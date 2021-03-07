@@ -3780,7 +3780,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     //         ||
     //    lefty  righty
     //
-    // we clice off where righty starts
+    // we slice off where righty starts
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       break;
     }
@@ -5032,6 +5032,15 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && str[_i]) {
       // console.log(
+      //   `1857 ███████████████████████████████████████ IS TAG STARTING? ${startsTag(
+      //     str,
+      //     i,
+      //     token,
+      //     layers,
+      //     withinStyle
+      //   )}`
+      // );
+      // console.log(
       //   `1707 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
       //     str,
       //     i,
@@ -5059,12 +5068,33 @@ function tokenizer(str, originalOpts) {
         //
         if (token.type && token.start !== null) {
           if (token.type === "rule") {
-            if (property && property.propertyStarts) {
-              property.propertyEnds = _i;
-              property.property = str.slice(property.propertyStarts, _i);
+            if (property && property.start) {
+              // patch important if needed
+              if (property.importantStarts && !property.importantEnds) {
+                property.importantEnds = _i;
+                property.important = str.slice(property.importantStarts, _i);
+              } // patch property
+
+
+              if (property.propertyStarts && !property.propertyEnds) {
+                property.propertyEnds = _i;
+
+                if (!property.property) {
+                  property.property = str.slice(property.propertyStarts, _i);
+                }
+              }
 
               if (!property.end) {
                 property.end = _i;
+              } // patch value
+
+
+              if (property.valueStarts && !property.valueEnds) {
+                property.valueEnds = _i;
+
+                if (!property.value) {
+                  property.value = str.slice(property.valueStarts, _i);
+                }
               }
 
               pushProperty(property);
@@ -5122,6 +5152,11 @@ function tokenizer(str, originalOpts) {
           token.kind = "xml";
         } else if (inlineTags.has(extractedTagName)) {
           token.kind = "inline";
+
+          if (extractedTagName) {
+            // for perf
+            doNothing = _i;
+          }
         }
       } else if (startsHtmlComment(str, _i, token, layers)) {
         //
@@ -5519,26 +5554,33 @@ function tokenizer(str, originalOpts) {
         });
       } else if (!token.type) {
         initToken("text", _i);
+        doNothing = _i;
       }
     }
 
-    var R1 = ";'\"{}<>".includes(str[right(str, _i - 1)]);
-    var R2 = matchRightIncl(str, _i, ["!important"], {
-      i: true,
-      trimBeforeMatching: true,
-      maxMismatches: 2
-    }); // catch the end of a css property (with or without !important)
+    var R1 = void 0;
+    var R2 = void 0;
+
+    if (!doNothing && (property.start || str[_i] === "!")) {
+      R1 = ";'\"{}<>".includes(str[right(str, _i - 1)]);
+      R2 = matchRightIncl(str, _i, ["!important"], {
+        i: true,
+        trimBeforeMatching: true,
+        maxMismatches: 2
+      });
+    } // catch the end of a css property (with or without !important)
     // -------------------------------------------------------------------------
 
     /* istanbul ignore else */
 
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
+
+    if (!doNothing && property && (property.semi && property.semi < _i && property.semi < _i || (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
     !rightVal || // or at that character !important does not start
     R1) || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
     !str[_i] || // or it's a whitespace
     !str[_i].trim() || // or it's a semicolon after a value
     !property.valueEnds && str[_i] === ";" || // or we reached the end of the attribute
-    attrEndsAt(_i))) {
+    attrEndsAt(_i)))) {
       /* istanbul ignore else */
       if (property.importantStarts && !property.importantEnds) {
         property.importantEnds = left(str, _i) + 1;
@@ -5569,6 +5611,10 @@ function tokenizer(str, originalOpts) {
 
       pushProperty(property);
       propertyReset();
+
+      if (!doNothing && (!str[_i] || str[_i].trim()) && str[_i] === ";") {
+        doNothing = _i;
+      }
     } // catch the end of a css property's value
     // -------------------------------------------------------------------------
 
@@ -5706,6 +5752,16 @@ function tokenizer(str, originalOpts) {
 
       pushProperty(property);
       propertyReset();
+      doNothing = _i;
+    } // catch the end of css property's !important
+    // -------------------------------------------------------------------------
+
+    /* istanbul ignore else */
+
+
+    if (property && property.importantStarts && !property.importantEnds && str[_i] && !str[_i].trim()) {
+      property.importantEnds = _i;
+      property.important = str.slice(property.importantStarts, _i);
     } // catch the start of css property's !important
     // -------------------------------------------------------------------------
 
@@ -5722,7 +5778,12 @@ function tokenizer(str, originalOpts) {
 
       if ( // it's non-whitespace char in front
       str[_i - 1] && str[_i - 1].trim() && // and before that it's whitespace
-      str[_i - 2] && !str[_i - 2].trim()) {
+      str[_i - 2] && !str[_i - 2].trim() || // there's a "1" in front
+      str[_i - 1] === "1" && // and it's not numeric character before it
+      // padding: 101important
+      //            ^
+      //          unlikely it's a mistyped !
+      str[_i - 2] && !/\d/.test(str[_i - 2])) {
         // merge that character into !important
         property.valueEnds = left(str, _i - 1) + 1;
         property.value = str.slice(property.valueStarts, property.valueEnds);
@@ -5768,6 +5829,8 @@ function tokenizer(str, originalOpts) {
             value: str.slice(temp, _i)
           });
         }
+      } else if (str[_i] === "!") {
+        property.importantStarts = _i;
       } else {
         property.valueStarts = _i;
       }
@@ -5811,7 +5874,9 @@ function tokenizer(str, originalOpts) {
     //                so that we can catch it later validating prop names
     //
     !rightVal || !":/}".includes(str[rightVal]) || // mind the rogue closings .a{x}}
-    str[_i] === "}" && str[rightVal] === "}")) && ( // also, regarding the slash,
+    str[_i] === "}" && str[rightVal] === "}") || // <style>.a{b!}
+    //            ^
+    str[_i] === "!") && ( // also, regarding the slash,
     // <div style="//color: red;">
     //              ^
     //            don't close here, continue, gather "//color"
@@ -5871,7 +5936,9 @@ function tokenizer(str, originalOpts) {
         //                this is
 
         if ( // either semi but no colon
-        nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) {
+        (nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) && !"{}".includes(str[_i]) && rightVal && ( // <style>.a{b!}
+        //            ^
+        !"!".includes(str[_i]) || isLatinLetter(str[rightVal]))) {
           // <div style="float.left;">
           //                  ^
           //            we're here
@@ -5883,6 +5950,8 @@ function tokenizer(str, originalOpts) {
           //                 ^
           //          we're here
           property.propertyEnds = null;
+        } else if (str[_i] === "!") {
+          property.importantStarts = _i;
         }
       }
     } // catch the colon of a css property
@@ -5931,10 +6000,10 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
 
 
-    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && // let all the crap in, filter later:
-    !"{};".includes(str[_i]) && // above is instead of a stricter clause:
+    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && // NOTA BENE - there's same clause for inline HTML style
+    // let all the crap in, filter later:
+    !"{}".includes(str[_i]) && // above is instead of a stricter clause:
     // attrNameRegexp.test(str[i]) &&
-    //
     token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) {
       // first, check maybe there's unfinished text token before it
       if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
@@ -5950,7 +6019,15 @@ function tokenizer(str, originalOpts) {
       // "property"
 
 
-      if (str[_i] === "!") {
+      if (str[_i] === ";") {
+        initProperty({
+          start: _i,
+          end: _i + 1,
+          semi: _i
+        });
+        pushProperty(property);
+        propertyReset();
+      } else if (str[_i] === "!") {
         initProperty({
           start: _i,
           importantStarts: _i
@@ -5958,6 +6035,8 @@ function tokenizer(str, originalOpts) {
       } else {
         initProperty(_i);
       }
+
+      doNothing = _i;
     } // catch the start a property
     // -------------------------------------------------------------------------
     // Mostly happens in dirty code cases - the start is normally being triggered
@@ -5975,8 +6054,15 @@ function tokenizer(str, originalOpts) {
     attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && // but property hasn't been initiated
     !property.start && // yet the character is suitable:
     // it's not a whitespace
-    str[_i] && str[_i].trim() && // it's not some separator
-    !"'\";".includes(str[_i]) && // it's not inside CSS block comment
+    str[_i] && str[_i].trim() && // NOTA BENE - there's same clause for inline HTML style
+    // it's not some separator
+    !"'\"".includes(str[_i]) && // TODO - cleanup below:
+    // either it's not semi
+    // (str[i] !== ";" ||
+    //   // or it is, but the last non-whitespace char was semi, so it's a rogue semi here
+    //   // we'll put it as a standalone property, it's not a part of text token
+    //   str[lastNonWhitespaceCharAt as number] === ";") &&
+    // it's not inside CSS block comment
     !lastLayerIs("block")) {
       // It's either css comment or a css property.
       // Dirty characters go as property name, then later we validate and
@@ -6014,12 +6100,28 @@ function tokenizer(str, originalOpts) {
           // if !important has been detected, that's a CSS like:
           // <div style="float:left;!important">
           // the !important is alone by itself
+          // also, it can be semi along by itself
 
 
-          initProperty(R2 ? {
-            start: _i,
-            importantStarts: _i
-          } : _i);
+          if (str[_i] === ";") {
+            initProperty({
+              start: _i,
+              end: _i + 1,
+              semi: _i
+            });
+            doNothing = _i;
+          } else if (R2) {
+            initProperty({
+              start: _i,
+              importantStarts: _i
+            });
+          } else {
+            // protection against unclosed quotes
+            // <div style="float:left;; >
+            //                          ^
+            //                    we're here
+            initProperty(_i);
+          }
         }
     } // in comment type, "only" kind tokens, submit square brackets to layers
     // -------------------------------------------------------------------------
@@ -6248,6 +6350,7 @@ function tokenizer(str, originalOpts) {
         }
 
         token.recognised = isTagNameRecognised(token.tagName);
+        doNothing = _i;
       }
     } // Catch the start of a tag name:
     // -------------------------------------------------------------------------
@@ -6258,12 +6361,14 @@ function tokenizer(str, originalOpts) {
       // Consider closing tag's slashes and tag name itself.
       if (str[_i] === "/") {
         token.closing = true;
+        doNothing = _i;
       } else if (isLatinLetter(str[_i])) {
         token.tagNameStartsAt = _i; // if by now closing marker is still null, set it to false - there
         // won't be any closing slashes between opening bracket and tag name
 
         if (!token.closing) {
           token.closing = false;
+          doNothing = _i;
         }
       } else ;
     } // catch the end of a tag attribute's name
@@ -6361,7 +6466,37 @@ function tokenizer(str, originalOpts) {
     !token.closingCurlyAt && // there is no unfinished property being recorded
     !property.propertyStarts) {
       // if it's suitable for property, start a property
-      // if it's whitespace, for example,
+      if (str[_i] === ";" && ( // a) if it's inline HTML tag CSS style attribute
+      attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && // last attribute has semi already set:
+      attrib.attribValue[~-attrib.attribValue.length].semi && // and that semi is really behind this current index
+      attrib.attribValue[~-attrib.attribValue.length].semi < _i || // or
+      // b) if it's head CSS styles block
+      token && token.type === "rule" && Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].semi && token.properties[~-token.properties.length].semi < _i)) {
+        // rogue semi?
+        // <div style="float:left;;">
+        //                        ^
+        // if so, it goes as a standalone property, something like:
+        // {
+        //   start: 23,
+        //   end: 24,
+        //   property: null,
+        //   propertyStarts: null,
+        //   propertyEnds: null,
+        //   value: null,
+        //   valueStarts: null,
+        //   valueEnds: null,
+        //   important: null,
+        //   importantStarts: null,
+        //   importantEnds: null,
+        //   colon: null,
+        //   semi: 23,
+        // }
+        initProperty({
+          start: _i,
+          semi: _i
+        });
+        doNothing = _i + 1;
+      } // if it's whitespace, for example,
       // <a style="  /* zzz */color: red;  ">
       //           ^
       //         this
@@ -6369,29 +6504,29 @@ function tokenizer(str, originalOpts) {
       // rogue text will go as property, for example:
       //
       // <a style="  z color: red;  ">
-      if ( // whitespace is automatically text token
-      str[_i] && !str[_i].trim() || // if comment layer has been started, it's also a text token, no matter even
-      // if it's a property, because it's comment's contents.
-      lastLayerIs("block")) {
-        // depends where to push, is it inline css or head css rule
-        if (attrib.attribName) {
-          attrib.attribValue.push({
-            type: "text",
-            start: _i,
-            end: null,
-            value: null
-          });
-        } else if (token.type === "rule" && ( // we don't want to push over the properties in-progress
-        !Array.isArray(token.properties) || !token.properties.length || // last property should have ended
-        token.properties[~-token.properties.length].end)) {
-          token.properties.push({
-            type: "text",
-            start: _i,
-            end: null,
-            value: null
-          });
+      else if ( // whitespace is automatically text token
+        str[_i] && !str[_i].trim() || // if comment layer has been started, it's also a text token, no matter even
+        // if it's a property, because it's comment's contents.
+        lastLayerIs("block")) {
+          // depends where to push, is it inline css or head css rule
+          if (attrib.attribName) {
+            attrib.attribValue.push({
+              type: "text",
+              start: _i,
+              end: null,
+              value: null
+            });
+          } else if (token.type === "rule" && ( // we don't want to push over the properties in-progress
+          !Array.isArray(token.properties) || !token.properties.length || // last property should have ended
+          token.properties[~-token.properties.length].end)) {
+            token.properties.push({
+              type: "text",
+              start: _i,
+              end: null,
+              value: null
+            });
+          }
         }
-      }
     } // Catch the end of a tag attribute's value:
     // -------------------------------------------------------------------------
 

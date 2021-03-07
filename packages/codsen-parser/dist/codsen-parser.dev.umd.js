@@ -2178,15 +2178,15 @@ function left(str, idx) {
   });
 }
 
-function isObj(something) {
+function isObj$3(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr(something) {
+function isStr$1(something) {
   return typeof something === "string";
 }
 
-var defaults = {
+var defaults$3 = {
   stringOffset: 0,
   maxDistance: 1,
   ignoreWhitespace: true
@@ -2196,14 +2196,14 @@ function findMalformed(str, refStr, cb, originalOpts) {
   //
   // insurance
   // ---------
-  if (!isStr(str)) {
+  if (!isStr$1(str)) {
     throw new TypeError("string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: " + str + " (type: " + typeof str + ")");
   } else if (!str.length) {
     // empty string - quick ending
     return;
   }
 
-  if (!isStr(refStr)) {
+  if (!isStr$1(refStr)) {
     throw new TypeError("string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: " + refStr + " (type: " + typeof refStr + ")");
   } else if (!refStr.length) {
     // empty string to look for - quick ending
@@ -2214,11 +2214,11 @@ function findMalformed(str, refStr, cb, originalOpts) {
     throw new TypeError("string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: " + cb + " (type: " + typeof cb + ")");
   }
 
-  if (originalOpts && !isObj(originalOpts)) {
+  if (originalOpts && !isObj$3(originalOpts)) {
     throw new TypeError("string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: " + originalOpts + " (type: " + typeof originalOpts + ")");
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // we perform the validation upon Object-assigned "opts" instead
+  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts); // we perform the validation upon Object-assigned "opts" instead
   // of incoming "originalOpts" because we don't want to mutate the
   // "originalOpts" and making note of fixed values, Object-assigning
   // "opts" and then putting those noted fixed values on top is more
@@ -2382,15 +2382,15 @@ function arrayiffy(something) {
 
 /* eslint no-plusplus:0 */
 
-function isObj$1(something) {
+function isObj$2(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr$1(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
-var defaults$1 = {
+var defaults$2 = {
   cb: undefined,
   i: false,
   trimBeforeMatching: false,
@@ -2421,7 +2421,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     return whatToMatchValVal;
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -2681,11 +2681,11 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
   // insurance
-  if (isObj$1(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+  if (isObj$2(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
     // arrayiffy if needed:
@@ -2694,10 +2694,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
 
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
-    return isStr$1(el) ? el : String(el);
+    return isStr(el) ? el : String(el);
   });
 
-  if (!isStr$1(str)) {
+  if (!isStr(str)) {
     return false;
   }
 
@@ -2712,7 +2712,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var whatToMatch;
   var special;
 
-  if (isStr$1(originalWhatToMatch)) {
+  if (isStr(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
@@ -2725,7 +2725,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + typeof originalWhatToMatch + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
   }
 
-  if (originalOpts && !isObj$1(originalOpts)) {
+  if (originalOpts && !isObj$2(originalOpts)) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + typeof originalOpts + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
@@ -2749,7 +2749,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
   Array.isArray(whatToMatch) && !whatToMatch.length || // []
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$1(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
   ) {
       if (typeof opts.cb === "function") {
         var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
@@ -2967,7 +2967,7 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y) {
 // Used to troubleshoot dirty broken code.
 
 
-function xBeforeYOnTheRight(str, startingIdx, x, y) {
+function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -3440,7 +3440,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       var R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim()); // that quote we suspected as closing, is from an opening-closing
       // set on another attribute:
 
-      var R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
+      var R4 = !xBeforeYOnTheRight$1(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
       // <z alt"href' www'/>
       //       ^    ^
       //    start   suspected ending
@@ -3771,7 +3771,7 @@ var defaultOpts = {
   allowCustomTagNames: false,
   skipOpeningBracket: false
 };
-var BACKSLASH = "\\";
+var BACKSLASH$1 = "\\";
 var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
 function isNotLetter(char) {
@@ -3843,7 +3843,7 @@ function isOpening(str, idx, originalOpts) {
   var matchingOptions = {
     cb: isNotLetter,
     i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    trimCharsBeforeMatching: ["/", BACKSLASH$1, "!", " ", "\t", "\n", "\r"]
   }; // -----------------------------------------------------------------------------
 
   if (opts.allowCustomTagNames) {
@@ -3884,7 +3884,7 @@ function isOpening(str, idx, originalOpts) {
         return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
       },
       i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH$1, "!", " ", "\t", "\n", "\r"]
     })) {
       passed = true;
     }
@@ -3969,7 +3969,7 @@ function isTagNameRecognised(tagName) {
 // Used to troubleshoot dirty broken code.
 
 
-function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -3987,7 +3987,7 @@ function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
   return false;
 }
 
-function isObj$2(something) {
+function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 } // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
 
@@ -4021,10 +4021,9 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
   var len = str.length; // getLastEspLayerObj()
 
   var lastEspLayerObj = layers[getLastEspLayerObjIdx(layers)];
-  console.log("017 getWholeEspTagLumpOnTheRight(): " + ("\x1B[" + 32 + "m" + "START" + "\x1B[" + 39 + "m"));
 
   for (var y = i + 1; y < len; y++) {
-    console.log("022 getWholeEspTagLumpOnTheRight(): " + ("\x1B[" + 36 + "m" + ("str[" + y + "]=" + str[y]) + "\x1B[" + 39 + "m")); // if righty character is on the left and now it's lefty,
+    // if righty character is on the left and now it's lefty,
     // we have a situation like:
     // {{ abc }}{% endif %}
     //        ^^^^
@@ -4035,10 +4034,8 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     //         ||
     //    lefty  righty
     //
-    // we clice off where righty starts
-
+    // we slice off where righty starts
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
-      console.log("039 getWholeEspTagLumpOnTheRight(): " + ("\x1B[" + 31 + "m" + "BREAK" + "\x1B[" + 39 + "m"));
       break;
     }
 
@@ -4054,7 +4051,6 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     wholeEspTagLumpOnTheRight.length > 1 && ( // contains one of opening-polarity characters
     wholeEspTagLumpOnTheRight.includes("<") || wholeEspTagLumpOnTheRight.includes("{") || wholeEspTagLumpOnTheRight.includes("[") || wholeEspTagLumpOnTheRight.includes("(")) && // bail if it's a bracket
     str[y] === "(") {
-      console.log("065 getWholeEspTagLumpOnTheRight(): " + ("\x1B[" + 31 + "m" + "BREAK" + "\x1B[" + 39 + "m"));
       break;
     }
 
@@ -4070,7 +4066,6 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     !lastEspLayerObj && y > i && "!=@".includes(str[y])) {
       wholeEspTagLumpOnTheRight += str[y];
     } else {
-      console.log("096 " + ("\x1B[" + 31 + "m" + "BREAK" + "\x1B[" + 39 + "m"));
       break;
     }
   } // if lump is tails+heads, report the length of tails only:
@@ -4126,7 +4121,6 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     }
   }
 
-  console.log("177 getWholeEspTagLumpOnTheRight(): final return");
   return wholeEspTagLumpOnTheRight;
 } // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
@@ -4236,24 +4230,16 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
   whichLayerToMatch.guessedClosingLump && // length is more than 2
   whichLayerToMatch.guessedClosingLump.length > 2 && // and last two characters match to what was guessed
   whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 1] === wholeEspTagLump[wholeEspTagLump.length - 1] && whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 2] === wholeEspTagLump[wholeEspTagLump.length - 2]) {
-    console.log("064 matchLayer(): " + ("\x1B[" + 32 + "m" + "RETURN" + "\x1B[" + 39 + "m") + " " + wholeEspTagLump.length);
     return wholeEspTagLump.length;
   } // console.log(`054 matchLayer(): finally, return undefined`);
 
 }
 
-var BACKSLASH$1 = "\\"; // This is an extracted logic which detects where token of a particular kind
+var BACKSLASH = "\\"; // This is an extracted logic which detects where token of a particular kind
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
 function startsTag(str, i, token, layers, withinStyle) {
-  console.log("020 \u2588\u2588 startsTag() isOpening1: " + isOpening(str, i, {
-    allowCustomTagNames: true
-  }));
-  console.log("025 \u2588\u2588 startsTag() isOpening2: " + isOpening(str, i, {
-    allowCustomTagNames: false,
-    skipOpeningBracket: true
-  }));
   return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && ( // within CSS styles, initiate tags only on opening bracket:
   !withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
     allowCustomTagNames: true
@@ -4261,7 +4247,7 @@ function startsTag(str, i, token, layers, withinStyle) {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$1].includes(str[left(str, i)])) && isOpening(str, i, {
+  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[left(str, i)])) && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
@@ -4310,15 +4296,14 @@ function startsEsp(str, i, token, layers, withinStyle) {
   ">})".includes(str[i]) && // heads include the opposite of it
   Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && ( // insurance against "greater than", as in:
   // <#if product.weight > 100>
-  str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || //
+  str[i] !== ">" || !xBeforeYOnTheRight(str, i + 1, ">", "<")) || //
   // 4. comment closing in RPL-like templating languages, for example:
   // <#-- z -->
   str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
-  console.log("123 startsEsp(): RETURNS " + !!res);
   return !!res;
 }
 var importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
-var defaults$2 = {
+var defaults$1 = {
   tagCb: null,
   tagCbLookahead: 0,
   charCb: null,
@@ -4350,19 +4335,19 @@ function tokenizer(str, originalOpts) {
     }
   }
 
-  if (originalOpts && !isObj$2(originalOpts)) {
+  if (originalOpts && !isObj$1(originalOpts)) {
     throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
   }
 
-  if (originalOpts && isObj$2(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type " + typeof originalOpts.tagCb + ", equal to " + JSON.stringify(originalOpts.tagCb, null, 4));
   }
 
-  if (originalOpts && isObj$2(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type " + typeof originalOpts.charCb + ", equal to " + JSON.stringify(originalOpts.charCb, null, 4));
   }
 
-  if (originalOpts && isObj$2(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
   } //
   //
@@ -4375,7 +4360,7 @@ function tokenizer(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); //
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); //
   //
   //
   //
@@ -4410,7 +4395,6 @@ function tokenizer(str, originalOpts) {
   function tokenReset() {
     // object-assign is basically cloning - objects are passed by reference,
     // we can't risk mutating the default object:
-    console.log("201 " + ("\x1B[" + 36 + "m" + "\u2588\u2588 tokenReset():" + "\x1B[" + 39 + "m") + " tokenReset() called");
     token = {
       type: null,
       start: null,
@@ -4446,18 +4430,15 @@ function tokenizer(str, originalOpts) {
   }
 
   function attribPush(tokenObj) {
-    console.log("236"); // 1. clean up any existing tokens first
+    // 1. clean up any existing tokens first
 
     /* istanbul ignore else */
-
     if (attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && !attrib.attribValue[~-attrib.attribValue.length].end) {
       attrib.attribValue[~-attrib.attribValue.length].end = tokenObj.start;
       attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, tokenObj.start);
-      console.log("250 complete previous attr, " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4));
     }
 
     attrib.attribValue.push(tokenObj);
-    console.log("260 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " to " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " now = " + JSON.stringify(attrib, null, 4));
   } // same for property
 
 
@@ -4489,12 +4470,8 @@ function tokenizer(str, originalOpts) {
   function pushProperty(p) {
     // push and init and patch up to resume
     if (attrib && attrib.attribName === "style") {
-      console.log("295 push property");
-      console.log("297 FIY, " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4));
-      console.log("304 FIY, " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib.attribValue, null, 4));
       attrib.attribValue.push(_objectSpread2({}, p));
     } else if (token && Array.isArray(token.properties)) {
-      console.log("312 push property");
       token.properties.push(_objectSpread2({}, p));
     }
   } // Initial resets:
@@ -4597,7 +4574,6 @@ function tokenizer(str, originalOpts) {
 
 
   function closingComment(i) {
-    console.log("429 closingComment(): " + ("\x1B[" + 32 + "m" + "closing comment" + "\x1B[" + 39 + "m"));
     var end = (right(str, i) || i) + 1;
     attribPush({
       type: "comment",
@@ -4609,19 +4585,15 @@ function tokenizer(str, originalOpts) {
       language: "css"
     }); // skip next character
 
-    doNothing = end;
-    console.log("445 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4)); // pop the block comment layer
+    doNothing = end; // pop the block comment layer
 
     if (lastLayerIs("block")) {
       layers.pop();
-      console.log("456 " + ("\x1B[" + 31 + "m" + "POP" + "\x1B[" + 39 + "m") + " layers, now = " + JSON.stringify(layers, null, 4));
     }
   }
 
   function reportFirstFromStash(stash, cb, lookaheadLength) {
-    console.time("reportFirstFromStash()");
-    console.log("472 " + ("\x1B[" + 35 + "m" + "reportFirstFromStash()" + "\x1B[" + 39 + "m") + ": \u2588\u2588 " + ("\x1B[" + 33 + "m" + "START" + "\x1B[" + 39 + "m")); // start to assemble node we're report to the callback cb1()
-
+    // start to assemble node we're report to the callback cb1()
     var currentElem = stash.shift(); // ^ shift removes it from stash
     // now we need the "future" nodes, as many as "lookahead" of them
     // that's the container where they'll sit:
@@ -4629,51 +4601,36 @@ function tokenizer(str, originalOpts) {
     var next = [];
 
     for (var i = 0; i < lookaheadLength; i++) {
-      console.log("i = " + i); // we want as many as "lookaheadLength" from stash but there might be
+      // we want as many as "lookaheadLength" from stash but there might be
       // not enough there
-
       if (stash[i]) {
         next.push(lodash_clonedeep(stash[i]));
-        console.log("488");
       } else {
-        console.log("491 " + ("\x1B[" + 35 + "m" + "reportFirstFromStash()" + "\x1B[" + 39 + "m") + ": " + ("\x1B[" + 31 + "m" + "STOP" + "\x1B[" + 39 + "m") + " - there are not enough elements in stash");
         break;
       }
     } // finally, ping the callback with assembled element:
 
 
-    console.log("499 " + ("\x1B[" + 35 + "m" + "reportFirstFromStash()" + "\x1B[" + 39 + "m") + ": " + ("\x1B[" + 32 + "m" + "PING CB" + "\x1B[" + 39 + "m") + " with " + JSON.stringify(currentElem, null, 4));
-
     if (typeof cb === "function") {
       cb(currentElem, next);
     }
-
-    console.timeEnd("reportFirstFromStash()");
   }
 
   function pingCharCb(incomingToken) {
-    console.time("pingCharCb()"); // no cloning, no reset
-
+    // no cloning, no reset
     if (opts.charCb) {
       // if there were no stashes, we'd call the callback like this:
       // opts.charCb(incomingToken);
       // 1. push to stash
       charStash.push(incomingToken); // 2. is there are enough tokens in the stash, ping the first-one
 
-      console.log("523 " + (charStash.length > opts.charCbLookahead ? "\x1B[" + 36 + "m" + "pingCharCb()" + "\x1B[" + 39 + "m" + ": " + ("\x1B[" + 32 + "m" + "ENOUGH VALUES IN CHAR STASH" + "\x1B[" + 39 + "m") : "\x1B[" + 36 + "m" + "pingCharCb()" + "\x1B[" + 39 + "m" + ": " + ("\x1B[" + 31 + "m" + "NOT ENOUGH VALUES IN CHAR STASH, MOVE ON" + "\x1B[" + 39 + "m")));
-
       if (charStash.length > opts.charCbLookahead) {
         reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
-        console.log("532 " + ("\x1B[" + 90 + "m" + "\u2588\u2588 charStash" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(charStash, null, 4));
       }
     }
-
-    console.timeEnd("pingCharCb()");
   }
 
   function pingTagCb(incomingToken) {
-    console.time("pingTagCb()");
-
     if (opts.tagCb) {
       // console.log(
       //   `419 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} tagCb() with ${JSON.stringify(
@@ -4686,44 +4643,34 @@ function tokenizer(str, originalOpts) {
       // 1. push to stash
       tagStash.push(incomingToken); // 2. is there are enough tokens in the stash, ping the first-one
 
-      console.log("560 " + (tagStash.length > opts.tagCbLookahead ? "\x1B[" + 36 + "m" + "pingTagCb()" + "\x1B[" + 39 + "m" + ": " + ("\x1B[" + 32 + "m" + "ENOUGH VALUES IN TAG STASH" + "\x1B[" + 39 + "m") : "\x1B[" + 36 + "m" + "pingTagCb()" + "\x1B[" + 39 + "m" + ": " + ("\x1B[" + 31 + "m" + "NOT ENOUGH VALUES IN TAG STASH, MOVE ON" + "\x1B[" + 39 + "m")));
-
       if (tagStash.length > opts.tagCbLookahead) {
         reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
-        console.log("569 pingTagCb(): " + ("\x1B[" + 90 + "m" + "\u2588\u2588 tagStash" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(tagStash, null, 4));
       }
     }
-
-    console.timeEnd("pingTagCb()");
   }
 
   function dumpCurrentToken(incomingToken, i) {
-    console.log("582 " + ("\x1B[" + 35 + "m" + "dumpCurrentToken()" + "\x1B[" + 39 + "m") + "; incoming incomingToken=" + JSON.stringify(incomingToken, null, 0) + "; i = " + ("\x1B[" + 33 + "m" + i + "\x1B[" + 39 + "m")); // Let's ensure it was not a token with trailing whitespace, because now is
+    // Let's ensure it was not a token with trailing whitespace, because now is
     // the time to separate it and report it as a standalone token.
     // Also, the following clause will catch the unclosed tags like
     // <a href="z" click here</a>
-
     if (!["text", "esp"].includes(incomingToken.type) && incomingToken.start !== null && incomingToken.start < i && (str[~-i] && !str[~-i].trim() || str[i] === "<")) {
-      console.log("599"); // this ending is definitely a token ending. Now the question is,
+      // this ending is definitely a token ending. Now the question is,
       // maybe we need to split all gathered token contents into two:
       // maybe it's a tag and a whitespace? or an unclosed tag?
       // in some cases, this token.end will be only end of a second token,
       // we'll need to find where this last chunk started and terminate the
       // previous token (one which started at the current token.start) there.
-
       if (left(str, i) !== null) {
-        console.log("607");
         incomingToken.end = left(str, i) + 1;
       } else {
-        console.log("610");
         incomingToken.end = i;
       }
 
       incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
-      console.log("615 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "incomingToken.end" + "\x1B[" + 39 + "m") + " = " + incomingToken.end + " (last two characters ending at incomingToken.end: " + JSON.stringify(str[~-incomingToken.end], null, 4) + " + " + JSON.stringify(str[incomingToken.end], null, 4) + "); " + ("\x1B[" + 33 + "m" + "incomingToken.value" + "\x1B[" + 39 + "m") + " = \"" + incomingToken.value + "\"");
 
       if (incomingToken.type === "tag" && !"/>".includes(str[~-incomingToken.end])) {
-        console.log("634 " + ("\x1B[" + 35 + "m" + "\u2588\u2588 UNCLOSED TAG CASES" + "\x1B[" + 39 + "m")); // we need to potentially shift the incomingToken.end left, imagine:
+        // we need to potentially shift the incomingToken.end left, imagine:
         // <a href="z" click here</a>
         //                       ^
         //               we are here ("i" value), that's incomingToken.end currently
@@ -4735,20 +4682,13 @@ function tokenizer(str, originalOpts) {
         // PLAN: take current token, if there are attributes, validate
         // each one of them, terminate at the point of the first smell.
         // If there are no attributes, terminate at the end of a tag name
-
         var cutOffIndex = incomingToken.tagNameEndsAt || i;
 
         if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
-          console.log("656 " + ("\x1B[" + 32 + "m" + "\u2588\u2588 validate all attributes" + "\x1B[" + 39 + "m")); // initial cut-off point is token.tagNameEndsAt
-
-          console.log("659 SET cutOffIndex = " + cutOffIndex); // with each validated attribute, push the cutOffIndex forward:
-
+          // initial cut-off point is token.tagNameEndsAt // with each validated attribute, push the cutOffIndex forward:
           for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
-            console.log("667 " + ("\x1B[" + 36 + "m" + ("incomingToken.attribs[" + i2 + "]") + "\x1B[" + 39 + "m") + " = " + JSON.stringify(incomingToken.attribs[i2], null, 4));
-
             if (incomingToken.attribs[i2].attribNameRecognised && incomingToken.attribs[i2].attribEnds) {
-              cutOffIndex = incomingToken.attribs[i2].attribEnds;
-              console.log("679 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "cutOffIndex" + "\x1B[" + 39 + "m") + " = " + cutOffIndex); // small tweak - consider this:
+              cutOffIndex = incomingToken.attribs[i2].attribEnds; // small tweak - consider this:
               // <a href="z" click here</a>
               //            ^
               //         this space in particular
@@ -4758,11 +4698,9 @@ function tokenizer(str, originalOpts) {
 
               if (str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
                 cutOffIndex += 1;
-                console.log("698 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "cutOffIndex" + "\x1B[" + 39 + "m") + " = " + cutOffIndex);
               }
             } else {
-              console.log("702 " + ("\x1B[" + 31 + "m" + "BREAK" + "\x1B[" + 39 + "m")); // delete false attributes from incomingToken.attribs
-
+              // delete false attributes from incomingToken.attribs
               if (i2 === 0) {
                 // if it's the first attribute and it's already
                 // not suitable, for example:
@@ -4772,9 +4710,8 @@ function tokenizer(str, originalOpts) {
               } else {
                 // leave only attributes up to i2-th
                 incomingToken.attribs = incomingToken.attribs.splice(0, i2);
-              }
+              } // in the end stop the loop:
 
-              console.log("715 " + ("\x1B[" + 32 + "m" + "CALCULATED" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "incomingToken.attribs" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(incomingToken.attribs, null, 4)); // in the end stop the loop:
 
               break;
             }
@@ -4786,73 +4723,51 @@ function tokenizer(str, originalOpts) {
 
         if (!incomingToken.tagNameEndsAt) {
           incomingToken.tagNameEndsAt = cutOffIndex;
-          console.log("733 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "incomingToken.tagNameEndsAt" + "\x1B[" + 39 + "m") + " = " + incomingToken.tagNameEndsAt);
         }
 
         if (incomingToken.tagNameStartsAt && incomingToken.tagNameEndsAt && !incomingToken.tagName) {
           incomingToken.tagName = str.slice(incomingToken.tagNameStartsAt, cutOffIndex);
-          console.log("748 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "incomingToken.tagName" + "\x1B[" + 39 + "m") + " = " + incomingToken.tagName);
           incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
         }
 
-        console.log("755 " + ("\x1B[" + 32 + "m" + "PING" + "\x1B[" + 39 + "m"));
         pingTagCb(incomingToken);
         initToken("text", cutOffIndex);
-        console.log("759 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.start" + "\x1B[" + 39 + "m") + " = " + token.start + "; " + ("\x1B[" + 33 + "m" + "token.type" + "\x1B[" + 39 + "m") + " = " + token.type);
       } else {
-        console.log("764 " + ("\x1B[" + 35 + "m" + "\u2588\u2588 HEALTHY TAG" + "\x1B[" + 39 + "m"));
-        console.log("765 " + ("\x1B[" + 32 + "m" + "PING" + "\x1B[" + 39 + "m"));
         pingTagCb(incomingToken);
-        console.log("767 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m"));
         tokenReset(); // if there was whitespace after token's end:
 
         if (str[~-i] && !str[~-i].trim()) {
-          console.log("771 indeed there was whitespace after token's end");
           initToken("text", left(str, i) + 1);
-          console.log("774 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.start" + "\x1B[" + 39 + "m") + " = " + token.start + "; " + ("\x1B[" + 33 + "m" + "token.type" + "\x1B[" + 39 + "m") + " = " + token.type);
         }
       }
-
-      console.log("782 FINALLY, " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4));
     } // if a token is already being recorded, end it
 
 
     if (token.start !== null) {
-      console.log("792 *");
-
       if (token.end === null && token.start !== i) {
         // (esp tags will have it set already)
         token.end = i;
         token.value = str.slice(token.start, token.end);
-        console.log("798 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end + "; " + ("\x1B[" + 33 + "m" + "token.value" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token.value, null, 4));
       } // normally we'd ping the token but let's not forget we have token stashes
       // in "attribToBackup" and "parentTokenToBackup"
 
-
-      console.log("811 *");
 
       if (token.start !== null && token.end) {
         // if it's a text token inside "at" rule, nest it, push into that
         // "at" rule pending in layers - otherwise, ping as standalone
         if (lastLayerIs("at")) {
           layers[~-layers.length].token.rules.push(token);
-          console.log("820 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " into layers AT rule");
         } else {
-          console.log("824 " + ("\x1B[" + 32 + "m" + "PING" + "\x1B[" + 39 + "m") + " as standalone");
           pingTagCb(token);
         }
       }
 
-      console.log("829 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m"));
       tokenReset();
     }
-
-    console.log("833 end of dumpCurrentToken() reached");
-    console.timeEnd("dumpCurrentToken()");
   }
 
   function atRuleWaitingForClosingCurlie() {
-    return lastLayerIs("at") && isObj$2(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
+    return lastLayerIs("at") && isObj$1(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
   }
 
   function getNewToken(type, startVal) {
@@ -4886,7 +4801,8 @@ function tokenizer(str, originalOpts) {
         value: null,
         closing: false,
         kind: "simple",
-        language: "html"
+        language: "html" // or "css"
+
       };
     }
 
@@ -4952,22 +4868,18 @@ function tokenizer(str, originalOpts) {
   }
 
   function initToken(type, startVal) {
-    console.time("initToken()"); // we mutate the object on the parent scope, so no Object.assign here
-
+    // we mutate the object on the parent scope, so no Object.assign here
     attribReset();
     token = getNewToken(type, startVal);
-    console.timeEnd("initToken()");
   }
 
   function initProperty(propertyStarts) {
-    console.time("initProperty()"); // we mutate the object on the parent scope, so no Object.assign here
-
+    // we mutate the object on the parent scope, so no Object.assign here
     propertyReset();
 
     if (typeof propertyStarts === "number") {
       property.propertyStarts = propertyStarts;
       property.start = propertyStarts;
-      console.timeEnd("initProperty()");
     } else {
       property = _objectSpread2(_objectSpread2({}, propertyDefault), propertyStarts);
     }
@@ -5004,7 +4916,7 @@ function tokenizer(str, originalOpts) {
 
 
   var _loop2 = function _loop2(_i) {
-    console.time("\x1B[" + 90 + "m" + "loop iteration" + "\x1B[" + 39 + "m"); //
+    //
     //
     //
     //
@@ -5015,11 +4927,8 @@ function tokenizer(str, originalOpts) {
     //
     //
     // Logging:
+    // ------------------------------------------------------------------------- // Progress:
     // -------------------------------------------------------------------------
-
-    console.log("\x1B[" + 36 + "m" + "===============================" + "\x1B[" + 39 + "m \x1B[" + 35 + "m" + ("str[ " + _i + " ] = " + (str[_i] && str[_i].trim() ? str[_i] : JSON.stringify(str[_i], null, 4))) + "\x1B[" + 39 + "m \x1B[" + 36 + "m" + "===============================" + "\x1B[" + 39 + "m\n"); // Progress:
-    // -------------------------------------------------------------------------
-
     if (!doNothing && str[_i] && opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
         if (_i === midLen) {
@@ -5034,7 +4943,6 @@ function tokenizer(str, originalOpts) {
         if (currentPercentageDone !== lastPercentage) {
           lastPercentage = currentPercentageDone;
           opts.reportProgressFunc(currentPercentageDone);
-          console.log("1047 DONE " + currentPercentageDone + "%");
         }
       }
     } // Left/Right helpers
@@ -5046,14 +4954,11 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
 
     if (withinStyle && token.type && !["rule", "at", "text", "comment"].includes(token.type)) {
-      console.log("1067 FIY, " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4));
       withinStyle = false;
-      console.log("1075 " + ("\x1B[" + 31 + "m" + "RESET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "withinStyle" + "\x1B[" + 39 + "m") + " = false");
     }
 
     if (doNothing && _i >= doNothing) {
       doNothing = 0;
-      console.log("1081 TURN OFF doNothing");
     } // skip chain of the same-type characters
     // -------------------------------------------------------------------------
 
@@ -5066,19 +4971,14 @@ function tokenizer(str, originalOpts) {
         property.valueEnds = _i;
         property.value = str.slice(property.valueStarts, _i);
         property.importantStarts = _i;
-        console.log("1106 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.valueEnds" + "\x1B[" + 39 + "m") + " = " + property.valueEnds + ";  " + ("\x1B[" + 33 + "m" + "property.value" + "\x1B[" + 39 + "m") + " = " + property.value + ";  " + ("\x1B[" + 33 + "m" + "property.importantStarts" + "\x1B[" + 39 + "m") + " = " + property.importantStarts);
       }
 
-      console.log("1117 " + ("\x1B[" + 32 + "m" + "SKIP" + "\x1B[" + 39 + "m") + " middle of the letters chunk");
-      console.timeEnd("\x1B[" + 90 + "m" + "loop iteration" + "\x1B[" + 39 + "m");
       i = _i;
       return "continue";
     }
 
     if (" \t\r\n".includes(str[_i]) && // ~- means subtract 1
     str[_i] === str[~-_i] && str[_i] === str[_i + 1]) {
-      console.log("1130 " + ("\x1B[" + 32 + "m" + "SKIP" + "\x1B[" + 39 + "m") + " middle of the spaces chunk");
-      console.timeEnd("\x1B[" + 90 + "m" + "loop iteration" + "\x1B[" + 39 + "m");
       i = _i;
       return "continue";
     } // catch the curly tails of at-rules
@@ -5086,113 +4986,83 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && atRuleWaitingForClosingCurlie()) {
-      console.log("1140 inside catch the curly tails of at-rules' clauses"); // if (token.type === null && str[i] === "}") {
+      // if (token.type === null && str[i] === "}") {
       // if (str[i] === "}") {
-
       if (str[_i] === "}") {
         if (!token.type || token.type === "text" || token.type === "rule" && token.openingCurlyAt === null) {
           // rule token must end earlier
           if (token.type === "rule") {
-            console.log("1152 complete the \"rule\" token");
             token.end = leftVal + 1;
             token.value = str.slice(token.start, token.end);
-            console.log("1156 " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4));
             pingTagCb(token); // if it's a text token inside "at" rule, nest it, push into that
             // "at" rule pending in layers - otherwise, ping as standalone
 
             if (lastLayerIs("at")) {
               layers[~-layers.length].token.rules.push(token);
-              console.log("1169 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " into layers AT rule");
             }
 
-            console.log("1173 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m"));
             tokenReset(); // if there was trailing whitespace, initiate it
 
             if (leftVal !== null && leftVal < ~-_i) {
-              console.log("1179 initiate whitespace from [" + (leftVal + 1) + ", " + _i + "]");
               initToken("text", leftVal + 1);
-              console.log("1183 " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " now = " + JSON.stringify(token, null, 4));
             }
           }
 
-          console.log("1192 call dumpCurrentToken()");
           dumpCurrentToken(token, _i);
-          console.log("1196 " + ("\x1B[" + 35 + "m" + "\u2588\u2588" + "\x1B[" + 39 + "m") + " restore at rule from layers");
           var poppedToken = layers.pop();
-          token = poppedToken.token;
-          console.log("1200 new token: " + JSON.stringify(token, null, 4)); // then, continue on "at" rule's token...
+          token = poppedToken.token; // then, continue on "at" rule's token...
 
           token.closingCurlyAt = _i;
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
-          console.log("1208 " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4) + " before pinging");
           pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
           // also put this "rule" into that parent in layers
 
           if (lastLayerIs("at")) {
-            console.log("1220 " + ("\x1B[" + 32 + "m" + "PUSH this rule into last AT layer" + "\x1B[" + 39 + "m"));
             layers[~-layers.length].token.rules.push(token);
           }
 
-          console.log("1227 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m"));
           tokenReset();
-          console.log("1231 " + ("\x1B[" + 31 + "m" + "skip the remaining of the program clauses for this index" + "\x1B[" + 39 + "m"));
           doNothing = _i + 1;
-          console.log("1235 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
         }
       } else if (token.type === "text" && str[_i] && str[_i].trim()) {
         // terminate the text token, all the non-whitespace characters comprise
         // rules because we're inside the at-token, it's CSS!
         token.end = _i;
-        token.value = str.slice(token.start, token.end);
-        console.log("1244 " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4)); // if it's a text token inside "at" rule, nest it, push into that
+        token.value = str.slice(token.start, token.end); // if it's a text token inside "at" rule, nest it, push into that
         // "at" rule pending in layers - otherwise, ping as standalone
 
         if (lastLayerIs("at")) {
           layers[~-layers.length].token.rules.push(token);
-          console.log("1256 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " into layers AT rule");
         } else {
-          console.log("1260 " + ("\x1B[" + 32 + "m" + "PING" + "\x1B[" + 39 + "m") + " as standalone");
           pingTagCb(token);
         }
 
-        console.log("1264 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m"));
         tokenReset();
       }
     }
 
     if (token.end && token.end === _i) {
-      console.log("1270 token was captured in the past, so push it now");
-
       if (token.tagName === "style" && !token.closing) {
         withinStyle = true;
-        console.log("1274 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "withinStyle" + "\x1B[" + 39 + "m") + " = true");
       } // we need to retain the information after tag was dumped to tagCb() and wiped
 
 
       if (attribToBackup) {
-        console.log("1279 THIS TAG GOES INTO ATTRIBUTE'S attribValue"); // 1. restore
+        // 1. restore
+        attrib = attribToBackup; // 2. push current token into attrib.attribValue
 
-        attrib = attribToBackup;
-        console.log("1284 " + ("\x1B[" + 35 + "m" + "RESTORE" + "\x1B[" + 39 + "m") + " attrib from stashed, now = " + JSON.stringify(attrib, null, 4)); // 2. push current token into attrib.attribValue
-
-        console.log("1293 PUSH token to be inside " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m"));
         attrib.attribValue.push(token); // 3. restore real token
 
         token = lodash_clonedeep(parentTokenToBackup); // 4. reset
 
         attribToBackup = undefined;
         parentTokenToBackup = undefined;
-        console.log("1305 " + ("\x1B[" + 33 + "m" + "FIY" + "\x1B[" + 39 + "m") + ", " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4));
       } else {
-        console.log("1312 call dumpCurrentToken()");
         dumpCurrentToken(token, _i);
-        console.log("1315 " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " layers");
         layers.length = 0;
       }
-    }
-
-    console.log("1321 " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib.attribValue, null, 4)); //
+    } //
     //
     //
     //
@@ -5205,10 +5075,9 @@ function tokenizer(str, originalOpts) {
     // record "layers" like entering double quotes
     // -------------------------------------------------------------------------
 
+
     if (!doNothing) {
       if (["tag", "at"].includes(token.type) && token.kind !== "cdata") {
-        console.log("1347 " + ("\x1B[" + 36 + "m" + "LAYERS CLAUSES" + "\x1B[" + 39 + "m") + " (\"tag\", \"rule\" or \"at\")");
-
         if (str[_i] && (SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !( // below, we have insurance against single quotes, wrapped with quotes:
         // "'" or '"' - templating languages might put single quote as a sttring
         // character, not meaning wrapped-something.
@@ -5222,13 +5091,9 @@ function tokenizer(str, originalOpts) {
         // can catch it, validating values, imagine "float" value "left" comes
         // with quotes, as in ""left""
         ) {
-            console.log("1372");
-            console.log("1374 last layer's value: " + (lastLayerIs("simple") && layers[~-layers.length].value));
-
             if ( // maybe it's the closing counterpart?
             lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
               layers.pop();
-              console.log("1386 " + ("\x1B[" + 32 + "m" + "POP" + "\x1B[" + 39 + "m") + " layers");
             } else {
               // it's opening then
               layers.push({
@@ -5236,24 +5101,14 @@ function tokenizer(str, originalOpts) {
                 value: str[_i],
                 position: _i
               });
-              console.log("1395 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " " + JSON.stringify({
-                type: "simple",
-                value: str[_i],
-                position: _i
-              }, null, 4));
             }
           }
       } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-        console.log("1411 inside \"comments\" layers clauses");
-
         if (["[", "]"].includes(str[_i])) {
-          console.log("1413");
-
           if ( // maybe it's the closing counterpart?
           lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
             // maybe it's the closing counterpart?
             layers.pop();
-            console.log("1422 " + ("\x1B[" + 32 + "m" + "POP" + "\x1B[" + 39 + "m") + " layers");
           } else {
             // it's opening then
             layers.push({
@@ -5261,26 +5116,17 @@ function tokenizer(str, originalOpts) {
               value: str[_i],
               position: _i
             });
-            console.log("1431 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " " + JSON.stringify({
-              type: "simple",
-              value: str[_i]
-            }, null, 4));
           }
         }
       } else if (token.type === "esp" && ("'\"" + BACKTICK + "()").includes(str[_i]) && !( // below, we have insurance against single quotes, wrapped with quotes:
       // "'" or '"' - templating languages might put single quote as a sttring
       // character, not meaning wrapped-something.
       ["\"", "'", "`"].includes(str[leftVal]) && str[leftVal] === str[rightVal])) {
-        console.log("1455");
-
         if ( // maybe it's the closing counterpart?
         lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
           // maybe it's the closing counterpart?
           layers.pop();
-          console.log("1463 " + ("\x1B[" + 32 + "m" + "POP LAYERS" + "\x1B[" + 39 + "m"));
-          console.log("1466 " + ("\x1B[" + 31 + "m" + "skip the remaining of the program clauses for this index" + "\x1B[" + 39 + "m"));
           doNothing = _i + 1;
-          console.log("1470 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
         } else if (!"]})>".includes(str[_i])) {
           // it's opening then
           layers.push({
@@ -5288,10 +5134,6 @@ function tokenizer(str, originalOpts) {
             value: str[_i],
             position: _i
           });
-          console.log("1480 " + ("\x1B[" + 32 + "m" + "PUSH LAYER" + "\x1B[" + 39 + "m") + " " + JSON.stringify({
-            type: "simple",
-            value: str[_i]
-          }, null, 4));
         }
       } // console.log(
       //   `1094 FIY, currently ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
@@ -5311,18 +5153,14 @@ function tokenizer(str, originalOpts) {
       // adds a comma, @,media
       // or adds a space, @ media
       token.identifierStartsAt = _i;
-      console.log("1520 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.identifierStartsAt" + "\x1B[" + 39 + "m") + " = " + token.identifierStartsAt);
     } // catch the end of the "at" rule token
     // -------------------------------------------------------------------------
 
 
     if (!doNothing && token.type === "at" && token.queryStartsAt && !token.queryEndsAt && "{;".includes(str[_i])) {
-      console.log("1536 end of the \"at\" rule token clauses start");
-
       if (str[_i] === "{") {
         if (str[~-_i] && str[~-_i].trim()) {
           token.queryEndsAt = _i;
-          console.log("1541 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.queryEndsAt" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token.queryEndsAt, null, 4));
         } else {
           // trim the trailing whitespace:
           // @media (max-width: 600px) {
@@ -5334,8 +5172,6 @@ function tokenizer(str, originalOpts) {
           // @media (max-width: 600px) {
           //                         ^
           //            that would be index of this bracket
-
-          console.log("1560 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.queryEndsAt" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token.queryEndsAt, null, 4));
         }
       } else {
         // ; closing, for example, illegal:
@@ -5344,12 +5180,10 @@ function tokenizer(str, originalOpts) {
         //          we're here
         //
         token.queryEndsAt = left(str, _i + 1) || 0;
-        console.log("1575 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.queryEndsAt" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token.queryEndsAt, null, 4));
       }
 
       if (token.queryStartsAt && token.queryEndsAt) {
         token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
-        console.log("1586 " + ("\x1B[" + 33 + "m" + "token.query" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token.query, null, 4));
       }
 
       token.end = str[_i] === ";" ? _i + 1 : _i;
@@ -5357,33 +5191,25 @@ function tokenizer(str, originalOpts) {
 
       if (str[_i] === ";") {
         // if code is clean, that would be @charset for example, no curlies
-        console.log("1599 " + ("\x1B[" + 32 + "m" + "PING" + "\x1B[" + 39 + "m") + " the token");
         pingTagCb(token);
       } else {
         // then it's opening curlie
-        console.log("1603 " + ("\x1B[" + 32 + "m" + "NEST" + "\x1B[" + 39 + "m") + " children");
-        console.log("1605 starting " + ("\x1B[" + 33 + "m" + "layers" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(layers, null, 4));
-        token.openingCurlyAt = _i;
-        console.log("1614 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.openingCurlyAt" + "\x1B[" + 39 + "m") + " = " + token.openingCurlyAt); // push so far gathered token into layers
+        token.openingCurlyAt = _i; // push so far gathered token into layers
 
         layers.push({
           type: "at",
           token: token
         });
-        console.log("1625 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " \"at\" token to layers");
       }
 
-      console.log("1629 " + ("\x1B[" + 31 + "m" + "REST" + "\x1B[" + 39 + "m") + " the token");
       tokenReset();
       doNothing = _i + 1;
-      console.log("1633 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
     } // catch the start of the query
     // -------------------------------------------------------------------------
 
 
     if (!doNothing && token.type === "at" && token.identifier && str[_i] && str[_i].trim() && !token.queryStartsAt) {
       token.queryStartsAt = _i;
-      console.log("1654 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.queryStartsAt" + "\x1B[" + 39 + "m") + " = " + token.queryStartsAt);
     } // catch the end of at rule's identifierStartsAt
     // -------------------------------------------------------------------------
 
@@ -5391,7 +5217,6 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && token && token.type === "at" && token.identifierStartsAt && _i >= token.start && str[_i] && (!str[_i].trim() || "()".includes(str[_i])) && !token.identifierEndsAt) {
       token.identifierEndsAt = _i;
       token.identifier = str.slice(token.identifierStartsAt, _i);
-      console.log("1676 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.identifierEndsAt" + "\x1B[" + 39 + "m") + " = " + token.identifierEndsAt + "; " + ("\x1B[" + 33 + "m" + "token.identifier" + "\x1B[" + 39 + "m") + " = \"" + token.identifier + "\"");
     } // catch the end of a CSS chunk
     // -------------------------------------------------------------------------
     // charsThatEndCSSChunks:  } , {
@@ -5399,56 +5224,34 @@ function tokenizer(str, originalOpts) {
 
     if (token.type === "rule") {
       if (selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && rightVal && !str[_i].trim() && charsThatEndCSSChunks.includes(str[rightVal]))) {
-        console.log("1698 FIY, " + ("\x1B[" + 33 + "m" + "selectorChunkStartedAt" + "\x1B[" + 39 + "m") + " was " + selectorChunkStartedAt);
-        console.log("1701 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " to selectors[]: " + JSON.stringify({
-          value: str.slice(selectorChunkStartedAt, _i),
-          selectorStarts: selectorChunkStartedAt,
-          selectorEnds: _i
-        }, null, 4));
         token.selectors.push({
           value: str.slice(selectorChunkStartedAt, _i),
           selectorStarts: selectorChunkStartedAt,
           selectorEnds: _i
         });
         selectorChunkStartedAt = undefined;
-        console.log("1719 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "selectorChunkStartedAt" + "\x1B[" + 39 + "m"));
         token.selectorsEnd = _i;
-        console.log("1724 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.selectorsEnd" + "\x1B[" + 39 + "m") + " = " + token.selectorsEnd);
       } else if (str[_i] === "{" && token.openingCurlyAt && !token.closingCurlyAt) {
         // we encounted an opening curly even though closing hasn't
         // been met yet:
         // <style>.a{float:left;x">.b{color: red}
         //                           ^
-        //                    we're here
-        console.log("1739 " + ("\x1B[" + 31 + "m" + "opening curlies!" + "\x1B[" + 39 + "m"));
-        console.log("1741 march backwards, find where selector chunk started"); // let selectorChunkStartedAt2;
-
+        //                    we're here // let selectorChunkStartedAt2;
         for (var y = _i; y--;) {
-          console.log("1745 " + ("\x1B[" + 36 + "m" + ("str[" + y + "]") + "\x1B[" + 39 + "m") + " = " + JSON.stringify(str[y], null, 4));
-
           if (!str[y].trim() || "{}\"';".includes(str[y])) {
-            console.log("1753 " + ("\x1B[" + 34 + "m" + "BREAK" + "\x1B[" + 39 + "m") + ", slice: \"" + ("\x1B[" + 35 + "m" + str.slice(y + 1, _i) + "\x1B[" + 39 + "m") + "\""); // patch the property
-
+            // patch the property
             if (property && property.start && !property.end) {
               property.end = y + 1;
               property.property = str.slice(property.start, property.end);
-              console.log("1764 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + property.end + ";  " + ("\x1B[" + 33 + "m" + "property.property" + "\x1B[" + 39 + "m") + " = " + property.property);
-              console.log("1771 PATCHED " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
               pushProperty(property);
               propertyReset();
-              console.log("1780 push, then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m"));
               token.end = y + 1;
               token.value = str.slice(token.start, token.end);
-              console.log("1786 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end + "; " + ("\x1B[" + 33 + "m" + "token.value" + "\x1B[" + 39 + "m") + " = " + token.value);
-              console.log("1793 PATCHED " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4));
-              console.log("1800 " + ("\x1B[" + 32 + "m" + "PING" + "\x1B[" + 39 + "m"));
               pingTagCb(token);
               initToken(str[y + 1] === "@" ? "at" : "rule", y + 1);
               token.left = left(str, y + 1);
               token.selectorsStart = y + 1;
-              console.log("1806 NEW " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4));
               _i = y + 1;
-              console.log("1815 " + ("\x1B[" + 31 + "m" + "REWIND" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "i" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(_i, null, 4));
             }
 
             break;
@@ -5482,7 +5285,16 @@ function tokenizer(str, originalOpts) {
     var lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
 
     if (!doNothing && str[_i]) {
-      console.log("1857 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 IS TAG STARTING? " + startsTag(str, _i, token, layers, withinStyle)); // console.log(
+      // console.log(
+      //   `1857 ███████████████████████████████████████ IS TAG STARTING? ${startsTag(
+      //     str,
+      //     i,
+      //     token,
+      //     layers,
+      //     withinStyle
+      //   )}`
+      // );
+      // console.log(
       //   `1707 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
       //     str,
       //     i,
@@ -5500,10 +5312,6 @@ function tokenizer(str, originalOpts) {
       //     withinStyle
       //   )}`
       // );
-
-      console.log("1886 main sorting checks start");
-      console.time("main-sorting-checks");
-
       if (startsTag(str, _i, token, layers, withinStyle)) {
         //
         //
@@ -5512,80 +5320,61 @@ function tokenizer(str, originalOpts) {
         //
         //
         //
-        console.log("1897 (html) tag opening");
-
         if (token.type && token.start !== null) {
           if (token.type === "rule") {
-            console.log("1901");
-
             if (property && property.start) {
               // patch important if needed
               if (property.importantStarts && !property.importantEnds) {
                 property.importantEnds = _i;
                 property.important = str.slice(property.importantStarts, _i);
-                console.log("1908 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.importantEnds" + "\x1B[" + 39 + "m") + " = " + property.importantEnds + ";  " + ("\x1B[" + 33 + "m" + "property.important" + "\x1B[" + 39 + "m") + " = \"" + property.important + "\"");
               } // patch property
 
 
               if (property.propertyStarts && !property.propertyEnds) {
                 property.propertyEnds = _i;
-                console.log("1919 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.propertyEnds" + "\x1B[" + 39 + "m") + " = " + property.propertyEnds);
 
                 if (!property.property) {
                   property.property = str.slice(property.propertyStarts, _i);
-                  console.log("1926 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.property, null, 4));
                 }
               }
 
               if (!property.end) {
                 property.end = _i;
-                console.log("1937 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + property.end);
               } // patch value
 
 
               if (property.valueStarts && !property.valueEnds) {
                 property.valueEnds = _i;
-                console.log("1947 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.valueEnds" + "\x1B[" + 39 + "m") + " = " + property.valueEnds);
 
                 if (!property.value) {
                   property.value = str.slice(property.valueStarts, _i);
-                  console.log("1954 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.value" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.value, null, 4));
                 }
               }
 
               pushProperty(property);
               propertyReset();
-              console.log("1966 push, then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m"));
             }
           }
 
-          console.log("1971 call dumpCurrentToken()");
           dumpCurrentToken(token, _i);
-          console.log("1974 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m"));
           tokenReset();
         } // add other HTML-specific keys onto the object
         // second arg is "start" key:
 
 
         initToken("tag", _i);
-        console.log("1983 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.start" + "\x1B[" + 39 + "m") + " = " + token.start + "; " + ("\x1B[" + 33 + "m" + "token.type" + "\x1B[" + 39 + "m") + " = " + token.type);
 
         if (withinStyle) {
           withinStyle = false;
-          console.log("1991 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "withinStyle" + "\x1B[" + 39 + "m") + " = false");
         } // extract the tag name:
 
 
         var badCharacters = "?![-/";
         var extractedTagName = "";
         var letterMet = false;
-        console.log(".");
-        console.log("2001 " + ("\x1B[" + 36 + "m" + "extract the tag name" + "\x1B[" + 39 + "m"));
 
         if (rightVal) {
           for (var _y2 = rightVal; _y2 < len; _y2++) {
-            console.log("\x1B[" + 36 + "m" + "str[y]" + "\x1B[" + 39 + "m" + " = " + JSON.stringify(str[_y2], null, 4));
-
             if (!letterMet && str[_y2] && str[_y2].trim() && str[_y2].toUpperCase() !== str[_y2].toLowerCase()) {
               letterMet = true;
             }
@@ -5601,28 +5390,27 @@ function tokenizer(str, originalOpts) {
             //               ^
             //             this
             ) {
-                console.log("2039 SET " + ("\x1B[" + 33 + "m" + "extractedTagName" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(extractedTagName, null, 4));
                 break;
               } else if (!badCharacters.includes(str[_y2])) {
               extractedTagName += str[_y2].trim().toLowerCase();
             }
           }
-        }
+        } // set the kind:
 
-        console.log("."); // set the kind:
 
         if (extractedTagName === "doctype") {
           token.kind = "doctype";
-          console.log("2059 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind);
         } else if (extractedTagName === "cdata") {
           token.kind = "cdata";
-          console.log("2066 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind);
         } else if (extractedTagName === "xml") {
           token.kind = "xml";
-          console.log("2073 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind);
         } else if (inlineTags.has(extractedTagName)) {
           token.kind = "inline";
-          console.log("2080 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind);
+
+          if (extractedTagName) {
+            // for perf
+            doNothing = _i;
+          }
         }
       } else if (startsHtmlComment(str, _i, token, layers)) {
         //
@@ -5632,22 +5420,16 @@ function tokenizer(str, originalOpts) {
         //
         //
         //
-        console.log("2093 HTML comment opening");
-
         if (token.start != null) {
-          console.log("2096 call dumpCurrentToken()");
           dumpCurrentToken(token, _i);
         } // add other HTML-specific keys onto the object
         // second arg is "start" key:
 
 
-        initToken("comment", _i); // the "language" default is "html" anyway so no need to set it
-
-        console.log("2106 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.start" + "\x1B[" + 39 + "m") + " = " + token.start + "; " + ("\x1B[" + 33 + "m" + "token.type" + "\x1B[" + 39 + "m") + " = " + token.type); // set "closing"
+        initToken("comment", _i); // the "language" default is "html" anyway so no need to set it // set "closing"
 
         if (str[_i] === "-") {
           token.closing = true;
-          console.log("2115 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.closing" + "\x1B[" + 39 + "m") + " = " + token.closing);
         } else if (matchRightIncl(str, _i, ["<![endif]-->"], {
           i: true,
           trimBeforeMatching: true,
@@ -5655,12 +5437,10 @@ function tokenizer(str, originalOpts) {
         })) {
           token.closing = true;
           token.kind = "only";
-          console.log("2129 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.closing" + "\x1B[" + 39 + "m") + " = " + token.closing + "; " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind);
         }
 
         if (withinStyle) {
           withinStyle = false;
-          console.log("2140 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "withinStyle" + "\x1B[" + 39 + "m") + " = false");
         }
       } else if (startsCssComment(str, _i, token, layers, withinStyle)) {
         //
@@ -5670,10 +5450,7 @@ function tokenizer(str, originalOpts) {
         //
         //
         //
-        console.log("2151 CSS block comment opening");
-
         if (token.start != null) {
-          console.log("2154 call dumpCurrentToken()");
           dumpCurrentToken(token, _i);
         } // add other token-specific keys onto the object
         // second arg is "start" key:
@@ -5681,7 +5458,6 @@ function tokenizer(str, originalOpts) {
 
         initToken("comment", _i);
         token.language = "css";
-        console.log("2164 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.language" + "\x1B[" + 39 + "m") + " = " + token.language);
         token.kind = str[_i] === "/" && str[_i + 1] === "/" ? "line" : "block";
         token.value = str.slice(_i, _i + 2);
         token.end = _i + 2;
@@ -5693,8 +5469,6 @@ function tokenizer(str, originalOpts) {
         }
 
         doNothing = _i + 2;
-        console.log("2182 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
-        console.log("2186 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4) + "; " + ("\x1B[" + 33 + "m" + "withinStyleComment" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(withinStyleComment, null, 4));
       } else if ( // if we encounter two consecutive characters of guessed lump
       typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && // current character is among guessed lump's characters
       layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && // ...and the following character too...
@@ -5738,24 +5512,18 @@ function tokenizer(str, originalOpts) {
         // ESP TAG STARTING
         //
         //
-        //
-        console.log("2282 ESP heads or tails start here"); // ESP tags can't be entered from after CSS at-rule tokens or
+        // // ESP tags can't be entered from after CSS at-rule tokens or
         // normal CSS rule tokens
         //
         //
         //
         // FIRST, extract the tag opening and guess the closing judging from it
-
-        var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
-        console.log("2297 \u2588\u2588 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "wholeEspTagLumpOnTheRight" + "\x1B[" + 39 + "m") + " = " + wholeEspTagLumpOnTheRight);
-        console.log("2300 FIY, " + ("\x1B[" + 33 + "m" + "layers" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(layers, null, 4));
-        console.log("2307 FIY, " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4)); // lump can't end with attribute's ending, that is, something like:
+        var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers); // lump can't end with attribute's ending, that is, something like:
         // <frameset cols="**">
         // that's a false positive
 
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
-          console.log("2318"); // check the "layers" records - maybe it's a closing part of a set?
-
+          // check the "layers" records - maybe it's a closing part of a set?
           var lengthOfClosingEspChunk;
           var disposableVar;
 
@@ -5764,10 +5532,8 @@ function tokenizer(str, originalOpts) {
           // but don't calculate twice!
           // eslint-disable-next-line no-cond-assign
           lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
-            console.log("2336 closing part of a set " + ("\x1B[" + 32 + "m" + "MATCHED" + "\x1B[" + 39 + "m") + " against the last layer");
-            console.log("2339 " + ("\x1B[" + 33 + "m" + "lengthOfClosingEspChunk" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(lengthOfClosingEspChunk, null, 4)); // if this was closing of a standalone esp tag, terminate it and ping
+            // if this was closing of a standalone esp tag, terminate it and ping
             // it to the cb()
-
             if (token.type === "esp") {
               if (!token.end) {
                 token.end = _i + lengthOfClosingEspChunk;
@@ -5780,25 +5546,19 @@ function tokenizer(str, originalOpts) {
 
                 if (str[_i] === ">" && str[leftVal] === "/") {
                   token.tailStartsAt = leftVal;
-                  console.log("2365 closing slash correction, " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " token.tailStartsAt=" + token.tailStartsAt);
                   token.tail = str.slice(token.tailStartsAt, _i + 1);
                 }
-
-                console.log("2373 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 32 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4));
               } // activate doNothing until the end of tails because otherwise,
               // mid-tail characters will initiate new tail start clauses
               // and we'll have overlap/false result
 
 
-              doNothing = token.tailEndsAt;
-              console.log("2386 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
-              console.log("2390 " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4) + " before pinging"); // it depends will we ping it as a standalone token or will we
+              doNothing = token.tailEndsAt; // it depends will we ping it as a standalone token or will we
               // nest inside the parent tag among attributes
 
               if (parentTokenToBackup) {
-                console.log("2400 " + ("\x1B[" + 32 + "m" + "NEST INSIDE THE STASHED TAG" + "\x1B[" + 39 + "m")); // push token to parent, to be among its attributes
+                // push token to parent, to be among its attributes
                 // 1. ensure key "attribs" exist (thinking about comment tokens etc)
-
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
                   parentTokenToBackup.attribs = [];
                 } // 2. push somewhere
@@ -5806,56 +5566,42 @@ function tokenizer(str, originalOpts) {
 
                 if (attribToBackup) {
                   // 1. restore
-                  attrib = attribToBackup;
-                  console.log("2414 " + ("\x1B[" + 35 + "m" + "RESTORE" + "\x1B[" + 39 + "m") + " attrib from stashed, now = " + JSON.stringify(attrib, null, 4)); // 2. push to attribValue
+                  attrib = attribToBackup; // 2. push to attribValue
 
-                  console.log("2423 PUSH token to be inside " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m"));
                   attrib.attribValue.push(_objectSpread2({}, token));
                 } else {
                   // push to attribs
-                  console.log("2428 PUSH token to be among attribs");
                   parentTokenToBackup.attribs.push(_objectSpread2({}, token));
                 } // 3. parentTokenToBackup becomes token
 
 
-                token = lodash_clonedeep(parentTokenToBackup);
-                console.log("2435 " + ("\x1B[" + 32 + "m" + "RESTORE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4)); // 4. resets
+                token = lodash_clonedeep(parentTokenToBackup); // 4. resets
 
                 parentTokenToBackup = undefined;
                 attribToBackup = undefined; // 5. pop layers, remove the opening ESP tag record
 
-                console.log("2447 POP layers");
                 layers.pop(); // 6. finally, continue, bypassing the rest of the code in this loop
 
-                console.log("2452 " + ("\x1B[" + 31 + "m" + "CONTINUE" + "\x1B[" + 39 + "m"));
-                console.timeEnd("\x1B[" + 90 + "m" + "loop iteration" + "\x1B[" + 39 + "m");
                 i = _i;
                 return "continue";
               } else {
-                console.log("2460 " + ("\x1B[" + 32 + "m" + "PING AS STANDALONE" + "\x1B[" + 39 + "m"));
                 dumpCurrentToken(token, _i);
               }
 
-              console.log("2465 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m"));
               tokenReset();
             } // pop the recorded layers, at this moment record of ESP chunk
             // will be lost:
 
 
             layers.pop();
-            console.log("2472 " + ("\x1B[" + 32 + "m" + "POP" + "\x1B[" + 39 + "m") + " layers");
           } else if (layers.length && ( // eslint-disable-next-line no-cond-assign
           lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, true))) {
-            console.log("2483 closing part of a set " + ("\x1B[" + 32 + "m" + "MATCHED" + "\x1B[" + 39 + "m") + " against first layer");
-            console.log("2486 wipe all layers, there were strange unclosed characters");
-            console.log("2489 " + ("\x1B[" + 33 + "m" + "lengthOfClosingEspChunk" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(lengthOfClosingEspChunk, null, 4)); // if this was closing of a standalone esp tag, terminate it and ping
+            // if this was closing of a standalone esp tag, terminate it and ping
             // it to the cb()
-
             if (token.type === "esp") {
               if (!token.end) {
                 token.end = _i + (lengthOfClosingEspChunk || 0);
                 token.value = str.slice(token.start, token.end);
-                console.log("2506 " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4) + " before pinging");
               }
 
               if (!token.tailStartsAt) {
@@ -5868,14 +5614,12 @@ function tokenizer(str, originalOpts) {
               }
 
               dumpCurrentToken(token, _i);
-              console.log("2522 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m"));
               tokenReset();
             } // pop the recorded layers, at this moment record of ESP chunk
             // will be lost:
 
 
             layers.length = 0;
-            console.log("2529 " + ("\x1B[" + 32 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " layers");
           } else if ( // insurance against stray tails inside attributes:
           // <a b="{ x %}">
           //       ^   ^
@@ -5921,11 +5665,7 @@ function tokenizer(str, originalOpts) {
           // imagine, the { x from <a b="{ x %}"> would be
           // such unrecognised text:
           attrib.attribValue[~-attrib.attribValue.length] && attrib.attribValue[~-attrib.attribValue.length].type === "text") {
-            console.log("2595 " + ("\x1B[" + 31 + "m" + "\u2588\u2588" + "\x1B[" + 39 + "m") + " seems like a stray lump");
-            console.log("2598 FIY, " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4));
-            console.log("2605 FIY, " + ("\x1B[" + 33 + "m" + "disposableVar" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(disposableVar, null, 4));
-            console.log("2613 let's convert last attrib.attribValue[] object into ESP-type"); // token does contain ESP tags, so it's not pure HTML
-
+            // token does contain ESP tags, so it's not pure HTML
             token.pureHTML = false;
             var lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length]; // getNewToken() just creates a new token according
             // the latest (DRY) reference, it doesn't reset
@@ -5939,7 +5679,6 @@ function tokenizer(str, originalOpts) {
             // <a b="something { x %}">
 
             if (!disposableVar || !disposableVar.idx) {
-              console.log("2639 " + ("\x1B[" + 33 + "m" + "ESP tag is this whole text token" + "\x1B[" + 39 + "m"));
               newTokenToPutInstead.head = disposableVar.char;
               newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
               newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
@@ -5947,17 +5686,13 @@ function tokenizer(str, originalOpts) {
               newTokenToPutInstead.tailEndsAt = _i + wholeEspTagLumpOnTheRight.length;
               newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
               attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
-            } else {
-              console.log("2655 " + ("\x1B[" + 33 + "m" + "we need to extract frontal part of text token" + "\x1B[" + 39 + "m"));
             }
           } else {
-            console.log("2660 closing part of a set " + ("\x1B[" + 31 + "m" + "NOT MATCHED" + "\x1B[" + 39 + "m") + " - means it's a new opening"); // If we've got an unclosed heads and here new heads are starting,
+            // If we've got an unclosed heads and here new heads are starting,
             // pop the last heads in layers - they will never be matched anyway.
             // Let parser/linter deal with it
-
             if (lastLayerIs("esp")) {
               layers.pop();
-              console.log("2669 " + ("\x1B[" + 31 + "m" + "POP layers - it was heads without tails" + "\x1B[" + 39 + "m"));
             } // if we're within a tag attribute, push the last esp token there
 
 
@@ -5966,24 +5701,15 @@ function tokenizer(str, originalOpts) {
                 attribToBackup.attribValue = [];
               }
 
-              console.log("2678 push token to attribValue");
               attribToBackup.attribValue.push(token);
             }
 
-            console.log("2682 push new layer");
             layers.push({
               type: "esp",
               openingLump: wholeEspTagLumpOnTheRight,
               guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
               position: _i
-            });
-            console.log("2690 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " " + JSON.stringify({
-              type: "esp",
-              openingLump: wholeEspTagLumpOnTheRight,
-              guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
-              position: _i
-            }, null, 4));
-            console.log("2702 " + ("\x1B[" + 33 + "m" + "layers" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(layers, null, 4)); // also, if it's a standalone ESP token, terminate the previous token
+            }); // also, if it's a standalone ESP token, terminate the previous token
             // and start recording a new-one
 
             if (token.start !== null) {
@@ -5991,31 +5717,24 @@ function tokenizer(str, originalOpts) {
               // the new, ESP token is incoming!
               // we nest ESP tokens inside "tag" type attributes
               if (token.type === "tag") {
-                console.log("2719 " + ("\x1B[" + 36 + "m" + "\u2588\u2588" + "\x1B[" + 39 + "m") + " ESP tag-inside-tag clauses"); // instead of dumping the tag token and starting a new-one,
+                // instead of dumping the tag token and starting a new-one,
                 // save the parent token, then nest all ESP tags among attributes
-
                 if (token.tagNameStartsAt && (!token.tagName || !token.tagNameEndsAt)) {
                   token.tagNameEndsAt = _i;
                   token.tagName = str.slice(token.tagNameStartsAt, _i);
                   token.recognised = isTagNameRecognised(token.tagName);
-                  console.log("2731 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.tagNameEndsAt" + "\x1B[" + 39 + "m") + " = " + token.tagNameEndsAt + "; " + ("\x1B[" + 33 + "m" + "token.tagName" + "\x1B[" + 39 + "m") + " = " + token.tagName);
                 }
 
                 parentTokenToBackup = lodash_clonedeep(token);
-                console.log("2741 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "parentTokenToBackup" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(parentTokenToBackup, null, 4));
 
                 if (attrib.attribStarts && !attrib.attribEnds) {
                   attribToBackup = lodash_clonedeep(attrib);
-                  console.log("2751 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attribToBackup" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attribToBackup, null, 4));
                 }
               } else if (!attribToBackup) {
-                console.log("2760 " + ("\x1B[" + 36 + "m" + "\u2588\u2588" + "\x1B[" + 39 + "m") + " standalone ESP tag - call the dump");
                 dumpCurrentToken(token, _i);
               } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "esp" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
-                console.log("2774 complete the unclosed token in attribToBackup");
                 attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
                 attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
-                console.log("2788 \u2588\u2588 patched " + ("\x1B[" + 33 + "m" + "attribToBackup" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attribToBackup, null, 4));
               }
             } // now, either way, if parent tag was stashed in "parentTokenToBackup"
             // or if this is a new ESP token and there's nothing to nest,
@@ -6023,14 +5742,12 @@ function tokenizer(str, originalOpts) {
 
 
             initToken("esp", _i);
-            console.log("2802 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.start" + "\x1B[" + 39 + "m") + " = " + token.start + "; " + ("\x1B[" + 33 + "m" + "token.type" + "\x1B[" + 39 + "m") + " = " + token.type);
             token.head = wholeEspTagLumpOnTheRight;
             token.headStartsAt = _i;
             token.headEndsAt = _i + wholeEspTagLumpOnTheRight.length; // toggle parentTokenToBackup.pureHTML
 
             if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
               parentTokenToBackup.pureHTML = false;
-              console.log("2815 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "parentTokenToBackup.pureHTML" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(parentTokenToBackup.pureHTML, null, 4));
             } // if text token has been initiated, imagine:
             //  "attribValue": [
             //     {
@@ -6047,30 +5764,21 @@ function tokenizer(str, originalOpts) {
 
 
             if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
-              console.log("2841 *");
-
               if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].start === token.start) {
-                console.log("2847 " + ("\x1B[" + 31 + "m" + "TEXT TOKEN INITIATED WHERE ESP WILL BE" + "\x1B[" + 39 + "m")); // erase it from stash
-
+                // erase it from stash
                 attribToBackup.attribValue.pop();
-                console.log("2852 " + ("\x1B[" + 31 + "m" + "POP" + "\x1B[" + 39 + "m") + " attribToBackup.attribValue, now attribToBackup.attribValue: " + JSON.stringify(attribToBackup.attribValue, null, 4));
               } else if ( // if the "text" type object is the last in "attribValue" and
               // it's not closed, let's close it and calculate its value:
               attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "text" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
-                console.log("2867");
                 attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
                 attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
-                console.log("2881 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + ("attribToBackup.attribValue[\n                    " + ~-attribToBackup.attribValue.length + "\n                  ]") + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attribToBackup.attribValue[~-attribToBackup.attribValue.length], null, 4));
               }
             }
           } // do nothing for the second and following characters from the lump
 
 
           doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
-          console.log("2899 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
         }
-
-        console.log("2903 end of ESP head/tail clauses reached");
       } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && // insurance against rogue extra closing curlies:
       // .a{x}}
       // don't start new rule at closing curlie!
@@ -6089,39 +5797,36 @@ function tokenizer(str, originalOpts) {
         // or rogue characters. In either case, inside styles, when
         // "withinStyle" is on, non-whitespace character terminates
         // this text token and "rule" token starts
-        console.log("2931 \u2588\u2588 " + ("\x1B[" + 32 + "m" + "at/rule starts" + "\x1B[" + 39 + "m"));
-
         if (token.type) {
-          console.log("2935 call dumpCurrentToken()");
           dumpCurrentToken(token, _i);
         }
 
         initToken(str[_i] === "@" ? "at" : "rule", _i);
         token.left = lastNonWhitespaceCharAt;
-        console.log("2942 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.left" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token.left, null, 4));
         token.nested = layers.some(function (o) {
           return o.type === "at";
         });
-        console.log("2950 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.nested" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token.nested, null, 4));
       } else if (!token.type) {
-        console.log("2957 BLANK token, so initiate text token");
         initToken("text", _i);
-        console.log("2960 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4));
+        doNothing = _i;
       }
-
-      console.timeEnd("main-sorting-checks");
     }
 
-    var R1 = ";'\"{}<>".includes(str[right(str, _i - 1)]);
-    var R2 = matchRightIncl(str, _i, ["!important"], {
-      i: true,
-      trimBeforeMatching: true,
-      maxMismatches: 2
-    });
-    console.log("2977 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + (R1 ? 32 : 31) + "m" + "R1" + "\x1B[" + 39 + "m") + " = " + R1 + "; " + ("\x1B[" + (R2 ? 32 : 31) + "m" + "R2" + "\x1B[" + 39 + "m") + " = " + R2); // catch the end of a css property (with or without !important)
+    var R1 = void 0;
+    var R2 = void 0;
+
+    if (!doNothing && (property.start || str[_i] === "!")) {
+      R1 = ";'\"{}<>".includes(str[right(str, _i - 1)]);
+      R2 = matchRightIncl(str, _i, ["!important"], {
+        i: true,
+        trimBeforeMatching: true,
+        maxMismatches: 2
+      });
+    } // catch the end of a css property (with or without !important)
     // -------------------------------------------------------------------------
 
     /* istanbul ignore else */
+
 
     if (!doNothing && property && (property.semi && property.semi < _i && property.semi < _i || (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
     !rightVal || // or at that character !important does not start
@@ -6130,13 +5835,10 @@ function tokenizer(str, originalOpts) {
     !str[_i].trim() || // or it's a semicolon after a value
     !property.valueEnds && str[_i] === ";" || // or we reached the end of the attribute
     attrEndsAt(_i)))) {
-      console.log("3009 " + ("\x1B[" + 32 + "m" + "css property ends" + "\x1B[" + 39 + "m"));
       /* istanbul ignore else */
-
       if (property.importantStarts && !property.importantEnds) {
         property.importantEnds = left(str, _i) + 1;
         property.important = str.slice(property.importantStarts, property.importantEnds);
-        console.log("3019 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.importantEnds" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.importantEnds, null, 4) + "; " + ("\x1B[" + 33 + "m" + "property.important" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.important, null, 4));
       }
       /* istanbul ignore else */
 
@@ -6144,36 +5846,28 @@ function tokenizer(str, originalOpts) {
       if (property.valueStarts && !property.valueEnds) {
         property.valueEnds = _i;
         property.value = str.slice(property.valueStarts, _i);
-        console.log("3036 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.valueEnds" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.valueEnds, null, 4) + "; " + ("\x1B[" + 33 + "m" + "property.value" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.value, null, 4));
       }
       /* istanbul ignore else */
 
 
       if (str[_i] === ";") {
         property.semi = _i;
-        console.log("3052 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.semi" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.semi, null, 4));
         property.end = _i + 1;
-        console.log("3060 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
       } else if (str[rightVal] === ";") {
         property.semi = rightVal;
         property.end = property.semi + 1;
-        console.log("3070 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.semi" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.semi, null, 4) + "; " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
         doNothing = property.end;
-        console.log("3083 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
       }
 
       if (!property.end) {
         property.end = _i;
-        console.log("3094 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
       }
 
       pushProperty(property);
-      console.log("3104 push " + JSON.stringify(property, null, 4) + ", then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m"));
       propertyReset();
 
       if (!doNothing && (!str[_i] || str[_i].trim()) && str[_i] === ";") {
         doNothing = _i;
-        console.log("3115 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
       }
     } // catch the end of a css property's value
     // -------------------------------------------------------------------------
@@ -6183,8 +5877,6 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && // token.type === "rule" &&
     property && property.valueStarts && !property.valueEnds) {
-      console.log("3135 " + ("\x1B[" + 90 + "m" + "css property's value ending clauses" + "\x1B[" + 39 + "m"));
-
       if ( // either end was reached
       !str[_i] || // or terminating characters (semi etc) follow
       R1 || // or !important starts
@@ -6193,33 +5885,26 @@ function tokenizer(str, originalOpts) {
       ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" && // it's real quote, not rogue double-wrapping around the value
       ifQuoteThenAttrClosingQuote(_i) || // it's a whitespace chunk with linebreaks
       rightVal && !str[_i].trim() && (str.slice(_i, rightVal).includes("\n") || str.slice(_i, rightVal).includes("\r"))) {
-        console.log("3161 FIY, " + ("\x1B[" + 33 + "m" + "lastNonWhitespaceCharAt" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(lastNonWhitespaceCharAt, null, 4));
-
         if (lastNonWhitespaceCharAt && ( // it's not a quote
         !"'\"".includes(str[_i]) || // there's nothing on the right
         !rightVal || // or it is a quote, but there's no quote on the right
         !"'\";".includes(str[rightVal]))) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
           property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
-          console.log("3182 SET " + ("\x1B[" + 33 + "m" + "property.valueEnds" + "\x1B[" + 39 + "m") + " = " + property.valueEnds + "; " + ("\x1B[" + 33 + "m" + "property.value" + "\x1B[" + 39 + "m") + " = " + property.value);
         }
 
         if (str[_i] === ";") {
           property.semi = _i;
-          console.log("3192 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.semi" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.semi, null, 4));
         } else if ( // it's whitespace
         str[_i] && !str[_i].trim() && // semicolon follows
         str[rightVal] === ";") {
           property.semi = rightVal;
-          console.log("3207 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.semi" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.semi, null, 4));
         }
 
         if ( // if semicolon has been spotted...
         property.semi) {
           // set the ending too
           property.end = property.semi + 1; // happy path, clean code has "end" at semi
-
-          console.log("3222 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
         }
 
         if ( // if there's no semicolon in the view
@@ -6229,43 +5914,33 @@ function tokenizer(str, originalOpts) {
         !property.end) {
           // we need to end it because this is it
           property.end = _i;
-          console.log("3244 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
         }
-
-        console.log("3253 " + ("\x1B[" + 32 + "m" + "NOW" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
 
         if (property.end) {
           // push and init and patch up to resume
           if (property.end > _i) {
             // if ending is in the future, skip everything up to it
             doNothing = property.end;
-            console.log("3266 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
           }
 
           pushProperty(property);
           propertyReset();
-          console.log("3276 push, then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m"));
         }
       } else if (str[_i] === ":" && property && property.colon && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
         // .a{b:c d:e;}
         //         ^
         //  we're here
-        //
-        console.log("3291 " + ("\x1B[" + 31 + "m" + "MISSING SEMICOL" + "\x1B[" + 39 + "m"));
-        console.log("3293 FIY, " + ("\x1B[" + 33 + "m" + "lastNonWhitespaceCharAt" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(lastNonWhitespaceCharAt, null, 4)); // semicolon is missing...
+        // // semicolon is missing...
         // traverse backwards from "lastNonWhitespaceCharAt", just in case
         // there's space before colon, .a{b:c d :e;}
         //                                      ^
         //                               we're here
         //
         // we're looking to pinpoint where one rule ends and another starts.
-
-        console.log("3309 \u2588\u2588 \"" + str.slice(right(str, property.colon), lastNonWhitespaceCharAt + 1) + "\"");
         var split = [];
 
         if (right(str, property.colon)) {
           split = str.slice(right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
-          console.log("\x1B[" + 33 + "m" + "split" + "\x1B[" + 39 + "m" + " = " + JSON.stringify(split, null, 4));
         }
 
         if (split.length === 2) {
@@ -6275,26 +5950,21 @@ function tokenizer(str, originalOpts) {
           //
           property.valueEnds = property.valueStarts + split[0].length;
           property.value = str.slice(property.valueStarts, property.valueEnds);
-          property.end = property.valueEnds;
-          console.log("3340 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4)); // push and init and patch up to resume
+          property.end = property.valueEnds; // push and init and patch up to resume
 
-          console.log("3349 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
           pushProperty(property); // backup the values before wiping the property:
 
           var whitespaceStarts = property.end;
           var newPropertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
           propertyReset();
-          console.log("3362 push, then " + ("\x1B[" + 31 + "m" + "RESET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m"));
           pushProperty({
             type: "text",
             start: whitespaceStarts,
             end: newPropertyStarts,
             value: str.slice(whitespaceStarts, newPropertyStarts)
           });
-          console.log("3372 PUSH to " + ("\x1B[" + 33 + "m" + "token.properties" + "\x1B[" + 39 + "m") + ", now = " + JSON.stringify(token.properties, null, 4));
           property.start = newPropertyStarts;
           property.propertyStarts = newPropertyStarts;
-          console.log("3382 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
         }
       } else if (str[_i] === "/" && str[rightVal] === "*") {
         // comment starts
@@ -6312,13 +5982,11 @@ function tokenizer(str, originalOpts) {
 
         if (!property.end) {
           property.end = _i;
-        }
+        } // push and init and patch up to resume
 
-        console.log("3407 " + ("\x1B[" + 32 + "m" + "NOW" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4)); // push and init and patch up to resume
 
         pushProperty(property);
         propertyReset();
-        console.log("3418 push, then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m"));
       }
     } // catch the css property's semicolon
     // -------------------------------------------------------------------------
@@ -6327,23 +5995,18 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && property && property.start && !property.end && str[_i] === ";") {
       property.semi = _i;
       property.end = _i + 1;
-      console.log("3435 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.semi" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.semi, null, 4) + "; " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
 
       if (!property.propertyEnds) {
         property.propertyEnds = _i;
-        console.log("3448 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.propertyEnds" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.propertyEnds, null, 4));
       }
 
       if (property.propertyStarts && property.propertyEnds && !property.property) {
         property.property = str.slice(property.propertyStarts, property.propertyEnds);
-        console.log("3465 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.property, null, 4));
       }
 
       pushProperty(property);
-      console.log("3475 push " + JSON.stringify(property, null, 4) + ", then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m"));
       propertyReset();
       doNothing = _i;
-      console.log("3485 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
     } // catch the end of css property's !important
     // -------------------------------------------------------------------------
 
@@ -6353,7 +6016,6 @@ function tokenizer(str, originalOpts) {
     if (property && property.importantStarts && !property.importantEnds && str[_i] && !str[_i].trim()) {
       property.importantEnds = _i;
       property.important = str.slice(property.importantStarts, _i);
-      console.log("3506 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.importantEnds" + "\x1B[" + 39 + "m") + " = " + property.importantEnds + ";  " + ("\x1B[" + 33 + "m" + "property.important" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.important, null, 0));
     } // catch the start of css property's !important
     // -------------------------------------------------------------------------
 
@@ -6363,9 +6025,7 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && property && property.valueEnds && !property.importantStarts && ( // it's an exclamation mark
     str[_i] === "!" || // considering missing excl. mark cases, more strict req.:
     isLatinLetter(str[_i]) && str.slice(_i).match(importantStartsRegexp))) {
-      console.log("3530 " + ("\x1B[" + 32 + "m" + "css property's !important starts" + "\x1B[" + 39 + "m"));
-      property.importantStarts = _i;
-      console.log("3534 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.importantStarts" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.importantStarts, null, 4)); // correction for cases like:
+      property.importantStarts = _i; // correction for cases like:
       // <style>.a{color:red 1important}
       //                     ^
       //            we're here, that "1" needs to be included as part of important
@@ -6381,7 +6041,6 @@ function tokenizer(str, originalOpts) {
         // merge that character into !important
         property.valueEnds = left(str, _i - 1) + 1;
         property.value = str.slice(property.valueStarts, property.valueEnds);
-        console.log("3568 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
         property.importantStarts--;
         property.important = str[_i - 1] + property.important;
       }
@@ -6392,18 +6051,13 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && property && property.colon && !property.valueStarts && str[_i] && str[_i].trim()) {
-      console.log("3590");
       /* istanbul ignore else */
-
       if ( // stopper character met:
       ";}'\"".includes(str[_i]) && // either it's real closing quote or not a quote
       ifQuoteThenAttrClosingQuote(_i)) {
-        console.log("3598 " + ("\x1B[" + 31 + "m" + "broken code!" + "\x1B[" + 39 + "m"));
         /* istanbul ignore else */
-
         if (str[_i] === ";") {
           property.semi = _i;
-          console.log("3603 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.semi" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.semi, null, 4));
         }
 
         var temp; // patch missing .end
@@ -6412,15 +6066,12 @@ function tokenizer(str, originalOpts) {
 
         if (!property.end) {
           property.end = property.semi ? property.semi + 1 : left(str, _i) + 1;
-          console.log("3620 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
           temp = property.end;
         } // push and init and patch up to resume
 
 
         pushProperty(property);
-        propertyReset();
-        console.log("3633 push, then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m"));
-        console.log("3637 FIY, " + ("\x1B[" + 33 + "m" + "temp" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(temp, null, 4)); // if there was a whitespace gap, submit it as text token
+        propertyReset(); // if there was a whitespace gap, submit it as text token
 
         /* istanbul ignore else */
 
@@ -6433,13 +6084,9 @@ function tokenizer(str, originalOpts) {
           });
         }
       } else if (str[_i] === "!") {
-        console.log("3656 " + ("\x1B[" + 32 + "m" + "css property's !important starts" + "\x1B[" + 39 + "m"));
         property.importantStarts = _i;
-        console.log("3660 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.importantStarts" + "\x1B[" + 39 + "m") + " = " + property.importantStarts);
       } else {
-        console.log("3666 " + ("\x1B[" + 32 + "m" + "css property's value starts" + "\x1B[" + 39 + "m"));
         property.valueStarts = _i;
-        console.log("3670 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.valueStarts" + "\x1B[" + 39 + "m") + " = " + property.valueStarts);
       }
     } // catch the start of a css chunk
     // -------------------------------------------------------------------------
@@ -6448,17 +6095,14 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
       if (!",".includes(str[_i])) {
         selectorChunkStartedAt = _i;
-        console.log("3691 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "selectorChunkStartedAt" + "\x1B[" + 39 + "m") + " = " + selectorChunkStartedAt);
 
         if (token.selectorsStart === null) {
           token.selectorsStart = _i;
-          console.log("3697 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.selectorsStart" + "\x1B[" + 39 + "m") + " = " + token.selectorsStart);
         }
       } else {
         // this contraption is needed to catch commas and assign
         // correctly broken chunk range, [selectorsStart, selectorsEnd]
         token.selectorsEnd = _i + 1;
-        console.log("3707 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.selectorsEnd" + "\x1B[" + 39 + "m") + " = " + token.selectorsEnd);
       }
     } // catch the end of a css property's name
     // -------------------------------------------------------------------------
@@ -6492,10 +6136,8 @@ function tokenizer(str, originalOpts) {
     //            don't close here, continue, gather "//color"
     //
     str[_i] !== "/" || str[_i - 1] !== "/")) {
-      console.log("3760 " + ("\x1B[" + 32 + "m" + "css property's name ends" + "\x1B[" + 39 + "m"));
       property.propertyEnds = _i;
       property.property = str.slice(property.propertyStarts, _i);
-      console.log("3766 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
 
       if (property.valueStarts) {
         // it's needed to safeguard against case like:
@@ -6503,7 +6145,6 @@ function tokenizer(str, originalOpts) {
         //                ^
         //            imagine we're here - valueStarts is not set!
         property.end = _i;
-        console.log("3779 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
       } // missing colon and onwards:
       // <style>.b{c}</style>
       // <style>.b{c;d}</style>
@@ -6513,7 +6154,6 @@ function tokenizer(str, originalOpts) {
       str[_i] && !str[_i].trim() && str[rightVal] !== ":") {
         if (str[_i] === ";") {
           property.semi = _i;
-          console.log("3798 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.semi" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.semi, null, 4));
         } // precaution against broken code:
         // .a{x}}
         //
@@ -6521,13 +6161,11 @@ function tokenizer(str, originalOpts) {
 
         if (!property.end) {
           property.end = property.semi ? property.semi + 1 : _i;
-          console.log("3812 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
         } // push and init and patch up to resume
 
 
         pushProperty(property);
         propertyReset();
-        console.log("3824 push, then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m"));
       } // cases with replaced colon:
       // <div style="float.left;">
 
@@ -6537,11 +6175,9 @@ function tokenizer(str, originalOpts) {
       attrNameRegexp.test(str[property.propertyStarts]) && // but this current char is not:
       !attrNameRegexp.test(str[_i]) && // and it's not terminating character
       !":'\"".includes(str[_i])) {
-        console.log("3843 " + ("\x1B[" + 31 + "m" + "dodgy character?" + "\x1B[" + 39 + "m")); // find out locations of next semi and next colon
-
+        // find out locations of next semi and next colon
         var nextSemi = str.indexOf(";", _i);
-        var nextColon = str.indexOf(":", _i);
-        console.log("3849 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "nextSemi" + "\x1B[" + 39 + "m") + " = " + nextSemi + "; " + ("\x1B[" + 33 + "m" + "nextColon" + "\x1B[" + 39 + "m") + " = " + nextColon); // whatever the situation, colon must not be before semi on the right
+        var nextColon = str.indexOf(":", _i); // whatever the situation, colon must not be before semi on the right
         // either one or both missing is fine, we just want to avoid
         // <div style="floa.t:left;
         //                 ^
@@ -6560,21 +6196,16 @@ function tokenizer(str, originalOpts) {
           // <div style="float.left;">
           //                  ^
           //            we're here
-          console.log("3877 " + ("\x1B[" + 32 + "m" + "CORRECTION #1 - set this as colon" + "\x1B[" + 39 + "m"));
           property.colon = _i;
           property.valueStarts = rightVal;
-          console.log("3882 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.colon" + "\x1B[" + 39 + "m") + " = " + property.colon + "; " + ("\x1B[" + 33 + "m" + "property.valueStarts" + "\x1B[" + 39 + "m") + " = " + property.valueStarts);
         } else if (nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi) {
           // case like
           // <div style="floa/t:left;">
           //                 ^
           //          we're here
-          console.log("3898 " + ("\x1B[" + 32 + "m" + "CORRECTION #2 - patch by extending the prop" + "\x1B[" + 39 + "m"));
           property.propertyEnds = null;
-          console.log("3902 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.propertyEnds" + "\x1B[" + 39 + "m") + " = " + property.propertyEnds);
         } else if (str[_i] === "!") {
           property.importantStarts = _i;
-          console.log("3909 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.importantStarts" + "\x1B[" + 39 + "m") + " = " + property.importantStarts);
         }
       }
     } // catch the colon of a css property
@@ -6587,18 +6218,15 @@ function tokenizer(str, originalOpts) {
     // on other hand, we don't need strict validation here either, to enter
     // these clauses it's enough that "property" was initiated.
     property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
-      property.colon = _i;
-      console.log("3934 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.colon" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.colon, null, 4)); // if string abruptly ends, record it here
+      property.colon = _i; // if string abruptly ends, record it here
 
       if (!rightVal) {
         property.end = _i + 1;
-        console.log("3945 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.end" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property.end, null, 4));
 
         if (str[_i + 1]) {
           // push and init and patch up to resume
           pushProperty(property);
-          propertyReset();
-          console.log("3957 push, then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m")); // that's some trailing whitespace, create a new text token for it
+          propertyReset(); // that's some trailing whitespace, create a new text token for it
 
           if (token.properties) {
             token.properties.push({
@@ -6607,24 +6235,20 @@ function tokenizer(str, originalOpts) {
               end: null,
               value: null
             });
-            console.log("3969 PUSH to " + ("\x1B[" + 33 + "m" + "token.properties" + "\x1B[" + 39 + "m") + ", now = " + JSON.stringify(token.properties, null, 4));
             doNothing = _i + 1;
-            console.log("3978 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
           }
         }
-      }
-
-      console.log("3989 FIY, " + ("\x1B[" + 33 + "m" + "lastNonWhitespaceCharAt" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(lastNonWhitespaceCharAt, null, 4)); // insurance against rogue characters
+      } // insurance against rogue characters
       // <style>.a{float:left;x">color: red}
       //                      |       ^
       //                      |     we're here
       //           propertyStarts
 
+
       if (property.propertyEnds && lastNonWhitespaceCharAt && property.propertyEnds !== lastNonWhitespaceCharAt + 1 && // it ends upon a bad character
       !attrNameRegexp.test(str[property.propertyEnds])) {
         property.propertyEnds = lastNonWhitespaceCharAt + 1;
         property.property = str.slice(property.propertyStarts, property.propertyEnds);
-        console.log("4014 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property.propertyEnds" + "\x1B[" + 39 + "m") + " = " + property.propertyEnds + "; " + ("\x1B[" + 33 + "m" + "property.property" + "\x1B[" + 39 + "m") + " = " + property.property);
       }
     } // catch the start of a css property's name
     // -------------------------------------------------------------------------
@@ -6635,12 +6259,10 @@ function tokenizer(str, originalOpts) {
     !"{}".includes(str[_i]) && // above is instead of a stricter clause:
     // attrNameRegexp.test(str[i]) &&
     token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) {
-      console.log("4041 " + ("\x1B[" + 32 + "m" + "css property's name starts" + "\x1B[" + 39 + "m")); // first, check maybe there's unfinished text token before it
-
+      // first, check maybe there's unfinished text token before it
       if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
         token.properties[~-token.properties.length].end = _i;
         token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
-        console.log("4057 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " last elem of " + ("\x1B[" + 33 + "m" + "token.properties[]" + "\x1B[" + 39 + "m") + " to: " + JSON.stringify(token.properties[~-token.properties.length], null, 4));
       } // in normal cases we're set propertyStarts but sometimes it can be
       // importantStarts, imagine:
       // <style>.a{color:red; !important;}
@@ -6652,7 +6274,6 @@ function tokenizer(str, originalOpts) {
 
 
       if (str[_i] === ";") {
-        console.log("4075");
         initProperty({
           start: _i,
           end: _i + 1,
@@ -6660,22 +6281,16 @@ function tokenizer(str, originalOpts) {
         });
         pushProperty(property);
         propertyReset();
-        console.log("4084 init, push, then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m"));
       } else if (str[_i] === "!") {
-        console.log("4087");
         initProperty({
           start: _i,
           importantStarts: _i
         });
-        console.log("4093 " + ("\x1B[" + 32 + "m" + "INIT" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
       } else {
-        console.log("4100");
         initProperty(_i);
-        console.log("4103 " + ("\x1B[" + 32 + "m" + "INIT" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
       }
 
       doNothing = _i;
-      console.log("4113 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
     } // catch the start a property
     // -------------------------------------------------------------------------
     // Mostly happens in dirty code cases - the start is normally being triggered
@@ -6703,15 +6318,13 @@ function tokenizer(str, originalOpts) {
     //   str[lastNonWhitespaceCharAt as number] === ";") &&
     // it's not inside CSS block comment
     !lastLayerIs("block")) {
-      console.log("4157 inside start of css property/comment token"); // It's either css comment or a css property.
+      // It's either css comment or a css property.
       // Dirty characters go as property name, then later we validate and
       // catch them.
       // Empty space goes as text token, see separate clauses above.
-
       if ( // currently it's slash
       str[_i] === "/" && // asterisk follows, straight away or after whitespace
       str[rightVal] === "*") {
-        console.log("4170 " + ("\x1B[" + 32 + "m" + "BLOCK COMMENT OPENING" + "\x1B[" + 39 + "m"));
         attribPush({
           type: "comment",
           start: _i,
@@ -6726,26 +6339,17 @@ function tokenizer(str, originalOpts) {
           type: "block",
           value: str.slice(_i, rightVal + 1),
           position: _i
-        });
-        console.log("4190 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " new layer, " + JSON.stringify({
-          type: "block",
-          value: str[_i],
-          position: _i
-        }, null, 4)); // skip the next char, consider there might be whitespace in front
+        }); // skip the next char, consider there might be whitespace in front
 
         doNothing = rightVal + 1;
-        console.log("4204 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
       } // if it's a closing comment
       else if (str[_i] === "*" && str[rightVal] === "/") {
-          console.log("4213 call closingComment()");
           closingComment(_i);
         } else {
-          console.log("4216"); // first, close the text token if it's not ended
-
+          // first, close the text token if it's not ended
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
             attrib.attribValue[~-attrib.attribValue.length].end = _i;
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
-            console.log("4229 complete last attrib object: " + JSON.stringify(attrib.attribValue[~-attrib.attribValue.length], null, 4));
           } // initiate a property
           // if !important has been detected, that's a CSS like:
           // <div style="float:left;!important">
@@ -6754,30 +6358,23 @@ function tokenizer(str, originalOpts) {
 
 
           if (str[_i] === ";") {
-            console.log("4243");
             initProperty({
               start: _i,
               end: _i + 1,
               semi: _i
             });
-            console.log("4250 " + ("\x1B[" + 32 + "m" + "INIT" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
             doNothing = _i;
-            console.log("4258 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
           } else if (R2) {
-            console.log("4265");
             initProperty({
               start: _i,
               importantStarts: _i
             });
-            console.log("4271 " + ("\x1B[" + 32 + "m" + "INIT" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
           } else {
             // protection against unclosed quotes
             // <div style="float:left;; >
             //                          ^
             //                    we're here
-            console.log("4282");
             initProperty(_i);
-            console.log("4285 " + ("\x1B[" + 32 + "m" + "INIT" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
           }
         }
     } // in comment type, "only" kind tokens, submit square brackets to layers
@@ -6794,8 +6391,7 @@ function tokenizer(str, originalOpts) {
     if (!doNothing) {
       if (token.type === "tag" && !layers.length && str[_i] === ">") {
         token.end = _i + 1;
-        token.value = str.slice(token.start, token.end);
-        console.log("4313 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end); // at this point other attributes might be still not submitted yet,
+        token.value = str.slice(token.start, token.end); // at this point other attributes might be still not submitted yet,
         // we can't reset it here
       } else if (token.type === "comment" && token.language === "html" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[_i] === "-" && (matchLeft(str, _i, "!-", {
         trimBeforeMatching: true
@@ -6812,7 +6408,7 @@ function tokenizer(str, originalOpts) {
           i: true,
           trimBeforeMatching: true
         }) && ( // the following case will assume closing sq. bracket is present
-        xBeforeYOnTheRight$1(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
+        xBeforeYOnTheRight(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
         str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
           // don't set the token's end, leave it open until the
           // closing bracket, for example, it might be:
@@ -6820,9 +6416,7 @@ function tokenizer(str, originalOpts) {
           //     ^
           //    we're here
           //
-          console.log("4364 " + ("\x1B[" + 32 + "m" + "OUTLOOK CONDITIONAL \"ONLY\" DETECTED" + "\x1B[" + 39 + "m"));
           token.kind = "only";
-          console.log("4368 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind);
         } else if ( // ensure it's not starting with closing counterpart,
         // --><![endif]-->
         // but with
@@ -6838,31 +6432,22 @@ function tokenizer(str, originalOpts) {
           //     ^
           //    we're here
           //
-          console.log("4391 " + ("\x1B[" + 32 + "m" + "OUTLOOK CONDITIONAL \"NOT\" DETECTED" + "\x1B[" + 39 + "m"));
           token.kind = "not";
           token.closing = true;
-          console.log("4396 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind + "; " + ("\x1B[" + 33 + "m" + "token.closing" + "\x1B[" + 39 + "m") + " = " + token.closing);
         } else if (token.kind === "simple" && token.language === "html" && !token.closing && str[rightVal] === ">") {
-          console.log("4409 " + ("\x1B[" + 32 + "m" + "simplet-kind comment token's ending caught" + "\x1B[" + 39 + "m"));
           token.end = rightVal + 1;
           token.kind = "simplet";
           token.closing = null;
-          console.log("4415 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
-          console.log("4420 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind);
-          console.log("4425 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.closing" + "\x1B[" + 39 + "m") + " = " + token.closing);
         } else if (token.language === "html") {
           // if it's a simple HTML comment, <!--, end it right here
-          console.log("4432 " + ("\x1B[" + 32 + "m" + (token.kind + " comment token's ending caught") + "\x1B[" + 39 + "m"));
           token.end = _i + 1; // tokenizer will catch <!- as opening, so we need to extend
           // for correct cases with two dashes <!--
 
           if (str[leftVal] === "!" && str[rightVal] === "-") {
             token.end = rightVal + 1;
-            console.log("4444 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
           }
 
           token.value = str.slice(token.start, token.end);
-          console.log("4452 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
         } // at this point other attributes might be still not submitted yet,
         // we can't reset it here
 
@@ -6873,7 +6458,6 @@ function tokenizer(str, originalOpts) {
         // at least the first part of it ("not" kind)
         if (Array.isArray(layers) && layers.length && layers[~-layers.length].value === "[") {
           layers.pop();
-          console.log("4475 " + ("\x1B[" + 31 + "m" + "POP" + "\x1B[" + 39 + "m") + " layers");
         } // the difference between opening Outlook conditional comment "only"
         // and conditional "only not" is that <!--> follows
 
@@ -6883,22 +6467,16 @@ function tokenizer(str, originalOpts) {
           maxMismatches: 1,
           lastMustMatch: true
         })) {
-          console.log("4489 that's kind=\"not\" comment and it continues on the right");
           token.kind = "not";
-          console.log("4493 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind);
         } else {
-          console.log("4499 that's the end of opening type=\"comment\" kind=\"only\" comment");
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
-          console.log("4504 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
         }
       } else if (token.type === "comment" && token.language === "css" && str[_i] === "*" && str[_i + 1] === "/") {
         token.end = _i + 1;
         token.value = str.slice(token.start, token.end);
-        console.log("4518 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
       } else if (token.type === "esp" && token.end === null && typeof token.head === "string" && typeof token.tail === "string" && token.tail.includes(str[_i])) {
-        console.log("4529 POSSIBLE ESP TAILS"); // extract the whole lump of ESP tag characters:
-
+        // extract the whole lump of ESP tag characters:
         var wholeEspTagClosing = "";
 
         for (var _y3 = _i; _y3 < len; _y3++) {
@@ -6907,16 +6485,15 @@ function tokenizer(str, originalOpts) {
           } else {
             break;
           }
-        }
-
-        console.log("4540 wholeEspTagClosing = " + wholeEspTagClosing); // now, imagine the new heads start, for example,
+        } // now, imagine the new heads start, for example,
         // {%- z -%}{%-
         //       ^
         //   we're here
         // find the breaking point where tails end
 
+
         if (wholeEspTagClosing.length > token.head.length) {
-          console.log("4550 wholeEspTagClosing.length = " + ("\x1B[" + 33 + "m" + wholeEspTagClosing.length + "\x1B[" + 39 + "m") + " > token.head.length = " + ("\x1B[" + 33 + "m" + token.head.length + "\x1B[" + 39 + "m")); // in order for this to be tails + new heads, the total length should be
+          // in order for this to be tails + new heads, the total length should be
           // at least bigger than heads.
           //
           // For example: Responsys heads: $( - 2 chars. Tails = ) - 1 char.
@@ -6936,11 +6513,10 @@ function tokenizer(str, originalOpts) {
           // the literals pair - for example Nunjucks {{ and {% and {%-
           // the first character is always the same.
           //
-
           var headsFirstChar = token.head[0];
 
           if (wholeEspTagClosing.endsWith(token.head)) {
-            console.log("4578 - chunk ends with the same heads"); // we have a situation like
+            // we have a situation like
             // zzz *|aaaa|**|bbb|*
             //           ^
             //         we're here and we extracted a chunk |**| and we're
@@ -6958,71 +6534,51 @@ function tokenizer(str, originalOpts) {
             //      we're here
             //
             // *| minus heads *| -- length 0 -- raise an error!
-
             token.end = _i + wholeEspTagClosing.length - token.head.length;
             token.value = str.slice(token.start, token.end);
-            console.log("4601 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
             doNothing = token.end;
-            console.log("4607 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
           } else if (wholeEspTagClosing.startsWith(token.tail)) {
             token.end = _i + token.tail.length;
             token.value = str.slice(token.start, token.end);
-            console.log("4613 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
             doNothing = token.end;
-            console.log("4619 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
           } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
-            console.log("4627"); // We're very lucky because heads and tails are using different
+            // We're very lucky because heads and tails are using different
             // characters, possibly opposite brackets of some kind.
             // That's Nunjucks, Responsys (but no eDialog) patterns.
-
             var firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
-            var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
-            console.log("\x1B[" + 33 + "m" + "firstPartOfWholeEspTagClosing" + "\x1B[" + 39 + "m" + " = " + JSON.stringify(firstPartOfWholeEspTagClosing, null, 4));
-            console.log("\x1B[" + 33 + "m" + "secondPartOfWholeEspTagClosing" + "\x1B[" + 39 + "m" + " = " + JSON.stringify(secondPartOfWholeEspTagClosing, null, 4)); // imagine we sliced off (Nunjucks): -%}{%-
+            var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar)); // imagine we sliced off (Nunjucks): -%}{%-
             // if every character from anticipated tails (-%}) is present in the front
             // chunk, Bob's your uncle, that's tails with new heads following.
 
             if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (char) {
               return firstPartOfWholeEspTagClosing.includes(char);
             })) {
-              console.log("4662 definitely tails + new heads");
               token.end = _i + firstPartOfWholeEspTagClosing.length;
               token.value = str.slice(token.start, token.end);
-              console.log("4666 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
               doNothing = token.end;
-              console.log("4672 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
             }
           } else {
             // so heads and tails don't contain unique character, and more so,
             // starting-one, PLUS, second set is different.
             // For example, ESP heads/tails can be *|zzz|*
             // Imaginary example, following heads would be variation of those
-            // above, ^|zzz|^
-            console.log("CASE #2."); // TODO
+            // above, ^|zzz|^ // TODO
             // for now, return defaults, from else scenario below:
             // we consider this whole chunk is tails.
-
             token.end = _i + wholeEspTagClosing.length;
             token.value = str.slice(token.start, token.end);
-            console.log("4688 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
             doNothing = token.end;
-            console.log("4694 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
           }
-
-          console.log("4697");
         } else {
           // we consider this whole chunk is tails.
           token.end = _i + wholeEspTagClosing.length;
-          token.value = str.slice(token.start, token.end);
-          console.log("4703 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end); // if last layer is ESP tag and we've got its closing, pop the layer
+          token.value = str.slice(token.start, token.end); // if last layer is ESP tag and we've got its closing, pop the layer
 
           if (lastLayerIs("esp")) {
-            console.log("4711 " + ("\x1B[" + 32 + "m" + "POP" + "\x1B[" + 39 + "m") + " layers, now " + ("\x1B[" + 33 + "m" + "layers" + "\x1B[" + 39 + "m") + ": " + JSON.stringify(layers, null, 4));
             layers.pop();
           }
 
           doNothing = token.end;
-          console.log("4722 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + doNothing);
         }
       } // END OF if (!doNothing)
 
@@ -7031,17 +6587,13 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && token.type === "tag" && token.tagNameStartsAt && !token.tagNameEndsAt) {
-      console.log("4738 catch the end of a tag name clauses"); // tag names can be with numbers, h1
-
+      // tag names can be with numbers, h1
       if (!str[_i] || !charSuitableForTagName(str[_i])) {
         token.tagNameEndsAt = _i;
-        console.log("4744 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.tagNameEndsAt" + "\x1B[" + 39 + "m") + " = " + token.tagNameEndsAt);
         token.tagName = str.slice(token.tagNameStartsAt, _i).toLowerCase();
-        console.log("4751 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.tagName" + "\x1B[" + 39 + "m") + " = " + token.tagName);
 
         if (token.tagName === "xml" && token.closing && !token.kind) {
           token.kind = "xml";
-          console.log("4759 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.kind" + "\x1B[" + 39 + "m") + " = " + token.kind);
         } // We evaluate self-closing tags not by presence of slash but evaluating
         // is the tag name among known self-closing tags. This way, we can later
         // catch and fix missing closing slashes.
@@ -7049,31 +6601,28 @@ function tokenizer(str, originalOpts) {
 
         if (voidTags.includes(token.tagName)) {
           token.void = true;
-          console.log("4771 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.void" + "\x1B[" + 39 + "m") + " = " + token.void);
         }
 
         token.recognised = isTagNameRecognised(token.tagName);
-        console.log("4780 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.recognised" + "\x1B[" + 39 + "m") + " = " + token.recognised);
+        doNothing = _i;
       }
     } // Catch the start of a tag name:
     // -------------------------------------------------------------------------
 
 
     if (!doNothing && token.type === "tag" && !token.tagNameStartsAt && token.start != null && (token.start < _i || str[token.start] !== "<")) {
-      console.log("4797 catch the start of a tag name clauses"); // MULTIPLE ENTRY!
+      // MULTIPLE ENTRY!
       // Consider closing tag's slashes and tag name itself.
-
       if (str[_i] === "/") {
         token.closing = true;
-        console.log("4804 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.closing" + "\x1B[" + 39 + "m") + " = " + token.closing);
+        doNothing = _i;
       } else if (isLatinLetter(str[_i])) {
-        token.tagNameStartsAt = _i;
-        console.log("4811 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.tagNameStartsAt" + "\x1B[" + 39 + "m") + " = " + token.tagNameStartsAt); // if by now closing marker is still null, set it to false - there
+        token.tagNameStartsAt = _i; // if by now closing marker is still null, set it to false - there
         // won't be any closing slashes between opening bracket and tag name
 
         if (!token.closing) {
           token.closing = false;
-          console.log("4820 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.closing" + "\x1B[" + 39 + "m") + " = " + token.closing);
+          doNothing = _i;
         }
       } else ;
     } // catch the end of a tag attribute's name
@@ -7081,7 +6630,6 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && _i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !isAttrNameChar(str[_i])) {
-      console.log("4842 inside catch the tag attribute name end clauses");
       attrib.attribNameEndsAt = _i;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, _i);
       attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
@@ -7089,21 +6637,13 @@ function tokenizer(str, originalOpts) {
       if (attrib.attribName.startsWith("mc:")) {
         // that's a mailchimp attribute
         token.pureHTML = false;
-      }
+      } // maybe there's a space in front of equal, <div class= "">
 
-      console.log("4853 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribNameEndsAt" + "\x1B[" + 39 + "m") + " = " + attrib.attribNameEndsAt + "; " + ("\x1B[" + 33 + "m" + "attrib.attribName" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib.attribName, null, 0)); // maybe there's a space in front of equal, <div class= "">
 
-      if (str[_i] && !str[_i].trim() && str[rightVal] === "=") {
-        console.log("4864 equal on the right");
-      } else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[rightVal] === ">") {
-        if ("'\"".includes(str[rightVal])) {
-          console.log("4872 " + ("\x1B[" + 31 + "m" + "space instead of equal" + "\x1B[" + 39 + "m"));
-        } else {
-          console.log("4876 " + ("\x1B[" + 31 + "m" + "a value-less attribute detected" + "\x1B[" + 39 + "m"));
-          attrib.attribEnds = _i;
-          console.log("4880 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribEnds" + "\x1B[" + 39 + "m") + " = " + attrib.attribEnds); // push and wipe
+      if (str[_i] && !str[_i].trim() && str[rightVal] === "=") ;else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[rightVal] === ">") {
+        if ("'\"".includes(str[rightVal])) ;else {
+          attrib.attribEnds = _i; // push and wipe
 
-          console.log("4887 " + ("\x1B[" + 32 + "m" + "PUSH ATTR AND WIPE" + "\x1B[" + 39 + "m"));
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
         }
@@ -7113,15 +6653,12 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStarts === null && isAttrNameChar(str[_i])) {
-      console.log("4907 inside catch the tag attribute name start clauses");
       attrib.attribStarts = _i; // even though in theory left() which reports first non-whitespace
       // character's index on the left can be null, it does not happen
       // in this context - there will be tag's name or something in front!
 
       attrib.attribLeft = lastNonWhitespaceCharAt;
       attrib.attribNameStartsAt = _i;
-      console.log("4915 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribStarts" + "\x1B[" + 39 + "m") + " = " + attrib.attribStarts + "; " + ("\x1B[" + 33 + "m" + "attrib.attribLeft" + "\x1B[" + 39 + "m") + " = " + attrib.attribLeft + "; " + ("\x1B[" + 33 + "m" + "attrib.attribNameStartsAt" + "\x1B[" + 39 + "m") + " = " + attrib.attribNameStartsAt);
-      console.log("4925 " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib.attribValue, null, 4));
     } // catch the curlies inside CSS rule
     // -------------------------------------------------------------------------
 
@@ -7129,36 +6666,29 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && token.type === "rule") {
       if (str[_i] === "{" && !token.openingCurlyAt) {
         token.openingCurlyAt = _i;
-        console.log("4940 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.openingCurlyAt" + "\x1B[" + 39 + "m") + " = " + token.openingCurlyAt);
       } else if (str[_i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
         token.closingCurlyAt = _i;
         token.end = _i + 1;
-        token.value = str.slice(token.start, token.end);
-        console.log("4953 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.closingCurlyAt" + "\x1B[" + 39 + "m") + " = " + token.closingCurlyAt + "; " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end); // check is the property's last text token closed:
+        token.value = str.slice(token.start, token.end); // check is the property's last text token closed:
 
         if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
           token.properties[~-token.properties.length].end = _i;
           token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
-          console.log("4971 " + ("\x1B[" + 32 + "m" + "COMPLETE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.properties[]" + "\x1B[" + 39 + "m") + " last elem, now = " + JSON.stringify(token.properties[~-token.properties.length], null, 4));
         } // if there's partial, still-pending property, push it
 
 
         if (property.start) {
-          console.log("4982 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " the pending property");
           token.properties.push(property);
           propertyReset();
         }
 
-        console.log("4988 " + ("\x1B[" + 32 + "m" + "PING" + "\x1B[" + 39 + "m"));
         pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
         // also put this "rule" into that parent in layers
 
         if (lastLayerIs("at")) {
-          console.log("4995 " + ("\x1B[" + 32 + "m" + "PUSH this rule into last AT layer" + "\x1B[" + 39 + "m"));
           layers[~-layers.length].token.rules.push(token);
         }
 
-        console.log("5000 " + ("\x1B[" + 32 + "m" + "RESET" + "\x1B[" + 39 + "m"));
         tokenReset();
       }
     } // catch the ending of a attribute sub-token value
@@ -7166,9 +6696,7 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && attrib.attribName && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-      // TODO
-      console.log("5017 " + ("\x1B[" + 35 + "m" + "\u2588\u2588" + "\x1B[" + 39 + "m") + " inside attribute sub-token end clauses"); // if it's a closing comment
-
+      // TODO // if it's a closing comment
       if (str[_i] === "*" && str[rightVal] === "/") {
         closingComment(_i);
       }
@@ -7191,8 +6719,7 @@ function tokenizer(str, originalOpts) {
     token.openingCurlyAt && // but not ended:
     !token.closingCurlyAt && // there is no unfinished property being recorded
     !property.propertyStarts) {
-      console.log("5061 " + ("\x1B[" + 36 + "m" + "\u2588\u2588" + "\x1B[" + 39 + "m") + " inside attribute sub-token start clauses"); // if it's suitable for property, start a property
-
+      // if it's suitable for property, start a property
       if (str[_i] === ";" && ( // a) if it's inline HTML tag CSS style attribute
       attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && // last attribute has semi already set:
       attrib.attribValue[~-attrib.attribValue.length].semi && // and that semi is really behind this current index
@@ -7222,9 +6749,7 @@ function tokenizer(str, originalOpts) {
           start: _i,
           semi: _i
         });
-        console.log("5109 " + ("\x1B[" + 32 + "m" + "INIT" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(property, null, 4));
         doNothing = _i + 1;
-        console.log("5117 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + "doNothing" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(doNothing, null, 4));
       } // if it's whitespace, for example,
       // <a style="  /* zzz */color: red;  ">
       //           ^
@@ -7237,8 +6762,7 @@ function tokenizer(str, originalOpts) {
         str[_i] && !str[_i].trim() || // if comment layer has been started, it's also a text token, no matter even
         // if it's a property, because it's comment's contents.
         lastLayerIs("block")) {
-          console.log("5139"); // depends where to push, is it inline css or head css rule
-
+          // depends where to push, is it inline css or head css rule
           if (attrib.attribName) {
             attrib.attribValue.push({
               type: "text",
@@ -7246,7 +6770,6 @@ function tokenizer(str, originalOpts) {
               end: null,
               value: null
             });
-            console.log("5149 PUSH to " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m") + ", now = " + JSON.stringify(attrib.attribValue, null, 4));
           } else if (token.type === "rule" && ( // we don't want to push over the properties in-progress
           !Array.isArray(token.properties) || !token.properties.length || // last property should have ended
           token.properties[~-token.properties.length].end)) {
@@ -7256,7 +6779,6 @@ function tokenizer(str, originalOpts) {
               end: null,
               value: null
             });
-            console.log("5170 PUSH to " + ("\x1B[" + 33 + "m" + "token.properties" + "\x1B[" + 39 + "m") + ", now = " + JSON.stringify(token.properties, null, 4));
           }
         }
     } // Catch the end of a tag attribute's value:
@@ -7264,12 +6786,7 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
-      console.log("5190 inside a catching end of a tag attr clauses");
-
       if (SOMEQUOTE.includes(str[_i])) {
-        console.log("5192 currently on a quote");
-        console.log("5195 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 isAttrClosing(str, " + (attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) + ", " + _i + ") = " + isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i));
-
         if ( // so we're on a single/double quote,
         // (str[i], the current character is a quote)
         // and...
@@ -7291,8 +6808,6 @@ function tokenizer(str, originalOpts) {
         !str[_i] || // or there is no closing bracket further
         !str.includes(">", _i) || // further checks confirm it looks like legit closing
         isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i))) {
-          console.log("5233 " + ("\x1B[" + 32 + "m" + "opening and closing quotes matched!" + "\x1B[" + 39 + "m"));
-          console.log("5236 " + ("\x1B[" + 32 + "m" + "FIY" + "\x1B[" + 39 + "m") + ", " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4));
           attrib.attribClosingQuoteAt = _i;
           attrib.attribValueEndsAt = _i;
 
@@ -7304,27 +6819,21 @@ function tokenizer(str, originalOpts) {
 
           if (property.propertyStarts) {
             attrib.attribValue.push(lodash_clonedeep(property));
-            console.log("5253 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " property into " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m"));
             propertyReset();
-            console.log("5257 " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " property");
           }
 
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-            console.log("5267 set the ending on the last object within \"attribValue\""); // if it's not a property (of inline style), set its "end"
-
+            // if it's not a property (of inline style), set its "end"
             if (!attrib.attribValue[~-attrib.attribValue.length].property) {
               attrib.attribValue[~-attrib.attribValue.length].end = _i;
               attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
-              console.log("5279 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + ("attrib.attribValue[" + ~-attrib.attribValue.length + "].end") + "\x1B[" + 39 + "m") + " = " + attrib.attribValue[~-attrib.attribValue.length].end + "; " + ("\x1B[" + 33 + "m" + ("attrib.attribValue[" + ~-attrib.attribValue.length + "].value") + "\x1B[" + 39 + "m") + " = " + attrib.attribValue[~-attrib.attribValue.length].value);
             }
-          }
+          } // 2. if the pair was mismatching, wipe layers' last element
 
-          console.log("5290 " + ("\x1B[" + 32 + "m" + "NOW" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4)); // 2. if the pair was mismatching, wipe layers' last element
 
           if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
             layers.pop();
             layers.pop();
-            console.log("5302 POP x 2, now layers = " + JSON.stringify(layers, null, 4));
           } // 3. last check for the last attribValue's .end - in some broken code
           // cases it might be still null:
           // <div style="float:left;x">
@@ -7334,11 +6843,9 @@ function tokenizer(str, originalOpts) {
 
           if (attrib.attribValue[~-attrib.attribValue.length] && !attrib.attribValue[~-attrib.attribValue.length].end) {
             attrib.attribValue[~-attrib.attribValue.length].end = _i;
-            console.log("5317 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " .end on the last attribValue, now = " + JSON.stringify(attrib.attribValue[~-attrib.attribValue.length], null, 4));
           } // 4. push and wipe
 
 
-          console.log("5327 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4));
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
         } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || // last attrib value should not be a text token
@@ -7355,14 +6862,10 @@ function tokenizer(str, originalOpts) {
             end: null,
             value: null
           });
-          console.log("5358 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " new to attrib.attribValue, now " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m") + ": " + JSON.stringify(attrib.attribValue, null, 4));
         }
-
-        console.log("5366");
       } else if (attrib.attribOpeningQuoteAt === null && (str[_i] && !str[_i].trim() || ["/", ">"].includes(str[_i]) || espChars.includes(str[_i]) && espChars.includes(str[_i + 1]))) {
         // ^ either whitespace or tag's closing or ESP literal's start ends
         // the attribute's value if there are no quotes
-        console.log("5375 opening quote was missing, terminate attr val here");
         attrib.attribValueEndsAt = _i;
         attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
 
@@ -7371,19 +6874,16 @@ function tokenizer(str, originalOpts) {
           attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
         }
 
-        attrib.attribEnds = _i;
-        console.log("5392 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribValueEndsAt" + "\x1B[" + 39 + "m") + " = " + attrib.attribValueEndsAt + "; " + ("\x1B[" + 33 + "m" + "attrib.attribValueRaw" + "\x1B[" + 39 + "m") + " = " + attrib.attribValueRaw + "; " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib.attribValue, null, 4) + "; " + ("\x1B[" + 33 + "m" + "attrib.attribEnds" + "\x1B[" + 39 + "m") + " = " + attrib.attribEnds); // 2. push and wipe
+        attrib.attribEnds = _i; // 2. push and wipe
 
         token.attribs.push(lodash_clonedeep(attrib));
         attribReset(); // 3. pop layers
 
-        layers.pop();
-        console.log("5412 " + ("\x1B[" + 31 + "m" + "POP" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "layers" + "\x1B[" + 39 + "m") + ", now:\n" + JSON.stringify(layers, null, 4)); // 4. tackle the tag ending
+        layers.pop(); // 4. tackle the tag ending
 
         if (str[_i] === ">") {
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
-          console.log("5424 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end);
         }
       } else if (str[_i] === "=" && leftVal !== null && rightVal && ("'\"".includes(str[rightVal]) || str[~-_i] && isLatinLetter(str[~-_i])) && // this will catch url params like
       // <img src="https://z.png?query=" />
@@ -7397,27 +6897,23 @@ function tokenizer(str, originalOpts) {
       // <img src="codsen.com?query=" />
       //                     ^
       /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
-        console.log("5455 " + ("\x1B[" + 31 + "m" + "MISSING CLOSING QUOTE ON PREVIOUS ATTR." + "\x1B[" + 39 + "m")); // all depends, are there whitespace characters:
+        // all depends, are there whitespace characters:
         // imagine
         // <a href="border="0">
         // vs
         // <a href="xyz border="0">
         // that's two different cases - there's nothing to salvage in former!
-
-        console.log("5466 " + ("\x1B[" + 36 + "m" + "\u2588\u2588 traverse backwards, try to salvage something" + "\x1B[" + 39 + "m"));
         var whitespaceFound;
         var attribClosingQuoteAt;
 
         for (var _y4 = leftVal; _y4 >= attrib.attribValueStartsAt; _y4--) {
-          console.log("5473 " + ("\x1B[" + 36 + "m" + ("------- str[" + _y4 + "] = " + str[_y4] + " -------") + "\x1B[" + 39 + "m")); // catch where whitespace starts
-
+          // catch where whitespace starts
           if (!whitespaceFound && str[_y4] && !str[_y4].trim()) {
             whitespaceFound = true;
 
             if (attribClosingQuoteAt) {
               // slice the captured chunk
-              var extractedChunksVal = str.slice(_y4, attribClosingQuoteAt);
-              console.log("5484 " + ("\x1B[" + 33 + "m" + "extractedChunksVal" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(extractedChunksVal, null, 4));
+              str.slice(_y4, attribClosingQuoteAt);
             }
           } // where that caught whitespace ends, that's the default location
           // of double quotes.
@@ -7434,44 +6930,33 @@ function tokenizer(str, originalOpts) {
             if (!attribClosingQuoteAt) {
               // that's the first, default location
               attribClosingQuoteAt = _y4 + 1;
-              console.log("5506 SET attribClosingQuoteAt = " + attribClosingQuoteAt);
-            } else {
-              console.log("5509 X");
             }
           }
         }
-
-        console.log("5515 FIY, " + ("\x1B[" + 33 + "m" + "attribClosingQuoteAt" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attribClosingQuoteAt, null, 4));
 
         if (attribClosingQuoteAt) {
           attrib.attribValueEndsAt = attribClosingQuoteAt;
 
           if (attrib.attribValueStartsAt) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
-            console.log("5531 FIY, " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4));
 
             if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
               attrib.attribValue[~-attrib.attribValue.length].end = attrib.attribValueEndsAt;
               attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValueEndsAt);
-              console.log("5550 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " attrib.attribValue's last object's end and value: " + JSON.stringify(attrib.attribValue, null, 4));
             }
           }
 
-          attrib.attribEnds = attribClosingQuoteAt;
-          console.log("5560 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribClosingQuoteAt" + "\x1B[" + 39 + "m") + " = " + attrib.attribClosingQuoteAt + "; " + ("\x1B[" + 33 + "m" + "attrib.attribValueEndsAt" + "\x1B[" + 39 + "m") + " = " + attrib.attribValueEndsAt + "; " + ("\x1B[" + 33 + "m" + "attrib.attribValueRaw" + "\x1B[" + 39 + "m") + " = " + attrib.attribValueRaw + "; " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib.attribValue, null, 4) + "; " + ("\x1B[" + 33 + "m" + "attrib.attribEnds" + "\x1B[" + 39 + "m") + " = " + attrib.attribEnds); // 2. if the pair was mismatching, wipe layers' last element
+          attrib.attribEnds = attribClosingQuoteAt; // 2. if the pair was mismatching, wipe layers' last element
 
           if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
             layers.pop();
-            console.log("5579 POP x 1, now layers = " + JSON.stringify(layers, null, 4));
           } // 3. push and wipe
 
 
           token.attribs.push(lodash_clonedeep(attrib));
-          attribReset();
-          console.log("5588 \u2588\u2588 " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4)); // 4. pull the i back to the position where the attribute ends
+          attribReset(); // 4. pull the i back to the position where the attribute ends
 
           _i = ~-attribClosingQuoteAt;
-          console.timeEnd("\x1B[" + 90 + "m" + "loop iteration" + "\x1B[" + 39 + "m");
           i = _i;
           return "continue";
         } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[rightVal]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i).trim()))) {
@@ -7484,8 +6969,7 @@ function tokenizer(str, originalOpts) {
           // 1. pull back the index, go backwards, read this new attribute again
           _i = attrib.attribOpeningQuoteAt; // 2. end the attribute
 
-          attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
-          console.log("5619 SET " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribEnds" + "\x1B[" + 39 + "m") + " = " + attrib.attribEnds); // 3. value doesn't start, this needs correction
+          attrib.attribEnds = attrib.attribOpeningQuoteAt + 1; // 3. value doesn't start, this needs correction
 
           attrib.attribValueStartsAt = null; // 4. pop the opening quotes layer
 
@@ -7494,7 +6978,6 @@ function tokenizer(str, originalOpts) {
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset(); // 6. continue
 
-          console.timeEnd("\x1B[" + 90 + "m" + "loop iteration" + "\x1B[" + 39 + "m");
           i = _i;
           return "continue";
         }
@@ -7505,26 +6988,20 @@ function tokenizer(str, originalOpts) {
       !Array.isArray(attrib.attribValue) || // or it's array but empty:
       !attrib.attribValue.length || // or is it not empty but its last attrib has ended by now
       attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
-        console.log("5656 " + ("\x1B[" + 33 + "m" + "ATTR. DOESN'T END, STRING VALUE TOKEN STARTS UNDER attribValue" + "\x1B[" + 39 + "m"));
         attrib.attribValue.push({
           type: "text",
           start: _i,
           end: null,
           value: null
         });
-        console.log("5667 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " new to attrib.attribValue, now " + ("\x1B[" + 33 + "m" + "attrib.attribValue" + "\x1B[" + 39 + "m") + ": " + JSON.stringify(attrib.attribValue, null, 4));
       }
     } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && attribToBackup.attribValueStartsAt && "'\"".includes(str[_i]) && str[attribToBackup.attribOpeningQuoteAt] === str[_i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, _i)) {
-      console.log("5685 " + ("\x1B[" + 31 + "m" + "\u2588\u2588" + "\x1B[" + 39 + "m") + " emergency catching tag attr closing quotes inside attribute, with ESP tag unclosed"); // imagine unclosed ESP tag inside attr value:
+      // imagine unclosed ESP tag inside attr value:
       // <tr class="{% x">
       //                ^
       //             we're here
       // we need to still proactively look for closing attribute quotes,
-      // even inside ESP tags, if we're inside tag attributes
-
-      console.log("5697 " + ("\x1B[" + 32 + "m" + "opening and closing quotes matched!" + "\x1B[" + 39 + "m"));
-      console.log("5700 " + ("\x1B[" + 32 + "m" + "FIY" + "\x1B[" + 39 + "m") + ", " + ("\x1B[" + 33 + "m" + "attribToBackup" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attribToBackup, null, 4)); // 1. patch up missing token (which is type="esp" currently) values
-
+      // even inside ESP tags, if we're inside tag attributes // 1. patch up missing token (which is type="esp" currently) values
       token.end = _i;
       token.value = str.slice(token.start, _i); // 2. push token into attribToBackup.attribValue
 
@@ -7532,7 +7009,6 @@ function tokenizer(str, originalOpts) {
         attribToBackup.attribValue = [];
       }
 
-      console.log("5715 push token to attribValue");
       attribToBackup.attribValue.push(token); // 3. patch up missing values in attribToBackup
 
       attribToBackup.attribValueEndsAt = _i;
@@ -7544,8 +7020,7 @@ function tokenizer(str, originalOpts) {
       token.attribs.push(attribToBackup); // 5. reset all
 
       attribToBackup = undefined;
-      parentTokenToBackup = undefined;
-      console.log("5737 FIY, now " + ("\x1B[" + 33 + "m" + "token" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(token, null, 4)); // 6. pop the last 3 layers
+      parentTokenToBackup = undefined; // 6. pop the last 3 layers
       // currently layers array should be like:
       // [
       //   {
@@ -7574,8 +7049,6 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
-      console.log("5781 inside catching attr value start clauses");
-
       if (str[_i] === "=" && !SOMEQUOTE.includes(str[rightVal]) && !"=".includes(str[rightVal]) && !espChars.includes(str[rightVal]) // it might be an ESP literal
       ) {
           // find the index of the next quote, single or double
@@ -7587,21 +7060,18 @@ function tokenizer(str, originalOpts) {
             return str.indexOf(quote, rightVal);
           }).filter(function (val) {
             return val > 0;
-          })) : undefined;
-          console.log("5800 " + ("\x1B[" + 33 + "m" + "firstQuoteOnTheRightIdx" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(firstQuoteOnTheRightIdx, null, 4)); // catch attribute name - equal - attribute name - equal
+          })) : undefined; // catch attribute name - equal - attribute name - equal
           // <span width=height=100>
 
           if ( // there is a character on the right (otherwise value would be null)
           rightVal && // there is equal character in the remaining chunk
           str.slice(rightVal).includes("=") && // characters upto first equals form a known attribute value
           allHtmlAttribs.has(str.slice(rightVal, rightVal + str.slice(rightVal).indexOf("=")).trim().toLowerCase())) {
-            console.log("5822 attribute ends"); // we have something like:
+            // we have something like:
             // <span width=height=100>
             // 1. end the attribute
-
             attrib.attribEnds = _i + 1; // 2. push and wipe
 
-            console.log("5831 " + ("\x1B[" + 32 + "m" + "attrib wipe, push and reset" + "\x1B[" + 39 + "m"));
             token.attribs.push(_objectSpread2({}, attrib));
             attribReset();
           } else if ( // try to stop this clause:
@@ -7613,21 +7083,14 @@ function tokenizer(str, originalOpts) {
           Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
             return "<>=".includes(char);
           })) {
-            console.log("5861 case of missing opening quotes - attribute continues"); // case of missing opening quotes
-
-            attrib.attribValueStartsAt = rightVal;
-            console.log("5866 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribValueStartsAt" + "\x1B[" + 39 + "m") + " = " + attrib.attribValueStartsAt); // push missing entry into layers
+            // case of missing opening quotes
+            attrib.attribValueStartsAt = rightVal; // push missing entry into layers
 
             layers.push({
               type: "simple",
               value: null,
               position: attrib.attribValueStartsAt
             });
-            console.log("5878 " + ("\x1B[" + 32 + "m" + "PUSH" + "\x1B[" + 39 + "m") + " " + JSON.stringify({
-              type: "simple",
-              value: null,
-              position: attrib.attribValueStartsAt
-            }, null, 4));
           }
         } else if (SOMEQUOTE.includes(str[_i])) {
         // maybe it's <span width='"100"> and it's a false opening quote, '
@@ -7644,8 +7107,7 @@ function tokenizer(str, originalOpts) {
         !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
           return ("<>=" + str[_i]).includes(char);
         })) {
-          console.log("5919 " + ("\x1B[" + 31 + "m" + "rogue quote!" + "\x1B[" + 39 + "m")); // pop the layers
-
+          // pop the layers
           layers.pop();
         } else {
           // OK then...
@@ -7653,16 +7115,13 @@ function tokenizer(str, originalOpts) {
 
           /* eslint no-lonely-if: "off" */
           if (!attrib.attribOpeningQuoteAt) {
-            console.log("5929 all fine, mark the quote as starting");
             attrib.attribOpeningQuoteAt = _i;
-            console.log("5932 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribOpeningQuoteAt" + "\x1B[" + 39 + "m") + " = " + attrib.attribOpeningQuoteAt);
 
             if ( // character exists on the right
             str[_i + 1] && ( // EITHER it's not the same as opening quote we're currently on
             str[_i + 1] !== str[_i] || // OR it's a rogue quote, part of the value
             !ifQuoteThenAttrClosingQuote(_i + 1))) {
               attrib.attribValueStartsAt = _i + 1;
-              console.log("5947 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribValueStartsAt" + "\x1B[" + 39 + "m") + " = " + attrib.attribValueStartsAt);
             }
           } else {
             // One quote exists.
@@ -7672,9 +7131,7 @@ function tokenizer(str, originalOpts) {
 
             /* istanbul ignore else */
             if (isAttrClosing(str, attrib.attribOpeningQuoteAt, _i)) {
-              console.log("5959");
               attrib.attribClosingQuoteAt = _i;
-              console.log("5962 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribClosingQuoteAt" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib.attribClosingQuoteAt, null, 4));
             }
             /* istanbul ignore else */
 
@@ -7682,21 +7139,15 @@ function tokenizer(str, originalOpts) {
             if (attrib.attribOpeningQuoteAt && attrib.attribClosingQuoteAt) {
               if (attrib.attribOpeningQuoteAt < ~-attrib.attribClosingQuoteAt) {
                 attrib.attribValueRaw = str.slice(attrib.attribOpeningQuoteAt + 1, attrib.attribClosingQuoteAt);
-                console.log("5978 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribValueRaw" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib.attribValueRaw, null, 4));
               } else {
                 attrib.attribValueRaw = "";
-                console.log("5987 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "attrib.attribValueRaw" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib.attribValueRaw, null, 4));
               }
 
-              attrib.attribEnds = _i + 1;
-              console.log("5997 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + "  " + ("\x1B[" + 33 + "m" + "attrib.attribEnds" + "\x1B[" + 39 + "m") + " = " + attrib.attribEnds); // push and wipe
+              attrib.attribEnds = _i + 1; // push and wipe
 
-              console.log("6003 " + ("\x1B[" + 32 + "m" + "attrib wipe, push and reset" + "\x1B[" + 39 + "m"));
               token.attribs.push(lodash_clonedeep(attrib));
               attribReset();
             }
-
-            console.log("6009 now " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4));
           }
         }
       } // else - value we assume does not start
@@ -7719,7 +7170,7 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && str[_i] === ">" && // consider ERB templating tags like <%= @p1 %>
     str[_i - 1] !== "%" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
-      console.log("6047 " + ("\x1B[" + 31 + "m" + "\u2588\u2588" + "\x1B[" + 39 + "m") + " bracket within attribute's value"); // Idea is simple: we have to situations:
+      // Idea is simple: we have to situations:
       // 1. this closing bracket is real, closing bracket
       // 2. this closing bracket is unencoded raw text
       // Now, we need to distinguish these two cases.
@@ -7727,20 +7178,15 @@ function tokenizer(str, originalOpts) {
       // If it's case #1, we'll likely encounter a new tag opening (or nothing).
       // If it's case #2, we'll likely encounter a tag closing or attribute
       // combo's equal+quote
-
       var thisIsRealEnding = false;
 
       if (str[_i + 1]) {
         // Traverse then
         for (var _y5 = _i + 1; _y5 < len; _y5++) {
-          console.log("6066 " + ("\x1B[" + 36 + "m" + ("str[" + _y5 + "] = " + JSON.stringify(str[_y5], null, 0)) + "\x1B[" + 39 + "m")); // if we reach the closing counterpart of the quotes, terminate
-
+          // if we reach the closing counterpart of the quotes, terminate
           if (attrib.attribOpeningQuoteAt && str[_y5] === str[attrib.attribOpeningQuoteAt]) {
-            console.log("6079 closing quote (" + str[attrib.attribOpeningQuoteAt] + ") found, " + ("\x1B[" + 31 + "m" + "BREAK" + "\x1B[" + 39 + "m"));
-
             if (_y5 !== _i + 1 && str[~-_y5] !== "=") {
               thisIsRealEnding = true;
-              console.log("6086 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "thisIsRealEnding" + "\x1B[" + 39 + "m") + " = " + thisIsRealEnding);
             }
 
             break;
@@ -7749,24 +7195,18 @@ function tokenizer(str, originalOpts) {
             // TODO - missing closing quotes
             break;
           } else if (str[_y5] === "<") {
-            thisIsRealEnding = true;
-            console.log("6097 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "thisIsRealEnding" + "\x1B[" + 39 + "m") + " = " + thisIsRealEnding); // TODO - pop only if type === "simple" and it's the same opening
+            thisIsRealEnding = true; // TODO - pop only if type === "simple" and it's the same opening
             // quotes of this attribute
 
             layers.pop();
-            console.log("6104 " + ("\x1B[" + 31 + "m" + "POP" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "layers" + "\x1B[" + 39 + "m") + ", now:\n" + JSON.stringify(layers, null, 4));
-            console.log("6111 break");
             break;
           } else if (!str[_y5 + 1]) {
             // if end was reached and nothing caught, that's also positive sign
             thisIsRealEnding = true;
-            console.log("6117 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "thisIsRealEnding" + "\x1B[" + 39 + "m") + " = " + thisIsRealEnding);
-            console.log("6120 break");
             break;
           }
         }
       } else {
-        console.log("6125 string ends so this was the bracket");
         thisIsRealEnding = true;
       } //
       //
@@ -7780,8 +7220,7 @@ function tokenizer(str, originalOpts) {
 
       if (thisIsRealEnding) {
         token.end = _i + 1;
-        token.value = str.slice(token.start, token.end);
-        console.log("6142 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "token.end" + "\x1B[" + 39 + "m") + " = " + token.end); // set and push the attribute's records, just closing quote will be
+        token.value = str.slice(token.start, token.end); // set and push the attribute's records, just closing quote will be
         // null and possibly value too
 
         if (attrib.attribValueStartsAt && _i && attrib.attribValueStartsAt < _i && str.slice(attrib.attribValueStartsAt, _i).trim()) {
@@ -7789,7 +7228,6 @@ function tokenizer(str, originalOpts) {
           attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
 
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-            console.log("6164");
             attrib.attribValue[~-attrib.attribValue.length].end = _i;
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
           } // otherwise, nulls stay
@@ -7800,12 +7238,10 @@ function tokenizer(str, originalOpts) {
 
         if (attrib.attribEnds === null) {
           attrib.attribEnds = _i;
-          console.log("6179 " + ("\x1B[" + 32 + "m" + "SET" + "\x1B[" + 39 + "m") + "  " + ("\x1B[" + 33 + "m" + "attrib.attribEnds" + "\x1B[" + 39 + "m") + " = " + attrib.attribEnds);
         }
 
         if (attrib) {
           // 2. push and wipe
-          console.log("6188 " + ("\x1B[" + 32 + "m" + "attrib wipe, push and reset" + "\x1B[" + 39 + "m"));
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
         }
@@ -7831,11 +7267,6 @@ function tokenizer(str, originalOpts) {
 
 
     if (str[_i] && opts.charCb) {
-      console.log("6218 " + ("\x1B[" + 32 + "m" + "PING" + "\x1B[" + 39 + "m") + " " + JSON.stringify({
-        type: token.type,
-        chr: str[_i],
-        i: _i
-      }, null, 4));
       pingCharCb({
         type: token.type,
         chr: str[_i],
@@ -7859,10 +7290,7 @@ function tokenizer(str, originalOpts) {
       // as is, that's abruptly ended attribute
 
       if (attrib && attrib.attribName) {
-        console.log("6253 " + ("\x1B[" + 33 + "m" + "attrib" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(attrib, null, 4)); // push and wipe
-
-        console.log("6262 " + ("\x1B[" + 32 + "m" + "PUSH ATTR AND WIPE" + "\x1B[" + 39 + "m")); // patch the attr ending if it's missing
-
+        // push and wipe // patch the attr ending if it's missing
         if (!attrib.attribEnds) {
           attrib.attribEnds = _i;
         }
@@ -7891,10 +7319,8 @@ function tokenizer(str, originalOpts) {
 
         pushProperty(property);
         propertyReset();
-        console.log("6314 push, then " + ("\x1B[" + 31 + "m" + "WIPE" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "property" + "\x1B[" + 39 + "m"));
       }
 
-      console.log("6318 " + ("\x1B[" + 32 + "m" + "PING" + "\x1B[" + 39 + "m"));
       pingTagCb(token);
     } //
     //
@@ -7920,13 +7346,6 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
 
 
-    console.log("" + ("\x1B[" + 90 + "m" + ("==========================================\n\u2588\u2588 token: " + JSON.stringify(token, null, 4) + (property.propertyStarts || property.importantStarts ? "\n\u2588\u2588 property: " + JSON.stringify(property, null, 4) : "") + (attrib.attribStarts ? "\n\u2588\u2588 attrib: " + JSON.stringify(attrib, null, 4) : "") + (attribToBackup ? "\n\u2588\u2588 attribToBackup: " + JSON.stringify(attribToBackup, null, 4) : "") + (parentTokenToBackup ? "\n\u2588\u2588 parentTokenToBackup: " + JSON.stringify(parentTokenToBackup, null, 4) : "") + (layers.length ? "\n\u2588\u2588 layers: " + JSON.stringify(layers, null, 4) : "")) + "\x1B[" + 39 + "m") + (doNothing ? "\n" + ("\x1B[" + 31 + "m" + ("DO NOTHING UNTIL " + doNothing) + "\x1B[" + 39 + "m") : ""));
-    console.log("\x1B[" + 90 + "m" + ("withinStyle = " + withinStyle) + "\x1B[" + 39 + "m" + "  " + ("\x1B[" + 90 + "m" + ("withinStyleComment = " + withinStyleComment) + "\x1B[" + 39 + "m"));
-    console.log("" + ("\x1B[" + 90 + "m" + ("selectorChunkStartedAt = " + selectorChunkStartedAt) + "\x1B[" + 39 + "m"));
-    console.log("" + ("\x1B[" + 90 + "m" + ("rightVal = " + rightVal) + "\x1B[" + 39 + "m"));
-    console.log("" + ("\x1B[" + 90 + "m" + ("lastNonWhitespaceCharAt = " + lastNonWhitespaceCharAt) + "\x1B[" + 39 + "m"));
-    console.log("" + (parentTokenToBackup ? "" + ("\x1B[" + 90 + "m" + ("parentTokenToBackup = " + JSON.stringify(parentTokenToBackup, null, 4)) + "\x1B[" + 39 + "m") : ""));
-    console.timeEnd("\x1B[" + 90 + "m" + "loop iteration" + "\x1B[" + 39 + "m");
     i = _i;
   };
 
@@ -7940,28 +7359,19 @@ function tokenizer(str, originalOpts) {
 
 
   if (charStash.length) {
-    console.log("6409 FINALLY, clear " + ("\x1B[" + 33 + "m" + "charStash" + "\x1B[" + 39 + "m"));
-
     for (var _i2 = 0, len2 = charStash.length; _i2 < len2; _i2++) {
       reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
-      console.log("6414 " + ("\x1B[" + 90 + "m" + "\u2588\u2588 charStash" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(charStash, null, 4));
     }
   }
 
   if (tagStash.length) {
-    console.log("6425 FINALLY, clear " + ("\x1B[" + 33 + "m" + "tagStash" + "\x1B[" + 39 + "m"));
-
     for (var _i3 = 0, _len = tagStash.length; _i3 < _len; _i3++) {
       reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
-      console.log("6430 " + ("\x1B[" + 90 + "m" + "\u2588\u2588 tagStash" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(tagStash, null, 4));
     }
   } // return stats
 
 
   var timeTakenInMilliseconds = Date.now() - start;
-  console.log(" ");
-  console.log("6443 " + ("\x1B[" + 35 + "m" + "\u2588\u2588" + "\x1B[" + 39 + "m") + " " + ("\x1B[" + 33 + "m" + "timeTakenInMilliseconds" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(timeTakenInMilliseconds, null, 4));
-  console.log(" ");
   return {
     timeTakenInMilliseconds: timeTakenInMilliseconds
   };
@@ -8293,10 +7703,10 @@ var objectPath = createCommonjsModule(function (module) {
   });
 });
 
-var version = "0.10.3";
+var version$1 = "0.10.3";
 
-var version$1 = version;
-var defaults$3 = {
+var version = version$1;
+var defaults = {
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100,
@@ -8305,7 +7715,7 @@ var defaults$3 = {
   errCb: null
 };
 
-function isObj$3(something) {
+function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
@@ -8348,23 +7758,23 @@ function cparser(str, originalOpts) {
     }
   }
 
-  if (originalOpts && !isObj$3(originalOpts)) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+  if (originalOpts && isObj(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type " + typeof originalOpts.tagCb + ", equal to " + JSON.stringify(originalOpts.tagCb, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+  if (originalOpts && isObj(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type " + typeof originalOpts.charCb + ", equal to " + JSON.stringify(originalOpts.charCb, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+  if (originalOpts && isObj(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
+  if (originalOpts && isObj(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type " + typeof originalOpts.errCb + ", equal to " + JSON.stringify(originalOpts.errCb, null, 4));
   } //
   //
@@ -8377,7 +7787,7 @@ function cparser(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts); //
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); //
   //
   //
   //
@@ -8450,7 +7860,7 @@ function cparser(str, originalOpts) {
         // recalculate the path for this token
         var prevToken = objectPath.get(res, path);
 
-        if (!isObj$3(prevToken)) {
+        if (!isObj(prevToken)) {
           prevToken = null;
         }
 
@@ -8608,14 +8018,14 @@ function cparser(str, originalOpts) {
         var parentsLastChildTokenValue;
         var parentsLastChildTokenPath;
 
-        if (isObj$3(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
+        if (isObj(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
           parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
           parentsLastChildTokenPath = previousPath + ".children." + (objectPath.get(res, previousPath).children.length - 1);
         }
 
         var tokenTakenCareOf = false;
 
-        if (tokenObj.type === "text" && isObj$3(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
+        if (tokenObj.type === "text" && isObj(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
           var suspiciousEndingStartsAt = (suspiciousCommentTagEndingRegExp.exec(tokenObj.value) || {}).index;
           var suspiciousEndingEndsAt = (suspiciousEndingStartsAt || 0) + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1; // part 1.
           // if any text precedes the "->" that text goes in as normal,
@@ -8657,7 +8067,7 @@ function cparser(str, originalOpts) {
 
 
           tokenTakenCareOf = true; //
-        } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$3(previousTagsToken)) { // check "only" kind comment-type tokens for malformed front parts,
+        } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj(previousTagsToken)) { // check "only" kind comment-type tokens for malformed front parts,
           // "<!--", which would turn them into "not" kind comment-type tokens
 
           if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
@@ -8689,7 +8099,7 @@ function cparser(str, originalOpts) {
               // or were there characters in front of text token which remain and
               // form the shorter, text token?
 
-              if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$3(previousTagsToken)) { // if there are no whitespace characters to the left of "from" index
+              if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj(previousTagsToken)) { // if there are no whitespace characters to the left of "from" index
                 // of the malformed "<!--", this means whole token is a malformed
                 // value and needs to be merged into current "comment" type token
                 // and its kind should be changed from "only" to "not".
@@ -8707,7 +8117,7 @@ function cparser(str, originalOpts) {
                 })); // stop token from being pushed in the ELSE clauses below
 
                 tokenTakenCareOf = true;
-              } else if (previousPath && isObj$3(previousTagsToken)) { // if there are text characters which are not part of "<!--",
+              } else if (previousPath && isObj(previousTagsToken)) { // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token
                 // 1. tweak the "text" token
 
@@ -8729,7 +8139,7 @@ function cparser(str, originalOpts) {
                 tokenTakenCareOf = true;
               }
             }
-          } else if (isObj$3(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
+          } else if (isObj(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
             // the text token might be in parent token's children array, as
             // last element, for example, consider the AST of:
             // <!--[if !mso]><!--><img src="gif"/>!--<![endif]-->
@@ -8755,7 +8165,7 @@ function cparser(str, originalOpts) {
               // or were there characters in front of text token which remain and
               // form the shorter, text token?
 
-              if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj$3(parentsLastChildTokenValue)) { // if there are no whitespace characters to the left of "from" index
+              if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj(parentsLastChildTokenValue)) { // if there are no whitespace characters to the left of "from" index
                 // of the malformed "<!--", this means whole token is a malformed
                 // value and needs to be merged into current "comment" type token
                 // and its kind should be changed from "only" to "not".
@@ -8774,7 +8184,7 @@ function cparser(str, originalOpts) {
                 objectPath.del(res, previousPath + ".children." + (objectPath.get(res, previousPath).children.length - 1)); // stop token from being pushed in the ELSE clauses below
 
                 tokenTakenCareOf = true;
-              } else if (previousPath && isObj$3(parentsLastChildTokenValue) && parentsLastChildTokenPath) { // if there are text characters which are not part of "<!--",
+              } else if (previousPath && isObj(parentsLastChildTokenValue) && parentsLastChildTokenPath) { // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token // 1. tweak the "text" token
 
                 objectPath.set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
@@ -8809,7 +8219,7 @@ function cparser(str, originalOpts) {
         // CHECK CHILD-PARENT MATCH
         //
 
-        if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$3(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
+        if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
           if (tokenObj.void) {
 
             if (typeof opts.errCb === "function") {
@@ -8878,8 +8288,8 @@ function cparser(str, originalOpts) {
 } // -----------------------------------------------------------------------------
 
 exports.cparser = cparser;
-exports.defaults = defaults$3;
-exports.version = version$1;
+exports.defaults = defaults;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

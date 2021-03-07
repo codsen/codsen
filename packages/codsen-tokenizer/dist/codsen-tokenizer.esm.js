@@ -150,7 +150,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     //         ||
     //    lefty  righty
     //
-    // we clice off where righty starts
+    // we slice off where righty starts
 
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       break;
@@ -405,9 +405,9 @@ function startsEsp(str, i, token, layers, withinStyle) {
   return !!res;
 }
 
-var version = "5.2.0";
+var version$1 = "5.2.0";
 
-const version$1 = version;
+const version = version$1;
 const importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
 const defaults = {
   tagCb: null,
@@ -905,7 +905,8 @@ function tokenizer(str, originalOpts) {
         value: null,
         closing: false,
         kind: "simple",
-        language: "html"
+        language: "html" // or "css"
+
       };
     }
 
@@ -3457,4 +3458,4 @@ const util = {
   matchLayerLast
 };
 
-export { defaults, tokenizer, util, version$1 as version };
+export { defaults, tokenizer, util, version };
