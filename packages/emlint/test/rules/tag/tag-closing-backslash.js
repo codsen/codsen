@@ -767,8 +767,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 4,
-          idxTo: 4,
+          idxFrom: 0,
+          idxTo: 5,
           message: "Missing slash.",
           fix: {
             ranges: [[4, 4, "/"]],
@@ -884,8 +884,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 4,
-          idxTo: 5,
+          idxFrom: 0,
+          idxTo: 6,
           message: "Missing slash.",
           fix: {
             ranges: [[4, 5, " /"]],
@@ -926,8 +926,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 5,
-          idxTo: 5,
+          idxFrom: 0,
+          idxTo: 6,
           message: "Missing slash.",
           fix: {
             ranges: [[5, 5, "/"]],

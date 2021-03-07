@@ -150,11 +150,11 @@ function checkForWhitespace(str, idxOffset) {
   };
 }
 
-var defaults = {
+var defaults$2 = {
   caseInsensitive: false
 };
 function includesWithRegex(arr, whatToMatch, originalOpts) {
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$2), originalOpts);
   if (!Array.isArray(arr) || !arr.length) {
     return false;
   }
@@ -170,7 +170,7 @@ var defaults$1 = {
   permittedValues: [],
   noSpaceAfterComma: false
 };
-function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
+function validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr) {
   var extractedValue = str.slice(charStart, charEnd);
   if (!(includesWithRegex(opts.quickPermittedValues, extractedValue, {
     caseInsensitive: opts.caseInsensitive
@@ -216,7 +216,7 @@ function validateString(str, idxOffset, originalOpts) {
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
           str.slice(idxFrom - idxOffset, idxTo - idxOffset);
-          validateValue(str, idxOffset, opts, idxFrom - idxOffset,
+          validateValue$2(str, idxOffset, opts, idxFrom - idxOffset,
           idxTo - idxOffset, errorArr);
         },
         errCb: function errCb(ranges, message) {
@@ -232,7 +232,7 @@ function validateString(str, idxOffset, originalOpts) {
       });
     } else {
       str.slice(charStart, charEnd);
-      validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
+      validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
   return errorArr;
@@ -875,7 +875,7 @@ function badCharacterInformationSeparatorThree(context) {
   };
 }
 
-function badCharacterInformationSeparatorTwo(context) {
+function badCharacterInformationSeparatorTwo$1(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -895,7 +895,7 @@ function badCharacterInformationSeparatorTwo(context) {
   };
 }
 
-function badCharacterInformationSeparatorTwo$1(context) {
+function badCharacterInformationSeparatorTwo(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -1215,7 +1215,7 @@ function badCharacterReverseLineFeed(context) {
   };
 }
 
-function badCharacterSingleShiftTwo(context) {
+function badCharacterSingleShiftTwo$1(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -1235,7 +1235,7 @@ function badCharacterSingleShiftTwo(context) {
   };
 }
 
-function badCharacterSingleShiftTwo$1(context) {
+function badCharacterSingleShiftTwo(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -2583,7 +2583,7 @@ function tagSpaceAfterOpeningBracket(context) {
   };
 }
 
-var BACKSLASH = "\\";
+var BACKSLASH$2 = "\\";
 function tagSpaceBeforeClosingBracket(context) {
   return {
     tag: function tag(node) {
@@ -2591,7 +2591,7 @@ function tagSpaceBeforeClosingBracket(context) {
       if (
       context.str[node.end - 1] === ">" &&
       !context.str[node.end - 2].trim().length &&
-      !(BACKSLASH + "/").includes(context.str[stringLeftRight.left(context.str, node.end - 1) || 0])) {
+      !(BACKSLASH$2 + "/").includes(context.str[stringLeftRight.left(context.str, node.end - 1) || 0])) {
         var from = stringLeftRight.left(context.str, node.end - 1) ? stringLeftRight.left(context.str, node.end - 1) + 1 : 0;
         ranges.push([from, node.end - 1]);
       }
@@ -2726,7 +2726,7 @@ function tagClosingBackslash(context) {
   };
 }
 
-var BACKSLASH$2 = "\\";
+var BACKSLASH = "\\";
 function tagVoidSlash(context, mode) {
   if (mode === void 0) {
     mode = "always";
@@ -2736,7 +2736,7 @@ function tagVoidSlash(context, mode) {
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
       var leftOfSlashPos = stringLeftRight.left(context.str, slashPos) || 0;
-      if (mode === "never" && node.void && !node.closing && context.str[slashPos] === "/") {
+      if (mode === "never" && node.void && context.str[slashPos] === "/") {
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -2746,8 +2746,8 @@ function tagVoidSlash(context, mode) {
             ranges: [[leftOfSlashPos + 1, closingBracketPos]]
           }
         });
-      } else if (mode === "always" && node.void && !node.closing && context.str[slashPos] !== "/" && (
-      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
+      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && (
+      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           if (context.str[slashPos + 1] === " ") {
             context.report({
@@ -2781,14 +2781,6 @@ function tagVoidSlash(context, mode) {
             }
           });
         }
-      } else if (node.void && node.closing) {
-        context.report({
-          ruleId: "tag-void-slash",
-          message: "A void tag can't be a closing tag.",
-          idxFrom: node.start,
-          idxTo: node.end,
-          fix: null
-        });
       }
     }
   };
@@ -3709,7 +3701,7 @@ function attributeValidateAlign(context) {
   };
 }
 
-var defaults$2 = {
+var defaults = {
   namedCssLevel1OK: true,
   namedCssLevel2PlusOK: true,
   hexThreeOK: false,
@@ -3718,7 +3710,7 @@ var defaults$2 = {
   hexEightOK: false
 };
 function validateColor(str, idxOffset, originalOpts) {
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$2), originalOpts);
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
       charStart = _checkForWhitespace.charStart,
       charEnd = _checkForWhitespace.charEnd,
@@ -4021,7 +4013,7 @@ var defaultOpts = {
   customPxMessage: null,
   maxValue: null
 };
-function validateValue$2(_ref) {
+function validateValue(_ref) {
   var str = _ref.str,
       opts = _ref.opts,
       charStart = _ref.charStart,
@@ -4158,7 +4150,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
         cb: function cb(idxFrom, idxTo) {
           var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
           if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
-            validateValue$2({
+            validateValue({
               str: str,
               opts: opts,
               charStart: idxFrom - idxOffset,
@@ -4206,7 +4198,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
       }
     } else {
       if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
-        validateValue$2({
+        validateValue({
           str: str,
           opts: opts,
           charStart: charStart,
@@ -4676,7 +4668,7 @@ function attributeValidateClass(context) {
   };
 }
 
-function attributeValidateClassid(context) {
+function attributeValidateClassid$1(context) {
   return {
     attribute: function attribute(node) {
       if (node.attribName === "classid") {
@@ -4703,7 +4695,7 @@ function attributeValidateClassid(context) {
   };
 }
 
-function attributeValidateClassid$1(context) {
+function attributeValidateClassid(context) {
   return {
     attribute: function attribute(node) {
       if (node.attribName === "clear") {
@@ -5386,7 +5378,8 @@ function attributeValidateFrame(context) {
         var errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
-          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border"],
+          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border"
+          ],
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
@@ -8942,10 +8935,10 @@ defineLazyProp__default['default'](builtInRules, "bad-character-information-sepa
   return badCharacterInformationSeparatorThree;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-two", function () {
-  return badCharacterInformationSeparatorTwo;
+  return badCharacterInformationSeparatorTwo$1;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-one", function () {
-  return badCharacterInformationSeparatorTwo$1;
+  return badCharacterInformationSeparatorTwo;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-delete", function () {
   return badCharacterDelete;
@@ -8993,10 +8986,10 @@ defineLazyProp__default['default'](builtInRules, "bad-character-reverse-line-fee
   return badCharacterReverseLineFeed;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-two", function () {
-  return badCharacterSingleShiftTwo;
+  return badCharacterSingleShiftTwo$1;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-three", function () {
-  return badCharacterSingleShiftTwo$1;
+  return badCharacterSingleShiftTwo;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-device-control-string", function () {
   return badCharacterDeviceControlString;
@@ -9296,10 +9289,10 @@ defineLazyProp__default['default'](builtInRules, "attribute-validate-class", fun
   return attributeValidateClass;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-validate-classid", function () {
-  return attributeValidateClassid;
+  return attributeValidateClassid$1;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-validate-clear", function () {
-  return attributeValidateClassid$1;
+  return attributeValidateClassid;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-validate-code", function () {
   return attributeValidateCode;
@@ -9898,10 +9891,10 @@ var Linter = function (_TypedEmitter) {
   return Linter;
 }(tinyTypedEmitter.TypedEmitter);
 
-var version = "4.2.0";
+var version$1 = "4.2.0";
 
-var version$1 = version;
+var version = version$1;
 
 exports.Linter = Linter;
 exports.util = util;
-exports.version = version$1;
+exports.version = version;

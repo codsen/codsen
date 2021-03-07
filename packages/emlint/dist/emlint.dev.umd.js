@@ -590,9 +590,9 @@ function createCommonjsModule(fn) {
 	return fn(module, module.exports), module.exports;
 }
 
-var require$$0 = /*@__PURE__*/getAugmentedNamespace(events);
+var require$$0$1 = /*@__PURE__*/getAugmentedNamespace(events);
 
-var TypedEmitter = require$$0.EventEmitter;
+var TypedEmitter = require$$0$1.EventEmitter;
 
 var array = [];
 var charCodeCache = [];
@@ -10100,7 +10100,7 @@ function x(something) {
   return res;
 }
 
-function isStr(something) {
+function isStr$3(something) {
   return typeof something === "string";
 }
 
@@ -10313,7 +10313,7 @@ function seq(direction, str, idx, opts, args) {
   // where we need to repeat same step (hungrily matched character) few times.
 
   while (i < args.length) {
-    if (!isStr(args[i]) || !args[i].length) {
+    if (!isStr$3(args[i]) || !args[i].length) {
       i += 1;
       continue;
     }
@@ -10464,7 +10464,7 @@ function rightSeq(str, idx) {
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-function isObj(something) {
+function isObj$5(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
@@ -10474,18 +10474,18 @@ function isLatinLetterOrNumberOrHash(char) {
   // - numbers 0-9 or
   // - letters A-Z or
   // - #
-  return isStr$1(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
+  return isStr$2(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
 }
 
 function isNumeric(something) {
-  return isStr$1(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
+  return isStr$2(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
 }
 
-function isStr$1(something) {
+function isStr$2(something) {
   return typeof something === "string";
 }
 
-function isLatinLetter(something) {
+function isLatinLetter$1(something) {
   return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
 }
 
@@ -10506,7 +10506,7 @@ function resemblesNumericEntity(str2, from, to) {
       whitespaceCount += 1;
     }
 
-    if (isLatinLetter(str2[i])) {
+    if (isLatinLetter$1(str2[i])) {
       lettersCount += 1;
     } else if (isNumeric(str2[i])) {
       numbersCount += 1;
@@ -10525,7 +10525,7 @@ function resemblesNumericEntity(str2, from, to) {
 
   if (!lettersCount && numbersCount > othersCount) {
     probablyNumeric = "deci";
-  } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumeric(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
+  } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumeric(charTrimmed[2]) || isLatinLetter$1(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
     // hexidecimal, for example, &#xA3;
     // but wide enough to include messed up cases
     probablyNumeric = "hexi";
@@ -10717,13 +10717,13 @@ function fixEnt(str, originalOpts) {
           rangeTo = _ref.rangeTo,
           rangeValEncoded = _ref.rangeValEncoded,
           rangeValDecoded = _ref.rangeValDecoded;
-      return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
+      return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj$5(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
     },
     progressFn: null,
     entityCatcherCb: null
   };
 
-  if (originalOpts && !isObj(originalOpts)) {
+  if (originalOpts && !isObj$5(originalOpts)) {
     throw new Error("string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (" + typeof originalOpts + "-type)");
   }
 
@@ -10957,7 +10957,7 @@ function fixEnt(str, originalOpts) {
               _tempRes = _temp3.tempRes;
             }
 
-            if (_tempEnt && (!Object.keys(uncertain).includes(_tempEnt) || uncertain[_tempEnt].addAmpIfSemiPresent === true || uncertain[_tempEnt].addAmpIfSemiPresent && (!_tempRes.leftmostChar || isStr$1(str[_tempRes.leftmostChar - 1]) && !str[_tempRes.leftmostChar - 1].trim().length))) {
+            if (_tempEnt && (!Object.keys(uncertain).includes(_tempEnt) || uncertain[_tempEnt].addAmpIfSemiPresent === true || uncertain[_tempEnt].addAmpIfSemiPresent && (!_tempRes.leftmostChar || isStr$2(str[_tempRes.leftmostChar - 1]) && !str[_tempRes.leftmostChar - 1].trim().length))) {
               var _decodedEntity = decode("&" + _tempEnt + ";");
 
               rangesArr2.push({
@@ -11678,15 +11678,15 @@ function lineCol(input, idx, skipChecks) {
   };
 }
 
-function isObj$1(something) {
+function isObj$4(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr$2(something) {
+function isStr$1(something) {
   return typeof something === "string";
 }
 
-var defaults = {
+var defaults$9 = {
   stringOffset: 0,
   maxDistance: 1,
   ignoreWhitespace: true
@@ -11696,14 +11696,14 @@ function findMalformed(str, refStr, cb, originalOpts) {
   //
   // insurance
   // ---------
-  if (!isStr$2(str)) {
+  if (!isStr$1(str)) {
     throw new TypeError("string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: " + str + " (type: " + typeof str + ")");
   } else if (!str.length) {
     // empty string - quick ending
     return;
   }
 
-  if (!isStr$2(refStr)) {
+  if (!isStr$1(refStr)) {
     throw new TypeError("string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: " + refStr + " (type: " + typeof refStr + ")");
   } else if (!refStr.length) {
     // empty string to look for - quick ending
@@ -11714,11 +11714,11 @@ function findMalformed(str, refStr, cb, originalOpts) {
     throw new TypeError("string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: " + cb + " (type: " + typeof cb + ")");
   }
 
-  if (originalOpts && !isObj$1(originalOpts)) {
+  if (originalOpts && !isObj$4(originalOpts)) {
     throw new TypeError("string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: " + originalOpts + " (type: " + typeof originalOpts + ")");
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // we perform the validation upon Object-assigned "opts" instead
+  var opts = _objectSpread2(_objectSpread2({}, defaults$9), originalOpts); // we perform the validation upon Object-assigned "opts" instead
   // of incoming "originalOpts" because we don't want to mutate the
   // "originalOpts" and making note of fixed values, Object-assigning
   // "opts" and then putting those noted fixed values on top is more
@@ -11882,15 +11882,15 @@ function arrayiffy(something) {
 
 /* eslint no-plusplus:0 */
 
-function isObj$2(something) {
+function isObj$3(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr$3(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
-var defaults$1 = {
+var defaults$8 = {
   cb: undefined,
   i: false,
   trimBeforeMatching: false,
@@ -11921,7 +11921,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     return whatToMatchValVal;
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$8), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -12181,11 +12181,11 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
   // insurance
-  if (isObj$2(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+  if (isObj$3(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$8), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
     // arrayiffy if needed:
@@ -12194,10 +12194,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
 
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
-    return isStr$3(el) ? el : String(el);
+    return isStr(el) ? el : String(el);
   });
 
-  if (!isStr$3(str)) {
+  if (!isStr(str)) {
     return false;
   }
 
@@ -12212,7 +12212,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var whatToMatch;
   var special;
 
-  if (isStr$3(originalWhatToMatch)) {
+  if (isStr(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
@@ -12225,7 +12225,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + typeof originalWhatToMatch + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
   }
 
-  if (originalOpts && !isObj$2(originalOpts)) {
+  if (originalOpts && !isObj$3(originalOpts)) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + typeof originalOpts + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
@@ -12249,7 +12249,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
   Array.isArray(whatToMatch) && !whatToMatch.length || // []
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$3(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
   ) {
       if (typeof opts.cb === "function") {
         var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
@@ -12467,7 +12467,7 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y) {
 // Used to troubleshoot dirty broken code.
 
 
-function xBeforeYOnTheRight(str, startingIdx, x, y) {
+function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -12940,7 +12940,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       var R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim()); // that quote we suspected as closing, is from an opening-closing
       // set on another attribute:
 
-      var R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
+      var R4 = !xBeforeYOnTheRight$1(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
       // <z alt"href' www'/>
       //       ^    ^
       //    start   suspected ending
@@ -13267,11 +13267,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   return false;
 }
 
-var defaultOpts = {
+var defaultOpts$1 = {
   allowCustomTagNames: false,
   skipOpeningBracket: false
 };
-var BACKSLASH = "\\";
+var BACKSLASH$5 = "\\";
 var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
 function isNotLetter(char) {
@@ -13299,7 +13299,7 @@ function isOpening(str, idx, originalOpts) {
     throw new Error("is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as \"" + typeof idx + "\", value being " + JSON.stringify(idx, null, 4));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts); // -----------------------------------------------------------------------------
+  var opts = _objectSpread2(_objectSpread2({}, defaultOpts$1), originalOpts); // -----------------------------------------------------------------------------
 
 
   var whitespaceChunk = "[\\\\ \\t\\r\\n/]*"; // generalChar does not include the dash, -
@@ -13343,7 +13343,7 @@ function isOpening(str, idx, originalOpts) {
   var matchingOptions = {
     cb: isNotLetter,
     i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    trimCharsBeforeMatching: ["/", BACKSLASH$5, "!", " ", "\t", "\n", "\r"]
   }; // -----------------------------------------------------------------------------
 
   if (opts.allowCustomTagNames) {
@@ -13384,7 +13384,7 @@ function isOpening(str, idx, originalOpts) {
         return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
       },
       i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH$5, "!", " ", "\t", "\n", "\r"]
     })) {
       passed = true;
     }
@@ -13415,7 +13415,7 @@ var BACKTICK = "\x60";
 var LEFTDOUBLEQUOTMARK = "\u201C";
 var RIGHTDOUBLEQUOTMARK = "\u201D";
 
-function isLatinLetter$1(char) {
+function isLatinLetter(char) {
   // we mean Latin letters A-Z, a-z
   return !!(char && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123));
 } // Considering custom element name character requirements:
@@ -13469,7 +13469,7 @@ function isTagNameRecognised(tagName) {
 // Used to troubleshoot dirty broken code.
 
 
-function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -13487,7 +13487,7 @@ function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
   return false;
 }
 
-function isObj$3(something) {
+function isObj$2(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 } // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
 
@@ -13534,7 +13534,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     //         ||
     //    lefty  righty
     //
-    // we clice off where righty starts
+    // we slice off where righty starts
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       break;
     }
@@ -13735,7 +13735,7 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
 
 }
 
-var BACKSLASH$1 = "\\"; // This is an extracted logic which detects where token of a particular kind
+var BACKSLASH$4 = "\\"; // This is an extracted logic which detects where token of a particular kind
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
@@ -13747,7 +13747,7 @@ function startsTag(str, i, token, layers, withinStyle) {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-  })) || isLatinLetter$1(str[i]) && (!str[i - 1] || !isLatinLetter$1(str[i - 1]) && !["<", "/", "!", BACKSLASH$1].includes(str[left(str, i)])) && isOpening(str, i, {
+  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$4].includes(str[left(str, i)])) && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
@@ -13796,14 +13796,14 @@ function startsEsp(str, i, token, layers, withinStyle) {
   ">})".includes(str[i]) && // heads include the opposite of it
   Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && ( // insurance against "greater than", as in:
   // <#if product.weight > 100>
-  str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || //
+  str[i] !== ">" || !xBeforeYOnTheRight(str, i + 1, ">", "<")) || //
   // 4. comment closing in RPL-like templating languages, for example:
   // <#-- z -->
   str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
   return !!res;
 }
 var importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
-var defaults$2 = {
+var defaults$7 = {
   tagCb: null,
   tagCbLookahead: 0,
   charCb: null,
@@ -13835,19 +13835,19 @@ function tokenizer(str, originalOpts) {
     }
   }
 
-  if (originalOpts && !isObj$3(originalOpts)) {
+  if (originalOpts && !isObj$2(originalOpts)) {
     throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+  if (originalOpts && isObj$2(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type " + typeof originalOpts.tagCb + ", equal to " + JSON.stringify(originalOpts.tagCb, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+  if (originalOpts && isObj$2(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type " + typeof originalOpts.charCb + ", equal to " + JSON.stringify(originalOpts.charCb, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+  if (originalOpts && isObj$2(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
   } //
   //
@@ -13860,7 +13860,7 @@ function tokenizer(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); //
+  var opts = _objectSpread2(_objectSpread2({}, defaults$7), originalOpts); //
   //
   //
   //
@@ -14267,7 +14267,7 @@ function tokenizer(str, originalOpts) {
   }
 
   function atRuleWaitingForClosingCurlie() {
-    return lastLayerIs("at") && isObj$3(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
+    return lastLayerIs("at") && isObj$2(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
   }
 
   function getNewToken(type, startVal) {
@@ -14301,7 +14301,8 @@ function tokenizer(str, originalOpts) {
         value: null,
         closing: false,
         kind: "simple",
-        language: "html"
+        language: "html" // or "css"
+
       };
     }
 
@@ -14462,7 +14463,7 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
 
 
-    if (isLatinLetter$1(str[_i]) && isLatinLetter$1(str[~-_i]) && isLatinLetter$1(str[_i + 1])) {
+    if (isLatinLetter(str[_i]) && isLatinLetter(str[~-_i]) && isLatinLetter(str[_i + 1])) {
       // <style>.a{color:1pximportant}
       //                    ^
       //                  mangled !important
@@ -15523,7 +15524,7 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && property && property.valueEnds && !property.importantStarts && ( // it's an exclamation mark
     str[_i] === "!" || // considering missing excl. mark cases, more strict req.:
-    isLatinLetter$1(str[_i]) && str.slice(_i).match(importantStartsRegexp))) {
+    isLatinLetter(str[_i]) && str.slice(_i).match(importantStartsRegexp))) {
       property.importantStarts = _i; // correction for cases like:
       // <style>.a{color:red 1important}
       //                     ^
@@ -15691,7 +15692,7 @@ function tokenizer(str, originalOpts) {
         if ( // either semi but no colon
         (nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) && !"{}".includes(str[_i]) && rightVal && ( // <style>.a{b!}
         //            ^
-        !"!".includes(str[_i]) || isLatinLetter$1(str[rightVal]))) {
+        !"!".includes(str[_i]) || isLatinLetter(str[rightVal]))) {
           // <div style="float.left;">
           //                  ^
           //            we're here
@@ -15907,7 +15908,7 @@ function tokenizer(str, originalOpts) {
           i: true,
           trimBeforeMatching: true
         }) && ( // the following case will assume closing sq. bracket is present
-        xBeforeYOnTheRight$1(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
+        xBeforeYOnTheRight(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
         str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
           // don't set the token's end, leave it open until the
           // closing bracket, for example, it might be:
@@ -16115,7 +16116,7 @@ function tokenizer(str, originalOpts) {
       if (str[_i] === "/") {
         token.closing = true;
         doNothing = _i;
-      } else if (isLatinLetter$1(str[_i])) {
+      } else if (isLatinLetter(str[_i])) {
         token.tagNameStartsAt = _i; // if by now closing marker is still null, set it to false - there
         // won't be any closing slashes between opening bracket and tag name
 
@@ -16384,7 +16385,7 @@ function tokenizer(str, originalOpts) {
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
         }
-      } else if (str[_i] === "=" && leftVal !== null && rightVal && ("'\"".includes(str[rightVal]) || str[~-_i] && isLatinLetter$1(str[~-_i])) && // this will catch url params like
+      } else if (str[_i] === "=" && leftVal !== null && rightVal && ("'\"".includes(str[rightVal]) || str[~-_i] && isLatinLetter(str[~-_i])) && // this will catch url params like
       // <img src="https://z.png?query=" />
       //                              ^
       //                            false alarm
@@ -17202,7 +17203,7 @@ var objectPath = createCommonjsModule(function (module) {
   });
 });
 
-var defaults$3 = {
+var defaults$6 = {
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100,
@@ -17211,7 +17212,7 @@ var defaults$3 = {
   errCb: null
 };
 
-function isObj$4(something) {
+function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
@@ -17254,23 +17255,23 @@ function cparser(str, originalOpts) {
     }
   }
 
-  if (originalOpts && !isObj$4(originalOpts)) {
+  if (originalOpts && !isObj$1(originalOpts)) {
     throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
   }
 
-  if (originalOpts && isObj$4(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type " + typeof originalOpts.tagCb + ", equal to " + JSON.stringify(originalOpts.tagCb, null, 4));
   }
 
-  if (originalOpts && isObj$4(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type " + typeof originalOpts.charCb + ", equal to " + JSON.stringify(originalOpts.charCb, null, 4));
   }
 
-  if (originalOpts && isObj$4(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
   }
 
-  if (originalOpts && isObj$4(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type " + typeof originalOpts.errCb + ", equal to " + JSON.stringify(originalOpts.errCb, null, 4));
   } //
   //
@@ -17283,7 +17284,7 @@ function cparser(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts); //
+  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts); //
   //
   //
   //
@@ -17355,7 +17356,7 @@ function cparser(str, originalOpts) {
         // recalculate the path for this token
         var prevToken = objectPath.get(res, path);
 
-        if (!isObj$4(prevToken)) {
+        if (!isObj$1(prevToken)) {
           prevToken = null;
         }
 
@@ -17516,14 +17517,14 @@ function cparser(str, originalOpts) {
         var parentsLastChildTokenValue;
         var parentsLastChildTokenPath;
 
-        if (isObj$4(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
+        if (isObj$1(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
           parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
           parentsLastChildTokenPath = previousPath + ".children." + (objectPath.get(res, previousPath).children.length - 1);
         }
 
         var tokenTakenCareOf = false;
 
-        if (tokenObj.type === "text" && isObj$4(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
+        if (tokenObj.type === "text" && isObj$1(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
           var suspiciousEndingStartsAt = (suspiciousCommentTagEndingRegExp.exec(tokenObj.value) || {}).index;
           var suspiciousEndingEndsAt = (suspiciousEndingStartsAt || 0) + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1; // part 1.
           // if any text precedes the "->" that text goes in as normal,
@@ -17567,7 +17568,7 @@ function cparser(str, originalOpts) {
 
 
           tokenTakenCareOf = true; //
-        } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$4(previousTagsToken)) {
+        } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$1(previousTagsToken)) {
           // check "only" kind comment-type tokens for malformed front parts,
           // "<!--", which would turn them into "not" kind comment-type tokens
           if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
@@ -17598,7 +17599,7 @@ function cparser(str, originalOpts) {
               // or were there characters in front of text token which remain and
               // form the shorter, text token?
 
-              if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$4(previousTagsToken)) {
+              if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$1(previousTagsToken)) {
                 // if there are no whitespace characters to the left of "from" index
                 // of the malformed "<!--", this means whole token is a malformed
                 // value and needs to be merged into current "comment" type token
@@ -17616,7 +17617,7 @@ function cparser(str, originalOpts) {
                 })); // stop token from being pushed in the ELSE clauses below
 
                 tokenTakenCareOf = true;
-              } else if (previousPath && isObj$4(previousTagsToken)) {
+              } else if (previousPath && isObj$1(previousTagsToken)) {
                 // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token
                 // 1. tweak the "text" token
@@ -17638,7 +17639,7 @@ function cparser(str, originalOpts) {
                 tokenTakenCareOf = true;
               }
             }
-          } else if (isObj$4(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
+          } else if (isObj$1(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
             // the text token might be in parent token's children array, as
             // last element, for example, consider the AST of:
             // <!--[if !mso]><!--><img src="gif"/>!--<![endif]-->
@@ -17664,7 +17665,7 @@ function cparser(str, originalOpts) {
               // form the shorter, text token?
 
 
-              if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj$4(parentsLastChildTokenValue)) {
+              if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj$1(parentsLastChildTokenValue)) {
                 // if there are no whitespace characters to the left of "from" index
                 // of the malformed "<!--", this means whole token is a malformed
                 // value and needs to be merged into current "comment" type token
@@ -17684,7 +17685,7 @@ function cparser(str, originalOpts) {
                 objectPath.del(res, previousPath + ".children." + (objectPath.get(res, previousPath).children.length - 1)); // stop token from being pushed in the ELSE clauses below
 
                 tokenTakenCareOf = true;
-              } else if (previousPath && isObj$4(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
+              } else if (previousPath && isObj$1(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
                 // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token // 1. tweak the "text" token
                 objectPath.set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
@@ -17720,7 +17721,7 @@ function cparser(str, originalOpts) {
         //
 
 
-        if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$4(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
+        if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$1(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
           if (tokenObj.void) {
             if (typeof opts.errCb === "function") {
               opts.errCb({
@@ -17799,6 +17800,35 @@ var escapeStringRegexp = function escapeStringRegexp(string) {
 
 var regexpCache = new Map();
 
+function sanitizeArray(input, inputName) {
+  if (!Array.isArray(input)) {
+    switch (typeof input) {
+      case 'string':
+        input = [input];
+        break;
+
+      case 'undefined':
+        input = [];
+        break;
+
+      default:
+        throw new TypeError("Expected '" + inputName + "' to be a string or an array, but got a type of '" + typeof input + "'");
+    }
+  }
+
+  return input.filter(function (string) {
+    if (typeof string !== 'string') {
+      if (typeof string === 'undefined') {
+        return false;
+      }
+
+      throw new TypeError("Expected '" + inputName + "' to be an array of strings, but found a type of '" + typeof string + "' in the array");
+    }
+
+    return true;
+  });
+}
+
 function makeRegexp(pattern, options) {
   options = _objectSpread2({
     caseSensitive: false
@@ -17823,12 +17853,11 @@ function makeRegexp(pattern, options) {
 }
 
 var matcher = function matcher(inputs, patterns, options) {
-  if (!(Array.isArray(inputs) && Array.isArray(patterns))) {
-    throw new TypeError("Expected two arrays, got " + typeof inputs + " " + typeof patterns);
-  }
+  inputs = sanitizeArray(inputs, 'inputs');
+  patterns = sanitizeArray(patterns, 'patterns');
 
   if (patterns.length === 0) {
-    return inputs;
+    return [];
   }
 
   var isFirstPatternNegated = patterns[0][0] === '!';
@@ -17858,11 +17887,16 @@ var matcher = function matcher(inputs, patterns, options) {
   return result;
 };
 
-var isMatch = function isMatch(input, pattern, options) {
-  var inputArray = Array.isArray(input) ? input : [input];
-  var patternArray = Array.isArray(pattern) ? pattern : [pattern];
-  return inputArray.some(function (input) {
-    return patternArray.every(function (pattern) {
+var isMatch = function isMatch(inputs, patterns, options) {
+  inputs = sanitizeArray(inputs, 'inputs');
+  patterns = sanitizeArray(patterns, 'patterns');
+
+  if (patterns.length === 0) {
+    return false;
+  }
+
+  return inputs.some(function (input) {
+    return patterns.every(function (pattern) {
       var regexp = makeRegexp(pattern, options);
       var matches = regexp.test(input);
       return regexp.negated ? !matches : matches;
@@ -18223,7 +18257,8 @@ function checkForWhitespace(str, idxOffset) {
         idxFrom: +idxOffset,
         idxTo: +idxOffset + str.length,
         message: "Missing value.",
-        fix: null
+        fix: null // can't fix - value is missing completely!
+
       });
     } else {
       gatheredRanges.push([idxOffset, idxOffset + charStart]);
@@ -18245,7 +18280,8 @@ function checkForWhitespace(str, idxOffset) {
       message: "Remove whitespace.",
       fix: {
         ranges: lodash_clonedeep(gatheredRanges)
-      }
+      } // we can fix - we delete this whitespace!
+
     }); // reset:
 
     gatheredRanges.length = 0;
@@ -18385,12 +18421,12 @@ var lodash_isregexp = createCommonjsModule(function (module, exports) {
   module.exports = isRegExp;
 });
 
-var defaults$4 = {
+var defaults$5 = {
   caseInsensitive: false
 };
 
 function includesWithRegex(arr, whatToMatch, originalOpts) {
-  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
 
   if (!Array.isArray(arr) || !arr.length) {
     // definitely does not include
@@ -18409,7 +18445,7 @@ function includesWithRegex(arr, whatToMatch, originalOpts) {
   });
 }
 
-var defaults$5 = {
+var defaults$4 = {
   caseInsensitive: false,
   canBeCommaSeparated: false,
   quickPermittedValues: [],
@@ -18419,7 +18455,7 @@ var defaults$5 = {
 // if value is comma-separated, each extracted chunk is passed to this
 // we keep it separate to keep it DRY
 
-function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
+function validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr) {
   var extractedValue = str.slice(charStart, charEnd);
 
   if (!(includesWithRegex(opts.quickPermittedValues, extractedValue, {
@@ -18466,7 +18502,7 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
 
 function validateString(str, idxOffset, originalOpts) {
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
 
 
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
@@ -18486,7 +18522,7 @@ function validateString(str, idxOffset, originalOpts) {
           str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
           // pushing to it
 
-          validateValue(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
+          validateValue$2(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
           idxTo - idxOffset, errorArr);
         },
         errCb: function errCb(ranges, message) {
@@ -18504,7 +18540,7 @@ function validateString(str, idxOffset, originalOpts) {
       str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
       // pushing to it
 
-      validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
+      validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
   return errorArr;
@@ -18540,7 +18576,7 @@ function isAnEnabledValue(maybeARulesValue) {
   return 0;
 }
 
-function isObj$5(something) {
+function isObj(something) {
   return !!(something && typeof something === "object" && !Array.isArray(something));
 }
 
@@ -18549,7 +18585,7 @@ function isAnEnabledRule(rules, ruleId) {
     return 0;
   }
 
-  if (isObj$5(rules) && Object.prototype.hasOwnProperty.call(rules, ruleId)) {
+  if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, ruleId)) {
     return rules[ruleId];
   }
 
@@ -18557,7 +18593,7 @@ function isAnEnabledRule(rules, ruleId) {
     return rules[ruleId.split("-")[0]];
   }
 
-  if (isObj$5(rules) && Object.prototype.hasOwnProperty.call(rules, "all")) {
+  if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, "all")) {
     return rules.all;
   } // default return - rule's off:
 
@@ -18584,7 +18620,7 @@ fontSizeRegex: fontSizeRegex,
 isoDateRegex: isoDateRegex,
 linkTypes: linkTypes,
 isLetter: isLetter,
-isObj: isObj$5
+isObj: isObj
 });
 
 // rule: bad-character-null
@@ -18604,7 +18640,8 @@ function badCharacterNull(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18629,7 +18666,8 @@ function badCharacterStartOfHeading(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18654,7 +18692,8 @@ function badCharacterStartOfText(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18679,7 +18718,8 @@ function badCharacterEndOfText(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, "\n"]]
+            ranges: [[i, i + 1, "\n"]] // replace with line break
+
           }
         });
       }
@@ -18704,7 +18744,8 @@ function badCharacterEndOfTransmission(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18729,7 +18770,8 @@ function badCharacterEnquiry(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18754,7 +18796,8 @@ function badCharacterAcknowledge(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18779,7 +18822,8 @@ function badCharacterBell(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18804,7 +18848,8 @@ function badCharacterBackspace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18843,7 +18888,8 @@ var badCharacterTabulation = function badCharacterTabulation(context) {
             idxFrom: i,
             idxTo: i + 1,
             fix: {
-              ranges: [[i, i + 1, " "]]
+              ranges: [[i, i + 1, " "]] // replace with one space
+
             }
           });
         } else if (mode === "indentationIsFine") {
@@ -18860,7 +18906,8 @@ var badCharacterTabulation = function badCharacterTabulation(context) {
               idxFrom: i,
               idxTo: i + 1,
               fix: {
-                ranges: [[i, i + 1, " "]]
+                ranges: [[i, i + 1, " "]] // replace with one space
+
               }
             });
           }
@@ -18887,7 +18934,8 @@ function badCharacterLineTabulation(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18912,7 +18960,8 @@ function badCharacterFormFeed(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18937,7 +18986,8 @@ function badCharacterShiftOut(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18962,7 +19012,8 @@ function badCharacterShiftIn(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18987,7 +19038,8 @@ function badCharacterDataLinkEscape(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19012,7 +19064,8 @@ function badCharacterDeviceControlOne(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19037,7 +19090,8 @@ function badCharacterDeviceControlTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19062,7 +19116,8 @@ function badCharacterDeviceControlThree(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19087,7 +19142,8 @@ function badCharacterDeviceControlFour(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19112,7 +19168,8 @@ function badCharacterNegativeAcknowledge(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19137,7 +19194,8 @@ function badCharacterSynchronousIdle(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19162,7 +19220,8 @@ function badCharacterEndOfTransmissionBlock(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19187,7 +19246,8 @@ function badCharacterCancel(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19212,7 +19272,8 @@ function badCharacterEndOfMedium(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19237,7 +19298,8 @@ function badCharacterSubstitute(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19262,7 +19324,8 @@ function badCharacterEscape(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19287,7 +19350,8 @@ function badCharacterInformationSeparatorFour(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19312,7 +19376,8 @@ function badCharacterInformationSeparatorThree(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19324,7 +19389,7 @@ function badCharacterInformationSeparatorThree(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "INFORMATION SEPARATOR TWO":
 // https://www.fileformat.info/info/unicode/char/001e/index.htm
-function badCharacterInformationSeparatorTwo(context) {
+function badCharacterInformationSeparatorTwo$1(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -19337,7 +19402,8 @@ function badCharacterInformationSeparatorTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19349,7 +19415,7 @@ function badCharacterInformationSeparatorTwo(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "INFORMATION SEPARATOR ONE":
 // https://www.fileformat.info/info/unicode/char/001f/index.htm
-function badCharacterInformationSeparatorTwo$1(context) {
+function badCharacterInformationSeparatorTwo(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -19362,7 +19428,8 @@ function badCharacterInformationSeparatorTwo$1(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19387,7 +19454,8 @@ function badCharacterDelete(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19412,7 +19480,8 @@ function badCharacterControl0080(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19437,7 +19506,8 @@ function badCharacterControl0081(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19462,7 +19532,8 @@ function badCharacterBreakPermittedHere(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19487,7 +19558,8 @@ function badCharacterNoBreakHere(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19512,7 +19584,8 @@ function badCharacterControl0084(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19537,7 +19610,8 @@ function badCharacterNextLine(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19562,7 +19636,8 @@ function badCharacterStartOfSelectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19587,7 +19662,8 @@ function badCharacterEndOfSelectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19612,7 +19688,8 @@ function badCharacterCharacterTabulationSet(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19637,7 +19714,8 @@ function badCharacterCharacterTabulationWithJustification(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19662,7 +19740,8 @@ function badCharacterLineTabulationSet(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19687,7 +19766,8 @@ function badCharacterPartialLineForward(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19712,7 +19792,8 @@ function badCharacterPartialLineBackward(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19737,7 +19818,8 @@ function badCharacterReverseLineFeed(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19749,7 +19831,7 @@ function badCharacterReverseLineFeed(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "SINGLE SHIFT TWO":
 // https://www.fileformat.info/info/unicode/char/008e/index.htm
-function badCharacterSingleShiftTwo(context) {
+function badCharacterSingleShiftTwo$1(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -19762,7 +19844,8 @@ function badCharacterSingleShiftTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19774,7 +19857,7 @@ function badCharacterSingleShiftTwo(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "SINGLE SHIFT THREE":
 // https://www.fileformat.info/info/unicode/char/008f/index.htm
-function badCharacterSingleShiftTwo$1(context) {
+function badCharacterSingleShiftTwo(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -19787,7 +19870,8 @@ function badCharacterSingleShiftTwo$1(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19812,7 +19896,8 @@ function badCharacterDeviceControlString(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19837,7 +19922,8 @@ function badCharacterPrivateUseOne(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19862,7 +19948,8 @@ function badCharacterPrivateUseTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19887,7 +19974,8 @@ function badCharacterSetTransmitState(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19912,7 +20000,8 @@ function badCharacterCancelCharacter(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19937,7 +20026,8 @@ function badCharacterMessageWaiting(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19962,7 +20052,8 @@ function badCharacterStartOfProtectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19987,7 +20078,8 @@ function badCharacterEndOfProtectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20012,7 +20104,8 @@ function badCharacterStartOfString(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20037,7 +20130,8 @@ function badCharacterControl0099(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20062,7 +20156,8 @@ function badCharacterSingleCharacterIntroducer(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20087,7 +20182,8 @@ function badCharacterControlSequenceIntroducer(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20112,7 +20208,8 @@ function badCharacterStringTerminator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20137,7 +20234,8 @@ function badCharacterOperatingSystemCommand(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20162,7 +20260,8 @@ function badCharacterPrivateMessage(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20187,7 +20286,8 @@ function badCharacterApplicationProgramCommand(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20212,7 +20312,8 @@ function badCharacterSoftHyphen(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // replace with a normal space
+
           }
         });
       }
@@ -20237,7 +20338,8 @@ function badCharacterNonBreakingSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20262,7 +20364,8 @@ function badCharacterOghamSpaceMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20287,7 +20390,8 @@ function badCharacterEnQuad(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20312,7 +20416,8 @@ function badCharacterEmQuad(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20337,7 +20442,8 @@ function badCharacterEnSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20362,7 +20468,8 @@ function badCharacterEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20387,7 +20494,8 @@ function badCharacterThreePerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20412,7 +20520,8 @@ function badCharacterFourPerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20437,7 +20546,8 @@ function badCharacterSixPerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20462,7 +20572,8 @@ function badCharacterFigureSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20487,7 +20598,8 @@ function badCharacterPunctuationSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20512,7 +20624,8 @@ function badCharacterThinSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20537,7 +20650,8 @@ function badCharacterHairSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20562,7 +20676,8 @@ function badCharacterZeroWidthSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20587,7 +20702,8 @@ function badCharacterZeroWidthNonJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20612,7 +20728,8 @@ function badCharacterZeroWidthJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20637,7 +20754,8 @@ function badCharacterLeftToRightMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20662,7 +20780,8 @@ function badCharacterRightToLeftMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20687,7 +20806,8 @@ function badCharacterLeftToRightEmbedding(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20712,7 +20832,8 @@ function badCharacterRightToLeftEmbedding(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20737,7 +20858,8 @@ function badCharacterPopDirectionalFormatting(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20762,7 +20884,8 @@ function badCharacterLeftToRightOverride(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20787,7 +20910,8 @@ function badCharacterRightToLeftOverride(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20812,7 +20936,8 @@ function badCharacterWordJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20837,7 +20962,8 @@ function badCharacterFunctionApplication(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20862,7 +20988,8 @@ function badCharacterInvisibleTimes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20887,7 +21014,8 @@ function badCharacterInvisibleSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20912,7 +21040,8 @@ function badCharacterInvisiblePlus(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20937,7 +21066,8 @@ function badCharacterLeftToRightIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20962,7 +21092,8 @@ function badCharacterRightToLeftIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20987,7 +21118,8 @@ function badCharacterFirstStrongIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21012,7 +21144,8 @@ function badCharacterPopDirectionalIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21037,7 +21170,8 @@ function badCharacterInhibitSymmetricSwapping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21062,7 +21196,8 @@ function badCharacterActivateSymmetricSwapping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21087,7 +21222,8 @@ function badCharacterInhibitArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21112,7 +21248,8 @@ function badCharacterActivateArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21137,7 +21274,8 @@ function badCharacterNationalDigitShapes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21162,7 +21300,8 @@ function badCharacterNominalDigitShapes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21187,7 +21326,8 @@ function badCharacterZeroWidthNoBreakSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21212,7 +21352,8 @@ function badCharacterInterlinearAnnotationAnchor(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21237,7 +21378,8 @@ function badCharacterInterlinearAnnotationSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21262,7 +21404,8 @@ function badCharacterInterlinearAnnotationTerminator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21287,7 +21430,8 @@ function badCharacterLineSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21312,7 +21456,8 @@ function badCharacterParagraphSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21337,7 +21482,8 @@ function badCharacterNarrowNoBreakSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -21362,7 +21508,8 @@ function badCharacterMediumMathematicalSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -21387,7 +21534,8 @@ function badCharacterIdeographicSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -21412,7 +21560,8 @@ function badCharacterReplacementCharacter(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21465,7 +21614,7 @@ function tagSpaceAfterOpeningBracket(context) {
 
 // -----------------------------------------------------------------------------
 
-var BACKSLASH$2 = "\\"; // it flags up any tags which have whitespace between opening bracket and first
+var BACKSLASH$3 = "\\"; // it flags up any tags which have whitespace between opening bracket and first
 // tag name letter:
 //
 // < table>
@@ -21483,7 +21632,7 @@ function tagSpaceBeforeClosingBracket(context) {
       !context.str[node.end - 2].trim().length && // and the next non-whitespace character on the left is not slash of
       // any kind (we don't want to step into rule's
       // "tag-space-between-slash-and-bracket" turf)
-      !(BACKSLASH$2 + "/").includes(context.str[left(context.str, node.end - 1) || 0])) {
+      !(BACKSLASH$3 + "/").includes(context.str[left(context.str, node.end - 1) || 0])) {
         var from = left(context.str, node.end - 1) ? left(context.str, node.end - 1) + 1 : 0;
         ranges.push([from, node.end - 1]);
       }
@@ -21580,7 +21729,7 @@ function tagSpaceBetweenSlashAndBracket(context) {
 }
 
 // rule: tag-closing-backslash
-var BACKSLASH$3 = "\\";
+var BACKSLASH$2 = "\\";
 
 function tagClosingBackslash(context) {
   return {
@@ -21594,11 +21743,11 @@ function tagClosingBackslash(context) {
       //
       //
 
-      if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$3)) {
+      if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$2)) {
 
         for (var i = node.start; i < node.tagNameStartsAt; i++) {
           // fish-out all backslashes
-          if (context.str[i] === BACKSLASH$3) {
+          if (context.str[i] === BACKSLASH$2) {
             // just delete the backslash because it doesn't belong here
             // if there's a need for closing (left) slash, it will be added
             // by 3rd level rules which can "see" the surrounding tag layout.
@@ -21615,7 +21764,7 @@ function tagClosingBackslash(context) {
 
 
       if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && // necessary because in the future unclosed tags will be recognised!
-      context.str[left(context.str, node.end - 1)] === BACKSLASH$3) {
+      context.str[left(context.str, node.end - 1)] === BACKSLASH$2) {
         var message = node.void ? "Replace backslash with slash." : "Delete this.";
         var backSlashPos = left(context.str, node.end - 1); // So we confirmed there's left slash.
         // Is it completely rogue or is it meant to be self-closing tag's closing?
@@ -21680,7 +21829,7 @@ function tagClosingBackslash(context) {
 // it controls, should we or should we not put the slashes on void tags,
 // such as img. Is it <img...> or is it <img.../>?
 
-var BACKSLASH$4 = "\\";
+var BACKSLASH$1 = "\\";
 
 function tagVoidSlash(context, mode) {
   if (mode === void 0) {
@@ -21694,7 +21843,7 @@ function tagVoidSlash(context, mode) {
       var slashPos = left(context.str, closingBracketPos);
       var leftOfSlashPos = left(context.str, slashPos) || 0;
 
-      if (mode === "never" && node.void && !node.closing && context.str[slashPos] === "/") {
+      if (mode === "never" && node.void && context.str[slashPos] === "/") {
         // if slashes are forbidden on void tags, delete the slash and all
         // the whitespace in front, because there's never a space before
         // non-void tag's closing bracket without a slash, for example, "<span >"
@@ -21707,8 +21856,8 @@ function tagVoidSlash(context, mode) {
             ranges: [[leftOfSlashPos + 1, closingBracketPos]]
           }
         });
-      } else if (mode === "always" && node.void && !node.closing && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
-      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$4 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) { // if slashes are requested on void tags, situation is more complex,
+      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
+      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$1 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) { // if slashes are requested on void tags, situation is more complex,
         // because we need to take into the account the rule
         // "tag-space-before-closing-slash"
 
@@ -21750,14 +21899,6 @@ function tagVoidSlash(context, mode) {
             }
           });
         }
-      } else if (node.void && node.closing) {
-        context.report({
-          ruleId: "tag-void-slash",
-          message: "A void tag can't be a closing tag.",
-          idxFrom: node.start,
-          idxTo: node.end,
-          fix: null
-        });
       }
     }
   };
@@ -21887,7 +22028,7 @@ function tagBadSelfClosing(context) {
   };
 }
 
-var defaults$6 = {
+var defaults$3 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -21899,7 +22040,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -21966,7 +22107,7 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-var defaults$7 = {
+var defaults$2 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
@@ -21994,7 +22135,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$7), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); // 1. validate opts.progressFn
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
@@ -22015,7 +22156,7 @@ function rMerge(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
   } else {
-    opts = _objectSpread2({}, defaults$7);
+    opts = _objectSpread2({}, defaults$2);
   } // progress-wise, sort takes first 20%
   // two-level-deep array clone:
 
@@ -22663,7 +22804,7 @@ function attributeValidateAcceptCharset(context) {
   };
 }
 
-var require$$0$1 = {
+var require$$0 = {
   "application/1d-interleaved-parityfec": {
     source: "iana"
   },
@@ -30984,7 +31125,7 @@ var require$$0$1 = {
  * Module exports.
  */
 
-var mimeDb = require$$0$1;
+var mimeDb = require$$0;
 
 // -----------------------------------------------------------------------------
 
@@ -31075,7 +31216,7 @@ function attributeValidateAccesskey(context) {
 
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 
-var BACKSLASH$5 = "\\"; // retrieved 2020-Jan-11
+var BACKSLASH = "\\"; // retrieved 2020-Jan-11
 // https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
 
 var knownSchemes = ["aaa", "aaas", "about", "acap", "acct", "acd", "acr", "adiumxtra", "adt", "afp", "afs", "aim", "amss", "android", "appdata", "apt", "ark", "attachment", "aw", "barion", "beshare", "bitcoin", "bitcoincash", "blob", "bolo", "browserext", "calculator", "callto", "cap", "cast", "casts", "chrome", "chrome-extension", "cid", "coap", "coap+tcp", "coap+ws", "coaps", "coaps+tcp", "coaps+ws", "com-eventbrite-attendee", "content", "conti", "crid", "cvs", "dab", "dav", "diaspora", "dict", "did", "dis", "dlna-playcontainer", "dlna-playsingle", "dns", "dntp", "dpp", "drm", "drop", "dtn", "dvb", "ed2k", "elsi", "example", "facetime", "fax", "feed", "feedready", "filesystem", "finger", "first-run-pen-experience", "fish", "fm", "fuchsia-pkg", "geo", "gg", "git", "gizmoproject", "go", "gopher", "graph", "gtalk", "h323", "ham", "hcap", "hcp", "hxxp", "hxxps", "hydrazone", "iax", "icap", "icon", "im", "imap", "info", "iotdisco", "ipn", "ipp", "ipps", "irc6", "ircs", "iris", "iris.beep", "iris.lwz", "iris.xpc", "iris.xpcs", "isostore", "itms", "jabber", "jar", "jms", "keyparc", "lastfm", "ldap", "ldaps", "leaptofrogans", "lorawan", "lvlt", "magnet", "mailserver", "maps", "market", "message", "microsoft.windows.camera", "microsoft.windows.camera.multipicker", "microsoft.windows.camera.picker", "mid", "mms", "modem", "mongodb", "moz", "ms-access", "ms-browser-extension", "ms-calculator", "ms-drive-to", "ms-enrollment", "ms-excel", "ms-eyecontrolspeech", "ms-gamebarservices", "ms-gamingoverlay", "ms-getoffice", "ms-help", "ms-infopath", "ms-inputapp", "ms-lockscreencomponent-config", "ms-media-stream-id", "ms-mixedrealitycapture", "ms-mobileplans", "ms-officeapp", "ms-people", "ms-project", "ms-powerpoint", "ms-publisher", "ms-restoretabcompanion", "ms-screenclip", "ms-screensketch", "ms-search", "ms-search-repair", "ms-secondary-screen-controller", "ms-secondary-screen-setup", "ms-settings", "ms-settings-airplanemode", "ms-settings-bluetooth", "ms-settings-camera", "ms-settings-cellular", "ms-settings-cloudstorage", "ms-settings-connectabledevices", "ms-settings-displays-topology", "ms-settings-emailandaccounts", "ms-settings-language", "ms-settings-location", "ms-settings-lock", "ms-settings-nfctransactions", "ms-settings-notifications", "ms-settings-power", "ms-settings-privacy", "ms-settings-proximity", "ms-settings-screenrotation", "ms-settings-wifi", "ms-settings-workplace", "ms-spd", "ms-sttoverlay", "ms-transit-to", "ms-useractivityset", "ms-virtualtouchpad", "ms-visio", "ms-walk-to", "ms-whiteboard", "ms-whiteboard-cmd", "ms-word", "msnim", "msrp", "msrps", "mss", "mtqp", "mumble", "mupdate", "mvn", "news", "nfs", "ni", "nih", "nntp", "notes", "ocf", "oid", "onenote", "onenote-cmd", "opaquelocktoken", "openpgp4fpr", "pack", "palm", "paparazzi", "payment", "payto", "pkcs11", "platform", "pop", "pres", "prospero", "proxy", "pwid", "psyc", "pttp", "qb", "query", "quic-transport", "redis", "rediss", "reload", "res", "resource", "rmi", "rsync", "rtmfp", "rtmp", "rtsp", "rtsps", "rtspu", "secondlife", "service", "session", "sftp", "sgn", "shttp", "sieve", "simpleledger", "sip", "sips", "skype", "smb", "sms", "smtp", "snews", "snmp", "soap.beep", "soap.beeps", "soldat", "spiffe", "spotify", "ssh", "steam", "stun", "stuns", "submit", "svn", "tag", "teamspeak", "tel", "teliaeid", "telnet", "tftp", "things", "thismessage", "tip", "tn3270", "tool", "turn", "turns", "tv", "udp", "unreal", "urn", "ut2004", "v-event", "vemmi", "ventrilo", "videotex", "vnc", "view-source", "wais", "webcal", "wpid", "ws", "wss", "wtai", "wyciwyg", "xcon", "xcon-userid", "xfire", "xmlrpc.beep", "xmlrpc.beeps", "xmpp", "xri", "ymsgr", "z39.50", "z39.50r", "z39.50s"];
@@ -31197,10 +31338,10 @@ function isRel(str, originalOpts) {
     };
   }
 
-  if (str.includes(BACKSLASH$5)) {
+  if (str.includes(BACKSLASH)) {
     return {
       res: false,
-      message: "Unescaped backslash (" + BACKSLASH$5 + ") character."
+      message: "Unescaped backslash (" + BACKSLASH + ") character."
     };
   }
 
@@ -31300,7 +31441,7 @@ ip.v6 = function (options) {
 
 var ipRegex = ip;
 
-var tlds = ["aaa", "aarp", "abarth", "abb", "abbott", "abbvie", "abc", "able", "abogado", "abudhabi", "ac", "academy", "accenture", "accountant", "accountants", "aco", "actor", "ad", "adac", "ads", "adult", "ae", "aeg", "aero", "aetna", "af", "afamilycompany", "afl", "africa", "ag", "agakhan", "agency", "ai", "aig", "airbus", "airforce", "airtel", "akdn", "al", "alfaromeo", "alibaba", "alipay", "allfinanz", "allstate", "ally", "alsace", "alstom", "am", "amazon", "americanexpress", "americanfamily", "amex", "amfam", "amica", "amsterdam", "analytics", "android", "anquan", "anz", "ao", "aol", "apartments", "app", "apple", "aq", "aquarelle", "ar", "arab", "aramco", "archi", "army", "arpa", "art", "arte", "as", "asda", "asia", "associates", "at", "athleta", "attorney", "au", "auction", "audi", "audible", "audio", "auspost", "author", "auto", "autos", "avianca", "aw", "aws", "ax", "axa", "az", "azure", "ba", "baby", "baidu", "banamex", "bananarepublic", "band", "bank", "bar", "barcelona", "barclaycard", "barclays", "barefoot", "bargains", "baseball", "basketball", "bauhaus", "bayern", "bb", "bbc", "bbt", "bbva", "bcg", "bcn", "bd", "be", "beats", "beauty", "beer", "bentley", "berlin", "best", "bestbuy", "bet", "bf", "bg", "bh", "bharti", "bi", "bible", "bid", "bike", "bing", "bingo", "bio", "biz", "bj", "black", "blackfriday", "blockbuster", "blog", "bloomberg", "blue", "bm", "bms", "bmw", "bn", "bnpparibas", "bo", "boats", "boehringer", "bofa", "bom", "bond", "boo", "book", "booking", "bosch", "bostik", "boston", "bot", "boutique", "box", "br", "bradesco", "bridgestone", "broadway", "broker", "brother", "brussels", "bs", "bt", "budapest", "bugatti", "build", "builders", "business", "buy", "buzz", "bv", "bw", "by", "bz", "bzh", "ca", "cab", "cafe", "cal", "call", "calvinklein", "cam", "camera", "camp", "cancerresearch", "canon", "capetown", "capital", "capitalone", "car", "caravan", "cards", "care", "career", "careers", "cars", "casa", "case", "caseih", "cash", "casino", "cat", "catering", "catholic", "cba", "cbn", "cbre", "cbs", "cc", "cd", "center", "ceo", "cern", "cf", "cfa", "cfd", "cg", "ch", "chanel", "channel", "charity", "chase", "chat", "cheap", "chintai", "christmas", "chrome", "church", "ci", "cipriani", "circle", "cisco", "citadel", "citi", "citic", "city", "cityeats", "ck", "cl", "claims", "cleaning", "click", "clinic", "clinique", "clothing", "cloud", "club", "clubmed", "cm", "cn", "co", "coach", "codes", "coffee", "college", "cologne", "com", "comcast", "commbank", "community", "company", "compare", "computer", "comsec", "condos", "construction", "consulting", "contact", "contractors", "cooking", "cookingchannel", "cool", "coop", "corsica", "country", "coupon", "coupons", "courses", "cpa", "cr", "credit", "creditcard", "creditunion", "cricket", "crown", "crs", "cruise", "cruises", "csc", "cu", "cuisinella", "cv", "cw", "cx", "cy", "cymru", "cyou", "cz", "dabur", "dad", "dance", "data", "date", "dating", "datsun", "day", "dclk", "dds", "de", "deal", "dealer", "deals", "degree", "delivery", "dell", "deloitte", "delta", "democrat", "dental", "dentist", "desi", "design", "dev", "dhl", "diamonds", "diet", "digital", "direct", "directory", "discount", "discover", "dish", "diy", "dj", "dk", "dm", "dnp", "do", "docs", "doctor", "dog", "domains", "dot", "download", "drive", "dtv", "dubai", "duck", "dunlop", "dupont", "durban", "dvag", "dvr", "dz", "earth", "eat", "ec", "eco", "edeka", "edu", "education", "ee", "eg", "email", "emerck", "energy", "engineer", "engineering", "enterprises", "epson", "equipment", "er", "ericsson", "erni", "es", "esq", "estate", "et", "etisalat", "eu", "eurovision", "eus", "events", "exchange", "expert", "exposed", "express", "extraspace", "fage", "fail", "fairwinds", "faith", "family", "fan", "fans", "farm", "farmers", "fashion", "fast", "fedex", "feedback", "ferrari", "ferrero", "fi", "fiat", "fidelity", "fido", "film", "final", "finance", "financial", "fire", "firestone", "firmdale", "fish", "fishing", "fit", "fitness", "fj", "fk", "flickr", "flights", "flir", "florist", "flowers", "fly", "fm", "fo", "foo", "food", "foodnetwork", "football", "ford", "forex", "forsale", "forum", "foundation", "fox", "fr", "free", "fresenius", "frl", "frogans", "frontdoor", "frontier", "ftr", "fujitsu", "fujixerox", "fun", "fund", "furniture", "futbol", "fyi", "ga", "gal", "gallery", "gallo", "gallup", "game", "games", "gap", "garden", "gay", "gb", "gbiz", "gd", "gdn", "ge", "gea", "gent", "genting", "george", "gf", "gg", "ggee", "gh", "gi", "gift", "gifts", "gives", "giving", "gl", "glade", "glass", "gle", "global", "globo", "gm", "gmail", "gmbh", "gmo", "gmx", "gn", "godaddy", "gold", "goldpoint", "golf", "goo", "goodyear", "goog", "google", "gop", "got", "gov", "gp", "gq", "gr", "grainger", "graphics", "gratis", "green", "gripe", "grocery", "group", "gs", "gt", "gu", "guardian", "gucci", "guge", "guide", "guitars", "guru", "gw", "gy", "hair", "hamburg", "hangout", "haus", "hbo", "hdfc", "hdfcbank", "health", "healthcare", "help", "helsinki", "here", "hermes", "hgtv", "hiphop", "hisamitsu", "hitachi", "hiv", "hk", "hkt", "hm", "hn", "hockey", "holdings", "holiday", "homedepot", "homegoods", "homes", "homesense", "honda", "horse", "hospital", "host", "hosting", "hot", "hoteles", "hotels", "hotmail", "house", "how", "hr", "hsbc", "ht", "hu", "hughes", "hyatt", "hyundai", "ibm", "icbc", "ice", "icu", "id", "ie", "ieee", "ifm", "ikano", "il", "im", "imamat", "imdb", "immo", "immobilien", "in", "inc", "industries", "infiniti", "info", "ing", "ink", "institute", "insurance", "insure", "int", "international", "intuit", "investments", "io", "ipiranga", "iq", "ir", "irish", "is", "ismaili", "ist", "istanbul", "it", "itau", "itv", "iveco", "jaguar", "java", "jcb", "je", "jeep", "jetzt", "jewelry", "jio", "jll", "jm", "jmp", "jnj", "jo", "jobs", "joburg", "jot", "joy", "jp", "jpmorgan", "jprs", "juegos", "juniper", "kaufen", "kddi", "ke", "kerryhotels", "kerrylogistics", "kerryproperties", "kfh", "kg", "kh", "ki", "kia", "kim", "kinder", "kindle", "kitchen", "kiwi", "km", "kn", "koeln", "komatsu", "kosher", "kp", "kpmg", "kpn", "kr", "krd", "kred", "kuokgroup", "kw", "ky", "kyoto", "kz", "la", "lacaixa", "lamborghini", "lamer", "lancaster", "lancia", "land", "landrover", "lanxess", "lasalle", "lat", "latino", "latrobe", "law", "lawyer", "lb", "lc", "lds", "lease", "leclerc", "lefrak", "legal", "lego", "lexus", "lgbt", "li", "lidl", "life", "lifeinsurance", "lifestyle", "lighting", "like", "lilly", "limited", "limo", "lincoln", "linde", "link", "lipsy", "live", "living", "lixil", "lk", "llc", "llp", "loan", "loans", "locker", "locus", "loft", "lol", "london", "lotte", "lotto", "love", "lpl", "lplfinancial", "lr", "ls", "lt", "ltd", "ltda", "lu", "lundbeck", "luxe", "luxury", "lv", "ly", "ma", "macys", "madrid", "maif", "maison", "makeup", "man", "management", "mango", "map", "market", "marketing", "markets", "marriott", "marshalls", "maserati", "mattel", "mba", "mc", "mckinsey", "md", "me", "med", "media", "meet", "melbourne", "meme", "memorial", "men", "menu", "merckmsd", "mg", "mh", "miami", "microsoft", "mil", "mini", "mint", "mit", "mitsubishi", "mk", "ml", "mlb", "mls", "mm", "mma", "mn", "mo", "mobi", "mobile", "moda", "moe", "moi", "mom", "monash", "money", "monster", "mormon", "mortgage", "moscow", "moto", "motorcycles", "mov", "movie", "mp", "mq", "mr", "ms", "msd", "mt", "mtn", "mtr", "mu", "museum", "mutual", "mv", "mw", "mx", "my", "mz", "na", "nab", "nagoya", "name", "nationwide", "natura", "navy", "nba", "nc", "ne", "nec", "net", "netbank", "netflix", "network", "neustar", "new", "newholland", "news", "next", "nextdirect", "nexus", "nf", "nfl", "ng", "ngo", "nhk", "ni", "nico", "nike", "nikon", "ninja", "nissan", "nissay", "nl", "no", "nokia", "northwesternmutual", "norton", "now", "nowruz", "nowtv", "np", "nr", "nra", "nrw", "ntt", "nu", "nyc", "nz", "obi", "observer", "off", "office", "okinawa", "olayan", "olayangroup", "oldnavy", "ollo", "om", "omega", "one", "ong", "onl", "online", "onyourside", "ooo", "open", "oracle", "orange", "org", "organic", "origins", "osaka", "otsuka", "ott", "ovh", "pa", "page", "panasonic", "paris", "pars", "partners", "parts", "party", "passagens", "pay", "pccw", "pe", "pet", "pf", "pfizer", "pg", "ph", "pharmacy", "phd", "philips", "phone", "photo", "photography", "photos", "physio", "pics", "pictet", "pictures", "pid", "pin", "ping", "pink", "pioneer", "pizza", "pk", "pl", "place", "play", "playstation", "plumbing", "plus", "pm", "pn", "pnc", "pohl", "poker", "politie", "porn", "post", "pr", "pramerica", "praxi", "press", "prime", "pro", "prod", "productions", "prof", "progressive", "promo", "properties", "property", "protection", "pru", "prudential", "ps", "pt", "pub", "pw", "pwc", "py", "qa", "qpon", "quebec", "quest", "qvc", "racing", "radio", "raid", "re", "read", "realestate", "realtor", "realty", "recipes", "red", "redstone", "redumbrella", "rehab", "reise", "reisen", "reit", "reliance", "ren", "rent", "rentals", "repair", "report", "republican", "rest", "restaurant", "review", "reviews", "rexroth", "rich", "richardli", "ricoh", "ril", "rio", "rip", "rmit", "ro", "rocher", "rocks", "rodeo", "rogers", "room", "rs", "rsvp", "ru", "rugby", "ruhr", "run", "rw", "rwe", "ryukyu", "sa", "saarland", "safe", "safety", "sakura", "sale", "salon", "samsclub", "samsung", "sandvik", "sandvikcoromant", "sanofi", "sap", "sarl", "sas", "save", "saxo", "sb", "sbi", "sbs", "sc", "sca", "scb", "schaeffler", "schmidt", "scholarships", "school", "schule", "schwarz", "science", "scjohnson", "scot", "sd", "se", "search", "seat", "secure", "security", "seek", "select", "sener", "services", "ses", "seven", "sew", "sex", "sexy", "sfr", "sg", "sh", "shangrila", "sharp", "shaw", "shell", "shia", "shiksha", "shoes", "shop", "shopping", "shouji", "show", "showtime", "si", "silk", "sina", "singles", "site", "sj", "sk", "ski", "skin", "sky", "skype", "sl", "sling", "sm", "smart", "smile", "sn", "sncf", "so", "soccer", "social", "softbank", "software", "sohu", "solar", "solutions", "song", "sony", "soy", "spa", "space", "sport", "spot", "spreadbetting", "sr", "srl", "ss", "st", "stada", "staples", "star", "statebank", "statefarm", "stc", "stcgroup", "stockholm", "storage", "store", "stream", "studio", "study", "style", "su", "sucks", "supplies", "supply", "support", "surf", "surgery", "suzuki", "sv", "swatch", "swiftcover", "swiss", "sx", "sy", "sydney", "systems", "sz", "tab", "taipei", "talk", "taobao", "target", "tatamotors", "tatar", "tattoo", "tax", "taxi", "tc", "tci", "td", "tdk", "team", "tech", "technology", "tel", "temasek", "tennis", "teva", "tf", "tg", "th", "thd", "theater", "theatre", "tiaa", "tickets", "tienda", "tiffany", "tips", "tires", "tirol", "tj", "tjmaxx", "tjx", "tk", "tkmaxx", "tl", "tm", "tmall", "tn", "to", "today", "tokyo", "tools", "top", "toray", "toshiba", "total", "tours", "town", "toyota", "toys", "tr", "trade", "trading", "training", "travel", "travelchannel", "travelers", "travelersinsurance", "trust", "trv", "tt", "tube", "tui", "tunes", "tushu", "tv", "tvs", "tw", "tz", "ua", "ubank", "ubs", "ug", "uk", "unicom", "university", "uno", "uol", "ups", "us", "uy", "uz", "va", "vacations", "vana", "vanguard", "vc", "ve", "vegas", "ventures", "verisign", "versicherung", "vet", "vg", "vi", "viajes", "video", "vig", "viking", "villas", "vin", "vip", "virgin", "visa", "vision", "viva", "vivo", "vlaanderen", "vn", "vodka", "volkswagen", "volvo", "vote", "voting", "voto", "voyage", "vu", "vuelos", "wales", "walmart", "walter", "wang", "wanggou", "watch", "watches", "weather", "weatherchannel", "webcam", "weber", "website", "wed", "wedding", "weibo", "weir", "wf", "whoswho", "wien", "wiki", "williamhill", "win", "windows", "wine", "winners", "wme", "wolterskluwer", "woodside", "work", "works", "world", "wow", "ws", "wtc", "wtf", "xbox", "xerox", "xfinity", "xihuan", "xin", "कॉम", "セール", "佛山", "ಭಾರತ", "慈善", "集团", "在线", "한국", "ଭାରତ", "大众汽车", "点看", "คอม", "ভাৰত", "ভারত", "八卦", "ישראל", "موقع", "বাংলা", "公益", "公司", "香格里拉", "网站", "移动", "我爱你", "москва", "қаз", "католик", "онлайн", "сайт", "联通", "срб", "бг", "бел", "קום", "时尚", "微博", "淡马锡", "ファッション", "орг", "नेट", "ストア", "アマゾン", "삼성", "சிங்கப்பூர்", "商标", "商店", "商城", "дети", "мкд", "ею", "ポイント", "新闻", "家電", "كوم", "中文网", "中信", "中国", "中國", "娱乐", "谷歌", "భారత్", "ලංකා", "電訊盈科", "购物", "クラウド", "ભારત", "通販", "भारतम्", "भारत", "भारोत", "网店", "संगठन", "餐厅", "网络", "ком", "укр", "香港", "亚马逊", "诺基亚", "食品", "飞利浦", "台湾", "台灣", "手机", "мон", "الجزائر", "عمان", "ارامكو", "ایران", "العليان", "اتصالات", "امارات", "بازار", "موريتانيا", "پاکستان", "الاردن", "بارت", "بھارت", "المغرب", "ابوظبي", "البحرين", "السعودية", "ڀارت", "كاثوليك", "سودان", "همراه", "عراق", "مليسيا", "澳門", "닷컴", "政府", "شبكة", "بيتك", "عرب", "გე", "机构", "组织机构", "健康", "ไทย", "سورية", "招聘", "рус", "рф", "تونس", "大拿", "ລາວ", "みんな", "グーグル", "ευ", "ελ", "世界", "書籍", "ഭാരതം", "ਭਾਰਤ", "网址", "닷넷", "コム", "天主教", "游戏", "vermögensberater", "vermögensberatung", "企业", "信息", "嘉里大酒店", "嘉里", "مصر", "قطر", "广东", "இலங்கை", "இந்தியா", "հայ", "新加坡", "فلسطين", "政务", "xxx", "xyz", "yachts", "yahoo", "yamaxun", "yandex", "ye", "yodobashi", "yoga", "yokohama", "you", "youtube", "yt", "yun", "za", "zappos", "zara", "zero", "zip", "zm", "zone", "zuerich", "zw"];
+var tlds = ["aaa", "aarp", "abarth", "abb", "abbott", "abbvie", "abc", "able", "abogado", "abudhabi", "ac", "academy", "accenture", "accountant", "accountants", "aco", "actor", "ad", "adac", "ads", "adult", "ae", "aeg", "aero", "aetna", "af", "afamilycompany", "afl", "africa", "ag", "agakhan", "agency", "ai", "aig", "airbus", "airforce", "airtel", "akdn", "al", "alfaromeo", "alibaba", "alipay", "allfinanz", "allstate", "ally", "alsace", "alstom", "am", "amazon", "americanexpress", "americanfamily", "amex", "amfam", "amica", "amsterdam", "analytics", "android", "anquan", "anz", "ao", "aol", "apartments", "app", "apple", "aq", "aquarelle", "ar", "arab", "aramco", "archi", "army", "arpa", "art", "arte", "as", "asda", "asia", "associates", "at", "athleta", "attorney", "au", "auction", "audi", "audible", "audio", "auspost", "author", "auto", "autos", "avianca", "aw", "aws", "ax", "axa", "az", "azure", "ba", "baby", "baidu", "banamex", "bananarepublic", "band", "bank", "bar", "barcelona", "barclaycard", "barclays", "barefoot", "bargains", "baseball", "basketball", "bauhaus", "bayern", "bb", "bbc", "bbt", "bbva", "bcg", "bcn", "bd", "be", "beats", "beauty", "beer", "bentley", "berlin", "best", "bestbuy", "bet", "bf", "bg", "bh", "bharti", "bi", "bible", "bid", "bike", "bing", "bingo", "bio", "biz", "bj", "black", "blackfriday", "blockbuster", "blog", "bloomberg", "blue", "bm", "bms", "bmw", "bn", "bnpparibas", "bo", "boats", "boehringer", "bofa", "bom", "bond", "boo", "book", "booking", "bosch", "bostik", "boston", "bot", "boutique", "box", "br", "bradesco", "bridgestone", "broadway", "broker", "brother", "brussels", "bs", "bt", "budapest", "bugatti", "build", "builders", "business", "buy", "buzz", "bv", "bw", "by", "bz", "bzh", "ca", "cab", "cafe", "cal", "call", "calvinklein", "cam", "camera", "camp", "cancerresearch", "canon", "capetown", "capital", "capitalone", "car", "caravan", "cards", "care", "career", "careers", "cars", "casa", "case", "cash", "casino", "cat", "catering", "catholic", "cba", "cbn", "cbre", "cbs", "cc", "cd", "center", "ceo", "cern", "cf", "cfa", "cfd", "cg", "ch", "chanel", "channel", "charity", "chase", "chat", "cheap", "chintai", "christmas", "chrome", "church", "ci", "cipriani", "circle", "cisco", "citadel", "citi", "citic", "city", "cityeats", "ck", "cl", "claims", "cleaning", "click", "clinic", "clinique", "clothing", "cloud", "club", "clubmed", "cm", "cn", "co", "coach", "codes", "coffee", "college", "cologne", "com", "comcast", "commbank", "community", "company", "compare", "computer", "comsec", "condos", "construction", "consulting", "contact", "contractors", "cooking", "cookingchannel", "cool", "coop", "corsica", "country", "coupon", "coupons", "courses", "cpa", "cr", "credit", "creditcard", "creditunion", "cricket", "crown", "crs", "cruise", "cruises", "csc", "cu", "cuisinella", "cv", "cw", "cx", "cy", "cymru", "cyou", "cz", "dabur", "dad", "dance", "data", "date", "dating", "datsun", "day", "dclk", "dds", "de", "deal", "dealer", "deals", "degree", "delivery", "dell", "deloitte", "delta", "democrat", "dental", "dentist", "desi", "design", "dev", "dhl", "diamonds", "diet", "digital", "direct", "directory", "discount", "discover", "dish", "diy", "dj", "dk", "dm", "dnp", "do", "docs", "doctor", "dog", "domains", "dot", "download", "drive", "dtv", "dubai", "duck", "dunlop", "dupont", "durban", "dvag", "dvr", "dz", "earth", "eat", "ec", "eco", "edeka", "edu", "education", "ee", "eg", "email", "emerck", "energy", "engineer", "engineering", "enterprises", "epson", "equipment", "er", "ericsson", "erni", "es", "esq", "estate", "et", "etisalat", "eu", "eurovision", "eus", "events", "exchange", "expert", "exposed", "express", "extraspace", "fage", "fail", "fairwinds", "faith", "family", "fan", "fans", "farm", "farmers", "fashion", "fast", "fedex", "feedback", "ferrari", "ferrero", "fi", "fiat", "fidelity", "fido", "film", "final", "finance", "financial", "fire", "firestone", "firmdale", "fish", "fishing", "fit", "fitness", "fj", "fk", "flickr", "flights", "flir", "florist", "flowers", "fly", "fm", "fo", "foo", "food", "foodnetwork", "football", "ford", "forex", "forsale", "forum", "foundation", "fox", "fr", "free", "fresenius", "frl", "frogans", "frontdoor", "frontier", "ftr", "fujitsu", "fujixerox", "fun", "fund", "furniture", "futbol", "fyi", "ga", "gal", "gallery", "gallo", "gallup", "game", "games", "gap", "garden", "gay", "gb", "gbiz", "gd", "gdn", "ge", "gea", "gent", "genting", "george", "gf", "gg", "ggee", "gh", "gi", "gift", "gifts", "gives", "giving", "gl", "glade", "glass", "gle", "global", "globo", "gm", "gmail", "gmbh", "gmo", "gmx", "gn", "godaddy", "gold", "goldpoint", "golf", "goo", "goodyear", "goog", "google", "gop", "got", "gov", "gp", "gq", "gr", "grainger", "graphics", "gratis", "green", "gripe", "grocery", "group", "gs", "gt", "gu", "guardian", "gucci", "guge", "guide", "guitars", "guru", "gw", "gy", "hair", "hamburg", "hangout", "haus", "hbo", "hdfc", "hdfcbank", "health", "healthcare", "help", "helsinki", "here", "hermes", "hgtv", "hiphop", "hisamitsu", "hitachi", "hiv", "hk", "hkt", "hm", "hn", "hockey", "holdings", "holiday", "homedepot", "homegoods", "homes", "homesense", "honda", "horse", "hospital", "host", "hosting", "hot", "hoteles", "hotels", "hotmail", "house", "how", "hr", "hsbc", "ht", "hu", "hughes", "hyatt", "hyundai", "ibm", "icbc", "ice", "icu", "id", "ie", "ieee", "ifm", "ikano", "il", "im", "imamat", "imdb", "immo", "immobilien", "in", "inc", "industries", "infiniti", "info", "ing", "ink", "institute", "insurance", "insure", "int", "international", "intuit", "investments", "io", "ipiranga", "iq", "ir", "irish", "is", "ismaili", "ist", "istanbul", "it", "itau", "itv", "iveco", "jaguar", "java", "jcb", "je", "jeep", "jetzt", "jewelry", "jio", "jll", "jm", "jmp", "jnj", "jo", "jobs", "joburg", "jot", "joy", "jp", "jpmorgan", "jprs", "juegos", "juniper", "kaufen", "kddi", "ke", "kerryhotels", "kerrylogistics", "kerryproperties", "kfh", "kg", "kh", "ki", "kia", "kim", "kinder", "kindle", "kitchen", "kiwi", "km", "kn", "koeln", "komatsu", "kosher", "kp", "kpmg", "kpn", "kr", "krd", "kred", "kuokgroup", "kw", "ky", "kyoto", "kz", "la", "lacaixa", "lamborghini", "lamer", "lancaster", "lancia", "land", "landrover", "lanxess", "lasalle", "lat", "latino", "latrobe", "law", "lawyer", "lb", "lc", "lds", "lease", "leclerc", "lefrak", "legal", "lego", "lexus", "lgbt", "li", "lidl", "life", "lifeinsurance", "lifestyle", "lighting", "like", "lilly", "limited", "limo", "lincoln", "linde", "link", "lipsy", "live", "living", "lixil", "lk", "llc", "llp", "loan", "loans", "locker", "locus", "loft", "lol", "london", "lotte", "lotto", "love", "lpl", "lplfinancial", "lr", "ls", "lt", "ltd", "ltda", "lu", "lundbeck", "luxe", "luxury", "lv", "ly", "ma", "macys", "madrid", "maif", "maison", "makeup", "man", "management", "mango", "map", "market", "marketing", "markets", "marriott", "marshalls", "maserati", "mattel", "mba", "mc", "mckinsey", "md", "me", "med", "media", "meet", "melbourne", "meme", "memorial", "men", "menu", "merckmsd", "mg", "mh", "miami", "microsoft", "mil", "mini", "mint", "mit", "mitsubishi", "mk", "ml", "mlb", "mls", "mm", "mma", "mn", "mo", "mobi", "mobile", "moda", "moe", "moi", "mom", "monash", "money", "monster", "mormon", "mortgage", "moscow", "moto", "motorcycles", "mov", "movie", "mp", "mq", "mr", "ms", "msd", "mt", "mtn", "mtr", "mu", "museum", "mutual", "mv", "mw", "mx", "my", "mz", "na", "nab", "nagoya", "name", "nationwide", "natura", "navy", "nba", "nc", "ne", "nec", "net", "netbank", "netflix", "network", "neustar", "new", "news", "next", "nextdirect", "nexus", "nf", "nfl", "ng", "ngo", "nhk", "ni", "nico", "nike", "nikon", "ninja", "nissan", "nissay", "nl", "no", "nokia", "northwesternmutual", "norton", "now", "nowruz", "nowtv", "np", "nr", "nra", "nrw", "ntt", "nu", "nyc", "nz", "obi", "observer", "off", "office", "okinawa", "olayan", "olayangroup", "oldnavy", "ollo", "om", "omega", "one", "ong", "onl", "online", "onyourside", "ooo", "open", "oracle", "orange", "org", "organic", "origins", "osaka", "otsuka", "ott", "ovh", "pa", "page", "panasonic", "paris", "pars", "partners", "parts", "party", "passagens", "pay", "pccw", "pe", "pet", "pf", "pfizer", "pg", "ph", "pharmacy", "phd", "philips", "phone", "photo", "photography", "photos", "physio", "pics", "pictet", "pictures", "pid", "pin", "ping", "pink", "pioneer", "pizza", "pk", "pl", "place", "play", "playstation", "plumbing", "plus", "pm", "pn", "pnc", "pohl", "poker", "politie", "porn", "post", "pr", "pramerica", "praxi", "press", "prime", "pro", "prod", "productions", "prof", "progressive", "promo", "properties", "property", "protection", "pru", "prudential", "ps", "pt", "pub", "pw", "pwc", "py", "qa", "qpon", "quebec", "quest", "qvc", "racing", "radio", "raid", "re", "read", "realestate", "realtor", "realty", "recipes", "red", "redstone", "redumbrella", "rehab", "reise", "reisen", "reit", "reliance", "ren", "rent", "rentals", "repair", "report", "republican", "rest", "restaurant", "review", "reviews", "rexroth", "rich", "richardli", "ricoh", "ril", "rio", "rip", "rmit", "ro", "rocher", "rocks", "rodeo", "rogers", "room", "rs", "rsvp", "ru", "rugby", "ruhr", "run", "rw", "rwe", "ryukyu", "sa", "saarland", "safe", "safety", "sakura", "sale", "salon", "samsclub", "samsung", "sandvik", "sandvikcoromant", "sanofi", "sap", "sarl", "sas", "save", "saxo", "sb", "sbi", "sbs", "sc", "sca", "scb", "schaeffler", "schmidt", "scholarships", "school", "schule", "schwarz", "science", "scjohnson", "scot", "sd", "se", "search", "seat", "secure", "security", "seek", "select", "sener", "services", "ses", "seven", "sew", "sex", "sexy", "sfr", "sg", "sh", "shangrila", "sharp", "shaw", "shell", "shia", "shiksha", "shoes", "shop", "shopping", "shouji", "show", "showtime", "si", "silk", "sina", "singles", "site", "sj", "sk", "ski", "skin", "sky", "skype", "sl", "sling", "sm", "smart", "smile", "sn", "sncf", "so", "soccer", "social", "softbank", "software", "sohu", "solar", "solutions", "song", "sony", "soy", "spa", "space", "sport", "spot", "spreadbetting", "sr", "srl", "ss", "st", "stada", "staples", "star", "statebank", "statefarm", "stc", "stcgroup", "stockholm", "storage", "store", "stream", "studio", "study", "style", "su", "sucks", "supplies", "supply", "support", "surf", "surgery", "suzuki", "sv", "swatch", "swiftcover", "swiss", "sx", "sy", "sydney", "systems", "sz", "tab", "taipei", "talk", "taobao", "target", "tatamotors", "tatar", "tattoo", "tax", "taxi", "tc", "tci", "td", "tdk", "team", "tech", "technology", "tel", "temasek", "tennis", "teva", "tf", "tg", "th", "thd", "theater", "theatre", "tiaa", "tickets", "tienda", "tiffany", "tips", "tires", "tirol", "tj", "tjmaxx", "tjx", "tk", "tkmaxx", "tl", "tm", "tmall", "tn", "to", "today", "tokyo", "tools", "top", "toray", "toshiba", "total", "tours", "town", "toyota", "toys", "tr", "trade", "trading", "training", "travel", "travelchannel", "travelers", "travelersinsurance", "trust", "trv", "tt", "tube", "tui", "tunes", "tushu", "tv", "tvs", "tw", "tz", "ua", "ubank", "ubs", "ug", "uk", "unicom", "university", "uno", "uol", "ups", "us", "uy", "uz", "va", "vacations", "vana", "vanguard", "vc", "ve", "vegas", "ventures", "verisign", "versicherung", "vet", "vg", "vi", "viajes", "video", "vig", "viking", "villas", "vin", "vip", "virgin", "visa", "vision", "viva", "vivo", "vlaanderen", "vn", "vodka", "volkswagen", "volvo", "vote", "voting", "voto", "voyage", "vu", "vuelos", "wales", "walmart", "walter", "wang", "wanggou", "watch", "watches", "weather", "weatherchannel", "webcam", "weber", "website", "wed", "wedding", "weibo", "weir", "wf", "whoswho", "wien", "wiki", "williamhill", "win", "windows", "wine", "winners", "wme", "wolterskluwer", "woodside", "work", "works", "world", "wow", "ws", "wtc", "wtf", "xbox", "xerox", "xfinity", "xihuan", "xin", "कॉम", "セール", "佛山", "ಭಾರತ", "慈善", "集团", "在线", "한국", "ଭାରତ", "大众汽车", "点看", "คอม", "ভাৰত", "ভারত", "八卦", "ישראל", "موقع", "বাংলা", "公益", "公司", "香格里拉", "网站", "移动", "我爱你", "москва", "қаз", "католик", "онлайн", "сайт", "联通", "срб", "бг", "бел", "קום", "时尚", "微博", "淡马锡", "ファッション", "орг", "नेट", "ストア", "アマゾン", "삼성", "சிங்கப்பூர்", "商标", "商店", "商城", "дети", "мкд", "ею", "ポイント", "新闻", "家電", "كوم", "中文网", "中信", "中国", "中國", "娱乐", "谷歌", "భారత్", "ලංකා", "電訊盈科", "购物", "クラウド", "ભારત", "通販", "भारतम्", "भारत", "भारोत", "网店", "संगठन", "餐厅", "网络", "ком", "укр", "香港", "亚马逊", "诺基亚", "食品", "飞利浦", "台湾", "台灣", "手机", "мон", "الجزائر", "عمان", "ارامكو", "ایران", "العليان", "اتصالات", "امارات", "بازار", "موريتانيا", "پاکستان", "الاردن", "بارت", "بھارت", "المغرب", "ابوظبي", "البحرين", "السعودية", "ڀارت", "كاثوليك", "سودان", "همراه", "عراق", "مليسيا", "澳門", "닷컴", "政府", "شبكة", "بيتك", "عرب", "გე", "机构", "组织机构", "健康", "ไทย", "سورية", "招聘", "рус", "рф", "تونس", "大拿", "ລາວ", "みんな", "グーグル", "ευ", "ελ", "世界", "書籍", "ഭാരതം", "ਭਾਰਤ", "网址", "닷넷", "コム", "天主教", "游戏", "vermögensberater", "vermögensberatung", "企业", "信息", "嘉里大酒店", "嘉里", "مصر", "قطر", "广东", "இலங்கை", "இந்தியா", "հայ", "新加坡", "فلسطين", "政务", "xxx", "xyz", "yachts", "yahoo", "yamaxun", "yandex", "ye", "yodobashi", "yoga", "yokohama", "you", "youtube", "yt", "yun", "za", "zappos", "zara", "zero", "zip", "zm", "zone", "zuerich", "zw"];
 
 var urlRegex = function urlRegex(options) {
   options = _objectSpread2({
@@ -31654,7 +31795,7 @@ function attributeValidateAlign(context) {
   };
 }
 
-var defaults$8 = {
+var defaults$1 = {
   namedCssLevel1OK: true,
   namedCssLevel2PlusOK: true,
   hexThreeOK: false,
@@ -31664,7 +31805,7 @@ var defaults$8 = {
 };
 
 function validateColor(str, idxOffset, originalOpts) {
-  var opts = _objectSpread2(_objectSpread2({}, defaults$8), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
 
 
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
@@ -31994,7 +32135,7 @@ function attributeValidateBgcolor(context) {
   };
 }
 
-var defaultOpts$1 = {
+var defaultOpts = {
   type: "integer",
   whitelistValues: [],
   theOnlyGoodUnits: null,
@@ -32011,7 +32152,7 @@ var defaultOpts$1 = {
   maxValue: null
 };
 
-function validateValue$2(_ref) {
+function validateValue(_ref) {
   var str = _ref.str,
       opts = _ref.opts,
       charStart = _ref.charStart,
@@ -32089,7 +32230,7 @@ function validateValue$2(_ref) {
         // dash can be in the middle! For example, colspan="1-1"
         var endPart = str.slice(i, charEnd);
 
-        if (isObj$5(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) { // special case for "px"
+        if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) { // special case for "px"
 
           if (endPart === "px") {
             var _message = opts.customPxMessage ? opts.customPxMessage : "Remove px.";
@@ -32174,7 +32315,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     return [];
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaultOpts$1), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
 
 
   var charStart = 0;
@@ -32202,7 +32343,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if the value is not whitelisted, evaluate it
 
           if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
-            validateValue$2({
+            validateValue({
               str: str,
               opts: opts,
               charStart: idxFrom - idxOffset,
@@ -32253,7 +32394,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     } else { // if the value is not whitelisted, evaluate it
 
       if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
-        validateValue$2({
+        validateValue({
           str: str,
           opts: opts,
           charStart: charStart,
@@ -32289,7 +32430,8 @@ function attributeValidateBorder(context) {
         var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: false,
-          theOnlyGoodUnits: []
+          theOnlyGoodUnits: [] // empty array means no units allowed
+
         });
         errorArr.forEach(function (errorObj) {
           context.report(_objectSpread2(_objectSpread2({}, errorObj), {}, {
@@ -32575,7 +32717,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
     });
   }
 
-  if (isObj$5(opts.enforceSiblingAttributes) && Object.keys(opts.enforceSiblingAttributes).length) {
+  if (isObj(opts.enforceSiblingAttributes) && Object.keys(opts.enforceSiblingAttributes).length) {
     Object.keys(opts.enforceSiblingAttributes).forEach(function (siblingAttr) {
 
       if (Array.isArray(node.parent.attribs) && !node.parent.attribs.some(function (attribObj) {
@@ -32831,7 +32973,7 @@ function attributeValidateClass(context) {
   };
 }
 
-function attributeValidateClassid(context) {
+function attributeValidateClassid$1(context) {
   return {
     attribute: function attribute(node) {
 
@@ -32862,7 +33004,7 @@ function attributeValidateClassid(context) {
   };
 }
 
-function attributeValidateClassid$1(context) {
+function attributeValidateClassid(context) {
   return {
     attribute: function attribute(node) {
 
@@ -33653,7 +33795,8 @@ function attributeValidateFrame(context) {
         var errorArr = validateString(node.attribValueRaw, // value
         node.attribValueStartsAt, // offset
         {
-          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border"],
+          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border" // All four sides.
+          ],
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
@@ -35036,14 +35179,14 @@ function loop(str, opts, res) {
 
   }
 }
-var defaults$9 = {
+var defaults = {
   offset: 0
 }; // See https://drafts.csswg.org/mediaqueries/
 // Also https://csstree.github.io/docs/validator.html
 // Also, test in Chrome yourself
 
 function isMediaD(originalStr, originalOpts) {
-  var opts = _objectSpread2(_objectSpread2({}, defaults$9), originalOpts); // insurance first
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // insurance first
 
 
   if (opts.offset && !Number.isInteger(opts.offset)) {
@@ -44441,7 +44584,7 @@ function commentMismatchingPair(context) {
       function (key, val, innerObj) {
         var current = val !== undefined ? val : key;
 
-        if (isObj$5(current)) {
+        if (isObj(current)) {
           // monkey will traverse every key, every string within.
           // We need to pick the objects of a type we need: "comment"
           // console.log(
@@ -44454,7 +44597,7 @@ function commentMismatchingPair(context) {
           if (current.type === "comment" && current.closing) {
             var previousToken = objectPath.get(node, pathPrev(innerObj.path));
 
-            if (isObj$5(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
+            if (isObj(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
               if (previousToken.kind === "not" && current.kind === "only") { // turn tail into "not"-kind, add front part (<!--)
                 // Out of all raised errors, only one can have "ranges.fix" -
                 // all other fixes, if any present, will be removed.
@@ -44507,7 +44650,7 @@ function commentConditionalNested(context) {
       function (key, val, innerObj) {
         var current = val !== undefined ? val : key;
 
-        if (isObj$5(current)) {
+        if (isObj(current)) {
           // monkey will traverse every key, every string within.
           // We need to pick the objects of a type we need: "comment"
 
@@ -44874,10 +45017,10 @@ defineLazyProp(builtInRules, "bad-character-information-separator-three", functi
   return badCharacterInformationSeparatorThree;
 });
 defineLazyProp(builtInRules, "bad-character-information-separator-two", function () {
-  return badCharacterInformationSeparatorTwo;
+  return badCharacterInformationSeparatorTwo$1;
 });
 defineLazyProp(builtInRules, "bad-character-information-separator-one", function () {
-  return badCharacterInformationSeparatorTwo$1;
+  return badCharacterInformationSeparatorTwo;
 });
 defineLazyProp(builtInRules, "bad-character-delete", function () {
   return badCharacterDelete;
@@ -44925,10 +45068,10 @@ defineLazyProp(builtInRules, "bad-character-reverse-line-feed", function () {
   return badCharacterReverseLineFeed;
 });
 defineLazyProp(builtInRules, "bad-character-single-shift-two", function () {
-  return badCharacterSingleShiftTwo;
+  return badCharacterSingleShiftTwo$1;
 });
 defineLazyProp(builtInRules, "bad-character-single-shift-three", function () {
-  return badCharacterSingleShiftTwo$1;
+  return badCharacterSingleShiftTwo;
 });
 defineLazyProp(builtInRules, "bad-character-device-control-string", function () {
   return badCharacterDeviceControlString;
@@ -45230,10 +45373,10 @@ defineLazyProp(builtInRules, "attribute-validate-class", function () {
   return attributeValidateClass;
 });
 defineLazyProp(builtInRules, "attribute-validate-classid", function () {
-  return attributeValidateClassid;
+  return attributeValidateClassid$1;
 });
 defineLazyProp(builtInRules, "attribute-validate-clear", function () {
-  return attributeValidateClassid$1;
+  return attributeValidateClassid;
 });
 defineLazyProp(builtInRules, "attribute-validate-code", function () {
   return attributeValidateCode;
@@ -45818,7 +45961,7 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
         if (currentRulesSeverity) {
           var message = "Something is wrong.";
 
-          if (isObj$5(obj) && typeof obj.ruleId === "string" && has.call(astErrMessages, obj.ruleId)) {
+          if (isObj(obj) && typeof obj.ruleId === "string" && has.call(astErrMessages, obj.ruleId)) {
             message = astErrMessages[obj.ruleId];
           }
 
@@ -45832,7 +45975,7 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
     }), function (key, val, innerObj) {
       var current = val !== undefined ? val : key;
 
-      if (isObj$5(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) {
+      if (isObj(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) {
         // console.log(` `);
         // console.log(
         //   `-----------------------------------------------------------------------------`
@@ -46022,13 +46165,13 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
   return Linter;
 }(TypedEmitter);
 
-var version = "4.2.0";
+var version$1 = "4.2.0";
 
-var version$1 = version;
+var version = version$1;
 
 exports.Linter = Linter;
 exports.util = util;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

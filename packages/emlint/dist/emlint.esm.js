@@ -130,11 +130,11 @@ function checkForWhitespace(str, idxOffset) {
   };
 }
 
-const defaults = {
+const defaults$2 = {
   caseInsensitive: false
 };
 function includesWithRegex(arr, whatToMatch, originalOpts) {
-  const opts = { ...defaults,
+  const opts = { ...defaults$2,
     ...originalOpts
   };
   if (!Array.isArray(arr) || !arr.length) {
@@ -150,7 +150,7 @@ const defaults$1 = {
   permittedValues: [],
   noSpaceAfterComma: false
 };
-function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
+function validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr) {
   const extractedValue = str.slice(charStart, charEnd);
   if (!(includesWithRegex(opts.quickPermittedValues, extractedValue, {
     caseInsensitive: opts.caseInsensitive
@@ -195,7 +195,7 @@ function validateString(str, idxOffset, originalOpts) {
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
           str.slice(idxFrom - idxOffset, idxTo - idxOffset);
-          validateValue(str, idxOffset, opts, idxFrom - idxOffset,
+          validateValue$2(str, idxOffset, opts, idxFrom - idxOffset,
           idxTo - idxOffset, errorArr);
         },
         errCb: (ranges, message) => {
@@ -211,7 +211,7 @@ function validateString(str, idxOffset, originalOpts) {
       });
     } else {
       str.slice(charStart, charEnd);
-      validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
+      validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
   return errorArr;
@@ -879,7 +879,7 @@ function badCharacterInformationSeparatorThree(context) {
   };
 }
 
-function badCharacterInformationSeparatorTwo(context) {
+function badCharacterInformationSeparatorTwo$1(context) {
   return {
     character({
       chr,
@@ -900,7 +900,7 @@ function badCharacterInformationSeparatorTwo(context) {
   };
 }
 
-function badCharacterInformationSeparatorTwo$1(context) {
+function badCharacterInformationSeparatorTwo(context) {
   return {
     character({
       chr,
@@ -1236,7 +1236,7 @@ function badCharacterReverseLineFeed(context) {
   };
 }
 
-function badCharacterSingleShiftTwo(context) {
+function badCharacterSingleShiftTwo$1(context) {
   return {
     character({
       chr,
@@ -1257,7 +1257,7 @@ function badCharacterSingleShiftTwo(context) {
   };
 }
 
-function badCharacterSingleShiftTwo$1(context) {
+function badCharacterSingleShiftTwo(context) {
   return {
     character({
       chr,
@@ -2671,7 +2671,7 @@ function tagSpaceAfterOpeningBracket(context) {
   };
 }
 
-const BACKSLASH = "\u005C";
+const BACKSLASH$2 = "\u005C";
 function tagSpaceBeforeClosingBracket(context) {
   return {
     tag(node) {
@@ -2679,7 +2679,7 @@ function tagSpaceBeforeClosingBracket(context) {
       if (
       context.str[node.end - 1] === ">" &&
       !context.str[node.end - 2].trim().length &&
-      !`${BACKSLASH}/`.includes(context.str[left(context.str, node.end - 1) || 0])) {
+      !`${BACKSLASH$2}/`.includes(context.str[left(context.str, node.end - 1) || 0])) {
         const from = left(context.str, node.end - 1) ? left(context.str, node.end - 1) + 1 : 0;
         ranges.push([from, node.end - 1]);
       }
@@ -2811,14 +2811,14 @@ function tagClosingBackslash(context) {
   };
 }
 
-const BACKSLASH$2 = "\u005C";
+const BACKSLASH = "\u005C";
 function tagVoidSlash(context, mode = "always") {
   return {
     tag(node) {
       const closingBracketPos = node.end - 1;
       const slashPos = left(context.str, closingBracketPos);
       const leftOfSlashPos = left(context.str, slashPos) || 0;
-      if (mode === "never" && node.void && !node.closing && context.str[slashPos] === "/") {
+      if (mode === "never" && node.void && context.str[slashPos] === "/") {
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -2828,8 +2828,8 @@ function tagVoidSlash(context, mode = "always") {
             ranges: [[leftOfSlashPos + 1, closingBracketPos]]
           }
         });
-      } else if (mode === "always" && node.void && !node.closing && context.str[slashPos] !== "/" && (
-      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
+      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && (
+      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           if (context.str[slashPos + 1] === " ") {
             context.report({
@@ -2863,14 +2863,6 @@ function tagVoidSlash(context, mode = "always") {
             }
           });
         }
-      } else if (node.void && node.closing) {
-        context.report({
-          ruleId: "tag-void-slash",
-          message: "A void tag can't be a closing tag.",
-          idxFrom: node.start,
-          idxTo: node.end,
-          fix: null
-        });
       }
     }
   };
@@ -3778,7 +3770,7 @@ function attributeValidateAlign(context) {
   };
 }
 
-const defaults$2 = {
+const defaults = {
   namedCssLevel1OK: true,
   namedCssLevel2PlusOK: true,
   hexThreeOK: false,
@@ -3787,7 +3779,7 @@ const defaults$2 = {
   hexEightOK: false
 };
 function validateColor(str, idxOffset, originalOpts) {
-  const opts = { ...defaults$2,
+  const opts = { ...defaults,
     ...originalOpts
   };
   const {
@@ -4095,7 +4087,7 @@ const defaultOpts = {
   customPxMessage: null,
   maxValue: null
 };
-function validateValue$2({
+function validateValue({
   str,
   opts,
   charStart,
@@ -4235,7 +4227,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
         cb: (idxFrom, idxTo) => {
           const extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
           if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
-            validateValue$2({
+            validateValue({
               str,
               opts,
               charStart: idxFrom - idxOffset,
@@ -4283,7 +4275,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
       }
     } else {
       if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
-        validateValue$2({
+        validateValue({
           str,
           opts,
           charStart,
@@ -4745,7 +4737,7 @@ function attributeValidateClass(context) {
   };
 }
 
-function attributeValidateClassid(context) {
+function attributeValidateClassid$1(context) {
   return {
     attribute(node) {
       if (node.attribName === "classid") {
@@ -4772,7 +4764,7 @@ function attributeValidateClassid(context) {
   };
 }
 
-function attributeValidateClassid$1(context) {
+function attributeValidateClassid(context) {
   return {
     attribute(node) {
       if (node.attribName === "clear") {
@@ -5454,7 +5446,8 @@ function attributeValidateFrame(context) {
         const errorArr = validateString(node.attribValueRaw,
         node.attribValueStartsAt,
         {
-          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border"],
+          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border"
+          ],
           canBeCommaSeparated: false
         });
         errorArr.forEach(errorObj => {
@@ -8944,8 +8937,8 @@ defineLazyProp(builtInRules, "bad-character-substitute", () => badCharacterSubst
 defineLazyProp(builtInRules, "bad-character-escape", () => badCharacterEscape);
 defineLazyProp(builtInRules, "bad-character-information-separator-four", () => badCharacterInformationSeparatorFour);
 defineLazyProp(builtInRules, "bad-character-information-separator-three", () => badCharacterInformationSeparatorThree);
-defineLazyProp(builtInRules, "bad-character-information-separator-two", () => badCharacterInformationSeparatorTwo);
-defineLazyProp(builtInRules, "bad-character-information-separator-one", () => badCharacterInformationSeparatorTwo$1);
+defineLazyProp(builtInRules, "bad-character-information-separator-two", () => badCharacterInformationSeparatorTwo$1);
+defineLazyProp(builtInRules, "bad-character-information-separator-one", () => badCharacterInformationSeparatorTwo);
 defineLazyProp(builtInRules, "bad-character-delete", () => badCharacterDelete);
 defineLazyProp(builtInRules, "bad-character-control-0080", () => badCharacterControl0080);
 defineLazyProp(builtInRules, "bad-character-control-0081", () => badCharacterControl0081);
@@ -8961,8 +8954,8 @@ defineLazyProp(builtInRules, "bad-character-line-tabulation-set", () => badChara
 defineLazyProp(builtInRules, "bad-character-partial-line-forward", () => badCharacterPartialLineForward);
 defineLazyProp(builtInRules, "bad-character-partial-line-backward", () => badCharacterPartialLineBackward);
 defineLazyProp(builtInRules, "bad-character-reverse-line-feed", () => badCharacterReverseLineFeed);
-defineLazyProp(builtInRules, "bad-character-single-shift-two", () => badCharacterSingleShiftTwo);
-defineLazyProp(builtInRules, "bad-character-single-shift-three", () => badCharacterSingleShiftTwo$1);
+defineLazyProp(builtInRules, "bad-character-single-shift-two", () => badCharacterSingleShiftTwo$1);
+defineLazyProp(builtInRules, "bad-character-single-shift-three", () => badCharacterSingleShiftTwo);
 defineLazyProp(builtInRules, "bad-character-device-control-string", () => badCharacterDeviceControlString);
 defineLazyProp(builtInRules, "bad-character-private-use-1", () => badCharacterPrivateUseOne);
 defineLazyProp(builtInRules, "bad-character-private-use-2", () => badCharacterPrivateUseTwo);
@@ -9062,8 +9055,8 @@ defineLazyProp(builtInRules, "attribute-validate-charset", () => attributeValida
 defineLazyProp(builtInRules, "attribute-validate-checked", () => attributeValidateChecked);
 defineLazyProp(builtInRules, "attribute-validate-cite", () => attributeValidateCite);
 defineLazyProp(builtInRules, "attribute-validate-class", () => attributeValidateClass);
-defineLazyProp(builtInRules, "attribute-validate-classid", () => attributeValidateClassid);
-defineLazyProp(builtInRules, "attribute-validate-clear", () => attributeValidateClassid$1);
+defineLazyProp(builtInRules, "attribute-validate-classid", () => attributeValidateClassid$1);
+defineLazyProp(builtInRules, "attribute-validate-clear", () => attributeValidateClassid);
 defineLazyProp(builtInRules, "attribute-validate-code", () => attributeValidateCode);
 defineLazyProp(builtInRules, "attribute-validate-codebase", () => attributeValidateCodebase);
 defineLazyProp(builtInRules, "attribute-validate-codetype", () => attributeValidateCodetype);
@@ -9439,8 +9432,8 @@ class Linter extends TypedEmitter {
   }
 }
 
-var version = "4.2.0";
+var version$1 = "4.2.0";
 
-const version$1 = version;
+const version = version$1;
 
-export { Linter, util, version$1 as version };
+export { Linter, util, version };

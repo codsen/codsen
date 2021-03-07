@@ -177,8 +177,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 1,
-          idxFrom: 25,
-          idxTo: 25,
+          idxFrom: 22,
+          idxTo: 26,
           message: "Missing slash.",
           fix: {
             ranges: [[25, 25, "/"]],
