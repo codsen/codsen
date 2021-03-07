@@ -1,7 +1,7 @@
 /**
  * generate-atomic-css
  * Generate Atomic CSS
- * Version: 1.4.6
+ * Version: 1.4.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/generate-atomic-css/
@@ -2059,12 +2059,9 @@ createCommonjsModule(function (module, exports) {
   module.exports = cloneDeep;
 });
 
-var RAWNBSP = "\xA0"; // separates the value from flags
+var RAWNBSP = "\xA0";
 
 function x(something) {
-  // console.log(
-  //   `007 ${`\u001b[${35}m${`x() incoming "${something}"`}\u001b[${39}m`}`
-  // );
   var res = {
     value: something,
     hungry: false,
@@ -2081,14 +2078,7 @@ function x(something) {
   } else if (res.value.endsWith("*") && res.value.length > 1) {
     res.value = res.value.slice(0, ~-res.value.length);
     res.hungry = true;
-  } // console.log(
-  //   `036 ${`\u001b[${35}m${`x() returning ${JSON.stringify(
-  //     res,
-  //     null,
-  //     0
-  //   )}`}\u001b[${39}m`}`
-  // );
-
+  }
 
   return res;
 }
@@ -2118,41 +2108,16 @@ function rightMain(_ref) {
     return null;
   }
 
-  if ( // next character exists
-  str[idx + 1] && ( // and...
-  // it's solid
-  str[idx + 1].trim() || // or it's a whitespace character, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 1]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 1] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
     return idx + 1;
   }
 
-  if ( // second next character exists
-  str[idx + 2] && ( // and...
-  // it's solid
-  str[idx + 2].trim() || // it's a whitespace character and...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
     return idx + 2;
-  } // worst case scenario - traverse forwards
-
+  }
 
   for (var i = idx + 1, len = str.length; i < len; i++) {
-    if ( // it's solid
-    str[i].trim() || // it's a whitespace character and...
-    // stop at newlines is on
-    stopAtNewlines && // and it's a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP) {
+    if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
       return i;
     }
   }
@@ -2172,27 +2137,6 @@ function right(str, idx) {
     stopAtRawNbsp: false
   });
 }
-//
-//       lllllll                        ffffffffffffffff           tttt                    ((((((       ))))))
-//       l:::::l                       f::::::::::::::::f       ttt:::t                  ((::::::(     )::::::))
-//       l:::::l                      f::::::::::::::::::f      t:::::t                ((:::::::(       ):::::::))
-//       l:::::l                      f::::::fffffff:::::f      t:::::t               (:::::::((         )):::::::)
-//       l::::l     eeeeeeeeeeee     f:::::f       ffffffttttttt:::::ttttttt         (::::::(             )::::::)
-//       l::::l   ee::::::::::::ee   f:::::f             t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l  e::::::eeeee:::::eef:::::::ffffff       t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l e::::::e     e:::::ef::::::::::::f       tttttt:::::::tttttt         (:::::(               ):::::)
-//       l::::l e:::::::eeeee::::::ef::::::::::::f             t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::::::::::::e f:::::::ffffff             t:::::t               (:::::(               ):::::)
-//       l::::l e::::::eeeeeeeeeee   f:::::f                   t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::e            f:::::f                   t:::::t    tttttt     (::::::(             )::::::)
-//       l::::::le::::::::e          f:::::::f                  t::::::tttt:::::t     (:::::::((         )):::::::)
-//       l::::::l e::::::::eeeeeeee  f:::::::f                  tt::::::::::::::t      ((:::::::(       ):::::::))
-//       l::::::l  ee:::::::::::::e  f:::::::f                    tt:::::::::::tt        ((::::::(     )::::::)
-//       llllllll    eeeeeeeeeeeeee  fffffffff                      ttttttttttt            ((((((       ))))))
-//
-//
-// Finds the index of the first non-whitespace character on the left
-
 
 function leftMain(_ref2) {
   var str = _ref2.str,
@@ -2212,41 +2156,16 @@ function leftMain(_ref2) {
     return null;
   }
 
-  if ( // ~- means minus one, in bitwise
-  str[~-idx] && ( // either it's not a whitespace
-  str[~-idx].trim() || // or it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[~-idx]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[~-idx] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[~-idx] && (str[~-idx].trim() || stopAtNewlines && "\n\r".includes(str[~-idx]) || stopAtRawNbsp && str[~-idx] === RAWNBSP)) {
     return ~-idx;
-  } // if we reached this point, this means character on the left is whitespace -
-  // fine - check the next character on the left, str[idx - 2]
+  }
 
-
-  if ( // second character exists
-  str[idx - 2] && ( // either it's not whitespace so Bob's your uncle here's non-whitespace character
-  str[idx - 2].trim() || // it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // it's some sort of a newline
-  "\n\r".includes(str[idx - 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx - 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx - 2] && (str[idx - 2].trim() || stopAtNewlines && "\n\r".includes(str[idx - 2]) || stopAtRawNbsp && str[idx - 2] === RAWNBSP)) {
     return idx - 2;
-  } // worst case scenario - traverse backwards
-
+  }
 
   for (var i = idx; i--;) {
-    if (str[i] && ( // it's non-whitespace character
-    str[i].trim() || // or it is whitespace character, but...
-    // stop at newlines is on
-    stopAtNewlines && // it's some sort of a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP)) {
+    if (str[i] && (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP)) {
       return i;
     }
   }
@@ -2277,24 +2196,15 @@ function seq(direction, str, idx, opts, args) {
   }
 
   if (direction === "right" && !str[idx + 1] || direction === "left" && !str[~-idx]) {
-    // if next character on the particular side doesn't even exist, that's a quick end
     return null;
-  } // we start to look on the particular side from index "idx".
-  // From there on, each finding sets its index to "lastFinding" so that we
-  // know where to start looking on from next. Any failed finding
-  // in a sequence is instant return "null".
-
+  }
 
   var lastFinding = idx;
   var gaps = [];
   var leftmostChar;
   var rightmostChar;
-  var satiated; // used to prevent mismatching action kicking in when that
-  // mismatching is after multiple hungry findings.
-  // go through all arguments
-
-  var i = 0; // we use while loop because for loop would not do in hungry matching cases,
-  // where we need to repeat same step (hungrily matched character) few times.
+  var satiated;
+  var i = 0;
 
   while (i < args.length) {
     if (!isStr$1(args[i]) || !args[i].length) {
@@ -2310,28 +2220,19 @@ function seq(direction, str, idx, opts, args) {
     var whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
 
     if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) {
-      // OK, one was matched, we're in the right clauses (otherwise we'd skip
-      // if it was optional or break the matching)
-      // Now, it depends, is it a hungry match, because if so, we need to look
-      // for more of these.
       var temp = direction === "right" ? right(str, whattsOnTheSide) : left(str, whattsOnTheSide);
 
       if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
-        // satiated means next iteration is allowed not to match anything
         satiated = true;
       } else {
-        // move on
         i += 1;
-      } // 1. first, tackle gaps
-      // if there was a gap, push it to gaps array:
-
+      }
 
       if (typeof whattsOnTheSide === "number" && direction === "right" && whattsOnTheSide > lastFinding + 1) {
         gaps.push([lastFinding + 1, whattsOnTheSide]);
       } else if (direction === "left" && typeof whattsOnTheSide === "number" && whattsOnTheSide < ~-lastFinding) {
         gaps.unshift([whattsOnTheSide + 1, lastFinding]);
-      } // 2. second, tackle the matching
-
+      }
 
       lastFinding = whattsOnTheSide;
 
@@ -2358,8 +2259,7 @@ function seq(direction, str, idx, opts, args) {
     } else {
       return null;
     }
-  } // if all arguments in sequence were empty strings, we return falsey null:
-
+  }
 
   if (leftmostChar === undefined || rightmostChar === undefined) {
     return null;
@@ -2370,31 +2270,7 @@ function seq(direction, str, idx, opts, args) {
     leftmostChar: leftmostChar,
     rightmostChar: rightmostChar
   };
-} //
-//
-//    lllllll
-//    l:::::l
-//    l:::::l
-//    l:::::l
-//     l::::l                  rrrrr   rrrrrrrrr            ssssssssss       eeeeeeeeeeee       qqqqqqqqq   qqqqq
-//     l::::l                  r::::rrr:::::::::r         ss::::::::::s    ee::::::::::::ee    q:::::::::qqq::::q
-//     l::::l                  r:::::::::::::::::r      ss:::::::::::::s  e::::::eeeee:::::ee q:::::::::::::::::q
-//     l::::l  --------------- rr::::::rrrrr::::::r     s::::::ssss:::::se::::::e     e:::::eq::::::qqqqq::::::qq
-//     l::::l  -:::::::::::::-  r:::::r     r:::::r      s:::::s  ssssss e:::::::eeeee::::::eq:::::q     q:::::q
-//     l::::l  ---------------  r:::::r     rrrrrrr        s::::::s      e:::::::::::::::::e q:::::q     q:::::q
-//     l::::l                   r:::::r                       s::::::s   e::::::eeeeeeeeeee  q:::::q     q:::::q
-//     l::::l                   r:::::r                 ssssss   s:::::s e:::::::e           q::::::q    q:::::q
-//    l::::::l                  r:::::r                 s:::::ssss::::::se::::::::e          q:::::::qqqqq:::::q
-//    l::::::l                  r:::::r                 s::::::::::::::s  e::::::::eeeeeeee   q::::::::::::::::q
-//    l::::::l                  r:::::r                  s:::::::::::ss    ee:::::::::::::e    qq::::::::::::::q
-//    llllllll                  rrrrrrr                   sssssssssss        eeeeeeeeeeeeee      qqqqqqqq::::::q
-//                                                                                                       q:::::q
-//                                                                                                       q:::::q
-//                                                                                                      q:::::::q
-//                                                                                                      q:::::::q
-//                                                                                                      q:::::::q
-//                                                                                                      qqqqqqqqq
-
+}
 
 var seqDefaults = {
   i: false
@@ -2405,10 +2281,7 @@ function leftSeq(str, idx) {
     args[_key - 2] = arguments[_key];
   }
 
-  // if there are no arguments, it becomes left()
   if (!args || !args.length) {
-    // console.log(`493 leftSeq() calling left()`);
-    // return left(str, idx);
     throw new Error("string-left-right/leftSeq(): only two input arguments were passed! Did you intend to use left() method instead?");
   }
 
@@ -2428,10 +2301,7 @@ function rightSeq(str, idx) {
     args[_key2 - 2] = arguments[_key2];
   }
 
-  // if there are no arguments, it becomes right()
   if (!args || !args.length) {
-    // console.log(`520 rightSeq() calling right()`);
-    // return right(str, idx);
     throw new Error("string-left-right/rightSeq(): only two input arguments were passed! Did you intend to use right() method instead?");
   }
 
@@ -2444,9 +2314,9 @@ function rightSeq(str, idx) {
   }
 
   return seq("right", str, idx, opts, args);
-} // chomp() lets you match sequences of characters with zero or more whitespace characters in between each,
+}
 
-var version$1 = "1.4.6";
+var version$1 = "1.4.7";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 

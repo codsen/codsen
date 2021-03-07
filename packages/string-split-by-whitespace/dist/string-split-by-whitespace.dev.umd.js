@@ -1,7 +1,7 @@
 /**
  * string-split-by-whitespace
  * Split string into array by chunks of whitespace
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-split-by-whitespace/
@@ -68,8 +68,7 @@ var defaults = {
 };
 
 function isIndexWithin(originalIndex, rangesArr, originalOpts) {
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // insurance
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (!Number.isInteger(originalIndex)) {
     throw new Error("ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as " + originalIndex + " (type " + typeof originalIndex + ")");
@@ -90,7 +89,7 @@ function isIndexWithin(originalIndex, rangesArr, originalOpts) {
   });
 }
 
-var version$1 = "2.0.6";
+var version$1 = "2.0.7";
 
 var version = version$1;
 

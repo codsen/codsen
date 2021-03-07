@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.0.7](https://github.com/codsen/codsen/compare/object-set-all-values-to@4.0.6...object-set-all-values-to@4.0.7) (2021-03-07)
-
-**Note:** Version bump only for package object-set-all-values-to
-
-
-
-
-
 ## 4.0.1 (2021-01-28)
 
 ### Bug Fixes

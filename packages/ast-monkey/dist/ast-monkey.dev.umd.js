@@ -1,7 +1,7 @@
 /**
  * ast-monkey
  * Traverse and edit AST
- * Version: 7.13.6
+ * Version: 7.13.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey/
@@ -3540,20 +3540,13 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
  */
-// "a" => null
-// "0" => null
-// "a.b" => "a"
-// "a.0" => "a"
-// "a.0.c" => "0"
-
 
 function parent(str) {
-  // input must have at least one dot:
   if (str.includes(".")) {
     var lastDotAt = str.lastIndexOf(".");
 
@@ -3571,16 +3564,10 @@ function parent(str) {
   return null;
 }
 
-/**
- * Utility library to traverse AST
- */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
-  }; //
-  // traverseInner() needs a wrapper to shield the last two input args from the outside
-  //
+  };
 
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
     var tree = lodash_clonedeep(treeOriginal);
@@ -3604,8 +3591,7 @@ function traverse(tree1, cb1) {
         if (tree[i] !== undefined) {
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "array";
-          innerObj.parentKey = parent(path); // innerObj.path = `${innerObj.path}[${i}]`
-
+          innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: path
           }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
@@ -3623,7 +3609,6 @@ function traverse(tree1, cb1) {
         }
       }
     } else if (lodash_isplainobject(tree)) {
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (var key in tree) {
         if (stop.now && key != null) {
           break;
@@ -3656,7 +3641,7 @@ function traverse(tree1, cb1) {
   }
 
   return traverseInner(tree1, cb1, {}, stop2);
-} // -----------------------------------------------------------------------------
+}
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -4789,13 +4774,11 @@ var lodash_intersection = intersection;
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.6
+ * Version: 3.13.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -5260,14 +5243,11 @@ var defaults = {
   schema: {},
   msg: "check-types-mini",
   optsVarName: "opts"
-}; // fourth input argument is shielded from an external API:
+};
 
 function internalApi(obj, ref, originalOptions) {
-  //
-  // Functions
-  // =========
   function existy(something) {
-    return something != null; // deliberate !=
+    return something != null;
   }
 
   function isObj(something) {
@@ -5288,16 +5268,12 @@ function internalApi(obj, ref, originalOptions) {
     });
   }
 
-  var hasKey = Object.prototype.hasOwnProperty; // Variables
-  // =========
-
+  var hasKey = Object.prototype.hasOwnProperty;
   var NAMESFORANYTYPE = ["any", "anything", "every", "everything", "all", "whatever", "whatevs"];
 
   if (!existy(obj)) {
     throw new Error("check-types-mini: [THROW_ID_01] First argument is missing!");
-  } // Prep our own opts
-  // =================
-
+  }
 
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
 
@@ -5317,31 +5293,11 @@ function internalApi(obj, ref, originalOptions) {
 
   if (opts.msg[opts.msg.length - 1] === ":") {
     opts.msg = opts.msg.slice(0, opts.msg.length - 1).trim();
-  } // now, since we let users type the allowed types, we have to normalise the letter case:
-
+  }
 
   if (isObj(opts.schema)) {
-    // 1. if schema is given as nested AST tree, for example:
-    // {
-    //   schema: {
-    //     option1: { somekey: "any" }, // <------ !
-    //     option2: "whatever"
-    //   }
-    // }
-    //
-    // (notice it's not flat, "option1.somekey": "any", but nested!)
-    //
-    // then, we flatten it first, so that each AST branch's path is key and the
-    // value at that branch's tip is the key's value:
-    // {
-    //   schema: {
-    //     "option1.somekey": "any", // <------ !
-    //     option2: "whatever"
-    //   }
-    // }
     Object.keys(opts.schema).forEach(function (oneKey) {
       if (isObj(opts.schema[oneKey])) {
-        // 1. extract all unique AST branches leading to their tips
         var tempObj = {};
         traverse(opts.schema[oneKey], function (key, val, innerObj) {
           var current = val !== undefined ? val : key;
@@ -5351,24 +5307,15 @@ function internalApi(obj, ref, originalOptions) {
           }
 
           return current;
-        }); // 2. delete that key which leads to object:
-
-        delete opts.schema[oneKey]; // 3. merge in all paths-as-keys into schema opts object:
-
+        });
+        delete opts.schema[oneKey];
         opts.schema = _objectSpread2(_objectSpread2({}, opts.schema), tempObj);
       }
-    }); //
-    //
-    //
-    //
-    //
-    // 2. arrayiffy
-
+    });
     Object.keys(opts.schema).forEach(function (oneKey) {
       if (!Array.isArray(opts.schema[oneKey])) {
         opts.schema[oneKey] = [opts.schema[oneKey]];
-      } // then turn all keys into strings and trim and lowercase them:
-
+      }
 
       opts.schema[oneKey] = opts.schema[oneKey].map(function (el) {
         return ("" + el).toLowerCase().trim();
@@ -5379,21 +5326,8 @@ function internalApi(obj, ref, originalOptions) {
   }
 
   if (!existy(ref)) {
-    // eslint-disable-next-line no-param-reassign
     ref = {};
-  } // ---------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------
-  // THE BUSINESS
-  // ============
-  // Since v.4 we support nested opts. That's AST's. This means, we will have to
-  // traverse them somehow up until the last tip of each branch. Luckily, we have
-  // tools for traversal - ast-monkey-traverse.
-  // 1. The "obj" and "ref" root level keys need separate attention.
-  // If keys mismatch, we need to check them separately from traversal.
-  // During traversal, we'll check if each value is a plain object/array and
-  // match the keysets as well. However, traversal won't "see" root level keys.
-
+  }
 
   if (opts.enforceStrictKeyset) {
     if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
@@ -5412,62 +5346,31 @@ function internalApi(obj, ref, originalOptions) {
         throw new TypeError(opts.msg + ": The reference object has key" + (_keys2.length > 1 ? "s" : "") + " which " + (_keys2.length > 1 ? "are" : "is") + " not present in the input object: " + _keys2.join(", "));
       }
     } else {
-      // it's an error because both schema and reference don't exist
       throw new TypeError(opts.msg + ": Both " + opts.optsVarName + ".schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!");
     }
-  } // 2. Call the monkey and traverse the schema object, checking each value-as-object
-  // or value-as-array separately, if opts.enforceStrictKeyset is on. Root level
-  // was checked in step 1. above. What's left is deeper levels. // When users set schema to "any" for certain path, this applies to that path
-  // and any (if exists) children objects/arrays/strings whatever on deeper children
-  // paths. Now, the problem is, we check by traversing everything - this means,
-  // for example, we have this to check:
-  //
-  // {
-  //   a: {
-  //     b: "c"
-  //   },
-  //  d: "e"
-  // }
-  // ast-monkey-traverse will check "a" and find it's schema is "any" - basically,
-  // we don't care what it's type is and instruct "check-types-mini" to skip it.
-  // This "skip" instruction applies to "b" too! However, our checking engine,
-  // "ast-monkey-traverse" will still traverse "b". It can't stop there, because
-  // there's still "d" key to check - we're traversing EVERYTHING.
-  // Challenge: when "ast-monkey" will stumble upon "b" it might flag it up as
-  // being of a wrong type, it does not have visibility of its parent's schemas.
-  // What we'll do to fix this is we'll compile the list of any paths that have
-  // "any"/"whatever" schemas in an array. Then, when deeper children nodes are
-  // traversed, we'll check, are they children of any aforementioned paths (technically
-  // speaking, do their path strings start with any of the strings in aforementioned
-  // paths array strings).
-
+  }
 
   var ignoredPathsArr = [];
   traverse(obj, function (key, val, innerObj) {
-    // innerObj.path // Here what we have been given:
     var current = val;
     var objKey = key;
 
     if (innerObj.parentType === "array") {
       objKey = undefined;
       current = key;
-    } // Here's what we will compare against to.
-    // If schema exists, types defined there will be used to compare against: // if current path is a children of any paths in "ignoredPathsArr", skip it:
-
+    }
 
     if (Array.isArray(ignoredPathsArr) && ignoredPathsArr.length && ignoredPathsArr.some(function (path) {
       return innerObj.path.startsWith(path);
     })) {
       return current;
-    } // if this key is ignored, skip it:
-
+    }
 
     if (objKey && opts.ignoreKeys.some(function (oneOfKeysToIgnore) {
       return matcher.isMatch(objKey, oneOfKeysToIgnore);
     })) {
       return current;
-    } // if this path is ignored, skip it:
-
+    }
 
     if (opts.ignorePaths.some(function (oneOfPathsToIgnore) {
       return matcher.isMatch(innerObj.path, oneOfPathsToIgnore);
@@ -5475,8 +5378,7 @@ function internalApi(obj, ref, originalOptions) {
       return current;
     }
 
-    var isNotAnArrayChild = !(!isObj(current) && !Array.isArray(current) && Array.isArray(innerObj.parent)); // ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  █
-
+    var isNotAnArrayChild = !(!isObj(current) && !Array.isArray(current) && Array.isArray(innerObj.parent));
     var optsSchemaHasThisPathDefined = false;
 
     if (isObj(opts.schema) && hasKey.call(opts.schema, innerObj.path)) {
@@ -5487,45 +5389,25 @@ function internalApi(obj, ref, originalOptions) {
 
     if (isObj(ref) && objectPath.has(ref, innerObj.path)) {
       refHasThisPathDefined = true;
-    } // ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  █
-    // First, check if given path is not covered by neither ref object nor schema.
-    // We also skip the non-container types (obj/arr) within arrays (test 02.11)
-    // Otherwise, we would get false throws because arrays can mention list of
-    // "things" (tag names, for example) and this application would enforce each
-    // one of them, does it exist in schema/ref, but it won't exist!
-    // Thus, strict existence checks apply only for object keys and arrays, not
-    // array elements which are not objects/arrays.
-
+    }
 
     if (opts.enforceStrictKeyset && isNotAnArrayChild && !optsSchemaHasThisPathDefined && !refHasThisPathDefined) {
       throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " is neither covered by reference object (second input argument), nor " + opts.optsVarName + ".schema! To stop this error, turn off " + opts.optsVarName + ".enforceStrictKeyset or provide some type reference (2nd argument or " + opts.optsVarName + ".schema).\n\nDebug info:\n\nobj = " + JSON.stringify(obj, null, 4) + "\n\nref = " + JSON.stringify(ref, null, 4) + "\n\ninnerObj = " + JSON.stringify(innerObj, null, 4) + "\n\nopts = " + JSON.stringify(opts, null, 4) + "\n\ncurrent = " + JSON.stringify(current, null, 4) + "\n\n");
     } else if (optsSchemaHasThisPathDefined) {
-      // step 1. Fetch the current keys' schema and normalise it - it's an array
-      // which holds strings. Those strings have to be lowercased. It also can
-      // be raw null/undefined, which would be arrayified and turned into string.
       var currentKeysSchema = arrayiffy(opts.schema[innerObj.path]).map(function (el) {
         return ("" + el).toLowerCase();
       });
-      objectPath.set(opts.schema, innerObj.path, currentKeysSchema); // step 2. First check does our schema contain any blanket names, "any", "whatever" etc.
+      objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
 
       if (!lodash_intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
-        // Because, if not, it means we need to do some work, check types.
-        // Beware, Booleans can be allowed blanket, as "boolean", but also,
-        // in granular fashion: as just "true" or just "false".
         if (current !== true && current !== false && !currentKeysSchema.includes(typeDetect(current).toLowerCase()) || (current === true || current === false) && !currentKeysSchema.includes(String(current)) && !currentKeysSchema.includes("boolean")) {
-          // new in v.2.2
-          // Check if key's value is array. Then, if it is, check if opts.acceptArrays is on.
-          // If it is, then iterate through the array, checking does each value conform to the
-          // types listed in that key's schema entry.
           if (Array.isArray(current) && opts.acceptArrays) {
-            // check each key:
             for (var i = 0, len = current.length; i < len; i++) {
               if (!currentKeysSchema.includes(typeDetect(current[i]).toLowerCase())) {
                 throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + "." + i + ", the " + i + "th element (equal to " + JSON.stringify(current[i], null, 0) + ") is of a type " + typeDetect(current[i]).toLowerCase() + ", but only the following are allowed by the " + opts.optsVarName + ".schema: " + currentKeysSchema.join(", "));
               }
             }
           } else {
-            // only then do throw...
             throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to " + (typeDetect(current) !== "string" ? '"' : "") + JSON.stringify(current, null, 0) + (typeDetect(current) !== "string" ? '"' : "") + " (type: " + typeDetect(current).toLowerCase() + ") which is not among the allowed types in schema (which is equal to " + JSON.stringify(currentKeysSchema, null, 0) + ")");
           }
         }
@@ -5551,10 +5433,6 @@ function internalApi(obj, ref, originalOptions) {
     return current;
   });
 }
-/**
- * Validate options object
- */
-
 
 function checkTypesMini(obj, ref, originalOptions) {
   return internalApi(obj, ref, originalOptions);
@@ -5563,13 +5441,10 @@ function checkTypesMini(obj, ref, originalOptions) {
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
- */
-/**
- * Does AST contain only empty space?
  */
 
 function empty(input) {
@@ -5607,21 +5482,13 @@ function isBlank(something) {
   }
 
   return false;
-} // -----------------------------------------------------------------------------
-// Legend:
-// b - superset object; s - subset object
-
-/**
- * Compare anything: AST, objects, arrays, strings and nested thereof
- */
-
+}
 
 function compare(b, s, originalOpts) {
   var sKeys;
   var bKeys;
   var found;
-  var bOffset = 0; // prep opts
-
+  var bOffset = 0;
   var defaults = {
     hungryForWhitespace: false,
     matchStrictly: false,
@@ -5629,18 +5496,15 @@ function compare(b, s, originalOpts) {
     useWildcards: false
   };
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // edge case when hungryForWhitespace=true, matchStrictly=true and matching against blank object:
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (opts.hungryForWhitespace && opts.matchStrictly && lodash_isplainobject(b) && empty(b) && lodash_isplainobject(s) && !Object.keys(s).length) {
     return true;
-  } // instant (falsey) result
-
+  }
 
   if ((!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b) && empty(s)) && lodash_isplainobject(b) && Object.keys(b).length !== 0 && lodash_isplainobject(s) && Object.keys(s).length === 0 || typeDetect(b) !== typeDetect(s) && (!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b))) {
     return false;
-  } // A C T I O N
-
+  }
 
   if (typeof b === "string" && typeof s === "string") {
     if (opts.hungryForWhitespace && empty(b) && empty(s)) {
@@ -5672,8 +5536,7 @@ function compare(b, s, originalOpts) {
     if (s.length === 0) {
       if (b.length === 0) {
         return true;
-      } // so b is not zero-long, but s is.
-
+      }
 
       if (opts.verboseWhenMismatches) {
         return "The given array has no elements, but the array on the other end, " + JSON.stringify(b, null, 4) + " does have some";
@@ -5720,8 +5583,7 @@ function compare(b, s, originalOpts) {
       }));
       var bMessage = uniqueKeysOnB.size ? " Second object has unique keys:\n        " + JSON.stringify(uniqueKeysOnB, null, 4) + "." : "";
       return "When matching strictly, we found that both objects have different amount of keys." + sMessage + bMessage;
-    } // eslint-disable-next-line
-
+    }
 
     var _loop = function _loop() {
       var sKey = _step.value;
@@ -5737,15 +5599,13 @@ function compare(b, s, originalOpts) {
           return {
             v: "The given object has key \"" + sKey + "\" which the other-one does not have."
           };
-        } // so wildcards are on and sKeys[i] contains a wildcard
-
+        }
 
         if (Object.keys(b).some(function (bKey) {
           return matcher.isMatch(bKey, sKey, {
             caseSensitive: true
           });
         })) {
-          // so some keys do match. Return true
           return {
             v: true
           };
@@ -5763,9 +5623,6 @@ function compare(b, s, originalOpts) {
       }
 
       if (b[sKey] != null && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
-        // Types mismatch. Probably falsey result, unless comparing with
-        // empty/blank things. Let's check.
-        // it might be blank array vs blank object:
         if (!(empty(b[sKey]) && empty(s[sKey]) && opts.hungryForWhitespace)) {
           if (!opts.verboseWhenMismatches) {
             return {
@@ -5806,7 +5663,7 @@ function compare(b, s, originalOpts) {
   return true;
 }
 
-var version$1 = "7.13.6";
+var version$1 = "7.13.7";
 
 var version = version$1;
 

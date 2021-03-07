@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Visual helper to place templating code around table tags into correct places
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-table-patcher/
@@ -65,16 +65,11 @@ function _objectSpread2(target) {
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
  */
-// bumps the last chunk in the string path from:
-// 9.children.3
-// to
-// 9.children.4
-// the path notation is object-path
 function pathNext(str) {
   if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
     return "" + str.slice(0, str.lastIndexOf(".") + 1) + (+str.slice(str.lastIndexOf(".") + 1) + 1);
@@ -85,12 +80,7 @@ function pathNext(str) {
   }
 
   return str;
-} // decrements the last chunk in the string path from:
-// 9.children.3
-// to
-// 9.children.2
-// the path notation is object-path
-
+}
 
 function pathPrev(str) {
   if (!str) {
@@ -115,13 +105,10 @@ function pathPrev(str) {
 }
 
 function pathUp(str) {
-  // input must have at least two dots:
   if (str.includes(".") && str.slice(str.indexOf(".") + 1).includes(".")) {
-    // go up, for example, from "a.children.2" to "a"
     var dotsCount = 0;
 
     for (var i = str.length; i--;) {
-      // console.log(`010 str[${i}] = ${str[i]}`);
       if (str[i] === ".") {
         dotsCount += 1;
       }
@@ -130,11 +117,10 @@ function pathUp(str) {
         return str.slice(0, i);
       }
     }
-  } // zero is the root level's first element
-
+  }
 
   return "0";
-} // calulate parent key, for example,
+}
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -2133,7 +2119,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   module.exports = cloneDeep;
 });
 
-var RAWNBSP = "\xA0"; // separates the value from flags
+var RAWNBSP = "\xA0";
 
 function rightMain(_ref) {
   var str = _ref.str,
@@ -2156,41 +2142,16 @@ function rightMain(_ref) {
     return null;
   }
 
-  if ( // next character exists
-  str[idx + 1] && ( // and...
-  // it's solid
-  str[idx + 1].trim() || // or it's a whitespace character, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 1]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 1] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
     return idx + 1;
   }
 
-  if ( // second next character exists
-  str[idx + 2] && ( // and...
-  // it's solid
-  str[idx + 2].trim() || // it's a whitespace character and...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
     return idx + 2;
-  } // worst case scenario - traverse forwards
-
+  }
 
   for (var i = idx + 1, len = str.length; i < len; i++) {
-    if ( // it's solid
-    str[i].trim() || // it's a whitespace character and...
-    // stop at newlines is on
-    stopAtNewlines && // and it's a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP) {
+    if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
       return i;
     }
   }
@@ -2210,27 +2171,6 @@ function right(str, idx) {
     stopAtRawNbsp: false
   });
 }
-//
-//       lllllll                        ffffffffffffffff           tttt                    ((((((       ))))))
-//       l:::::l                       f::::::::::::::::f       ttt:::t                  ((::::::(     )::::::))
-//       l:::::l                      f::::::::::::::::::f      t:::::t                ((:::::::(       ):::::::))
-//       l:::::l                      f::::::fffffff:::::f      t:::::t               (:::::::((         )):::::::)
-//       l::::l     eeeeeeeeeeee     f:::::f       ffffffttttttt:::::ttttttt         (::::::(             )::::::)
-//       l::::l   ee::::::::::::ee   f:::::f             t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l  e::::::eeeee:::::eef:::::::ffffff       t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l e::::::e     e:::::ef::::::::::::f       tttttt:::::::tttttt         (:::::(               ):::::)
-//       l::::l e:::::::eeeee::::::ef::::::::::::f             t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::::::::::::e f:::::::ffffff             t:::::t               (:::::(               ):::::)
-//       l::::l e::::::eeeeeeeeeee   f:::::f                   t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::e            f:::::f                   t:::::t    tttttt     (::::::(             )::::::)
-//       l::::::le::::::::e          f:::::::f                  t::::::tttt:::::t     (:::::::((         )):::::::)
-//       l::::::l e::::::::eeeeeeee  f:::::::f                  tt::::::::::::::t      ((:::::::(       ):::::::))
-//       l::::::l  ee:::::::::::::e  f:::::::f                    tt:::::::::::tt        ((::::::(     )::::::)
-//       llllllll    eeeeeeeeeeeeee  fffffffff                      ttttttttttt            ((((((       ))))))
-//
-//
-// Finds the index of the first non-whitespace character on the left
-
 
 function leftMain(_ref2) {
   var str = _ref2.str,
@@ -2250,41 +2190,16 @@ function leftMain(_ref2) {
     return null;
   }
 
-  if ( // ~- means minus one, in bitwise
-  str[~-idx] && ( // either it's not a whitespace
-  str[~-idx].trim() || // or it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[~-idx]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[~-idx] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[~-idx] && (str[~-idx].trim() || stopAtNewlines && "\n\r".includes(str[~-idx]) || stopAtRawNbsp && str[~-idx] === RAWNBSP)) {
     return ~-idx;
-  } // if we reached this point, this means character on the left is whitespace -
-  // fine - check the next character on the left, str[idx - 2]
+  }
 
-
-  if ( // second character exists
-  str[idx - 2] && ( // either it's not whitespace so Bob's your uncle here's non-whitespace character
-  str[idx - 2].trim() || // it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // it's some sort of a newline
-  "\n\r".includes(str[idx - 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx - 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx - 2] && (str[idx - 2].trim() || stopAtNewlines && "\n\r".includes(str[idx - 2]) || stopAtRawNbsp && str[idx - 2] === RAWNBSP)) {
     return idx - 2;
-  } // worst case scenario - traverse backwards
-
+  }
 
   for (var i = idx; i--;) {
-    if (str[i] && ( // it's non-whitespace character
-    str[i].trim() || // or it is whitespace character, but...
-    // stop at newlines is on
-    stopAtNewlines && // it's some sort of a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP)) {
+    if (str[i] && (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP)) {
       return i;
     }
   }
@@ -2320,20 +2235,15 @@ var defaults$7 = {
 };
 
 function findMalformed(str, refStr, cb, originalOpts) {
-  //
-  // insurance
-  // ---------
   if (!isStr$2(str)) {
     throw new TypeError("string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: " + str + " (type: " + typeof str + ")");
   } else if (!str.length) {
-    // empty string - quick ending
     return;
   }
 
   if (!isStr$2(refStr)) {
     throw new TypeError("string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: " + refStr + " (type: " + typeof refStr + ")");
   } else if (!refStr.length) {
-    // empty string to look for - quick ending
     return;
   }
 
@@ -2345,83 +2255,41 @@ function findMalformed(str, refStr, cb, originalOpts) {
     throw new TypeError("string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: " + originalOpts + " (type: " + typeof originalOpts + ")");
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$7), originalOpts); // we perform the validation upon Object-assigned "opts" instead
-  // of incoming "originalOpts" because we don't want to mutate the
-  // "originalOpts" and making note of fixed values, Object-assigning
-  // "opts" and then putting those noted fixed values on top is more
-  // tedious than letting Object-assign to do the job, then validating
-  // it, then trying to salvage the value (if possible).
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults$7), originalOpts);
 
   if (typeof opts.stringOffset === "string" && /^\d*$/.test(opts.stringOffset)) {
     opts.stringOffset = Number(opts.stringOffset);
   } else if (!Number.isInteger(opts.stringOffset) || opts.stringOffset < 0) {
     throw new TypeError("[THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: " + opts.stringOffset);
-  } //
-  // action
-  // ------
+  }
 
-
-  var len = str.length; // "current" character (str[i]) is matched against first character
-  // of "refStr", then, if opts.maxDistance allows and refStr has
-  // enough length, current character (str[i]) is matched against the
-  // second character of "refStr" - this time, "patience" is subtracted
-  // by amount of skipped characters, in this case, by 1... and so on...
-  // That matching chain is a "for" loop and that loop's length is below:
-
+  var len = str.length;
   var len2 = Math.min(refStr.length, (opts.maxDistance || 0) + 1);
-  var pendingMatchesArr = []; // when it attempts to dip below zero, match is failed
-
+  var pendingMatchesArr = [];
   var patience = opts.maxDistance || 1;
   var wasThisLetterMatched;
 
   for (var i = 0; i < len; i++) {
-    //
-    //
-    //
-    //
-    //                             THE TOP
-    //                             ███████
-    //
-    //
-    //
-    //
-    // Logging:
-    // -------------------------------------------------------------------------
     if (opts.ignoreWhitespace && !str[i].trim()) {
       continue;
-    } //
-    //
-    //
-    //
-    //                            THE MIDDLE
-    //                            ██████████
-    //
-    //
-    //
-    //
-
+    }
 
     for (var z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {
       wasThisLetterMatched = false;
 
       if (Array.isArray(pendingMatchesArr[z].pendingToCheck) && pendingMatchesArr[z].pendingToCheck.length && str[i] === pendingMatchesArr[z].pendingToCheck[0]) {
-        wasThisLetterMatched = true; // if matched, shift() it
-
+        wasThisLetterMatched = true;
         pendingMatchesArr[z].pendingToCheck.shift();
       } else if (Array.isArray(pendingMatchesArr[z].pendingToCheck) && pendingMatchesArr[z].pendingToCheck.length && str[i] === pendingMatchesArr[z].pendingToCheck[1]) {
-        wasThisLetterMatched = true; // if matched, shift() it
-
+        wasThisLetterMatched = true;
         pendingMatchesArr[z].pendingToCheck.shift();
         pendingMatchesArr[z].pendingToCheck.shift();
-        pendingMatchesArr[z].patienceLeft -= 1; //
+        pendingMatchesArr[z].patienceLeft -= 1;
       } else {
-        pendingMatchesArr[z].patienceLeft -= 1; // we look up the next character, if it matches, we don't pop it
+        pendingMatchesArr[z].patienceLeft -= 1;
 
         if (str[right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
-          pendingMatchesArr[z].pendingToCheck.shift(); // after popping, match the current character at str[i] is it
-          // equal to the first element of recently-shifted
-          // pendingMatchesArr[z].pendingToCheck:
+          pendingMatchesArr[z].pendingToCheck.shift();
 
           if (str[i] === pendingMatchesArr[z].pendingToCheck[0]) {
             pendingMatchesArr[z].pendingToCheck.shift();
@@ -2432,10 +2300,7 @@ function findMalformed(str, refStr, cb, originalOpts) {
 
     pendingMatchesArr = pendingMatchesArr.filter(function (obj) {
       return obj.patienceLeft >= 0;
-    }); // out of all objects which deplete pendingToCheck[] to zero length,
-    // we pick the one with the smallest "startsAt" value - that's filtering
-    // the overlapping values
-
+    });
     var tempArr = pendingMatchesArr.filter(function (obj) {
       return obj.pendingToCheck.length === 0;
     }).map(function (obj) {
@@ -2447,13 +2312,11 @@ function findMalformed(str, refStr, cb, originalOpts) {
       var idxTo = i + (wasThisLetterMatched ? 1 : 0);
 
       if (str.slice(idxFrom, idxTo) !== refStr) {
-        // only ping malformed values, don't ping those exactly matching "refStr"
         cb({
           idxFrom: idxFrom + (opts.stringOffset || 0),
           idxTo: idxTo + (opts.stringOffset || 0)
         });
-      } // remove pendingMatchesArr[] entries with no characters to check
-
+      }
 
       pendingMatchesArr = pendingMatchesArr.filter(function (obj) {
         return obj.pendingToCheck.length;
@@ -2470,31 +2333,18 @@ function findMalformed(str, refStr, cb, originalOpts) {
         pendingMatchesArr.push(whatToPush);
         break;
       }
-    } //
-    //
-    //
-    //
-    //                            THE BOTTOM
-    //                            ██████████
-    //
-    //
-    //
-    //
-    // Logging
-
+    }
   }
 }
 
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.6
+ * Version: 3.13.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -2506,8 +2356,6 @@ function arrayiffy(something) {
 
   return something;
 }
-
-/* eslint no-plusplus:0 */
 
 function isObj$3(something) {
   return something && typeof something === "object" && !Array.isArray(something);
@@ -2530,8 +2378,7 @@ var defaults$6 = {
 
 var defaultGetNextIdx = function defaultGetNextIdx(index) {
   return index + 1;
-}; // eslint-disable-next-line consistent-return
-
+};
 
 function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
   if (special === void 0) {
@@ -2542,7 +2389,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     getNextIdx = defaultGetNextIdx;
   }
 
-  var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
+  var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
 
   if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
@@ -2552,52 +2399,21 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
   if (position >= str.length && !special) {
     return false;
-  } // The "charsToCheckCount" varies, it decreases with skipped characters,
-  // as long as "maxMismatches" allows. It's not the count of how many
-  // characters de-facto have been matched from the source.
+  }
 
-
-  var charsToCheckCount = special ? 1 : whatToMatchVal.length; // this is the counter of real characters matched. It is not reduced
-  // from the holes in matched. For example, if source is "abc" and
-  // maxMismatches=1 and we have "ac", result of the match will be true,
-  // the following var will be equal to 2, meaning we matched two
-  // characters:
-
-  var charsMatchedTotal = 0; // used to catch frontal false positives, where too-eager matching
-  // depletes the mismatches allowance before precisely matching the exact
-  // string that follows, yielding too early false-positive start
-
+  var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+  var charsMatchedTotal = 0;
   var patienceReducedBeforeFirstMatch = false;
-  var lastWasMismatched = false; // value is "false" or index of where it was activated
-  // if no character was ever matched, even through if opts.maxMismatches
-  // would otherwise allow to skip characters, this will act as a last
-  // insurance - at least one character must have been matched to yield a
-  // positive result!
-
+  var lastWasMismatched = false;
   var atLeastSomethingWasMatched = false;
   var patience = opts.maxMismatches;
-  var i = position; // internal-use flag, not the same as "atLeastSomethingWasMatched":
-
-  var somethingFound = false; // these two drive opts.firstMustMatch and opts.lastMustMatch:
-
+  var i = position;
+  var somethingFound = false;
   var firstCharacterMatched = false;
-  var lastCharacterMatched = false; // bail early if there's whitespace in front, imagine:
-  // abc important}
-  //   ^
-  //  start, match ["!important"], matchRightIncl()
-  //
-  // in case above, "c" consumed 1 patience, let's say 1 is left,
-  // we stumble upon "i" where "!" is missing. "c" is false start.
+  var lastCharacterMatched = false;
 
   function whitespaceInFrontOfFirstChar() {
-    return (// it's a first letter match
-      charsMatchedTotal === 1 && // and character in front exists
-      // str[i - 1] &&
-      // and it's whitespace
-      // !str[i - 1].trim() &&
-      // some patience has been consumed already
-      patience < opts.maxMismatches - 1
-    );
+    return charsMatchedTotal === 1 && patience < opts.maxMismatches - 1;
   }
 
   while (str[i]) {
@@ -2616,7 +2432,6 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       return val.toLowerCase();
     }).includes(str[i].toLowerCase())) {
       if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
-        // return true because we reached the zero'th index, exactly what we're looking for
         return true;
       }
 
@@ -2624,7 +2439,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       continue;
     }
 
-    var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1]; // let's match
+    var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
 
     if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
       if (!somethingFound) {
@@ -2633,12 +2448,10 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
       if (!atLeastSomethingWasMatched) {
         atLeastSomethingWasMatched = true;
-      } // if this was the first character from the "to-match" list, flip the flag
-
+      }
 
       if (charsToCheckCount === whatToMatchVal.length) {
-        firstCharacterMatched = true; // now, if the first character was matched and yet, patience was
-        // reduced already, this means there's a false beginning in front
+        firstCharacterMatched = true;
 
         if (patience !== opts.maxMismatches) {
           return false;
@@ -2648,33 +2461,14 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       }
 
       charsToCheckCount -= 1;
-      charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
-      // abc important}
-      //   ^
-      //  start, match ["!important"], matchRightIncl()
-      //
-      // in case above, "c" consumed 1 patience, let's say 1 is left,
-      // we stumble upon "i" where "!" is missing. "c" is false start.
+      charsMatchedTotal++;
 
       if (whitespaceInFrontOfFirstChar()) {
         return false;
       }
 
       if (!charsToCheckCount) {
-        return (// either it was not a perfect match
-          charsMatchedTotal !== whatToMatchVal.length || // or it was, and in that case, no patience was reduced
-          // (if a perfect match was found, yet some "patience" was reduced,
-          // that means we have false positive characters)
-          patience === opts.maxMismatches || // mind you, it can be a case of rogue characters in-between
-          // the what was matched, imagine:
-          // source: "abxcd", matching ["bc"], maxMismatches=1
-          // in above case, charsMatchedTotal === 2 and whatToMatchVal ("bc") === 2
-          // - we want to exclude cases of frontal false positives, like:
-          // source: "xy abc", match "abc", maxMismatches=2, start at 0
-          //          ^
-          //       match form here to the right
-          !patienceReducedBeforeFirstMatch ? i : false
-        );
+        return charsMatchedTotal !== whatToMatchVal.length || patience === opts.maxMismatches || !patienceReducedBeforeFirstMatch ? i : false;
       }
     } else {
       if (!patienceReducedBeforeFirstMatch && !charsMatchedTotal) {
@@ -2682,23 +2476,14 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       }
 
       if (opts.maxMismatches && patience && i) {
-        patience -= 1; // the bigger the maxMismatches, the further away we must check for
-        // alternative matches
+        patience -= 1;
 
         for (var y = 0; y <= patience; y++) {
-          // maybe str[i] will match against next charToCompareAgainst?
           var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
           var nextCharInSource = str[getNextIdx(i)];
 
-          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
-          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-            charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
-            // abc important}
-            //   ^
-            //  start, match ["!important"], matchRightIncl()
-            //
-            // in case above, "c" consumed 1 patience, let's say 1 is left,
-            // we stumble upon "i" where "!" is missing. "c" is false start.
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsMatchedTotal++;
 
             if (whitespaceInFrontOfFirstChar()) {
               return false;
@@ -2707,8 +2492,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
-          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
-          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
             if (!charsMatchedTotal && !opts.hungry) {
               return false;
             }
@@ -2717,41 +2501,27 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
             somethingFound = true;
             break;
           } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
-            // If "nextCharToCompareAgainst" is undefined, this
-            // means there are no more characters left to match,
-            // this is the last character to be matched.
-            // This means, if patience >= 0, this is it,
-            // the match is still positive.
             return i;
-          } // ███████████████████████████████████████
-
+          }
         }
 
         if (!somethingFound) {
-          // if the character was rogue, we mark it:
-          lastWasMismatched = i; // patience--;
-          // console.log(
-          //   `350 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`patience`}\u001b[${39}m`} = ${patience}`
-          // );
+          lastWasMismatched = i;
         }
       } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
         return 0;
       } else {
         return false;
       }
-    } // turn off "lastWasMismatched" if it's on and it hasn't been activated
-    // on this current index:
-
+    }
 
     if (lastWasMismatched !== false && lastWasMismatched !== i) {
       lastWasMismatched = false;
-    } // if all was matched, happy days
-
+    }
 
     if (charsToCheckCount < 1) {
       return i;
-    } // iterate onto the next index, otherwise while would loop infinitely
-
+    }
 
     i = getNextIdx(i);
   }
@@ -2767,47 +2537,9 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
     return false;
   }
-} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// Real deal
-
+}
 
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
-  // insurance
   if (isObj$3(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
@@ -2815,10 +2547,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
-    // arrayiffy if needed:
     opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
-  } // stringify all:
-
+  }
 
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr$1(el) ? el : String(el);
@@ -2869,87 +2599,71 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     return false;
   })) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index " + culpritsIndex + " is longer than 1 character, " + culpritsVal.length + " (equals to " + culpritsVal + "). Please split it into separate characters and put into array as separate elements.");
-  } // action
-  // CASE 1. If it's driven by callback-only, the 3rd input argument, what to look
-  // for - is falsey - empty string within array (or not), OR given null
+  }
 
+  if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$1(whatToMatch[0]) && !whatToMatch[0].trim()) {
+    if (typeof opts.cb === "function") {
+      var firstCharOutsideIndex;
+      var startingPosition = position;
 
-  if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
-  Array.isArray(whatToMatch) && !whatToMatch.length || // []
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$1(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
-  ) {
-      if (typeof opts.cb === "function") {
-        var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
+      if (mode === "matchLeftIncl" || mode === "matchRight") {
+        startingPosition += 1;
+      }
 
-        var startingPosition = position;
+      if (mode[5] === "L") {
+        for (var y = startingPosition; y--;) {
+          var currentChar = str[y];
 
-        if (mode === "matchLeftIncl" || mode === "matchRight") {
-          startingPosition += 1;
-        }
-
-        if (mode[5] === "L") {
-          for (var y = startingPosition; y--;) {
-            // assemble the value of the current character
-            var currentChar = str[y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
-              break;
-            }
-          }
-        } else if (mode.startsWith("matchRight")) {
-          for (var _y = startingPosition; _y < str.length; _y++) {
-            // assemble the value of the current character
-            var _currentChar = str[_y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
-              firstCharOutsideIndex = _y;
-              break;
-            }
+          if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            firstCharOutsideIndex = y;
+            break;
           }
         }
+      } else if (mode.startsWith("matchRight")) {
+        for (var _y = startingPosition; _y < str.length; _y++) {
+          var _currentChar = str[_y];
 
-        if (firstCharOutsideIndex === undefined) {
-          return false;
+          if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+            firstCharOutsideIndex = _y;
+            break;
+          }
         }
+      }
 
-        var wholeCharacterOutside = str[firstCharOutsideIndex];
-        var indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-        var theRemainderOfTheString = "";
+      if (firstCharOutsideIndex === undefined) {
+        return false;
+      }
 
-        if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
-          theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
-        }
+      var wholeCharacterOutside = str[firstCharOutsideIndex];
+      var indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+      var theRemainderOfTheString = "";
 
-        if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
-        } // ELSE matchRight & matchRightIncl
+      if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
+        theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
+      }
 
-
-        if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
-          theRemainderOfTheString = str.slice(firstCharOutsideIndex);
-        }
-
+      if (mode[5] === "L") {
         return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
 
-      var extraNote = "";
-
-      if (!originalOpts) {
-        extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+      if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
+        theRemainderOfTheString = str.slice(firstCharOutsideIndex);
       }
 
-      throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!" + extraNote);
-    } // Case 2. Normal operation where callback may or may not be present, but it is
-  // only accompanying the matching of what was given in 3rd input argument.
-  // Then if 3rd arg's contents were matched, callback is checked and its Boolean
-  // result is merged using logical "AND" - meaning both have to be true to yield
-  // final result "true".
+      return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+    }
 
+    var extraNote = "";
+
+    if (!originalOpts) {
+      extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+    }
+
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!" + extraNote);
+  }
 
   for (var i = 0, len = whatToMatch.length; i < len; i++) {
-    special = typeof whatToMatch[i] === "function"; // since input can be function, we need to grab the value explicitly:
-
+    special = typeof whatToMatch[i] === "function";
     var whatToMatchVal = whatToMatch[i];
     var fullCharacterInFront = void 0;
     var indexOfTheCharacterInFront = void 0;
@@ -2964,17 +2678,14 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
     var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i2) {
       return mode[5] === "L" ? i2 - 1 : i2 + 1;
-    }); // if march() returned positive result and it was "special" case,
-    // Bob's your uncle, here's the result:
+    });
 
     if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
       return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
-    } // now, the "found" is the index of the first character of what was found.
-    // we need to calculate the character to the left/right of it:
-
+    }
 
     if (Number.isInteger(found)) {
-      indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1; //
+      indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
 
       if (mode[5] === "L") {
         restOfStringInFront = str.slice(0, found);
@@ -2997,8 +2708,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
 
   return false;
-} // External API functions
-
+}
 
 function matchLeftIncl(str, position, whatToMatch, opts) {
   return main("matchLeftIncl", str, position, whatToMatch, opts);
@@ -3019,7 +2729,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -3029,25 +2739,19 @@ var allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "
 /**
  * is-char-suitable-for-html-attr-name
  * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
  */
-// Follows the spec:
-// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
 function isAttrNameChar(char) {
-  return typeof char === "string" && ( //
-  // lowercase letters, indexes 97 - 122:
-  char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || // uppercase letters, indexes 65 - 90
-  char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || // digits 0 - 9, indexes 48 - 57
-  char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
+  return typeof char === "string" && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
 }
 
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.1.3
+ * Version: 2.1.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -3066,15 +2770,12 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y) {
     if (y.some(function (oneOfStr) {
       return str.startsWith(oneOfStr, i);
     })) {
-      // it's escape clause, bracket or whatever was reached and yet,
-      // "x" hasn't been encountered yet
       return {
         v: true
       };
     }
 
     if (str[i] === x) {
-      // if "x" was found, that's it - falsey result
       return {
         v: false
       };
@@ -3085,54 +2786,38 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y) {
     var _ret = _loop(i);
 
     if (typeof _ret === "object") return _ret.v;
-  } // default result
-
+  }
 
   return true;
-} // Tells, if substring x goes before substring y on the right
-// side of "str", starting at index "startingIdx".
-// Used to troubleshoot dirty broken code.
-
+}
 
 function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
-      // if x was first, Bob's your uncle, that's truthy result
       return true;
     }
 
     if (str.startsWith(y, i)) {
-      // since we're in this clause, x failed, so if y matched,
-      // this means y precedes x
       return false;
     }
-  } // default result
-
+  }
 
   return false;
-} // Tells, is this a clean plausible attribute starting at given index
-// <img alt="so-called "artists"class='yo'/>
-//                              ^
-//                            start
-
+}
 
 function plausibleAttrStartsAtX(str, start) {
   if (!isAttrNameChar(str[start]) || !start) {
     return false;
-  } // const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
-
+  }
 
   var regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
   return regex.test(str.slice(start));
-} // difference is equal is required
-
+}
 
 function guaranteedAttrStartsAtX(str, start) {
   if (!start || !isAttrNameChar(str[start])) {
     return false;
-  } // either quotes match or does not match but tag closing follows
-  // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-
+  }
 
   var regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   return regex.test(str.slice(start));
@@ -3168,195 +2853,42 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   var totalQuotesCount = 0;
   var lastQuoteWasMatched = false;
   var lastMatchedQuotesPairsStartIsAt;
-  var lastMatchedQuotesPairsEndIsAt; // when suspected attribute name chunks end, we wipe them, but here
-  // we store the last extracted chunk - then later, for example, when we
-  // traverse further and meet opening quote (even with equal missing),
-  // we can evaluate that chunk, was it a known attribute name (idea being,
-  // known attribute name followed by quote is probably legit attribute starting)
-
+  var lastMatchedQuotesPairsEndIsAt;
   var lastCapturedChunk;
-  var secondLastCapturedChunk; // this boolean flag signifies, was the last chunk captured after passing
-  // "isThisClosingIdx":
-  // idea being, if you pass suspected quotes, then encounter new-ones and
-  // in-between does not resemble an attribute name, it's falsey result:
-  // <img alt="so-called "artists"!' class='yo'/>
-  //          ^                  ^
-  //        start             suspected
-  //
-  // that exclamation mark above doesn't resemble an attribute name,
-  // so single quote that follows it is not a starting of its value
-
-  var lastChunkWasCapturedAfterSuspectedClosing = false; // does what it says on the tin - flips on the first instance
-
+  var secondLastCapturedChunk;
+  var lastChunkWasCapturedAfterSuspectedClosing = false;
   var closingBracketMet = false;
-  var openingBracketMet = false; // let's traverse from opening to the end of the string, then in happy
-  // path scenarios, let's exit way earlier, upon closing quote
+  var openingBracketMet = false;
 
   for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //                                THE TOP
-    //                                ███████
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // Logging:
-    // -------------------------------------------------------------------------
-    if ( // Imagine we're here:
-    // <z bbb"c" ddd'e>
-    //       ^      ^
-    //   start     suspected closing
-    //
-    // this single quote at 13 is preceded by fully matched pair of quotes
-    // there's also attribute-name-like chunk preceding in front.
-    // Let's catch such case.
-    //
-    // 1. we're on a quote
-    "'\"".includes(str[i]) && // 2. we ensure that a pair of quotes was catched so far
-    lastQuoteWasMatched && // 3. lastMatchedQuotesPairsStartIsAt is our known opening
-    lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && // 4. lastMatchedQuotesPairsEndIsAt is the last matched pair's closing:
-    // <z bbb"c" ddd'e>
-    //         ^
-    //        this if to reuse the example..
-    //
-    lastMatchedQuotesPairsEndIsAt !== undefined && lastMatchedQuotesPairsEndIsAt < i && // rule must not trigger before the suspected quote index
-    i >= isThisClosingIdx) {
-      // ███████████████████████████████████████ E1
-      //
-      // consider WHERE WE ARE AT THE MOMENT in relation to
-      // the INDEX THAT'S QUESTIONED FOR BEING A CLOSING-ONE
-      // FALSEY result:
-      // <z bbb"c" ddd'e'>.<z fff"g">
-      //       ^      ^
-      //     start   suspected
-      //
-      // <z bbb"c" ddd'e'>.<z fff"g">
-      //              ^
-      //            we're here
-      // TRUTHY result:
-      // <img class="so-called "alt"!' border='10'/>
-      //            ^          ^
-      //          start      suspected
-      //
-      // where we're at:
-      // <img class="so-called "alt"!' border='10'/>
-      //                           ^
-      //
-      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[right(str, i)]); // ███████████████████████████████████████ E2
-      //
-      //
-      // ensure it's not a triplet of quotes:
-      // <img alt="so-called "artists"!' class='yo'/>
-      //          ^          ^       ^
-      //       start      suspected  |
-      //                             current index
-      //
-
-      var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && // rule out cases where plausible attribute starts:
-      // <img class="so-called "alt"!' border='10'/>
-      //            ^          ^   ^
-      //        start          |    \
-      //           suspected end    currently on
-      plausibleAttrStartsAtX(str, i + 1)); // ███████████████████████████████████████ E3
-
-      var E31 = // or a proper recognised attribute follows:
-      // <img alt="so-called "artists"class='yo'/>
-      //          ^                  ^
-      //       start              suspected and currently on
-      //
-      // we're on a suspected quote
-      i === isThisClosingIdx && // plus one because we're on a quote
-      plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
-      var E32 = // or the last chunk is a known attribute name:
-      // <img class="so-called "alt"!' border='10'/>
-      //            ^          ^
-      //         start      suspected/we're currently on
-      //
-      chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim()); // imagine:
+    if ("'\"".includes(str[i]) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt !== undefined && lastMatchedQuotesPairsEndIsAt < i && i >= isThisClosingIdx) {
+      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[right(str, i)]);
+      var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
+      var E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
+      var E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
 
       if (chunkStartsAt) {
         str.slice(chunkStartsAt, i).trim();
       }
 
-      var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && // and whole chunk is a plausible attribute name
-      Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
+      var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
         return isAttrNameChar(char);
-      }) && // known opening and suspected closing are both singles or doubles
-      str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]); // anti-rule - it's fine if we're on suspected ending and to the left
-      // it's not an attribute start
-      // <img alt='Deal is your's!"/>
-      //          ^               ^
-      //       start            suspected/current
-      // extract attr name characters chunk on the left, "s" in the case below
-      // <img alt='Deal is your's"/>
-      //                         ^
-      //                       start
-
+      }) && str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]);
       var attrNameCharsChunkOnTheLeft = void 0;
 
       if (i === isThisClosingIdx) {
         attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
       }
 
-      var E34 = // we're on suspected
-      i === isThisClosingIdx && ( // it's not a character suitable for attr name,
-      !isAttrNameChar(str[left(str, i)]) || // or it is, but whatever we extracted is not recognised attr name
-      attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && // rule out equal
-      str[left(str, i)] !== "="; // ███████████████████████████████████████ E4
-
-      var E41 = // either it's a tag ending and we're at the suspected quote
-      "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
-      var E42 = // or next character is suitable for a tag name:
-      isAttrNameChar(str[right(str, i)]);
-      var E43 = // or in case of:
-      // <img class="so-called "alt"!' border='10'/>
-      //            ^          ^
-      //          start      suspected
-      //
-      // where we're at:
-      // <img class="so-called "alt"!' border='10'/>
-      //                           ^
-      //                          here
-      lastQuoteWasMatched && i !== isThisClosingIdx;
-      var E5 = // it's not a double-wrapped attribute value:
-      //
-      // <div style="float:"left"">z</div>
-      //            ^      ^
-      //          start   suspected
-      //
-      // we're at:
-      // <div style="float:"left"">z</div>
-      //                        ^
-      //                      here
-      !( // rule must not trigger before the suspected quote index
-      i >= isThisClosingIdx && // there's colon to the left of a suspected quote
-      str[left(str, isThisClosingIdx)] === ":");
+      var E34 = i === isThisClosingIdx && (!isAttrNameChar(str[left(str, i)]) || attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && str[left(str, i)] !== "=";
+      var E41 = "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
+      var E42 = isAttrNameChar(str[right(str, i)]);
+      var E43 = lastQuoteWasMatched && i !== isThisClosingIdx;
+      var E5 = !(i >= isThisClosingIdx && str[left(str, isThisClosingIdx)] === ":");
       return !!(E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5);
-    } // catch quotes
-
+    }
 
     if ("'\"".includes(str[i])) {
-      // catch the non-overlapping matched pairs of quotes
-      // for example that's three pairs in total below:
-      // <z bbb"c" ddd'e'>.<z fff"g">
-      // Insurace against the Killer Triplet - a quoted quote
       if (str[i] === "'" && str[i - 1] === "\"" && str[i + 1] === "\"" || str[i] === "\"" && str[i - 1] === "'" && str[i + 1] === "'") {
         continue;
       }
@@ -3369,110 +2901,41 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         lastQuoteWasMatched = true;
       } else {
         lastQuoteWasMatched = false;
-      } // bump total counts:
-
+      }
 
       quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
-      totalQuotesCount = quotesCount.get("\"") + quotesCount.get("'"); // lastQuoteAt = i;
-      // console.log(
-      //   `325 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
-      //     lastQuoteAt,
-      //     null,
-      //     4
-      //   )}`
-      // );
-    } // catch closing brackets
-
+      totalQuotesCount = quotesCount.get("\"") + quotesCount.get("'");
+    }
 
     if (str[i] === ">" && !closingBracketMet) {
-      closingBracketMet = true; // if all pairs of quotes were met, that's a good indicator, imagine
-      // <z bbb"c" ddd'e'>
-      //                 ^
+      closingBracketMet = true;
 
-      if (totalQuotesCount && quotesCount.get("matchedPairs") && totalQuotesCount === quotesCount.get("matchedPairs") * 2 && // we haven't reached the suspected quote and tag's already ending
-      i < isThisClosingIdx) {
+      if (totalQuotesCount && quotesCount.get("matchedPairs") && totalQuotesCount === quotesCount.get("matchedPairs") * 2 && i < isThisClosingIdx) {
         return false;
       }
-    } // catch opening brackets
+    }
 
-
-    if (str[i] === "<" && // consider ERB templating tags, <%= zzz %>
-    str[right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
-      openingBracketMet = true; // if it's past the "isThisClosingIdx", that's very falsey
-      // if (i > isThisClosingIdx) {
-
-      return false; // }
-    } //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //                               MIDDLE
-    //                               ██████
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // before and after the suspected index, all the way while traversing the
-    // string from known, starting quotes (or in their absence, starting of
-    // the attribute's value, the second input argument "idxOfAttrOpening")
-    // all the way until the end, we catch the first character past the
-    // questioned attribute closing.
-    // imagine
-    // <img alt="so-called "artists"!' class='yo'/>
-    //          ^                  ^
-    //        opening          suspected closing
-
+    if (str[i] === "<" && str[right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
+      openingBracketMet = true;
+      return false;
+    }
 
     if (str[i].trim() && !chunkStartsAt) {
-      // <img alt="so-called "artists"!' class='yo'/>
-      //                              ^
-      //                         we land here, on excl. mark
       if (isAttrNameChar(str[i])) {
         chunkStartsAt = i;
       }
     } else if (chunkStartsAt && !isAttrNameChar(str[i])) {
-      // ending of an attr name chunk
       secondLastCapturedChunk = lastCapturedChunk;
       lastCapturedChunk = str.slice(chunkStartsAt, i);
-      lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx; // console.log(
-      //   `434 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`
-      // );
-      // chunkStartsAt = null;
-      // imagine:
-      // <z bbb"c' href"e>
-      //       ^ ^
-      //   start suspected ending
-      //
-      // we're here:
-      // <z bbb"c' href"e>
-      //               ^
+      lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
 
       if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[right(str, i)])) {
-        var A1 = i > isThisClosingIdx; //
-        // ensure that all continuous chunks since the last quote are
-        // recognised attribute names
-
+        var A1 = i > isThisClosingIdx;
         var A21 = !lastQuoteAt;
         var A22 = lastQuoteAt + 1 >= i;
         var A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
           return allHtmlAttribs.has(chunk);
-        }); // <div style="float:'left"">z</div>
-        //            ^           ^
-        //          start      we're here
-
+        });
         var A3 = !lastCapturedChunk || !secondLastCapturedChunk || !secondLastCapturedChunk.endsWith(":");
         var B1 = i === isThisClosingIdx;
         var B21 = totalQuotesCount < 3;
@@ -3485,150 +2948,30 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         return A1 && (A21 || A22 || A23) && A3 || B1 && (B21 || B22 || B23 || B24 || B25);
       }
 
-      if ( // this is a recognised attribute
-      lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
+      if (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
         return true;
       }
-    } // catching new attributes that follow after suspected quote.
-    // Imagine
-    // <a class "c" id 'e' href "www">
-    //                 ^            ^
-    //        known start at 16     suspected ending at 29
+    }
 
-
-    if ( // if we're currently on some quote:
-    "'\"".includes(str[i]) && ( // and if either quote count is an even number (the "!" checking is it zero)
-    !(quotesCount.get("\"") % 2) || !(quotesCount.get("'") % 2)) && // and sum of quotes is odd, for example,
-    // <a class "c" id 'e' href "www">
-    //                          ^
-    //                   reusing example above, let's say we're here
-    //
-    // in this situation, both single quotes around "e" add up to 2, then
-    // current opening quote of "www" adds up to 3.
-    //
-    // In human language, this means, we check, was there a complete
-    // set of quotes recorded by now, plus is current chunk a known
-    // attribute name - this allows us to catch an attribute with equal missing
-    (quotesCount.get("\"") + quotesCount.get("'")) % 2 && ( //
-    // last chunk is not falsey (thus a string):
-    lastCapturedChunk && // and finally, perf resource-taxing evaluation, is it recognised:
-    allHtmlAttribs.has(lastCapturedChunk) || // imagine
-    // <z bbb"c" ddd'e'>
-    //         ^
-    //        a suspected closing
-    //
-    // alternatively, check the count of remaining quotes, ensure that
-    // leading up to closing bracket, everything's neat (not overlapping
-    // at least and opened and closed)
-    // this catch is for the following attributes, for example,
-    // <z bbb"c" ddd'e'>
-    //       ^      ^
-    //     start   suspected ending
-    i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())) && //
-    // the same quote doesn't follow on the right,
-    // think <div style="float:"left"">z</div>
-    //                  ^           ^
-    //               start    suspected closing
-    !(str[i + 1] === str[i] && str[i] === str[idxOfAttrOpening]) && //
-    //
-    // and it's not this case:
-    //
-    // <div style="float:'left'">z</div>
-    //            ^      ^
-    //         start   suspected
-    //
-    // we're here:
-    // <div style="float:'left'">z</div>
-    //                        ^
-    //                       here
-    !( // we're part the suspected closing, on another closing
-    i > isThisClosingIdx + 1 && // colon is to the left of suspected
-    str[left(str, isThisClosingIdx)] === ":") && //
-    // the suspected quote is the fourth,
-    // <div style="float:'left'">z</div>
-    //            ^            ^
-    //          start        suspected
-    //
-    // we want to exclude the quote on the left:
-    // <div style="float:'left'">z</div>
-    //                        ^
-    //                       this
-    //
-    // in which case, we'd have:
-    // lastCapturedChunk = "left"
-    // secondLastCapturedChunk = "float:"
-    !(lastCapturedChunk && secondLastCapturedChunk && secondLastCapturedChunk.trim().endsWith(":"))) {
-      // rules:
-      // before suspected index this pattern is falsey, after - truthy
-      var R0 = i > isThisClosingIdx; //
-
+    if ("'\"".includes(str[i]) && (!(quotesCount.get("\"") % 2) || !(quotesCount.get("'") % 2)) && (quotesCount.get("\"") + quotesCount.get("'")) % 2 && (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) || i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())) && !(str[i + 1] === str[i] && str[i] === str[idxOfAttrOpening]) && !(i > isThisClosingIdx + 1 && str[left(str, isThisClosingIdx)] === ":") && !(lastCapturedChunk && secondLastCapturedChunk && secondLastCapturedChunk.trim().endsWith(":"))) {
+      var R0 = i > isThisClosingIdx;
       var R1 = !!openingQuote;
       var R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
-      var R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim()); // that quote we suspected as closing, is from an opening-closing
-      // set on another attribute:
-
-      var R4 = !xBeforeYOnTheRight$1(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
-      // <z alt"href' www'/>
-      //       ^    ^
-      //    start   suspected ending
-      // let's rule out the case where a whole (suspected) attribute's value is
-      // a known attribute value, plus quotes mismatch plus that closing quote
-      // is on the right, before the its opposite kind
-
+      var R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim());
+      var R4 = !xBeforeYOnTheRight$1(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx]));
       return R0 && !(R1 && R2 && R3 && R4);
     }
 
-    if ( // imagine
-    // <a href=www" class=e'>
-    //         ^  ^
-    //     start  suspected
-    // if it's equal following attribute name
-    (str[i] === "=" || // OR
-    // it's whitespace
-    !str[i].length && // and next non-whitespace character is "equal" character
-    str[right(str, i)] === "=") && // last chunk is not falsey (thus a string)
-    lastCapturedChunk && // and finally, perf resource-taxing evaluation, is it recognised:
-    allHtmlAttribs.has(lastCapturedChunk)) {
-      // definitely that's new attribute starting
+    if ((str[i] === "=" || !str[i].length && str[right(str, i)] === "=") && lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk)) {
       var W1 = i > isThisClosingIdx;
-      var W2 = // insurance against:
-      // <z alt"href' www' id=z"/>
-      //       ^         ^
-      //     start      suspected ending
-      //
-      // <z alt"href' www' id=z"/>
-      //                       ^
-      //                    we're here currently
-      !(!( //
-      // first, rule out healthy code scenarios,
-      // <a href="zzz" target="_blank" style="color: black;">
-      //         ^   ^       ^
-      //        /    |        \
-      //   start   suspected   we're here
-      lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || // or quotes can be mismatching, but last chunk's start should
-      // match a confirmed attribute regex (with matching quotes and
-      // equal present)
-      guaranteedAttrStartsAtX(str, chunkStartsAt)) && //
-      // continuing with catch clauses of the insurance case:
-      lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt !== undefined && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
+      var W2 = !(!(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || guaranteedAttrStartsAtX(str, chunkStartsAt)) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt !== undefined && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
       return W1 && W2;
-    } // when index "isThisClosingIdx" has been passed...
-
+    }
 
     if (i > isThisClosingIdx) {
-      // if current quote matches the opening
       if (openingQuote && str[i] === openingQuote) {
-        // we want to return false as default...
-        // except if we're able to extract a clean recognised attribute name
-        // in front of here and prove that it's actually a new attribute starting
-        // here, then it's true
-        // imagine
-        // <img alt="somethin' fishy going on' class">z<a class="y">
-        //          ^                        ^      ^
-        //         start            suspected       we're here
         var Y1 = !!lastQuoteAt;
-        var Y2 = lastQuoteAt === isThisClosingIdx; // ensure there's some content between suspected and "here":
-
+        var Y2 = lastQuoteAt === isThisClosingIdx;
         var Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
         var Y4 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
           return allHtmlAttribs.has(chunk);
@@ -3636,56 +2979,22 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         var Y5 = i >= isThisClosingIdx;
         var Y6 = !str[right(str, i)] || !"'\"".includes(str[right(str, i)]);
         return !!(Y1 && Y2 && Y3 && Y4 && Y5 && Y6);
-      } // if we have passed the suspected closing quote
-      // and we meet another quote of the same kind,
-      // it's false result. Imagine code:
-      // <img alt='so-called "artists"!" class='yo'/>
-      //                     ^       ^
-      //               questioned    |
-      //                 index     we're here
-      //                           so it's false
+      }
 
-
-      if ( // if attribute starts with a quote
-      openingQuote && // and we're suspecting a mismatching pair:
-      str[isThisClosingIdx] === oppositeToOpeningQuote && // we're questioning, maybe current
-      // suspected closing quote is of the
-      // opposite kind (single-double, double-single)
-      str[i] === oppositeToOpeningQuote) {
+      if (openingQuote && str[isThisClosingIdx] === oppositeToOpeningQuote && str[i] === oppositeToOpeningQuote) {
         return false;
-      } // if the tag closing was met, that's fine, imagine:
-      // <div class='c">.</div>
-      //              ^
-      //        we went past this suspected closing quote
-      //        and reached the tag ending...
-
+      }
 
       if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-        // happy path scenario
-        var _R = // opening matches closing
-        str[idxOfAttrOpening] === str[isThisClosingIdx] && // last captured quote was the suspected ("isThisClosingIdx")
-        lastQuoteAt === isThisClosingIdx && // all is clean inside - there are no quotes of the ones used in
-        // opening/closing (there can be opposite type quotes though)
-        !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]); // Not more than one pair of non-overlapping quotes should have been matched.
+        var _R = str[idxOfAttrOpening] === str[isThisClosingIdx] && lastQuoteAt === isThisClosingIdx && !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
 
-
-        var R11 = quotesCount.get("matchedPairs") < 2; // at least it's not a recognised attribute name on the left:
+        var R11 = quotesCount.get("matchedPairs") < 2;
 
         var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
 
-        var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && ( // avoid cases where multiple pairs of mismatching quotes were matched
-        // we're past suspected closing:
-        !(i > isThisClosingIdx && // and there were some single quotes recorded so far
-        quotesCount.get("'") && // and doubles too
-        quotesCount.get("\"") && // and there were few quote pairs matched
-        quotesCount.get("matchedPairs") > 1) || // but add escape latch for when tag closing follows:
-        // <img alt='so-called "artists"!"/>
-        //          ^                    ^^
-        //        start         suspected  currently we're on slash
-        "/>".includes(str[right(str, i)]));
+        var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && (!(i > isThisClosingIdx && quotesCount.get("'") && quotesCount.get("\"") && quotesCount.get("matchedPairs") > 1) || "/>".includes(str[right(str, i)]));
 
-        var _R2 = totalQuotesCount < 3 || // there's only two quotes mismatching:
-        quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
+        var _R2 = totalQuotesCount < 3 || quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
 
         var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt !== undefined && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
           return isAttrNameChar(char);
@@ -3693,56 +3002,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
         var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && isAttrNameChar(str[idxOfAttrOpening - 2]);
         var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
-        return (// happy path - known opening matched suspected closing and
-          // that suspected closing was the last captured quote ("lastQuoteAt")
-          //
-          _R || // The matched pair count total has not reach or exceed two
-          //
-          // because we're talking about fully matched opening-closing quote
-          // pairs.
-          //
-          // Let me remind you the question algorithm is answering:
-          // Is quote at index y closing quote, considering opening is at x?
-          //
-          // Now, imagine we went past index y, reached index z, and up to
-          // this point two sets of quotes were caught, as in:
-          // <z bbb"c" ddd"e">
-          //       ^        ^
-          //     start     we're here, quote in question
-          //
-          // above, that's falsey result, it can't be fourth caught quote!
-          (R11 || R12) && // besides that,
-          // We need to account for mismatching quote pair. If a pair is
-          // mismatching, "matchedPairs" might not get bumped to two thus
-          // leading to a mistake.
-          // When pair is mismatching, we can tell it's so because total count
-          // minus matched count times two would be equal to two - two
-          // quotes left unmatched.
-          // Mind you, it's not more because algorithm would exit by the time
-          // we would reach 4 let's say...
-          // either there's not more than one pair:
-          _R2 && ( // also, protection against cases like:
-          // <z bbb"c" ddd'e>
-          //       ^      ^
-          //   start     suspected
-          //
-          // in case above, all the clauses up until now pass
-          //
-          // we need to check against "lastQuoteWasMatched" flag
-          //
-          //
-          // or last pair was matched:
-          R31 || // either this closing bracket is the last:
-          R32 || // or char before starting is equal and char before that
-          // satisfies attribute name requirements
-          R33 || // or it seems like it's outside rather inside a tag:
-          R34)
-        );
-      } // if the true attribute ending was met passing
-      // past the suspected one, this means that
-      // suspected one was a false guess. Correct ending
-      // is at this index "i"
-
+        return _R || (R11 || R12) && _R2 && (R31 || R32 || R33 || R34);
+      }
 
       if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
         trimBeforeMatching: true,
@@ -3751,32 +3012,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         return true;
       }
     } else {
-      // this clause is meant to catch the suspected quotes
-      // which don't belong to the tag, it's where quotes
-      // in question are way beyond the actual attribute's ending.
-      // For example, consider
-      // <div class="c' id="x'>.</div>
-      //            ^        ^
-      //            |        |
-      //         known      suspected
-      //         opening    closing
-      //
-      // That equal-quote after "id" would trigger the alarm,
-      // that is the clause below..
-      // BUT mind the false positive:
-      // <img src="xyz" alt="="/>
-      //                    ^ ^
-      //                    | |
-      //      known opening/  \suspected closing
-      //
-      // by the way we use right() to jump over whitespace
-      // for example, this will also catch:
-      // <img src="xyz" alt="=   "/>
-      //
       var firstNonWhitespaceCharOnTheLeft = void 0;
 
       if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
-        // happy path
         firstNonWhitespaceCharOnTheLeft = i - 1;
       } else {
         for (var y = i; y--;) {
@@ -3788,108 +3026,44 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
 
       if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
-        // ensure it's not tag ending on the right
-        // before freaking out:
         cb: function cb(char) {
           return !"/>".includes(char);
         },
         trimBeforeMatching: true,
         trimCharsBeforeMatching: ["="]
-      }) && // ensure it's a character suitable for attribute
-      // name on the left of equal (if it's a real
-      // attribute name its name characters must pass
-      // the isAttrNameChar()...)
-      isAttrNameChar(str[firstNonWhitespaceCharOnTheLeft]) && // ensure it's not
-      // <img src="https://z.com/r.png?a=" />
-      //                                ^
-      //                              here
-      //
-      // in which case it's a false positive!!!
-      !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
+      }) && isAttrNameChar(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
         return false;
       }
 
       if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
         return true;
-      } // also some insurance for crazier patterns like:
-      // <z alt"href" www'/>
-      //        ^   |    ^
-      //    start   |    suspected
-      //            |
-      //          currently on
-      //
-      // catch this pattern where initial equal to the left of start is missing
-      // and this pattern implies equals will be missing further
-
+      }
 
       if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
         return false;
-      } // catch
-      // <div style="float:"left'">z</div>
-      //            ^            ^
-      //          start       we're here, and also it's suspected too
-      //
-
+      }
 
       if (i === isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
         return true;
       }
-    } //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //                               BOTTOM
-    //                               ██████
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // catch quotes again - these clauses are specifically at the bottom
-    // because they're depdendent on "lastCapturedChunk" which is calculated
-    // after quote catching at the top
+    }
 
-
-    if ("'\"".includes(str[i]) && // if these quotes are after "isThisClosingIdx", a suspected closing
-    i > isThisClosingIdx) {
-      // if these quotes are after "isThisClosingIdx", if there
-      // was no chunk recorded after it until now,
-      // ("lastChunkWasCapturedAfterSuspectedClosing" flag)
-      // or there was but it's not recognised, that's falsey result
-      if ( // if there was no chunk recorded after it until now
-      !lastChunkWasCapturedAfterSuspectedClosing || !lastCapturedChunk || // or there was but lastCapturedChunk is not recognised
-      !allHtmlAttribs.has(lastCapturedChunk)) {
+    if ("'\"".includes(str[i]) && i > isThisClosingIdx) {
+      if (!lastChunkWasCapturedAfterSuspectedClosing || !lastCapturedChunk || !allHtmlAttribs.has(lastCapturedChunk)) {
         return false;
-      } // ELSE - it does match, so it seems legit
-
+      }
 
       return true;
-    } // at the bottom, PART II of catch quotes
-
+    }
 
     if ("'\"".includes(str[i])) {
       lastQuoteAt = i;
-    } // at the bottom, PART II of reset chunk
-
+    }
 
     if (chunkStartsAt && !isAttrNameChar(str[i])) {
       chunkStartsAt = null;
-    } // logging
-    // -----------------------------------------------------------------------------
-
-  } // if this point was reached and loop didn't exit...
-  // default is false
-
+    }
+  }
 
   return false;
 }
@@ -3906,10 +3080,7 @@ function isNotLetter(char) {
 }
 
 function extraRequirements(str, idx) {
-  // either it's opening bracket
-  return str[idx] === "<" || // or there's one opening bracket to the left
-  str[left(str, idx)] === "<"; // TODO: consider adding clauses for br/> -
-  // slash-closing follows, but no opening
+  return str[idx] === "<" || str[left(str, idx)] === "<";
 }
 
 function isOpening(str, idx, originalOpts) {
@@ -3917,7 +3088,6 @@ function isOpening(str, idx, originalOpts) {
     idx = 0;
   }
 
-  // -----------------------------------------------------------------------------
   if (typeof str !== "string") {
     throw new Error("is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as \"" + typeof str + "\", value being " + JSON.stringify(str, null, 4));
   }
@@ -3926,52 +3096,27 @@ function isOpening(str, idx, originalOpts) {
     throw new Error("is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as \"" + typeof idx + "\", value being " + JSON.stringify(idx, null, 4));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts); // -----------------------------------------------------------------------------
+  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts);
 
-
-  var whitespaceChunk = "[\\\\ \\t\\r\\n/]*"; // generalChar does not include the dash, -
-
-  var generalChar = "._a-z0-9\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF"; // =======
-  // r1. tag without attributes
-  // for example <br>, <br/>
-
-  var r1 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+" + whitespaceChunk + "\\/?" + whitespaceChunk + ">", "g"); // its custom-html tag version:
-
-  var r5 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*" + whitespaceChunk + ">", "g"); // to anybody who wonders, the \u2070-\uFFFF covers all the surrogates
-  // of which emoji can be assembled. This is a very rough match, aiming to
-  // catch as much as possible, not the validation-level match.
-  // If you put bunch of opening surrogates in a sequence, for example,
-  // this program would still match them positively. It's to catch all emoji,
-  // including future, new-fangled emoji.
-  // =======
-  // r2. tag with one healthy attribute (no closing slash or whatever follow afterwards is matched)
-
-  var r2 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['\"\\w]", "g"); // its custom-html tag version:
-
-  var r6 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\w+\\s+[" + generalChar + "]+[-" + generalChar + "]*(?:-\\w+)?\\s*=\\s*['\"\\w]"); // =======
-  // r3. closing/self-closing tags
-
-  var r3 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\/?\\s*\\w+\\s*\\/?\\s*>", "g"); // its custom-html tag version:
-
-  var r7 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\/?\\s*[" + generalChar + "]+[-" + generalChar + "]*\\s*\\/?\\s*>", "g"); // =======
-  // r4. opening tag with attributes,
-
-  var r4 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g"); // its custom-html tag version:
-
-  var r8 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g"); // =======
-  // lesser requirements when opening bracket precedes index "idx"
-
-  var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", ""); // =======
-
+  var whitespaceChunk = "[\\\\ \\t\\r\\n/]*";
+  var generalChar = "._a-z0-9\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF";
+  var r1 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+" + whitespaceChunk + "\\/?" + whitespaceChunk + ">", "g");
+  var r5 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*" + whitespaceChunk + ">", "g");
+  var r2 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['\"\\w]", "g");
+  var r6 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\w+\\s+[" + generalChar + "]+[-" + generalChar + "]*(?:-\\w+)?\\s*=\\s*['\"\\w]");
+  var r3 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\/?\\s*\\w+\\s*\\/?\\s*>", "g");
+  var r7 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\/?\\s*[" + generalChar + "]+[-" + generalChar + "]*\\s*\\/?\\s*>", "g");
+  var r4 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
+  var r8 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
+  var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", "");
   var whatToTest = idx ? str.slice(idx) : str;
   var qualified = false;
-  var passed = false; // if the result is still falsey, we match against the known HTML tag names list
-
+  var passed = false;
   var matchingOptions = {
     cb: isNotLetter,
     i: true,
     trimCharsBeforeMatching: ["/", BACKSLASH$1, "!", " ", "\t", "\n", "\r"]
-  }; // -----------------------------------------------------------------------------
+  };
 
   if (opts.allowCustomTagNames) {
     if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
@@ -4019,18 +3164,13 @@ function isOpening(str, idx, originalOpts) {
 
   if (!passed && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
     passed = true;
-  } //
-
+  }
 
   var res = typeof str === "string" && idx < str.length && passed;
   return res;
 }
 
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-
-var allHTMLTagsKnownToHumanity = new Set(["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]); // contains all common templating language head/tail marker characters:
-
+var allHTMLTagsKnownToHumanity = new Set(["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]);
 var espChars = "{}%-$_()*|#";
 var veryEspChars = "{}|#";
 var notVeryEspChars = "%()$_*#";
@@ -4043,19 +3183,12 @@ var LEFTDOUBLEQUOTMARK = "\u201C";
 var RIGHTDOUBLEQUOTMARK = "\u201D";
 
 function isLatinLetter(char) {
-  // we mean Latin letters A-Z, a-z
   return !!(char && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123));
-} // Considering custom element name character requirements:
-// https://html.spec.whatwg.org/multipage/custom-elements.html
-// Example of Unicode character in a regex:
-// \u0041
-// "-" | "." | [0-9] | "_" | [a-z] | #xB7 | [#xC0-#xEFFFF]
-
+}
 
 function charSuitableForTagName(char) {
   return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
-} // it flips all brackets backwards and puts characters in the opposite order
-
+}
 
 function flipEspTag(str) {
   var res = "";
@@ -4091,48 +3224,34 @@ function flipEspTag(str) {
 
 function isTagNameRecognised(tagName) {
   return allHTMLTagsKnownToHumanity.has(tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(tagName.toLowerCase());
-} // Tells, if substring x goes before substring y on the right
-// side of "str", starting at index "startingIdx".
-// Used to troubleshoot dirty broken code.
-
+}
 
 function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
-      // if x was first, Bob's your uncle, that's truthy result
       return true;
     }
 
     if (str.startsWith(y, i)) {
-      // since we're in this clause, x failed, so if y matched,
-      // this means y precedes x
       return false;
     }
-  } // default result
-
+  }
 
   return false;
 }
 
 function isObj$2(something) {
   return something && typeof something === "object" && !Array.isArray(something);
-} // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
+}
 
-
-var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]; // https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Inline_text_semantics
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Image_and_multimedia
-
-var inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]); // Rules which might wrap the media queries, for example:
-// @supports (display: grid) {...
-// const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
-
+var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
+var inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]);
 var charsThatEndCSSChunks = ["{", "}", ","];
 var SOMEQUOTE = "'\"" + LEFTDOUBLEQUOTMARK + RIGHTDOUBLEQUOTMARK;
-var attrNameRegexp = /[\w-]/; // returns found object's index in "layers" array
+var attrNameRegexp = /[\w-]/;
 
 function getLastEspLayerObjIdx(layers) {
   if (layers && layers.length) {
-    // traverse layers backwards
     for (var z = layers.length; z--;) {
       if (layers[z].type === "esp") {
         return z;
@@ -4145,83 +3264,29 @@ function getLastEspLayerObjIdx(layers) {
 
 function getWholeEspTagLumpOnTheRight(str, i, layers) {
   var wholeEspTagLumpOnTheRight = str[i];
-  var len = str.length; // getLastEspLayerObj()
-
+  var len = str.length;
   var lastEspLayerObj = layers[getLastEspLayerObjIdx(layers)];
 
   for (var y = i + 1; y < len; y++) {
-    // if righty character is on the left and now it's lefty,
-    // we have a situation like:
-    // {{ abc }}{% endif %}
-    //        ^^^^
-    //        lump
-    //
-    // {{ abc }}{% endif %}
-    //         ^^
-    //         ||
-    //    lefty  righty
-    //
-    // we slice off where righty starts
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       break;
     }
 
-    if ( // consider:
-    // ${(y/4)?int}
-    //   ^
-    //   we're here - is this opening bracket part of heads?!?
-    //
-    // or JSP:
-    // <%=(new java.util.Date()).toLocaleString()%>
-    //    ^
-    // if lump already is two chars long
-    wholeEspTagLumpOnTheRight.length > 1 && ( // contains one of opening-polarity characters
-    wholeEspTagLumpOnTheRight.includes("<") || wholeEspTagLumpOnTheRight.includes("{") || wholeEspTagLumpOnTheRight.includes("[") || wholeEspTagLumpOnTheRight.includes("(")) && // bail if it's a bracket
-    str[y] === "(") {
+    if (wholeEspTagLumpOnTheRight.length > 1 && (wholeEspTagLumpOnTheRight.includes("<") || wholeEspTagLumpOnTheRight.includes("{") || wholeEspTagLumpOnTheRight.includes("[") || wholeEspTagLumpOnTheRight.includes("(")) && str[y] === "(") {
       break;
     }
 
-    if (espChars.includes(str[y]) || // in case it's XML tag-like templating tag, such as JSP,
-    // we check, is it in the last guessed lump's character's list
-    lastEspLayerObj && lastEspLayerObj.guessedClosingLump.includes(str[y]) || str[i] === "<" && str[y] === "/" || // accept closing bracket if it's RPL comment, tails of: <#-- z -->
-    str[y] === ">" && wholeEspTagLumpOnTheRight === "--" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-" || // we do exception for extra characters, such as JSP's
-    // exclamation mark: <%! yo %>
-    //                     ^
-    // which is legit...
-    //
-    // at least one character must have been caught already
-    !lastEspLayerObj && y > i && "!=@".includes(str[y])) {
+    if (espChars.includes(str[y]) || lastEspLayerObj && lastEspLayerObj.guessedClosingLump.includes(str[y]) || str[i] === "<" && str[y] === "/" || str[y] === ">" && wholeEspTagLumpOnTheRight === "--" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-" || !lastEspLayerObj && y > i && "!=@".includes(str[y])) {
       wholeEspTagLumpOnTheRight += str[y];
     } else {
       break;
     }
-  } // if lump is tails+heads, report the length of tails only:
-  // {%- a -%}{%- b -%}
-  //        ^
-  //      we're talking about this lump of tails and heads
-
+  }
 
   if (wholeEspTagLumpOnTheRight && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].guessedClosingLump && wholeEspTagLumpOnTheRight.length > layers[layers.length - 1].guessedClosingLump.length) {
-    //
-    // case I.
-    //
     if (wholeEspTagLumpOnTheRight.endsWith(layers[layers.length - 1].openingLump)) {
-      // no need to extract tails, heads "{%-" were confirmed in example:
-      // {%- a -%}{%- b -%}
-      //          ^
-      //         here
-      // return string, extracted ESP tails
       return wholeEspTagLumpOnTheRight.slice(0, wholeEspTagLumpOnTheRight.length - layers[layers.length - 1].openingLump.length);
-    } // ELSE
-    // imagine a case like:
-    // {%- aa %}{% bb %}
-    // opening heads were {%-, flipped were -%}. Now when we take lump %}{%
-    // and match, the dash will be missing.
-    // What we're going to do is we'll split the lump where last matched
-    // continuous chunk ends (%} in example above) with condition that
-    // at least one character from ESP-list follows, which is not part of
-    // guessed closing lump.
-
+    }
 
     var uniqueCharsListFromGuessedClosingLumpArr = new Set(layers[layers.length - 1].guessedClosingLump);
     var found = 0;
@@ -4249,40 +3314,10 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
   }
 
   return wholeEspTagLumpOnTheRight;
-} // starts. Previously it sat within if() clauses but became unwieldy and
-// so we extracted into a function.
-
+}
 
 function startsHtmlComment(str, i, token, layers) {
-  // console.log(
-  //   `R1: ${!!matchRight(str, i, ["!--"], {
-  //     maxMismatches: 1,
-  //     firstMustMatch: true, // <--- FUZZY MATCH, BUT EXCL. MARK IS OBLIGATORY
-  //     trimBeforeMatching: true
-  //   }) ||
-  //     matchRight(str, i, ["![endif]"], {
-  //       i: true,
-  //       maxMismatches: 2,
-  //       trimBeforeMatching: true
-  //     })}`
-  // );
-  // console.log(
-  //   `R2: ${!matchRight(str, i, ["![cdata", "<"], {
-  //     i: true,
-  //     maxMismatches: 1,
-  //     trimBeforeMatching: true
-  //   })}`
-  // );
-  // console.log(`R3: ${!!(token.type !== "comment" || token.kind !== "not")}`);
-  // console.log(
-  //   `R3*: ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${JSON.stringify(
-  //     token.kind,
-  //     null,
-  //     4
-  //   )}`
-  // );
-  return !!( // the opening is deliberately loose, with one dash missing, "!-" instead of "!--"
-  str[i] === "<" && (matchRight(str, i, ["!--"], {
+  return !!(str[i] === "<" && (matchRight(str, i, ["!--"], {
     maxMismatches: 1,
     firstMustMatch: true,
     trimBeforeMatching: true
@@ -4299,30 +3334,12 @@ function startsHtmlComment(str, i, token, layers) {
   }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !matchLeft(str, i, "<", {
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["-", "!"]
-  }) && ( // insurance against ESP tag, RPL comments: <#-- z -->
-  !Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "esp" || !(layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-")));
-} // import { matchLeft, matchRight } from "string-match-left-right";
-
+  }) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "esp" || !(layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-")));
+}
 
 function startsCssComment(str, i, _token, _layers, withinStyle) {
-  return (// cast to bool
-    withinStyle && ( // match the / *
-    str[i] === "/" && str[i + 1] === "*" || // match the * /
-    str[i] === "*" && str[i + 1] === "/")
-  );
-} // We record ESP tag head and tails as we traverse code because we need to know
-// the arrangement of all pieces: start, end, nesting etc.
-//
-// Now, we keep records of each "layer" - new opening of some sorts: quotes,
-// heads of ESP tags and so on.
-//
-// This function is a helper to check, does something match as a counterpart
-// to the last/first layer.
-//
-// Quotes could be checked here but are not at the moment, here currently
-// we deal with ESP tokens only
-// RETURNS: undefined or integer, length of a matched ESP lump.
-
+  return withinStyle && (str[i] === "/" && str[i + 1] === "*" || str[i] === "*" && str[i + 1] === "/");
+}
 
 function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
   if (matchFirstInstead === void 0) {
@@ -4333,42 +3350,23 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
     return;
   }
 
-  var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1]; // console.log(
-  //   `023 matchLayer(): ${`\u001b[${33}m${`whichLayerToMatch`}\u001b[${39}m`} = ${JSON.stringify(
-  //     whichLayerToMatch,
-  //     null,
-  //     4
-  //   )}`
-  // );
+  var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
 
   if (whichLayerToMatch.type !== "esp") {
-    // we aim to match ESP tag layers, so instantly it's falsey result
-    // because layer we match against is not ESP tag layer
-    // console.log(`033 matchLayer(): early return undefined`);
     return;
   }
 
-  if ( // imagine case of Nunjucks: heads "{%" are normal but tails "-%}" (notice dash)
-  wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || // match every character from the last "layers" complex-type entry must be
-  // present in the extracted lump
-  Array.from(wholeEspTagLump).every(function (char) {
+  if (wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || Array.from(wholeEspTagLump).every(function (char) {
     return whichLayerToMatch.guessedClosingLump.includes(char);
-  }) || // consider ruby heads, <%# and tails -%>
-  whichLayerToMatch.guessedClosingLump && // length is more than 2
-  whichLayerToMatch.guessedClosingLump.length > 2 && // and last two characters match to what was guessed
-  whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 1] === wholeEspTagLump[wholeEspTagLump.length - 1] && whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 2] === wholeEspTagLump[wholeEspTagLump.length - 2]) {
+  }) || whichLayerToMatch.guessedClosingLump && whichLayerToMatch.guessedClosingLump.length > 2 && whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 1] === wholeEspTagLump[wholeEspTagLump.length - 1] && whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 2] === wholeEspTagLump[wholeEspTagLump.length - 2]) {
     return wholeEspTagLump.length;
-  } // console.log(`054 matchLayer(): finally, return undefined`);
-
+  }
 }
 
-var BACKSLASH = "\\"; // This is an extracted logic which detects where token of a particular kind
-// starts. Previously it sat within if() clauses but became unwieldy and
-// so we extracted into a function.
+var BACKSLASH = "\\";
 
 function startsTag(str, i, token, layers, withinStyle) {
-  return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && ( // within CSS styles, initiate tags only on opening bracket:
-  !withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
+  return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && (!withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
     allowCustomTagNames: true
   }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
     i: true,
@@ -4378,55 +3376,10 @@ function startsTag(str, i, token, layers, withinStyle) {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
-} // starts. Previously it sat within if() clauses but became unwieldy and
-// so we extracted into a function.
-
+}
 
 function startsEsp(str, i, token, layers, withinStyle) {
-  var res = // 1. two consecutive esp characters - Liquid, Mailchimp etc.
-  // {{ or |* and so on
-  espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && // ensure our suspected lump doesn't comprise only
-  // of "notVeryEspChars" - real ESP tag |**| can
-  // contain asterisk (*) but only asterisks can't
-  // comprise an ESP tag. But curly braces can -
-  // {{ and }} are valid Nunjucks heads/tails.
-  // So not all ESP tag characters are equal.
-  !(notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])) && ( // only "veryEspChars" group characters can
-  // be repeated, like {{ and }} - other's can't
-  // for example, ** is not real ESP heads
-  str[i] !== str[i + 1] || veryEspChars.includes(str[i])) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !( // insurance against repeated percentages
-  //
-  // imagine: "99%%."
-  //             ^
-  //      we're here
-  str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(withinStyle && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || //
-  // 2. html-like syntax
-  //
-  // 2.1 - Responsys RPL and similar
-  // <#if z> or </#if> and so on
-  // normal opening tag
-  str[i] === "<" && ( // and
-  // either it's closing tag and what follows is ESP-char
-  str[i + 1] === "/" && espChars.includes(str[i + 2]) || // or
-  // it's not closing and esp char follows right away
-  espChars.includes(str[i + 1]) && // but no cheating, character must not be second-grade
-  !["-"].includes(str[i + 1])) || // 2.2 - JSP (Java Server Pages)
-  // <%@ page blablabla %>
-  // <c:set var="someList" value="${jspProp.someList}" />
-  str[i] === "<" && ( // covers majority of JSP tag cases
-  str[i + 1] === "%" || // <jsp:
-  str.startsWith("jsp:", i + 1) || // <cms:
-  str.startsWith("cms:", i + 1) || // <c:
-  str.startsWith("c:", i + 1)) || str.startsWith("${jspProp", i) || //
-  // 3. single character tails, for example RPL's closing curlies: ${zzz}
-  // it's specifically a closing-kind character
-  ">})".includes(str[i]) && // heads include the opposite of it
-  Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && ( // insurance against "greater than", as in:
-  // <#if product.weight > 100>
-  str[i] !== ">" || !xBeforeYOnTheRight(str, i + 1, ">", "<")) || //
-  // 4. comment closing in RPL-like templating languages, for example:
-  // <#-- z -->
-  str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
+  var res = espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])) && (str[i] !== str[i + 1] || veryEspChars.includes(str[i])) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(withinStyle && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || str[i] === "<" && (str[i + 1] === "%" || str.startsWith("jsp:", i + 1) || str.startsWith("cms:", i + 1) || str.startsWith("c:", i + 1)) || str.startsWith("${jspProp", i) || ">})".includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
   return !!res;
 }
 var importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
@@ -4439,20 +3392,9 @@ var defaults$5 = {
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
 };
-/**
- * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- */
 
 function tokenizer(str, originalOpts) {
-  var start = Date.now(); //
-  //
-  //
-  //
-  //
-  //
-  //
-  // INSURANCE
-  // ---------------------------------------------------------------------------
+  var start = Date.now();
 
   if (typeof str !== "string") {
     if (str === undefined) {
@@ -4476,52 +3418,22 @@ function tokenizer(str, originalOpts) {
 
   if (originalOpts && isObj$2(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
-  } //
-  //
-  //
-  //
-  //
-  //
-  //
-  // OPTS
-  // ---------------------------------------------------------------------------
+  }
 
-
-  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts); //
-  //
-  //
-  //
-  //
-  //
-  //
-  // VARS
-  // ---------------------------------------------------------------------------
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
 
   var currentPercentageDone = 0;
   var lastPercentage = 0;
   var len = str.length;
   var midLen = Math.floor(len / 2);
-  var doNothing = 0; // index until where to do nothing
-
-  var withinStyle = false; // flag used to instruct content after <style> to toggle type="css"
-
-  var withinStyleComment = false; // opts.*CbLookahead allows to request "x"-many tokens "from the future"
-  // to be reported upon each token. You can check what's coming next.
-  // To implement this, we need to stash "x"-many tokens and only when enough
-  // have been gathered, array.shift() the first one and ping the callback
-  // with it, along with "x"-many following tokens. Later, in the end,
-  // we clean up stashes and report only as many as we have.
-  // The stashes will be LIFO (last in first out) style arrays:
-
+  var doNothing = 0;
+  var withinStyle = false;
+  var withinStyleComment = false;
   var tagStash = [];
-  var charStash = []; // when we compile the token, we fill this object:
-
+  var charStash = [];
   var token = {};
 
   function tokenReset() {
-    // object-assign is basically cloning - objects are passed by reference,
-    // we can't risk mutating the default object:
     token = {
       type: null,
       start: null,
@@ -4529,8 +3441,7 @@ function tokenizer(str, originalOpts) {
       value: null
     };
     attribReset();
-  } // same for attributes:
-
+  }
 
   var attribDefaults = {
     attribName: "",
@@ -4551,14 +3462,10 @@ function tokenizer(str, originalOpts) {
   var attrib = _objectSpread2({}, attribDefaults);
 
   function attribReset() {
-    // object-assign is basically cloning - objects are passed by reference,
-    // we can't risk mutating the default object:
     attrib = lodash_clonedeep(attribDefaults);
   }
 
   function attribPush(tokenObj) {
-    // 1. clean up any existing tokens first
-
     /* istanbul ignore else */
     if (attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && !attrib.attribValue[~-attrib.attribValue.length].end) {
       attrib.attribValue[~-attrib.attribValue.length].end = tokenObj.start;
@@ -4566,8 +3473,7 @@ function tokenizer(str, originalOpts) {
     }
 
     attrib.attribValue.push(tokenObj);
-  } // same for property
-
+  }
 
   var propertyDefault = {
     start: null,
@@ -4589,116 +3495,26 @@ function tokenizer(str, originalOpts) {
 
   function propertyReset() {
     property = _objectSpread2({}, propertyDefault);
-  } // The CSS properties can be in <style> blocks or inline, <div style="">.
-  // When we process the code, we have to address both places. This "push"
-  // is used in handful of places so we DRY'ed it to a function.
-
+  }
 
   function pushProperty(p) {
-    // push and init and patch up to resume
     if (attrib && attrib.attribName === "style") {
       attrib.attribValue.push(_objectSpread2({}, p));
     } else if (token && Array.isArray(token.properties)) {
       token.properties.push(_objectSpread2({}, p));
     }
-  } // Initial resets:
+  }
 
-
-  tokenReset(); // ---------------------------------------------------------------------------
-
-  var selectorChunkStartedAt; // For example:
-  //
-  //       <style type="text/css">
-  //         .unused1[z].unused2, .used[z] {a:1;}
-  //         |                 |
-  //         <-selector chunk ->
-  //
-  //
-  // ---------------------------------------------------------------------------
-
-  var parentTokenToBackup; // We use it for nested ESP tags - for example, <td{% z %}>
-  // The esp tag {% z %} is nested among the tag's attributes:
-  // {
-  //   type: "tag",
-  //   start: 0,
-  //   end: 11,
-  //   value: `<td{% z %}>`,
-  //   attribs: [
-  //     {
-  //       type: "esp",
-  //       start: 3,
-  //       end: 10,
-  //       value: "{% z %}",
-  //       head: "{%",
-  //       tail: "%}",
-  //       kind: null,
-  //     },
-  //   ],
-  // }
-  //
-  // to allow this, we have to save the current, parent token, in case above,
-  // <td...> and then initiate the ESP token, which later will get nested
-
-  var attribToBackup; // We use it when ESP tag is inside the attribute:
-  // <a b="{{ c }}d">
-  //
-  // we need to back up both tag and attrib objects, assemble esp tag, then
-  // restore both and stick it inside the "attrib"'s array "attribValue":
-  //
-  // attribValue: [
-  //   {
-  //     type: "esp",
-  //     start: 6,
-  //     end: 13,
-  //     value: "{{ c }}",
-  //     head: "{{",
-  //     tail: "}}",
-  //   },
-  //   {
-  //     type: "text",
-  //     start: 13,
-  //     end: 14,
-  //     value: "d",
-  //   },
-  // ],
-
-  var lastNonWhitespaceCharAt = null; // ---------------------------------------------------------------------------
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  // INNER FUNCTIONS
-  // ---------------------------------------------------------------------------
-  // When we enter the double quotes or any other kind of "layer", we need to
-  // ignore all findings until the "layer" is exited. Here we keep note of the
-  // closing strings which exit the current "layer". There can be many of them,
-  // nested and escaped and so on.
-
-  var layers = []; // example of contents:
-  // [
-  //     {
-  //         type: "simple",
-  //         value: "'",
-  //     },
-  //     {
-  //         type: "esp",
-  //         guessedClosingLump: "%}"
-  //     }
-  // ]
-  // there can be two types of layer values: simple strings to match html/css
-  // token types and complex, to match esp tokens heuristically, where we don't
-  // know exact ESP tails but we know set of characters that suspected "tail"
-  // should match.
-  //
+  tokenReset();
+  var selectorChunkStartedAt;
+  var parentTokenToBackup;
+  var attribToBackup;
+  var lastNonWhitespaceCharAt = null;
+  var layers = [];
 
   function lastLayerIs(something) {
     return !!(Array.isArray(layers) && layers.length && layers[~-layers.length].type === something);
-  } // processes closing comment - it's DRY'ed here because it's in multiple places
-  // considering broken code like stray closing inline css comment blocks etc.
-
+  }
 
   function closingComment(i) {
     var end = (right(str, i) || i) + 1;
@@ -4710,9 +3526,8 @@ function tokenizer(str, originalOpts) {
       closing: true,
       kind: "block",
       language: "css"
-    }); // skip next character
-
-    doNothing = end; // pop the block comment layer
+    });
+    doNothing = end;
 
     if (lastLayerIs("block")) {
       layers.pop();
@@ -4720,23 +3535,16 @@ function tokenizer(str, originalOpts) {
   }
 
   function reportFirstFromStash(stash, cb, lookaheadLength) {
-    // start to assemble node we're report to the callback cb1()
-    var currentElem = stash.shift(); // ^ shift removes it from stash
-    // now we need the "future" nodes, as many as "lookahead" of them
-    // that's the container where they'll sit:
-
+    var currentElem = stash.shift();
     var next = [];
 
     for (var i = 0; i < lookaheadLength; i++) {
-      // we want as many as "lookaheadLength" from stash but there might be
-      // not enough there
       if (stash[i]) {
         next.push(lodash_clonedeep(stash[i]));
       } else {
         break;
       }
-    } // finally, ping the callback with assembled element:
-
+    }
 
     if (typeof cb === "function") {
       cb(currentElem, next);
@@ -4744,12 +3552,8 @@ function tokenizer(str, originalOpts) {
   }
 
   function pingCharCb(incomingToken) {
-    // no cloning, no reset
     if (opts.charCb) {
-      // if there were no stashes, we'd call the callback like this:
-      // opts.charCb(incomingToken);
-      // 1. push to stash
-      charStash.push(incomingToken); // 2. is there are enough tokens in the stash, ping the first-one
+      charStash.push(incomingToken);
 
       if (charStash.length > opts.charCbLookahead) {
         reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
@@ -4759,16 +3563,7 @@ function tokenizer(str, originalOpts) {
 
   function pingTagCb(incomingToken) {
     if (opts.tagCb) {
-      // console.log(
-      //   `419 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} tagCb() with ${JSON.stringify(
-      //     incomingToken,
-      //     null,
-      //     4
-      //   )}`
-      // );
-      // opts.tagCb(clone(incomingToken));
-      // 1. push to stash
-      tagStash.push(incomingToken); // 2. is there are enough tokens in the stash, ping the first-one
+      tagStash.push(incomingToken);
 
       if (tagStash.length > opts.tagCbLookahead) {
         reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
@@ -4777,17 +3572,7 @@ function tokenizer(str, originalOpts) {
   }
 
   function dumpCurrentToken(incomingToken, i) {
-    // Let's ensure it was not a token with trailing whitespace, because now is
-    // the time to separate it and report it as a standalone token.
-    // Also, the following clause will catch the unclosed tags like
-    // <a href="z" click here</a>
     if (!["text", "esp"].includes(incomingToken.type) && incomingToken.start !== null && incomingToken.start < i && (str[~-i] && !str[~-i].trim() || str[i] === "<")) {
-      // this ending is definitely a token ending. Now the question is,
-      // maybe we need to split all gathered token contents into two:
-      // maybe it's a tag and a whitespace? or an unclosed tag?
-      // in some cases, this token.end will be only end of a second token,
-      // we'll need to find where this last chunk started and terminate the
-      // previous token (one which started at the current token.start) there.
       if (left(str, i) !== null) {
         incomingToken.end = left(str, i) + 1;
       } else {
@@ -4797,48 +3582,22 @@ function tokenizer(str, originalOpts) {
       incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
 
       if (incomingToken.type === "tag" && !"/>".includes(str[~-incomingToken.end])) {
-        // we need to potentially shift the incomingToken.end left, imagine:
-        // <a href="z" click here</a>
-        //                       ^
-        //               we are here ("i" value), that's incomingToken.end currently
-        //
-        // <a href="z" click here</a>
-        //            ^
-        //        incomingToken.end should be here
-        //
-        // PLAN: take current token, if there are attributes, validate
-        // each one of them, terminate at the point of the first smell.
-        // If there are no attributes, terminate at the end of a tag name
         var cutOffIndex = incomingToken.tagNameEndsAt || i;
 
         if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
-          // initial cut-off point is token.tagNameEndsAt // with each validated attribute, push the cutOffIndex forward:
           for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
             if (incomingToken.attribs[i2].attribNameRecognised && incomingToken.attribs[i2].attribEnds) {
-              cutOffIndex = incomingToken.attribs[i2].attribEnds; // small tweak - consider this:
-              // <a href="z" click here</a>
-              //            ^
-              //         this space in particular
-              // that space above should belong to the tag's index range,
-              // unless the whitespace is bigger than 1:
-              // <a href="z"   click here</a>
+              cutOffIndex = incomingToken.attribs[i2].attribEnds;
 
               if (str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
                 cutOffIndex += 1;
               }
             } else {
-              // delete false attributes from incomingToken.attribs
               if (i2 === 0) {
-                // if it's the first attribute and it's already
-                // not suitable, for example:
-                // <a click here</a>
-                // all attributes ("click", "here") are removed:
                 incomingToken.attribs = [];
               } else {
-                // leave only attributes up to i2-th
                 incomingToken.attribs = incomingToken.attribs.splice(0, i2);
-              } // in the end stop the loop:
-
+              }
 
               break;
             }
@@ -4861,27 +3620,21 @@ function tokenizer(str, originalOpts) {
         initToken("text", cutOffIndex);
       } else {
         pingTagCb(incomingToken);
-        tokenReset(); // if there was whitespace after token's end:
+        tokenReset();
 
         if (str[~-i] && !str[~-i].trim()) {
           initToken("text", left(str, i) + 1);
         }
       }
-    } // if a token is already being recorded, end it
-
+    }
 
     if (token.start !== null) {
       if (token.end === null && token.start !== i) {
-        // (esp tags will have it set already)
         token.end = i;
         token.value = str.slice(token.start, token.end);
-      } // normally we'd ping the token but let's not forget we have token stashes
-      // in "attribToBackup" and "parentTokenToBackup"
-
+      }
 
       if (token.start !== null && token.end) {
-        // if it's a text token inside "at" rule, nest it, push into that
-        // "at" rule pending in layers - otherwise, ping as standalone
         if (lastLayerIs("at")) {
           layers[~-layers.length].token.rules.push(token);
         } else {
@@ -4928,8 +3681,7 @@ function tokenizer(str, originalOpts) {
         value: null,
         closing: false,
         kind: "simple",
-        language: "html" // or "css"
-
+        language: "html"
       };
     }
 
@@ -4983,8 +3735,7 @@ function tokenizer(str, originalOpts) {
         tailStartsAt: null,
         tailEndsAt: null
       };
-    } // a default is text token
-
+    }
 
     return {
       type: "text",
@@ -4995,13 +3746,11 @@ function tokenizer(str, originalOpts) {
   }
 
   function initToken(type, startVal) {
-    // we mutate the object on the parent scope, so no Object.assign here
     attribReset();
     token = getNewToken(type, startVal);
   }
 
   function initProperty(propertyStarts) {
-    // we mutate the object on the parent scope, so no Object.assign here
     propertyReset();
 
     if (typeof propertyStarts === "number") {
@@ -5013,58 +3762,20 @@ function tokenizer(str, originalOpts) {
   }
 
   function ifQuoteThenAttrClosingQuote(idx) {
-    // either it's not a quote:
-    return !"'\"".includes(str[idx]) || // precaution when both attrib.attribOpeningQuoteAt and
-    // attrib.attribValueStartsAt are missing and thus unusable - just
-    // skip this clause in that case... (but it should not ever happen)
-    !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) || // or it's real closing quote, because if not, let's keep it within
-    // the value, it will be easier to validate, imagine:
-    // <div style="float:"left"">
-    //
-    isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
+    return !"'\"".includes(str[idx]) || !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) || isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
   }
 
   function attrEndsAt(idx) {
-    // either we're within normal head css styles:
-    return ";}/".includes(str[idx]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // or within inline css styles within html
-    "/;'\"><".includes(str[idx]) && attrib && attrib.attribName === "style" && // and it's a real quote, not rogue double-wrapping around the value
-    ifQuoteThenAttrClosingQuote(idx);
-  } //
-  //
-  //
-  //
-  //
-  //
-  //
-  // THE MAIN LOOP
-  // ---------------------------------------------------------------------------
-  // We deliberately step 1 character outside of str length
-  // to simplify the algorithm. Thusly, it's i <= len not i < len:
-
+    return ";}/".includes(str[idx]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || "/;'\"><".includes(str[idx]) && attrib && attrib.attribName === "style" && ifQuoteThenAttrClosingQuote(idx);
+  }
 
   var _loop2 = function _loop2(_i) {
-    //
-    //
-    //
-    //
-    //                                THE TOP
-    //                                ███████
-    //
-    //
-    //
-    //
-    // Logging:
-    // ------------------------------------------------------------------------- // Progress:
-    // -------------------------------------------------------------------------
     if (!doNothing && str[_i] && opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
         if (_i === midLen) {
           opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
         }
       } else if (len >= 2000) {
-        // defaults:
-        // opts.reportProgressFuncFrom = 0
-        // opts.reportProgressFuncTo = 100
         currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
 
         if (currentPercentageDone !== lastPercentage) {
@@ -5072,13 +3783,10 @@ function tokenizer(str, originalOpts) {
           opts.reportProgressFunc(currentPercentageDone);
         }
       }
-    } // Left/Right helpers
-    // -------------------------------------------------------------------------
-
+    }
 
     var leftVal = left(str, _i);
-    var rightVal = right(str, _i); // Turn off doNothing if marker passed
-    // -------------------------------------------------------------------------
+    var rightVal = right(str, _i);
 
     if (withinStyle && token.type && !["rule", "at", "text", "comment"].includes(token.type)) {
       withinStyle = false;
@@ -5086,14 +3794,9 @@ function tokenizer(str, originalOpts) {
 
     if (doNothing && _i >= doNothing) {
       doNothing = 0;
-    } // skip chain of the same-type characters
-    // -------------------------------------------------------------------------
-
+    }
 
     if (isLatinLetter(str[_i]) && isLatinLetter(str[~-_i]) && isLatinLetter(str[_i + 1])) {
-      // <style>.a{color:1pximportant}
-      //                    ^
-      //                  mangled !important
       if (property && property.valueStarts && !property.valueEnds && !property.importantStarts && str.startsWith("important", _i)) {
         property.valueEnds = _i;
         property.value = str.slice(property.valueStarts, _i);
@@ -5104,31 +3807,24 @@ function tokenizer(str, originalOpts) {
       return "continue";
     }
 
-    if (" \t\r\n".includes(str[_i]) && // ~- means subtract 1
-    str[_i] === str[~-_i] && str[_i] === str[_i + 1]) {
+    if (" \t\r\n".includes(str[_i]) && str[_i] === str[~-_i] && str[_i] === str[_i + 1]) {
       i = _i;
       return "continue";
-    } // catch the curly tails of at-rules
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && atRuleWaitingForClosingCurlie()) {
-      // if (token.type === null && str[i] === "}") {
-      // if (str[i] === "}") {
       if (str[_i] === "}") {
         if (!token.type || token.type === "text" || token.type === "rule" && token.openingCurlyAt === null) {
-          // rule token must end earlier
           if (token.type === "rule") {
             token.end = leftVal + 1;
             token.value = str.slice(token.start, token.end);
-            pingTagCb(token); // if it's a text token inside "at" rule, nest it, push into that
-            // "at" rule pending in layers - otherwise, ping as standalone
+            pingTagCb(token);
 
             if (lastLayerIs("at")) {
               layers[~-layers.length].token.rules.push(token);
             }
 
-            tokenReset(); // if there was trailing whitespace, initiate it
+            tokenReset();
 
             if (leftVal !== null && leftVal < ~-_i) {
               initToken("text", leftVal + 1);
@@ -5137,13 +3833,11 @@ function tokenizer(str, originalOpts) {
 
           dumpCurrentToken(token, _i);
           var poppedToken = layers.pop();
-          token = poppedToken.token; // then, continue on "at" rule's token...
-
+          token = poppedToken.token;
           token.closingCurlyAt = _i;
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
-          pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
-          // also put this "rule" into that parent in layers
+          pingTagCb(token);
 
           if (lastLayerIs("at")) {
             layers[~-layers.length].token.rules.push(token);
@@ -5153,11 +3847,8 @@ function tokenizer(str, originalOpts) {
           doNothing = _i + 1;
         }
       } else if (token.type === "text" && str[_i] && str[_i].trim()) {
-        // terminate the text token, all the non-whitespace characters comprise
-        // rules because we're inside the at-token, it's CSS!
         token.end = _i;
-        token.value = str.slice(token.start, token.end); // if it's a text token inside "at" rule, nest it, push into that
-        // "at" rule pending in layers - otherwise, ping as standalone
+        token.value = str.slice(token.start, token.end);
 
         if (lastLayerIs("at")) {
           layers[~-layers.length].token.rules.push(token);
@@ -5172,72 +3863,26 @@ function tokenizer(str, originalOpts) {
     if (token.end && token.end === _i) {
       if (token.tagName === "style" && !token.closing) {
         withinStyle = true;
-      } // we need to retain the information after tag was dumped to tagCb() and wiped
-
+      }
 
       if (attribToBackup) {
-        // 1. restore
-        attrib = attribToBackup; // 2. push current token into attrib.attribValue
-
-        attrib.attribValue.push(token); // 3. restore real token
-
-        token = lodash_clonedeep(parentTokenToBackup); // 4. reset
-
+        attrib = attribToBackup;
+        attrib.attribValue.push(token);
+        token = lodash_clonedeep(parentTokenToBackup);
         attribToBackup = undefined;
         parentTokenToBackup = undefined;
       } else {
         dumpCurrentToken(token, _i);
         layers.length = 0;
       }
-    } //
-    //
-    //
-    //
-    //                               MIDDLE
-    //                               ██████
-    //
-    //
-    //
-    //
-    // record "layers" like entering double quotes
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing) {
       if (["tag", "at"].includes(token.type) && token.kind !== "cdata") {
-        if (str[_i] && (SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !( // below, we have insurance against single quotes, wrapped with quotes:
-        // "'" or '"' - templating languages might put single quote as a sttring
-        // character, not meaning wrapped-something.
-        SOMEQUOTE.includes(str[leftVal]) && str[leftVal] === str[rightVal]) && // protection against double-wrapped values, like
-        // <div style="float:"left"">
-        //
-        //
-        // it's not a quote or a real attr ending
-        ifQuoteThenAttrClosingQuote(_i) // because if it's not really a closing quote, it's a rogue-one and
-        // it belongs to the current attribute's value so that later we
-        // can catch it, validating values, imagine "float" value "left" comes
-        // with quotes, as in ""left""
-        ) {
-            if ( // maybe it's the closing counterpart?
-            lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
-              layers.pop();
-            } else {
-              // it's opening then
-              layers.push({
-                type: "simple",
-                value: str[_i],
-                position: _i
-              });
-            }
-          }
-      } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-        if (["[", "]"].includes(str[_i])) {
-          if ( // maybe it's the closing counterpart?
-          lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
-            // maybe it's the closing counterpart?
+        if (str[_i] && (SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !(SOMEQUOTE.includes(str[leftVal]) && str[leftVal] === str[rightVal]) && ifQuoteThenAttrClosingQuote(_i)) {
+          if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
             layers.pop();
           } else {
-            // it's opening then
             layers.push({
               type: "simple",
               value: str[_i],
@@ -5245,67 +3890,44 @@ function tokenizer(str, originalOpts) {
             });
           }
         }
-      } else if (token.type === "esp" && ("'\"" + BACKTICK + "()").includes(str[_i]) && !( // below, we have insurance against single quotes, wrapped with quotes:
-      // "'" or '"' - templating languages might put single quote as a sttring
-      // character, not meaning wrapped-something.
-      ["\"", "'", "`"].includes(str[leftVal]) && str[leftVal] === str[rightVal])) {
-        if ( // maybe it's the closing counterpart?
-        lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
-          // maybe it's the closing counterpart?
+      } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
+        if (["[", "]"].includes(str[_i])) {
+          if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
+            layers.pop();
+          } else {
+            layers.push({
+              type: "simple",
+              value: str[_i],
+              position: _i
+            });
+          }
+        }
+      } else if (token.type === "esp" && ("'\"" + BACKTICK + "()").includes(str[_i]) && !(["\"", "'", "`"].includes(str[leftVal]) && str[leftVal] === str[rightVal])) {
+        if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
           layers.pop();
           doNothing = _i + 1;
         } else if (!"]})>".includes(str[_i])) {
-          // it's opening then
           layers.push({
             type: "simple",
             value: str[_i],
             position: _i
           });
         }
-      } // console.log(
-      //   `1094 FIY, currently ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
-      //     layers,
-      //     null,
-      //     4
-      //   )}`
-      // );
-
-    } // catch the start of at rule's identifierStartsAt
-    // -------------------------------------------------------------------------
-
+      }
+    }
 
     if (!doNothing && token.type === "at" && token.start != null && _i >= token.start && !token.identifierStartsAt && str[_i] && str[_i].trim() && str[_i] !== "@") {
-      // the media identifier's "entry" requirements are deliberately loose
-      // because we want to catch errors there, imagine somebody mistakenly
-      // adds a comma, @,media
-      // or adds a space, @ media
       token.identifierStartsAt = _i;
-    } // catch the end of the "at" rule token
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && token.type === "at" && token.queryStartsAt && !token.queryEndsAt && "{;".includes(str[_i])) {
       if (str[_i] === "{") {
         if (str[~-_i] && str[~-_i].trim()) {
           token.queryEndsAt = _i;
         } else {
-          // trim the trailing whitespace:
-          // @media (max-width: 600px) {
-          //                          ^
-          //                        this
-          //
-          token.queryEndsAt = leftVal !== null ? leftVal + 1 : _i; // left() stops "to the left" of a character, if you used that index
-          // for slicing, that character would be included, in our case,
-          // @media (max-width: 600px) {
-          //                         ^
-          //            that would be index of this bracket
+          token.queryEndsAt = leftVal !== null ? leftVal + 1 : _i;
         }
       } else {
-        // ; closing, for example, illegal:
-        // @charset "UTF-8";
-        //                 ^
-        //          we're here
-        //
         token.queryEndsAt = left(str, _i + 1) || 0;
       }
 
@@ -5317,12 +3939,9 @@ function tokenizer(str, originalOpts) {
       token.value = str.slice(token.start, token.end);
 
       if (str[_i] === ";") {
-        // if code is clean, that would be @charset for example, no curlies
         pingTagCb(token);
       } else {
-        // then it's opening curlie
-        token.openingCurlyAt = _i; // push so far gathered token into layers
-
+        token.openingCurlyAt = _i;
         layers.push({
           type: "at",
           token: token
@@ -5331,23 +3950,16 @@ function tokenizer(str, originalOpts) {
 
       tokenReset();
       doNothing = _i + 1;
-    } // catch the start of the query
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && token.type === "at" && token.identifier && str[_i] && str[_i].trim() && !token.queryStartsAt) {
       token.queryStartsAt = _i;
-    } // catch the end of at rule's identifierStartsAt
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && token && token.type === "at" && token.identifierStartsAt && _i >= token.start && str[_i] && (!str[_i].trim() || "()".includes(str[_i])) && !token.identifierEndsAt) {
       token.identifierEndsAt = _i;
       token.identifier = str.slice(token.identifierStartsAt, _i);
-    } // catch the end of a CSS chunk
-    // -------------------------------------------------------------------------
-    // charsThatEndCSSChunks:  } , {
-
+    }
 
     if (token.type === "rule") {
       if (selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && rightVal && !str[_i].trim() && charsThatEndCSSChunks.includes(str[rightVal]))) {
@@ -5359,14 +3971,8 @@ function tokenizer(str, originalOpts) {
         selectorChunkStartedAt = undefined;
         token.selectorsEnd = _i;
       } else if (str[_i] === "{" && token.openingCurlyAt && !token.closingCurlyAt) {
-        // we encounted an opening curly even though closing hasn't
-        // been met yet:
-        // <style>.a{float:left;x">.b{color: red}
-        //                           ^
-        //                    we're here // let selectorChunkStartedAt2;
         for (var y = _i; y--;) {
           if (!str[y].trim() || "{}\"';".includes(str[y])) {
-            // patch the property
             if (property && property.start && !property.end) {
               property.end = y + 1;
               property.property = str.slice(property.start, property.end);
@@ -5385,77 +3991,19 @@ function tokenizer(str, originalOpts) {
           }
         }
       }
-    } // catch the beginning of a token
-    // -------------------------------------------------------------------------
-    // imagine layers are like this:
-    // [
-    //   {
-    //     type: "esp",
-    //     openingLump: "<%@",
-    //     guessedClosingLump: "@%>",
-    //     position: 0,
-    //   },
-    //   {
-    //     type: "simple",
-    //     value: '"',
-    //     position: 17,
-    //   },
-    //   {
-    //     type: "simple",
-    //     value: "'",
-    //     position: 42,
-    //   },
-    // ];
-    // we extract the last type="esp" layer to simplify calculations
-
+    }
 
     var lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
 
     if (!doNothing && str[_i]) {
-      // console.log(
-      //   `1857 ███████████████████████████████████████ IS TAG STARTING? ${startsTag(
-      //     str,
-      //     i,
-      //     token,
-      //     layers,
-      //     withinStyle
-      //   )}`
-      // );
-      // console.log(
-      //   `1707 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
-      //     str,
-      //     i,
-      //     token,
-      //     layers,
-      //     withinStyle
-      //   )}`
-      // );
-      // console.log(
-      //   `1717 ███████████████████████████████████████ IS ESP TAG STARTING? ${startsEsp(
-      //     str,
-      //     i,
-      //     token,
-      //     layers,
-      //     withinStyle
-      //   )}`
-      // );
       if (startsTag(str, _i, token, layers, withinStyle)) {
-        //
-        //
-        //
-        // TAG STARTING
-        //
-        //
-        //
         if (token.type && token.start !== null) {
           if (token.type === "rule") {
             if (property && property.start) {
-              // patch important if needed
               if (property.importantStarts && !property.importantEnds) {
                 property.importantEnds = _i;
                 property.important = str.slice(property.importantStarts, _i);
-              } // patch property
-
+              }
 
               if (property.propertyStarts && !property.propertyEnds) {
                 property.propertyEnds = _i;
@@ -5467,8 +4015,7 @@ function tokenizer(str, originalOpts) {
 
               if (!property.end) {
                 property.end = _i;
-              } // patch value
-
+              }
 
               if (property.valueStarts && !property.valueEnds) {
                 property.valueEnds = _i;
@@ -5485,16 +4032,13 @@ function tokenizer(str, originalOpts) {
 
           dumpCurrentToken(token, _i);
           tokenReset();
-        } // add other HTML-specific keys onto the object
-        // second arg is "start" key:
-
+        }
 
         initToken("tag", _i);
 
         if (withinStyle) {
           withinStyle = false;
-        } // extract the tag name:
-
+        }
 
         var badCharacters = "?![-/";
         var extractedTagName = "";
@@ -5506,24 +4050,13 @@ function tokenizer(str, originalOpts) {
               letterMet = true;
             }
 
-            if ( // at least one letter has been met, to cater
-            // <? xml ...
-            letterMet && str[_y2] && ( // it's whitespace
-            !str[_y2].trim() || // or symbol which definitely does not belong to a tag,
-            // considering we want to catch some rogue characters to
-            // validate and flag them up later
-            !/\w/.test(str[_y2]) && !badCharacters.includes(str[_y2]) || str[_y2] === "[") // if letter has been met, "[" is also terminating character
-            // think <![CDATA[x<y]]>
-            //               ^
-            //             this
-            ) {
-                break;
-              } else if (!badCharacters.includes(str[_y2])) {
+            if (letterMet && str[_y2] && (!str[_y2].trim() || !/\w/.test(str[_y2]) && !badCharacters.includes(str[_y2]) || str[_y2] === "[")) {
+              break;
+            } else if (!badCharacters.includes(str[_y2])) {
               extractedTagName += str[_y2].trim().toLowerCase();
             }
           }
-        } // set the kind:
-
+        }
 
         if (extractedTagName === "doctype") {
           token.kind = "doctype";
@@ -5535,25 +4068,15 @@ function tokenizer(str, originalOpts) {
           token.kind = "inline";
 
           if (extractedTagName) {
-            // for perf
             doNothing = _i;
           }
         }
       } else if (startsHtmlComment(str, _i, token, layers)) {
-        //
-        //
-        //
-        // HTML COMMENT STARTING
-        //
-        //
-        //
         if (token.start != null) {
           dumpCurrentToken(token, _i);
-        } // add other HTML-specific keys onto the object
-        // second arg is "start" key:
+        }
 
-
-        initToken("comment", _i); // the "language" default is "html" anyway so no need to set it // set "closing"
+        initToken("comment", _i);
 
         if (str[_i] === "-") {
           token.closing = true;
@@ -5570,18 +4093,9 @@ function tokenizer(str, originalOpts) {
           withinStyle = false;
         }
       } else if (startsCssComment(str, _i, token, layers, withinStyle)) {
-        //
-        //
-        //
-        // CSS COMMENT STARTING
-        //
-        //
-        //
         if (token.start != null) {
           dumpCurrentToken(token, _i);
-        } // add other token-specific keys onto the object
-        // second arg is "start" key:
-
+        }
 
         initToken("comment", _i);
         token.language = "css";
@@ -5596,119 +4110,46 @@ function tokenizer(str, originalOpts) {
         }
 
         doNothing = _i + 2;
-      } else if ( // if we encounter two consecutive characters of guessed lump
-      typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && // current character is among guessed lump's characters
-      layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && // ...and the following character too...
-      layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && // since we "jump" over layers, that is, passed quotes
-      // and what not, we have to ensure we don't skip
-      // legit cases like:
-      // ${"${name}${name}${name}${name}"}
-      //          ^
-      //          here
-      // Responsys expression can be within a value! we have
-      // to respect those quotes!
-      //
-      // these are erroneous quotes representing layers
-      // which we do ignore (JSP example):
-      //
-      // <%@taglib prefix="t' tagdir='/WEB-INF/tags"%>
-      //                  ^ ^        ^             ^
-      //                  errors
-      !( // we excluse the same case,
-      // ${"${name}${name}${name}${name}"}
-      //          ^
-      //        false ending
-      // we ensure that quote doesn't follow the esp layer
-      // "lastEspLayerObjIdx" and there's counterpart of it
-      // on the right, and there's ESP char on the right of it
-      // next layer after esp's follows
-      layers[lastEspLayerObjIdx + 1] && // and it's quote
-      "'\"".includes(layers[lastEspLayerObjIdx + 1].value) && // matching quote on the right has ESP character following
-      // it exists (>-1)
-      str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i))])) || // hard check
-      startsEsp(str, _i, token, layers, withinStyle) && ( // ensure we're not inside quotes, so it's not an expression within a value
-      // ${"${name}${name}${name}${name}"}
-      //    ^
-      //   we could be here - notice quotes wrapping all around
-      //
-      !lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || // or we're within an attribute (so quotes are HTML tag's not esp tag's)
-      attrib && attrib.attribStarts && !attrib.attribEnds)) {
-        //
-        //
-        //
-        // ESP TAG STARTING
-        //
-        //
-        // // ESP tags can't be entered from after CSS at-rule tokens or
-        // normal CSS rule tokens
-        //
-        //
-        //
-        // FIRST, extract the tag opening and guess the closing judging from it
-        var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers); // lump can't end with attribute's ending, that is, something like:
-        // <frameset cols="**">
-        // that's a false positive
+      } else if (typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && !(layers[lastEspLayerObjIdx + 1] && "'\"".includes(layers[lastEspLayerObjIdx + 1].value) && str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i))])) || startsEsp(str, _i, token, layers, withinStyle) && (!lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnds)) {
+        var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
 
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
-          // check the "layers" records - maybe it's a closing part of a set?
           var lengthOfClosingEspChunk;
           var disposableVar;
 
-          if (layers.length && ( //
-          // if layer match result is truthy, we take it, otherwise, move on
-          // but don't calculate twice!
-          // eslint-disable-next-line no-cond-assign
-          lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
-            // if this was closing of a standalone esp tag, terminate it and ping
-            // it to the cb()
+          if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
             if (token.type === "esp") {
               if (!token.end) {
                 token.end = _i + lengthOfClosingEspChunk;
                 token.value = str.slice(token.start, token.end);
                 token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
                 token.tailStartsAt = _i;
-                token.tailEndsAt = token.end; // correction for XML-like templating tags, closing can
-                // have a slash, <c:set zzz/>
-                //                         ^
+                token.tailEndsAt = token.end;
 
                 if (str[_i] === ">" && str[leftVal] === "/") {
                   token.tailStartsAt = leftVal;
                   token.tail = str.slice(token.tailStartsAt, _i + 1);
                 }
-              } // activate doNothing until the end of tails because otherwise,
-              // mid-tail characters will initiate new tail start clauses
-              // and we'll have overlap/false result
+              }
 
-
-              doNothing = token.tailEndsAt; // it depends will we ping it as a standalone token or will we
-              // nest inside the parent tag among attributes
+              doNothing = token.tailEndsAt;
 
               if (parentTokenToBackup) {
-                // push token to parent, to be among its attributes
-                // 1. ensure key "attribs" exist (thinking about comment tokens etc)
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
                   parentTokenToBackup.attribs = [];
-                } // 2. push somewhere
-
+                }
 
                 if (attribToBackup) {
-                  // 1. restore
-                  attrib = attribToBackup; // 2. push to attribValue
-
+                  attrib = attribToBackup;
                   attrib.attribValue.push(_objectSpread2({}, token));
                 } else {
-                  // push to attribs
                   parentTokenToBackup.attribs.push(_objectSpread2({}, token));
-                } // 3. parentTokenToBackup becomes token
+                }
 
-
-                token = lodash_clonedeep(parentTokenToBackup); // 4. resets
-
+                token = lodash_clonedeep(parentTokenToBackup);
                 parentTokenToBackup = undefined;
-                attribToBackup = undefined; // 5. pop layers, remove the opening ESP tag record
-
-                layers.pop(); // 6. finally, continue, bypassing the rest of the code in this loop
-
+                attribToBackup = undefined;
+                layers.pop();
                 i = _i;
                 return "continue";
               } else {
@@ -5716,15 +4157,10 @@ function tokenizer(str, originalOpts) {
               }
 
               tokenReset();
-            } // pop the recorded layers, at this moment record of ESP chunk
-            // will be lost:
-
+            }
 
             layers.pop();
-          } else if (layers.length && ( // eslint-disable-next-line no-cond-assign
-          lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, true))) {
-            // if this was closing of a standalone esp tag, terminate it and ping
-            // it to the cb()
+          } else if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, true))) {
             if (token.type === "esp") {
               if (!token.end) {
                 token.end = _i + (lengthOfClosingEspChunk || 0);
@@ -5742,68 +4178,18 @@ function tokenizer(str, originalOpts) {
 
               dumpCurrentToken(token, _i);
               tokenReset();
-            } // pop the recorded layers, at this moment record of ESP chunk
-            // will be lost:
-
+            }
 
             layers.length = 0;
-          } else if ( // insurance against stray tails inside attributes:
-          // <a b="{ x %}">
-          //       ^   ^
-          //       |   |
-          //       |   we're here
-          //       |
-          //       |
-          //     this opening bracket is incomplete
-          //     and therefore not recognised as an opening
-          //
-          //
-          // if ESP character lump we extracted, for example,
-          // %} contains a closing character, in this case, a }
-          attrib && attrib.attribValue && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && Array.from(str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i)).some(function (char, idx) {
-            return wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && ( // ensure it's not a false alarm, "notVeryEspChars"
-            // bunch, for example, % or $ can be legit characters
-            //
-            // either it's from "veryEspChars" list so
-            // it can be anywhere, not necessarily at the
-            // beginning, for example, broken mailchimp:
-            // <a b="some text | x *|">
-            //                 ^
-            //               this is
-            //
-            veryEspChars.includes(char) || // or that character must be the first character
-            // of the attribute's value, for example:
-            // <a b="% x %}">
-            //       ^
-            //     this
-            //
-            // because imagine false positive, legit %:
-            // <a b="Real 5% discount! x %}">
-            //             ^
-            //    definitely not a part of broken opening {%
-            //
-            // it's zero'th index:
-            !idx) && (disposableVar = {
+          } else if (attrib && attrib.attribValue && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && Array.from(str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i)).some(function (char, idx) {
+            return wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && (veryEspChars.includes(char) || !idx) && (disposableVar = {
               char: char,
               idx: idx
             });
-          }) && // we're inside attribute
-          token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && // last attribute's value element is text-type
-          // imagine, the { x from <a b="{ x %}"> would be
-          // such unrecognised text:
-          attrib.attribValue[~-attrib.attribValue.length] && attrib.attribValue[~-attrib.attribValue.length].type === "text") {
-            // token does contain ESP tags, so it's not pure HTML
+          }) && token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && attrib.attribValue[~-attrib.attribValue.length] && attrib.attribValue[~-attrib.attribValue.length].type === "text") {
             token.pureHTML = false;
-            var lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length]; // getNewToken() just creates a new token according
-            // the latest (DRY) reference, it doesn't reset
-            // the "token" unlike initToken()
-
-            var newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start); // for remaining values, we need to consider, is there
-            // text in front:
-            //
-            // <a b="{ x %}">
-            // vs.
-            // <a b="something { x %}">
+            var lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length];
+            var newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
 
             if (!disposableVar || !disposableVar.idx) {
               newTokenToPutInstead.head = disposableVar.char;
@@ -5815,13 +4201,9 @@ function tokenizer(str, originalOpts) {
               attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
             }
           } else {
-            // If we've got an unclosed heads and here new heads are starting,
-            // pop the last heads in layers - they will never be matched anyway.
-            // Let parser/linter deal with it
             if (lastLayerIs("esp")) {
               layers.pop();
-            } // if we're within a tag attribute, push the last esp token there
-
+            }
 
             if (attribToBackup) {
               if (!Array.isArray(attribToBackup.attribValue)) {
@@ -5836,16 +4218,10 @@ function tokenizer(str, originalOpts) {
               openingLump: wholeEspTagLumpOnTheRight,
               guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
               position: _i
-            }); // also, if it's a standalone ESP token, terminate the previous token
-            // and start recording a new-one
+            });
 
             if (token.start !== null) {
-              // it means token has already being recorded, we need to tackle it -
-              // the new, ESP token is incoming!
-              // we nest ESP tokens inside "tag" type attributes
               if (token.type === "tag") {
-                // instead of dumping the tag token and starting a new-one,
-                // save the parent token, then nest all ESP tags among attributes
                 if (token.tagNameStartsAt && (!token.tagName || !token.tagNameEndsAt)) {
                   token.tagNameEndsAt = _i;
                   token.tagName = str.slice(token.tagNameStartsAt, _i);
@@ -5863,67 +4239,30 @@ function tokenizer(str, originalOpts) {
                 attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
                 attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
               }
-            } // now, either way, if parent tag was stashed in "parentTokenToBackup"
-            // or if this is a new ESP token and there's nothing to nest,
-            // let's initiate it:
-
+            }
 
             initToken("esp", _i);
             token.head = wholeEspTagLumpOnTheRight;
             token.headStartsAt = _i;
-            token.headEndsAt = _i + wholeEspTagLumpOnTheRight.length; // toggle parentTokenToBackup.pureHTML
+            token.headEndsAt = _i + wholeEspTagLumpOnTheRight.length;
 
             if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
               parentTokenToBackup.pureHTML = false;
-            } // if text token has been initiated, imagine:
-            //  "attribValue": [
-            //     {
-            //         "type": "text",
-            //         "start": 6, <-------- after the initiation of this, we started ESP token at 6
-            //         "end": null,
-            //         "value": null
-            //     },
-            //     {
-            //         "type": "esp",
-            //         "start": 6, <-------- same start on real ESP token
-            //           ...
-            //  ],
-
+            }
 
             if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
               if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].start === token.start) {
-                // erase it from stash
                 attribToBackup.attribValue.pop();
-              } else if ( // if the "text" type object is the last in "attribValue" and
-              // it's not closed, let's close it and calculate its value:
-              attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "text" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
+              } else if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "text" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
                 attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
                 attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
               }
             }
-          } // do nothing for the second and following characters from the lump
-
+          }
 
           doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
         }
-      } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && // insurance against rogue extra closing curlies:
-      // .a{x}}
-      // don't start new rule at closing curlie!
-      !"{}".includes(str[_i]) && ( // if at rule starts right after <style>, if we're on "@"
-      // for example:
-      // <style>@media a {.b{c}}</style>
-      // first the <style> tag token will be pushed and then tag object
-      // reset and then, still at "@"
-      !token.type || // or, there was whitespace and we started recording a text token
-      // <style>  @media a {.b{c}}</style>
-      //          ^
-      //        we're here - look at the whitespace on the left.
-      //
-      ["text"].includes(token.type))) {
-        // Text token inside styles can be either whitespace chunk
-        // or rogue characters. In either case, inside styles, when
-        // "withinStyle" is on, non-whitespace character terminates
-        // this text token and "rule" token starts
+      } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && (!token.type || ["text"].includes(token.type))) {
         if (token.type) {
           dumpCurrentToken(token, _i);
         }
@@ -5949,19 +4288,11 @@ function tokenizer(str, originalOpts) {
         trimBeforeMatching: true,
         maxMismatches: 2
       });
-    } // catch the end of a css property (with or without !important)
-    // -------------------------------------------------------------------------
-
+    }
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && (property.semi && property.semi < _i && property.semi < _i || (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
-    !rightVal || // or at that character !important does not start
-    R1) || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
-    !str[_i] || // or it's a whitespace
-    !str[_i].trim() || // or it's a semicolon after a value
-    !property.valueEnds && str[_i] === ";" || // or we reached the end of the attribute
-    attrEndsAt(_i)))) {
+    if (!doNothing && property && (property.semi && property.semi < _i && property.semi < _i || (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && (!rightVal || R1) || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && (!str[_i] || !str[_i].trim() || !property.valueEnds && str[_i] === ";" || attrEndsAt(_i)))) {
       /* istanbul ignore else */
       if (property.importantStarts && !property.importantEnds) {
         property.importantEnds = left(str, _i) + 1;
@@ -5996,57 +4327,33 @@ function tokenizer(str, originalOpts) {
       if (!doNothing && (!str[_i] || str[_i].trim()) && str[_i] === ";") {
         doNothing = _i;
       }
-    } // catch the end of a css property's value
-    // -------------------------------------------------------------------------
-
+    }
     /* istanbul ignore else */
 
 
-    if (!doNothing && // token.type === "rule" &&
-    property && property.valueStarts && !property.valueEnds) {
-      if ( // either end was reached
-      !str[_i] || // or terminating characters (semi etc) follow
-      R1 || // or !important starts
-      R2 || str[right(str, _i - 1)] === "!" || // normal head css styles:
-      ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // inline css styles within html
-      ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" && // it's real quote, not rogue double-wrapping around the value
-      ifQuoteThenAttrClosingQuote(_i) || // it's a whitespace chunk with linebreaks
-      rightVal && !str[_i].trim() && (str.slice(_i, rightVal).includes("\n") || str.slice(_i, rightVal).includes("\r"))) {
-        if (lastNonWhitespaceCharAt && ( // it's not a quote
-        !"'\"".includes(str[_i]) || // there's nothing on the right
-        !rightVal || // or it is a quote, but there's no quote on the right
-        !"'\";".includes(str[rightVal]))) {
+    if (!doNothing && property && property.valueStarts && !property.valueEnds) {
+      if (!str[_i] || R1 || R2 || str[right(str, _i - 1)] === "!" || ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" && ifQuoteThenAttrClosingQuote(_i) || rightVal && !str[_i].trim() && (str.slice(_i, rightVal).includes("\n") || str.slice(_i, rightVal).includes("\r"))) {
+        if (lastNonWhitespaceCharAt && (!"'\"".includes(str[_i]) || !rightVal || !"'\";".includes(str[rightVal]))) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
           property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
         }
 
         if (str[_i] === ";") {
           property.semi = _i;
-        } else if ( // it's whitespace
-        str[_i] && !str[_i].trim() && // semicolon follows
-        str[rightVal] === ";") {
+        } else if (str[_i] && !str[_i].trim() && str[rightVal] === ";") {
           property.semi = rightVal;
         }
 
-        if ( // if semicolon has been spotted...
-        property.semi) {
-          // set the ending too
-          property.end = property.semi + 1; // happy path, clean code has "end" at semi
+        if (property.semi) {
+          property.end = property.semi + 1;
         }
 
-        if ( // if there's no semicolon in the view
-        !property.semi && // and semi is not coming next
-        !R1 && // and !important is not following
-        !R2 && str[right(str, _i - 1)] !== "!" && // and property hasn't ended
-        !property.end) {
-          // we need to end it because this is it
+        if (!property.semi && !R1 && !R2 && str[right(str, _i - 1)] !== "!" && !property.end) {
           property.end = _i;
         }
 
         if (property.end) {
-          // push and init and patch up to resume
           if (property.end > _i) {
-            // if ending is in the future, skip everything up to it
             doNothing = property.end;
           }
 
@@ -6054,16 +4361,6 @@ function tokenizer(str, originalOpts) {
           propertyReset();
         }
       } else if (str[_i] === ":" && property && property.colon && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
-        // .a{b:c d:e;}
-        //         ^
-        //  we're here
-        // // semicolon is missing...
-        // traverse backwards from "lastNonWhitespaceCharAt", just in case
-        // there's space before colon, .a{b:c d :e;}
-        //                                      ^
-        //                               we're here
-        //
-        // we're looking to pinpoint where one rule ends and another starts.
         var split = [];
 
         if (right(str, property.colon)) {
@@ -6071,16 +4368,10 @@ function tokenizer(str, originalOpts) {
         }
 
         if (split.length === 2) {
-          // it's missing semicol, like: .a{b:c d:e;}
-          //                                 ^   ^
-          //                                 |gap| we split
-          //
           property.valueEnds = property.valueStarts + split[0].length;
           property.value = str.slice(property.valueStarts, property.valueEnds);
-          property.end = property.valueEnds; // push and init and patch up to resume
-
-          pushProperty(property); // backup the values before wiping the property:
-
+          property.end = property.valueEnds;
+          pushProperty(property);
           var whitespaceStarts = property.end;
           var newPropertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
           propertyReset();
@@ -6094,11 +4385,6 @@ function tokenizer(str, originalOpts) {
           property.propertyStarts = newPropertyStarts;
         }
       } else if (str[_i] === "/" && str[rightVal] === "*") {
-        // comment starts
-        // <a style="color: red/* zzz */">
-        //                     ^
-        //                we're here
-
         /* istanbul ignore else */
         if (property.valueStarts && !property.valueEnds) {
           property.valueEnds = _i;
@@ -6109,15 +4395,12 @@ function tokenizer(str, originalOpts) {
 
         if (!property.end) {
           property.end = _i;
-        } // push and init and patch up to resume
-
+        }
 
         pushProperty(property);
         propertyReset();
       }
-    } // catch the css property's semicolon
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && property && property.start && !property.end && str[_i] === ";") {
       property.semi = _i;
@@ -6134,72 +4417,48 @@ function tokenizer(str, originalOpts) {
       pushProperty(property);
       propertyReset();
       doNothing = _i;
-    } // catch the end of css property's !important
-    // -------------------------------------------------------------------------
-
+    }
     /* istanbul ignore else */
 
 
     if (property && property.importantStarts && !property.importantEnds && str[_i] && !str[_i].trim()) {
       property.importantEnds = _i;
       property.important = str.slice(property.importantStarts, _i);
-    } // catch the start of css property's !important
-    // -------------------------------------------------------------------------
-
+    }
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && property.valueEnds && !property.importantStarts && ( // it's an exclamation mark
-    str[_i] === "!" || // considering missing excl. mark cases, more strict req.:
-    isLatinLetter(str[_i]) && str.slice(_i).match(importantStartsRegexp))) {
-      property.importantStarts = _i; // correction for cases like:
-      // <style>.a{color:red 1important}
-      //                     ^
-      //            we're here, that "1" needs to be included as part of important
+    if (!doNothing && property && property.valueEnds && !property.importantStarts && (str[_i] === "!" || isLatinLetter(str[_i]) && str.slice(_i).match(importantStartsRegexp))) {
+      property.importantStarts = _i;
 
-      if ( // it's non-whitespace char in front
-      str[_i - 1] && str[_i - 1].trim() && // and before that it's whitespace
-      str[_i - 2] && !str[_i - 2].trim() || // there's a "1" in front
-      str[_i - 1] === "1" && // and it's not numeric character before it
-      // padding: 101important
-      //            ^
-      //          unlikely it's a mistyped !
-      str[_i - 2] && !/\d/.test(str[_i - 2])) {
-        // merge that character into !important
+      if (str[_i - 1] && str[_i - 1].trim() && str[_i - 2] && !str[_i - 2].trim() || str[_i - 1] === "1" && str[_i - 2] && !/\d/.test(str[_i - 2])) {
         property.valueEnds = left(str, _i - 1) + 1;
         property.value = str.slice(property.valueStarts, property.valueEnds);
         property.importantStarts--;
         property.important = str[_i - 1] + property.important;
       }
-    } // catch the start of a css property's value
-    // -------------------------------------------------------------------------
-
+    }
     /* istanbul ignore else */
 
 
     if (!doNothing && property && property.colon && !property.valueStarts && str[_i] && str[_i].trim()) {
       /* istanbul ignore else */
-      if ( // stopper character met:
-      ";}'\"".includes(str[_i]) && // either it's real closing quote or not a quote
-      ifQuoteThenAttrClosingQuote(_i)) {
+      if (";}'\"".includes(str[_i]) && ifQuoteThenAttrClosingQuote(_i)) {
         /* istanbul ignore else */
         if (str[_i] === ";") {
           property.semi = _i;
         }
 
-        var temp; // patch missing .end
-
+        var temp;
         /* istanbul ignore else */
 
         if (!property.end) {
           property.end = property.semi ? property.semi + 1 : left(str, _i) + 1;
           temp = property.end;
-        } // push and init and patch up to resume
-
+        }
 
         pushProperty(property);
-        propertyReset(); // if there was a whitespace gap, submit it as text token
-
+        propertyReset();
         /* istanbul ignore else */
 
         if (temp && temp < _i) {
@@ -6215,9 +4474,7 @@ function tokenizer(str, originalOpts) {
       } else {
         property.valueStarts = _i;
       }
-    } // catch the start of a css chunk
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
       if (!",".includes(str[_i])) {
@@ -6227,133 +4484,55 @@ function tokenizer(str, originalOpts) {
           token.selectorsStart = _i;
         }
       } else {
-        // this contraption is needed to catch commas and assign
-        // correctly broken chunk range, [selectorsStart, selectorsEnd]
         token.selectorsEnd = _i + 1;
       }
-    } // catch the end of a css property's name
-    // -------------------------------------------------------------------------
+    }
 
-
-    if (!doNothing && // token.type === "rule" &&
-    property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && ( // end was reached
-    !str[_i] || // or it's whitespace
-    !str[_i].trim() || // or
-    // it's not suitable
-    !attrNameRegexp.test(str[_i]) && ( // and
-    // it's a colon (clean code)
-    // <div style="float:left;">z</div>
-    //                  ^
-    //          we're here
-    //
-    str[_i] === ":" || //
-    // or
-    //
-    // <div style="float.:left;">z</div>
-    //                  ^
-    //                include this dot within property name
-    //                so that we can catch it later validating prop names
-    //
-    !rightVal || !":/}".includes(str[rightVal]) || // mind the rogue closings .a{x}}
-    str[_i] === "}" && str[rightVal] === "}") || // <style>.a{b!}
-    //            ^
-    str[_i] === "!") && ( // also, regarding the slash,
-    // <div style="//color: red;">
-    //              ^
-    //            don't close here, continue, gather "//color"
-    //
-    str[_i] !== "/" || str[_i - 1] !== "/")) {
+    if (!doNothing && property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && (!str[_i] || !str[_i].trim() || !attrNameRegexp.test(str[_i]) && (str[_i] === ":" || !rightVal || !":/}".includes(str[rightVal]) || str[_i] === "}" && str[rightVal] === "}") || str[_i] === "!") && (str[_i] !== "/" || str[_i - 1] !== "/")) {
       property.propertyEnds = _i;
       property.property = str.slice(property.propertyStarts, _i);
 
       if (property.valueStarts) {
-        // it's needed to safeguard against case like:
-        // <style>.a{b:c d:e;}</style>
-        //                ^
-        //            imagine we're here - valueStarts is not set!
         property.end = _i;
-      } // missing colon and onwards:
-      // <style>.b{c}</style>
-      // <style>.b{c;d}</style>
+      }
 
-
-      if ("};".includes(str[_i]) || // it's whitespace and it's not leading up to a colon
-      str[_i] && !str[_i].trim() && str[rightVal] !== ":") {
+      if ("};".includes(str[_i]) || str[_i] && !str[_i].trim() && str[rightVal] !== ":") {
         if (str[_i] === ";") {
           property.semi = _i;
-        } // precaution against broken code:
-        // .a{x}}
-        //
-
+        }
 
         if (!property.end) {
           property.end = property.semi ? property.semi + 1 : _i;
-        } // push and init and patch up to resume
-
+        }
 
         pushProperty(property);
         propertyReset();
-      } // cases with replaced colon:
-      // <div style="float.left;">
+      }
 
-
-      if ( // it's a non-whitespace character
-      str[_i] && str[_i].trim() && // and property seems plausible - its first char at least
-      attrNameRegexp.test(str[property.propertyStarts]) && // but this current char is not:
-      !attrNameRegexp.test(str[_i]) && // and it's not terminating character
-      !":'\"".includes(str[_i])) {
-        // find out locations of next semi and next colon
+      if (str[_i] && str[_i].trim() && attrNameRegexp.test(str[property.propertyStarts]) && !attrNameRegexp.test(str[_i]) && !":'\"".includes(str[_i])) {
         var nextSemi = str.indexOf(";", _i);
-        var nextColon = str.indexOf(":", _i); // whatever the situation, colon must not be before semi on the right
-        // either one or both missing is fine, we just want to avoid
-        // <div style="floa.t:left;
-        //                 ^
-        //            this is not a dodgy colon
-        //
-        // but,
-        //
-        // <div style="float.left;
-        //                  ^
-        //                this is
+        var nextColon = str.indexOf(":", _i);
 
-        if ( // either semi but no colon
-        (nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) && !"{}".includes(str[_i]) && rightVal && ( // <style>.a{b!}
-        //            ^
-        !"!".includes(str[_i]) || isLatinLetter(str[rightVal]))) {
-          // <div style="float.left;">
-          //                  ^
-          //            we're here
+        if ((nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) && !"{}".includes(str[_i]) && rightVal && (!"!".includes(str[_i]) || isLatinLetter(str[rightVal]))) {
           property.colon = _i;
           property.valueStarts = rightVal;
         } else if (nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi) {
-          // case like
-          // <div style="floa/t:left;">
-          //                 ^
-          //          we're here
           property.propertyEnds = null;
         } else if (str[_i] === "!") {
           property.importantStarts = _i;
         }
       }
-    } // catch the colon of a css property
-    // -------------------------------------------------------------------------
+    }
 
-
-    if (!doNothing && // we don't check for token.type === "rule" because inline css will use
-    // these clauses too and token.type === "tag" there, but
-    // attrib.attribName === "style"
-    // on other hand, we don't need strict validation here either, to enter
-    // these clauses it's enough that "property" was initiated.
-    property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
-      property.colon = _i; // if string abruptly ends, record it here
+    if (!doNothing && property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
+      property.colon = _i;
 
       if (!rightVal) {
         property.end = _i + 1;
 
         if (str[_i + 1]) {
-          // push and init and patch up to resume
           pushProperty(property);
-          propertyReset(); // that's some trailing whitespace, create a new text token for it
+          propertyReset();
 
           if (token.properties) {
             token.properties.push({
@@ -6365,40 +4544,19 @@ function tokenizer(str, originalOpts) {
             doNothing = _i + 1;
           }
         }
-      } // insurance against rogue characters
-      // <style>.a{float:left;x">color: red}
-      //                      |       ^
-      //                      |     we're here
-      //           propertyStarts
+      }
 
-
-      if (property.propertyEnds && lastNonWhitespaceCharAt && property.propertyEnds !== lastNonWhitespaceCharAt + 1 && // it ends upon a bad character
-      !attrNameRegexp.test(str[property.propertyEnds])) {
+      if (property.propertyEnds && lastNonWhitespaceCharAt && property.propertyEnds !== lastNonWhitespaceCharAt + 1 && !attrNameRegexp.test(str[property.propertyEnds])) {
         property.propertyEnds = lastNonWhitespaceCharAt + 1;
         property.property = str.slice(property.propertyStarts, property.propertyEnds);
       }
-    } // catch the start of a css property's name
-    // -------------------------------------------------------------------------
+    }
 
-
-    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && // NOTA BENE - there's same clause for inline HTML style
-    // let all the crap in, filter later:
-    !"{}".includes(str[_i]) && // above is instead of a stricter clause:
-    // attrNameRegexp.test(str[i]) &&
-    token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) {
-      // first, check maybe there's unfinished text token before it
+    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) {
       if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
         token.properties[~-token.properties.length].end = _i;
         token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
-      } // in normal cases we're set propertyStarts but sometimes it can be
-      // importantStarts, imagine:
-      // <style>.a{color:red; !important;}
-      //                      ^
-      //                we're here
-      //
-      // we want to put "!important" under key "important", not under
-      // "property"
-
+      }
 
       if (str[_i] === ";") {
         initProperty({
@@ -6418,40 +4576,10 @@ function tokenizer(str, originalOpts) {
       }
 
       doNothing = _i;
-    } // catch the start a property
-    // -------------------------------------------------------------------------
-    // Mostly happens in dirty code cases - the start is normally being triggered
-    // not from here, the first character, but earlier, from previous clauses.
-    // But imagine <div style="float;left">z</div>
-    //                              ^
-    //                            wrong
-    //
-    // in case like above, "l" would not have the beginning of a property
-    // triggered, hence this clause here
+    }
 
-
-    if (!doNothing && // style attribute is being processed at the moment
-    attrib && attrib.attribName === "style" && // it's not done yet
-    attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && // but property hasn't been initiated
-    !property.start && // yet the character is suitable:
-    // it's not a whitespace
-    str[_i] && str[_i].trim() && // NOTA BENE - there's same clause for inline HTML style
-    // it's not some separator
-    !"'\"".includes(str[_i]) && // TODO - cleanup below:
-    // either it's not semi
-    // (str[i] !== ";" ||
-    //   // or it is, but the last non-whitespace char was semi, so it's a rogue semi here
-    //   // we'll put it as a standalone property, it's not a part of text token
-    //   str[lastNonWhitespaceCharAt as number] === ";") &&
-    // it's not inside CSS block comment
-    !lastLayerIs("block")) {
-      // It's either css comment or a css property.
-      // Dirty characters go as property name, then later we validate and
-      // catch them.
-      // Empty space goes as text token, see separate clauses above.
-      if ( // currently it's slash
-      str[_i] === "/" && // asterisk follows, straight away or after whitespace
-      str[rightVal] === "*") {
+    if (!doNothing && attrib && attrib.attribName === "style" && attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && !property.start && str[_i] && str[_i].trim() && !"'\"".includes(str[_i]) && !lastLayerIs("block")) {
+      if (str[_i] === "/" && str[rightVal] === "*") {
         attribPush({
           type: "comment",
           start: _i,
@@ -6460,66 +4588,47 @@ function tokenizer(str, originalOpts) {
           closing: false,
           kind: "block",
           language: "css"
-        }); // push a new layer, comment
-
+        });
         layers.push({
           type: "block",
           value: str.slice(_i, rightVal + 1),
           position: _i
-        }); // skip the next char, consider there might be whitespace in front
-
+        });
         doNothing = rightVal + 1;
-      } // if it's a closing comment
-      else if (str[_i] === "*" && str[rightVal] === "/") {
-          closingComment(_i);
-        } else {
-          // first, close the text token if it's not ended
-          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-            attrib.attribValue[~-attrib.attribValue.length].end = _i;
-            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
-          } // initiate a property
-          // if !important has been detected, that's a CSS like:
-          // <div style="float:left;!important">
-          // the !important is alone by itself
-          // also, it can be semi along by itself
-
-
-          if (str[_i] === ";") {
-            initProperty({
-              start: _i,
-              end: _i + 1,
-              semi: _i
-            });
-            doNothing = _i;
-          } else if (R2) {
-            initProperty({
-              start: _i,
-              importantStarts: _i
-            });
-          } else {
-            // protection against unclosed quotes
-            // <div style="float:left;; >
-            //                          ^
-            //                    we're here
-            initProperty(_i);
-          }
+      } else if (str[_i] === "*" && str[rightVal] === "/") {
+        closingComment(_i);
+      } else {
+        if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+          attrib.attribValue[~-attrib.attribValue.length].end = _i;
+          attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
         }
-    } // in comment type, "only" kind tokens, submit square brackets to layers
-    // -------------------------------------------------------------------------
-    // ps. it's so that we can rule out greater-than signs
 
+        if (str[_i] === ";") {
+          initProperty({
+            start: _i,
+            end: _i + 1,
+            semi: _i
+          });
+          doNothing = _i;
+        } else if (R2) {
+          initProperty({
+            start: _i,
+            importantStarts: _i
+          });
+        } else {
+          initProperty(_i);
+        }
+      }
+    }
 
     if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
       if (str[_i] === "[") ;
-    } // catch the ending of a token
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing) {
       if (token.type === "tag" && !layers.length && str[_i] === ">") {
         token.end = _i + 1;
-        token.value = str.slice(token.start, token.end); // at this point other attributes might be still not submitted yet,
-        // we can't reset it here
+        token.value = str.slice(token.start, token.end);
       } else if (token.type === "comment" && token.language === "html" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[_i] === "-" && (matchLeft(str, _i, "!-", {
         trimBeforeMatching: true
       }) || matchLeftIncl(str, _i, "!-", {
@@ -6534,31 +4643,13 @@ function tokenizer(str, originalOpts) {
         }) || matchRight(str, _i, ["if"], {
           i: true,
           trimBeforeMatching: true
-        }) && ( // the following case will assume closing sq. bracket is present
-        xBeforeYOnTheRight(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
-        str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
-          // don't set the token's end, leave it open until the
-          // closing bracket, for example, it might be:
-          // <!--[if gte mso 9]>
-          //     ^
-          //    we're here
-          //
+        }) && (xBeforeYOnTheRight(str, _i, "]", ">") || str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
           token.kind = "only";
-        } else if ( // ensure it's not starting with closing counterpart,
-        // --><![endif]-->
-        // but with
-        // <!--<![endif]-->
-        str[token.start] !== "-" && matchRightIncl(str, _i, ["-<![endif"], {
+        } else if (str[token.start] !== "-" && matchRightIncl(str, _i, ["-<![endif"], {
           i: true,
           trimBeforeMatching: true,
           maxMismatches: 2
         })) {
-          // don't set the token's end, leave it open until the
-          // closing bracket, for example, it might be:
-          // <!--<![endif]-->
-          //     ^
-          //    we're here
-          //
           token.kind = "not";
           token.closing = true;
         } else if (token.kind === "simple" && token.language === "html" && !token.closing && str[rightVal] === ">") {
@@ -6566,28 +4657,18 @@ function tokenizer(str, originalOpts) {
           token.kind = "simplet";
           token.closing = null;
         } else if (token.language === "html") {
-          // if it's a simple HTML comment, <!--, end it right here
-          token.end = _i + 1; // tokenizer will catch <!- as opening, so we need to extend
-          // for correct cases with two dashes <!--
+          token.end = _i + 1;
 
           if (str[leftVal] === "!" && str[rightVal] === "-") {
             token.end = rightVal + 1;
           }
 
           token.value = str.slice(token.start, token.end);
-        } // at this point other attributes might be still not submitted yet,
-        // we can't reset it here
-
+        }
       } else if (token.type === "comment" && token.language === "html" && str[_i] === ">" && (!layers.length || str[rightVal] === "<")) {
-        // if last layer was for square bracket, this means closing
-        // counterpart is missing so we need to remove it now
-        // because it's the ending of the tag ("only" kind) or
-        // at least the first part of it ("not" kind)
         if (Array.isArray(layers) && layers.length && layers[~-layers.length].value === "[") {
           layers.pop();
-        } // the difference between opening Outlook conditional comment "only"
-        // and conditional "only not" is that <!--> follows
-
+        }
 
         if (!["simplet", "not"].includes(token.kind) && matchRight(str, _i, ["<!-->", "<!---->"], {
           trimBeforeMatching: true,
@@ -6603,7 +4684,6 @@ function tokenizer(str, originalOpts) {
         token.end = _i + 1;
         token.value = str.slice(token.start, token.end);
       } else if (token.type === "esp" && token.end === null && typeof token.head === "string" && typeof token.tail === "string" && token.tail.includes(str[_i])) {
-        // extract the whole lump of ESP tag characters:
         var wholeEspTagClosing = "";
 
         for (var _y3 = _i; _y3 < len; _y3++) {
@@ -6612,55 +4692,12 @@ function tokenizer(str, originalOpts) {
           } else {
             break;
           }
-        } // now, imagine the new heads start, for example,
-        // {%- z -%}{%-
-        //       ^
-        //   we're here
-        // find the breaking point where tails end
-
+        }
 
         if (wholeEspTagClosing.length > token.head.length) {
-          // in order for this to be tails + new heads, the total length should be
-          // at least bigger than heads.
-          //
-          // For example: Responsys heads: $( - 2 chars. Tails = ) - 1 char.
-          // Responsys total of closing tail + head - )$( - 3 chars.
-          // That's more than head, 2 chars.
-          //
-          // For example, eDialog heads: _ - 1 char. Tails: __ - 2 chars.
-          // eDialog total of closing tail +  head = 3 chars.
-          // That's more than head, 1 char.
-          //
-          // And same applies to Nujnucks, even considering mix of diferent
-          // heads.
-          //
-          // Another important point - first character in ESP literals.
-          // Even if there are different types of literals, more often than not
-          // first character is constant. Variations are often inside of
-          // the literals pair - for example Nunjucks {{ and {% and {%-
-          // the first character is always the same.
-          //
           var headsFirstChar = token.head[0];
 
           if (wholeEspTagClosing.endsWith(token.head)) {
-            // we have a situation like
-            // zzz *|aaaa|**|bbb|*
-            //           ^
-            //         we're here and we extracted a chunk |**| and we're
-            //         trying to split it into two.
-            //
-            // by the way, that's very lucky because node.heads (opening *| above)
-            // is confirmed - we passed those heads and we know they are exact.
-            // Now, our chunk ends with exactly the same new heads.
-            // The only consideration is error scenario, heads intead of tails.
-            // That's why we'll check, tags excluded, that's the length left:
-            // |**| minus heads *| equals |* -- length 2 -- happy days.
-            // Bad scenario:
-            // *|aaaa*|bbb|*
-            //       ^
-            //      we're here
-            //
-            // *| minus heads *| -- length 0 -- raise an error!
             token.end = _i + wholeEspTagClosing.length - token.head.length;
             token.value = str.slice(token.start, token.end);
             doNothing = token.end;
@@ -6669,13 +4706,8 @@ function tokenizer(str, originalOpts) {
             token.value = str.slice(token.start, token.end);
             doNothing = token.end;
           } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
-            // We're very lucky because heads and tails are using different
-            // characters, possibly opposite brackets of some kind.
-            // That's Nunjucks, Responsys (but no eDialog) patterns.
             var firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
-            var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar)); // imagine we sliced off (Nunjucks): -%}{%-
-            // if every character from anticipated tails (-%}) is present in the front
-            // chunk, Bob's your uncle, that's tails with new heads following.
+            var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
 
             if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (char) {
               return firstPartOfWholeEspTagClosing.includes(char);
@@ -6685,21 +4717,13 @@ function tokenizer(str, originalOpts) {
               doNothing = token.end;
             }
           } else {
-            // so heads and tails don't contain unique character, and more so,
-            // starting-one, PLUS, second set is different.
-            // For example, ESP heads/tails can be *|zzz|*
-            // Imaginary example, following heads would be variation of those
-            // above, ^|zzz|^ // TODO
-            // for now, return defaults, from else scenario below:
-            // we consider this whole chunk is tails.
             token.end = _i + wholeEspTagClosing.length;
             token.value = str.slice(token.start, token.end);
             doNothing = token.end;
           }
         } else {
-          // we consider this whole chunk is tails.
           token.end = _i + wholeEspTagClosing.length;
-          token.value = str.slice(token.start, token.end); // if last layer is ESP tag and we've got its closing, pop the layer
+          token.value = str.slice(token.start, token.end);
 
           if (lastLayerIs("esp")) {
             layers.pop();
@@ -6707,24 +4731,17 @@ function tokenizer(str, originalOpts) {
 
           doNothing = token.end;
         }
-      } // END OF if (!doNothing)
-
-    } // Catch the end of a tag name
-    // -------------------------------------------------------------------------
-
+      }
+    }
 
     if (!doNothing && token.type === "tag" && token.tagNameStartsAt && !token.tagNameEndsAt) {
-      // tag names can be with numbers, h1
       if (!str[_i] || !charSuitableForTagName(str[_i])) {
         token.tagNameEndsAt = _i;
         token.tagName = str.slice(token.tagNameStartsAt, _i).toLowerCase();
 
         if (token.tagName === "xml" && token.closing && !token.kind) {
           token.kind = "xml";
-        } // We evaluate self-closing tags not by presence of slash but evaluating
-        // is the tag name among known self-closing tags. This way, we can later
-        // catch and fix missing closing slashes.
-
+        }
 
         if (voidTags.includes(token.tagName)) {
           token.void = true;
@@ -6733,28 +4750,21 @@ function tokenizer(str, originalOpts) {
         token.recognised = isTagNameRecognised(token.tagName);
         doNothing = _i;
       }
-    } // Catch the start of a tag name:
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && token.type === "tag" && !token.tagNameStartsAt && token.start != null && (token.start < _i || str[token.start] !== "<")) {
-      // MULTIPLE ENTRY!
-      // Consider closing tag's slashes and tag name itself.
       if (str[_i] === "/") {
         token.closing = true;
         doNothing = _i;
       } else if (isLatinLetter(str[_i])) {
-        token.tagNameStartsAt = _i; // if by now closing marker is still null, set it to false - there
-        // won't be any closing slashes between opening bracket and tag name
+        token.tagNameStartsAt = _i;
 
         if (!token.closing) {
           token.closing = false;
           doNothing = _i;
         }
       } else ;
-    } // catch the end of a tag attribute's name
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && _i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !isAttrNameChar(str[_i])) {
       attrib.attribNameEndsAt = _i;
@@ -6762,33 +4772,23 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
 
       if (attrib.attribName.startsWith("mc:")) {
-        // that's a mailchimp attribute
         token.pureHTML = false;
-      } // maybe there's a space in front of equal, <div class= "">
-
+      }
 
       if (str[_i] && !str[_i].trim() && str[rightVal] === "=") ;else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[rightVal] === ">") {
         if ("'\"".includes(str[rightVal])) ;else {
-          attrib.attribEnds = _i; // push and wipe
-
+          attrib.attribEnds = _i;
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
         }
       }
-    } // catch the start of a tag attribute's name
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStarts === null && isAttrNameChar(str[_i])) {
-      attrib.attribStarts = _i; // even though in theory left() which reports first non-whitespace
-      // character's index on the left can be null, it does not happen
-      // in this context - there will be tag's name or something in front!
-
+      attrib.attribStarts = _i;
       attrib.attribLeft = lastNonWhitespaceCharAt;
       attrib.attribNameStartsAt = _i;
-    } // catch the curlies inside CSS rule
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && token.type === "rule") {
       if (str[_i] === "{" && !token.openingCurlyAt) {
@@ -6796,21 +4796,19 @@ function tokenizer(str, originalOpts) {
       } else if (str[_i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
         token.closingCurlyAt = _i;
         token.end = _i + 1;
-        token.value = str.slice(token.start, token.end); // check is the property's last text token closed:
+        token.value = str.slice(token.start, token.end);
 
         if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
           token.properties[~-token.properties.length].end = _i;
           token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
-        } // if there's partial, still-pending property, push it
-
+        }
 
         if (property.start) {
           token.properties.push(property);
           propertyReset();
         }
 
-        pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
-        // also put this "rule" into that parent in layers
+        pingTagCb(token);
 
         if (lastLayerIs("at")) {
           layers[~-layers.length].token.rules.push(token);
@@ -6818,123 +4816,45 @@ function tokenizer(str, originalOpts) {
 
         tokenReset();
       }
-    } // catch the ending of a attribute sub-token value
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && attrib.attribName && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-      // TODO // if it's a closing comment
       if (str[_i] === "*" && str[rightVal] === "/") {
         closingComment(_i);
       }
-    } // catch the beginning of a attribute sub-token value
-    // -------------------------------------------------------------------------
+    }
 
-
-    if ( // EITHER IT'S INLINE CSS:
-    !doNothing && // attribute has been recording
-    attrib && // and it's not finished
-    attrib.attribValueStartsAt && !attrib.attribValueEndsAt && // and its property hasn't been recording
-    !property.propertyStarts && // we're inside the value
-    _i >= attrib.attribValueStartsAt && // if attribValue array is empty, no object has been placed yet,
-    Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || // or there is one but it's got ending (prevention from submitting
-    // another text type object on top, before previous has been closed)
-    attrib.attribValue[~-attrib.attribValue.length].end && // and that end is less than current index i
-    attrib.attribValue[~-attrib.attribValue.length].end <= _i) || // OR IT'S HEAD CSS
-    !doNothing && // css rule token has been recording
-    token.type === "rule" && // token started:
-    token.openingCurlyAt && // but not ended:
-    !token.closingCurlyAt && // there is no unfinished property being recorded
-    !property.propertyStarts) {
-      // if it's suitable for property, start a property
-      if (str[_i] === ";" && ( // a) if it's inline HTML tag CSS style attribute
-      attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && // last attribute has semi already set:
-      attrib.attribValue[~-attrib.attribValue.length].semi && // and that semi is really behind this current index
-      attrib.attribValue[~-attrib.attribValue.length].semi < _i || // or
-      // b) if it's head CSS styles block
-      token && token.type === "rule" && Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].semi && token.properties[~-token.properties.length].semi < _i)) {
-        // rogue semi?
-        // <div style="float:left;;">
-        //                        ^
-        // if so, it goes as a standalone property, something like:
-        // {
-        //   start: 23,
-        //   end: 24,
-        //   property: null,
-        //   propertyStarts: null,
-        //   propertyEnds: null,
-        //   value: null,
-        //   valueStarts: null,
-        //   valueEnds: null,
-        //   important: null,
-        //   importantStarts: null,
-        //   importantEnds: null,
-        //   colon: null,
-        //   semi: 23,
-        // }
+    if (!doNothing && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && !property.propertyStarts && _i >= attrib.attribValueStartsAt && Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i) || !doNothing && token.type === "rule" && token.openingCurlyAt && !token.closingCurlyAt && !property.propertyStarts) {
+      if (str[_i] === ";" && (attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].semi && attrib.attribValue[~-attrib.attribValue.length].semi < _i || token && token.type === "rule" && Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].semi && token.properties[~-token.properties.length].semi < _i)) {
         initProperty({
           start: _i,
           semi: _i
         });
         doNothing = _i + 1;
-      } // if it's whitespace, for example,
-      // <a style="  /* zzz */color: red;  ">
-      //           ^
-      //         this
-      //
-      // rogue text will go as property, for example:
-      //
-      // <a style="  z color: red;  ">
-      else if ( // whitespace is automatically text token
-        str[_i] && !str[_i].trim() || // if comment layer has been started, it's also a text token, no matter even
-        // if it's a property, because it's comment's contents.
-        lastLayerIs("block")) {
-          // depends where to push, is it inline css or head css rule
-          if (attrib.attribName) {
-            attrib.attribValue.push({
-              type: "text",
-              start: _i,
-              end: null,
-              value: null
-            });
-          } else if (token.type === "rule" && ( // we don't want to push over the properties in-progress
-          !Array.isArray(token.properties) || !token.properties.length || // last property should have ended
-          token.properties[~-token.properties.length].end)) {
-            token.properties.push({
-              type: "text",
-              start: _i,
-              end: null,
-              value: null
-            });
-          }
+      } else if (str[_i] && !str[_i].trim() || lastLayerIs("block")) {
+        if (attrib.attribName) {
+          attrib.attribValue.push({
+            type: "text",
+            start: _i,
+            end: null,
+            value: null
+          });
+        } else if (token.type === "rule" && (!Array.isArray(token.properties) || !token.properties.length || token.properties[~-token.properties.length].end)) {
+          token.properties.push({
+            type: "text",
+            start: _i,
+            end: null,
+            value: null
+          });
         }
-    } // Catch the end of a tag attribute's value:
-    // -------------------------------------------------------------------------
-
+      }
+    }
 
     if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
       if (SOMEQUOTE.includes(str[_i])) {
-        if ( // so we're on a single/double quote,
-        // (str[i], the current character is a quote)
-        // and...
-        // we're not inside some ESP tag - ESP layers are not pending:
-        !layers.some(function (layerObj) {
+        if (!layers.some(function (layerObj) {
           return layerObj.type === "esp";
-        }) && ( // and the current character passed the
-        // attribute closing quote validation by
-        // "is-html-attribute-closing"
-        //
-        // the isAttrClosing() api is the following:
-        // 1. str, 2. opening quotes index, 3. suspected
-        // character for attribute closing (quotes typically,
-        // but can be mismatching)...
-        // see the package "is-html-attribute-closing" on npm:
-        //
-        //
-        // either end was reached,
-        !str[_i] || // or there is no closing bracket further
-        !str.includes(">", _i) || // further checks confirm it looks like legit closing
-        isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i))) {
+        }) && (!str[_i] || !str.includes(">", _i) || isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i))) {
           attrib.attribClosingQuoteAt = _i;
           attrib.attribValueEndsAt = _i;
 
@@ -6950,39 +4870,24 @@ function tokenizer(str, originalOpts) {
           }
 
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-            // if it's not a property (of inline style), set its "end"
             if (!attrib.attribValue[~-attrib.attribValue.length].property) {
               attrib.attribValue[~-attrib.attribValue.length].end = _i;
               attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
             }
-          } // 2. if the pair was mismatching, wipe layers' last element
-
+          }
 
           if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
             layers.pop();
             layers.pop();
-          } // 3. last check for the last attribValue's .end - in some broken code
-          // cases it might be still null:
-          // <div style="float:left;x">
-          //                         ^
-          //                       we're here
-
+          }
 
           if (attrib.attribValue[~-attrib.attribValue.length] && !attrib.attribValue[~-attrib.attribValue.length].end) {
             attrib.attribValue[~-attrib.attribValue.length].end = _i;
-          } // 4. push and wipe
-
+          }
 
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
-        } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || // last attrib value should not be a text token
-        attrib.attribValue[~-attrib.attribValue.length].type !== "text") && !property.propertyStarts) {
-          // quotes not matched, so it's unencoded, raw quote, part of the value
-          // for example
-          // <table width=""100">
-          //               ^
-          //            rogue quote
-          // let's initiate a next token
+        } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].type !== "text") && !property.propertyStarts) {
           attrib.attribValue.push({
             type: "text",
             start: _i,
@@ -6991,8 +4896,6 @@ function tokenizer(str, originalOpts) {
           });
         }
       } else if (attrib.attribOpeningQuoteAt === null && (str[_i] && !str[_i].trim() || ["/", ">"].includes(str[_i]) || espChars.includes(str[_i]) && espChars.includes(str[_i + 1]))) {
-        // ^ either whitespace or tag's closing or ESP literal's start ends
-        // the attribute's value if there are no quotes
         attrib.attribValueEndsAt = _i;
         attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
 
@@ -7001,61 +4904,32 @@ function tokenizer(str, originalOpts) {
           attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
         }
 
-        attrib.attribEnds = _i; // 2. push and wipe
-
+        attrib.attribEnds = _i;
         token.attribs.push(lodash_clonedeep(attrib));
-        attribReset(); // 3. pop layers
-
-        layers.pop(); // 4. tackle the tag ending
+        attribReset();
+        layers.pop();
 
         if (str[_i] === ">") {
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
         }
-      } else if (str[_i] === "=" && leftVal !== null && rightVal && ("'\"".includes(str[rightVal]) || str[~-_i] && isLatinLetter(str[~-_i])) && // this will catch url params like
-      // <img src="https://z.png?query=" />
-      //                              ^
-      //                            false alarm
-      //
-      // let's exclude anything URL-related
-      !(attrib && attrib.attribOpeningQuoteAt && ( // check for presence of slash, /
-      /\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || // check for mailto:
-      /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || // check for /\w?\w/ like
-      // <img src="codsen.com?query=" />
-      //                     ^
-      /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
-        // all depends, are there whitespace characters:
-        // imagine
-        // <a href="border="0">
-        // vs
-        // <a href="xyz border="0">
-        // that's two different cases - there's nothing to salvage in former!
+      } else if (str[_i] === "=" && leftVal !== null && rightVal && ("'\"".includes(str[rightVal]) || str[~-_i] && isLatinLetter(str[~-_i])) && !(attrib && attrib.attribOpeningQuoteAt && (/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
         var whitespaceFound;
         var attribClosingQuoteAt;
 
         for (var _y4 = leftVal; _y4 >= attrib.attribValueStartsAt; _y4--) {
-          // catch where whitespace starts
           if (!whitespaceFound && str[_y4] && !str[_y4].trim()) {
             whitespaceFound = true;
 
             if (attribClosingQuoteAt) {
-              // slice the captured chunk
               str.slice(_y4, attribClosingQuoteAt);
             }
-          } // where that caught whitespace ends, that's the default location
-          // of double quotes.
-          // <a href="xyz border="0">
-          //            ^        ^
-          //            |        |
-          //            |   we go from here
-          //         to here
-
+          }
 
           if (whitespaceFound && str[_y4] && str[_y4].trim()) {
             whitespaceFound = false;
 
             if (!attribClosingQuoteAt) {
-              // that's the first, default location
               attribClosingQuoteAt = _y4 + 1;
             }
           }
@@ -7073,48 +4947,28 @@ function tokenizer(str, originalOpts) {
             }
           }
 
-          attrib.attribEnds = attribClosingQuoteAt; // 2. if the pair was mismatching, wipe layers' last element
+          attrib.attribEnds = attribClosingQuoteAt;
 
           if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
             layers.pop();
-          } // 3. push and wipe
-
+          }
 
           token.attribs.push(lodash_clonedeep(attrib));
-          attribReset(); // 4. pull the i back to the position where the attribute ends
-
+          attribReset();
           _i = ~-attribClosingQuoteAt;
           i = _i;
           return "continue";
         } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[rightVal]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i).trim()))) {
-          // worst case scenario:
-          // <span width="height="100">
-          //
-          // traversing back from second "=" we hit only the beginning of an
-          // attribute, there was nothing to salvage.
-          // In this case, reset the attribute's calculation, go backwards to "h".
-          // 1. pull back the index, go backwards, read this new attribute again
-          _i = attrib.attribOpeningQuoteAt; // 2. end the attribute
-
-          attrib.attribEnds = attrib.attribOpeningQuoteAt + 1; // 3. value doesn't start, this needs correction
-
-          attrib.attribValueStartsAt = null; // 4. pop the opening quotes layer
-
-          layers.pop(); // 5. push and wipe
-
+          _i = attrib.attribOpeningQuoteAt;
+          attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
+          attrib.attribValueStartsAt = null;
+          layers.pop();
           token.attribs.push(lodash_clonedeep(attrib));
-          attribReset(); // 6. continue
-
+          attribReset();
           i = _i;
           return "continue";
         }
-      } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property.propertyStarts && ( //
-      // AND,
-      //
-      // either there are no attributes recorded under attrib.attribValue:
-      !Array.isArray(attrib.attribValue) || // or it's array but empty:
-      !attrib.attribValue.length || // or is it not empty but its last attrib has ended by now
-      attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
+      } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property.propertyStarts && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
         attrib.attribValue.push({
           type: "text",
           start: _i,
@@ -7123,139 +4977,68 @@ function tokenizer(str, originalOpts) {
         });
       }
     } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && attribToBackup.attribValueStartsAt && "'\"".includes(str[_i]) && str[attribToBackup.attribOpeningQuoteAt] === str[_i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, _i)) {
-      // imagine unclosed ESP tag inside attr value:
-      // <tr class="{% x">
-      //                ^
-      //             we're here
-      // we need to still proactively look for closing attribute quotes,
-      // even inside ESP tags, if we're inside tag attributes // 1. patch up missing token (which is type="esp" currently) values
       token.end = _i;
-      token.value = str.slice(token.start, _i); // 2. push token into attribToBackup.attribValue
+      token.value = str.slice(token.start, _i);
 
       if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
         attribToBackup.attribValue = [];
       }
 
-      attribToBackup.attribValue.push(token); // 3. patch up missing values in attribToBackup
-
+      attribToBackup.attribValue.push(token);
       attribToBackup.attribValueEndsAt = _i;
       attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, _i);
       attribToBackup.attribClosingQuoteAt = _i;
-      attribToBackup.attribEnds = _i + 1; // 4. restore parent token
-
+      attribToBackup.attribEnds = _i + 1;
       token = lodash_clonedeep(parentTokenToBackup);
-      token.attribs.push(attribToBackup); // 5. reset all
-
+      token.attribs.push(attribToBackup);
       attribToBackup = undefined;
-      parentTokenToBackup = undefined; // 6. pop the last 3 layers
-      // currently layers array should be like:
-      // [
-      //   {
-      //     "type": "simple",
-      //     "value": '"',
-      //     "position": 10
-      //   },
-      //   {
-      //     "type": "esp",
-      //     "openingLump": "{%",
-      //     "guessedClosingLump": "%}",
-      //     "position": 11
-      //   }
-      //   {
-      //     "type": "simple",
-      //     "value": '"',
-      //     "position": 15
-      //   },
-      // ]
-
+      parentTokenToBackup = undefined;
       layers.pop();
       layers.pop();
       layers.pop();
-    } // Catch the start of a tag attribute's value:
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
-      if (str[_i] === "=" && !SOMEQUOTE.includes(str[rightVal]) && !"=".includes(str[rightVal]) && !espChars.includes(str[rightVal]) // it might be an ESP literal
-      ) {
-          // find the index of the next quote, single or double
-          var firstQuoteOnTheRightIdx = SOMEQUOTE.split("").map(function (quote) {
-            return str.indexOf(quote, rightVal);
-          }).filter(function (val) {
-            return val > 0;
-          }).length ? Math.min.apply(Math, SOMEQUOTE.split("").map(function (quote) {
-            return str.indexOf(quote, rightVal);
-          }).filter(function (val) {
-            return val > 0;
-          })) : undefined; // catch attribute name - equal - attribute name - equal
-          // <span width=height=100>
+      if (str[_i] === "=" && !SOMEQUOTE.includes(str[rightVal]) && !"=".includes(str[rightVal]) && !espChars.includes(str[rightVal])) {
+        var firstQuoteOnTheRightIdx = SOMEQUOTE.split("").map(function (quote) {
+          return str.indexOf(quote, rightVal);
+        }).filter(function (val) {
+          return val > 0;
+        }).length ? Math.min.apply(Math, SOMEQUOTE.split("").map(function (quote) {
+          return str.indexOf(quote, rightVal);
+        }).filter(function (val) {
+          return val > 0;
+        })) : undefined;
 
-          if ( // there is a character on the right (otherwise value would be null)
-          rightVal && // there is equal character in the remaining chunk
-          str.slice(rightVal).includes("=") && // characters upto first equals form a known attribute value
-          allHtmlAttribs.has(str.slice(rightVal, rightVal + str.slice(rightVal).indexOf("=")).trim().toLowerCase())) {
-            // we have something like:
-            // <span width=height=100>
-            // 1. end the attribute
-            attrib.attribEnds = _i + 1; // 2. push and wipe
-
-            token.attribs.push(_objectSpread2({}, attrib));
-            attribReset();
-          } else if ( // try to stop this clause:
-          //
-          // if there are no quotes in the remaining string
-          !firstQuoteOnTheRightIdx || // there is one but there are equal character between here and its location
-          str.slice(rightVal, firstQuoteOnTheRightIdx).includes("=") || // if there is no second quote of that type in the remaining string
-          !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || // if string slice from quote to quote includes equal or brackets
-          Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
-            return "<>=".includes(char);
-          })) {
-            // case of missing opening quotes
-            attrib.attribValueStartsAt = rightVal; // push missing entry into layers
-
-            layers.push({
-              type: "simple",
-              value: null,
-              position: attrib.attribValueStartsAt
-            });
-          }
-        } else if (SOMEQUOTE.includes(str[_i])) {
-        // maybe it's <span width='"100"> and it's a false opening quote, '
+        if (rightVal && str.slice(rightVal).includes("=") && allHtmlAttribs.has(str.slice(rightVal, rightVal + str.slice(rightVal).indexOf("=")).trim().toLowerCase())) {
+          attrib.attribEnds = _i + 1;
+          token.attribs.push(_objectSpread2({}, attrib));
+          attribReset();
+        } else if (!firstQuoteOnTheRightIdx || str.slice(rightVal, firstQuoteOnTheRightIdx).includes("=") || !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
+          return "<>=".includes(char);
+        })) {
+          attrib.attribValueStartsAt = rightVal;
+          layers.push({
+            type: "simple",
+            value: null,
+            position: attrib.attribValueStartsAt
+          });
+        }
+      } else if (SOMEQUOTE.includes(str[_i])) {
         var nextCharIdx = rightVal;
 
-        if ( // a non-whitespace character exists on the right of index i
-        nextCharIdx && // if it is a quote character
-        SOMEQUOTE.includes(str[nextCharIdx]) && // but opposite kind,
-        str[_i] !== str[nextCharIdx] && // and string is long enough
-        str.length > nextCharIdx + 2 && // and remaining string contains that quote like the one on the right
-        str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && ( // and to the right of it we don't have str[i] quote,
-        // case: <span width="'100'">
-        !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && // and that slice does not contain equal or brackets or quote of other kind
-        !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
+        if (nextCharIdx && SOMEQUOTE.includes(str[nextCharIdx]) && str[_i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
           return ("<>=" + str[_i]).includes(char);
         })) {
-          // pop the layers
           layers.pop();
         } else {
-          // OK then...
-          // has the quotes started (it's closing quote) or it's the opening quote?
-
-          /* eslint no-lonely-if: "off" */
           if (!attrib.attribOpeningQuoteAt) {
             attrib.attribOpeningQuoteAt = _i;
 
-            if ( // character exists on the right
-            str[_i + 1] && ( // EITHER it's not the same as opening quote we're currently on
-            str[_i + 1] !== str[_i] || // OR it's a rogue quote, part of the value
-            !ifQuoteThenAttrClosingQuote(_i + 1))) {
+            if (str[_i + 1] && (str[_i + 1] !== str[_i] || !ifQuoteThenAttrClosingQuote(_i + 1))) {
               attrib.attribValueStartsAt = _i + 1;
             }
           } else {
-            // One quote exists.
-            // <table width="100">
-            //                  ^
-            //
-
             /* istanbul ignore else */
             if (isAttrClosing(str, attrib.attribOpeningQuoteAt, _i)) {
               attrib.attribClosingQuoteAt = _i;
@@ -7270,47 +5053,20 @@ function tokenizer(str, originalOpts) {
                 attrib.attribValueRaw = "";
               }
 
-              attrib.attribEnds = _i + 1; // push and wipe
-
+              attrib.attribEnds = _i + 1;
               token.attribs.push(lodash_clonedeep(attrib));
               attribReset();
             }
           }
         }
-      } // else - value we assume does not start
+      }
+    }
 
-    } //
-    //
-    //
-    //
-    //
-    //                       "PARSING" ERROR CLAUSES
-    //                       ███████████████████████
-    //
-    //
-    //
-    //
-    //
-    // Catch raw closing brackets inside attribute's contents, maybe they
-    // mean the tag ending and maybe the closing quotes are missing?
-
-
-    if (!doNothing && str[_i] === ">" && // consider ERB templating tags like <%= @p1 %>
-    str[_i - 1] !== "%" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
-      // Idea is simple: we have to situations:
-      // 1. this closing bracket is real, closing bracket
-      // 2. this closing bracket is unencoded raw text
-      // Now, we need to distinguish these two cases.
-      // It's easiest done traversing right until the next closing bracket.
-      // If it's case #1, we'll likely encounter a new tag opening (or nothing).
-      // If it's case #2, we'll likely encounter a tag closing or attribute
-      // combo's equal+quote
+    if (!doNothing && str[_i] === ">" && str[_i - 1] !== "%" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
       var thisIsRealEnding = false;
 
       if (str[_i + 1]) {
-        // Traverse then
         for (var _y5 = _i + 1; _y5 < len; _y5++) {
-          // if we reach the closing counterpart of the quotes, terminate
           if (attrib.attribOpeningQuoteAt && str[_y5] === str[attrib.attribOpeningQuoteAt]) {
             if (_y5 !== _i + 1 && str[~-_y5] !== "=") {
               thisIsRealEnding = true;
@@ -7318,37 +5074,23 @@ function tokenizer(str, originalOpts) {
 
             break;
           } else if (str[_y5] === ">") {
-            // must be real tag closing, we just tackle missing quotes
-            // TODO - missing closing quotes
             break;
           } else if (str[_y5] === "<") {
-            thisIsRealEnding = true; // TODO - pop only if type === "simple" and it's the same opening
-            // quotes of this attribute
-
+            thisIsRealEnding = true;
             layers.pop();
             break;
           } else if (!str[_y5 + 1]) {
-            // if end was reached and nothing caught, that's also positive sign
             thisIsRealEnding = true;
             break;
           }
         }
       } else {
         thisIsRealEnding = true;
-      } //
-      //
-      //
-      // FINALLY,
-      //
-      //
-      //
-      // if "thisIsRealEnding" was set to "true", terminate the tag here.
-
+      }
 
       if (thisIsRealEnding) {
         token.end = _i + 1;
-        token.value = str.slice(token.start, token.end); // set and push the attribute's records, just closing quote will be
-        // null and possibly value too
+        token.value = str.slice(token.start, token.end);
 
         if (attrib.attribValueStartsAt && _i && attrib.attribValueStartsAt < _i && str.slice(attrib.attribValueStartsAt, _i).trim()) {
           attrib.attribValueEndsAt = _i;
@@ -7357,8 +5099,7 @@ function tokenizer(str, originalOpts) {
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
             attrib.attribValue[~-attrib.attribValue.length].end = _i;
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
-          } // otherwise, nulls stay
-
+          }
         } else {
           attrib.attribValueStartsAt = null;
         }
@@ -7368,30 +5109,11 @@ function tokenizer(str, originalOpts) {
         }
 
         if (attrib) {
-          // 2. push and wipe
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
         }
       }
-    } //
-    //
-    //
-    //
-    //                               BOTTOM
-    //                               ██████
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // ping charCb
-    // -------------------------------------------------------------------------
-
+    }
 
     if (str[_i] && opts.charCb) {
       pingCharCb({
@@ -7399,33 +5121,20 @@ function tokenizer(str, originalOpts) {
         chr: str[_i],
         i: _i
       });
-    } //
-    //
-    //
-    //
-    //
-    //
-    //
-    // catch end of the string
-    // -------------------------------------------------------------------------
-    // notice there's no "doNothing"
-
+    }
 
     if (!str[_i] && token.start !== null) {
       token.end = _i;
-      token.value = str.slice(token.start, token.end); // if there is unfinished "attrib" object, submit it
-      // as is, that's abruptly ended attribute
+      token.value = str.slice(token.start, token.end);
 
       if (attrib && attrib.attribName) {
-        // push and wipe // patch the attr ending if it's missing
         if (!attrib.attribEnds) {
           attrib.attribEnds = _i;
         }
 
         token.attribs.push(_objectSpread2({}, attrib));
         attribReset();
-      } // if there was an unfinished CSS property, finish it
-
+      }
 
       if (token && Array.isArray(token.properties) && token.properties.length && !token.properties[~-token.properties.length].end) {
         token.properties[~-token.properties.length].end = _i;
@@ -7433,13 +5142,9 @@ function tokenizer(str, originalOpts) {
         if (token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].value) {
           token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
         }
-      } // if there is unfinished css property that has been
-      // recording, end it and push it as is. That's an
-      // abruptly ended css chunk.
-
+      }
 
       if (property && property.propertyStarts) {
-        // patch property.end
         if (!property.end) {
           property.end = _i;
         }
@@ -7449,29 +5154,11 @@ function tokenizer(str, originalOpts) {
       }
 
       pingTagCb(token);
-    } //
-    //
-    //
-    //
-    //
-    //
-    //
-    // Record last non-whitespace character
-    // -------------------------------------------------------------------------
-
+    }
 
     if (str[_i] && str[_i].trim()) {
       lastNonWhitespaceCharAt = _i;
-    } //
-    //
-    //
-    //
-    //
-    //
-    //
-    // logging:
-    // -------------------------------------------------------------------------
-
+    }
 
     i = _i;
   };
@@ -7480,10 +5167,7 @@ function tokenizer(str, originalOpts) {
     var _ret2 = _loop2(i);
 
     if (_ret2 === "continue") continue;
-  } //
-  // finally, clear stashes
-  //
-
+  }
 
   if (charStash.length) {
     for (var _i2 = 0, len2 = charStash.length; _i2 < len2; _i2++) {
@@ -7495,14 +5179,13 @@ function tokenizer(str, originalOpts) {
     for (var _i3 = 0, _len = tagStash.length; _i3 < _len; _i3++) {
       reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
     }
-  } // return stats
-
+  }
 
   var timeTakenInMilliseconds = Date.now() - start;
   return {
     timeTakenInMilliseconds: timeTakenInMilliseconds
   };
-} // -----------------------------------------------------------------------------
+}
 
 var objectPath = createCommonjsModule(function (module) {
   (function (root, factory) {
@@ -7844,36 +5527,12 @@ function isObj$1(something) {
 }
 
 function layerPending(layers, tokenObj) {
-  return (// usual closing case
-    tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && Object.prototype.hasOwnProperty.call(layers[layers.length - 1], "tagName") && Object.prototype.hasOwnProperty.call(tokenObj, "tagName") && layers[layers.length - 1].tagName === tokenObj.tagName && layers[layers.length - 1].closing === false || // OR,
-    // rarer cases - any closing comment tag will close the layer, with
-    // condition that opening exists among layers:
-    // for example, consider <!--x<a>-->
-    // <!-- is one layer
-    // <a> is another layer
-    // but
-    // --> comes in and closes the last opening comment, it does not matter
-    // that html tag layer hasn't been closed - comment tags take priority
-    tokenObj.type === "comment" && layers.some(function (layerObjToken) {
-      return Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing;
-    }))
-  );
+  return tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && Object.prototype.hasOwnProperty.call(layers[layers.length - 1], "tagName") && Object.prototype.hasOwnProperty.call(tokenObj, "tagName") && layers[layers.length - 1].tagName === tokenObj.tagName && layers[layers.length - 1].closing === false || tokenObj.type === "comment" && layers.some(function (layerObjToken) {
+    return Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing;
+  }));
 }
-/**
- * Parser aiming at broken or mixed code, especially HTML & CSS
- */
-
 
 function cparser(str, originalOpts) {
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  // INSURANCE
-  // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
     if (str === undefined) {
       throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
@@ -7900,116 +5559,41 @@ function cparser(str, originalOpts) {
 
   if (originalOpts && isObj$1(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type " + typeof originalOpts.errCb + ", equal to " + JSON.stringify(originalOpts.errCb, null, 4));
-  } //
-  //
-  //
-  //
-  //
-  //
-  //
-  // OPTS
-  // ---------------------------------------------------------------------------
+  }
 
-
-  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts); //
-  //
-  //
-  //
-  //
-  //
-  //
-  // ACTION
-  // ---------------------------------------------------------------------------
-  // layers keep track of tag heads, so that when we hit their tails, we know
-  // where both parts are:
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts);
 
   var layers = [];
-  var res = []; // this flag is used to give notice
-  // we use object-path notation
-  // (https://www.npmjs.com/package/object-path)
-  // outer container is array so starting path is zero.
-  // object-path notation differs from normal js notation
-  // in that array paths are with digits, a.2 not a[2]
-  // which means, object keys can't have digit-only names.
-  // The benefit of this notation is that it's consistent -
-  // all the levels are joined with a dot, there are no brackets.
-
+  var res = [];
   var path = "";
   var nestNext = false;
   var lastProcessedToken = {};
   var tokensWithChildren = ["tag", "comment"];
-  var tagNamesThatDontHaveClosings = ["doctype"]; // Call codsen-tokenizer. It works through callbacks,
-  // pinging each token to the function you give, opts.tagCb
-
+  var tagNamesThatDontHaveClosings = ["doctype"];
   tokenizer(str, {
     reportProgressFunc: opts.reportProgressFunc,
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo,
     tagCbLookahead: 2,
     tagCb: function tagCb(tokenObj, next) {
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //              TAG CALLBACK STARTS
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      // // pass the token to the 3rd parties through opts.tagCb
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
-      } // tokenizer pings nested "rule" and "at" rule tokens separately,
-      // which means, there might be duplication. To consume each "rule" and "at"
-      // only once, we have to ensure their "nested" key is false.
-
+      }
 
       if (!tokenObj.nested) {
-        // tokenizer does not build AST's so there is no
-        // "children" key reported on each node. However,
-        // here we do build AST's and while some tokens might
-        // not have children tokens or can't (text nodes),
-        // for consistency we will add children key with
-        // an empty array value to each token in AST.
-        // recalculate the path for this token
         var prevToken = objectPath.get(res, path);
 
         if (!isObj$1(prevToken)) {
           prevToken = null;
         }
 
-        if (nestNext && // ensure it's not a closing tag of a pair, in which case
-        // don't nest it!
-        !tokenObj.closing && ( // also don't nest under closing tag
-        !lastProcessedToken.closing || // unless it's a comment tag
-        lastProcessedToken.type === "comment" && // and it's an HTML comment
-        lastProcessedToken.language === "html") && // also don't nest under text token
-        lastProcessedToken.type !== "text" && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj)) {
-          // 1. reset the flag
-          nestNext = false; // 2. go deeper
-          // "1.children.3" -> "1.children.3.children.0"
-
+        if (nestNext && !tokenObj.closing && (!lastProcessedToken.closing || lastProcessedToken.type === "comment" && lastProcessedToken.language === "html") && lastProcessedToken.type !== "text" && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj)) {
+          nestNext = false;
           path = path + ".children.0";
-        } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && ( // ensure preceding token was not an opening counterpart:
-        !tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
-          // goes up and then bumps,
-          // "1.children.3" -> "2" // for comments, many layers could have been nested before
-          // this closing comment, so we need to find out, at which level
-          // above the opening comment layer was
-          if (tokenObj.type === "comment" && tokenObj.closing && Array.isArray(layers) && layers.length && // there's opening comment layer somewhere above
-          layers.some(function (l) {
+        } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && (!tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
+          if (tokenObj.type === "comment" && tokenObj.closing && Array.isArray(layers) && layers.length && layers.some(function (l) {
             return l.type === "comment" && l.kind === tokenObj.kind;
           })) {
-            // find out how many levels above that opening comment tag is
             for (var i = layers.length; i--;) {
               path = pathNext(pathUp(path));
 
@@ -8022,12 +5606,6 @@ function cparser(str, originalOpts) {
           }
 
           if (layerPending(layers, tokenObj)) {
-            //
-            // in case of comment layers, there can be more layers leading
-            // up to this, so more popping might be needed.
-            // Imagine <!--<a><a><a><a><a><a>-->
-            //                                ^
-            //                              we're here
             while (layers.length && layers[layers.length - 1].type !== tokenObj.type && layers[layers.length - 1].kind !== tokenObj.kind) {
               layers.pop();
             }
@@ -8035,19 +5613,13 @@ function cparser(str, originalOpts) {
             layers.pop();
             nestNext = false;
           } else {
-            if (layers.length && tokenObj.tagName && // (tokenObj as TagToken).tagName ===
-            //   (layers[layers.length - 2] as TagToken).tagName
-            layers.some(function (layerObj) {
+            if (layers.length && tokenObj.tagName && layers.some(function (layerObj) {
               return layerObj.type === "tag" && layerObj.tagName === tokenObj.tagName;
             })) {
-              // if this is a gap and current token closes parent token,
-              // go another level up
               var lastLayer = layers.pop();
-              var currTagName = lastLayer.tagName; // let i = 0;
+              var currTagName = lastLayer.tagName;
 
               while (currTagName !== tokenObj.tagName) {
-                // i++;
-                // 1. report the last layer's token as missing closing
                 if (lastLayer && typeof opts.errCb === "function") {
                   opts.errCb({
                     ruleId: "" + lastLayer.type + (lastLayer.type === "comment" ? "-" + lastLayer.kind : "") + "-missing-closing",
@@ -8061,20 +5633,7 @@ function cparser(str, originalOpts) {
                 currTagName = lastLayer.tagName;
                 path = pathNext(pathUp(path));
               }
-            } else if ( // so it's a closing tag (</table> in example below)
-            // and it was not pending (meaning opening heads were not in front)
-            // and this token is tag and it's closing the first layer backwards
-            // imagine code: <table><tr><td>x</td></a></table>
-            // imagine we're on </table>
-            // The </a> didn't open a new layer so we have layers:
-            // <table>, <tr>
-            // </tr> was meant to be instead of </a>,
-            // the first layer backwards, the <table> does match our </table>
-            // that's path "layers[layers.length - 2]"
-            layers.length > 1 && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].tagName === tokenObj.tagName) {
-              // 1. don't amend the path, because this rogue closing tag has
-              // already triggered "UP", tree is fine
-              // 2. report the last layer's token as missing closing
+            } else if (layers.length > 1 && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].tagName === tokenObj.tagName) {
               if (typeof opts.errCb === "function") {
                 var lastLayersToken = layers[layers.length - 1];
                 opts.errCb({
@@ -8083,26 +5642,21 @@ function cparser(str, originalOpts) {
                   idxTo: lastLayersToken.end,
                   tokenObj: lastLayersToken
                 });
-              } // 3. pop all 2
-
+              }
 
               layers.pop();
               layers.pop();
             } else ;
           }
         } else if (!path) {
-          // it's the first element - push the token into index 0
           path = "0";
         } else {
-          // bumps the index,
-          // "1.children.3" -> "1.children.4"
           path = pathNext(path);
 
           if (layerPending(layers, tokenObj)) {
             layers.pop();
           }
-        } // activate the nestNext
-
+        }
 
         if (tokensWithChildren.includes(tokenObj.type) && !tokenObj.void && Object.prototype.hasOwnProperty.call(tokenObj, "closing") && !tokenObj.closing) {
           nestNext = true;
@@ -8110,18 +5664,9 @@ function cparser(str, originalOpts) {
           if (!tokenObj.kind || !tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
             layers.push(_objectSpread2({}, tokenObj));
           }
-        } // check, does this closing tag have an
-        // opening counterpart
+        }
 
-
-        var previousPath = pathPrev(path) || ""; // console.log(
-        //   `269 ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
-        //     previousPath,
-        //     null,
-        //     4
-        //   )}`
-        // );
-
+        var previousPath = pathPrev(path) || "";
         var parentPath = pathUp(path);
         var parentTagsToken;
 
@@ -8133,12 +5678,7 @@ function cparser(str, originalOpts) {
 
         if (previousPath) {
           previousTagsToken = objectPath.get(res, previousPath);
-        } //
-        // AST CORRECTION PART
-        //
-        // We change nodes where we recognise the error.
-        // // case of "a<!--b->c", current token being "text" type, value "b->c"
-
+        }
 
         var suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
         var parentsLastChildTokenValue;
@@ -8153,9 +5693,7 @@ function cparser(str, originalOpts) {
 
         if (tokenObj.type === "text" && isObj$1(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
           var suspiciousEndingStartsAt = (suspiciousCommentTagEndingRegExp.exec(tokenObj.value) || {}).index;
-          var suspiciousEndingEndsAt = (suspiciousEndingStartsAt || 0) + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1; // part 1.
-          // if any text precedes the "->" that text goes in as normal,
-          // at this level, under this path:
+          var suspiciousEndingEndsAt = (suspiciousEndingStartsAt || 0) + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
 
           if (suspiciousEndingStartsAt && suspiciousEndingStartsAt > 0) {
             objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
@@ -8166,9 +5704,7 @@ function cparser(str, originalOpts) {
             if (tokensWithChildren.includes(tokenObj.type)) {
               tokenObj.children = [];
             }
-          } // part 2.
-          // further, the "->" goes as closing token at parent level
-
+          }
 
           path = pathNext(pathUp(path));
           objectPath.set(res, path, {
@@ -8179,8 +5715,7 @@ function cparser(str, originalOpts) {
             end: tokenObj.start + suspiciousEndingEndsAt,
             value: tokenObj.value.slice(suspiciousEndingStartsAt, suspiciousEndingEndsAt),
             children: []
-          }); // part 3.
-          // if any text follows "->" add that after
+          });
 
           if (suspiciousEndingEndsAt < tokenObj.value.length) {
             path = pathNext(path);
@@ -8190,28 +5725,12 @@ function cparser(str, originalOpts) {
               end: tokenObj.end,
               value: tokenObj.value.slice(suspiciousEndingEndsAt)
             });
-          } // part 4.
-          // stop token from being pushed in the ELSE clauses below
+          }
 
-
-          tokenTakenCareOf = true; //
+          tokenTakenCareOf = true;
         } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$1(previousTagsToken)) {
-          // check "only" kind comment-type tokens for malformed front parts,
-          // "<!--", which would turn them into "not" kind comment-type tokens
           if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
-            // if "only" kind token is preceded by something that resembles
-            // opening HTML comment ("simple" kind), that might be first part
-            // of "not" kind comment:
-            //
-            // <img/><--<![endif]-->
-            //       ^
-            //      excl. mark missing on the first part ("<!--") // findMalformed
-            var capturedMalformedTagRanges = []; // Contents will be objects like:
-            // {
-            //   idxFrom: 3,
-            //   idxTo: 9
-            // }
-
+            var capturedMalformedTagRanges = [];
             findMalformed(previousTagsToken.value, "<!--", function (obj) {
               capturedMalformedTagRanges.push(obj);
             }, {
@@ -8219,39 +5738,25 @@ function cparser(str, originalOpts) {
             });
 
             if (capturedMalformedTagRanges.length && !right(previousTagsToken.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
-              // pick the last
-              // imagine, there were multiple malformed opening comments:
-              // <img/><1--<1--<1--<1--<![endif]-->
-              var malformedRange = capturedMalformedTagRanges.pop(); // is the whole text token to be merged into the closing comment token,
-              // or were there characters in front of text token which remain and
-              // form the shorter, text token?
+              var malformedRange = capturedMalformedTagRanges.pop();
 
               if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$1(previousTagsToken)) {
-                // if there are no whitespace characters to the left of "from" index
-                // of the malformed "<!--", this means whole token is a malformed
-                // value and needs to be merged into current "comment" type token
-                // and its kind should be changed from "only" to "not".
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
-                } // path becomes the path of previous, text token - we overwrite it
-
+                }
 
                 path = previousPath;
                 objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: "" + previousTagsToken.value + tokenObj.value
-                })); // stop token from being pushed in the ELSE clauses below
-
+                }));
                 tokenTakenCareOf = true;
               } else if (previousPath && isObj$1(previousTagsToken)) {
-                // if there are text characters which are not part of "<!--",
-                // shorten the text token, push a new comment token
-                // 1. tweak the "text" token
                 objectPath.set(res, previousPath, _objectSpread2(_objectSpread2({}, previousTagsToken), {}, {
                   end: malformedRange.idxFrom + previousTagsToken.start,
                   value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
-                })); // 2. tweak the current "comment" token
+                }));
 
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
@@ -8261,22 +5766,12 @@ function cparser(str, originalOpts) {
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: "" + previousTagsToken.value.slice(malformedRange.idxFrom) + tokenObj.value
-                })); // stop token from being pushed in the ELSE clauses below
-
+                }));
                 tokenTakenCareOf = true;
               }
             }
           } else if (isObj$1(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
-            // the text token might be in parent token's children array, as
-            // last element, for example, consider the AST of:
-            // <!--[if !mso]><!--><img src="gif"/>!--<![endif]-->
-            // // findMalformed
-            var _capturedMalformedTagRanges = []; // Contents will be objects like:
-            // {
-            //   idxFrom: 3,
-            //   idxTo: 9
-            // }
-
+            var _capturedMalformedTagRanges = [];
             findMalformed(parentsLastChildTokenValue.value, "<!--", function (obj) {
               _capturedMalformedTagRanges.push(obj);
             }, {
@@ -8284,41 +5779,25 @@ function cparser(str, originalOpts) {
             });
 
             if (_capturedMalformedTagRanges.length && !right(parentsLastChildTokenValue.value, _capturedMalformedTagRanges[_capturedMalformedTagRanges.length - 1].idxTo - 1)) {
-              // pick the last
-              // imagine, there were multiple malformed opening comments:
-              // <!--[if !mso]><!--><img src="gif"/>!--!--!--!--<![endif]-->
-              var _malformedRange = _capturedMalformedTagRanges.pop(); // is the whole text token to be merged into the closing comment token,
-              // or were there characters in front of text token which remain and
-              // form the shorter, text token?
-
+              var _malformedRange = _capturedMalformedTagRanges.pop();
 
               if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj$1(parentsLastChildTokenValue)) {
-                // if there are no whitespace characters to the left of "from" index
-                // of the malformed "<!--", this means whole token is a malformed
-                // value and needs to be merged into current "comment" type token
-                // and its kind should be changed from "only" to "not".
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
-                } // 1. Insert current node. The path for current token remains the same - text node was among
-                // the previous token's children tokens
-
+                }
 
                 objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: "" + parentsLastChildTokenValue.value + tokenObj.value
-                })); // 2. Delete the text node.
-
-                objectPath.del(res, previousPath + ".children." + (objectPath.get(res, previousPath).children.length - 1)); // stop token from being pushed in the ELSE clauses below
-
+                }));
+                objectPath.del(res, previousPath + ".children." + (objectPath.get(res, previousPath).children.length - 1));
                 tokenTakenCareOf = true;
               } else if (previousPath && isObj$1(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
-                // if there are text characters which are not part of "<!--",
-                // shorten the text token, push a new comment token // 1. tweak the "text" token
                 objectPath.set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
                   end: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   value: parentsLastChildTokenValue.value.slice(0, _malformedRange.idxFrom)
-                })); // 2. tweak the current "comment" token
+                }));
 
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
@@ -8328,14 +5807,12 @@ function cparser(str, originalOpts) {
                   start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: "" + parentsLastChildTokenValue.value.slice(_malformedRange.idxFrom) + tokenObj.value
-                })); // stop token from being pushed in the ELSE clauses below
-
+                }));
                 tokenTakenCareOf = true;
               }
             }
           }
-        } // if token was not pushed yet, push it
-
+        }
 
         if (!tokenTakenCareOf) {
           if (tokensWithChildren.includes(tokenObj.type)) {
@@ -8343,10 +5820,7 @@ function cparser(str, originalOpts) {
           }
 
           objectPath.set(res, path, tokenObj);
-        } //
-        // CHECK CHILD-PARENT MATCH
-        //
-
+        }
 
         if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$1(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
           if (tokenObj.void) {
@@ -8371,33 +5845,13 @@ function cparser(str, originalOpts) {
               });
             }
           }
-        } // SET a new previous token's value
+        }
 
-
-        lastProcessedToken = _objectSpread2({}, tokenObj); //
-        // LOGGING
-        //
-      } //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //              TAG CALLBACK ENDS
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-
+        lastProcessedToken = _objectSpread2({}, tokenObj);
+      }
     },
     charCb: opts.charCb
-  }); // if there are some unclosed layer tokens, raise errors about them all:
+  });
 
   if (layers.length) {
     layers.forEach(function (tokenObj) {
@@ -8413,12 +5867,12 @@ function cparser(str, originalOpts) {
   }
 
   return res;
-} // -----------------------------------------------------------------------------
+}
 
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -8429,29 +5883,22 @@ function collWhitespace(str, originallineBreakLimit) {
     originallineBreakLimit = 1;
   }
 
-  var rawNbsp = "\xA0"; // helpers
+  var rawNbsp = "\xA0";
 
   function reverse(s) {
     return Array.from(s).reverse().join("");
-  } // replaces the leading/trailing whitespace chunks with final strings
-
+  }
 
   function prep(whitespaceChunk, limit, trailing) {
-    // when processing the leading whitespace, it's \n\r --- CR - LF
-    // when processing the trailing whitespace, we're processing inverted order,
-    // so it's \n\r --- LF - CR
-    // for this reason, we set first and second linebreak according to direction,
-    // the "trailing" boolean:
     var firstBreakChar = trailing ? "\n" : "\r";
     var secondBreakChar = trailing ? "\r" : "\n";
 
     if (!whitespaceChunk) {
       return whitespaceChunk;
-    } // let whitespace char count since last CR or LF
-
+    }
 
     var crlfCount = 0;
-    var res = ""; // let beginning = true;
+    var res = "";
 
     for (var i = 0, len = whitespaceChunk.length; i < len; i++) {
       if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
@@ -8484,13 +5931,11 @@ function collWhitespace(str, originallineBreakLimit) {
   }
 
   if (typeof str === "string" && str.length) {
-    // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
     var lineBreakLimit = 1;
 
     if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
       lineBreakLimit = +originallineBreakLimit;
-    } // plan: extract what would String.prototype() would remove, front and back parts
-
+    }
 
     var frontPart = "";
     var endPart = "";
@@ -8504,25 +5949,16 @@ function collWhitespace(str, originallineBreakLimit) {
           break;
         }
       }
-    } // if whole string is whitespace, endPart is empty string
-
+    }
 
     if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
       for (var _i = str.length; _i--;) {
-        // console.log(
-        //   `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
-        //     str[i],
-        //     null,
-        //     4
-        //   )}`}\u001b[${39}m`}`
-        // );
         if (str[_i].trim()) {
           endPart = str.slice(_i + 1);
           break;
         }
       }
-    } // -------------------------------------------------------------------------
-
+    }
 
     return "" + prep(frontPart, lineBreakLimit, false) + str.trim() + reverse(prep(reverse(endPart), lineBreakLimit, true));
   }
@@ -8536,17 +5972,14 @@ var defaults$3 = {
 };
 
 function rSort(arrOfRanges, originalOptions) {
-  // quick ending
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
-  } // fill any settings with defaults if missing:
+  }
 
-
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOptions); // arrOfRanges validation
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOptions);
 
   var culpritsIndex;
-  var culpritsLen; // validate does every range consist of exactly two indexes:
+  var culpritsLen;
 
   if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
     return range;
@@ -8560,8 +5993,7 @@ function rSort(arrOfRanges, originalOptions) {
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") has not two but " + culpritsLen + " elements!");
-  } // validate are range indexes natural numbers:
-
+  }
 
   if (!arrOfRanges.filter(function (range) {
     return range;
@@ -8574,8 +6006,7 @@ function rSort(arrOfRanges, originalOptions) {
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") does not consist of only natural numbers!");
-  } // let's assume worst case scenario is N x N.
-
+  }
 
   var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
     return range;
@@ -8613,21 +6044,12 @@ var defaults$2 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
-}; // merges the overlapping ranges
-// case #1. exact extension:
-// [ [1, 5], [5, 10] ] => [ [1, 10] ]
-// case #2. overlap:
-// [ [1, 4], [3, 5] ] => [ [1, 5] ]
+};
 
 function rMerge(arrOfRanges, originalOpts) {
-  //
-  // internal functions:
-  // ---------------------------------------------------------------------------
   function isObj(something) {
     return something && typeof something === "object" && !Array.isArray(something);
-  } // quick ending:
-  // ---------------------------------------------------------------------------
-
+  }
 
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return null;
@@ -8637,19 +6059,17 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
       } else if (opts.progressFn && typeof opts.progressFn !== "function") {
         throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"" + typeof opts.progressFn + "\", equal to " + JSON.stringify(opts.progressFn, null, 4));
-      } // 2. validate opts.mergeType
-
+      }
 
       if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
         throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
-      } // 3. validate opts.joinRangesThatTouchEdges
-
+      }
 
       if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
         throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"" + typeof opts.joinRangesThatTouchEdges + "\", equal to " + JSON.stringify(opts.joinRangesThatTouchEdges, null, 4));
@@ -8659,18 +6079,13 @@ function rMerge(arrOfRanges, originalOpts) {
     }
   } else {
     opts = _objectSpread2({}, defaults$2);
-  } // progress-wise, sort takes first 20%
-  // two-level-deep array clone:
+  }
 
-
-  var filtered = arrOfRanges // filter out null
-  .filter(function (range) {
+  var filtered = arrOfRanges.filter(function (range) {
     return range;
   }).map(function (subarr) {
     return [].concat(subarr);
-  }).filter( // filter out futile ranges with identical starting and ending points with
-  // nothing to add (no 3rd argument)
-  function (rangeArr) {
+  }).filter(function (rangeArr) {
     return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
   });
   var sortedRanges;
@@ -8678,11 +6093,9 @@ function rMerge(arrOfRanges, originalOpts) {
   var percentageDone;
 
   if (opts.progressFn) {
-    // progress already gets reported in [0,100] range, so we just need to
-    // divide by 5 in order to "compress" that into 20% range.
     sortedRanges = rSort(filtered, {
       progressFn: function progressFn(percentage) {
-        percentageDone = Math.floor(percentage / 5); // ensure each percent is passed only once:
+        percentageDone = Math.floor(percentage / 5);
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
@@ -8698,8 +6111,7 @@ function rMerge(arrOfRanges, originalOpts) {
     return null;
   }
 
-  var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
-  // loop from the end:
+  var len = sortedRanges.length - 1;
 
   for (var i = len; i > 0; i--) {
     if (opts.progressFn) {
@@ -8707,26 +6119,20 @@ function rMerge(arrOfRanges, originalOpts) {
 
       if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
         lastPercentageDone = percentageDone;
-        opts.progressFn(percentageDone); // console.log(
-        //   `153 REPORTING ${`\u001b[${33}m${`doneSoFar`}\u001b[${39}m`} = ${doneSoFar}`
-        // );
+        opts.progressFn(percentageDone);
       }
-    } // if current range is before the preceding-one
-
+    }
 
     if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
       sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
-      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]); // tend the third argument, "what to insert"
+      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
 
       if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
-        // if the value of the range before exists:
         if (sortedRanges[i - 1][2] !== null) {
           if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
             sortedRanges[i - 1][2] = null;
           } else if (sortedRanges[i - 1][2] != null) {
-            // if there's a clash of "insert" values:
             if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
-              // take the value from the range that's on the right:
               sortedRanges[i - 1][2] = sortedRanges[i][2];
             } else {
               sortedRanges[i - 1][2] += sortedRanges[i][2];
@@ -8735,11 +6141,9 @@ function rMerge(arrOfRanges, originalOpts) {
             sortedRanges[i - 1][2] = sortedRanges[i][2];
           }
         }
-      } // get rid of the second element:
+      }
 
-
-      sortedRanges.splice(i, 1); // reset the traversal, start from the end again
-
+      sortedRanges.splice(i, 1);
       i = sortedRanges.length;
     }
   }
@@ -8763,12 +6167,9 @@ var defaults$1 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
-}; // -----------------------------------------------------------------------------
+};
 
 var Ranges = /*#__PURE__*/function () {
-  //
-  // O P T I O N S
-  // =============
   function Ranges(originalOpts) {
     var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
@@ -8780,8 +6181,7 @@ var Ranges = /*#__PURE__*/function () {
       } else {
         throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
       }
-    } // so it's correct, let's get it in:
-
+    }
 
     this.opts = opts;
     this.ranges = [];
@@ -8793,7 +6193,6 @@ var Ranges = /*#__PURE__*/function () {
     var _this = this;
 
     if (originalFrom == null && originalTo == null) {
-      // absent ranges are marked as null - instead of array of arrays we can receive a null
       return;
     }
 
@@ -8805,20 +6204,16 @@ var Ranges = /*#__PURE__*/function () {
           })) {
             originalFrom.forEach(function (thing) {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array
                 _this.add.apply(_this, thing);
-              } // just skip other cases
-
+              }
             });
             return;
           }
 
           if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
-            // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
-        } // else,
-
+        }
 
         return;
       }
@@ -8832,23 +6227,16 @@ var Ranges = /*#__PURE__*/function () {
     var to = +originalTo;
 
     if (isNum(addVal)) {
-      // eslint-disable-next-line no-param-reassign
       addVal = String(addVal);
-    } // validation
-
+    }
 
     if (isNum(from) && isNum(to)) {
-      // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + typeof addVal + ", equal to:\n" + JSON.stringify(addVal, null, 4));
-      } // Does the incoming "from" value match the existing last element's "to" value?
-
+      }
 
       if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
-        // The incoming range is an exact extension of the last range, like
-        // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
-        this.last()[1] = to; // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
-
+        this.last()[1] = to;
         if (this.last()[2] === null || addVal === null) ;
 
         if (this.last()[2] !== null && existy(addVal)) {
@@ -8859,7 +6247,6 @@ var Ranges = /*#__PURE__*/function () {
           }
 
           if (!(isStr(calculatedVal) && !calculatedVal.length)) {
-            // don't let the zero-length strings past
             this.last()[2] = calculatedVal;
           }
         }
@@ -8872,13 +6259,9 @@ var Ranges = /*#__PURE__*/function () {
         this.ranges.push(whatToPush);
       }
     } else {
-      // Error somewhere!
-      // Let's find out where.
-      // is it first arg?
       if (!(isNum(from) && from >= 0)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"" + typeof from + "\" equal to: " + JSON.stringify(from, null, 4));
       } else {
-        // then it's second...
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"" + typeof to + "\" equal to: " + JSON.stringify(to, null, 4));
       }
     }
@@ -8886,15 +6269,12 @@ var Ranges = /*#__PURE__*/function () {
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
     this.add(originalFrom, originalTo, addVal);
-  } // C U R R E N T () - kindof a getter
-  // ==================================
-  ;
+  };
 
   _proto.current = function current() {
     var _this2 = this;
 
     if (Array.isArray(this.ranges) && this.ranges.length) {
-      // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
       });
@@ -8913,21 +6293,14 @@ var Ranges = /*#__PURE__*/function () {
     }
 
     return null;
-  } // W I P E ()
-  // ==========
-  ;
+  };
 
   _proto.wipe = function wipe() {
     this.ranges = [];
-  } // R E P L A C E ()
-  // ==========
-  ;
+  };
 
   _proto.replace = function replace(givenRanges) {
     if (Array.isArray(givenRanges) && givenRanges.length) {
-      // Now, ranges can be array of arrays, correct format but also single
-      // range, an array of two natural numbers might be given.
-      // Let's put safety latch against such cases
       if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
         throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, " + JSON.stringify(givenRanges[0], null, 4) + " should be an array and its first element should be an integer, a string index.");
       } else {
@@ -8936,9 +6309,7 @@ var Ranges = /*#__PURE__*/function () {
     } else {
       this.ranges = [];
     }
-  } // L A S T ()
-  // ==========
-  ;
+  };
 
   _proto.last = function last() {
     if (Array.isArray(this.ranges) && this.ranges.length) {
@@ -8954,7 +6325,7 @@ var Ranges = /*#__PURE__*/function () {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -8983,19 +6354,16 @@ function rApply(str, originalRangesArr, _progressFn) {
   if (!originalRangesArr || !originalRangesArr.filter(function (range) {
     return range;
   }).length) {
-    // quick ending - no ranges passed
     return str;
   }
 
   var rangesArr;
 
   if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
-    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
-  } // allocate first 10% of progress to this stage
-
+  }
 
   var len = rangesArr.length;
   var counter = 0;
@@ -9034,13 +6402,10 @@ function rApply(str, originalRangesArr, _progressFn) {
     }
 
     counter += 1;
-  }); // allocate another 10% of the progress indicator length to the rangesMerge step:
-
+  });
   var workingRanges = rMerge(rangesArr, {
     progressFn: function progressFn(perc) {
       if (_progressFn) {
-        // since "perc" is already from zero to hundred, we just divide by 10 and
-        // get the range from zero to ten:
         percentageDone = 10 + Math.floor(perc / 10);
         /* istanbul ignore else */
 
@@ -9051,18 +6416,14 @@ function rApply(str, originalRangesArr, _progressFn) {
         }
       }
     }
-  }); // allocate the rest 80% to the actual string assembly:
-
+  });
   var len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
   /* istanbul ignore else */
 
   if (len2 > 0) {
-    var tails = str.slice(workingRanges[len2 - 1][1]); // eslint-disable-next-line no-param-reassign
-
+    var tails = str.slice(workingRanges[len2 - 1][1]);
     str = workingRanges.reduce(function (acc, _val, i, arr) {
       if (_progressFn) {
-        // since "perc" is already from zero to hundred, we just divide by 10 and
-        // get the range from zero to ten:
         percentageDone = 20 + Math.floor(i / len2 * 80);
         /* istanbul ignore else */
 
@@ -9076,8 +6437,7 @@ function rApply(str, originalRangesArr, _progressFn) {
       var beginning = i === 0 ? 0 : arr[i - 1][1];
       var ending = arr[i][0];
       return acc + str.slice(beginning, ending) + (arr[i][2] || "");
-    }, ""); // eslint-disable-next-line no-param-reassign
-
+    }, "");
     str += tails;
   }
 
@@ -9099,14 +6459,8 @@ function traverse(tree1, cb1, lookahead) {
 
   var stop1 = {
     now: false
-  }; // that's where we stash the arguments that the callback function tries
-  // to ping; we keep them until enough of them is gathered to set them as
-  // "future" values:
-
-  var stash = []; // ^ LIFO STACK
-  //
-  // traverseInner() needs a wrapper to shield the internal arguments and simplify external API.
-  //
+  };
+  var stash = [];
 
   function traverseInner(tree, callback, innerObj, stop) {
     innerObj = _objectSpread2({}, innerObj);
@@ -9120,8 +6474,7 @@ function traverse(tree1, cb1, lookahead) {
 
         var path = innerObj.path + "." + i;
         innerObj.parent = lodash_clonedeep(tree);
-        innerObj.parentType = "array"; // innerObj.path = `${innerObj.path}[${i}]`
-
+        innerObj.parentType = "array";
         callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
           path: trimFirstDot(path)
         }), stop);
@@ -9130,7 +6483,6 @@ function traverse(tree1, cb1, lookahead) {
         }), stop);
       }
     } else if (lodash_isplainobject(tree)) {
-      // eslint-disable-next-line
       for (var key in tree) {
         if (stop.now && key != null) {
           break;
@@ -9154,47 +6506,31 @@ function traverse(tree1, cb1, lookahead) {
     }
 
     return tree;
-  } // for DRY purposes, we extract the function which reports the first element
-  // from the stash and removes that element.
-
+  }
 
   function reportFirstFromStash() {
-    // start to assemble node we're report to the callback cb1()
-    var currentElem = stash.shift(); // ^ shift removes it from stash
-    // now we need the "future" nodes, as many as "lookahead" of them
-    // that's the container where they'll sit:
-
+    var currentElem = stash.shift();
     currentElem[2].next = [];
 
     for (var i = 0; i < lookahead; i++) {
-      // we want as many as "lookahead" from stash but there might be not enough
       if (stash[i]) {
         currentElem[2].next.push(lodash_clonedeep([stash[i][0], stash[i][1], stash[i][2]]));
       } else {
         break;
       }
-    } // finally, ping the callback with assembled element:
-
+    }
 
     cb1.apply(void 0, currentElem);
-  } // used to buffer "lookahead"-amount of results and report them as "future"
-  // nodes
-
+  }
 
   function intermediary() {
     for (var _len = arguments.length, incoming = new Array(_len), _key = 0; _key < _len; _key++) {
       incoming[_key] = arguments[_key];
     }
 
-    // 1. put the incoming things into stash.
-    // We need to delete the "now" element, the last-one in here,
-    // because it's for internal use
-    stash.push([].concat(incoming)); // 2. if there are enough things gathered in stash, report the first one
-    // from the stash:
+    stash.push([].concat(incoming));
 
     if (stash.length > lookahead) {
-      // the following function has "stash" in its scope and it will mutate
-      // the stash:
       reportFirstFromStash();
     }
   }
@@ -9202,18 +6538,16 @@ function traverse(tree1, cb1, lookahead) {
   traverseInner(tree1, intermediary, {
     depth: -1,
     path: ""
-  }, stop1); // once the end is reached, clean up the stash - that's the remaining elements
-  // that will have less "future" reported in them, compared to what was
-  // requested by "lookahead"
+  }, stop1);
 
   if (stash.length) {
     for (var i = 0, len = stash.length; i < len; i++) {
       reportFirstFromStash();
     }
   }
-} // -----------------------------------------------------------------------------
+}
 
-var version$1 = "4.0.6";
+var version$1 = "4.0.7";
 
 var version = version$1;
 var htmlCommentRegex = /<!--([\s\S]*?)-->/g;

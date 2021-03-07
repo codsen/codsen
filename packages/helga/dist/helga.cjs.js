@@ -1,7 +1,7 @@
 /**
  * helga
  * Your next best friend when editing complex nested code
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/helga/
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version$1 = "1.3.6";
+var version$1 = "1.3.7";
 
 var version = version$1;
 var defaults = {
@@ -35,38 +35,19 @@ var escapes = {
   "\\": "\\",
   "0": "\0"
 };
-
 function unescape(str) {
   return str.replace(/\\([bfnrtv'"\\0])/g, function (match) {
     return escapes[match] || match && (match.startsWith("\\") ? escapes[match.slice(1)] : "");
   });
 }
-
 function helga(str, originalOpts) {
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts); // console.log(
-  //   `011 using ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-  //     opts,
-  //     null,
-  //     4
-  //   )}`
-  // );
-  // 1. beautification:
-  // ---------------------------------------------------------------------------
-
-
-  var beautified = unescape(str); // 2. minification:
-  // ---------------------------------------------------------------------------
-
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
+  var beautified = unescape(str);
   var minified = unescape(str);
-
   if (opts.targetJSON) {
-    // if target is JSON, replace all tabs with two spaces, then JSON stringify
-    minified = JSON.stringify(minified.replace(/\t/g, "  "), null, 0); // remove wrapper quotes
-
+    minified = JSON.stringify(minified.replace(/\t/g, "  "), null, 0);
     minified = minified.slice(1, minified.length - 1);
-  } // ---------------------------------------------------------------------------
-
-
+  }
   return {
     minified: minified,
     beautified: beautified

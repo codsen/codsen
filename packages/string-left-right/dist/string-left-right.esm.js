@@ -1,7 +1,7 @@
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -10,21 +10,16 @@
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
-var version$1 = "4.0.6";
+var version$1 = "4.0.7";
 
 const version = version$1;
-const RAWNBSP = "\u00A0"; // separates the value from flags
-
+const RAWNBSP = "\u00A0";
 function x(something) {
-  // console.log(
-  //   `007 ${`\u001b[${35}m${`x() incoming "${something}"`}\u001b[${39}m`}`
-  // );
   const res = {
     value: something,
     hungry: false,
     optional: false
   };
-
   if ((res.value.endsWith("?*") || res.value.endsWith("*?")) && res.value.length > 2) {
     res.value = res.value.slice(0, res.value.length - 2);
     res.optional = true;
@@ -35,26 +30,15 @@ function x(something) {
   } else if (res.value.endsWith("*") && res.value.length > 1) {
     res.value = res.value.slice(0, ~-res.value.length);
     res.hungry = true;
-  } // console.log(
-  //   `036 ${`\u001b[${35}m${`x() returning ${JSON.stringify(
-  //     res,
-  //     null,
-  //     0
-  //   )}`}\u001b[${39}m`}`
-  // );
-
-
+  }
   return res;
 }
-
 function isNum(something) {
   return typeof something === "number";
 }
-
 function isStr(something) {
   return typeof something === "string";
 }
-
 function rightMain({
   str,
   idx = 0,
@@ -64,57 +48,42 @@ function rightMain({
   if (typeof str !== "string" || !str.length) {
     return null;
   }
-
   if (!idx || typeof idx !== "number") {
     idx = 0;
   }
-
   if (!str[idx + 1]) {
     return null;
   }
-
-  if ( // next character exists
-  str[idx + 1] && ( // and...
-  // it's solid
-  str[idx + 1].trim() || // or it's a whitespace character, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 1]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
+  if (
+  str[idx + 1] && (
+  str[idx + 1].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx + 1]) ||
+  stopAtRawNbsp &&
   str[idx + 1] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
     return idx + 1;
   }
-
-  if ( // second next character exists
-  str[idx + 2] && ( // and...
-  // it's solid
-  str[idx + 2].trim() || // it's a whitespace character and...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
+  if (
+  str[idx + 2] && (
+  str[idx + 2].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx + 2]) ||
+  stopAtRawNbsp &&
   str[idx + 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
     return idx + 2;
-  } // worst case scenario - traverse forwards
-
-
+  }
   for (let i = idx + 1, len = str.length; i < len; i++) {
-    if ( // it's solid
-    str[i].trim() || // it's a whitespace character and...
-    // stop at newlines is on
-    stopAtNewlines && // and it's a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
+    if (
+    str[i].trim() ||
+    stopAtNewlines &&
+    "\n\r".includes(str[i]) ||
+    stopAtRawNbsp &&
     str[i] === RAWNBSP) {
       return i;
     }
   }
-
   return null;
 }
-
 function right(str, idx = 0) {
   return rightMain({
     str,
@@ -123,7 +92,6 @@ function right(str, idx = 0) {
     stopAtRawNbsp: false
   });
 }
-
 function rightStopAtNewLines(str, idx) {
   return rightMain({
     str,
@@ -132,7 +100,6 @@ function rightStopAtNewLines(str, idx) {
     stopAtRawNbsp: false
   });
 }
-
 function rightStopAtRawNbsp(str, idx) {
   return rightMain({
     str,
@@ -140,29 +107,7 @@ function rightStopAtRawNbsp(str, idx) {
     stopAtNewlines: false,
     stopAtRawNbsp: true
   });
-} //
-//
-//       lllllll                        ffffffffffffffff           tttt                    ((((((       ))))))
-//       l:::::l                       f::::::::::::::::f       ttt:::t                  ((::::::(     )::::::))
-//       l:::::l                      f::::::::::::::::::f      t:::::t                ((:::::::(       ):::::::))
-//       l:::::l                      f::::::fffffff:::::f      t:::::t               (:::::::((         )):::::::)
-//       l::::l     eeeeeeeeeeee     f:::::f       ffffffttttttt:::::ttttttt         (::::::(             )::::::)
-//       l::::l   ee::::::::::::ee   f:::::f             t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l  e::::::eeeee:::::eef:::::::ffffff       t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l e::::::e     e:::::ef::::::::::::f       tttttt:::::::tttttt         (:::::(               ):::::)
-//       l::::l e:::::::eeeee::::::ef::::::::::::f             t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::::::::::::e f:::::::ffffff             t:::::t               (:::::(               ):::::)
-//       l::::l e::::::eeeeeeeeeee   f:::::f                   t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::e            f:::::f                   t:::::t    tttttt     (::::::(             )::::::)
-//       l::::::le::::::::e          f:::::::f                  t::::::tttt:::::t     (:::::::((         )):::::::)
-//       l::::::l e::::::::eeeeeeee  f:::::::f                  tt::::::::::::::t      ((:::::::(       ):::::::))
-//       l::::::l  ee:::::::::::::e  f:::::::f                    tt:::::::::::tt        ((::::::(     )::::::)
-//       llllllll    eeeeeeeeeeeeee  fffffffff                      ttttttttttt            ((((((       ))))))
-//
-//
-// Finds the index of the first non-whitespace character on the left
-
-
+}
 function leftMain({
   str,
   idx,
@@ -172,57 +117,42 @@ function leftMain({
   if (typeof str !== "string" || !str.length) {
     return null;
   }
-
   if (!idx || typeof idx !== "number") {
     idx = 0;
   }
-
   if (idx < 1) {
     return null;
   }
-
-  if ( // ~- means minus one, in bitwise
-  str[~-idx] && ( // either it's not a whitespace
-  str[~-idx].trim() || // or it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[~-idx]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
+  if (
+  str[~-idx] && (
+  str[~-idx].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[~-idx]) ||
+  stopAtRawNbsp &&
   str[~-idx] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
     return ~-idx;
-  } // if we reached this point, this means character on the left is whitespace -
-  // fine - check the next character on the left, str[idx - 2]
-
-
-  if ( // second character exists
-  str[idx - 2] && ( // either it's not whitespace so Bob's your uncle here's non-whitespace character
-  str[idx - 2].trim() || // it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // it's some sort of a newline
-  "\n\r".includes(str[idx - 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
+  }
+  if (
+  str[idx - 2] && (
+  str[idx - 2].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx - 2]) ||
+  stopAtRawNbsp &&
   str[idx - 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
     return idx - 2;
-  } // worst case scenario - traverse backwards
-
-
+  }
   for (let i = idx; i--;) {
-    if (str[i] && ( // it's non-whitespace character
-    str[i].trim() || // or it is whitespace character, but...
-    // stop at newlines is on
-    stopAtNewlines && // it's some sort of a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
+    if (str[i] && (
+    str[i].trim() ||
+    stopAtNewlines &&
+    "\n\r".includes(str[i]) ||
+    stopAtRawNbsp &&
     str[i] === RAWNBSP)) {
       return i;
     }
   }
-
   return null;
 }
-
 function left(str, idx = 0) {
   return leftMain({
     str,
@@ -231,7 +161,6 @@ function left(str, idx = 0) {
     stopAtRawNbsp: false
   });
 }
-
 function leftStopAtNewLines(str, idx) {
   return leftMain({
     str,
@@ -240,7 +169,6 @@ function leftStopAtNewLines(str, idx) {
     stopAtRawNbsp: false
   });
 }
-
 function leftStopAtRawNbsp(str, idx) {
   return leftMain({
     str,
@@ -249,39 +177,23 @@ function leftStopAtRawNbsp(str, idx) {
     stopAtRawNbsp: true
   });
 }
-
 function seq(direction, str, idx, opts, args) {
-
   if (typeof str !== "string" || !str.length) {
     return null;
   }
-
   if (typeof idx !== "number") {
     idx = 0;
   }
-
   if (direction === "right" && !str[idx + 1] || direction === "left" && !str[~-idx]) {
-    // if next character on the particular side doesn't even exist, that's a quick end
     return null;
-  } // we start to look on the particular side from index "idx".
-  // From there on, each finding sets its index to "lastFinding" so that we
-  // know where to start looking on from next. Any failed finding
-  // in a sequence is instant return "null".
-
-
+  }
   let lastFinding = idx;
   const gaps = [];
   let leftmostChar;
   let rightmostChar;
-  let satiated; // used to prevent mismatching action kicking in when that
-  // mismatching is after multiple hungry findings.
-  // go through all arguments
-
-  let i = 0; // we use while loop because for loop would not do in hungry matching cases,
-  // where we need to repeat same step (hungrily matched character) few times.
-
+  let satiated;
+  let i = 0;
   while (i < args.length) {
-
     if (!isStr(args[i]) || !args[i].length) {
       i += 1;
       continue;
@@ -292,42 +204,28 @@ function seq(direction, str, idx, opts, args) {
       hungry
     } = x(args[i]);
     const whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
-
-    if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) { // OK, one was matched, we're in the right clauses (otherwise we'd skip
-      // if it was optional or break the matching)
-      // Now, it depends, is it a hungry match, because if so, we need to look
-      // for more of these.
-
+    if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) {
       const temp = direction === "right" ? right(str, whattsOnTheSide) : left(str, whattsOnTheSide);
-
       if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
-        // satiated means next iteration is allowed not to match anything
         satiated = true;
       } else {
-        // move on
         i += 1;
-      } // 1. first, tackle gaps
-      // if there was a gap, push it to gaps array:
-
+      }
       if (typeof whattsOnTheSide === "number" && direction === "right" && whattsOnTheSide > lastFinding + 1) {
         gaps.push([lastFinding + 1, whattsOnTheSide]);
       } else if (direction === "left" && typeof whattsOnTheSide === "number" && whattsOnTheSide < ~-lastFinding) {
         gaps.unshift([whattsOnTheSide + 1, lastFinding]);
-      } // 2. second, tackle the matching
-
+      }
       lastFinding = whattsOnTheSide;
-
       if (direction === "right") {
         if (leftmostChar === undefined) {
           leftmostChar = whattsOnTheSide;
         }
-
         rightmostChar = whattsOnTheSide;
       } else {
         if (rightmostChar === undefined) {
           rightmostChar = whattsOnTheSide;
         }
-
         leftmostChar = whattsOnTheSide;
       }
     } else if (optional) {
@@ -340,8 +238,7 @@ function seq(direction, str, idx, opts, args) {
     } else {
       return null;
     }
-  } // if all arguments in sequence were empty strings, we return falsey null:
-
+  }
   if (leftmostChar === undefined || rightmostChar === undefined) {
     return null;
   }
@@ -350,46 +247,15 @@ function seq(direction, str, idx, opts, args) {
     leftmostChar,
     rightmostChar
   };
-} //
-//
-//    lllllll
-//    l:::::l
-//    l:::::l
-//    l:::::l
-//     l::::l                  rrrrr   rrrrrrrrr            ssssssssss       eeeeeeeeeeee       qqqqqqqqq   qqqqq
-//     l::::l                  r::::rrr:::::::::r         ss::::::::::s    ee::::::::::::ee    q:::::::::qqq::::q
-//     l::::l                  r:::::::::::::::::r      ss:::::::::::::s  e::::::eeeee:::::ee q:::::::::::::::::q
-//     l::::l  --------------- rr::::::rrrrr::::::r     s::::::ssss:::::se::::::e     e:::::eq::::::qqqqq::::::qq
-//     l::::l  -:::::::::::::-  r:::::r     r:::::r      s:::::s  ssssss e:::::::eeeee::::::eq:::::q     q:::::q
-//     l::::l  ---------------  r:::::r     rrrrrrr        s::::::s      e:::::::::::::::::e q:::::q     q:::::q
-//     l::::l                   r:::::r                       s::::::s   e::::::eeeeeeeeeee  q:::::q     q:::::q
-//     l::::l                   r:::::r                 ssssss   s:::::s e:::::::e           q::::::q    q:::::q
-//    l::::::l                  r:::::r                 s:::::ssss::::::se::::::::e          q:::::::qqqqq:::::q
-//    l::::::l                  r:::::r                 s::::::::::::::s  e::::::::eeeeeeee   q::::::::::::::::q
-//    l::::::l                  r:::::r                  s:::::::::::ss    ee:::::::::::::e    qq::::::::::::::q
-//    llllllll                  rrrrrrr                   sssssssssss        eeeeeeeeeeeeee      qqqqqqqq::::::q
-//                                                                                                       q:::::q
-//                                                                                                       q:::::q
-//                                                                                                      q:::::::q
-//                                                                                                      q:::::::q
-//                                                                                                      q:::::::q
-//                                                                                                      qqqqqqqqq
-
-
+}
 const seqDefaults = {
   i: false
 };
-
 function leftSeq(str, idx, ...args) {
-  // if there are no arguments, it becomes left()
   if (!args || !args.length) {
-    // console.log(`493 leftSeq() calling left()`);
-    // return left(str, idx);
     throw new Error(`string-left-right/leftSeq(): only two input arguments were passed! Did you intend to use left() method instead?`);
   }
-
   let opts;
-
   if (isObj(args[0])) {
     opts = { ...seqDefaults,
       ...args.shift()
@@ -399,17 +265,11 @@ function leftSeq(str, idx, ...args) {
   }
   return seq("left", str, idx, opts, Array.from(args).reverse());
 }
-
 function rightSeq(str, idx, ...args) {
-  // if there are no arguments, it becomes right()
   if (!args || !args.length) {
-    // console.log(`520 rightSeq() calling right()`);
-    // return right(str, idx);
     throw new Error(`string-left-right/rightSeq(): only two input arguments were passed! Did you intend to use right() method instead?`);
   }
-
   let opts;
-
   if (isObj(args[0])) {
     opts = { ...seqDefaults,
       ...args.shift()
@@ -418,78 +278,41 @@ function rightSeq(str, idx, ...args) {
     opts = seqDefaults;
   }
   return seq("right", str, idx, opts, args);
-} // chomp() lets you match sequences of characters with zero or more whitespace characters in between each,
-// on left or right of a given string index, with optional granular control over surrounding
-// whitespace-munching. Yes, that's a technical term.
-
-
+}
 function chomp(direction, str, idx, opts, args = []) {
-  //
-  // INSURANCE.
-  //
   if (typeof str !== "string" || !str.length) {
     return null;
   }
-
   if (!idx || typeof idx !== "number") {
     idx = 0;
   }
-
   if (direction === "right" && !str[idx + 1] || direction === "left" && +idx === 0) {
     return null;
-  } //
-  // ACTION.
-  //
+  }
   let lastRes = null;
   let lastIdx = null;
-
   do {
     lastRes = direction === "right" ? rightSeq(str, typeof lastIdx === "number" ? lastIdx : idx, ...args) : leftSeq(str, typeof lastIdx === "number" ? lastIdx : idx, ...args);
-
     if (lastRes !== null) {
       lastIdx = direction === "right" ? lastRes.rightmostChar : lastRes.leftmostChar;
     }
   } while (lastRes);
-
   if (lastIdx != null && direction === "right") {
     lastIdx += 1;
   }
-
   if (lastIdx === null) {
-    // if nothing was matched
     return null;
-  } // the last thing what's left to do is tackle the whitespace on the right.
-  // Depending on opts.mode, there can be different ways.
-
-
+  }
   if (direction === "right") {
-    //
-    //
-    //
-    //                           R I G H T
-    //
-    //
-    //
-    // quick ending - no whitespace on the right at all:
     if (str[lastIdx] && str[lastIdx].trim()) {
-      // if the character follows tightly right after,
       return lastIdx;
-    } // Default, 0 is leave single space if possible or chomp up to nearest line
-    // break character or chomp up to EOL
-
-
+    }
     const whatsOnTheRight = right(str, lastIdx);
-
     if (!opts || opts.mode === 0) {
       if (whatsOnTheRight === lastIdx + 1) {
-        // if there's one whitespace character, Bob's your uncle here's
-        // the final result
         return lastIdx;
       }
-
-      if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) { // if there are line break characters between current "lastIdx" we're on
-        // and the first non-whitespace character on the right
-
+      if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
         for (let y = lastIdx, len = str.length; y < len; y++) {
           if (`\n\r`.includes(str[y])) {
             return y;
@@ -499,147 +322,64 @@ function chomp(direction, str, idx, opts, args = []) {
         return whatsOnTheRight ? ~-whatsOnTheRight : str.length;
       }
     } else if (opts.mode === 1) {
-      // mode 1 doesn't touch the whitespace, so it's quick:
       return lastIdx;
     } else if (opts.mode === 2) {
-      // mode 2 hungrily chomps all whitespace except newlines
       const remainderString = str.slice(lastIdx);
-
       if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
-        // if there are line breaks, we need to loop to chomp up to them but not further
         for (let y = lastIdx, len = str.length; y < len; y++) {
           if (str[y].trim() || `\n\r`.includes(str[y])) {
             return y;
           }
         }
-      } // ELSE, last but not least, chomp to the end:
+      }
       return str.length;
-    } // ELSE - mode 3
-    // mode 3 is an aggro chomp - will chump all whitespace
-    return whatsOnTheRight || str.length; //
-    //
-    //
-    //                           R I G H T    E N D S
-    //
-    //
-    //
-  } //
-  //
-  //
-  //                                L E F T
-  //
-  //
-  //
-  // quick ending - no whitespace on the left at all:
-
-
+    }
+    return whatsOnTheRight || str.length;
+  }
   if (str[lastIdx] && str[~-lastIdx] && str[~-lastIdx].trim()) {
-    // if the non-whitespace character is on the left
     return lastIdx;
-  } // Default, 0 is leave single space if possible or chomp up to nearest line
-  // break character or chomp up to index zero, start of the string
-
-
+  }
   const whatsOnTheLeft = left(str, lastIdx);
-
   if (!opts || opts.mode === 0) {
-
     if (whatsOnTheLeft === lastIdx - 2) {
-      // if there's one whitespace character between here and next real character, Bob's your uncle here's
-      // the final result
       return lastIdx;
     }
-
-    if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) { // if there are line break characters between current "lastIdx" we're on
-      // and the first non-whitespace character on the right
-
+    if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
       for (let y = lastIdx; y--;) {
-
         if (`\n\r`.includes(str[y]) || str[y].trim()) {
           return y + 1 + (str[y].trim() ? 1 : 0);
         }
       }
-    } // ELSE
+    }
     return 0;
   }
-
   if (opts.mode === 1) {
-    // mode 1 doesn't touch the whitespace, so it's quick:
     return lastIdx;
   }
-
   if (opts.mode === 2) {
-    // mode 2 hungrily chomps all whitespace except newlines
     const remainderString = str.slice(0, lastIdx);
-
     if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
-      // if there are line breaks, we need to loop to chomp up to them but not further
       for (let y = lastIdx; y--;) {
         if (str[y].trim() || `\n\r`.includes(str[y])) {
           return y + 1;
         }
       }
-    } // ELSE, last but not least, chomp to the end:
+    }
     return 0;
-  } // ELSE - mode 3
-  // mode 3 is an aggro chomp - will chump all whitespace
-  return whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0; //
-  //
-  //
-  //                            L E F T    E N D S
-  //
-  //
-  //
-} //
-//
-//                       hhhhhhh                                                         LLLLLLLLLLL
-//                       h:::::h                                                         L:::::::::L
-//                       h:::::h                                                         L:::::::::L
-//                       h:::::h                                                         LL:::::::LL
-//        cccccccccccccccch::::h hhhhh          mmmmmmm    mmmmmmm   ppppp   ppppppppp     L:::::L
-//      cc:::::::::::::::ch::::hh:::::hhh     mm:::::::m  m:::::::mm p::::ppp:::::::::p    L:::::L
-//     c:::::::::::::::::ch::::::::::::::hh  m::::::::::mm::::::::::mp:::::::::::::::::p   L:::::L
-//    c:::::::cccccc:::::ch:::::::hhh::::::h m::::::::::::::::::::::mpp::::::ppppp::::::p  L:::::L
-//    c::::::c     ccccccch::::::h   h::::::hm:::::mmm::::::mmm:::::m p:::::p     p:::::p  L:::::L
-//    c:::::c             h:::::h     h:::::hm::::m   m::::m   m::::m p:::::p     p:::::p  L:::::L
-//    c:::::c             h:::::h     h:::::hm::::m   m::::m   m::::m p:::::p     p:::::p  L:::::L
-//    c::::::c     ccccccch:::::h     h:::::hm::::m   m::::m   m::::m p:::::p    p::::::p  L:::::L         LLLLLL
-//    c:::::::cccccc:::::ch:::::h     h:::::hm::::m   m::::m   m::::m p:::::ppppp:::::::pLL:::::::LLLLLLLLL:::::L
-//     c:::::::::::::::::ch:::::h     h:::::hm::::m   m::::m   m::::m p::::::::::::::::p L::::::::::::::::::::::L
-//      cc:::::::::::::::ch:::::h     h:::::hm::::m   m::::m   m::::m p::::::::::::::pp  L::::::::::::::::::::::L
-//        cccccccccccccccchhhhhhh     hhhhhhhmmmmmm   mmmmmm   mmmmmm p::::::pppppppp    LLLLLLLLLLLLLLLLLLLLLLLL
-//                                                                    p:::::p
-//                                                                    p:::::p
-//                                                                   p:::::::p
-//                                                                   p:::::::p
-//                                                                   p:::::::p
-//                                                                   ppppppppp
-//
-
-
-function chompLeft(str, idx, ...args) { // if there are no arguments, null
-
+  }
+  return whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0;
+}
+function chompLeft(str, idx, ...args) {
   if (!args.length || args.length === 1 && isObj(args[0])) {
     return null;
-  } //
-  // OPTS.
-  //
-  // modes:
-  // 0 - leave single space if possible
-  // 1 - stop at first space, leave whitespace alone
-  // 2 - aggressively chomp all whitespace except newlines
-  // 3 - aggressively chomp all whitespace including newlines
-
+  }
   const defaults = {
     mode: 0
-  }; // now, the first element within args can be opts.
-  // It's a plain object so it's easy to distinguish
-
+  };
   if (isObj(args[0])) {
     const opts = { ...defaults,
       ...clone(args[0])
     };
-
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && `0123`.includes(opts.mode)) {
@@ -649,62 +389,22 @@ function chompLeft(str, idx, ...args) { // if there are no arguments, null
     }
     return chomp("left", str, idx, opts, clone(args).slice(1));
   }
-
   if (!isStr(args[0])) {
     return chomp("left", str, idx, defaults, clone(args).slice(1));
-  } // ELSE
-  // all arguments are values to match, first element is not options object
+  }
   return chomp("left", str, idx, defaults, clone(args));
-} //
-//
-//                      hhhhhhh                                                         RRRRRRRRRRRRRRRRR
-//                      h:::::h                                                         R::::::::::::::::R
-//                      h:::::h                                                         R::::::RRRRRR:::::R
-//                      h:::::h                                                         RR:::::R     R:::::R
-//       cccccccccccccccch::::h hhhhh          mmmmmmm    mmmmmmm   ppppp   ppppppppp     R::::R     R:::::R
-//     cc:::::::::::::::ch::::hh:::::hhh     mm:::::::m  m:::::::mm p::::ppp:::::::::p    R::::R     R:::::R
-//    c:::::::::::::::::ch::::::::::::::hh  m::::::::::mm::::::::::mp:::::::::::::::::p   R::::RRRRRR:::::R
-//   c:::::::cccccc:::::ch:::::::hhh::::::h m::::::::::::::::::::::mpp::::::ppppp::::::p  R:::::::::::::RR
-//   c::::::c     ccccccch::::::h   h::::::hm:::::mmm::::::mmm:::::m p:::::p     p:::::p  R::::RRRRRR:::::R
-//   c:::::c             h:::::h     h:::::hm::::m   m::::m   m::::m p:::::p     p:::::p  R::::R     R:::::R
-//   c:::::c             h:::::h     h:::::hm::::m   m::::m   m::::m p:::::p     p:::::p  R::::R     R:::::R
-//   c::::::c     ccccccch:::::h     h:::::hm::::m   m::::m   m::::m p:::::p    p::::::p  R::::R     R:::::R
-//   c:::::::cccccc:::::ch:::::h     h:::::hm::::m   m::::m   m::::m p:::::ppppp:::::::pRR:::::R     R:::::R
-//    c:::::::::::::::::ch:::::h     h:::::hm::::m   m::::m   m::::m p::::::::::::::::p R::::::R     R:::::R
-//     cc:::::::::::::::ch:::::h     h:::::hm::::m   m::::m   m::::m p::::::::::::::pp  R::::::R     R:::::R
-//       cccccccccccccccchhhhhhh     hhhhhhhmmmmmm   mmmmmm   mmmmmm p::::::pppppppp    RRRRRRRR     RRRRRRR
-//                                                                   p:::::p
-//                                                                   p:::::p
-//                                                                  p:::::::p
-//                                                                  p:::::::p
-//                                                                  p:::::::p
-//                                                                  ppppppppp
-//
-
-
-function chompRight(str, idx, ...args) { // if there are no arguments, null
-
+}
+function chompRight(str, idx, ...args) {
   if (!args.length || args.length === 1 && isObj(args[0])) {
     return null;
-  } //
-  // OPTS.
-  //
-  // modes:
-  // 0 - leave single space if possible
-  // 1 - stop at first space, leave whitespace alone
-  // 2 - aggressively chomp all whitespace except newlines
-  // 3 - aggressively chomp all whitespace including newlines
-
+  }
   const defaults = {
     mode: 0
-  }; // now, the first element within args can be opts.
-  // It's a plain object so it's easy to distinguish
-
+  };
   if (isObj(args[0])) {
     const opts = { ...defaults,
       ...clone(args[0])
     };
-
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && `0123`.includes(opts.mode)) {
@@ -714,11 +414,9 @@ function chompRight(str, idx, ...args) { // if there are no arguments, null
     }
     return chomp("right", str, idx, opts, clone(args).slice(1));
   }
-
   if (!isStr(args[0])) {
     return chomp("right", str, idx, defaults, clone(args).slice(1));
-  } // ELSE
-  // all arguments are values to match, first element is not options object
+  }
   return chomp("right", str, idx, defaults, clone(args));
 }
 

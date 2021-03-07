@@ -1,7 +1,7 @@
 /**
  * detergent
  * Extracts, cleans and encodes text
- * Version: 7.0.6
+ * Version: 7.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detergent/
@@ -2059,12 +2059,9 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   module.exports = cloneDeep;
 });
 
-var RAWNBSP = "\xA0"; // separates the value from flags
+var RAWNBSP = "\xA0";
 
 function x(something) {
-  // console.log(
-  //   `007 ${`\u001b[${35}m${`x() incoming "${something}"`}\u001b[${39}m`}`
-  // );
   var res = {
     value: something,
     hungry: false,
@@ -2081,14 +2078,7 @@ function x(something) {
   } else if (res.value.endsWith("*") && res.value.length > 1) {
     res.value = res.value.slice(0, ~-res.value.length);
     res.hungry = true;
-  } // console.log(
-  //   `036 ${`\u001b[${35}m${`x() returning ${JSON.stringify(
-  //     res,
-  //     null,
-  //     0
-  //   )}`}\u001b[${39}m`}`
-  // );
-
+  }
 
   return res;
 }
@@ -2122,41 +2112,16 @@ function rightMain(_ref) {
     return null;
   }
 
-  if ( // next character exists
-  str[idx + 1] && ( // and...
-  // it's solid
-  str[idx + 1].trim() || // or it's a whitespace character, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 1]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 1] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
     return idx + 1;
   }
 
-  if ( // second next character exists
-  str[idx + 2] && ( // and...
-  // it's solid
-  str[idx + 2].trim() || // it's a whitespace character and...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
     return idx + 2;
-  } // worst case scenario - traverse forwards
-
+  }
 
   for (var i = idx + 1, len = str.length; i < len; i++) {
-    if ( // it's solid
-    str[i].trim() || // it's a whitespace character and...
-    // stop at newlines is on
-    stopAtNewlines && // and it's a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP) {
+    if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
       return i;
     }
   }
@@ -2185,27 +2150,6 @@ function rightStopAtNewLines(str, idx) {
     stopAtRawNbsp: false
   });
 }
-//
-//       lllllll                        ffffffffffffffff           tttt                    ((((((       ))))))
-//       l:::::l                       f::::::::::::::::f       ttt:::t                  ((::::::(     )::::::))
-//       l:::::l                      f::::::::::::::::::f      t:::::t                ((:::::::(       ):::::::))
-//       l:::::l                      f::::::fffffff:::::f      t:::::t               (:::::::((         )):::::::)
-//       l::::l     eeeeeeeeeeee     f:::::f       ffffffttttttt:::::ttttttt         (::::::(             )::::::)
-//       l::::l   ee::::::::::::ee   f:::::f             t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l  e::::::eeeee:::::eef:::::::ffffff       t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l e::::::e     e:::::ef::::::::::::f       tttttt:::::::tttttt         (:::::(               ):::::)
-//       l::::l e:::::::eeeee::::::ef::::::::::::f             t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::::::::::::e f:::::::ffffff             t:::::t               (:::::(               ):::::)
-//       l::::l e::::::eeeeeeeeeee   f:::::f                   t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::e            f:::::f                   t:::::t    tttttt     (::::::(             )::::::)
-//       l::::::le::::::::e          f:::::::f                  t::::::tttt:::::t     (:::::::((         )):::::::)
-//       l::::::l e::::::::eeeeeeee  f:::::::f                  tt::::::::::::::t      ((:::::::(       ):::::::))
-//       l::::::l  ee:::::::::::::e  f:::::::f                    tt:::::::::::tt        ((::::::(     )::::::)
-//       llllllll    eeeeeeeeeeeeee  fffffffff                      ttttttttttt            ((((((       ))))))
-//
-//
-// Finds the index of the first non-whitespace character on the left
-
 
 function leftMain(_ref2) {
   var str = _ref2.str,
@@ -2225,41 +2169,16 @@ function leftMain(_ref2) {
     return null;
   }
 
-  if ( // ~- means minus one, in bitwise
-  str[~-idx] && ( // either it's not a whitespace
-  str[~-idx].trim() || // or it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[~-idx]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[~-idx] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[~-idx] && (str[~-idx].trim() || stopAtNewlines && "\n\r".includes(str[~-idx]) || stopAtRawNbsp && str[~-idx] === RAWNBSP)) {
     return ~-idx;
-  } // if we reached this point, this means character on the left is whitespace -
-  // fine - check the next character on the left, str[idx - 2]
+  }
 
-
-  if ( // second character exists
-  str[idx - 2] && ( // either it's not whitespace so Bob's your uncle here's non-whitespace character
-  str[idx - 2].trim() || // it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // it's some sort of a newline
-  "\n\r".includes(str[idx - 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx - 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx - 2] && (str[idx - 2].trim() || stopAtNewlines && "\n\r".includes(str[idx - 2]) || stopAtRawNbsp && str[idx - 2] === RAWNBSP)) {
     return idx - 2;
-  } // worst case scenario - traverse backwards
-
+  }
 
   for (var i = idx; i--;) {
-    if (str[i] && ( // it's non-whitespace character
-    str[i].trim() || // or it is whitespace character, but...
-    // stop at newlines is on
-    stopAtNewlines && // it's some sort of a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP)) {
+    if (str[i] && (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP)) {
       return i;
     }
   }
@@ -2299,24 +2218,15 @@ function seq(direction, str, idx, opts, args) {
   }
 
   if (direction === "right" && !str[idx + 1] || direction === "left" && !str[~-idx]) {
-    // if next character on the particular side doesn't even exist, that's a quick end
     return null;
-  } // we start to look on the particular side from index "idx".
-  // From there on, each finding sets its index to "lastFinding" so that we
-  // know where to start looking on from next. Any failed finding
-  // in a sequence is instant return "null".
-
+  }
 
   var lastFinding = idx;
   var gaps = [];
   var leftmostChar;
   var rightmostChar;
-  var satiated; // used to prevent mismatching action kicking in when that
-  // mismatching is after multiple hungry findings.
-  // go through all arguments
-
-  var i = 0; // we use while loop because for loop would not do in hungry matching cases,
-  // where we need to repeat same step (hungrily matched character) few times.
+  var satiated;
+  var i = 0;
 
   while (i < args.length) {
     if (!isStr$3(args[i]) || !args[i].length) {
@@ -2332,28 +2242,19 @@ function seq(direction, str, idx, opts, args) {
     var whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
 
     if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) {
-      // OK, one was matched, we're in the right clauses (otherwise we'd skip
-      // if it was optional or break the matching)
-      // Now, it depends, is it a hungry match, because if so, we need to look
-      // for more of these.
       var temp = direction === "right" ? right(str, whattsOnTheSide) : left(str, whattsOnTheSide);
 
       if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
-        // satiated means next iteration is allowed not to match anything
         satiated = true;
       } else {
-        // move on
         i += 1;
-      } // 1. first, tackle gaps
-      // if there was a gap, push it to gaps array:
-
+      }
 
       if (typeof whattsOnTheSide === "number" && direction === "right" && whattsOnTheSide > lastFinding + 1) {
         gaps.push([lastFinding + 1, whattsOnTheSide]);
       } else if (direction === "left" && typeof whattsOnTheSide === "number" && whattsOnTheSide < ~-lastFinding) {
         gaps.unshift([whattsOnTheSide + 1, lastFinding]);
-      } // 2. second, tackle the matching
-
+      }
 
       lastFinding = whattsOnTheSide;
 
@@ -2380,8 +2281,7 @@ function seq(direction, str, idx, opts, args) {
     } else {
       return null;
     }
-  } // if all arguments in sequence were empty strings, we return falsey null:
-
+  }
 
   if (leftmostChar === undefined || rightmostChar === undefined) {
     return null;
@@ -2392,31 +2292,7 @@ function seq(direction, str, idx, opts, args) {
     leftmostChar: leftmostChar,
     rightmostChar: rightmostChar
   };
-} //
-//
-//    lllllll
-//    l:::::l
-//    l:::::l
-//    l:::::l
-//     l::::l                  rrrrr   rrrrrrrrr            ssssssssss       eeeeeeeeeeee       qqqqqqqqq   qqqqq
-//     l::::l                  r::::rrr:::::::::r         ss::::::::::s    ee::::::::::::ee    q:::::::::qqq::::q
-//     l::::l                  r:::::::::::::::::r      ss:::::::::::::s  e::::::eeeee:::::ee q:::::::::::::::::q
-//     l::::l  --------------- rr::::::rrrrr::::::r     s::::::ssss:::::se::::::e     e:::::eq::::::qqqqq::::::qq
-//     l::::l  -:::::::::::::-  r:::::r     r:::::r      s:::::s  ssssss e:::::::eeeee::::::eq:::::q     q:::::q
-//     l::::l  ---------------  r:::::r     rrrrrrr        s::::::s      e:::::::::::::::::e q:::::q     q:::::q
-//     l::::l                   r:::::r                       s::::::s   e::::::eeeeeeeeeee  q:::::q     q:::::q
-//     l::::l                   r:::::r                 ssssss   s:::::s e:::::::e           q::::::q    q:::::q
-//    l::::::l                  r:::::r                 s:::::ssss::::::se::::::::e          q:::::::qqqqq:::::q
-//    l::::::l                  r:::::r                 s::::::::::::::s  e::::::::eeeeeeee   q::::::::::::::::q
-//    l::::::l                  r:::::r                  s:::::::::::ss    ee:::::::::::::e    qq::::::::::::::q
-//    llllllll                  rrrrrrr                   sssssssssss        eeeeeeeeeeeeee      qqqqqqqq::::::q
-//                                                                                                       q:::::q
-//                                                                                                       q:::::q
-//                                                                                                      q:::::::q
-//                                                                                                      q:::::::q
-//                                                                                                      q:::::::q
-//                                                                                                      qqqqqqqqq
-
+}
 
 var seqDefaults = {
   i: false
@@ -2427,10 +2303,7 @@ function leftSeq(str, idx) {
     args[_key - 2] = arguments[_key];
   }
 
-  // if there are no arguments, it becomes left()
   if (!args || !args.length) {
-    // console.log(`493 leftSeq() calling left()`);
-    // return left(str, idx);
     throw new Error("string-left-right/leftSeq(): only two input arguments were passed! Did you intend to use left() method instead?");
   }
 
@@ -2450,10 +2323,7 @@ function rightSeq(str, idx) {
     args[_key2 - 2] = arguments[_key2];
   }
 
-  // if there are no arguments, it becomes right()
   if (!args || !args.length) {
-    // console.log(`520 rightSeq() calling right()`);
-    // return right(str, idx);
     throw new Error("string-left-right/rightSeq(): only two input arguments were passed! Did you intend to use right() method instead?");
   }
 
@@ -2466,19 +2336,13 @@ function rightSeq(str, idx) {
   }
 
   return seq("right", str, idx, opts, args);
-} // chomp() lets you match sequences of characters with zero or more whitespace characters in between each,
-// on left or right of a given string index, with optional granular control over surrounding
-// whitespace-munching. Yes, that's a technical term.
-
+}
 
 function chomp(direction, str, idx, opts, args) {
   if (args === void 0) {
     args = [];
   }
 
-  //
-  // INSURANCE.
-  //
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -2489,10 +2353,7 @@ function chomp(direction, str, idx, opts, args) {
 
   if (direction === "right" && !str[idx + 1] || direction === "left" && +idx === 0) {
     return null;
-  } //
-  // ACTION.
-  //
-
+  }
 
   var lastRes = null;
   var lastIdx = null;
@@ -2510,40 +2371,22 @@ function chomp(direction, str, idx, opts, args) {
   }
 
   if (lastIdx === null) {
-    // if nothing was matched
     return null;
-  } // the last thing what's left to do is tackle the whitespace on the right.
-  // Depending on opts.mode, there can be different ways.
-
+  }
 
   if (direction === "right") {
-    //
-    //
-    //
-    //                           R I G H T
-    //
-    //
-    //
-    // quick ending - no whitespace on the right at all:
     if (str[lastIdx] && str[lastIdx].trim()) {
-      // if the character follows tightly right after,
       return lastIdx;
-    } // Default, 0 is leave single space if possible or chomp up to nearest line
-    // break character or chomp up to EOL
-
+    }
 
     var whatsOnTheRight = right(str, lastIdx);
 
     if (!opts || opts.mode === 0) {
       if (whatsOnTheRight === lastIdx + 1) {
-        // if there's one whitespace character, Bob's your uncle here's
-        // the final result
         return lastIdx;
       }
 
       if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
-        // if there are line break characters between current "lastIdx" we're on
-        // and the first non-whitespace character on the right
         for (var y = lastIdx, len = str.length; y < len; y++) {
           if ("\n\r".includes(str[y])) {
             return y;
@@ -2553,154 +2396,79 @@ function chomp(direction, str, idx, opts, args) {
         return whatsOnTheRight ? ~-whatsOnTheRight : str.length;
       }
     } else if (opts.mode === 1) {
-      // mode 1 doesn't touch the whitespace, so it's quick:
       return lastIdx;
     } else if (opts.mode === 2) {
-      // mode 2 hungrily chomps all whitespace except newlines
       var remainderString = str.slice(lastIdx);
 
       if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
-        // if there are line breaks, we need to loop to chomp up to them but not further
         for (var _y = lastIdx, _len3 = str.length; _y < _len3; _y++) {
           if (str[_y].trim() || "\n\r".includes(str[_y])) {
             return _y;
           }
         }
-      } // ELSE, last but not least, chomp to the end:
-
+      }
 
       return str.length;
-    } // ELSE - mode 3
-    // mode 3 is an aggro chomp - will chump all whitespace
+    }
 
-
-    return whatsOnTheRight || str.length; //
-    //
-    //
-    //                           R I G H T    E N D S
-    //
-    //
-    //
-  } //
-  //
-  //
-  //                                L E F T
-  //
-  //
-  //
-  // quick ending - no whitespace on the left at all:
-
+    return whatsOnTheRight || str.length;
+  }
 
   if (str[lastIdx] && str[~-lastIdx] && str[~-lastIdx].trim()) {
-    // if the non-whitespace character is on the left
     return lastIdx;
-  } // Default, 0 is leave single space if possible or chomp up to nearest line
-  // break character or chomp up to index zero, start of the string
-
+  }
 
   var whatsOnTheLeft = left(str, lastIdx);
 
   if (!opts || opts.mode === 0) {
     if (whatsOnTheLeft === lastIdx - 2) {
-      // if there's one whitespace character between here and next real character, Bob's your uncle here's
-      // the final result
       return lastIdx;
     }
 
     if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
-      // if there are line break characters between current "lastIdx" we're on
-      // and the first non-whitespace character on the right
       for (var _y2 = lastIdx; _y2--;) {
         if ("\n\r".includes(str[_y2]) || str[_y2].trim()) {
           return _y2 + 1 + (str[_y2].trim() ? 1 : 0);
         }
       }
-    } // ELSE
-
+    }
 
     return 0;
   }
 
   if (opts.mode === 1) {
-    // mode 1 doesn't touch the whitespace, so it's quick:
     return lastIdx;
   }
 
   if (opts.mode === 2) {
-    // mode 2 hungrily chomps all whitespace except newlines
     var _remainderString = str.slice(0, lastIdx);
 
     if (_remainderString.trim() || _remainderString.includes("\n") || _remainderString.includes("\r")) {
-      // if there are line breaks, we need to loop to chomp up to them but not further
       for (var _y3 = lastIdx; _y3--;) {
         if (str[_y3].trim() || "\n\r".includes(str[_y3])) {
           return _y3 + 1;
         }
       }
-    } // ELSE, last but not least, chomp to the end:
-
+    }
 
     return 0;
-  } // ELSE - mode 3
-  // mode 3 is an aggro chomp - will chump all whitespace
+  }
 
-
-  return whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0; //
-  //
-  //
-  //                            L E F T    E N D S
-  //
-  //
-  //
-} //
-//
-//                       hhhhhhh                                                         LLLLLLLLLLL
-//                       h:::::h                                                         L:::::::::L
-//                       h:::::h                                                         L:::::::::L
-//                       h:::::h                                                         LL:::::::LL
-//        cccccccccccccccch::::h hhhhh          mmmmmmm    mmmmmmm   ppppp   ppppppppp     L:::::L
-//      cc:::::::::::::::ch::::hh:::::hhh     mm:::::::m  m:::::::mm p::::ppp:::::::::p    L:::::L
-//     c:::::::::::::::::ch::::::::::::::hh  m::::::::::mm::::::::::mp:::::::::::::::::p   L:::::L
-//    c:::::::cccccc:::::ch:::::::hhh::::::h m::::::::::::::::::::::mpp::::::ppppp::::::p  L:::::L
-//    c::::::c     ccccccch::::::h   h::::::hm:::::mmm::::::mmm:::::m p:::::p     p:::::p  L:::::L
-//    c:::::c             h:::::h     h:::::hm::::m   m::::m   m::::m p:::::p     p:::::p  L:::::L
-//    c:::::c             h:::::h     h:::::hm::::m   m::::m   m::::m p:::::p     p:::::p  L:::::L
-//    c::::::c     ccccccch:::::h     h:::::hm::::m   m::::m   m::::m p:::::p    p::::::p  L:::::L         LLLLLL
-//    c:::::::cccccc:::::ch:::::h     h:::::hm::::m   m::::m   m::::m p:::::ppppp:::::::pLL:::::::LLLLLLLLL:::::L
-//     c:::::::::::::::::ch:::::h     h:::::hm::::m   m::::m   m::::m p::::::::::::::::p L::::::::::::::::::::::L
-//      cc:::::::::::::::ch:::::h     h:::::hm::::m   m::::m   m::::m p::::::::::::::pp  L::::::::::::::::::::::L
-//        cccccccccccccccchhhhhhh     hhhhhhhmmmmmm   mmmmmm   mmmmmm p::::::pppppppp    LLLLLLLLLLLLLLLLLLLLLLLL
-//                                                                    p:::::p
-//                                                                    p:::::p
-//                                                                   p:::::::p
-//                                                                   p:::::::p
-//                                                                   p:::::::p
-//                                                                   ppppppppp
-//
-
+  return whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0;
+}
 
 function chompLeft(str, idx) {
   for (var _len4 = arguments.length, args = new Array(_len4 > 2 ? _len4 - 2 : 0), _key3 = 2; _key3 < _len4; _key3++) {
     args[_key3 - 2] = arguments[_key3];
   }
 
-  // if there are no arguments, null
   if (!args.length || args.length === 1 && lodash_isplainobject(args[0])) {
     return null;
-  } //
-  // OPTS.
-  //
-  // modes:
-  // 0 - leave single space if possible
-  // 1 - stop at first space, leave whitespace alone
-  // 2 - aggressively chomp all whitespace except newlines
-  // 3 - aggressively chomp all whitespace including newlines
-
+  }
 
   var defaults = {
     mode: 0
-  }; // now, the first element within args can be opts.
-  // It's a plain object so it's easy to distinguish
+  };
 
   if (lodash_isplainobject(args[0])) {
     var opts = _objectSpread2(_objectSpread2({}, defaults), lodash_clonedeep(args[0]));
@@ -2718,12 +2486,10 @@ function chompLeft(str, idx) {
 
   if (!isStr$3(args[0])) {
     return chomp("left", str, idx, defaults, lodash_clonedeep(args).slice(1));
-  } // ELSE
-  // all arguments are values to match, first element is not options object
-
+  }
 
   return chomp("left", str, idx, defaults, lodash_clonedeep(args));
-} //
+}
 
 var array = [];
 var charCodeCache = [];
@@ -2804,7 +2570,7 @@ leven_1.default = _default;
 /**
  * all-named-html-entities
  * List of all named HTML entities
- * Version: 1.5.6
+ * Version: 1.5.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/all-named-html-entities/
@@ -10122,80 +9888,7 @@ var entStartsWith = entStartsWithJson;
 var entEndsWith = entEndsWithJson;
 var uncertain = uncertainJson;
 var allNamedEntitiesSetOnly = new Set(["Aacute", "aacute", "Abreve", "abreve", "ac", "acd", "acE", "Acirc", "acirc", "acute", "Acy", "acy", "AElig", "aelig", "af", "Afr", "afr", "Agrave", "agrave", "alefsym", "aleph", "Alpha", "alpha", "Amacr", "amacr", "amalg", "AMP", "amp", "And", "and", "andand", "andd", "andslope", "andv", "ang", "ange", "angle", "angmsd", "angmsdaa", "angmsdab", "angmsdac", "angmsdad", "angmsdae", "angmsdaf", "angmsdag", "angmsdah", "angrt", "angrtvb", "angrtvbd", "angsph", "angst", "angzarr", "Aogon", "aogon", "Aopf", "aopf", "ap", "apacir", "apE", "ape", "apid", "apos", "ApplyFunction", "approx", "approxeq", "Aring", "aring", "Ascr", "ascr", "Assign", "ast", "asymp", "asympeq", "Atilde", "atilde", "Auml", "auml", "awconint", "awint", "backcong", "backepsilon", "backprime", "backsim", "backsimeq", "Backslash", "Barv", "barvee", "Barwed", "barwed", "barwedge", "bbrk", "bbrktbrk", "bcong", "Bcy", "bcy", "bdquo", "becaus", "Because", "because", "bemptyv", "bepsi", "bernou", "Bernoullis", "Beta", "beta", "beth", "between", "Bfr", "bfr", "bigcap", "bigcirc", "bigcup", "bigodot", "bigoplus", "bigotimes", "bigsqcup", "bigstar", "bigtriangledown", "bigtriangleup", "biguplus", "bigvee", "bigwedge", "bkarow", "blacklozenge", "blacksquare", "blacktriangle", "blacktriangledown", "blacktriangleleft", "blacktriangleright", "blank", "blk12", "blk14", "blk34", "block", "bne", "bnequiv", "bNot", "bnot", "Bopf", "bopf", "bot", "bottom", "bowtie", "boxbox", "boxDL", "boxDl", "boxdL", "boxdl", "boxDR", "boxDr", "boxdR", "boxdr", "boxH", "boxh", "boxHD", "boxHd", "boxhD", "boxhd", "boxHU", "boxHu", "boxhU", "boxhu", "boxminus", "boxplus", "boxtimes", "boxUL", "boxUl", "boxuL", "boxul", "boxUR", "boxUr", "boxuR", "boxur", "boxV", "boxv", "boxVH", "boxVh", "boxvH", "boxvh", "boxVL", "boxVl", "boxvL", "boxvl", "boxVR", "boxVr", "boxvR", "boxvr", "bprime", "Breve", "breve", "brvbar", "Bscr", "bscr", "bsemi", "bsim", "bsime", "bsol", "bsolb", "bsolhsub", "bull", "bullet", "bump", "bumpE", "bumpe", "Bumpeq", "bumpeq", "Cacute", "cacute", "Cap", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "CapitalDifferentialD", "caps", "caret", "caron", "Cayleys", "ccaps", "Ccaron", "ccaron", "Ccedil", "ccedil", "Ccirc", "ccirc", "Cconint", "ccups", "ccupssm", "Cdot", "cdot", "cedil", "Cedilla", "cemptyv", "cent", "CenterDot", "centerdot", "Cfr", "cfr", "CHcy", "chcy", "check", "checkmark", "Chi", "chi", "cir", "circ", "circeq", "circlearrowleft", "circlearrowright", "circledast", "circledcirc", "circleddash", "CircleDot", "circledR", "circledS", "CircleMinus", "CirclePlus", "CircleTimes", "cirE", "cire", "cirfnint", "cirmid", "cirscir", "ClockwiseContourIntegral", "CloseCurlyDoubleQuote", "CloseCurlyQuote", "clubs", "clubsuit", "Colon", "colon", "Colone", "colone", "coloneq", "comma", "commat", "comp", "compfn", "complement", "complexes", "cong", "congdot", "Congruent", "Conint", "conint", "ContourIntegral", "Copf", "copf", "coprod", "Coproduct", "COPY", "copy", "copysr", "CounterClockwiseContourIntegral", "crarr", "Cross", "cross", "Cscr", "cscr", "csub", "csube", "csup", "csupe", "ctdot", "cudarrl", "cudarrr", "cuepr", "cuesc", "cularr", "cularrp", "Cup", "cup", "cupbrcap", "CupCap", "cupcap", "cupcup", "cupdot", "cupor", "cups", "curarr", "curarrm", "curlyeqprec", "curlyeqsucc", "curlyvee", "curlywedge", "curren", "curvearrowleft", "curvearrowright", "cuvee", "cuwed", "cwconint", "cwint", "cylcty", "Dagger", "dagger", "daleth", "Darr", "dArr", "darr", "dash", "Dashv", "dashv", "dbkarow", "dblac", "Dcaron", "dcaron", "Dcy", "dcy", "DD", "dd", "ddagger", "ddarr", "DDotrahd", "ddotseq", "deg", "Del", "Delta", "delta", "demptyv", "dfisht", "Dfr", "dfr", "dHar", "dharl", "dharr", "DiacriticalAcute", "DiacriticalDot", "DiacriticalDoubleAcute", "DiacriticalGrave", "DiacriticalTilde", "diam", "Diamond", "diamond", "diamondsuit", "diams", "die", "DifferentialD", "digamma", "disin", "div", "divide", "divideontimes", "divonx", "DJcy", "djcy", "dlcorn", "dlcrop", "dollar", "Dopf", "dopf", "Dot", "dot", "DotDot", "doteq", "doteqdot", "DotEqual", "dotminus", "dotplus", "dotsquare", "doublebarwedge", "DoubleContourIntegral", "DoubleDot", "DoubleDownArrow", "DoubleLeftArrow", "DoubleLeftRightArrow", "DoubleLeftTee", "DoubleLongLeftArrow", "DoubleLongLeftRightArrow", "DoubleLongRightArrow", "DoubleRightArrow", "DoubleRightTee", "DoubleUpArrow", "DoubleUpDownArrow", "DoubleVerticalBar", "DownArrow", "Downarrow", "downarrow", "DownArrowBar", "DownArrowUpArrow", "DownBreve", "downdownarrows", "downharpoonleft", "downharpoonright", "DownLeftRightVector", "DownLeftTeeVector", "DownLeftVector", "DownLeftVectorBar", "DownRightTeeVector", "DownRightVector", "DownRightVectorBar", "DownTee", "DownTeeArrow", "drbkarow", "drcorn", "drcrop", "Dscr", "dscr", "DScy", "dscy", "dsol", "Dstrok", "dstrok", "dtdot", "dtri", "dtrif", "duarr", "duhar", "dwangle", "DZcy", "dzcy", "dzigrarr", "Eacute", "eacute", "easter", "Ecaron", "ecaron", "ecir", "Ecirc", "ecirc", "ecolon", "Ecy", "ecy", "eDDot", "Edot", "eDot", "edot", "ee", "efDot", "Efr", "efr", "eg", "Egrave", "egrave", "egs", "egsdot", "el", "Element", "elinters", "ell", "els", "elsdot", "Emacr", "emacr", "empty", "emptyset", "EmptySmallSquare", "emptyv", "EmptyVerySmallSquare", "emsp", "emsp13", "emsp14", "ENG", "eng", "ensp", "Eogon", "eogon", "Eopf", "eopf", "epar", "eparsl", "eplus", "epsi", "Epsilon", "epsilon", "epsiv", "eqcirc", "eqcolon", "eqsim", "eqslantgtr", "eqslantless", "Equal", "equals", "EqualTilde", "equest", "Equilibrium", "equiv", "equivDD", "eqvparsl", "erarr", "erDot", "Escr", "escr", "esdot", "Esim", "esim", "Eta", "eta", "ETH", "eth", "Euml", "euml", "euro", "excl", "exist", "Exists", "expectation", "ExponentialE", "exponentiale", "fallingdotseq", "Fcy", "fcy", "female", "ffilig", "fflig", "ffllig", "Ffr", "ffr", "filig", "FilledSmallSquare", "FilledVerySmallSquare", "fjlig", "flat", "fllig", "fltns", "fnof", "Fopf", "fopf", "ForAll", "forall", "fork", "forkv", "Fouriertrf", "fpartint", "frac12", "frac13", "frac14", "frac15", "frac16", "frac18", "frac23", "frac25", "frac34", "frac35", "frac38", "frac45", "frac56", "frac58", "frac78", "frasl", "frown", "Fscr", "fscr", "gacute", "Gamma", "gamma", "Gammad", "gammad", "gap", "Gbreve", "gbreve", "Gcedil", "Gcirc", "gcirc", "Gcy", "gcy", "Gdot", "gdot", "gE", "ge", "gEl", "gel", "geq", "geqq", "geqslant", "ges", "gescc", "gesdot", "gesdoto", "gesdotol", "gesl", "gesles", "Gfr", "gfr", "Gg", "gg", "ggg", "gimel", "GJcy", "gjcy", "gl", "gla", "glE", "glj", "gnap", "gnapprox", "gnE", "gne", "gneq", "gneqq", "gnsim", "Gopf", "gopf", "grave", "GreaterEqual", "GreaterEqualLess", "GreaterFullEqual", "GreaterGreater", "GreaterLess", "GreaterSlantEqual", "GreaterTilde", "Gscr", "gscr", "gsim", "gsime", "gsiml", "GT", "Gt", "gt", "gtcc", "gtcir", "gtdot", "gtlPar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim", "gvertneqq", "gvnE", "Hacek", "hairsp", "half", "hamilt", "HARDcy", "hardcy", "hArr", "harr", "harrcir", "harrw", "Hat", "hbar", "Hcirc", "hcirc", "hearts", "heartsuit", "hellip", "hercon", "Hfr", "hfr", "HilbertSpace", "hksearow", "hkswarow", "hoarr", "homtht", "hookleftarrow", "hookrightarrow", "Hopf", "hopf", "horbar", "HorizontalLine", "Hscr", "hscr", "hslash", "Hstrok", "hstrok", "HumpDownHump", "HumpEqual", "hybull", "hyphen", "Iacute", "iacute", "ic", "Icirc", "icirc", "Icy", "icy", "Idot", "IEcy", "iecy", "iexcl", "iff", "Ifr", "ifr", "Igrave", "igrave", "ii", "iiiint", "iiint", "iinfin", "iiota", "IJlig", "ijlig", "Im", "Imacr", "imacr", "image", "ImaginaryI", "imagline", "imagpart", "imath", "imof", "imped", "Implies", "in", "incare", "infin", "infintie", "inodot", "Int", "int", "intcal", "integers", "Integral", "intercal", "Intersection", "intlarhk", "intprod", "InvisibleComma", "InvisibleTimes", "IOcy", "iocy", "Iogon", "iogon", "Iopf", "iopf", "Iota", "iota", "iprod", "iquest", "Iscr", "iscr", "isin", "isindot", "isinE", "isins", "isinsv", "isinv", "it", "Itilde", "itilde", "Iukcy", "iukcy", "Iuml", "iuml", "Jcirc", "jcirc", "Jcy", "jcy", "Jfr", "jfr", "jmath", "Jopf", "jopf", "Jscr", "jscr", "Jsercy", "jsercy", "Jukcy", "jukcy", "Kappa", "kappa", "kappav", "Kcedil", "kcedil", "Kcy", "kcy", "Kfr", "kfr", "kgreen", "KHcy", "khcy", "KJcy", "kjcy", "Kopf", "kopf", "Kscr", "kscr", "lAarr", "Lacute", "lacute", "laemptyv", "lagran", "Lambda", "lambda", "Lang", "lang", "langd", "langle", "lap", "Laplacetrf", "laquo", "Larr", "lArr", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "lAtail", "latail", "late", "lates", "lBarr", "lbarr", "lbbrk", "lbrace", "lbrack", "lbrke", "lbrksld", "lbrkslu", "Lcaron", "lcaron", "Lcedil", "lcedil", "lceil", "lcub", "Lcy", "lcy", "ldca", "ldquo", "ldquor", "ldrdhar", "ldrushar", "ldsh", "lE", "le", "LeftAngleBracket", "LeftArrow", "Leftarrow", "leftarrow", "LeftArrowBar", "LeftArrowRightArrow", "leftarrowtail", "LeftCeiling", "LeftDoubleBracket", "LeftDownTeeVector", "LeftDownVector", "LeftDownVectorBar", "LeftFloor", "leftharpoondown", "leftharpoonup", "leftleftarrows", "LeftRightArrow", "Leftrightarrow", "leftrightarrow", "leftrightarrows", "leftrightharpoons", "leftrightsquigarrow", "LeftRightVector", "LeftTee", "LeftTeeArrow", "LeftTeeVector", "leftthreetimes", "LeftTriangle", "LeftTriangleBar", "LeftTriangleEqual", "LeftUpDownVector", "LeftUpTeeVector", "LeftUpVector", "LeftUpVectorBar", "LeftVector", "LeftVectorBar", "lEg", "leg", "leq", "leqq", "leqslant", "les", "lescc", "lesdot", "lesdoto", "lesdotor", "lesg", "lesges", "lessapprox", "lessdot", "lesseqgtr", "lesseqqgtr", "LessEqualGreater", "LessFullEqual", "LessGreater", "lessgtr", "LessLess", "lesssim", "LessSlantEqual", "LessTilde", "lfisht", "lfloor", "Lfr", "lfr", "lg", "lgE", "lHar", "lhard", "lharu", "lharul", "lhblk", "LJcy", "ljcy", "Ll", "ll", "llarr", "llcorner", "Lleftarrow", "llhard", "lltri", "Lmidot", "lmidot", "lmoust", "lmoustache", "lnap", "lnapprox", "lnE", "lne", "lneq", "lneqq", "lnsim", "loang", "loarr", "lobrk", "LongLeftArrow", "Longleftarrow", "longleftarrow", "LongLeftRightArrow", "Longleftrightarrow", "longleftrightarrow", "longmapsto", "LongRightArrow", "Longrightarrow", "longrightarrow", "looparrowleft", "looparrowright", "lopar", "Lopf", "lopf", "loplus", "lotimes", "lowast", "lowbar", "LowerLeftArrow", "LowerRightArrow", "loz", "lozenge", "lozf", "lpar", "lparlt", "lrarr", "lrcorner", "lrhar", "lrhard", "lrm", "lrtri", "lsaquo", "Lscr", "lscr", "Lsh", "lsh", "lsim", "lsime", "lsimg", "lsqb", "lsquo", "lsquor", "Lstrok", "lstrok", "LT", "Lt", "lt", "ltcc", "ltcir", "ltdot", "lthree", "ltimes", "ltlarr", "ltquest", "ltri", "ltrie", "ltrif", "ltrPar", "lurdshar", "luruhar", "lvertneqq", "lvnE", "macr", "male", "malt", "maltese", "Map", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker", "mcomma", "Mcy", "mcy", "mdash", "mDDot", "measuredangle", "MediumSpace", "Mellintrf", "Mfr", "mfr", "mho", "micro", "mid", "midast", "midcir", "middot", "minus", "minusb", "minusd", "minusdu", "MinusPlus", "mlcp", "mldr", "mnplus", "models", "Mopf", "mopf", "mp", "Mscr", "mscr", "mstpos", "Mu", "mu", "multimap", "mumap", "nabla", "Nacute", "nacute", "nang", "nap", "napE", "napid", "napos", "napprox", "natur", "natural", "naturals", "nbsp", "nbump", "nbumpe", "ncap", "Ncaron", "ncaron", "Ncedil", "ncedil", "ncong", "ncongdot", "ncup", "Ncy", "ncy", "ndash", "ne", "nearhk", "neArr", "nearr", "nearrow", "nedot", "NegativeMediumSpace", "NegativeThickSpace", "NegativeThinSpace", "NegativeVeryThinSpace", "nequiv", "nesear", "nesim", "NestedGreaterGreater", "NestedLessLess", "NewLine", "nexist", "nexists", "Nfr", "nfr", "ngE", "nge", "ngeq", "ngeqq", "ngeqslant", "nges", "nGg", "ngsim", "nGt", "ngt", "ngtr", "nGtv", "nhArr", "nharr", "nhpar", "ni", "nis", "nisd", "niv", "NJcy", "njcy", "nlArr", "nlarr", "nldr", "nlE", "nle", "nLeftarrow", "nleftarrow", "nLeftrightarrow", "nleftrightarrow", "nleq", "nleqq", "nleqslant", "nles", "nless", "nLl", "nlsim", "nLt", "nlt", "nltri", "nltrie", "nLtv", "nmid", "NoBreak", "NonBreakingSpace", "Nopf", "nopf", "Not", "not", "NotCongruent", "NotCupCap", "NotDoubleVerticalBar", "NotElement", "NotEqual", "NotEqualTilde", "NotExists", "NotGreater", "NotGreaterEqual", "NotGreaterFullEqual", "NotGreaterGreater", "NotGreaterLess", "NotGreaterSlantEqual", "NotGreaterTilde", "NotHumpDownHump", "NotHumpEqual", "notin", "notindot", "notinE", "notinva", "notinvb", "notinvc", "NotLeftTriangle", "NotLeftTriangleBar", "NotLeftTriangleEqual", "NotLess", "NotLessEqual", "NotLessGreater", "NotLessLess", "NotLessSlantEqual", "NotLessTilde", "NotNestedGreaterGreater", "NotNestedLessLess", "notni", "notniva", "notnivb", "notnivc", "NotPrecedes", "NotPrecedesEqual", "NotPrecedesSlantEqual", "NotReverseElement", "NotRightTriangle", "NotRightTriangleBar", "NotRightTriangleEqual", "NotSquareSubset", "NotSquareSubsetEqual", "NotSquareSuperset", "NotSquareSupersetEqual", "NotSubset", "NotSubsetEqual", "NotSucceeds", "NotSucceedsEqual", "NotSucceedsSlantEqual", "NotSucceedsTilde", "NotSuperset", "NotSupersetEqual", "NotTilde", "NotTildeEqual", "NotTildeFullEqual", "NotTildeTilde", "NotVerticalBar", "npar", "nparallel", "nparsl", "npart", "npolint", "npr", "nprcue", "npre", "nprec", "npreceq", "nrArr", "nrarr", "nrarrc", "nrarrw", "nRightarrow", "nrightarrow", "nrtri", "nrtrie", "nsc", "nsccue", "nsce", "Nscr", "nscr", "nshortmid", "nshortparallel", "nsim", "nsime", "nsimeq", "nsmid", "nspar", "nsqsube", "nsqsupe", "nsub", "nsubE", "nsube", "nsubset", "nsubseteq", "nsubseteqq", "nsucc", "nsucceq", "nsup", "nsupE", "nsupe", "nsupset", "nsupseteq", "nsupseteqq", "ntgl", "Ntilde", "ntilde", "ntlg", "ntriangleleft", "ntrianglelefteq", "ntriangleright", "ntrianglerighteq", "Nu", "nu", "num", "numero", "numsp", "nvap", "nVDash", "nVdash", "nvDash", "nvdash", "nvge", "nvgt", "nvHarr", "nvinfin", "nvlArr", "nvle", "nvlt", "nvltrie", "nvrArr", "nvrtrie", "nvsim", "nwarhk", "nwArr", "nwarr", "nwarrow", "nwnear", "Oacute", "oacute", "oast", "ocir", "Ocirc", "ocirc", "Ocy", "ocy", "odash", "Odblac", "odblac", "odiv", "odot", "odsold", "OElig", "oelig", "ofcir", "Ofr", "ofr", "ogon", "Ograve", "ograve", "ogt", "ohbar", "ohm", "oint", "olarr", "olcir", "olcross", "oline", "olt", "Omacr", "omacr", "Omega", "omega", "Omicron", "omicron", "omid", "ominus", "Oopf", "oopf", "opar", "OpenCurlyDoubleQuote", "OpenCurlyQuote", "operp", "oplus", "Or", "or", "orarr", "ord", "order", "orderof", "ordf", "ordm", "origof", "oror", "orslope", "orv", "oS", "Oscr", "oscr", "Oslash", "oslash", "osol", "Otilde", "otilde", "Otimes", "otimes", "otimesas", "Ouml", "ouml", "ovbar", "OverBar", "OverBrace", "OverBracket", "OverParenthesis", "par", "para", "parallel", "parsim", "parsl", "part", "PartialD", "Pcy", "pcy", "percnt", "period", "permil", "perp", "pertenk", "Pfr", "pfr", "Phi", "phi", "phiv", "phmmat", "phone", "Pi", "pi", "pitchfork", "piv", "planck", "planckh", "plankv", "plus", "plusacir", "plusb", "pluscir", "plusdo", "plusdu", "pluse", "PlusMinus", "plusmn", "plussim", "plustwo", "pm", "Poincareplane", "pointint", "Popf", "popf", "pound", "Pr", "pr", "prap", "prcue", "prE", "pre", "prec", "precapprox", "preccurlyeq", "Precedes", "PrecedesEqual", "PrecedesSlantEqual", "PrecedesTilde", "preceq", "precnapprox", "precneqq", "precnsim", "precsim", "Prime", "prime", "primes", "prnap", "prnE", "prnsim", "prod", "Product", "profalar", "profline", "profsurf", "prop", "Proportion", "Proportional", "propto", "prsim", "prurel", "Pscr", "pscr", "Psi", "psi", "puncsp", "Qfr", "qfr", "qint", "Qopf", "qopf", "qprime", "Qscr", "qscr", "quaternions", "quatint", "quest", "questeq", "QUOT", "quot", "rAarr", "race", "Racute", "racute", "radic", "raemptyv", "Rang", "rang", "rangd", "range", "rangle", "raquo", "Rarr", "rArr", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "Rarrtl", "rarrtl", "rarrw", "rAtail", "ratail", "ratio", "rationals", "RBarr", "rBarr", "rbarr", "rbbrk", "rbrace", "rbrack", "rbrke", "rbrksld", "rbrkslu", "Rcaron", "rcaron", "Rcedil", "rcedil", "rceil", "rcub", "Rcy", "rcy", "rdca", "rdldhar", "rdquo", "rdquor", "rdsh", "Re", "real", "realine", "realpart", "reals", "rect", "REG", "reg", "ReverseElement", "ReverseEquilibrium", "ReverseUpEquilibrium", "rfisht", "rfloor", "Rfr", "rfr", "rHar", "rhard", "rharu", "rharul", "Rho", "rho", "rhov", "RightAngleBracket", "RightArrow", "Rightarrow", "rightarrow", "RightArrowBar", "RightArrowLeftArrow", "rightarrowtail", "RightCeiling", "RightDoubleBracket", "RightDownTeeVector", "RightDownVector", "RightDownVectorBar", "RightFloor", "rightharpoondown", "rightharpoonup", "rightleftarrows", "rightleftharpoons", "rightrightarrows", "rightsquigarrow", "RightTee", "RightTeeArrow", "RightTeeVector", "rightthreetimes", "RightTriangle", "RightTriangleBar", "RightTriangleEqual", "RightUpDownVector", "RightUpTeeVector", "RightUpVector", "RightUpVectorBar", "RightVector", "RightVectorBar", "ring", "risingdotseq", "rlarr", "rlhar", "rlm", "rmoust", "rmoustache", "rnmid", "roang", "roarr", "robrk", "ropar", "Ropf", "ropf", "roplus", "rotimes", "RoundImplies", "rpar", "rpargt", "rppolint", "rrarr", "Rrightarrow", "rsaquo", "Rscr", "rscr", "Rsh", "rsh", "rsqb", "rsquo", "rsquor", "rthree", "rtimes", "rtri", "rtrie", "rtrif", "rtriltri", "RuleDelayed", "ruluhar", "rx", "Sacute", "sacute", "sbquo", "Sc", "sc", "scap", "Scaron", "scaron", "sccue", "scE", "sce", "Scedil", "scedil", "Scirc", "scirc", "scnap", "scnE", "scnsim", "scpolint", "scsim", "Scy", "scy", "sdot", "sdotb", "sdote", "searhk", "seArr", "searr", "searrow", "sect", "semi", "seswar", "setminus", "setmn", "sext", "Sfr", "sfr", "sfrown", "sharp", "SHCHcy", "shchcy", "SHcy", "shcy", "ShortDownArrow", "ShortLeftArrow", "shortmid", "shortparallel", "ShortRightArrow", "ShortUpArrow", "shy", "Sigma", "sigma", "sigmaf", "sigmav", "sim", "simdot", "sime", "simeq", "simg", "simgE", "siml", "simlE", "simne", "simplus", "simrarr", "slarr", "SmallCircle", "smallsetminus", "smashp", "smeparsl", "smid", "smile", "smt", "smte", "smtes", "SOFTcy", "softcy", "sol", "solb", "solbar", "Sopf", "sopf", "spades", "spadesuit", "spar", "sqcap", "sqcaps", "sqcup", "sqcups", "Sqrt", "sqsub", "sqsube", "sqsubset", "sqsubseteq", "sqsup", "sqsupe", "sqsupset", "sqsupseteq", "squ", "Square", "square", "SquareIntersection", "SquareSubset", "SquareSubsetEqual", "SquareSuperset", "SquareSupersetEqual", "SquareUnion", "squarf", "squf", "srarr", "Sscr", "sscr", "ssetmn", "ssmile", "sstarf", "Star", "star", "starf", "straightepsilon", "straightphi", "strns", "Sub", "sub", "subdot", "subE", "sube", "subedot", "submult", "subnE", "subne", "subplus", "subrarr", "Subset", "subset", "subseteq", "subseteqq", "SubsetEqual", "subsetneq", "subsetneqq", "subsim", "subsub", "subsup", "succ", "succapprox", "succcurlyeq", "Succeeds", "SucceedsEqual", "SucceedsSlantEqual", "SucceedsTilde", "succeq", "succnapprox", "succneqq", "succnsim", "succsim", "SuchThat", "Sum", "sum", "sung", "Sup", "sup", "sup1", "sup2", "sup3", "supdot", "supdsub", "supE", "supe", "supedot", "Superset", "SupersetEqual", "suphsol", "suphsub", "suplarr", "supmult", "supnE", "supne", "supplus", "Supset", "supset", "supseteq", "supseteqq", "supsetneq", "supsetneqq", "supsim", "supsub", "supsup", "swarhk", "swArr", "swarr", "swarrow", "swnwar", "szlig", "Tab", "target", "Tau", "tau", "tbrk", "Tcaron", "tcaron", "Tcedil", "tcedil", "Tcy", "tcy", "tdot", "telrec", "Tfr", "tfr", "there4", "Therefore", "therefore", "Theta", "theta", "thetasym", "thetav", "thickapprox", "thicksim", "ThickSpace", "thinsp", "ThinSpace", "thkap", "thksim", "THORN", "thorn", "Tilde", "tilde", "TildeEqual", "TildeFullEqual", "TildeTilde", "times", "timesb", "timesbar", "timesd", "tint", "toea", "top", "topbot", "topcir", "Topf", "topf", "topfork", "tosa", "tprime", "TRADE", "trade", "triangle", "triangledown", "triangleleft", "trianglelefteq", "triangleq", "triangleright", "trianglerighteq", "tridot", "trie", "triminus", "TripleDot", "triplus", "trisb", "tritime", "trpezium", "Tscr", "tscr", "TScy", "tscy", "TSHcy", "tshcy", "Tstrok", "tstrok", "twixt", "twoheadleftarrow", "twoheadrightarrow", "Uacute", "uacute", "Uarr", "uArr", "uarr", "Uarrocir", "Ubrcy", "ubrcy", "Ubreve", "ubreve", "Ucirc", "ucirc", "Ucy", "ucy", "udarr", "Udblac", "udblac", "udhar", "ufisht", "Ufr", "ufr", "Ugrave", "ugrave", "uHar", "uharl", "uharr", "uhblk", "ulcorn", "ulcorner", "ulcrop", "ultri", "Umacr", "umacr", "uml", "UnderBar", "UnderBrace", "UnderBracket", "UnderParenthesis", "Union", "UnionPlus", "Uogon", "uogon", "Uopf", "uopf", "UpArrow", "Uparrow", "uparrow", "UpArrowBar", "UpArrowDownArrow", "UpDownArrow", "Updownarrow", "updownarrow", "UpEquilibrium", "upharpoonleft", "upharpoonright", "uplus", "UpperLeftArrow", "UpperRightArrow", "Upsi", "upsi", "upsih", "Upsilon", "upsilon", "UpTee", "UpTeeArrow", "upuparrows", "urcorn", "urcorner", "urcrop", "Uring", "uring", "urtri", "Uscr", "uscr", "utdot", "Utilde", "utilde", "utri", "utrif", "uuarr", "Uuml", "uuml", "uwangle", "vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "vArr", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright", "Vbar", "vBar", "vBarv", "Vcy", "vcy", "VDash", "Vdash", "vDash", "vdash", "Vdashl", "Vee", "vee", "veebar", "veeeq", "vellip", "Verbar", "verbar", "Vert", "vert", "VerticalBar", "VerticalLine", "VerticalSeparator", "VerticalTilde", "VeryThinSpace", "Vfr", "vfr", "vltri", "vnsub", "vnsup", "Vopf", "vopf", "vprop", "vrtri", "Vscr", "vscr", "vsubnE", "vsubne", "vsupnE", "vsupne", "Vvdash", "vzigzag", "Wcirc", "wcirc", "wedbar", "Wedge", "wedge", "wedgeq", "weierp", "Wfr", "wfr", "Wopf", "wopf", "wp", "wr", "wreath", "Wscr", "wscr", "xcap", "xcirc", "xcup", "xdtri", "Xfr", "xfr", "xhArr", "xharr", "Xi", "xi", "xlArr", "xlarr", "xmap", "xnis", "xodot", "Xopf", "xopf", "xoplus", "xotime", "xrArr", "xrarr", "Xscr", "xscr", "xsqcup", "xuplus", "xutri", "xvee", "xwedge", "Yacute", "yacute", "YAcy", "yacy", "Ycirc", "ycirc", "Ycy", "ycy", "yen", "Yfr", "yfr", "YIcy", "yicy", "Yopf", "yopf", "Yscr", "yscr", "YUcy", "yucy", "Yuml", "yuml", "Zacute", "zacute", "Zcaron", "zcaron", "Zcy", "zcy", "Zdot", "zdot", "zeetrf", "ZeroWidthSpace", "Zeta", "zeta", "Zfr", "zfr", "ZHcy", "zhcy", "zigrarr", "Zopf", "zopf", "Zscr", "zscr", "zwj", "zwnj"]);
-var allNamedEntitiesSetOnlyCaseInsensitive = new Set(["aacute", "abreve", "ac", "acd", "ace", "acirc", "acute", "acy", "aelig", "af", "afr", "agrave", "alefsym", "aleph", "alpha", "amacr", "amalg", "amp", "and", "andand", "andd", "andslope", "andv", "ang", "ange", "angle", "angmsd", "angmsdaa", "angmsdab", "angmsdac", "angmsdad", "angmsdae", "angmsdaf", "angmsdag", "angmsdah", "angrt", "angrtvb", "angrtvbd", "angsph", "angst", "angzarr", "aogon", "aopf", "ap", "apacir", "ape", "apid", "apos", "applyfunction", "approx", "approxeq", "aring", "ascr", "assign", "ast", "asymp", "asympeq", "atilde", "auml", "awconint", "awint", "backcong", "backepsilon", "backprime", "backsim", "backsimeq", "backslash", "barv", "barvee", "barwed", "barwedge", "bbrk", "bbrktbrk", "bcong", "bcy", "bdquo", "becaus", "because", "bemptyv", "bepsi", "bernou", "bernoullis", "beta", "beth", "between", "bfr", "bigcap", "bigcirc", "bigcup", "bigodot", "bigoplus", "bigotimes", "bigsqcup", "bigstar", "bigtriangledown", "bigtriangleup", "biguplus", "bigvee", "bigwedge", "bkarow", "blacklozenge", "blacksquare", "blacktriangle", "blacktriangledown", "blacktriangleleft", "blacktriangleright", "blank", "blk12", "blk14", "blk34", "block", "bne", "bnequiv", "bnot", "bopf", "bot", "bottom", "bowtie", "boxbox", "boxdl", "boxdr", "boxh", "boxhd", "boxhu", "boxminus", "boxplus", "boxtimes", "boxul", "boxur", "boxv", "boxvh", "boxvl", "boxvr", "bprime", "breve", "brvbar", "bscr", "bsemi", "bsim", "bsime", "bsol", "bsolb", "bsolhsub", "bull", "bullet", "bump", "bumpe", "bumpeq", "cacute", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "capitaldifferentiald", "caps", "caret", "caron", "cayleys", "ccaps", "ccaron", "ccedil", "ccirc", "cconint", "ccups", "ccupssm", "cdot", "cedil", "cedilla", "cemptyv", "cent", "centerdot", "cfr", "chcy", "check", "checkmark", "chi", "cir", "circ", "circeq", "circlearrowleft", "circlearrowright", "circledast", "circledcirc", "circleddash", "circledot", "circledr", "circleds", "circleminus", "circleplus", "circletimes", "cire", "cirfnint", "cirmid", "cirscir", "clockwisecontourintegral", "closecurlydoublequote", "closecurlyquote", "clubs", "clubsuit", "colon", "colone", "coloneq", "comma", "commat", "comp", "compfn", "complement", "complexes", "cong", "congdot", "congruent", "conint", "contourintegral", "copf", "coprod", "coproduct", "copy", "copysr", "counterclockwisecontourintegral", "crarr", "cross", "cscr", "csub", "csube", "csup", "csupe", "ctdot", "cudarrl", "cudarrr", "cuepr", "cuesc", "cularr", "cularrp", "cup", "cupbrcap", "cupcap", "cupcup", "cupdot", "cupor", "cups", "curarr", "curarrm", "curlyeqprec", "curlyeqsucc", "curlyvee", "curlywedge", "curren", "curvearrowleft", "curvearrowright", "cuvee", "cuwed", "cwconint", "cwint", "cylcty", "dagger", "daleth", "darr", "dash", "dashv", "dbkarow", "dblac", "dcaron", "dcy", "dd", "ddagger", "ddarr", "ddotrahd", "ddotseq", "deg", "del", "delta", "demptyv", "dfisht", "dfr", "dhar", "dharl", "dharr", "diacriticalacute", "diacriticaldot", "diacriticaldoubleacute", "diacriticalgrave", "diacriticaltilde", "diam", "diamond", "diamondsuit", "diams", "die", "differentiald", "digamma", "disin", "div", "divide", "divideontimes", "divonx", "djcy", "dlcorn", "dlcrop", "dollar", "dopf", "dot", "dotdot", "doteq", "doteqdot", "dotequal", "dotminus", "dotplus", "dotsquare", "doublebarwedge", "doublecontourintegral", "doubledot", "doubledownarrow", "doubleleftarrow", "doubleleftrightarrow", "doublelefttee", "doublelongleftarrow", "doublelongleftrightarrow", "doublelongrightarrow", "doublerightarrow", "doublerighttee", "doubleuparrow", "doubleupdownarrow", "doubleverticalbar", "downarrow", "downarrowbar", "downarrowuparrow", "downbreve", "downdownarrows", "downharpoonleft", "downharpoonright", "downleftrightvector", "downleftteevector", "downleftvector", "downleftvectorbar", "downrightteevector", "downrightvector", "downrightvectorbar", "downtee", "downteearrow", "drbkarow", "drcorn", "drcrop", "dscr", "dscy", "dsol", "dstrok", "dtdot", "dtri", "dtrif", "duarr", "duhar", "dwangle", "dzcy", "dzigrarr", "eacute", "easter", "ecaron", "ecir", "ecirc", "ecolon", "ecy", "eddot", "edot", "ee", "efdot", "efr", "eg", "egrave", "egs", "egsdot", "el", "element", "elinters", "ell", "els", "elsdot", "emacr", "empty", "emptyset", "emptysmallsquare", "emptyv", "emptyverysmallsquare", "emsp", "emsp13", "emsp14", "eng", "ensp", "eogon", "eopf", "epar", "eparsl", "eplus", "epsi", "epsilon", "epsiv", "eqcirc", "eqcolon", "eqsim", "eqslantgtr", "eqslantless", "equal", "equals", "equaltilde", "equest", "equilibrium", "equiv", "equivdd", "eqvparsl", "erarr", "erdot", "escr", "esdot", "esim", "eta", "eth", "euml", "euro", "excl", "exist", "exists", "expectation", "exponentiale", "fallingdotseq", "fcy", "female", "ffilig", "fflig", "ffllig", "ffr", "filig", "filledsmallsquare", "filledverysmallsquare", "fjlig", "flat", "fllig", "fltns", "fnof", "fopf", "forall", "fork", "forkv", "fouriertrf", "fpartint", "frac12", "frac13", "frac14", "frac15", "frac16", "frac18", "frac23", "frac25", "frac34", "frac35", "frac38", "frac45", "frac56", "frac58", "frac78", "frasl", "frown", "fscr", "gacute", "gamma", "gammad", "gap", "gbreve", "gcedil", "gcirc", "gcy", "gdot", "ge", "gel", "geq", "geqq", "geqslant", "ges", "gescc", "gesdot", "gesdoto", "gesdotol", "gesl", "gesles", "gfr", "gg", "ggg", "gimel", "gjcy", "gl", "gla", "gle", "glj", "gnap", "gnapprox", "gne", "gneq", "gneqq", "gnsim", "gopf", "grave", "greaterequal", "greaterequalless", "greaterfullequal", "greatergreater", "greaterless", "greaterslantequal", "greatertilde", "gscr", "gsim", "gsime", "gsiml", "gt", "gtcc", "gtcir", "gtdot", "gtlpar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim", "gvertneqq", "gvne", "hacek", "hairsp", "half", "hamilt", "hardcy", "harr", "harrcir", "harrw", "hat", "hbar", "hcirc", "hearts", "heartsuit", "hellip", "hercon", "hfr", "hilbertspace", "hksearow", "hkswarow", "hoarr", "homtht", "hookleftarrow", "hookrightarrow", "hopf", "horbar", "horizontalline", "hscr", "hslash", "hstrok", "humpdownhump", "humpequal", "hybull", "hyphen", "iacute", "ic", "icirc", "icy", "idot", "iecy", "iexcl", "iff", "ifr", "igrave", "ii", "iiiint", "iiint", "iinfin", "iiota", "ijlig", "im", "imacr", "image", "imaginaryi", "imagline", "imagpart", "imath", "imof", "imped", "implies", "in", "incare", "infin", "infintie", "inodot", "int", "intcal", "integers", "integral", "intercal", "intersection", "intlarhk", "intprod", "invisiblecomma", "invisibletimes", "iocy", "iogon", "iopf", "iota", "iprod", "iquest", "iscr", "isin", "isindot", "isine", "isins", "isinsv", "isinv", "it", "itilde", "iukcy", "iuml", "jcirc", "jcy", "jfr", "jmath", "jopf", "jscr", "jsercy", "jukcy", "kappa", "kappav", "kcedil", "kcy", "kfr", "kgreen", "khcy", "kjcy", "kopf", "kscr", "laarr", "lacute", "laemptyv", "lagran", "lambda", "lang", "langd", "langle", "lap", "laplacetrf", "laquo", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "latail", "late", "lates", "lbarr", "lbbrk", "lbrace", "lbrack", "lbrke", "lbrksld", "lbrkslu", "lcaron", "lcedil", "lceil", "lcub", "lcy", "ldca", "ldquo", "ldquor", "ldrdhar", "ldrushar", "ldsh", "le", "leftanglebracket", "leftarrow", "leftarrowbar", "leftarrowrightarrow", "leftarrowtail", "leftceiling", "leftdoublebracket", "leftdownteevector", "leftdownvector", "leftdownvectorbar", "leftfloor", "leftharpoondown", "leftharpoonup", "leftleftarrows", "leftrightarrow", "leftrightarrows", "leftrightharpoons", "leftrightsquigarrow", "leftrightvector", "lefttee", "leftteearrow", "leftteevector", "leftthreetimes", "lefttriangle", "lefttrianglebar", "lefttriangleequal", "leftupdownvector", "leftupteevector", "leftupvector", "leftupvectorbar", "leftvector", "leftvectorbar", "leg", "leq", "leqq", "leqslant", "les", "lescc", "lesdot", "lesdoto", "lesdotor", "lesg", "lesges", "lessapprox", "lessdot", "lesseqgtr", "lesseqqgtr", "lessequalgreater", "lessfullequal", "lessgreater", "lessgtr", "lessless", "lesssim", "lessslantequal", "lesstilde", "lfisht", "lfloor", "lfr", "lg", "lge", "lhar", "lhard", "lharu", "lharul", "lhblk", "ljcy", "ll", "llarr", "llcorner", "lleftarrow", "llhard", "lltri", "lmidot", "lmoust", "lmoustache", "lnap", "lnapprox", "lne", "lneq", "lneqq", "lnsim", "loang", "loarr", "lobrk", "longleftarrow", "longleftrightarrow", "longmapsto", "longrightarrow", "looparrowleft", "looparrowright", "lopar", "lopf", "loplus", "lotimes", "lowast", "lowbar", "lowerleftarrow", "lowerrightarrow", "loz", "lozenge", "lozf", "lpar", "lparlt", "lrarr", "lrcorner", "lrhar", "lrhard", "lrm", "lrtri", "lsaquo", "lscr", "lsh", "lsim", "lsime", "lsimg", "lsqb", "lsquo", "lsquor", "lstrok", "lt", "ltcc", "ltcir", "ltdot", "lthree", "ltimes", "ltlarr", "ltquest", "ltri", "ltrie", "ltrif", "ltrpar", "lurdshar", "luruhar", "lvertneqq", "lvne", "macr", "male", "malt", "maltese", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker", "mcomma", "mcy", "mdash", "mddot", "measuredangle", "mediumspace", "mellintrf", "mfr", "mho", "micro", "mid", "midast", "midcir", "middot", "minus", "minusb", "minusd", "minusdu", "minusplus", "mlcp", "mldr", "mnplus", "models", "mopf", "mp", "mscr", "mstpos", "mu", "multimap", "mumap", "nabla", "nacute", "nang", "nap", "nape", "napid", "napos", "napprox", "natur", "natural", "naturals", "nbsp", "nbump", "nbumpe", "ncap", "ncaron", "ncedil", "ncong", "ncongdot", "ncup", "ncy", "ndash", "ne", "nearhk", "nearr", "nearrow", "nedot", "negativemediumspace", "negativethickspace", "negativethinspace", "negativeverythinspace", "nequiv", "nesear", "nesim", "nestedgreatergreater", "nestedlessless", "newline", "nexist", "nexists", "nfr", "nge", "ngeq", "ngeqq", "ngeqslant", "nges", "ngg", "ngsim", "ngt", "ngtr", "ngtv", "nharr", "nhpar", "ni", "nis", "nisd", "niv", "njcy", "nlarr", "nldr", "nle", "nleftarrow", "nleftrightarrow", "nleq", "nleqq", "nleqslant", "nles", "nless", "nll", "nlsim", "nlt", "nltri", "nltrie", "nltv", "nmid", "nobreak", "nonbreakingspace", "nopf", "not", "notcongruent", "notcupcap", "notdoubleverticalbar", "notelement", "notequal", "notequaltilde", "notexists", "notgreater", "notgreaterequal", "notgreaterfullequal", "notgreatergreater", "notgreaterless", "notgreaterslantequal", "notgreatertilde", "nothumpdownhump", "nothumpequal", "notin", "notindot", "notine", "notinva", "notinvb", "notinvc", "notlefttriangle", "notlefttrianglebar", "notlefttriangleequal", "notless", "notlessequal", "notlessgreater", "notlessless", "notlessslantequal", "notlesstilde", "notnestedgreatergreater", "notnestedlessless", "notni", "notniva", "notnivb", "notnivc", "notprecedes", "notprecedesequal", "notprecedesslantequal", "notreverseelement", "notrighttriangle", "notrighttrianglebar", "notrighttriangleequal", "notsquaresubset", "notsquaresubsetequal", "notsquaresuperset", "notsquaresupersetequal", "notsubset", "notsubsetequal", "notsucceeds", "notsucceedsequal", "notsucceedsslantequal", "notsucceedstilde", "notsuperset", "notsupersetequal", "nottilde", "nottildeequal", "nottildefullequal", "nottildetilde", "notverticalbar", "npar", "nparallel", "nparsl", "npart", "npolint", "npr", "nprcue", "npre", "nprec", "npreceq", "nrarr", "nrarrc", "nrarrw", "nrightarrow", "nrtri", "nrtrie", "nsc", "nsccue", "nsce", "nscr", "nshortmid", "nshortparallel", "nsim", "nsime", "nsimeq", "nsmid", "nspar", "nsqsube", "nsqsupe", "nsub", "nsube", "nsubset", "nsubseteq", "nsubseteqq", "nsucc", "nsucceq", "nsup", "nsupe", "nsupset", "nsupseteq", "nsupseteqq", "ntgl", "ntilde", "ntlg", "ntriangleleft", "ntrianglelefteq", "ntriangleright", "ntrianglerighteq", "nu", "num", "numero", "numsp", "nvap", "nvdash", "nvge", "nvgt", "nvharr", "nvinfin", "nvlarr", "nvle", "nvlt", "nvltrie", "nvrarr", "nvrtrie", "nvsim", "nwarhk", "nwarr", "nwarrow", "nwnear", "oacute", "oast", "ocir", "ocirc", "ocy", "odash", "odblac", "odiv", "odot", "odsold", "oelig", "ofcir", "ofr", "ogon", "ograve", "ogt", "ohbar", "ohm", "oint", "olarr", "olcir", "olcross", "oline", "olt", "omacr", "omega", "omicron", "omid", "ominus", "oopf", "opar", "opencurlydoublequote", "opencurlyquote", "operp", "oplus", "or", "orarr", "ord", "order", "orderof", "ordf", "ordm", "origof", "oror", "orslope", "orv", "os", "oscr", "oslash", "osol", "otilde", "otimes", "otimesas", "ouml", "ovbar", "overbar", "overbrace", "overbracket", "overparenthesis", "par", "para", "parallel", "parsim", "parsl", "part", "partiald", "pcy", "percnt", "period", "permil", "perp", "pertenk", "pfr", "phi", "phiv", "phmmat", "phone", "pi", "pitchfork", "piv", "planck", "planckh", "plankv", "plus", "plusacir", "plusb", "pluscir", "plusdo", "plusdu", "pluse", "plusminus", "plusmn", "plussim", "plustwo", "pm", "poincareplane", "pointint", "popf", "pound", "pr", "prap", "prcue", "pre", "prec", "precapprox", "preccurlyeq", "precedes", "precedesequal", "precedesslantequal", "precedestilde", "preceq", "precnapprox", "precneqq", "precnsim", "precsim", "prime", "primes", "prnap", "prne", "prnsim", "prod", "product", "profalar", "profline", "profsurf", "prop", "proportion", "proportional", "propto", "prsim", "prurel", "pscr", "psi", "puncsp", "qfr", "qint", "qopf", "qprime", "qscr", "quaternions", "quatint", "quest", "questeq", "quot", "raarr", "race", "racute", "radic", "raemptyv", "rang", "rangd", "range", "rangle", "raquo", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "rarrtl", "rarrw", "ratail", "ratio", "rationals", "rbarr", "rbbrk", "rbrace", "rbrack", "rbrke", "rbrksld", "rbrkslu", "rcaron", "rcedil", "rceil", "rcub", "rcy", "rdca", "rdldhar", "rdquo", "rdquor", "rdsh", "re", "real", "realine", "realpart", "reals", "rect", "reg", "reverseelement", "reverseequilibrium", "reverseupequilibrium", "rfisht", "rfloor", "rfr", "rhar", "rhard", "rharu", "rharul", "rho", "rhov", "rightanglebracket", "rightarrow", "rightarrowbar", "rightarrowleftarrow", "rightarrowtail", "rightceiling", "rightdoublebracket", "rightdownteevector", "rightdownvector", "rightdownvectorbar", "rightfloor", "rightharpoondown", "rightharpoonup", "rightleftarrows", "rightleftharpoons", "rightrightarrows", "rightsquigarrow", "righttee", "rightteearrow", "rightteevector", "rightthreetimes", "righttriangle", "righttrianglebar", "righttriangleequal", "rightupdownvector", "rightupteevector", "rightupvector", "rightupvectorbar", "rightvector", "rightvectorbar", "ring", "risingdotseq", "rlarr", "rlhar", "rlm", "rmoust", "rmoustache", "rnmid", "roang", "roarr", "robrk", "ropar", "ropf", "roplus", "rotimes", "roundimplies", "rpar", "rpargt", "rppolint", "rrarr", "rrightarrow", "rsaquo", "rscr", "rsh", "rsqb", "rsquo", "rsquor", "rthree", "rtimes", "rtri", "rtrie", "rtrif", "rtriltri", "ruledelayed", "ruluhar", "rx", "sacute", "sbquo", "sc", "scap", "scaron", "sccue", "sce", "scedil", "scirc", "scnap", "scne", "scnsim", "scpolint", "scsim", "scy", "sdot", "sdotb", "sdote", "searhk", "searr", "searrow", "sect", "semi", "seswar", "setminus", "setmn", "sext", "sfr", "sfrown", "sharp", "shchcy", "shcy", "shortdownarrow", "shortleftarrow", "shortmid", "shortparallel", "shortrightarrow", "shortuparrow", "shy", "sigma", "sigmaf", "sigmav", "sim", "simdot", "sime", "simeq", "simg", "simge", "siml", "simle", "simne", "simplus", "simrarr", "slarr", "smallcircle", "smallsetminus", "smashp", "smeparsl", "smid", "smile", "smt", "smte", "smtes", "softcy", "sol", "solb", "solbar", "sopf", "spades", "spadesuit", "spar", "sqcap", "sqcaps", "sqcup", "sqcups", "sqrt", "sqsub", "sqsube", "sqsubset", "sqsubseteq", "sqsup", "sqsupe", "sqsupset", "sqsupseteq", "squ", "square", "squareintersection", "squaresubset", "squaresubsetequal", "squaresuperset", "squaresupersetequal", "squareunion", "squarf", "squf", "srarr", "sscr", "ssetmn", "ssmile", "sstarf", "star", "starf", "straightepsilon", "straightphi", "strns", "sub", "subdot", "sube", "subedot", "submult", "subne", "subplus", "subrarr", "subset", "subseteq", "subseteqq", "subsetequal", "subsetneq", "subsetneqq", "subsim", "subsub", "subsup", "succ", "succapprox", "succcurlyeq", "succeeds", "succeedsequal", "succeedsslantequal", "succeedstilde", "succeq", "succnapprox", "succneqq", "succnsim", "succsim", "suchthat", "sum", "sung", "sup", "sup1", "sup2", "sup3", "supdot", "supdsub", "supe", "supedot", "superset", "supersetequal", "suphsol", "suphsub", "suplarr", "supmult", "supne", "supplus", "supset", "supseteq", "supseteqq", "supsetneq", "supsetneqq", "supsim", "supsub", "supsup", "swarhk", "swarr", "swarrow", "swnwar", "szlig", "tab", "target", "tau", "tbrk", "tcaron", "tcedil", "tcy", "tdot", "telrec", "tfr", "there4", "therefore", "theta", "thetasym", "thetav", "thickapprox", "thicksim", "thickspace", "thinsp", "thinspace", "thkap", "thksim", "thorn", "tilde", "tildeequal", "tildefullequal", "tildetilde", "times", "timesb", "timesbar", "timesd", "tint", "toea", "top", "topbot", "topcir", "topf", "topfork", "tosa", "tprime", "trade", "triangle", "triangledown", "triangleleft", "trianglelefteq", "triangleq", "triangleright", "trianglerighteq", "tridot", "trie", "triminus", "tripledot", "triplus", "trisb", "tritime", "trpezium", "tscr", "tscy", "tshcy", "tstrok", "twixt", "twoheadleftarrow", "twoheadrightarrow", "uacute", "uarr", "uarrocir", "ubrcy", "ubreve", "ucirc", "ucy", "udarr", "udblac", "udhar", "ufisht", "ufr", "ugrave", "uhar", "uharl", "uharr", "uhblk", "ulcorn", "ulcorner", "ulcrop", "ultri", "umacr", "uml", "underbar", "underbrace", "underbracket", "underparenthesis", "union", "unionplus", "uogon", "uopf", "uparrow", "uparrowbar", "uparrowdownarrow", "updownarrow", "upequilibrium", "upharpoonleft", "upharpoonright", "uplus", "upperleftarrow", "upperrightarrow", "upsi", "upsih", "upsilon", "uptee", "upteearrow", "upuparrows", "urcorn", "urcorner", "urcrop", "uring", "urtri", "uscr", "utdot", "utilde", "utri", "utrif", "uuarr", "uuml", "uwangle", "vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright", "vbar", "vbarv", "vcy", "vdash", "vdashl", "vee", "veebar", "veeeq", "vellip", "verbar", "vert", "verticalbar", "verticalline", "verticalseparator", "verticaltilde", "verythinspace", "vfr", "vltri", "vnsub", "vnsup", "vopf", "vprop", "vrtri", "vscr", "vsubne", "vsupne", "vvdash", "vzigzag", "wcirc", "wedbar", "wedge", "wedgeq", "weierp", "wfr", "wopf", "wp", "wr", "wreath", "wscr", "xcap", "xcirc", "xcup", "xdtri", "xfr", "xharr", "xi", "xlarr", "xmap", "xnis", "xodot", "xopf", "xoplus", "xotime", "xrarr", "xscr", "xsqcup", "xuplus", "xutri", "xvee", "xwedge", "yacute", "yacy", "ycirc", "ycy", "yen", "yfr", "yicy", "yopf", "yscr", "yucy", "yuml", "zacute", "zcaron", "zcy", "zdot", "zeetrf", "zerowidthspace", "zeta", "zfr", "zhcy", "zigrarr", "zopf", "zscr", "zwj", "zwnj"]); // -----------------------------------------------------------------------------
-// import fs from "fs";
-// const all = Object.keys(allNamedEntities);
-// const allCaseInsensitive = [];
-//
-// all.forEach(entity => {
-//   if (!allCaseInsensitive.includes(entity.toLowerCase())) {
-//     allCaseInsensitive.push(entity.toLowerCase());
-//   }
-// });
-//
-// // GENERATOR:
-//
-// function assemble(entitiesArr, startsWithObj, endsWithObj) {
-//   for (let i = 0, len = entitiesArr.length; i < len; i++) {
-//     // if key for the first letter of this entity does not exist, create it:
-//     const firstLetter = entitiesArr[i][0];
-//     const secondLetter = entitiesArr[i][1];
-//
-//     if (!startsWithObj.hasOwnProperty(firstLetter)) {
-//       startsWithObj[firstLetter] = {};
-//     }
-//     if (!startsWithObj[firstLetter].hasOwnProperty(secondLetter)) {
-//       startsWithObj[firstLetter][secondLetter] = [];
-//     }
-//     // push into array by first letter:
-//     startsWithObj[firstLetter][secondLetter].push(entitiesArr[i]);
-//
-//     // if key for the last letter of this entity does not exist, create it:
-//     const lastLetter = entitiesArr[i][entitiesArr[i].length - 1];
-//     const secondToLastLetter = entitiesArr[i][entitiesArr[i].length - 2];
-//     if (!endsWithObj.hasOwnProperty(lastLetter)) {
-//       endsWithObj[lastLetter] = {};
-//     }
-//     if (!endsWithObj[lastLetter].hasOwnProperty(secondToLastLetter)) {
-//       endsWithObj[lastLetter][secondToLastLetter] = [];
-//     }
-//     // push into array by last letter:
-//     endsWithObj[lastLetter][secondToLastLetter].push(entitiesArr[i]);
-//   }
-// }
-//
-// // PLAN:
-// // assemble startsWith; group by first letter so we get:
-// // startsWith = {
-// //   a: [ ... ],
-// //   b: [ ... ],
-// //   ...
-// // }
-//
-// // define empty objects:
-// const startsWith = {};
-// const endsWith = {};
-// const startsWithCaseInsensitive = {};
-// const endsWithCaseInsensitive = {};
-//
-// // mutate the pairs, case sensitive ones and insensitive:
-// assemble(all, startsWith, endsWith);
-// assemble(
-//   allCaseInsensitive,
-//   startsWithCaseInsensitive,
-//   endsWithCaseInsensitive
-// );
-//
-// fs.writeFileSync("src/startsWith.json", JSON.stringify(startsWith, null, 4));
-// fs.writeFileSync("src/endsWith.json", JSON.stringify(endsWith, null, 4));
-// fs.writeFileSync(
-//   "src/startsWithCaseInsensitive.json",
-//   JSON.stringify(startsWithCaseInsensitive, null, 4)
-// );
-// fs.writeFileSync(
-//   "src/endsWithCaseInsensitive.json",
-//   JSON.stringify(endsWithCaseInsensitive, null, 4)
-// );
+var allNamedEntitiesSetOnlyCaseInsensitive = new Set(["aacute", "abreve", "ac", "acd", "ace", "acirc", "acute", "acy", "aelig", "af", "afr", "agrave", "alefsym", "aleph", "alpha", "amacr", "amalg", "amp", "and", "andand", "andd", "andslope", "andv", "ang", "ange", "angle", "angmsd", "angmsdaa", "angmsdab", "angmsdac", "angmsdad", "angmsdae", "angmsdaf", "angmsdag", "angmsdah", "angrt", "angrtvb", "angrtvbd", "angsph", "angst", "angzarr", "aogon", "aopf", "ap", "apacir", "ape", "apid", "apos", "applyfunction", "approx", "approxeq", "aring", "ascr", "assign", "ast", "asymp", "asympeq", "atilde", "auml", "awconint", "awint", "backcong", "backepsilon", "backprime", "backsim", "backsimeq", "backslash", "barv", "barvee", "barwed", "barwedge", "bbrk", "bbrktbrk", "bcong", "bcy", "bdquo", "becaus", "because", "bemptyv", "bepsi", "bernou", "bernoullis", "beta", "beth", "between", "bfr", "bigcap", "bigcirc", "bigcup", "bigodot", "bigoplus", "bigotimes", "bigsqcup", "bigstar", "bigtriangledown", "bigtriangleup", "biguplus", "bigvee", "bigwedge", "bkarow", "blacklozenge", "blacksquare", "blacktriangle", "blacktriangledown", "blacktriangleleft", "blacktriangleright", "blank", "blk12", "blk14", "blk34", "block", "bne", "bnequiv", "bnot", "bopf", "bot", "bottom", "bowtie", "boxbox", "boxdl", "boxdr", "boxh", "boxhd", "boxhu", "boxminus", "boxplus", "boxtimes", "boxul", "boxur", "boxv", "boxvh", "boxvl", "boxvr", "bprime", "breve", "brvbar", "bscr", "bsemi", "bsim", "bsime", "bsol", "bsolb", "bsolhsub", "bull", "bullet", "bump", "bumpe", "bumpeq", "cacute", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "capitaldifferentiald", "caps", "caret", "caron", "cayleys", "ccaps", "ccaron", "ccedil", "ccirc", "cconint", "ccups", "ccupssm", "cdot", "cedil", "cedilla", "cemptyv", "cent", "centerdot", "cfr", "chcy", "check", "checkmark", "chi", "cir", "circ", "circeq", "circlearrowleft", "circlearrowright", "circledast", "circledcirc", "circleddash", "circledot", "circledr", "circleds", "circleminus", "circleplus", "circletimes", "cire", "cirfnint", "cirmid", "cirscir", "clockwisecontourintegral", "closecurlydoublequote", "closecurlyquote", "clubs", "clubsuit", "colon", "colone", "coloneq", "comma", "commat", "comp", "compfn", "complement", "complexes", "cong", "congdot", "congruent", "conint", "contourintegral", "copf", "coprod", "coproduct", "copy", "copysr", "counterclockwisecontourintegral", "crarr", "cross", "cscr", "csub", "csube", "csup", "csupe", "ctdot", "cudarrl", "cudarrr", "cuepr", "cuesc", "cularr", "cularrp", "cup", "cupbrcap", "cupcap", "cupcup", "cupdot", "cupor", "cups", "curarr", "curarrm", "curlyeqprec", "curlyeqsucc", "curlyvee", "curlywedge", "curren", "curvearrowleft", "curvearrowright", "cuvee", "cuwed", "cwconint", "cwint", "cylcty", "dagger", "daleth", "darr", "dash", "dashv", "dbkarow", "dblac", "dcaron", "dcy", "dd", "ddagger", "ddarr", "ddotrahd", "ddotseq", "deg", "del", "delta", "demptyv", "dfisht", "dfr", "dhar", "dharl", "dharr", "diacriticalacute", "diacriticaldot", "diacriticaldoubleacute", "diacriticalgrave", "diacriticaltilde", "diam", "diamond", "diamondsuit", "diams", "die", "differentiald", "digamma", "disin", "div", "divide", "divideontimes", "divonx", "djcy", "dlcorn", "dlcrop", "dollar", "dopf", "dot", "dotdot", "doteq", "doteqdot", "dotequal", "dotminus", "dotplus", "dotsquare", "doublebarwedge", "doublecontourintegral", "doubledot", "doubledownarrow", "doubleleftarrow", "doubleleftrightarrow", "doublelefttee", "doublelongleftarrow", "doublelongleftrightarrow", "doublelongrightarrow", "doublerightarrow", "doublerighttee", "doubleuparrow", "doubleupdownarrow", "doubleverticalbar", "downarrow", "downarrowbar", "downarrowuparrow", "downbreve", "downdownarrows", "downharpoonleft", "downharpoonright", "downleftrightvector", "downleftteevector", "downleftvector", "downleftvectorbar", "downrightteevector", "downrightvector", "downrightvectorbar", "downtee", "downteearrow", "drbkarow", "drcorn", "drcrop", "dscr", "dscy", "dsol", "dstrok", "dtdot", "dtri", "dtrif", "duarr", "duhar", "dwangle", "dzcy", "dzigrarr", "eacute", "easter", "ecaron", "ecir", "ecirc", "ecolon", "ecy", "eddot", "edot", "ee", "efdot", "efr", "eg", "egrave", "egs", "egsdot", "el", "element", "elinters", "ell", "els", "elsdot", "emacr", "empty", "emptyset", "emptysmallsquare", "emptyv", "emptyverysmallsquare", "emsp", "emsp13", "emsp14", "eng", "ensp", "eogon", "eopf", "epar", "eparsl", "eplus", "epsi", "epsilon", "epsiv", "eqcirc", "eqcolon", "eqsim", "eqslantgtr", "eqslantless", "equal", "equals", "equaltilde", "equest", "equilibrium", "equiv", "equivdd", "eqvparsl", "erarr", "erdot", "escr", "esdot", "esim", "eta", "eth", "euml", "euro", "excl", "exist", "exists", "expectation", "exponentiale", "fallingdotseq", "fcy", "female", "ffilig", "fflig", "ffllig", "ffr", "filig", "filledsmallsquare", "filledverysmallsquare", "fjlig", "flat", "fllig", "fltns", "fnof", "fopf", "forall", "fork", "forkv", "fouriertrf", "fpartint", "frac12", "frac13", "frac14", "frac15", "frac16", "frac18", "frac23", "frac25", "frac34", "frac35", "frac38", "frac45", "frac56", "frac58", "frac78", "frasl", "frown", "fscr", "gacute", "gamma", "gammad", "gap", "gbreve", "gcedil", "gcirc", "gcy", "gdot", "ge", "gel", "geq", "geqq", "geqslant", "ges", "gescc", "gesdot", "gesdoto", "gesdotol", "gesl", "gesles", "gfr", "gg", "ggg", "gimel", "gjcy", "gl", "gla", "gle", "glj", "gnap", "gnapprox", "gne", "gneq", "gneqq", "gnsim", "gopf", "grave", "greaterequal", "greaterequalless", "greaterfullequal", "greatergreater", "greaterless", "greaterslantequal", "greatertilde", "gscr", "gsim", "gsime", "gsiml", "gt", "gtcc", "gtcir", "gtdot", "gtlpar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim", "gvertneqq", "gvne", "hacek", "hairsp", "half", "hamilt", "hardcy", "harr", "harrcir", "harrw", "hat", "hbar", "hcirc", "hearts", "heartsuit", "hellip", "hercon", "hfr", "hilbertspace", "hksearow", "hkswarow", "hoarr", "homtht", "hookleftarrow", "hookrightarrow", "hopf", "horbar", "horizontalline", "hscr", "hslash", "hstrok", "humpdownhump", "humpequal", "hybull", "hyphen", "iacute", "ic", "icirc", "icy", "idot", "iecy", "iexcl", "iff", "ifr", "igrave", "ii", "iiiint", "iiint", "iinfin", "iiota", "ijlig", "im", "imacr", "image", "imaginaryi", "imagline", "imagpart", "imath", "imof", "imped", "implies", "in", "incare", "infin", "infintie", "inodot", "int", "intcal", "integers", "integral", "intercal", "intersection", "intlarhk", "intprod", "invisiblecomma", "invisibletimes", "iocy", "iogon", "iopf", "iota", "iprod", "iquest", "iscr", "isin", "isindot", "isine", "isins", "isinsv", "isinv", "it", "itilde", "iukcy", "iuml", "jcirc", "jcy", "jfr", "jmath", "jopf", "jscr", "jsercy", "jukcy", "kappa", "kappav", "kcedil", "kcy", "kfr", "kgreen", "khcy", "kjcy", "kopf", "kscr", "laarr", "lacute", "laemptyv", "lagran", "lambda", "lang", "langd", "langle", "lap", "laplacetrf", "laquo", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "latail", "late", "lates", "lbarr", "lbbrk", "lbrace", "lbrack", "lbrke", "lbrksld", "lbrkslu", "lcaron", "lcedil", "lceil", "lcub", "lcy", "ldca", "ldquo", "ldquor", "ldrdhar", "ldrushar", "ldsh", "le", "leftanglebracket", "leftarrow", "leftarrowbar", "leftarrowrightarrow", "leftarrowtail", "leftceiling", "leftdoublebracket", "leftdownteevector", "leftdownvector", "leftdownvectorbar", "leftfloor", "leftharpoondown", "leftharpoonup", "leftleftarrows", "leftrightarrow", "leftrightarrows", "leftrightharpoons", "leftrightsquigarrow", "leftrightvector", "lefttee", "leftteearrow", "leftteevector", "leftthreetimes", "lefttriangle", "lefttrianglebar", "lefttriangleequal", "leftupdownvector", "leftupteevector", "leftupvector", "leftupvectorbar", "leftvector", "leftvectorbar", "leg", "leq", "leqq", "leqslant", "les", "lescc", "lesdot", "lesdoto", "lesdotor", "lesg", "lesges", "lessapprox", "lessdot", "lesseqgtr", "lesseqqgtr", "lessequalgreater", "lessfullequal", "lessgreater", "lessgtr", "lessless", "lesssim", "lessslantequal", "lesstilde", "lfisht", "lfloor", "lfr", "lg", "lge", "lhar", "lhard", "lharu", "lharul", "lhblk", "ljcy", "ll", "llarr", "llcorner", "lleftarrow", "llhard", "lltri", "lmidot", "lmoust", "lmoustache", "lnap", "lnapprox", "lne", "lneq", "lneqq", "lnsim", "loang", "loarr", "lobrk", "longleftarrow", "longleftrightarrow", "longmapsto", "longrightarrow", "looparrowleft", "looparrowright", "lopar", "lopf", "loplus", "lotimes", "lowast", "lowbar", "lowerleftarrow", "lowerrightarrow", "loz", "lozenge", "lozf", "lpar", "lparlt", "lrarr", "lrcorner", "lrhar", "lrhard", "lrm", "lrtri", "lsaquo", "lscr", "lsh", "lsim", "lsime", "lsimg", "lsqb", "lsquo", "lsquor", "lstrok", "lt", "ltcc", "ltcir", "ltdot", "lthree", "ltimes", "ltlarr", "ltquest", "ltri", "ltrie", "ltrif", "ltrpar", "lurdshar", "luruhar", "lvertneqq", "lvne", "macr", "male", "malt", "maltese", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker", "mcomma", "mcy", "mdash", "mddot", "measuredangle", "mediumspace", "mellintrf", "mfr", "mho", "micro", "mid", "midast", "midcir", "middot", "minus", "minusb", "minusd", "minusdu", "minusplus", "mlcp", "mldr", "mnplus", "models", "mopf", "mp", "mscr", "mstpos", "mu", "multimap", "mumap", "nabla", "nacute", "nang", "nap", "nape", "napid", "napos", "napprox", "natur", "natural", "naturals", "nbsp", "nbump", "nbumpe", "ncap", "ncaron", "ncedil", "ncong", "ncongdot", "ncup", "ncy", "ndash", "ne", "nearhk", "nearr", "nearrow", "nedot", "negativemediumspace", "negativethickspace", "negativethinspace", "negativeverythinspace", "nequiv", "nesear", "nesim", "nestedgreatergreater", "nestedlessless", "newline", "nexist", "nexists", "nfr", "nge", "ngeq", "ngeqq", "ngeqslant", "nges", "ngg", "ngsim", "ngt", "ngtr", "ngtv", "nharr", "nhpar", "ni", "nis", "nisd", "niv", "njcy", "nlarr", "nldr", "nle", "nleftarrow", "nleftrightarrow", "nleq", "nleqq", "nleqslant", "nles", "nless", "nll", "nlsim", "nlt", "nltri", "nltrie", "nltv", "nmid", "nobreak", "nonbreakingspace", "nopf", "not", "notcongruent", "notcupcap", "notdoubleverticalbar", "notelement", "notequal", "notequaltilde", "notexists", "notgreater", "notgreaterequal", "notgreaterfullequal", "notgreatergreater", "notgreaterless", "notgreaterslantequal", "notgreatertilde", "nothumpdownhump", "nothumpequal", "notin", "notindot", "notine", "notinva", "notinvb", "notinvc", "notlefttriangle", "notlefttrianglebar", "notlefttriangleequal", "notless", "notlessequal", "notlessgreater", "notlessless", "notlessslantequal", "notlesstilde", "notnestedgreatergreater", "notnestedlessless", "notni", "notniva", "notnivb", "notnivc", "notprecedes", "notprecedesequal", "notprecedesslantequal", "notreverseelement", "notrighttriangle", "notrighttrianglebar", "notrighttriangleequal", "notsquaresubset", "notsquaresubsetequal", "notsquaresuperset", "notsquaresupersetequal", "notsubset", "notsubsetequal", "notsucceeds", "notsucceedsequal", "notsucceedsslantequal", "notsucceedstilde", "notsuperset", "notsupersetequal", "nottilde", "nottildeequal", "nottildefullequal", "nottildetilde", "notverticalbar", "npar", "nparallel", "nparsl", "npart", "npolint", "npr", "nprcue", "npre", "nprec", "npreceq", "nrarr", "nrarrc", "nrarrw", "nrightarrow", "nrtri", "nrtrie", "nsc", "nsccue", "nsce", "nscr", "nshortmid", "nshortparallel", "nsim", "nsime", "nsimeq", "nsmid", "nspar", "nsqsube", "nsqsupe", "nsub", "nsube", "nsubset", "nsubseteq", "nsubseteqq", "nsucc", "nsucceq", "nsup", "nsupe", "nsupset", "nsupseteq", "nsupseteqq", "ntgl", "ntilde", "ntlg", "ntriangleleft", "ntrianglelefteq", "ntriangleright", "ntrianglerighteq", "nu", "num", "numero", "numsp", "nvap", "nvdash", "nvge", "nvgt", "nvharr", "nvinfin", "nvlarr", "nvle", "nvlt", "nvltrie", "nvrarr", "nvrtrie", "nvsim", "nwarhk", "nwarr", "nwarrow", "nwnear", "oacute", "oast", "ocir", "ocirc", "ocy", "odash", "odblac", "odiv", "odot", "odsold", "oelig", "ofcir", "ofr", "ogon", "ograve", "ogt", "ohbar", "ohm", "oint", "olarr", "olcir", "olcross", "oline", "olt", "omacr", "omega", "omicron", "omid", "ominus", "oopf", "opar", "opencurlydoublequote", "opencurlyquote", "operp", "oplus", "or", "orarr", "ord", "order", "orderof", "ordf", "ordm", "origof", "oror", "orslope", "orv", "os", "oscr", "oslash", "osol", "otilde", "otimes", "otimesas", "ouml", "ovbar", "overbar", "overbrace", "overbracket", "overparenthesis", "par", "para", "parallel", "parsim", "parsl", "part", "partiald", "pcy", "percnt", "period", "permil", "perp", "pertenk", "pfr", "phi", "phiv", "phmmat", "phone", "pi", "pitchfork", "piv", "planck", "planckh", "plankv", "plus", "plusacir", "plusb", "pluscir", "plusdo", "plusdu", "pluse", "plusminus", "plusmn", "plussim", "plustwo", "pm", "poincareplane", "pointint", "popf", "pound", "pr", "prap", "prcue", "pre", "prec", "precapprox", "preccurlyeq", "precedes", "precedesequal", "precedesslantequal", "precedestilde", "preceq", "precnapprox", "precneqq", "precnsim", "precsim", "prime", "primes", "prnap", "prne", "prnsim", "prod", "product", "profalar", "profline", "profsurf", "prop", "proportion", "proportional", "propto", "prsim", "prurel", "pscr", "psi", "puncsp", "qfr", "qint", "qopf", "qprime", "qscr", "quaternions", "quatint", "quest", "questeq", "quot", "raarr", "race", "racute", "radic", "raemptyv", "rang", "rangd", "range", "rangle", "raquo", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "rarrtl", "rarrw", "ratail", "ratio", "rationals", "rbarr", "rbbrk", "rbrace", "rbrack", "rbrke", "rbrksld", "rbrkslu", "rcaron", "rcedil", "rceil", "rcub", "rcy", "rdca", "rdldhar", "rdquo", "rdquor", "rdsh", "re", "real", "realine", "realpart", "reals", "rect", "reg", "reverseelement", "reverseequilibrium", "reverseupequilibrium", "rfisht", "rfloor", "rfr", "rhar", "rhard", "rharu", "rharul", "rho", "rhov", "rightanglebracket", "rightarrow", "rightarrowbar", "rightarrowleftarrow", "rightarrowtail", "rightceiling", "rightdoublebracket", "rightdownteevector", "rightdownvector", "rightdownvectorbar", "rightfloor", "rightharpoondown", "rightharpoonup", "rightleftarrows", "rightleftharpoons", "rightrightarrows", "rightsquigarrow", "righttee", "rightteearrow", "rightteevector", "rightthreetimes", "righttriangle", "righttrianglebar", "righttriangleequal", "rightupdownvector", "rightupteevector", "rightupvector", "rightupvectorbar", "rightvector", "rightvectorbar", "ring", "risingdotseq", "rlarr", "rlhar", "rlm", "rmoust", "rmoustache", "rnmid", "roang", "roarr", "robrk", "ropar", "ropf", "roplus", "rotimes", "roundimplies", "rpar", "rpargt", "rppolint", "rrarr", "rrightarrow", "rsaquo", "rscr", "rsh", "rsqb", "rsquo", "rsquor", "rthree", "rtimes", "rtri", "rtrie", "rtrif", "rtriltri", "ruledelayed", "ruluhar", "rx", "sacute", "sbquo", "sc", "scap", "scaron", "sccue", "sce", "scedil", "scirc", "scnap", "scne", "scnsim", "scpolint", "scsim", "scy", "sdot", "sdotb", "sdote", "searhk", "searr", "searrow", "sect", "semi", "seswar", "setminus", "setmn", "sext", "sfr", "sfrown", "sharp", "shchcy", "shcy", "shortdownarrow", "shortleftarrow", "shortmid", "shortparallel", "shortrightarrow", "shortuparrow", "shy", "sigma", "sigmaf", "sigmav", "sim", "simdot", "sime", "simeq", "simg", "simge", "siml", "simle", "simne", "simplus", "simrarr", "slarr", "smallcircle", "smallsetminus", "smashp", "smeparsl", "smid", "smile", "smt", "smte", "smtes", "softcy", "sol", "solb", "solbar", "sopf", "spades", "spadesuit", "spar", "sqcap", "sqcaps", "sqcup", "sqcups", "sqrt", "sqsub", "sqsube", "sqsubset", "sqsubseteq", "sqsup", "sqsupe", "sqsupset", "sqsupseteq", "squ", "square", "squareintersection", "squaresubset", "squaresubsetequal", "squaresuperset", "squaresupersetequal", "squareunion", "squarf", "squf", "srarr", "sscr", "ssetmn", "ssmile", "sstarf", "star", "starf", "straightepsilon", "straightphi", "strns", "sub", "subdot", "sube", "subedot", "submult", "subne", "subplus", "subrarr", "subset", "subseteq", "subseteqq", "subsetequal", "subsetneq", "subsetneqq", "subsim", "subsub", "subsup", "succ", "succapprox", "succcurlyeq", "succeeds", "succeedsequal", "succeedsslantequal", "succeedstilde", "succeq", "succnapprox", "succneqq", "succnsim", "succsim", "suchthat", "sum", "sung", "sup", "sup1", "sup2", "sup3", "supdot", "supdsub", "supe", "supedot", "superset", "supersetequal", "suphsol", "suphsub", "suplarr", "supmult", "supne", "supplus", "supset", "supseteq", "supseteqq", "supsetneq", "supsetneqq", "supsim", "supsub", "supsup", "swarhk", "swarr", "swarrow", "swnwar", "szlig", "tab", "target", "tau", "tbrk", "tcaron", "tcedil", "tcy", "tdot", "telrec", "tfr", "there4", "therefore", "theta", "thetasym", "thetav", "thickapprox", "thicksim", "thickspace", "thinsp", "thinspace", "thkap", "thksim", "thorn", "tilde", "tildeequal", "tildefullequal", "tildetilde", "times", "timesb", "timesbar", "timesd", "tint", "toea", "top", "topbot", "topcir", "topf", "topfork", "tosa", "tprime", "trade", "triangle", "triangledown", "triangleleft", "trianglelefteq", "triangleq", "triangleright", "trianglerighteq", "tridot", "trie", "triminus", "tripledot", "triplus", "trisb", "tritime", "trpezium", "tscr", "tscy", "tshcy", "tstrok", "twixt", "twoheadleftarrow", "twoheadrightarrow", "uacute", "uarr", "uarrocir", "ubrcy", "ubreve", "ucirc", "ucy", "udarr", "udblac", "udhar", "ufisht", "ufr", "ugrave", "uhar", "uharl", "uharr", "uhblk", "ulcorn", "ulcorner", "ulcrop", "ultri", "umacr", "uml", "underbar", "underbrace", "underbracket", "underparenthesis", "union", "unionplus", "uogon", "uopf", "uparrow", "uparrowbar", "uparrowdownarrow", "updownarrow", "upequilibrium", "upharpoonleft", "upharpoonright", "uplus", "upperleftarrow", "upperrightarrow", "upsi", "upsih", "upsilon", "uptee", "upteearrow", "upuparrows", "urcorn", "urcorner", "urcrop", "uring", "urtri", "uscr", "utdot", "utilde", "utri", "utrif", "uuarr", "uuml", "uwangle", "vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright", "vbar", "vbarv", "vcy", "vdash", "vdashl", "vee", "veebar", "veeeq", "vellip", "verbar", "vert", "verticalbar", "verticalline", "verticalseparator", "verticaltilde", "verythinspace", "vfr", "vltri", "vnsub", "vnsup", "vopf", "vprop", "vrtri", "vscr", "vsubne", "vsupne", "vvdash", "vzigzag", "wcirc", "wedbar", "wedge", "wedgeq", "weierp", "wfr", "wopf", "wp", "wr", "wreath", "wscr", "xcap", "xcirc", "xcup", "xdtri", "xfr", "xharr", "xi", "xlarr", "xmap", "xnis", "xodot", "xopf", "xoplus", "xotime", "xrarr", "xscr", "xsqcup", "xuplus", "xutri", "xvee", "xwedge", "yacute", "yacy", "ycirc", "ycy", "yen", "yfr", "yicy", "yopf", "yscr", "yucy", "yuml", "zacute", "zcaron", "zcy", "zdot", "zeetrf", "zerowidthspace", "zeta", "zfr", "zhcy", "zigrarr", "zopf", "zscr", "zwj", "zwnj"]);
 
 function decode$1(ent) {
   if (typeof ent !== "string" || !ent.length || !ent.startsWith("&") || !ent.endsWith(";")) {
@@ -10204,21 +9897,14 @@ function decode$1(ent) {
 
   var val = ent.slice(1, ent.length - 1);
   return allNamedEntities[val] ? allNamedEntities[val] : null;
-} // -----------------------------------------------------------------------------
-var maxLength = 31; // -----------------------------------------------------------------------------
-
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+}
+var maxLength = 31;
 
 function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
 function isLatinLetterOrNumberOrHash(char) {
-  // we mean:
-  // - Latin letters a-z or
-  // - numbers 0-9 or
-  // - letters A-Z or
-  // - #
   return isStr$2(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
 }
 
@@ -10235,7 +9921,6 @@ function isLatinLetter(something) {
 }
 
 function resemblesNumericEntity(str2, from, to) {
-  // plan: loop characters, count types, judge what's given
   var lettersCount = 0;
   var numbersCount = 0;
   var othersCount = 0;
@@ -10261,18 +9946,13 @@ function resemblesNumericEntity(str2, from, to) {
     } else {
       othersCount += 1;
     }
-  } // if there are more numbers than letters (or equal) then it's more likely
-  // to be a numeric entity
+  }
 
-
-  var probablyNumeric = false; // if decimal-type, for example, &#999999;
-  // but wide enough to include messed up cases
+  var probablyNumeric = false;
 
   if (!lettersCount && numbersCount > othersCount) {
     probablyNumeric = "deci";
   } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumeric(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
-    // hexidecimal, for example, &#xA3;
-    // but wide enough to include messed up cases
     probablyNumeric = "hexi";
   }
 
@@ -10289,34 +9969,10 @@ function resemblesNumericEntity(str2, from, to) {
 }
 
 function findLongest(temp1) {
-  // we are filtering something like this:
-  // [
-  //   {
-  //       "tempEnt": "acute",
-  //       "tempRes": {
-  //           "gaps": [],
-  //           "leftmostChar": 2,
-  //           "rightmostChar": 6
-  //       }
-  //   },
-  //   {
-  //       "tempEnt": "zacute",
-  //       "tempRes": {
-  //           "gaps": [],
-  //           "leftmostChar": 0,
-  //           "rightmostChar": 6
-  //       }
-  //   }
-  // ]
-  //
-  // we find the object which represents the longest matched entity, that is,
-  // object which "tempEnt" key value's length is the longest.
   if (Array.isArray(temp1) && temp1.length) {
     if (temp1.length === 1) {
-      // quick ending - only one value anyway
       return temp1[0];
-    } // filter-out and return the longest-one
-
+    }
 
     return temp1.reduce(function (accum, tempObj) {
       if (tempObj.tempEnt.length > accum.tempEnt.length) {
@@ -10334,77 +9990,12 @@ function removeGappedFromMixedCases(str, temp1) {
   /* istanbul ignore if */
   if (arguments.length !== 2) {
     throw new Error("removeGappedFromMixedCases(): wrong amount of inputs!");
-  } // If there is one without gaps and all others with gaps, gapless
-  // wins, regardless of length.
-  // The longest of gapless-one wins, trumping all the ones with gaps.
-  // If all are with gaps, the longest one wins.
-  // [
-  //   {
-  //       "tempEnt": "acute",
-  //       "tempRes": {
-  //           "gaps": [],
-  //           "leftmostChar": 2,
-  //           "rightmostChar": 6
-  //       }
-  //   },
-  //   {
-  //       "tempEnt": "zacute",
-  //       "tempRes": {
-  //           "gaps": [
-  //               [
-  //                   1,
-  //                   2
-  //               ]
-  //           ],
-  //           "leftmostChar": 0,
-  //           "rightmostChar": 6
-  //       }
-  //   }
-  // ]
-  // For example, entity "zacute" record above shows it has gaps, while the
-  // "acute" does not have gaps. This is a mixed case scenario and we remove
-  // all gapped entities, that is, in this case, "zacute".
-  // Imagine we have string "zzzzzz acute; yyyyyy". That z on the left of
-  // "acute" is legit. That's why we exclude matched gapped entities in
-  // mixed cases.
-  // But, semicolon also matters, for example, &acd; vs. &ac; in:
-  // &ac d;
-  // case picks &acd; as winner
-
+  }
 
   var copy;
 
   if (Array.isArray(temp1) && temp1.length) {
-    // prevent mutation:
-    copy = Array.from(temp1); // 1. if some matches have semicolon to the right of rightmostChar and
-    // some matches don't, exclude those that don't.
-    // If at any moment we've left with one match, Bob's your uncle here's
-    // the final result.
-    // For example, we might be working on something like this:
-    // [
-    //     {
-    //         "tempEnt": "ac",
-    //         "tempRes": {
-    //             "gaps": [],
-    //             "leftmostChar": 1,
-    //             "rightmostChar": 2
-    //         }
-    //     },
-    //     {
-    //         "tempEnt": "acd",
-    //         "tempRes": {
-    //             "gaps": [
-    //                 [
-    //                     3,
-    //                     4
-    //                 ]
-    //             ],
-    //             "leftmostChar": 1,
-    //             "rightmostChar": 4
-    //         }
-    //     }
-    // ]
-
+    copy = Array.from(temp1);
     /* istanbul ignore if */
 
     if (copy.length > 1 && copy.some(function (entityObj) {
@@ -10412,45 +10003,26 @@ function removeGappedFromMixedCases(str, temp1) {
     }) && copy.some(function (entityObj) {
       return str[right(str, entityObj.tempRes.rightmostChar)] !== ";";
     })) {
-      // filter out those with semicolon to the right of the last character:
       copy = copy.filter(function (entityObj) {
         return str[right(str, entityObj.tempRes.rightmostChar)] === ";";
       });
-    } // 2. if still there is more than one match, first exclude gapped if
-    // there is mix of gapped vs. gapless. Then, return longest.
-    // If all are either gapped or gapless, return longest.
-
+    }
 
     if (!(copy.every(function (entObj) {
       return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
     }) || copy.every(function (entObj) {
       return entObj && entObj.tempRes && entObj.tempRes.gaps && Array.isArray(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
     }))) {
-      // filter out entities with gaps, leave gapless-ones
       return findLongest(copy.filter(function (entObj) {
         return !entObj.tempRes.gaps || !Array.isArray(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
       }));
     }
-  } // else if all entries don't have gaps, return longest
-
+  }
 
   return findLongest(temp1);
 }
 
 function fixEnt(str, originalOpts) {
-  //
-  //
-  //
-  //
-  //
-  //                              THE PROGRAM
-  //
-  //
-  //
-  //
-  //
-  // insurance:
-  // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
     throw new Error("string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n" + JSON.stringify(str, null, 4) + " (" + typeof str + "-type)");
   }
@@ -10484,43 +10056,16 @@ function fixEnt(str, originalOpts) {
 
   if (opts.progressFn && typeof opts.progressFn !== "function") {
     throw new TypeError("string-fix-broken-named-entities: [THROW_ID_05] opts.progressFn must be a function (or falsey)! Currently it's: " + typeof opts.progressFn + ", equal to: " + JSON.stringify(opts.progressFn, null, 4));
-  } // state flags
-  // ---------------------------------------------------------------------------
-  // this is what we'll return, process by default callback or user's custom-one
-
+  }
 
   var rangesArr2 = [];
   var percentageDone;
-  var lastPercentageDone; // allocate all 100 of progress to the main loop below
-
+  var lastPercentageDone;
   var len = str.length + 1;
-  var counter = 0; // doNothingUntil can be either falsey or truthy: index number or boolean true
-  // If it's number, it's instruction to avoid actions until that index is
-  // reached when traversing. If it's boolean, it means we don't know when we'll
-  // stop, we just turn on the flag (permanently, for now).
-
-  var doNothingUntil = null; // catch letter sequences, possibly separated with whitespace. Non-letter
-  // breaks the sequence. Main aim is to catch names of encoded HTML entities
-  // for example, nbsp from "&nbsp;"
-
+  var counter = 0;
+  var doNothingUntil = null;
   var letterSeqStartAt = null;
-  var brokenNumericEntityStartAt = null; //                                      |
-  //                                      |
-  //                                      |
-  //                                      |
-  //                                      |
-  //                                      |
-  //                                      |
-  //              T   H   E       L   O   O   P       S  T  A  R  T  S
-  //                                      |
-  //                                      |
-  //                                 \    |     /
-  //                                  \   |    /
-  //                                   \  |   /
-  //                                    \ |  /
-  //                                     \| /
-  //                                      V
-  // differently from regex-based approach, we aim to traverse the string only once:
+  var brokenNumericEntityStartAt = null;
 
   var _loop = function _loop(i) {
     if (opts.progressFn) {
@@ -10531,28 +10076,7 @@ function fixEnt(str, originalOpts) {
         lastPercentageDone = percentageDone;
         opts.progressFn(percentageDone);
       }
-    } //            |
-    //            |
-    //            |
-    //            |
-    //            |
-    // PART 1. FRONTAL LOGGING
-    //            |
-    //            |
-    //            |
-    //            |
-    //            | //            |
-    //            |
-    //            |
-    //            |
-    //            |
-    // PART 3. RULES AT THE TOP
-    //            |
-    //            |
-    //            |
-    //            |
-    //            |
-
+    }
 
     if (doNothingUntil) {
       if (typeof doNothingUntil === "number" && i >= doNothingUntil) {
@@ -10561,66 +10085,29 @@ function fixEnt(str, originalOpts) {
         counter += 1;
         return "continue";
       }
-    } //            |
-    //            |
-    //            |
-    //            |
-    //            |
-    // PART 3. RULES AT THE MIDDLE
-    //            |
-    //            |
-    //            |
-    //            |
-    //            |
-    // escape latch for text chunks
-
+    }
 
     if (letterSeqStartAt !== null && i - letterSeqStartAt > 50) {
       letterSeqStartAt = null;
-    } // Catch the end of a latin letter sequence.
-
+    }
 
     if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i]))) {
       if (i > letterSeqStartAt + 1) {
         var potentialEntity = str.slice(letterSeqStartAt, i);
         var whatsOnTheLeft = left(str, letterSeqStartAt);
-        var whatsEvenMoreToTheLeft = whatsOnTheLeft ? left(str, whatsOnTheLeft) : ""; //
-        //
-        //
-        //
-        // CASE 1 - CHECK FOR MISSING SEMICOLON
-        //
-        //
-        //
-        //
+        var whatsEvenMoreToTheLeft = whatsOnTheLeft ? left(str, whatsOnTheLeft) : "";
 
         if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
-          // check, what's the index of the character to the right of
-          // str[whatsOnTheLeft], is it any of the known named HTML entities.
           var firstChar = letterSeqStartAt;
           /* istanbul ignore next */
 
-          var secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null; // we'll tap the "entStartsWith" from npm package "all-named-html-entities"
-          // which gives a plain object of named entities, all grouped by first
-          // and second character first. This reduces amount of matching needed. // mind you, there can be overlapping variations of entities, for
-          // example, &ang; and &angst;. Now, if you match "ang" from "&ang;",
-          // starting from the left side (like we do using "entStartsWith"),
-          // when there is "&angst;", answer will also be positive. And we can't
-          // rely on semicolon being on the right because we are actually
-          // catching MISSING semicolons here.
-          // The only way around this is to match all entities that start here
-          // and pick the one with the biggest character length.
-          // TODO - set up case insensitive matching here:
-
+          var secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null;
           /* istanbul ignore else */
 
           if (Object.prototype.hasOwnProperty.call(entStartsWith, str[firstChar]) && Object.prototype.hasOwnProperty.call(entStartsWith[str[firstChar]], str[secondChar])) {
             var tempEnt = "";
             var tempRes;
             var temp1 = entStartsWith[str[firstChar]][str[secondChar]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
-              // find all entities that match on the right of here
-              // rightSeq could theoretically give positive answer, zero index,
-              // but it's impossible here, so we're fine to match "if true".
               tempRes = rightSeq.apply(void 0, [str, letterSeqStartAt - 1].concat(oneOfKnownEntities.split("")));
 
               if (tempRes) {
@@ -10651,26 +10138,11 @@ function fixEnt(str, originalOpts) {
                 rangeValEncoded: "&" + tempEnt + ";",
                 rangeValDecoded: decodedEntity
               });
-            } // ELSE, it was just a legit ampersand
-
+            }
           }
         } else if (str[whatsOnTheLeft] !== "&" && str[whatsEvenMoreToTheLeft] !== "&" && str[i] === ";") {
-          //
-          //
-          //
-          //
-          // CASE 2 - CHECK FOR MISSING AMPERSAND
-          //
-          //
-          //
-          // // check, what's on the left of str[i], is it any of known named HTML
-          // entities. There are two thousand of them so we'll match by last
-          // two characters. For posterity, we assume there can be any amount of
-          // whitespace between characters and we need to tackle it as well.
           var lastChar = left(str, i);
-          var secondToLast = left(str, lastChar); // we'll tap the "entEndsWith" from npm package "all-named-html-entities"
-          // which gives a plain object of named entities, all grouped by first
-          // and second character first. This reduces amount of matching needed.
+          var secondToLast = left(str, lastChar);
 
           if (secondToLast !== null && Object.prototype.hasOwnProperty.call(entEndsWith, str[lastChar]) && Object.prototype.hasOwnProperty.call(entEndsWith[str[lastChar]], str[secondToLast])) {
             var _tempEnt = "";
@@ -10678,9 +10150,6 @@ function fixEnt(str, originalOpts) {
             var _tempRes;
 
             var _temp2 = entEndsWith[str[lastChar]][str[secondToLast]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
-              // find all entities that match on the right of here
-              // rightSeq could theoretically give positive answer, zero index,
-              // but it's impossible here, so we're fine to match "if true".
               _tempRes = leftSeq.apply(void 0, [str, i].concat(oneOfKnownEntities.split("")));
 
               if (_tempRes && !(oneOfKnownEntities === "block" && str[left(str, letterSeqStartAt)] === ":")) {
@@ -10715,9 +10184,6 @@ function fixEnt(str, originalOpts) {
               });
             }
           } else if (brokenNumericEntityStartAt !== null) {
-            // we have a malformed numeric entity reference, like #x26; without
-            // an ampersand but with the rest of characters
-            // 1. push the issue:
             rangesArr2.push({
               ruleName: "bad-malformed-numeric-character-entity",
               entityName: null,
@@ -10725,50 +10191,18 @@ function fixEnt(str, originalOpts) {
               rangeTo: i + 1,
               rangeValEncoded: null,
               rangeValDecoded: null
-            }); // 2. reset marker:
-
+            });
             brokenNumericEntityStartAt = null;
           }
         } else if ((str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&") && str[i] === ";") {
-          //
-          //
-          //
-          //
-          // CASE 3 - CHECK FOR MESSY ENTITIES OR REQUESTED DECODING
-          //
-          //
-          //
-          // // find out more: is it legit, unrecognised or numeric...
-
           /* istanbul ignore else */
           if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
-            // Maybe it's a numeric entity?
-            // we can simply check, does entity start with a hash but that
-            // would be naive because this is a tool to catch and fix errors
-            // and hash might be missing or mis-typed
-            // So, we have confirmed ampersand, something in between and then
-            // confirmed semicolon.
-            // First, we extracted the contents of all this, "situation.charTrimmed".
-            // By the way, Character-trimmed string where String.trim() is
-            // applied to each character. This is needed so that our tool could
-            // recognise whitespace gaps anywhere in the input. Imagine, for
-            // example, "&# 85;" with rogue space. Errors like that require
-            // constant trimming on the algorithm side.
-            // We are going to describe numeric entity as
-            // * something that starts with ampersand
-            // * ends with semicolon
-            // - has no letter characters AND at least one number character OR
-            // - has more numeric characters than letters
             var situation = resemblesNumericEntity(str, whatsOnTheLeft + 1, i);
 
             if (situation.probablyNumeric) {
-              // 1. TACKLE HEALTHY DECIMAL NUMERIC CHARACTER REFERENCE ENTITIES:
               if (
               /* istanbul ignore next */
-              situation.probablyNumeric && situation.charTrimmed[0] === "#" && !situation.whitespaceCount && ( // decimal:
-              !situation.lettersCount && situation.numbersCount > 0 && !situation.othersCount || // hexidecimal:
-              (situation.numbersCount || situation.lettersCount) && situation.charTrimmed[1] === "x" && !situation.othersCount)) {
-                // if it's a healthy decimal numeric character reference:
+              situation.probablyNumeric && situation.charTrimmed[0] === "#" && !situation.whitespaceCount && (!situation.lettersCount && situation.numbersCount > 0 && !situation.othersCount || (situation.numbersCount || situation.lettersCount) && situation.charTrimmed[1] === "x" && !situation.othersCount)) {
                 var decodedEntitysValue = String.fromCharCode(parseInt(situation.charTrimmed.slice(situation.probablyNumeric === "deci" ? 1 : 2), situation.probablyNumeric === "deci" ? 10 : 16));
 
                 if (situation.probablyNumeric === "deci" && parseInt(situation.numbersValue, 10) > 918015) {
@@ -10781,7 +10215,6 @@ function fixEnt(str, originalOpts) {
                     rangeValDecoded: null
                   });
                 } else if (opts.decode) {
-                  // unless decoding was requested, no further action is needed:
                   rangesArr2.push({
                     ruleName: "encoded-numeric-html-entity-reference",
                     entityName: situation.charTrimmed,
@@ -10792,7 +10225,6 @@ function fixEnt(str, originalOpts) {
                   });
                 }
               } else {
-                // RAISE A GENERIC ERROR
                 rangesArr2.push({
                   ruleName: "bad-malformed-numeric-character-entity",
                   entityName: null,
@@ -10801,30 +10233,18 @@ function fixEnt(str, originalOpts) {
                   rangeValEncoded: null,
                   rangeValDecoded: null
                 });
-              } // also call the general entity callback if it's given
-
+              }
 
               if (opts.entityCatcherCb) {
                 opts.entityCatcherCb(whatsOnTheLeft, i + 1);
               }
             } else {
-              //
-              //
-              //
-              //
-              //          NAMED ENTITIES CLAUSES BELOW
-              //
-              //
-              //
-              //
-              // happy path:
               var potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(function (char) {
                 return char.trim().length;
               }).join("");
 
               if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
-                if ( // first, check is the letter case allright
-                !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
+                if (!allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
                   var matchingEntitiesOfCorrectCaseArr = [].concat(allNamedEntitiesSetOnly).filter(function (ent) {
                     return ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase();
                   });
@@ -10848,14 +10268,10 @@ function fixEnt(str, originalOpts) {
                       rangeValDecoded: null
                     });
                   }
-                } else if ( // is it really healthy? measuring distance is a way to find out
-                // any present whitespace characters will bloat the length...
-                i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
+                } else if (i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
                   var rangeFrom = str[whatsOnTheLeft] === "&" ? whatsOnTheLeft : whatsEvenMoreToTheLeft;
 
-                  if ( // if it's a dubious entity
-                  Object.keys(uncertain).includes(potentialEntityOnlyNonWhitespaceChars) && // and there's space after ampersand
-                  !str[rangeFrom + 1].trim().length) {
+                  if (Object.keys(uncertain).includes(potentialEntityOnlyNonWhitespaceChars) && !str[rangeFrom + 1].trim().length) {
                     letterSeqStartAt = null;
                     return "continue";
                   }
@@ -10869,7 +10285,6 @@ function fixEnt(str, originalOpts) {
                     rangeValDecoded: decode$1("&" + potentialEntityOnlyNonWhitespaceChars + ";")
                   });
                 } else if (opts.decode) {
-                  // last thing, if decode is required, we've got an error still...
                   rangesArr2.push({
                     ruleName: "encoded-html-entity-" + potentialEntityOnlyNonWhitespaceChars,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
@@ -10879,14 +10294,12 @@ function fixEnt(str, originalOpts) {
                     rangeValDecoded: decode$1("&" + potentialEntityOnlyNonWhitespaceChars + ";")
                   });
                 } else if (opts.entityCatcherCb) {
-                  // it's healthy - so at least ping the entity catcher
                   opts.entityCatcherCb(whatsOnTheLeft, i + 1);
                 }
 
                 letterSeqStartAt = null;
                 return "continue";
-              } // First, match against case-insensitive list
-
+              }
               /* istanbul ignore next */
 
 
@@ -10895,9 +10308,6 @@ function fixEnt(str, originalOpts) {
               var temp;
 
               if (Object.prototype.hasOwnProperty.call(brokenNamedEntities, situation.charTrimmed.toLowerCase())) {
-                //
-                //                          case I.
-                //
                 _tempEnt2 = situation.charTrimmed;
 
                 var _decodedEntity2 = decode$1("&" + brokenNamedEntities[situation.charTrimmed.toLowerCase()] + ";");
@@ -10910,24 +10320,14 @@ function fixEnt(str, originalOpts) {
                   rangeValEncoded: "&" + brokenNamedEntities[situation.charTrimmed.toLowerCase()] + ";",
                   rangeValDecoded: _decodedEntity2
                 });
-              } else if ( // idea being, if length of suspected chunk is less or equal to
-              // the length of the longest entity (add 1 for Levenshtein distance)
-              // we still consider that whole chunk (from ampersand to semi)
-              // might be a value of an entity
-              potentialEntity.length < maxLength + 2 && ( // a) either one character is different:
-              (temp = [].concat(allNamedEntitiesSetOnly).filter(function (curr) {
+              } else if (potentialEntity.length < maxLength + 2 && ((temp = [].concat(allNamedEntitiesSetOnly).filter(function (curr) {
                 return leven_1(curr, potentialEntity) === 1;
-              })) && temp.length || //
-              // OR
-              //
-              // b) two are different but entity is at least 4 chars long:
-              (temp = [].concat(allNamedEntitiesSetOnly).filter(function (curr) {
+              })) && temp.length || (temp = [].concat(allNamedEntitiesSetOnly).filter(function (curr) {
                 return (
                   /* istanbul ignore next */
                   leven_1(curr, potentialEntity) === 2 && potentialEntity.length > 3
                 );
               })) && temp.length)) {
-                // now the problem: what if there were multiple entities matched?
                 if (temp.length === 1) {
                   var _temp4 = temp;
                   _tempEnt2 = _temp4[0];
@@ -10940,11 +10340,9 @@ function fixEnt(str, originalOpts) {
                     rangeValDecoded: decode$1("&" + _tempEnt2 + ";")
                   });
                 }
-              } // if "tempEnt" was not set by now, it is not a known HTML entity
-
+              }
 
               if (!_tempEnt2) {
-                // it's an unrecognised entity:
                 rangesArr2.push({
                   ruleName: "bad-named-html-entity-unrecognised",
                   entityName: null,
@@ -10953,30 +10351,11 @@ function fixEnt(str, originalOpts) {
                   rangeValEncoded: null,
                   rangeValDecoded: null
                 });
-              } //
-              //
-              //
-              //
-              //          NAMED ENTITIES CLAUSES ABOVE
-              //
-              //
-              //
-              //
-
+              }
             }
           }
         } else if (str[whatsEvenMoreToTheLeft] === "&" && str[i] === ";" && i - whatsEvenMoreToTheLeft < maxLength) {
-          //
-          //
-          //
-          //
-          // CASE 4 - &*...;
-          //
-          //
-          //
-          //
-          var _situation = resemblesNumericEntity(str, whatsEvenMoreToTheLeft + 1, i); // push the issue:
-
+          var _situation = resemblesNumericEntity(str, whatsEvenMoreToTheLeft + 1, i);
 
           rangesArr2.push({
             ruleName: "" + (
@@ -10989,32 +10368,20 @@ function fixEnt(str, originalOpts) {
             rangeValDecoded: null
           });
         }
-      } // one-character chunks or chunks ending with ampersand get wiped:
-
+      }
 
       letterSeqStartAt = null;
-    } // Catch the start of the sequence of latin letters. It's necessary to
-    // tackle named HTML entity recognition, missing ampersands and semicolons.
-
+    }
 
     if (letterSeqStartAt === null && isLatinLetterOrNumberOrHash(str[i]) && str[i + 1]) {
       letterSeqStartAt = i;
-    } // catch amp;
-
+    }
 
     if (str[i] === "a") {
-      // // 1. catch recursively-encoded cases. They're easy actually, the task will
-      // // be deleting sequence of repeated "amp;" between ampersand and letter.
-      // For example, we have this:
-      // text&   amp  ;  a  m   p   ;  nbsp;text
-      // We start at the opening ampersand at index 4;
       var singleAmpOnTheRight = rightSeq(str, i, "m", "p", ";");
 
       if (singleAmpOnTheRight) {
-        // if we had to delete all amp;amp;amp; and leave only ampersand, this
-        // will be the index to delete up to:
-        var toDeleteAllAmpEndHere = singleAmpOnTheRight.rightmostChar + 1; // so one &amp; is confirmed.
-
+        var toDeleteAllAmpEndHere = singleAmpOnTheRight.rightmostChar + 1;
         var nextAmpOnTheRight = rightSeq(str, singleAmpOnTheRight.rightmostChar, "a", "m", "p", ";");
 
         if (nextAmpOnTheRight) {
@@ -11029,23 +10396,13 @@ function fixEnt(str, originalOpts) {
               toDeleteAllAmpEndHere = _temp5.rightmostChar + 1;
             }
           } while (_temp5);
-        } // What we have is toDeleteAllAmpEndHere which marks where the last amp;
-        // semicolon ends (were we to delete the whole thing).
-        // For example, in:
-        // text&   amp  ;  a  m   p   ;     a  m   p   ;    nbsp;text
-        // this would be index 49, the "n" from "nbsp;"
-
+        }
 
         var firstCharThatFollows = right(str, toDeleteAllAmpEndHere - 1);
-        var secondCharThatFollows = firstCharThatFollows ? right(str, firstCharThatFollows) : null; // If entity follows, for example,
-        // text&   amp  ;  a  m   p   ;     a  m   p   ;    nbsp;text
-        // we delete from the first ampersand to the beginning of that entity.
-        // Otherwise, we delete only repetitions of amp; + whitespaces in between.
-
+        var secondCharThatFollows = firstCharThatFollows ? right(str, firstCharThatFollows) : null;
         var matchedTemp = "";
 
         if (secondCharThatFollows && Object.prototype.hasOwnProperty.call(entStartsWith, str[firstCharThatFollows]) && Object.prototype.hasOwnProperty.call(entStartsWith[str[firstCharThatFollows]], str[secondCharThatFollows]) && entStartsWith[str[firstCharThatFollows]][str[secondCharThatFollows]].some(function (entity) {
-          // if (str.entStartsWith(`${entity};`, firstCharThatFollows)) {
           var matchEntityOnTheRight = rightSeq.apply(void 0, [str, toDeleteAllAmpEndHere - 1].concat(entity.split("")));
           /* istanbul ignore else */
 
@@ -11054,7 +10411,7 @@ function fixEnt(str, originalOpts) {
             return true;
           }
         })) {
-          doNothingUntil = firstCharThatFollows + matchedTemp.length + 1; // is there ampersand on the left of "i", the first amp;?
+          doNothingUntil = firstCharThatFollows + matchedTemp.length + 1;
 
           var _whatsOnTheLeft = left(str, i);
           /* istanbul ignore else */
@@ -11070,9 +10427,6 @@ function fixEnt(str, originalOpts) {
               rangeValDecoded: decode$1("&" + matchedTemp + ";")
             });
           } else if (_whatsOnTheLeft) {
-            // we need to add the ampersand as well. Now, another consideration
-            // appears: whitespace and where exactly to put it. Algorithmically,
-            // right here, at this first letter "a" from "amp;&<some-entity>;"
             var _rangeFrom = i;
             var spaceReplacement = "";
             if (str[i - 1] === " ") ;
@@ -11091,25 +10445,13 @@ function fixEnt(str, originalOpts) {
           }
         }
       }
-    } // catch #x of messed up entities without ampersand (like #x26;)
-
+    }
 
     if (str[i] === "#" && right(str, i) && str[right(str, i)].toLowerCase() === "x" && (!str[i - 1] || !left(str, i) || str[left(str, i)] !== "&")) {
       if (isNumeric(str[right(str, right(str, i))])) {
         brokenNumericEntityStartAt = i;
       }
-    } //            |
-    //            |
-    //            |
-    //            |
-    //            |
-    // PART 3. RULES AT THE BOTTOM
-    //            |
-    //            |
-    //            |
-    //            |
-    //            |
-
+    }
 
     counter += 1;
   };
@@ -11118,40 +10460,11 @@ function fixEnt(str, originalOpts) {
     var _ret = _loop(i);
 
     if (_ret === "continue") continue;
-  } //                                      ^
-  //                                     /|\
-  //                                    / | \
-  //                                   /  |  \
-  //                                  /   |   \
-  //                                 /    |    \
-  //                                      |
-  //                                      |
-  //              T   H   E       L   O   O   P       E   N   D   S
-  //                                      |
-  //                                      |
-  //                                      |
-  //                                      |
-  //                                      |
-  //                                      |
-
+  }
 
   if (!rangesArr2.length) {
     return [];
-  } // return rangesArr2.map(opts.cb);
-  // if any two issue objects have identical "from" indexes, remove the one
-  // which spans more. For example, [4, 8] and [4, 12] would end up [4, 12]
-  // winning and [4, 8] removed. Obviously, it's not arrays, it's objects,
-  // format for example
-  // {
-  //     "ruleName": "bad-named-html-entity-malformed-amp",
-  //     "entityName": "amp",
-  //     "rangeFrom": 4,
-  //     "rangeTo": 8,
-  //     "rangeValEncoded": "&amp;",
-  //     "rangeValDecoded": "&"
-  // },
-  // so instead of [4, 8] that would be [rangeFrom, rangeTo]...
-
+  }
 
   var res = rangesArr2.filter(function (filteredRangeObj, i) {
     return rangesArr2.every(function (oneOfEveryObj, y) {
@@ -11164,13 +10477,11 @@ function fixEnt(str, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.6
+ * Version: 3.13.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -11182,8 +10493,6 @@ function arrayiffy(something) {
 
   return something;
 }
-
-/* eslint no-plusplus:0 */
 
 function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
@@ -11206,8 +10515,7 @@ var defaults$8 = {
 
 var defaultGetNextIdx = function defaultGetNextIdx(index) {
   return index + 1;
-}; // eslint-disable-next-line consistent-return
-
+};
 
 function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
   if (special === void 0) {
@@ -11218,7 +10526,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     getNextIdx = defaultGetNextIdx;
   }
 
-  var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
+  var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
 
   if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
@@ -11228,52 +10536,21 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
   if (position >= str.length && !special) {
     return false;
-  } // The "charsToCheckCount" varies, it decreases with skipped characters,
-  // as long as "maxMismatches" allows. It's not the count of how many
-  // characters de-facto have been matched from the source.
+  }
 
-
-  var charsToCheckCount = special ? 1 : whatToMatchVal.length; // this is the counter of real characters matched. It is not reduced
-  // from the holes in matched. For example, if source is "abc" and
-  // maxMismatches=1 and we have "ac", result of the match will be true,
-  // the following var will be equal to 2, meaning we matched two
-  // characters:
-
-  var charsMatchedTotal = 0; // used to catch frontal false positives, where too-eager matching
-  // depletes the mismatches allowance before precisely matching the exact
-  // string that follows, yielding too early false-positive start
-
+  var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+  var charsMatchedTotal = 0;
   var patienceReducedBeforeFirstMatch = false;
-  var lastWasMismatched = false; // value is "false" or index of where it was activated
-  // if no character was ever matched, even through if opts.maxMismatches
-  // would otherwise allow to skip characters, this will act as a last
-  // insurance - at least one character must have been matched to yield a
-  // positive result!
-
+  var lastWasMismatched = false;
   var atLeastSomethingWasMatched = false;
   var patience = opts.maxMismatches;
-  var i = position; // internal-use flag, not the same as "atLeastSomethingWasMatched":
-
-  var somethingFound = false; // these two drive opts.firstMustMatch and opts.lastMustMatch:
-
+  var i = position;
+  var somethingFound = false;
   var firstCharacterMatched = false;
-  var lastCharacterMatched = false; // bail early if there's whitespace in front, imagine:
-  // abc important}
-  //   ^
-  //  start, match ["!important"], matchRightIncl()
-  //
-  // in case above, "c" consumed 1 patience, let's say 1 is left,
-  // we stumble upon "i" where "!" is missing. "c" is false start.
+  var lastCharacterMatched = false;
 
   function whitespaceInFrontOfFirstChar() {
-    return (// it's a first letter match
-      charsMatchedTotal === 1 && // and character in front exists
-      // str[i - 1] &&
-      // and it's whitespace
-      // !str[i - 1].trim() &&
-      // some patience has been consumed already
-      patience < opts.maxMismatches - 1
-    );
+    return charsMatchedTotal === 1 && patience < opts.maxMismatches - 1;
   }
 
   while (str[i]) {
@@ -11292,7 +10569,6 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       return val.toLowerCase();
     }).includes(str[i].toLowerCase())) {
       if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
-        // return true because we reached the zero'th index, exactly what we're looking for
         return true;
       }
 
@@ -11300,7 +10576,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       continue;
     }
 
-    var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1]; // let's match
+    var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
 
     if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
       if (!somethingFound) {
@@ -11309,12 +10585,10 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
       if (!atLeastSomethingWasMatched) {
         atLeastSomethingWasMatched = true;
-      } // if this was the first character from the "to-match" list, flip the flag
-
+      }
 
       if (charsToCheckCount === whatToMatchVal.length) {
-        firstCharacterMatched = true; // now, if the first character was matched and yet, patience was
-        // reduced already, this means there's a false beginning in front
+        firstCharacterMatched = true;
 
         if (patience !== opts.maxMismatches) {
           return false;
@@ -11324,33 +10598,14 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       }
 
       charsToCheckCount -= 1;
-      charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
-      // abc important}
-      //   ^
-      //  start, match ["!important"], matchRightIncl()
-      //
-      // in case above, "c" consumed 1 patience, let's say 1 is left,
-      // we stumble upon "i" where "!" is missing. "c" is false start.
+      charsMatchedTotal++;
 
       if (whitespaceInFrontOfFirstChar()) {
         return false;
       }
 
       if (!charsToCheckCount) {
-        return (// either it was not a perfect match
-          charsMatchedTotal !== whatToMatchVal.length || // or it was, and in that case, no patience was reduced
-          // (if a perfect match was found, yet some "patience" was reduced,
-          // that means we have false positive characters)
-          patience === opts.maxMismatches || // mind you, it can be a case of rogue characters in-between
-          // the what was matched, imagine:
-          // source: "abxcd", matching ["bc"], maxMismatches=1
-          // in above case, charsMatchedTotal === 2 and whatToMatchVal ("bc") === 2
-          // - we want to exclude cases of frontal false positives, like:
-          // source: "xy abc", match "abc", maxMismatches=2, start at 0
-          //          ^
-          //       match form here to the right
-          !patienceReducedBeforeFirstMatch ? i : false
-        );
+        return charsMatchedTotal !== whatToMatchVal.length || patience === opts.maxMismatches || !patienceReducedBeforeFirstMatch ? i : false;
       }
     } else {
       if (!patienceReducedBeforeFirstMatch && !charsMatchedTotal) {
@@ -11358,23 +10613,14 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       }
 
       if (opts.maxMismatches && patience && i) {
-        patience -= 1; // the bigger the maxMismatches, the further away we must check for
-        // alternative matches
+        patience -= 1;
 
         for (var y = 0; y <= patience; y++) {
-          // maybe str[i] will match against next charToCompareAgainst?
           var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
           var nextCharInSource = str[getNextIdx(i)];
 
-          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
-          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-            charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
-            // abc important}
-            //   ^
-            //  start, match ["!important"], matchRightIncl()
-            //
-            // in case above, "c" consumed 1 patience, let's say 1 is left,
-            // we stumble upon "i" where "!" is missing. "c" is false start.
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsMatchedTotal++;
 
             if (whitespaceInFrontOfFirstChar()) {
               return false;
@@ -11383,8 +10629,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
-          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
-          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
             if (!charsMatchedTotal && !opts.hungry) {
               return false;
             }
@@ -11393,41 +10638,27 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
             somethingFound = true;
             break;
           } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
-            // If "nextCharToCompareAgainst" is undefined, this
-            // means there are no more characters left to match,
-            // this is the last character to be matched.
-            // This means, if patience >= 0, this is it,
-            // the match is still positive.
             return i;
-          } // ███████████████████████████████████████
-
+          }
         }
 
         if (!somethingFound) {
-          // if the character was rogue, we mark it:
-          lastWasMismatched = i; // patience--;
-          // console.log(
-          //   `350 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`patience`}\u001b[${39}m`} = ${patience}`
-          // );
+          lastWasMismatched = i;
         }
       } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
         return 0;
       } else {
         return false;
       }
-    } // turn off "lastWasMismatched" if it's on and it hasn't been activated
-    // on this current index:
-
+    }
 
     if (lastWasMismatched !== false && lastWasMismatched !== i) {
       lastWasMismatched = false;
-    } // if all was matched, happy days
-
+    }
 
     if (charsToCheckCount < 1) {
       return i;
-    } // iterate onto the next index, otherwise while would loop infinitely
-
+    }
 
     i = getNextIdx(i);
   }
@@ -11443,47 +10674,9 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
     return false;
   }
-} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// Real deal
-
+}
 
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
-  // insurance
   if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
@@ -11491,10 +10684,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var opts = _objectSpread2(_objectSpread2({}, defaults$8), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
-    // arrayiffy if needed:
     opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
-  } // stringify all:
-
+  }
 
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr$1(el) ? el : String(el);
@@ -11545,87 +10736,71 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     return false;
   })) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index " + culpritsIndex + " is longer than 1 character, " + culpritsVal.length + " (equals to " + culpritsVal + "). Please split it into separate characters and put into array as separate elements.");
-  } // action
-  // CASE 1. If it's driven by callback-only, the 3rd input argument, what to look
-  // for - is falsey - empty string within array (or not), OR given null
+  }
 
+  if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$1(whatToMatch[0]) && !whatToMatch[0].trim()) {
+    if (typeof opts.cb === "function") {
+      var firstCharOutsideIndex;
+      var startingPosition = position;
 
-  if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
-  Array.isArray(whatToMatch) && !whatToMatch.length || // []
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$1(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
-  ) {
-      if (typeof opts.cb === "function") {
-        var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
+      if (mode === "matchLeftIncl" || mode === "matchRight") {
+        startingPosition += 1;
+      }
 
-        var startingPosition = position;
+      if (mode[5] === "L") {
+        for (var y = startingPosition; y--;) {
+          var currentChar = str[y];
 
-        if (mode === "matchLeftIncl" || mode === "matchRight") {
-          startingPosition += 1;
-        }
-
-        if (mode[5] === "L") {
-          for (var y = startingPosition; y--;) {
-            // assemble the value of the current character
-            var currentChar = str[y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
-              break;
-            }
-          }
-        } else if (mode.startsWith("matchRight")) {
-          for (var _y = startingPosition; _y < str.length; _y++) {
-            // assemble the value of the current character
-            var _currentChar = str[_y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
-              firstCharOutsideIndex = _y;
-              break;
-            }
+          if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            firstCharOutsideIndex = y;
+            break;
           }
         }
+      } else if (mode.startsWith("matchRight")) {
+        for (var _y = startingPosition; _y < str.length; _y++) {
+          var _currentChar = str[_y];
 
-        if (firstCharOutsideIndex === undefined) {
-          return false;
+          if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+            firstCharOutsideIndex = _y;
+            break;
+          }
         }
+      }
 
-        var wholeCharacterOutside = str[firstCharOutsideIndex];
-        var indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-        var theRemainderOfTheString = "";
+      if (firstCharOutsideIndex === undefined) {
+        return false;
+      }
 
-        if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
-          theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
-        }
+      var wholeCharacterOutside = str[firstCharOutsideIndex];
+      var indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+      var theRemainderOfTheString = "";
 
-        if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
-        } // ELSE matchRight & matchRightIncl
+      if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
+        theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
+      }
 
-
-        if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
-          theRemainderOfTheString = str.slice(firstCharOutsideIndex);
-        }
-
+      if (mode[5] === "L") {
         return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
 
-      var extraNote = "";
-
-      if (!originalOpts) {
-        extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+      if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
+        theRemainderOfTheString = str.slice(firstCharOutsideIndex);
       }
 
-      throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!" + extraNote);
-    } // Case 2. Normal operation where callback may or may not be present, but it is
-  // only accompanying the matching of what was given in 3rd input argument.
-  // Then if 3rd arg's contents were matched, callback is checked and its Boolean
-  // result is merged using logical "AND" - meaning both have to be true to yield
-  // final result "true".
+      return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+    }
 
+    var extraNote = "";
+
+    if (!originalOpts) {
+      extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+    }
+
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!" + extraNote);
+  }
 
   for (var i = 0, len = whatToMatch.length; i < len; i++) {
-    special = typeof whatToMatch[i] === "function"; // since input can be function, we need to grab the value explicitly:
-
+    special = typeof whatToMatch[i] === "function";
     var whatToMatchVal = whatToMatch[i];
     var fullCharacterInFront = void 0;
     var indexOfTheCharacterInFront = void 0;
@@ -11640,17 +10815,14 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
     var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i2) {
       return mode[5] === "L" ? i2 - 1 : i2 + 1;
-    }); // if march() returned positive result and it was "special" case,
-    // Bob's your uncle, here's the result:
+    });
 
     if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
       return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
-    } // now, the "found" is the index of the first character of what was found.
-    // we need to calculate the character to the left/right of it:
-
+    }
 
     if (Number.isInteger(found)) {
-      indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1; //
+      indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
 
       if (mode[5] === "L") {
         restOfStringInFront = str.slice(0, found);
@@ -11673,7 +10845,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
 
   return false;
-} // External API functions
+}
 
 function matchRightIncl(str, position, whatToMatch, opts) {
   return main("matchRightIncl", str, position, whatToMatch, opts);
@@ -11682,7 +10854,7 @@ function matchRightIncl(str, position, whatToMatch, opts) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -11693,29 +10865,22 @@ function collWhitespace(str, originallineBreakLimit) {
     originallineBreakLimit = 1;
   }
 
-  var rawNbsp = "\xA0"; // helpers
+  var rawNbsp = "\xA0";
 
   function reverse(s) {
     return Array.from(s).reverse().join("");
-  } // replaces the leading/trailing whitespace chunks with final strings
-
+  }
 
   function prep(whitespaceChunk, limit, trailing) {
-    // when processing the leading whitespace, it's \n\r --- CR - LF
-    // when processing the trailing whitespace, we're processing inverted order,
-    // so it's \n\r --- LF - CR
-    // for this reason, we set first and second linebreak according to direction,
-    // the "trailing" boolean:
     var firstBreakChar = trailing ? "\n" : "\r";
     var secondBreakChar = trailing ? "\r" : "\n";
 
     if (!whitespaceChunk) {
       return whitespaceChunk;
-    } // let whitespace char count since last CR or LF
-
+    }
 
     var crlfCount = 0;
-    var res = ""; // let beginning = true;
+    var res = "";
 
     for (var i = 0, len = whitespaceChunk.length; i < len; i++) {
       if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
@@ -11748,13 +10913,11 @@ function collWhitespace(str, originallineBreakLimit) {
   }
 
   if (typeof str === "string" && str.length) {
-    // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
     var lineBreakLimit = 1;
 
     if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
       lineBreakLimit = +originallineBreakLimit;
-    } // plan: extract what would String.prototype() would remove, front and back parts
-
+    }
 
     var frontPart = "";
     var endPart = "";
@@ -11768,25 +10931,16 @@ function collWhitespace(str, originallineBreakLimit) {
           break;
         }
       }
-    } // if whole string is whitespace, endPart is empty string
-
+    }
 
     if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
       for (var _i = str.length; _i--;) {
-        // console.log(
-        //   `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
-        //     str[i],
-        //     null,
-        //     4
-        //   )}`}\u001b[${39}m`}`
-        // );
         if (str[_i].trim()) {
           endPart = str.slice(_i + 1);
           break;
         }
       }
-    } // -------------------------------------------------------------------------
-
+    }
 
     return "" + prep(frontPart, lineBreakLimit, false) + str.trim() + reverse(prep(reverse(endPart), lineBreakLimit, true));
   }
@@ -11800,17 +10954,14 @@ var defaults$7 = {
 };
 
 function rSort(arrOfRanges, originalOptions) {
-  // quick ending
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
-  } // fill any settings with defaults if missing:
+  }
 
-
-  var opts = _objectSpread2(_objectSpread2({}, defaults$7), originalOptions); // arrOfRanges validation
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults$7), originalOptions);
 
   var culpritsIndex;
-  var culpritsLen; // validate does every range consist of exactly two indexes:
+  var culpritsLen;
 
   if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
     return range;
@@ -11824,8 +10975,7 @@ function rSort(arrOfRanges, originalOptions) {
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") has not two but " + culpritsLen + " elements!");
-  } // validate are range indexes natural numbers:
-
+  }
 
   if (!arrOfRanges.filter(function (range) {
     return range;
@@ -11838,8 +10988,7 @@ function rSort(arrOfRanges, originalOptions) {
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") does not consist of only natural numbers!");
-  } // let's assume worst case scenario is N x N.
-
+  }
 
   var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
     return range;
@@ -11877,21 +11026,12 @@ var defaults$6 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
-}; // merges the overlapping ranges
-// case #1. exact extension:
-// [ [1, 5], [5, 10] ] => [ [1, 10] ]
-// case #2. overlap:
-// [ [1, 4], [3, 5] ] => [ [1, 5] ]
+};
 
 function rMerge(arrOfRanges, originalOpts) {
-  //
-  // internal functions:
-  // ---------------------------------------------------------------------------
   function isObj(something) {
     return something && typeof something === "object" && !Array.isArray(something);
-  } // quick ending:
-  // ---------------------------------------------------------------------------
-
+  }
 
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return null;
@@ -11901,19 +11041,17 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts);
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
       } else if (opts.progressFn && typeof opts.progressFn !== "function") {
         throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"" + typeof opts.progressFn + "\", equal to " + JSON.stringify(opts.progressFn, null, 4));
-      } // 2. validate opts.mergeType
-
+      }
 
       if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
         throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
-      } // 3. validate opts.joinRangesThatTouchEdges
-
+      }
 
       if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
         throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"" + typeof opts.joinRangesThatTouchEdges + "\", equal to " + JSON.stringify(opts.joinRangesThatTouchEdges, null, 4));
@@ -11923,18 +11061,13 @@ function rMerge(arrOfRanges, originalOpts) {
     }
   } else {
     opts = _objectSpread2({}, defaults$6);
-  } // progress-wise, sort takes first 20%
-  // two-level-deep array clone:
+  }
 
-
-  var filtered = arrOfRanges // filter out null
-  .filter(function (range) {
+  var filtered = arrOfRanges.filter(function (range) {
     return range;
   }).map(function (subarr) {
     return [].concat(subarr);
-  }).filter( // filter out futile ranges with identical starting and ending points with
-  // nothing to add (no 3rd argument)
-  function (rangeArr) {
+  }).filter(function (rangeArr) {
     return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
   });
   var sortedRanges;
@@ -11942,11 +11075,9 @@ function rMerge(arrOfRanges, originalOpts) {
   var percentageDone;
 
   if (opts.progressFn) {
-    // progress already gets reported in [0,100] range, so we just need to
-    // divide by 5 in order to "compress" that into 20% range.
     sortedRanges = rSort(filtered, {
       progressFn: function progressFn(percentage) {
-        percentageDone = Math.floor(percentage / 5); // ensure each percent is passed only once:
+        percentageDone = Math.floor(percentage / 5);
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
@@ -11962,8 +11093,7 @@ function rMerge(arrOfRanges, originalOpts) {
     return null;
   }
 
-  var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
-  // loop from the end:
+  var len = sortedRanges.length - 1;
 
   for (var i = len; i > 0; i--) {
     if (opts.progressFn) {
@@ -11971,26 +11101,20 @@ function rMerge(arrOfRanges, originalOpts) {
 
       if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
         lastPercentageDone = percentageDone;
-        opts.progressFn(percentageDone); // console.log(
-        //   `153 REPORTING ${`\u001b[${33}m${`doneSoFar`}\u001b[${39}m`} = ${doneSoFar}`
-        // );
+        opts.progressFn(percentageDone);
       }
-    } // if current range is before the preceding-one
-
+    }
 
     if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
       sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
-      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]); // tend the third argument, "what to insert"
+      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
 
       if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
-        // if the value of the range before exists:
         if (sortedRanges[i - 1][2] !== null) {
           if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
             sortedRanges[i - 1][2] = null;
           } else if (sortedRanges[i - 1][2] != null) {
-            // if there's a clash of "insert" values:
             if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
-              // take the value from the range that's on the right:
               sortedRanges[i - 1][2] = sortedRanges[i][2];
             } else {
               sortedRanges[i - 1][2] += sortedRanges[i][2];
@@ -11999,11 +11123,9 @@ function rMerge(arrOfRanges, originalOpts) {
             sortedRanges[i - 1][2] = sortedRanges[i][2];
           }
         }
-      } // get rid of the second element:
+      }
 
-
-      sortedRanges.splice(i, 1); // reset the traversal, start from the end again
-
+      sortedRanges.splice(i, 1);
       i = sortedRanges.length;
     }
   }
@@ -12027,12 +11149,9 @@ var defaults$5 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
-}; // -----------------------------------------------------------------------------
+};
 
 var Ranges = /*#__PURE__*/function () {
-  //
-  // O P T I O N S
-  // =============
   function Ranges(originalOpts) {
     var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
 
@@ -12044,8 +11163,7 @@ var Ranges = /*#__PURE__*/function () {
       } else {
         throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
       }
-    } // so it's correct, let's get it in:
-
+    }
 
     this.opts = opts;
     this.ranges = [];
@@ -12057,7 +11175,6 @@ var Ranges = /*#__PURE__*/function () {
     var _this = this;
 
     if (originalFrom == null && originalTo == null) {
-      // absent ranges are marked as null - instead of array of arrays we can receive a null
       return;
     }
 
@@ -12069,20 +11186,16 @@ var Ranges = /*#__PURE__*/function () {
           })) {
             originalFrom.forEach(function (thing) {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array
                 _this.add.apply(_this, thing);
-              } // just skip other cases
-
+              }
             });
             return;
           }
 
           if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
-            // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
-        } // else,
-
+        }
 
         return;
       }
@@ -12096,23 +11209,16 @@ var Ranges = /*#__PURE__*/function () {
     var to = +originalTo;
 
     if (isNum(addVal)) {
-      // eslint-disable-next-line no-param-reassign
       addVal = String(addVal);
-    } // validation
-
+    }
 
     if (isNum(from) && isNum(to)) {
-      // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + typeof addVal + ", equal to:\n" + JSON.stringify(addVal, null, 4));
-      } // Does the incoming "from" value match the existing last element's "to" value?
-
+      }
 
       if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
-        // The incoming range is an exact extension of the last range, like
-        // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
-        this.last()[1] = to; // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
-
+        this.last()[1] = to;
         if (this.last()[2] === null || addVal === null) ;
 
         if (this.last()[2] !== null && existy(addVal)) {
@@ -12123,7 +11229,6 @@ var Ranges = /*#__PURE__*/function () {
           }
 
           if (!(isStr(calculatedVal) && !calculatedVal.length)) {
-            // don't let the zero-length strings past
             this.last()[2] = calculatedVal;
           }
         }
@@ -12136,13 +11241,9 @@ var Ranges = /*#__PURE__*/function () {
         this.ranges.push(whatToPush);
       }
     } else {
-      // Error somewhere!
-      // Let's find out where.
-      // is it first arg?
       if (!(isNum(from) && from >= 0)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"" + typeof from + "\" equal to: " + JSON.stringify(from, null, 4));
       } else {
-        // then it's second...
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"" + typeof to + "\" equal to: " + JSON.stringify(to, null, 4));
       }
     }
@@ -12150,15 +11251,12 @@ var Ranges = /*#__PURE__*/function () {
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
     this.add(originalFrom, originalTo, addVal);
-  } // C U R R E N T () - kindof a getter
-  // ==================================
-  ;
+  };
 
   _proto.current = function current() {
     var _this2 = this;
 
     if (Array.isArray(this.ranges) && this.ranges.length) {
-      // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
       });
@@ -12177,21 +11275,14 @@ var Ranges = /*#__PURE__*/function () {
     }
 
     return null;
-  } // W I P E ()
-  // ==========
-  ;
+  };
 
   _proto.wipe = function wipe() {
     this.ranges = [];
-  } // R E P L A C E ()
-  // ==========
-  ;
+  };
 
   _proto.replace = function replace(givenRanges) {
     if (Array.isArray(givenRanges) && givenRanges.length) {
-      // Now, ranges can be array of arrays, correct format but also single
-      // range, an array of two natural numbers might be given.
-      // Let's put safety latch against such cases
       if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
         throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, " + JSON.stringify(givenRanges[0], null, 4) + " should be an array and its first element should be an integer, a string index.");
       } else {
@@ -12200,9 +11291,7 @@ var Ranges = /*#__PURE__*/function () {
     } else {
       this.ranges = [];
     }
-  } // L A S T ()
-  // ==========
-  ;
+  };
 
   _proto.last = function last() {
     if (Array.isArray(this.ranges) && this.ranges.length) {
@@ -12218,7 +11307,7 @@ var Ranges = /*#__PURE__*/function () {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -12247,19 +11336,16 @@ function rApply(str, originalRangesArr, _progressFn) {
   if (!originalRangesArr || !originalRangesArr.filter(function (range) {
     return range;
   }).length) {
-    // quick ending - no ranges passed
     return str;
   }
 
   var rangesArr;
 
   if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
-    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
-  } // allocate first 10% of progress to this stage
-
+  }
 
   var len = rangesArr.length;
   var counter = 0;
@@ -12298,13 +11384,10 @@ function rApply(str, originalRangesArr, _progressFn) {
     }
 
     counter += 1;
-  }); // allocate another 10% of the progress indicator length to the rangesMerge step:
-
+  });
   var workingRanges = rMerge(rangesArr, {
     progressFn: function progressFn(perc) {
       if (_progressFn) {
-        // since "perc" is already from zero to hundred, we just divide by 10 and
-        // get the range from zero to ten:
         percentageDone = 10 + Math.floor(perc / 10);
         /* istanbul ignore else */
 
@@ -12315,18 +11398,14 @@ function rApply(str, originalRangesArr, _progressFn) {
         }
       }
     }
-  }); // allocate the rest 80% to the actual string assembly:
-
+  });
   var len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
   /* istanbul ignore else */
 
   if (len2 > 0) {
-    var tails = str.slice(workingRanges[len2 - 1][1]); // eslint-disable-next-line no-param-reassign
-
+    var tails = str.slice(workingRanges[len2 - 1][1]);
     str = workingRanges.reduce(function (acc, _val, i, arr) {
       if (_progressFn) {
-        // since "perc" is already from zero to hundred, we just divide by 10 and
-        // get the range from zero to ten:
         percentageDone = 20 + Math.floor(i / len2 * 80);
         /* istanbul ignore else */
 
@@ -12340,8 +11419,7 @@ function rApply(str, originalRangesArr, _progressFn) {
       var beginning = i === 0 ? 0 : arr[i - 1][1];
       var ending = arr[i][0];
       return acc + str.slice(beginning, ending) + (arr[i][2] || "");
-    }, ""); // eslint-disable-next-line no-param-reassign
-
+    }, "");
     str += tails;
   }
 
@@ -12384,7 +11462,7 @@ var headsAndTailsHexo = [{
   heads: ["<%", "<%=", "<%-"],
   tails: ["%>", "=%>", "-%>"]
 }];
-var knownHTMLTags = ["abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]; // finally,
+var knownHTMLTags = ["abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
 var defaults$4 = {
   removeWidowPreventionMeasures: false,
   convertEntities: true,
@@ -12401,8 +11479,7 @@ var defaults$4 = {
 };
 
 function removeWidows(str, originalOpts) {
-  // track time taken
-  var start = Date.now(); // insurance:
+  var start = Date.now();
 
   if (typeof str !== "string") {
     if (str === undefined) {
@@ -12414,8 +11491,7 @@ function removeWidows(str, originalOpts) {
 
   if (originalOpts && typeof originalOpts !== "object") {
     throw new Error("string-remove-widows: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
-  } // consts
-
+  }
 
   var isArr = Array.isArray;
   var len = str.length;
@@ -12425,32 +11501,21 @@ function removeWidows(str, originalOpts) {
   var punctuationCharsToConsiderWidowIssue = ["."];
   var postcodeRegexFront = /[A-Z]{1,2}[0-9][0-9A-Z]?$/;
   var postcodeRegexEnd = /^[0-9][A-Z]{2}/;
-  var leavePercForLastStage = 0.06; // in range of [0, 1]
-  // vars
-
+  var leavePercForLastStage = 0.06;
   var currentPercentageDone;
   var lastPercentage = 0;
-  var wordCount = 0; // counted per-chunk (paragraph)
-
-  var charCount = 0; // counted per-character, per chunk (paragraph)
-
-  var secondToLastWhitespaceStartedAt; // necessary to support whitespace at line ends
-
-  var secondToLastWhitespaceEndedAt; // necessary to support whitespace at line ends
-
+  var wordCount = 0;
+  var charCount = 0;
+  var secondToLastWhitespaceStartedAt;
+  var secondToLastWhitespaceEndedAt;
   var lastWhitespaceStartedAt;
   var lastWhitespaceEndedAt;
   var lastEncodedNbspStartedAt;
-  var lastEncodedNbspEndedAt; // let lineBreakCount;
+  var lastEncodedNbspEndedAt;
+  var doNothingUntil;
+  var bumpWordCountAt;
 
-  var doNothingUntil; // requests to bump word count in the future:
-
-  var bumpWordCountAt; // prep the opts
-
-  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts); // Now, strictly speaking, this program can remove widow words but also
-  // it will decode any entities it encounters if option convertEntities is off.
-  // We need an interface to report what actions were taken:
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts);
 
   var whatWasDone = {
     removeWidows: false,
@@ -12460,28 +11525,16 @@ function removeWidows(str, originalOpts) {
   if (!opts.ignore || !isArr(opts.ignore) && typeof opts.ignore !== "string") {
     opts.ignore = [];
   } else {
-    // arrayiffy
     if (typeof opts.ignore === "string") {
       opts.ignore = [opts.ignore];
-    } // expand the string value presets
-
+    }
 
     if (opts.ignore.includes("all")) {
-      // hugo heads tails and included in jinja's list, so can be omitted
       opts.ignore = opts.ignore.concat(headsAndTailsJinja.concat(headsAndTailsHexo));
     } else if (opts.ignore.some(function (val) {
       return typeof val === "string";
     })) {
-      // if some values are strings, we need to either remove them or expand them
-      // from string to recognised list of heads/tails
-      var temp = []; // console.log(
-      //   `166 ${`\u001b[${31}m${`OLD`}\u001b[${39}m`} ${`\u001b[${33}m${`opts.ignore`}\u001b[${39}m`} = ${JSON.stringify(
-      //     opts.ignore,
-      //     null,
-      //     0
-      //   )}`
-      // );
-
+      var temp = [];
       opts.ignore = opts.ignore.filter(function (val) {
         if (typeof val === "string" && val.length) {
           if (["nunjucks", "jinja", "liquid"].includes(val.trim().toLowerCase())) {
@@ -12497,8 +11550,7 @@ function removeWidows(str, originalOpts) {
 
         if (typeof val === "object") {
           return true;
-        } // otherwise false is returned, value is excluded
-
+        }
       });
 
       if (temp.length) {
@@ -12510,15 +11562,11 @@ function removeWidows(str, originalOpts) {
   var ceil;
 
   if (opts.reportProgressFunc) {
-    // ceil is the top the range [0, 100], or whatever it was customised to,
-    // [opts.reportProgressFuncFrom, opts.reportProgressFuncTo].
-    // Also, leavePercForLastStage needs to be left to next stage, so "100" or
-    // "opts.reportProgressFuncTo" is multiplied by (1 - leavePercForLastStage).
     ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
   }
 
   function push(finalStart, finalEnd) {
-    var finalWhatToInsert = rawnbsp; // calculate what to insert
+    var finalWhatToInsert = rawnbsp;
 
     if (opts.removeWidowPreventionMeasures) {
       finalWhatToInsert = " ";
@@ -12547,23 +11595,12 @@ function removeWidows(str, originalOpts) {
     lastWhitespaceStartedAt = undefined;
     lastWhitespaceEndedAt = undefined;
     lastEncodedNbspStartedAt = undefined;
-    lastEncodedNbspEndedAt = undefined; // lineBreakCount = undefined;
+    lastEncodedNbspEndedAt = undefined;
   }
 
-  resetAll(); // iterate the string
+  resetAll();
 
   var _loop = function _loop(_i) {
-    //
-    //
-    //
-    //
-    //                    TOP
-    //
-    //
-    //
-    //
-    // Logging:
-    // ███████████████████████████████████████ // detect templating language heads and tails
     if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
       opts.ignore.some(function (valObj, y) {
         if (isArr(valObj.heads) && valObj.heads.some(function (oneOfHeads) {
@@ -12575,76 +11612,44 @@ function removeWidows(str, originalOpts) {
           return true;
         }
       });
-    } // if there was word count bump request issued in the past for current
-    // index, do bump it:
-
+    }
 
     if (!doNothingUntil && bumpWordCountAt && bumpWordCountAt === _i) {
       wordCount += 1;
       bumpWordCountAt = undefined;
-    } // Report the progress. Used in web worker setups.
-
+    }
 
     if (typeof opts.reportProgressFunc === "function") {
-      // defaults:
-      // opts.reportProgressFuncFrom = 0
-      // opts.reportProgressFuncTo = 100
-      currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * (ceil || 1)); // console.log(
-      //   `309 ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${currentPercentageDone}; ${`\u001b[${33}m${`lastPercentage`}\u001b[${39}m`} = ${lastPercentage};`
-      // );
+      currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * (ceil || 1));
 
       if (currentPercentageDone !== lastPercentage) {
         lastPercentage = currentPercentageDone;
         opts.reportProgressFunc(currentPercentageDone);
       }
-    } // catch the end of whitespace (must be at the top)
-
+    }
 
     if (!doNothingUntil && _i && str[_i] && str[_i].trim() && (!str[_i - 1] || str[_i - 1] && !str[_i - 1].trim())) {
-      // 1. mark the ending
       lastWhitespaceEndedAt = _i;
     }
 
     if (!doNothingUntil && str[_i] && str[_i].trim()) {
       charCount += 1;
-    } //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //             MIDDLE
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // catch dashes
-
+    }
 
     if (!doNothingUntil && opts.hyphens && (("-" + rawMdash + rawNdash).includes(str[_i]) || str.startsWith(encodedNdashHtml, _i) || str.startsWith(encodedNdashCss, _i) || str.startsWith(encodedNdashJs, _i) || str.startsWith(encodedMdashHtml, _i) || str.startsWith(encodedMdashCss, _i) || str.startsWith(encodedMdashJs, _i)) && str[_i + 1] && (!str[_i + 1].trim() || str[_i] === "&")) {
       if (str[_i - 1] && !str[_i - 1].trim() && str[left(str, _i)]) {
-        push(left(str, _i) + 1, _i); // report what was done:
-
+        push(left(str, _i) + 1, _i);
         whatWasDone.removeWidows = true;
       }
-    } // catch the HTML-encoded (named or numeric) nbsp's:
-
+    }
 
     if (!doNothingUntil && (str.startsWith("&nbsp;", _i) || str.startsWith("&#160;", _i))) {
       lastEncodedNbspStartedAt = _i;
-      lastEncodedNbspEndedAt = _i + 6; // since there was no whitespace, word counting needs to ba taken care of
-      // separately, but the index-bumping must happen in future, at correct time
+      lastEncodedNbspEndedAt = _i + 6;
 
       if (str[_i + 6] && str[_i + 6].trim()) {
         bumpWordCountAt = _i + 6;
-      } // if it opts.convertEntities is off, replace it right away
-
+      }
 
       if (!opts.convertEntities) {
         rangesArr.push(_i, _i + 6, rawnbsp);
@@ -12653,18 +11658,15 @@ function removeWidows(str, originalOpts) {
         rangesArr.push(_i, _i + 6, opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs);
         whatWasDone.convertEntities = true;
       }
-    } // catch the CSS-encoded (\00A0) nbsp's:
-
+    }
 
     if (!doNothingUntil && str[_i + 4] && str[_i] === "\\" && str[_i + 1] === "0" && str[_i + 2] === "0" && str[_i + 3].toUpperCase() === "A" && str[_i + 4] === "0") {
       lastEncodedNbspStartedAt = _i;
-      lastEncodedNbspEndedAt = _i + 5; // since there was no whitespace, word counting needs to ba taken care of
-      // separately, but the index-bumping must happen in future, at correct time
+      lastEncodedNbspEndedAt = _i + 5;
 
       if (str[_i + 5] && str[_i + 5].trim()) {
         bumpWordCountAt = _i + 5;
-      } // if it opts.convertEntities is off, replace it right away
-
+      }
 
       if (!opts.convertEntities) {
         rangesArr.push(_i, _i + 5, rawnbsp);
@@ -12673,47 +11675,40 @@ function removeWidows(str, originalOpts) {
         rangesArr.push(_i, _i + 5, opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs);
         whatWasDone.convertEntities = true;
       }
-    } // catch the JS-encoded (\u00A0) nbsp's:
-
+    }
 
     if (!doNothingUntil && str[_i] === "\\" && str[_i + 1] && str[_i + 1].toLowerCase() === "u" && str[_i + 2] === "0" && str[_i + 3] === "0" && str[_i + 4] && str[_i + 4].toUpperCase() === "A" && str[_i + 5] === "0") {
       lastEncodedNbspStartedAt = _i;
-      lastEncodedNbspEndedAt = _i + 6; // since there was no whitespace, word counting needs to ba taken care of
-      // separately, but the index-bumping must happen in future, at correct time
+      lastEncodedNbspEndedAt = _i + 6;
 
       if (str[_i + 6] && str[_i + 6].trim()) {
         bumpWordCountAt = _i + 6;
-      } // if it opts.convertEntities is off, replace it right away
-
+      }
 
       if (!opts.convertEntities) {
         rangesArr.push(_i, _i + 6, rawnbsp);
       } else if (opts.targetLanguage === "html" || opts.targetLanguage === "css") {
         rangesArr.push(_i, _i + 6, opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss);
       }
-    } // catch raw nbsp's:
-
+    }
 
     if (!doNothingUntil && str[_i] === rawnbsp) {
       lastEncodedNbspStartedAt = _i;
-      lastEncodedNbspEndedAt = _i + 1; // if it opts.convertEntities is off, replace it right away
+      lastEncodedNbspEndedAt = _i + 1;
 
       if (opts.convertEntities) {
         rangesArr.push(_i, _i + 1, opts.targetLanguage === "css" ? encodedNbspCss : opts.targetLanguage === "js" ? encodedNbspJs : encodedNbspHtml);
       }
-    } // catch the first letter of the first word
-
+    }
 
     if (!doNothingUntil && str[_i] && str[_i].trim() && (!str[_i - 1] || !str[_i - 1].trim())) {
-      // 1. bump the word counter
       wordCount += 1;
-    } // catch the ending of paragraphs or the EOL - here's where the action happens
-
+    }
 
     if (!doNothingUntil && (!str[_i] || "\r\n".includes(str[_i]) || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && left(str, _i) && punctuationCharsToConsiderWidowIssue.includes(str[left(str, _i)]))) {
       if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
         var finalStart;
-        var finalEnd; // calculate start and end values
+        var finalEnd;
 
         if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined && lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
           if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
@@ -12729,10 +11724,7 @@ function removeWidows(str, originalOpts) {
         } else if (lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
           finalStart = lastEncodedNbspStartedAt;
           finalEnd = lastEncodedNbspEndedAt;
-        } // if by now the point to insert non-breaking space was not found,
-        // give last chance to secondToLastWhitespaceStartedAt and
-        // secondToLastWhitespaceEndedAt:
-
+        }
 
         if (!(finalStart && finalEnd) && secondToLastWhitespaceStartedAt && secondToLastWhitespaceEndedAt) {
           finalStart = secondToLastWhitespaceStartedAt;
@@ -12746,54 +11738,26 @@ function removeWidows(str, originalOpts) {
       }
 
       resetAll();
-    } // catch postcodes
-    // postcodeRegexFront, postcodeRegexEnd
-
+    }
 
     if (opts.UKPostcodes && str[_i] && !str[_i].trim() && str[_i - 1] && str[_i - 1].trim() && postcodeRegexFront.test(str.slice(0, _i)) && str[right(str, _i)] && postcodeRegexEnd.test(str.slice(right(str, _i)))) {
       push(_i, right(str, _i));
       whatWasDone.removeWidows = true;
-    } //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //              BOTTOM
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // catch the start of whitespace (must be at the bottom)
-    //
-    // either it's first whitespace character ever met, or we're overwriting an
-    // old whitespace record and it's the first character of new whitespace chunk
-
+    }
 
     if (!doNothingUntil && str[_i] && !str[_i].trim() && str[_i - 1] && str[_i - 1].trim() && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim()) && !"/>".includes(str[right(str, _i)]) && !str.slice(0, _i).trim().endsWith("br") && !str.slice(0, _i).trim().endsWith("hr") && !(str.slice(0, _i).endsWith("<") && knownHTMLTags.some(function (tag) {
       return str.startsWith(tag, right(str, _i));
     }))) {
-      // 1. current value becomes second-to-last
       secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
-      secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt; // 2. mark new-one
-
-      lastWhitespaceStartedAt = _i; // 2. wipe the ending of new-one
-
-      lastWhitespaceEndedAt = undefined; // 3. wipe the records of the last nbsp because they are not relevant
+      secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
+      lastWhitespaceStartedAt = _i;
+      lastWhitespaceEndedAt = undefined;
 
       if (lastEncodedNbspStartedAt !== undefined || lastEncodedNbspEndedAt !== undefined) {
         lastEncodedNbspStartedAt = undefined;
         lastEncodedNbspEndedAt = undefined;
       }
-    } // look for templating tails
-
+    }
 
     var tempTailFinding = void 0;
 
@@ -12808,24 +11772,11 @@ function removeWidows(str, originalOpts) {
         }
       }))) {
         doNothingUntil = undefined;
-        _i += tempTailFinding.length; // imagine we caught "{% endif" of the following string:
-        // {% if something %} some text and more text {% endif %}
-        // we need to tackle the "%}" that follows.
+        _i += tempTailFinding.length;
 
         if (isArr(opts.ignore) && opts.ignore.length && str[_i + 1]) {
           opts.ignore.some(function (oneOfHeadsTailsObjs) {
             i = _i;
-            // console.log("\n\n\n");
-            // console.log(
-            //   `857 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`}\n\n\n`
-            // );
-            // console.log(
-            //   `860 PROCESSING ${`\u001b[${33}m${`oneOfHeadsTailsObjs`}\u001b[${39}m`} = ${JSON.stringify(
-            //     oneOfHeadsTailsObjs,
-            //     null,
-            //     4
-            //   )}`
-            // );
             return matchRightIncl(str, _i, oneOfHeadsTailsObjs.tails, {
               trimBeforeMatching: true,
               cb: function cb(_char, _theRemainderOfTheString, index) {
@@ -12844,14 +11795,12 @@ function removeWidows(str, originalOpts) {
           });
         }
       }
-    } // if it's a CR or LF, reset the word/letter counts
-
+    }
 
     if (str[_i] && "\r\n".includes(str[_i])) {
       wordCount = 0;
       charCount = 0;
-    } // skip known tag ranges
-
+    }
 
     if (isArr(opts.tagRanges) && opts.tagRanges.length && opts.tagRanges.some(function (rangeArr) {
       if (_i >= rangeArr[0] && _i <= rangeArr[1] && rangeArr[1] - 1 > _i) {
@@ -12859,12 +11808,7 @@ function removeWidows(str, originalOpts) {
         i = _i;
         return true;
       }
-    })) ; // logging after each loop's iteration:
-    // ███████████████████████████████████████ //
-    //
-    //
-    // end of the loop
-
+    })) ;
     i = _i;
   };
 
@@ -12888,7 +11832,7 @@ function removeWidows(str, originalOpts) {
     },
     whatWasDone: whatWasDone
   };
-} // main export
+}
 
 var HIGH_SURROGATE_START = 0xd800;
 var HIGH_SURROGATE_END = 0xdbff;
@@ -13061,7 +12005,7 @@ runes_1.substr = substr;
 /**
  * ranges-crop
  * Crop array of ranges when they go beyond the reference string's length
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-crop/
@@ -13074,8 +12018,7 @@ function rCrop(arrOfRanges, strLen) {
 
   if (!Array.isArray(arrOfRanges)) {
     throw new TypeError("ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: " + typeof arrOfRanges + ", equal to: " + JSON.stringify(arrOfRanges, null, 4));
-  } // strLen validation
-
+  }
 
   if (!Number.isInteger(strLen)) {
     throw new TypeError("ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: " + typeof strLen + ", equal to: " + JSON.stringify(strLen, null, 4));
@@ -13089,7 +12032,7 @@ function rCrop(arrOfRanges, strLen) {
     });
   }
 
-  var culpritsIndex = 0; // validate are range indexes natural numbers:
+  var culpritsIndex = 0;
 
   if (!arrOfRanges.filter(function (range) {
     return range;
@@ -13106,8 +12049,7 @@ function rCrop(arrOfRanges, strLen) {
     }
 
     throw new TypeError("ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 0) + ") does not consist of only natural numbers!");
-  } // validate that any third argument values (if any) are of a string-type
-
+  }
 
   if (!arrOfRanges.filter(function (range) {
     return range;
@@ -13120,9 +12062,7 @@ function rCrop(arrOfRanges, strLen) {
     return true;
   })) {
     throw new TypeError("ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the " + culpritsIndex + "th range " + JSON.stringify(arrOfRanges[culpritsIndex], null, 0) + " has a argument in the range of a type " + typeof arrOfRanges[culpritsIndex][2]);
-  } //                       finally, the real action
-  // ---------------------------------------------------------------------------
-
+  }
 
   var res = (rMerge(arrOfRanges) || []).filter(function (singleRangeArr) {
     return singleRangeArr[0] <= strLen && (singleRangeArr[2] != undefined || singleRangeArr[0] < strLen);
@@ -13143,13 +12083,11 @@ function rCrop(arrOfRanges, strLen) {
 function rInvert(arrOfRanges, strLen, originalOptions) {
   if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError("ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: " + typeof arrOfRanges + ", equal to: " + JSON.stringify(arrOfRanges, null, 4));
-  } // strLen validation
-
+  }
 
   if (!Number.isInteger(strLen) || strLen < 0) {
     throw new TypeError("ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: " + typeof strLen + ", equal to: " + JSON.stringify(strLen, null, 4));
-  } // arrOfRanges validation
-
+  }
 
   if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
     throw new TypeError("ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = " + JSON.stringify(arrOfRanges, null, 0) + "!");
@@ -13158,27 +12096,22 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.filter(function (range) {
     return Array.isArray(range) && range[0] !== range[1];
   }).length || !strLen) {
-    // this could be ranges.current() from "ranges-push" npm library
-    // which means, absence of any ranges, so invert result is everything:
-    // from index zero to index string.length
     if (!strLen) {
       return null;
     }
 
     return [[0, strLen]];
-  } // opts validation // declare defaults, so we can enforce types later:
-
+  }
 
   var defaults = {
     strictlyTwoElementsInRangeArrays: false,
     skipChecks: false
-  }; // fill any settings with defaults if missing:
+  };
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
 
   var culpritsIndex = 0;
-  var culpritsLen; // validate does every range consist of exactly two indexes:
+  var culpritsLen;
 
   if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
     return range;
@@ -13192,8 +12125,7 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
     return true;
   })) {
     throw new TypeError("ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 0) + ") has not two but " + culpritsLen + " elements!");
-  } // validate are range indexes natural numbers:
-
+  }
 
   if (!opts.skipChecks && !arrOfRanges.every(function (rangeArr, indx) {
     if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
@@ -13209,37 +12141,25 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
   var prep;
 
   if (!opts.skipChecks) {
-    // if checks are enabled, filter merged ranges.
-    // For posterity, merging is general cleaning: sorting, joining overlapping
-    // ranges, also deleting blank ranges (equal start and end indexes with
-    // nothing to insert). Imagine, how can we iterate unsorted ranges, for
-    // example: [[1, 3], [0, 4]] -> it's impossible because order is messed up
-    // and there's overlap. In reality, merged result is simply [[0, 4]].
-    // Then, we invert from 4 onwards to the end of reference string length.
     prep = rMerge(arrOfRanges.filter(function (rangeArr) {
       return rangeArr[0] !== rangeArr[1];
     }));
   } else {
-    // but if checks are turned off, filter straight away:
     prep = arrOfRanges.filter(function (rangeArr) {
       return rangeArr[0] !== rangeArr[1];
-    }); // hopefully input ranges were really sorted...
+    });
   }
 
   var res = prep.reduce(function (accum, currArr, i, arr) {
-    var res2 = []; // if the first range's first index is not zero, additionally add zero range:
+    var res2 = [];
 
     if (i === 0 && arr[0][0] !== 0) {
       res2.push([0, arr[0][0]]);
-    } // Now, for every range, add inverted range that follows. For example,
-    // if we've got [[1, 2], [4, 5]] and we're processing [1, 2], then
-    // add the inverted chunk that follows it, [2, 4].
-
+    }
 
     var endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
 
     if (currArr[1] !== endingIndex) {
-      // this can happen only when opts.skipChecks is on:
       if (opts.skipChecks && currArr[1] > endingIndex) {
         throw new TypeError("ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [" + currArr[1] + ", " + endingIndex + "] which is backwards. For investigation, whole ranges array is:\n" + JSON.stringify(arr, null, 0));
       }
@@ -13255,7 +12175,7 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
 /**
  * ranges-process-outside
  * Iterate string considering ranges, as if they were already applied
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-process-outside/
@@ -13266,9 +12186,6 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
     skipChecks = false;
   }
 
-  //
-  // insurance:
-  //
   if (typeof originalStr !== "string") {
     if (originalStr === undefined) {
       throw new Error("ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!");
@@ -13283,9 +12200,7 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
 
   if (typeof cb !== "function") {
     throw new Error("ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n" + JSON.stringify(cb, null, 4) + " (type " + typeof cb + ")");
-  } // separate the iterator because it might be called with inverted ranges or
-  // with separately calculated "everything" if the ranges are empty/falsey
-
+  }
 
   function iterator(str, arrOfArrays) {
     (arrOfArrays || []).forEach(function (_ref) {
@@ -13309,13 +12224,11 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
   }
 
   if (originalRanges && originalRanges.length) {
-    // if ranges are given, invert and run callback against each character
     var temp = rCrop(rInvert(skipChecks ? originalRanges : originalRanges, originalStr.length, {
       skipChecks: !!skipChecks
     }), originalStr.length);
     iterator(originalStr, temp);
   } else {
-    // otherwise, run callback on everything
     iterator(originalStr, [[0, originalStr.length]]);
   }
 }
@@ -13330,20 +12243,11 @@ var defaults$3 = {
   enforceSpacesOnly: false,
   cb: function cb(_ref) {
     var suggested = _ref.suggested;
-    // console.log(`default CB called`);
-    // console.log(
-    //   `${`\u001b[${33}m${`suggested`}\u001b[${39}m`} = ${JSON.stringify(
-    //     suggested,
-    //     null,
-    //     4
-    //   )}`
-    // );
     return suggested;
   }
 };
 
 function collapse(str, originalOpts) {
-  // f's
   if (typeof str !== "string") {
     throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
   }
@@ -13360,7 +12264,7 @@ function collapse(str, originalOpts) {
   }
 
   var finalIndexesToDelete = new Ranges();
-  var NBSP = "\xA0"; // fill any settings with defaults if missing:
+  var NBSP = "\xA0";
 
   var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
 
@@ -13376,8 +12280,7 @@ function collapse(str, originalOpts) {
     } else if (something) {
       finalIndexesToDelete.push.apply(finalIndexesToDelete, something);
     }
-  } // -----------------------------------------------------------------------------
-
+  }
 
   var spacesStartAt = null;
   var whiteSpaceStartsAt = null;
@@ -13389,27 +12292,6 @@ function collapse(str, originalOpts) {
   var consecutiveLineBreakCount = 0;
 
   for (var i = 0, len = str.length; i <= len; i++) {
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //                        LOOP STARTS - THE TOP PART
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // // line break counting
     if (str[i] === "\r" || str[i] === "\n" && str[i - 1] !== "\r") {
       consecutiveLineBreakCount += 1;
 
@@ -13418,101 +12300,36 @@ function collapse(str, originalOpts) {
       }
 
       linebreaksEndAt = str[i] === "\r" && str[i + 1] === "\n" ? i + 2 : i + 1;
-    } // catch raw non-breaking spaces
-
+    }
 
     if (!opts.trimnbsp && str[i] === NBSP && !nbspPresent) {
       nbspPresent = true;
-    } //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //                             LOOP'S MIDDLE
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // catch the end of space character (" ") sequences
+    }
 
+    if (spacesStartAt !== null && str[i] !== " ") {
+      var a1 = spacesStartAt && whiteSpaceStartsAt || !whiteSpaceStartsAt && (!opts.trimStart || !opts.trimnbsp && (str[i] === NBSP || str[spacesStartAt - 1] === NBSP));
+      var a2 = str[i] || !opts.trimEnd || !opts.trimnbsp && (str[i] === NBSP || str[spacesStartAt - 1] === NBSP);
+      var a3 = !opts.enforceSpacesOnly || (!str[spacesStartAt - 1] || str[spacesStartAt - 1].trim()) && (!str[i] || str[i].trim());
 
-    if ( // spaces sequence hasn't started yet
-    spacesStartAt !== null && // it's a space
-    str[i] !== " ") {
-      var a1 = // it's not a beginning of the string (more general whitespace clauses
-      // will take care of trimming, taking into account opts.trimStart etc)
-      // either it's not leading whitespace
-      spacesStartAt && whiteSpaceStartsAt || // it is within frontal whitespace and
-      !whiteSpaceStartsAt && (!opts.trimStart || !opts.trimnbsp && ( // we can't trim NBSP
-      // and there's NBSP on one side
-      str[i] === NBSP || str[spacesStartAt - 1] === NBSP));
-      var a2 = // it is not a trailing whitespace
-      str[i] || !opts.trimEnd || !opts.trimnbsp && ( // we can't trim NBSP
-      // and there's NBSP on one side
-      str[i] === NBSP || str[spacesStartAt - 1] === NBSP);
-      var a3 = // beware that there might be whitespace characters (like tabs, \t)
-      // before or after this chunk of spaces - if opts.enforceSpacesOnly
-      // is enabled, we need to skip this clause because wider, general
-      // whitespace chunk clauses will take care of the whole chunk, larger
-      // than this [spacesStartAt, i - 1], it will be
-      // [whiteSpaceStartsAt, ..., " "]
-      //
-      // either spaces-only setting is off,
-      !opts.enforceSpacesOnly || // neither of surrounding characters (if present) is not whitespace
-      (!str[spacesStartAt - 1] || // or it's not whitespace
-      str[spacesStartAt - 1].trim()) && ( // either it's end of string
-      !str[i] || // it's not a whitespace
-      str[i].trim());
-
-      if ( // length of spaces sequence is more than 1
-      spacesStartAt < i - 1 && a1 && a2 && a3) {
+      if (spacesStartAt < i - 1 && a1 && a2 && a3) {
         var startIdx = spacesStartAt;
         var endIdx = i;
         var whatToAdd = " ";
 
-        if (opts.trimLines && ( // touches the start
-        !spacesStartAt || // touches the end
-        !str[i] || // linebreak before
-        str[spacesStartAt - 1] && "\r\n".includes(str[spacesStartAt - 1]) || // linebreak after
-        str[i] && "\r\n".includes(str[i]))) {
+        if (opts.trimLines && (!spacesStartAt || !str[i] || str[spacesStartAt - 1] && "\r\n".includes(str[spacesStartAt - 1]) || str[i] && "\r\n".includes(str[i]))) {
           whatToAdd = null;
-        } // the plan is to reuse existing spaces - for example, imagine:
-        // "a   b" - three space gap.
-        // Instead of overwriting all three spaces with single space, range:
-        // [1, 4, " "], we leave the last space, only deleting other two:
-        // range [1, 3] (notice the third element, "what to add" missing).
-
+        }
 
         if (whatToAdd && str[spacesStartAt] === " ") {
           endIdx -= 1;
           whatToAdd = null;
-        } // if nbsp trimming is disabled and we have a situation like:
-        // "    \xa0     a"
-        //      ^
-        // we're here
-        //
-        // we need to still trim the spaces chunk, in whole
-
+        }
 
         if (!spacesStartAt && opts.trimStart) {
           endIdx = i;
         } else if (!str[i] && opts.trimEnd) {
           endIdx = i;
-        } // Notice we could push ranges to final, using standalone push()
-        // but here we stage because general whitespace clauses need to be
-        // aware what was "booked" so far.
-
+        }
 
         staging.push([
         /* istanbul ignore next */
@@ -13521,48 +12338,19 @@ function collapse(str, originalOpts) {
           whiteSpaceEndsAt: right(str, i - 1) || i,
           str: str
         }]);
-      } // resets are at the bottom
+      }
+    }
 
-    } // catch the start of space character (" ") sequences
-
-
-    if ( // spaces sequence hasn't started yet
-    spacesStartAt === null && // it's a space
-    str[i] === " ") {
+    if (spacesStartAt === null && str[i] === " ") {
       spacesStartAt = i;
-    } // catch the start of whitespace chunks
+    }
 
-
-    if ( // chunk hasn't been recording
-    whiteSpaceStartsAt === null && // it's whitespace
-    str[i] && !str[i].trim()) {
+    if (whiteSpaceStartsAt === null && str[i] && !str[i].trim()) {
       whiteSpaceStartsAt = i;
-    } // catch the end of line whitespace (chunk of whitespace characters execept LF / CR)
+    }
 
-
-    if ( // chunk has been recording
-    lineWhiteSpaceStartsAt !== null && ( // and end has been met:
-    //
-    // either line break has been reached
-    "\n\r".includes(str[i]) || // or
-    // it's not whitespace
-    !str[i] || str[i].trim() || // either we don't care about non-breaking spaces and trim/replace them
-    !(opts.trimnbsp || opts.enforceSpacesOnly) && // and we do care and it's not a non-breaking space
-    str[i] === NBSP) && ( // also, mind the trim-able whitespace at the edges...
-    //
-    // it's not beginning of the string (more general whitespace clauses
-    // will take care of trimming, taking into account opts.trimStart etc)
-    lineWhiteSpaceStartsAt || !opts.trimStart || opts.enforceSpacesOnly && nbspPresent) && ( // it's not the ending of the string - we traverse upto and including
-    // str.length, which means last str[i] is undefined
-    str[i] || !opts.trimEnd || opts.enforceSpacesOnly && nbspPresent)) {
-      // tend opts.enforceSpacesOnly
-      // ---------------------------
-      if ( // setting is on
-      opts.enforceSpacesOnly && ( // either chunk's longer than 1
-      i > lineWhiteSpaceStartsAt + 1 || // or it's single character but not a space (yet still whitespace)
-      str[lineWhiteSpaceStartsAt] !== " ")) {
-        // also whole whitespace chunk goes, only we replace with a single space
-        // but maybe we can reuse existing characters to reduce the footprint
+    if (lineWhiteSpaceStartsAt !== null && ("\n\r".includes(str[i]) || !str[i] || str[i].trim() || !(opts.trimnbsp || opts.enforceSpacesOnly) && str[i] === NBSP) && (lineWhiteSpaceStartsAt || !opts.trimStart || opts.enforceSpacesOnly && nbspPresent) && (str[i] || !opts.trimEnd || opts.enforceSpacesOnly && nbspPresent)) {
+      if (opts.enforceSpacesOnly && (i > lineWhiteSpaceStartsAt + 1 || str[lineWhiteSpaceStartsAt] !== " ")) {
         var _startIdx = lineWhiteSpaceStartsAt;
         var _endIdx = i;
         var _whatToAdd = " ";
@@ -13573,9 +12361,7 @@ function collapse(str, originalOpts) {
         } else if (str[lineWhiteSpaceStartsAt] === " ") {
           _startIdx += 1;
           _whatToAdd = null;
-        } // make sure it's not on the edge of string with trim options enabled,
-        // in that case don't add the space!
-
+        }
 
         if ((opts.trimStart || opts.trimLines) && !lineWhiteSpaceStartsAt || (opts.trimEnd || opts.trimLines) && !str[i]) {
           _whatToAdd = null;
@@ -13586,15 +12372,9 @@ function collapse(str, originalOpts) {
           whiteSpaceEndsAt: i,
           str: str
         });
-      } // tend opts.trimLines
-      // -------------------
+      }
 
-
-      if ( // setting is on
-      opts.trimLines && ( // it is on the edge of a line
-      !lineWhiteSpaceStartsAt || "\r\n".includes(str[lineWhiteSpaceStartsAt - 1]) || !str[i] || "\r\n".includes(str[i])) && ( // and we don't care about non-breaking spaces
-      opts.trimnbsp || // this chunk doesn't contain any
-      !nbspPresent)) {
+      if (opts.trimLines && (!lineWhiteSpaceStartsAt || "\r\n".includes(str[lineWhiteSpaceStartsAt - 1]) || !str[i] || "\r\n".includes(str[i])) && (opts.trimnbsp || !nbspPresent)) {
         push([lineWhiteSpaceStartsAt, i], {
           whiteSpaceStartsAt: whiteSpaceStartsAt,
           whiteSpaceEndsAt: right(str, i - 1) || i,
@@ -13603,77 +12383,24 @@ function collapse(str, originalOpts) {
       }
 
       lineWhiteSpaceStartsAt = null;
-    } // Catch the start of a sequence of line whitespace (chunk of whitespace characters execept LF / CR)
+    }
 
-
-    if ( // chunk hasn't been recording
-    lineWhiteSpaceStartsAt === null && // we're currently not on CR or LF
-    !"\r\n".includes(str[i]) && // and it's whitespace
-    str[i] && !str[i].trim() && ( // mind the raw non-breaking spaces
-    opts.trimnbsp || str[i] !== NBSP || opts.enforceSpacesOnly)) {
+    if (lineWhiteSpaceStartsAt === null && !"\r\n".includes(str[i]) && str[i] && !str[i].trim() && (opts.trimnbsp || str[i] !== NBSP || opts.enforceSpacesOnly)) {
       lineWhiteSpaceStartsAt = i;
-    } //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //                             LOOP'S BOTTOM
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // Catch the end of whitespace chunks
-    // This clause is deliberately under the catch clauses of the end of line
-    // whitespace chunks because the empty, null ranges are the last thing to
-    // be pinged to the callback. "pushed" flag must not be triggered too early.
+    }
 
-
-    if ( // whitespace chunk has been recording
-    whiteSpaceStartsAt !== null && ( // it's EOL
-    !str[i] || // or non-whitespace character
-    str[i].trim())) {
-      // If there's anything staged, that must be string-only or per-line
-      // whitespace chunks (possibly even multiple) gathered while we've been
-      // traversing this (one) whitespace chunk.
-      if ( // whitespace is frontal
-      (!whiteSpaceStartsAt && ( // frontal trimming is enabled
-      opts.trimStart || // or per-line trimming is enabled
-      opts.trimLines && // and we're on the same line (we don't want to remove linebreaks)
-      linebreaksStartAt === null) || // whitespace is trailing
-      !str[i] && ( // trailing part's trimming is enabled
-      opts.trimEnd || // or per-line trimming is enabled
-      opts.trimLines && // and we're on the same line (we don't want to remove linebreaks)
-      linebreaksStartAt === null)) && ( // either we don't care about non-breaking spaces
-      opts.trimnbsp || // or there are no raw non-breaking spaces in this trim-suitable chunk
-      !nbspPresent || // or there are non-breaking spaces but they don't matter because
-      // we want spaces-only everywhere
-      opts.enforceSpacesOnly)) {
+    if (whiteSpaceStartsAt !== null && (!str[i] || str[i].trim())) {
+      if ((!whiteSpaceStartsAt && (opts.trimStart || opts.trimLines && linebreaksStartAt === null) || !str[i] && (opts.trimEnd || opts.trimLines && linebreaksStartAt === null)) && (opts.trimnbsp || !nbspPresent || opts.enforceSpacesOnly)) {
         push([whiteSpaceStartsAt, i], {
           whiteSpaceStartsAt: whiteSpaceStartsAt,
           whiteSpaceEndsAt: i,
           str: str
         });
       } else {
-        var somethingPushed = false; // tackle the line breaks
-        // ----------------------
+        var somethingPushed = false;
 
-        if (opts.removeEmptyLines && // there were some linebreaks recorded
-        linebreaksStartAt !== null && // there are too many
-        consecutiveLineBreakCount > (opts.limitConsecutiveEmptyLinesTo || 0) + 1) {
-          somethingPushed = true; // try to salvage some of the existing linebreaks - don't replace the
-          // same with the same
-
+        if (opts.removeEmptyLines && linebreaksStartAt !== null && consecutiveLineBreakCount > (opts.limitConsecutiveEmptyLinesTo || 0) + 1) {
+          somethingPushed = true;
           var _startIdx2 = linebreaksStartAt;
 
           var _endIdx2 = linebreaksEndAt || str.length;
@@ -13697,21 +12424,15 @@ function collapse(str, originalOpts) {
             whiteSpaceEndsAt: i,
             str: str
           });
-        } // push the staging if it exists
-        // -----------------------------
-
+        }
 
         if (staging.length) {
           while (staging.length) {
-            // FIFO - first in, first out
-            // @tsx-ignore
             push.apply(void 0, staging.shift());
           }
 
           somethingPushed = true;
-        } // if nothing has been pushed so far, push nothing to cb()
-        // -------------------------------------------------------
-
+        }
 
         if (!somethingPushed) {
           push(null, {
@@ -13724,40 +12445,18 @@ function collapse(str, originalOpts) {
 
       whiteSpaceStartsAt = null;
       lineWhiteSpaceStartsAt = null;
-      nbspPresent = false; // reset line break counts
+      nbspPresent = false;
 
       if (consecutiveLineBreakCount) {
         consecutiveLineBreakCount = 0;
         linebreaksStartAt = null;
         linebreaksEndAt = null;
       }
-    } // rest spaces chunk starting record
-
+    }
 
     if (spacesStartAt !== null && str[i] !== " ") {
       spacesStartAt = null;
-    } // ------------------------------------------------------------------------- //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //                             LOOP ENDS
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-
+    }
   }
 
   return {
@@ -13776,18 +12475,15 @@ var defaults$2 = {
 };
 
 function trimSpaces(str, originalOpts) {
-  // insurance:
   if (typeof str !== "string") {
     throw new Error("string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as " + typeof str + ", equal to:\n" + JSON.stringify(str, null, 4));
-  } // opts preparation:
-
+  }
 
   var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
   function check(char) {
     return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\xA0");
-  } // action:
-
+  }
 
   var newStart;
   var newEnd;
@@ -13798,22 +12494,16 @@ function trimSpaces(str, originalOpts) {
         if (!check(str[i])) {
           newStart = i;
           break;
-        } // if we traversed the whole string this way and didn't stumble on a non-
-        // space/whitespace character (depending on opts.classicTrim), this means
-        // whole thing can be trimmed:
-
+        }
 
         if (i === str.length - 1) {
-          // this means there are only spaces/whitespace from beginning to the end
           return {
             res: "",
             ranges: [[0, str.length]]
           };
         }
       }
-    } // if we reached this far, check the last character - find out, is it worth
-    // trimming the end of the given string:
-
+    }
 
     if (check(str[str.length - 1])) {
       for (var _i = str.length; _i--;) {
@@ -13843,16 +12533,13 @@ function trimSpaces(str, originalOpts) {
         res: str.slice(0, newEnd),
         ranges: [[newEnd, str.length]]
       };
-    } // if we reached this far, there was nothing to trim:
-
+    }
 
     return {
       res: str,
       ranges: []
     };
-  } // if we reached this far, this means it's an empty string. In which case,
-  // return empty values:
-
+  }
 
   return {
     res: "",
@@ -19921,8 +18608,6 @@ function decode(text, _a) {
 
 var decode_1 = decode;
 
-/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-
 /* istanbul ignore next */
 
 function characterSuitableForNames(char) {
@@ -19963,13 +18648,7 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   }
 
   return false;
-} //
-// precaution against JSP comparison
-// kl <c:when test="${!empty ab.cd && ab.cd > 0.00}"> mn
-//                                          ^
-//                                        we're here, it's false ending
-//
-
+}
 /* istanbul ignore next */
 
 
@@ -19990,27 +18669,15 @@ var defaults$1 = {
   },
   cb: null
 };
-/**
- * Strips HTML tags from strings. No parser, accepts mixed sources.
- */
 
 function stripHtml(str, originalOpts) {
-  // const
-  // ===========================================================================
   var start = Date.now();
   var definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
   var singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
-  var punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\xBB"]); // \u00BB is &raquo; - guillemet - right angled quote
-  // \u2026 is &hellip; - ellipsis
-  // we'll gather opening tags from ranged-pairs here:
-
-  var rangedOpeningTags = []; // we'll put tag locations here
-
+  var punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\xBB"]);
+  var rangedOpeningTags = [];
   var allTagLocations = [];
-  var filteredTagLocations = []; // variables
-  // ===========================================================================
-  // records the info about the suspected tag:
-
+  var filteredTagLocations = [];
   var tag = {};
 
   function resetTag() {
@@ -20019,31 +18686,18 @@ function stripHtml(str, originalOpts) {
     };
   }
 
-  resetTag(); // records the beginning of the current whitespace chunk:
-
-  var chunkOfWhitespaceStartsAt = null; // records the beginning of the current chunk of spaces (strictly spaces-only):
-
-  var chunkOfSpacesStartsAt = null; // temporary variable to assemble the attribute pieces:
-
-  var attrObj = {}; // marker to store captured href, used in opts.dumpLinkHrefsNearby.enabled
-
+  resetTag();
+  var chunkOfWhitespaceStartsAt = null;
+  var chunkOfSpacesStartsAt = null;
+  var attrObj = {};
   var hrefDump = {
     tagName: "",
     hrefValue: "",
     openingTagEnds: undefined
-  }; // used to insert extra things when pushing into ranges array
-
-  var stringToInsertAfter = ""; // state flag
-
-  var hrefInsertionActive = false; // marker to keep a note where does the whitespace chunk that follows closing bracket end.
-  // It's necessary for opts.trimOnlySpaces when there's closing bracket, whitespace, non-space
-  // whitespace character ("\n", "\t" etc), whitspace, end-of-file. Trim will kick in and will
-  // try to trim up until the EOF, be we'll have to pull the end of trim back, back to the first
-  // character of aforementioned non-space whitespace character sequence.
-  // This variable will tell exactly where it is located.
-
-  var spacesChunkWhichFollowsTheClosingBracketEndsAt = null; // functions
-  // ===========================================================================
+  };
+  var stringToInsertAfter = "";
+  var hrefInsertionActive = false;
+  var spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
 
   function existy(x) {
     return x != null;
@@ -20055,30 +18709,11 @@ function stripHtml(str, originalOpts) {
 
   function treatRangedTags(i, opts, rangesToDelete) {
     if (Array.isArray(opts.stripTogetherWithTheirContents) && (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*"))) {
-      // it depends, is it opening or closing range tag:
-      // We could try to distinguish opening from closing tags by presence of
-      // slash, but that would be a liability for dirty code cases where clash
-      // is missing. Better, instead, just see if an entry for that tag name
-      // already exists in the rangesToDelete[].
       if (Array.isArray(rangedOpeningTags) && rangedOpeningTags.some(function (obj) {
         return obj.name === tag.name && obj.lastClosingBracketAt < i;
       })) {
         var _loop = function _loop(y) {
           if (rangedOpeningTags[y].name === tag.name) {
-            // we'll remove from opening tag's opening bracket to closing tag's
-            // closing bracket because whitespace will be taken care of separately,
-            // when tags themselves will be removed.
-            // Basically, for each range tag there will be 3 removals:
-            // opening tag, closing tag and all from opening to closing tag.
-            // We keep removing opening and closing tags along whole range
-            // because of few reasons: 1. cases of broken/dirty code, 2. keeping
-            // the algorithm simpler, 3. opts that control whitespace removal
-            // around tags.
-            // 1. add range without caring about surrounding whitespace around
-            // the range // also, tend filteredTagLocations in the output - tags which are to be
-            // deleted with contents should be reported as one large range in
-            // filteredTagLocations - from opening to closing - not two ranges
-
             /* istanbul ignore else */
             if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
               filteredTagLocations = filteredTagLocations.filter(function (_ref) {
@@ -20105,9 +18740,7 @@ function stripHtml(str, originalOpts) {
                 insert: null,
                 rangesArr: rangesToDelete,
                 proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, null]
-              }); // null will remove any spaces added so far. Opening and closing range tags might
-              // have received spaces as separate entities, but those might not be necessary for range:
-              // "text <script>deleteme</script>."
+              });
             } else if (opts.cb) {
               opts.cb({
                 tag: tag,
@@ -20117,39 +18750,25 @@ function stripHtml(str, originalOpts) {
                 rangesArr: rangesToDelete,
                 proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, ""]
               });
-            } // 2. delete the reference to this range from rangedOpeningTags[]
-            // because there might be more ranged tags of the same name or
-            // different, overlapping or encompassing ranged tags with same
-            // or different name.
+            }
 
-
-            rangedOpeningTags.splice(y, 1); // 3. stop the loop
-
+            rangedOpeningTags.splice(y, 1);
             return "break";
           }
         };
 
-        // if (tag.slashPresent) { // closing tag.
-        // filter and remove the found tag
         for (var y = rangedOpeningTags.length; y--;) {
           var _ret = _loop(y);
 
           if (_ret === "break") break;
         }
       } else {
-        // opening tag.
         rangedOpeningTags.push(tag);
       }
     }
   }
 
-  function calculateWhitespaceToInsert(str2, // whole string
-  currCharIdx, // current index
-  fromIdx, // leftmost whitespace edge around tag
-  toIdx, // rightmost whitespace edge around tag
-  lastOpeningBracketAt, // tag actually starts here (<)
-  lastClosingBracketAt // tag actually ends here (>)
-  ) {
+  function calculateWhitespaceToInsert(str2, currCharIdx, fromIdx, toIdx, lastOpeningBracketAt, lastClosingBracketAt) {
     var strToEvaluateForLineBreaks = "";
 
     if (Number.isInteger(fromIdx) && fromIdx < lastOpeningBracketAt) {
@@ -20157,8 +18776,6 @@ function stripHtml(str, originalOpts) {
     }
 
     if (Number.isInteger(toIdx) && toIdx > lastClosingBracketAt + 1) {
-      // limit whitespace that follows the tag, stop at linebreak. That's to make
-      // the algorithm composable - we include linebreaks in front but not after.
       var temp = str2.slice(lastClosingBracketAt + 1, toIdx);
 
       if (temp.includes("\n") && isOpeningAt(toIdx, str2)) {
@@ -20178,16 +18795,13 @@ function stripHtml(str, originalOpts) {
 
         if (foundLineBreaks.length === 2) {
           return "\n\n";
-        } // return three line breaks maximum
-
+        }
 
         return "\n\n\n";
-      } // default spacer - a single space
-
+      }
 
       return " ";
-    } // default case: space
-
+    }
 
     return "";
   }
@@ -20213,9 +18827,7 @@ function stripHtml(str, originalOpts) {
 
   function isClosingAt(i) {
     return str[i] === ">" && str[i - 1] !== "%";
-  } // validation
-  // ===========================================================================
-
+  }
 
   if (typeof str !== "string") {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: " + (typeof str).toLowerCase() + ", equal to:\n" + JSON.stringify(str, null, 4));
@@ -20223,11 +18835,9 @@ function stripHtml(str, originalOpts) {
 
   if (originalOpts && !lodash_isplainobject(originalOpts)) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: " + (typeof originalOpts).toLowerCase() + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
-  } // eslint-disable-next-line consistent-return
-
+  }
 
   function resetHrefMarkers() {
-    // reset the hrefDump
     if (hrefInsertionActive) {
       hrefDump = {
         tagName: "",
@@ -20236,25 +18846,17 @@ function stripHtml(str, originalOpts) {
       };
       hrefInsertionActive = false;
     }
-  } // prep opts
-  // ===========================================================================
-
+  }
 
   var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   if (Object.prototype.hasOwnProperty.call(opts, "returnRangesOnly")) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] opts.returnRangesOnly has been removed from the API since v.5 release.");
-  } // filter non-string or whitespace entries from the following arrays or turn
-  // them into arrays:
-
+  }
 
   opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
-  opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags"); // let's define the onlyStripTagsMode. Since opts.onlyStripTags can cancel
-  // out the entries in opts.onlyStripTags, it can be empty but this mode has
-  // to be switched on:
-
-  var onlyStripTagsMode = !!opts.onlyStripTags.length; // if both opts.onlyStripTags and opts.ignoreTags are set, latter is respected,
-  // we simply exclude ignored tags from the opts.onlyStripTags.
+  opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
+  var onlyStripTagsMode = !!opts.onlyStripTags.length;
 
   if (opts.onlyStripTags.length && opts.ignoreTags.length) {
     opts.onlyStripTags = lodash_without.apply(void 0, [opts.onlyStripTags].concat(opts.ignoreTags));
@@ -20262,8 +18864,7 @@ function stripHtml(str, originalOpts) {
 
   if (!lodash_isplainobject(opts.dumpLinkHrefsNearby)) {
     opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults$1.dumpLinkHrefsNearby);
-  } // Object.assign doesn't deep merge, so we take care of opts.dumpLinkHrefsNearby:
-
+  }
 
   opts.dumpLinkHrefsNearby = defaults$1.dumpLinkHrefsNearby;
 
@@ -20272,7 +18873,6 @@ function stripHtml(str, originalOpts) {
     if (lodash_isplainobject(originalOpts.dumpLinkHrefsNearby)) {
       opts.dumpLinkHrefsNearby = _objectSpread2(_objectSpread2({}, defaults$1.dumpLinkHrefsNearby), originalOpts.dumpLinkHrefsNearby);
     } else if (originalOpts.dumpLinkHrefsNearby) {
-      // checking to omit value as number zero
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to " + typeof originalOpts.dumpLinkHrefsNearby + ", equal to " + JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4) + ". The only allowed value is a plain object. See the API reference.");
     }
   }
@@ -20295,8 +18895,7 @@ function stripHtml(str, originalOpts) {
     return true;
   })) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index " + somethingCaught.i + " has a value " + somethingCaught.el + " which is not string but " + (typeof somethingCaught.el).toLowerCase() + ".");
-  } // prep the opts.cb
-
+  }
 
   if (!opts.cb) {
     opts.cb = function (_ref2) {
@@ -20307,59 +18906,37 @@ function stripHtml(str, originalOpts) {
         rangesArr.push.apply(rangesArr, proposedReturn);
       }
     };
-  } // if the links have to be on a new line, we need to increase the allowance for line breaks
-  // in Ranges class, it's the ranges-push API setting opts.limitLinebreaksCount
-  // see https://www.npmjs.com/package/ranges-push#optional-options-object
-
+  }
 
   var rangesToDelete = new Ranges({
     limitToBeAddedWhitespace: true,
     limitLinebreaksCount: 2
-  }); // TODO: it's chummy - ranges will be unreliable if initial str has changed
-  // use ranges-ent-decode
+  });
 
   if (!opts.skipHtmlDecoding) {
     while (str !== decode_1(str, {
       scope: "strict"
     })) {
-      // eslint-disable-next-line no-param-reassign
       str = decode_1(str, {
         scope: "strict"
       });
     }
-  } // step 1.
-  // ===========================================================================
-
+  }
 
   var _loop2 = function _loop2(_i, len) {
-    // catch the first ending of the spaces chunk that follows the closing bracket.
-    // -------------------------------------------------------------------------
-    // There can be no space after bracket, in that case, the result will be that character that
-    // follows the closing bracket.
-    // There can be bunch of spaces that end with EOF. In that case it's fine, this variable will
-    // be null.
     if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < _i && str[_i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
       spacesChunkWhichFollowsTheClosingBracketEndsAt = _i;
-    } // catch the closing bracket of dirty tags with missing opening brackets
-    // -------------------------------------------------------------------------
-
+    }
 
     if (isClosingAt(_i)) {
-      // tend cases where opening bracket of a tag is missing:
       if ((!tag || Object.keys(tag).length < 2) && _i > 1) {
-        // traverse backwards either until start of string or ">" is found
         for (var y = _i; y--;) {
           if (str[y - 1] === undefined || isClosingAt(y)) {
             var _ret3 = function () {
               var startingPoint = str[y - 1] === undefined ? y : y + 1;
-              var culprit = str.slice(startingPoint, _i + 1); // Check if the culprit starts with a tag that's more likely a tag
-              // name (like "body" or "article"). Single-letter tag names are excluded
-              // because they can be plausible, ie. in math texts and so on.
-              // Nobody uses puts comparison signs between words like: "article > ",
-              // but single letter names can be plausible: "a > b" in math.
+              var culprit = str.slice(startingPoint, _i + 1);
 
-              if (str !== "<" + lodash_trim(culprit.trim(), "/>") + ">" && // recursion prevention
-              [].concat(definitelyTagNames).some(function (val) {
+              if (str !== "<" + lodash_trim(culprit.trim(), "/>") + ">" && [].concat(definitelyTagNames).some(function (val) {
                 return lodash_trim(culprit.trim().split(/\s+/).filter(function (val2) {
                   return val2.trim();
                 }).filter(function (_val3, i3) {
@@ -20406,31 +18983,22 @@ function stripHtml(str, originalOpts) {
           }
         }
       }
-    } // catch slash
-    // -------------------------------------------------------------------------
-
+    }
 
     if (str[_i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
       tag.slashPresent = _i;
-    } // catch double or single quotes
-    // -------------------------------------------------------------------------
-
+    }
 
     if (str[_i] === '"' || str[_i] === "'") {
       if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[_i]) {
-        // 1. finish assembling the "attrObj{}"
         attrObj.valueEnds = _i;
         attrObj.value = str.slice(attrObj.valueStarts, _i);
-        tag.attributes.push(attrObj); // reset:
-
-        attrObj = {}; // 2. finally, delete the quotes marker, we don't need it any more
-
-        tag.quotes = undefined; // 3. if opts.dumpLinkHrefsNearby.enabled is on, catch href
-
+        tag.attributes.push(attrObj);
+        attrObj = {};
+        tag.quotes = undefined;
         var hrefVal;
 
-        if (opts.dumpLinkHrefsNearby.enabled && // eslint-disable-next-line
-        tag.attributes.some(function (obj) {
+        if (opts.dumpLinkHrefsNearby.enabled && tag.attributes.some(function (obj) {
           if (obj.name && obj.name.toLowerCase() === "href") {
             hrefVal = "" + (opts.dumpLinkHrefsNearby.wrapHeads || "") + obj.value + (opts.dumpLinkHrefsNearby.wrapTails || "");
             i = _i;
@@ -20444,48 +19012,31 @@ function stripHtml(str, originalOpts) {
           };
         }
       } else if (!tag.quotes && tag.nameStarts) {
-        // 1. if it's opening marker, record the type and location of quotes
         tag.quotes = {};
         tag.quotes.value = str[_i];
-        tag.quotes.start = _i; // 2. start assembling the attribute object which we'll dump into tag.attributes[] array:
+        tag.quotes.start = _i;
 
         if (attrObj.nameStarts && attrObj.nameEnds && attrObj.nameEnds < _i && attrObj.nameStarts < _i && !attrObj.valueStarts) {
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         }
       }
-    } // catch the ending of the tag name:
-    // -------------------------------------------------------------------------
-
+    }
 
     if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[_i].trim() || !characterSuitableForNames(str[_i]))) {
-      // 1. mark the name ending
-      tag.nameEnds = _i; // 2. extract the full name string
-
+      tag.nameEnds = _i;
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (
       /* istanbul ignore next */
       !isClosingAt(_i) && str[_i] !== "/" && str[_i + 1] === undefined ? 1 : 0));
 
-      if ( // if we caught "----" from "<----" or "---->", bail:
-      str[tag.nameStarts - 1] !== "!" && // protection against <!--
-      !tag.name.replace(/-/g, "").length || // if tag name starts with a number character
-      /^\d+$/.test(tag.name[0])) {
+      if (str[tag.nameStarts - 1] !== "!" && !tag.name.replace(/-/g, "").length || /^\d+$/.test(tag.name[0])) {
         tag = {};
         i = _i;
         return "continue";
       }
 
       if (isOpeningAt(_i)) {
-        // process it because we need to tackle this new tag
-        calculateHrefToBeInserted(opts); // calculateWhitespaceToInsert() API:
-        // str, // whole string
-        // currCharIdx, // current index
-        // fromIdx, // leftmost whitespace edge around tag
-        // toIdx, // rightmost whitespace edge around tag
-        // lastOpeningBracketAt, // tag actually starts here (<)
-        // lastClosingBracketAt // tag actually ends here (>)
-
-        var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i); // only on pair tags, exclude the opening counterpart and closing
-        // counterpart if whole pair is to be deleted
+        calculateHrefToBeInserted(opts);
+        var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i);
 
         if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
           /* istanbul ignore next */
@@ -20494,13 +19045,7 @@ function stripHtml(str, originalOpts) {
                 upto = _ref3[1];
             return !(from === tag.leftOuterWhitespace && upto === _i);
           });
-        } // console.log(
-        //   `1011 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-        //     tag.leftOuterWhitespace
-        //   }, ${i}] to filteredTagLocations`
-        // );
-        // filteredTagLocations.push([tag.leftOuterWhitespace, i]);
-
+        }
 
         opts.cb({
           tag: tag,
@@ -20510,38 +19055,23 @@ function stripHtml(str, originalOpts) {
           rangesArr: rangesToDelete,
           proposedReturn: [tag.leftOuterWhitespace, _i, "" + whiteSpaceCompensation + stringToInsertAfter + whiteSpaceCompensation]
         });
-        resetHrefMarkers(); // also,
-
+        resetHrefMarkers();
         treatRangedTags(_i, opts, rangesToDelete);
       }
-    } // catch beginning of an attribute value
-    // -------------------------------------------------------------------------
-
+    }
 
     if (tag.quotes && tag.quotes.start && tag.quotes.start < _i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
       attrObj.valueStarts = _i;
-    } // catch rare cases when attributes name has some space after it, before equals
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!tag.quotes && attrObj.nameEnds && str[_i] === "=" && !attrObj.valueStarts && !attrObj.equalsAt) {
       attrObj.equalsAt = _i;
-    } // catch the ending of the whole attribute
-    // -------------------------------------------------------------------------
-    // for example, <a b c> this "c" ends "b" because it's not "equals" sign.
-    // We even anticipate for cases where whitespace anywhere between attribute parts:
-    // < article class = " something " / >
-
+    }
 
     if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[_i].trim() && str[_i] !== "=") {
-      // if (!tag.attributes) {
-      //   tag.attributes = [];
-      // }
       tag.attributes.push(attrObj);
       attrObj = {};
-    } // catch the ending of an attribute's name
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
       if (!str[_i].trim()) {
@@ -20556,121 +19086,76 @@ function stripHtml(str, originalOpts) {
         }
       } else if (str[_i] === "/" || isClosingAt(_i)) {
         attrObj.nameEnds = _i;
-        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds); // if (!tag.attributes) {
-        //   tag.attributes = [];
-        // }
-
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         tag.attributes.push(attrObj);
         attrObj = {};
       } else if (isOpeningAt(_i)) {
-        // TODO - address both cases of onlyPlausible
         attrObj.nameEnds = _i;
-        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds); // if (!tag.attributes) {
-        //   tag.attributes = [];
-        // }
-
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         tag.attributes.push(attrObj);
         attrObj = {};
       }
-    } // catch the beginning of an attribute's name
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!tag.quotes && tag.nameEnds < _i && !str[_i - 1].trim() && str[_i].trim() && !"<>/!".includes(str[_i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
       attrObj.nameStarts = _i;
-    } // catch "< /" - turn off "onlyPlausible"
-    // -------------------------------------------------------------------------
-
+    }
 
     if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < _i && str[_i] === "/" && tag.onlyPlausible) {
       tag.onlyPlausible = false;
-    } // catch character that follows an opening bracket:
-    // -------------------------------------------------------------------------
+    }
 
-
-    if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < _i && str[_i] !== "/" // there can be closing slashes in various places, legit and not
-    ) {
-        // 1. identify, is it definite or just plausible tag
-        if (tag.onlyPlausible === undefined) {
-          if ((!str[_i].trim() || isOpeningAt(_i)) && !tag.slashPresent) {
-            tag.onlyPlausible = true;
-          } else {
-            tag.onlyPlausible = false;
-          }
-        } // 2. catch the beginning of the tag name. Consider custom HTML tag names
-        // and also known (X)HTML tags:
-
-
-        if (str[_i].trim() && tag.nameStarts === undefined && !isOpeningAt(_i) && str[_i] !== "/" && !isClosingAt(_i) && str[_i] !== "!") {
-          tag.nameStarts = _i;
-          tag.nameContainsLetters = false;
+    if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < _i && str[_i] !== "/") {
+      if (tag.onlyPlausible === undefined) {
+        if ((!str[_i].trim() || isOpeningAt(_i)) && !tag.slashPresent) {
+          tag.onlyPlausible = true;
+        } else {
+          tag.onlyPlausible = false;
         }
-      } // Catch letters in the tag name. Necessary to filter out false positives like "<------"
+      }
 
+      if (str[_i].trim() && tag.nameStarts === undefined && !isOpeningAt(_i) && str[_i] !== "/" && !isClosingAt(_i) && str[_i] !== "!") {
+        tag.nameStarts = _i;
+        tag.nameContainsLetters = false;
+      }
+    }
 
     if (tag.nameStarts && !tag.quotes && str[_i].toLowerCase() !== str[_i].toUpperCase()) {
       tag.nameContainsLetters = true;
-    } // catch closing bracket
-    // -------------------------------------------------------------------------
+    }
 
-
-    if ( // it's closing bracket
-    isClosingAt(_i) && //
-    // precaution against JSP comparison
-    // kl <c:when test="${!empty ab.cd && ab.cd > 0.00}"> mn
-    //                                          ^
-    //                                        we're here, it's false ending
-    //
-    notWithinAttrQuotes(tag, str, _i)) {
+    if (isClosingAt(_i) && notWithinAttrQuotes(tag, str, _i)) {
       if (tag.lastOpeningBracketAt !== undefined) {
-        // 1. mark the index
-        tag.lastClosingBracketAt = _i; // 2. reset the spacesChunkWhichFollowsTheClosingBracketEndsAt
-
-        spacesChunkWhichFollowsTheClosingBracketEndsAt = null; // 3. push attrObj into tag.attributes[]
+        tag.lastClosingBracketAt = _i;
+        spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
 
         if (Object.keys(attrObj).length) {
-          // if (!tag.attributes) {
-          //   tag.attributes = [];
-          // }
           tag.attributes.push(attrObj);
           attrObj = {};
-        } // 4. if opts.dumpLinkHrefsNearby.enabled is on and we just recorded an href,
-
+        }
 
         if (opts.dumpLinkHrefsNearby.enabled && hrefDump.tagName && !hrefDump.openingTagEnds) {
-          // finish assembling the hrefDump{}
-          hrefDump.openingTagEnds = _i; // or tag.lastClosingBracketAt, same
+          hrefDump.openingTagEnds = _i;
         }
       }
-    } // catch the ending of the tag
-    // -------------------------------------------------------------------------
-    // the tag is "released" into "rApply":
-
+    }
 
     if (tag.lastOpeningBracketAt !== undefined) {
       if (tag.lastClosingBracketAt === undefined) {
-        if (tag.lastOpeningBracketAt < _i && !isOpeningAt(_i) && ( // to prevent cases like "text <<<<<< text"
-        str[_i + 1] === undefined || isOpeningAt(_i + 1)) && tag.nameContainsLetters) {
-          // find out the tag name earlier than dedicated tag name ending catching section:
-          // if (str[i + 1] === undefined) {
-          tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : _i + 1).toLowerCase(); // submit tag to allTagLocations
-
+        if (tag.lastOpeningBracketAt < _i && !isOpeningAt(_i) && (str[_i + 1] === undefined || isOpeningAt(_i + 1)) && tag.nameContainsLetters) {
+          tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : _i + 1).toLowerCase();
           /* istanbul ignore else */
 
           if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
             allTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
           }
 
-          if ( // if it's an ignored tag
-          opts.ignoreTags.includes(tag.name) || // or just plausible and unrecognised
-          tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
+          if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
             tag = {};
             attrObj = {};
             i = _i;
             return "continue";
-          } // if the tag is only plausible (there's space after opening bracket) and it's not among
-          // recognised tags, leave it as it is:
-
+          }
 
           if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[_i + 1] === undefined) {
             calculateHrefToBeInserted(opts);
@@ -20685,20 +19170,14 @@ function stripHtml(str, originalOpts) {
               rangesArr: rangesToDelete,
               proposedReturn: [tag.leftOuterWhitespace, _i + 1, "" + _whiteSpaceCompensation + stringToInsertAfter + _whiteSpaceCompensation]
             });
-            resetHrefMarkers(); // also,
-
+            resetHrefMarkers();
             treatRangedTags(_i, opts, rangesToDelete);
           }
           /* istanbul ignore else */
 
 
           if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt && filteredTagLocations[filteredTagLocations.length - 1][1] !== _i + 1) {
-            // filter out opening/closing tag pair because whole chunk
-            // from opening's opening to closing's closing will be pushed
             if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
-              // get the last opening counterpart of the pair
-              // iterate rangedOpeningTags from the, pick the first
-              // ranged opening tag whose name is same like current, closing's
               var lastRangedOpeningTag;
 
               for (var z = rangedOpeningTags.length; z--;) {
@@ -20721,25 +19200,16 @@ function stripHtml(str, originalOpts) {
                 filteredTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
               }
             } else {
-              // if it's not ranged tag, just push it as it is to filteredTagLocations
               filteredTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
             }
           }
         }
       } else if (_i > tag.lastClosingBracketAt && str[_i].trim() || str[_i + 1] === undefined) {
-        // case 2. closing bracket HAS BEEN met
-        // we'll look for a non-whitespace character and delete up to it
-        // BUT, we'll wipe the tag object only if that non-whitespace character
-        // is not a ">". This way we'll catch and delete sequences of closing brackets.
-        // part 1.
         var endingRangeIndex = tag.lastClosingBracketAt === _i ? _i + 1 : _i;
 
         if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < _i) {
           endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
-        } // if it's a dodgy suspicious tag where space follows opening bracket, there's an extra requirement
-        // for this tag to be considered a tag - there has to be at least one attribute with equals if
-        // the tag name is not recognised. // submit tag to allTagLocations
-
+        }
         /* istanbul ignore else */
 
 
@@ -20748,7 +19218,6 @@ function stripHtml(str, originalOpts) {
         }
 
         if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
-          // ping the callback with nulls:
           opts.cb({
             tag: tag,
             deleteFrom: null,
@@ -20756,27 +19225,18 @@ function stripHtml(str, originalOpts) {
             insert: null,
             rangesArr: rangesToDelete,
             proposedReturn: null
-          }); // don't submit the tag onto "filteredTagLocations"
-          // then reset:
-
+          });
           tag = {};
-          attrObj = {}; // continue;
-        } else if (!tag.onlyPlausible || // tag name is recognised and there are no attributes:
-        tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) || // OR there is at least one equals that follow the attribute's name:
-        tag.attributes && tag.attributes.some(function (attrObj2) {
+          attrObj = {};
+        } else if (!tag.onlyPlausible || tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) || tag.attributes && tag.attributes.some(function (attrObj2) {
           return attrObj2.equalsAt;
         })) {
-          // submit tag to filteredTagLocations
-
           /* istanbul ignore else */
           if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
             filteredTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
-          } // if this was an ignored tag name, algorithm would have bailed earlier,
-          // in stage "catch the ending of the tag name".
+          }
 
-
-          var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt); // calculate optional opts.dumpLinkHrefsNearby.enabled HREF to insert
-
+          var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
 
           stringToInsertAfter = "";
           hrefInsertionActive = false;
@@ -20793,8 +19253,7 @@ function stripHtml(str, originalOpts) {
 
           if (tag.leftOuterWhitespace === 0 || !right(str, endingRangeIndex - 1)) {
             insert = "";
-          } // pass the range onto the callback function, be it default or user's
-
+          }
 
           opts.cb({
             tag: tag,
@@ -20804,45 +19263,25 @@ function stripHtml(str, originalOpts) {
             rangesArr: rangesToDelete,
             proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert]
           });
-          resetHrefMarkers(); // also,
-
+          resetHrefMarkers();
           treatRangedTags(_i, opts, rangesToDelete);
         } else {
           tag = {};
-        } // part 2.
-
+        }
 
         if (!isClosingAt(_i)) {
           tag = {};
         }
       }
-    } // catch an opening bracket
-    // -------------------------------------------------------------------------
+    }
 
-
-    if (isOpeningAt(_i) && !isOpeningAt(_i - 1) && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1])) && //
-    // precaution JSP,
-    // against <c:
-    !(str[_i + 1] === "c" && str[_i + 2] === ":") && // against <fmt:
-    !(str[_i + 1] === "f" && str[_i + 2] === "m" && str[_i + 3] === "t" && str[_i + 4] === ":") && // against <sql:
-    !(str[_i + 1] === "s" && str[_i + 2] === "q" && str[_i + 3] === "l" && str[_i + 4] === ":") && // against <x:
-    !(str[_i + 1] === "x" && str[_i + 2] === ":") && // against <fn:
-    !(str[_i + 1] === "f" && str[_i + 2] === "n" && str[_i + 3] === ":") && //
-    // kl <c:when test="${!empty ab.cd && ab.cd < 0.00}"> mn
-    //                                          ^
-    //                                  we're here, it's false alarm
-    notWithinAttrQuotes(tag, str, _i)) {
-      // cater sequences of opening brackets "<<<<div>>>"
+    if (isOpeningAt(_i) && !isOpeningAt(_i - 1) && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1])) && !(str[_i + 1] === "c" && str[_i + 2] === ":") && !(str[_i + 1] === "f" && str[_i + 2] === "m" && str[_i + 3] === "t" && str[_i + 4] === ":") && !(str[_i + 1] === "s" && str[_i + 2] === "q" && str[_i + 3] === "l" && str[_i + 4] === ":") && !(str[_i + 1] === "x" && str[_i + 2] === ":") && !(str[_i + 1] === "f" && str[_i + 2] === "n" && str[_i + 3] === ":") && notWithinAttrQuotes(tag, str, _i)) {
       if (isClosingAt(right(str, _i))) {
         i = _i;
-        // cater cases like: "<><><>"
         return "continue";
       } else {
-        // 1. Before (re)setting flags, check, do we have a case of a tag with a
-        // missing closing bracket, and this is a new tag following it.
         if (tag.nameEnds && tag.nameEnds < _i && !tag.lastClosingBracketAt) {
           if (tag.onlyPlausible === true && tag.attributes && tag.attributes.length || tag.onlyPlausible === false) {
-            // tag.onlyPlausible can be undefined too
             var _whiteSpaceCompensation3 = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i);
 
             opts.cb({
@@ -20852,18 +19291,14 @@ function stripHtml(str, originalOpts) {
               insert: _whiteSpaceCompensation3,
               rangesArr: rangesToDelete,
               proposedReturn: [tag.leftOuterWhitespace, _i, _whiteSpaceCompensation3]
-            }); // also,
-
-            treatRangedTags(_i, opts, rangesToDelete); // then, for continuity, mark everything up accordingly if it's a new bracket:
-
+            });
+            treatRangedTags(_i, opts, rangesToDelete);
             tag = {};
             attrObj = {};
           }
-        } // 2. if new tag starts, reset:
-
+        }
 
         if (tag.lastOpeningBracketAt !== undefined && tag.onlyPlausible && tag.name && !tag.quotes) {
-          // reset:
           tag.lastOpeningBracketAt = undefined;
           tag.name = undefined;
           tag.onlyPlausible = false;
@@ -20872,28 +19307,18 @@ function stripHtml(str, originalOpts) {
         if ((tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) && !tag.quotes) {
           tag.lastOpeningBracketAt = _i;
           tag.slashPresent = false;
-          tag.attributes = []; // since 2.1.0 we started to care about not trimming outer whitespace which is not spaces.
-          // For example, " \t <a> \n ". Tag's whitespace boundaries should not extend to string
-          // edges but until "\t" on the left and "\n" on the right IF opts.trimOnlySpaces is on.
+          tag.attributes = [];
 
           if (chunkOfWhitespaceStartsAt === null) {
             tag.leftOuterWhitespace = _i;
           } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
-            // if whitespace extends to the beginning of a string, there's a risk it might include
-            // not only spaces. To fix that, switch to space-only range marker:
-
             /* istanbul ignore next */
             tag.leftOuterWhitespace = chunkOfSpacesStartsAt || _i;
           } else {
             tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
-          } // tag.leftOuterWhitespace =
-          //   chunkOfWhitespaceStartsAt === null ? i : chunkOfWhitespaceStartsAt; // tend the HTML comments: <!-- --> or CDATA: <![CDATA[ ... ]]>
-          // if opening comment tag is detected, traverse forward aggressively
-          // until EOL or "-->" is reached and offset outer index "i".
-
+          }
 
           if ("" + str[_i + 1] + str[_i + 2] + str[_i + 3] === "!--" || "" + str[_i + 1] + str[_i + 2] + str[_i + 3] + str[_i + 4] + str[_i + 5] + str[_i + 6] + str[_i + 7] + str[_i + 8] === "![CDATA[") {
-            // make a note which one it is:
             var cdata = true;
 
             if (str[_i + 2] === "-") {
@@ -20912,8 +19337,7 @@ function stripHtml(str, originalOpts) {
 
                 if (str[_y + 1] === undefined && !str[_y].trim() || str[_y] === ">") {
                   rangeEnd += 1;
-                } // submit the tag
-
+                }
                 /* istanbul ignore else */
 
 
@@ -20936,36 +19360,28 @@ function stripHtml(str, originalOpts) {
                   insert: _whiteSpaceCompensation4,
                   rangesArr: rangesToDelete,
                   proposedReturn: [tag.leftOuterWhitespace, rangeEnd, _whiteSpaceCompensation4]
-                }); // offset:
-
+                });
                 _i = _y - 1;
 
                 if (str[_y] === ">") {
                   _i = _y;
-                } // resets:
-
+                }
 
                 tag = {};
-                attrObj = {}; // finally,
-
+                attrObj = {};
                 break;
               }
             }
           }
         }
       }
-    } // catch whitespace
-    // -------------------------------------------------------------------------
-
+    }
 
     if (!str[_i].trim()) {
-      // 1. catch chunk boundaries:
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = _i;
 
-        if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < _i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && _i === tag.lastOpeningBracketAt + 1 && // insurance against tail part of ranged tag being deleted:
-        !rangedOpeningTags.some( // eslint-disable-next-line no-loop-func
-        function (rangedTagObj) {
+        if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < _i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && _i === tag.lastOpeningBracketAt + 1 && !rangedOpeningTags.some(function (rangedTagObj) {
           return rangedTagObj.name === tag.name;
         })) {
           tag.onlyPlausible = true;
@@ -20974,47 +19390,26 @@ function stripHtml(str, originalOpts) {
         }
       }
     } else if (chunkOfWhitespaceStartsAt !== null) {
-      // 1. piggyback the catching of the attributes with equal and no value
       if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[_i] !== '"' && str[_i] !== "'") {
         /* istanbul ignore else */
         if (lodash_isplainobject(attrObj)) {
           tag.attributes.push(attrObj);
-        } // reset:
-
+        }
 
         attrObj = {};
         tag.equalsSpottedAt = undefined;
-      } // 2. reset whitespace marker
-
+      }
 
       chunkOfWhitespaceStartsAt = null;
-    } // catch spaces-only chunks (needed for outer trim option opts.trimOnlySpaces)
-    // -------------------------------------------------------------------------
-
+    }
 
     if (str[_i] === " ") {
-      // 1. catch spaces boundaries:
       if (chunkOfSpacesStartsAt === null) {
         chunkOfSpacesStartsAt = _i;
       }
     } else if (chunkOfSpacesStartsAt !== null) {
-      // 2. reset the marker
       chunkOfSpacesStartsAt = null;
-    } // log all
-    // ------------------------------------------------------------------------- // console.log(
-    //   `${`\u001b[${33}m${`chunkOfSpacesStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
-    //     chunkOfSpacesStartsAt,
-    //     null,
-    //     4
-    //   )}`
-    // ); // console.log(
-    //   `${`\u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
-    //     chunkOfWhitespaceStartsAt,
-    //     null,
-    //     4
-    //   )}`
-    // );
-
+    }
 
     i = _i;
   };
@@ -21023,69 +19418,38 @@ function stripHtml(str, originalOpts) {
     var _ret2 = _loop2(i, len);
 
     if (_ret2 === "continue") continue;
-  } // trim but in ranges
-  // first tackle the beginning on the string
+  }
 
-
-  if (str && ( // if only spaces were meant to be trimmed,
-  opts.trimOnlySpaces && // and first character is a space
-  str[0] === " " || // if normal trim is requested
-  !opts.trimOnlySpaces && // and the first character is whitespace character
-  !str[0].trim())) {
+  if (str && (opts.trimOnlySpaces && str[0] === " " || !opts.trimOnlySpaces && !str[0].trim())) {
     for (var _i2 = 0, _len = str.length; _i2 < _len; _i2++) {
       if (opts.trimOnlySpaces && str[_i2] !== " " || !opts.trimOnlySpaces && str[_i2].trim()) {
         rangesToDelete.push([0, _i2]);
         break;
       } else if (!str[_i2 + 1]) {
-        // if end has been reached and whole string has been trimmable
         rangesToDelete.push([0, _i2 + 1]);
       }
     }
   }
 
-  if (str && ( // if only spaces were meant to be trimmed,
-  opts.trimOnlySpaces && // and last character is a space
-  str[str.length - 1] === " " || // if normal trim is requested
-  !opts.trimOnlySpaces && // and the last character is whitespace character
-  !str[str.length - 1].trim())) {
+  if (str && (opts.trimOnlySpaces && str[str.length - 1] === " " || !opts.trimOnlySpaces && !str[str.length - 1].trim())) {
     for (var _i3 = str.length; _i3--;) {
       if (opts.trimOnlySpaces && str[_i3] !== " " || !opts.trimOnlySpaces && str[_i3].trim()) {
         rangesToDelete.push([_i3 + 1, str.length]);
         break;
-      } // don't tackle end-to-end because it would have been already caught on the
-      // start-to-end direction loop above.
-
+      }
     }
-  } // last correction, imagine we've got text-whitespace-tag.
-  // That last part "tag" was removed but "whitespace" in between is on the left.
-  // We need to trim() that too if applicable.
-  // By now we'll be able to tell, is starting/ending range array touching
-  // the start (index 0) or end (str.length - 1) character indexes, and if so,
-  // their inner sides will need to be trimmed accordingly, considering the
-  // "opts.trimOnlySpaces" of course.
-
+  }
 
   var curr = rangesToDelete.current();
 
   if ((!originalOpts || !originalOpts.cb) && curr) {
-    // check front - the first range of gathered ranges, does it touch start (0)
     if (curr[0] && !curr[0][0]) {
-      curr[0][1]; // check the character at str[startingIdx] // manually edit Ranges class:
-
+      curr[0][1];
       rangesToDelete.ranges[0] = [rangesToDelete.ranges[0][0], rangesToDelete.ranges[0][1]];
-    } // check end - the last range of gathered ranges, does it touch the end (str.length)
-    // PS. remember ending is not inclusive, so ranges covering the whole ending
-    // would go up to str.length, not up to str.length - 1!
-
+    }
 
     if (curr[curr.length - 1] && curr[curr.length - 1][1] === str.length) {
-      curr[curr.length - 1][0]; // check character at str[startingIdx - 1] // remove third element from the last range "what to add" - because
-      // ranges will crop aggressively, covering all whitespace, but they
-      // then restore missing spaces (in which case it's not missing).
-      // We already have tight crop, we just need to remove that "what to add"
-      // third element.
-      // hard edit:
-
+      curr[curr.length - 1][0];
       /* istanbul ignore else */
 
       if (rangesToDelete.ranges) {
@@ -21096,7 +19460,7 @@ function stripHtml(str, originalOpts) {
         }
 
         var backupWhatToAdd = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][2];
-        rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [startingIdx2, rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1]]; // for cases of opts.dumpLinkHrefsNearby
+        rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [startingIdx2, rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1]];
 
         if (backupWhatToAdd && backupWhatToAdd.trim()) {
           rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(backupWhatToAdd.trimEnd());
@@ -25254,12 +23618,12 @@ var he = createCommonjsModule(function (module, exports) {
   })(commonjsGlobal);
 });
 
-var version$1 = "7.0.6";
+var version$1 = "7.0.7";
 
 /**
  * html-entities-not-email-friendly
  * All HTML entities which are not email template friendly
- * Version: 0.4.6
+ * Version: 0.4.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-entities-not-email-friendly/
@@ -27123,8 +25487,7 @@ var defaults = {
 };
 
 function expander(originalOpts) {
-  var letterOrDigit = /^[0-9a-zA-Z]+$/; // Internal functions
-  // ---------------------------------------------------------------------------
+  var letterOrDigit = /^[0-9a-zA-Z]+$/;
 
   function isWhitespace(char) {
     if (!char || typeof char !== "string") {
@@ -27136,9 +25499,7 @@ function expander(originalOpts) {
 
   function isStr(something) {
     return typeof something === "string";
-  } // Sanitise the inputs
-  // ---------------------------------------------------------------------------
-
+  }
 
   if (!originalOpts || typeof originalOpts !== "object" || Array.isArray(originalOpts)) {
     var supplementalString;
@@ -27178,9 +25539,7 @@ function expander(originalOpts) {
 
   if (isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== "left" && originalOpts.extendToOneSide !== "right" || !isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== undefined && originalOpts.extendToOneSide !== false) {
     throw new Error("string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: \"" + originalOpts.extendToOneSide + "\" (" + typeof originalOpts.extendToOneSide + "). It has to be either Boolean \"false\" or strings \"left\" or \"right\"");
-  } // Prepare the opts
-  // ---------------------------------------------------------------------------
-
+  }
 
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
@@ -27201,18 +25560,13 @@ function expander(originalOpts) {
     } else {
       throw new Error("string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n" + JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4) + ". Now, that array contains not only string elements. For example, an element at index " + culpritsIndex + " is of a type " + typeof culpritsValue + " (equal to " + JSON.stringify(culpritsValue, null, 0) + ").");
     }
-  } // Action
-  // ---------------------------------------------------------------------------
+  }
 
-
-  var str = opts.str; // convenience
-
+  var str = opts.str;
   var from = opts.from;
-  var to = opts.to; // 1. expand the given range outwards and leave a single space or
-  // {single-of-whatever-there-was} (like line break, tab etc) on each side
+  var to = opts.to;
 
   if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
-    // loop backwards
     for (var i = from; i--;) {
       if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
         if (str[i].trim()) {
@@ -27234,11 +25588,9 @@ function expander(originalOpts) {
         }
       }
     }
-  } // 2. expand forward
-
+  }
 
   if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
-    // loop forward
     for (var _i = to, len = str.length; _i < len; _i++) {
       if (!opts.ifRightSideIncludesThisCropItToo.includes(str[_i]) && (str[_i] && str[_i].trim() || str[_i] === undefined)) {
         if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[_i - 1])) {
@@ -27250,8 +25602,7 @@ function expander(originalOpts) {
         break;
       }
     }
-  } // 3. tight crop adjustments
-
+  }
 
   if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
     if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
@@ -27280,17 +25631,13 @@ function convertOne(str, _ref) {
       convertApostrophes = _ref$convertApostroph === void 0 ? true : _ref$convertApostroph,
       offsetBy = _ref.offsetBy;
 
-  // insurance
-  // =========
   if (!Number.isInteger(from) || from < 0) {
     throw new Error("string-apostrophes: [THROW_ID_01] options objects key \"to\", a starting string index, is wrong! It was given as " + from + " (type " + typeof from + ")");
   }
 
   if (!Number.isInteger(to)) {
     to = from + 1;
-  } // consts
-  // ======
-
+  }
 
   var rangesArr = [];
   var leftSingleQuote = "\u2018";
@@ -27299,10 +25646,7 @@ function convertOne(str, _ref) {
   var rightDoubleQuote = "\u201D";
   var singlePrime = "\u2032";
   var doublePrime = "\u2033";
-  var punctuationChars = [".", ",", ";", "!", "?"]; // const rawNDash = "\u2013";
-  // const rawMDash = "\u2014";
-  // f's
-  // ===
+  var punctuationChars = [".", ",", ";", "!", "?"];
 
   function isDigitStr(str2) {
     return typeof str2 === "string" && str2.charCodeAt(0) >= 48 && str2.charCodeAt(0) <= 57;
@@ -27310,127 +25654,102 @@ function convertOne(str, _ref) {
 
   function isLetter(str2) {
     return typeof str2 === "string" && !!str2.length && str2.toUpperCase() !== str2.toLowerCase();
-  } // The following section detects apostrophes, with aim to convert them to
-  // curlie right single quote or similar.
-  // However, we also need to tackle cases where wrong-side apostrophe is put,
-  // for example, right side single quote instead of left side or the opposite.
-
+  }
 
   if (value && ["'", leftSingleQuote, rightSingleQuote, singlePrime].includes(value) || to === from + 1 && ["'", leftSingleQuote, rightSingleQuote, singlePrime].includes(str[from])) {
-    // IF SINGLE QUOTE OR APOSTROPHE, the '
-    // OR LEFT/RIGHT SINGLE QUOTES OR SINGLE PRIME
     if (str[from - 1] && str[to] && isDigitStr(str[from - 1]) && !isLetter(str[to])) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&prime;" : singlePrime) && value !== (convertEntities ? "&prime;" : singlePrime)) {
         rangesArr.push([from, to, convertEntities ? "&prime;" : singlePrime]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
-    } else if (str[to] && str[to + 1] && str[to] === "n" && str.slice(from, to) === str.slice(to + 1, to + 1 + (to - from)) // ensure quotes/apostrophes match
-    ) {
-        // specifically take care of 'n' as in "rock ’n’ roll"
-        if (convertApostrophes && str.slice(from, to + 2) !== (convertEntities ? "&rsquo;n&rsquo;" : rightSingleQuote + "n" + rightSingleQuote) && value !== (convertEntities ? "&rsquo;n&rsquo;" : rightSingleQuote + "n" + rightSingleQuote)) {
-          rangesArr.push([from, to + 2, convertEntities ? "&rsquo;n&rsquo;" : rightSingleQuote + "n" + rightSingleQuote]);
-          /* istanbul ignore next */
+    } else if (str[to] && str[to + 1] && str[to] === "n" && str.slice(from, to) === str.slice(to + 1, to + 1 + (to - from))) {
+      if (convertApostrophes && str.slice(from, to + 2) !== (convertEntities ? "&rsquo;n&rsquo;" : rightSingleQuote + "n" + rightSingleQuote) && value !== (convertEntities ? "&rsquo;n&rsquo;" : rightSingleQuote + "n" + rightSingleQuote)) {
+        rangesArr.push([from, to + 2, convertEntities ? "&rsquo;n&rsquo;" : rightSingleQuote + "n" + rightSingleQuote]);
+        /* istanbul ignore next */
 
-          if (typeof offsetBy === "function") {
-            offsetBy(2);
-          }
-        } else if (!convertApostrophes && str.slice(from, to + 2) !== "'n'" && value !== "'n'") {
-          rangesArr.push([from, to + 2, "'n'"]);
-          /* istanbul ignore next */
-
-          if (typeof offsetBy === "function") {
-            offsetBy(2);
-          }
+        if (typeof offsetBy === "function") {
+          offsetBy(2);
         }
-      } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isDigitStr(str[to])) {
+      } else if (!convertApostrophes && str.slice(from, to + 2) !== "'n'" && value !== "'n'") {
+        rangesArr.push([from, to + 2, "'n'"]);
+        /* istanbul ignore next */
+
+        if (typeof offsetBy === "function") {
+          offsetBy(2);
+        }
+      }
+    } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isDigitStr(str[to])) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
-        // first, take care of 'tis, 'twas, 'twere, 'twould and so on
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
     } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
-      // if there's punctuation on the left and something on the right:
       if (!str[to].trim()) {
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
           rangesArr.push([from, to, "'"]);
         }
-      } else if (str[to] === "\"" && // double quote follows
-      str[to + 1] && !str[to + 1].trim() // and whitespace after
-      ) {
-          if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : "" + rightSingleQuote + rightDoubleQuote) && value !== (convertEntities ? "&rsquo;&rdquo;" : "" + rightSingleQuote + rightDoubleQuote)) {
-            rangesArr.push([from, to + 1, "" + (convertEntities ? "&rsquo;&rdquo;" : "" + rightSingleQuote + rightDoubleQuote)]);
-            /* istanbul ignore next */
+      } else if (str[to] === "\"" && str[to + 1] && !str[to + 1].trim()) {
+        if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : "" + rightSingleQuote + rightDoubleQuote) && value !== (convertEntities ? "&rsquo;&rdquo;" : "" + rightSingleQuote + rightDoubleQuote)) {
+          rangesArr.push([from, to + 1, "" + (convertEntities ? "&rsquo;&rdquo;" : "" + rightSingleQuote + rightDoubleQuote)]);
+          /* istanbul ignore next */
 
-            if (typeof offsetBy === "function") {
-              offsetBy(1);
-            }
-          } else if (!convertApostrophes && str.slice(from, to + 1) !== "'\"" && value !== "'\"") {
-            rangesArr.push([from, to + 1, "'\""]);
-            /* istanbul ignore next */
+          if (typeof offsetBy === "function") {
+            offsetBy(1);
+          }
+        } else if (!convertApostrophes && str.slice(from, to + 1) !== "'\"" && value !== "'\"") {
+          rangesArr.push([from, to + 1, "'\""]);
+          /* istanbul ignore next */
 
-            if (typeof offsetBy === "function") {
-              offsetBy(1);
-            }
+          if (typeof offsetBy === "function") {
+            offsetBy(1);
           }
         }
+      }
     } else if (from === 0 && str.slice(to).trim()) {
-      // if it's the beginning of a string
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
     } else if (!str[to] && str.slice(0, from).trim()) {
-      //
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
-        // 3. if it's the ending of a string
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
     } else if (str[from - 1] && str[to] && (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) && (isLetter(str[to]) || isDigitStr(str[to]))) {
-      // equivalent of /(\w)'(\w)/g
-      // single quote surrounded with alphanumeric characters
       if (convertApostrophes) {
-        // exception for a few Hawaiian words:
         if ((str[to] && str[from - 5] && str[from - 5].toLowerCase() === "h" && str[from - 4].toLowerCase() === "a" && str[from - 3].toLowerCase() === "w" && str[from - 2].toLowerCase() === "a" && str[from - 1].toLowerCase() === "i" && str[to].toLowerCase() === "i" || str[from - 1] && str[from - 1].toLowerCase() === "o" && str[to + 2] && str[to].toLowerCase() === "a" && str[to + 1].toLowerCase() === "h" && str[to + 2].toLowerCase() === "u") && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
         } else if (str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
         }
       } else if (str.slice(from, to) !== "'" && value !== "'") {
-        // not convertApostrophes - remove anything that's not apostrophe
         rangesArr.push([from, to, "'"]);
       }
     } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
-      // equivalent of /'\b/g
-      // alphanumeric follows
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
     } else if (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) {
-      // equivalent of /'\b/g
-      // alphanumeric precedes
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
     } else if (str[from - 1] && !str[from - 1].trim()) {
-      // whitespace in front
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
         rangesArr.push([from, to, "'"]);
       }
     } else if (str[to] && !str[to].trim()) {
-      // whitespace after
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
@@ -27438,25 +25757,20 @@ function convertOne(str, _ref) {
       }
     }
   } else if (["\"", leftDoubleQuote, rightDoubleQuote, doublePrime].includes(value) || to === from + 1 && ["\"", leftDoubleQuote, rightDoubleQuote, doublePrime].includes(str[from])) {
-    // IF DOUBLE QUOTE (") OR OTHER TYPES OF DOUBLE QUOTES
     if (str[from - 1] && isDigitStr(str[from - 1]) && str[to] && str[to] !== "'" && str[to] !== '"' && str[to] !== rightSingleQuote && str[to] !== rightDoubleQuote && str[to] !== leftSingleQuote && str[to] !== leftDoubleQuote) {
-      // 0.
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&Prime;" : doublePrime) && value !== (convertEntities ? "&Prime;" : doublePrime)) {
-        // replace double quotes meaning inches with double prime symbol:
         rangesArr.push([from, to, convertEntities ? "&Prime;" : doublePrime]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
     } else if (str[from - 1] && str[to] && punctuationChars.includes(str[from - 1])) {
-      // 1.
       if (!str[to].trim()) {
         if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
           rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
-      } else if (str[to] === "'" && // single quote follows
-      str[to + 1] && !str[to + 1].trim()) {
+      } else if (str[to] === "'" && str[to + 1] && !str[to + 1].trim()) {
         if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rdquo;&rsquo;" : "" + rightDoubleQuote + rightSingleQuote) && value !== (convertEntities ? "&rdquo;&rsquo;" : "" + rightDoubleQuote + rightSingleQuote)) {
           rangesArr.push([from, to + 1, convertEntities ? "&rdquo;&rsquo;" : "" + rightDoubleQuote + rightSingleQuote]);
           /* istanbul ignore next */
@@ -27474,44 +25788,36 @@ function convertOne(str, _ref) {
         }
       }
     } else if (from === 0 && str[to] && str.slice(to).trim()) {
-      // 2.
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
     } else if (!str[to] && str.slice(0, from).trim()) {
-      // 3.
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
     } else if (str[to] && (isLetter(str[to]) || isDigitStr(str[to]))) {
-      // equivalent of /"\b/g
-      // 4.
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
     } else if (str[from - 1] && (isLetter(str[from - 1]) || isDigitStr(str[from - 1]))) {
-      // equivalent of /"\b/g
-      // 5.
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
     } else if (str[from - 1] && !str[from - 1].trim()) {
-      // 6.
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&ldquo;" : leftDoubleQuote) && value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
         rangesArr.push([from, to, "\""]);
       }
     } else if (str[to] && !str[to].trim()) {
-      // 7.
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rdquo;" : rightDoubleQuote) && value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {

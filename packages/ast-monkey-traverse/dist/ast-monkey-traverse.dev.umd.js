@@ -1,7 +1,7 @@
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -2062,20 +2062,13 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
  */
-// "a" => null
-// "0" => null
-// "a.b" => "a"
-// "a.0" => "a"
-// "a.0.c" => "0"
-
 
 function parent(str) {
-  // input must have at least one dot:
   if (str.includes(".")) {
     var lastDotAt = str.lastIndexOf(".");
 
@@ -2093,7 +2086,7 @@ function parent(str) {
   return null;
 }
 
-var version$1 = "2.0.6";
+var version$1 = "2.0.7";
 
 var version = version$1;
 /**

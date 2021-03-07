@@ -1,7 +1,7 @@
 /**
  * string-extract-class-names
  * Extracts CSS class/id names from a string
- * Version: 6.0.6
+ * Version: 6.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-class-names/
@@ -1883,7 +1883,7 @@ createCommonjsModule(function (module, exports) {
   module.exports = cloneDeep;
 });
 
-var RAWNBSP = "\xA0"; // separates the value from flags
+var RAWNBSP = "\xA0";
 
 function rightMain(_ref) {
   var str = _ref.str,
@@ -1906,41 +1906,16 @@ function rightMain(_ref) {
     return null;
   }
 
-  if ( // next character exists
-  str[idx + 1] && ( // and...
-  // it's solid
-  str[idx + 1].trim() || // or it's a whitespace character, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 1]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 1] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
     return idx + 1;
   }
 
-  if ( // second next character exists
-  str[idx + 2] && ( // and...
-  // it's solid
-  str[idx + 2].trim() || // it's a whitespace character and...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
     return idx + 2;
-  } // worst case scenario - traverse forwards
-
+  }
 
   for (var i = idx + 1, len = str.length; i < len; i++) {
-    if ( // it's solid
-    str[i].trim() || // it's a whitespace character and...
-    // stop at newlines is on
-    stopAtNewlines && // and it's a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP) {
+    if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
       return i;
     }
   }
@@ -1960,27 +1935,6 @@ function right(str, idx) {
     stopAtRawNbsp: false
   });
 }
-//
-//       lllllll                        ffffffffffffffff           tttt                    ((((((       ))))))
-//       l:::::l                       f::::::::::::::::f       ttt:::t                  ((::::::(     )::::::))
-//       l:::::l                      f::::::::::::::::::f      t:::::t                ((:::::::(       ):::::::))
-//       l:::::l                      f::::::fffffff:::::f      t:::::t               (:::::::((         )):::::::)
-//       l::::l     eeeeeeeeeeee     f:::::f       ffffffttttttt:::::ttttttt         (::::::(             )::::::)
-//       l::::l   ee::::::::::::ee   f:::::f             t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l  e::::::eeeee:::::eef:::::::ffffff       t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l e::::::e     e:::::ef::::::::::::f       tttttt:::::::tttttt         (:::::(               ):::::)
-//       l::::l e:::::::eeeee::::::ef::::::::::::f             t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::::::::::::e f:::::::ffffff             t:::::t               (:::::(               ):::::)
-//       l::::l e::::::eeeeeeeeeee   f:::::f                   t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::e            f:::::f                   t:::::t    tttttt     (::::::(             )::::::)
-//       l::::::le::::::::e          f:::::::f                  t::::::tttt:::::t     (:::::::((         )):::::::)
-//       l::::::l e::::::::eeeeeeee  f:::::::f                  tt::::::::::::::t      ((:::::::(       ):::::::))
-//       l::::::l  ee:::::::::::::e  f:::::::f                    tt:::::::::::tt        ((::::::(     )::::::)
-//       llllllll    eeeeeeeeeeeeee  fffffffff                      ttttttttttt            ((((((       ))))))
-//
-//
-// Finds the index of the first non-whitespace character on the left
-
 
 function leftMain(_ref2) {
   var str = _ref2.str,
@@ -2000,41 +1954,16 @@ function leftMain(_ref2) {
     return null;
   }
 
-  if ( // ~- means minus one, in bitwise
-  str[~-idx] && ( // either it's not a whitespace
-  str[~-idx].trim() || // or it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[~-idx]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[~-idx] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[~-idx] && (str[~-idx].trim() || stopAtNewlines && "\n\r".includes(str[~-idx]) || stopAtRawNbsp && str[~-idx] === RAWNBSP)) {
     return ~-idx;
-  } // if we reached this point, this means character on the left is whitespace -
-  // fine - check the next character on the left, str[idx - 2]
+  }
 
-
-  if ( // second character exists
-  str[idx - 2] && ( // either it's not whitespace so Bob's your uncle here's non-whitespace character
-  str[idx - 2].trim() || // it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // it's some sort of a newline
-  "\n\r".includes(str[idx - 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx - 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx - 2] && (str[idx - 2].trim() || stopAtNewlines && "\n\r".includes(str[idx - 2]) || stopAtRawNbsp && str[idx - 2] === RAWNBSP)) {
     return idx - 2;
-  } // worst case scenario - traverse backwards
-
+  }
 
   for (var i = idx; i--;) {
-    if (str[i] && ( // it's non-whitespace character
-    str[i].trim() || // or it is whitespace character, but...
-    // stop at newlines is on
-    stopAtNewlines && // it's some sort of a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP)) {
+    if (str[i] && (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP)) {
       return i;
     }
   }
@@ -2055,7 +1984,7 @@ function left(str, idx) {
   });
 }
 
-var version$1 = "6.0.6";
+var version$1 = "6.0.7";
 
 var version = version$1;
 /**

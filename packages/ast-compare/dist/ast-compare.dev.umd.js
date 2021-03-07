@@ -1,7 +1,7 @@
 /**
  * ast-compare
  * Compare anything: AST, objects, arrays, strings and nested thereof
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-compare/
@@ -2505,20 +2505,13 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
  */
-// "a" => null
-// "0" => null
-// "a.b" => "a"
-// "a.0" => "a"
-// "a.0.c" => "0"
-
 
 function parent(str) {
-  // input must have at least one dot:
   if (str.includes(".")) {
     var lastDotAt = str.lastIndexOf(".");
 
@@ -2536,16 +2529,10 @@ function parent(str) {
   return null;
 }
 
-/**
- * Utility library to traverse AST
- */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
-  }; //
-  // traverseInner() needs a wrapper to shield the last two input args from the outside
-  //
+  };
 
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
     var tree = lodash_clonedeep(treeOriginal);
@@ -2569,8 +2556,7 @@ function traverse(tree1, cb1) {
         if (tree[i] !== undefined) {
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "array";
-          innerObj.parentKey = parent(path); // innerObj.path = `${innerObj.path}[${i}]`
-
+          innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: path
           }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
@@ -2588,7 +2574,6 @@ function traverse(tree1, cb1) {
         }
       }
     } else if (lodash_isplainobject(tree)) {
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (var key in tree) {
         if (stop.now && key != null) {
           break;
@@ -2621,18 +2606,15 @@ function traverse(tree1, cb1) {
   }
 
   return traverseInner(tree1, cb1, {}, stop2);
-} // -----------------------------------------------------------------------------
+}
 
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
- */
-/**
- * Does AST contain only empty space?
  */
 
 function empty(input) {

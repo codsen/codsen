@@ -1,7 +1,7 @@
 /**
  * json-comb-core
  * The inner core of json-comb
- * Version: 6.8.6
+ * Version: 6.8.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/json-comb-core/
@@ -4246,16 +4246,11 @@ function isPlainObject(value) {
 var lodash_isplainobject = isPlainObject;
 
 function flattenAllArrays(originalIncommingObj, originalOpts) {
-  //
-  // internal functions
-  // ==================
   function arrayContainsStr(arr) {
     return arr.some(function (val) {
       return typeof val === "string";
     });
-  } // setup
-  // =====
-
+  }
 
   var defaults = {
     flattenArraysContainingStringsToBeEmpty: false
@@ -4266,9 +4261,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   var incommingObj = lodash_clonedeep(originalIncommingObj);
   var isFirstObj;
   var combinedObj;
-  var firstObjIndex; // action
-  // ======
-  // 1. check current
+  var firstObjIndex;
 
   if (Array.isArray(incommingObj)) {
     if (opts.flattenArraysContainingStringsToBeEmpty && arrayContainsStr(incommingObj)) {
@@ -4296,8 +4289,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
     if (isFirstObj !== null) {
       incommingObj[firstObjIndex] = lodash_clonedeep(combinedObj);
     }
-  } // 2. traverse deeper
-
+  }
 
   if (lodash_isplainobject(incommingObj)) {
     Object.keys(incommingObj).forEach(function (key) {
@@ -6279,14 +6271,10 @@ var defaults$2 = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
 };
-/**
- * Like _.includes but with wildcards
- */
 
 function includesWithGlob(originalInput, stringToFind, originalOpts) {
-  // maybe we can end prematurely:
   if (!originalInput.length || !stringToFind.length) {
-    return false; // because nothing can be found in it
+    return false;
   }
 
   var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
@@ -6299,8 +6287,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
         caseSensitive: opts.caseSensitive
       });
     });
-  } // array then.
-
+  }
 
   if (opts.arrayVsArrayAllMustBeFound === "any") {
     return stringToFind.some(function (stringToFindVal) {
@@ -6324,14 +6311,13 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.6
+ * Version: 3.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
  */
 
 function nonEmpty(input) {
-  // deliberate ==, catches undefined and null
   if (input == null) {
     return false;
   }
@@ -6413,8 +6399,6 @@ var defaults$1 = {
 };
 
 function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
-  // DEFAULTS
-  // ---------------------------------------------------------------------------
   var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   if (typeof opts.ignoreKeys === "string") {
@@ -6423,34 +6407,17 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
 
   if (typeof opts.hardMergeKeys === "string") {
     opts.hardMergeKeys = [opts.hardMergeKeys];
-  } // hardMergeKeys: '*' <===> hardMergeEverything === true
-  // also hardMergeKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
-
+  }
 
   if (opts.hardMergeKeys.includes("*")) {
     opts.hardMergeEverything = true;
-  } // ignoreKeys: '*' <===> ignoreEverything === true
-  // also ignoreKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
-
+  }
 
   if (opts.ignoreKeys.includes("*")) {
     opts.ignoreEverything = true;
-  } // this variable takes "path" coming from input and appends the key
-  // name following object-path notation.
-  // https://github.com/mariocasciaro/object-path
-  // Basically, arrays are marked with dot, same like object keys, only the
-  // key is the index number of the element.
-  //
-  // For example: key1.key2.0.key3.
-  // That zero means first element of the array. It also means that key "key1"
-  // had value of a plain object-type, which had a key "key2" which value was
-  // an array. That's array's first element (at zero'th index) was a plain object.
-  // That object had key "key3", which we reference here by "key1.key2.0.key3".
+  }
 
-
-  var currPath; // ACTION
-  // ---------------------------------------------------------------------------
-  // when null is used as explicit false, it overrides everything and anything:
+  var currPath;
 
   if (opts.useNullAsExplicitFalse && (input1orig === null || input2orig === null)) {
     if (typeof opts.cb === "function") {
@@ -6462,9 +6429,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return null;
-  } // clone the values to prevent accidental mutations, but only if it makes sense -
-  // it applies to arrays and plain objects only (as far as we're concerned here)
-
+  }
 
   var i1 = isArr$1(input1orig) || lodash_isplainobject(input1orig) ? lodash_clonedeep(input1orig) : input1orig;
   var i2 = isArr$1(input2orig) || lodash_isplainobject(input2orig) ? lodash_clonedeep(input2orig) : input2orig;
@@ -6474,20 +6439,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     uniRes = i1;
   } else if (opts.hardMergeEverything) {
     uniRes = i2;
-  } // short name to mark unidirectional state
+  }
 
-
-  var uni = opts.hardMergeEverything || opts.ignoreEverything; // console.log(`168 uniRes = ${JSON.stringify(uniRes, null, 4)}`);
-  // console.log(`169 uni = ${JSON.stringify(uni, null, 4)}`); // Now the complex part. By this point we know there's a value clash and we need
-  // to judge case-by-case. Principle is to aim to retain as much data as possible
-  // after merging.
+  var uni = opts.hardMergeEverything || opts.ignoreEverything;
 
   if (isArr$1(i1)) {
     if (nonEmpty(i1)) {
-      // cases 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
       if (isArr$1(i2) && nonEmpty(i2)) {
-        // case 1
-        // two array merge
         if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
           var _currentResult = uni ? uniRes : [];
 
@@ -6519,8 +6477,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         var temp = [];
 
         for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
-          // calculate current path
-          currPath = infoObj.path && infoObj.path.length ? infoObj.path + "." + index : "" + index; // calculate the merge outcome:
+          currPath = infoObj.path && infoObj.path.length ? infoObj.path + "." + index : "" + index;
 
           if (lodash_isplainobject(i1[index]) && lodash_isplainobject(i2[index]) && (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index]) || !opts.mergeObjectsOnlyWhenKeysetMatches)) {
             temp.push(mergeAdvanced({
@@ -6528,19 +6485,17 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
               key: infoObj.key,
               type: [getType(i1), getType(i2)]
             }, i1[index], i2[index], opts));
-          } else if (opts.oneToManyArrayObjectMerge && (i1.length === 1 || i2.length === 1) // either of arrays has one elem.
-          ) {
-              temp.push(i1.length === 1 ? mergeAdvanced({
-                path: currPath,
-                key: infoObj.key,
-                type: [getType(i1), getType(i2)]
-              }, i1[0], i2[index], opts) : mergeAdvanced({
-                path: currPath,
-                key: infoObj.key,
-                type: [getType(i1), getType(i2)]
-              }, i1[index], i2[0], opts));
-            } else if (opts.concatInsteadOfMerging) {
-            // case1 - concatenation no matter what contents
+          } else if (opts.oneToManyArrayObjectMerge && (i1.length === 1 || i2.length === 1)) {
+            temp.push(i1.length === 1 ? mergeAdvanced({
+              path: currPath,
+              key: infoObj.key,
+              type: [getType(i1), getType(i2)]
+            }, i1[0], i2[index], opts) : mergeAdvanced({
+              path: currPath,
+              key: infoObj.key,
+              type: [getType(i1), getType(i2)]
+            }, i1[index], i2[0], opts));
+          } else if (opts.concatInsteadOfMerging) {
             if (index < i1.length) {
               temp.push(i1[index]);
             }
@@ -6549,8 +6504,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
               temp.push(i2[index]);
             }
           } else {
-            // case2 - merging, evaluating contents
-            // push each element of i1 into temp
             if (index < i1.length) {
               temp.push(i1[index]);
             }
@@ -6559,8 +6512,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
               temp.push(i2[index]);
             }
           }
-        } // optionally dedupe:
-
+        }
 
         if (opts.dedupeStringsInArrayValues && temp.every(function (el) {
           return isStr$2(el);
@@ -6570,7 +6522,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
 
         i1 = lodash_clonedeep(temp);
       } else {
-        // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
         var _currentResult3 = uni ? uniRes : i1;
 
         if (typeof opts.cb === "function") {
@@ -6584,9 +6535,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         return _currentResult3;
       }
     } else {
-      // cases 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
       if (nonEmpty(i2)) {
-        // cases 11, 13, 15, 17
         var _currentResult5 = uni ? uniRes : i2;
 
         if (typeof opts.cb === "function") {
@@ -6598,8 +6547,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
 
         return _currentResult5;
-      } // cases 12, 14, 16, 18, 19, 20
-
+      }
 
       var _currentResult4 = uni ? uniRes : i1;
 
@@ -6615,11 +6563,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
   } else if (lodash_isplainobject(i1)) {
     if (nonEmpty(i1)) {
-      // cases 21-30
       if (isArr$1(i2)) {
-        // cases 21, 22
         if (nonEmpty(i2)) {
-          // case 21
           var _currentResult9 = uni ? uniRes : i2;
 
           if (typeof opts.cb === "function") {
@@ -6631,8 +6576,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
           }
 
           return _currentResult9;
-        } // case 22
-
+        }
 
         var _currentResult8 = uni ? uniRes : i1;
 
@@ -6648,17 +6592,11 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       if (lodash_isplainobject(i2)) {
-        // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
         Object.keys(i2).forEach(function (key) {
-          // calculate current path:
-          currPath = infoObj.path && infoObj.path.length ? infoObj.path + "." + key : "" + key; // calculate the merge outcome:
+          currPath = infoObj.path && infoObj.path.length ? infoObj.path + "." + key : "" + key;
 
           if (i1.hasOwnProperty(key)) {
-            // key clash
             if (includesWithGlob(key, opts.ignoreKeys)) {
-              // set the ignoreEverything for all deeper recursive traversals,
-              // otherwise, it will get lost, yet, ignores apply to all children
-              // console.log('455. - ignoreEverything')
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -6667,11 +6605,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 ignoreEverything: true
               }));
             } else if (includesWithGlob(key, opts.hardMergeKeys)) {
-              // set the hardMergeEverything for all deeper recursive traversals.
-              // The user requested this key to be hard-merged, but in deeper branches
-              // without this switch (opts.hardMergeEverything) we'd lose the visibility
-              // of the name of the key; we can't "bubble up" to check all parents' key names,
-              // are any of them positive for "hard merge"...
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -6680,10 +6613,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 hardMergeEverything: true
               }));
             } else if (includesWithGlob(key, opts.hardArrayConcatKeys)) {
-              // set the hardArrayConcat option to true for all deeper values.
-              // It will force a concat of both values, as long as they are both arrays
-              // No merge will happen.
-              // console.log('489. - hardArrayConcat')
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -6699,7 +6628,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
               }, i1[key], i2[key], opts);
             }
           } else {
-            i1[key] = i2[key]; // key does not exist, so creates it
+            i1[key] = i2[key];
           }
         });
 
@@ -6714,8 +6643,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
 
         return i1;
-      } // cases 24, 25, 26, 27, 28, 29, 30
-
+      }
 
       var _currentResult7 = uni ? uniRes : i1;
 
@@ -6728,12 +6656,9 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult7;
-    } // i1 is empty obj
-    // cases 31-40
-
+    }
 
     if (isArr$1(i2) || lodash_isplainobject(i2) || nonEmpty(i2)) {
-      // cases 31, 32, 33, 34, 35, 37
       var _currentResult11 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
@@ -6745,8 +6670,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult11;
-    } // 36, 38, 39, 40
-
+    }
 
     var _currentResult6 = uni ? uniRes : i1;
 
@@ -6763,7 +6687,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     if (isFinite(i1)) {
       if (lodash_isdate(i2)) {
         if (isFinite(i2)) {
-          // compares dates
           var _currentResult15 = uni ? uniRes : i1 > i2 ? i1 : i2;
 
           if (typeof opts.cb === "function") {
@@ -6775,8 +6698,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
           }
 
           return _currentResult15;
-        } // return i1 date
-
+        }
 
         var _currentResult14 = uni ? uniRes : i1;
 
@@ -6789,8 +6711,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
 
         return _currentResult14;
-      } // if i2 is truthy, return it, otherwise return date at i1
-
+      }
 
       var _currentResult13 = uni ? uniRes : i2 ? i2 : i1;
 
@@ -6806,7 +6727,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     if (lodash_isdate(i2)) {
-      // return i2 date
       var _currentResult16 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
@@ -6834,8 +6754,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
   } else if (isStr$2(i1)) {
     if (nonEmpty(i1)) {
       if ((isArr$1(i2) || lodash_isplainobject(i2) || isStr$2(i2)) && nonEmpty(i2)) {
-        // cases 41, 43, 45
-        // take care of hard merge setting cases, opts.hardMergeKeys
         var _currentResult19 = uni ? uniRes : i2;
 
         if (typeof opts.cb === "function") {
@@ -6847,8 +6765,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
 
         return _currentResult19;
-      } // cases 42, 44, 46, 47, 48, 49, 50
-
+      }
 
       var _currentResult18 = uni ? uniRes : i1;
 
@@ -6861,11 +6778,9 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult18;
-    } // i1 is empty string
-
+    }
 
     if (i2 != null && !isBool(i2)) {
-      // cases 51, 52, 53, 54, 55, 56, 57
       var _currentResult20 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
@@ -6877,8 +6792,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult20;
-    } // 58, 59, 60
-
+    }
 
     var _currentResult17 = uni ? uniRes : i1;
 
@@ -6893,7 +6807,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     return _currentResult17;
   } else if (isNum(i1)) {
     if (nonEmpty(i2)) {
-      // cases 61, 63, 65, 67
       var _currentResult22 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
@@ -6905,8 +6818,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult22;
-    } // cases 62, 64, 66, 68, 69, 70
-
+    }
 
     var _currentResult21 = uni ? uniRes : i1;
 
@@ -6921,10 +6833,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     return _currentResult21;
   } else if (isBool(i1)) {
     if (isBool(i2)) {
-      // case 78 - two Booleans
       if (opts.mergeBoolsUsingOrNotAnd) {
-        var _currentResult25 = uni ? uniRes : i1 || i2; // default - OR
-
+        var _currentResult25 = uni ? uniRes : i1 || i2;
 
         if (typeof opts.cb === "function") {
           return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult25, {
@@ -6937,8 +6847,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         return _currentResult25;
       }
 
-      var _currentResult24 = uni ? uniRes : i1 && i2; // alternative merge using AND
-
+      var _currentResult24 = uni ? uniRes : i1 && i2;
 
       if (typeof opts.cb === "function") {
         return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult24, {
@@ -6952,8 +6861,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     if (i2 != null) {
-      // DELIBERATE LOOSE EQUAL - existy()
-      // cases 71, 72, 73, 74, 75, 76, 77
       var _currentResult26 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
@@ -6965,9 +6872,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult26;
-    } // i2 is null or undefined
-    // cases 79*, 80
-
+    }
 
     var _currentResult23 = uni ? uniRes : i1;
 
@@ -6982,8 +6887,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     return _currentResult23;
   } else if (i1 === null) {
     if (i2 != null) {
-      // DELIBERATE LOOSE EQUAL - existy()
-      // case 81, 82, 83, 84, 85, 86, 87, 88*
       var _currentResult28 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
@@ -6995,8 +6898,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult28;
-    } // cases 89, 90
-
+    }
 
     var _currentResult27 = uni ? uniRes : i1;
 
@@ -7021,8 +6923,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult29;
-  } // return i1
-
+  }
 
   var currentResult = uni ? uniRes : i1;
 
@@ -7036,17 +6937,11 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
 
   return currentResult;
 }
-/**
- * Recursively, deeply merge of anything
- */
-
 
 function externalApi(input1orig, input2orig, originalOpts) {
   if (!arguments.length) {
     throw new TypeError("object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing");
-  } // notice we have first argument tracking the current path, which is not
-  // exposed to the external API.
-
+  }
 
   return mergeAdvanced({
     key: null,
@@ -7058,13 +6953,11 @@ function externalApi(input1orig, input2orig, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.6
+ * Version: 3.13.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -8999,8 +8892,6 @@ var lodash_isequal = createCommonjsModule(function (module, exports) {
   module.exports = isEqual;
 });
 
-// -----------------------------------------------------------------------------
-
 function allValuesEqualTo(input, value, opts) {
   if (Array.isArray(input)) {
     if (input.length === 0) {
@@ -9011,9 +8902,7 @@ function allValuesEqualTo(input, value, opts) {
       return lodash_isequal(el, value);
     })) {
       return false;
-    } // so at this point
-    // backwards traversal for increased performance:
-
+    }
 
     for (var i = input.length; i--;) {
       if (!allValuesEqualTo(input[i], value, opts)) {
@@ -9041,14 +8930,9 @@ function allValuesEqualTo(input, value, opts) {
   }
 
   return lodash_isequal(input, value);
-} // T H E   E X P O S E D   W R A P P E R   F U N C T I O N
-// -----------------------------------------------------------------------------
-// we use this wrapper function because there will be recursive calls and it would
-// be a waste of resources to perform the input checks each time within recursion
-
+}
 
 function allEq(inputOriginal, valueOriginal, originalOpts) {
-  // precautions:
   if (inputOriginal === undefined) {
     throw new Error("object-all-values-equal-to: [THROW_ID_01] The first input is undefined! Please provide the first argument.");
   }
@@ -9059,15 +8943,13 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
 
   if (originalOpts && !lodash_isplainobject(originalOpts)) {
     throw new Error("object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a " + typeof originalOpts + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
-  } // prep opts
-
+  }
 
   var defaults = {
     arraysMustNotContainPlaceholders: true
   };
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // and finally,
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
@@ -9076,8 +8958,7 @@ var defaults = {
   placeholder: false,
   doNotFillThesePathsIfTheyContainPlaceholders: [],
   useNullAsExplicitFalse: true
-}; // ===================================
-// F ( )
+};
 
 function typ(something) {
   if (lodash_isplainobject(something)) {
@@ -9097,10 +8978,7 @@ function isStr$1(something) {
 
 function existy$1(x) {
   return x != null;
-} // this function does the job, but it is not exposed because its first argument
-// requirements are loose - it can be anything since it will be calling itself recursively
-// with potentially AST contents (objects containing arrays containing objects etc.)
-
+}
 
 function fillMissingKeys(incompleteOriginal, schema, opts, path) {
   if (path === void 0) {
@@ -9111,9 +8989,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path) {
 
   if (existy$1(incomplete) || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allEq(incomplete, opts.placeholder))) {
     if (lodash_isplainobject(schema) && lodash_isplainobject(incomplete)) {
-      // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach(function (key) {
-        // calculate the path for current key
         var currentPath = "" + (path ? path + "." : "") + key;
 
         if (opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath)) {
@@ -9122,7 +8998,6 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path) {
               incomplete[key] = opts.placeholder;
             }
           } else {
-            // just create the key and set to placeholder value
             incomplete[key] = opts.placeholder;
           }
         }
@@ -9153,18 +9028,9 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path) {
   }
 
   return incomplete;
-} // =================================================
-// T H E   E X P O S E D   F U N C T I O N
-
+}
 
 function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalOptsWrapper) {
-  // first argument must be an object. However, we're going to call recursively,
-  // so we have to wrap the main function with another, wrapper-one, and perform
-  // object-checks only on that wrapper. This way, only objects can come in,
-  // but inside there can be whatever data structures.
-  //
-  // Also, wrapper function will shield the fourth argument from the outside API
-  //
   if (arguments.length === 0) {
     throw new Error("object-fill-missing-keys: [THROW_ID_01] All arguments are missing!");
   }
@@ -9179,8 +9045,7 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
 
   if (originalOptsWrapper && !lodash_isplainobject(originalOptsWrapper)) {
     throw new Error("object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is \"" + typ(originalOptsWrapper) + "\" and it's equal to: " + JSON.stringify(originalOptsWrapper, null, 4));
-  } // fill any settings with defaults if missing:
-
+  }
 
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptsWrapper || {});
 
@@ -9206,7 +9071,7 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
 /**
  * object-set-all-values-to
  * Recursively walk the input and set all found values in plain objects to something
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-set-all-values-to/
@@ -9221,7 +9086,6 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
   } else if (lodash_isplainobject(valueOriginal) || Array.isArray(valueOriginal)) {
     value = lodash_clonedeep(valueOriginal);
   } else {
-    // needed for functions as values - we can't clone them!
     value = valueOriginal;
   }
 
@@ -9373,9 +9237,6 @@ function noNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
 
     if (isObj$1(input)) {
       if (isObj$1(reference)) {
-        // input and reference both are objects.
-        // match the keys and record any unique-ones.
-        // then traverse recursively.
         Object.keys(input).forEach(function (key) {
           if (!Object.prototype.hasOwnProperty.call(reference, key)) {
             temp = innerVar.path.length > 0 ? innerVar.path + "." + key : key;
@@ -9389,16 +9250,12 @@ function noNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
           }
         });
       } else {
-        // input is object, but reference is not.
-        // record all the keys of the input, but don't traverse deeper
         innerVar.res = innerVar.res.concat(Object.keys(input).map(function (key) {
           return innerVar.path.length > 0 ? innerVar.path + "." + key : key;
         }));
       }
     } else if (Array.isArray(input)) {
       if (Array.isArray(reference)) {
-        // both input and reference are arrays.
-        // traverse each
         for (var i = 0, len = input.length; i < len; i++) {
           temp = {
             path: (innerVar.path.length > 0 ? innerVar.path : "") + "[" + i + "]",
@@ -9412,8 +9269,6 @@ function noNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
           }
         }
       } else {
-        // mismatch
-        // traverse all elements of the input and put their locations to innerVar.res
         innerVar.res = innerVar.res.concat(input.map(function (_el, i) {
           return (innerVar.path.length > 0 ? innerVar.path : "") + "[" + i + "]";
         }));
@@ -10055,7 +9910,7 @@ var pOne_1 = pOne;
 var _default = pOne;
 pOne_1.default = _default;
 
-var version$1 = "6.8.6";
+var version$1 = "6.8.7";
 
 var version = version$1;
 

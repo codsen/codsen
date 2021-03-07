@@ -1,7 +1,7 @@
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -17,27 +17,20 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version$1 = "4.0.6";
+var version$1 = "4.0.7";
 
 var version = version$1;
 var defaults = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
-
 function rSort(arrOfRanges, originalOptions) {
-  // quick ending
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
-  } // fill any settings with defaults if missing:
-
-
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOptions); // arrOfRanges validation
-
-
+  }
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOptions);
   var culpritsIndex;
-  var culpritsLen; // validate does every range consist of exactly two indexes:
-
+  var culpritsLen;
   if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
     return range;
   }).every(function (rangeArr, indx) {
@@ -46,13 +39,10 @@ function rSort(arrOfRanges, originalOptions) {
       culpritsLen = rangeArr.length;
       return false;
     }
-
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") has not two but " + culpritsLen + " elements!");
-  } // validate are range indexes natural numbers:
-
-
+  }
   if (!arrOfRanges.filter(function (range) {
     return range;
   }).every(function (rangeArr, indx) {
@@ -60,13 +50,10 @@ function rSort(arrOfRanges, originalOptions) {
       culpritsIndex = indx;
       return false;
     }
-
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") does not consist of only natural numbers!");
-  } // let's assume worst case scenario is N x N.
-
-
+  }
   var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
     return range;
   }).length, 2);
@@ -78,23 +65,18 @@ function rSort(arrOfRanges, originalOptions) {
       counter += 1;
       opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
     }
-
     if (range1[0] === range2[0]) {
       if (range1[1] < range2[1]) {
         return -1;
       }
-
       if (range1[1] > range2[1]) {
         return 1;
       }
-
       return 0;
     }
-
     if (range1[0] < range2[0]) {
       return -1;
     }
-
     return 1;
   });
 }

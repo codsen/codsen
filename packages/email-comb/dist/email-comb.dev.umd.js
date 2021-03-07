@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/email-comb/
@@ -107,13 +107,11 @@ function _createForOfIteratorHelperLoose(o, allowArrayLike) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.6
+ * Version: 3.13.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -125,8 +123,6 @@ function arrayiffy(something) {
 
   return something;
 }
-
-/* eslint no-plusplus:0 */
 
 function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);
@@ -149,8 +145,7 @@ var defaults$6 = {
 
 var defaultGetNextIdx = function defaultGetNextIdx(index) {
   return index + 1;
-}; // eslint-disable-next-line consistent-return
-
+};
 
 function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
   if (special === void 0) {
@@ -161,7 +156,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     getNextIdx = defaultGetNextIdx;
   }
 
-  var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
+  var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
 
   if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
@@ -171,52 +166,21 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
   if (position >= str.length && !special) {
     return false;
-  } // The "charsToCheckCount" varies, it decreases with skipped characters,
-  // as long as "maxMismatches" allows. It's not the count of how many
-  // characters de-facto have been matched from the source.
+  }
 
-
-  var charsToCheckCount = special ? 1 : whatToMatchVal.length; // this is the counter of real characters matched. It is not reduced
-  // from the holes in matched. For example, if source is "abc" and
-  // maxMismatches=1 and we have "ac", result of the match will be true,
-  // the following var will be equal to 2, meaning we matched two
-  // characters:
-
-  var charsMatchedTotal = 0; // used to catch frontal false positives, where too-eager matching
-  // depletes the mismatches allowance before precisely matching the exact
-  // string that follows, yielding too early false-positive start
-
+  var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+  var charsMatchedTotal = 0;
   var patienceReducedBeforeFirstMatch = false;
-  var lastWasMismatched = false; // value is "false" or index of where it was activated
-  // if no character was ever matched, even through if opts.maxMismatches
-  // would otherwise allow to skip characters, this will act as a last
-  // insurance - at least one character must have been matched to yield a
-  // positive result!
-
+  var lastWasMismatched = false;
   var atLeastSomethingWasMatched = false;
   var patience = opts.maxMismatches;
-  var i = position; // internal-use flag, not the same as "atLeastSomethingWasMatched":
-
-  var somethingFound = false; // these two drive opts.firstMustMatch and opts.lastMustMatch:
-
+  var i = position;
+  var somethingFound = false;
   var firstCharacterMatched = false;
-  var lastCharacterMatched = false; // bail early if there's whitespace in front, imagine:
-  // abc important}
-  //   ^
-  //  start, match ["!important"], matchRightIncl()
-  //
-  // in case above, "c" consumed 1 patience, let's say 1 is left,
-  // we stumble upon "i" where "!" is missing. "c" is false start.
+  var lastCharacterMatched = false;
 
   function whitespaceInFrontOfFirstChar() {
-    return (// it's a first letter match
-      charsMatchedTotal === 1 && // and character in front exists
-      // str[i - 1] &&
-      // and it's whitespace
-      // !str[i - 1].trim() &&
-      // some patience has been consumed already
-      patience < opts.maxMismatches - 1
-    );
+    return charsMatchedTotal === 1 && patience < opts.maxMismatches - 1;
   }
 
   while (str[i]) {
@@ -235,7 +199,6 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       return val.toLowerCase();
     }).includes(str[i].toLowerCase())) {
       if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
-        // return true because we reached the zero'th index, exactly what we're looking for
         return true;
       }
 
@@ -243,7 +206,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       continue;
     }
 
-    var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1]; // let's match
+    var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
 
     if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
       if (!somethingFound) {
@@ -252,12 +215,10 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
       if (!atLeastSomethingWasMatched) {
         atLeastSomethingWasMatched = true;
-      } // if this was the first character from the "to-match" list, flip the flag
-
+      }
 
       if (charsToCheckCount === whatToMatchVal.length) {
-        firstCharacterMatched = true; // now, if the first character was matched and yet, patience was
-        // reduced already, this means there's a false beginning in front
+        firstCharacterMatched = true;
 
         if (patience !== opts.maxMismatches) {
           return false;
@@ -267,33 +228,14 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       }
 
       charsToCheckCount -= 1;
-      charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
-      // abc important}
-      //   ^
-      //  start, match ["!important"], matchRightIncl()
-      //
-      // in case above, "c" consumed 1 patience, let's say 1 is left,
-      // we stumble upon "i" where "!" is missing. "c" is false start.
+      charsMatchedTotal++;
 
       if (whitespaceInFrontOfFirstChar()) {
         return false;
       }
 
       if (!charsToCheckCount) {
-        return (// either it was not a perfect match
-          charsMatchedTotal !== whatToMatchVal.length || // or it was, and in that case, no patience was reduced
-          // (if a perfect match was found, yet some "patience" was reduced,
-          // that means we have false positive characters)
-          patience === opts.maxMismatches || // mind you, it can be a case of rogue characters in-between
-          // the what was matched, imagine:
-          // source: "abxcd", matching ["bc"], maxMismatches=1
-          // in above case, charsMatchedTotal === 2 and whatToMatchVal ("bc") === 2
-          // - we want to exclude cases of frontal false positives, like:
-          // source: "xy abc", match "abc", maxMismatches=2, start at 0
-          //          ^
-          //       match form here to the right
-          !patienceReducedBeforeFirstMatch ? i : false
-        );
+        return charsMatchedTotal !== whatToMatchVal.length || patience === opts.maxMismatches || !patienceReducedBeforeFirstMatch ? i : false;
       }
     } else {
       if (!patienceReducedBeforeFirstMatch && !charsMatchedTotal) {
@@ -301,23 +243,14 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
       }
 
       if (opts.maxMismatches && patience && i) {
-        patience -= 1; // the bigger the maxMismatches, the further away we must check for
-        // alternative matches
+        patience -= 1;
 
         for (var y = 0; y <= patience; y++) {
-          // maybe str[i] will match against next charToCompareAgainst?
           var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
           var nextCharInSource = str[getNextIdx(i)];
 
-          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
-          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-            charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
-            // abc important}
-            //   ^
-            //  start, match ["!important"], matchRightIncl()
-            //
-            // in case above, "c" consumed 1 patience, let's say 1 is left,
-            // we stumble upon "i" where "!" is missing. "c" is false start.
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsMatchedTotal++;
 
             if (whitespaceInFrontOfFirstChar()) {
               return false;
@@ -326,8 +259,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
-          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
-          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
             if (!charsMatchedTotal && !opts.hungry) {
               return false;
             }
@@ -336,41 +268,27 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
             somethingFound = true;
             break;
           } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
-            // If "nextCharToCompareAgainst" is undefined, this
-            // means there are no more characters left to match,
-            // this is the last character to be matched.
-            // This means, if patience >= 0, this is it,
-            // the match is still positive.
             return i;
-          } // ███████████████████████████████████████
-
+          }
         }
 
         if (!somethingFound) {
-          // if the character was rogue, we mark it:
-          lastWasMismatched = i; // patience--;
-          // console.log(
-          //   `350 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`patience`}\u001b[${39}m`} = ${patience}`
-          // );
+          lastWasMismatched = i;
         }
       } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
         return 0;
       } else {
         return false;
       }
-    } // turn off "lastWasMismatched" if it's on and it hasn't been activated
-    // on this current index:
-
+    }
 
     if (lastWasMismatched !== false && lastWasMismatched !== i) {
       lastWasMismatched = false;
-    } // if all was matched, happy days
-
+    }
 
     if (charsToCheckCount < 1) {
       return i;
-    } // iterate onto the next index, otherwise while would loop infinitely
-
+    }
 
     i = getNextIdx(i);
   }
@@ -386,47 +304,9 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
     return false;
   }
-} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// Real deal
-
+}
 
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
-  // insurance
   if (isObj$1(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
@@ -434,10 +314,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
-    // arrayiffy if needed:
     opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
-  } // stringify all:
-
+  }
 
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr$2(el) ? el : String(el);
@@ -488,87 +366,71 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     return false;
   })) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index " + culpritsIndex + " is longer than 1 character, " + culpritsVal.length + " (equals to " + culpritsVal + "). Please split it into separate characters and put into array as separate elements.");
-  } // action
-  // CASE 1. If it's driven by callback-only, the 3rd input argument, what to look
-  // for - is falsey - empty string within array (or not), OR given null
+  }
 
+  if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim()) {
+    if (typeof opts.cb === "function") {
+      var firstCharOutsideIndex;
+      var startingPosition = position;
 
-  if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
-  Array.isArray(whatToMatch) && !whatToMatch.length || // []
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
-  ) {
-      if (typeof opts.cb === "function") {
-        var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
+      if (mode === "matchLeftIncl" || mode === "matchRight") {
+        startingPosition += 1;
+      }
 
-        var startingPosition = position;
+      if (mode[5] === "L") {
+        for (var y = startingPosition; y--;) {
+          var currentChar = str[y];
 
-        if (mode === "matchLeftIncl" || mode === "matchRight") {
-          startingPosition += 1;
-        }
-
-        if (mode[5] === "L") {
-          for (var y = startingPosition; y--;) {
-            // assemble the value of the current character
-            var currentChar = str[y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
-              break;
-            }
-          }
-        } else if (mode.startsWith("matchRight")) {
-          for (var _y = startingPosition; _y < str.length; _y++) {
-            // assemble the value of the current character
-            var _currentChar = str[_y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
-
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
-              firstCharOutsideIndex = _y;
-              break;
-            }
+          if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            firstCharOutsideIndex = y;
+            break;
           }
         }
+      } else if (mode.startsWith("matchRight")) {
+        for (var _y = startingPosition; _y < str.length; _y++) {
+          var _currentChar = str[_y];
 
-        if (firstCharOutsideIndex === undefined) {
-          return false;
+          if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+            firstCharOutsideIndex = _y;
+            break;
+          }
         }
+      }
 
-        var wholeCharacterOutside = str[firstCharOutsideIndex];
-        var indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-        var theRemainderOfTheString = "";
+      if (firstCharOutsideIndex === undefined) {
+        return false;
+      }
 
-        if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
-          theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
-        }
+      var wholeCharacterOutside = str[firstCharOutsideIndex];
+      var indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+      var theRemainderOfTheString = "";
 
-        if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
-        } // ELSE matchRight & matchRightIncl
+      if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
+        theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
+      }
 
-
-        if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
-          theRemainderOfTheString = str.slice(firstCharOutsideIndex);
-        }
-
+      if (mode[5] === "L") {
         return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
 
-      var extraNote = "";
-
-      if (!originalOpts) {
-        extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+      if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
+        theRemainderOfTheString = str.slice(firstCharOutsideIndex);
       }
 
-      throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!" + extraNote);
-    } // Case 2. Normal operation where callback may or may not be present, but it is
-  // only accompanying the matching of what was given in 3rd input argument.
-  // Then if 3rd arg's contents were matched, callback is checked and its Boolean
-  // result is merged using logical "AND" - meaning both have to be true to yield
-  // final result "true".
+      return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+    }
 
+    var extraNote = "";
+
+    if (!originalOpts) {
+      extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+    }
+
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!" + extraNote);
+  }
 
   for (var i = 0, len = whatToMatch.length; i < len; i++) {
-    special = typeof whatToMatch[i] === "function"; // since input can be function, we need to grab the value explicitly:
-
+    special = typeof whatToMatch[i] === "function";
     var whatToMatchVal = whatToMatch[i];
     var fullCharacterInFront = void 0;
     var indexOfTheCharacterInFront = void 0;
@@ -583,17 +445,14 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
     var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i2) {
       return mode[5] === "L" ? i2 - 1 : i2 + 1;
-    }); // if march() returned positive result and it was "special" case,
-    // Bob's your uncle, here's the result:
+    });
 
     if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
       return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
-    } // now, the "found" is the index of the first character of what was found.
-    // we need to calculate the character to the left/right of it:
-
+    }
 
     if (Number.isInteger(found)) {
-      indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1; //
+      indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
 
       if (mode[5] === "L") {
         restOfStringInFront = str.slice(0, found);
@@ -616,7 +475,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
 
   return false;
-} // External API functions
+}
 
 function matchLeft(str, position, whatToMatch, opts) {
   return main("matchLeft", str, position, whatToMatch, opts);
@@ -633,7 +492,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * regex-empty-conditional-comments
  * Regular expression for matching HTML empty conditional comments
- * Version: 1.10.6
+ * Version: 1.10.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-empty-conditional-comments/
@@ -2513,7 +2372,7 @@ createCommonjsModule(function (module, exports) {
   module.exports = cloneDeep;
 });
 
-var RAWNBSP = "\xA0"; // separates the value from flags
+var RAWNBSP = "\xA0";
 
 function rightMain(_ref) {
   var str = _ref.str,
@@ -2536,41 +2395,16 @@ function rightMain(_ref) {
     return null;
   }
 
-  if ( // next character exists
-  str[idx + 1] && ( // and...
-  // it's solid
-  str[idx + 1].trim() || // or it's a whitespace character, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 1]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 1] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
     return idx + 1;
   }
 
-  if ( // second next character exists
-  str[idx + 2] && ( // and...
-  // it's solid
-  str[idx + 2].trim() || // it's a whitespace character and...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[idx + 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx + 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
     return idx + 2;
-  } // worst case scenario - traverse forwards
-
+  }
 
   for (var i = idx + 1, len = str.length; i < len; i++) {
-    if ( // it's solid
-    str[i].trim() || // it's a whitespace character and...
-    // stop at newlines is on
-    stopAtNewlines && // and it's a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP) {
+    if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
       return i;
     }
   }
@@ -2590,27 +2424,6 @@ function right(str, idx) {
     stopAtRawNbsp: false
   });
 }
-//
-//       lllllll                        ffffffffffffffff           tttt                    ((((((       ))))))
-//       l:::::l                       f::::::::::::::::f       ttt:::t                  ((::::::(     )::::::))
-//       l:::::l                      f::::::::::::::::::f      t:::::t                ((:::::::(       ):::::::))
-//       l:::::l                      f::::::fffffff:::::f      t:::::t               (:::::::((         )):::::::)
-//       l::::l     eeeeeeeeeeee     f:::::f       ffffffttttttt:::::ttttttt         (::::::(             )::::::)
-//       l::::l   ee::::::::::::ee   f:::::f             t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l  e::::::eeeee:::::eef:::::::ffffff       t:::::::::::::::::t         (:::::(               ):::::)
-//       l::::l e::::::e     e:::::ef::::::::::::f       tttttt:::::::tttttt         (:::::(               ):::::)
-//       l::::l e:::::::eeeee::::::ef::::::::::::f             t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::::::::::::e f:::::::ffffff             t:::::t               (:::::(               ):::::)
-//       l::::l e::::::eeeeeeeeeee   f:::::f                   t:::::t               (:::::(               ):::::)
-//       l::::l e:::::::e            f:::::f                   t:::::t    tttttt     (::::::(             )::::::)
-//       l::::::le::::::::e          f:::::::f                  t::::::tttt:::::t     (:::::::((         )):::::::)
-//       l::::::l e::::::::eeeeeeee  f:::::::f                  tt::::::::::::::t      ((:::::::(       ):::::::))
-//       l::::::l  ee:::::::::::::e  f:::::::f                    tt:::::::::::tt        ((::::::(     )::::::)
-//       llllllll    eeeeeeeeeeeeee  fffffffff                      ttttttttttt            ((((((       ))))))
-//
-//
-// Finds the index of the first non-whitespace character on the left
-
 
 function leftMain(_ref2) {
   var str = _ref2.str,
@@ -2630,41 +2443,16 @@ function leftMain(_ref2) {
     return null;
   }
 
-  if ( // ~- means minus one, in bitwise
-  str[~-idx] && ( // either it's not a whitespace
-  str[~-idx].trim() || // or it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // and it's a newline
-  "\n\r".includes(str[~-idx]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[~-idx] === RAWNBSP)) {
-    // best case scenario - next character is non-whitespace:
+  if (str[~-idx] && (str[~-idx].trim() || stopAtNewlines && "\n\r".includes(str[~-idx]) || stopAtRawNbsp && str[~-idx] === RAWNBSP)) {
     return ~-idx;
-  } // if we reached this point, this means character on the left is whitespace -
-  // fine - check the next character on the left, str[idx - 2]
+  }
 
-
-  if ( // second character exists
-  str[idx - 2] && ( // either it's not whitespace so Bob's your uncle here's non-whitespace character
-  str[idx - 2].trim() || // it is whitespace, but...
-  // stop at newlines is on
-  stopAtNewlines && // it's some sort of a newline
-  "\n\r".includes(str[idx - 2]) || // stop at raw nbsp is on
-  stopAtRawNbsp && // and it's a raw nbsp
-  str[idx - 2] === RAWNBSP)) {
-    // second best case scenario - second next character is non-whitespace:
+  if (str[idx - 2] && (str[idx - 2].trim() || stopAtNewlines && "\n\r".includes(str[idx - 2]) || stopAtRawNbsp && str[idx - 2] === RAWNBSP)) {
     return idx - 2;
-  } // worst case scenario - traverse backwards
-
+  }
 
   for (var i = idx; i--;) {
-    if (str[i] && ( // it's non-whitespace character
-    str[i].trim() || // or it is whitespace character, but...
-    // stop at newlines is on
-    stopAtNewlines && // it's some sort of a newline
-    "\n\r".includes(str[i]) || // stop at raw nbsp is on
-    stopAtRawNbsp && // and it's a raw nbsp
-    str[i] === RAWNBSP)) {
+    if (str[i] && (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP)) {
       return i;
     }
   }
@@ -2688,55 +2476,33 @@ function left(str, idx) {
 /**
  * string-extract-class-names
  * Extracts CSS class/id names from a string
- * Version: 6.0.6
+ * Version: 6.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-class-names/
  */
-/**
- * Extracts CSS class/id names from a string
- */
 
 function extract(str) {
-  // insurance
-  // =========
   if (typeof str !== "string") {
     throw new TypeError("string-extract-class-names: [THROW_ID_01] first str should be string, not " + typeof str + ", currently equal to " + JSON.stringify(str, null, 4));
   }
 
   var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`";
-  var stateCurrentlyIs; // "." or "#"
-  // functions
-  // =========
+  var stateCurrentlyIs;
 
   function isLatinLetter(char) {
-    // we mean Latin letters A-Z, a-z
     return typeof char === "string" && !!char.length && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
-  } // action
-  // ======
-
+  }
 
   var selectorStartsAt = null;
   var result = {
     res: [],
     ranges: []
-  }; // we iterate upto and including str.length - last element will be undefined
-  // at cost of extra protective clauses (if not undefined) we simplify the
-  // algorithm ending clauses - things' ending at string's end can now be
-  // tackled in the same logic as things' that end in the middle of the string
+  };
 
   for (var i = 0, len = str.length; i <= len; i++) {
-    // catch the ending of a selector's name:
-    if (selectorStartsAt !== null && i >= selectorStartsAt && ( // and...
-    // either the end of string has been reached
-    !str[i] || // or it's a whitespace
-    !str[i].trim() || // or it's a character, unsuitable for class/id names
-    badChars.includes(str[i]))) {
-      // if selector is more than dot or hash:
+    if (selectorStartsAt !== null && i >= selectorStartsAt && (!str[i] || !str[i].trim() || badChars.includes(str[i]))) {
       if (i > selectorStartsAt + 1) {
-        // If we reached the last character and selector's beginning has not been
-        // interrupted, extend the slice's ending by 1 character. If we terminate
-        // the selector because of illegal character, slice right here, at index "i".
         result.ranges.push([selectorStartsAt, i]);
         result.res.push("" + (stateCurrentlyIs || "") + str.slice(selectorStartsAt, i));
 
@@ -2746,19 +2512,15 @@ function extract(str) {
       }
 
       selectorStartsAt = null;
-    } // catch dot or hash:
-
+    }
 
     if (str[i] && selectorStartsAt === null && (str[i] === "." || str[i] === "#")) {
       selectorStartsAt = i;
-    } // catch zzz[class=]
-
+    }
 
     var temp1 = right(str, i + 4);
 
     if (str.startsWith("class", i) && typeof left(str, i) === "number" && str[left(str, i)] === "[" && typeof temp1 === "number" && str[temp1] === "=") {
-      // if it's zzz[class=something] (without quotes)
-
       /* istanbul ignore else */
       if (right(str, temp1) && isLatinLetter(str[right(str, temp1)])) {
         selectorStartsAt = right(str, temp1);
@@ -2767,13 +2529,11 @@ function extract(str) {
       }
 
       stateCurrentlyIs = ".";
-    } // catch zzz[id=]
-
+    }
 
     var temp2 = right(str, i + 1);
 
     if (str.startsWith("id", i) && str[left(str, i)] === "[" && temp2 !== null && str[temp2] === "=") {
-      // if it's zzz[id=something] (without quotes)
       if (isLatinLetter(str[right(str, temp2)])) {
         selectorStartsAt = right(str, temp2);
       } else if ("'\"".includes(str[right(str, temp2)]) && isLatinLetter(str[right(str, right(str, temp2))])) {
@@ -2782,10 +2542,7 @@ function extract(str) {
 
       stateCurrentlyIs = "#";
     }
-  } // absence of ranges is falsy "null", not truthy empty array, so
-  // if nothing was extracted and empty array is in result.ranges,
-  // overwrite it to falsy "null"
-
+  }
 
   if (!result.ranges.length) {
     result.ranges = null;
@@ -2911,12 +2668,7 @@ var isMatch = function isMatch(inputs, patterns, options) {
 };
 matcher.isMatch = isMatch;
 
-/**
- * Like _.pullAll but with globs (wildcards)
- */
-
 function pull(originalInput, originalToBeRemoved, originalOpts) {
-  // insurance
   if (!originalInput.length) {
     return [];
   }
@@ -2925,8 +2677,7 @@ function pull(originalInput, originalToBeRemoved, originalOpts) {
     return Array.from(originalInput);
   }
 
-  var toBeRemoved = typeof originalToBeRemoved === "string" ? [originalToBeRemoved] : Array.from(originalToBeRemoved); // opts are mirroring matcher's at the moment, can't promise that for the future
-
+  var toBeRemoved = typeof originalToBeRemoved === "string" ? [originalToBeRemoved] : Array.from(originalToBeRemoved);
   var defaults = {
     caseSensitive: true
   };
@@ -2943,7 +2694,7 @@ function pull(originalInput, originalToBeRemoved, originalOpts) {
   return res;
 }
 
-var version$1 = "5.0.6";
+var version$1 = "5.0.7";
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -4088,8 +3839,7 @@ var defaults$5 = {
 };
 
 function expander(originalOpts) {
-  var letterOrDigit = /^[0-9a-zA-Z]+$/; // Internal functions
-  // ---------------------------------------------------------------------------
+  var letterOrDigit = /^[0-9a-zA-Z]+$/;
 
   function isWhitespace(char) {
     if (!char || typeof char !== "string") {
@@ -4101,9 +3851,7 @@ function expander(originalOpts) {
 
   function isStr(something) {
     return typeof something === "string";
-  } // Sanitise the inputs
-  // ---------------------------------------------------------------------------
-
+  }
 
   if (!originalOpts || typeof originalOpts !== "object" || Array.isArray(originalOpts)) {
     var supplementalString;
@@ -4143,9 +3891,7 @@ function expander(originalOpts) {
 
   if (isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== "left" && originalOpts.extendToOneSide !== "right" || !isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== undefined && originalOpts.extendToOneSide !== false) {
     throw new Error("string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: \"" + originalOpts.extendToOneSide + "\" (" + typeof originalOpts.extendToOneSide + "). It has to be either Boolean \"false\" or strings \"left\" or \"right\"");
-  } // Prepare the opts
-  // ---------------------------------------------------------------------------
-
+  }
 
   var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
 
@@ -4166,18 +3912,13 @@ function expander(originalOpts) {
     } else {
       throw new Error("string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n" + JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4) + ". Now, that array contains not only string elements. For example, an element at index " + culpritsIndex + " is of a type " + typeof culpritsValue + " (equal to " + JSON.stringify(culpritsValue, null, 0) + ").");
     }
-  } // Action
-  // ---------------------------------------------------------------------------
+  }
 
-
-  var str = opts.str; // convenience
-
+  var str = opts.str;
   var from = opts.from;
-  var to = opts.to; // 1. expand the given range outwards and leave a single space or
-  // {single-of-whatever-there-was} (like line break, tab etc) on each side
+  var to = opts.to;
 
   if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
-    // loop backwards
     for (var i = from; i--;) {
       if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
         if (str[i].trim()) {
@@ -4199,11 +3940,9 @@ function expander(originalOpts) {
         }
       }
     }
-  } // 2. expand forward
-
+  }
 
   if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
-    // loop forward
     for (var _i = to, len = str.length; _i < len; _i++) {
       if (!opts.ifRightSideIncludesThisCropItToo.includes(str[_i]) && (str[_i] && str[_i].trim() || str[_i] === undefined)) {
         if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[_i - 1])) {
@@ -4215,8 +3954,7 @@ function expander(originalOpts) {
         break;
       }
     }
-  } // 3. tight crop adjustments
-
+  }
 
   if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
     if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
@@ -4238,7 +3976,7 @@ function expander(originalOpts) {
 /**
  * string-uglify
  * Shorten sets of strings deterministically, to be git-friendly
- * Version: 1.4.6
+ * Version: 1.4.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-uglify/
@@ -4250,8 +3988,7 @@ function tellcp(str, idNum) {
   }
 
   return str.codePointAt(idNum) || 0;
-} // converts whole array into array uglified names
-
+}
 
 function uglifyArr(arr) {
   var letters = "abcdefghijklmnopqrstuvwxyz";
@@ -4339,18 +4076,15 @@ function uglifyArr(arr) {
     x: false,
     y: false,
     z: false
-  }; // final array we'll assemble and eventually return
-
-  var res = []; // quick end
+  };
+  var res = [];
 
   if (!Array.isArray(arr) || !arr.length) {
     return arr;
   }
 
   for (var id = 0, len = arr.length; id < len; id++) {
-    // insurance against duplicate reference array values
     if (arr.indexOf(arr[id]) < id) {
-      // push again the calculated value from "res":
       res.push(res[arr.indexOf(arr[id])]);
       continue;
     }
@@ -4364,16 +4098,13 @@ function uglifyArr(arr) {
       var val = arr[id];
 
       if (!res.includes(val)) {
-        res.push(val); // the first candidates for single-character value are 2-char long classes:
+        res.push(val);
 
         if (val.startsWith(".") && val.length === 2 && singleClasses[val.slice(1)] === false) {
-          // mark the letter as used
           singleClasses[val.slice(1)] = true;
         } else if (val.startsWith("#") && val.length === 2 && singleIds[val.slice(1)] === false) {
-          // mark the letter as used
           singleIds[val.slice(1)] = true;
         } else if (!val.startsWith(".") && !val.startsWith("#") && val.length === 1 && singleNameonly[val] === false) {
-          // mark the letter as used
           singleNameonly[val] = true;
         }
 
@@ -4384,7 +4115,6 @@ function uglifyArr(arr) {
     var generated = "" + prefix + letters[codePointSum % letters.length] + lettersAndNumbers[codePointSum % lettersAndNumbers.length];
 
     if (res.includes(generated)) {
-      // add more characters:
       var soFarWeveGot = generated;
       var counter = 0;
       var reducedCodePointSum = Array.from(arr[id]).reduce(function (acc, curr) {
@@ -4402,13 +4132,7 @@ function uglifyArr(arr) {
         } while (temp >= 10);
 
         return temp;
-      }, 0); // console.log(
-      //   `${`\u001b[${33}m${`magicNumber`}\u001b[${39}m`} = ${JSON.stringify(
-      //     magicNumber,
-      //     null,
-      //     4
-      //   )}`
-      // );
+      }, 0);
 
       while (res.includes(soFarWeveGot)) {
         counter += 1;
@@ -4427,20 +4151,14 @@ function uglifyArr(arr) {
     } else if (!generated.startsWith(".") && !generated.startsWith("#") && generated.length === 1 && singleNameonly[generated] === false) {
       singleNameonly[generated] = true;
     }
-  } // loop through all uglified values again and if the one letter name that
-  // matches current name's first letter (considering it might be id, class or
-  // just name), shorten that value up to that single letter.
-
+  }
 
   for (var i = 0, _len = res.length; i < _len; i++) {
     if (res[i].startsWith(".")) {
-      // if particular class name starts with a letter which hasn't been taken
       if (singleClasses[res[i].slice(1, 2)] === false) {
         singleClasses[res[i].slice(1, 2)] = res[i];
         res[i] = res[i].slice(0, 2);
       } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
-        // This means, particular class name was repeated in the list and
-        // was shortened. We must shorten it to the same value.
         res[i] = res[i].slice(0, 2);
       }
     } else if (res[i].startsWith("#")) {
@@ -4448,8 +4166,6 @@ function uglifyArr(arr) {
         singleIds[res[i].slice(1, 2)] = res[i];
         res[i] = res[i].slice(0, 2);
       } else if (singleIds[res[i].slice(1, 2)] === res[i]) {
-        // This means, particular id name was repeated in the list and
-        // was shortened. We must shorten it to the same value.
         res[i] = res[i].slice(0, 2);
       }
     } else if (!res[i].startsWith(".") && !res[i].startsWith("#")) {
@@ -4457,15 +4173,13 @@ function uglifyArr(arr) {
         singleNameonly[res[i].slice(0, 1)] = res[i];
         res[i] = res[i].slice(0, 1);
       } else if (singleNameonly[res[i].slice(0, 1)] === res[i]) {
-        // This means, particular id name was repeated in the list and
-        // was shortened. We must shorten it to the same value.
         res[i] = res[i].slice(0, 1);
       }
     }
   }
 
   return res;
-} // main function - converts n-th string in a given reference array of strings
+}
 
 var defaults$4 = {
   strictlyTwoElementsInRangeArrays: false,
@@ -4473,17 +4187,14 @@ var defaults$4 = {
 };
 
 function rSort(arrOfRanges, originalOptions) {
-  // quick ending
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
-  } // fill any settings with defaults if missing:
+  }
 
-
-  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOptions); // arrOfRanges validation
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOptions);
 
   var culpritsIndex;
-  var culpritsLen; // validate does every range consist of exactly two indexes:
+  var culpritsLen;
 
   if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
     return range;
@@ -4497,8 +4208,7 @@ function rSort(arrOfRanges, originalOptions) {
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") has not two but " + culpritsLen + " elements!");
-  } // validate are range indexes natural numbers:
-
+  }
 
   if (!arrOfRanges.filter(function (range) {
     return range;
@@ -4511,8 +4221,7 @@ function rSort(arrOfRanges, originalOptions) {
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") does not consist of only natural numbers!");
-  } // let's assume worst case scenario is N x N.
-
+  }
 
   var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
     return range;
@@ -4550,21 +4259,12 @@ var defaults$3 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
-}; // merges the overlapping ranges
-// case #1. exact extension:
-// [ [1, 5], [5, 10] ] => [ [1, 10] ]
-// case #2. overlap:
-// [ [1, 4], [3, 5] ] => [ [1, 5] ]
+};
 
 function rMerge(arrOfRanges, originalOpts) {
-  //
-  // internal functions:
-  // ---------------------------------------------------------------------------
   function isObj(something) {
     return something && typeof something === "object" && !Array.isArray(something);
-  } // quick ending:
-  // ---------------------------------------------------------------------------
-
+  }
 
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return null;
@@ -4574,19 +4274,17 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
       } else if (opts.progressFn && typeof opts.progressFn !== "function") {
         throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"" + typeof opts.progressFn + "\", equal to " + JSON.stringify(opts.progressFn, null, 4));
-      } // 2. validate opts.mergeType
-
+      }
 
       if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
         throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
-      } // 3. validate opts.joinRangesThatTouchEdges
-
+      }
 
       if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
         throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"" + typeof opts.joinRangesThatTouchEdges + "\", equal to " + JSON.stringify(opts.joinRangesThatTouchEdges, null, 4));
@@ -4596,18 +4294,13 @@ function rMerge(arrOfRanges, originalOpts) {
     }
   } else {
     opts = _objectSpread2({}, defaults$3);
-  } // progress-wise, sort takes first 20%
-  // two-level-deep array clone:
+  }
 
-
-  var filtered = arrOfRanges // filter out null
-  .filter(function (range) {
+  var filtered = arrOfRanges.filter(function (range) {
     return range;
   }).map(function (subarr) {
     return [].concat(subarr);
-  }).filter( // filter out futile ranges with identical starting and ending points with
-  // nothing to add (no 3rd argument)
-  function (rangeArr) {
+  }).filter(function (rangeArr) {
     return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
   });
   var sortedRanges;
@@ -4615,11 +4308,9 @@ function rMerge(arrOfRanges, originalOpts) {
   var percentageDone;
 
   if (opts.progressFn) {
-    // progress already gets reported in [0,100] range, so we just need to
-    // divide by 5 in order to "compress" that into 20% range.
     sortedRanges = rSort(filtered, {
       progressFn: function progressFn(percentage) {
-        percentageDone = Math.floor(percentage / 5); // ensure each percent is passed only once:
+        percentageDone = Math.floor(percentage / 5);
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
@@ -4635,8 +4326,7 @@ function rMerge(arrOfRanges, originalOpts) {
     return null;
   }
 
-  var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
-  // loop from the end:
+  var len = sortedRanges.length - 1;
 
   for (var i = len; i > 0; i--) {
     if (opts.progressFn) {
@@ -4644,26 +4334,20 @@ function rMerge(arrOfRanges, originalOpts) {
 
       if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
         lastPercentageDone = percentageDone;
-        opts.progressFn(percentageDone); // console.log(
-        //   `153 REPORTING ${`\u001b[${33}m${`doneSoFar`}\u001b[${39}m`} = ${doneSoFar}`
-        // );
+        opts.progressFn(percentageDone);
       }
-    } // if current range is before the preceding-one
-
+    }
 
     if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
       sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
-      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]); // tend the third argument, "what to insert"
+      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
 
       if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
-        // if the value of the range before exists:
         if (sortedRanges[i - 1][2] !== null) {
           if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
             sortedRanges[i - 1][2] = null;
           } else if (sortedRanges[i - 1][2] != null) {
-            // if there's a clash of "insert" values:
             if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
-              // take the value from the range that's on the right:
               sortedRanges[i - 1][2] = sortedRanges[i][2];
             } else {
               sortedRanges[i - 1][2] += sortedRanges[i][2];
@@ -4672,11 +4356,9 @@ function rMerge(arrOfRanges, originalOpts) {
             sortedRanges[i - 1][2] = sortedRanges[i][2];
           }
         }
-      } // get rid of the second element:
+      }
 
-
-      sortedRanges.splice(i, 1); // reset the traversal, start from the end again
-
+      sortedRanges.splice(i, 1);
       i = sortedRanges.length;
     }
   }
@@ -4687,7 +4369,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -4716,19 +4398,16 @@ function rApply(str, originalRangesArr, _progressFn) {
   if (!originalRangesArr || !originalRangesArr.filter(function (range) {
     return range;
   }).length) {
-    // quick ending - no ranges passed
     return str;
   }
 
   var rangesArr;
 
   if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
-    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
-  } // allocate first 10% of progress to this stage
-
+  }
 
   var len = rangesArr.length;
   var counter = 0;
@@ -4767,13 +4446,10 @@ function rApply(str, originalRangesArr, _progressFn) {
     }
 
     counter += 1;
-  }); // allocate another 10% of the progress indicator length to the rangesMerge step:
-
+  });
   var workingRanges = rMerge(rangesArr, {
     progressFn: function progressFn(perc) {
       if (_progressFn) {
-        // since "perc" is already from zero to hundred, we just divide by 10 and
-        // get the range from zero to ten:
         percentageDone = 10 + Math.floor(perc / 10);
         /* istanbul ignore else */
 
@@ -4784,18 +4460,14 @@ function rApply(str, originalRangesArr, _progressFn) {
         }
       }
     }
-  }); // allocate the rest 80% to the actual string assembly:
-
+  });
   var len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
   /* istanbul ignore else */
 
   if (len2 > 0) {
-    var tails = str.slice(workingRanges[len2 - 1][1]); // eslint-disable-next-line no-param-reassign
-
+    var tails = str.slice(workingRanges[len2 - 1][1]);
     str = workingRanges.reduce(function (acc, _val, i, arr) {
       if (_progressFn) {
-        // since "perc" is already from zero to hundred, we just divide by 10 and
-        // get the range from zero to ten:
         percentageDone = 20 + Math.floor(i / len2 * 80);
         /* istanbul ignore else */
 
@@ -4809,8 +4481,7 @@ function rApply(str, originalRangesArr, _progressFn) {
       var beginning = i === 0 ? 0 : arr[i - 1][1];
       var ending = arr[i][0];
       return acc + str.slice(beginning, ending) + (arr[i][2] || "");
-    }, ""); // eslint-disable-next-line no-param-reassign
-
+    }, "");
     str += tails;
   }
 
@@ -5049,7 +4720,7 @@ var lodash_pullall = pullAll;
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -5060,29 +4731,22 @@ function collWhitespace(str, originallineBreakLimit) {
     originallineBreakLimit = 1;
   }
 
-  var rawNbsp = "\xA0"; // helpers
+  var rawNbsp = "\xA0";
 
   function reverse(s) {
     return Array.from(s).reverse().join("");
-  } // replaces the leading/trailing whitespace chunks with final strings
-
+  }
 
   function prep(whitespaceChunk, limit, trailing) {
-    // when processing the leading whitespace, it's \n\r --- CR - LF
-    // when processing the trailing whitespace, we're processing inverted order,
-    // so it's \n\r --- LF - CR
-    // for this reason, we set first and second linebreak according to direction,
-    // the "trailing" boolean:
     var firstBreakChar = trailing ? "\n" : "\r";
     var secondBreakChar = trailing ? "\r" : "\n";
 
     if (!whitespaceChunk) {
       return whitespaceChunk;
-    } // let whitespace char count since last CR or LF
-
+    }
 
     var crlfCount = 0;
-    var res = ""; // let beginning = true;
+    var res = "";
 
     for (var i = 0, len = whitespaceChunk.length; i < len; i++) {
       if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
@@ -5115,13 +4779,11 @@ function collWhitespace(str, originallineBreakLimit) {
   }
 
   if (typeof str === "string" && str.length) {
-    // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
     var lineBreakLimit = 1;
 
     if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
       lineBreakLimit = +originallineBreakLimit;
-    } // plan: extract what would String.prototype() would remove, front and back parts
-
+    }
 
     var frontPart = "";
     var endPart = "";
@@ -5135,25 +4797,16 @@ function collWhitespace(str, originallineBreakLimit) {
           break;
         }
       }
-    } // if whole string is whitespace, endPart is empty string
-
+    }
 
     if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
       for (var _i = str.length; _i--;) {
-        // console.log(
-        //   `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
-        //     str[i],
-        //     null,
-        //     4
-        //   )}`}\u001b[${39}m`}`
-        // );
         if (str[_i].trim()) {
           endPart = str.slice(_i + 1);
           break;
         }
       }
-    } // -------------------------------------------------------------------------
-
+    }
 
     return "" + prep(frontPart, lineBreakLimit, false) + str.trim() + reverse(prep(reverse(endPart), lineBreakLimit, true));
   }
@@ -5177,12 +4830,9 @@ var defaults$2 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
-}; // -----------------------------------------------------------------------------
+};
 
 var Ranges = /*#__PURE__*/function () {
-  //
-  // O P T I O N S
-  // =============
   function Ranges(originalOpts) {
     var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
@@ -5194,8 +4844,7 @@ var Ranges = /*#__PURE__*/function () {
       } else {
         throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
       }
-    } // so it's correct, let's get it in:
-
+    }
 
     this.opts = opts;
     this.ranges = [];
@@ -5207,7 +4856,6 @@ var Ranges = /*#__PURE__*/function () {
     var _this = this;
 
     if (originalFrom == null && originalTo == null) {
-      // absent ranges are marked as null - instead of array of arrays we can receive a null
       return;
     }
 
@@ -5219,20 +4867,16 @@ var Ranges = /*#__PURE__*/function () {
           })) {
             originalFrom.forEach(function (thing) {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array
                 _this.add.apply(_this, thing);
-              } // just skip other cases
-
+              }
             });
             return;
           }
 
           if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
-            // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
-        } // else,
-
+        }
 
         return;
       }
@@ -5246,23 +4890,16 @@ var Ranges = /*#__PURE__*/function () {
     var to = +originalTo;
 
     if (isNum(addVal)) {
-      // eslint-disable-next-line no-param-reassign
       addVal = String(addVal);
-    } // validation
-
+    }
 
     if (isNum(from) && isNum(to)) {
-      // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr$1(addVal) && !isNum(addVal)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + typeof addVal + ", equal to:\n" + JSON.stringify(addVal, null, 4));
-      } // Does the incoming "from" value match the existing last element's "to" value?
-
+      }
 
       if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
-        // The incoming range is an exact extension of the last range, like
-        // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
-        this.last()[1] = to; // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
-
+        this.last()[1] = to;
         if (this.last()[2] === null || addVal === null) ;
 
         if (this.last()[2] !== null && existy(addVal)) {
@@ -5273,7 +4910,6 @@ var Ranges = /*#__PURE__*/function () {
           }
 
           if (!(isStr$1(calculatedVal) && !calculatedVal.length)) {
-            // don't let the zero-length strings past
             this.last()[2] = calculatedVal;
           }
         }
@@ -5286,13 +4922,9 @@ var Ranges = /*#__PURE__*/function () {
         this.ranges.push(whatToPush);
       }
     } else {
-      // Error somewhere!
-      // Let's find out where.
-      // is it first arg?
       if (!(isNum(from) && from >= 0)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"" + typeof from + "\" equal to: " + JSON.stringify(from, null, 4));
       } else {
-        // then it's second...
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"" + typeof to + "\" equal to: " + JSON.stringify(to, null, 4));
       }
     }
@@ -5300,15 +4932,12 @@ var Ranges = /*#__PURE__*/function () {
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
     this.add(originalFrom, originalTo, addVal);
-  } // C U R R E N T () - kindof a getter
-  // ==================================
-  ;
+  };
 
   _proto.current = function current() {
     var _this2 = this;
 
     if (Array.isArray(this.ranges) && this.ranges.length) {
-      // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
       });
@@ -5327,21 +4956,14 @@ var Ranges = /*#__PURE__*/function () {
     }
 
     return null;
-  } // W I P E ()
-  // ==========
-  ;
+  };
 
   _proto.wipe = function wipe() {
     this.ranges = [];
-  } // R E P L A C E ()
-  // ==========
-  ;
+  };
 
   _proto.replace = function replace(givenRanges) {
     if (Array.isArray(givenRanges) && givenRanges.length) {
-      // Now, ranges can be array of arrays, correct format but also single
-      // range, an array of two natural numbers might be given.
-      // Let's put safety latch against such cases
       if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
         throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, " + JSON.stringify(givenRanges[0], null, 4) + " should be an array and its first element should be an integer, a string index.");
       } else {
@@ -5350,9 +4972,7 @@ var Ranges = /*#__PURE__*/function () {
     } else {
       this.ranges = [];
     }
-  } // L A S T ()
-  // ==========
-  ;
+  };
 
   _proto.last = function last() {
     if (Array.isArray(this.ranges) && this.ranges.length) {
@@ -5392,13 +5012,9 @@ function isStr(something) {
 function isLetter(something) {
   return typeof something === "string" && something.toUpperCase() !== something.toLowerCase();
 }
-/**
- * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- */
-
 
 function crush(str, originalOpts) {
-  var start = Date.now(); // insurance:
+  var start = Date.now();
 
   if (!isStr(str)) {
     if (str === undefined) {
@@ -5420,8 +5036,7 @@ function crush(str, originalOpts) {
     }
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // normalize the opts.removeHTMLComments
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   if (typeof opts.removeHTMLComments === "boolean") {
     opts.removeHTMLComments = opts.removeHTMLComments ? 1 : 0;
@@ -5433,46 +5048,20 @@ function crush(str, originalOpts) {
     breakToTheLeftOfFirstLetters = [].concat(new Set(opts.breakToTheLeftOf.map(function (val) {
       return val[0];
     }))).join("");
-  } // console.log(
-  //   `0187 ${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
-  //     breakToTheLeftOfFirstLetters,
-  //     null,
-  //     4
-  //   )}`
-  // );
-  //
-  // console.log("\n");
-  // console.log(
-  //   `0196 ${`\u001b[${33}m${`██ ██ ██`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-  //     opts,
-  //     null,
-  //     4
-  //   )}`
-  // );
-
+  }
 
   var lastLinebreak = null;
   var whitespaceStartedAt = null;
   var nonWhitespaceCharMet = false;
-  var countCharactersPerLine = 0; // new characters-per-line counter
-
+  var countCharactersPerLine = 0;
   var cpl = 0;
   var withinStyleTag = false;
-  var withinHTMLConditional = false; // <!--[if lte mso 11]> etc
-
+  var withinHTMLConditional = false;
   var withinInlineStyle = null;
   var styleCommentStartedAt = null;
   var htmlCommentStartedAt = null;
-  var scriptStartedAt = null; // main do nothing switch, used to skip chunks of code and perform no action
-
-  var doNothing; // we use staging "from" and "to" to preemptively mark the chunks
-  // of whitespace that will be either: a) replaced with a space; or
-  // b) replaced with linebreak. If opts.removeLineBreaks is on,
-  // if we need to break where the particular whitespace chunk is
-  // located, we replace it with line break. Otherwise, if
-  // the next chunk of characters that follows it fits on one line,
-  // we replace it with a single space.
-
+  var scriptStartedAt = null;
+  var doNothing;
   var stageFrom = null;
   var stageTo = null;
   var stageAdd = null;
@@ -5486,51 +5075,28 @@ function crush(str, originalOpts) {
   var DELETE_TIGHTLY_IF_ON_RIGHT_IS = "<";
   var set = "{},:;<>~+";
   var DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS = set;
-  var DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS = set; // the first non-whitespace character turns this flag off:
-
-  var beginningOfAFile = true; // it will be used to trim start of the file.
-
+  var DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS = set;
+  var beginningOfAFile = true;
   var len = str.length;
   var midLen = Math.floor(len / 2);
-  var leavePercForLastStage = 0.01; // in range of [0, 1]
-  // ceil - total range which is allocated to the main processing
-
+  var leavePercForLastStage = 0.01;
   var ceil;
 
   if (opts.reportProgressFunc) {
     ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
-  } // one more round to collapse the whitespace to:
-  // 1. Tackle indentations
-  // 2. Remove excessive whitespace between strings on each line (not touching indentations)
-  // progress-wise, 98% will be allocated to loop, rest 2% - to range applies and
-  // final return clauses
-
+  }
 
   var currentPercentageDone;
   var lastPercentage = 0;
 
   if (len) {
     for (var i = 0; i < len; i++) {
-      //
-      //
-      //
-      //
-      //                    TOP
-      //
-      //
-      //
-      //
-      // Logging:
-      // ███████████████████████████████████████ // Report the progress. We'll allocate 98% of the progress bar to this stage
       if (opts.reportProgressFunc) {
         if (len > 1000 && len < 2000) {
           if (i === midLen) {
             opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
           }
         } else if (len >= 2000) {
-          // defaults:
-          // opts.reportProgressFuncFrom = 0
-          // opts.reportProgressFuncTo = 100
           currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * (ceil || 1));
 
           if (currentPercentageDone !== lastPercentage) {
@@ -5538,27 +5104,16 @@ function crush(str, originalOpts) {
             opts.reportProgressFunc(currentPercentageDone);
           }
         }
-      } // count characters-per-line
+      }
 
-
-      cpl++; // turn off doNothing if marker passed
-      // ███████████████████████████████████████
+      cpl++;
 
       if (doNothing && typeof doNothing === "number" && i >= doNothing) {
         doNothing = undefined;
-      } // catch ending of </script...
-      // ███████████████████████████████████████
-
+      }
 
       if (scriptStartedAt !== null && str.startsWith("</script", i) && !isLetter(str[i + 8])) {
-        // 1. if there is a line break, chunk of whitespace and </script>,
-        // delete that chunk of whitespace, leave line break.
-        // If there's non-whitespace character, chunk of whitespace and </script>,
-        // delete that chunk of whitespace.
-        // Basically, traverse backwards from "<" of "</script>", stop either
-        // at first line break or non-whitespace character.
         if ((opts.removeIndentations || opts.removeLineBreaks) && i > 0 && str[~-i] && !str[~-i].trim()) {
-          // march backwards
           for (var y = i; y--;) {
             if (str[y] === "\n" || str[y] === "\r" || str[y].trim()) {
               if (y + 1 < i) {
@@ -5568,16 +5123,13 @@ function crush(str, originalOpts) {
               break;
             }
           }
-        } // 2.
-
+        }
 
         scriptStartedAt = null;
         doNothing = false;
         i += 8;
         continue;
-      } // catch start of <script...
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && !withinStyleTag && str.startsWith("<script", i) && !isLetter(str[i + 7])) {
         scriptStartedAt = i;
@@ -5594,49 +5146,24 @@ function crush(str, originalOpts) {
 
         whitespaceStartedAt = null;
         lastLinebreak = null;
-      } //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //             MIDDLE
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      // catch ending of the tag's name
-      // ███████████████████████████████████████
+      }
 
+      if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[i])) {
+        tagName = str.slice(tagNameStartsAt, i);
+        var idxOnTheRight = right(str, ~-i);
 
-      if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[i]) // not a letter
-      ) {
-          tagName = str.slice(tagNameStartsAt, i); // check for inner tag whitespace
-
-          var idxOnTheRight = right(str, ~-i);
-
-          if (typeof idxOnTheRight === "number" && str[idxOnTheRight] === ">" && !str[i].trim() && right(str, i)) {
+        if (typeof idxOnTheRight === "number" && str[idxOnTheRight] === ">" && !str[i].trim() && right(str, i)) {
+          finalIndexesToDelete.push(i, right(str, i));
+        } else if (idxOnTheRight && str[idxOnTheRight] === "/" && str[right(str, idxOnTheRight)] === ">") {
+          if (!str[i].trim() && right(str, i)) {
             finalIndexesToDelete.push(i, right(str, i));
-          } else if (idxOnTheRight && str[idxOnTheRight] === "/" && str[right(str, idxOnTheRight)] === ">") {
-            // if there's a space in front of "/>"
-            if (!str[i].trim() && right(str, i)) {
-              finalIndexesToDelete.push(i, right(str, i));
-            } // if there's space between slash and bracket
-
-
-            if (str[idxOnTheRight + 1] !== ">" && right(str, idxOnTheRight + 1)) {
-              finalIndexesToDelete.push(idxOnTheRight + 1, right(str, idxOnTheRight + 1));
-            }
           }
-        } // catch a tag's opening bracket
-      // ███████████████████████████████████████
 
+          if (str[idxOnTheRight + 1] !== ">" && right(str, idxOnTheRight + 1)) {
+            finalIndexesToDelete.push(idxOnTheRight + 1, right(str, idxOnTheRight + 1));
+          }
+        }
+      }
 
       if (!doNothing && !withinStyleTag && !withinInlineStyle && str[~-i] === "<" && tagNameStartsAt === null) {
         if (/\w/.test(str[i])) {
@@ -5644,12 +5171,9 @@ function crush(str, originalOpts) {
         } else if (str[right(str, ~-i)] === "/" && /\w/.test(str[right(str, right(str, ~-i))] || "")) {
           tagNameStartsAt = right(str, right(str, ~-i));
         }
-      } // catch an end of CSS comments
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null && str[i] === "*" && str[i + 1] === "/") {
-        // stage:
         var _expander = expander({
           str: str,
           from: styleCommentStartedAt,
@@ -5660,7 +5184,6 @@ function crush(str, originalOpts) {
 
         stageFrom = _expander[0];
         stageTo = _expander[1];
-        // reset marker:
         styleCommentStartedAt = null;
 
         if (stageFrom != null) {
@@ -5668,18 +5191,12 @@ function crush(str, originalOpts) {
         } else {
           countCharactersPerLine += 1;
           i += 1;
-        } // console.log(`0796 CONTINUE`);
-        // continue;
-
+        }
 
         doNothing = i + 2;
-      } // catch a start of CSS comments
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && str[i] === "/" && str[i + 1] === "*") {
-        // independently of options settings, mark the options setting
-        // "removeCSSComments" as applicable:
         if (!applicableOpts.removeCSSComments) {
           applicableOpts.removeCSSComments = true;
         }
@@ -5687,15 +5204,11 @@ function crush(str, originalOpts) {
         if (opts.removeCSSComments) {
           styleCommentStartedAt = i;
         }
-      } // catch an ending of mso conditional tags
-      // ███████████████████████████████████████
-
+      }
 
       if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
         withinHTMLConditional = false;
-      } // catch an end of HTML comment
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && !withinStyleTag && !withinInlineStyle && htmlCommentStartedAt !== null) {
         var distanceFromHereToCommentEnding = void 0;
@@ -5707,7 +5220,6 @@ function crush(str, originalOpts) {
         }
 
         if (distanceFromHereToCommentEnding) {
-          // stage:
           var _expander2 = expander({
             str: str,
             from: htmlCommentStartedAt,
@@ -5716,103 +5228,62 @@ function crush(str, originalOpts) {
 
           stageFrom = _expander2[0];
           stageTo = _expander2[1];
-          // reset marker:
           htmlCommentStartedAt = null;
 
           if (stageFrom != null) {
-            // it depends is there any character allowance left from the
-            // line length limit or not
             if (opts.lineLengthLimit && cpl - (stageTo - stageFrom) >= opts.lineLengthLimit) {
-              finalIndexesToDelete.push(stageFrom, stageTo, "\n"); // Currently we're not on the bracket ">" of the comment
-              // closing "-->", we're at the start of it, that first
-              // dash. This means, we'll still traverse to the end
-              // of this comment tag, before the actual "reset" should
-              // happen.
-              // Luckily we know how many characters are there left
-              // to traverse until the comment's ending is reached -
-              // "distanceFromHereToCommentEnding".
-
-              cpl = -distanceFromHereToCommentEnding; // here we've reset cpl to some negative value, like -3
+              finalIndexesToDelete.push(stageFrom, stageTo, "\n");
+              cpl = -distanceFromHereToCommentEnding;
             } else {
-              // we have some character length allowance left so
-              // let's just delete the comment and reduce the cpl
-              // by that length
               finalIndexesToDelete.push(stageFrom, stageTo);
               cpl -= stageTo - stageFrom;
-            } // finalIndexesToDelete.push(i + 1, i + 1, "\n");
-            // console.log(`1485 PUSH [${i + 1}, ${i + 1}, "\\n"]`);
-            // countCharactersPerLine = 0;
-
+            }
           } else {
             countCharactersPerLine += distanceFromHereToCommentEnding - 1;
             i += distanceFromHereToCommentEnding - 1;
-          } // console.log(`0796 CONTINUE`);
-          // continue;
-
+          }
 
           doNothing = i + distanceFromHereToCommentEnding;
         }
-      } // catch a start of HTML comment
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && !withinStyleTag && !withinInlineStyle && str.startsWith("<!--", i) && htmlCommentStartedAt === null) {
-        // detect outlook conditionals
         if (str.startsWith("[if", i + 4)) {
           if (!withinHTMLConditional) {
             withinHTMLConditional = true;
-          } // skip the second counterpart, "<!-->" of "<!--[if !mso]><!-->"
-          // the plan is to not set the "htmlCommentStartedAt" at all if deletion
-          // is not needed
-
+          }
 
           if (opts.removeHTMLComments === 2) {
             htmlCommentStartedAt = i;
           }
-        } else if ( // setting is either 1 or 2 (delete text comments only or any comments):
-        opts.removeHTMLComments && ( // prevent the "not" type tails' "<!--" of "<!--<![endif]-->" from
-        // accidentally triggering the clauses
-        !withinHTMLConditional || opts.removeHTMLComments === 2)) {
+        } else if (opts.removeHTMLComments && (!withinHTMLConditional || opts.removeHTMLComments === 2)) {
           htmlCommentStartedAt = i;
-        } // independently of options settings, mark the options setting
-        // "removeHTMLComments" as applicable:
-
+        }
 
         if (!applicableOpts.removeHTMLComments) {
           applicableOpts.removeHTMLComments = true;
-        } // opts.removeHTMLComments: 0|1|2
-
-      } // catch style tag
-      // ███████████████████████████████████████
-
+        }
+      }
 
       if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str.startsWith("</style", i) && !isLetter(str[i + 7])) {
         withinStyleTag = false;
       } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str.startsWith("<style", i) && !isLetter(str[i + 6])) {
-        withinStyleTag = true; // if opts.breakToTheLeftOf have "<style" among them, break to the
-        // right of this tag as well
+        withinStyleTag = true;
 
         if ((opts.removeLineBreaks || opts.removeIndentations) && opts.breakToTheLeftOf.includes("<style") && str.startsWith(" type=\"text/css\">", i + 6) && str[i + 24]) {
           finalIndexesToDelete.push(i + 23, i + 23, "\n");
         }
-      } // catch start of inline styles
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && !withinInlineStyle && "\"'".includes(str[i]) && str.endsWith("style=", i)) {
         withinInlineStyle = i;
-      } // catch whitespace
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && !str[i].trim()) {
-        // if whitespace
         if (whitespaceStartedAt === null) {
           whitespaceStartedAt = i;
         }
       } else if (!doNothing && !((withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null)) {
-        // catch the ending of a whitespace chunk
-        // console.log(`0912`);
         if (whitespaceStartedAt !== null) {
           if (opts.removeLineBreaks) {
             countCharactersPerLine += 1;
@@ -5825,29 +5296,11 @@ function crush(str, originalOpts) {
               finalIndexesToDelete.push(0, i);
             }
           } else {
-            // so it's not beginning of a file
-            // this is the most important area of the program - catching normal
-            // whitespace chunks
-            // ===================================================================
-            // ██ CASE 1. Remove indentations only.
             if (opts.removeIndentations && !opts.removeLineBreaks) {
               if (!nonWhitespaceCharMet && lastLinebreak !== null && i > lastLinebreak) {
                 finalIndexesToDelete.push(lastLinebreak + 1, i);
               } else if (whitespaceStartedAt + 1 < i) {
-                // we'll try to recycle some spaces, either at the
-                // beginning (preferable) or ending (at least) of the
-                // whitespace chunk, instead of wiping whole whitespace
-                // chunk and adding single space again.
-                // first, crop tight around the conditional comments
-                if ( // imagine <!--[if mso]>
-                str.endsWith("]>", whitespaceStartedAt) || // imagine <!--[if !mso]><!-->...<
-                //                            ^
-                //                            |
-                //                          our "whitespaceStartedAt"
-                str.endsWith("-->", whitespaceStartedAt) || // imagine closing counterparts, .../>...<![endif]-->
-                str.startsWith("<![", i) || // imagine other type of closing counterpart, .../>...<!--<![
-                str.startsWith("<!--<![", i)) {
-                  // push the whole whitespace chunk
+                if (str.endsWith("]>", whitespaceStartedAt) || str.endsWith("-->", whitespaceStartedAt) || str.startsWith("<![", i) || str.startsWith("<!--<![", i)) {
                   finalIndexesToDelete.push(whitespaceStartedAt, i);
                 } else if (str[whitespaceStartedAt] === " ") {
                   finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
@@ -5857,15 +5310,10 @@ function crush(str, originalOpts) {
                   finalIndexesToDelete.push(whitespaceStartedAt, i, " ");
                 }
               }
-            } // ===================================================================
-            // ██ CASE 2. Remove linebreaks (includes indentation removal by definition).
-
+            }
 
             if (opts.removeLineBreaks || withinInlineStyle) {
-              //
-              // ██ CASE 2-1 - special break points from opts.breakToTheLeftOf
               if (breakToTheLeftOfFirstLetters.includes(str[i]) && matchRightIncl(str, i, opts.breakToTheLeftOf)) {
-                // maybe there was just single line break?
                 if (!(str[~-i] === "\n" && whitespaceStartedAt === ~-i)) {
                   finalIndexesToDelete.push(whitespaceStartedAt, i, "\n");
                 }
@@ -5876,27 +5324,17 @@ function crush(str, originalOpts) {
                 whitespaceStartedAt = null;
                 countCharactersPerLine = 1;
                 continue;
-              } // ██ CASE 2-2 - rest of whitespace chunk removal clauses
+              }
 
-
-              var whatToAdd = " "; // skip for inline tags and also inline comparisons vs. numbers
-              // for example "something < 2" or "zzz > 1"
-
-              if ( // (
-              str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+              var whatToAdd = " ";
+              if (str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
-                } // not a letter
-
-              }) // ) ||
-              // ("<>".includes(str[i]) &&
-              //   ("0123456789".includes(str[right(str, i)]) ||
-              //     "0123456789".includes(str[left(str, i)])))
-              ) ;else if (str[~-whitespaceStartedAt] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i])) || str.startsWith("!important", i) && !withinHTMLConditional || withinInlineStyle && (str[~-whitespaceStartedAt] === "'" || str[~-whitespaceStartedAt] === '"') || str[~-whitespaceStartedAt] === "}" && str.startsWith("</style", i) || str[i] === ">" && ("'\"".includes(str[left(str, i)]) || str[right(str, i)] === "<") || str[i] === "/" && str[right(str, i)] === ">") {
+                }
+              })) ;else if (str[~-whitespaceStartedAt] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i])) || str.startsWith("!important", i) && !withinHTMLConditional || withinInlineStyle && (str[~-whitespaceStartedAt] === "'" || str[~-whitespaceStartedAt] === '"') || str[~-whitespaceStartedAt] === "}" && str.startsWith("</style", i) || str[i] === ">" && ("'\"".includes(str[left(str, i)]) || str[right(str, i)] === "<") || str[i] === "/" && str[right(str, i)] === ">") {
                 whatToAdd = "";
 
                 if (str[i] === "/" && str[i + 1] === ">" && right(str, i) && right(str, i) > i + 1) {
-                  // delete whitespace between / and >
                   finalIndexesToDelete.push(i + 1, right(str, i));
                   countCharactersPerLine -= right(str, i) - i + 1;
                 }
@@ -5904,31 +5342,18 @@ function crush(str, originalOpts) {
 
               if (whatToAdd && whatToAdd.length) {
                 countCharactersPerLine += 1;
-              } // TWO CASES:
-
+              }
 
               if (!opts.lineLengthLimit) {
-                // 2-1: Line-length limiting is off (easy)
-                // We skip the stage part, the whitespace chunks to straight to
-                // finalIndexesToDelete ranges array.
-                // but ensure that we're not replacing a single space with a single space
-                if (!(i === whitespaceStartedAt + 1 && // str[whitespaceStartedAt] === " " &&
-                whatToAdd === " ")) {
+                if (!(i === whitespaceStartedAt + 1 && whatToAdd === " ")) {
                   finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
                 }
               } else {
-                // 2-2: Line-length limiting is on (not that easy)
-                // maybe we are already beyond the limit?
                 if (countCharactersPerLine >= opts.lineLengthLimit || !str[i + 1] || str[i] === ">" || str[i] === "/" && str[i + 1] === ">") {
                   if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[i + 1] && str[i + 1].trim() && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i + 1])) {
                     whatToAdd = "\n";
                     countCharactersPerLine = 1;
-                  } // replace the whitespace only in two cases:
-                  // 1) if line length limit would otherwise be exceeded
-                  // 2) if this replacement reduces the file length. For example,
-                  // don't replace the linebreak with a space. But do delete
-                  // linebreak like it happens between tags.
-
+                  }
 
                   if (countCharactersPerLine > opts.lineLengthLimit || !(whatToAdd === " " && i === whitespaceStartedAt + 1)) {
                     finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
@@ -5939,45 +5364,33 @@ function crush(str, originalOpts) {
                   stageTo = null;
                   stageAdd = null;
                 } else if (stageFrom === null || whitespaceStartedAt < stageFrom) {
-                  // only submit the range if it's bigger
                   stageFrom = whitespaceStartedAt;
                   stageTo = i;
                   stageAdd = whatToAdd;
                 }
               }
-            } // ===================================================================
+            }
+          }
 
-          } // finally, toggle the marker:
-
-
-          whitespaceStartedAt = null; // toggle nonWhitespaceCharMet
+          whitespaceStartedAt = null;
 
           if (!nonWhitespaceCharMet) {
             nonWhitespaceCharMet = true;
-          } // continue;
-
+          }
         } else {
-          // 1. case when first character in string is not whitespace:
           if (beginningOfAFile) {
             beginningOfAFile = false;
-          } // 2. tend count if linebreak removal is on:
-
+          }
 
           if (opts.removeLineBreaks) {
-            // there was no whitespace gap and linebreak removal is on, so just
-            // increment the count
             countCharactersPerLine += 1;
           }
-        } // ===================================================================
-        // ██ EXTRAS:
-        // toggle nonWhitespaceCharMet
-
+        }
 
         if (!nonWhitespaceCharMet) {
           nonWhitespaceCharMet = true;
         }
-      } // catch the characters, suitable for a break
-
+      }
 
       if (!doNothing && !beginningOfAFile && i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters) && !str.startsWith("</a", i)) {
         if (breakToTheLeftOfFirstLetters && matchRightIncl(str, i, opts.breakToTheLeftOf) && str.slice(0, i).trim() && (!str.startsWith("<![endif]", i) || !matchLeft(str, i, "<!--"))) {
@@ -5989,49 +5402,32 @@ function crush(str, originalOpts) {
           continue;
         } else if (opts.lineLengthLimit && countCharactersPerLine <= opts.lineLengthLimit) {
           if (!str[i + 1] || CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) || !str[i].trim()) {
-            // 1. release stage contents - now they'll be definitely deleted
-            // =============================================================
             if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
-              var _whatToAdd = stageAdd; // if we are not on breaking point, last "stageAdd" needs to be
-              // amended into linebreak because otherwise we'll exceed the
-              // character limit
+              var _whatToAdd = stageAdd;
 
               if (str[i].trim() && str[i + 1] && str[i + 1].trim() && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
                 _whatToAdd = "\n";
-              } // if line is beyond the line length limit or whitespace is not
-              // a single space, staged to be replaced with single space,
-              // tackle this whitespace
-
+              }
 
               if (countCharactersPerLine + (_whatToAdd ? _whatToAdd.length : 0) > opts.lineLengthLimit || !(_whatToAdd === " " && stageTo === stageFrom + 1 && str[stageFrom] === " ")) {
-                // push this range only if it's not between curlies, } and {
                 if (!(str[~-stageFrom] === "}" && str[stageTo] === "{")) {
                   finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
                   lastLinebreak = null;
-                } // else {
-                //   console.log(
-                //     `1419 didn't push because whitespace is between curlies`
-                //   );
-                // }
-
+                }
               } else {
                 countCharactersPerLine -= lastLinebreak || 0;
               }
-            } // 2. put this current place into stage
-            // =============================================================
-
+            }
 
             if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
-              } // not a letter
-
+              }
             })) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               trimCharsBeforeMatching: "/",
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
-              } // not a letter
-
+              }
             }))) {
               stageFrom = i;
               stageTo = i;
@@ -6040,99 +5436,58 @@ function crush(str, originalOpts) {
               trimCharsBeforeMatching: "/",
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
-              } // not a letter
-
+              }
             }))) {
               stageFrom = null;
               stageTo = null;
-              stageAdd = null; // if (str[i] === "\n" || str[i] === "\r") {
-              //   countCharactersPerLine -= lastLinebreak;
-              //   console.log(
-              //     `1449 SET countCharactersPerLine = ${countCharactersPerLine}`
-              //   );
-              // }
+              stageAdd = null;
             }
           }
         } else if (opts.lineLengthLimit) {
-          // countCharactersPerLine > opts.lineLengthLimit // LIMIT HAS BEEN EXCEEDED!
-          // WE NEED TO BREAK RIGHT HERE
           if (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
             trimCharsBeforeMatching: "/",
             cb: function cb(nextChar) {
               return !nextChar || !/\w/.test(nextChar);
-            } // not a letter
-
+            }
           }))) {
-            // ██ 1.
-            // // if really exceeded, not on limit, commit stage which will shorten
-            // the string and maybe we'll be within the limit range again
             if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
-              // case in test 02.11.09
-              // We might have passed some tabs for example, which should be
-              // deleted what might put line length back within limit. Or not.
-              //
-              var whatToAddLength = stageAdd && stageAdd.length ? stageAdd.length : 0; // Currently, countCharactersPerLine > opts.lineLengthLimit
-              // But, will it still be true if we compensate for what's in stage?
-
+              var whatToAddLength = stageAdd && stageAdd.length ? stageAdd.length : 0;
               if (countCharactersPerLine - (stageTo - stageFrom - whatToAddLength) - 1 > opts.lineLengthLimit) ;else {
-                // So,
-                // countCharactersPerLine -
-                // (stageTo - stageFrom - whatToAddLength) - 1 <=
-                // opts.lineLengthLimit
-                // don't break at stage, just apply its contents and we're good
-                finalIndexesToDelete.push(stageFrom, stageTo, stageAdd); // We're not done yet. We are currently located on a potential
-                // break point,
-                // countCharactersPerLine -
-                // (stageTo - stageFrom - whatToAddLength) - 1 ===
-                // opts.lineLengthLimit ?
+                finalIndexesToDelete.push(stageFrom, stageTo, stageAdd);
 
                 if (countCharactersPerLine - (stageTo - stageFrom - whatToAddLength) - 1 === opts.lineLengthLimit) {
                   finalIndexesToDelete.push(i, i, "\n");
                   countCharactersPerLine = 0;
-                } // reset
-
+                }
 
                 stageFrom = null;
                 stageTo = null;
                 stageAdd = null;
               }
             } else {
-              //
               finalIndexesToDelete.push(i, i, "\n");
               countCharactersPerLine = 0;
             }
           } else if (str[i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && isStr(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
-            // ██ 2.
-            //
             if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) ;else {
-              //
               finalIndexesToDelete.push(i + 1, i + 1, "\n");
               countCharactersPerLine = 0;
             }
           } else if (!str[i].trim()) ;else if (!str[i + 1]) {
-            // ██ 4.
-            // // if we reached the end of string, check what's in stage
             if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
               finalIndexesToDelete.push(stageFrom, stageTo, "\n");
             }
           }
         }
-      } // catch any character beyond the line length limit:
-
+      }
 
       if (!doNothing && !beginningOfAFile && opts.removeLineBreaks && opts.lineLengthLimit && countCharactersPerLine >= opts.lineLengthLimit && stageFrom !== null && stageTo !== null && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !"/".includes(str[i])) {
-        // two possible cases:
-        // 1. we hit the line length limit and we can break afterwards
-        // 2. we can't break afterwards, and there might be stage present
         if (!(countCharactersPerLine === opts.lineLengthLimit && str[i + 1] && !str[i + 1].trim())) {
-          //
           var _whatToAdd2 = "\n";
 
           if (str[i + 1] && !str[i + 1].trim() && countCharactersPerLine === opts.lineLengthLimit) {
             _whatToAdd2 = stageAdd;
-          } // final correction - we might need to extend stageFrom to include
-          // all whitespace on the left if whatToAdd is a line break
-
+          }
 
           if (_whatToAdd2 === "\n" && !str[~-stageFrom].trim() && left(str, stageFrom)) {
             stageFrom = left(str, stageFrom) + 1;
@@ -6149,28 +5504,19 @@ function crush(str, originalOpts) {
           stageTo = null;
           stageAdd = null;
         }
-      } // catch line breaks
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && str[i] === "\n" || str[i] === "\r" && (!str[i + 1] || str[i + 1] && str[i + 1] !== "\n")) {
-        // =======================================================================
-        // mark this
-        lastLinebreak = i; // =======================================================================
-        // reset nonWhitespaceCharMet
+        lastLinebreak = i;
 
         if (nonWhitespaceCharMet) {
           nonWhitespaceCharMet = false;
-        } // =======================================================================
-        // delete trailing whitespace on each line OR empty lines
-
+        }
 
         if (!opts.removeLineBreaks && whitespaceStartedAt !== null && whitespaceStartedAt < i && str[i + 1] && str[i + 1] !== "\r" && str[i + 1] !== "\n") {
           finalIndexesToDelete.push(whitespaceStartedAt, i);
         }
-      } // catch the EOF
-      // ███████████████████████████████████████
-
+      }
 
       if (!str[i + 1]) {
         if (withinStyleTag && styleCommentStartedAt !== null) {
@@ -6182,39 +5528,15 @@ function crush(str, originalOpts) {
             ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS
           }));
         } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
-          // catch trailing whitespace at the end of the string which is not legit
-          // trailing linebreak
           finalIndexesToDelete.push(whitespaceStartedAt, i + 1);
         } else if (whitespaceStartedAt && (str[i] === "\r" && str[i + 1] === "\n" || str[i] === "\n" && str[i - 1] !== "\r")) {
           finalIndexesToDelete.push(whitespaceStartedAt, i);
         }
-      } //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //              BOTTOM
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      // catch end of inline styles
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && withinInlineStyle && withinInlineStyle < i && str[withinInlineStyle] === str[i]) {
         withinInlineStyle = null;
-      } // catch <pre...>
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && !withinStyleTag && str.startsWith("<pre", i) && !isLetter(str[i + 4])) {
         var locationOfClosingPre = str.indexOf("</pre", i + 5);
@@ -6222,9 +5544,7 @@ function crush(str, originalOpts) {
         if (locationOfClosingPre > 0) {
           doNothing = locationOfClosingPre;
         }
-      } // catch <code...>
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && !withinStyleTag && str.startsWith("<code", i) && !isLetter(str[i + 5])) {
         var locationOfClosingCode = str.indexOf("</code", i + 5);
@@ -6232,9 +5552,7 @@ function crush(str, originalOpts) {
         if (locationOfClosingCode > 0) {
           doNothing = locationOfClosingCode;
         }
-      } // catch start of <![CDATA[
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && str.startsWith("<![CDATA[", i)) {
         var locationOfClosingCData = str.indexOf("]]>", i + 9);
@@ -6242,30 +5560,20 @@ function crush(str, originalOpts) {
         if (locationOfClosingCData > 0) {
           doNothing = locationOfClosingCData;
         }
-      } // catch tag's closing bracket
-      // ███████████████████████████████████████
-
+      }
 
       if (!doNothing && !withinStyleTag && !withinInlineStyle && tagNameStartsAt !== null && str[i] === ">") {
-        // if another tag starts on the right, hand over the name:
         if (str[right(str, i)] === "<") {
           leftTagName = tagName;
         }
 
         tagNameStartsAt = null;
         tagName = null;
-      } // catch tag's opening bracket
-      // ███████████████████████████████████████
-
+      }
 
       if (str[i] === "<" && leftTagName !== null) {
-        // reset it after use
         leftTagName = null;
-      } // logging after each loop's iteration:
-      //
-      //
-      // end of the loop
-
+      }
     }
 
     if (finalIndexesToDelete.current()) {
@@ -6273,8 +5581,6 @@ function crush(str, originalOpts) {
       finalIndexesToDelete.wipe();
       var startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
       var res = rApply(str, ranges, function (applyPercDone) {
-        // allocate remaining "leavePercForLastStage" percentage of the total
-        // progress reporting to this stage:
         if (opts.reportProgressFunc && len >= 2000) {
           currentPercentageDone = Math.floor(startingPercentageDone + (opts.reportProgressFuncTo - startingPercentageDone) * (applyPercDone / 100));
 
@@ -6298,8 +5604,7 @@ function crush(str, originalOpts) {
         result: res
       };
     }
-  } // ELSE - return the original input string
-
+  }
 
   return {
     log: {

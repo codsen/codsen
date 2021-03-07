@@ -1,7 +1,7 @@
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -105,7 +105,7 @@ function parent(str) {
   return null;
 }
 
-var version$1 = "1.3.6";
+var version$1 = "1.3.7";
 
 var version = version$1; // -----------------------------------------------------------------------------
 

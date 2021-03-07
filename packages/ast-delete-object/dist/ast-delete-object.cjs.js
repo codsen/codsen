@@ -1,7 +1,7 @@
 /**
  * ast-delete-object
  * Delete all plain objects in AST if they contain a certain key/value pair
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-delete-object/
@@ -23,51 +23,38 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "2.0.6";
+var version$1 = "2.0.7";
 
 var version = version$1;
 var defaults = {
   matchKeysStrictly: false,
   hungryForWhitespace: false
 };
-/**
- * Delete all plain objects in AST if they contain a certain key/value pair
- */
-
 function deleteObj(originalInput, objToDelete, originalOpts) {
   if (!originalInput) {
     throw new Error("ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!");
   }
-
   if (!objToDelete) {
     throw new Error("ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!");
   }
-
   if (originalOpts && !isObj__default['default'](originalOpts)) {
     throw new Error("ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!");
   }
-
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
-
   var input = clone__default['default'](originalInput);
-  var current; // compare input itself
-
+  var current;
   if (astCompare.compare(input, objToDelete, {
     hungryForWhitespace: opts.hungryForWhitespace,
     matchStrictly: opts.matchKeysStrictly
   })) {
     return {};
-  } // traversal
-
-
+  }
   input = astMonkeyTraverse.traverse(input, function (key, val) {
     current = val !== undefined ? val : key;
-
     if (isObj__default['default'](current)) {
       if (isObj__default['default'](objToDelete) && isObj__default['default'](current) && !Object.keys(objToDelete).length && !Object.keys(current).length) {
         return NaN;
       }
-
       if (astCompare.compare(current, objToDelete, {
         hungryForWhitespace: opts.hungryForWhitespace,
         matchStrictly: opts.matchKeysStrictly
@@ -75,7 +62,6 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
         return NaN;
       }
     }
-
     return current;
   });
   return input;

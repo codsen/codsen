@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.7](https://github.com/codsen/codsen/compare/email-comb@5.0.6...email-comb@5.0.7) (2021-03-07)
-
+## 5.0.7 (2021-03-07)
 
 ### Bug Fixes
 
-* correct the name of the package in the throw messages ([2d1ad58](https://github.com/codsen/codsen/commit/2d1ad58a8d48c98d56abf88e351bae39fe8d9e42))
-
-
-
-
+- correct the name of the package in the throw messages ([2d1ad58](https://github.com/codsen/codsen/commit/2d1ad58a8d48c98d56abf88e351bae39fe8d9e42))
 
 ## 5.0.1 (2021-01-28)
 

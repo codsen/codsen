@@ -1,7 +1,7 @@
 /**
  * object-flatten-all-arrays
  * Merge and flatten any arrays found in all values within plain objects
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-flatten-all-arrays/
@@ -23,48 +23,33 @@ var merge__default = /*#__PURE__*/_interopDefaultLegacy(merge);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "5.0.6";
+var version$1 = "5.0.7";
 
 var version = version$1;
-
 function flattenAllArrays(originalIncommingObj, originalOpts) {
-  //
-  // internal functions
-  // ==================
   function arrayContainsStr(arr) {
     return arr.some(function (val) {
       return typeof val === "string";
     });
-  } // setup
-  // =====
-
-
+  }
   var defaults = {
     flattenArraysContainingStringsToBeEmpty: false
   };
-
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
-
   var incommingObj = clone__default['default'](originalIncommingObj);
   var isFirstObj;
   var combinedObj;
-  var firstObjIndex; // action
-  // ======
-  // 1. check current
-
+  var firstObjIndex;
   if (Array.isArray(incommingObj)) {
     if (opts.flattenArraysContainingStringsToBeEmpty && arrayContainsStr(incommingObj)) {
       return [];
     }
-
     isFirstObj = null;
     combinedObj = {};
     firstObjIndex = 0;
-
     for (var i = 0, len = incommingObj.length; i < len; i++) {
       if (isObj__default['default'](incommingObj[i])) {
         combinedObj = merge__default['default'](combinedObj, incommingObj[i]);
-
         if (isFirstObj === null) {
           isFirstObj = true;
           firstObjIndex = i;
@@ -74,13 +59,10 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
         }
       }
     }
-
     if (isFirstObj !== null) {
       incommingObj[firstObjIndex] = clone__default['default'](combinedObj);
     }
-  } // 2. traverse deeper
-
-
+  }
   if (isObj__default['default'](incommingObj)) {
     Object.keys(incommingObj).forEach(function (key) {
       if (isObj__default['default'](incommingObj[key]) || Array.isArray(incommingObj[key])) {
@@ -94,7 +76,6 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
       }
     });
   }
-
   return incommingObj;
 }
 

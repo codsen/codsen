@@ -1,7 +1,7 @@
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -22,52 +22,36 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "2.0.6";
+var version$1 = "2.0.7";
 
 var version = version$1;
-/**
- * Utility library to traverse AST
- */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
-  }; //
-  // traverseInner() needs a wrapper to shield the last two input args from the outside
-  //
-
+  };
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
     var tree = clone__default['default'](treeOriginal);
     var res;
-
     var innerObj = _objectSpread__default['default']({
       depth: -1,
       path: ""
     }, originalInnerObj);
-
     innerObj.depth += 1;
-
     if (Array.isArray(tree)) {
-
       for (var i = 0, len = tree.length; i < len; i++) {
-
         if (stop.now) {
           break;
         }
-
         var path = innerObj.path ? innerObj.path + "." + i : "" + i;
-
         if (tree[i] !== undefined) {
           innerObj.parent = clone__default['default'](tree);
           innerObj.parentType = "array";
-          innerObj.parentKey = astMonkeyUtil.parent(path); // innerObj.path = `${innerObj.path}[${i}]`
-
+          innerObj.parentKey = astMonkeyUtil.parent(path);
           res = traverseInner(callback(tree[i], undefined, _objectSpread__default['default'](_objectSpread__default['default']({}, innerObj), {}, {
             path: path
           }), stop), callback, _objectSpread__default['default'](_objectSpread__default['default']({}, innerObj), {}, {
             path: path
           }), stop);
-
           if (Number.isNaN(res) && i < tree.length) {
             tree.splice(i, 1);
             i -= 1;
@@ -78,20 +62,15 @@ function traverse(tree1, cb1) {
           tree.splice(i, 1);
         }
       }
-    } else if (isObj__default['default'](tree)) { // eslint-disable-next-line guard-for-in, no-restricted-syntax
-
+    } else if (isObj__default['default'](tree)) {
       for (var key in tree) {
-
         if (stop.now && key != null) {
           break;
         }
-
         var _path = innerObj.path ? innerObj.path + "." + key : key;
-
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-
         innerObj.parent = clone__default['default'](tree);
         innerObj.parentType = "object";
         innerObj.parentKey = astMonkeyUtil.parent(_path);
@@ -100,7 +79,6 @@ function traverse(tree1, cb1) {
         }), stop), callback, _objectSpread__default['default'](_objectSpread__default['default']({}, innerObj), {}, {
           path: _path
         }), stop);
-
         if (Number.isNaN(res)) {
           delete tree[key];
         } else {
@@ -110,9 +88,8 @@ function traverse(tree1, cb1) {
     }
     return tree;
   }
-
   return traverseInner(tree1, cb1, {}, stop2);
-} // -----------------------------------------------------------------------------
+}
 
 exports.traverse = traverse;
 exports.version = version;

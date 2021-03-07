@@ -1,7 +1,7 @@
 /**
  * object-merge-advanced
  * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 12.0.3
+ * Version: 12.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-merge-advanced/
@@ -3943,7 +3943,7 @@ var lodash_isdate = createCommonjsModule(function (module, exports) {
   module.exports = isDate;
 });
 
-var version$1 = "12.0.3";
+var version$1 = "12.0.4";
 
 var escapeStringRegexp = function escapeStringRegexp(string) {
   if (typeof string !== 'string') {
@@ -4066,14 +4066,10 @@ var defaults$1 = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
 };
-/**
- * Like _.includes but with wildcards
- */
 
 function includesWithGlob(originalInput, stringToFind, originalOpts) {
-  // maybe we can end prematurely:
   if (!originalInput.length || !stringToFind.length) {
-    return false; // because nothing can be found in it
+    return false;
   }
 
   var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
@@ -4086,8 +4082,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
         caseSensitive: opts.caseSensitive
       });
     });
-  } // array then.
-
+  }
 
   if (opts.arrayVsArrayAllMustBeFound === "any") {
     return stringToFind.some(function (stringToFindVal) {
@@ -4111,14 +4106,13 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.6
+ * Version: 3.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
  */
 
 function nonEmpty(input) {
-  // deliberate ==, catches undefined and null
   if (input == null) {
     return false;
   }

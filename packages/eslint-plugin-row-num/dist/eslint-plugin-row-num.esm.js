@@ -1,7 +1,7 @@
 /**
  * eslint-plugin-row-num
  * ESLint plugin to update row numbers on each console.log
- * Version: 1.5.2
+ * Version: 1.5.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/eslint-plugin-row-num/
@@ -9,25 +9,12 @@
 
 import { fixRowNums } from 'js-row-num';
 
-// import stringify from "json-stringify-safe";
-
 const create = context => {
   return {
     CallExpression(node) {
-      // console.log(stringify(node, null, 4));
       /* istanbul ignore else */
-
       if (node.callee && node.callee.type === "MemberExpression" && node.callee.object && node.callee.object.type === "Identifier" && node.callee.object.name === "console" && node.callee.property && node.callee.property.type === "Identifier" && node.callee.property.name === "log" && node.arguments && Array.isArray(node.arguments) && node.arguments.length) {
-        node.arguments.forEach(arg => { // console.log(
-          //   `033 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${stringify(
-          //     arg,
-          //     null,
-          //     4
-          //   )}`
-          // );
-          // if the updated console.log contents are different from what we
-          // have now, latter needs to be updated.
-
+        node.arguments.forEach(arg => {
           if (arg.type === "Literal" && typeof arg.raw === "string" && arg.raw !== fixRowNums(arg.raw, {
             overrideRowNum: arg.loc.start.line,
             returnRangesOnly: false,
@@ -42,14 +29,11 @@ const create = context => {
                   returnRangesOnly: true,
                   extractedLogContentsWereGiven: true
                 });
-
                 if (ranges) {
                   let offset = arg.start;
-
                   if (!offset && arg.range && typeof arg.range[0] === "number") {
                     offset = arg.range[0];
                   }
-
                   const preppedRanges = [offset + ranges[0][0], offset + ranges[0][1]];
                   return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
                 }
@@ -69,14 +53,11 @@ const create = context => {
                   returnRangesOnly: true,
                   extractedLogContentsWereGiven: true
                 });
-
                 if (ranges) {
                   let offset = arg.quasis[0].range[0] + 1;
-
                   if (!offset && arg.range && typeof arg.range[0] === "number") {
-                    offset = arg.quasis[0].start + 1; // compensate plus one for the back-tick
+                    offset = arg.quasis[0].start + 1;
                   }
-
                   const preppedRanges = [offset + ranges[0][0], offset + ranges[0][1]];
                   return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
                 }
@@ -86,22 +67,16 @@ const create = context => {
         });
       }
     }
-
   };
 };
-
 var correctRowNum = {
   create,
   meta: {
-    // docs: {
-    //   url: getDocumentationUrl(__filename),
-    // },
     type: "suggestion",
     messages: {
       correctRowNum: "Update the row number."
     },
-    fixable: "code" // or "code" or "whitespace"
-
+    fixable: "code"
   }
 };
 

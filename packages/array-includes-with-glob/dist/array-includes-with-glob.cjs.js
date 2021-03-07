@@ -1,7 +1,7 @@
 /**
  * array-includes-with-glob
  * Like _.includes but with wildcards
- * Version: 3.0.6
+ * Version: 3.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-includes-with-glob/
@@ -19,36 +19,26 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
-var version$1 = "3.0.6";
+var version$1 = "3.0.7";
 
 var version = version$1;
 var defaults = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
 };
-/**
- * Like _.includes but with wildcards
- */
-
 function includesWithGlob(originalInput, stringToFind, originalOpts) {
-  // maybe we can end prematurely:
   if (!originalInput.length || !stringToFind.length) {
-    return false; // because nothing can be found in it
+    return false;
   }
-
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
-
   var input = typeof originalInput === "string" ? [originalInput] : Array.from(originalInput);
-
   if (typeof stringToFind === "string") {
     return input.some(function (val) {
       return matcher__default['default'].isMatch(val, stringToFind, {
         caseSensitive: opts.caseSensitive
       });
     });
-  } // array then.
-
-
+  }
   if (opts.arrayVsArrayAllMustBeFound === "any") {
     return stringToFind.some(function (stringToFindVal) {
       return input.some(function (val) {
@@ -58,7 +48,6 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
       });
     });
   }
-
   return stringToFind.every(function (stringToFindVal) {
     return input.some(function (val) {
       return matcher__default['default'].isMatch(val, stringToFindVal, {

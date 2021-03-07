@@ -1,7 +1,7 @@
 /**
  * html-img-alt
  * Adds missing alt attributes to img tags. Non-parsing.
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-img-alt/
@@ -4242,7 +4242,7 @@ var he = createCommonjsModule(function (module, exports) {
 /**
  * string-unfancy
  * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-unfancy/
@@ -4284,8 +4284,7 @@ function unfancy(str) {
 
   if (typeof str !== "string") {
     throw new Error("string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: " + typeof str);
-  } // decode anticipating multiple encoding on top of one another
-
+  }
 
   var res = str;
 
@@ -4308,17 +4307,14 @@ var defaults$3 = {
 };
 
 function rSort(arrOfRanges, originalOptions) {
-  // quick ending
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
-  } // fill any settings with defaults if missing:
+  }
 
-
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOptions); // arrOfRanges validation
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOptions);
 
   var culpritsIndex;
-  var culpritsLen; // validate does every range consist of exactly two indexes:
+  var culpritsLen;
 
   if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
     return range;
@@ -4332,8 +4328,7 @@ function rSort(arrOfRanges, originalOptions) {
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") has not two but " + culpritsLen + " elements!");
-  } // validate are range indexes natural numbers:
-
+  }
 
   if (!arrOfRanges.filter(function (range) {
     return range;
@@ -4346,8 +4341,7 @@ function rSort(arrOfRanges, originalOptions) {
     return true;
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") does not consist of only natural numbers!");
-  } // let's assume worst case scenario is N x N.
-
+  }
 
   var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
     return range;
@@ -4385,21 +4379,12 @@ var defaults$2 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
-}; // merges the overlapping ranges
-// case #1. exact extension:
-// [ [1, 5], [5, 10] ] => [ [1, 10] ]
-// case #2. overlap:
-// [ [1, 4], [3, 5] ] => [ [1, 5] ]
+};
 
 function rMerge(arrOfRanges, originalOpts) {
-  //
-  // internal functions:
-  // ---------------------------------------------------------------------------
   function isObj(something) {
     return something && typeof something === "object" && !Array.isArray(something);
-  } // quick ending:
-  // ---------------------------------------------------------------------------
-
+  }
 
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return null;
@@ -4409,19 +4394,17 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
       } else if (opts.progressFn && typeof opts.progressFn !== "function") {
         throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"" + typeof opts.progressFn + "\", equal to " + JSON.stringify(opts.progressFn, null, 4));
-      } // 2. validate opts.mergeType
-
+      }
 
       if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
         throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
-      } // 3. validate opts.joinRangesThatTouchEdges
-
+      }
 
       if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
         throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"" + typeof opts.joinRangesThatTouchEdges + "\", equal to " + JSON.stringify(opts.joinRangesThatTouchEdges, null, 4));
@@ -4431,18 +4414,13 @@ function rMerge(arrOfRanges, originalOpts) {
     }
   } else {
     opts = _objectSpread2({}, defaults$2);
-  } // progress-wise, sort takes first 20%
-  // two-level-deep array clone:
+  }
 
-
-  var filtered = arrOfRanges // filter out null
-  .filter(function (range) {
+  var filtered = arrOfRanges.filter(function (range) {
     return range;
   }).map(function (subarr) {
     return [].concat(subarr);
-  }).filter( // filter out futile ranges with identical starting and ending points with
-  // nothing to add (no 3rd argument)
-  function (rangeArr) {
+  }).filter(function (rangeArr) {
     return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
   });
   var sortedRanges;
@@ -4450,11 +4428,9 @@ function rMerge(arrOfRanges, originalOpts) {
   var percentageDone;
 
   if (opts.progressFn) {
-    // progress already gets reported in [0,100] range, so we just need to
-    // divide by 5 in order to "compress" that into 20% range.
     sortedRanges = rSort(filtered, {
       progressFn: function progressFn(percentage) {
-        percentageDone = Math.floor(percentage / 5); // ensure each percent is passed only once:
+        percentageDone = Math.floor(percentage / 5);
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
@@ -4470,8 +4446,7 @@ function rMerge(arrOfRanges, originalOpts) {
     return null;
   }
 
-  var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
-  // loop from the end:
+  var len = sortedRanges.length - 1;
 
   for (var i = len; i > 0; i--) {
     if (opts.progressFn) {
@@ -4479,26 +4454,20 @@ function rMerge(arrOfRanges, originalOpts) {
 
       if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
         lastPercentageDone = percentageDone;
-        opts.progressFn(percentageDone); // console.log(
-        //   `153 REPORTING ${`\u001b[${33}m${`doneSoFar`}\u001b[${39}m`} = ${doneSoFar}`
-        // );
+        opts.progressFn(percentageDone);
       }
-    } // if current range is before the preceding-one
-
+    }
 
     if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
       sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
-      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]); // tend the third argument, "what to insert"
+      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
 
       if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
-        // if the value of the range before exists:
         if (sortedRanges[i - 1][2] !== null) {
           if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
             sortedRanges[i - 1][2] = null;
           } else if (sortedRanges[i - 1][2] != null) {
-            // if there's a clash of "insert" values:
             if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
-              // take the value from the range that's on the right:
               sortedRanges[i - 1][2] = sortedRanges[i][2];
             } else {
               sortedRanges[i - 1][2] += sortedRanges[i][2];
@@ -4507,11 +4476,9 @@ function rMerge(arrOfRanges, originalOpts) {
             sortedRanges[i - 1][2] = sortedRanges[i][2];
           }
         }
-      } // get rid of the second element:
+      }
 
-
-      sortedRanges.splice(i, 1); // reset the traversal, start from the end again
-
+      sortedRanges.splice(i, 1);
       i = sortedRanges.length;
     }
   }
@@ -4522,7 +4489,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -4551,19 +4518,16 @@ function rApply(str, originalRangesArr, _progressFn) {
   if (!originalRangesArr || !originalRangesArr.filter(function (range) {
     return range;
   }).length) {
-    // quick ending - no ranges passed
     return str;
   }
 
   var rangesArr;
 
   if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
-    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
-  } // allocate first 10% of progress to this stage
-
+  }
 
   var len = rangesArr.length;
   var counter = 0;
@@ -4602,13 +4566,10 @@ function rApply(str, originalRangesArr, _progressFn) {
     }
 
     counter += 1;
-  }); // allocate another 10% of the progress indicator length to the rangesMerge step:
-
+  });
   var workingRanges = rMerge(rangesArr, {
     progressFn: function progressFn(perc) {
       if (_progressFn) {
-        // since "perc" is already from zero to hundred, we just divide by 10 and
-        // get the range from zero to ten:
         percentageDone = 10 + Math.floor(perc / 10);
         /* istanbul ignore else */
 
@@ -4619,18 +4580,14 @@ function rApply(str, originalRangesArr, _progressFn) {
         }
       }
     }
-  }); // allocate the rest 80% to the actual string assembly:
-
+  });
   var len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
   /* istanbul ignore else */
 
   if (len2 > 0) {
-    var tails = str.slice(workingRanges[len2 - 1][1]); // eslint-disable-next-line no-param-reassign
-
+    var tails = str.slice(workingRanges[len2 - 1][1]);
     str = workingRanges.reduce(function (acc, _val, i, arr) {
       if (_progressFn) {
-        // since "perc" is already from zero to hundred, we just divide by 10 and
-        // get the range from zero to ten:
         percentageDone = 20 + Math.floor(i / len2 * 80);
         /* istanbul ignore else */
 
@@ -4644,8 +4601,7 @@ function rApply(str, originalRangesArr, _progressFn) {
       var beginning = i === 0 ? 0 : arr[i - 1][1];
       var ending = arr[i][0];
       return acc + str.slice(beginning, ending) + (arr[i][2] || "");
-    }, ""); // eslint-disable-next-line no-param-reassign
-
+    }, "");
     str += tails;
   }
 
@@ -4655,7 +4611,7 @@ function rApply(str, originalRangesArr, _progressFn) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -4666,29 +4622,22 @@ function collWhitespace(str, originallineBreakLimit) {
     originallineBreakLimit = 1;
   }
 
-  var rawNbsp = "\xA0"; // helpers
+  var rawNbsp = "\xA0";
 
   function reverse(s) {
     return Array.from(s).reverse().join("");
-  } // replaces the leading/trailing whitespace chunks with final strings
-
+  }
 
   function prep(whitespaceChunk, limit, trailing) {
-    // when processing the leading whitespace, it's \n\r --- CR - LF
-    // when processing the trailing whitespace, we're processing inverted order,
-    // so it's \n\r --- LF - CR
-    // for this reason, we set first and second linebreak according to direction,
-    // the "trailing" boolean:
     var firstBreakChar = trailing ? "\n" : "\r";
     var secondBreakChar = trailing ? "\r" : "\n";
 
     if (!whitespaceChunk) {
       return whitespaceChunk;
-    } // let whitespace char count since last CR or LF
-
+    }
 
     var crlfCount = 0;
-    var res = ""; // let beginning = true;
+    var res = "";
 
     for (var i = 0, len = whitespaceChunk.length; i < len; i++) {
       if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
@@ -4721,13 +4670,11 @@ function collWhitespace(str, originallineBreakLimit) {
   }
 
   if (typeof str === "string" && str.length) {
-    // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
     var lineBreakLimit = 1;
 
     if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
       lineBreakLimit = +originallineBreakLimit;
-    } // plan: extract what would String.prototype() would remove, front and back parts
-
+    }
 
     var frontPart = "";
     var endPart = "";
@@ -4741,25 +4688,16 @@ function collWhitespace(str, originallineBreakLimit) {
           break;
         }
       }
-    } // if whole string is whitespace, endPart is empty string
-
+    }
 
     if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
       for (var _i = str.length; _i--;) {
-        // console.log(
-        //   `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
-        //     str[i],
-        //     null,
-        //     4
-        //   )}`}\u001b[${39}m`}`
-        // );
         if (str[_i].trim()) {
           endPart = str.slice(_i + 1);
           break;
         }
       }
-    } // -------------------------------------------------------------------------
-
+    }
 
     return "" + prep(frontPart, lineBreakLimit, false) + str.trim() + reverse(prep(reverse(endPart), lineBreakLimit, true));
   }
@@ -4783,12 +4721,9 @@ var defaults$1 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
-}; // -----------------------------------------------------------------------------
+};
 
 var Ranges = /*#__PURE__*/function () {
-  //
-  // O P T I O N S
-  // =============
   function Ranges(originalOpts) {
     var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
@@ -4800,8 +4735,7 @@ var Ranges = /*#__PURE__*/function () {
       } else {
         throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
       }
-    } // so it's correct, let's get it in:
-
+    }
 
     this.opts = opts;
     this.ranges = [];
@@ -4813,7 +4747,6 @@ var Ranges = /*#__PURE__*/function () {
     var _this = this;
 
     if (originalFrom == null && originalTo == null) {
-      // absent ranges are marked as null - instead of array of arrays we can receive a null
       return;
     }
 
@@ -4825,20 +4758,16 @@ var Ranges = /*#__PURE__*/function () {
           })) {
             originalFrom.forEach(function (thing) {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array
                 _this.add.apply(_this, thing);
-              } // just skip other cases
-
+              }
             });
             return;
           }
 
           if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
-            // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
-        } // else,
-
+        }
 
         return;
       }
@@ -4852,23 +4781,16 @@ var Ranges = /*#__PURE__*/function () {
     var to = +originalTo;
 
     if (isNum(addVal)) {
-      // eslint-disable-next-line no-param-reassign
       addVal = String(addVal);
-    } // validation
-
+    }
 
     if (isNum(from) && isNum(to)) {
-      // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + typeof addVal + ", equal to:\n" + JSON.stringify(addVal, null, 4));
-      } // Does the incoming "from" value match the existing last element's "to" value?
-
+      }
 
       if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
-        // The incoming range is an exact extension of the last range, like
-        // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
-        this.last()[1] = to; // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
-
+        this.last()[1] = to;
         if (this.last()[2] === null || addVal === null) ;
 
         if (this.last()[2] !== null && existy(addVal)) {
@@ -4879,7 +4801,6 @@ var Ranges = /*#__PURE__*/function () {
           }
 
           if (!(isStr(calculatedVal) && !calculatedVal.length)) {
-            // don't let the zero-length strings past
             this.last()[2] = calculatedVal;
           }
         }
@@ -4892,13 +4813,9 @@ var Ranges = /*#__PURE__*/function () {
         this.ranges.push(whatToPush);
       }
     } else {
-      // Error somewhere!
-      // Let's find out where.
-      // is it first arg?
       if (!(isNum(from) && from >= 0)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"" + typeof from + "\" equal to: " + JSON.stringify(from, null, 4));
       } else {
-        // then it's second...
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"" + typeof to + "\" equal to: " + JSON.stringify(to, null, 4));
       }
     }
@@ -4906,15 +4823,12 @@ var Ranges = /*#__PURE__*/function () {
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
     this.add(originalFrom, originalTo, addVal);
-  } // C U R R E N T () - kindof a getter
-  // ==================================
-  ;
+  };
 
   _proto.current = function current() {
     var _this2 = this;
 
     if (Array.isArray(this.ranges) && this.ranges.length) {
-      // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
       });
@@ -4933,21 +4847,14 @@ var Ranges = /*#__PURE__*/function () {
     }
 
     return null;
-  } // W I P E ()
-  // ==========
-  ;
+  };
 
   _proto.wipe = function wipe() {
     this.ranges = [];
-  } // R E P L A C E ()
-  // ==========
-  ;
+  };
 
   _proto.replace = function replace(givenRanges) {
     if (Array.isArray(givenRanges) && givenRanges.length) {
-      // Now, ranges can be array of arrays, correct format but also single
-      // range, an array of two natural numbers might be given.
-      // Let's put safety latch against such cases
       if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
         throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, " + JSON.stringify(givenRanges[0], null, 4) + " should be an array and its first element should be an integer, a string index.");
       } else {
@@ -4956,9 +4863,7 @@ var Ranges = /*#__PURE__*/function () {
     } else {
       this.ranges = [];
     }
-  } // L A S T ()
-  // ==========
-  ;
+  };
 
   _proto.last = function last() {
     if (Array.isArray(this.ranges) && this.ranges.length) {
@@ -7594,20 +7499,13 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
  */
-// "a" => null
-// "0" => null
-// "a.b" => "a"
-// "a.0" => "a"
-// "a.0.c" => "0"
-
 
 function parent(str) {
-  // input must have at least one dot:
   if (str.includes(".")) {
     var lastDotAt = str.lastIndexOf(".");
 
@@ -7625,16 +7523,10 @@ function parent(str) {
   return null;
 }
 
-/**
- * Utility library to traverse AST
- */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
-  }; //
-  // traverseInner() needs a wrapper to shield the last two input args from the outside
-  //
+  };
 
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
     var tree = lodash_clonedeep(treeOriginal);
@@ -7658,8 +7550,7 @@ function traverse(tree1, cb1) {
         if (tree[i] !== undefined) {
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "array";
-          innerObj.parentKey = parent(path); // innerObj.path = `${innerObj.path}[${i}]`
-
+          innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: path
           }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
@@ -7677,7 +7568,6 @@ function traverse(tree1, cb1) {
         }
       }
     } else if (lodash_isplainobject(tree)) {
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (var key in tree) {
         if (stop.now && key != null) {
           break;
@@ -7710,7 +7600,7 @@ function traverse(tree1, cb1) {
   }
 
   return traverseInner(tree1, cb1, {}, stop2);
-} // -----------------------------------------------------------------------------
+}
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -8843,13 +8733,11 @@ var lodash_intersection = intersection;
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.6
+ * Version: 3.13.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -9314,14 +9202,11 @@ var defaults = {
   schema: {},
   msg: "check-types-mini",
   optsVarName: "opts"
-}; // fourth input argument is shielded from an external API:
+};
 
 function internalApi(obj, ref, originalOptions) {
-  //
-  // Functions
-  // =========
   function existy(something) {
-    return something != null; // deliberate !=
+    return something != null;
   }
 
   function isObj(something) {
@@ -9342,16 +9227,12 @@ function internalApi(obj, ref, originalOptions) {
     });
   }
 
-  var hasKey = Object.prototype.hasOwnProperty; // Variables
-  // =========
-
+  var hasKey = Object.prototype.hasOwnProperty;
   var NAMESFORANYTYPE = ["any", "anything", "every", "everything", "all", "whatever", "whatevs"];
 
   if (!existy(obj)) {
     throw new Error("check-types-mini: [THROW_ID_01] First argument is missing!");
-  } // Prep our own opts
-  // =================
-
+  }
 
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
 
@@ -9371,31 +9252,11 @@ function internalApi(obj, ref, originalOptions) {
 
   if (opts.msg[opts.msg.length - 1] === ":") {
     opts.msg = opts.msg.slice(0, opts.msg.length - 1).trim();
-  } // now, since we let users type the allowed types, we have to normalise the letter case:
-
+  }
 
   if (isObj(opts.schema)) {
-    // 1. if schema is given as nested AST tree, for example:
-    // {
-    //   schema: {
-    //     option1: { somekey: "any" }, // <------ !
-    //     option2: "whatever"
-    //   }
-    // }
-    //
-    // (notice it's not flat, "option1.somekey": "any", but nested!)
-    //
-    // then, we flatten it first, so that each AST branch's path is key and the
-    // value at that branch's tip is the key's value:
-    // {
-    //   schema: {
-    //     "option1.somekey": "any", // <------ !
-    //     option2: "whatever"
-    //   }
-    // }
     Object.keys(opts.schema).forEach(function (oneKey) {
       if (isObj(opts.schema[oneKey])) {
-        // 1. extract all unique AST branches leading to their tips
         var tempObj = {};
         traverse(opts.schema[oneKey], function (key, val, innerObj) {
           var current = val !== undefined ? val : key;
@@ -9405,24 +9266,15 @@ function internalApi(obj, ref, originalOptions) {
           }
 
           return current;
-        }); // 2. delete that key which leads to object:
-
-        delete opts.schema[oneKey]; // 3. merge in all paths-as-keys into schema opts object:
-
+        });
+        delete opts.schema[oneKey];
         opts.schema = _objectSpread2(_objectSpread2({}, opts.schema), tempObj);
       }
-    }); //
-    //
-    //
-    //
-    //
-    // 2. arrayiffy
-
+    });
     Object.keys(opts.schema).forEach(function (oneKey) {
       if (!Array.isArray(opts.schema[oneKey])) {
         opts.schema[oneKey] = [opts.schema[oneKey]];
-      } // then turn all keys into strings and trim and lowercase them:
-
+      }
 
       opts.schema[oneKey] = opts.schema[oneKey].map(function (el) {
         return ("" + el).toLowerCase().trim();
@@ -9433,21 +9285,8 @@ function internalApi(obj, ref, originalOptions) {
   }
 
   if (!existy(ref)) {
-    // eslint-disable-next-line no-param-reassign
     ref = {};
-  } // ---------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------
-  // THE BUSINESS
-  // ============
-  // Since v.4 we support nested opts. That's AST's. This means, we will have to
-  // traverse them somehow up until the last tip of each branch. Luckily, we have
-  // tools for traversal - ast-monkey-traverse.
-  // 1. The "obj" and "ref" root level keys need separate attention.
-  // If keys mismatch, we need to check them separately from traversal.
-  // During traversal, we'll check if each value is a plain object/array and
-  // match the keysets as well. However, traversal won't "see" root level keys.
-
+  }
 
   if (opts.enforceStrictKeyset) {
     if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
@@ -9466,62 +9305,31 @@ function internalApi(obj, ref, originalOptions) {
         throw new TypeError(opts.msg + ": The reference object has key" + (_keys2.length > 1 ? "s" : "") + " which " + (_keys2.length > 1 ? "are" : "is") + " not present in the input object: " + _keys2.join(", "));
       }
     } else {
-      // it's an error because both schema and reference don't exist
       throw new TypeError(opts.msg + ": Both " + opts.optsVarName + ".schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!");
     }
-  } // 2. Call the monkey and traverse the schema object, checking each value-as-object
-  // or value-as-array separately, if opts.enforceStrictKeyset is on. Root level
-  // was checked in step 1. above. What's left is deeper levels. // When users set schema to "any" for certain path, this applies to that path
-  // and any (if exists) children objects/arrays/strings whatever on deeper children
-  // paths. Now, the problem is, we check by traversing everything - this means,
-  // for example, we have this to check:
-  //
-  // {
-  //   a: {
-  //     b: "c"
-  //   },
-  //  d: "e"
-  // }
-  // ast-monkey-traverse will check "a" and find it's schema is "any" - basically,
-  // we don't care what it's type is and instruct "check-types-mini" to skip it.
-  // This "skip" instruction applies to "b" too! However, our checking engine,
-  // "ast-monkey-traverse" will still traverse "b". It can't stop there, because
-  // there's still "d" key to check - we're traversing EVERYTHING.
-  // Challenge: when "ast-monkey" will stumble upon "b" it might flag it up as
-  // being of a wrong type, it does not have visibility of its parent's schemas.
-  // What we'll do to fix this is we'll compile the list of any paths that have
-  // "any"/"whatever" schemas in an array. Then, when deeper children nodes are
-  // traversed, we'll check, are they children of any aforementioned paths (technically
-  // speaking, do their path strings start with any of the strings in aforementioned
-  // paths array strings).
-
+  }
 
   var ignoredPathsArr = [];
   traverse(obj, function (key, val, innerObj) {
-    // innerObj.path // Here what we have been given:
     var current = val;
     var objKey = key;
 
     if (innerObj.parentType === "array") {
       objKey = undefined;
       current = key;
-    } // Here's what we will compare against to.
-    // If schema exists, types defined there will be used to compare against: // if current path is a children of any paths in "ignoredPathsArr", skip it:
-
+    }
 
     if (Array.isArray(ignoredPathsArr) && ignoredPathsArr.length && ignoredPathsArr.some(function (path) {
       return innerObj.path.startsWith(path);
     })) {
       return current;
-    } // if this key is ignored, skip it:
-
+    }
 
     if (objKey && opts.ignoreKeys.some(function (oneOfKeysToIgnore) {
       return matcher.isMatch(objKey, oneOfKeysToIgnore);
     })) {
       return current;
-    } // if this path is ignored, skip it:
-
+    }
 
     if (opts.ignorePaths.some(function (oneOfPathsToIgnore) {
       return matcher.isMatch(innerObj.path, oneOfPathsToIgnore);
@@ -9529,8 +9337,7 @@ function internalApi(obj, ref, originalOptions) {
       return current;
     }
 
-    var isNotAnArrayChild = !(!isObj(current) && !Array.isArray(current) && Array.isArray(innerObj.parent)); // ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  █
-
+    var isNotAnArrayChild = !(!isObj(current) && !Array.isArray(current) && Array.isArray(innerObj.parent));
     var optsSchemaHasThisPathDefined = false;
 
     if (isObj(opts.schema) && hasKey.call(opts.schema, innerObj.path)) {
@@ -9541,45 +9348,25 @@ function internalApi(obj, ref, originalOptions) {
 
     if (isObj(ref) && objectPath.has(ref, innerObj.path)) {
       refHasThisPathDefined = true;
-    } // ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  █
-    // First, check if given path is not covered by neither ref object nor schema.
-    // We also skip the non-container types (obj/arr) within arrays (test 02.11)
-    // Otherwise, we would get false throws because arrays can mention list of
-    // "things" (tag names, for example) and this application would enforce each
-    // one of them, does it exist in schema/ref, but it won't exist!
-    // Thus, strict existence checks apply only for object keys and arrays, not
-    // array elements which are not objects/arrays.
-
+    }
 
     if (opts.enforceStrictKeyset && isNotAnArrayChild && !optsSchemaHasThisPathDefined && !refHasThisPathDefined) {
       throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " is neither covered by reference object (second input argument), nor " + opts.optsVarName + ".schema! To stop this error, turn off " + opts.optsVarName + ".enforceStrictKeyset or provide some type reference (2nd argument or " + opts.optsVarName + ".schema).\n\nDebug info:\n\nobj = " + JSON.stringify(obj, null, 4) + "\n\nref = " + JSON.stringify(ref, null, 4) + "\n\ninnerObj = " + JSON.stringify(innerObj, null, 4) + "\n\nopts = " + JSON.stringify(opts, null, 4) + "\n\ncurrent = " + JSON.stringify(current, null, 4) + "\n\n");
     } else if (optsSchemaHasThisPathDefined) {
-      // step 1. Fetch the current keys' schema and normalise it - it's an array
-      // which holds strings. Those strings have to be lowercased. It also can
-      // be raw null/undefined, which would be arrayified and turned into string.
       var currentKeysSchema = arrayiffy(opts.schema[innerObj.path]).map(function (el) {
         return ("" + el).toLowerCase();
       });
-      objectPath.set(opts.schema, innerObj.path, currentKeysSchema); // step 2. First check does our schema contain any blanket names, "any", "whatever" etc.
+      objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
 
       if (!lodash_intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
-        // Because, if not, it means we need to do some work, check types.
-        // Beware, Booleans can be allowed blanket, as "boolean", but also,
-        // in granular fashion: as just "true" or just "false".
         if (current !== true && current !== false && !currentKeysSchema.includes(typeDetect(current).toLowerCase()) || (current === true || current === false) && !currentKeysSchema.includes(String(current)) && !currentKeysSchema.includes("boolean")) {
-          // new in v.2.2
-          // Check if key's value is array. Then, if it is, check if opts.acceptArrays is on.
-          // If it is, then iterate through the array, checking does each value conform to the
-          // types listed in that key's schema entry.
           if (Array.isArray(current) && opts.acceptArrays) {
-            // check each key:
             for (var i = 0, len = current.length; i < len; i++) {
               if (!currentKeysSchema.includes(typeDetect(current[i]).toLowerCase())) {
                 throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + "." + i + ", the " + i + "th element (equal to " + JSON.stringify(current[i], null, 0) + ") is of a type " + typeDetect(current[i]).toLowerCase() + ", but only the following are allowed by the " + opts.optsVarName + ".schema: " + currentKeysSchema.join(", "));
               }
             }
           } else {
-            // only then do throw...
             throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to " + (typeDetect(current) !== "string" ? '"' : "") + JSON.stringify(current, null, 0) + (typeDetect(current) !== "string" ? '"' : "") + " (type: " + typeDetect(current).toLowerCase() + ") which is not among the allowed types in schema (which is equal to " + JSON.stringify(currentKeysSchema, null, 0) + ")");
           }
         }
@@ -9605,16 +9392,12 @@ function internalApi(obj, ref, originalOptions) {
     return current;
   });
 }
-/**
- * Validate options object
- */
-
 
 function checkTypesMini(obj, ref, originalOptions) {
   return internalApi(obj, ref, originalOptions);
 }
 
-var version$1 = "2.0.6";
+var version$1 = "2.0.7";
 
 var version = version$1;
 

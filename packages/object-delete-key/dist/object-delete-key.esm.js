@@ -1,7 +1,7 @@
 /**
  * object-delete-key
  * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-delete-key/
@@ -12,19 +12,16 @@ import { isEmpty } from 'ast-is-empty';
 import clone from 'lodash.clonedeep';
 import { arrObjOrBoth } from 'util-array-object-or-both';
 
-var version$1 = "2.0.6";
+var version$1 = "2.0.7";
 
 const version = version$1;
-
 function deleteKey(originalInput, originalOpts) {
   function existy(x) {
     return x != null;
   }
-
   if (!existy(originalInput)) {
     throw new Error("object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon.");
   }
-
   const defaults = {
     key: null,
     val: undefined,
@@ -37,14 +34,11 @@ function deleteKey(originalInput, originalOpts) {
   opts.only = arrObjOrBoth(opts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
     optsVarName: "opts.only"
-  }); // after this, opts.only is equal to either: 1) object, 2) array OR 3) any
-
+  });
   if (!existy(opts.key) && !existy(opts.val)) {
     throw new Error("object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value.");
   }
-
   let input = clone(originalInput);
-
   if (opts.cleanup) {
     let findings = find(input, {
       key: opts.key,
@@ -53,13 +47,10 @@ function deleteKey(originalInput, originalOpts) {
     });
     let currentIndex;
     let nodeToDelete;
-
     while (Array.isArray(findings) && findings.length) {
       nodeToDelete = findings[0].index;
-
       for (let i = 1, len = findings[0].path.length; i < len; i++) {
         currentIndex = findings[0].path[len - 1 - i];
-
         if (isEmpty(del(get(input, {
           index: currentIndex
         }), {
@@ -70,7 +61,6 @@ function deleteKey(originalInput, originalOpts) {
           nodeToDelete = currentIndex;
         }
       }
-
       input = drop(input, {
         index: nodeToDelete
       });
@@ -82,7 +72,6 @@ function deleteKey(originalInput, originalOpts) {
     }
     return input;
   }
-
   return del(input, {
     key: opts.key,
     val: opts.val,

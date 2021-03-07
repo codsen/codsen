@@ -1,7 +1,7 @@
 /**
  * util-array-object-or-both
  * Validate and normalise user choice: array, object or both?
- * Version: 3.0.6
+ * Version: 3.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-array-object-or-both/
@@ -27,29 +27,22 @@ function arrObjOrBoth(str, originalOpts) {
     msg: "",
     optsVarName: "given variable"
   };
-
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
-
   if (opts && opts.msg && opts.msg.length > 0) {
     opts.msg = opts.msg.trim() + " ";
   }
-
   if (opts.optsVarName !== "given variable") {
     opts.optsVarName = "variable \"" + opts.optsVarName + "\"";
   }
-
   if (includes__default['default'](onlyObjectValues, str.toLowerCase().trim())) {
     return "object";
   }
-
   if (includes__default['default'](onlyArrayValues, str.toLowerCase().trim())) {
     return "array";
   }
-
   if (includes__default['default'](onlyAnyValues, str.toLowerCase().trim())) {
     return "any";
   }
-
   throw new TypeError(opts.msg + "The " + opts.optsVarName + " was customised to an unrecognised value: " + str + ". Please check it against the API documentation.");
 }
 

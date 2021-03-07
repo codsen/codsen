@@ -1,7 +1,7 @@
 /**
  * charcode-is-valid-xml-name-character
  * Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
- * Version: 1.12.6
+ * Version: 1.12.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/charcode-is-valid-xml-name-character/
@@ -68,8 +68,7 @@ var defaults = {
 };
 
 function isIndexWithin(originalIndex, rangesArr, originalOpts) {
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // insurance
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (!Number.isInteger(originalIndex)) {
     throw new Error("ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as " + originalIndex + " (type " + typeof originalIndex + ")");

@@ -1,7 +1,7 @@
 /**
  * array-pull-all-with-glob
  * Like _.pullAll but with globs (wildcards)
- * Version: 5.0.6
+ * Version: 5.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-pull-all-with-glob/
@@ -9,25 +9,17 @@
 
 import matcher from 'matcher';
 
-var version$1 = "5.0.6";
+var version$1 = "5.0.7";
 
 const version = version$1;
-/**
- * Like _.pullAll but with globs (wildcards)
- */
-
 function pull(originalInput, originalToBeRemoved, originalOpts) {
-  // insurance
   if (!originalInput.length) {
     return [];
   }
-
   if (!originalInput.length || !originalToBeRemoved.length) {
     return Array.from(originalInput);
   }
-
-  const toBeRemoved = typeof originalToBeRemoved === "string" ? [originalToBeRemoved] : Array.from(originalToBeRemoved); // opts are mirroring matcher's at the moment, can't promise that for the future
-
+  const toBeRemoved = typeof originalToBeRemoved === "string" ? [originalToBeRemoved] : Array.from(originalToBeRemoved);
   const defaults = {
     caseSensitive: true
   };

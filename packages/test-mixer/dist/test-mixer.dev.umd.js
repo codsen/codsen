@@ -1,7 +1,7 @@
 /**
  * test-mixer
  * Test helper to generate function opts object variations
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/test-mixer/
@@ -3509,7 +3509,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
 /**
  * object-boolean-combinations
  * Consumes a defaults object with booleans, generates all possible variations of it
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-boolean-combinations/
@@ -3520,9 +3520,6 @@ function combinations(originalIncomingObject, originalOverrideObject) {
     originalOverrideObject = {};
   }
 
-  //
-  // FUNCTIONS
-  // =========
   function combi(n) {
     var r = [];
 
@@ -3537,9 +3534,7 @@ function combinations(originalIncomingObject, originalOverrideObject) {
     }
 
     return r;
-  } // CHECKS
-  // ======
-
+  }
 
   if (!originalIncomingObject) {
     throw new Error("[THROW_ID_01] missing input object");
@@ -3554,25 +3549,17 @@ function combinations(originalIncomingObject, originalOverrideObject) {
   }
 
   var incomingObject = lodash_clonedeep(originalIncomingObject);
-  var overrideObject = lodash_clonedeep(originalOverrideObject); // START
-  // =====
-
+  var overrideObject = lodash_clonedeep(originalOverrideObject);
   var propertiesToMix = Object.keys(incomingObject);
   var outcomingObjectsArray = [];
-  var propertiesToBeOverridden = []; // if there's override, prepare an alternative (a subset) array propertiesToMix
-  // ----------------------------------------------------------------------------
+  var propertiesToBeOverridden = [];
 
   if (lodash_isplainobject(overrideObject) && Object.keys(overrideObject).length) {
-    // find legitimate properties from the overrideObject:
-    // enforce that override object had just a subset of incomingObject properties, nothing else
-    propertiesToBeOverridden = lodash_intersection(Object.keys(overrideObject), Object.keys(incomingObject)); // propertiesToMix = all incoming object's properties MINUS properties to override
-
+    propertiesToBeOverridden = lodash_intersection(Object.keys(overrideObject), Object.keys(incomingObject));
     propertiesToBeOverridden.forEach(function (elem) {
       return lodash_pull(propertiesToMix, elem);
     });
-  } // mix up whatever propertiesToMix has came to this point
-  // ------------------------------------------------------
-
+  }
 
   var boolCombinations = combi(Object.keys(propertiesToMix).length);
   var tempObject;
@@ -3582,25 +3569,20 @@ function combinations(originalIncomingObject, originalOverrideObject) {
       tempObject[elem2] = boolCombinations[index1][index2] === 1;
     });
     outcomingObjectsArray.push(tempObject);
-  }); // if there's override, append the static override values on each property of the
-  // propertiesToMix array:
-  // ------------------------------------------------------------------------------
+  });
 
   if (lodash_isplainobject(overrideObject) && Object.keys(overrideObject).length) {
     outcomingObjectsArray.forEach(function (elem3) {
       return propertiesToBeOverridden.forEach(function (elem4) {
-        // eslint-disable-next-line no-param-reassign
         elem3[elem4] = overrideObject[elem4];
       });
     });
-  } // RETURN
-  // ======
-
+  }
 
   return outcomingObjectsArray;
 }
 
-var version$1 = "2.0.6";
+var version$1 = "2.0.7";
 
 var version = version$1;
 

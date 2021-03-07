@@ -1,7 +1,7 @@
 /**
  * ast-get-object
  * Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-object/
@@ -2505,20 +2505,13 @@ var typeDetect = createCommonjsModule(function (module, exports) {
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
  */
-// "a" => null
-// "0" => null
-// "a.b" => "a"
-// "a.0" => "a"
-// "a.0.c" => "0"
-
 
 function parent(str) {
-  // input must have at least one dot:
   if (str.includes(".")) {
     var lastDotAt = str.lastIndexOf(".");
 
@@ -2536,16 +2529,10 @@ function parent(str) {
   return null;
 }
 
-/**
- * Utility library to traverse AST
- */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
-  }; //
-  // traverseInner() needs a wrapper to shield the last two input args from the outside
-  //
+  };
 
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
     var tree = lodash_clonedeep(treeOriginal);
@@ -2569,8 +2556,7 @@ function traverse(tree1, cb1) {
         if (tree[i] !== undefined) {
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "array";
-          innerObj.parentKey = parent(path); // innerObj.path = `${innerObj.path}[${i}]`
-
+          innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: path
           }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
@@ -2588,7 +2574,6 @@ function traverse(tree1, cb1) {
         }
       }
     } else if (lodash_isplainobject(tree)) {
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (var key in tree) {
         if (stop.now && key != null) {
           break;
@@ -2621,18 +2606,15 @@ function traverse(tree1, cb1) {
   }
 
   return traverseInner(tree1, cb1, {}, stop2);
-} // -----------------------------------------------------------------------------
+}
 
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
- */
-/**
- * Does AST contain only empty space?
  */
 
 function empty(input) {
@@ -2787,21 +2769,13 @@ function isBlank(something) {
   }
 
   return false;
-} // -----------------------------------------------------------------------------
-// Legend:
-// b - superset object; s - subset object
-
-/**
- * Compare anything: AST, objects, arrays, strings and nested thereof
- */
-
+}
 
 function compare(b, s, originalOpts) {
   var sKeys;
   var bKeys;
   var found;
-  var bOffset = 0; // prep opts
-
+  var bOffset = 0;
   var defaults = {
     hungryForWhitespace: false,
     matchStrictly: false,
@@ -2809,18 +2783,15 @@ function compare(b, s, originalOpts) {
     useWildcards: false
   };
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // edge case when hungryForWhitespace=true, matchStrictly=true and matching against blank object:
-
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (opts.hungryForWhitespace && opts.matchStrictly && lodash_isplainobject(b) && empty(b) && lodash_isplainobject(s) && !Object.keys(s).length) {
     return true;
-  } // instant (falsey) result
-
+  }
 
   if ((!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b) && empty(s)) && lodash_isplainobject(b) && Object.keys(b).length !== 0 && lodash_isplainobject(s) && Object.keys(s).length === 0 || typeDetect(b) !== typeDetect(s) && (!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b))) {
     return false;
-  } // A C T I O N
-
+  }
 
   if (typeof b === "string" && typeof s === "string") {
     if (opts.hungryForWhitespace && empty(b) && empty(s)) {
@@ -2852,8 +2823,7 @@ function compare(b, s, originalOpts) {
     if (s.length === 0) {
       if (b.length === 0) {
         return true;
-      } // so b is not zero-long, but s is.
-
+      }
 
       if (opts.verboseWhenMismatches) {
         return "The given array has no elements, but the array on the other end, " + JSON.stringify(b, null, 4) + " does have some";
@@ -2900,8 +2870,7 @@ function compare(b, s, originalOpts) {
       }));
       var bMessage = uniqueKeysOnB.size ? " Second object has unique keys:\n        " + JSON.stringify(uniqueKeysOnB, null, 4) + "." : "";
       return "When matching strictly, we found that both objects have different amount of keys." + sMessage + bMessage;
-    } // eslint-disable-next-line
-
+    }
 
     var _loop = function _loop() {
       var sKey = _step.value;
@@ -2917,15 +2886,13 @@ function compare(b, s, originalOpts) {
           return {
             v: "The given object has key \"" + sKey + "\" which the other-one does not have."
           };
-        } // so wildcards are on and sKeys[i] contains a wildcard
-
+        }
 
         if (Object.keys(b).some(function (bKey) {
           return matcher.isMatch(bKey, sKey, {
             caseSensitive: true
           });
         })) {
-          // so some keys do match. Return true
           return {
             v: true
           };
@@ -2943,9 +2910,6 @@ function compare(b, s, originalOpts) {
       }
 
       if (b[sKey] != null && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
-        // Types mismatch. Probably falsey result, unless comparing with
-        // empty/blank things. Let's check.
-        // it might be blank array vs blank object:
         if (!(empty(b[sKey]) && empty(s[sKey]) && opts.hungryForWhitespace)) {
           if (!opts.verboseWhenMismatches) {
             return {
@@ -2986,7 +2950,7 @@ function compare(b, s, originalOpts) {
   return true;
 }
 
-var version$1 = "2.0.6";
+var version$1 = "2.0.7";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var version = version$1; // ===================================
