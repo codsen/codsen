@@ -14851,7 +14851,7 @@ var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate
 
 var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-before-closing-slash", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
 
-var allAttribRules = ["attribute-duplicate", "attribute-malformed", "attribute-on-closing-tag"];
+var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag"];
 
 var allCSSRules = ["css-rule-malformed", "css-trailing-semi"];
 
@@ -19388,6 +19388,46 @@ var attributeOnClosingTag = function attributeOnClosingTag(context) {
     }
   };
 };
+
+// -----------------------------------------------------------------------------
+
+function attributeEnforceImgAlt(context) {
+  return {
+    tag: function tag(node) {
+
+      if ( // whoever reads this, I'm writing the following lines looking
+      // at the terminal, at line above, "node" object printed out.
+      // Normally, you can't write rules blindly, you first wire up
+      // a blank rule which does nothing (the console.log above), then
+      // see what's coming in, then tap those key values you want.
+      node.type === "tag" && node.tagName === "img" && (!node.attribs.length || !node.attribs.some(function (attrib) {
+        return !attrib.attribName || attrib.attribName.toLowerCase() === "alt";
+      }))) {
+        var startPos = node.attribs.length ? node.attribs[~-node.attribs.length].attribEnds : node.tagNameEndsAt;
+        var endPos = startPos; // if there's excessive whitespace, extend the replacement:
+        // <img   >
+        //     ^^
+        //     replace all this with ` alt=""`, respect whitespace being present
+        // that is, don't turn `<img  >` into `<img alt="">` but into
+        // `<img alt="" >`
+
+        if (context.str[startPos + 1] && !context.str[startPos].trim() && !context.str[startPos + 1].trim() && right(context.str, startPos)) {
+          endPos = right(context.str, startPos) - 1;
+        }
+
+        context.report({
+          ruleId: "attribute-enforce-img-alt",
+          message: "Add an alt attribute.",
+          idxFrom: node.start,
+          idxTo: node.end,
+          fix: {
+            ranges: [[startPos, endPos, ' alt=""']]
+          }
+        });
+      }
+    }
+  };
+}
 
 // -----------------------------------------------------------------------------
 
@@ -41793,6 +41833,9 @@ defineLazyProp(builtInRules, "attribute-malformed", function () {
 });
 defineLazyProp(builtInRules, "attribute-on-closing-tag", function () {
   return attributeOnClosingTag;
+});
+defineLazyProp(builtInRules, "attribute-enforce-img-alt", function () {
+  return attributeEnforceImgAlt;
 });
 defineLazyProp(builtInRules, "attribute-validate-abbr", function () {
   return attributeValidateAbbr;

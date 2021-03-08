@@ -298,3 +298,19 @@ tap.test(
     t.end();
   }
 );
+
+tap.todo(
+  `14 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - ESP tag`,
+  (t) => {
+    const str = `<img src="{{ addr }}z.png"/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-src": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str, "14.01");
+    t.is(messages.length, 0, "14.02");
+    t.end();
+  }
+);

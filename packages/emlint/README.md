@@ -39,14 +39,14 @@ const linter = new Linter();
 
 // Correct "not" type Outlook conditional would be:
 // <!--[if !mso]><!-->
-//   <img src="fallback"/>
+//   <span class="foo">z</span>
 // <!--<![endif]-->
 
 // We have a "not" type opening but "only" type
 // closing:
 const messages = linter.verify(
   `<!--[if !mso]><!-->
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <![endif]-->`,
   {
     rules: {
@@ -62,10 +62,10 @@ assert.deepEqual(messages, [
     severity: 2,
     ruleId: "comment-mismatching-pair",
     message: `Add "<!--".`,
-    idxFrom: 44,
-    idxTo: 56,
+    idxFrom: 49,
+    idxTo: 61,
     fix: {
-      ranges: [[44, 44, "<!--"]],
+      ranges: [[49, 49, "<!--"]],
     },
     keepSeparateWhenFixing: true,
   },

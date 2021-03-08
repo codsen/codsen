@@ -282,6 +282,8 @@ import attributeMalformed from "./rules/attribute/attribute-malformed";
 
 import attributeOnClosingTag from "./rules/attribute/attribute-on-closing-tag";
 
+import attributeEnforceImgAlt from "./rules/attribute/attribute-enforce-img-alt";
+
 // ATTRIBUTE-VALIDATE- rules
 // -----------------------------------------------------------------------------
 
@@ -1196,6 +1198,11 @@ defineLazyProp(
 );
 defineLazyProp(
   builtInRules,
+  "attribute-enforce-img-alt",
+  () => attributeEnforceImgAlt
+);
+defineLazyProp(
+  builtInRules,
   "attribute-validate-abbr",
   () => attributeValidateAbbr
 );
@@ -1977,7 +1984,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1980 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1987 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

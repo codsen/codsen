@@ -547,7 +547,7 @@ tap.test(
   `18 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up closing tag`,
   (t) => {
     const str = `<!--[if !mso]><!--><img src="gif"/><!--<[endif]-->`;
-    const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+    const fixed = `<!--[if !mso]><!--><img src="gif" alt=""/><!--<![endif]-->`;
     const messages = verify(t, str, {
       rules: {
         all: 2,

@@ -25,10 +25,10 @@ tap.test(
   `02 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are healthy`,
   (t) => {
     const str = `<!--[if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<![endif]-->`;
     const fixed = `<!--[if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <![endif]-->`;
     const messages = verify(t, str, {
       rules: {
@@ -43,11 +43,11 @@ tap.test(
         {
           severity: 1,
           ruleId: "comment-mismatching-pair",
-          idxFrom: 38,
-          idxTo: 54,
+          idxFrom: 43,
+          idxTo: 59,
           message: `Remove "<!--".`,
           fix: {
-            ranges: [[38, 54]],
+            ranges: [[43, 59]],
           },
         },
       ],
@@ -62,10 +62,10 @@ tap.test(
   `03 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - heads tag is also dirty`,
   (t) => {
     const str = `<!-- [if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<![endif]-->`;
     const fixed = `<!--[if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <![endif]-->`;
     const messages = verify(t, str, {
       rules: {
@@ -92,11 +92,11 @@ tap.test(
           severity: 1,
           ruleId: "comment-mismatching-pair",
           message: 'Remove "<!--".',
-          idxFrom: 39,
-          idxTo: 55,
+          idxFrom: 44,
+          idxTo: 60,
           keepSeparateWhenFixing: true,
           fix: {
-            ranges: [[39, 55, "<![endif]-->"]],
+            ranges: [[44, 60, "<![endif]-->"]],
           },
         },
       ],
@@ -111,10 +111,10 @@ tap.test(
   `04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - tails tag is also dirty`,
   (t) => {
     const str = `<!--[if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<[endif]-->`;
     const fixed = `<!--[if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <![endif]-->`;
 
     const messages = verify(t, str, {
@@ -127,11 +127,11 @@ tap.test(
       [
         {
           severity: 2,
-          idxFrom: 38,
-          idxTo: 53,
+          idxFrom: 43,
+          idxTo: 58,
           message: "Malformed closing comment tag.",
           fix: {
-            ranges: [[38, 53, "<!--<![endif]-->"]],
+            ranges: [[43, 58, "<!--<![endif]-->"]],
           },
           ruleId: "comment-closing-malformed",
         },
@@ -141,7 +141,7 @@ tap.test(
     t.equal(
       applyFixes(str, messages),
       `<!--[if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<![endif]-->`,
       "04.02"
     );
@@ -149,7 +149,7 @@ tap.test(
     const secondRoundMessages = verify(
       t,
       `<!--[if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<![endif]-->`,
       {
         rules: {
@@ -162,11 +162,11 @@ tap.test(
       [
         {
           severity: 2,
-          idxFrom: 38,
-          idxTo: 54,
+          idxFrom: 43,
+          idxTo: 59,
           message: `Remove "<!--".`,
           fix: {
-            ranges: [[38, 54, "<![endif]-->"]],
+            ranges: [[43, 59, "<![endif]-->"]],
           },
           ruleId: "comment-mismatching-pair",
         },
@@ -189,10 +189,10 @@ tap.test(
   `05 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are also dirty`,
   (t) => {
     const str = `<!-[if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<[endif]-->`;
     const fixed = `<!--[if mso]>
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <![endif]-->`;
     const messages = verify(t, str, {
       rules: {
@@ -221,10 +221,10 @@ tap.test(
   `06 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are healthy`,
   (t) => {
     const str = `<!--[if !mso]><!-->
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <![endif]-->`;
     const fixed = `<!--[if !mso]><!-->
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<![endif]-->`;
     const messages = verify(t, str, {
       rules: {
@@ -242,10 +242,10 @@ tap.test(
           severity: 2,
           ruleId: "comment-mismatching-pair",
           message: 'Add "<!--".',
-          idxFrom: 44,
-          idxTo: 56,
+          idxFrom: 49,
+          idxTo: 61,
           fix: {
-            ranges: [[44, 44, "<!--"]],
+            ranges: [[49, 49, "<!--"]],
           },
           keepSeparateWhenFixing: true,
         },
@@ -260,10 +260,10 @@ tap.test(
   `07 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - heads tag is also dirty`,
   (t) => {
     const str = `<!-[if !mso]><!-->
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <![endif]-->`;
     const fixed = `<!--[if !mso]><!-->
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<![endif]-->`;
     const messages = verify(t, str, {
       rules: {
@@ -291,10 +291,10 @@ tap.test(
           severity: 2,
           ruleId: "comment-mismatching-pair",
           message: 'Add "<!--".',
-          idxFrom: 43,
-          idxTo: 55,
+          idxFrom: 48,
+          idxTo: 60,
           fix: {
-            ranges: [[43, 43, "<!--"]],
+            ranges: [[48, 48, "<!--"]],
           },
         },
       ],
@@ -309,10 +309,10 @@ tap.test(
   `08 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - tails tag is also dirty`,
   (t) => {
     const str = `<!--[if mso]><!-->
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <[endif]-->`;
     const fixed = `<!--[if mso]><!-->
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<![endif]-->`;
     const messages = verify(t, str, {
       rules: {
@@ -338,10 +338,10 @@ tap.test(
   `09 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are also dirty`,
   (t) => {
     const str = `<!-[if mso]><!-->
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <[endif]-->`;
     const fixed = `<!--[if mso]><!-->
-  <img src="fallback"/>
+  <span class="foo">z</span>
 <!--<![endif]-->`;
     const messages = verify(t, str, {
       rules: {

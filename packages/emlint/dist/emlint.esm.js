@@ -37,7 +37,7 @@ var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate
 
 var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-before-closing-slash", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
 
-var allAttribRules = ["attribute-duplicate", "attribute-malformed", "attribute-on-closing-tag"];
+var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag"];
 
 var allCSSRules = ["css-rule-malformed", "css-trailing-semi"];
 
@@ -3192,6 +3192,30 @@ const attributeOnClosingTag = context => {
     }
   };
 };
+
+function attributeEnforceImgAlt(context) {
+  return {
+    tag(node) {
+      if (
+      node.type === "tag" && node.tagName === "img" && (!node.attribs.length || !node.attribs.some(attrib => !attrib.attribName || attrib.attribName.toLowerCase() === "alt"))) {
+        const startPos = node.attribs.length ? node.attribs[~-node.attribs.length].attribEnds : node.tagNameEndsAt;
+        let endPos = startPos;
+        if (context.str[startPos + 1] && !context.str[startPos].trim() && !context.str[startPos + 1].trim() && right(context.str, startPos)) {
+          endPos = right(context.str, startPos) - 1;
+        }
+        context.report({
+          ruleId: "attribute-enforce-img-alt",
+          message: `Add an alt attribute.`,
+          idxFrom: node.start,
+          idxTo: node.end,
+          fix: {
+            ranges: [[startPos, endPos, ' alt=""']]
+          }
+        });
+      }
+    }
+  };
+}
 
 function attributeValidateAbbr(context) {
   return {
@@ -9034,6 +9058,7 @@ defineLazyProp(builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
 defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 defineLazyProp(builtInRules, "attribute-on-closing-tag", () => attributeOnClosingTag);
+defineLazyProp(builtInRules, "attribute-enforce-img-alt", () => attributeEnforceImgAlt);
 defineLazyProp(builtInRules, "attribute-validate-abbr", () => attributeValidateAbbr);
 defineLazyProp(builtInRules, "attribute-validate-accept-charset", () => attributeValidateAcceptCharset);
 defineLazyProp(builtInRules, "attribute-validate-accept", () => attributeValidateAccept);

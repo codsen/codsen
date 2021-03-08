@@ -1,5 +1,6 @@
 [
   "attribute-duplicate",
+  "attribute-enforce-img-alt",
   "attribute-malformed",
   "attribute-on-closing-tag"
 ]
