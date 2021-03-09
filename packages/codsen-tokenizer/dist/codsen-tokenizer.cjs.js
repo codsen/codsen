@@ -1727,6 +1727,13 @@ function tokenizer(str, originalOpts) {
           i = _i;
           return "continue";
         }
+      } else if (str[_i] === "/" && str[rightVal] === ">") {
+        if (attrib.attribValueStartsAt) {
+          attrib.attribValueStartsAt = null;
+        }
+        if (!attrib.attribEnds) {
+          attrib.attribEnds = _i;
+        }
       } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property.propertyStarts && (
       !Array.isArray(attrib.attribValue) ||
       !attrib.attribValue.length ||

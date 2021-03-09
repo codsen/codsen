@@ -289,3 +289,57 @@ tap.test(
     t.end();
   }
 );
+
+// issues with attributes
+// -----------------------------------------------------------------------------
+
+tap.test(
+  `09 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
+  (t) => {
+    const gathered = [];
+    ct(`<img alt="/>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 12,
+          value: '<img alt="/>',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "img",
+          recognised: true,
+          closing: false,
+          void: true,
+          pureHTML: true,
+          kind: "inline",
+          attribs: [
+            {
+              attribName: "alt",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 8,
+              attribOpeningQuoteAt: 9,
+              attribClosingQuoteAt: null,
+              attribValueRaw: null,
+              attribValue: [],
+              attribValueStartsAt: null,
+              attribValueEndsAt: null,
+              attribStarts: 5,
+              attribEnds: 10,
+              attribLeft: 3,
+            },
+          ],
+        },
+      ],
+      "09"
+    );
+    t.end();
+  }
+);
