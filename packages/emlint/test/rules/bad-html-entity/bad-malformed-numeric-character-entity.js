@@ -170,23 +170,7 @@ tap.test(
         "tag-void-slash": [1],
       },
     });
-    t.equal(applyFixes(str, messages), "a&#99999999999999999;z<br/>", "07.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-void-slash",
-          severity: 1,
-          idxFrom: 22,
-          idxTo: 26,
-          message: "Missing slash.",
-          fix: {
-            ranges: [[25, 25, "/"]],
-          },
-        },
-      ],
-      "07.02"
-    );
+    t.equal(applyFixes(str, messages), "a&#99999999999999999;z<br/>", "07");
     t.end();
   }
 );

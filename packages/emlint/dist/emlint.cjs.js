@@ -2756,7 +2756,7 @@ function tagVoidSlash(context, mode) {
               idxFrom: node.start,
               idxTo: node.end,
               fix: {
-                ranges: [[slashPos + 2, closingBracketPos, "/"]]
+                ranges: [[slashPos + 2, closingBracketPos + 1, "/>"]]
               }
             });
           } else {
@@ -2766,7 +2766,7 @@ function tagVoidSlash(context, mode) {
               idxFrom: node.start,
               idxTo: node.end,
               fix: {
-                ranges: [[slashPos + 1, closingBracketPos, " /"]]
+                ranges: [[slashPos + 1, closingBracketPos + 1, " />"]]
               }
             });
           }
@@ -2777,7 +2777,7 @@ function tagVoidSlash(context, mode) {
             idxFrom: node.start,
             idxTo: node.end,
             fix: {
-              ranges: [[slashPos + 1, closingBracketPos, "/"]]
+              ranges: [[slashPos + 1, closingBracketPos + 1, "/>"]]
             }
           });
         }
@@ -3080,8 +3080,18 @@ function attributeMalformed(context) {
       if (node.attribOpeningQuoteAt === null && node.attribValueStartsAt !== null) {
         ranges.push([node.attribValueStartsAt, node.attribValueStartsAt, node.attribClosingQuoteAt === null ? "\"" : context.str[node.attribClosingQuoteAt]]);
       }
-      if (node.attribClosingQuoteAt === null && node.attribValueEndsAt !== null) {
-        ranges.push([node.attribValueEndsAt, node.attribValueEndsAt, node.attribOpeningQuoteAt === null ? "\"" : context.str[node.attribOpeningQuoteAt]]);
+      if (node.attribClosingQuoteAt === null) {
+        if (node.attribValueEndsAt !== null) {
+          ranges.push([node.attribValueEndsAt, node.attribValueEndsAt, node.attribOpeningQuoteAt === null ? "\"" : context.str[node.attribOpeningQuoteAt]]);
+        } else if (node.attribOpeningQuoteAt) {
+          if (
+          Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) &&
+          context.str[node.attribOpeningQuoteAt] === "'") {
+            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\"\""]);
+          } else {
+            ranges.push([node.attribOpeningQuoteAt + 1, node.attribOpeningQuoteAt + 1, context.str[node.attribOpeningQuoteAt] || "\""]);
+          }
+        }
       }
       if (ranges.length) {
         context.report({

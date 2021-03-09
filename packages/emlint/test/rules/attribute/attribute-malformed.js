@@ -832,7 +832,7 @@ tap.test(
 // various
 // -----------------------------------------------------------------------------
 
-tap.todo(`34`, (t) => {
+tap.test(`34`, (t) => {
   const str = `<img alt="/>`;
   const fixed = `<img alt=""/>`;
   const messages = verify(t, str, {
@@ -847,6 +847,81 @@ tap.todo(`34`, (t) => {
 });
 
 tap.test(`35`, (t) => {
+  const str = `<img alt='/>`;
+  const fixed = `<img alt=''/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "35.01");
+  t.equal(messages.length, 1, "35.02");
+  t.end();
+});
+
+tap.test(`36`, (t) => {
+  const str = `<img alt=">`;
+  const fixed = `<img alt=""/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+      "tag-void-slash": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "36");
+  t.end();
+});
+
+tap.test(`37`, (t) => {
+  const str = `<img alt='>`;
+  const fixed = `<img alt=''/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+      "tag-void-slash": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "37");
+  t.end();
+});
+
+tap.test(`38`, (t) => {
+  const str = `<img alt=">`;
+  const fixed = `<img alt="" />`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+      "tag-void-slash": 2,
+      "tag-space-before-closing-slash": [2, "always"],
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "38");
+  t.end();
+});
+
+tap.test(`39`, (t) => {
+  const str = `<img alt='>`;
+  const fixed = `<img alt="" />`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+      "tag-void-slash": 2,
+      "format-prettier": 2,
+      "tag-space-before-closing-slash": [2, "always"],
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "39");
+  t.end();
+});
+
+// -----------------------------------------------------------------------------
+
+tap.test(`40`, (t) => {
   const str = `<div class=“foo”>z</div>`;
   const fixed = `<div class="foo">z</div>`;
   const messages = verify(t, str, {
@@ -854,6 +929,6 @@ tap.test(`35`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "35");
+  t.equal(applyFixes(str, messages), fixed, "40");
   t.end();
 });

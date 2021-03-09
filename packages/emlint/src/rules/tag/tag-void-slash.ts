@@ -88,17 +88,25 @@ function tagVoidSlash(
               message: "Missing slash.",
               idxFrom: node.start,
               idxTo: node.end,
-              fix: { ranges: [[slashPos + 2, closingBracketPos, "/"]] },
+              // overwrite the closing bracket too because it will solve the
+              // problem when trying to sort the fixes when attributes inside
+              // operate on nearby index positions - otherwise clashes can
+              // happen, for example,
+              //
+              // <img alt=">
+              //
+              // with 2 rules: attribute-malformed, tag-void-slash
+              fix: { ranges: [[slashPos + 2, closingBracketPos + 1, "/>"]] },
             });
           } else {
             // space is missing so add one
-            console.log(`095 tagVoidSlash(): add space and slash`);
+            console.log(`103 tagVoidSlash(): add space and slash`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
               idxFrom: node.start,
               idxTo: node.end,
-              fix: { ranges: [[slashPos + 1, closingBracketPos, " /"]] },
+              fix: { ranges: [[slashPos + 1, closingBracketPos + 1, " />"]] },
             });
           }
         } else if (
@@ -116,13 +124,13 @@ function tagVoidSlash(
             context.processedRulesConfig["tag-space-before-closing-slash"] > 0)
         ) {
           // no space needed
-          console.log(`119 tagVoidSlash(): add slash only`);
+          console.log(`127 tagVoidSlash(): add slash only`);
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",
             idxFrom: node.start,
             idxTo: node.end,
-            fix: { ranges: [[slashPos + 1, closingBracketPos, "/"]] },
+            fix: { ranges: [[slashPos + 1, closingBracketPos + 1, "/>"]] },
           });
         }
       }

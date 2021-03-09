@@ -324,7 +324,7 @@ tap.test(
           idxFrom: 0,
           idxTo: 4,
           fix: {
-            ranges: [[3, 3, "/"]],
+            ranges: [[3, 4, "/>"]],
           },
         },
         {
@@ -334,7 +334,7 @@ tap.test(
           idxFrom: 4,
           idxTo: 8,
           fix: {
-            ranges: [[7, 7, "/"]],
+            ranges: [[7, 8, "/>"]],
           },
         },
         {
@@ -344,7 +344,7 @@ tap.test(
           idxFrom: 11,
           idxTo: 15,
           fix: {
-            ranges: [[14, 14, "/"]],
+            ranges: [[14, 15, "/>"]],
           },
         },
       ],

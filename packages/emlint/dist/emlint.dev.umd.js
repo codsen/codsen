@@ -13805,6 +13805,14 @@ function tokenizer(str, originalOpts) {
           i = _i;
           return "continue";
         }
+      } else if (str[_i] === "/" && str[rightVal] === ">") {
+        if (attrib.attribValueStartsAt) {
+          attrib.attribValueStartsAt = null;
+        }
+
+        if (!attrib.attribEnds) {
+          attrib.attribEnds = _i;
+        }
       } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property.propertyStarts && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
         attrib.attribValue.push({
           type: "text",
@@ -18733,8 +18741,16 @@ function tagVoidSlash(context, mode) {
               message: "Missing slash.",
               idxFrom: node.start,
               idxTo: node.end,
+              // overwrite the closing bracket too because it will solve the
+              // problem when trying to sort the fixes when attributes inside
+              // operate on nearby index positions - otherwise clashes can
+              // happen, for example,
+              //
+              // <img alt=">
+              //
+              // with 2 rules: attribute-malformed, tag-void-slash
               fix: {
-                ranges: [[slashPos + 2, closingBracketPos, "/"]]
+                ranges: [[slashPos + 2, closingBracketPos + 1, "/>"]]
               }
             });
           } else {
@@ -18745,7 +18761,7 @@ function tagVoidSlash(context, mode) {
               idxFrom: node.start,
               idxTo: node.end,
               fix: {
-                ranges: [[slashPos + 1, closingBracketPos, " /"]]
+                ranges: [[slashPos + 1, closingBracketPos + 1, " />"]]
               }
             });
           }
@@ -18757,7 +18773,7 @@ function tagVoidSlash(context, mode) {
             idxFrom: node.start,
             idxTo: node.end,
             fix: {
-              ranges: [[slashPos + 1, closingBracketPos, "/"]]
+              ranges: [[slashPos + 1, closingBracketPos + 1, "/>"]]
             }
           });
         }
@@ -19341,8 +19357,20 @@ function attributeMalformed(context) {
         ranges.push([node.attribValueStartsAt, node.attribValueStartsAt, node.attribClosingQuoteAt === null ? "\"" : context.str[node.attribClosingQuoteAt]]);
       }
 
-      if (node.attribClosingQuoteAt === null && node.attribValueEndsAt !== null) {
-        ranges.push([node.attribValueEndsAt, node.attribValueEndsAt, node.attribOpeningQuoteAt === null ? "\"" : context.str[node.attribOpeningQuoteAt]]);
+      if (node.attribClosingQuoteAt === null) {
+        if (node.attribValueEndsAt !== null) {
+          ranges.push([node.attribValueEndsAt, node.attribValueEndsAt, node.attribOpeningQuoteAt === null ? "\"" : context.str[node.attribOpeningQuoteAt]]);
+        } else if (node.attribOpeningQuoteAt) {
+          if ( // if format-prettier is enabled
+          Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && // opening quote is single
+          context.str[node.attribOpeningQuoteAt] === "'") {
+            // replace that opening quote with two doubles
+            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\"\""]);
+          } else {
+            // add a counterpart, single or double
+            ranges.push([node.attribOpeningQuoteAt + 1, node.attribOpeningQuoteAt + 1, context.str[node.attribOpeningQuoteAt] || "\""]);
+          }
+        }
       }
 
       if (ranges.length) {

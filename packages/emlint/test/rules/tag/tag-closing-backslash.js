@@ -771,7 +771,7 @@ tap.test(
           idxTo: 5,
           message: "Missing slash.",
           fix: {
-            ranges: [[4, 4, "/"]],
+            ranges: [[4, 5, "/>"]],
           },
         },
       ],
@@ -888,7 +888,7 @@ tap.test(
           idxTo: 6,
           message: "Missing slash.",
           fix: {
-            ranges: [[4, 5, " /"]],
+            ranges: [[4, 6, " />"]],
           },
         },
       ],
@@ -930,7 +930,7 @@ tap.test(
           idxTo: 6,
           message: "Missing slash.",
           fix: {
-            ranges: [[5, 5, "/"]],
+            ranges: [[5, 6, "/>"]],
           },
         },
       ],
