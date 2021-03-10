@@ -3025,7 +3025,8 @@ function attributeMalformed(context) {
           });
         }
       }
-      if (node.attribNameEndsAt && node.attribValueStartsAt) {
+      if (node.attribNameEndsAt && (node.attribValueStartsAt ||
+      node.attribOpeningQuoteAt && node.attribClosingQuoteAt && node.attribClosingQuoteAt === node.attribOpeningQuoteAt + 1)) {
         if (
         node.attribOpeningQuoteAt !== null && context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt) !== "=") {
           var message = "Malformed around equal.";

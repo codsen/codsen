@@ -19288,7 +19288,8 @@ function attributeMalformed(context) {
       } // something wrong around equal
 
 
-      if (node.attribNameEndsAt && node.attribValueStartsAt) {
+      if (node.attribNameEndsAt && (node.attribValueStartsAt || // it's an empty value
+      node.attribOpeningQuoteAt && node.attribClosingQuoteAt && node.attribClosingQuoteAt === node.attribOpeningQuoteAt + 1)) {
 
         if ( // if opening quotes are present, let's use their location
         node.attribOpeningQuoteAt !== null && context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt) !== "=") {

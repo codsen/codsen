@@ -100,8 +100,15 @@ function attributeMalformed(context: Linter): RuleObjType {
       }
 
       // something wrong around equal
-      if (node.attribNameEndsAt && node.attribValueStartsAt) {
-        console.log(`104`);
+      if (
+        node.attribNameEndsAt &&
+        (node.attribValueStartsAt ||
+          // it's an empty value
+          (node.attribOpeningQuoteAt &&
+            node.attribClosingQuoteAt &&
+            node.attribClosingQuoteAt === node.attribOpeningQuoteAt + 1))
+      ) {
+        console.log(`111`);
         if (
           // if opening quotes are present, let's use their location
           node.attribOpeningQuoteAt !== null &&
@@ -110,7 +117,7 @@ function attributeMalformed(context: Linter): RuleObjType {
             node.attribOpeningQuoteAt
           ) !== "="
         ) {
-          console.log(`113`);
+          console.log(`120`);
           let message = `Malformed around equal.`;
           if (
             !context.str
@@ -118,7 +125,7 @@ function attributeMalformed(context: Linter): RuleObjType {
               .includes("=")
           ) {
             console.log(
-              `121 ${`\u001b[${31}m${`EQUAL MISSING`}\u001b[${39}m`}`
+              `128 ${`\u001b[${31}m${`EQUAL MISSING`}\u001b[${39}m`}`
             );
             message = `Equal is missing.`;
           }
@@ -134,7 +141,7 @@ function attributeMalformed(context: Linter): RuleObjType {
           }
 
           console.log(
-            `137 ${`\u001b[${31}m${`RAISE ERROR ABOUT EQUALS SIGN`}\u001b[${39}m`}`
+            `144 ${`\u001b[${31}m${`RAISE ERROR ABOUT EQUALS SIGN`}\u001b[${39}m`}`
           );
           context.report({
             ruleId: "attribute-malformed",
@@ -162,7 +169,7 @@ function attributeMalformed(context: Linter): RuleObjType {
           context.str[node.attribOpeningQuoteAt]
       ) {
         console.log(
-          `165 ${`\u001b[${31}m${`REPEATED OPENING QUOTES`}\u001b[${39}m`}`
+          `172 ${`\u001b[${31}m${`REPEATED OPENING QUOTES`}\u001b[${39}m`}`
         );
         const message = `Delete repeated opening quotes.`;
         context.report({
@@ -189,7 +196,7 @@ function attributeMalformed(context: Linter): RuleObjType {
           context.str[node.attribClosingQuoteAt]
       ) {
         console.log(
-          `192 ${`\u001b[${31}m${`REPEATED CLOSING QUOTES`}\u001b[${39}m`}`
+          `199 ${`\u001b[${31}m${`REPEATED CLOSING QUOTES`}\u001b[${39}m`}`
         );
         const message = `Delete repeated closing quotes.`;
         context.report({
@@ -211,7 +218,7 @@ function attributeMalformed(context: Linter): RuleObjType {
         node.attribValueStartsAt !== null
       ) {
         console.log(
-          `214 attributeMalformed(): ${`\u001b[${31}m${`OPENING QUOTE MISSING`}\u001b[${39}m`}`
+          `221 attributeMalformed(): ${`\u001b[${31}m${`OPENING QUOTE MISSING`}\u001b[${39}m`}`
         );
         ranges.push([
           node.attribValueStartsAt,
@@ -225,7 +232,7 @@ function attributeMalformed(context: Linter): RuleObjType {
       if (node.attribClosingQuoteAt === null) {
         if (node.attribValueEndsAt !== null) {
           console.log(
-            `228 attributeMalformed(): ${`\u001b[${31}m${`CLOSING QUOTE MISSING, VALUE PRESENT`}\u001b[${39}m`}`
+            `235 attributeMalformed(): ${`\u001b[${31}m${`CLOSING QUOTE MISSING, VALUE PRESENT`}\u001b[${39}m`}`
           );
           ranges.push([
             node.attribValueEndsAt,
@@ -253,7 +260,7 @@ function attributeMalformed(context: Linter): RuleObjType {
           } else {
             // add a counterpart, single or double
             console.log(
-              `256 attributeMalformed(): ${`\u001b[${31}m${`CLOSING QUOTE MISSING, TAG ABRUPTLY ENDS`}\u001b[${39}m`}`
+              `263 attributeMalformed(): ${`\u001b[${31}m${`CLOSING QUOTE MISSING, TAG ABRUPTLY ENDS`}\u001b[${39}m`}`
             );
             ranges.push([
               node.attribOpeningQuoteAt + 1,
@@ -264,7 +271,7 @@ function attributeMalformed(context: Linter): RuleObjType {
         }
       }
       if (ranges.length) {
-        console.log(`267 attributeMalformed(): RAISE ERROR ABOUT QUOTES`);
+        console.log(`274 attributeMalformed(): RAISE ERROR ABOUT QUOTES`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
@@ -278,11 +285,11 @@ function attributeMalformed(context: Linter): RuleObjType {
         node.attribOpeningQuoteAt !== null &&
         node.attribClosingQuoteAt !== null
       ) {
-        console.log(`281 attributeMalformed(): quote checks`);
+        console.log(`288 attributeMalformed(): quote checks`);
 
         if (!`'"`.includes(context.str[node.attribOpeningQuoteAt])) {
           // if the opening quote is just wrong, then we'll use doubles
-          console.log(`285 attributeMalformed(): opening quote is wrong`);
+          console.log(`292 attributeMalformed(): opening quote is wrong`);
           context.report({
             ruleId: "attribute-malformed",
             message: `Wrong opening quote.`,
@@ -297,7 +304,7 @@ function attributeMalformed(context: Linter): RuleObjType {
 
           // check the closing quote
           if (context.str[node.attribClosingQuoteAt] !== `"`) {
-            console.log(`300 attributeMalformed(): closing quote is wrong`);
+            console.log(`307 attributeMalformed(): closing quote is wrong`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Wrong closing quote.`,
@@ -322,7 +329,7 @@ function attributeMalformed(context: Linter): RuleObjType {
             !node.attribValueRaw.startsWith(`'`) &&
             !node.attribValueRaw.endsWith(`'`))
         ) {
-          console.log(`325 attributeMalformed(): closing quote is mismatching`);
+          console.log(`332 attributeMalformed(): closing quote is mismatching`);
 
           // if format-prettier is enabled, use a double for both
           if (
@@ -336,7 +343,7 @@ function attributeMalformed(context: Linter): RuleObjType {
             context.str[node.attribOpeningQuoteAt] !== `"`
           ) {
             console.log(
-              `339 attributeMalformed(): set opening quote to be double`
+              `346 attributeMalformed(): set opening quote to be double`
             );
             context.report({
               ruleId: "attribute-malformed",
@@ -357,7 +364,7 @@ function attributeMalformed(context: Linter): RuleObjType {
             // check closing-one too
             if (context.str[node.attribClosingQuoteAt] !== `"`) {
               console.log(
-                `360 attributeMalformed(): set closing quote to be double`
+                `367 attributeMalformed(): set closing quote to be double`
               );
               context.report({
                 ruleId: "attribute-malformed",
@@ -377,11 +384,11 @@ function attributeMalformed(context: Linter): RuleObjType {
             }
           } else if (node.attribValueRaw.includes(`"`)) {
             console.log(
-              `380 attributeMalformed(): use singles as means for escaping doubles within a value`
+              `387 attributeMalformed(): use singles as means for escaping doubles within a value`
             );
             if (context.str[node.attribOpeningQuoteAt] !== `'`) {
               console.log(
-                `384 attributeMalformed(): set opening quote to be single`
+                `391 attributeMalformed(): set opening quote to be single`
               );
               context.report({
                 ruleId: "attribute-malformed",
@@ -401,7 +408,7 @@ function attributeMalformed(context: Linter): RuleObjType {
             }
             if (context.str[node.attribClosingQuoteAt] !== `'`) {
               console.log(
-                `404 attributeMalformed(): set closing quote to be single`
+                `411 attributeMalformed(): set closing quote to be single`
               );
               context.report({
                 ruleId: "attribute-malformed",
@@ -421,7 +428,7 @@ function attributeMalformed(context: Linter): RuleObjType {
             }
           } else {
             console.log(
-              `424 attributeMalformed(): set the closing quote to be like opening`
+              `431 attributeMalformed(): set the closing quote to be like opening`
             );
             context.report({
               ruleId: "attribute-malformed",
@@ -460,7 +467,7 @@ function attributeMalformed(context: Linter): RuleObjType {
             isAnEnabledValue(context.processedRulesConfig["format-prettier"])
           ) {
             console.log(
-              `463 attributeMalformed(): escape doubles within a value`
+              `470 attributeMalformed(): escape doubles within a value`
             );
             context.report({
               ruleId: "attribute-malformed",
@@ -479,7 +486,7 @@ function attributeMalformed(context: Linter): RuleObjType {
             });
           } else {
             console.log(
-              `482 attributeMalformed(): use the opposite type of quotes`
+              `489 attributeMalformed(): use the opposite type of quotes`
             );
             const valueToSet =
               context.str[node.attribOpeningQuoteAt] === `"` ? `'` : `"`;
