@@ -3147,11 +3147,25 @@ function attributeMalformed(context) {
       }
       const ranges = [];
       if (node.attribOpeningQuoteAt === null && node.attribValueStartsAt !== null) {
-        ranges.push([node.attribValueStartsAt, node.attribValueStartsAt, node.attribClosingQuoteAt === null ? `"` : context.str[node.attribClosingQuoteAt]]);
+        let valueToPut = `"`;
+        if (node.attribClosingQuoteAt && `'"`.includes(context.str[node.attribClosingQuoteAt])) {
+          valueToPut = context.str[node.attribClosingQuoteAt];
+        }
+        ranges.push([left(context.str, node.attribValueStartsAt) + 1, node.attribValueStartsAt, valueToPut]);
+        if (node.attribClosingQuoteAt && !`'"`.includes(context.str[node.attribClosingQuoteAt])) {
+          ranges.push([node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, valueToPut]);
+        }
       }
       if (node.attribClosingQuoteAt === null) {
         if (node.attribValueEndsAt !== null) {
-          ranges.push([node.attribValueEndsAt, node.attribValueEndsAt, node.attribOpeningQuoteAt === null ? `"` : context.str[node.attribOpeningQuoteAt]]);
+          let valueToPut = `"`;
+          if (node.attribOpeningQuoteAt && `'"`.includes(context.str[node.attribOpeningQuoteAt])) {
+            valueToPut = context.str[node.attribOpeningQuoteAt];
+          }
+          ranges.push([left(context.str, node.attribValueEndsAt) + 1, node.attribValueEndsAt, valueToPut]);
+          if (node.attribOpeningQuoteAt && !`'"`.includes(context.str[node.attribOpeningQuoteAt])) {
+            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, valueToPut]);
+          }
         } else if (node.attribOpeningQuoteAt) {
           if (
           Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) &&

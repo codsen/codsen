@@ -19227,7 +19227,6 @@ var attributeDuplicate = function attributeDuplicate(context) {
   };
 };
 
-// rule: attribute-malformed
 // -----------------------------------------------------------------------------
 // it flags up malformed HTML attributes
 
@@ -19355,12 +19354,31 @@ function attributeMalformed(context) {
       var ranges = [];
 
       if (node.attribOpeningQuoteAt === null && node.attribValueStartsAt !== null) {
-        ranges.push([node.attribValueStartsAt, node.attribValueStartsAt, node.attribClosingQuoteAt === null ? "\"" : context.str[node.attribClosingQuoteAt]]);
+        var valueToPut = "\"";
+
+        if (node.attribClosingQuoteAt && "'\"".includes(context.str[node.attribClosingQuoteAt])) {
+          valueToPut = context.str[node.attribClosingQuoteAt];
+        }
+        ranges.push([left(context.str, node.attribValueStartsAt) + 1, node.attribValueStartsAt, valueToPut]); // check the closing-one
+
+        if (node.attribClosingQuoteAt && !"'\"".includes(context.str[node.attribClosingQuoteAt])) {
+          ranges.push([node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, valueToPut]);
+        }
       }
 
       if (node.attribClosingQuoteAt === null) {
         if (node.attribValueEndsAt !== null) {
-          ranges.push([node.attribValueEndsAt, node.attribValueEndsAt, node.attribOpeningQuoteAt === null ? "\"" : context.str[node.attribOpeningQuoteAt]]);
+          var _valueToPut = "\"";
+
+          if (node.attribOpeningQuoteAt && "'\"".includes(context.str[node.attribOpeningQuoteAt])) {
+            _valueToPut = context.str[node.attribOpeningQuoteAt];
+          } // consume the frontal whitespace, if any:
+
+          ranges.push([left(context.str, node.attribValueEndsAt) + 1, node.attribValueEndsAt, _valueToPut]); // check the opening-one
+
+          if (node.attribOpeningQuoteAt && !"'\"".includes(context.str[node.attribOpeningQuoteAt])) {
+            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, _valueToPut]);
+          }
         } else if (node.attribOpeningQuoteAt) {
           if ( // if format-prettier is enabled
           Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && // opening quote is single

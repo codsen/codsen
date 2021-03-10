@@ -16,7 +16,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - merge head CSS style validation with inline HTML style-one, separate trailing semi rules ([8d8291d](https://github.com/codsen/codsen/commit/8d8291dfd9cce242b7c231e6e63ea8510d37b543))
 - new rule, `format-prettier` ([08ff4f0](https://github.com/codsen/codsen/commit/08ff4f0f6ca810a74b6f68839593469ca569df8d))
 - rewrite `css-trailing-semi` to tend both HTML head CSS and the inline HTML style attrs ([5b82c6b](https://github.com/codsen/codsen/commit/5b82c6b8282714aba85a3c4170c6cd39b016e5bd))
-- rule `format-prettier` to detect missing space after semi in CSS ([df53bec](https://github.com/codsen/codsen/commit/df53bec551b3e2561ce6952e8448162f52f6219b))
+- set rule `format-prettier` to detect missing space after semi in CSS ([df53bec](https://github.com/codsen/codsen/commit/df53bec551b3e2561ce6952e8448162f52f6219b))
 
 ## 4.2.0 (2021-02-27)
 

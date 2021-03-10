@@ -858,3 +858,29 @@ tap.test(`40`, (t) => {
   t.equal(applyFixes(str, messages), fixed, "40");
   t.end();
 });
+
+tap.test(`41`, (t) => {
+  const str = `<div class=\nfoo”>z</div>`;
+  const fixed = `<div class="foo">z</div>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "41");
+  t.end();
+});
+
+tap.test(`42`, (t) => {
+  const str = `<div class=“foo\n>z</div>`;
+  const fixed = `<div class="foo">z</div>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "42");
+  t.end();
+});
