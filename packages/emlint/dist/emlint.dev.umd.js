@@ -11909,7 +11909,7 @@ var defaultOpts$1 = {
   allowCustomTagNames: false,
   skipOpeningBracket: false
 };
-var BACKSLASH$5 = "\\";
+var BACKSLASH$6 = "\\";
 var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
 function isNotLetter(char) {
@@ -11952,7 +11952,7 @@ function isOpening(str, idx, originalOpts) {
   var matchingOptions = {
     cb: isNotLetter,
     i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH$5, "!", " ", "\t", "\n", "\r"]
+    trimCharsBeforeMatching: ["/", BACKSLASH$6, "!", " ", "\t", "\n", "\r"]
   };
 
   if (opts.allowCustomTagNames) {
@@ -11993,7 +11993,7 @@ function isOpening(str, idx, originalOpts) {
         return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
       },
       i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH$5, "!", " ", "\t", "\n", "\r"]
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH$6, "!", " ", "\t", "\n", "\r"]
     })) {
       passed = true;
     }
@@ -12200,7 +12200,7 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
   }
 }
 
-var BACKSLASH$4 = "\\";
+var BACKSLASH$5 = "\\";
 
 function startsTag(str, i, token, layers, withinStyle) {
   return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && (!withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
@@ -12209,7 +12209,7 @@ function startsTag(str, i, token, layers, withinStyle) {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$4].includes(str[left(str, i)])) && isOpening(str, i, {
+  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$5].includes(str[left(str, i)])) && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
@@ -14857,7 +14857,7 @@ var defineLazyProp = function defineLazyProp(object, propertyName, fn) {
 
 var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate-arabic-form-shaping", "bad-character-activate-symmetric-swapping", "bad-character-application-program-command", "bad-character-backspace", "bad-character-bell", "bad-character-break-permitted-here", "bad-character-cancel", "bad-character-cancel-character", "bad-character-character-tabulation-set", "bad-character-character-tabulation-with-justification", "bad-character-control-0080", "bad-character-control-0081", "bad-character-control-0084", "bad-character-control-0099", "bad-character-control-sequence-introducer", "bad-character-data-link-escape", "bad-character-delete", "bad-character-device-control-four", "bad-character-device-control-one", "bad-character-device-control-string", "bad-character-device-control-three", "bad-character-device-control-two", "bad-character-em-quad", "bad-character-em-space", "bad-character-en-quad", "bad-character-en-space", "bad-character-end-of-medium", "bad-character-end-of-protected-area", "bad-character-end-of-selected-area", "bad-character-end-of-text", "bad-character-end-of-transmission", "bad-character-end-of-transmission-block", "bad-character-enquiry", "bad-character-escape", "bad-character-figure-space", "bad-character-first-strong-isolate", "bad-character-form-feed", "bad-character-four-per-em-space", "bad-character-function-application", "bad-character-hair-space", "bad-character-ideographic-space", "bad-character-information-separator-four", "bad-character-information-separator-one", "bad-character-information-separator-three", "bad-character-information-separator-two", "bad-character-inhibit-arabic-form-shaping", "bad-character-inhibit-symmetric-swapping", "bad-character-interlinear-annotation-anchor", "bad-character-interlinear-annotation-separator", "bad-character-interlinear-annotation-terminator", "bad-character-invisible-plus", "bad-character-invisible-separator", "bad-character-invisible-times", "bad-character-left-to-right-embedding", "bad-character-left-to-right-isolate", "bad-character-left-to-right-mark", "bad-character-left-to-right-override", "bad-character-line-separator", "bad-character-line-tabulation", "bad-character-line-tabulation-set", "bad-character-medium-mathematical-space", "bad-character-message-waiting", "bad-character-narrow-no-break-space", "bad-character-national-digit-shapes", "bad-character-negative-acknowledge", "bad-character-next-line", "bad-character-no-break-here", "bad-character-nominal-digit-shapes", "bad-character-non-breaking-space", "bad-character-null", "bad-character-ogham-space-mark", "bad-character-operating-system-command", "bad-character-paragraph-separator", "bad-character-partial-line-backward", "bad-character-partial-line-forward", "bad-character-pop-directional-formatting", "bad-character-pop-directional-isolate", "bad-character-private-message", "bad-character-private-use-1", "bad-character-private-use-2", "bad-character-punctuation-space", "bad-character-replacement-character", "bad-character-reverse-line-feed", "bad-character-right-to-left-embedding", "bad-character-right-to-left-isolate", "bad-character-right-to-left-mark", "bad-character-right-to-left-override", "bad-character-set-transmit-state", "bad-character-shift-in", "bad-character-shift-out", "bad-character-single-character-introducer", "bad-character-single-shift-three", "bad-character-single-shift-two", "bad-character-six-per-em-space", "bad-character-soft-hyphen", "bad-character-start-of-heading", "bad-character-start-of-protected-area", "bad-character-start-of-selected-area", "bad-character-start-of-string", "bad-character-start-of-text", "bad-character-string-terminator", "bad-character-substitute", "bad-character-synchronous-idle", "bad-character-tabulation", "bad-character-thin-space", "bad-character-three-per-em-space", "bad-character-word-joiner", "bad-character-zero-width-joiner", "bad-character-zero-width-no-break-space", "bad-character-zero-width-non-joiner", "bad-character-zero-width-space"];
 
-var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-before-closing-slash", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
+var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
 
 var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag"];
 
@@ -18440,12 +18440,6 @@ function badCharacterReplacementCharacter(context) {
 }
 
 // -----------------------------------------------------------------------------
-// it flags up any tags which have whitespace between opening bracket and first
-// tag name letter:
-//
-// < table>
-// <   a href="">
-// <\n\nspan>
 
 function tagSpaceAfterOpeningBracket(context) {
   return {
@@ -18484,83 +18478,69 @@ function tagSpaceAfterOpeningBracket(context) {
 
 // -----------------------------------------------------------------------------
 
-var BACKSLASH$3 = "\\"; // it flags up any tags which have whitespace between opening bracket and first
-// tag name letter:
-//
-// < table>
-// <   a href="">
-// <\n\nspan>
+var BACKSLASH$4 = "\\";
 
-function tagSpaceBeforeClosingBracket(context) {
-  return {
-    tag: function tag(node) {
-      var ranges = []; // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartsAt);
-      // 1. if there's whitespace before the closing bracket
-
-      if ( // tag ends with a bracket:
-      context.str[node.end - 1] === ">" && // and there's a whitespace on the left of it:
-      !context.str[node.end - 2].trim().length && // and the next non-whitespace character on the left is not slash of
-      // any kind (we don't want to step into rule's
-      // "tag-space-between-slash-and-bracket" turf)
-      !(BACKSLASH$3 + "/").includes(context.str[left(context.str, node.end - 1) || 0])) {
-        var from = left(context.str, node.end - 1) ? left(context.str, node.end - 1) + 1 : 0;
-        ranges.push([from, node.end - 1]);
-      }
-
-      if (ranges.length) {
-        context.report({
-          ruleId: "tag-space-before-closing-bracket",
-          message: "Bad whitespace.",
-          idxFrom: ranges[0][0],
-          idxTo: ranges[ranges.length - 1][1],
-          fix: {
-            ranges: ranges
-          }
-        });
-      }
-    }
-  };
-}
-
-// -----------------------------------------------------------------------------
-// it flags up any tags which have whitespace between opening bracket and first
-// tag name letter:
-//
-// < table>
-// <   a href="">
-// <\n\nspan>
-
-function tagSpaceBeforeClosingSlash(context, mode) {
+function tagSpaceBeforeClosingBracket(context, mode) {
   if (mode === void 0) {
     mode = "never";
   }
 
   return {
-    tag: function tag(node) {
-      context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
+    tag: function tag(node) { // -----------------------------------------------------------------------------
+      // early exit
+      // if there's no closing bracket, exit early
 
-      var closingBracketPos = node.end - 1;
-      var slashPos = left(context.str, closingBracketPos);
-      var leftOfSlashPos = left(context.str, slashPos) || 0;
+      if (context.str[node.end - 1] !== ">") {
+        return;
+      } // -----------------------------------------------------------------------------
+      // preparations
+      // calculate the "leftmostPos" - that's slash if present or bracket
+      // <br />
+      //     ^
+      //
+      // <br /   >
+      //     ^
+      //
+      // <div class="">
+      //              ^
+      // "leftmostPos" is the initial position of the closing bracket ">":
 
-      if (mode === "never" && node.void && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
+
+      var leftmostPos = node.end - 1; // find the first non-whitespace character on the left:
+
+      var idxOnTheLeft = left(context.str, leftmostPos);
+
+      if (context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$4) {
+        leftmostPos = idxOnTheLeft;
+      } // -----------------------------------------------------------------------------
+      // depends, is format-prettier enabled or not
+
+      if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && node.void || // OR mode is set to "always":
+      mode === "always" && // format-prettier is not enabled
+      !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] && ( // it's not whitespace on the left
+      context.str[leftmostPos - 1].trim() || // or it is, but it's not a single space
+      context.str[leftmostPos - 1] !== " " || // or it is a single space but to the left of it it's whitespace
+      context.str[leftmostPos - 2] && !context.str[leftmostPos - 2].trim())) {
         context.report({
-          ruleId: "tag-space-before-closing-slash",
-          message: "Bad whitespace.",
-          idxFrom: leftOfSlashPos + 1,
-          idxTo: slashPos,
+          ruleId: "tag-space-before-closing-bracket",
+          message: "Add a space.",
+          idxFrom: node.start,
+          idxTo: node.end,
           fix: {
-            ranges: [[leftOfSlashPos + 1, slashPos]]
+            ranges: [[left(context.str, leftmostPos) + 1, leftmostPos, " "]]
           }
         });
-      } else if (mode === "always" && node.void && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
+      } else if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && !node.void || // mode is "never"
+      mode !== "always" && // and format-prettier is not enabled
+      !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] && // there's whitespace to the left of slash/closing bracket
+      !context.str[leftmostPos - 1].trim()) {
         context.report({
-          ruleId: "tag-space-before-closing-slash",
-          message: "Missing space.",
-          idxFrom: slashPos,
-          idxTo: slashPos,
+          ruleId: "tag-space-before-closing-bracket",
+          message: "Remove space.",
+          idxFrom: node.start,
+          idxTo: node.end,
           fix: {
-            ranges: [[slashPos, slashPos, " "]]
+            ranges: [[left(context.str, leftmostPos) + 1, leftmostPos]]
           }
         });
       }
@@ -18568,22 +18548,19 @@ function tagSpaceBeforeClosingSlash(context, mode) {
   };
 }
 
+var BACKSLASH$3 = "\\"; // rule: tag-space-between-slash-and-bracket
 // -----------------------------------------------------------------------------
-// it flags up any tags which have whitespace between opening bracket and first
-// tag name letter:
-//
-// < table>
-// <   a href="">
-// <\n\nspan>
 
 function tagSpaceBetweenSlashAndBracket(context) {
   return {
     tag: function tag(node) {
       // since we know the location of the closing bracket,
       // let's look to the left, is there a slash and check the distance
-      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && // necessary because in the future unclosed tags will be recognised!
-      context.str[left(context.str, node.end - 1)] === "/" && left(context.str, node.end - 1) < node.end - 2) {
-        var idxFrom = left(context.str, node.end - 1) + 1;
+      var idxOnTheLeft = left(context.str, node.end - 1);
+
+      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && ( // necessary because in the future unclosed tags will be recognised!
+      context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$3) && idxOnTheLeft < node.end - 2) {
+        var idxFrom = idxOnTheLeft + 1;
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
           message: "Bad whitespace.",
@@ -18773,7 +18750,7 @@ function tagVoidSlash(context, mode) {
             idxFrom: node.start,
             idxTo: node.end,
             fix: {
-              ranges: [[slashPos + 1, closingBracketPos + 1, "/>"]]
+              ranges: [[closingBracketPos, closingBracketPos + 1, "/>"]]
             }
           });
         }
@@ -19386,8 +19363,17 @@ function attributeMalformed(context) {
             // replace that opening quote with two doubles
             ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\"\""]);
           } else {
-            // add a counterpart, single or double
-            ranges.push([node.attribOpeningQuoteAt + 1, node.attribOpeningQuoteAt + 1, context.str[node.attribOpeningQuoteAt] || "\""]);
+            // add a counterpart, single or double // Instead of pushing into new position after opening quote,
+            // replace opening quote with two quotes. This will solve
+            // issues when rules that follow will compound - sorting will
+            // treat this range as early because it started earlier, at
+            // the opening quote. Imagine:
+            // <img alt=">
+            //           ^
+            //      slash, gap and quote - 3 rules competing
+            //
+
+            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "" + context.str[node.attribOpeningQuoteAt] + (context.str[node.attribOpeningQuoteAt] || "\"")]);
           }
         }
       }
@@ -41959,9 +41945,6 @@ defineLazyProp(builtInRules, "tag-space-after-opening-bracket", function () {
 });
 defineLazyProp(builtInRules, "tag-space-before-closing-bracket", function () {
   return tagSpaceBeforeClosingBracket;
-});
-defineLazyProp(builtInRules, "tag-space-before-closing-slash", function () {
-  return tagSpaceBeforeClosingSlash;
 });
 defineLazyProp(builtInRules, "tag-space-between-slash-and-bracket", function () {
   return tagSpaceBetweenSlashAndBracket;

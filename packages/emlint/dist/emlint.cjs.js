@@ -57,7 +57,7 @@ var op__default = /*#__PURE__*/_interopDefaultLegacy(op);
 
 var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate-arabic-form-shaping", "bad-character-activate-symmetric-swapping", "bad-character-application-program-command", "bad-character-backspace", "bad-character-bell", "bad-character-break-permitted-here", "bad-character-cancel", "bad-character-cancel-character", "bad-character-character-tabulation-set", "bad-character-character-tabulation-with-justification", "bad-character-control-0080", "bad-character-control-0081", "bad-character-control-0084", "bad-character-control-0099", "bad-character-control-sequence-introducer", "bad-character-data-link-escape", "bad-character-delete", "bad-character-device-control-four", "bad-character-device-control-one", "bad-character-device-control-string", "bad-character-device-control-three", "bad-character-device-control-two", "bad-character-em-quad", "bad-character-em-space", "bad-character-en-quad", "bad-character-en-space", "bad-character-end-of-medium", "bad-character-end-of-protected-area", "bad-character-end-of-selected-area", "bad-character-end-of-text", "bad-character-end-of-transmission", "bad-character-end-of-transmission-block", "bad-character-enquiry", "bad-character-escape", "bad-character-figure-space", "bad-character-first-strong-isolate", "bad-character-form-feed", "bad-character-four-per-em-space", "bad-character-function-application", "bad-character-hair-space", "bad-character-ideographic-space", "bad-character-information-separator-four", "bad-character-information-separator-one", "bad-character-information-separator-three", "bad-character-information-separator-two", "bad-character-inhibit-arabic-form-shaping", "bad-character-inhibit-symmetric-swapping", "bad-character-interlinear-annotation-anchor", "bad-character-interlinear-annotation-separator", "bad-character-interlinear-annotation-terminator", "bad-character-invisible-plus", "bad-character-invisible-separator", "bad-character-invisible-times", "bad-character-left-to-right-embedding", "bad-character-left-to-right-isolate", "bad-character-left-to-right-mark", "bad-character-left-to-right-override", "bad-character-line-separator", "bad-character-line-tabulation", "bad-character-line-tabulation-set", "bad-character-medium-mathematical-space", "bad-character-message-waiting", "bad-character-narrow-no-break-space", "bad-character-national-digit-shapes", "bad-character-negative-acknowledge", "bad-character-next-line", "bad-character-no-break-here", "bad-character-nominal-digit-shapes", "bad-character-non-breaking-space", "bad-character-null", "bad-character-ogham-space-mark", "bad-character-operating-system-command", "bad-character-paragraph-separator", "bad-character-partial-line-backward", "bad-character-partial-line-forward", "bad-character-pop-directional-formatting", "bad-character-pop-directional-isolate", "bad-character-private-message", "bad-character-private-use-1", "bad-character-private-use-2", "bad-character-punctuation-space", "bad-character-replacement-character", "bad-character-reverse-line-feed", "bad-character-right-to-left-embedding", "bad-character-right-to-left-isolate", "bad-character-right-to-left-mark", "bad-character-right-to-left-override", "bad-character-set-transmit-state", "bad-character-shift-in", "bad-character-shift-out", "bad-character-single-character-introducer", "bad-character-single-shift-three", "bad-character-single-shift-two", "bad-character-six-per-em-space", "bad-character-soft-hyphen", "bad-character-start-of-heading", "bad-character-start-of-protected-area", "bad-character-start-of-selected-area", "bad-character-start-of-string", "bad-character-start-of-text", "bad-character-string-terminator", "bad-character-substitute", "bad-character-synchronous-idle", "bad-character-tabulation", "bad-character-thin-space", "bad-character-three-per-em-space", "bad-character-word-joiner", "bad-character-zero-width-joiner", "bad-character-zero-width-no-break-space", "bad-character-zero-width-non-joiner", "bad-character-zero-width-space"];
 
-var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-before-closing-slash", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
+var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
 
 var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag"];
 
@@ -2583,61 +2583,47 @@ function tagSpaceAfterOpeningBracket(context) {
   };
 }
 
-var BACKSLASH$2 = "\\";
-function tagSpaceBeforeClosingBracket(context) {
-  return {
-    tag: function tag(node) {
-      var ranges = [];
-      if (
-      context.str[node.end - 1] === ">" &&
-      !context.str[node.end - 2].trim().length &&
-      !(BACKSLASH$2 + "/").includes(context.str[stringLeftRight.left(context.str, node.end - 1) || 0])) {
-        var from = stringLeftRight.left(context.str, node.end - 1) ? stringLeftRight.left(context.str, node.end - 1) + 1 : 0;
-        ranges.push([from, node.end - 1]);
-      }
-      if (ranges.length) {
-        context.report({
-          ruleId: "tag-space-before-closing-bracket",
-          message: "Bad whitespace.",
-          idxFrom: ranges[0][0],
-          idxTo: ranges[ranges.length - 1][1],
-          fix: {
-            ranges: ranges
-          }
-        });
-      }
-    }
-  };
-}
-
-function tagSpaceBeforeClosingSlash(context, mode) {
+var BACKSLASH$3 = "\\";
+function tagSpaceBeforeClosingBracket(context, mode) {
   if (mode === void 0) {
     mode = "never";
   }
   return {
     tag: function tag(node) {
-      context.str.slice(node.start + 1, node.tagNameStartsAt);
-      var closingBracketPos = node.end - 1;
-      var slashPos = stringLeftRight.left(context.str, closingBracketPos);
-      var leftOfSlashPos = stringLeftRight.left(context.str, slashPos) || 0;
-      if (mode === "never" && node.void && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
+      if (context.str[node.end - 1] !== ">") {
+        return;
+      }
+      var leftmostPos = node.end - 1;
+      var idxOnTheLeft = stringLeftRight.left(context.str, leftmostPos);
+      if (context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$3) {
+        leftmostPos = idxOnTheLeft;
+      }
+      if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && node.void ||
+      mode === "always" &&
+      !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] && (
+      context.str[leftmostPos - 1].trim() ||
+      context.str[leftmostPos - 1] !== " " ||
+      context.str[leftmostPos - 2] && !context.str[leftmostPos - 2].trim())) {
         context.report({
-          ruleId: "tag-space-before-closing-slash",
-          message: "Bad whitespace.",
-          idxFrom: leftOfSlashPos + 1,
-          idxTo: slashPos,
+          ruleId: "tag-space-before-closing-bracket",
+          message: "Add a space.",
+          idxFrom: node.start,
+          idxTo: node.end,
           fix: {
-            ranges: [[leftOfSlashPos + 1, slashPos]]
+            ranges: [[stringLeftRight.left(context.str, leftmostPos) + 1, leftmostPos, " "]]
           }
         });
-      } else if (mode === "always" && node.void && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
+      } else if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && !node.void ||
+      mode !== "always" &&
+      !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] &&
+      !context.str[leftmostPos - 1].trim()) {
         context.report({
-          ruleId: "tag-space-before-closing-slash",
-          message: "Missing space.",
-          idxFrom: slashPos,
-          idxTo: slashPos,
+          ruleId: "tag-space-before-closing-bracket",
+          message: "Remove space.",
+          idxFrom: node.start,
+          idxTo: node.end,
           fix: {
-            ranges: [[slashPos, slashPos, " "]]
+            ranges: [[stringLeftRight.left(context.str, leftmostPos) + 1, leftmostPos]]
           }
         });
       }
@@ -2645,12 +2631,14 @@ function tagSpaceBeforeClosingSlash(context, mode) {
   };
 }
 
+var BACKSLASH$2 = "\\";
 function tagSpaceBetweenSlashAndBracket(context) {
   return {
     tag: function tag(node) {
-      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
-      context.str[stringLeftRight.left(context.str, node.end - 1)] === "/" && stringLeftRight.left(context.str, node.end - 1) < node.end - 2) {
-        var idxFrom = stringLeftRight.left(context.str, node.end - 1) + 1;
+      var idxOnTheLeft = stringLeftRight.left(context.str, node.end - 1);
+      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && (
+      context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$2) && idxOnTheLeft < node.end - 2) {
+        var idxFrom = idxOnTheLeft + 1;
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
           message: "Bad whitespace.",
@@ -2777,7 +2765,7 @@ function tagVoidSlash(context, mode) {
             idxFrom: node.start,
             idxTo: node.end,
             fix: {
-              ranges: [[slashPos + 1, closingBracketPos + 1, "/>"]]
+              ranges: [[closingBracketPos, closingBracketPos + 1, "/>"]]
             }
           });
         }
@@ -3104,7 +3092,7 @@ function attributeMalformed(context) {
           context.str[node.attribOpeningQuoteAt] === "'") {
             ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\"\""]);
           } else {
-            ranges.push([node.attribOpeningQuoteAt + 1, node.attribOpeningQuoteAt + 1, context.str[node.attribOpeningQuoteAt] || "\""]);
+            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "" + context.str[node.attribOpeningQuoteAt] + (context.str[node.attribOpeningQuoteAt] || "\"")]);
           }
         }
       }
@@ -9345,9 +9333,6 @@ defineLazyProp__default['default'](builtInRules, "tag-space-after-opening-bracke
 });
 defineLazyProp__default['default'](builtInRules, "tag-space-before-closing-bracket", function () {
   return tagSpaceBeforeClosingBracket;
-});
-defineLazyProp__default['default'](builtInRules, "tag-space-before-closing-slash", function () {
-  return tagSpaceBeforeClosingSlash;
 });
 defineLazyProp__default['default'](builtInRules, "tag-space-between-slash-and-bracket", function () {
   return tagSpaceBetweenSlashAndBracket;

@@ -149,7 +149,7 @@ tap.test(
   `07 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`,
   (t) => {
     const str = `<br><br>zzz</br></br>`;
-    const fixed = `<br/><br/>zzz<br/><br/>`;
+    const fixed = `<br /><br />zzz<br /><br />`;
     const messages = verify(t, str, {
       rules: {
         all: 2,
@@ -164,50 +164,13 @@ tap.test(
   `08 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`,
   (t) => {
     const str = `<br><br>zzz<br>`;
-    const fixed = `<br/><br/>zzz<br/>`;
+    const fixed = `<br /><br />zzz<br />`;
     const messages = verify(t, str, {
       rules: {
         all: 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "08.01");
-    t.match(
-      messages,
-      [
-        {
-          severity: 2,
-          ruleId: "tag-void-slash",
-          message: "Missing slash.",
-          idxFrom: 0,
-          idxTo: 4,
-          fix: {
-            ranges: [[3, 4, "/>"]],
-          },
-        },
-        {
-          severity: 2,
-          ruleId: "tag-void-slash",
-          message: "Missing slash.",
-          idxFrom: 4,
-          idxTo: 8,
-          fix: {
-            ranges: [[7, 8, "/>"]],
-          },
-        },
-        {
-          severity: 2,
-          ruleId: "tag-void-slash",
-          message: "Missing slash.",
-          idxFrom: 11,
-          idxTo: 15,
-          fix: {
-            ranges: [[14, 15, "/>"]],
-          },
-        },
-      ],
-      "08.02"
-    );
-    t.is(messages.length, 3, "08.03");
+    t.equal(applyFixes(str, messages), fixed, "08");
     t.end();
   }
 );

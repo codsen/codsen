@@ -781,8 +781,7 @@ tap.test(`35`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "35.01");
-  t.equal(messages.length, 1, "35.02");
+  t.equal(applyFixes(str, messages), fixed, "35");
   t.end();
 });
 
@@ -795,8 +794,7 @@ tap.test(`36`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "36.01");
-  t.equal(messages.length, 1, "36.02");
+  t.equal(applyFixes(str, messages), fixed, "36");
   t.end();
 });
 
@@ -828,14 +826,14 @@ tap.test(`38`, (t) => {
   t.end();
 });
 
-tap.test(`39`, (t) => {
+tap.only(`39`, (t) => {
   const str = `<img alt=">`;
   const fixed = `<img alt="" />`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
       "tag-void-slash": 2,
-      "tag-space-before-closing-slash": [2, "always"],
+      "tag-space-before-closing-bracket": [2, "always"],
     },
   });
   // will fix:
@@ -851,7 +849,7 @@ tap.test(`40`, (t) => {
       "attribute-malformed": 2,
       "tag-void-slash": 2,
       "format-prettier": 2,
-      "tag-space-before-closing-slash": [2, "always"],
+      "tag-space-before-closing-bracket": [2, "always"],
     },
   });
   // will fix:
@@ -882,5 +880,18 @@ tap.test(`42`, (t) => {
   });
   // will fix:
   t.equal(applyFixes(str, messages), fixed, "42");
+  t.end();
+});
+
+tap.todo(`43`, (t) => {
+  const str = `<img alt='there's "somethin" here'/>`;
+  const fixed = `<img alt="there's &quot;somethin&quot; here"/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "43");
   t.end();
 });

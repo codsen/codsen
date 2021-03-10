@@ -41,7 +41,7 @@ tap.test(
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
-        "tag-space-before-closing-slash": 2,
+        "tag-space-before-closing-bracket": 2,
       },
     });
     t.equal(applyFixes(str, messages), "<br/>", "02.01");
@@ -72,7 +72,7 @@ tap.test(
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
-        "tag-space-before-closing-slash": [2, "never"],
+        "tag-space-before-closing-bracket": [2, "never"],
       },
     });
     t.equal(applyFixes(str, messages), "<br/>", "03.01");
@@ -103,26 +103,10 @@ tap.test(
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />", "04.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-closing-backslash",
-          severity: 2,
-          idxFrom: 4,
-          idxTo: 6,
-          message: "Replace backslash with slash.",
-          fix: {
-            ranges: [[4, 6, "/"]],
-          },
-        },
-      ],
-      "04.02"
-    );
+    t.equal(applyFixes(str, messages), "<br />", "04");
     t.end();
   }
 );
@@ -134,26 +118,10 @@ tap.test(
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />", "05.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-closing-backslash",
-          severity: 2,
-          idxFrom: 3,
-          idxTo: 5,
-          message: "Replace backslash with slash.",
-          fix: {
-            ranges: [[3, 5, " /"]],
-          },
-        },
-      ],
-      "05.02"
-    );
+    t.equal(applyFixes(str, messages), "<br />", "05");
     t.end();
   }
 );
@@ -165,26 +133,10 @@ tap.test(
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />", "06.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-closing-backslash",
-          severity: 2,
-          idxFrom: 3,
-          idxTo: 6,
-          message: "Replace backslash with slash.",
-          fix: {
-            ranges: [[3, 6, " /"]],
-          },
-        },
-      ],
-      "06.02"
-    );
+    t.equal(applyFixes(str, messages), "<br />", "06");
     t.end();
   }
 );
@@ -194,26 +146,10 @@ tap.test(`07 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, (t) => {
   const messages = verify(t, str, {
     rules: {
       "tag-closing-backslash": 2,
-      "tag-space-before-closing-slash": [2, "always"],
+      "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), "<br />", "07.01");
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 4,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[3, 4, " /"]],
-        },
-      },
-    ],
-    "07.02"
-  );
+  t.equal(applyFixes(str, messages), "<br />", "07");
   t.end();
 });
 
@@ -316,7 +252,7 @@ tap.test(
 // SPACE IN FRONT
 
 tap.test(
-  `11 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
+  `11 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-bracket`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const messages = verify(t, str, {
@@ -347,7 +283,7 @@ tap.test(
 );
 
 tap.test(
-  `12 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
+  `12 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-bracket`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const messages = verify(t, str, {
@@ -378,7 +314,7 @@ tap.test(
 );
 
 tap.test(
-  `13 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
+  `13 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-bracket`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const messages = verify(t, str, {
@@ -408,115 +344,67 @@ tap.test(
   }
 );
 
-// "tag-space-before-closing-slash" = always
+// "tag-space-before-closing-bracket" = always
 
 tap.test(
-  `14 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
+  `14 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2,
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />", "14.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-closing-backslash",
-          severity: 2,
-          idxFrom: 4,
-          idxTo: 6,
-          message: "Replace backslash with slash.",
-          fix: {
-            ranges: [[4, 6, "/"]],
-          },
-        },
-      ],
-      "14.02"
-    );
+    t.equal(applyFixes(str, messages), "<br />", "14");
     t.end();
   }
 );
 
 tap.test(
-  `15 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
+  `15 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "always"],
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />", "15.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-closing-backslash",
-          severity: 2,
-          idxFrom: 4,
-          idxTo: 6,
-          message: "Replace backslash with slash.",
-          fix: {
-            ranges: [[4, 6, "/"]],
-          },
-        },
-      ],
-      "15.02"
-    );
+    t.equal(applyFixes(str, messages), "<br />", "15");
     t.end();
   }
 );
 
 tap.test(
-  `16 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
+  `16 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "never"],
-        "tag-space-before-closing-slash": [2, "always"], // doesn't matter!
+        "tag-space-before-closing-bracket": [2, "always"], // doesn't matter!
       },
     });
-    t.equal(applyFixes(str, messages), "<br>", "16.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-closing-backslash",
-          severity: 2,
-          idxFrom: 3,
-          idxTo: 6,
-          message: "Delete this.",
-          fix: {
-            ranges: [[3, 6]],
-          },
-        },
-      ],
-      "16.02"
-    );
+    t.equal(applyFixes(str, messages), "<br >", "16");
     t.end();
   }
 );
 
-// "tag-space-before-closing-slash" = never
+// "tag-space-before-closing-bracket" = never
 
 tap.test(
-  `17 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
+  `17 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2,
-        "tag-space-before-closing-slash": [2, "never"],
+        "tag-space-before-closing-bracket": [2, "never"],
       },
     });
     t.equal(applyFixes(str, messages), "<br/>", "17.01");
@@ -541,14 +429,14 @@ tap.test(
 );
 
 tap.test(
-  `18 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
+  `18 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "always"],
-        "tag-space-before-closing-slash": [2, "never"],
+        "tag-space-before-closing-bracket": [2, "never"],
       },
     });
     t.equal(applyFixes(str, messages), "<br/>", "18.01");
@@ -573,14 +461,14 @@ tap.test(
 );
 
 tap.test(
-  `19 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
+  `19 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "never"],
-        "tag-space-before-closing-slash": [2, "never"], // doesn't matter
+        "tag-space-before-closing-bracket": [2, "never"], // doesn't matter
       },
     });
     t.equal(applyFixes(str, messages), "<br>", "19.01");
@@ -644,26 +532,10 @@ tap.test(
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<div>", "21.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-closing-backslash",
-          severity: 2,
-          idxFrom: 4,
-          idxTo: 5,
-          message: "Delete this.",
-          fix: {
-            ranges: [[4, 5]],
-          },
-        },
-      ],
-      "21.02"
-    );
+    t.equal(applyFixes(str, messages), "<div >", "21");
     t.end();
   }
 );
@@ -713,27 +585,11 @@ tap.test(
     const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
         "tag-void-slash": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<div>", "23.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-closing-backslash",
-          severity: 2,
-          idxFrom: 4,
-          idxTo: 5,
-          message: "Delete this.",
-          fix: {
-            ranges: [[4, 5]],
-          },
-        },
-      ],
-      "23.02"
-    );
+    t.equal(applyFixes(str, messages), "<div >", "23");
     t.end();
   }
 );
@@ -864,36 +720,10 @@ tap.test(
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2,
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
       },
     });
-    t.equal(applyFixes(str, messages), "<br />", "28.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-closing-backslash",
-          severity: 2,
-          idxFrom: 1,
-          idxTo: 2,
-          message: "Wrong slash - backslash.",
-          fix: {
-            ranges: [[1, 2]],
-          },
-        },
-        {
-          ruleId: "tag-void-slash",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 6,
-          message: "Missing slash.",
-          fix: {
-            ranges: [[4, 6, " />"]],
-          },
-        },
-      ],
-      "28.02"
-    );
+    t.equal(applyFixes(str, messages), "<br />", "28");
     t.end();
   }
 );
@@ -906,7 +736,7 @@ tap.test(
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2,
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
       },
     });
     t.equal(applyFixes(str, messages), "<br />", "29.01");

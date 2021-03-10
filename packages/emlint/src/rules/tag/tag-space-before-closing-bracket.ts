@@ -1,57 +1,137 @@
 import { Linter, RuleObjType } from "../../linter";
-import { Ranges } from "../../../../../scripts/common";
 import { left } from "string-left-right";
+import { isAnEnabledValue } from "../../util/util";
 
 // rule: tag-space-before-closing-bracket
 // -----------------------------------------------------------------------------
 
 const BACKSLASH = "\u005C";
 
-// it flags up any tags which have whitespace between opening bracket and first
-// tag name letter:
-//
-// < table>
-// <   a href="">
-// <\n\nspan>
-
-function tagSpaceBeforeClosingBracket(context: Linter): RuleObjType {
+function tagSpaceBeforeClosingBracket(
+  context: Linter,
+  mode: "always" | "never" = "never"
+): RuleObjType {
   return {
     tag(node) {
       console.log(
         `███████████████████████████████████████ tagSpaceBeforeClosingBracket() ███████████████████████████████████████`
       );
+      console.log(`mode = ${JSON.stringify(mode, null, 4)}`);
       console.log(`node = ${JSON.stringify(node, null, 4)}`);
-      const ranges: Ranges = [];
-      // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartsAt);
 
-      // 1. if there's whitespace before the closing bracket
-      if (
-        // tag ends with a bracket:
-        context.str[node.end - 1] === ">" &&
-        // and there's a whitespace on the left of it:
-        !context.str[node.end - 2].trim().length &&
-        // and the next non-whitespace character on the left is not slash of
-        // any kind (we don't want to step into rule's
-        // "tag-space-between-slash-and-bracket" turf)
-        !`${BACKSLASH}/`.includes(
-          context.str[left(context.str, node.end - 1) || 0]
-        )
-      ) {
-        const from = left(context.str, node.end - 1)
-          ? (left(context.str, node.end - 1) as number) + 1
-          : 0;
-        console.log(`043 whitespace before closing bracket confirmed`);
-        console.log(`044 PUSH [${from}, ${node.end - 1}]`);
-        ranges.push([from, node.end - 1]);
+      // -----------------------------------------------------------------------------
+      // early exit
+
+      // if there's no closing bracket, exit early
+      if (context.str[node.end - 1] !== ">") {
+        console.log(`027 EXIT, there's no closing bracket`);
+        return;
       }
 
-      if (ranges.length) {
+      // -----------------------------------------------------------------------------
+      // preparations
+
+      // calculate the "leftmostPos" - that's slash if present or bracket
+      // <br />
+      //     ^
+      //
+      // <br /   >
+      //     ^
+      //
+      // <div class="">
+      //              ^
+
+      // "leftmostPos" is the initial position of the closing bracket ">":
+      let leftmostPos = node.end - 1;
+      // find the first non-whitespace character on the left:
+      const idxOnTheLeft = left(context.str, leftmostPos) as number;
+      if (
+        context.str[idxOnTheLeft] === "/" ||
+        context.str[idxOnTheLeft] === BACKSLASH
+      ) {
+        leftmostPos = idxOnTheLeft;
+      }
+      console.log(
+        `055 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`leftmostPos`}\u001b[${39}m`} = ${JSON.stringify(
+          leftmostPos,
+          null,
+          4
+        )}`
+      );
+
+      // -----------------------------------------------------------------------------
+      // depends, is format-prettier enabled or not
+
+      if (
+        ((Object.keys(context.processedRulesConfig).includes(
+          "format-prettier"
+        ) &&
+          isAnEnabledValue(context.processedRulesConfig["format-prettier"]) &&
+          node.void) ||
+          // OR mode is set to "always":
+          (mode === "always" &&
+            // format-prettier is not enabled
+            !(
+              Object.keys(context.processedRulesConfig).includes(
+                "format-prettier"
+              ) &&
+              isAnEnabledValue(context.processedRulesConfig["format-prettier"])
+            ))) &&
+        context.str[leftmostPos - 1] &&
+        // it's not whitespace on the left
+        (context.str[leftmostPos - 1].trim() ||
+          // or it is, but it's not a single space
+          context.str[leftmostPos - 1] !== " " ||
+          // or it is a single space but to the left of it it's whitespace
+          (context.str[leftmostPos - 2] &&
+            !context.str[leftmostPos - 2].trim()))
+      ) {
+        console.log(`089 always mode - enforce spaces`);
         context.report({
           ruleId: "tag-space-before-closing-bracket",
-          message: "Bad whitespace.",
-          idxFrom: ranges[0][0],
-          idxTo: ranges[ranges.length - 1][1], // second elem. from last range
-          fix: { ranges },
+          message: "Add a space.",
+          idxFrom: node.start,
+          idxTo: node.end,
+          fix: {
+            ranges: [
+              [
+                (left(context.str, leftmostPos) as number) + 1,
+                leftmostPos,
+                " ",
+              ],
+            ],
+          },
+        });
+      } else if (
+        ((Object.keys(context.processedRulesConfig).includes(
+          "format-prettier"
+        ) &&
+          isAnEnabledValue(context.processedRulesConfig["format-prettier"]) &&
+          !node.void) ||
+          // mode is "never"
+          (mode !== "always" &&
+            // and format-prettier is not enabled
+            !(
+              Object.keys(context.processedRulesConfig).includes(
+                "format-prettier"
+              ) &&
+              isAnEnabledValue(context.processedRulesConfig["format-prettier"])
+            ))) &&
+        context.str[leftmostPos - 1] &&
+        // there's whitespace to the left of slash/closing bracket
+        !context.str[leftmostPos - 1].trim()
+      ) {
+        console.log(`124 never mode - ban spaces`);
+        context.report({
+          ruleId: "tag-space-before-closing-bracket",
+          message: "Remove space.",
+          idxFrom: node.start,
+          idxTo: node.end,
+          fix: {
+            ranges: [
+              [(left(context.str, leftmostPos) as number) + 1, leftmostPos],
+            ],
+          },
         });
       }
     },

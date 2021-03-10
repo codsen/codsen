@@ -546,8 +546,8 @@ tap.test(
 tap.test(
   `18 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up closing tag`,
   (t) => {
-    const str = `<!--[if !mso]><!--><img src="gif"/><!--<[endif]-->`;
-    const fixed = `<!--[if !mso]><!--><img src="gif" alt=""/><!--<![endif]-->`;
+    const str = `<!--[if !mso]><!--><br /><!--<[endif]-->`;
+    const fixed = `<!--[if !mso]><!--><br /><!--<![endif]-->`;
     const messages = verify(t, str, {
       rules: {
         all: 2,
@@ -561,8 +561,8 @@ tap.test(
 tap.test(
   `19 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - opening bracket missing`,
   (t) => {
-    const str = `<!--[if !mso]><!--><img src="gif"/><!--<!endif]-->`;
-    const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+    const str = `<!--[if !mso]><!--><br /><!--<!endif]-->`;
+    const fixed = `<!--[if !mso]><!--><br /><!--<![endif]-->`;
     const messages = verify(t, str, {
       rules: {
         "comment-closing-malformed": 2,
@@ -574,11 +574,11 @@ tap.test(
       [
         {
           severity: 2,
-          idxFrom: 35,
-          idxTo: 50,
+          idxFrom: 25,
+          idxTo: 40,
           message: "Malformed closing comment tag.",
           fix: {
-            ranges: [[35, 50, "<!--<![endif]-->"]],
+            ranges: [[25, 40, "<!--<![endif]-->"]],
           },
           ruleId: "comment-closing-malformed",
         },

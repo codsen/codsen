@@ -130,7 +130,7 @@ function tagVoidSlash(
             message: "Missing slash.",
             idxFrom: node.start,
             idxTo: node.end,
-            fix: { ranges: [[slashPos + 1, closingBracketPos + 1, "/>"]] },
+            fix: { ranges: [[closingBracketPos, closingBracketPos + 1, "/>"]] },
           });
         }
       }

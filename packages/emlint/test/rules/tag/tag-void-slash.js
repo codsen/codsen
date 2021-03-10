@@ -51,12 +51,12 @@ tap.test(
 );
 
 tap.test(
-  `03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with "tag-space-before-closing-slash"`,
+  `03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with "tag-space-before-closing-bracket"`,
   (t) => {
     const str = "<br>";
     const messages = verify(t, str, {
       rules: {
-        "tag-space-before-closing-slash": 2,
+        "tag-space-before-closing-bracket": 2,
         "tag-void-slash": 2,
       },
     });
@@ -90,116 +90,55 @@ tap.test(
         tag: 2,
       },
     });
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-void-slash",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 4,
-          message: "Missing slash.",
-          fix: {
-            ranges: [[3, 4, "/>"]],
-          },
-        },
-      ],
-      "04.01"
-    );
-    t.equal(applyFixes(str, messages), "<br/>", "04.02");
+    t.equal(applyFixes(str, messages), "<br/>", "04");
     t.end();
   }
 );
 
-tap.test(
-  `05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=always`,
+tap.only(
+  `05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-bracket"=always`,
   (t) => {
     const str = "<br>";
+    const fixed = "<br />";
     const messages = verify(t, str, {
       rules: {
-        "tag-space-before-closing-slash": [2, "always"],
+        "tag-space-before-closing-bracket": [2, "always"],
         "tag-void-slash": 2,
       },
     });
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-void-slash",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 4,
-          message: "Missing slash.",
-          fix: {
-            ranges: [[3, 4, " />"]],
-          },
-        },
-      ],
-      "05.01"
-    );
-    t.equal(applyFixes(str, messages), "<br />", "05.02");
+    t.equal(applyFixes(str, messages), fixed, "05");
     t.end();
   }
 );
 
 tap.test(
-  `06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never`,
+  `06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-bracket"=never`,
   (t) => {
     const str = "<br>";
+    const fixed = "<br/>";
     const messages = verify(t, str, {
       rules: {
-        "tag-space-before-closing-slash": [2, "never"],
+        "tag-space-before-closing-bracket": [2, "never"],
         "tag-void-slash": 2,
       },
     });
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-void-slash",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 4,
-          message: "Missing slash.",
-          fix: {
-            ranges: [[3, 4, "/>"]],
-          },
-        },
-      ],
-      "06.01"
-    );
-    t.equal(applyFixes(str, messages), "<br/>", "06.02");
+    t.equal(applyFixes(str, messages), fixed, "06");
     t.end();
   }
 );
 
 tap.test(
-  `07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-slash"=never, hardcoded void's default always`,
+  `07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-bracket"=never, hardcoded void's default always`,
   (t) => {
     const str = "<br>";
+    const fixed = "<br/>";
     const messages = verify(t, str, {
       rules: {
-        "tag-space-before-closing-slash": [2, "never"],
+        "tag-space-before-closing-bracket": [2, "never"],
         "tag-void-slash": [2, "always"],
       },
     });
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-void-slash",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 4,
-          message: "Missing slash.",
-          fix: {
-            ranges: [[3, 4, "/>"]],
-          },
-        },
-      ],
-      "07.01"
-    );
-    t.equal(applyFixes(str, messages), "<br/>", "07.02");
+    t.equal(applyFixes(str, messages), fixed, "07");
     t.end();
   }
 );
@@ -210,7 +149,7 @@ tap.test(
     const str = "<br>";
     const messages = verify(t, str, {
       rules: {
-        "tag-space-before-closing-slash": [2, "never"],
+        "tag-space-before-closing-bracket": [2, "never"],
         "tag-void-slash": [2, "never"],
       },
     });
@@ -312,3 +251,32 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`13 - does not touch the whitespace`, (t) => {
+  const str = "<br >";
+  const fixed = "<br />";
+  const messages = verify(t, str, {
+    rules: {
+      "tag-void-slash": [2, "always"],
+    },
+  });
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-void-slash",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 5,
+        message: "Missing slash.",
+        fix: {
+          ranges: [[4, 5, "/>"]],
+        },
+      },
+    ],
+    "13.01"
+  );
+  t.equal(messages.length, 1, "13.02");
+  t.equal(applyFixes(str, messages), fixed, "13.03");
+  t.end();
+});

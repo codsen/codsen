@@ -257,8 +257,6 @@ import tagSpaceAfterOpeningBracket from "./rules/tag/tag-space-after-opening-bra
 
 import tagSpaceBeforeClosingBracket from "./rules/tag/tag-space-before-closing-bracket";
 
-import tagSpaceBeforeClosingSlash from "./rules/tag/tag-space-before-closing-slash";
-
 import tagSpaceBetweenSlashAndBracket from "./rules/tag/tag-space-between-slash-and-bracket";
 
 import tagClosingBackslash from "./rules/tag/tag-closing-backslash";
@@ -1171,11 +1169,6 @@ defineLazyProp(
 );
 defineLazyProp(
   builtInRules,
-  "tag-space-before-closing-slash",
-  () => tagSpaceBeforeClosingSlash
-);
-defineLazyProp(
-  builtInRules,
   "tag-space-between-slash-and-bracket",
   () => tagSpaceBetweenSlashAndBracket
 );
@@ -1984,7 +1977,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1987 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1980 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

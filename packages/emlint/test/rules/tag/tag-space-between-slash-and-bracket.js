@@ -2,6 +2,8 @@ import tap from "tap";
 import { applyFixes, verify } from "../../../t-util/util";
 // import { deepContains } from "ast-deep-contains");
 
+const BACKSLASH = "\u005C";
+
 // 1. no opts
 // -----------------------------------------------------------------------------
 
@@ -95,5 +97,17 @@ tap.test(`03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`, (t) => {
     "03.01"
   );
   t.equal(applyFixes(str, messages), "<br/>", "03.02");
+  t.end();
+});
+
+tap.test(`04 - backslash`, (t) => {
+  const str = `<br\t\t${BACKSLASH}\t\t>`;
+  const fixed = `<br\t\t${BACKSLASH}>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-space-between-slash-and-bracket": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "04");
   t.end();
 });
