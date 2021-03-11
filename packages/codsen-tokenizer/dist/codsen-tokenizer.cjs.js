@@ -1046,7 +1046,11 @@ function tokenizer(str, originalOpts) {
         });
       } else if (!token.type) {
         initToken("text", _i);
-        doNothing = _i;
+        if (withinScript && str.indexOf("</script>", _i)) {
+          doNothing = str.indexOf("</script>", _i);
+        } else {
+          doNothing = _i;
+        }
       }
     }
     var R1 = void 0;

@@ -1024,7 +1024,11 @@ function tokenizer(str, originalOpts) {
         token.nested = layers.some(o => o.type === "at");
       } else if (!token.type) {
         initToken("text", i);
-        doNothing = i;
+        if (withinScript && str.indexOf("</script>", i)) {
+          doNothing = str.indexOf("</script>", i);
+        } else {
+          doNothing = i;
+        }
       }
     }
     let R1;

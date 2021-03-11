@@ -163,3 +163,86 @@ tap.test(`02`, (t) => {
   );
   t.end();
 });
+
+tap.test(`03 - tag within script`, (t) => {
+  const gathered = [];
+  ct(`<html><script>console.log("<html>")</script></html>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 6,
+        value: "<html>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 5,
+        tagName: "html",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "tag",
+        start: 6,
+        end: 14,
+        value: "<script>",
+        tagNameStartsAt: 7,
+        tagNameEndsAt: 13,
+        tagName: "script",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [],
+      },
+      {
+        type: "text",
+        start: 14,
+        end: 35,
+        value: 'console.log("<html>")',
+      },
+      {
+        type: "tag",
+        start: 35,
+        end: 44,
+        value: "</script>",
+        tagNameStartsAt: 37,
+        tagNameEndsAt: 43,
+        tagName: "script",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [],
+      },
+      {
+        type: "tag",
+        start: 44,
+        end: 51,
+        value: "</html>",
+        tagNameStartsAt: 46,
+        tagNameEndsAt: 50,
+        tagName: "html",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+    ],
+    "03"
+  );
+  t.end();
+});
