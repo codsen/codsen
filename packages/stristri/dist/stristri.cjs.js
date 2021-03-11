@@ -26,6 +26,7 @@ var defaultOpts = {
   css: true,
   text: false,
   templatingTags: false,
+  js: true,
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
@@ -69,6 +70,7 @@ function stri(input, originalOpts) {
     html: false,
     css: false,
     text: false,
+    js: false,
     templatingTags: false
   };
   if (!input) {
@@ -136,11 +138,15 @@ function stri(input, originalOpts) {
           gatheredRanges.push([token.start, token.end, " "]);
         }
       } else if (token.type === "text") {
-        if (!withinCSS && !withinHTMLComment && !withinXML && !withinScript && !applicableOpts.text && token.value.trim()) {
+        if (withinScript) {
+          applicableOpts.js = true;
+        } else if (!withinCSS && !withinHTMLComment && !withinXML && !applicableOpts.text && token.value.trim()) {
           applicableOpts.text = true;
         }
-        if (withinCSS && opts.css || (withinHTMLComment || withinScript) && opts.html || !withinCSS && !withinHTMLComment && !withinXML && !withinScript && opts.text) {
-          if (token.value.includes("\n")) {
+        if (withinCSS && opts.css || withinScript && opts.js || withinHTMLComment && opts.html || !withinCSS && !withinHTMLComment && !withinXML && !withinScript && opts.text) {
+          if (withinScript) {
+            gatheredRanges.push([token.start, token.end]);
+          } else if (token.value.includes("\n")) {
             gatheredRanges.push([token.start, token.end, "\n"]);
           } else {
             gatheredRanges.push([token.start, token.end, " "]);

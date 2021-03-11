@@ -3123,6 +3123,7 @@ function tokenizer(str, originalOpts) {
   var len = str.length;
   var midLen = Math.floor(len / 2);
   var doNothing = 0;
+  var withinScript = false;
   var withinStyle = false;
   var withinStyleComment = false;
   var tagStash = [];
@@ -3767,7 +3768,7 @@ function tokenizer(str, originalOpts) {
             doNothing = _i;
           }
         }
-      } else if (startsHtmlComment(str, _i, token, layers)) {
+      } else if (!withinScript && startsHtmlComment(str, _i, token, layers)) {
         if (token.start != null) {
           dumpCurrentToken(token, _i);
         }
@@ -3788,7 +3789,7 @@ function tokenizer(str, originalOpts) {
         if (withinStyle) {
           withinStyle = false;
         }
-      } else if (startsCssComment(str, _i, token, layers, withinStyle)) {
+      } else if (!withinScript && startsCssComment(str, _i, token, layers, withinStyle)) {
         if (token.start != null) {
           dumpCurrentToken(token, _i);
         }
@@ -3806,7 +3807,7 @@ function tokenizer(str, originalOpts) {
         }
 
         doNothing = _i + 2;
-      } else if (typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && !(layers[lastEspLayerObjIdx + 1] && "'\"".includes(layers[lastEspLayerObjIdx + 1].value) && str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i))])) || startsEsp(str, _i, token, layers, withinStyle) && (!lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnds)) {
+      } else if (!withinScript && (typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && !(layers[lastEspLayerObjIdx + 1] && "'\"".includes(layers[lastEspLayerObjIdx + 1].value) && str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i))])) || startsEsp(str, _i, token, layers, withinStyle) && (!lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnds))) {
         var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
 
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
@@ -3958,7 +3959,7 @@ function tokenizer(str, originalOpts) {
 
           doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
         }
-      } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && (!token.type || ["text"].includes(token.type))) {
+      } else if (!withinScript && withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && (!token.type || ["text"].includes(token.type))) {
         if (token.type) {
           dumpCurrentToken(token, _i);
         }
@@ -3970,7 +3971,12 @@ function tokenizer(str, originalOpts) {
         });
       } else if (!token.type) {
         initToken("text", _i);
-        doNothing = _i;
+
+        if (withinScript && str.indexOf("</script>", _i)) {
+          doNothing = str.indexOf("</script>", _i);
+        } else {
+          doNothing = _i;
+        }
       }
     }
 
@@ -4435,6 +4441,10 @@ function tokenizer(str, originalOpts) {
         token.tagNameEndsAt = _i;
         token.tagName = str.slice(token.tagNameStartsAt, _i).toLowerCase();
 
+        if (token.tagName && token.tagName.toLowerCase() === "script") {
+          withinScript = !withinScript;
+        }
+
         if (token.tagName === "xml" && token.closing && !token.kind) {
           token.kind = "xml";
         }
@@ -4663,6 +4673,14 @@ function tokenizer(str, originalOpts) {
           attribReset();
           i = _i;
           return "continue";
+        }
+      } else if (str[_i] === "/" && str[rightVal] === ">") {
+        if (attrib.attribValueStartsAt) {
+          attrib.attribValueStartsAt = null;
+        }
+
+        if (!attrib.attribEnds) {
+          attrib.attribEnds = _i;
         }
       } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property.propertyStarts && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
         attrib.attribValue.push({
@@ -5771,6 +5789,7 @@ var defaultOpts = {
   css: true,
   text: false,
   templatingTags: false,
+  js: true,
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
@@ -5830,6 +5849,7 @@ function stri(input, originalOpts) {
     html: false,
     css: false,
     text: false,
+    js: false,
     templatingTags: false
   }; // quick ending
 
@@ -5855,6 +5875,7 @@ function stri(input, originalOpts) {
       /* istanbul ignore else */
 
       if (token.type === "comment") {
+
         if (withinCSS) {
           if (!applicableOpts.css) {
             applicableOpts.css = true;
@@ -5879,8 +5900,8 @@ function stri(input, originalOpts) {
             gatheredRanges.push([token.start, token.end, " "]);
           }
         }
-      } else if (token.type === "tag") {
-        // mark applicable opts
+      } else if (token.type === "tag") { // mark applicable opts
+
         if (!applicableOpts.html) {
           applicableOpts.html = true;
         }
@@ -5909,8 +5930,8 @@ function stri(input, originalOpts) {
         } else if (withinScript && token.tagName === "script" && token.closing) {
           withinScript = false;
         }
-      } else if (["at", "rule"].includes(token.type)) {
-        // mark applicable opts
+      } else if (["at", "rule"].includes(token.type)) { // mark applicable opts
+
         if (!applicableOpts.css) {
           applicableOpts.css = true;
         }
@@ -5918,21 +5939,25 @@ function stri(input, originalOpts) {
         if (opts.css) {
           gatheredRanges.push([token.start, token.end, " "]);
         }
-      } else if (token.type === "text") {
-        // mark applicable opts
-        if (!withinCSS && !withinHTMLComment && !withinXML && !withinScript && !applicableOpts.text && token.value.trim()) {
+      } else if (token.type === "text") { // mark applicable opts
+
+        if (withinScript) {
+          applicableOpts.js = true;
+        } else if (!withinCSS && !withinHTMLComment && !withinXML && !applicableOpts.text && token.value.trim()) {
           applicableOpts.text = true;
         }
 
-        if (withinCSS && opts.css || (withinHTMLComment || withinScript) && opts.html || !withinCSS && !withinHTMLComment && !withinXML && !withinScript && opts.text) {
-          if (token.value.includes("\n")) {
+        if (withinCSS && opts.css || withinScript && opts.js || withinHTMLComment && opts.html || !withinCSS && !withinHTMLComment && !withinXML && !withinScript && opts.text) {
+          if (withinScript) {
+            gatheredRanges.push([token.start, token.end]);
+          } else if (token.value.includes("\n")) {
             gatheredRanges.push([token.start, token.end, "\n"]);
           } else {
             gatheredRanges.push([token.start, token.end, " "]);
           }
         }
-      } else if (token.type === "esp") {
-        // mark applicable opts
+      } else if (token.type === "esp") { // mark applicable opts
+
         if (!applicableOpts.templatingTags) {
           applicableOpts.templatingTags = true;
         }
