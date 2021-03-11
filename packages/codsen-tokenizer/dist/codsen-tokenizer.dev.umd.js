@@ -3350,6 +3350,8 @@ function tokenizer(str, originalOpts) {
   var midLen = Math.floor(len / 2);
   var doNothing = 0; // index until where to do nothing
 
+  var withinScript = false; // marks a state of being between <script> and </script>
+
   var withinStyle = false; // flag used to instruct content after <style> to toggle type="css"
 
   var withinStyleComment = false; // opts.*CbLookahead allows to request "x"-many tokens "from the future"
@@ -4386,7 +4388,7 @@ function tokenizer(str, originalOpts) {
             doNothing = _i;
           }
         }
-      } else if (startsHtmlComment(str, _i, token, layers)) {
+      } else if (!withinScript && startsHtmlComment(str, _i, token, layers)) {
         //
         //
         //
@@ -4417,7 +4419,7 @@ function tokenizer(str, originalOpts) {
         if (withinStyle) {
           withinStyle = false;
         }
-      } else if (startsCssComment(str, _i, token, layers, withinStyle)) {
+      } else if (!withinScript && startsCssComment(str, _i, token, layers, withinStyle)) {
         //
         //
         //
@@ -4445,7 +4447,7 @@ function tokenizer(str, originalOpts) {
         }
 
         doNothing = _i + 2;
-      } else if ( // if we encounter two consecutive characters of guessed lump
+      } else if (!withinScript && ( // if we encounter two consecutive characters of guessed lump
       typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && // current character is among guessed lump's characters
       layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && // ...and the following character too...
       layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && // since we "jump" over layers, that is, passed quotes
@@ -4481,7 +4483,7 @@ function tokenizer(str, originalOpts) {
       //   we could be here - notice quotes wrapping all around
       //
       !lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || // or we're within an attribute (so quotes are HTML tag's not esp tag's)
-      attrib && attrib.attribStarts && !attrib.attribEnds)) {
+      attrib && attrib.attribStarts && !attrib.attribEnds))) {
         //
         //
         //
@@ -4751,7 +4753,7 @@ function tokenizer(str, originalOpts) {
 
           doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
         }
-      } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && // insurance against rogue extra closing curlies:
+      } else if (!withinScript && withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && // insurance against rogue extra closing curlies:
       // .a{x}}
       // don't start new rule at closing curlie!
       !"{}".includes(str[_i]) && ( // if at rule starts right after <style>, if we're on "@"
@@ -5566,6 +5568,10 @@ function tokenizer(str, originalOpts) {
       if (!str[_i] || !charSuitableForTagName(str[_i])) {
         token.tagNameEndsAt = _i;
         token.tagName = str.slice(token.tagNameStartsAt, _i).toLowerCase();
+
+        if (token.tagName && token.tagName.toLowerCase() === "script") {
+          withinScript = !withinScript;
+        }
 
         if (token.tagName === "xml" && token.closing && !token.kind) {
           token.kind = "xml";

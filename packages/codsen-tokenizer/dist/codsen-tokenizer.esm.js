@@ -265,6 +265,7 @@ function tokenizer(str, originalOpts) {
   const len = str.length;
   const midLen = Math.floor(len / 2);
   let doNothing = 0;
+  let withinScript = false;
   let withinStyle = false;
   let withinStyleComment = false;
   const tagStash = [];
@@ -833,7 +834,7 @@ function tokenizer(str, originalOpts) {
             doNothing = i;
           }
         }
-      } else if (startsHtmlComment(str, i, token, layers)) {
+      } else if (!withinScript && startsHtmlComment(str, i, token, layers)) {
         if (token.start != null) {
           dumpCurrentToken(token, i);
         }
@@ -851,7 +852,7 @@ function tokenizer(str, originalOpts) {
         if (withinStyle) {
           withinStyle = false;
         }
-      } else if (startsCssComment(str, i, token, layers, withinStyle)) {
+      } else if (!withinScript && startsCssComment(str, i, token, layers, withinStyle)) {
         if (token.start != null) {
           dumpCurrentToken(token, i);
         }
@@ -866,7 +867,7 @@ function tokenizer(str, originalOpts) {
           withinStyleComment = false;
         }
         doNothing = i + 2;
-      } else if (
+      } else if (!withinScript && (
       typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 &&
       layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[i]) &&
       layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[i + 1]) &&
@@ -876,7 +877,7 @@ function tokenizer(str, originalOpts) {
       str.indexOf(layers[lastEspLayerObjIdx + 1].value, i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, i))])) ||
       startsEsp(str, i, token, layers, withinStyle) && (
       !lastLayerIs("simple") || ![`'`, `"`].includes(layers[~-layers.length].value) ||
-      attrib && attrib.attribStarts && !attrib.attribEnds)) {
+      attrib && attrib.attribStarts && !attrib.attribEnds))) {
         const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
           let lengthOfClosingEspChunk;
@@ -1011,7 +1012,7 @@ function tokenizer(str, originalOpts) {
           }
           doNothing = i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
         }
-      } else if (withinStyle && !withinStyleComment && str[i] && str[i].trim() &&
+      } else if (!withinScript && withinStyle && !withinStyleComment && str[i] && str[i].trim() &&
       !`{}`.includes(str[i]) && (
       !token.type ||
       ["text"].includes(token.type))) {
@@ -1480,6 +1481,9 @@ function tokenizer(str, originalOpts) {
       if (!str[i] || !charSuitableForTagName(str[i])) {
         token.tagNameEndsAt = i;
         token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
+        if (token.tagName && token.tagName.toLowerCase() === "script") {
+          withinScript = !withinScript;
+        }
         if (token.tagName === "xml" && token.closing && !token.kind) {
           token.kind = "xml";
         }
