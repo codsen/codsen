@@ -12264,6 +12264,7 @@ function tokenizer(str, originalOpts) {
   var len = str.length;
   var midLen = Math.floor(len / 2);
   var doNothing = 0;
+  var withinScript = false;
   var withinStyle = false;
   var withinStyleComment = false;
   var tagStash = [];
@@ -12908,7 +12909,7 @@ function tokenizer(str, originalOpts) {
             doNothing = _i;
           }
         }
-      } else if (startsHtmlComment(str, _i, token, layers)) {
+      } else if (!withinScript && startsHtmlComment(str, _i, token, layers)) {
         if (token.start != null) {
           dumpCurrentToken(token, _i);
         }
@@ -12929,7 +12930,7 @@ function tokenizer(str, originalOpts) {
         if (withinStyle) {
           withinStyle = false;
         }
-      } else if (startsCssComment(str, _i, token, layers, withinStyle)) {
+      } else if (!withinScript && startsCssComment(str, _i, token, layers, withinStyle)) {
         if (token.start != null) {
           dumpCurrentToken(token, _i);
         }
@@ -12947,7 +12948,7 @@ function tokenizer(str, originalOpts) {
         }
 
         doNothing = _i + 2;
-      } else if (typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && !(layers[lastEspLayerObjIdx + 1] && "'\"".includes(layers[lastEspLayerObjIdx + 1].value) && str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i))])) || startsEsp(str, _i, token, layers, withinStyle) && (!lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnds)) {
+      } else if (!withinScript && (typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && !(layers[lastEspLayerObjIdx + 1] && "'\"".includes(layers[lastEspLayerObjIdx + 1].value) && str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i))])) || startsEsp(str, _i, token, layers, withinStyle) && (!lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnds))) {
         var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
 
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
@@ -13099,7 +13100,7 @@ function tokenizer(str, originalOpts) {
 
           doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
         }
-      } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && (!token.type || ["text"].includes(token.type))) {
+      } else if (!withinScript && withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && (!token.type || ["text"].includes(token.type))) {
         if (token.type) {
           dumpCurrentToken(token, _i);
         }
@@ -13111,7 +13112,12 @@ function tokenizer(str, originalOpts) {
         });
       } else if (!token.type) {
         initToken("text", _i);
-        doNothing = _i;
+
+        if (withinScript && str.indexOf("</script>", _i)) {
+          doNothing = str.indexOf("</script>", _i);
+        } else {
+          doNothing = _i;
+        }
       }
     }
 
@@ -13575,6 +13581,10 @@ function tokenizer(str, originalOpts) {
       if (!str[_i] || !charSuitableForTagName(str[_i])) {
         token.tagNameEndsAt = _i;
         token.tagName = str.slice(token.tagNameStartsAt, _i).toLowerCase();
+
+        if (token.tagName && token.tagName.toLowerCase() === "script") {
+          withinScript = !withinScript;
+        }
 
         if (token.tagName === "xml" && token.closing && !token.kind) {
           token.kind = "xml";
@@ -14857,7 +14867,7 @@ var defineLazyProp = function defineLazyProp(object, propertyName, fn) {
 
 var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate-arabic-form-shaping", "bad-character-activate-symmetric-swapping", "bad-character-application-program-command", "bad-character-backspace", "bad-character-bell", "bad-character-break-permitted-here", "bad-character-cancel", "bad-character-cancel-character", "bad-character-character-tabulation-set", "bad-character-character-tabulation-with-justification", "bad-character-control-0080", "bad-character-control-0081", "bad-character-control-0084", "bad-character-control-0099", "bad-character-control-sequence-introducer", "bad-character-data-link-escape", "bad-character-delete", "bad-character-device-control-four", "bad-character-device-control-one", "bad-character-device-control-string", "bad-character-device-control-three", "bad-character-device-control-two", "bad-character-em-quad", "bad-character-em-space", "bad-character-en-quad", "bad-character-en-space", "bad-character-end-of-medium", "bad-character-end-of-protected-area", "bad-character-end-of-selected-area", "bad-character-end-of-text", "bad-character-end-of-transmission", "bad-character-end-of-transmission-block", "bad-character-enquiry", "bad-character-escape", "bad-character-figure-space", "bad-character-first-strong-isolate", "bad-character-form-feed", "bad-character-four-per-em-space", "bad-character-function-application", "bad-character-hair-space", "bad-character-ideographic-space", "bad-character-information-separator-four", "bad-character-information-separator-one", "bad-character-information-separator-three", "bad-character-information-separator-two", "bad-character-inhibit-arabic-form-shaping", "bad-character-inhibit-symmetric-swapping", "bad-character-interlinear-annotation-anchor", "bad-character-interlinear-annotation-separator", "bad-character-interlinear-annotation-terminator", "bad-character-invisible-plus", "bad-character-invisible-separator", "bad-character-invisible-times", "bad-character-left-to-right-embedding", "bad-character-left-to-right-isolate", "bad-character-left-to-right-mark", "bad-character-left-to-right-override", "bad-character-line-separator", "bad-character-line-tabulation", "bad-character-line-tabulation-set", "bad-character-medium-mathematical-space", "bad-character-message-waiting", "bad-character-narrow-no-break-space", "bad-character-national-digit-shapes", "bad-character-negative-acknowledge", "bad-character-next-line", "bad-character-no-break-here", "bad-character-nominal-digit-shapes", "bad-character-non-breaking-space", "bad-character-null", "bad-character-ogham-space-mark", "bad-character-operating-system-command", "bad-character-paragraph-separator", "bad-character-partial-line-backward", "bad-character-partial-line-forward", "bad-character-pop-directional-formatting", "bad-character-pop-directional-isolate", "bad-character-private-message", "bad-character-private-use-1", "bad-character-private-use-2", "bad-character-punctuation-space", "bad-character-replacement-character", "bad-character-reverse-line-feed", "bad-character-right-to-left-embedding", "bad-character-right-to-left-isolate", "bad-character-right-to-left-mark", "bad-character-right-to-left-override", "bad-character-set-transmit-state", "bad-character-shift-in", "bad-character-shift-out", "bad-character-single-character-introducer", "bad-character-single-shift-three", "bad-character-single-shift-two", "bad-character-six-per-em-space", "bad-character-soft-hyphen", "bad-character-start-of-heading", "bad-character-start-of-protected-area", "bad-character-start-of-selected-area", "bad-character-start-of-string", "bad-character-start-of-text", "bad-character-string-terminator", "bad-character-substitute", "bad-character-synchronous-idle", "bad-character-tabulation", "bad-character-thin-space", "bad-character-three-per-em-space", "bad-character-word-joiner", "bad-character-zero-width-joiner", "bad-character-zero-width-no-break-space", "bad-character-zero-width-non-joiner", "bad-character-zero-width-space"];
 
-var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
+var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-between-slash-and-bracket", "tag-table", "tag-void-frontal-slash", "tag-void-slash"];
 
 var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag"];
 
@@ -18570,6 +18580,157 @@ function tagSpaceBetweenSlashAndBracket(context) {
             ranges: [[idxFrom, node.end - 1]]
           }
         });
+      }
+    }
+  };
+}
+
+// rule: tag-table
+// checks the sanity in table structures
+// -----------------------------------------------------------------------------
+// it flags up any <bold> tags
+function tagTable(context) {
+  return {
+    tag: function tag(node) {
+
+      if (node.tagName === "table" && !node.closing) {
+
+        if (node.children && node.children.length) {
+          var extracted = [];
+          var orderNumber = 0; // flag to check the correct sequence of opening and closing tags
+
+          var closingTrMet = true;
+
+          for (var i = 0, len1 = node.children.length; i < len1; i++) {
+
+            if (node.children[i].type === "tag" && node.children[i].tagName === "tr") { // if it's a closing TR, flip the flag
+
+              if (node.children[i].closing) {
+
+                if (!closingTrMet) {
+                  closingTrMet = true;
+                } else {
+                  return;
+                }
+              } else {
+
+                if (closingTrMet) {
+                  closingTrMet = false;
+                } else {
+                  return;
+                }
+                var finding = {
+                  orderNumber: orderNumber,
+                  idx: i,
+                  tds: []
+                };
+                orderNumber++; // extract all TD's from within
+
+                if (node.children[i].children && node.children[i].children.length) {
+                  var closingTdMet = true;
+
+                  for (var y = 0, len2 = node.children[i].children.length; y < len2; y++) {
+
+                    if (node.children[i].children[y].type === "tag" && node.children[i].children[y].tagName === "td") {
+
+                      if (node.children[i].children[y].closing) {
+
+                        if (!closingTdMet) {
+                          closingTdMet = true;
+                        } else {
+                          return;
+                        }
+                      } else {
+
+                        if (closingTdMet) {
+                          closingTdMet = false;
+                        } else {
+                          return;
+                        }
+                        finding.tds.push(y);
+                      }
+                    }
+                  }
+
+                  if (!closingTdMet) {
+                    return;
+                  }
+                }
+                extracted.push(finding);
+              }
+            }
+          } // tags with let's say missing clashes will be nested further:
+          // <table><tr><td><tr><td><td></table>
+          // so the ending closingTrMet will be false, not true
+
+          if (!closingTrMet) {
+            return;
+          }
+
+          if (extracted.length) {
+            var spans = extracted.map(function (findingObj) {
+              return findingObj.tds.reduce(function (acc, curr) {
+                var temp = 0;
+
+                if ( // if there's colspan on this td, use that value
+                node.children[findingObj.idx].children[curr].attribs && node.children[findingObj.idx].children[curr].attribs.length && node.children[findingObj.idx].children[curr].attribs.some(function (attrib) {
+                  return attrib.attribName === "colspan" && attrib.attribValue && attrib.attribValue.length && attrib.attribValue.some(function (valObjNode) {
+                    if (valObjNode.type === "text" && Number.isInteger(+valObjNode.value)) {
+                      // drill through and also extract the value
+                      temp = +valObjNode.value;
+                      return true;
+                    }
+
+                    return false;
+                  });
+                })) {
+                  return acc + temp;
+                }
+
+                return acc + 1;
+              }, 0);
+            });
+            var uniqueSpans = new Set(spans); // console.log(
+            //   `268 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`uniqueSpans`}\u001b[${39}m`} = ${JSON.stringify(
+            //     [...uniqueSpans],
+            //     null,
+            //     4
+            //   )}`
+            // );
+
+            var tdCounts = extracted.map(function (e) {
+              return e.tds.length;
+            }); // The "uniqueSpans" takes into account colspan attr values, if any - this is
+            // the absolute measurement, if everything is all right. If it's not allright,
+            // we start from the bottom, evaluating TD's and colspan attributes and then
+            // finding out what's wrong
+
+            if (uniqueSpans.size && uniqueSpans.size !== 1) {
+              var tdMaxCountPerRow = Math.max.apply(Math, tdCounts); // 1. rows where there's lesser amount of TD's and possibly colspan is missing/wrong
+
+              extracted // rows with lesser
+              .filter(function (e) {
+                return e.tds.length !== tdMaxCountPerRow;
+              }).forEach(function (e) {
+
+                if (e.tds.length === spans[e.orderNumber] && e.tds.length === 1) { // position to insert the attribute is to the left of tag token's end,
+                  // provided it ends with bracket!
+
+                  var pos = node.children[e.idx].children[e.tds[0]].end - 1;
+                  context.report({
+                    ruleId: "tag-table",
+                    message: "Add a collspan.",
+                    idxFrom: node.children[e.idx].children[e.tds[0]].start,
+                    idxTo: node.children[e.idx].children[e.tds[0]].end,
+                    fix: {
+                      ranges: [[pos, pos, " colspan=\"" + tdMaxCountPerRow + "\""]]
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
       }
     }
   };
@@ -41948,6 +42109,9 @@ defineLazyProp(builtInRules, "tag-space-before-closing-bracket", function () {
 });
 defineLazyProp(builtInRules, "tag-space-between-slash-and-bracket", function () {
   return tagSpaceBetweenSlashAndBracket;
+});
+defineLazyProp(builtInRules, "tag-table", function () {
+  return tagTable;
 });
 defineLazyProp(builtInRules, "tag-closing-backslash", function () {
   return tagClosingBackslash;

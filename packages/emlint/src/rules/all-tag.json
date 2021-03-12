@@ -10,6 +10,7 @@
   "tag-space-after-opening-bracket",
   "tag-space-before-closing-bracket",
   "tag-space-between-slash-and-bracket",
+  "tag-table",
   "tag-void-frontal-slash",
   "tag-void-slash"
 ]

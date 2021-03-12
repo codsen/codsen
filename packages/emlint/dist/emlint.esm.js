@@ -35,7 +35,7 @@ import op from 'object-path';
 
 var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate-arabic-form-shaping", "bad-character-activate-symmetric-swapping", "bad-character-application-program-command", "bad-character-backspace", "bad-character-bell", "bad-character-break-permitted-here", "bad-character-cancel", "bad-character-cancel-character", "bad-character-character-tabulation-set", "bad-character-character-tabulation-with-justification", "bad-character-control-0080", "bad-character-control-0081", "bad-character-control-0084", "bad-character-control-0099", "bad-character-control-sequence-introducer", "bad-character-data-link-escape", "bad-character-delete", "bad-character-device-control-four", "bad-character-device-control-one", "bad-character-device-control-string", "bad-character-device-control-three", "bad-character-device-control-two", "bad-character-em-quad", "bad-character-em-space", "bad-character-en-quad", "bad-character-en-space", "bad-character-end-of-medium", "bad-character-end-of-protected-area", "bad-character-end-of-selected-area", "bad-character-end-of-text", "bad-character-end-of-transmission", "bad-character-end-of-transmission-block", "bad-character-enquiry", "bad-character-escape", "bad-character-figure-space", "bad-character-first-strong-isolate", "bad-character-form-feed", "bad-character-four-per-em-space", "bad-character-function-application", "bad-character-hair-space", "bad-character-ideographic-space", "bad-character-information-separator-four", "bad-character-information-separator-one", "bad-character-information-separator-three", "bad-character-information-separator-two", "bad-character-inhibit-arabic-form-shaping", "bad-character-inhibit-symmetric-swapping", "bad-character-interlinear-annotation-anchor", "bad-character-interlinear-annotation-separator", "bad-character-interlinear-annotation-terminator", "bad-character-invisible-plus", "bad-character-invisible-separator", "bad-character-invisible-times", "bad-character-left-to-right-embedding", "bad-character-left-to-right-isolate", "bad-character-left-to-right-mark", "bad-character-left-to-right-override", "bad-character-line-separator", "bad-character-line-tabulation", "bad-character-line-tabulation-set", "bad-character-medium-mathematical-space", "bad-character-message-waiting", "bad-character-narrow-no-break-space", "bad-character-national-digit-shapes", "bad-character-negative-acknowledge", "bad-character-next-line", "bad-character-no-break-here", "bad-character-nominal-digit-shapes", "bad-character-non-breaking-space", "bad-character-null", "bad-character-ogham-space-mark", "bad-character-operating-system-command", "bad-character-paragraph-separator", "bad-character-partial-line-backward", "bad-character-partial-line-forward", "bad-character-pop-directional-formatting", "bad-character-pop-directional-isolate", "bad-character-private-message", "bad-character-private-use-1", "bad-character-private-use-2", "bad-character-punctuation-space", "bad-character-replacement-character", "bad-character-reverse-line-feed", "bad-character-right-to-left-embedding", "bad-character-right-to-left-isolate", "bad-character-right-to-left-mark", "bad-character-right-to-left-override", "bad-character-set-transmit-state", "bad-character-shift-in", "bad-character-shift-out", "bad-character-single-character-introducer", "bad-character-single-shift-three", "bad-character-single-shift-two", "bad-character-six-per-em-space", "bad-character-soft-hyphen", "bad-character-start-of-heading", "bad-character-start-of-protected-area", "bad-character-start-of-selected-area", "bad-character-start-of-string", "bad-character-start-of-text", "bad-character-string-terminator", "bad-character-substitute", "bad-character-synchronous-idle", "bad-character-tabulation", "bad-character-thin-space", "bad-character-three-per-em-space", "bad-character-word-joiner", "bad-character-zero-width-joiner", "bad-character-zero-width-no-break-space", "bad-character-zero-width-non-joiner", "bad-character-zero-width-space"];
 
-var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
+var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-between-slash-and-bracket", "tag-table", "tag-void-frontal-slash", "tag-void-slash"];
 
 var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag"];
 
@@ -2733,6 +2733,107 @@ function tagSpaceBetweenSlashAndBracket(context) {
             ranges: [[idxFrom, node.end - 1]]
           }
         });
+      }
+    }
+  };
+}
+
+function tagTable(context) {
+  return {
+    tag(node) {
+      if (node.tagName === "table" && !node.closing) {
+        if (node.children && node.children.length) {
+          const extracted = [];
+          let orderNumber = 0;
+          let closingTrMet = true;
+          for (let i = 0, len1 = node.children.length; i < len1; i++) {
+            if (node.children[i].type === "tag" && node.children[i].tagName === "tr") {
+              if (node.children[i].closing) {
+                if (!closingTrMet) {
+                  closingTrMet = true;
+                } else {
+                  return;
+                }
+              } else {
+                if (closingTrMet) {
+                  closingTrMet = false;
+                } else {
+                  return;
+                }
+                const finding = {
+                  orderNumber,
+                  idx: i,
+                  tds: []
+                };
+                orderNumber++;
+                if (node.children[i].children && node.children[i].children.length) {
+                  let closingTdMet = true;
+                  for (let y = 0, len2 = node.children[i].children.length; y < len2; y++) {
+                    if (node.children[i].children[y].type === "tag" && node.children[i].children[y].tagName === "td") {
+                      if (node.children[i].children[y].closing) {
+                        if (!closingTdMet) {
+                          closingTdMet = true;
+                        } else {
+                          return;
+                        }
+                      } else {
+                        if (closingTdMet) {
+                          closingTdMet = false;
+                        } else {
+                          return;
+                        }
+                        finding.tds.push(y);
+                      }
+                    }
+                  }
+                  if (!closingTdMet) {
+                    return;
+                  }
+                }
+                extracted.push(finding);
+              }
+            }
+          }
+          if (!closingTrMet) {
+            return;
+          }
+          if (extracted.length) {
+            const spans = extracted.map(findingObj => findingObj.tds.reduce((acc, curr) => {
+              let temp = 0;
+              if (
+              node.children[findingObj.idx].children[curr].attribs && node.children[findingObj.idx].children[curr].attribs.length && node.children[findingObj.idx].children[curr].attribs.some(attrib => attrib.attribName === "colspan" && attrib.attribValue && attrib.attribValue.length && attrib.attribValue.some(valObjNode => {
+                if (valObjNode.type === "text" && Number.isInteger(+valObjNode.value)) {
+                  temp = +valObjNode.value;
+                  return true;
+                }
+                return false;
+              }))) {
+                return acc + temp;
+              }
+              return acc + 1;
+            }, 0));
+            const uniqueSpans = new Set(spans);
+            const tdCounts = extracted.map(e => e.tds.length);
+            if (uniqueSpans.size && uniqueSpans.size !== 1) {
+              const tdMaxCountPerRow = Math.max(...tdCounts);
+              extracted
+              .filter(e => e.tds.length !== tdMaxCountPerRow).forEach(e => {
+                if (e.tds.length === spans[e.orderNumber] && e.tds.length === 1) {
+                  const pos = node.children[e.idx].children[e.tds[0]].end - 1;
+                  context.report({
+                    ruleId: "tag-table",
+                    message: `Add a collspan.`,
+                    idxFrom: node.children[e.idx].children[e.tds[0]].start,
+                    idxTo: node.children[e.idx].children[e.tds[0]].end,
+                    fix: {
+                      ranges: [[pos, pos, ` colspan="${tdMaxCountPerRow}"`]]
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
       }
     }
   };
@@ -9164,6 +9265,7 @@ defineLazyProp(builtInRules, "bad-character-replacement-character", () => badCha
 defineLazyProp(builtInRules, "tag-space-after-opening-bracket", () => tagSpaceAfterOpeningBracket);
 defineLazyProp(builtInRules, "tag-space-before-closing-bracket", () => tagSpaceBeforeClosingBracket);
 defineLazyProp(builtInRules, "tag-space-between-slash-and-bracket", () => tagSpaceBetweenSlashAndBracket);
+defineLazyProp(builtInRules, "tag-table", () => tagTable);
 defineLazyProp(builtInRules, "tag-closing-backslash", () => tagClosingBackslash);
 defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
 defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
