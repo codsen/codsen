@@ -337,6 +337,14 @@ function tagTable(context: Linter): RuleObjType {
                         ranges: [[pos, pos, ` colspan="${tdMaxCountPerRow}"`]],
                       },
                     });
+                  } else {
+                    context.report({
+                      ruleId: "tag-table",
+                      message: `Should contain ${tdMaxCountPerRow} td's.`,
+                      idxFrom: node.children[e.idx].start,
+                      idxTo: node.children[e.idx].end,
+                      fix: null,
+                    });
                   }
                 });
             }

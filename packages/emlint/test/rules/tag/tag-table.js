@@ -171,7 +171,7 @@ tap.test(`02 - off`, (t) => {
   t.end();
 });
 
-tap.test(`03 - warn`, (t) => {
+tap.test(`03 - one col, two cols`, (t) => {
   const str = `<table>
   <tr>
     <td>
@@ -223,6 +223,41 @@ tap.test(`03 - warn`, (t) => {
       },
     ],
     "03.02"
+  );
+  t.end();
+});
+
+tap.test(`04 - two cols, three cols`, (t) => {
+  const str = `<table>
+  <tr>
+    <td>1</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+  </tr>
+</table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  // can't fix
+  t.equal(applyFixes(str, messages), str, "04.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 10,
+        idxTo: 14,
+        message: `Should contain 3 td's.`,
+        fix: null,
+      },
+    ],
+    "04.02"
   );
   t.end();
 });
