@@ -2713,15 +2713,19 @@ function tagTable(context) {
             return;
           }
           if (extracted.length) {
+            var bail = false;
             var spans = extracted.map(function (findingObj) {
               return findingObj.tds.reduce(function (acc, curr) {
                 var temp = 0;
                 if (
                 node.children[findingObj.idx].children[curr].attribs && node.children[findingObj.idx].children[curr].attribs.length && node.children[findingObj.idx].children[curr].attribs.some(function (attrib) {
                   return attrib.attribName === "colspan" && attrib.attribValue && attrib.attribValue.length && attrib.attribValue.some(function (valObjNode) {
-                    if (valObjNode.type === "text" && Number.isInteger(+valObjNode.value)) {
-                      temp = +valObjNode.value;
-                      return true;
+                    if (valObjNode.type === "text") {
+                      if (Number.isInteger(+valObjNode.value)) {
+                        temp = +valObjNode.value;
+                        return true;
+                      }
+                      bail = true;
                     }
                     return false;
                   });
@@ -2731,6 +2735,9 @@ function tagTable(context) {
                 return acc + 1;
               }, 0);
             });
+            if (bail) {
+              return;
+            }
             var uniqueSpans = new Set(spans);
             var tdCounts = extracted.map(function (e) {
               return e.tds.length;
@@ -2741,17 +2748,35 @@ function tagTable(context) {
               .filter(function (e) {
                 return e.tds.length !== tdMaxCountPerRow;
               }).forEach(function (e) {
-                if (e.tds.length === spans[e.orderNumber] && e.tds.length === 1) {
-                  var pos = node.children[e.idx].children[e.tds[0]].end - 1;
-                  context.report({
-                    ruleId: "tag-table",
-                    message: "Add a collspan.",
-                    idxFrom: node.children[e.idx].children[e.tds[0]].start,
-                    idxTo: node.children[e.idx].children[e.tds[0]].end,
-                    fix: {
-                      ranges: [[pos, pos, " colspan=\"" + tdMaxCountPerRow + "\""]]
+                if (e.tds.length === 1) {
+                  if (e.tds.length === spans[e.orderNumber]) {
+                    var pos = node.children[e.idx].children[e.tds[0]].end - 1;
+                    context.report({
+                      ruleId: "tag-table",
+                      message: "Add a collspan.",
+                      idxFrom: node.children[e.idx].children[e.tds[0]].start,
+                      idxTo: node.children[e.idx].children[e.tds[0]].end,
+                      fix: {
+                        ranges: [[pos, pos, " colspan=\"" + tdMaxCountPerRow + "\""]]
+                      }
+                    });
+                  } else {
+                    var attribsOfCulpridTd = node.children[e.idx].children[e.tds[0]].attribs;
+                    for (var z = 0, len3 = attribsOfCulpridTd.length; z < len3; z++) {
+                      if (attribsOfCulpridTd[z].attribName === "colspan") {
+                        context.report({
+                          ruleId: "tag-table",
+                          message: "Should be colspan=\"" + tdMaxCountPerRow + "\".",
+                          idxFrom: attribsOfCulpridTd[z].attribStarts,
+                          idxTo: attribsOfCulpridTd[z].attribEnds,
+                          fix: {
+                            ranges: [[attribsOfCulpridTd[z].attribValueStartsAt, attribsOfCulpridTd[z].attribValueEndsAt, "" + tdMaxCountPerRow]]
+                          }
+                        });
+                        break;
+                      }
                     }
-                  });
+                  }
                 } else {
                   context.report({
                     ruleId: "tag-table",
@@ -2759,6 +2784,28 @@ function tagTable(context) {
                     idxFrom: node.children[e.idx].start,
                     idxTo: node.children[e.idx].end,
                     fix: null
+                  });
+                }
+              });
+              tdCounts.forEach(function (tdCount, idx) {
+                if (
+                tdCount === tdMaxCountPerRow &&
+                spans[idx] > tdCount) {
+                  extracted[idx].tds.forEach(function (tdIdx) {
+                    var currentTd = node.children[extracted[idx].idx].children[tdIdx];
+                    currentTd.attribs.filter(function (attrib) {
+                      return attrib.attribName === "colspan";
+                    }).forEach(function (attrib) {
+                      context.report({
+                        ruleId: "tag-table",
+                        message: "Remove the colspan.",
+                        idxFrom: attrib.attribStarts,
+                        idxTo: attrib.attribEnds,
+                        fix: {
+                          ranges: [[attrib.attribLeft + 1, attrib.attribEnds]]
+                        }
+                      });
+                    });
                   });
                 }
               });

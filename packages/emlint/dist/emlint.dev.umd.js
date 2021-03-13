@@ -18668,6 +18668,7 @@ function tagTable(context) {
           }
 
           if (extracted.length) {
+            var bail = false;
             var spans = extracted.map(function (findingObj) {
               return findingObj.tds.reduce(function (acc, curr) {
                 var temp = 0;
@@ -18675,10 +18676,14 @@ function tagTable(context) {
                 if ( // if there's colspan on this td, use that value
                 node.children[findingObj.idx].children[curr].attribs && node.children[findingObj.idx].children[curr].attribs.length && node.children[findingObj.idx].children[curr].attribs.some(function (attrib) {
                   return attrib.attribName === "colspan" && attrib.attribValue && attrib.attribValue.length && attrib.attribValue.some(function (valObjNode) {
-                    if (valObjNode.type === "text" && Number.isInteger(+valObjNode.value)) {
-                      // drill through and also extract the value
-                      temp = +valObjNode.value;
-                      return true;
+                    if (valObjNode.type === "text") {
+                      if (Number.isInteger(+valObjNode.value)) {
+                        // drill through and also extract the value
+                        temp = +valObjNode.value;
+                        return true;
+                      }
+
+                      bail = true;
                     }
 
                     return false;
@@ -18690,6 +18695,10 @@ function tagTable(context) {
                 return acc + 1;
               }, 0);
             });
+
+            if (bail) {
+              return;
+            }
             var uniqueSpans = new Set(spans); // console.log(
             //   `268 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`uniqueSpans`}\u001b[${39}m`} = ${JSON.stringify(
             //     [...uniqueSpans],
@@ -18713,19 +18722,40 @@ function tagTable(context) {
                 return e.tds.length !== tdMaxCountPerRow;
               }).forEach(function (e) {
 
-                if (e.tds.length === spans[e.orderNumber] && e.tds.length === 1) { // position to insert the attribute is to the left of tag token's end,
-                  // provided it ends with bracket!
+                if (e.tds.length === 1) {
 
-                  var pos = node.children[e.idx].children[e.tds[0]].end - 1;
-                  context.report({
-                    ruleId: "tag-table",
-                    message: "Add a collspan.",
-                    idxFrom: node.children[e.idx].children[e.tds[0]].start,
-                    idxTo: node.children[e.idx].children[e.tds[0]].end,
-                    fix: {
-                      ranges: [[pos, pos, " colspan=\"" + tdMaxCountPerRow + "\""]]
+                  if (e.tds.length === spans[e.orderNumber]) { // position to insert the attribute is to the left of tag token's end,
+                    // provided it ends with bracket!
+
+                    var pos = node.children[e.idx].children[e.tds[0]].end - 1;
+                    context.report({
+                      ruleId: "tag-table",
+                      message: "Add a collspan.",
+                      idxFrom: node.children[e.idx].children[e.tds[0]].start,
+                      idxTo: node.children[e.idx].children[e.tds[0]].end,
+                      fix: {
+                        ranges: [[pos, pos, " colspan=\"" + tdMaxCountPerRow + "\""]]
+                      }
+                    });
+                  } else {
+                    var attribsOfCulpridTd = node.children[e.idx].children[e.tds[0]].attribs;
+
+                    for (var z = 0, len3 = attribsOfCulpridTd.length; z < len3; z++) {
+
+                      if (attribsOfCulpridTd[z].attribName === "colspan") {
+                        context.report({
+                          ruleId: "tag-table",
+                          message: "Should be colspan=\"" + tdMaxCountPerRow + "\".",
+                          idxFrom: attribsOfCulpridTd[z].attribStarts,
+                          idxTo: attribsOfCulpridTd[z].attribEnds,
+                          fix: {
+                            ranges: [[attribsOfCulpridTd[z].attribValueStartsAt, attribsOfCulpridTd[z].attribValueEndsAt, "" + tdMaxCountPerRow]]
+                          }
+                        });
+                        break;
+                      }
                     }
-                  });
+                  }
                 } else {
                   context.report({
                     ruleId: "tag-table",
@@ -18733,6 +18763,49 @@ function tagTable(context) {
                     idxFrom: node.children[e.idx].start,
                     idxTo: node.children[e.idx].end,
                     fix: null
+                  });
+                }
+              }); // 2. td count can be even but there might be a wrong colspan:
+              //
+              // <table>
+              //   <tr>
+              //     <td colspan="2">1</td>
+              //         ^^^^^^^^^^^
+              //     <td>2</td>
+              //   </tr>
+              //   <tr>
+              //     <td>1</td>
+              //     <td>2</td>
+              //   </tr>
+              // </table>
+
+              tdCounts.forEach(function (tdCount, idx) {
+                if ( // td count is correct:
+                tdCount === tdMaxCountPerRow && // but because of colspans, the total span is off
+                spans[idx] > tdCount) {
+                  extracted[idx].tds.forEach(function (tdIdx) {
+                    // tdIdx
+                    var currentTd = node.children[extracted[idx].idx].children[tdIdx]; // console.log(
+                    //   `${`\u001b[${33}m${`currentTd`}\u001b[${39}m`} = ${JSON.stringify(
+                    //     currentTd,
+                    //     null,
+                    //     4
+                    //   )}`
+                    // );
+
+                    currentTd.attribs.filter(function (attrib) {
+                      return attrib.attribName === "colspan";
+                    }).forEach(function (attrib) {
+                      context.report({
+                        ruleId: "tag-table",
+                        message: "Remove the colspan.",
+                        idxFrom: attrib.attribStarts,
+                        idxTo: attrib.attribEnds,
+                        fix: {
+                          ranges: [[attrib.attribLeft + 1, attrib.attribEnds]]
+                        }
+                      });
+                    });
                   });
                 }
               });
