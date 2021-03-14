@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0](https://github.com/codsen/codsen/compare/emlint@4.3.0...emlint@4.4.0) (2021-03-14)
+
+
+### Bug Fixes
+
+* apply attr equal character checks on empty value too ([0f2732a](https://github.com/codsen/codsen/commit/0f2732aaa1d509ded8103fc3b6654c99097f2f1b))
+* improvements to `tag-table` ([1510cdf](https://github.com/codsen/codsen/commit/1510cdfef7d86f01001cdcc23b51c3efc6deb52e))
+* improvements to `tag-table` - fix the error by deleting a bad colspan ([a197d07](https://github.com/codsen/codsen/commit/a197d07e420b64317366e72b3fa056d29cf67a45))
+
+
+### Features
+
+* `attribute-malformed` does not enforce attr leading whitespace if HTML is not pure ([490d8bb](https://github.com/codsen/codsen/commit/490d8bbaf424490f72c4ede3d86b3b3b78b61bb4))
+* `attribute-malformed` to detect malformed leading space ([e054789](https://github.com/codsen/codsen/commit/e0547890b59bd9af50635227575785ada5fe854d))
+* improvements to `attribute-malformed` ([b60adbe](https://github.com/codsen/codsen/commit/b60adbe46a39725899b9f8e576b961fc6dbf93cd))
+* improvements to `attribute-malformed` ([a2e694f](https://github.com/codsen/codsen/commit/a2e694f18b3dcb338fcab94b105bd48a44716bd4))
+* improvements to `attribute-malformed` ([c2da4bb](https://github.com/codsen/codsen/commit/c2da4bb2e94fdfe2bd32070c812d885a3d7d53c1))
+* merge rule `tag-space-before-closing-slash` into `tag-space-before-closing-bracket` ([e66f448](https://github.com/codsen/codsen/commit/e66f448297e402a3b06b0a32d3e21ffb750e1d08))
+* new rule, `attribute-enforce-img-alt` ([a83236f](https://github.com/codsen/codsen/commit/a83236fba40313c1a850fbdcfcafac19a94b3deb))
+* new rule, `tag-table` ([035ac70](https://github.com/codsen/codsen/commit/035ac70491fbbc9b64226bb2054d680723eab449))
+
+
+
+
+
 ## 4.3.0 (2021-03-07)
 
 ### Bug Fixes

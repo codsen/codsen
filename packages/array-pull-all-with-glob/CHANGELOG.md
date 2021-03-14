@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.8](https://github.com/codsen/codsen/compare/array-pull-all-with-glob@5.0.7...array-pull-all-with-glob@5.0.8) (2021-03-14)
+
+**Note:** Version bump only for package array-pull-all-with-glob
+
+
+
+
+
 ## 5.0.1 (2021-01-28)
 
 ### Bug Fixes

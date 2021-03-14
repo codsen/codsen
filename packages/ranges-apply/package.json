@@ -1,6 +1,6 @@
 {
   "name": "ranges-apply",
-  "version": "5.0.7",
+  "version": "5.0.8",
   "description": "Take an array of string index ranges, delete/replace the string according to them",
   "keywords": [
     "delete",
@@ -75,7 +75,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "ranges-merge": "^7.0.7"
+    "ranges-merge": "^7.0.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -102,7 +102,7 @@
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.7",
+    "lect": "^0.16.8",
     "rollup": "^2.41.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0](https://github.com/codsen/codsen/compare/codsen-tokenizer@5.3.0...codsen-tokenizer@5.4.0) (2021-03-14)
+
+
+### Bug Fixes
+
+* further improvements to JS code recognition ([77273f0](https://github.com/codsen/codsen/commit/77273f004437b1568e1fe7708794ec320c1d6d79))
+* tackle a case where attribute's opening quotes are followed by slash + bracket ([876812e](https://github.com/codsen/codsen/commit/876812e5dfe0cc6b57cfe6be5a8cbef7127a1ebd))
+
+
+### Features
+
+* improved JS code recognition ([623f13e](https://github.com/codsen/codsen/commit/623f13e7be9365b46e74546886472163e7d7330f))
+
+
+
+
+
 ## 5.3.0 (2021-03-07)
 
 ### Bug Fixes

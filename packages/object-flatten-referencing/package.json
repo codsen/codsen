@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-referencing",
-  "version": "5.0.7",
+  "version": "5.0.8",
   "description": "Flatten complex nested objects according to a reference objects",
   "keywords": [
     "advanced",
@@ -81,7 +81,7 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^4.0.0",
-    "str-indexes-of-plus": "^3.0.7"
+    "str-indexes-of-plus": "^3.0.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -110,7 +110,7 @@
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.7",
+    "lect": "^0.16.8",
     "rollup": "^2.41.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

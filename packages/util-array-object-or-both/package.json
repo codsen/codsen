@@ -1,6 +1,6 @@
 {
   "name": "util-array-object-or-both",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Validate and normalise user choice: array, object or both?",
   "keywords": [
     "array",
@@ -103,7 +103,7 @@
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.7",
+    "lect": "^0.16.8",
     "rollup": "^2.41.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/codsen/codsen/compare/stristri@3.0.7...stristri@3.1.0) (2021-03-14)
+
+
+### Features
+
+* separate the inline <script> contents - add a new option, "js" ([b7aac4b](https://github.com/codsen/codsen/commit/b7aac4b0b8490fad2bd8ec8ec232ae4a8de7867c))
+
+
+
+
+
 ## 3.0.1 (2021-01-28)
 
 ### Bug Fixes

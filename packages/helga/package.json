@@ -1,6 +1,6 @@
 {
   "name": "helga",
-  "version": "1.3.7",
+  "version": "1.3.8",
   "description": "Your next best friend when editing complex nested code",
   "keywords": [
     "api",
@@ -105,7 +105,7 @@
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.7",
+    "lect": "^0.16.8",
     "rollup": "^2.41.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

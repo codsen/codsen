@@ -1,6 +1,6 @@
 {
   "name": "string-uglify",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "Shorten sets of strings deterministically, to be git-friendly",
   "keywords": [
     "class",
@@ -107,7 +107,7 @@
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.7",
+    "lect": "^0.16.8",
     "rollup": "^2.41.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
