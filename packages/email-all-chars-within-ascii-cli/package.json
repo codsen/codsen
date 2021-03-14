@@ -84,7 +84,7 @@
   "devDependencies": {
     "@types/lodash.pullall": "^4.2.6",
     "@types/lodash.uniq": "^4.5.6",
-    "eslint": "^7.21.0",
+    "eslint": "^7.22.0",
     "execa": "^5.0.0",
     "lect": "^0.16.7",
     "tap": "^14.11.0",
