@@ -3196,6 +3196,10 @@ function attributeMalformed(context) {
   const blacklist = ["doctype"];
   return {
     attribute(node) {
+      if (
+      node.attribName === undefined) {
+        return;
+      }
       if (!node.attribNameRecognised && node.attribName && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
         let somethingMatched = false;
         for (const oneOfAttribs of allHtmlAttribs.values()) {
@@ -3443,10 +3447,10 @@ function attributeMalformed(context) {
           }
         }
       }
-      if (node.attribLeft && node.attribStarts && (node.attribLeft + 2 !== node.attribStarts || context.str[node.attribStarts - 1] !== " ")) {
+      if (node.parent.pureHTML && node.attribLeft && node.attribStarts && (node.attribLeft + 2 !== node.attribStarts || context.str[node.attribStarts - 1] !== " ")) {
         context.report({
           ruleId: "attribute-malformed",
-          message: `Wrong closing quote.`,
+          message: `Add a space.`,
           idxFrom: node.attribStarts,
           idxTo: node.attribEnds,
           fix: {

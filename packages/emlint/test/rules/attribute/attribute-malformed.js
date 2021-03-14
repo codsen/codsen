@@ -918,7 +918,6 @@ tap.test(`45 - leading space missing`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  // will fix:
   t.equal(applyFixes(str, messages), fixed, "45");
   t.end();
 });
@@ -931,7 +930,6 @@ tap.test(`46 - two spaces`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  // will fix:
   t.equal(applyFixes(str, messages), fixed, "46");
   t.end();
 });
@@ -944,7 +942,17 @@ tap.test(`47 - one tab`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  // will fix:
   t.equal(applyFixes(str, messages), fixed, "47");
+  t.end();
+});
+
+tap.only(`48 - ESP tags present`, (t) => {
+  const str = `<span {% if x %}class="x" {% endif %}id="left">.</span>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "48");
   t.end();
 });

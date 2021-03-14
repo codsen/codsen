@@ -19453,8 +19453,14 @@ function attributeMalformed(context) {
   // the following tags will be processed separately
   var blacklist = ["doctype"];
   return {
-    attribute: function attribute(node) { // if Levenshtein distance is 1 and it's not among known attribute names,
+    attribute: function attribute(node) {
+
+      if ( // exclude ESP tags, comment tokens etc etc.
+      node.attribName === undefined) {
+        return;
+      } // if Levenshtein distance is 1 and it's not among known attribute names,
       // it's definitely mis-typed
+
 
       if (!node.attribNameRecognised && node.attribName && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
         var somethingMatched = false;
@@ -19754,13 +19760,15 @@ function attributeMalformed(context) {
             });
           }
         }
-      } // whitespace in front
+      } // check the whitespace in front of an attribute
+      // <span class="x"id="left">
+      //                ^
 
 
-      if (node.attribLeft && node.attribStarts && (node.attribLeft + 2 !== node.attribStarts || context.str[node.attribStarts - 1] !== " ")) {
+      if (node.parent.pureHTML && node.attribLeft && node.attribStarts && (node.attribLeft + 2 !== node.attribStarts || context.str[node.attribStarts - 1] !== " ")) {
         context.report({
           ruleId: "attribute-malformed",
-          message: "Wrong closing quote.",
+          message: "Add a space.",
           idxFrom: node.attribStarts,
           idxTo: node.attribEnds,
           fix: {
