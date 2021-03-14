@@ -1,7 +1,7 @@
 /**
  * is-media-descriptor
  * Is given string a valid media descriptor (including media query)?
- * Version: 3.0.7
+ * Version: 3.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-media-descriptor/
@@ -595,7 +595,7 @@ function loop(str, opts, res) {
   }
 }
 
-var version$1 = "3.0.7";
+var version$1 = "3.0.8";
 
 var version = version$1;
 var defaults = {

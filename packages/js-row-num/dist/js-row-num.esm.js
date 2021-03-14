@@ -1,7 +1,7 @@
 /**
  * js-row-num
  * Update all row numbers in all console.logs in JS code
- * Version: 4.0.7
+ * Version: 4.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/js-row-num/
@@ -10,7 +10,7 @@
 import { Ranges } from 'ranges-push';
 import { rApply } from 'ranges-apply';
 
-var version$1 = "4.0.7";
+var version$1 = "4.0.8";
 
 const version = version$1;
 const BACKSLASH = `\u005C`;

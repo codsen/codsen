@@ -1,7 +1,7 @@
 /**
  * all-named-html-entities
  * List of all named HTML entities
- * Version: 1.5.7
+ * Version: 1.5.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/all-named-html-entities/
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version$1 = "1.5.7";
+var version$1 = "1.5.8";
 
 var Aacute = "Á";
 var aacute = "á";

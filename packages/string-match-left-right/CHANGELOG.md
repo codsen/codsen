@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.0.2](https://github.com/codsen/codsen/compare/string-match-left-right@7.0.1...string-match-left-right@7.0.2) (2021-03-14)
-
-**Note:** Version bump only for package string-match-left-right
-
-
-
-
-
 ## 7.0.0 (2021-02-27)
 
 ### Bug Fixes

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.8](https://github.com/codsen/codsen/compare/ast-monkey-traverse@2.0.7...ast-monkey-traverse@2.0.8) (2021-03-14)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-
-
-
-
 ## 2.0.1 (2021-01-28)
 
 ### Bug Fixes

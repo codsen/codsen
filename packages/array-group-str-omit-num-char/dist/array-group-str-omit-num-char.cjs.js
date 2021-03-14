@@ -1,7 +1,7 @@
 /**
  * array-group-str-omit-num-char
  * Groups array of strings by omitting number characters
- * Version: 4.0.7
+ * Version: 4.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-group-str-omit-num-char/
@@ -20,7 +20,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
 
-var version$1 = "4.0.7";
+var version$1 = "4.0.8";
 
 var version = version$1;
 var defaults = {

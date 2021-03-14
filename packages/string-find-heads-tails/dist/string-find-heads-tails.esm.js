@@ -1,7 +1,7 @@
 /**
  * string-find-heads-tails
  * Finds where are arbitrary templating marker heads and tails located
- * Version: 4.0.7
+ * Version: 4.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-find-heads-tails/
@@ -10,7 +10,7 @@
 import { matchRightIncl } from 'string-match-left-right';
 import { arrayiffy } from 'arrayiffy-if-string';
 
-var version$1 = "4.0.7";
+var version$1 = "4.0.8";
 
 const version = version$1;
 function isObj(something) {

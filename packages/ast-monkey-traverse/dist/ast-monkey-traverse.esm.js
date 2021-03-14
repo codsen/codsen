@@ -1,7 +1,7 @@
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.7
+ * Version: 2.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -11,7 +11,7 @@ import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 import { parent } from 'ast-monkey-util';
 
-var version$1 = "2.0.7";
+var version$1 = "2.0.8";
 
 const version = version$1;
 function traverse(tree1, cb1) {

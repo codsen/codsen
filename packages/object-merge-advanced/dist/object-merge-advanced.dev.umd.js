@@ -1,7 +1,7 @@
 /**
  * object-merge-advanced
  * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 12.0.4
+ * Version: 12.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-merge-advanced/
@@ -3943,7 +3943,7 @@ var lodash_isdate = createCommonjsModule(function (module, exports) {
   module.exports = isDate;
 });
 
-var version$1 = "12.0.4";
+var version$1 = "12.0.5";
 
 var escapeStringRegexp = function escapeStringRegexp(string) {
   if (typeof string !== 'string') {
@@ -4106,7 +4106,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.7
+ * Version: 3.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/

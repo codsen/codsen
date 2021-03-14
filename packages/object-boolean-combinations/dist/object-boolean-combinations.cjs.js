@@ -1,7 +1,7 @@
 /**
  * object-boolean-combinations
  * Consumes a defaults object with booleans, generates all possible variations of it
- * Version: 4.0.7
+ * Version: 4.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-boolean-combinations/
@@ -23,7 +23,7 @@ var pull__default = /*#__PURE__*/_interopDefaultLegacy(pull);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
-var version$1 = "4.0.7";
+var version$1 = "4.0.8";
 
 var version = version$1;
 function combinations(originalIncomingObject, originalOverrideObject) {
