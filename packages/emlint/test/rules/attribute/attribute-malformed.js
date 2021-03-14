@@ -826,7 +826,7 @@ tap.test(`38`, (t) => {
   t.end();
 });
 
-tap.only(`39`, (t) => {
+tap.test(`39`, (t) => {
   const str = `<img alt=">`;
   const fixed = `<img alt="" />`;
   const messages = verify(t, str, {
@@ -893,5 +893,58 @@ tap.todo(`43`, (t) => {
   });
   // will fix:
   t.equal(applyFixes(str, messages), fixed, "43");
+  t.end();
+});
+
+// leading whitespace
+// -----------------------------------------------------------------------------
+
+tap.test(`44 - leading space present`, (t) => {
+  const str = `<span class="x" id="left">.</span>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  t.strictSame(messages, [], "44");
+  t.end();
+});
+
+tap.test(`45 - leading space missing`, (t) => {
+  const str = `<span class="x"id="left">.</span>`;
+  const fixed = `<span class="x" id="left">.</span>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "45");
+  t.end();
+});
+
+tap.test(`46 - two spaces`, (t) => {
+  const str = `<span class="x"  id="left">.</span>`;
+  const fixed = `<span class="x" id="left">.</span>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "46");
+  t.end();
+});
+
+tap.test(`47 - one tab`, (t) => {
+  const str = `<span class="x"\tid="left">.</span>`;
+  const fixed = `<span class="x" id="left">.</span>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "47");
   t.end();
 });

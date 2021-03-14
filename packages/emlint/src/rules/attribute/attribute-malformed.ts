@@ -580,6 +580,25 @@ function attributeMalformed(context: Linter): RuleObjType {
           }
         }
       }
+
+      // whitespace in front
+      if (
+        node.attribLeft &&
+        node.attribStarts &&
+        (node.attribLeft + 2 !== node.attribStarts ||
+          context.str[node.attribStarts - 1] !== " ")
+      ) {
+        console.log(`591 whitespace missing`);
+        context.report({
+          ruleId: "attribute-malformed",
+          message: `Add a space.`,
+          idxFrom: node.attribStarts,
+          idxTo: node.attribEnds,
+          fix: {
+            ranges: [[node.attribLeft + 1, node.attribStarts, " "]],
+          },
+        });
+      }
     },
   };
 }

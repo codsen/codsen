@@ -19754,6 +19754,19 @@ function attributeMalformed(context) {
             });
           }
         }
+      } // whitespace in front
+
+
+      if (node.attribLeft && node.attribStarts && (node.attribLeft + 2 !== node.attribStarts || context.str[node.attribStarts - 1] !== " ")) {
+        context.report({
+          ruleId: "attribute-malformed",
+          message: "Wrong closing quote.",
+          idxFrom: node.attribStarts,
+          idxTo: node.attribEnds,
+          fix: {
+            ranges: [[node.attribLeft + 1, node.attribStarts, " "]]
+          }
+        });
       }
     }
   };
