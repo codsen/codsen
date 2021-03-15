@@ -79,81 +79,19 @@ tap.test(`06 - off`, (t) => {
   t.end();
 });
 
-tap.test(`07 - warn`, (t) => {
+tap.test(`07`, (t) => {
   const str = `<a class"b" id'c'>`;
+  const fixed = `<a class="b" id="c">`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 1,
     },
   });
-  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`, "07.01");
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "attribute-malformed",
-        severity: 1,
-        idxFrom: 3,
-        idxTo: 11,
-        message: `Equal is missing.`,
-        fix: {
-          ranges: [[8, 8, "="]],
-        },
-      },
-      {
-        ruleId: "attribute-malformed",
-        severity: 1,
-        idxFrom: 12,
-        idxTo: 17,
-        message: `Equal is missing.`,
-        fix: {
-          ranges: [[14, 14, "="]],
-        },
-      },
-    ],
-    "07.02"
-  );
+  t.equal(applyFixes(str, messages), fixed, "07");
   t.end();
 });
 
-tap.test(`08 - warn`, (t) => {
-  const str = `<a class"b" id'c'>`;
-  const messages = verify(t, str, {
-    rules: {
-      "attribute-malformed": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`, "08.01");
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "attribute-malformed",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 11,
-        message: `Equal is missing.`,
-        fix: {
-          ranges: [[8, 8, "="]],
-        },
-      },
-      {
-        ruleId: "attribute-malformed",
-        severity: 2,
-        idxFrom: 12,
-        idxTo: 17,
-        message: `Equal is missing.`,
-        fix: {
-          ranges: [[14, 14, "="]],
-        },
-      },
-    ],
-    "08.02"
-  );
-  t.end();
-});
-
-tap.test(`09 - equal missing`, (t) => {
+tap.test(`08 - equal missing`, (t) => {
   const str = `<img alt""/>`;
   const fixed = `<img alt=""/>`;
   const messages = verify(t, str, {
@@ -162,21 +100,21 @@ tap.test(`09 - equal missing`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "09");
+  t.equal(applyFixes(str, messages), fixed, "08");
   t.end();
 });
 
 // mis-typed
 // -----------------------------------------------------------------------------
 
-tap.test(`10 - err`, (t) => {
+tap.test(`09 - err`, (t) => {
   const str = `<td clas="w100p">`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), `<td class="w100p">`, "10.01");
+  t.equal(applyFixes(str, messages), `<td class="w100p">`, "09.01");
   t.match(
     messages,
     [
@@ -190,12 +128,12 @@ tap.test(`10 - err`, (t) => {
         },
       },
     ],
-    "10.02"
+    "09.02"
   );
   t.end();
 });
 
-tap.test(`11 - err`, (t) => {
+tap.test(`10 - err`, (t) => {
   const str = `<td zzzz="w100p">`;
   const messages = verify(t, str, {
     rules: {
@@ -203,7 +141,7 @@ tap.test(`11 - err`, (t) => {
     },
   });
   // can't fix:
-  t.equal(applyFixes(str, messages), str, "11.01");
+  t.equal(applyFixes(str, messages), str, "10.01");
   t.match(
     messages,
     [
@@ -215,7 +153,7 @@ tap.test(`11 - err`, (t) => {
         fix: null,
       },
     ],
-    "11.02"
+    "10.02"
   );
   t.end();
 });
@@ -223,7 +161,7 @@ tap.test(`11 - err`, (t) => {
 // repeated opening quotes
 // -----------------------------------------------------------------------------
 
-tap.test(`12 - repeated opening - double`, (t) => {
+tap.test(`11 - repeated opening - double`, (t) => {
   const str = `<table width=""100">\n  zzz\n</table>`;
   const fixed = `<table width="100">\n  zzz\n</table>`;
   const messages = verify(t, str, {
@@ -232,7 +170,7 @@ tap.test(`12 - repeated opening - double`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "12.01");
+  t.equal(applyFixes(str, messages), fixed, "11.01");
   t.match(
     messages,
     [
@@ -246,53 +184,36 @@ tap.test(`12 - repeated opening - double`, (t) => {
         },
       },
     ],
-    "12.02"
+    "11.02"
   );
   t.end();
 });
 
-tap.test(`13 - repeated opening - single`, (t) => {
+tap.test(`12 - repeated opening - single`, (t) => {
   const str = `<table width=''100'>\n  zzz\n</table>`;
-  const fixed = `<table width='100'>\n  zzz\n</table>`;
+  const fixed = `<table width="100">\n  zzz\n</table>`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 1,
     },
   });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "13.01");
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "attribute-malformed",
-        idxFrom: 7,
-        idxTo: 19,
-        message: `Delete repeated opening quotes.`,
-        fix: {
-          ranges: [[14, 15]],
-        },
-      },
-    ],
-    "13.02"
-  );
+  t.equal(applyFixes(str, messages), fixed, "12");
   t.end();
 });
 
-tap.test(`14 - repeated opening - single quotes instead of equal`, (t) => {
+tap.test(`13 - repeated opening - single quotes instead of equal`, (t) => {
   const str = `<table width''100'>\n  zzz\n</table>`;
-  const fixed = `<table width='100'>\n  zzz\n</table>`;
+  const fixed = `<table width="100">\n  zzz\n</table>`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
     },
   });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "14");
+  t.equal(applyFixes(str, messages), fixed, "13");
   t.end();
 });
 
-tap.test(`15 - repeated opening - double quotes instead of equal`, (t) => {
+tap.test(`14 - repeated opening - double quotes instead of equal`, (t) => {
   const str = `<table width""100">\n  zzz\n</table>`;
   const fixed = `<table width="100">\n  zzz\n</table>`;
   const messages = verify(t, str, {
@@ -300,12 +221,11 @@ tap.test(`15 - repeated opening - double quotes instead of equal`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "15");
+  t.equal(applyFixes(str, messages), fixed, "14");
   t.end();
 });
 
-tap.test(`16 - repeated closing - double`, (t) => {
+tap.test(`15 - repeated closing - double`, (t) => {
   const str = `<table width="100"">\n  zzz\n</table>`;
   const fixed = `<table width="100">\n  zzz\n</table>`;
   const messages = verify(t, str, {
@@ -313,8 +233,7 @@ tap.test(`16 - repeated closing - double`, (t) => {
       "attribute-malformed": 1,
     },
   });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "16.01");
+  t.equal(applyFixes(str, messages), fixed, "15.01");
   t.match(
     messages,
     [
@@ -328,7 +247,7 @@ tap.test(`16 - repeated closing - double`, (t) => {
         },
       },
     ],
-    "16.02"
+    "15.02"
   );
   t.end();
 });
@@ -336,8 +255,21 @@ tap.test(`16 - repeated closing - double`, (t) => {
 // rogue quotes
 // -----------------------------------------------------------------------------
 
-tap.test(`17 - repeated opening - rogue single`, (t) => {
+tap.test(`16 - repeated opening - rogue single`, (t) => {
   const str = `<table width='"100">zzz</table>`;
+  const fixed = `<table width="100">zzz</table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "16");
+  t.end();
+});
+
+tap.test(`17 - repeated opening - rogue double`, (t) => {
+  const str = `<table width="'100'>zzz</table>`;
   const fixed = `<table width="100">zzz</table>`;
   const messages = verify(t, str, {
     rules: {
@@ -349,9 +281,12 @@ tap.test(`17 - repeated opening - rogue single`, (t) => {
   t.end();
 });
 
-tap.test(`18 - repeated opening - rogue double`, (t) => {
-  const str = `<table width="'100'>zzz</table>`;
-  const fixed = `<table width='100'>zzz</table>`;
+// rogue characters
+// -----------------------------------------------------------------------------
+
+tap.test(`18 - repeated opening - rogue characters around equal`, (t) => {
+  const str = `<span width...=....."100"></span>`;
+  const fixed = `<span width="100"></span>`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
@@ -362,55 +297,37 @@ tap.test(`18 - repeated opening - rogue double`, (t) => {
   t.end();
 });
 
-// rogue characters
+// equal missing
 // -----------------------------------------------------------------------------
 
-tap.test(`19 - repeated opening - rogue characters around equal`, (t) => {
-  const str = `<span width...=....."100"></span>`;
-  const fixed = `<span width="100"></span>`;
+tap.test(`19 - equal missing - equal is missing, tight`, (t) => {
+  const str = `<a class"c" id'e'>`;
+  const fixed = `<a class="c" id="e">`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
     },
   });
-  // will fix:
   t.equal(applyFixes(str, messages), fixed, "19");
   t.end();
 });
 
-// equal missing
-// -----------------------------------------------------------------------------
-
-tap.test(`20 - equal missing - equal is missing, tight`, (t) => {
-  const str = `<a class"c" id'e'>`;
-  const fixed = `<a class="c" id='e'>`;
-  const messages = verify(t, str, {
-    rules: {
-      "attribute-malformed": 2,
-    },
-  });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "20");
-  t.end();
-});
-
 tap.test(
-  `21 - equal missing - space instead of equal, recognised attr names followed by quoted value`,
+  `20 - equal missing - space instead of equal, recognised attr names followed by quoted value`,
   (t) => {
     const str = `<a class "c" id 'e' href "www">`;
-    const fixed = `<a class="c" id='e' href="www">`;
+    const fixed = `<a class="c" id="e" href="www">`;
     const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
     });
-    // will fix:
-    t.equal(applyFixes(str, messages), fixed, "21");
+    t.equal(applyFixes(str, messages), fixed, "20");
     t.end();
   }
 );
 
-tap.test(`22 - equal missing - mismatching quotes - A,B; A,B`, (t) => {
+tap.test(`21 - equal missing - mismatching quotes - A,B; A,B`, (t) => {
   const str = `<a class"c' id"e'>`;
   const fixed = `<a class="c" id="e">`;
   const messages = verify(t, str, {
@@ -418,31 +335,25 @@ tap.test(`22 - equal missing - mismatching quotes - A,B; A,B`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "22");
+  t.equal(applyFixes(str, messages), fixed, "21.01");
+  t.equal(messages.length, 4, "21.02");
   t.end();
 });
 
-tap.test(
-  `23 - equal missing - mismatching quotes - A,B; B,A - no prettier`,
-  (t) => {
-    // a default setting sets the closing quote to be
-    // like the opening
-    const str = `<a class"c' id'e">`;
-    const fixed = `<a class="c" id='e'>`;
-    const messages = verify(t, str, {
-      rules: {
-        "attribute-malformed": 2,
-      },
-    });
-    // will fix:
-    t.equal(applyFixes(str, messages), fixed, "23");
-    t.end();
-  }
-);
+tap.test(`22 - equal missing - mismatching quotes - A,B; B,A`, (t) => {
+  const str = `<a class"c' id'e">`;
+  const fixed = `<a class="c" id="e">`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "22.01");
+  t.equal(messages.length, 4, "22.02");
+  t.end();
+});
 
-tap.test(`24 - equal missing - mismatching quotes - A,B; B,A`, (t) => {
-  // with format-prettier enabled, doubles are enforced
+tap.test(`23 - equal missing - mismatching quotes - A,B; B,A`, (t) => {
   const str = `<a class"c' id'e">`;
   const fixed = `<a class="c" id="e">`;
   const messages = verify(t, str, {
@@ -452,14 +363,15 @@ tap.test(`24 - equal missing - mismatching quotes - A,B; B,A`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "24");
+  t.equal(applyFixes(str, messages), fixed, "23.01");
+  t.equal(messages.length, 4, "23.02");
   t.end();
 });
 
 // mismatching quotes
 // -----------------------------------------------------------------------------
 
-tap.test(`25 - no quotes in the value, A-B`, (t) => {
+tap.test(`24 - no quotes in the value, A-B`, (t) => {
   const str = `<div class="c'>.</div>`;
   const fixed = `<div class="c">.</div>`;
   const messages = verify(t, str, {
@@ -468,7 +380,7 @@ tap.test(`25 - no quotes in the value, A-B`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "25.01");
+  t.equal(applyFixes(str, messages), fixed, "24.01");
   t.match(
     messages,
     [
@@ -483,13 +395,13 @@ tap.test(`25 - no quotes in the value, A-B`, (t) => {
         },
       },
     ],
-    "25.02"
+    "24.02"
   );
-  t.equal(messages.length, 1, "25.03");
+  t.equal(messages.length, 1, "24.03");
   t.end();
 });
 
-tap.test(`26 - no quotes in the value, B-A`, (t) => {
+tap.test(`25 - no quotes in the value, B-A`, (t) => {
   const str = `<div class='c">.</div>`;
   const fixed = `<div class="c">.</div>`;
   const messages = verify(t, str, {
@@ -498,89 +410,12 @@ tap.test(`26 - no quotes in the value, B-A`, (t) => {
       "format-prettier": 2,
     },
   });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "26.01");
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "attribute-malformed",
-        severity: 2,
-        idxFrom: 5,
-        idxTo: 14,
-        message: `Wrong opening quote.`,
-        fix: {
-          ranges: [[11, 12, `"`]],
-        },
-      },
-    ],
-    "26.02"
-  );
-  t.equal(messages.length, 1, "26.03");
+  t.equal(applyFixes(str, messages), fixed, "25.01");
+  t.equal(messages.length, 1, "25.02");
   t.end();
 });
 
-tap.test(`27 - double quotes in the value, A-B`, (t) => {
-  const str = `<img alt='so-called "artists"!"/>`;
-  const fixed = `<img alt='so-called "artists"!'/>`;
-  const messages = verify(t, str, {
-    rules: {
-      "attribute-malformed": 2,
-    },
-  });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "27.01");
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "attribute-malformed",
-        severity: 2,
-        idxFrom: 5,
-        idxTo: 31,
-        message: `Wrong closing quote.`,
-        fix: {
-          ranges: [[30, 31, `'`]],
-        },
-      },
-    ],
-    "27.02"
-  );
-  t.equal(messages.length, 1, "27.03");
-  t.end();
-});
-
-tap.test(`28 - double quotes in the value, B-A`, (t) => {
-  const str = `<img alt="so-called "artists"!'/>`;
-  const fixed = `<img alt='so-called "artists"!'/>`;
-  const messages = verify(t, str, {
-    rules: {
-      "attribute-malformed": 2,
-    },
-  });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "28.01");
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "attribute-malformed",
-        severity: 2,
-        idxFrom: 5,
-        idxTo: 31,
-        message: `Wrong opening quote.`,
-        fix: {
-          ranges: [[9, 10, `'`]],
-        },
-      },
-    ],
-    "28.02"
-  );
-  t.equal(messages.length, 1, "28.03");
-  t.end();
-});
-
-tap.test(`29 - single quotes in the value, A-B`, (t) => {
+tap.test(`26 - single quotes in the value, A-B`, (t) => {
   const str = `<img alt="Deal is your's!'/>`;
   const fixed = `<img alt="Deal is your's!"/>`;
   const messages = verify(t, str, {
@@ -589,7 +424,7 @@ tap.test(`29 - single quotes in the value, A-B`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "29.01");
+  t.equal(applyFixes(str, messages), fixed, "26.01");
   t.match(
     messages,
     [
@@ -604,13 +439,13 @@ tap.test(`29 - single quotes in the value, A-B`, (t) => {
         },
       },
     ],
-    "29.02"
+    "26.02"
   );
-  t.equal(messages.length, 1, "29.03");
+  t.equal(messages.length, 1, "26.03");
   t.end();
 });
 
-tap.test(`30 - single quotes in the value, B-A`, (t) => {
+tap.test(`27 - single quotes in the value, B-A`, (t) => {
   const str = `<img alt='Deal is your's!"/>`;
   const fixed = `<img alt="Deal is your's!"/>`;
   const messages = verify(t, str, {
@@ -619,7 +454,7 @@ tap.test(`30 - single quotes in the value, B-A`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "30.01");
+  t.equal(applyFixes(str, messages), fixed, "27.01");
   t.match(
     messages,
     [
@@ -634,16 +469,16 @@ tap.test(`30 - single quotes in the value, B-A`, (t) => {
         },
       },
     ],
-    "30.02"
+    "27.02"
   );
-  t.equal(messages.length, 1, "30.03");
+  t.equal(messages.length, 1, "27.03");
   t.end();
 });
 
 // wrong letter case, legit attributes
 // -----------------------------------------------------------------------------
 
-tap.test(`31 - all caps attr name`, (t) => {
+tap.test(`28 - all caps attr name`, (t) => {
   const str = `<img SRC="spacer.gif" Alt=""/>`;
   const fixed = `<img src="spacer.gif" alt=""/>`;
   const messages = verify(t, str, {
@@ -652,7 +487,7 @@ tap.test(`31 - all caps attr name`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "31.01");
+  t.equal(applyFixes(str, messages), fixed, "28.01");
   t.match(
     messages,
     [
@@ -677,25 +512,100 @@ tap.test(`31 - all caps attr name`, (t) => {
         },
       },
     ],
-    "31.02"
+    "28.02"
   );
-  t.equal(messages.length, 2, "31.03");
+  t.equal(messages.length, 2, "28.03");
   t.end();
 });
 
 // unescaped matching quotes within a value
 // -----------------------------------------------------------------------------
 
-tap.test(`32 - single quotes in the value, A-A-A-A, no prettier`, (t) => {
+tap.test(`29 - D-D wrapping - useSingleToEscapeDouble = off`, (t) => {
   const str = `<img alt="so-called "artists"!"/>`;
-  const fixed = `<img alt='so-called "artists"!'/>`;
+  const fixed = `<img alt="so-called &quot;artists&quot;!"/>`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "32.01");
+  t.equal(applyFixes(str, messages), fixed, "29.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-malformed",
+        severity: 2,
+        idxFrom: 10,
+        idxTo: 30,
+        message: `Unencoded quote.`,
+        fix: {
+          ranges: [[20, 21, `&quot;`]],
+        },
+      },
+      {
+        ruleId: "attribute-malformed",
+        severity: 2,
+        idxFrom: 10,
+        idxTo: 30,
+        message: `Unencoded quote.`,
+        fix: {
+          ranges: [[28, 29, `&quot;`]],
+        },
+      },
+    ],
+    "29.02"
+  );
+  t.equal(messages.length, 2, "29.03");
+  t.end();
+});
+
+tap.test(`30 - S-S wrapping - useSingleToEscapeDouble = off`, (t) => {
+  const str = `<img alt='so-called "artists"!'/>`;
+  const fixed = `<img alt="so-called &quot;artists&quot;!"/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "30");
+  t.end();
+});
+
+tap.test(`31 - D-S wrapping - useSingleToEscapeDouble = off`, (t) => {
+  const str = `<img alt="so-called "artists"!'/>`;
+  const fixed = `<img alt="so-called &quot;artists&quot;!"/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "31");
+  t.end();
+});
+
+tap.test(`32 - S-D wrapping - useSingleToEscapeDouble = off`, (t) => {
+  const str = `<img alt='so-called "artists"!"/>`;
+  const fixed = `<img alt="so-called &quot;artists&quot;!"/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "32");
+  t.end();
+});
+
+tap.test(`33 - useSingleToEscapeDouble = on`, (t) => {
+  const str = `<img alt="so-called "artists"!"/>`;
+  const fixed = `<img alt='so-called "artists"!'/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": [2, "useSingleToEscapeDouble"],
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "33.01");
   t.match(
     messages,
     [
@@ -720,13 +630,51 @@ tap.test(`32 - single quotes in the value, A-A-A-A, no prettier`, (t) => {
         },
       },
     ],
-    "32.02"
+    "33.02"
   );
-  t.equal(messages.length, 2, "32.03");
+  t.equal(messages.length, 2, "33.03");
   t.end();
 });
 
-tap.test(`33 - curly quotes instead`, (t) => {
+tap.test(`34 - S-S wrapping - useSingleToEscapeDouble = on`, (t) => {
+  const str = `<img alt='so-called "artists"!'/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": [2, "useSingleToEscapeDouble"],
+    },
+  });
+  t.strictSame(messages, [], "34");
+  t.end();
+});
+
+tap.test(`35 - S-D wrapping - useSingleToEscapeDouble = on`, (t) => {
+  const str = `<img alt='so-called "artists"!"/>`;
+  const fixed = `<img alt='so-called "artists"!'/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": [2, "useSingleToEscapeDouble"],
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "35");
+  t.end();
+});
+
+tap.test(`36 - D-S wrapping - useSingleToEscapeDouble = on`, (t) => {
+  const str = `<img alt="so-called "artists"!'/>`;
+  const fixed = `<img alt='so-called "artists"!'/>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-malformed": [2, "useSingleToEscapeDouble"],
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "36");
+  t.end();
+});
+
+// various
+// -----------------------------------------------------------------------------
+
+tap.test(`37 - curly quotes instead`, (t) => {
   const str = `<div class=“foo”>z</div>`;
   const fixed = `<div class="foo">z</div>`;
   const messages = verify(t, str, {
@@ -734,45 +682,11 @@ tap.test(`33 - curly quotes instead`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "33");
+  t.equal(applyFixes(str, messages), fixed, "37");
   t.end();
 });
 
-tap.test(`34 - single quotes in the value, A-A-A-A, prettier`, (t) => {
-  const str = `<img alt="so-called "artists"!"/>`;
-  const fixed = `<img alt="so-called &quot;artists&quot;!"/>`;
-  const messages = verify(t, str, {
-    rules: {
-      "attribute-malformed": 2,
-      "format-prettier": 2,
-    },
-  });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "34.01");
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "attribute-malformed",
-        severity: 2,
-        idxFrom: 5,
-        idxTo: 31,
-        message: `Encode the double quotes.`,
-        fix: {
-          ranges: [[10, 30, `so-called &quot;artists&quot;!`]],
-        },
-      },
-    ],
-    "34.02"
-  );
-  t.equal(messages.length, 1, "34.03");
-  t.end();
-});
-
-// various
-// -----------------------------------------------------------------------------
-
-tap.test(`35`, (t) => {
+tap.test(`38`, (t) => {
   const str = `<img alt="/>`;
   const fixed = `<img alt=""/>`;
   const messages = verify(t, str, {
@@ -781,24 +695,24 @@ tap.test(`35`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "35");
+  t.equal(applyFixes(str, messages), fixed, "38");
   t.end();
 });
 
-tap.test(`36`, (t) => {
+tap.test(`39`, (t) => {
   const str = `<img alt='/>`;
-  const fixed = `<img alt=''/>`;
+  const fixed = `<img alt=""/>`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "36");
+  t.equal(applyFixes(str, messages), fixed, "39");
   t.end();
 });
 
-tap.test(`37`, (t) => {
+tap.test(`40`, (t) => {
   const str = `<img alt=">`;
   const fixed = `<img alt=""/>`;
   const messages = verify(t, str, {
@@ -808,13 +722,13 @@ tap.test(`37`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "37");
+  t.equal(applyFixes(str, messages), fixed, "40");
   t.end();
 });
 
-tap.test(`38`, (t) => {
+tap.test(`41`, (t) => {
   const str = `<img alt='>`;
-  const fixed = `<img alt=''/>`;
+  const fixed = `<img alt=""/>`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
@@ -822,11 +736,11 @@ tap.test(`38`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "38");
+  t.equal(applyFixes(str, messages), fixed, "41");
   t.end();
 });
 
-tap.test(`39`, (t) => {
+tap.test(`42`, (t) => {
   const str = `<img alt=">`;
   const fixed = `<img alt="" />`;
   const messages = verify(t, str, {
@@ -837,11 +751,11 @@ tap.test(`39`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "39");
+  t.equal(applyFixes(str, messages), fixed, "42");
   t.end();
 });
 
-tap.test(`40`, (t) => {
+tap.test(`43`, (t) => {
   const str = `<img alt='>`;
   const fixed = `<img alt="" />`;
   const messages = verify(t, str, {
@@ -853,11 +767,11 @@ tap.test(`40`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "40");
+  t.equal(applyFixes(str, messages), fixed, "43");
   t.end();
 });
 
-tap.test(`41`, (t) => {
+tap.test(`44`, (t) => {
   const str = `<div class=\nfoo”>z</div>`;
   const fixed = `<div class="foo">z</div>`;
   const messages = verify(t, str, {
@@ -866,11 +780,11 @@ tap.test(`41`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "41");
+  t.equal(applyFixes(str, messages), fixed, "44");
   t.end();
 });
 
-tap.test(`42`, (t) => {
+tap.test(`45`, (t) => {
   const str = `<div class=“foo\n>z</div>`;
   const fixed = `<div class="foo">z</div>`;
   const messages = verify(t, str, {
@@ -879,11 +793,11 @@ tap.test(`42`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "42");
+  t.equal(applyFixes(str, messages), fixed, "45");
   t.end();
 });
 
-tap.todo(`43`, (t) => {
+tap.test(`46`, (t) => {
   const str = `<img alt='there's "somethin" here'/>`;
   const fixed = `<img alt="there's &quot;somethin&quot; here"/>`;
   const messages = verify(t, str, {
@@ -892,25 +806,25 @@ tap.todo(`43`, (t) => {
     },
   });
   // will fix:
-  t.equal(applyFixes(str, messages), fixed, "43");
+  t.equal(applyFixes(str, messages), fixed, "46");
   t.end();
 });
 
 // leading whitespace
 // -----------------------------------------------------------------------------
 
-tap.test(`44 - leading space present`, (t) => {
+tap.test(`47 - leading space present`, (t) => {
   const str = `<span class="x" id="left">.</span>`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
     },
   });
-  t.strictSame(messages, [], "44");
+  t.strictSame(messages, [], "47");
   t.end();
 });
 
-tap.test(`45 - leading space missing`, (t) => {
+tap.test(`48 - leading space missing`, (t) => {
   const str = `<span class="x"id="left">.</span>`;
   const fixed = `<span class="x" id="left">.</span>`;
   const messages = verify(t, str, {
@@ -918,11 +832,11 @@ tap.test(`45 - leading space missing`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "45");
+  t.equal(applyFixes(str, messages), fixed, "48");
   t.end();
 });
 
-tap.test(`46 - two spaces`, (t) => {
+tap.test(`49 - two spaces`, (t) => {
   const str = `<span class="x"  id="left">.</span>`;
   const fixed = `<span class="x" id="left">.</span>`;
   const messages = verify(t, str, {
@@ -930,11 +844,11 @@ tap.test(`46 - two spaces`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "46");
+  t.equal(applyFixes(str, messages), fixed, "49");
   t.end();
 });
 
-tap.test(`47 - one tab`, (t) => {
+tap.test(`50 - one tab`, (t) => {
   const str = `<span class="x"\tid="left">.</span>`;
   const fixed = `<span class="x" id="left">.</span>`;
   const messages = verify(t, str, {
@@ -942,17 +856,17 @@ tap.test(`47 - one tab`, (t) => {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "47");
+  t.equal(applyFixes(str, messages), fixed, "50");
   t.end();
 });
 
-tap.only(`48 - ESP tags present`, (t) => {
+tap.test(`51 - ESP tags present`, (t) => {
   const str = `<span {% if x %}class="x" {% endif %}id="left">.</span>`;
   const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "48");
+  t.equal(applyFixes(str, messages), str, "51");
   t.end();
 });

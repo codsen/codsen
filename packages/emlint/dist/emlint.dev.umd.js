@@ -19446,16 +19446,24 @@ var attributeDuplicate = function attributeDuplicate(context) {
   };
 };
 
-// -----------------------------------------------------------------------------
-// it flags up malformed HTML attributes
-
 function attributeMalformed(context) {
+  for (var _len = arguments.length, config = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    config[_key - 1] = arguments[_key];
+  }
+
   // the following tags will be processed separately
   var blacklist = ["doctype"];
   return {
     attribute: function attribute(node) {
+      var inTheEndUseDoubles = true;
 
-      if ( // exclude ESP tags, comment tokens etc etc.
+      if (config.includes("useSingleToEscapeDouble") && node.attribValueRaw.includes("\"") && !node.attribValueRaw.includes("'") && // it's not leading or trailing
+      !node.attribValueRaw.trim().startsWith("\"") && !node.attribValueRaw.trim().endsWith("\"")) {
+        inTheEndUseDoubles = false;
+      }
+      var repeatedQuotesPresent = false;
+
+      if ( // exclude ESP tags etc.
       node.attribName === undefined) {
         return;
       } // if Levenshtein distance is 1 and it's not among known attribute names,
@@ -19557,6 +19565,7 @@ function attributeMalformed(context) {
             ranges: [[node.attribValueStartsAt, node.attribValueStartsAt + 1]]
           }
         });
+        repeatedQuotesPresent = true;
       } // repeated closing quotes
 
 
@@ -19573,192 +19582,69 @@ function attributeMalformed(context) {
             ranges: [[node.attribValueEndsAt - 1, node.attribValueEndsAt]]
           }
         });
-      } // maybe some quotes are missing?
+        repeatedQuotesPresent = true;
+      } // check the opening quote
 
 
-      var ranges = [];
-
-      if (node.attribOpeningQuoteAt === null && node.attribValueStartsAt !== null) {
-        var valueToPut = "\"";
-
-        if (node.attribClosingQuoteAt && "'\"".includes(context.str[node.attribClosingQuoteAt])) {
-          valueToPut = context.str[node.attribClosingQuoteAt];
-        }
-        ranges.push([left(context.str, node.attribValueStartsAt) + 1, node.attribValueStartsAt, valueToPut]); // check the closing-one
-
-        if (node.attribClosingQuoteAt && !"'\"".includes(context.str[node.attribClosingQuoteAt])) {
-          ranges.push([node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, valueToPut]);
-        }
-      }
-
-      if (node.attribClosingQuoteAt === null) {
-        if (node.attribValueEndsAt !== null) {
-          var _valueToPut = "\"";
-
-          if (node.attribOpeningQuoteAt && "'\"".includes(context.str[node.attribOpeningQuoteAt])) {
-            _valueToPut = context.str[node.attribOpeningQuoteAt];
-          } // consume the frontal whitespace, if any:
-
-          ranges.push([left(context.str, node.attribValueEndsAt) + 1, node.attribValueEndsAt, _valueToPut]); // check the opening-one
-
-          if (node.attribOpeningQuoteAt && !"'\"".includes(context.str[node.attribOpeningQuoteAt])) {
-            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, _valueToPut]);
-          }
-        } else if (node.attribOpeningQuoteAt) {
-          if ( // if format-prettier is enabled
-          Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && // opening quote is single
-          context.str[node.attribOpeningQuoteAt] === "'") {
-            // replace that opening quote with two doubles
-            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\"\""]);
-          } else {
-            // add a counterpart, single or double // Instead of pushing into new position after opening quote,
-            // replace opening quote with two quotes. This will solve
-            // issues when rules that follow will compound - sorting will
-            // treat this range as early because it started earlier, at
-            // the opening quote. Imagine:
-            // <img alt=">
-            //           ^
-            //      slash, gap and quote - 3 rules competing
-            //
-
-            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "" + context.str[node.attribOpeningQuoteAt] + (context.str[node.attribOpeningQuoteAt] || "\"")]);
-          }
-        }
-      }
-
-      if (ranges.length) {
-        context.report({
-          ruleId: "attribute-malformed",
-          message: "Quote" + (ranges.length > 1 ? "s are" : " is") + " missing.",
-          idxFrom: node.attribStarts,
-          idxTo: node.attribEnds,
-          fix: {
-            ranges: ranges
-          }
-        });
-      }
-
-      if (node.attribOpeningQuoteAt !== null && node.attribClosingQuoteAt !== null) {
-
-        if (!"'\"".includes(context.str[node.attribOpeningQuoteAt])) {
-          // if the opening quote is just wrong, then we'll use doubles
+      if (context.str[node.attribOpeningQuoteAt] !== (inTheEndUseDoubles ? "\"" : "'")) {
+        // does it exist?
+        if (node.attribOpeningQuoteAt) {
           context.report({
             ruleId: "attribute-malformed",
             message: "Wrong opening quote.",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
             fix: {
-              ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\""]]
+              ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, inTheEndUseDoubles ? "\"" : "'"]]
             }
-          }); // check the closing quote
+          });
+        } else if (node.attribValueStartsAt) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "Add an opening quote.",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            fix: {
+              ranges: [[left(context.str, node.attribValueStartsAt) + 1, node.attribValueStartsAt, inTheEndUseDoubles ? "\"" : "'"]]
+            }
+          });
+        }
+      } // check the closing quote
 
-          if (context.str[node.attribClosingQuoteAt] !== "\"") {
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong closing quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "\""]]
-              }
-            });
+
+      if (context.str[node.attribClosingQuoteAt] !== (inTheEndUseDoubles ? "\"" : "'")) {
+        if (node.attribClosingQuoteAt) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "Wrong closing quote.",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            fix: {
+              ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, inTheEndUseDoubles ? "\"" : "'"]]
+            }
+          });
+        } else if (node.attribValueEndsAt || node.attribOpeningQuoteAt) { // if the is no value, only opening quote:
+          // <img alt="/>
+          // value will be null, so we use opening quote's position instead
+
+          var startPos = node.attribOpeningQuoteAt;
+
+          if (node.attribValueStartsAt) {
+            // correction for trailing whitespace,
+            // <div class=“foo\n>z</div>
+            //                ^^
+            startPos = node.attribValueStartsAt + node.attribValueRaw.trimEnd().length;
           }
-        } else if (context.str[node.attribOpeningQuoteAt] !== context.str[node.attribClosingQuoteAt] || node.attribValueRaw.includes("'") && // avoid repeated quote cases:
-        !node.attribValueRaw.startsWith("'") && !node.attribValueRaw.endsWith("'")) { // if format-prettier is enabled, use a double for both
 
-          if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) || node.attribValueRaw.includes("'")) && context.str[node.attribOpeningQuoteAt] !== "\"") {
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong opening quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\""]]
-              }
-            }); // check closing-one too
-
-            if (context.str[node.attribClosingQuoteAt] !== "\"") {
-              context.report({
-                ruleId: "attribute-malformed",
-                message: "Wrong closing quote.",
-                idxFrom: node.attribStarts,
-                idxTo: node.attribEnds,
-                fix: {
-                  ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "\""]]
-                }
-              });
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "Add a closing quote.",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            fix: {
+              ranges: [[startPos, node.attribValueEndsAt || node.attribOpeningQuoteAt, inTheEndUseDoubles ? "\"" : "'"]]
             }
-          } else if (node.attribValueRaw.includes("\"")) {
-
-            if (context.str[node.attribOpeningQuoteAt] !== "'") {
-              context.report({
-                ruleId: "attribute-malformed",
-                message: "Wrong opening quote.",
-                idxFrom: node.attribStarts,
-                idxTo: node.attribEnds,
-                fix: {
-                  ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "'"]]
-                }
-              });
-            }
-
-            if (context.str[node.attribClosingQuoteAt] !== "'") {
-              context.report({
-                ruleId: "attribute-malformed",
-                message: "Wrong closing quote.",
-                idxFrom: node.attribStarts,
-                idxTo: node.attribEnds,
-                fix: {
-                  ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "'"]]
-                }
-              });
-            }
-          } else {
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong closing quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, context.str[node.attribOpeningQuoteAt]]]
-              }
-            });
-          }
-        } else if (context.str[node.attribOpeningQuoteAt] === context.str[node.attribClosingQuoteAt] && node.attribValueRaw.includes(context.str[node.attribOpeningQuoteAt]) && // avoid duplicate quote cases
-        !node.attribValueRaw.startsWith(context.str[node.attribOpeningQuoteAt]) && !node.attribValueRaw.endsWith(context.str[node.attribOpeningQuoteAt])) {
-          // <img alt="so-called "artists"!"/>
-          //                     ^       ^
-          if (Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"])) {
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Encode the double quotes.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribValueStartsAt, node.attribValueEndsAt, node.attribValueRaw.replace(/"/g, "&quot;")]]
-              }
-            });
-          } else {
-            var valueToSet = context.str[node.attribOpeningQuoteAt] === "\"" ? "'" : "\"";
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong opening quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, valueToSet]]
-              }
-            });
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong closing quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, valueToSet]]
-              }
-            });
-          }
+          });
         }
       } // check the whitespace in front of an attribute
       // <span class="x"id="left">
@@ -19773,6 +19659,23 @@ function attributeMalformed(context) {
           idxTo: node.attribEnds,
           fix: {
             ranges: [[node.attribLeft + 1, node.attribStarts, " "]]
+          }
+        });
+      } // finally, check, do the attribute contents need to be encoded
+
+
+      if (!repeatedQuotesPresent && node.attribValueStartsAt && node.attribValueEndsAt && typeof node.attribValueRaw === "string" && (inTheEndUseDoubles && node.attribValueRaw.includes("\"") || !inTheEndUseDoubles && node.attribValueRaw.includes("'"))) {
+        node.attribValueRaw.split("").forEach(function (char, idx) {
+          if (char === (inTheEndUseDoubles ? "\"" : "'")) {
+            context.report({
+              ruleId: "attribute-malformed",
+              message: "Unencoded quote.",
+              idxFrom: node.attribValueStartsAt,
+              idxTo: node.attribValueEndsAt,
+              fix: {
+                ranges: [[node.attribValueStartsAt + idx, node.attribValueStartsAt + idx + 1, inTheEndUseDoubles ? "&quot;" : "&apos;"]]
+              }
+            });
           }
         });
       }

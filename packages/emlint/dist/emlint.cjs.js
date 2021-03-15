@@ -3134,9 +3134,18 @@ var attributeDuplicate = function attributeDuplicate(context) {
 };
 
 function attributeMalformed(context) {
+  for (var _len = arguments.length, config = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    config[_key - 1] = arguments[_key];
+  }
   var blacklist = ["doctype"];
   return {
     attribute: function attribute(node) {
+      var inTheEndUseDoubles = true;
+      if (config.includes("useSingleToEscapeDouble") && node.attribValueRaw.includes("\"") && !node.attribValueRaw.includes("'") &&
+      !node.attribValueRaw.trim().startsWith("\"") && !node.attribValueRaw.trim().endsWith("\"")) {
+        inTheEndUseDoubles = false;
+      }
+      var repeatedQuotesPresent = false;
       if (
       node.attribName === undefined) {
         return;
@@ -3219,6 +3228,7 @@ function attributeMalformed(context) {
             ranges: [[node.attribValueStartsAt, node.attribValueStartsAt + 1]]
           }
         });
+        repeatedQuotesPresent = true;
       }
       if (node.attribValueRaw && (
       node.attribValueRaw.endsWith("\"") || node.attribValueRaw.endsWith("'")) && node.attribValueEndsAt && node.attribClosingQuoteAt && context.str[node.attribValueEndsAt] === context.str[node.attribClosingQuoteAt]) {
@@ -3232,161 +3242,56 @@ function attributeMalformed(context) {
             ranges: [[node.attribValueEndsAt - 1, node.attribValueEndsAt]]
           }
         });
+        repeatedQuotesPresent = true;
       }
-      var ranges = [];
-      if (node.attribOpeningQuoteAt === null && node.attribValueStartsAt !== null) {
-        var valueToPut = "\"";
-        if (node.attribClosingQuoteAt && "'\"".includes(context.str[node.attribClosingQuoteAt])) {
-          valueToPut = context.str[node.attribClosingQuoteAt];
-        }
-        ranges.push([stringLeftRight.left(context.str, node.attribValueStartsAt) + 1, node.attribValueStartsAt, valueToPut]);
-        if (node.attribClosingQuoteAt && !"'\"".includes(context.str[node.attribClosingQuoteAt])) {
-          ranges.push([node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, valueToPut]);
-        }
-      }
-      if (node.attribClosingQuoteAt === null) {
-        if (node.attribValueEndsAt !== null) {
-          var _valueToPut = "\"";
-          if (node.attribOpeningQuoteAt && "'\"".includes(context.str[node.attribOpeningQuoteAt])) {
-            _valueToPut = context.str[node.attribOpeningQuoteAt];
-          }
-          ranges.push([stringLeftRight.left(context.str, node.attribValueEndsAt) + 1, node.attribValueEndsAt, _valueToPut]);
-          if (node.attribOpeningQuoteAt && !"'\"".includes(context.str[node.attribOpeningQuoteAt])) {
-            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, _valueToPut]);
-          }
-        } else if (node.attribOpeningQuoteAt) {
-          if (
-          Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) &&
-          context.str[node.attribOpeningQuoteAt] === "'") {
-            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\"\""]);
-          } else {
-            ranges.push([node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "" + context.str[node.attribOpeningQuoteAt] + (context.str[node.attribOpeningQuoteAt] || "\"")]);
-          }
-        }
-      }
-      if (ranges.length) {
-        context.report({
-          ruleId: "attribute-malformed",
-          message: "Quote" + (ranges.length > 1 ? "s are" : " is") + " missing.",
-          idxFrom: node.attribStarts,
-          idxTo: node.attribEnds,
-          fix: {
-            ranges: ranges
-          }
-        });
-      }
-      if (node.attribOpeningQuoteAt !== null && node.attribClosingQuoteAt !== null) {
-        if (!"'\"".includes(context.str[node.attribOpeningQuoteAt])) {
+      if (context.str[node.attribOpeningQuoteAt] !== (inTheEndUseDoubles ? "\"" : "'")) {
+        if (node.attribOpeningQuoteAt) {
           context.report({
             ruleId: "attribute-malformed",
             message: "Wrong opening quote.",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
             fix: {
-              ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\""]]
+              ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, inTheEndUseDoubles ? "\"" : "'"]]
             }
           });
-          if (context.str[node.attribClosingQuoteAt] !== "\"") {
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong closing quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "\""]]
-              }
-            });
-          }
-        } else if (context.str[node.attribOpeningQuoteAt] !== context.str[node.attribClosingQuoteAt] || node.attribValueRaw.includes("'") &&
-        !node.attribValueRaw.startsWith("'") && !node.attribValueRaw.endsWith("'")) {
-          if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) || node.attribValueRaw.includes("'")) && context.str[node.attribOpeningQuoteAt] !== "\"") {
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong opening quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\""]]
-              }
-            });
-            if (context.str[node.attribClosingQuoteAt] !== "\"") {
-              context.report({
-                ruleId: "attribute-malformed",
-                message: "Wrong closing quote.",
-                idxFrom: node.attribStarts,
-                idxTo: node.attribEnds,
-                fix: {
-                  ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "\""]]
-                }
-              });
+        } else if (node.attribValueStartsAt) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "Add an opening quote.",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            fix: {
+              ranges: [[stringLeftRight.left(context.str, node.attribValueStartsAt) + 1, node.attribValueStartsAt, inTheEndUseDoubles ? "\"" : "'"]]
             }
-          } else if (node.attribValueRaw.includes("\"")) {
-            if (context.str[node.attribOpeningQuoteAt] !== "'") {
-              context.report({
-                ruleId: "attribute-malformed",
-                message: "Wrong opening quote.",
-                idxFrom: node.attribStarts,
-                idxTo: node.attribEnds,
-                fix: {
-                  ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "'"]]
-                }
-              });
+          });
+        }
+      }
+      if (context.str[node.attribClosingQuoteAt] !== (inTheEndUseDoubles ? "\"" : "'")) {
+        if (node.attribClosingQuoteAt) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "Wrong closing quote.",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            fix: {
+              ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, inTheEndUseDoubles ? "\"" : "'"]]
             }
-            if (context.str[node.attribClosingQuoteAt] !== "'") {
-              context.report({
-                ruleId: "attribute-malformed",
-                message: "Wrong closing quote.",
-                idxFrom: node.attribStarts,
-                idxTo: node.attribEnds,
-                fix: {
-                  ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "'"]]
-                }
-              });
+          });
+        } else if (node.attribValueEndsAt || node.attribOpeningQuoteAt) {
+          var startPos = node.attribOpeningQuoteAt;
+          if (node.attribValueStartsAt) {
+            startPos = node.attribValueStartsAt + node.attribValueRaw.trimEnd().length;
+          }
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "Add a closing quote.",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            fix: {
+              ranges: [[startPos, node.attribValueEndsAt || node.attribOpeningQuoteAt, inTheEndUseDoubles ? "\"" : "'"]]
             }
-          } else {
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong closing quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, context.str[node.attribOpeningQuoteAt]]]
-              }
-            });
-          }
-        } else if (context.str[node.attribOpeningQuoteAt] === context.str[node.attribClosingQuoteAt] && node.attribValueRaw.includes(context.str[node.attribOpeningQuoteAt]) &&
-        !node.attribValueRaw.startsWith(context.str[node.attribOpeningQuoteAt]) && !node.attribValueRaw.endsWith(context.str[node.attribOpeningQuoteAt])) {
-          if (Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"])) {
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Encode the double quotes.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribValueStartsAt, node.attribValueEndsAt, node.attribValueRaw.replace(/"/g, "&quot;")]]
-              }
-            });
-          } else {
-            var valueToSet = context.str[node.attribOpeningQuoteAt] === "\"" ? "'" : "\"";
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong opening quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, valueToSet]]
-              }
-            });
-            context.report({
-              ruleId: "attribute-malformed",
-              message: "Wrong closing quote.",
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              fix: {
-                ranges: [[node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, valueToSet]]
-              }
-            });
-          }
+          });
         }
       }
       if (node.parent.pureHTML && node.attribLeft && node.attribStarts && (node.attribLeft + 2 !== node.attribStarts || context.str[node.attribStarts - 1] !== " ")) {
@@ -3397,6 +3302,21 @@ function attributeMalformed(context) {
           idxTo: node.attribEnds,
           fix: {
             ranges: [[node.attribLeft + 1, node.attribStarts, " "]]
+          }
+        });
+      }
+      if (!repeatedQuotesPresent && node.attribValueStartsAt && node.attribValueEndsAt && typeof node.attribValueRaw === "string" && (inTheEndUseDoubles && node.attribValueRaw.includes("\"") || !inTheEndUseDoubles && node.attribValueRaw.includes("'"))) {
+        node.attribValueRaw.split("").forEach(function (char, idx) {
+          if (char === (inTheEndUseDoubles ? "\"" : "'")) {
+            context.report({
+              ruleId: "attribute-malformed",
+              message: "Unencoded quote.",
+              idxFrom: node.attribValueStartsAt,
+              idxTo: node.attribValueEndsAt,
+              fix: {
+                ranges: [[node.attribValueStartsAt + idx, node.attribValueStartsAt + idx + 1, inTheEndUseDoubles ? "&quot;" : "&apos;"]]
+              }
+            });
           }
         });
       }
