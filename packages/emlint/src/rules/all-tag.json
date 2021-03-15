@@ -3,6 +3,7 @@
   "tag-bold",
   "tag-closing-backslash",
   "tag-is-present",
+  "tag-malformed",
   "tag-missing-closing",
   "tag-missing-opening",
   "tag-name-case",

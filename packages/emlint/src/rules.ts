@@ -261,6 +261,8 @@ import tagSpaceBetweenSlashAndBracket from "./rules/tag/tag-space-between-slash-
 
 import tagTable from "./rules/tag/tag-table";
 
+import tagMalformed from "./rules/tag/tag-malformed";
+
 import tagClosingBackslash from "./rules/tag/tag-closing-backslash";
 
 import tagVoidSlash from "./rules/tag/tag-void-slash";
@@ -1175,6 +1177,7 @@ defineLazyProp(
   () => tagSpaceBetweenSlashAndBracket
 );
 defineLazyProp(builtInRules, "tag-table", () => tagTable);
+defineLazyProp(builtInRules, "tag-malformed", () => tagMalformed);
 defineLazyProp(
   builtInRules,
   "tag-closing-backslash",
@@ -1980,7 +1983,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1983 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1986 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
