@@ -3142,6 +3142,7 @@ function isOpening(str, idx, originalOpts) {
   var r4 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
   var r8 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
   var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", "");
+  var r10 = new RegExp("^\\/\\s*\\w+s*>");
   var whatToTest = idx ? str.slice(idx) : str;
   var leftSideIdx = left(str, idx);
   var qualified = false;
@@ -3162,6 +3163,8 @@ function isOpening(str, idx, originalOpts) {
     } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
     } else if (r8.test(whatToTest)) {
+      passed = true;
+    } else if (str[idx] === "/" && str[leftSideIdx] !== "<" && r10.test(whatToTest)) {
       passed = true;
     }
   } else {
@@ -3209,10 +3212,6 @@ var BACKSLASH = "\\"; // This is an extracted logic which detects where token of
 // so we extracted into a function.
 
 function startsTag(str, i, token, layers, withinStyle, leftVal, rightVal) {
-  isOpening(str, i, {
-    allowCustomTagNames: false,
-    skipOpeningBracket: true
-  });
   return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && ( // within CSS styles, initiate tags only on opening bracket:
   !withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
     allowCustomTagNames: true
@@ -3224,7 +3223,7 @@ function startsTag(str, i, token, layers, withinStyle, leftVal, rightVal) {
   //                ^
   //    tag begins here
   str[i] === "/" && isLatinLetter(str[i + 1]) && str[leftVal] !== "<" && isOpening(str, i, {
-    allowCustomTagNames: false,
+    allowCustomTagNames: true,
     skipOpeningBracket: true
   }) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[leftVal])) && isOpening(str, i, {
     allowCustomTagNames: false,

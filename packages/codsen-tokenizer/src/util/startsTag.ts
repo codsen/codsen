@@ -17,15 +17,6 @@ function startsTag(
   leftVal: number | null,
   rightVal: number | null
 ): boolean {
-  const R1 = isOpening(str, i, {
-    allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
-    skipOpeningBracket: true,
-  });
-  console.log(
-    `025 ███████████████████████████████████████ ${`\u001b[${
-      R1 ? 32 : 31
-    }m${`R1`}\u001b[${39}m`} = ${R1}`
-  );
   return !!(
     str[i] &&
     str[i].trim().length &&
@@ -51,7 +42,7 @@ function startsTag(
         isLatinLetter(str[i + 1]) &&
         str[leftVal as number] !== "<" &&
         isOpening(str, i, {
-          allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
+          allowCustomTagNames: true, // loose requirements because of slash
           skipOpeningBracket: true,
         })) ||
       (isLatinLetter(str[i]) &&

@@ -188,10 +188,6 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead = false) {
 
 const BACKSLASH = "\u005C";
 function startsTag(str, i, token, layers, withinStyle, leftVal, rightVal) {
-  isOpening(str, i, {
-    allowCustomTagNames: false,
-    skipOpeningBracket: true
-  });
   return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && (
   !withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
     allowCustomTagNames: true
@@ -201,7 +197,7 @@ function startsTag(str, i, token, layers, withinStyle, leftVal, rightVal) {
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
   })) ||
   str[i] === "/" && isLatinLetter(str[i + 1]) && str[leftVal] !== "<" && isOpening(str, i, {
-    allowCustomTagNames: false,
+    allowCustomTagNames: true,
     skipOpeningBracket: true
   }) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[leftVal])) && isOpening(str, i, {
     allowCustomTagNames: false,
