@@ -2982,7 +2982,9 @@ function isOpening(str, idx, originalOpts) {
   var r4 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
   var r8 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
   var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", "");
+  var r10 = new RegExp("^\\/\\s*\\w+s*>");
   var whatToTest = idx ? str.slice(idx) : str;
+  var leftSideIdx = left(str, idx);
   var qualified = false;
   var passed = false;
   var matchingOptions = {
@@ -2992,7 +2994,7 @@ function isOpening(str, idx, originalOpts) {
   };
 
   if (opts.allowCustomTagNames) {
-    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
+    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, leftSideIdx)] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
       passed = true;
     } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
@@ -3002,9 +3004,11 @@ function isOpening(str, idx, originalOpts) {
       passed = true;
     } else if (r8.test(whatToTest)) {
       passed = true;
+    } else if (str[idx] === "/" && str[leftSideIdx] !== "<" && r10.test(whatToTest)) {
+      passed = true;
     }
   } else {
-    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
+    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, leftSideIdx)] === "<") || (whatToTest[0] === "<" || whatToTest[0] === "/" && (!str[leftSideIdx] || str[leftSideIdx] !== "<")) && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
       qualified = true;
     } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
       qualified = true;
@@ -3238,14 +3242,17 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
 
 var BACKSLASH = "\\";
 
-function startsTag(str, i, token, layers, withinStyle) {
+function startsTag(str, i, token, layers, withinStyle, leftVal, rightVal) {
   return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && (!withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
     allowCustomTagNames: true
-  }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
+  }) || str[rightVal] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[left(str, i)])) && isOpening(str, i, {
+  })) || str[i] === "/" && isLatinLetter(str[i + 1]) && str[leftVal] !== "<" && isOpening(str, i, {
+    allowCustomTagNames: true,
+    skipOpeningBracket: true
+  }) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[leftVal])) && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
@@ -3870,7 +3877,7 @@ function tokenizer(str, originalOpts) {
     var lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
 
     if (!doNothing && str[_i]) {
-      if (startsTag(str, _i, token, layers, withinStyle)) {
+      if (startsTag(str, _i, token, layers, withinStyle, leftVal, rightVal)) {
         if (token.type && token.start !== null) {
           if (token.type === "rule") {
             if (property && property.start) {
