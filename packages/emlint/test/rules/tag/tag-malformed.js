@@ -43,51 +43,48 @@ tap.test(`03 - tag - line break - missing bracket`, (t) => {
   t.end();
 });
 
+tap.test(`04 - two tags, tight`, (t) => {
+  const str = `<div class=""div class="x">`;
+  const fixed = `<div class=""><div class="x">`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "04");
+  t.end();
+});
+
+tap.test(`05 - two tags, tight`, (t) => {
+  const str = `<div class="" div class="x">`;
+  const fixed = `<div class=""> <div class="x">`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "05");
+  t.end();
+});
+
+tap.test(`06 - two tags, tight`, (t) => {
+  const str = `<div class="z" div class="x">`;
+  const fixed = `<div class="z"> <div class="x">`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "06");
+  t.end();
+});
+
 // closing bracket missing
 // -----------------------------------------------------------------------------
 
-tap.test(`04 - position of a missing bracket is on EOL`, (t) => {
+tap.test(`07 - position of a missing bracket is on EOL`, (t) => {
   const str = `<div`;
   const fixed = `<div>`;
-  const messages = verify(t, str, {
-    rules: {
-      "tag-malformed": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), fixed, "04.01");
-  t.equal(messages.length, 1, "04.02");
-  t.end();
-});
-
-tap.test(`05 - position of a missing bracket is on EOL`, (t) => {
-  const str = `<div></div`;
-  const fixed = `<div></div>`;
-  const messages = verify(t, str, {
-    rules: {
-      "tag-malformed": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), fixed, "05.01");
-  t.equal(messages.length, 1, "05.02");
-  t.end();
-});
-
-tap.test(`06 - attrs`, (t) => {
-  const str = `<div class="z"`;
-  const fixed = `<div class="z">`;
-  const messages = verify(t, str, {
-    rules: {
-      "tag-malformed": 2,
-    },
-  });
-  t.equal(applyFixes(str, messages), fixed, "06.01");
-  t.equal(messages.length, 1, "06.02");
-  t.end();
-});
-
-tap.test(`07 - attrs, trailing whitespace`, (t) => {
-  const str = `<div class="z"   `;
-  const fixed = `<div class="z">   `;
   const messages = verify(t, str, {
     rules: {
       "tag-malformed": 2,
@@ -98,8 +95,47 @@ tap.test(`07 - attrs, trailing whitespace`, (t) => {
   t.end();
 });
 
+tap.test(`08 - position of a missing bracket is on EOL`, (t) => {
+  const str = `<div></div`;
+  const fixed = `<div></div>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "08.01");
+  t.equal(messages.length, 1, "08.02");
+  t.end();
+});
+
+tap.test(`09 - attrs`, (t) => {
+  const str = `<div class="z"`;
+  const fixed = `<div class="z">`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "09.01");
+  t.equal(messages.length, 1, "09.02");
+  t.end();
+});
+
+tap.test(`10 - attrs, trailing whitespace`, (t) => {
+  const str = `<div class="z"   `;
+  const fixed = `<div class="z">   `;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "10.01");
+  t.equal(messages.length, 1, "10.02");
+  t.end();
+});
+
 tap.test(
-  `08 - position of a missing bracket is on a new opening bracket`,
+  `11 - position of a missing bracket is on a new opening bracket`,
   (t) => {
     const str = `<div></div<div>`;
     const fixed = `<div></div><div>`;
@@ -108,14 +144,14 @@ tap.test(
         "tag-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "08.01");
-    t.equal(messages.length, 1, "08.02");
+    t.equal(applyFixes(str, messages), fixed, "11.01");
+    t.equal(messages.length, 1, "11.02");
     t.end();
   }
 );
 
 tap.test(
-  `09 - position of a missing bracket is on a new opening bracket`,
+  `12 - position of a missing bracket is on a new opening bracket`,
   (t) => {
     const str = `<div></div\n<div>`;
     const fixed = `<div></div>\n<div>`;
@@ -124,8 +160,8 @@ tap.test(
         "tag-malformed": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "09.01");
-    t.equal(messages.length, 1, "09.02");
+    t.equal(applyFixes(str, messages), fixed, "12.01");
+    t.equal(messages.length, 1, "12.02");
     t.end();
   }
 );
