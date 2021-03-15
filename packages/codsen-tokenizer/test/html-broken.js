@@ -201,11 +201,64 @@ tap.test(
   }
 );
 
+tap.test(`06`, (t) => {
+  const gathered = [];
+  ct(`<div>some text /div>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 5,
+        value: "<div>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "text",
+        start: 5,
+        end: 15,
+        value: "some text ",
+      },
+      {
+        type: "tag",
+        start: 15,
+        end: 20,
+        value: "/div>",
+        tagNameStartsAt: 16,
+        tagNameEndsAt: 19,
+        tagName: "div",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+    ],
+    "06"
+  );
+  t.end();
+});
+
 // 02. comment and comment-like tags
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `06 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
+  `07 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];
     ct(`<->`, {
@@ -226,15 +279,15 @@ tap.test(
           end: 3,
         },
       ],
-      "06.01"
+      "07.01"
     );
-    t.is(gathered.length, 1, "06.02");
+    t.is(gathered.length, 1, "07.02");
     t.end();
   }
 );
 
 tap.test(
-  `07 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
+  `08 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];
     ct(`<-->`, {
@@ -255,15 +308,15 @@ tap.test(
           end: 4,
         },
       ],
-      "07.01"
+      "08.01"
     );
-    t.is(gathered.length, 1, "07.02");
+    t.is(gathered.length, 1, "08.02");
     t.end();
   }
 );
 
 tap.test(
-  `08 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
+  `09 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];
     ct(`<----->`, {
@@ -284,7 +337,7 @@ tap.test(
           end: 7,
         },
       ],
-      "08"
+      "09"
     );
     t.end();
   }
@@ -294,7 +347,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `09 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
+  `10 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`,
   (t) => {
     const gathered = [];
     ct(`<img alt="/>`, {
@@ -338,7 +391,7 @@ tap.test(
           ],
         },
       ],
-      "09"
+      "10"
     );
     t.end();
   }

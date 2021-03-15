@@ -188,6 +188,11 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead = false) {
 
 const BACKSLASH = "\u005C";
 function startsTag(str, i, token, layers, withinStyle) {
+  isOpening(str, i, {
+    allowCustomTagNames: false,
+    skipOpeningBracket: true
+  });
+  const leftSideIdx = left(str, i);
   return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && (
   !withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
     allowCustomTagNames: true
@@ -195,7 +200,11 @@ function startsTag(str, i, token, layers, withinStyle) {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[left(str, i)])) && isOpening(str, i, {
+  })) ||
+  str[i] === "/" && isLatinLetter(str[i + 1]) && str[leftSideIdx] !== "<" && isOpening(str, i, {
+    allowCustomTagNames: false,
+    skipOpeningBracket: true
+  }) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[leftSideIdx])) && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));

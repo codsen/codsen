@@ -16,6 +16,16 @@ function startsTag(
   layers: Layer[],
   withinStyle: boolean
 ): boolean {
+  const R1 = isOpening(str, i, {
+    allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
+    skipOpeningBracket: true,
+  });
+  console.log(
+    `024 ███████████████████████████████████████ ${`\u001b[${
+      R1 ? 32 : 31
+    }m${`R1`}\u001b[${39}m`} = ${R1}`
+  );
+  const leftSideIdx = left(str, i) as number;
   return !!(
     str[i] &&
     str[i].trim().length &&
@@ -34,12 +44,20 @@ function startsTag(
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
         }))) ||
+      // <div>some text /div>
+      //                ^
+      //    tag begins here
+      (str[i] === "/" &&
+        isLatinLetter(str[i + 1]) &&
+        str[leftSideIdx] !== "<" &&
+        isOpening(str, i, {
+          allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
+          skipOpeningBracket: true,
+        })) ||
       (isLatinLetter(str[i]) &&
         (!str[i - 1] ||
           (!isLatinLetter(str[i - 1]) &&
-            !["<", "/", "!", BACKSLASH].includes(
-              str[left(str, i) as number]
-            ))) &&
+            !["<", "/", "!", BACKSLASH].includes(str[leftSideIdx]))) &&
         isOpening(str, i, {
           allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
           skipOpeningBracket: true,
