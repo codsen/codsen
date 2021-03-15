@@ -55,7 +55,7 @@ tap.test(`04 - two tags, tight`, (t) => {
   t.end();
 });
 
-tap.test(`05 - two tags, tight`, (t) => {
+tap.test(`05 - two tags, spaced`, (t) => {
   const str = `<div class="" div class="x">`;
   const fixed = `<div class=""> <div class="x">`;
   const messages = verify(t, str, {
@@ -67,7 +67,7 @@ tap.test(`05 - two tags, tight`, (t) => {
   t.end();
 });
 
-tap.test(`06 - two tags, tight`, (t) => {
+tap.test(`06 - two tags, attr`, (t) => {
   const str = `<div class="z" div class="x">`;
   const fixed = `<div class="z"> <div class="x">`;
   const messages = verify(t, str, {
