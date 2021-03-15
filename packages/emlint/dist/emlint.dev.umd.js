@@ -18457,12 +18457,17 @@ function tagSpaceAfterOpeningBracket(context) {
       var ranges = []; // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartsAt);
       // 1. if there's whitespace after opening bracket
 
-      if (typeof context.str[node.start + 1] === "string" && !context.str[node.start + 1].trim()) {
+      if ( // it starts on a bracket
+      context.str[node.start] === "<" && // and next character exists
+      context.str[node.start + 1] && // and it's a whitespace character
+      !context.str[node.start + 1].trim()) {
         ranges.push([node.start + 1, right(context.str, node.start + 1) || context.str.length]);
       } // 2. if there's whitespace before tag name
 
 
-      if (!context.str[node.tagNameStartsAt - 1].trim()) {
+      if ( // it starts on a bracket
+      context.str[node.start] === "<" && // character in front of the tag's name is whitespace
+      !context.str[node.tagNameStartsAt - 1].trim()) {
         var charToTheLeftOfTagNameIdx = left(context.str, node.tagNameStartsAt) || 0;
 
         if (charToTheLeftOfTagNameIdx !== node.start) {
@@ -18823,7 +18828,20 @@ function tagTable(context) {
 
 function tagMalformed(context) {
   return {
-    tag: function tag(node) { // check closing bracket
+    tag: function tag(node) { // check the opening bracket
+
+      if (context.str[node.start] !== "<") {
+        context.report({
+          ruleId: "tag-malformed",
+          message: "Add an opening bracket.",
+          idxFrom: node.start,
+          idxTo: node.end,
+          fix: {
+            ranges: [[node.start, node.start, "<"]]
+          }
+        });
+      } // check the closing bracket
+
 
       if (context.str[node.end - 1] !== ">") {
         var startPos = left(context.str, node.end) + 1;

@@ -2559,10 +2559,15 @@ function tagSpaceAfterOpeningBracket(context) {
   return {
     tag: function tag(node) {
       var ranges = [];
-      if (typeof context.str[node.start + 1] === "string" && !context.str[node.start + 1].trim()) {
+      if (
+      context.str[node.start] === "<" &&
+      context.str[node.start + 1] &&
+      !context.str[node.start + 1].trim()) {
         ranges.push([node.start + 1, stringLeftRight.right(context.str, node.start + 1) || context.str.length]);
       }
-      if (!context.str[node.tagNameStartsAt - 1].trim()) {
+      if (
+      context.str[node.start] === "<" &&
+      !context.str[node.tagNameStartsAt - 1].trim()) {
         var charToTheLeftOfTagNameIdx = stringLeftRight.left(context.str, node.tagNameStartsAt) || 0;
         if (charToTheLeftOfTagNameIdx !== node.start) {
           ranges.push([charToTheLeftOfTagNameIdx + 1, node.tagNameStartsAt]);
@@ -2820,6 +2825,17 @@ function tagTable(context) {
 function tagMalformed(context) {
   return {
     tag: function tag(node) {
+      if (context.str[node.start] !== "<") {
+        context.report({
+          ruleId: "tag-malformed",
+          message: "Add an opening bracket.",
+          idxFrom: node.start,
+          idxTo: node.end,
+          fix: {
+            ranges: [[node.start, node.start, "<"]]
+          }
+        });
+      }
       if (context.str[node.end - 1] !== ">") {
         var startPos = stringLeftRight.left(context.str, node.end) + 1;
         context.report({

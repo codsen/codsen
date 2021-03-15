@@ -187,10 +187,21 @@ tap.test(`06 - in front of backslash`, (t) => {
   t.end();
 });
 
+tap.test(`07 - should not trigger when opening brackets are missing`, (t) => {
+  const str = `<div> div class="x">`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-space-after-opening-bracket": 2,
+    },
+  });
+  t.strictSame(messages, [], "07");
+  t.end();
+});
+
 // 02. XML
 // -----------------------------------------------------------------------------
 
-tap.test(`07 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
+tap.test(`08 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
   const str = `< ?xml version="1.0" encoding="UTF-8"?>`;
   const messages = verify(t, str, {
     rules: {
@@ -211,12 +222,12 @@ tap.test(`07 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
         },
       },
     ],
-    "07.01"
+    "08.01"
   );
   t.equal(
     applyFixes(str, messages),
     `<?xml version="1.0" encoding="UTF-8"?>`,
-    "07.02"
+    "08.02"
   );
   t.end();
 });
