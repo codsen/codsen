@@ -109,3 +109,15 @@ tap.test(`05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, (t) => {
   );
   t.end();
 });
+
+tap.test(`06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, (t) => {
+  const str = `<div>some text /div>`;
+  t.true(
+    is(str, 15, {
+      allowCustomTagNames: false,
+      skipOpeningBracket: true,
+    }),
+    "06"
+  );
+  t.end();
+});

@@ -2436,6 +2436,7 @@ function isOpening(str, idx, originalOpts) {
   var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", ""); // =======
 
   var whatToTest = idx ? str.slice(idx) : str;
+  var leftSideIdx = left(str, idx);
   var qualified = false;
   var passed = false; // if the result is still falsey, we match against the known HTML tag names list
 
@@ -2447,7 +2448,7 @@ function isOpening(str, idx, originalOpts) {
 
   if (opts.allowCustomTagNames) {
 
-    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
+    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, leftSideIdx)] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
       passed = true;
     } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
@@ -2460,7 +2461,9 @@ function isOpening(str, idx, originalOpts) {
     }
   } else {
 
-    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
+    if ((opts.skipOpeningBracket && ( // either opening bracket is straight on the left
+    str[idx - 1] === "<" || // or there's a slash to the left and opening bracket to further left
+    str[idx - 1] === "/" && str[left(str, leftSideIdx)] === "<") || (whatToTest[0] === "<" || whatToTest[0] === "/" && (!str[leftSideIdx] || str[leftSideIdx] !== "<")) && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
       qualified = true;
     } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
       qualified = true;

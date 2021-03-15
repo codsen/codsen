@@ -61,6 +61,7 @@ function isOpening(str, idx, originalOpts) {
   var r8 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
   var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", "");
   var whatToTest = idx ? str.slice(idx) : str;
+  var leftSideIdx = stringLeftRight.left(str, idx);
   var qualified = false;
   var passed = false;
   var matchingOptions = {
@@ -69,7 +70,7 @@ function isOpening(str, idx, originalOpts) {
     trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
   };
   if (opts.allowCustomTagNames) {
-    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[stringLeftRight.left(str, stringLeftRight.left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
+    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[stringLeftRight.left(str, leftSideIdx)] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
       passed = true;
     } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
@@ -81,7 +82,9 @@ function isOpening(str, idx, originalOpts) {
       passed = true;
     }
   } else {
-    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[stringLeftRight.left(str, stringLeftRight.left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
+    if ((opts.skipOpeningBracket && (
+    str[idx - 1] === "<" ||
+    str[idx - 1] === "/" && str[stringLeftRight.left(str, leftSideIdx)] === "<") || (whatToTest[0] === "<" || whatToTest[0] === "/" && (!str[leftSideIdx] || str[leftSideIdx] !== "<")) && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
       qualified = true;
     } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
       qualified = true;

@@ -128,6 +128,7 @@ function isOpening(
   // =======
 
   const whatToTest = idx ? str.slice(idx) : str;
+  const leftSideIdx = left(str, idx) as number;
 
   let qualified = false;
   let passed = false;
@@ -139,68 +140,75 @@ function isOpening(
   };
 
   console.log(
-    `142 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
+    `143 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
   );
 
   console.timeEnd("p02 - declarations");
   // -----------------------------------------------------------------------------
 
   if (opts.allowCustomTagNames) {
-    console.log(`149 entering the custom tag name clauses`);
+    console.log(`150 entering the custom tag name clauses`);
     console.time("p03 - custom tag name clauses");
     if (
       ((opts.skipOpeningBracket &&
         (str[idx - 1] === "<" ||
           (str[idx - 1] === "/" &&
-            str[left(str, left(str, idx) as number) as number] === "<"))) ||
+            str[left(str, leftSideIdx) as number] === "<"))) ||
         (whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim())) &&
       (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))
     ) {
-      console.log(`159 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} passed`);
+      console.log(`160 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
-      console.log(`162 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
+      console.log(`163 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r6.test(whatToTest)) {
-      console.log(`165 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
+      console.log(`166 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
-      console.log(`168 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
+      console.log(`169 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r8.test(whatToTest)) {
-      console.log(`171 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
+      console.log(`172 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
       passed = true;
     }
     console.timeEnd("p03 - custom tag name clauses");
   } else {
     console.time("p04 - qualify clauses");
+
     if (
       ((opts.skipOpeningBracket &&
+        // either opening bracket is straight on the left
         (str[idx - 1] === "<" ||
+          // or there's a slash to the left and opening bracket to further left
           (str[idx - 1] === "/" &&
-            str[left(str, left(str, idx) as number) as number] === "<"))) ||
-        (whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim())) &&
+            str[left(str, leftSideIdx) as number] === "<"))) ||
+        ((whatToTest[0] === "<" ||
+          (whatToTest[0] === "/" &&
+            (!str[leftSideIdx] || str[leftSideIdx] !== "<"))) &&
+          whatToTest[1] &&
+          whatToTest[1].trim())) &&
       r9.test(whatToTest)
     ) {
-      console.log(`185 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} qualified`);
+      console.log(`193 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} qualified`);
       qualified = true;
     } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
-      console.log(`188 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} qualified`);
+      console.log(`196 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} qualified`);
       qualified = true;
     } else if (r2.test(whatToTest)) {
-      console.log(`191 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} qualified`);
+      console.log(`199 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} qualified`);
       qualified = true;
     } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
-      console.log(`194 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} qualified`);
+      console.log(`202 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} qualified`);
       qualified = true;
     } else if (r4.test(whatToTest)) {
-      console.log(`197 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} qualified`);
+      console.log(`205 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} qualified`);
       qualified = true;
     }
     console.timeEnd("p04 - qualify clauses");
 
     console.log(
-      `203 FIY ${`\u001b[${33}m${`qualified`}\u001b[${39}m`} = ${JSON.stringify(
+      `211 FIY ${`\u001b[${33}m${`qualified`}\u001b[${39}m`} = ${JSON.stringify(
         qualified,
         null,
         4
@@ -213,14 +221,14 @@ function isOpening(
       matchRightIncl(str, idx, knownHtmlTags, {
         cb: (char) => {
           if (char === undefined) {
-            console.log(`216`);
+            console.log(`224`);
             if (
               (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim()) ||
               str[idx - 1] === "<"
             ) {
               passed = true;
               console.log(
-                `223 ${`\u001b[${31}m${`EOL after tag name`}\u001b[${39}m`}`
+                `231 ${`\u001b[${31}m${`EOL after tag name`}\u001b[${39}m`}`
               );
             }
             return true;
@@ -244,14 +252,14 @@ function isOpening(
         ],
       })
     ) {
-      console.log(`247 SET passed = true`);
+      console.log(`255 SET passed = true`);
       passed = true;
     }
     console.timeEnd("p05 - the pass clauses");
   }
 
   console.log(
-    `254 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `262 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -267,12 +275,12 @@ function isOpening(
     matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;
-    console.log(`270 SET passed = true`);
+    console.log(`278 SET passed = true`);
   }
   console.timeEnd("p06 - last check clauses");
 
   console.log(
-    `275 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `283 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -281,7 +289,7 @@ function isOpening(
 
   //
   console.log(
-    `284 ${`\u001b[${33}m${`isNotLetter(str[${
+    `292 ${`\u001b[${33}m${`isNotLetter(str[${
       idx + 1
     }])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
@@ -290,7 +298,7 @@ function isOpening(
     )}`
   );
   const res = typeof str === "string" && idx < str.length && passed;
-  console.log(`293 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`301 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 
