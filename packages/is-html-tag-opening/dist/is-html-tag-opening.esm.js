@@ -50,6 +50,7 @@ function isOpening(str, idx = 0, originalOpts) {
   const r4 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}\\w+(?:\\s*\\w+)?\\s*\\w+=['"]`, "g");
   const r8 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*\\s+(?:\\s*\\w+)?\\s*\\w+=['"]`, "g");
   const r9 = new RegExp(`^<${opts.skipOpeningBracket ? `?\\/?` : ""}(${whitespaceChunk}[${generalChar}]+)+${whitespaceChunk}[\\\\/=>]`, "");
+  const r10 = new RegExp(`^\\/\\s*\\w+s*>`);
   const whatToTest = idx ? str.slice(idx) : str;
   const leftSideIdx = left(str, idx);
   let qualified = false;
@@ -69,6 +70,8 @@ function isOpening(str, idx = 0, originalOpts) {
     } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
     } else if (r8.test(whatToTest)) {
+      passed = true;
+    } else if (str[idx] === "/" && str[leftSideIdx] !== "<" && r10.test(whatToTest)) {
       passed = true;
     }
   } else {

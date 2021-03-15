@@ -117,7 +117,83 @@ tap.test(`06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, (t) => {
       allowCustomTagNames: false,
       skipOpeningBracket: true,
     }),
-    "06"
+    "06.01"
+  );
+  t.false(
+    is(str, 16, {
+      allowCustomTagNames: false,
+      skipOpeningBracket: true,
+    }),
+    "06.02"
   );
   t.end();
 });
+
+tap.test(`07 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, (t) => {
+  const str = `<div>some text /div>`;
+  t.true(
+    is(str, 15, {
+      allowCustomTagNames: true,
+      skipOpeningBracket: true,
+    }),
+    "07.01"
+  );
+  t.false(
+    is(str, 16, {
+      allowCustomTagNames: true,
+      skipOpeningBracket: true,
+    }),
+    "07.02"
+  );
+  t.true(
+    is(str, 15, {
+      allowCustomTagNames: false,
+      skipOpeningBracket: true,
+    }),
+    "07.03"
+  );
+  t.false(
+    is(str, 16, {
+      allowCustomTagNames: false,
+      skipOpeningBracket: true,
+    }),
+    "07.04"
+  );
+  t.end();
+});
+
+tap.test(
+  `08 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag, unrecognised`,
+  (t) => {
+    const str = `<div>some text /yo>`;
+    t.true(
+      is(str, 15, {
+        allowCustomTagNames: true,
+        skipOpeningBracket: true,
+      }),
+      "08.01"
+    );
+    t.false(
+      is(str, 16, {
+        allowCustomTagNames: true,
+        skipOpeningBracket: true,
+      }),
+      "08.02"
+    );
+    t.false(
+      is(str, 15, {
+        allowCustomTagNames: false,
+        skipOpeningBracket: true,
+      }),
+      "08.03"
+    );
+    t.false(
+      is(str, 16, {
+        allowCustomTagNames: false,
+        skipOpeningBracket: true,
+      }),
+      "08.04"
+    );
+    t.end();
+  }
+);

@@ -2434,6 +2434,9 @@ function isOpening(str, idx, originalOpts) {
   // lesser requirements when opening bracket precedes index "idx"
 
   var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", ""); // =======
+  // r10. closing tag with slash present but opening bracket missing
+
+  var r10 = new RegExp("^\\/\\s*\\w+s*>"); // =======
 
   var whatToTest = idx ? str.slice(idx) : str;
   var leftSideIdx = left(str, idx);
@@ -2457,6 +2460,8 @@ function isOpening(str, idx, originalOpts) {
     } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
     } else if (r8.test(whatToTest)) {
+      passed = true;
+    } else if (str[idx] === "/" && str[leftSideIdx] !== "<" && r10.test(whatToTest)) {
       passed = true;
     }
   } else {
