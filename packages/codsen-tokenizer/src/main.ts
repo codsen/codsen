@@ -1887,7 +1887,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       console.log(`1887 main sorting checks start`);
 
       console.time(`main-sorting-checks`);
-      if (startsTag(str, i, token, layers, withinStyle)) {
+      if (startsTag(str, i, token, layers, withinStyle, leftVal, rightVal)) {
         //
         //
         //

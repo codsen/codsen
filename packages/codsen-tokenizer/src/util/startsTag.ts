@@ -1,5 +1,4 @@
 import { isOpening } from "is-html-tag-opening";
-import { left, right } from "string-left-right";
 import { matchRight } from "string-match-left-right";
 import { isLatinLetter, Token, Layer } from "./util";
 
@@ -14,18 +13,19 @@ function startsTag(
   i: number,
   token: Token,
   layers: Layer[],
-  withinStyle: boolean
+  withinStyle: boolean,
+  leftVal: number | null,
+  rightVal: number | null
 ): boolean {
   const R1 = isOpening(str, i, {
     allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
     skipOpeningBracket: true,
   });
   console.log(
-    `024 ███████████████████████████████████████ ${`\u001b[${
+    `025 ███████████████████████████████████████ ${`\u001b[${
       R1 ? 32 : 31
     }m${`R1`}\u001b[${39}m`} = ${R1}`
   );
-  const leftSideIdx = left(str, i) as number;
   return !!(
     str[i] &&
     str[i].trim().length &&
@@ -38,7 +38,7 @@ function startsTag(
       (isOpening(str, i, {
         allowCustomTagNames: true,
       }) ||
-        str[right(str, i) as number] === ">" ||
+        str[rightVal as number] === ">" ||
         matchRight(str, i, ["doctype", "xml", "cdata"], {
           i: true,
           trimBeforeMatching: true,
@@ -49,7 +49,7 @@ function startsTag(
       //    tag begins here
       (str[i] === "/" &&
         isLatinLetter(str[i + 1]) &&
-        str[leftSideIdx] !== "<" &&
+        str[leftVal as number] !== "<" &&
         isOpening(str, i, {
           allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
           skipOpeningBracket: true,
@@ -57,7 +57,7 @@ function startsTag(
       (isLatinLetter(str[i]) &&
         (!str[i - 1] ||
           (!isLatinLetter(str[i - 1]) &&
-            !["<", "/", "!", BACKSLASH].includes(str[leftSideIdx]))) &&
+            !["<", "/", "!", BACKSLASH].includes(str[leftVal as number]))) &&
         isOpening(str, i, {
           allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
           skipOpeningBracket: true,

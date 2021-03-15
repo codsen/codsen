@@ -210,24 +210,23 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
 }
 
 var BACKSLASH = "\\";
-function startsTag(str, i, token, layers, withinStyle) {
+function startsTag(str, i, token, layers, withinStyle, leftVal, rightVal) {
   isHtmlTagOpening.isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   });
-  var leftSideIdx = stringLeftRight.left(str, i);
   return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && (
   !withinStyle || str[i] === "<") && (str[i] === "<" && (isHtmlTagOpening.isOpening(str, i, {
     allowCustomTagNames: true
-  }) || str[stringLeftRight.right(str, i)] === ">" || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
+  }) || str[rightVal] === ">" || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
   })) ||
-  str[i] === "/" && isLatinLetter(str[i + 1]) && str[leftSideIdx] !== "<" && isHtmlTagOpening.isOpening(str, i, {
+  str[i] === "/" && isLatinLetter(str[i + 1]) && str[leftVal] !== "<" && isHtmlTagOpening.isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
-  }) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[leftSideIdx])) && isHtmlTagOpening.isOpening(str, i, {
+  }) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[leftVal])) && isHtmlTagOpening.isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
@@ -797,7 +796,7 @@ function tokenizer(str, originalOpts) {
     }
     var lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
     if (!doNothing && str[_i]) {
-      if (startsTag(str, _i, token, layers, withinStyle)) {
+      if (startsTag(str, _i, token, layers, withinStyle, leftVal, rightVal)) {
         if (token.type && token.start !== null) {
           if (token.type === "rule") {
             if (property && property.start) {

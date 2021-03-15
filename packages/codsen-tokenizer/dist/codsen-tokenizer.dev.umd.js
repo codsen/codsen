@@ -3208,26 +3208,25 @@ var BACKSLASH = "\\"; // This is an extracted logic which detects where token of
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
-function startsTag(str, i, token, layers, withinStyle) {
+function startsTag(str, i, token, layers, withinStyle, leftVal, rightVal) {
   isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   });
-  var leftSideIdx = left(str, i);
   return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && ( // within CSS styles, initiate tags only on opening bracket:
   !withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
     allowCustomTagNames: true
-  }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
+  }) || str[rightVal] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
   })) || // <div>some text /div>
   //                ^
   //    tag begins here
-  str[i] === "/" && isLatinLetter(str[i + 1]) && str[leftSideIdx] !== "<" && isOpening(str, i, {
+  str[i] === "/" && isLatinLetter(str[i + 1]) && str[leftVal] !== "<" && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
-  }) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[leftSideIdx])) && isOpening(str, i, {
+  }) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[leftVal])) && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
@@ -4299,7 +4298,7 @@ function tokenizer(str, originalOpts) {
       //   )}`
       // );
 
-      if (startsTag(str, _i, token, layers, withinStyle)) {
+      if (startsTag(str, _i, token, layers, withinStyle, leftVal, rightVal)) {
         //
         //
         //
