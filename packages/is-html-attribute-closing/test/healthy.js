@@ -6,22 +6,16 @@ import { combinations } from "./util/util";
 // healthy code
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, one attr, double quotes`,
-  (t) => {
-    combinations(`<a href="zzz">`).forEach((str) => {
-      t.true(is(str, 8, 12), "01");
-    });
-    t.end();
-  }
-);
+tap.test(`01 - one tag, one attr, double quotes`, (t) => {
+  combinations(`<a href="zzz">`).forEach((str) => {
+    t.true(is(str, 8, 12), "01");
+  });
+  t.end();
+});
 
-tap.test(
-  `02 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, double quotes`,
-  (t) => {
-    combinations(
-      `<a href="zzz" target="_blank" style="color: black;">`
-    ).forEach((str) => {
+tap.test(`02 - one tag, few attrs, double quotes`, (t) => {
+  combinations(`<a href="zzz" target="_blank" style="color: black;">`).forEach(
+    (str) => {
       // 1. starting at the opening of "href":
       t.false(is(str, 8, 8), "02.01");
       t.true(is(str, 8, 12), "02.02"); // <--
@@ -45,40 +39,37 @@ tap.test(
       t.false(is(str, 36, 28), "02.16");
       t.false(is(str, 36, 36), "02.17");
       t.true(is(str, 36, 50), "02.18"); // <--
-    });
+    }
+  );
 
-    // fin.
-    t.end();
-  }
-);
+  // fin.
+  t.end();
+});
 
-tap.test(
-  `03 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - repeated singles inside doubles`,
-  (t) => {
-    [
-      `<img src="spacer.gif" alt="'''''" width="1" height="1" border="0" style="display:block;"/>`,
-      `<img src="spacer.gif" alt='"""""' width="1" height="1" border="0" style="display:block;"/>`,
-    ].forEach((str) => {
-      // 0. warmup
-      t.true(is(str, 9, 20), "03.01");
+tap.test(`03 - repeated singles inside doubles`, (t) => {
+  [
+    `<img src="spacer.gif" alt="'''''" width="1" height="1" border="0" style="display:block;"/>`,
+    `<img src="spacer.gif" alt='"""""' width="1" height="1" border="0" style="display:block;"/>`,
+  ].forEach((str) => {
+    // 0. warmup
+    t.true(is(str, 9, 20), "03.01");
 
-      // 1. the bizness
-      t.false(is(str, 26, 9), "03.02");
-      t.false(is(str, 26, 20), "03.03");
-      t.false(is(str, 26, 26), "03.04");
-      t.false(is(str, 26, 27), "03.05");
-      t.false(is(str, 26, 28), "03.06");
-      t.false(is(str, 26, 29), "03.07");
-      t.false(is(str, 26, 30), "03.08");
-      t.false(is(str, 26, 31), "03.09");
-      t.true(is(str, 26, 32), "03.10"); // <--
-      t.false(is(str, 26, 40), "03.11");
-    });
+    // 1. the bizness
+    t.false(is(str, 26, 9), "03.02");
+    t.false(is(str, 26, 20), "03.03");
+    t.false(is(str, 26, 26), "03.04");
+    t.false(is(str, 26, 27), "03.05");
+    t.false(is(str, 26, 28), "03.06");
+    t.false(is(str, 26, 29), "03.07");
+    t.false(is(str, 26, 30), "03.08");
+    t.false(is(str, 26, 31), "03.09");
+    t.true(is(str, 26, 32), "03.10"); // <--
+    t.false(is(str, 26, 40), "03.11");
+  });
 
-    // fin.
-    t.end();
-  }
-);
+  // fin.
+  t.end();
+});
 
 tap.test(`04`, (t) => {
   combinations(`<body alink="">`).forEach((str) => {
@@ -87,7 +78,7 @@ tap.test(`04`, (t) => {
   t.end();
 });
 
-tap.test(`05 links with redirects hardcoded`, (t) => {
+tap.test(`05 - links with redirects hardcoded`, (t) => {
   combinations(`<a
  href="http://a.b.c/d/EDF/HIJ/KLM/NOP/q?r=https://www.codsen.com/st/uv-wx-yz-123.html&b=456" style="color:#000; text-decoration:none;" target="_blank">x</a>
 >`).forEach((str) => {
@@ -106,7 +97,7 @@ tap.test(`05 links with redirects hardcoded`, (t) => {
   t.end();
 });
 
-tap.test(`06 url attribs within src`, (t) => {
+tap.test(`06 - url attribs within src`, (t) => {
   [
     `<img src="https://z.com/r.png?a=" />`,
     `<img src="https://z.com/r.png?a=b" />`,
@@ -123,7 +114,7 @@ tap.test(`06 url attribs within src`, (t) => {
   t.end();
 });
 
-tap.test(`07 no equal char in mailto`, (t) => {
+tap.test(`07 - no equal char in mailto`, (t) => {
   combinations(
     `<a href="mailto:frank@wwdcdemo.example.com">John Frank</a>`
   ).forEach((str) => {
@@ -132,7 +123,7 @@ tap.test(`07 no equal char in mailto`, (t) => {
   t.end();
 });
 
-tap.test(`08 href with mailto and equal`, (t) => {
+tap.test(`08 - href with mailto and equal`, (t) => {
   combinations(
     `<a href="mailto:foo@example.com?cc=bar@example.com&subject=Greetings%20from%20Cupertino!&body=Wish%20you%20were%20here!">John Frank</a>`
   ).forEach((str) => {
@@ -178,9 +169,50 @@ tap.test(`13`, (t) => {
   t.end();
 });
 
-tap.test(`14 text quotes`, (t) => {
+tap.test(`14 - text quotes`, (t) => {
   combinations(`abc "d" efg`).forEach((str) => {
     t.false(is(str, 4, 6), "10");
+  });
+  t.end();
+});
+
+tap.test(`15 - quote pairs inside font-family`, (t) => {
+  combinations(
+    `<td style="font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;">`
+  ).forEach((str, idx) => {
+    t.false(is(str, 10, 23), `15.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 31), `15.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 34), `15.03.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 39), `15.04.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.true(is(str, 10, 52), `15.05.${`${idx}`.padStart(2, "0")} - "${str}"`);
+  });
+  t.end();
+});
+
+tap.test(`16`, (t) => {
+  combinations(
+    `<td style="font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;">\nzzz\n</td>`
+  ).forEach((str, idx) => {
+    t.false(is(str, 10, 23), `16.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 31), `16.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 34), `16.03.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 39), `16.04.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.true(is(str, 10, 52), `16.05.${`${idx}`.padStart(2, "0")} - "${str}"`);
+  });
+  t.end();
+});
+
+tap.test(`17`, (t) => {
+  combinations(
+    `<td style="font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;" align="left"></td>`
+  ).forEach((str, idx) => {
+    t.false(is(str, 10, 23), `17.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 31), `17.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 34), `17.03.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 39), `17.04.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.true(is(str, 10, 52), `17.05.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 60), `17.06.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    t.false(is(str, 10, 65), `17.07.${`${idx}`.padStart(2, "0")} - "${str}"`);
   });
   t.end();
 });

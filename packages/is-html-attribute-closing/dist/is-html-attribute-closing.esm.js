@@ -87,13 +87,15 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   let closingBracketMet = false;
   let openingBracketMet = false;
   for (let i = idxOfAttrOpening, len = str.length; i < len; i++) {
+    const rightVal = right(str, i);
+    const leftVal = left(str, i);
     if (
     `'"`.includes(str[i]) &&
     lastQuoteWasMatched &&
     lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
     lastMatchedQuotesPairsEndIsAt !== undefined && lastMatchedQuotesPairsEndIsAt < i &&
     i >= isThisClosingIdx) {
-      const E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || `/>`.includes(str[right(str, i)]);
+      const E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || `/>`.includes(str[rightVal]);
       const E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] &&
       plausibleAttrStartsAtX(str, i + 1));
       const E31 =
@@ -106,20 +108,20 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
       const E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() &&
       Array.from(str.slice(chunkStartsAt, i).trim()).every(char => isAttrNameChar(char)) &&
-      str[idxOfAttrOpening] === str[isThisClosingIdx] && !`/>`.includes(str[right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", [`'`, `"`]);
+      str[idxOfAttrOpening] === str[isThisClosingIdx] && !`/>`.includes(str[rightVal]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", [`'`, `"`]);
       let attrNameCharsChunkOnTheLeft;
       if (i === isThisClosingIdx) {
         attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
       }
       const E34 =
       i === isThisClosingIdx && (
-      !isAttrNameChar(str[left(str, i)]) ||
+      !isAttrNameChar(str[leftVal]) ||
       attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) &&
-      str[left(str, i)] !== "=";
+      str[leftVal] !== "=";
       const E41 =
-      `/>`.includes(str[right(str, i)]) && i === isThisClosingIdx;
+      `/>`.includes(str[rightVal]) && i === isThisClosingIdx;
       const E42 =
-      isAttrNameChar(str[right(str, i)]);
+      isAttrNameChar(str[rightVal]);
       const E43 =
       lastQuoteWasMatched && i !== isThisClosingIdx;
       const E5 =
@@ -152,7 +154,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
     }
     if (str[i] === "<" &&
-    str[right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
+    str[rightVal] !== "%" && closingBracketMet && !openingBracketMet) {
       openingBracketMet = true;
       return false;
     }
@@ -164,7 +166,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       secondLastCapturedChunk = lastCapturedChunk;
       lastCapturedChunk = str.slice(chunkStartsAt, i);
       lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
-      if (`'"`.includes(str[i]) && quotesCount.get(`matchedPairs`) === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !`'"`.includes(str[right(str, i)])) {
+      if (`'"`.includes(str[i]) && quotesCount.get(`matchedPairs`) === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !`'"`.includes(str[rightVal])) {
         const A1 = i > isThisClosingIdx;
         const A21 = !lastQuoteAt;
         const A22 = lastQuoteAt + 1 >= i;
@@ -205,7 +207,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     if (
     (str[i] === "=" ||
     !str[i].length &&
-    str[right(str, i)] === "=") &&
+    str[rightVal] === "=") &&
     lastCapturedChunk &&
     allHtmlAttribs.has(lastCapturedChunk)) {
       const W1 = i > isThisClosingIdx;
@@ -223,7 +225,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
         const Y4 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(chunk => allHtmlAttribs.has(chunk));
         const Y5 = i >= isThisClosingIdx;
-        const Y6 = !str[right(str, i)] || !`'"`.includes(str[right(str, i)]);
+        const Y6 = !str[rightVal] || !`'"`.includes(str[rightVal]);
         return !!(Y1 && Y2 && Y3 && Y4 && Y5 && Y6);
       }
       if (
@@ -244,11 +246,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         quotesCount.get(`'`) &&
         quotesCount.get(`"`) &&
         quotesCount.get(`matchedPairs`) > 1) ||
-        `/>`.includes(str[right(str, i)]));
+        `/>`.includes(str[rightVal]));
         const R2 = totalQuotesCount < 3 ||
         quotesCount.get(`"`) + quotesCount.get(`'`) - quotesCount.get(`matchedPairs`) * 2 !== 2;
         const R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt !== undefined && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(char => isAttrNameChar(char)) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
-        const R32 = !right(str, i) && totalQuotesCount % 2 === 0;
+        const R32 = !rightVal && totalQuotesCount % 2 === 0;
         const R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && isAttrNameChar(str[idxOfAttrOpening - 2]);
         const R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", [`='`, `="`]);
         return (
@@ -294,7 +296,10 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       if (i < isThisClosingIdx && `'"`.includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
         return false;
       }
-      if (i === isThisClosingIdx && `'"`.includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+      if (i === isThisClosingIdx && `'"`.includes(str[i]) && (str[leftVal] === `'` || str[leftVal] === `"`) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+        return true;
+      }
+      if (i === isThisClosingIdx && `'"`.includes(str[i]) && str.slice(idxOfAttrOpening, isThisClosingIdx).includes(":") && (str[rightVal] === ">" || str[rightVal] === "/" && str[right(str, rightVal)] === ">")) {
         return true;
       }
     }

@@ -104,13 +104,15 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   var closingBracketMet = false;
   var openingBracketMet = false;
   for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
+    var rightVal = stringLeftRight.right(str, i);
+    var leftVal = stringLeftRight.left(str, i);
     if (
     "'\"".includes(str[i]) &&
     lastQuoteWasMatched &&
     lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
     lastMatchedQuotesPairsEndIsAt !== undefined && lastMatchedQuotesPairsEndIsAt < i &&
     i >= isThisClosingIdx) {
-      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, stringLeftRight.right(str, isThisClosingIdx)) || "/>".includes(str[stringLeftRight.right(str, i)]);
+      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, stringLeftRight.right(str, isThisClosingIdx)) || "/>".includes(str[rightVal]);
       var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] &&
       plausibleAttrStartsAtX(str, i + 1));
       var E31 =
@@ -125,20 +127,20 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
         return isCharSuitableForHtmlAttrName.isAttrNameChar(char);
       }) &&
-      str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[stringLeftRight.right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]);
+      str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[rightVal]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]);
       var attrNameCharsChunkOnTheLeft = void 0;
       if (i === isThisClosingIdx) {
         attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
       }
       var E34 =
       i === isThisClosingIdx && (
-      !isCharSuitableForHtmlAttrName.isAttrNameChar(str[stringLeftRight.left(str, i)]) ||
+      !isCharSuitableForHtmlAttrName.isAttrNameChar(str[leftVal]) ||
       attrNameCharsChunkOnTheLeft && !htmlAllKnownAttributes.allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) &&
-      str[stringLeftRight.left(str, i)] !== "=";
+      str[leftVal] !== "=";
       var E41 =
-      "/>".includes(str[stringLeftRight.right(str, i)]) && i === isThisClosingIdx;
+      "/>".includes(str[rightVal]) && i === isThisClosingIdx;
       var E42 =
-      isCharSuitableForHtmlAttrName.isAttrNameChar(str[stringLeftRight.right(str, i)]);
+      isCharSuitableForHtmlAttrName.isAttrNameChar(str[rightVal]);
       var E43 =
       lastQuoteWasMatched && i !== isThisClosingIdx;
       var E5 =
@@ -171,7 +173,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
     }
     if (str[i] === "<" &&
-    str[stringLeftRight.right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
+    str[rightVal] !== "%" && closingBracketMet && !openingBracketMet) {
       openingBracketMet = true;
       return false;
     }
@@ -183,7 +185,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       secondLastCapturedChunk = lastCapturedChunk;
       lastCapturedChunk = str.slice(chunkStartsAt, i);
       lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
-      if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[stringLeftRight.right(str, i)])) {
+      if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[rightVal])) {
         var A1 = i > isThisClosingIdx;
         var A21 = !lastQuoteAt;
         var A22 = lastQuoteAt + 1 >= i;
@@ -228,7 +230,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     if (
     (str[i] === "=" ||
     !str[i].length &&
-    str[stringLeftRight.right(str, i)] === "=") &&
+    str[rightVal] === "=") &&
     lastCapturedChunk &&
     htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
       var W1 = i > isThisClosingIdx;
@@ -248,7 +250,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           return htmlAllKnownAttributes.allHtmlAttribs.has(chunk);
         });
         var Y5 = i >= isThisClosingIdx;
-        var Y6 = !str[stringLeftRight.right(str, i)] || !"'\"".includes(str[stringLeftRight.right(str, i)]);
+        var Y6 = !str[rightVal] || !"'\"".includes(str[rightVal]);
         return !!(Y1 && Y2 && Y3 && Y4 && Y5 && Y6);
       }
       if (
@@ -269,13 +271,13 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         quotesCount.get("'") &&
         quotesCount.get("\"") &&
         quotesCount.get("matchedPairs") > 1) ||
-        "/>".includes(str[stringLeftRight.right(str, i)]));
+        "/>".includes(str[rightVal]));
         var _R2 = totalQuotesCount < 3 ||
         quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
         var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt !== undefined && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
           return isCharSuitableForHtmlAttrName.isAttrNameChar(char);
         }) && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
-        var R32 = !stringLeftRight.right(str, i) && totalQuotesCount % 2 === 0;
+        var R32 = !rightVal && totalQuotesCount % 2 === 0;
         var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && isCharSuitableForHtmlAttrName.isAttrNameChar(str[idxOfAttrOpening - 2]);
         var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
         return (
@@ -323,7 +325,10 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[stringLeftRight.left(str, idxOfAttrOpening)] && str[stringLeftRight.left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
         return false;
       }
-      if (i === isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+      if (i === isThisClosingIdx && "'\"".includes(str[i]) && (str[leftVal] === "'" || str[leftVal] === "\"") && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+        return true;
+      }
+      if (i === isThisClosingIdx && "'\"".includes(str[i]) && str.slice(idxOfAttrOpening, isThisClosingIdx).includes(":") && (str[rightVal] === ">" || str[rightVal] === "/" && str[stringLeftRight.right(str, rightVal)] === ">")) {
         return true;
       }
     }

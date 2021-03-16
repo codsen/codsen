@@ -104,6 +104,9 @@ function isAttrClosing(
     //
     //
 
+    const rightVal = right(str, i) as number;
+    const leftVal = left(str, i) as number;
+
     //
     // Logging:
     // -------------------------------------------------------------------------
@@ -145,9 +148,9 @@ function isAttrClosing(
       // rule must not trigger before the suspected quote index
       i >= isThisClosingIdx
     ) {
-      console.log(`148 ███████████████████████████████████████`);
+      console.log(`151 ███████████████████████████████████████`);
       console.log(
-        `150 ${`\u001b[${33}m${`plausibleAttrStartsAtX(str, ${
+        `153 ${`\u001b[${33}m${`plausibleAttrStartsAtX(str, ${
           i + 1
         })`}\u001b[${39}m`} = ${JSON.stringify(
           plausibleAttrStartsAtX(str, i + 1),
@@ -157,7 +160,7 @@ function isAttrClosing(
       );
 
       console.log(
-        `160 FIY, ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+        `163 FIY, ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
           lastCapturedChunk,
           null,
           4
@@ -194,7 +197,7 @@ function isAttrClosing(
       const E1 =
         i !== isThisClosingIdx ||
         guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx) as number) ||
-        `/>`.includes(str[right(str, i) as number]);
+        `/>`.includes(str[rightVal]);
 
       // ███████████████████████████████████████ E2
       //
@@ -263,7 +266,7 @@ function isAttrClosing(
         plausibleAttrName = str.slice(chunkStartsAt, i).trim();
       }
       console.log(
-        `266 ${`\u001b[${33}m${`plausibleAttrName`}\u001b[${39}m`} = ${JSON.stringify(
+        `269 ${`\u001b[${33}m${`plausibleAttrName`}\u001b[${39}m`} = ${JSON.stringify(
           plausibleAttrName,
           null,
           4
@@ -280,7 +283,7 @@ function isAttrClosing(
         ) &&
         // known opening and suspected closing are both singles or doubles
         str[idxOfAttrOpening] === str[isThisClosingIdx] &&
-        !`/>`.includes(str[right(str, i) as number]) &&
+        !`/>`.includes(str[rightVal]) &&
         ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", [`'`, `"`]);
 
       // anti-rule - it's fine if we're on suspected ending and to the left
@@ -299,7 +302,7 @@ function isAttrClosing(
         attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
       }
       console.log(
-        `302 CALCULATED ${`\u001b[${33}m${`attrNameCharsChunkOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+        `305 CALCULATED ${`\u001b[${33}m${`attrNameCharsChunkOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
           attrNameCharsChunkOnTheLeft,
           null,
           4
@@ -310,22 +313,22 @@ function isAttrClosing(
         // we're on suspected
         i === isThisClosingIdx &&
         // it's not a character suitable for attr name,
-        (!isAttrNameChar(str[left(str, i) as number]) ||
+        (!isAttrNameChar(str[leftVal]) ||
           // or it is, but whatever we extracted is not recognised attr name
           (attrNameCharsChunkOnTheLeft &&
             !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft))) &&
         // rule out equal
-        str[left(str, i) as number] !== "=";
+        str[leftVal] !== "=";
 
       // ███████████████████████████████████████ E4
 
       const E41 =
         // either it's a tag ending and we're at the suspected quote
-        `/>`.includes(str[right(str, i) as number]) && i === isThisClosingIdx;
+        `/>`.includes(str[rightVal]) && i === isThisClosingIdx;
 
       const E42 =
         // or next character is suitable for a tag name:
-        isAttrNameChar(str[right(str, i) as number]);
+        isAttrNameChar(str[rightVal]);
 
       const E43 =
         // or in case of:
@@ -359,7 +362,7 @@ function isAttrClosing(
           )
         );
 
-      console.log(`362 RES:`);
+      console.log(`365 RES:`);
       console.log(`E1: ${`\u001b[${E1 ? 32 : 31}m${E1}\u001b[${39}m`}`);
       console.log(`E2: ${`\u001b[${E2 ? 32 : 31}m${E2}\u001b[${39}m`}`);
       console.log(
@@ -405,13 +408,13 @@ function isAttrClosing(
         (str[i] === `"` && str[i - 1] === `'` && str[i + 1] === `'`)
       ) {
         console.log(
-          `408 killer triplet detected - ${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`
+          `411 killer triplet detected - ${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`
         );
         continue;
       }
 
       console.log(
-        `414 FIY, ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+        `417 FIY, ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
           lastQuoteAt,
           null,
           4
@@ -420,7 +423,7 @@ function isAttrClosing(
         }`
       );
       if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
-        console.log(`423 quotes matching`);
+        console.log(`426 quotes matching`);
         quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
         lastMatchedQuotesPairsStartIsAt = lastQuoteAt;
         lastMatchedQuotesPairsEndIsAt = i;
@@ -428,17 +431,17 @@ function isAttrClosing(
 
         lastQuoteWasMatched = true;
         console.log(
-          `431 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteWasMatched`}\u001b[${39}m`} = ${JSON.stringify(
+          `434 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteWasMatched`}\u001b[${39}m`} = ${JSON.stringify(
             lastQuoteWasMatched,
             null,
             4
           )}`
         );
       } else {
-        console.log(`438 quotes not matching`);
+        console.log(`441 quotes not matching`);
         lastQuoteWasMatched = false;
         console.log(
-          `441 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteWasMatched`}\u001b[${39}m`} = ${JSON.stringify(
+          `444 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteWasMatched`}\u001b[${39}m`} = ${JSON.stringify(
             lastQuoteWasMatched,
             null,
             4
@@ -465,7 +468,7 @@ function isAttrClosing(
     if (str[i] === ">" && !closingBracketMet) {
       closingBracketMet = true;
       console.log(
-        `468 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`closingBracketMet`}\u001b[${39}m`} = ${JSON.stringify(
+        `471 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`closingBracketMet`}\u001b[${39}m`} = ${JSON.stringify(
           closingBracketMet,
           null,
           4
@@ -483,9 +486,9 @@ function isAttrClosing(
         i < isThisClosingIdx
       ) {
         console.log(
-          `486 all quotes matched so far and it looks like tag ending`
+          `489 all quotes matched so far and it looks like tag ending`
         );
-        console.log(`488 RETURN false`);
+        console.log(`491 RETURN false`);
         return false;
       }
     }
@@ -494,13 +497,13 @@ function isAttrClosing(
     if (
       str[i] === "<" &&
       // consider ERB templating tags, <%= zzz %>
-      str[right(str, i) as number] !== "%" &&
+      str[rightVal] !== "%" &&
       closingBracketMet &&
       !openingBracketMet
     ) {
       openingBracketMet = true;
       console.log(
-        `503 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`openingBracketMet`}\u001b[${39}m`} = ${JSON.stringify(
+        `506 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`openingBracketMet`}\u001b[${39}m`} = ${JSON.stringify(
           openingBracketMet,
           null,
           4
@@ -510,7 +513,7 @@ function isAttrClosing(
       // if it's past the "isThisClosingIdx", that's very falsey
       // if (i > isThisClosingIdx) {
       console.log(
-        `513 new tag starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+        `516 new tag starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
       );
       return false;
       // }
@@ -552,17 +555,17 @@ function isAttrClosing(
     //        opening          suspected closing
 
     if (str[i].trim() && !chunkStartsAt) {
-      console.log(`555 inside the attr name START catching clauses`);
+      console.log(`558 inside the attr name START catching clauses`);
       // <img alt="so-called "artists"!' class='yo'/>
       //                              ^
       //                         we land here, on excl. mark
       if (isAttrNameChar(str[i])) {
         console.log(
-          `561 ${`\u001b[${32}m${`██ new attribute name starts`}\u001b[${39}m`}`
+          `564 ${`\u001b[${32}m${`██ new attribute name starts`}\u001b[${39}m`}`
         );
         chunkStartsAt = i;
         console.log(
-          `565 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `568 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             chunkStartsAt,
             null,
             4
@@ -570,11 +573,11 @@ function isAttrClosing(
         );
       }
     } else if (chunkStartsAt && !isAttrNameChar(str[i])) {
-      console.log(`573 inside the attr name END catching clauses`);
+      console.log(`576 inside the attr name END catching clauses`);
 
       // ending of an attr name chunk
       console.log(
-        `577 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`}: "${str.slice(
+        `580 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`}: "${str.slice(
           chunkStartsAt,
           i
         )}"`
@@ -582,7 +585,7 @@ function isAttrClosing(
       secondLastCapturedChunk = lastCapturedChunk;
       lastCapturedChunk = str.slice(chunkStartsAt, i);
       console.log(
-        `585 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+        `588 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
           lastCapturedChunk,
           null,
           4
@@ -615,15 +618,15 @@ function isAttrClosing(
         totalQuotesCount === 3 &&
         str[idxOfAttrOpening] === str[i] &&
         allHtmlAttribs.has(lastCapturedChunk) &&
-        !`'"`.includes(str[right(str, i) as number])
+        !`'"`.includes(str[rightVal])
       ) {
         console.log(
-          `621 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
+          `624 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
             i > isThisClosingIdx
           }`
         );
         console.log(
-          `626 FIY, ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `629 FIY, ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
             lastQuoteAt,
             null,
             4
@@ -672,7 +675,7 @@ function isAttrClosing(
           .split(/\s+/)
           .every((chunk) => allHtmlAttribs.has(chunk));
 
-        console.log(`675:`);
+        console.log(`678:`);
         console.log(
           `(A1=${`\u001b[${
             A1 ? 32 : 31
@@ -719,8 +722,8 @@ function isAttrClosing(
         lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
         lastMatchedQuotesPairsEndIsAt === isThisClosingIdx
       ) {
-        console.log(`722 pattern: matched pair + attribute name after`);
-        console.log(`723 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} true`);
+        console.log(`725 pattern: matched pair + attribute name after`);
+        console.log(`726 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} true`);
         return true;
       }
     }
@@ -731,7 +734,7 @@ function isAttrClosing(
     //                 ^            ^
     //        known start at 16     suspected ending at 29
     console.log(
-      `734 ${
+      `737 ${
         i > isThisClosingIdx + 1
           ? `FIY, the trim [${isThisClosingIdx + 1}, ${i}]: "${str
               .slice(isThisClosingIdx + 1, i)
@@ -822,10 +825,10 @@ function isAttrClosing(
         secondLastCapturedChunk.trim().endsWith(":")
       )
     ) {
-      console.log(`825 FIY, doubles count: ${quotesCount.get(`"`)}`);
-      console.log(`826 FIY, singles count: ${quotesCount.get(`'`)}`);
+      console.log(`828 FIY, doubles count: ${quotesCount.get(`"`)}`);
+      console.log(`829 FIY, singles count: ${quotesCount.get(`'`)}`);
       console.log(
-        `828 FIY, lastCapturedChunk: ${JSON.stringify(
+        `831 FIY, lastCapturedChunk: ${JSON.stringify(
           lastCapturedChunk,
           null,
           0
@@ -836,7 +839,7 @@ function isAttrClosing(
         )}`
       );
       console.log(
-        `839 FIY, ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+        `842 FIY, ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
           chunkStartsAt,
           null,
           4
@@ -892,7 +895,7 @@ function isAttrClosing(
         )}\u001b[${39}m`}`
       );
 
-      console.log(`895 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+      console.log(`898 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
 
       return R0 && !(R1 && R2 && R3 && R4);
     }
@@ -908,7 +911,7 @@ function isAttrClosing(
         // it's whitespace
         (!str[i].length &&
           // and next non-whitespace character is "equal" character
-          str[right(str, i) as number] === "=")) &&
+          str[rightVal] === "=")) &&
       // last chunk is not falsey (thus a string)
       lastCapturedChunk &&
       // and finally, perf resource-taxing evaluation, is it recognised:
@@ -950,7 +953,7 @@ function isAttrClosing(
           lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx
         );
 
-      console.log(`953 new attr starting`);
+      console.log(`956 new attr starting`);
       console.log(
         `W1=${`\u001b[${W1 ? 32 : 31}m${W1}\u001b[${39}m`} && W2=${`\u001b[${
           W2 ? 32 : 31
@@ -964,29 +967,29 @@ function isAttrClosing(
 
     // when index "isThisClosingIdx" has been passed...
     if (i > isThisClosingIdx) {
-      console.log(`967 i > isThisClosingIdx`);
+      console.log(`970 i > isThisClosingIdx`);
 
       // if current quote matches the opening
       if (openingQuote && str[i] === openingQuote) {
         console.log(
-          `972 a true opening quote matched beyond the suspected-one - ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+          `975 a true opening quote matched beyond the suspected-one - ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
         );
         console.log(
-          `975 ! ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+          `978 ! ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
             lastCapturedChunk,
             null,
             4
           )}`
         );
         console.log(
-          `982 ! ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `985 ! ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
             lastQuoteAt,
             null,
             4
           )}`
         );
         console.log(
-          `989 ! ${`\u001b[${33}m${`isThisClosingIdx`}\u001b[${39}m`} = ${JSON.stringify(
+          `992 ! ${`\u001b[${33}m${`isThisClosingIdx`}\u001b[${39}m`} = ${JSON.stringify(
             isThisClosingIdx,
             null,
             4
@@ -1018,9 +1021,7 @@ function isAttrClosing(
           .every((chunk) => allHtmlAttribs.has(chunk));
         const Y5 = i >= isThisClosingIdx;
 
-        const Y6 =
-          !str[right(str, i) as number] ||
-          !`'"`.includes(str[right(str, i) as number]);
+        const Y6 = !str[rightVal] || !`'"`.includes(str[rightVal]);
 
         console.log(`Y1: ${`\u001b[${Y1 ? 32 : 31}m${Y1}\u001b[${39}m`}`);
         console.log(`Y2: ${`\u001b[${Y2 ? 32 : 31}m${Y2}\u001b[${39}m`}`);
@@ -1029,7 +1030,7 @@ function isAttrClosing(
         console.log(`Y5: ${`\u001b[${Y5 ? 32 : 31}m${Y5}\u001b[${39}m`}`);
         console.log(`Y6: ${`\u001b[${Y6 ? 32 : 31}m${Y6}\u001b[${39}m`}`);
         console.log(
-          `1032 ${`\u001b[${
+          `1033 ${`\u001b[${
             Y1 && Y2 && Y3 && Y4 && Y5 && Y6 ? 32 : 31
           }m${`RETURN`}\u001b[${39}m`} Y1 && Y2 && Y3 && Y4 && Y5 && Y6 ===> ${`\u001b[${
             Y1 && Y2 && Y3 && Y4 && Y5 && Y6 ? 32 : 31
@@ -1058,7 +1059,7 @@ function isAttrClosing(
         str[i] === oppositeToOpeningQuote
       ) {
         console.log(
-          `1061 another quote same as suspected was met - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+          `1062 another quote same as suspected was met - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
         );
         return false;
       } // if the tag closing was met, that's fine, imagine:
@@ -1067,7 +1068,7 @@ function isAttrClosing(
       //        we went past this suspected closing quote
       //        and reached the tag ending...
       if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-        console.log(`1070 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+        console.log(`1071 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
 
         // happy path scenario
         const R0 =
@@ -1115,7 +1116,7 @@ function isAttrClosing(
             // <img alt='so-called "artists"!"/>
             //          ^                    ^^
             //        start         suspected  currently we're on slash
-            `/>`.includes(str[right(str, i) as number]));
+            `/>`.includes(str[rightVal]));
 
         const R2 =
           totalQuotesCount < 3 ||
@@ -1142,7 +1143,7 @@ function isAttrClosing(
               )
             ));
 
-        const R32 = !right(str, i) && totalQuotesCount % 2 === 0;
+        const R32 = !rightVal && totalQuotesCount % 2 === 0;
 
         const R33 =
           str[idxOfAttrOpening - 2] &&
@@ -1154,7 +1155,7 @@ function isAttrClosing(
           `="`,
         ]);
 
-        console.log(`1157:`);
+        console.log(`1158:`);
         console.log(" ");
         console.log(
           `R0 (happy path): ${`\u001b[${R0 ? 32 : 31}m${R0}\u001b[${39}m`}`
@@ -1256,12 +1257,12 @@ function isAttrClosing(
         })
       ) {
         console.log(
-          `1259 new attribute starts - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
+          `1260 new attribute starts - ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`
         );
         return true;
       }
     } else {
-      console.log(`1264 i <= isThisClosingIdx`);
+      console.log(`1265 i <= isThisClosingIdx`);
       // this clause is meant to catch the suspected quotes
       // which don't belong to the tag, it's where quotes
       // in question are way beyond the actual attribute's ending.
@@ -1286,24 +1287,24 @@ function isAttrClosing(
       // for example, this will also catch:
       // <img src="xyz" alt="=   "/>
       //
-      console.log(`1289 *`);
+      console.log(`1290 *`);
       let firstNonWhitespaceCharOnTheLeft;
       if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
         // happy path
         firstNonWhitespaceCharOnTheLeft = i - 1;
-        console.log(`1294 happy path`);
+        console.log(`1295 happy path`);
         console.log(
-          `1296 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+          `1297 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
             firstNonWhitespaceCharOnTheLeft,
             null,
             4
           )}`
         );
       } else {
-        console.log(`1303 traverse backwards`);
+        console.log(`1304 traverse backwards`);
         for (let y = i; y--; ) {
           console.log(
-            `1306 ${`\u001b[${33}m${`str[${y}]`}\u001b[${39}m`} = ${JSON.stringify(
+            `1307 ${`\u001b[${33}m${`str[${y}]`}\u001b[${39}m`} = ${JSON.stringify(
               str[y],
               null,
               4
@@ -1312,7 +1313,7 @@ function isAttrClosing(
           if (str[y].trim() && str[y] !== "=") {
             firstNonWhitespaceCharOnTheLeft = y;
             console.log(
-              `1315 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+              `1316 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
                 firstNonWhitespaceCharOnTheLeft,
                 null,
                 4
@@ -1349,15 +1350,15 @@ function isAttrClosing(
         !str.endsWith("href=", idxOfAttrOpening)
       ) {
         console.log(
-          `1352 new attribute starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+          `1353 new attribute starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
         );
         return false;
       }
 
-      console.log(`1357 new attr didn't start`);
+      console.log(`1358 new attr didn't start`);
 
       if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
-        console.log(`1360 another attribute starts on the right!`);
+        console.log(`1361 another attribute starts on the right!`);
         return true;
       }
 
@@ -1371,8 +1372,20 @@ function isAttrClosing(
       // catch this pattern where initial equal to the left of start is missing
       // and this pattern implies equals will be missing further
       console.log(
-        `1374 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+        `1375 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${`\u001b[${35}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
           lastCapturedChunk,
+          null,
+          4
+        )}; ${`\u001b[${33}m${`secondLastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+          secondLastCapturedChunk,
+          null,
+          4
+        )}; ${`\u001b[${33}m${`firstNonWhitespaceCharOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+          firstNonWhitespaceCharOnTheLeft,
+          null,
+          4
+        )}; ${`\u001b[${33}m${`str[firstNonWhitespaceCharOnTheLeft]`}\u001b[${39}m`} = ${JSON.stringify(
+          str[firstNonWhitespaceCharOnTheLeft as any],
           null,
           4
         )}`
@@ -1388,7 +1401,7 @@ function isAttrClosing(
         allHtmlAttribs.has(lastCapturedChunk)
       ) {
         console.log(
-          `1391 freak out clause, it seems an attribute started in between start and suspected`
+          `1404 freak out clause, it seems an attribute started in between start and suspected`
         );
         return false;
       }
@@ -1401,18 +1414,35 @@ function isAttrClosing(
       if (
         i === isThisClosingIdx &&
         `'"`.includes(str[i]) &&
+        (str[leftVal] === `'` || str[leftVal] === `"`) &&
         lastCapturedChunk &&
         secondLastCapturedChunk &&
         totalQuotesCount % 2 === 0 &&
         secondLastCapturedChunk.endsWith(":")
       ) {
         console.log(
-          `1410 it's ending of an attribute with a double-wrapped value - RETURN ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
+          `1424 it's ending of an attribute with a double-wrapped value - RETURN ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
         );
         return true;
       }
 
-      console.log(`1415 end of i <= isThisClosingIdx clauses`);
+      // catch mismatching pairs: case when definitely a tag end follows,
+      // <td style='font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;">
+      //           ^                                         ^
+      //        opening                               suspected closing
+      if (
+        i === isThisClosingIdx &&
+        `'"`.includes(str[i]) &&
+        str.slice(idxOfAttrOpening, isThisClosingIdx).includes(":") &&
+        (str[rightVal] === ">" ||
+          (str[rightVal] === "/" &&
+            str[right(str, rightVal) as number] === ">"))
+      ) {
+        console.log(
+          `1442 tag ending to the right, RETURN ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
+        );
+        return true;
+      }
     }
 
     //
@@ -1450,7 +1480,7 @@ function isAttrClosing(
       // ("lastChunkWasCapturedAfterSuspectedClosing" flag)
       // or there was but it's not recognised, that's falsey result
       console.log(
-        `1453 FIY, ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+        `1483 FIY, ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
           lastCapturedChunk,
           null,
           4
@@ -1465,7 +1495,7 @@ function isAttrClosing(
         !allHtmlAttribs.has(lastCapturedChunk)
       ) {
         console.log(
-          `1468 the slice "${str.slice(
+          `1498 the slice "${str.slice(
             isThisClosingIdx,
             i
           )}" does not contain a new attribute name, ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
@@ -1473,7 +1503,7 @@ function isAttrClosing(
         return false;
       }
       // ELSE - it does match, so it seems legit
-      console.log(`1476 ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`);
+      console.log(`1506 ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`);
       return true;
     }
 
@@ -1481,7 +1511,7 @@ function isAttrClosing(
     if (`'"`.includes(str[i])) {
       lastQuoteAt = i;
       console.log(
-        `1484 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+        `1514 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
           lastQuoteAt,
           null,
           4
@@ -1492,7 +1522,7 @@ function isAttrClosing(
     // at the bottom, PART II of reset chunk
     if (chunkStartsAt && !isAttrNameChar(str[i])) {
       console.log(
-        `1495 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`
+        `1525 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`
       );
       chunkStartsAt = null;
     }
@@ -1525,7 +1555,7 @@ function isAttrClosing(
 
   // if this point was reached and loop didn't exit...
   // default is false
-  console.log(`1528 ${`\u001b[${31}m${`RETURN DEFAULT FALSE`}\u001b[${39}m`}`);
+  console.log(`1558 ${`\u001b[${31}m${`RETURN DEFAULT FALSE`}\u001b[${39}m`}`);
   return false;
 }
 

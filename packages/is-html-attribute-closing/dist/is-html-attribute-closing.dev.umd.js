@@ -2600,7 +2600,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     //
     //
     //
-    //
+    var rightVal = right(str, i);
+    var leftVal = left(str, i); //
     // Logging:
     // -------------------------------------------------------------------------
 
@@ -2644,7 +2645,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       //                           ^
       //
 
-      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[right(str, i)]); // ███████████████████████████████████████ E2
+      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[rightVal]); // ███████████████████████████████████████ E2
       //
       //
       // ensure it's not a triplet of quotes:
@@ -2683,7 +2684,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
         return isAttrNameChar(char);
       }) && // known opening and suspected closing are both singles or doubles
-      str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]); // anti-rule - it's fine if we're on suspected ending and to the left
+      str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[rightVal]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]); // anti-rule - it's fine if we're on suspected ending and to the left
       // it's not an attribute start
       // <img alt='Deal is your's!"/>
       //          ^               ^
@@ -2700,14 +2701,14 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
       var E34 = // we're on suspected
       i === isThisClosingIdx && ( // it's not a character suitable for attr name,
-      !isAttrNameChar(str[left(str, i)]) || // or it is, but whatever we extracted is not recognised attr name
+      !isAttrNameChar(str[leftVal]) || // or it is, but whatever we extracted is not recognised attr name
       attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && // rule out equal
-      str[left(str, i)] !== "="; // ███████████████████████████████████████ E4
+      str[leftVal] !== "="; // ███████████████████████████████████████ E4
 
       var E41 = // either it's a tag ending and we're at the suspected quote
-      "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
+      "/>".includes(str[rightVal]) && i === isThisClosingIdx;
       var E42 = // or next character is suitable for a tag name:
-      isAttrNameChar(str[right(str, i)]);
+      isAttrNameChar(str[rightVal]);
       var E43 = // or in case of:
       // <img class="so-called "alt"!' border='10'/>
       //            ^          ^
@@ -2780,7 +2781,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 
 
     if (str[i] === "<" && // consider ERB templating tags, <%= zzz %>
-    str[right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
+    str[rightVal] !== "%" && closingBracketMet && !openingBracketMet) {
       openingBracketMet = true; // if it's past the "isThisClosingIdx", that's very falsey
       // if (i > isThisClosingIdx) {
       return false; // }
@@ -2841,7 +2842,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       // <z bbb"c' href"e>
       //               ^
 
-      if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[right(str, i)])) {
+      if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[rightVal])) {
         var A1 = i > isThisClosingIdx; //
         // ensure that all continuous chunks since the last quote are
         // recognised attribute names
@@ -2965,7 +2966,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     (str[i] === "=" || // OR
     // it's whitespace
     !str[i].length && // and next non-whitespace character is "equal" character
-    str[right(str, i)] === "=") && // last chunk is not falsey (thus a string)
+    str[rightVal] === "=") && // last chunk is not falsey (thus a string)
     lastCapturedChunk && // and finally, perf resource-taxing evaluation, is it recognised:
     allHtmlAttribs.has(lastCapturedChunk)) {
       // definitely that's new attribute starting
@@ -3013,7 +3014,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           return allHtmlAttribs.has(chunk);
         });
         var Y5 = i >= isThisClosingIdx;
-        var Y6 = !str[right(str, i)] || !"'\"".includes(str[right(str, i)]);
+        var Y6 = !str[rightVal] || !"'\"".includes(str[rightVal]);
         return !!(Y1 && Y2 && Y3 && Y4 && Y5 && Y6);
       } // if we have passed the suspected closing quote
       // and we meet another quote of the same kind,
@@ -3061,7 +3062,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         // <img alt='so-called "artists"!"/>
         //          ^                    ^^
         //        start         suspected  currently we're on slash
-        "/>".includes(str[right(str, i)]));
+        "/>".includes(str[rightVal]));
 
         var _R2 = totalQuotesCount < 3 || // there's only two quotes mismatching:
         quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
@@ -3069,7 +3070,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt !== undefined && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
           return isAttrNameChar(char);
         }) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
-        var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
+        var R32 = !rightVal && totalQuotesCount % 2 === 0;
         var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && isAttrNameChar(str[idxOfAttrOpening - 2]);
         var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
         return (// happy path - known opening matched suspected closing and
@@ -3210,7 +3211,15 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       //
 
 
-      if (i === isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+      if (i === isThisClosingIdx && "'\"".includes(str[i]) && (str[leftVal] === "'" || str[leftVal] === "\"") && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+        return true;
+      } // catch mismatching pairs: case when definitely a tag end follows,
+      // <td style='font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;">
+      //           ^                                         ^
+      //        opening                               suspected closing
+
+
+      if (i === isThisClosingIdx && "'\"".includes(str[i]) && str.slice(idxOfAttrOpening, isThisClosingIdx).includes(":") && (str[rightVal] === ">" || str[rightVal] === "/" && str[right(str, rightVal)] === ">")) {
         return true;
       }
     } //
