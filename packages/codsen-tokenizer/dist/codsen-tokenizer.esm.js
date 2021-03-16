@@ -1038,7 +1038,14 @@ function tokenizer(str, originalOpts) {
     let R1;
     let R2;
     if (!doNothing && (property.start || str[i] === "!")) {
-      R1 = `;'"{}<>`.includes(str[right(str, i - 1)]);
+      const idxRightIncl = right(str, i - 1);
+      R1 = `;{}<>`.includes(str[idxRightIncl]) ||
+      `'"`.includes(str[idxRightIncl]) && (
+      !layers ||
+      !layers.length ||
+      !layers[~-layers.length] ||
+      !layers[~-layers.length].value ||
+      layers[~-layers.length].value === str[idxRightIncl]);
       R2 = matchRightIncl(str, i, ["!important"], {
         i: true,
         trimBeforeMatching: true,

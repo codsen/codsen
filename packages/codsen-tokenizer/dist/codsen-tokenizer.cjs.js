@@ -1060,7 +1060,14 @@ function tokenizer(str, originalOpts) {
     var R1 = void 0;
     var R2 = void 0;
     if (!doNothing && (property.start || str[_i] === "!")) {
-      R1 = ";'\"{}<>".includes(str[stringLeftRight.right(str, _i - 1)]);
+      var idxRightIncl = stringLeftRight.right(str, _i - 1);
+      R1 = ";{}<>".includes(str[idxRightIncl]) ||
+      "'\"".includes(str[idxRightIncl]) && (
+      !layers ||
+      !layers.length ||
+      !layers[~-layers.length] ||
+      !layers[~-layers.length].value ||
+      layers[~-layers.length].value === str[idxRightIncl]);
       R2 = stringMatchLeftRight.matchRightIncl(str, _i, ["!important"], {
         i: true,
         trimBeforeMatching: true,
