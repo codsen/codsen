@@ -34419,8 +34419,20 @@ function attributeValidateStyle(context) {
             message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
+        } // validate the contents
+
+
+        if (node.attribValueRaw && node.attribValueRaw.trim()) {
+          validateStyle(node, context);
+        } else {
+          context.report({
+            ruleId: "attribute-validate-style",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: "Missing value.",
+            fix: null
+          });
         }
-        validateStyle(node, context);
       }
     }
   };

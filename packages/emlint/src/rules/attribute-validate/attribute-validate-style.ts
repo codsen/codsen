@@ -52,10 +52,22 @@ function attributeValidateStyle(
           });
         }
 
-        console.log(
-          `056 ${`\u001b[${35}m${`CALL validateStyle()`}\u001b[${39}m`}`
-        );
-        validateStyle(node, context);
+        // validate the contents
+        if (node.attribValueRaw && node.attribValueRaw.trim()) {
+          console.log(
+            `058 ${`\u001b[${35}m${`CALL validateStyle()`}\u001b[${39}m`}`
+          );
+          validateStyle(node, context);
+        } else {
+          console.log(`062 ${`\u001b[${31}m${`empty style`}\u001b[${39}m`}`);
+          context.report({
+            ruleId: "attribute-validate-style",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        }
       }
     },
   };

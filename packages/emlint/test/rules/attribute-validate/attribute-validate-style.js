@@ -64,11 +64,68 @@ tap.test(
   }
 );
 
+tap.test(
+  `05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value`,
+  (t) => {
+    const str = `<td style="">`;
+    const messages = verify(t, str, {
+      rules: {
+        "attribute-validate-style": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str, "05.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-style",
+          idxFrom: 4,
+          idxTo: 12,
+          message: `Missing value.`,
+          fix: null,
+        },
+      ],
+      "05.02"
+    );
+    t.equal(messages.length, 1, "05.03");
+    t.end();
+  }
+);
+
+tap.test(
+  `06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - only trimmable whitespace as a value`,
+  (t) => {
+    const str = `<td style="  \t">`;
+    const messages = verify(t, str, {
+      rules: {
+        "attribute-validate-style": 2,
+      },
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str, "06.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-validate-style",
+          idxFrom: 4,
+          idxTo: 15,
+          message: `Missing value.`,
+          fix: null,
+        },
+      ],
+      "06.02"
+    );
+    t.equal(messages.length, 1, "06.03");
+    t.end();
+  }
+);
+
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
+  `07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   (t) => {
     const str = `<td style=" font-size: 10px;">`;
     const messages = verify(t, str, {
@@ -79,7 +136,7 @@ tap.test(
     t.equal(
       applyFixes(str, messages),
       `<td style="font-size: 10px;">`,
-      "05.01"
+      "07.01"
     );
     t.match(
       messages,
@@ -94,15 +151,15 @@ tap.test(
           },
         },
       ],
-      "05.02"
+      "07.02"
     );
-    t.equal(messages.length, 1, "05.03");
+    t.equal(messages.length, 1, "07.03");
     t.end();
   }
 );
 
 tap.test(
-  `06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
+  `08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   (t) => {
     const str = `<td style="font-size: 10px; ">`;
     const messages = verify(t, str, {
@@ -113,7 +170,7 @@ tap.test(
     t.equal(
       applyFixes(str, messages),
       `<td style="font-size: 10px;">`,
-      "06.01"
+      "08.01"
     );
     t.match(
       messages,
@@ -128,15 +185,15 @@ tap.test(
           },
         },
       ],
-      "06.02"
+      "08.02"
     );
-    t.equal(messages.length, 1, "06.03");
+    t.equal(messages.length, 1, "08.03");
     t.end();
   }
 );
 
 tap.test(
-  `07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
+  `09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
   (t) => {
     const str = `<td style="  font-size: 10px;  ">`;
     const messages = verify(t, str, {
@@ -144,13 +201,13 @@ tap.test(
         "attribute-validate-style": 2,
       },
     });
-    t.equal(applyFixes(str, messages), `<td style="font-size: 10px;">`, "07");
+    t.equal(applyFixes(str, messages), `<td style="font-size: 10px;">`, "09");
     t.end();
   }
 );
 
 tap.test(
-  `08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - whitespace inbetween`,
+  `10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - whitespace inbetween`,
   (t) => {
     const str = `<td style="font-size:  10px;"></td>`;
     const messages = verify(t, str, {
@@ -161,7 +218,7 @@ tap.test(
     t.equal(
       applyFixes(str, messages),
       `<td style="font-size: 10px;"></td>`,
-      "08.01"
+      "10.01"
     );
     t.match(
       messages,
@@ -176,15 +233,15 @@ tap.test(
           },
         },
       ],
-      "08.02"
+      "10.02"
     );
-    t.equal(messages.length, 1, "08.03");
+    t.equal(messages.length, 1, "10.03");
     t.end();
   }
 );
 
 tap.test(
-  `09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - tab inbetween`,
+  `11 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - tab inbetween`,
   (t) => {
     const str = `<td style="font-size:\t10px;"></td>`;
     const messages = verify(t, str, {
@@ -195,7 +252,7 @@ tap.test(
     t.equal(
       applyFixes(str, messages),
       `<td style="font-size: 10px;"></td>`,
-      "09.01"
+      "11.01"
     );
     t.match(
       messages,
@@ -210,15 +267,15 @@ tap.test(
           },
         },
       ],
-      "09.02"
+      "11.02"
     );
-    t.equal(messages.length, 1, "09.03");
+    t.equal(messages.length, 1, "11.03");
     t.end();
   }
 );
 
 tap.test(
-  `10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - tab inbetween`,
+  `12 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - tab inbetween`,
   (t) => {
     const str = `<td style="font-size:\t 10px;"></td>`;
     const fixed = `<td style="font-size: 10px;"></td>`;
@@ -227,13 +284,13 @@ tap.test(
         "attribute-validate-style": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "10");
+    t.equal(applyFixes(str, messages), fixed, "12");
     t.end();
   }
 );
 
 tap.test(
-  `11 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - tab inbetween`,
+  `13 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - tab inbetween`,
   (t) => {
     const str = `<td style="font-size: \t10px;"></td>`;
     const fixed = `<td style="font-size: 10px;"></td>`;
@@ -242,36 +299,7 @@ tap.test(
         "attribute-validate-style": 2,
       },
     });
-    t.equal(applyFixes(str, messages), fixed, "11");
-    t.end();
-  }
-);
-
-tap.test(
-  `12 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  (t) => {
-    const str = `<td style="  \t">`;
-    const messages = verify(t, str, {
-      rules: {
-        "attribute-validate-style": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "12.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-style",
-          idxFrom: 11,
-          idxTo: 14,
-          message: `Missing value.`,
-          fix: null,
-        },
-      ],
-      "12.02"
-    );
-    t.equal(messages.length, 1, "12.03");
+    t.equal(applyFixes(str, messages), fixed, "13");
     t.end();
   }
 );
@@ -280,7 +308,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `13 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong parent tag`,
+  `14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong parent tag`,
   (t) => {
     const str = `<html style="font-size: 10px;">`;
     const messages = verify(t, str, {
@@ -289,7 +317,7 @@ tap.test(
       },
     });
     // can't fix:
-    t.equal(applyFixes(str, messages), str, "13.01");
+    t.equal(applyFixes(str, messages), str, "14.01");
     t.match(
       messages,
       [
@@ -300,9 +328,9 @@ tap.test(
           fix: null,
         },
       ],
-      "13.02"
+      "14.02"
     );
-    t.equal(messages.length, 1, "13.03");
+    t.equal(messages.length, 1, "14.03");
     t.end();
   }
 );
@@ -310,7 +338,7 @@ tap.test(
 // rogue semi
 // -----------------------------------------------------------------------------
 
-tap.test(`14 - two semis, tight`, (t) => {
+tap.test(`15 - two semis, tight`, (t) => {
   const str = `<div style="float: left;;"></div>`;
   const fixed = `<div style="float: left;"></div>`;
   const messages = verify(t, str, {
@@ -318,7 +346,7 @@ tap.test(`14 - two semis, tight`, (t) => {
       "attribute-validate-style": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "14.01");
+  t.equal(applyFixes(str, messages), fixed, "15.01");
   t.match(
     messages,
     [
@@ -330,8 +358,8 @@ tap.test(`14 - two semis, tight`, (t) => {
         fix: { ranges: [[24, 25]] },
       },
     ],
-    "14.02"
+    "15.02"
   );
-  t.equal(messages.length, 1, "14.03");
+  t.equal(messages.length, 1, "15.03");
   t.end();
 });

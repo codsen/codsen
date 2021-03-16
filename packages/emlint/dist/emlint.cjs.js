@@ -7953,7 +7953,17 @@ function attributeValidateStyle(context) {
             fix: null
           });
         }
-        validateStyle(node, context);
+        if (node.attribValueRaw && node.attribValueRaw.trim()) {
+          validateStyle(node, context);
+        } else {
+          context.report({
+            ruleId: "attribute-validate-style",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: "Missing value.",
+            fix: null
+          });
+        }
       }
     }
   };
