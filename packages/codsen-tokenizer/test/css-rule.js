@@ -6154,20 +6154,122 @@ tap.test(`82`, (t) => {
   t.end();
 });
 
-tap.todo(`83 - standalone semi in head CSS - chopped`, (t) => {
+tap.test(`83 - ESP var as a CSS rule's value`, (t) => {
   const gathered = [];
-  ct(`<style>.a{b:c!important};`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.strictSame(gathered, [], "83");
+  ct(
+    `<style>
+.yyy {
+  font-family: {{ zzz }} important;
+}
+</style>`,
+    {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    }
+  );
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "text",
+        start: 7,
+        end: 8,
+        value: "\n",
+      },
+      {
+        type: "rule",
+        start: 8,
+        end: 52,
+        value: ".yyy {\n  font-family: {{ zzz }} important;\n}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 13,
+        closingCurlyAt: 51,
+        selectorsStart: 8,
+        selectorsEnd: 12,
+        selectors: [
+          {
+            value: ".yyy",
+            selectorStarts: 8,
+            selectorEnds: 12,
+          },
+        ],
+        properties: [
+          {
+            type: "text",
+            start: 14,
+            end: 17,
+            value: "\n  ",
+          },
+          {
+            start: 17,
+            end: 50,
+            property: "font-family",
+            propertyStarts: 17,
+            propertyEnds: 28,
+            value: "{{ zzz }}",
+            valueStarts: 30,
+            valueEnds: 39,
+            important: "important",
+            importantStarts: 40,
+            importantEnds: 49,
+            colon: 28,
+            semi: 49,
+          },
+          {
+            type: "text",
+            start: 50,
+            end: 51,
+            value: "\n",
+          },
+        ],
+      },
+      {
+        type: "text",
+        start: 52,
+        end: 53,
+        value: "\n",
+      },
+      {
+        type: "tag",
+        start: 53,
+        end: 61,
+        value: "</style>",
+        tagNameStartsAt: 55,
+        tagNameEndsAt: 60,
+        tagName: "style",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+    ],
+    "83"
+  );
   t.end();
 });
 
-tap.todo(`84 - standalone semi in head CSS - closed`, (t) => {
+tap.todo(`84 - standalone semi in head CSS - chopped`, (t) => {
   const gathered = [];
-  ct(`<style>.red{color:red!important};</style>`, {
+  ct(`<style>.a{b:c!important};`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -6176,7 +6278,18 @@ tap.todo(`84 - standalone semi in head CSS - closed`, (t) => {
   t.end();
 });
 
-tap.todo(`85 - standalone semi in head CSS - surroundings`, (t) => {
+tap.todo(`85 - standalone semi in head CSS - closed`, (t) => {
+  const gathered = [];
+  ct(`<style>.red{color:red!important};</style>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "85");
+  t.end();
+});
+
+tap.todo(`86 - standalone semi in head CSS - surroundings`, (t) => {
   const gathered = [];
   ct(
     `<style>.a{b:c!important};
@@ -6187,6 +6300,6 @@ tap.todo(`85 - standalone semi in head CSS - surroundings`, (t) => {
       },
     }
   );
-  t.strictSame(gathered, [], "85");
+  t.strictSame(gathered, [], "86");
   t.end();
 });

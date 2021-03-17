@@ -4220,7 +4220,9 @@ function tokenizer(str, originalOpts) {
         });
         selectorChunkStartedAt = undefined;
         token.selectorsEnd = _i;
-      } else if (str[_i] === "{" && token.openingCurlyAt && !token.closingCurlyAt) {
+      } else if (str[_i] === "{" && str[_i - 1] !== "{" && // avoid Nunjucks variable as CSS rule's value
+      str[_i + 1] !== "{" && // avoid Nunjucks variable as CSS rule's value
+      token.openingCurlyAt && !token.closingCurlyAt) {
         // we encounted an opening curly even though closing hasn't
         // been met yet:
         // <style>.a{float:left;x">.b{color: red}
@@ -4814,7 +4816,8 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && (property.start || str[_i] === "!")) {
       var idxRightIncl = right(str, _i - 1);
-      R1 = ";{}<>".includes(str[idxRightIncl]) || // or it's a quote
+      R1 = ";<>".includes(str[idxRightIncl]) || // avoid Nunjucks ESP tags, {{ zzz }}
+      str[idxRightIncl] === "{" && str[_i - 1] !== "{" || str[idxRightIncl] === "}" && str[_i - 1] !== "}" || // or it's a quote
       "'\"".includes(str[idxRightIncl]) && ( // but then it has to be a matching counterpart
       // either there are no layers
       !layers || // or there are but they're empty
@@ -5099,6 +5102,11 @@ function tokenizer(str, originalOpts) {
       } else {
         property.valueStarts = _i;
       }
+    } // catch double opening curlies inside a css property
+
+
+    if (!doNothing && str[_i] === "{" && str[_i + 1] === "{" && property && property.valueStarts && !property.valueEnds && str.indexOf("}}", _i) > 0) {
+      doNothing = str.indexOf("}}") + 2;
     } // catch the start of a css chunk
     // -------------------------------------------------------------------------
 
@@ -5676,7 +5684,7 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && token.type === "rule") {
-      if (str[_i] === "{" && !token.openingCurlyAt) {
+      if (str[_i] === "{" && str[_i + 1] !== "{" && str[_i - 1] !== "{" && !token.openingCurlyAt) {
         token.openingCurlyAt = _i;
       } else if (str[_i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
         token.closingCurlyAt = _i;

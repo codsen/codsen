@@ -750,7 +750,9 @@ function tokenizer(str, originalOpts) {
         });
         selectorChunkStartedAt = undefined;
         token.selectorsEnd = i;
-      } else if (str[i] === "{" && token.openingCurlyAt && !token.closingCurlyAt) {
+      } else if (str[i] === "{" && str[i - 1] !== "{" &&
+      str[i + 1] !== "{" &&
+      token.openingCurlyAt && !token.closingCurlyAt) {
         for (let y = i; y--;) {
           if (!str[y].trim() || `{}"';`.includes(str[y])) {
             if (property && property.start && !property.end) {
@@ -1039,7 +1041,8 @@ function tokenizer(str, originalOpts) {
     let R2;
     if (!doNothing && (property.start || str[i] === "!")) {
       const idxRightIncl = right(str, i - 1);
-      R1 = `;{}<>`.includes(str[idxRightIncl]) ||
+      R1 = `;<>`.includes(str[idxRightIncl]) ||
+      str[idxRightIncl] === `{` && str[i - 1] !== `{` || str[idxRightIncl] === `}` && str[i - 1] !== `}` ||
       `'"`.includes(str[idxRightIncl]) && (
       !layers ||
       !layers.length ||
@@ -1233,6 +1236,9 @@ function tokenizer(str, originalOpts) {
       } else {
         property.valueStarts = i;
       }
+    }
+    if (!doNothing && str[i] === "{" && str[i + 1] === "{" && property && property.valueStarts && !property.valueEnds && str.indexOf("}}", i) > 0) {
+      doNothing = str.indexOf("}}") + 2;
     }
     if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && !"{}".includes(str[i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
       if (!",".includes(str[i])) {
@@ -1542,7 +1548,7 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameStartsAt = i;
     }
     if (!doNothing && token.type === "rule") {
-      if (str[i] === "{" && !token.openingCurlyAt) {
+      if (str[i] === "{" && str[i + 1] !== "{" && str[i - 1] !== "{" && !token.openingCurlyAt) {
         token.openingCurlyAt = i;
       } else if (str[i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
         token.closingCurlyAt = i;
