@@ -2751,8 +2751,13 @@ function tagTable(context) {
           const extracted = [];
           let orderNumber = 0;
           let closingTrMet = true;
+          let trFound = false;
+          let tdFound = false;
           for (let i = 0, len1 = node.children.length; i < len1; i++) {
             if (node.children[i].type === "tag" && node.children[i].tagName === "tr") {
+              if (!trFound) {
+                trFound = true;
+              }
               if (node.children[i].closing) {
                 if (!closingTrMet) {
                   closingTrMet = true;
@@ -2775,6 +2780,9 @@ function tagTable(context) {
                   let closingTdMet = true;
                   for (let y = 0, len2 = node.children[i].children.length; y < len2; y++) {
                     if (node.children[i].children[y].type === "tag" && node.children[i].children[y].tagName === "td") {
+                      if (!tdFound) {
+                        tdFound = true;
+                      }
                       if (node.children[i].children[y].closing) {
                         if (!closingTdMet) {
                           closingTdMet = true;
@@ -2808,6 +2816,23 @@ function tagTable(context) {
                 fix: null
               });
             }
+          }
+          if (!trFound) {
+            context.report({
+              ruleId: "tag-table",
+              message: `Missing children <tr> tags.`,
+              idxFrom: node.start,
+              idxTo: node.end,
+              fix: null
+            });
+          } else if (!tdFound) {
+            context.report({
+              ruleId: "tag-table",
+              message: `Missing children <td> tags.`,
+              idxFrom: node.start,
+              idxTo: node.end,
+              fix: null
+            });
           }
           if (!closingTrMet) {
             return;
@@ -2901,6 +2926,14 @@ function tagTable(context) {
               });
             }
           }
+        } else {
+          context.report({
+            ruleId: "tag-table",
+            message: `Missing children <tr> tags.`,
+            idxFrom: node.start,
+            idxTo: node.end,
+            fix: null
+          });
         }
       } else if (node.tagName === "tr" && !node.closing && node.children && node.children.length && node.children.some(n => n.type === "text" && n.value.trim())) {
         node.children.filter(n => n.type === "text" && n.value.trim()).forEach(n => {

@@ -18624,10 +18624,15 @@ function tagTable(context) {
           var orderNumber = 0; // flag to check the correct sequence of opening and closing tags
 
           var closingTrMet = true;
+          var trFound = false;
+          var tdFound = false;
 
           for (var i = 0, len1 = node.children.length; i < len1; i++) {
 
-            if (node.children[i].type === "tag" && node.children[i].tagName === "tr") { // if it's a closing TR, flip the flag
+            if (node.children[i].type === "tag" && node.children[i].tagName === "tr") {
+              if (!trFound) {
+                trFound = true;
+              } // if it's a closing TR, flip the flag
 
               if (node.children[i].closing) {
 
@@ -18656,6 +18661,10 @@ function tagTable(context) {
                   for (var y = 0, len2 = node.children[i].children.length; y < len2; y++) {
 
                     if (node.children[i].children[y].type === "tag" && node.children[i].children[y].tagName === "td") {
+
+                      if (!tdFound) {
+                        tdFound = true;
+                      }
 
                       if (node.children[i].children[y].closing) {
 
@@ -18693,9 +18702,28 @@ function tagTable(context) {
                 fix: null
               });
             }
+          }
+
+          if (!trFound) {
+            context.report({
+              ruleId: "tag-table",
+              message: "Missing children <tr> tags.",
+              idxFrom: node.start,
+              idxTo: node.end,
+              fix: null
+            });
+          } else if (!tdFound) {
+            context.report({
+              ruleId: "tag-table",
+              message: "Missing children <td> tags.",
+              idxFrom: node.start,
+              idxTo: node.end,
+              fix: null
+            });
           } // tags with let's say missing clashes will be nested further:
           // <table><tr><td><tr><td><td></table>
           // so the ending closingTrMet will be false, not true
+
 
           if (!closingTrMet) {
             return;
@@ -18845,6 +18873,14 @@ function tagTable(context) {
               });
             }
           }
+        } else {
+          context.report({
+            ruleId: "tag-table",
+            message: "Missing children <tr> tags.",
+            idxFrom: node.start,
+            idxTo: node.end,
+            fix: null
+          });
         }
       } else if (node.tagName === "tr" && !node.closing && node.children && node.children.length && node.children.some(function (n) {
         return n.type === "text" && n.value.trim();

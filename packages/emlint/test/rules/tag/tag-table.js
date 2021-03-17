@@ -137,7 +137,6 @@ tap.test(`01 - bails early`, (t) => {
       },
     });
     t.equal(applyFixes(str, messages), str, `01.01 - ${str}`);
-    t.strictSame(messages, [], `01.02 - ${str}`);
   });
   t.end();
 });
@@ -751,5 +750,108 @@ tap.test(`17 - text token between tr and td`, (t) => {
     "17.02"
   );
   t.equal(messages.length, 1, "17.03");
+  t.end();
+});
+
+// table tag without tr
+// -----------------------------------------------------------------------------
+
+tap.test(`18 - table without tr`, (t) => {
+  const str = `<table></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "18.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 0,
+        idxTo: 7,
+        message: `Missing children <tr> tags.`,
+        fix: null,
+      },
+    ],
+    "18.02"
+  );
+  t.equal(messages.length, 1, "18.03");
+  t.end();
+});
+
+tap.test(`19 - table without tr`, (t) => {
+  const str = `<table>\n\n\n`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "19.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 0,
+        idxTo: 7,
+        message: `Missing children <tr> tags.`,
+        fix: null,
+      },
+    ],
+    "19.02"
+  );
+  t.equal(messages.length, 1, "19.03");
+  t.end();
+});
+
+tap.test(`20 - table without td`, (t) => {
+  const str = `<table><tr></tr></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "20.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 0,
+        idxTo: 7,
+        message: `Missing children <td> tags.`,
+        fix: null,
+      },
+    ],
+    "20.02"
+  );
+  t.equal(messages.length, 1, "20.03");
+  t.end();
+});
+
+tap.test(`21 - table without td`, (t) => {
+  const str = `<table><tr>\n\n\n`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "21.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 0,
+        idxTo: 7,
+        message: `Missing children <td> tags.`,
+        fix: null,
+      },
+    ],
+    "21.02"
+  );
+  t.equal(messages.length, 1, "21.03");
   t.end();
 });
