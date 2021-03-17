@@ -12822,7 +12822,7 @@ function tokenizer(str, originalOpts) {
         });
         selectorChunkStartedAt = undefined;
         token.selectorsEnd = _i;
-      } else if (str[_i] === "{" && token.openingCurlyAt && !token.closingCurlyAt) {
+      } else if (str[_i] === "{" && str[_i - 1] !== "{" && str[_i + 1] !== "{" && token.openingCurlyAt && !token.closingCurlyAt) {
         for (var y = _i; y--;) {
           if (!str[y].trim() || "{}\"';".includes(str[y])) {
             if (property && property.start && !property.end) {
@@ -13140,7 +13140,7 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && (property.start || str[_i] === "!")) {
       var idxRightIncl = right(str, _i - 1);
-      R1 = ";{}<>".includes(str[idxRightIncl]) || "'\"".includes(str[idxRightIncl]) && (!layers || !layers.length || !layers[~-layers.length] || !layers[~-layers.length].value || layers[~-layers.length].value === str[idxRightIncl]);
+      R1 = ";<>".includes(str[idxRightIncl]) || str[idxRightIncl] === "{" && str[_i - 1] !== "{" || str[idxRightIncl] === "}" && str[_i - 1] !== "}" || "'\"".includes(str[idxRightIncl]) && (!layers || !layers.length || !layers[~-layers.length] || !layers[~-layers.length].value || layers[~-layers.length].value === str[idxRightIncl]);
       R2 = matchRightIncl(str, _i, ["!important"], {
         i: true,
         trimBeforeMatching: true,
@@ -13332,6 +13332,10 @@ function tokenizer(str, originalOpts) {
       } else {
         property.valueStarts = _i;
       }
+    }
+
+    if (!doNothing && str[_i] === "{" && str[_i + 1] === "{" && property && property.valueStarts && !property.valueEnds && str.indexOf("}}", _i) > 0) {
+      doNothing = str.indexOf("}}") + 2;
     }
 
     if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
@@ -13653,7 +13657,7 @@ function tokenizer(str, originalOpts) {
     }
 
     if (!doNothing && token.type === "rule") {
-      if (str[_i] === "{" && !token.openingCurlyAt) {
+      if (str[_i] === "{" && str[_i + 1] !== "{" && str[_i - 1] !== "{" && !token.openingCurlyAt) {
         token.openingCurlyAt = _i;
       } else if (str[_i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
         token.closingCurlyAt = _i;
@@ -18678,6 +18682,16 @@ function tagTable(context) {
                 }
                 extracted.push(finding);
               }
+            } else if ( // if <table> child is a text token
+            node.children[i].type === "text" && // it's not just whitespace
+            node.children[i].value.trim()) {
+              context.report({
+                ruleId: "tag-table",
+                message: "Rogue character" + (node.children[i].value.trim().length > 1 ? "s" : "") + " between tags.",
+                idxFrom: node.children[i].start,
+                idxTo: node.children[i].end,
+                fix: null
+              });
             }
           } // tags with let's say missing clashes will be nested further:
           // <table><tr><td><tr><td><td></table>
@@ -18832,6 +18846,20 @@ function tagTable(context) {
             }
           }
         }
+      } else if (node.tagName === "tr" && !node.closing && node.children && node.children.length && node.children.some(function (n) {
+        return n.type === "text" && n.value.trim();
+      })) {
+        node.children.filter(function (n) {
+          return n.type === "text" && n.value.trim();
+        }).forEach(function (n) {
+          context.report({
+            ruleId: "tag-table",
+            message: "Rogue character" + (n.value.trim().length > 1 ? "s" : "") + " between tags.",
+            idxFrom: n.start,
+            idxTo: n.end,
+            fix: null
+          });
+        });
       }
     }
   };

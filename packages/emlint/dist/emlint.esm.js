@@ -2797,6 +2797,16 @@ function tagTable(context) {
                 }
                 extracted.push(finding);
               }
+            } else if (
+            node.children[i].type === "text" &&
+            node.children[i].value.trim()) {
+              context.report({
+                ruleId: "tag-table",
+                message: `Rogue character${node.children[i].value.trim().length > 1 ? "s" : ""} between tags.`,
+                idxFrom: node.children[i].start,
+                idxTo: node.children[i].end,
+                fix: null
+              });
             }
           }
           if (!closingTrMet) {
@@ -2892,6 +2902,16 @@ function tagTable(context) {
             }
           }
         }
+      } else if (node.tagName === "tr" && !node.closing && node.children && node.children.length && node.children.some(n => n.type === "text" && n.value.trim())) {
+        node.children.filter(n => n.type === "text" && n.value.trim()).forEach(n => {
+          context.report({
+            ruleId: "tag-table",
+            message: `Rogue character${n.value.trim().length > 1 ? "s" : ""} between tags.`,
+            idxFrom: n.start,
+            idxTo: n.end,
+            fix: null
+          });
+        });
       }
     }
   };

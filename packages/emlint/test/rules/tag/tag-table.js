@@ -272,6 +272,7 @@ tap.test(`04 - one col, two cols`, (t) => {
     ],
     "04.02"
   );
+  t.equal(messages.length, 1, "04.03");
   t.end();
 });
 
@@ -307,6 +308,7 @@ tap.test(`05 - two cols, three cols`, (t) => {
     ],
     "05.02"
   );
+  t.equal(messages.length, 1, "05.03");
   t.end();
 });
 
@@ -355,6 +357,7 @@ tap.test(`06 - 4-2-3`, (t) => {
     ],
     "06.02"
   );
+  t.equal(messages.length, 2, "06.03");
   t.end();
 });
 
@@ -434,6 +437,7 @@ tap.test(`07 - 4-2-1-3 - suggests a fix to one of them`, (t) => {
     ],
     "07.02"
   );
+  t.equal(messages.length, 3, "07.03");
   t.end();
 });
 
@@ -497,6 +501,7 @@ tap.test(`08 - fixed a colspan value`, (t) => {
     ],
     "08.02"
   );
+  t.equal(messages.length, 2, "08.03");
   t.end();
 });
 
@@ -542,5 +547,209 @@ tap.test(`09 - removed a colspan value`, (t) => {
     ],
     "09.02"
   );
+  t.equal(messages.length, 1, "09.03");
+  t.end();
+});
+
+// intra tag text tokens
+// -----------------------------------------------------------------------------
+
+tap.test(`10 - text token between table and tr`, (t) => {
+  const str = `<table>.<tr><td>x</td></tr></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "10.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 7,
+        idxTo: 8,
+        message: `Rogue character between tags.`,
+        fix: null,
+      },
+    ],
+    "10.02"
+  );
+  t.equal(messages.length, 1, "10.03");
+  t.end();
+});
+
+tap.test(`11 - text token between table and tr`, (t) => {
+  const str = `<table>\ntralala\n<tr><td>x</td></tr></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "11.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 7,
+        idxTo: 16,
+        message: `Rogue characters between tags.`,
+        fix: null,
+      },
+    ],
+    "11.02"
+  );
+  t.equal(messages.length, 1, "11.03");
+  t.end();
+});
+
+tap.test(`12 - text token between tr and td`, (t) => {
+  const str = `<table><tr>.<td>x</td></tr></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "12.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 11,
+        idxTo: 12,
+        message: `Rogue character between tags.`,
+        fix: null,
+      },
+    ],
+    "12.02"
+  );
+  t.equal(messages.length, 1, "12.03");
+  t.end();
+});
+
+tap.test(`13 - text token between tr and td`, (t) => {
+  const str = `<table><tr>\ntralala\n<td>x</td></tr></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "13.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 11,
+        idxTo: 20,
+        message: `Rogue characters between tags.`,
+        fix: null,
+      },
+    ],
+    "13.02"
+  );
+  t.equal(messages.length, 1, "13.03");
+  t.end();
+});
+
+tap.test(`14 - text token between /td and /tr`, (t) => {
+  const str = `<table><tr><td>x</td>.</tr></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "14.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 21,
+        idxTo: 22,
+        message: `Rogue character between tags.`,
+        fix: null,
+      },
+    ],
+    "14.02"
+  );
+  t.equal(messages.length, 1, "14.03");
+  t.end();
+});
+
+tap.test(`15 - text token between /td and /tr`, (t) => {
+  const str = `<table><tr><td>x</td>\ntralala\n</tr></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "15.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 21,
+        idxTo: 30,
+        message: `Rogue characters between tags.`,
+        fix: null,
+      },
+    ],
+    "15.02"
+  );
+  t.equal(messages.length, 1, "15.03");
+  t.end();
+});
+
+tap.test(`16 - text token between tr and td`, (t) => {
+  const str = `<table><tr><td>x</td></tr>.</table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "16.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 26,
+        idxTo: 27,
+        message: `Rogue character between tags.`,
+        fix: null,
+      },
+    ],
+    "16.02"
+  );
+  t.equal(messages.length, 1, "16.03");
+  t.end();
+});
+
+tap.test(`17 - text token between tr and td`, (t) => {
+  const str = `<table><tr><td>x</td></tr>\ntralala\n</table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "17.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 26,
+        idxTo: 35,
+        message: `Rogue characters between tags.`,
+        fix: null,
+      },
+    ],
+    "17.02"
+  );
+  t.equal(messages.length, 1, "17.03");
   t.end();
 });
