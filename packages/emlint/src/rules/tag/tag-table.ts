@@ -559,6 +559,28 @@ function tagTable(context: Linter): RuleObjType {
               fix: null,
             });
           });
+      } else if (node.tagName === "td" && !node.closing) {
+        console.log(`563 td`);
+        console.log(
+          `565 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
+        if (
+          !node.children ||
+          !node.children.length ||
+          !node.children.some((n) => n.type !== "text" || n.value.trim())
+        ) {
+          context.report({
+            ruleId: "tag-table",
+            message: `Empty <td> tag.`,
+            idxFrom: node.start,
+            idxTo: node.end,
+            fix: null,
+          });
+        }
       }
     },
   };

@@ -2874,6 +2874,18 @@ function tagTable(context) {
             fix: null
           });
         });
+      } else if (node.tagName === "td" && !node.closing) {
+        if (!node.children || !node.children.length || !node.children.some(function (n) {
+          return n.type !== "text" || n.value.trim();
+        })) {
+          context.report({
+            ruleId: "tag-table",
+            message: "Empty <td> tag.",
+            idxFrom: node.start,
+            idxTo: node.end,
+            fix: null
+          });
+        }
       }
     }
   };

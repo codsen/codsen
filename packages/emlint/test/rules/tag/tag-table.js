@@ -855,3 +855,68 @@ tap.test(`21 - table without td`, (t) => {
   t.equal(messages.length, 1, "21.03");
   t.end();
 });
+
+// empty td tag
+// ------------------------------------------------------------------------------
+
+tap.test(`22 - td is not empty`, (t) => {
+  const str = `<table><tr><td>.</td></tr></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "22.01");
+  t.strictSame(messages, [], "22.02");
+  t.end();
+});
+
+tap.test(`23 - empty td`, (t) => {
+  const str = `<table><tr><td></td></tr></table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "23.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 11,
+        idxTo: 15,
+        message: `Empty <td> tag.`,
+        fix: null,
+      },
+    ],
+    "23.02"
+  );
+  t.equal(messages.length, 1, "23.03");
+  t.end();
+});
+
+tap.test(`24 - empty td`, (t) => {
+  const str = `<table>\n<tr>\n<td>\n</td>\n</tr>\n</table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-table": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "24.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-table",
+        idxFrom: 13,
+        idxTo: 17,
+        message: `Empty <td> tag.`,
+        fix: null,
+      },
+    ],
+    "24.02"
+  );
+  t.equal(messages.length, 1, "24.03");
+  t.end();
+});
