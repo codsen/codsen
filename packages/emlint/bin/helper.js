@@ -92,6 +92,42 @@ fs.writeFileSync(
   JSON.stringify(allCSS.sort(), null, 2)
 );
 
+// bake the "format-" rules list JSON:
+
+const allFormat = fs
+  .readdirSync(path.resolve("src/rules/format/"))
+  .filter((val) => val.startsWith("format-"))
+  .map((val) => path.parse(val).name);
+
+fs.writeFileSync(
+  path.resolve("src/rules/all-format.json"),
+  JSON.stringify(allFormat.sort(), null, 2)
+);
+
+// bake the "comment-" rules list JSON:
+
+const allComment = fs
+  .readdirSync(path.resolve("src/rules/comment/"))
+  .filter((val) => val.startsWith("comment-"))
+  .map((val) => path.parse(val).name);
+
+fs.writeFileSync(
+  path.resolve("src/rules/all-comment.json"),
+  JSON.stringify(allComment.sort(), null, 2)
+);
+
+// bake the "email-" rules list JSON:
+
+const allEmail = fs
+  .readdirSync(path.resolve("src/rules/email/"))
+  .filter((val) => val.startsWith("email-"))
+  .map((val) => path.parse(val).name);
+
+fs.writeFileSync(
+  path.resolve("src/rules/all-email.json"),
+  JSON.stringify(allEmail.sort(), null, 2)
+);
+
 // bake the "all-bad-named-html-entity" rules list JSON:
 // since rules come from standalone npm package, "string-fix-broken-named-entities",
 // rules source is embedded into linter.js and we'll have to use unit test
@@ -104,4 +140,30 @@ const allBadNamedHTMLEntityRules = fs
 fs.writeFileSync(
   path.resolve("src/rules/all-bad-named-html-entity.json"),
   JSON.stringify(allBadNamedHTMLEntityRules.sort(), null, 2)
+);
+
+// bake the list of all rules
+
+fs.writeFileSync(
+  path.resolve("src/rules/all.json"),
+  JSON.stringify(
+    [
+      // dedupe just in case
+      ...new Set([
+        ...allBadCharacterRules,
+        ...allTagRules,
+        ...allMediaRules,
+        ...allAttribRules,
+        ...allAttribValidateRules,
+        ...allCharacter,
+        ...allCSS,
+        ...allFormat,
+        ...allComment,
+        ...allEmail,
+        ...allBadNamedHTMLEntityRules,
+      ]),
+    ].sort(),
+    null,
+    2
+  )
 );
