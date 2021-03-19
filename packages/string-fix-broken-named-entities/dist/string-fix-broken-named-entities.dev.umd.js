@@ -10719,7 +10719,14 @@ function fixEnt(str, originalOpts) { //
     return rangesArr2.every(function (oneOfEveryObj, y) {
       return i === y || !(filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom && filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo);
     });
-  }).map(opts.cb);
+  });
+  /* istanbul ignore else */
+
+  if (typeof opts.cb === "function") {
+    return res.map(opts.cb);
+  }
+  /* istanbul ignore next */
+
   return res;
 }
 

@@ -35,7 +35,7 @@ interface cbObj {
 }
 interface Opts {
   decode: boolean;
-  cb: (obj: cbObj) => void;
+  cb: null | ((obj: cbObj) => void);
   entityCatcherCb: null | ((from: number, to: number) => void);
   textAmpersandCatcherCb: null | ((idx: number) => void);
   progressFn: null | ((percDone: number) => void);
@@ -1506,27 +1506,31 @@ function fixEnt(str: string, originalOpts?: Partial<Opts>): Ranges {
   //     "rangeValDecoded": "&"
   // },
   // so instead of [4, 8] that would be [rangeFrom, rangeTo]...
-  const res: any = rangesArr2
-    .filter((filteredRangeObj, i) => {
-      return rangesArr2.every((oneOfEveryObj, y) => {
-        return (
-          i === y ||
-          !(
-            filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom &&
-            filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo
-          )
-        );
-      });
-    })
-    .map(opts.cb);
+  const res: any = rangesArr2.filter((filteredRangeObj, i) =>
+    rangesArr2.every(
+      (oneOfEveryObj, y) =>
+        i === y ||
+        !(
+          filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom &&
+          filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo
+        )
+    )
+  );
+
+  /* istanbul ignore else */
+  if (typeof opts.cb === "function") {
+    console.log(`1522 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} mapped`);
+    return res.map(opts.cb);
+  }
 
   console.log(
-    `1524 RETURN ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1527 RETURN ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
     )}`
   );
+  /* istanbul ignore next */
   return res;
 }
 

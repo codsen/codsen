@@ -514,11 +514,12 @@ function fixEnt(str, originalOpts) {
   if (!rangesArr2.length) {
     return [];
   }
-  const res = rangesArr2.filter((filteredRangeObj, i) => {
-    return rangesArr2.every((oneOfEveryObj, y) => {
-      return i === y || !(filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom && filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo);
-    });
-  }).map(opts.cb);
+  const res = rangesArr2.filter((filteredRangeObj, i) => rangesArr2.every((oneOfEveryObj, y) => i === y || !(filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom && filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo)));
+  /* istanbul ignore else */
+  if (typeof opts.cb === "function") {
+    return res.map(opts.cb);
+  }
+  /* istanbul ignore next */
   return res;
 }
 

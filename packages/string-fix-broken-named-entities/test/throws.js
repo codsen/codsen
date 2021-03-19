@@ -91,3 +91,27 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`07 - all callbacks are undefined`, (t) => {
+  t.doesNotThrow(() => {
+    fix("", {
+      cb: undefined,
+      entityCatcherCb: undefined,
+      textAmpersandCatcherCb: undefined,
+      progressFn: undefined,
+    });
+  }, "07");
+  t.end();
+});
+
+tap.test(`08 - all callbacks are nulls`, (t) => {
+  t.doesNotThrow(() => {
+    fix("", {
+      cb: null,
+      entityCatcherCb: null,
+      textAmpersandCatcherCb: null,
+      progressFn: null,
+    });
+  }, "08");
+  t.end();
+});
