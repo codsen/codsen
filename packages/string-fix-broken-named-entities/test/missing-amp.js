@@ -54,7 +54,7 @@ tap.test(
           }),
           [
             {
-              ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
+              ruleName: `bad-html-entity-malformed-${singleEntity}`,
               entityName: singleEntity,
               rangeFrom: 0,
               rangeTo: singleEntity.length + 1,

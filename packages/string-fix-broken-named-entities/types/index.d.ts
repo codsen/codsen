@@ -15,6 +15,7 @@ interface Opts {
     decode: boolean;
     cb: (obj: cbObj) => void;
     entityCatcherCb: null | ((from: number, to: number) => void);
+    textAmpersandCatcherCb: null | ((idx: number) => void);
     progressFn: null | ((percDone: number) => void);
 }
 declare function fixEnt(str: string, originalOpts?: Partial<Opts>): Ranges;

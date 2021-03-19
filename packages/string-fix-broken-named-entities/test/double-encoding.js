@@ -88,7 +88,7 @@ tap.test(
           t.strictSame(
             received,
             {
-              ruleName: "bad-named-html-entity-multiple-encoding",
+              ruleName: "bad-html-entity-multiple-encoding",
               entityName: "nbsp",
               rangeFrom: 4,
               rangeTo: 14,
@@ -174,7 +174,7 @@ tap.test(
               rangeTo: 9,
               rangeValDecoded: "\xA0",
               rangeValEncoded: "&nbsp;",
-              ruleName: "bad-named-html-entity-malformed-nbsp",
+              ruleName: "bad-html-entity-malformed-nbsp",
             },
             "15.01"
           );
@@ -204,7 +204,7 @@ tap.test(
               rangeTo: 9,
               rangeValDecoded: "\xA0",
               rangeValEncoded: "&nbsp;",
-              ruleName: "bad-named-html-entity-malformed-nbsp",
+              ruleName: "bad-html-entity-malformed-nbsp",
             },
             "16.01"
           );
@@ -228,7 +228,7 @@ tap.test(
               rangeTo: 5,
               rangeValDecoded: "\xA0",
               rangeValEncoded: "&nbsp;",
-              ruleName: "bad-named-html-entity-malformed-nbsp",
+              ruleName: "bad-html-entity-malformed-nbsp",
             },
             "16.04"
           );
@@ -266,7 +266,7 @@ tap.test(
               rangeTo: 8,
               rangeValDecoded: "\xA0",
               rangeValEncoded: "&nbsp;",
-              ruleName: "bad-named-html-entity-malformed-nbsp",
+              ruleName: "bad-html-entity-malformed-nbsp",
             },
             "18.01"
           );
@@ -296,7 +296,7 @@ tap.test(
               rangeTo: 8,
               rangeValDecoded: "\xA0",
               rangeValEncoded: "&nbsp;",
-              ruleName: "bad-named-html-entity-malformed-nbsp",
+              ruleName: "bad-html-entity-malformed-nbsp",
             },
             "19.02"
           );
@@ -320,7 +320,7 @@ tap.test(
               rangeTo: 5,
               rangeValDecoded: "\xA0",
               rangeValEncoded: "&nbsp;",
-              ruleName: "bad-named-html-entity-malformed-nbsp",
+              ruleName: "bad-html-entity-malformed-nbsp",
             },
             "19.05"
           );

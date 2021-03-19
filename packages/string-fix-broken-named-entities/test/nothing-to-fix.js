@@ -62,7 +62,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `encoded-html-entity-nbsp`,
+          ruleName: `bad-html-entity-encoded-nbsp`,
           entityName: "nbsp",
           rangeFrom: 0,
           rangeTo: 6,

@@ -24,7 +24,7 @@ tap.test(
           }),
           [
             {
-              ruleName: `encoded-html-entity-${singleEntity}`,
+              ruleName: `bad-html-entity-encoded-${singleEntity}`,
               entityName: singleEntity,
               rangeFrom: 0,
               rangeTo: singleEntity.length + 2,
@@ -49,7 +49,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `encoded-html-entity-EmptyVerySmallSquare`,
+          ruleName: `bad-html-entity-encoded-EmptyVerySmallSquare`,
           entityName: "EmptyVerySmallSquare",
           rangeFrom: 0,
           rangeTo: 22,

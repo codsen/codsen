@@ -42,7 +42,7 @@ tap.test(
             }),
             [
               {
-                ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
+                ruleName: `bad-html-entity-malformed-${singleEntity}`,
                 entityName: singleEntity,
                 rangeFrom: 0,
                 rangeTo: singleEntity.length + 3,
@@ -64,7 +64,7 @@ tap.test(
     const inp5 = "& nbsp;";
     const outp5 = [
       {
-        ruleName: "bad-named-html-entity-malformed-nbsp",
+        ruleName: "bad-html-entity-malformed-nbsp",
         entityName: "nbsp",
         rangeFrom: 0,
         rangeTo: 7,
@@ -83,7 +83,7 @@ tap.test(
     const inp5 = "&nbsp ;";
     const outp5 = [
       {
-        ruleName: "bad-named-html-entity-malformed-nbsp",
+        ruleName: "bad-html-entity-malformed-nbsp",
         entityName: "nbsp",
         rangeFrom: 0,
         rangeTo: 7,
@@ -102,7 +102,7 @@ tap.test(
     const inp5 = "& nbsp ;";
     const outp5 = [
       {
-        ruleName: "bad-named-html-entity-malformed-nbsp",
+        ruleName: "bad-html-entity-malformed-nbsp",
         entityName: "nbsp",
         rangeFrom: 0,
         rangeTo: 8,

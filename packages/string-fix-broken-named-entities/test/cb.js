@@ -57,11 +57,11 @@ tap.test(
       }),
       [
         {
-          name: "bad-named-html-entity-malformed-nbsp",
+          name: "bad-html-entity-malformed-nbsp",
           position: [3, 8, "&nbsp;"],
         },
         {
-          name: "bad-named-html-entity-malformed-nbsp",
+          name: "bad-html-entity-malformed-nbsp",
           position: [11, 16, "&nbsp;"],
         },
       ],

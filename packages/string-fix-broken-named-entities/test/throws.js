@@ -81,3 +81,13 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(
+  `06 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.textAmpersandCatcherCb is not function`,
+  (t) => {
+    t.throws(() => {
+      fix("aaa", { textAmpersandCatcherCb: "bbb" });
+    }, /THROW_ID_06/);
+    t.end();
+  }
+);

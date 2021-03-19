@@ -14,7 +14,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `encoded-numeric-html-entity-reference`,
+          ruleName: `bad-html-entity-encoded-numeric`,
           entityName: "#65",
           rangeFrom: 0,
           rangeTo: 5,
@@ -39,7 +39,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `encoded-numeric-html-entity-reference`,
+          ruleName: `bad-html-entity-encoded-numeric`,
           entityName: "#163",
           rangeFrom: 0,
           rangeTo: 6,
@@ -64,7 +64,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-malformed-numeric-character-entity`,
+          ruleName: `bad-html-entity-malformed-numeric`,
           entityName: null,
           rangeFrom: 0,
           rangeTo: 20,
@@ -123,7 +123,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-malformed-numeric-character-entity`,
+          ruleName: `bad-html-entity-malformed-numeric`,
           entityName: null,
           rangeFrom: 0,
           rangeTo: 20,
@@ -147,7 +147,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-malformed-numeric-character-entity`,
+          ruleName: `bad-html-entity-malformed-numeric`,
           entityName: null,
           rangeFrom: 0,
           rangeTo: 5,
@@ -180,7 +180,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `encoded-numeric-html-entity-reference`,
+          ruleName: `bad-html-entity-encoded-numeric`,
           entityName: "#163",
           rangeFrom: 15,
           rangeTo: 21,
@@ -207,7 +207,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `encoded-numeric-html-entity-reference`,
+          ruleName: `bad-html-entity-encoded-numeric`,
           entityName: "#xA3",
           rangeFrom: 0,
           rangeTo: 6,
@@ -232,7 +232,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-malformed-numeric-character-entity`,
+          ruleName: `bad-html-entity-malformed-numeric`,
           entityName: null,
           rangeFrom: 0,
           rangeTo: 6,
@@ -258,7 +258,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-malformed-numeric-character-entity`,
+          ruleName: `bad-html-entity-malformed-numeric`,
           entityName: null,
           rangeFrom: 0,
           rangeTo: 6,
@@ -282,7 +282,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-malformed-numeric-character-entity`,
+          ruleName: `bad-html-entity-malformed-numeric`,
           entityName: null,
           rangeFrom: 0,
           rangeTo: 7,
@@ -306,7 +306,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-malformed-numeric-character-entity`,
+          ruleName: `bad-html-entity-malformed-numeric`,
           entityName: null,
           rangeFrom: 3,
           rangeTo: 8,

@@ -66,7 +66,7 @@ tap.test(
       decode: true,
     });
     t.strictSame(gatheredHealthy, [], "03.01");
-    t.strictSame(gatheredBroken, ["encoded-html-entity-nbsp"], "03.02");
+    t.strictSame(gatheredBroken, ["bad-html-entity-encoded-nbsp"], "03.02");
     t.end();
   }
 );
@@ -100,11 +100,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     });
     t.strictSame(gatheredHealthy, [[2, 8]], "05.01");
-    t.strictSame(
-      gatheredBroken,
-      ["bad-named-html-entity-malformed-nbsp"],
-      "05.02"
-    );
+    t.strictSame(gatheredBroken, ["bad-html-entity-malformed-nbsp"], "05.02");
     t.end();
   }
 );
@@ -170,7 +166,7 @@ tap.test(
       gatheredBroken,
       [
         {
-          ruleName: "encoded-html-entity-isindot",
+          ruleName: "bad-html-entity-encoded-isindot",
           entityName: "isindot",
           rangeFrom: 2,
           rangeTo: 11,
@@ -225,11 +221,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.strictSame(
-      gatheredBroken,
-      ["bad-named-html-entity-malformed-nbsp"],
-      "10.01"
-    );
+    t.strictSame(gatheredBroken, ["bad-html-entity-malformed-nbsp"], "10.01");
     t.strictSame(gatheredHealthy, [], "10.02");
     t.end();
   }
@@ -264,11 +256,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.strictSame(
-      gatheredBroken,
-      ["bad-named-html-entity-malformed-nbsp"],
-      "12.01"
-    );
+    t.strictSame(gatheredBroken, ["bad-html-entity-malformed-nbsp"], "12.01");
     t.strictSame(gatheredHealthy, [], "12.02");
     t.end();
   }
@@ -315,11 +303,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.strictSame(
-      gatheredBroken,
-      ["bad-named-html-entity-unrecognised"],
-      "14.01"
-    );
+    t.strictSame(gatheredBroken, ["bad-html-entity-unrecognised"], "14.01");
     t.strictSame(gatheredHealthy, [], "14.02");
     t.end();
   }
@@ -354,11 +338,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.strictSame(
-      gatheredBroken,
-      ["bad-named-html-entity-unrecognised"],
-      "16.01"
-    );
+    t.strictSame(gatheredBroken, ["bad-html-entity-unrecognised"], "16.01");
     t.strictSame(gatheredHealthy, [], "16.02");
     t.end();
   }

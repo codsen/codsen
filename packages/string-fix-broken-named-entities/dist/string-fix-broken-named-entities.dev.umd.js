@@ -9987,6 +9987,7 @@ function fixEnt(str, originalOpts) { //
           rangeValDecoded = _ref.rangeValDecoded;
       return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
     },
+    textAmpersandCatcherCb: null,
     progressFn: null,
     entityCatcherCb: null
   };
@@ -10007,6 +10008,10 @@ function fixEnt(str, originalOpts) { //
 
   if (opts.progressFn && typeof opts.progressFn !== "function") {
     throw new TypeError("string-fix-broken-named-entities: [THROW_ID_05] opts.progressFn must be a function (or falsey)! Currently it's: " + typeof opts.progressFn + ", equal to: " + JSON.stringify(opts.progressFn, null, 4));
+  }
+
+  if (opts.textAmpersandCatcherCb && typeof opts.textAmpersandCatcherCb !== "function") {
+    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_06] opts.textAmpersandCatcherCb must be a function (or falsey)! Currently it's: " + typeof opts.textAmpersandCatcherCb + ", equal to: " + JSON.stringify(opts.textAmpersandCatcherCb, null, 4));
   } // state flags
   // ---------------------------------------------------------------------------
   // this is what we'll return, process by default callback or user's custom-one
@@ -10026,7 +10031,16 @@ function fixEnt(str, originalOpts) { //
   // for example, nbsp from "&nbsp;"
 
   var letterSeqStartAt = null;
-  var brokenNumericEntityStartAt = null; //                                      |
+  var brokenNumericEntityStartAt = null;
+  var ampPositions = [];
+
+  function pingAmps() {
+
+    for (var i = 0, _len = ampPositions.length; i < _len; i++) { // ping each ampersand's index, starting from zero index:
+
+      opts.textAmpersandCatcherCb(ampPositions.shift());
+    }
+  } //                                      |
   //                                      |
   //                                      |
   //                                      |
@@ -10043,6 +10057,7 @@ function fixEnt(str, originalOpts) { //
   //                                     \| /
   //                                      V
   // differently from regex-based approach, we aim to traverse the string only once:
+
 
   var _loop = function _loop(i) {
     if (opts.progressFn) {
@@ -10082,6 +10097,10 @@ function fixEnt(str, originalOpts) { //
         counter += 1;
         return "continue";
       }
+    }
+
+    if (str[i] === "&") {
+      ampPositions.push(i);
     } //            |
     //            |
     //            |
@@ -10106,7 +10125,7 @@ function fixEnt(str, originalOpts) { //
       if (i > letterSeqStartAt + 1) {
         var potentialEntity = str.slice(letterSeqStartAt, i);
         var whatsOnTheLeft = left(str, letterSeqStartAt);
-        var whatsEvenMoreToTheLeft = whatsOnTheLeft ? left(str, whatsOnTheLeft) : ""; //
+        var whatsEvenMoreToTheLeft = whatsOnTheLeft ? left(str, whatsOnTheLeft) : null; //
         //
         //
         //
@@ -10166,15 +10185,14 @@ function fixEnt(str, originalOpts) { //
             if (tempEnt && (!Object.keys(uncertain).includes(tempEnt) || !str[tempRes.rightmostChar + 1] || ["&"].includes(str[tempRes.rightmostChar + 1]) || (uncertain[tempEnt].addSemiIfAmpPresent === true || uncertain[tempEnt].addSemiIfAmpPresent && (!str[tempRes.rightmostChar + 1] || !str[tempRes.rightmostChar + 1].trim().length)) && str[tempRes.leftmostChar - 1] === "&")) {
               var decodedEntity = decode("&" + tempEnt + ";");
               rangesArr2.push({
-                ruleName: "bad-named-html-entity-malformed-" + tempEnt,
+                ruleName: "bad-html-entity-malformed-" + tempEnt,
                 entityName: tempEnt,
                 rangeFrom: whatsOnTheLeft || 0,
                 rangeTo: tempRes.rightmostChar + 1,
                 rangeValEncoded: "&" + tempEnt + ";",
                 rangeValDecoded: decodedEntity
               });
-            } // ELSE, it was just a legit ampersand
-
+            }
           }
         } else if (str[whatsOnTheLeft] !== "&" && str[whatsEvenMoreToTheLeft] !== "&" && str[i] === ";") {
           //
@@ -10228,7 +10246,7 @@ function fixEnt(str, originalOpts) { //
 
               var _decodedEntity = decode("&" + _tempEnt + ";");
               rangesArr2.push({
-                ruleName: "bad-named-html-entity-malformed-" + _tempEnt,
+                ruleName: "bad-html-entity-malformed-" + _tempEnt,
                 entityName: _tempEnt,
                 rangeFrom: _tempRes.leftmostChar,
                 rangeTo: i + 1,
@@ -10241,7 +10259,7 @@ function fixEnt(str, originalOpts) { //
             // an ampersand but with the rest of characters
             // 1. push the issue:
             rangesArr2.push({
-              ruleName: "bad-malformed-numeric-character-entity",
+              ruleName: "bad-html-entity-malformed-numeric",
               entityName: null,
               rangeFrom: brokenNumericEntityStartAt,
               rangeTo: i + 1,
@@ -10260,9 +10278,22 @@ function fixEnt(str, originalOpts) { //
           //
           //
           //
-          // // find out more: is it legit, unrecognised or numeric...
+          // // submit all caught ampersands up to this entity's opening-one
+
+          if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length && letterSeqStartAt) {
+            // backwards loop for perf reasons
+            for (var _i = ampPositions.length; _i--;) {
+              var ampIdx = ampPositions.shift();
+
+              if (ampIdx < letterSeqStartAt - 1) {
+                opts.textAmpersandCatcherCb(ampIdx);
+              } // else, index gets discarded
+
+            }
+          } // find out more: is it legit, unrecognised or numeric...
 
           /* istanbul ignore else */
+
 
           if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) { // Maybe it's a numeric entity?
             // we can simply check, does entity start with a hash but that
@@ -10296,7 +10327,7 @@ function fixEnt(str, originalOpts) { //
 
                 if (situation.probablyNumeric === "deci" && parseInt(situation.numbersValue, 10) > 918015) {
                   rangesArr2.push({
-                    ruleName: "bad-malformed-numeric-character-entity",
+                    ruleName: "bad-html-entity-malformed-numeric",
                     entityName: null,
                     rangeFrom: whatsOnTheLeft || 0,
                     rangeTo: i + 1,
@@ -10306,7 +10337,7 @@ function fixEnt(str, originalOpts) { //
                 } else if (opts.decode) {
                   // unless decoding was requested, no further action is needed:
                   rangesArr2.push({
-                    ruleName: "encoded-numeric-html-entity-reference",
+                    ruleName: "bad-html-entity-encoded-numeric",
                     entityName: situation.charTrimmed,
                     rangeFrom: whatsOnTheLeft || 0,
                     rangeTo: i + 1,
@@ -10317,7 +10348,7 @@ function fixEnt(str, originalOpts) { //
               } else {
                 // RAISE A GENERIC ERROR
                 rangesArr2.push({
-                  ruleName: "bad-malformed-numeric-character-entity",
+                  ruleName: "bad-html-entity-malformed-numeric",
                   entityName: null,
                   rangeFrom: whatsOnTheLeft || 0,
                   rangeTo: i + 1,
@@ -10346,6 +10377,7 @@ function fixEnt(str, originalOpts) { //
               }).join("");
 
               if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
+                ampPositions.length = 0;
 
                 if ( // first, check is the letter case allright
                 !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
@@ -10355,7 +10387,7 @@ function fixEnt(str, originalOpts) { //
 
                   if (matchingEntitiesOfCorrectCaseArr.length === 1) {
                     rangesArr2.push({
-                      ruleName: "bad-named-html-entity-malformed-" + matchingEntitiesOfCorrectCaseArr[0],
+                      ruleName: "bad-html-entity-malformed-" + matchingEntitiesOfCorrectCaseArr[0],
                       entityName: matchingEntitiesOfCorrectCaseArr[0],
                       rangeFrom: whatsOnTheLeft,
                       rangeTo: i + 1,
@@ -10364,7 +10396,7 @@ function fixEnt(str, originalOpts) { //
                     });
                   } else {
                     rangesArr2.push({
-                      ruleName: "bad-named-html-entity-unrecognised",
+                      ruleName: "bad-html-entity-unrecognised",
                       entityName: null,
                       rangeFrom: whatsOnTheLeft,
                       rangeTo: i + 1,
@@ -10384,7 +10416,7 @@ function fixEnt(str, originalOpts) { //
                     return "continue";
                   }
                   rangesArr2.push({
-                    ruleName: "bad-named-html-entity-malformed-" + potentialEntityOnlyNonWhitespaceChars,
+                    ruleName: "bad-html-entity-malformed-" + potentialEntityOnlyNonWhitespaceChars,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
                     rangeFrom: rangeFrom,
                     rangeTo: i + 1,
@@ -10393,7 +10425,7 @@ function fixEnt(str, originalOpts) { //
                   });
                 } else if (opts.decode) { // last thing, if decode is required, we've got an error still...
                   rangesArr2.push({
-                    ruleName: "encoded-html-entity-" + potentialEntityOnlyNonWhitespaceChars,
+                    ruleName: "bad-html-entity-encoded-" + potentialEntityOnlyNonWhitespaceChars,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
@@ -10421,7 +10453,7 @@ function fixEnt(str, originalOpts) { //
 
                 var _decodedEntity2 = decode("&" + brokenNamedEntities[situation.charTrimmed.toLowerCase()] + ";");
                 rangesArr2.push({
-                  ruleName: "bad-named-html-entity-malformed-" + brokenNamedEntities[situation.charTrimmed.toLowerCase()],
+                  ruleName: "bad-html-entity-malformed-" + brokenNamedEntities[situation.charTrimmed.toLowerCase()],
                   entityName: brokenNamedEntities[situation.charTrimmed.toLowerCase()],
                   rangeFrom: whatsOnTheLeft,
                   rangeTo: i + 1,
@@ -10450,7 +10482,7 @@ function fixEnt(str, originalOpts) { //
                   var _temp4 = temp;
                   _tempEnt2 = _temp4[0];
                   rangesArr2.push({
-                    ruleName: "bad-named-html-entity-malformed-" + _tempEnt2,
+                    ruleName: "bad-html-entity-malformed-" + _tempEnt2,
                     entityName: _tempEnt2,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
@@ -10463,7 +10495,7 @@ function fixEnt(str, originalOpts) { //
 
               if (!_tempEnt2) { // it's an unrecognised entity:
                 rangesArr2.push({
-                  ruleName: "bad-named-html-entity-unrecognised",
+                  ruleName: "bad-html-entity-unrecognised",
                   entityName: null,
                   rangeFrom: whatsOnTheLeft,
                   rangeTo: i + 1,
@@ -10497,13 +10529,21 @@ function fixEnt(str, originalOpts) { //
           rangesArr2.push({
             ruleName: "" + (
             /* istanbul ignore next */
-            _situation.probablyNumeric ? "bad-malformed-numeric-character-entity" : "bad-named-html-entity-unrecognised"),
+            _situation.probablyNumeric ? "bad-html-entity-malformed-numeric" : "bad-html-entity-unrecognised"),
             entityName: null,
             rangeFrom: whatsEvenMoreToTheLeft,
             rangeTo: i + 1,
             rangeValEncoded: null,
             rangeValDecoded: null
           });
+        } else {
+
+          if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+            for (var _i2 = 0, _len2 = ampPositions.length; _i2 < _len2; _i2++) { // ping each ampersand's index, starting from zero index:
+
+              opts.textAmpersandCatcherCb(ampPositions.shift());
+            }
+          }
         }
       } // one-character chunks or chunks ending with ampersand get wiped:
 
@@ -10518,8 +10558,8 @@ function fixEnt(str, originalOpts) { //
     } // catch amp;
 
 
-    if (str[i] === "a") { // // 1. catch recursively-encoded cases. They're easy actually, the task will
-      // // be deleting sequence of repeated "amp;" between ampersand and letter.
+    if (str[i] === "a") { // 1. catch recursively-encoded cases. They're easy actually, the task will
+      // be deleting sequence of repeated "amp;" between ampersand and letter.
       // For example, we have this:
       // text&   amp  ;  a  m   p   ;  nbsp;text
       // We start at the opening ampersand at index 4;
@@ -10572,15 +10612,17 @@ function fixEnt(str, originalOpts) { //
         })) {
           doNothingUntil = firstCharThatFollows + matchedTemp.length + 1; // is there ampersand on the left of "i", the first amp;?
 
-          var _whatsOnTheLeft = left(str, i);
+          /* istanbul ignore next */
+
+          var _whatsOnTheLeft = left(str, i) || 0;
           /* istanbul ignore else */
 
 
           if (str[_whatsOnTheLeft] === "&") {
             rangesArr2.push({
-              ruleName: "bad-named-html-entity-multiple-encoding",
+              ruleName: "bad-html-entity-multiple-encoding",
               entityName: matchedTemp,
-              rangeFrom: _whatsOnTheLeft || 0,
+              rangeFrom: _whatsOnTheLeft,
               rangeTo: doNothingUntil,
               rangeValEncoded: "&" + matchedTemp + ";",
               rangeValDecoded: decode("&" + matchedTemp + ";")
@@ -10597,7 +10639,7 @@ function fixEnt(str, originalOpts) { //
 
             if (typeof opts.cb === "function") {
               rangesArr2.push({
-                ruleName: "bad-named-html-entity-multiple-encoding",
+                ruleName: "bad-html-entity-multiple-encoding",
                 entityName: matchedTemp,
                 rangeFrom: _rangeFrom,
                 rangeTo: doNothingUntil,
@@ -10627,10 +10669,15 @@ function fixEnt(str, originalOpts) { //
     //            |
     //            |
     //            |
+
+
+    if (!str[i] && typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+      pingAmps();
+    }
     counter += 1;
   };
 
-  for (var i = 0; i < len; i++) {
+  for (var i = 0; i <= len; i++) {
     var _ret = _loop(i);
 
     if (_ret === "continue") continue;
@@ -10659,7 +10706,7 @@ function fixEnt(str, originalOpts) { //
   // winning and [4, 8] removed. Obviously, it's not arrays, it's objects,
   // format for example
   // {
-  //     "ruleName": "bad-named-html-entity-malformed-amp",
+  //     "ruleName": "bad-html-entity-malformed-amp",
   //     "entityName": "amp",
   //     "rangeFrom": 4,
   //     "rangeTo": 8,

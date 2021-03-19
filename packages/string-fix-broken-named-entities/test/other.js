@@ -25,7 +25,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-unrecognised`,
+          ruleName: `bad-html-entity-unrecognised`,
           entityName: null,
           rangeFrom: 4,
           rangeTo: 12,
@@ -61,7 +61,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-malformed-pound`,
+          ruleName: `bad-html-entity-malformed-pound`,
           entityName: "pound",
           rangeFrom: 4,
           rangeTo: 12,
@@ -122,7 +122,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-unrecognised`,
+          ruleName: `bad-html-entity-unrecognised`,
           entityName: null,
           rangeFrom: 4,
           rangeTo: 11,
@@ -148,7 +148,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-malformed-pound`,
+          ruleName: `bad-html-entity-malformed-pound`,
           entityName: "pound",
           rangeFrom: 0,
           rangeTo: 6,
@@ -173,7 +173,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-malformed-pound`,
+          ruleName: `bad-html-entity-malformed-pound`,
           entityName: "pound",
           rangeFrom: 1,
           rangeTo: 9,
@@ -197,7 +197,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-malformed-twoheadrightarrow`,
+          ruleName: `bad-html-entity-malformed-twoheadrightarrow`,
           entityName: "twoheadrightarrow",
           rangeFrom: 1,
           rangeTo: 20,
@@ -221,7 +221,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-malformed-Alpha`,
+          ruleName: `bad-html-entity-malformed-Alpha`,
           entityName: "Alpha",
           rangeFrom: 1,
           rangeTo: 9,
@@ -245,7 +245,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-malformed-acd`,
+          ruleName: `bad-html-entity-malformed-acd`,
           entityName: "acd",
           rangeFrom: 0,
           rangeTo: 6,
@@ -269,7 +269,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-malformed-acd`,
+          ruleName: `bad-html-entity-malformed-acd`,
           entityName: "acd",
           rangeFrom: 0,
           rangeTo: inp1.length,
@@ -293,7 +293,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-unrecognised`,
+          ruleName: `bad-html-entity-unrecognised`,
           entityName: null,
           rangeFrom: 0,
           rangeTo: inp1.length,
@@ -317,7 +317,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `bad-named-html-entity-malformed-zwnj`,
+          ruleName: `bad-html-entity-malformed-zwnj`,
           entityName: "zwnj",
           rangeFrom: 0,
           rangeTo: inp1.length,
@@ -349,7 +349,7 @@ tap.test(
       }),
       [
         {
-          ruleName: `encoded-html-entity-xcap`,
+          ruleName: `bad-html-entity-encoded-xcap`,
           entityName: "xcap",
           rangeFrom: 0,
           rangeTo: inp1.length,

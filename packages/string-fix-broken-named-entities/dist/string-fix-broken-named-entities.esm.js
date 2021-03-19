@@ -116,6 +116,7 @@ function fixEnt(str, originalOpts) {
       rangeValEncoded,
       rangeValDecoded
     }) => rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo],
+    textAmpersandCatcherCb: null,
     progressFn: null,
     entityCatcherCb: null
   };
@@ -134,6 +135,9 @@ function fixEnt(str, originalOpts) {
   if (opts.progressFn && typeof opts.progressFn !== "function") {
     throw new TypeError(`string-fix-broken-named-entities: [THROW_ID_05] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(opts.progressFn, null, 4)}`);
   }
+  if (opts.textAmpersandCatcherCb && typeof opts.textAmpersandCatcherCb !== "function") {
+    throw new TypeError(`string-fix-broken-named-entities: [THROW_ID_06] opts.textAmpersandCatcherCb must be a function (or falsey)! Currently it's: ${typeof opts.textAmpersandCatcherCb}, equal to: ${JSON.stringify(opts.textAmpersandCatcherCb, null, 4)}`);
+  }
   const rangesArr2 = [];
   let percentageDone;
   let lastPercentageDone;
@@ -142,7 +146,13 @@ function fixEnt(str, originalOpts) {
   let doNothingUntil = null;
   let letterSeqStartAt = null;
   let brokenNumericEntityStartAt = null;
-  for (let i = 0; i < len; i++) {
+  const ampPositions = [];
+  function pingAmps() {
+    for (let i = 0, len = ampPositions.length; i < len; i++) {
+      opts.textAmpersandCatcherCb(ampPositions.shift());
+    }
+  }
+  for (let i = 0; i <= len; i++) {
     if (opts.progressFn) {
       percentageDone = Math.floor(counter / len * 100);
       /* istanbul ignore else */
@@ -159,6 +169,9 @@ function fixEnt(str, originalOpts) {
         continue;
       }
     }
+    if (str[i] === "&") {
+      ampPositions.push(i);
+    }
     if (letterSeqStartAt !== null && i - letterSeqStartAt > 50) {
       letterSeqStartAt = null;
     }
@@ -166,7 +179,7 @@ function fixEnt(str, originalOpts) {
       if (i > letterSeqStartAt + 1) {
         const potentialEntity = str.slice(letterSeqStartAt, i);
         const whatsOnTheLeft = left(str, letterSeqStartAt);
-        const whatsEvenMoreToTheLeft = whatsOnTheLeft ? left(str, whatsOnTheLeft) : "";
+        const whatsEvenMoreToTheLeft = whatsOnTheLeft ? left(str, whatsOnTheLeft) : null;
         if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
           const firstChar = letterSeqStartAt;
           /* istanbul ignore next */
@@ -196,7 +209,7 @@ function fixEnt(str, originalOpts) {
             if (tempEnt && (!Object.keys(uncertain).includes(tempEnt) || !str[tempRes.rightmostChar + 1] || ["&"].includes(str[tempRes.rightmostChar + 1]) || (uncertain[tempEnt].addSemiIfAmpPresent === true || uncertain[tempEnt].addSemiIfAmpPresent && (!str[tempRes.rightmostChar + 1] || !str[tempRes.rightmostChar + 1].trim().length)) && str[tempRes.leftmostChar - 1] === "&")) {
               const decodedEntity = decode(`&${tempEnt};`);
               rangesArr2.push({
-                ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
+                ruleName: `bad-html-entity-malformed-${tempEnt}`,
                 entityName: tempEnt,
                 rangeFrom: whatsOnTheLeft || 0,
                 rangeTo: tempRes.rightmostChar + 1,
@@ -232,7 +245,7 @@ function fixEnt(str, originalOpts) {
             if (tempEnt && (!Object.keys(uncertain).includes(tempEnt) || uncertain[tempEnt].addAmpIfSemiPresent === true || uncertain[tempEnt].addAmpIfSemiPresent && (!tempRes.leftmostChar || isStr(str[tempRes.leftmostChar - 1]) && !str[tempRes.leftmostChar - 1].trim().length))) {
               const decodedEntity = decode(`&${tempEnt};`);
               rangesArr2.push({
-                ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
+                ruleName: `bad-html-entity-malformed-${tempEnt}`,
                 entityName: tempEnt,
                 rangeFrom: tempRes.leftmostChar,
                 rangeTo: i + 1,
@@ -242,7 +255,7 @@ function fixEnt(str, originalOpts) {
             }
           } else if (brokenNumericEntityStartAt !== null) {
             rangesArr2.push({
-              ruleName: "bad-malformed-numeric-character-entity",
+              ruleName: "bad-html-entity-malformed-numeric",
               entityName: null,
               rangeFrom: brokenNumericEntityStartAt,
               rangeTo: i + 1,
@@ -252,6 +265,14 @@ function fixEnt(str, originalOpts) {
             brokenNumericEntityStartAt = null;
           }
         } else if ((str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&") && str[i] === ";") {
+          if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length && letterSeqStartAt) {
+            for (let i = ampPositions.length; i--;) {
+              const ampIdx = ampPositions.shift();
+              if (ampIdx < letterSeqStartAt - 1) {
+                opts.textAmpersandCatcherCb(ampIdx);
+              }
+            }
+          }
           /* istanbul ignore else */
           if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
             const situation = resemblesNumericEntity(str, whatsOnTheLeft + 1, i);
@@ -264,7 +285,7 @@ function fixEnt(str, originalOpts) {
                 const decodedEntitysValue = String.fromCharCode(parseInt(situation.charTrimmed.slice(situation.probablyNumeric === "deci" ? 1 : 2), situation.probablyNumeric === "deci" ? 10 : 16));
                 if (situation.probablyNumeric === "deci" && parseInt(situation.numbersValue, 10) > 918015) {
                   rangesArr2.push({
-                    ruleName: `bad-malformed-numeric-character-entity`,
+                    ruleName: `bad-html-entity-malformed-numeric`,
                     entityName: null,
                     rangeFrom: whatsOnTheLeft || 0,
                     rangeTo: i + 1,
@@ -273,7 +294,7 @@ function fixEnt(str, originalOpts) {
                   });
                 } else if (opts.decode) {
                   rangesArr2.push({
-                    ruleName: `encoded-numeric-html-entity-reference`,
+                    ruleName: `bad-html-entity-encoded-numeric`,
                     entityName: situation.charTrimmed,
                     rangeFrom: whatsOnTheLeft || 0,
                     rangeTo: i + 1,
@@ -283,7 +304,7 @@ function fixEnt(str, originalOpts) {
                 }
               } else {
                 rangesArr2.push({
-                  ruleName: `bad-malformed-numeric-character-entity`,
+                  ruleName: `bad-html-entity-malformed-numeric`,
                   entityName: null,
                   rangeFrom: whatsOnTheLeft || 0,
                   rangeTo: i + 1,
@@ -297,12 +318,13 @@ function fixEnt(str, originalOpts) {
             } else {
               const potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(char => char.trim().length).join("");
               if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
+                ampPositions.length = 0;
                 if (
                 !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
                   const matchingEntitiesOfCorrectCaseArr = [...allNamedEntitiesSetOnly].filter(ent => ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase());
                   if (matchingEntitiesOfCorrectCaseArr.length === 1) {
                     rangesArr2.push({
-                      ruleName: `bad-named-html-entity-malformed-${matchingEntitiesOfCorrectCaseArr[0]}`,
+                      ruleName: `bad-html-entity-malformed-${matchingEntitiesOfCorrectCaseArr[0]}`,
                       entityName: matchingEntitiesOfCorrectCaseArr[0],
                       rangeFrom: whatsOnTheLeft,
                       rangeTo: i + 1,
@@ -311,7 +333,7 @@ function fixEnt(str, originalOpts) {
                     });
                   } else {
                     rangesArr2.push({
-                      ruleName: `bad-named-html-entity-unrecognised`,
+                      ruleName: `bad-html-entity-unrecognised`,
                       entityName: null,
                       rangeFrom: whatsOnTheLeft,
                       rangeTo: i + 1,
@@ -329,7 +351,7 @@ function fixEnt(str, originalOpts) {
                     continue;
                   }
                   rangesArr2.push({
-                    ruleName: `bad-named-html-entity-malformed-${potentialEntityOnlyNonWhitespaceChars}`,
+                    ruleName: `bad-html-entity-malformed-${potentialEntityOnlyNonWhitespaceChars}`,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
                     rangeFrom: rangeFrom,
                     rangeTo: i + 1,
@@ -338,7 +360,7 @@ function fixEnt(str, originalOpts) {
                   });
                 } else if (opts.decode) {
                   rangesArr2.push({
-                    ruleName: `encoded-html-entity-${potentialEntityOnlyNonWhitespaceChars}`,
+                    ruleName: `bad-html-entity-encoded-${potentialEntityOnlyNonWhitespaceChars}`,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
@@ -359,7 +381,7 @@ function fixEnt(str, originalOpts) {
                 tempEnt = situation.charTrimmed;
                 const decodedEntity = decode(`&${brokenNamedEntities[situation.charTrimmed.toLowerCase()]};`);
                 rangesArr2.push({
-                  ruleName: `bad-named-html-entity-malformed-${brokenNamedEntities[situation.charTrimmed.toLowerCase()]}`,
+                  ruleName: `bad-html-entity-malformed-${brokenNamedEntities[situation.charTrimmed.toLowerCase()]}`,
                   entityName: brokenNamedEntities[situation.charTrimmed.toLowerCase()],
                   rangeFrom: whatsOnTheLeft,
                   rangeTo: i + 1,
@@ -375,7 +397,7 @@ function fixEnt(str, originalOpts) {
                 if (temp.length === 1) {
                   [tempEnt] = temp;
                   rangesArr2.push({
-                    ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
+                    ruleName: `bad-html-entity-malformed-${tempEnt}`,
                     entityName: tempEnt,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
@@ -386,7 +408,7 @@ function fixEnt(str, originalOpts) {
               }
               if (!tempEnt) {
                 rangesArr2.push({
-                  ruleName: `bad-named-html-entity-unrecognised`,
+                  ruleName: `bad-html-entity-unrecognised`,
                   entityName: null,
                   rangeFrom: whatsOnTheLeft,
                   rangeTo: i + 1,
@@ -401,13 +423,19 @@ function fixEnt(str, originalOpts) {
           rangesArr2.push({
             ruleName: `${
             /* istanbul ignore next */
-            situation.probablyNumeric ? "bad-malformed-numeric-character-entity" : "bad-named-html-entity-unrecognised"}`,
+            situation.probablyNumeric ? "bad-html-entity-malformed-numeric" : "bad-html-entity-unrecognised"}`,
             entityName: null,
             rangeFrom: whatsEvenMoreToTheLeft,
             rangeTo: i + 1,
             rangeValEncoded: null,
             rangeValDecoded: null
           });
+        } else {
+          if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+            for (let i = 0, len = ampPositions.length; i < len; i++) {
+              opts.textAmpersandCatcherCb(ampPositions.shift());
+            }
+          }
         }
       }
       letterSeqStartAt = null;
@@ -442,13 +470,14 @@ function fixEnt(str, originalOpts) {
           }
         })) {
           doNothingUntil = firstCharThatFollows + matchedTemp.length + 1;
-          const whatsOnTheLeft = left(str, i);
+          /* istanbul ignore next */
+          const whatsOnTheLeft = left(str, i) || 0;
           /* istanbul ignore else */
           if (str[whatsOnTheLeft] === "&") {
             rangesArr2.push({
-              ruleName: "bad-named-html-entity-multiple-encoding",
+              ruleName: "bad-html-entity-multiple-encoding",
               entityName: matchedTemp,
-              rangeFrom: whatsOnTheLeft || 0,
+              rangeFrom: whatsOnTheLeft,
               rangeTo: doNothingUntil,
               rangeValEncoded: `&${matchedTemp};`,
               rangeValDecoded: decode(`&${matchedTemp};`)
@@ -460,7 +489,7 @@ function fixEnt(str, originalOpts) {
             /* istanbul ignore else */
             if (typeof opts.cb === "function") {
               rangesArr2.push({
-                ruleName: "bad-named-html-entity-multiple-encoding",
+                ruleName: "bad-html-entity-multiple-encoding",
                 entityName: matchedTemp,
                 rangeFrom,
                 rangeTo: doNothingUntil,
@@ -476,6 +505,9 @@ function fixEnt(str, originalOpts) {
       if (isNumeric(str[right(str, right(str, i))])) {
         brokenNumericEntityStartAt = i;
       }
+    }
+    if (!str[i] && typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+      pingAmps();
     }
     counter += 1;
   }
