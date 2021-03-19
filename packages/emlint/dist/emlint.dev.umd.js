@@ -41188,107 +41188,6 @@ var characterEncode = function characterEncode(context) {
   };
 };
 
-function characterUnspacedPunctuation(context, originalOpts) {
-  var charCodeMapping = {
-    63: "questionMark",
-    33: "exclamationMark",
-    59: "semicolon",
-    187: "rightDoubleAngleQuotMark",
-    171: "leftDoubleAngleQuotMark"
-  };
-  return {
-    text: function text(node) {
-      var defaults = {
-        questionMark: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        },
-        exclamationMark: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        },
-        semicolon: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        },
-        rightDoubleAngleQuotMark: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        },
-        leftDoubleAngleQuotMark: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        }
-      };
-
-      var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // plan: iterate each character from this text chunk/node, query each
-      // caught character's surroundings as per config
-
-      for (var i = node.start; i < node.end; i++) {
-        var charCode = context.str[i].charCodeAt(0);
-
-        if (charCodeMapping[String(charCode)]) {
-          var charName = charCodeMapping[String(charCode)]; // precautions first.
-          // if it's an exclamation mark and two dashes follow, we bail right away
-
-          if (charName === "exclamationMark" && context.str[right(context.str, i)] === "-" && context.str[right(context.str, right(context.str, i))] === "-") {
-            return;
-          }
-
-          if (opts[charName].whitespaceLeft === "never" && i && !context.str[i - 1].trim().length) {
-            var idxFrom = left(context.str, i) ? left(context.str, i) + 1 : 0;
-            context.report({
-              ruleId: "character-unspaced-punctuation",
-              idxFrom: idxFrom,
-              idxTo: i,
-              message: "Remove the whitespace.",
-              fix: {
-                ranges: [[idxFrom, i]]
-              }
-            });
-          }
-
-          if (opts[charName].whitespaceRight === "never" && i < node.end - 1 && !context.str[i + 1].trim().length) {
-            context.report({
-              ruleId: "character-unspaced-punctuation",
-              idxFrom: i + 1,
-              idxTo: right(context.str, i) || context.str.length,
-              message: "Remove the whitespace.",
-              fix: {
-                ranges: [[i + 1, right(context.str, i) || context.str.length]]
-              }
-            });
-          }
-
-          if (opts[charName].whitespaceLeft === "always" && i && context.str[i - 1].trim().length) {
-            context.report({
-              ruleId: "character-unspaced-punctuation",
-              idxFrom: i,
-              idxTo: i + 1,
-              message: "Add a space.",
-              fix: {
-                ranges: [[i, i, " "]]
-              }
-            });
-          }
-
-          if (opts[charName].whitespaceRight === "always" && i < node.end - 1 && context.str[i + 1].trim().length) {
-            context.report({
-              ruleId: "character-unspaced-punctuation",
-              idxFrom: i,
-              idxTo: i + 1,
-              message: "Add a space.",
-              fix: {
-                ranges: [[i + 1, i + 1, " "]]
-              }
-            });
-          }
-        }
-      }
-    }
-  };
-}
-
 // -----------------------------------------------------------------------------
 // it tap the is-media-descriptor that we already use on tags
 // to validate media query selectors, for example (rogue letter "e"):
@@ -42659,9 +42558,6 @@ defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", functio
 });
 defineLazyProp(builtInRules, "character-encode", function () {
   return characterEncode;
-});
-defineLazyProp(builtInRules, "character-unspaced-punctuation", function () {
-  return characterUnspacedPunctuation;
 });
 defineLazyProp(builtInRules, "media-malformed", function () {
   return mediaMalformed;

@@ -240,7 +240,6 @@
   "bad-named-html-entity-not-email-friendly",
   "bad-named-html-entity-unrecognised",
   "character-encode",
-  "character-unspaced-punctuation",
   "comment-closing-malformed",
   "comment-conditional-nested",
   "comment-mismatching-pair",

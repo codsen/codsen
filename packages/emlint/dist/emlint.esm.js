@@ -8704,99 +8704,6 @@ const characterEncode = (context, ...opts) => {
   };
 };
 
-function characterUnspacedPunctuation(context, originalOpts) {
-  const charCodeMapping = {
-    63: "questionMark",
-    33: "exclamationMark",
-    59: "semicolon",
-    187: "rightDoubleAngleQuotMark",
-    171: "leftDoubleAngleQuotMark"
-  };
-  return {
-    text(node) {
-      const defaults = {
-        questionMark: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        },
-        exclamationMark: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        },
-        semicolon: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        },
-        rightDoubleAngleQuotMark: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        },
-        leftDoubleAngleQuotMark: {
-          whitespaceLeft: "never",
-          whitespaceRight: "always"
-        }
-      };
-      const opts = { ...defaults,
-        ...originalOpts
-      };
-      for (let i = node.start; i < node.end; i++) {
-        const charCode = context.str[i].charCodeAt(0);
-        if (charCodeMapping[String(charCode)]) {
-          const charName = charCodeMapping[String(charCode)];
-          if (charName === "exclamationMark" && context.str[right(context.str, i)] === "-" && context.str[right(context.str, right(context.str, i))] === "-") {
-            return;
-          }
-          if (opts[charName].whitespaceLeft === "never" && i && !context.str[i - 1].trim().length) {
-            const idxFrom = left(context.str, i) ? left(context.str, i) + 1 : 0;
-            context.report({
-              ruleId: "character-unspaced-punctuation",
-              idxFrom,
-              idxTo: i,
-              message: "Remove the whitespace.",
-              fix: {
-                ranges: [[idxFrom, i]]
-              }
-            });
-          }
-          if (opts[charName].whitespaceRight === "never" && i < node.end - 1 && !context.str[i + 1].trim().length) {
-            context.report({
-              ruleId: "character-unspaced-punctuation",
-              idxFrom: i + 1,
-              idxTo: right(context.str, i) || context.str.length,
-              message: "Remove the whitespace.",
-              fix: {
-                ranges: [[i + 1, right(context.str, i) || context.str.length]]
-              }
-            });
-          }
-          if (opts[charName].whitespaceLeft === "always" && i && context.str[i - 1].trim().length) {
-            context.report({
-              ruleId: "character-unspaced-punctuation",
-              idxFrom: i,
-              idxTo: i + 1,
-              message: "Add a space.",
-              fix: {
-                ranges: [[i, i, " "]]
-              }
-            });
-          }
-          if (opts[charName].whitespaceRight === "always" && i < node.end - 1 && context.str[i + 1].trim().length) {
-            context.report({
-              ruleId: "character-unspaced-punctuation",
-              idxFrom: i,
-              idxTo: i + 1,
-              message: "Add a space.",
-              fix: {
-                ranges: [[i + 1, i + 1, " "]]
-              }
-            });
-          }
-        }
-      }
-    }
-  };
-}
-
 function mediaMalformed(context) {
   return {
     at(node) {
@@ -9491,7 +9398,6 @@ defineLazyProp(builtInRules, "attribute-validate-vspace", () => attributeValidat
 defineLazyProp(builtInRules, "attribute-validate-width", () => attributeValidateWidth);
 defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", () => htmlEntitiesNotEmailFriendly);
 defineLazyProp(builtInRules, "character-encode", () => characterEncode);
-defineLazyProp(builtInRules, "character-unspaced-punctuation", () => characterUnspacedPunctuation);
 defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
 defineLazyProp(builtInRules, "comment-closing-malformed", () => commentClosingMalformed);
 defineLazyProp(builtInRules, "comment-opening-malformed", () => commentOpeningMalformed);

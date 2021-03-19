@@ -540,8 +540,6 @@ import htmlEntitiesNotEmailFriendly from "./rules/bad-html-entity/bad-named-html
 
 import characterEncode from "./rules/character/character-encode";
 
-import characterUnspacedPunctuation from "./rules/character/character-unspaced-punctuation";
-
 // MEDIA (QUERY) rules
 // -----------------------------------------------------------------------------
 // rules running from "at" nodes
@@ -1801,11 +1799,6 @@ defineLazyProp(
   () => htmlEntitiesNotEmailFriendly
 );
 defineLazyProp(builtInRules, "character-encode", () => characterEncode);
-defineLazyProp(
-  builtInRules,
-  "character-unspaced-punctuation",
-  () => characterUnspacedPunctuation
-);
 defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
 defineLazyProp(
   builtInRules,
@@ -1983,7 +1976,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1986 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1979 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
