@@ -216,6 +216,14 @@ function fixEnt(str, originalOpts) {
                 rangeValEncoded: `&${tempEnt};`,
                 rangeValDecoded: decodedEntity
               });
+              if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+                while (ampPositions.length) {
+                  const currentAmp = ampPositions.shift();
+                  if (currentAmp < tempRes.leftmostChar - 1 || currentAmp === i) {
+                    opts.textAmpersandCatcherCb(currentAmp);
+                  }
+                }
+              }
             }
           }
         } else if (str[whatsOnTheLeft] !== "&" && str[whatsEvenMoreToTheLeft] !== "&" && str[i] === ";") {

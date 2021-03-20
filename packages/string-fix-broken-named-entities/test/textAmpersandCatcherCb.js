@@ -75,3 +75,86 @@ tap.test(`04 - sandwitched, broken entities`, (t) => {
   t.strictSame(gathered, [0, 6, 12], "04.02");
   t.end();
 });
+
+tap.test(`05`, (t) => {
+  const gathered = [];
+  const res = fix("<span>&nbsp</span>", {
+    cb: (obj) => obj,
+    textAmpersandCatcherCb: (idx) => gathered.push(idx),
+  });
+  t.strictSame(
+    res,
+    [
+      {
+        ruleName: "bad-html-entity-malformed-nbsp",
+        entityName: "nbsp",
+        rangeFrom: 6,
+        rangeTo: 11,
+        rangeValEncoded: "&nbsp;",
+        rangeValDecoded: "\u00A0",
+      },
+    ],
+    "05.01"
+  );
+  t.strictSame(gathered, [], "05.02");
+  t.end();
+});
+
+tap.test(`06`, (t) => {
+  const gathered = [];
+  const res = fix("<span>&&nbsp&</span>", {
+    cb: (obj) => obj,
+    textAmpersandCatcherCb: (idx) => gathered.push(idx),
+  });
+  t.strictSame(
+    res,
+    [
+      {
+        ruleName: "bad-html-entity-malformed-nbsp",
+        entityName: "nbsp",
+        rangeFrom: 7,
+        rangeTo: 12,
+        rangeValEncoded: "&nbsp;",
+        rangeValDecoded: "\u00A0",
+      },
+    ],
+    "06.01"
+  );
+  t.strictSame(gathered, [6, 12], "06.02");
+  t.end();
+});
+
+tap.test(`07`, (t) => {
+  const gathered = [];
+  const res = fix("<span>&&nbsp;&</span>", {
+    cb: (obj) => obj,
+    textAmpersandCatcherCb: (idx) => gathered.push(idx),
+  });
+  t.strictSame(res, [], "07.01");
+  t.strictSame(gathered, [6, 13], "07.02");
+  t.end();
+});
+
+tap.test(`08`, (t) => {
+  const gathered = [];
+  const res = fix("<span>&nbp;</span>", {
+    cb: (obj) => obj,
+    textAmpersandCatcherCb: (idx) => gathered.push(idx),
+  });
+  t.strictSame(
+    res,
+    [
+      {
+        ruleName: "bad-html-entity-malformed-nbsp",
+        entityName: "nbsp",
+        rangeFrom: 6,
+        rangeTo: 11,
+        rangeValEncoded: "&nbsp;",
+        rangeValDecoded: "\u00A0",
+      },
+    ],
+    "08.01"
+  );
+  t.strictSame(gathered, [], "08.02");
+  t.end();
+});

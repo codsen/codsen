@@ -94,7 +94,7 @@ tap.test(
 
 tap.test(`07 - all callbacks are undefined`, (t) => {
   t.doesNotThrow(() => {
-    fix("", {
+    fix("&nsp;", {
       cb: undefined,
       entityCatcherCb: undefined,
       textAmpersandCatcherCb: undefined,
@@ -106,7 +106,7 @@ tap.test(`07 - all callbacks are undefined`, (t) => {
 
 tap.test(`08 - all callbacks are nulls`, (t) => {
   t.doesNotThrow(() => {
-    fix("", {
+    fix("&nsp;", {
       cb: null,
       entityCatcherCb: null,
       textAmpersandCatcherCb: null,

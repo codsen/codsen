@@ -10191,7 +10191,20 @@ function fixEnt(str, originalOpts) { //
                 rangeTo: tempRes.rightmostChar + 1,
                 rangeValEncoded: "&" + tempEnt + ";",
                 rangeValDecoded: decodedEntity
-              });
+              }); // release all ampersands
+
+              if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+
+                while (ampPositions.length) {
+                  var currentAmp = ampPositions.shift();
+
+                  if (currentAmp < tempRes.leftmostChar - 1 || currentAmp === i) { // ping each ampersand's index, starting from zero index:
+
+                    opts.textAmpersandCatcherCb(currentAmp);
+                  } // else, it gets discarded without action
+
+                }
+              }
             }
           }
         } else if (str[whatsOnTheLeft] !== "&" && str[whatsEvenMoreToTheLeft] !== "&" && str[i] === ";") {
