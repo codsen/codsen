@@ -556,10 +556,7 @@ tap.test(
   }
 );
 
-tap.test(
-  `31 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - just checking`,
-  (t) => {
-    t.strictSame(fix("&; &; &;"), [], "31");
-    t.end();
-  }
-);
+tap.test(`31`, (t) => {
+  t.strictSame(fix("&; &; &;"), [], "31");
+  t.end();
+});

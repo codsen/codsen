@@ -272,11 +272,15 @@ function fixEnt(str, originalOpts) {
             });
             brokenNumericEntityStartAt = null;
           }
-        } else if ((str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&") && str[i] === ";") {
+        } else if (str[i] === ";" && (str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&")) {
+          let startOfTheSeq = letterSeqStartAt - 1;
+          if (!str[letterSeqStartAt - 1].trim() && str[whatsOnTheLeft] === "&") {
+            startOfTheSeq = whatsOnTheLeft;
+          }
           if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length && letterSeqStartAt) {
-            for (let i = ampPositions.length; i--;) {
+            while (ampPositions.length) {
               const ampIdx = ampPositions.shift();
-              if (ampIdx < letterSeqStartAt - 1) {
+              if (ampIdx < startOfTheSeq) {
                 opts.textAmpersandCatcherCb(ampIdx);
               }
             }
@@ -326,7 +330,14 @@ function fixEnt(str, originalOpts) {
             } else {
               const potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(char => char.trim().length).join("");
               if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
-                ampPositions.length = 0;
+                if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+                  while (ampPositions.length) {
+                    const currentAmp = ampPositions.shift();
+                    if (currentAmp < letterSeqStartAt - 1) {
+                      opts.textAmpersandCatcherCb(currentAmp);
+                    }
+                  }
+                }
                 if (
                 !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
                   const matchingEntitiesOfCorrectCaseArr = [...allNamedEntitiesSetOnly].filter(ent => ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase());
@@ -440,7 +451,7 @@ function fixEnt(str, originalOpts) {
           });
         } else {
           if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
-            for (let i = 0, len = ampPositions.length; i < len; i++) {
+            while (ampPositions.length) {
               opts.textAmpersandCatcherCb(ampPositions.shift());
             }
           }

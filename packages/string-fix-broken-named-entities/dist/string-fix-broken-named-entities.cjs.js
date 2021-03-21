@@ -291,11 +291,15 @@ function fixEnt(str, originalOpts) {
             });
             brokenNumericEntityStartAt = null;
           }
-        } else if ((str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&") && str[i] === ";") {
+        } else if (str[i] === ";" && (str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&")) {
+          var startOfTheSeq = letterSeqStartAt - 1;
+          if (!str[letterSeqStartAt - 1].trim() && str[whatsOnTheLeft] === "&") {
+            startOfTheSeq = whatsOnTheLeft;
+          }
           if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length && letterSeqStartAt) {
-            for (var _i = ampPositions.length; _i--;) {
+            while (ampPositions.length) {
               var ampIdx = ampPositions.shift();
-              if (ampIdx < letterSeqStartAt - 1) {
+              if (ampIdx < startOfTheSeq) {
                 opts.textAmpersandCatcherCb(ampIdx);
               }
             }
@@ -347,7 +351,14 @@ function fixEnt(str, originalOpts) {
                 return char.trim().length;
               }).join("");
               if (potentialEntityOnlyNonWhitespaceChars.length <= allNamedHtmlEntities.maxLength && allNamedHtmlEntities.allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
-                ampPositions.length = 0;
+                if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+                  while (ampPositions.length) {
+                    var _currentAmp = ampPositions.shift();
+                    if (_currentAmp < letterSeqStartAt - 1) {
+                      opts.textAmpersandCatcherCb(_currentAmp);
+                    }
+                  }
+                }
                 if (
                 !allNamedHtmlEntities.allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
                   var matchingEntitiesOfCorrectCaseArr = [].concat(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (ent) {
@@ -469,7 +480,7 @@ function fixEnt(str, originalOpts) {
           });
         } else {
           if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
-            for (var _i2 = 0, _len2 = ampPositions.length; _i2 < _len2; _i2++) {
+            while (ampPositions.length) {
               opts.textAmpersandCatcherCb(ampPositions.shift());
             }
           }

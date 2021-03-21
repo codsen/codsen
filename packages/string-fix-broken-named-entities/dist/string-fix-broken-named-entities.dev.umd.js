@@ -10282,7 +10282,7 @@ function fixEnt(str, originalOpts) { //
 
             brokenNumericEntityStartAt = null;
           }
-        } else if ((str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&") && str[i] === ";") {
+        } else if (str[i] === ";" && (str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&")) {
           //
           //
           //
@@ -10291,14 +10291,20 @@ function fixEnt(str, originalOpts) { //
           //
           //
           //
-          // // submit all caught ampersands up to this entity's opening-one
+          //
+          var startOfTheSeq = letterSeqStartAt - 1;
+
+          if (!str[letterSeqStartAt - 1].trim() && str[whatsOnTheLeft] === "&") {
+            startOfTheSeq = whatsOnTheLeft;
+          } // submit all caught ampersands up to this entity's opening-one
+
 
           if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length && letterSeqStartAt) {
-            // backwards loop for perf reasons
-            for (var _i = ampPositions.length; _i--;) {
+
+            while (ampPositions.length) {
               var ampIdx = ampPositions.shift();
 
-              if (ampIdx < letterSeqStartAt - 1) {
+              if (ampIdx < startOfTheSeq) {
                 opts.textAmpersandCatcherCb(ampIdx);
               } // else, index gets discarded
 
@@ -10390,7 +10396,19 @@ function fixEnt(str, originalOpts) { //
               }).join("");
 
               if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
-                ampPositions.length = 0;
+
+                if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+
+                  while (ampPositions.length) {
+                    var _currentAmp = ampPositions.shift();
+
+                    if (_currentAmp < letterSeqStartAt - 1) { // ping each ampersand's index, starting from zero index:
+
+                      opts.textAmpersandCatcherCb(_currentAmp);
+                    } // else, it gets discarded without action
+
+                  }
+                }
 
                 if ( // first, check is the letter case allright
                 !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
@@ -10552,7 +10570,7 @@ function fixEnt(str, originalOpts) { //
         } else {
 
           if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
-            for (var _i2 = 0, _len2 = ampPositions.length; _i2 < _len2; _i2++) { // ping each ampersand's index, starting from zero index:
+            while (ampPositions.length) { // ping each ampersand's index, starting from zero index:
 
               opts.textAmpersandCatcherCb(ampPositions.shift());
             }
