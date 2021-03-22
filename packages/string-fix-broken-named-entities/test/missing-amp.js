@@ -88,53 +88,100 @@ tap.test(`03 - false positive prevention`, (t) => {
 tap.test(
   `04 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - aacute vs acute`,
   (t) => {
-    t.strictSame(fix("z &aacute; y"), [], "04.01");
-    t.strictSame(fix("z &acute; y"), [], "04.02");
+    const gathered = [];
+    t.strictSame(
+      fix("z &aacute; y", {
+        textAmpersandCatcherCb: (idx) => {
+          gathered.push(idx);
+        },
+      }),
+      [],
+      "04.01"
+    );
+    t.strictSame(gathered, [], "04.02");
     t.end();
   }
 );
 
 tap.test(
-  `05 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - aacute vs acute, false positive`,
+  `05 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - aacute vs acute`,
+  (t) => {
+    const gathered = [];
+    t.strictSame(
+      fix("z &acute; y", {
+        textAmpersandCatcherCb: (idx) => {
+          gathered.push(idx);
+        },
+      }),
+      [],
+      "05.01"
+    );
+    t.strictSame(gathered, [], "05.02");
+    t.end();
+  }
+);
+
+tap.test(
+  `06 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - aacute vs acute, false positive`,
   (t) => {
     t.strictSame(
       fix("Diagnosis can be acute; it is up to a doctor to"),
       [],
-      "05"
+      "06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, rarrpl`,
+  `07 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, rarrpl`,
   (t) => {
     const inp1 = "rarrpl;";
     const outp1 = [[0, 7, "&rarrpl;"]];
-    t.strictSame(fix(inp1), outp1, "06.01");
-    t.strictSame(fix(inp1, { cb }), outp1, "06.02");
+    t.strictSame(fix(inp1), outp1, "07.01");
+    t.strictSame(fix(inp1, { cb }), outp1, "07.02");
     t.end();
   }
 );
 
 tap.test(
-  `07 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - &block; vs. display:block`,
+  `08 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - &block; vs. display:block`,
   (t) => {
     const inp1 = `<img src=abc.jpg width=123 height=456 border=0 style=display:block; alt=xyz/>`;
-    t.strictSame(fix(inp1), [], "07");
+    t.strictSame(fix(inp1), [], "08");
     t.end();
   }
 );
 
-tap.test(`08 - nbsp`, (t) => {
+tap.test(`09 - nbsp`, (t) => {
+  const gathered = [];
   const inp1 = "nbsp;";
   const outp1 = [[0, 5, "&nbsp;"]];
-  t.strictSame(fix(inp1), outp1, "08");
+  t.strictSame(
+    fix(inp1, {
+      textAmpersandCatcherCb: (idx) => {
+        gathered.push(idx);
+      },
+    }),
+    outp1,
+    "09.01"
+  );
+  t.strictSame(gathered, [], "09.02");
   t.end();
 });
 
-tap.test(`09 - red & bull;`, (t) => {
+tap.test(`10 - red & bull;`, (t) => {
+  const gathered = [];
   const inp1 = "red & bull;";
-  t.strictSame(fix(inp1), [], "09");
+  t.strictSame(
+    fix(inp1, {
+      textAmpersandCatcherCb: (idx) => {
+        gathered.push(idx);
+      },
+    }),
+    [],
+    "10.01"
+  );
+  t.strictSame(gathered, [], "10.02");
   t.end();
 });

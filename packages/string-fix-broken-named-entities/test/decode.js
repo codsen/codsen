@@ -42,10 +42,14 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${36}m${`decode`}\u001b[${39}m`} - one of entities`,
   (t) => {
+    const gathered = [];
     t.strictSame(
       fix(`&EmptyVerySmallSquare;`, {
         decode: true,
         cb: (obj) => obj,
+        textAmpersandCatcherCb: (idx) => {
+          gathered.push(idx);
+        },
       }),
       [
         {
@@ -59,6 +63,7 @@ tap.test(
       ],
       `02`
     );
+    t.strictSame(gathered, [], "02.02");
     t.end();
   }
 );

@@ -61,8 +61,8 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space after ampersand`,
   (t) => {
-    const inp5 = "& nbsp;";
-    const outp5 = [
+    const inp1 = "& nbsp;";
+    const outp1 = [
       {
         ruleName: "bad-html-entity-malformed-nbsp",
         entityName: "nbsp",
@@ -72,7 +72,21 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "02");
+    t.strictSame(fix(inp1, { cb: (obj) => obj }), outp1, "02.01");
+
+    const gathered = [];
+    t.strictSame(
+      fix(inp1, {
+        cb: (obj) => obj,
+        textAmpersandCatcherCb: (idx) => {
+          gathered.push(idx);
+        },
+      }),
+      outp1,
+      "02.02"
+    );
+
+    t.strictSame(gathered, [], "02.03");
     t.end();
   }
 );
@@ -91,7 +105,20 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "03");
+    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "03.01");
+
+    const gathered = [];
+    t.strictSame(
+      fix(inp5, {
+        cb: (obj) => obj,
+        textAmpersandCatcherCb: (idx) => {
+          gathered.push(idx);
+        },
+      }),
+      outp5,
+      "03.02"
+    );
+    t.strictSame(gathered, [], "03.03");
     t.end();
   }
 );
@@ -110,7 +137,20 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "04");
+    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "04.01");
+
+    const gathered = [];
+    t.strictSame(
+      fix(inp5, {
+        cb: (obj) => obj,
+        textAmpersandCatcherCb: (idx) => {
+          gathered.push(idx);
+        },
+      }),
+      outp5,
+      "04.02"
+    );
+    t.strictSame(gathered, [], "04.03");
     t.end();
   }
 );

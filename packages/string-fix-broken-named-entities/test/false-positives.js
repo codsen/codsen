@@ -34,22 +34,37 @@ tap.test(
 );
 
 tap.test(`03`, (t) => {
+  const gathered = [];
   const inp1 = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
   t.strictSame(
     fix(inp1, {
       cb: (obj) => obj,
       decode: true,
+      textAmpersandCatcherCb: (idx) => {
+        gathered.push(idx);
+      },
     }),
     [],
     "03.01"
   );
+  t.strictSame(gathered, [55], "03.02");
+  t.end();
+});
+
+tap.test(`04`, (t) => {
+  const gathered = [];
+  const inp1 = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
   t.strictSame(
     fix(inp1, {
       cb: (obj) => obj,
       decode: false,
+      textAmpersandCatcherCb: (idx) => {
+        gathered.push(idx);
+      },
     }),
     [],
-    "03.02"
+    "04.01"
   );
+  t.strictSame(gathered, [55], "04.02");
   t.end();
 });

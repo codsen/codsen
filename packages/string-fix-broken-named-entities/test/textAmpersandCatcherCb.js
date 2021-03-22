@@ -217,7 +217,7 @@ tap.todo(`11 - hex with missing semi`, (t) => {
     res,
     [
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName: "bad-html-entity",
         entityName: "nbsp",
         rangeFrom: 7,
         rangeTo: 14,
@@ -241,7 +241,7 @@ tap.todo(`12`, (t) => {
     res,
     [
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName: "bad-html-entity",
         entityName: "nbsp",
         rangeFrom: 6,
         rangeTo: 13,
@@ -265,7 +265,7 @@ tap.todo(`13`, (t) => {
     res,
     [
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName: "bad-html-entity",
         entityName: "nbsp",
         rangeFrom: 6,
         rangeTo: 13,
