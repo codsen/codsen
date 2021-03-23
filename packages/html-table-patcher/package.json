@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "Visual helper to place templating code around table tags into correct places",
   "keywords": [
     "add",
@@ -79,10 +79,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "ast-monkey-traverse-with-lookahead": "^2.0.8",
-    "codsen-parser": "^0.10.5",
-    "ranges-apply": "^5.0.8",
-    "ranges-push": "^5.0.8"
+    "ast-monkey-traverse-with-lookahead": "^2.0.9",
+    "codsen-parser": "^0.10.6",
+    "ranges-apply": "^5.0.9",
+    "ranges-push": "^5.0.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -109,7 +109,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.8",
+    "lect": "^0.16.9",
     "rollup": "^2.42.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

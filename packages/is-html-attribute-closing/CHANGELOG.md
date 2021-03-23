@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/codsen/codsen/compare/is-html-attribute-closing@2.1.5...is-html-attribute-closing@2.2.0) (2021-03-23)
+
+
+### Features
+
+* improved recognition of HTML inline style attribute patterns ([5c104d3](https://github.com/codsen/codsen/commit/5c104d3710f34694898099e2d29a2da5f1fc9586))
+
+
+
+
+
 ## 2.1.0 (2021-02-07)
 
 ### Features

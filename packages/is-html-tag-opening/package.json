@@ -1,6 +1,6 @@
 {
   "name": "is-html-tag-opening",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "Does an HTML tag start at given position?",
   "keywords": [
     "bracket",
@@ -80,8 +80,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "string-left-right": "^4.0.8",
-    "string-match-left-right": "^7.0.2"
+    "string-left-right": "^4.0.9",
+    "string-match-left-right": "^7.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -108,7 +108,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.8",
+    "lect": "^0.16.9",
     "rollup": "^2.42.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
@@ -116,7 +116,7 @@
     "rollup-plugin-dts": "^3.0.1",
     "rollup-plugin-terser": "^7.0.2",
     "tap": "^14.11.0",
-    "test-mixer": "^2.0.8",
+    "test-mixer": "^2.0.9",
     "tsd": "^0.14.0",
     "tslib": "^2.1.0",
     "typescript": "^4.2.3"

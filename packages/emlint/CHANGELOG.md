@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0](https://github.com/codsen/codsen/compare/emlint@4.4.0...emlint@4.5.0) (2021-03-23)
+
+
+### Bug Fixes
+
+* `attribute-validate-style` the case of a missing value ([efcefa7](https://github.com/codsen/codsen/commit/efcefa767684dd37758573adeeee927dca43b037))
+* improve `tag-malformed`, detect missing opening brackets too ([d71f957](https://github.com/codsen/codsen/commit/d71f9575250a590d2966168ad48b0befdbb7167f))
+* remove the rule `character-unspaced-punctuation` because it's not set up right conceptually ([424e530](https://github.com/codsen/codsen/commit/424e530f334880defe38941c677ec52d8708fc14))
+* update the compilation script to include newest families of rules, plus generate a list of all ([cc9fae0](https://github.com/codsen/codsen/commit/cc9fae0a23d5b60d7252f65d1e6dd80c969ee66a))
+
+
+### Features
+
+* `attribute-malformed` to recognise unencoded quotes within values and encode them ([b98d58c](https://github.com/codsen/codsen/commit/b98d58c137f2f05b1128615dbbbaa5b31c218beb))
+* `tag-table` to detect empty `td` tags ([9d1980b](https://github.com/codsen/codsen/commit/9d1980baa7b4596bb0d5b037660d2dd7defba634))
+* `tag-table` to detect intra-tag text tokens within tables ([84a5d7e](https://github.com/codsen/codsen/commit/84a5d7e0abddacc3589e69aa7dca44e890026324))
+* `tag-table` to recognise the absence of `tr` or `td` tags ([eaa4676](https://github.com/codsen/codsen/commit/eaa4676f4fbf2652e65e76bfc21e72507c5e2f3d))
+* new rule, `tag-malformed` ([1cca505](https://github.com/codsen/codsen/commit/1cca5055c1b97df7554b3d37e4b91e70aebacace))
+
+
+
+
+
 ## 4.4.0 (2021-03-14)
 
 ### Bug Fixes

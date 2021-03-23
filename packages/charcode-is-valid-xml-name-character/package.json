@@ -1,6 +1,6 @@
 {
   "name": "charcode-is-valid-xml-name-character",
-  "version": "1.12.8",
+  "version": "1.12.9",
   "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
   "keywords": [
     "4",
@@ -80,7 +80,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "ranges-is-index-within": "^2.0.8"
+    "ranges-is-index-within": "^2.0.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -106,7 +106,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.8",
+    "lect": "^0.16.9",
     "rollup": "^2.42.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

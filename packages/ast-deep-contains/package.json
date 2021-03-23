@@ -1,6 +1,6 @@
 {
   "name": "ast-deep-contains",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Like t.same assert on array of objects, where element order doesn't matter.",
   "keywords": [
     "array",
@@ -94,7 +94,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@sindresorhus/is": "^4.0.0",
-    "ast-monkey-traverse": "^2.0.8",
+    "ast-monkey-traverse": "^2.0.9",
     "object-path": "^0.11.5"
   },
   "devDependencies": {
@@ -124,7 +124,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.8",
+    "lect": "^0.16.9",
     "rollup": "^2.42.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

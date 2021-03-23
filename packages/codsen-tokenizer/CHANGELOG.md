@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0](https://github.com/codsen/codsen/compare/codsen-tokenizer@5.4.0...codsen-tokenizer@5.5.0) (2021-03-23)
+
+
+### Bug Fixes
+
+* recognise Nunjucks double curly variables within CSS rules ([5963e7b](https://github.com/codsen/codsen/commit/5963e7b43dc89cf7849d8ce88d942daa55157ab0))
+* recognise quote groups within HTML inline style attributes ([1a79454](https://github.com/codsen/codsen/commit/1a79454cf4149f6bba0a22bf5906d5b57055cb93))
+
+
+### Features
+
+* better recognition of closing tags with slash but missing opening bracket ([fbce088](https://github.com/codsen/codsen/commit/fbce0887f242523072fa688f93d997534c18d8b3))
+
+
+
+
+
 ## 5.4.0 (2021-03-14)
 
 ### Bug Fixes
