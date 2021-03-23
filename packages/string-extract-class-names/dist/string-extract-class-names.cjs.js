@@ -1,7 +1,7 @@
 /**
  * string-extract-class-names
  * Extracts CSS class/id names from a string
- * Version: 6.0.8
+ * Version: 6.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-class-names/
@@ -13,7 +13,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var stringLeftRight = require('string-left-right');
 
-var version$1 = "6.0.8";
+var version$1 = "6.0.9";
 
 var version = version$1;
 function extract(str) {

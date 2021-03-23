@@ -1,7 +1,7 @@
 /**
  * ranges-regex
  * Integrate regex operations into Ranges workflow
- * Version: 4.0.8
+ * Version: 4.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-regex/
@@ -10,7 +10,7 @@
 import { rMerge } from 'ranges-merge';
 import isregexp from 'lodash.isregexp';
 
-var version$1 = "4.0.8";
+var version$1 = "4.0.9";
 
 const version = version$1;
 function rRegex(regx, str, replacement) {

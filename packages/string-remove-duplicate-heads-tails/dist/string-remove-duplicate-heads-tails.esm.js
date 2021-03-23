@@ -1,7 +1,7 @@
 /**
  * string-remove-duplicate-heads-tails
  * Detect and (recursively) remove head and tail wrappings around the input string
- * Version: 5.0.8
+ * Version: 5.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-remove-duplicate-heads-tails/
@@ -14,7 +14,7 @@ import { Ranges } from 'ranges-push';
 import { rApply } from 'ranges-apply';
 import { trimSpaces } from 'string-trim-spaces-only';
 
-var version$1 = "5.0.8";
+var version$1 = "5.0.9";
 
 const version = version$1;
 const defaults = {

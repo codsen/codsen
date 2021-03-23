@@ -1,7 +1,7 @@
 /**
  * ast-get-values-by-key
  * Extract values and paths from AST by keys OR set them by keys
- * Version: 3.0.8
+ * Version: 3.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-values-by-key/
@@ -2104,7 +2104,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.8
+ * Version: 1.3.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -2324,7 +2324,7 @@ var isMatch = function isMatch(inputs, patterns, options) {
 };
 matcher.isMatch = isMatch;
 
-var version$1 = "3.0.8";
+var version$1 = "3.0.9";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var version = version$1;

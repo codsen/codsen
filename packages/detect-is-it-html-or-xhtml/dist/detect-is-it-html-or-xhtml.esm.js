@@ -1,13 +1,13 @@
 /**
  * detect-is-it-html-or-xhtml
  * Answers, is the string input string more an HTML or XHTML (or neither)
- * Version: 4.0.8
+ * Version: 4.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detect-is-it-html-or-xhtml/
  */
 
-var version$1 = "4.0.8";
+var version$1 = "4.0.9";
 
 const version = version$1;
 function detectIsItHTMLOrXhtml(input) {

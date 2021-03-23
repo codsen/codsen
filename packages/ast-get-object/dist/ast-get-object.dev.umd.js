@@ -1,7 +1,7 @@
 /**
  * ast-get-object
  * Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * Version: 2.0.8
+ * Version: 2.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-object/
@@ -2505,7 +2505,7 @@ var typeDetect = createCommonjsModule(function (module, exports) {
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.8
+ * Version: 1.3.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -2611,7 +2611,7 @@ function traverse(tree1, cb1) {
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.8
+ * Version: 2.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
@@ -2950,7 +2950,7 @@ function compare(b, s, originalOpts) {
   return true;
 }
 
-var version$1 = "2.0.8";
+var version$1 = "2.0.9";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var version = version$1; // ===================================

@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.9](https://github.com/codsen/codsen/compare/is-html-tag-opening@2.0.8...is-html-tag-opening@2.0.9) (2021-03-23)
-
+## 2.0.9 (2021-03-23)
 
 ### Bug Fixes
 
-* address the `opts.allowCustomTagNames` in context of malformed closing tags ([0a785fa](https://github.com/codsen/codsen/commit/0a785faa2a0e7821007fa9c9665bc247ac4cc6b2))
-* better detection of missing opening bracket when slash + known tag name follows ([b569953](https://github.com/codsen/codsen/commit/b56995356d6b449851ba1fc4a9e4e1b7bc220770))
-
-
-
-
+- address the `opts.allowCustomTagNames` in context of malformed closing tags ([0a785fa](https://github.com/codsen/codsen/commit/0a785faa2a0e7821007fa9c9665bc247ac4cc6b2))
+- better detection of missing opening bracket when slash + known tag name follows ([b569953](https://github.com/codsen/codsen/commit/b56995356d6b449851ba1fc4a9e4e1b7bc220770))
 
 ## 2.0.1 (2021-01-28)
 

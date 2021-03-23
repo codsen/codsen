@@ -1,7 +1,7 @@
 /**
  * ranges-regex
  * Integrate regex operations into Ranges workflow
- * Version: 4.0.8
+ * Version: 4.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-regex/
@@ -380,7 +380,7 @@ var lodash_isregexp = createCommonjsModule(function (module, exports) {
   module.exports = isRegExp;
 });
 
-var version$1 = "4.0.8";
+var version$1 = "4.0.9";
 
 var version = version$1;
 

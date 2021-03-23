@@ -3,24 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.1.0](https://github.com/codsen/codsen/compare/string-fix-broken-named-entities@5.0.8...string-fix-broken-named-entities@5.1.0) (2021-03-23)
-
+## 5.1.0 (2021-03-23)
 
 ### Bug Fixes
 
-* fix a case with entity without semi, reporting of raw amps in front ([8e25561](https://github.com/codsen/codsen/commit/8e25561295ecf944880a2a205eef58313b6a9e68))
-* more fixes for `opts.textAmpersandCatcherCb` ([1bbdf3a](https://github.com/codsen/codsen/commit/1bbdf3ab2d338458147c6e442d52a848cf0952b0))
-* tend a falsy `opts.cb` ([8626c30](https://github.com/codsen/codsen/commit/8626c308ac5155abd163b5d6ecf52e5e7500c587))
-* tweaks for `opts.textAmpersandCatcherCb` ([18d4805](https://github.com/codsen/codsen/commit/18d480571be6108ad5e55208ddf801d95afe3dc7))
-
+- fix a case with entity without semi, reporting of raw amps in front ([8e25561](https://github.com/codsen/codsen/commit/8e25561295ecf944880a2a205eef58313b6a9e68))
+- more fixes for `opts.textAmpersandCatcherCb` ([1bbdf3a](https://github.com/codsen/codsen/commit/1bbdf3ab2d338458147c6e442d52a848cf0952b0))
+- tend a falsy `opts.cb` ([8626c30](https://github.com/codsen/codsen/commit/8626c308ac5155abd163b5d6ecf52e5e7500c587))
+- tweaks for `opts.textAmpersandCatcherCb` ([18d4805](https://github.com/codsen/codsen/commit/18d480571be6108ad5e55208ddf801d95afe3dc7))
 
 ### Features
 
-* `opts.textAmpersandCatcherCb` and tweak rule names to conform to emlint better ([27f2518](https://github.com/codsen/codsen/commit/27f251800d8a7d6bd35772eec239d6422ef27141))
-
-
-
-
+- `opts.textAmpersandCatcherCb` and tweak rule names to conform to emlint better ([27f2518](https://github.com/codsen/codsen/commit/27f251800d8a7d6bd35772eec239d6422ef27141))
 
 ## 5.0.1 (2021-01-28)
 

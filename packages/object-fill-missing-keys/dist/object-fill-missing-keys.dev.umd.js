@@ -1,7 +1,7 @@
 /**
  * object-fill-missing-keys
  * Add missing keys into plain objects, according to a reference object
- * Version: 8.0.8
+ * Version: 8.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-fill-missing-keys/
@@ -4104,7 +4104,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.8
+ * Version: 3.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
@@ -4746,7 +4746,7 @@ function externalApi(input1orig, input2orig, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.8
+ * Version: 3.13.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -6747,7 +6747,7 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 
-var version$1 = "8.0.8";
+var version$1 = "8.0.9";
 
 var version = version$1;
 var defaults = {

@@ -1,7 +1,7 @@
 /**
  * regex-is-jsp
  * Regular expression for detecting JSP (Java Server Pages) code
- * Version: 2.0.8
+ * Version: 2.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-is-jsp/
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version$1 = "2.0.8";
+var version$1 = "2.0.9";
 
 var version = version$1;
 function isJSP() {

@@ -1,7 +1,7 @@
 /**
  * generate-atomic-css
  * Generate Atomic CSS
- * Version: 1.4.8
+ * Version: 1.4.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/generate-atomic-css/
@@ -2316,7 +2316,7 @@ function rightSeq(str, idx) {
   return seq("right", str, idx, opts, args);
 }
 
-var version$1 = "1.4.8";
+var version$1 = "1.4.9";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
