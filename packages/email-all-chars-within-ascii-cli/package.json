@@ -74,7 +74,7 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "email-all-chars-within-ascii": "^3.0.8",
-    "globby": "^11.0.2",
+    "globby": "^11.0.3",
     "inquirer": "^8.0.0",
     "lodash.pullall": "^4.2.0",
     "minimist": "^1.2.5",
@@ -88,7 +88,7 @@
     "execa": "^5.0.0",
     "lect": "^0.16.8",
     "tap": "^14.11.0",
-    "tempy": "^1.0.0",
+    "tempy": "^1.0.1",
     "tslib": "^2.1.0"
   }
 }

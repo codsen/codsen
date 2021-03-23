@@ -71,9 +71,9 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
-    "globby": "^11.0.2",
+    "globby": "^11.0.3",
     "lodash.uniq": "^4.5.0",
-    "log-symbols": "^4.0.0",
+    "log-symbols": "^4.1.0",
     "meow": "^9.0.0",
     "string-splice": "^1.3.0",
     "update-notifier": "^5.1.0"
@@ -82,7 +82,7 @@
     "@types/lodash.uniq": "^4.5.6",
     "eslint": "^7.22.0",
     "execa": "^5.0.0",
-    "lect": "^0.16.7",
+    "lect": "^0.16.8",
     "tap": "^14.11.0",
     "tslib": "^2.1.0"
   }

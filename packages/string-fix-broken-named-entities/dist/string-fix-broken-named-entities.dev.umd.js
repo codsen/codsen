@@ -10672,7 +10672,7 @@ function fixEnt(str, originalOpts) { //
     //            |
     //            |
     // ampersand catches are at the bottom to prevent current index
-    // being tangled into the logic
+    // being tangled into the catch-logic of a previous entity
 
 
     if (str[i] === "&") {

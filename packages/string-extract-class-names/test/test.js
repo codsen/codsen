@@ -7,7 +7,7 @@ import { extract as e } from "../dist/string-extract-class-names.esm";
 // normal use cases
 // ==============================
 
-tap.only(
+tap.test(
   "01 - class: just class passed, nothing done, falls on default",
   (t) => {
     t.strictSame(

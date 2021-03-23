@@ -77,7 +77,7 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "csv-sort": "^5.0.8",
-    "globby": "^11.0.2",
+    "globby": "^11.0.3",
     "inquirer": "^8.0.0",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
@@ -92,7 +92,7 @@
     "fs-extra": "^9.1.0",
     "lect": "^0.16.8",
     "tap": "^14.11.0",
-    "tempy": "^1.0.0",
+    "tempy": "^1.0.1",
     "tslib": "^2.1.0"
   }
 }

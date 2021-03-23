@@ -327,7 +327,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   "08 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Booleans",
   (t) => {
     // opts.hardMergeEverything, CB:

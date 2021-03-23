@@ -170,7 +170,7 @@ tap.test(
   }
 );
 
-tap.only(`08 - all`, (t) => {
+tap.test(`08 - all`, (t) => {
   const str = `abc&amp;nbsp;def`;
   const messages = verify(t, str, {
     rules: {

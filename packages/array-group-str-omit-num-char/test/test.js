@@ -78,7 +78,7 @@ tap.test(
   }
 );
 
-tap.only("05 - all contain digits and all are unique", (t) => {
+tap.test("05 - all contain digits and all are unique", (t) => {
   t.strictSame(
     group(["a1-1", "b2-2", "c3-3", "d4-4"]),
     {

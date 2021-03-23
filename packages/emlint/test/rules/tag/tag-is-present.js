@@ -88,7 +88,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wildcard`,
   (t) => {
     const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";

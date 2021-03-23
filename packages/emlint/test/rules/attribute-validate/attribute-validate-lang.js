@@ -88,7 +88,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 // <applet lang="de">
-tap.only(
+tap.test(
   `05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const badParentTags = [

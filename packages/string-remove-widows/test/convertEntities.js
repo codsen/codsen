@@ -19,7 +19,7 @@ import {
 // opts.convertEntities
 // -----------------------------------------------------------------------------
 
-tap.only(
+tap.test(
   `01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - entities, one line string no full stop`,
   (t) => {
     t.match(

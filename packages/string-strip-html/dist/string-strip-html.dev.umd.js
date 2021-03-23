@@ -6257,21 +6257,43 @@ function decode(text, _a) {
     return '';
   }
 
+  var decodeRegExp = decodeRegExps[level][scope];
+  var match = decodeRegExp.exec(text);
+
+  if (!match) {
+    return text;
+  }
+
   var references = allNamedReferences[level].entities;
   var isAttribute = scope === 'attribute';
-  return text.replace(decodeRegExps[level][scope], function (entity) {
+  var lastIndex = 0;
+  var result = '';
+
+  do {
+    var entity = match[0];
+
+    if (lastIndex !== match.index) {
+      result += text.substring(lastIndex, match.index);
+    }
+
     if (isAttribute && entity[entity.length - 1] === '=') {
-      return entity;
+      result += entity;
+    } else if (entity[1] != '#') {
+      result += references[entity] || entity;
+    } else {
+      var secondChar = entity[2];
+      var code = secondChar == 'x' || secondChar == 'X' ? parseInt(entity.substr(3), 16) : parseInt(entity.substr(2));
+      result += code >= 0x10ffff ? outOfBoundsChar : code > 65535 ? surrogatePairs.fromCodePoint(code) : fromCharCode(numericUnicodeMap.numericUnicodeMap[code] || code);
     }
 
-    if (entity[1] != '#') {
-      return references[entity] || entity;
-    }
+    lastIndex = match.index + entity.length;
+  } while (match = decodeRegExp.exec(text));
 
-    var secondChar = entity[2];
-    var code = secondChar == 'x' || secondChar == 'X' ? parseInt(entity.substr(3), 16) : parseInt(entity.substr(2));
-    return code >= 0x10ffff ? outOfBoundsChar : code > 65535 ? surrogatePairs.fromCodePoint(code) : fromCharCode(numericUnicodeMap.numericUnicodeMap[code] || code);
-  });
+  if (lastIndex !== text.length) {
+    result += text.substring(lastIndex, text.length);
+  }
+
+  return result;
 }
 
 var decode_1 = decode;

@@ -92,7 +92,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   (t) => {
     const str = `<hr size="7 ">`;

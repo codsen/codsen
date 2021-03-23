@@ -1,7 +1,7 @@
 import tap from "tap";
 import { generateVariations, combinations } from "./util";
 
-tap.only(`01`, (t) => {
+tap.test(`01`, (t) => {
   t.strictSame(
     combinations(`<a href="zzz">`),
     [`<a href='zzz'>`, `<a href='zzz">`, `<a href="zzz'>`, `<a href="zzz">`],

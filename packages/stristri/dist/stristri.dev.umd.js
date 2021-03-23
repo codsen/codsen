@@ -2557,8 +2557,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   var openingBracketMet = false;
 
   for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
+    var rightVal = right(str, i);
+    var leftVal = left(str, i);
+
     if ("'\"".includes(str[i]) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt !== undefined && lastMatchedQuotesPairsEndIsAt < i && i >= isThisClosingIdx) {
-      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[right(str, i)]);
+      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[rightVal]);
       var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
       var E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
       var E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
@@ -2569,16 +2572,16 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 
       var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
         return isAttrNameChar(char);
-      }) && str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]);
+      }) && str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[rightVal]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]);
       var attrNameCharsChunkOnTheLeft = void 0;
 
       if (i === isThisClosingIdx) {
         attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
       }
 
-      var E34 = i === isThisClosingIdx && (!isAttrNameChar(str[left(str, i)]) || attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && str[left(str, i)] !== "=";
-      var E41 = "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
-      var E42 = isAttrNameChar(str[right(str, i)]);
+      var E34 = i === isThisClosingIdx && (!isAttrNameChar(str[leftVal]) || attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && str[leftVal] !== "=";
+      var E41 = "/>".includes(str[rightVal]) && i === isThisClosingIdx;
+      var E42 = isAttrNameChar(str[rightVal]);
       var E43 = lastQuoteWasMatched && i !== isThisClosingIdx;
       var E5 = !(i >= isThisClosingIdx && str[left(str, isThisClosingIdx)] === ":");
       return !!(E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5);
@@ -2611,7 +2614,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
     }
 
-    if (str[i] === "<" && str[right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
+    if (str[i] === "<" && str[rightVal] !== "%" && closingBracketMet && !openingBracketMet) {
       openingBracketMet = true;
       return false;
     }
@@ -2625,7 +2628,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       lastCapturedChunk = str.slice(chunkStartsAt, i);
       lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
 
-      if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[right(str, i)])) {
+      if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[rightVal])) {
         var A1 = i > isThisClosingIdx;
         var A21 = !lastQuoteAt;
         var A22 = lastQuoteAt + 1 >= i;
@@ -2658,7 +2661,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       return R0 && !(R1 && R2 && R3 && R4);
     }
 
-    if ((str[i] === "=" || !str[i].length && str[right(str, i)] === "=") && lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk)) {
+    if ((str[i] === "=" || !str[i].length && str[rightVal] === "=") && lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk)) {
       var W1 = i > isThisClosingIdx;
       var W2 = !(!(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || guaranteedAttrStartsAtX(str, chunkStartsAt)) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt !== undefined && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
       return W1 && W2;
@@ -2673,7 +2676,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           return allHtmlAttribs.has(chunk);
         });
         var Y5 = i >= isThisClosingIdx;
-        var Y6 = !str[right(str, i)] || !"'\"".includes(str[right(str, i)]);
+        var Y6 = !str[rightVal] || !"'\"".includes(str[rightVal]);
         return !!(Y1 && Y2 && Y3 && Y4 && Y5 && Y6);
       }
 
@@ -2688,14 +2691,14 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 
         var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
 
-        var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && (!(i > isThisClosingIdx && quotesCount.get("'") && quotesCount.get("\"") && quotesCount.get("matchedPairs") > 1) || "/>".includes(str[right(str, i)]));
+        var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && (!(i > isThisClosingIdx && quotesCount.get("'") && quotesCount.get("\"") && quotesCount.get("matchedPairs") > 1) || "/>".includes(str[rightVal]));
 
         var _R2 = totalQuotesCount < 3 || quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
 
         var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt !== undefined && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
           return isAttrNameChar(char);
         }) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
-        var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
+        var R32 = !rightVal && totalQuotesCount % 2 === 0;
         var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && isAttrNameChar(str[idxOfAttrOpening - 2]);
         var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
         return _R || (R11 || R12) && _R2 && (R31 || R32 || R33 || R34);
@@ -2739,7 +2742,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         return false;
       }
 
-      if (i === isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+      if (i === isThisClosingIdx && "'\"".includes(str[i]) && (str[leftVal] === "'" || str[leftVal] === "\"") && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+        return true;
+      }
+
+      if (i === isThisClosingIdx && "'\"".includes(str[i]) && str.slice(idxOfAttrOpening, isThisClosingIdx).includes(":") && (str[rightVal] === ">" || str[rightVal] === "/" && str[right(str, rightVal)] === ">")) {
         return true;
       }
     }
@@ -2805,7 +2812,9 @@ function isOpening(str, idx, originalOpts) {
   var r4 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
   var r8 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
   var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", "");
+  var r10 = new RegExp("^\\/\\s*\\w+s*>");
   var whatToTest = idx ? str.slice(idx) : str;
+  var leftSideIdx = left(str, idx);
   var qualified = false;
   var passed = false;
   var matchingOptions = {
@@ -2815,7 +2824,7 @@ function isOpening(str, idx, originalOpts) {
   };
 
   if (opts.allowCustomTagNames) {
-    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
+    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, leftSideIdx)] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
       passed = true;
     } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
@@ -2825,9 +2834,11 @@ function isOpening(str, idx, originalOpts) {
       passed = true;
     } else if (r8.test(whatToTest)) {
       passed = true;
+    } else if (str[idx] === "/" && str[leftSideIdx] !== "<" && r10.test(whatToTest)) {
+      passed = true;
     }
   } else {
-    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
+    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, leftSideIdx)] === "<") || (whatToTest[0] === "<" || whatToTest[0] === "/" && (!str[leftSideIdx] || str[leftSideIdx] !== "<")) && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
       qualified = true;
     } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
       qualified = true;
@@ -3061,14 +3072,17 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
 
 var BACKSLASH = "\\";
 
-function startsTag(str, i, token, layers, withinStyle) {
+function startsTag(str, i, token, layers, withinStyle, leftVal, rightVal) {
   return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && (!withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
     allowCustomTagNames: true
-  }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
+  }) || str[rightVal] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[left(str, i)])) && isOpening(str, i, {
+  })) || str[i] === "/" && isLatinLetter(str[i + 1]) && str[leftVal] !== "<" && isOpening(str, i, {
+    allowCustomTagNames: true,
+    skipOpeningBracket: true
+  }) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[leftVal])) && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
@@ -3667,7 +3681,7 @@ function tokenizer(str, originalOpts) {
         });
         selectorChunkStartedAt = undefined;
         token.selectorsEnd = _i;
-      } else if (str[_i] === "{" && token.openingCurlyAt && !token.closingCurlyAt) {
+      } else if (str[_i] === "{" && str[_i - 1] !== "{" && str[_i + 1] !== "{" && token.openingCurlyAt && !token.closingCurlyAt) {
         for (var y = _i; y--;) {
           if (!str[y].trim() || "{}\"';".includes(str[y])) {
             if (property && property.start && !property.end) {
@@ -3693,7 +3707,7 @@ function tokenizer(str, originalOpts) {
     var lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
 
     if (!doNothing && str[_i]) {
-      if (startsTag(str, _i, token, layers, withinStyle)) {
+      if (startsTag(str, _i, token, layers, withinStyle, leftVal, rightVal)) {
         if (token.type && token.start !== null) {
           if (token.type === "rule") {
             if (property && property.start) {
@@ -3984,7 +3998,8 @@ function tokenizer(str, originalOpts) {
     var R2 = void 0;
 
     if (!doNothing && (property.start || str[_i] === "!")) {
-      R1 = ";'\"{}<>".includes(str[right(str, _i - 1)]);
+      var idxRightIncl = right(str, _i - 1);
+      R1 = ";<>".includes(str[idxRightIncl]) || str[idxRightIncl] === "{" && str[_i - 1] !== "{" || str[idxRightIncl] === "}" && str[_i - 1] !== "}" || "'\"".includes(str[idxRightIncl]) && (!layers || !layers.length || !layers[~-layers.length] || !layers[~-layers.length].value || layers[~-layers.length].value === str[idxRightIncl]);
       R2 = matchRightIncl(str, _i, ["!important"], {
         i: true,
         trimBeforeMatching: true,
@@ -4176,6 +4191,10 @@ function tokenizer(str, originalOpts) {
       } else {
         property.valueStarts = _i;
       }
+    }
+
+    if (!doNothing && str[_i] === "{" && str[_i + 1] === "{" && property && property.valueStarts && !property.valueEnds && str.indexOf("}}", _i) > 0) {
+      doNothing = str.indexOf("}}") + 2;
     }
 
     if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
@@ -4497,7 +4516,7 @@ function tokenizer(str, originalOpts) {
     }
 
     if (!doNothing && token.type === "rule") {
-      if (str[_i] === "{" && !token.openingCurlyAt) {
+      if (str[_i] === "{" && str[_i + 1] !== "{" && str[_i - 1] !== "{" && !token.openingCurlyAt) {
         token.openingCurlyAt = _i;
       } else if (str[_i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
         token.closingCurlyAt = _i;

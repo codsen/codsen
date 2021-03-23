@@ -95,7 +95,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-bracket"=always`,
   (t) => {
     const str = "<br>";

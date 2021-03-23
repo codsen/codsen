@@ -10036,6 +10036,7 @@ function fixEnt(str, originalOpts) {
           rangeValDecoded = _ref.rangeValDecoded;
       return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj$1(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
     },
+    textAmpersandCatcherCb: null,
     progressFn: null,
     entityCatcherCb: null
   };
@@ -10058,6 +10059,10 @@ function fixEnt(str, originalOpts) {
     throw new TypeError("string-fix-broken-named-entities: [THROW_ID_05] opts.progressFn must be a function (or falsey)! Currently it's: " + typeof opts.progressFn + ", equal to: " + JSON.stringify(opts.progressFn, null, 4));
   }
 
+  if (opts.textAmpersandCatcherCb && typeof opts.textAmpersandCatcherCb !== "function") {
+    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_06] opts.textAmpersandCatcherCb must be a function (or falsey)! Currently it's: " + typeof opts.textAmpersandCatcherCb + ", equal to: " + JSON.stringify(opts.textAmpersandCatcherCb, null, 4));
+  }
+
   var rangesArr2 = [];
   var percentageDone;
   var lastPercentageDone;
@@ -10066,6 +10071,19 @@ function fixEnt(str, originalOpts) {
   var doNothingUntil = null;
   var letterSeqStartAt = null;
   var brokenNumericEntityStartAt = null;
+  var ampPositions = [];
+
+  function pingAmps(untilIdx, loopIndexI) {
+    if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+      while (ampPositions.length) {
+        var currentAmp = ampPositions.shift();
+
+        if (untilIdx === undefined || currentAmp < untilIdx || currentAmp === loopIndexI) {
+          opts.textAmpersandCatcherCb(currentAmp);
+        }
+      }
+    }
+  }
 
   var _loop = function _loop(i) {
     if (opts.progressFn) {
@@ -10095,7 +10113,7 @@ function fixEnt(str, originalOpts) {
       if (i > letterSeqStartAt + 1) {
         var potentialEntity = str.slice(letterSeqStartAt, i);
         var whatsOnTheLeft = left(str, letterSeqStartAt);
-        var whatsEvenMoreToTheLeft = whatsOnTheLeft ? left(str, whatsOnTheLeft) : "";
+        var whatsEvenMoreToTheLeft = whatsOnTheLeft ? left(str, whatsOnTheLeft) : null;
 
         if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
           var firstChar = letterSeqStartAt;
@@ -10131,13 +10149,14 @@ function fixEnt(str, originalOpts) {
             if (tempEnt && (!Object.keys(uncertain).includes(tempEnt) || !str[tempRes.rightmostChar + 1] || ["&"].includes(str[tempRes.rightmostChar + 1]) || (uncertain[tempEnt].addSemiIfAmpPresent === true || uncertain[tempEnt].addSemiIfAmpPresent && (!str[tempRes.rightmostChar + 1] || !str[tempRes.rightmostChar + 1].trim().length)) && str[tempRes.leftmostChar - 1] === "&")) {
               var decodedEntity = decode$1("&" + tempEnt + ";");
               rangesArr2.push({
-                ruleName: "bad-named-html-entity-malformed-" + tempEnt,
+                ruleName: "bad-html-entity-malformed-" + tempEnt,
                 entityName: tempEnt,
                 rangeFrom: whatsOnTheLeft || 0,
                 rangeTo: tempRes.rightmostChar + 1,
                 rangeValEncoded: "&" + tempEnt + ";",
                 rangeValDecoded: decodedEntity
               });
+              pingAmps(whatsOnTheLeft || 0, i);
             }
           }
         } else if (str[whatsOnTheLeft] !== "&" && str[whatsEvenMoreToTheLeft] !== "&" && str[i] === ";") {
@@ -10175,27 +10194,31 @@ function fixEnt(str, originalOpts) {
               var _decodedEntity = decode$1("&" + _tempEnt + ";");
 
               rangesArr2.push({
-                ruleName: "bad-named-html-entity-malformed-" + _tempEnt,
+                ruleName: "bad-html-entity-malformed-" + _tempEnt,
                 entityName: _tempEnt,
                 rangeFrom: _tempRes.leftmostChar,
                 rangeTo: i + 1,
                 rangeValEncoded: "&" + _tempEnt + ";",
                 rangeValDecoded: _decodedEntity
               });
+              pingAmps(_tempRes.leftmostChar, i);
             }
           } else if (brokenNumericEntityStartAt !== null) {
             rangesArr2.push({
-              ruleName: "bad-malformed-numeric-character-entity",
+              ruleName: "bad-html-entity-malformed-numeric",
               entityName: null,
               rangeFrom: brokenNumericEntityStartAt,
               rangeTo: i + 1,
               rangeValEncoded: null,
               rangeValDecoded: null
             });
+            pingAmps(brokenNumericEntityStartAt, i);
             brokenNumericEntityStartAt = null;
           }
-        } else if ((str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&") && str[i] === ";") {
+        } else if (str[i] === ";" && (str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&")) {
+          if (!str[letterSeqStartAt - 1].trim() && str[whatsOnTheLeft] === "&") ;
           /* istanbul ignore else */
+
           if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
             var situation = resemblesNumericEntity(str, whatsOnTheLeft + 1, i);
 
@@ -10207,7 +10230,7 @@ function fixEnt(str, originalOpts) {
 
                 if (situation.probablyNumeric === "deci" && parseInt(situation.numbersValue, 10) > 918015) {
                   rangesArr2.push({
-                    ruleName: "bad-malformed-numeric-character-entity",
+                    ruleName: "bad-html-entity-malformed-numeric",
                     entityName: null,
                     rangeFrom: whatsOnTheLeft || 0,
                     rangeTo: i + 1,
@@ -10216,7 +10239,7 @@ function fixEnt(str, originalOpts) {
                   });
                 } else if (opts.decode) {
                   rangesArr2.push({
-                    ruleName: "encoded-numeric-html-entity-reference",
+                    ruleName: "bad-html-entity-encoded-numeric",
                     entityName: situation.charTrimmed,
                     rangeFrom: whatsOnTheLeft || 0,
                     rangeTo: i + 1,
@@ -10224,15 +10247,18 @@ function fixEnt(str, originalOpts) {
                     rangeValDecoded: decodedEntitysValue
                   });
                 }
+
+                pingAmps(whatsOnTheLeft || 0, i);
               } else {
                 rangesArr2.push({
-                  ruleName: "bad-malformed-numeric-character-entity",
+                  ruleName: "bad-html-entity-malformed-numeric",
                   entityName: null,
                   rangeFrom: whatsOnTheLeft || 0,
                   rangeTo: i + 1,
                   rangeValEncoded: null,
                   rangeValDecoded: null
                 });
+                pingAmps(whatsOnTheLeft || 0, i);
               }
 
               if (opts.entityCatcherCb) {
@@ -10251,22 +10277,24 @@ function fixEnt(str, originalOpts) {
 
                   if (matchingEntitiesOfCorrectCaseArr.length === 1) {
                     rangesArr2.push({
-                      ruleName: "bad-named-html-entity-malformed-" + matchingEntitiesOfCorrectCaseArr[0],
+                      ruleName: "bad-html-entity-malformed-" + matchingEntitiesOfCorrectCaseArr[0],
                       entityName: matchingEntitiesOfCorrectCaseArr[0],
                       rangeFrom: whatsOnTheLeft,
                       rangeTo: i + 1,
                       rangeValEncoded: "&" + matchingEntitiesOfCorrectCaseArr[0] + ";",
                       rangeValDecoded: decode$1("&" + matchingEntitiesOfCorrectCaseArr[0] + ";")
                     });
+                    pingAmps(whatsOnTheLeft, i);
                   } else {
                     rangesArr2.push({
-                      ruleName: "bad-named-html-entity-unrecognised",
+                      ruleName: "bad-html-entity-unrecognised",
                       entityName: null,
                       rangeFrom: whatsOnTheLeft,
                       rangeTo: i + 1,
                       rangeValEncoded: null,
                       rangeValDecoded: null
                     });
+                    pingAmps(whatsOnTheLeft, i);
                   }
                 } else if (i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
                   var rangeFrom = str[whatsOnTheLeft] === "&" ? whatsOnTheLeft : whatsEvenMoreToTheLeft;
@@ -10277,24 +10305,32 @@ function fixEnt(str, originalOpts) {
                   }
 
                   rangesArr2.push({
-                    ruleName: "bad-named-html-entity-malformed-" + potentialEntityOnlyNonWhitespaceChars,
+                    ruleName: "bad-html-entity-malformed-" + potentialEntityOnlyNonWhitespaceChars,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
                     rangeFrom: rangeFrom,
                     rangeTo: i + 1,
                     rangeValEncoded: "&" + potentialEntityOnlyNonWhitespaceChars + ";",
                     rangeValDecoded: decode$1("&" + potentialEntityOnlyNonWhitespaceChars + ";")
                   });
+                  pingAmps(rangeFrom, i);
                 } else if (opts.decode) {
                   rangesArr2.push({
-                    ruleName: "encoded-html-entity-" + potentialEntityOnlyNonWhitespaceChars,
+                    ruleName: "bad-html-entity-encoded-" + potentialEntityOnlyNonWhitespaceChars,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
                     rangeValEncoded: "&" + potentialEntityOnlyNonWhitespaceChars + ";",
                     rangeValDecoded: decode$1("&" + potentialEntityOnlyNonWhitespaceChars + ";")
                   });
-                } else if (opts.entityCatcherCb) {
-                  opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  pingAmps(whatsOnTheLeft, i);
+                } else if (opts.entityCatcherCb || opts.textAmpersandCatcherCb) {
+                  if (opts.entityCatcherCb) {
+                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  }
+
+                  if (opts.textAmpersandCatcherCb) {
+                    pingAmps(whatsOnTheLeft, i);
+                  }
                 }
 
                 letterSeqStartAt = null;
@@ -10313,13 +10349,14 @@ function fixEnt(str, originalOpts) {
                 var _decodedEntity2 = decode$1("&" + brokenNamedEntities[situation.charTrimmed.toLowerCase()] + ";");
 
                 rangesArr2.push({
-                  ruleName: "bad-named-html-entity-malformed-" + brokenNamedEntities[situation.charTrimmed.toLowerCase()],
+                  ruleName: "bad-html-entity-malformed-" + brokenNamedEntities[situation.charTrimmed.toLowerCase()],
                   entityName: brokenNamedEntities[situation.charTrimmed.toLowerCase()],
                   rangeFrom: whatsOnTheLeft,
                   rangeTo: i + 1,
                   rangeValEncoded: "&" + brokenNamedEntities[situation.charTrimmed.toLowerCase()] + ";",
                   rangeValDecoded: _decodedEntity2
                 });
+                pingAmps(whatsOnTheLeft, i);
               } else if (potentialEntity.length < maxLength + 2 && ((temp = [].concat(allNamedEntitiesSetOnly).filter(function (curr) {
                 return leven_1(curr, potentialEntity) === 1;
               })) && temp.length || (temp = [].concat(allNamedEntitiesSetOnly).filter(function (curr) {
@@ -10332,25 +10369,27 @@ function fixEnt(str, originalOpts) {
                   var _temp4 = temp;
                   _tempEnt2 = _temp4[0];
                   rangesArr2.push({
-                    ruleName: "bad-named-html-entity-malformed-" + _tempEnt2,
+                    ruleName: "bad-html-entity-malformed-" + _tempEnt2,
                     entityName: _tempEnt2,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
                     rangeValEncoded: "&" + _tempEnt2 + ";",
                     rangeValDecoded: decode$1("&" + _tempEnt2 + ";")
                   });
+                  pingAmps(whatsOnTheLeft, i);
                 }
               }
 
               if (!_tempEnt2) {
                 rangesArr2.push({
-                  ruleName: "bad-named-html-entity-unrecognised",
+                  ruleName: "bad-html-entity-unrecognised",
                   entityName: null,
                   rangeFrom: whatsOnTheLeft,
                   rangeTo: i + 1,
                   rangeValEncoded: null,
                   rangeValDecoded: null
                 });
+                pingAmps(whatsOnTheLeft, i);
               }
             }
           }
@@ -10360,13 +10399,14 @@ function fixEnt(str, originalOpts) {
           rangesArr2.push({
             ruleName: "" + (
             /* istanbul ignore next */
-            _situation.probablyNumeric ? "bad-malformed-numeric-character-entity" : "bad-named-html-entity-unrecognised"),
+            _situation.probablyNumeric ? "bad-html-entity-malformed-numeric" : "bad-html-entity-unrecognised"),
             entityName: null,
             rangeFrom: whatsEvenMoreToTheLeft,
             rangeTo: i + 1,
             rangeValEncoded: null,
             rangeValDecoded: null
           });
+          pingAmps(whatsEvenMoreToTheLeft, i);
         }
       }
 
@@ -10412,20 +10452,22 @@ function fixEnt(str, originalOpts) {
           }
         })) {
           doNothingUntil = firstCharThatFollows + matchedTemp.length + 1;
+          /* istanbul ignore next */
 
-          var _whatsOnTheLeft = left(str, i);
+          var _whatsOnTheLeft = left(str, i) || 0;
           /* istanbul ignore else */
 
 
           if (str[_whatsOnTheLeft] === "&") {
             rangesArr2.push({
-              ruleName: "bad-named-html-entity-multiple-encoding",
+              ruleName: "bad-html-entity-multiple-encoding",
               entityName: matchedTemp,
-              rangeFrom: _whatsOnTheLeft || 0,
+              rangeFrom: _whatsOnTheLeft,
               rangeTo: doNothingUntil,
               rangeValEncoded: "&" + matchedTemp + ";",
               rangeValDecoded: decode$1("&" + matchedTemp + ";")
             });
+            pingAmps(_whatsOnTheLeft, i);
           } else if (_whatsOnTheLeft) {
             var _rangeFrom = i;
             var spaceReplacement = "";
@@ -10434,13 +10476,14 @@ function fixEnt(str, originalOpts) {
 
             if (typeof opts.cb === "function") {
               rangesArr2.push({
-                ruleName: "bad-named-html-entity-multiple-encoding",
+                ruleName: "bad-html-entity-multiple-encoding",
                 entityName: matchedTemp,
                 rangeFrom: _rangeFrom,
                 rangeTo: doNothingUntil,
                 rangeValEncoded: spaceReplacement + "&" + matchedTemp + ";",
                 rangeValDecoded: "" + spaceReplacement + decode$1("&" + matchedTemp + ";")
               });
+              pingAmps(_rangeFrom, i);
             }
           }
         }
@@ -10453,10 +10496,18 @@ function fixEnt(str, originalOpts) {
       }
     }
 
+    if (str[i] === "&") {
+      ampPositions.push(i);
+    }
+
+    if (!str[i] && typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+      pingAmps();
+    }
+
     counter += 1;
   };
 
-  for (var i = 0; i < len; i++) {
+  for (var i = 0; i <= len; i++) {
     var _ret = _loop(i);
 
     if (_ret === "continue") continue;
@@ -10470,7 +10521,15 @@ function fixEnt(str, originalOpts) {
     return rangesArr2.every(function (oneOfEveryObj, y) {
       return i === y || !(filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom && filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo);
     });
-  }).map(opts.cb);
+  });
+  /* istanbul ignore else */
+
+  if (typeof opts.cb === "function") {
+    return res.map(opts.cb);
+  }
+  /* istanbul ignore next */
+
+
   return res;
 }
 
@@ -18589,21 +18648,43 @@ function decode(text, _a) {
     return '';
   }
 
+  var decodeRegExp = decodeRegExps[level][scope];
+  var match = decodeRegExp.exec(text);
+
+  if (!match) {
+    return text;
+  }
+
   var references = allNamedReferences[level].entities;
   var isAttribute = scope === 'attribute';
-  return text.replace(decodeRegExps[level][scope], function (entity) {
+  var lastIndex = 0;
+  var result = '';
+
+  do {
+    var entity = match[0];
+
+    if (lastIndex !== match.index) {
+      result += text.substring(lastIndex, match.index);
+    }
+
     if (isAttribute && entity[entity.length - 1] === '=') {
-      return entity;
+      result += entity;
+    } else if (entity[1] != '#') {
+      result += references[entity] || entity;
+    } else {
+      var secondChar = entity[2];
+      var code = secondChar == 'x' || secondChar == 'X' ? parseInt(entity.substr(3), 16) : parseInt(entity.substr(2));
+      result += code >= 0x10ffff ? outOfBoundsChar : code > 65535 ? surrogatePairs.fromCodePoint(code) : fromCharCode(numericUnicodeMap.numericUnicodeMap[code] || code);
     }
 
-    if (entity[1] != '#') {
-      return references[entity] || entity;
-    }
+    lastIndex = match.index + entity.length;
+  } while (match = decodeRegExp.exec(text));
 
-    var secondChar = entity[2];
-    var code = secondChar == 'x' || secondChar == 'X' ? parseInt(entity.substr(3), 16) : parseInt(entity.substr(2));
-    return code >= 0x10ffff ? outOfBoundsChar : code > 65535 ? surrogatePairs.fromCodePoint(code) : fromCharCode(numericUnicodeMap.numericUnicodeMap[code] || code);
-  });
+  if (lastIndex !== text.length) {
+    result += text.substring(lastIndex, text.length);
+  }
+
+  return result;
 }
 
 var decode_1 = decode;

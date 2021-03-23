@@ -143,7 +143,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 78866,
+        "size": 79717,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -244,7 +244,7 @@
     },
     {
         "name": "emlint",
-        "size": 320815,
+        "size": 316384,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -346,7 +346,7 @@
     },
     {
         "name": "is-html-attribute-closing",
-        "size": 13621,
+        "size": 13918,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -356,7 +356,7 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 6073,
+        "size": 6345,
         "imports": [
             "string-left-right",
             "string-match-left-right"
@@ -670,7 +670,7 @@
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 23320,
+        "size": 25352,
         "imports": [
             "all-named-html-entities",
             "string-left-right"

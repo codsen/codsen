@@ -69,7 +69,7 @@ tap.test(`01 - colon in attr name is not an issue`, (t) => {
 // various
 
 // <div mc:repeatable=.product.>
-tap.only(`02 - fancy quotes pasted from MC documentation website`, (t) => {
+tap.test(`02 - fancy quotes pasted from MC documentation website`, (t) => {
   const gathered = [];
   ct(`<div mc:repeatable=${LEFTDOUBLEQUOTMARK}product${RIGHTDOUBLEQUOTMARK}>`, {
     tagCb: (obj) => {
