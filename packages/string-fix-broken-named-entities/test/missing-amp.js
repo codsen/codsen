@@ -182,6 +182,6 @@ tap.test(`10 - red & bull;`, (t) => {
     [],
     "10.01"
   );
-  t.strictSame(gathered, [], "10.02");
+  t.strictSame(gathered, [4], "10.02");
   t.end();
 });

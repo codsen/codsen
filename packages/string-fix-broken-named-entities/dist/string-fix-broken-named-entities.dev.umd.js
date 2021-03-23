@@ -10034,11 +10034,24 @@ function fixEnt(str, originalOpts) { //
   var brokenNumericEntityStartAt = null;
   var ampPositions = [];
 
-  function pingAmps() {
+  function pingAmps(untilIdx, loopIndexI) {
+    if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
 
-    for (var i = 0, _len = ampPositions.length; i < _len; i++) { // ping each ampersand's index, starting from zero index:
+      while (ampPositions.length) {
+        var currentAmp = ampPositions.shift();
 
-      opts.textAmpersandCatcherCb(ampPositions.shift());
+        if ( // batch dumping, cases like end of string reached:
+        untilIdx === undefined || // submit all ampersands caught up to this entity:
+        currentAmp < untilIdx || // also, we might on a new ampersand, for example:
+        // <span>&&nbsp&</span>
+        //             ^
+        //      we're here
+        currentAmp === loopIndexI) { // ping each ampersand's index, starting from zero index:
+
+          opts.textAmpersandCatcherCb(currentAmp);
+        } // else, it gets discarded without action
+
+      }
     }
   } //                                      |
   //                                      |
@@ -10097,10 +10110,6 @@ function fixEnt(str, originalOpts) { //
         counter += 1;
         return "continue";
       }
-    }
-
-    if (str[i] === "&") {
-      ampPositions.push(i);
     } //            |
     //            |
     //            |
@@ -10192,19 +10201,7 @@ function fixEnt(str, originalOpts) { //
                 rangeValEncoded: "&" + tempEnt + ";",
                 rangeValDecoded: decodedEntity
               }); // release all ampersands
-
-              if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
-
-                while (ampPositions.length) {
-                  var currentAmp = ampPositions.shift();
-
-                  if (currentAmp < tempRes.leftmostChar - 1 || currentAmp === i) { // ping each ampersand's index, starting from zero index:
-
-                    opts.textAmpersandCatcherCb(currentAmp);
-                  } // else, it gets discarded without action
-
-                }
-              }
+              pingAmps(whatsOnTheLeft || 0, i);
             }
           }
         } else if (str[whatsOnTheLeft] !== "&" && str[whatsEvenMoreToTheLeft] !== "&" && str[i] === ";") {
@@ -10266,6 +10263,7 @@ function fixEnt(str, originalOpts) { //
                 rangeValEncoded: "&" + _tempEnt + ";",
                 rangeValDecoded: _decodedEntity
               });
+              pingAmps(_tempRes.leftmostChar, i);
             }
           } else if (brokenNumericEntityStartAt !== null) {
             // we have a malformed numeric entity reference, like #x26; without
@@ -10278,38 +10276,14 @@ function fixEnt(str, originalOpts) { //
               rangeTo: i + 1,
               rangeValEncoded: null,
               rangeValDecoded: null
-            }); // 2. reset marker:
+            });
+            pingAmps(brokenNumericEntityStartAt, i); // 2. reset marker:
 
             brokenNumericEntityStartAt = null;
           }
         } else if (str[i] === ";" && (str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&")) {
-          //
-          //
-          //
-          //
-          // CASE 3 - CHECK FOR MESSY ENTITIES OR REQUESTED DECODING
-          //
-          //
-          //
-          //
-          var startOfTheSeq = letterSeqStartAt - 1;
 
-          if (!str[letterSeqStartAt - 1].trim() && str[whatsOnTheLeft] === "&") {
-            startOfTheSeq = whatsOnTheLeft;
-          } // submit all caught ampersands up to this entity's opening-one
-
-
-          if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length && letterSeqStartAt) {
-
-            while (ampPositions.length) {
-              var ampIdx = ampPositions.shift();
-
-              if (ampIdx < startOfTheSeq) {
-                opts.textAmpersandCatcherCb(ampIdx);
-              } // else, index gets discarded
-
-            }
-          } // find out more: is it legit, unrecognised or numeric...
+          if (!str[letterSeqStartAt - 1].trim() && str[whatsOnTheLeft] === "&") ; // find out more: is it legit, unrecognised or numeric...
 
           /* istanbul ignore else */
 
@@ -10364,6 +10338,7 @@ function fixEnt(str, originalOpts) { //
                     rangeValDecoded: decodedEntitysValue
                   });
                 }
+                pingAmps(whatsOnTheLeft || 0, i);
               } else {
                 // RAISE A GENERIC ERROR
                 rangesArr2.push({
@@ -10374,6 +10349,7 @@ function fixEnt(str, originalOpts) { //
                   rangeValEncoded: null,
                   rangeValDecoded: null
                 });
+                pingAmps(whatsOnTheLeft || 0, i);
               } // also call the general entity callback if it's given
 
 
@@ -10397,19 +10373,6 @@ function fixEnt(str, originalOpts) { //
 
               if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
 
-                if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
-
-                  while (ampPositions.length) {
-                    var _currentAmp = ampPositions.shift();
-
-                    if (_currentAmp < letterSeqStartAt - 1) { // ping each ampersand's index, starting from zero index:
-
-                      opts.textAmpersandCatcherCb(_currentAmp);
-                    } // else, it gets discarded without action
-
-                  }
-                }
-
                 if ( // first, check is the letter case allright
                 !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
                   var matchingEntitiesOfCorrectCaseArr = [].concat(allNamedEntitiesSetOnly).filter(function (ent) {
@@ -10425,6 +10388,7 @@ function fixEnt(str, originalOpts) { //
                       rangeValEncoded: "&" + matchingEntitiesOfCorrectCaseArr[0] + ";",
                       rangeValDecoded: decode("&" + matchingEntitiesOfCorrectCaseArr[0] + ";")
                     });
+                    pingAmps(whatsOnTheLeft, i);
                   } else {
                     rangesArr2.push({
                       ruleName: "bad-html-entity-unrecognised",
@@ -10434,6 +10398,7 @@ function fixEnt(str, originalOpts) { //
                       rangeValEncoded: null,
                       rangeValDecoded: null
                     });
+                    pingAmps(whatsOnTheLeft, i);
                   }
                 } else if ( // is it really healthy? measuring distance is a way to find out
                 // any present whitespace characters will bloat the length...
@@ -10454,6 +10419,7 @@ function fixEnt(str, originalOpts) { //
                     rangeValEncoded: "&" + potentialEntityOnlyNonWhitespaceChars + ";",
                     rangeValDecoded: decode("&" + potentialEntityOnlyNonWhitespaceChars + ";")
                   });
+                  pingAmps(rangeFrom, i);
                 } else if (opts.decode) { // last thing, if decode is required, we've got an error still...
                   rangesArr2.push({
                     ruleName: "bad-html-entity-encoded-" + potentialEntityOnlyNonWhitespaceChars,
@@ -10463,9 +10429,16 @@ function fixEnt(str, originalOpts) { //
                     rangeValEncoded: "&" + potentialEntityOnlyNonWhitespaceChars + ";",
                     rangeValDecoded: decode("&" + potentialEntityOnlyNonWhitespaceChars + ";")
                   });
-                } else if (opts.entityCatcherCb) {
+                  pingAmps(whatsOnTheLeft, i);
+                } else if (opts.entityCatcherCb || opts.textAmpersandCatcherCb) {
                   // it's healthy - so at least ping the entity catcher
-                  opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  if (opts.entityCatcherCb) {
+                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  }
+
+                  if (opts.textAmpersandCatcherCb) {
+                    pingAmps(whatsOnTheLeft, i);
+                  }
                 }
                 letterSeqStartAt = null;
                 return "continue";
@@ -10491,6 +10464,7 @@ function fixEnt(str, originalOpts) { //
                   rangeValEncoded: "&" + brokenNamedEntities[situation.charTrimmed.toLowerCase()] + ";",
                   rangeValDecoded: _decodedEntity2
                 });
+                pingAmps(whatsOnTheLeft, i);
               } else if ( // idea being, if length of suspected chunk is less or equal to
               // the length of the longest entity (add 1 for Levenshtein distance)
               // we still consider that whole chunk (from ampersand to semi)
@@ -10520,6 +10494,7 @@ function fixEnt(str, originalOpts) { //
                     rangeValEncoded: "&" + _tempEnt2 + ";",
                     rangeValDecoded: decode("&" + _tempEnt2 + ";")
                   });
+                  pingAmps(whatsOnTheLeft, i);
                 }
               } // if "tempEnt" was not set by now, it is not a known HTML entity
 
@@ -10533,6 +10508,7 @@ function fixEnt(str, originalOpts) { //
                   rangeValEncoded: null,
                   rangeValDecoded: null
                 });
+                pingAmps(whatsOnTheLeft, i);
               } //
               //
               //
@@ -10567,14 +10543,7 @@ function fixEnt(str, originalOpts) { //
             rangeValEncoded: null,
             rangeValDecoded: null
           });
-        } else {
-
-          if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
-            while (ampPositions.length) { // ping each ampersand's index, starting from zero index:
-
-              opts.textAmpersandCatcherCb(ampPositions.shift());
-            }
-          }
+          pingAmps(whatsEvenMoreToTheLeft, i);
         }
       } // one-character chunks or chunks ending with ampersand get wiped:
 
@@ -10658,6 +10627,7 @@ function fixEnt(str, originalOpts) { //
               rangeValEncoded: "&" + matchedTemp + ";",
               rangeValDecoded: decode("&" + matchedTemp + ";")
             });
+            pingAmps(_whatsOnTheLeft, i);
           } else if (_whatsOnTheLeft) {
             // we need to add the ampersand as well. Now, another consideration
             // appears: whitespace and where exactly to put it. Algorithmically,
@@ -10677,6 +10647,7 @@ function fixEnt(str, originalOpts) { //
                 rangeValEncoded: spaceReplacement + "&" + matchedTemp + ";",
                 rangeValDecoded: "" + spaceReplacement + decode("&" + matchedTemp + ";")
               });
+              pingAmps(_rangeFrom, i);
             }
           }
         }
@@ -10700,7 +10671,13 @@ function fixEnt(str, originalOpts) { //
     //            |
     //            |
     //            |
+    // ampersand catches are at the bottom to prevent current index
+    // being tangled into the logic
 
+
+    if (str[i] === "&") {
+      ampPositions.push(i);
+    }
 
     if (!str[i] && typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
       pingAmps();

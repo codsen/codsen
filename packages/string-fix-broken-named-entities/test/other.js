@@ -124,7 +124,6 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit healthy entity should not raise any issues`,
   (t) => {
-    const gathered = [];
     const inp1 = "abc &pound; def";
     t.strictSame(fix(inp1), [], "05.01");
     t.strictSame(
@@ -134,6 +133,15 @@ tap.test(
       [],
       "05.02"
     );
+    t.end();
+  }
+);
+
+tap.test(
+  `06 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit healthy entity should not raise any issues`,
+  (t) => {
+    const gathered = [];
+    const inp1 = "abc &pound; def";
     t.strictSame(
       fix(inp1, {
         cb: (obj) => obj,
@@ -142,20 +150,20 @@ tap.test(
         },
       }),
       [],
-      "05.03"
+      "06.01"
     );
-    t.strictSame(gathered, [], "05.04");
+    t.strictSame(gathered, [], "06.02");
     t.end();
   }
 );
 
 tap.test(
-  `06 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`,
+  `07 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`,
   (t) => {
     const gathered = [];
     const inp1 = "a&poUnd;b";
     const outp1 = [[1, 8, "&pound;"]];
-    t.strictSame(fix(inp1), outp1, "06.01");
+    t.strictSame(fix(inp1), outp1, "07.01");
     t.strictSame(
       fix(inp1, {
         textAmpersandCatcherCb: (idx) => {
@@ -163,15 +171,15 @@ tap.test(
         },
       }),
       outp1,
-      "06.02"
+      "07.02"
     );
-    t.strictSame(gathered, [], "06.03");
+    t.strictSame(gathered, [], "07.03");
     t.end();
   }
 );
 
 tap.test(
-  `07 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - only first two characters match legit entity`,
+  `08 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - only first two characters match legit entity`,
   (t) => {
     const gathered = [];
     const inp1 = "abc &pozzz; def";
@@ -189,7 +197,7 @@ tap.test(
           rangeValDecoded: null,
         },
       ],
-      "07.01"
+      "08.01"
     );
 
     t.strictSame(
@@ -209,36 +217,9 @@ tap.test(
           rangeValDecoded: null,
         },
       ],
-      "07.02"
+      "08.02"
     );
-    t.strictSame(gathered, [], "07.03");
-    t.end();
-  }
-);
-
-tap.test(
-  `08 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`,
-  (t) => {
-    const inp1 = "&Poun;";
-    const gatheredHealthy = [];
-    t.strictSame(
-      fix(inp1, {
-        cb: (obj) => obj,
-        entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
-      }),
-      [
-        {
-          ruleName: `bad-html-entity-malformed-pound`,
-          entityName: "pound",
-          rangeFrom: 0,
-          rangeTo: 6,
-          rangeValEncoded: "&pound;",
-          rangeValDecoded: "\xA3", // <= pound symbol
-        },
-      ],
-      "08.01"
-    );
-    t.strictSame(gatheredHealthy, [], "08.02");
+    t.strictSame(gathered, [], "08.03");
     t.end();
   }
 );
@@ -246,16 +227,12 @@ tap.test(
 tap.test(
   `09 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`,
   (t) => {
-    const gathered = [];
     const inp1 = "&Poun;";
     const gatheredHealthy = [];
     t.strictSame(
       fix(inp1, {
         cb: (obj) => obj,
         entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
-        textAmpersandCatcherCb: (idx) => {
-          gathered.push(idx);
-        },
       }),
       [
         {
@@ -270,31 +247,38 @@ tap.test(
       "09.01"
     );
     t.strictSame(gatheredHealthy, [], "09.02");
-    t.strictSame(gathered, [], "09.03");
     t.end();
   }
 );
 
 tap.test(
-  `10 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - space before semicolon`,
+  `10 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`,
   (t) => {
-    const oneOfBrokenEntities = "a&pound ;b";
+    const gathered = [];
+    const inp1 = "&Poun;";
+    const gatheredHealthy = [];
     t.strictSame(
-      fix(oneOfBrokenEntities, {
+      fix(inp1, {
         cb: (obj) => obj,
+        entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
+        textAmpersandCatcherCb: (idx) => {
+          gathered.push(idx);
+        },
       }),
       [
         {
           ruleName: `bad-html-entity-malformed-pound`,
           entityName: "pound",
-          rangeFrom: 1,
-          rangeTo: 9,
+          rangeFrom: 0,
+          rangeTo: 6,
           rangeValEncoded: "&pound;",
           rangeValDecoded: "\xA3", // <= pound symbol
         },
       ],
-      "10"
+      "10.01"
     );
+    t.strictSame(gatheredHealthy, [], "10.02");
+    t.strictSame(gathered, [], "10.03");
     t.end();
   }
 );
@@ -302,6 +286,30 @@ tap.test(
 tap.test(
   `11 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - space before semicolon`,
   (t) => {
+    const oneOfBrokenEntities = "a&pound ;b";
+    t.strictSame(
+      fix(oneOfBrokenEntities, {
+        cb: (obj) => obj,
+      }),
+      [
+        {
+          ruleName: `bad-html-entity-malformed-pound`,
+          entityName: "pound",
+          rangeFrom: 1,
+          rangeTo: 9,
+          rangeValEncoded: "&pound;",
+          rangeValDecoded: "\xA3", // <= pound symbol
+        },
+      ],
+      "11"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `12 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - space before semicolon`,
+  (t) => {
     const gathered = [];
     const oneOfBrokenEntities = "a&pound ;b";
     t.strictSame(
@@ -321,33 +329,9 @@ tap.test(
           rangeValDecoded: "\xA3", // <= pound symbol
         },
       ],
-      "11.01"
+      "12.01"
     );
-    t.strictSame(gathered, [], "11.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `12 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - twoheadrightarrow wrong case only`,
-  (t) => {
-    const inp1 = "a&twoheadRightarrow;b";
-    t.strictSame(
-      fix(inp1, {
-        cb: (obj) => obj,
-      }),
-      [
-        {
-          ruleName: `bad-html-entity-malformed-twoheadrightarrow`,
-          entityName: "twoheadrightarrow",
-          rangeFrom: 1,
-          rangeTo: 20,
-          rangeValEncoded: "&twoheadrightarrow;",
-          rangeValDecoded: "\u21A0",
-        },
-      ],
-      "12"
-    );
+    t.strictSame(gathered, [], "12.02");
     t.end();
   }
 );
@@ -355,6 +339,30 @@ tap.test(
 tap.test(
   `13 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - twoheadrightarrow wrong case only`,
   (t) => {
+    const inp1 = "a&twoheadRightarrow;b";
+    t.strictSame(
+      fix(inp1, {
+        cb: (obj) => obj,
+      }),
+      [
+        {
+          ruleName: `bad-html-entity-malformed-twoheadrightarrow`,
+          entityName: "twoheadrightarrow",
+          rangeFrom: 1,
+          rangeTo: 20,
+          rangeValEncoded: "&twoheadrightarrow;",
+          rangeValDecoded: "\u21A0",
+        },
+      ],
+      "13"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `14 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - twoheadrightarrow wrong case only`,
+  (t) => {
     const gathered = [];
     const inp1 = "a&twoheadRightarrow;b";
     t.strictSame(
@@ -374,33 +382,9 @@ tap.test(
           rangeValDecoded: "\u21A0",
         },
       ],
-      "13.01"
+      "14.01"
     );
-    t.strictSame(gathered, [], "13.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `14 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entities with capital letter and known existing alternative with all lowercase`,
-  (t) => {
-    const inp1 = "x&A lpha;y";
-    t.strictSame(
-      fix(inp1, {
-        cb: (obj) => obj,
-      }),
-      [
-        {
-          ruleName: `bad-html-entity-malformed-Alpha`,
-          entityName: "Alpha",
-          rangeFrom: 1,
-          rangeTo: 9,
-          rangeValEncoded: "&Alpha;",
-          rangeValDecoded: "\u0391",
-        },
-      ],
-      "14"
-    );
+    t.strictSame(gathered, [], "14.02");
     t.end();
   }
 );
@@ -408,6 +392,30 @@ tap.test(
 tap.test(
   `15 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entities with capital letter and known existing alternative with all lowercase`,
   (t) => {
+    const inp1 = "x&A lpha;y";
+    t.strictSame(
+      fix(inp1, {
+        cb: (obj) => obj,
+      }),
+      [
+        {
+          ruleName: `bad-html-entity-malformed-Alpha`,
+          entityName: "Alpha",
+          rangeFrom: 1,
+          rangeTo: 9,
+          rangeValEncoded: "&Alpha;",
+          rangeValDecoded: "\u0391",
+        },
+      ],
+      "15"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `16 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entities with capital letter and known existing alternative with all lowercase`,
+  (t) => {
     const gathered = [];
     const inp1 = "x&A lpha;y";
     t.strictSame(
@@ -427,33 +435,9 @@ tap.test(
           rangeValDecoded: "\u0391",
         },
       ],
-      "15.01"
+      "16.01"
     );
-    t.strictSame(gathered, [], "15.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `16 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &ac d;`,
-  (t) => {
-    const inp1 = "&ac d;";
-    t.strictSame(
-      fix(inp1, {
-        cb: (obj) => obj,
-      }),
-      [
-        {
-          ruleName: `bad-html-entity-malformed-acd`,
-          entityName: "acd",
-          rangeFrom: 0,
-          rangeTo: 6,
-          rangeValEncoded: "&acd;",
-          rangeValDecoded: "\u223F",
-        },
-      ],
-      "16"
-    );
+    t.strictSame(gathered, [], "16.02");
     t.end();
   }
 );
@@ -461,6 +445,30 @@ tap.test(
 tap.test(
   `17 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &ac d;`,
   (t) => {
+    const inp1 = "&ac d;";
+    t.strictSame(
+      fix(inp1, {
+        cb: (obj) => obj,
+      }),
+      [
+        {
+          ruleName: `bad-html-entity-malformed-acd`,
+          entityName: "acd",
+          rangeFrom: 0,
+          rangeTo: 6,
+          rangeValEncoded: "&acd;",
+          rangeValDecoded: "\u223F",
+        },
+      ],
+      "17"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `18 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &ac d;`,
+  (t) => {
     const gathered = [];
     const inp1 = "&ac d;";
     t.strictSame(
@@ -480,33 +488,9 @@ tap.test(
           rangeValDecoded: "\u223F",
         },
       ],
-      "17.01"
+      "18.01"
     );
-    t.strictSame(gathered, [], "17.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `18 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Acd;`,
-  (t) => {
-    const inp1 = "&Acd;";
-    t.strictSame(
-      fix(inp1, {
-        cb: (obj) => obj,
-      }),
-      [
-        {
-          ruleName: `bad-html-entity-malformed-acd`,
-          entityName: "acd",
-          rangeFrom: 0,
-          rangeTo: inp1.length,
-          rangeValEncoded: "&acd;",
-          rangeValDecoded: "\u223F",
-        },
-      ],
-      "18"
-    );
+    t.strictSame(gathered, [], "18.02");
     t.end();
   }
 );
@@ -514,6 +498,30 @@ tap.test(
 tap.test(
   `19 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Acd;`,
   (t) => {
+    const inp1 = "&Acd;";
+    t.strictSame(
+      fix(inp1, {
+        cb: (obj) => obj,
+      }),
+      [
+        {
+          ruleName: `bad-html-entity-malformed-acd`,
+          entityName: "acd",
+          rangeFrom: 0,
+          rangeTo: inp1.length,
+          rangeValEncoded: "&acd;",
+          rangeValDecoded: "\u223F",
+        },
+      ],
+      "19"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `20 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Acd;`,
+  (t) => {
     const gathered = [];
     const inp1 = "&Acd;";
     t.strictSame(
@@ -533,33 +541,9 @@ tap.test(
           rangeValDecoded: "\u223F",
         },
       ],
-      "19.01"
+      "20.01"
     );
-    t.strictSame(gathered, [], "19.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `20 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Aelig; - ambiguous case`,
-  (t) => {
-    const inp1 = "&Aelig;";
-    t.strictSame(
-      fix(inp1, {
-        cb: (obj) => obj,
-      }),
-      [
-        {
-          ruleName: `bad-html-entity-unrecognised`,
-          entityName: null,
-          rangeFrom: 0,
-          rangeTo: inp1.length,
-          rangeValEncoded: null,
-          rangeValDecoded: null,
-        },
-      ],
-      "20"
-    );
+    t.strictSame(gathered, [], "20.02");
     t.end();
   }
 );
@@ -567,6 +551,30 @@ tap.test(
 tap.test(
   `21 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Aelig; - ambiguous case`,
   (t) => {
+    const inp1 = "&Aelig;";
+    t.strictSame(
+      fix(inp1, {
+        cb: (obj) => obj,
+      }),
+      [
+        {
+          ruleName: `bad-html-entity-unrecognised`,
+          entityName: null,
+          rangeFrom: 0,
+          rangeTo: inp1.length,
+          rangeValEncoded: null,
+          rangeValDecoded: null,
+        },
+      ],
+      "21"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `22 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Aelig; - ambiguous case`,
+  (t) => {
     const gathered = [];
     const inp1 = "&Aelig;";
     t.strictSame(
@@ -586,15 +594,15 @@ tap.test(
           rangeValDecoded: null,
         },
       ],
-      "21.01"
+      "22.01"
     );
-    t.strictSame(gathered, [], "21.02");
+    t.strictSame(gathered, [], "22.02");
     t.end();
   }
 );
 
 tap.test(
-  `22 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`,
+  `23 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`,
   (t) => {
     const inp1 = "&zwjn;";
     t.strictSame(
@@ -611,14 +619,14 @@ tap.test(
           rangeValDecoded: "\u200C",
         },
       ],
-      "22"
+      "23"
     );
     t.end();
   }
 );
 
 tap.test(
-  `23 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`,
+  `24 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`,
   (t) => {
     const gathered = [];
     const inp1 = "&zwjn;";
@@ -639,15 +647,15 @@ tap.test(
           rangeValDecoded: "\u200C",
         },
       ],
-      "23.01"
+      "24.01"
     );
-    t.strictSame(gathered, [], "23.02");
+    t.strictSame(gathered, [], "24.02");
     t.end();
   }
 );
 
 tap.test(
-  `24 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`,
+  `25 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`,
   (t) => {
     const inp1 = "&xcap;";
     t.strictSame(
@@ -655,7 +663,7 @@ tap.test(
         cb: (obj) => obj,
       }),
       [],
-      "24.01"
+      "25.01"
     );
     t.strictSame(
       fix(inp1, {
@@ -672,28 +680,8 @@ tap.test(
           rangeValDecoded: "\u22C2",
         },
       ],
-      "24.02"
+      "25.02"
     );
-    t.end();
-  }
-);
-
-tap.test(
-  `25 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`,
-  (t) => {
-    const gathered = [];
-    const inp1 = "&xcap;";
-    t.strictSame(
-      fix(inp1, {
-        cb: (obj) => obj,
-        textAmpersandCatcherCb: (idx) => {
-          gathered.push(idx);
-        },
-      }),
-      [],
-      "25.01"
-    );
-    t.strictSame(gathered, [], "25.02");
     t.end();
   }
 );
@@ -709,6 +697,26 @@ tap.test(
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
+      }),
+      [],
+      "26.01"
+    );
+    t.strictSame(gathered, [], "26.02");
+    t.end();
+  }
+);
+
+tap.test(
+  `27 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`,
+  (t) => {
+    const gathered = [];
+    const inp1 = "&xcap;";
+    t.strictSame(
+      fix(inp1, {
+        cb: (obj) => obj,
+        textAmpersandCatcherCb: (idx) => {
+          gathered.push(idx);
+        },
         decode: true,
       }),
       [
@@ -721,15 +729,15 @@ tap.test(
           rangeValDecoded: "\u22C2",
         },
       ],
-      "26.01"
+      "27.01"
     );
-    t.strictSame(gathered, [], "26.02");
+    t.strictSame(gathered, [], "27.02");
     t.end();
   }
 );
 
 tap.test(
-  `27 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 1`,
+  `28 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 1`,
   (t) => {
     const inp1 = "&nbsp;&nbsp;";
     t.strictSame(
@@ -737,14 +745,14 @@ tap.test(
         cb: (obj) => obj,
       }),
       [],
-      "27"
+      "28"
     );
     t.end();
   }
 );
 
 tap.test(
-  `28 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 1`,
+  `29 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 1`,
   (t) => {
     const gathered = [];
     const inp1 = "&nbsp;&nbsp;";
@@ -756,15 +764,15 @@ tap.test(
         },
       }),
       [],
-      "28.01"
+      "29.01"
     );
-    t.strictSame(gathered, [], "28.02");
+    t.strictSame(gathered, [], "29.02");
     t.end();
   }
 );
 
 tap.test(
-  `29 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 2`,
+  `30 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 2`,
   (t) => {
     const gathered = [];
     const inputs = [
@@ -792,23 +800,7 @@ tap.test(
         `"${input}" - ${i}`
       )
     );
-    t.strictSame(gathered, [], "29");
-    t.end();
-  }
-);
-
-tap.test(
-  `30 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 3`,
-  (t) => {
-    const inp1 = "&NBSP;&NBSP;";
-    t.strictSame(
-      fix(inp1),
-      [
-        [0, 6, "&nbsp;"],
-        [6, 12, "&nbsp;"],
-      ],
-      "30"
-    );
+    t.strictSame(gathered, [], "30");
     t.end();
   }
 );
@@ -816,6 +808,22 @@ tap.test(
 tap.test(
   `31 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 3`,
   (t) => {
+    const inp1 = "&NBSP;&NBSP;";
+    t.strictSame(
+      fix(inp1),
+      [
+        [0, 6, "&nbsp;"],
+        [6, 12, "&nbsp;"],
+      ],
+      "31"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `32 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 3`,
+  (t) => {
     const gathered = [];
     const inp1 = "&NBSP;&NBSP;";
     t.strictSame(
@@ -828,29 +836,9 @@ tap.test(
         [0, 6, "&nbsp;"],
         [6, 12, "&nbsp;"],
       ],
-      "31.01"
+      "32.01"
     );
-    t.strictSame(gathered, [], "31.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `32 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 4`,
-  (t) => {
-    const inp1 = "&NBSP;&NBSP;&NBSP; a &NBSP;&NBSP;&NBSP;";
-    t.strictSame(
-      fix(inp1),
-      [
-        [0, 6, "&nbsp;"],
-        [6, 12, "&nbsp;"],
-        [12, 18, "&nbsp;"],
-        [21, 27, "&nbsp;"],
-        [27, 33, "&nbsp;"],
-        [33, 39, "&nbsp;"],
-      ],
-      "32"
-    );
+    t.strictSame(gathered, [], "32.02");
     t.end();
   }
 );
@@ -858,6 +846,26 @@ tap.test(
 tap.test(
   `33 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 4`,
   (t) => {
+    const inp1 = "&NBSP;&NBSP;&NBSP; a &NBSP;&NBSP;&NBSP;";
+    t.strictSame(
+      fix(inp1),
+      [
+        [0, 6, "&nbsp;"],
+        [6, 12, "&nbsp;"],
+        [12, 18, "&nbsp;"],
+        [21, 27, "&nbsp;"],
+        [27, 33, "&nbsp;"],
+        [33, 39, "&nbsp;"],
+      ],
+      "33"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `34 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 4`,
+  (t) => {
     const gathered = [];
     const inp1 = "&NBSP;&NBSP;&NBSP; a &NBSP;&NBSP;&NBSP;";
     t.strictSame(
@@ -874,25 +882,9 @@ tap.test(
         [27, 33, "&nbsp;"],
         [33, 39, "&nbsp;"],
       ],
-      "33.01"
+      "34.01"
     );
-    t.strictSame(gathered, [], "33.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `34 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 5`,
-  (t) => {
-    const inp1 = "&nbsp;&nbsp;&bsp; a &nbsp;&nnbsp;&nbsp;";
-    t.strictSame(
-      fix(inp1),
-      [
-        [12, 17, "&nbsp;"],
-        [26, 33, "&nbsp;"],
-      ],
-      "34"
-    );
+    t.strictSame(gathered, [], "34.02");
     t.end();
   }
 );
@@ -900,6 +892,22 @@ tap.test(
 tap.test(
   `35 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 5`,
   (t) => {
+    const inp1 = "&nbsp;&nbsp;&bsp; a &nbsp;&nnbsp;&nbsp;";
+    t.strictSame(
+      fix(inp1),
+      [
+        [12, 17, "&nbsp;"],
+        [26, 33, "&nbsp;"],
+      ],
+      "35"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `36 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 5`,
+  (t) => {
     const gathered = [];
     const inp1 = "&nbsp;&nbsp;&bsp; a &nbsp;&nnbsp;&nbsp;";
     t.strictSame(
@@ -912,15 +920,15 @@ tap.test(
         [12, 17, "&nbsp;"],
         [26, 33, "&nbsp;"],
       ],
-      "35.01"
+      "36.01"
     );
-    t.strictSame(gathered, [], "35.02");
+    t.strictSame(gathered, [], "36.02");
     t.end();
   }
 );
 
 tap.test(
-  `36 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 6`,
+  `37 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 6`,
   (t) => {
     const inp1 = "&nbsp;&bsp;&nnbsp; a &nbsp;&nnbsp;&nnbsp;";
     t.strictSame(
@@ -931,14 +939,14 @@ tap.test(
         [27, 34, "&nbsp;"],
         [34, 41, "&nbsp;"],
       ],
-      "36"
+      "37"
     );
     t.end();
   }
 );
 
 tap.test(
-  `37 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 6`,
+  `38 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 6`,
   (t) => {
     const gathered = [];
     const inp1 = "&nbsp;&bsp;&nnbsp; a &nbsp;&nnbsp;&nnbsp;";
@@ -954,15 +962,15 @@ tap.test(
         [27, 34, "&nbsp;"],
         [34, 41, "&nbsp;"],
       ],
-      "37.01"
+      "38.01"
     );
-    t.strictSame(gathered, [], "37.02");
+    t.strictSame(gathered, [], "38.02");
     t.end();
   }
 );
 
 tap.test(
-  `38 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
+  `39 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
   (t) => {
     t.strictSame(
       fix("&ang&;ang;"),
@@ -970,14 +978,14 @@ tap.test(
         [0, 4, "&ang;"],
         [4, 10, "&ang;"],
       ],
-      "38"
+      "39"
     );
     t.end();
   }
 );
 
 tap.test(
-  `39 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
+  `40 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
   (t) => {
     const gathered = [];
     t.strictSame(
@@ -990,23 +998,23 @@ tap.test(
         [0, 4, "&ang;"],
         [4, 10, "&ang;"],
       ],
-      "39.01"
+      "40.01"
     );
-    t.strictSame(gathered, [], "39.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `40 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
-  (t) => {
-    t.strictSame(fix("the &;ang;100"), [[4, 10, "&ang;"]], "40");
+    t.strictSame(gathered, [], "40.02");
     t.end();
   }
 );
 
 tap.test(
   `41 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
+  (t) => {
+    t.strictSame(fix("the &;ang;100"), [[4, 10, "&ang;"]], "41");
+    t.end();
+  }
+);
+
+tap.test(
+  `42 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
   (t) => {
     const gathered = [];
     t.strictSame(
@@ -1016,23 +1024,23 @@ tap.test(
         },
       }),
       [[4, 10, "&ang;"]],
-      "41.01"
+      "42.01"
     );
-    t.strictSame(gathered, [], "41.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `42 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
-  (t) => {
-    t.strictSame(fix("&Ifz;"), [[0, 5, "&Ifr;"]], "42");
+    t.strictSame(gathered, [], "42.02");
     t.end();
   }
 );
 
 tap.test(
   `43 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
+  (t) => {
+    t.strictSame(fix("&Ifz;"), [[0, 5, "&Ifr;"]], "43");
+    t.end();
+  }
+);
+
+tap.test(
+  `44 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
   (t) => {
     const gathered = [];
     t.strictSame(
@@ -1042,23 +1050,23 @@ tap.test(
         },
       }),
       [[0, 5, "&Ifr;"]],
-      "43.01"
+      "44.01"
     );
-    t.strictSame(gathered, [], "43.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `44 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
-  (t) => {
-    t.strictSame(fix("&ifz;"), [[0, 5]], "44");
+    t.strictSame(gathered, [], "44.02");
     t.end();
   }
 );
 
 tap.test(
   `45 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
+  (t) => {
+    t.strictSame(fix("&ifz;"), [[0, 5]], "45");
+    t.end();
+  }
+);
+
+tap.test(
+  `46 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
   (t) => {
     const gathered = [];
     t.strictSame(
@@ -1068,23 +1076,23 @@ tap.test(
         },
       }),
       [[0, 5]],
-      "45.01"
+      "46.01"
     );
-    t.strictSame(gathered, [], "45.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `46 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
-  (t) => {
-    t.strictSame(fix("&ifz;&"), [[0, 5]], "46");
+    t.strictSame(gathered, [], "46.02");
     t.end();
   }
 );
 
 tap.test(
   `47 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
+  (t) => {
+    t.strictSame(fix("&ifz;&"), [[0, 5]], "47");
+    t.end();
+  }
+);
+
+tap.test(
+  `48 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
   (t) => {
     const gathered = [];
     t.strictSame(
@@ -1094,27 +1102,27 @@ tap.test(
         },
       }),
       [[0, 5]],
-      "47.01"
+      "48.01"
     );
-    t.strictSame(gathered, [], "47.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `48 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an entity`,
-  (t) => {
-    t.strictSame(
-      fix("&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;"),
-      [],
-      "48"
-    );
+    t.strictSame(gathered, [5], "48.02");
     t.end();
   }
 );
 
 tap.test(
   `49 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an entity`,
+  (t) => {
+    t.strictSame(
+      fix("&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;"),
+      [],
+      "49"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `50 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an entity`,
   (t) => {
     const gathered = [];
     t.strictSame(
@@ -1124,29 +1132,29 @@ tap.test(
         },
       }),
       [],
-      "49.01"
+      "50.01"
     );
-    t.strictSame(gathered, [], "49.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `50 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`,
-  (t) => {
-    t.strictSame(
-      fix(
-        "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
-      ),
-      [],
-      "50"
-    );
+    t.strictSame(gathered, [0], "50.02");
     t.end();
   }
 );
 
 tap.test(
   `51 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`,
+  (t) => {
+    t.strictSame(
+      fix(
+        "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
+      ),
+      [],
+      "51"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `52 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`,
   (t) => {
     const gathered = [];
     t.strictSame(
@@ -1159,29 +1167,29 @@ tap.test(
         }
       ),
       [],
-      "51.01"
+      "52.01"
     );
-    t.strictSame(gathered, [0], "51.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `52 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`,
-  (t) => {
-    t.strictSame(
-      fix(
-        "&nbsp ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
-      ),
-      [[0, 5, "&nbsp;"]],
-      "52"
-    );
+    t.strictSame(gathered, [0], "52.02");
     t.end();
   }
 );
 
 tap.test(
   `53 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`,
+  (t) => {
+    t.strictSame(
+      fix(
+        "&nbsp ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
+      ),
+      [[0, 5, "&nbsp;"]],
+      "53"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `54 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`,
   (t) => {
     const gathered = [];
     t.strictSame(
@@ -1194,19 +1202,19 @@ tap.test(
         }
       ),
       [[0, 5, "&nbsp;"]],
-      "53.01"
+      "54.01"
     );
-    t.strictSame(gathered, [], "53.02");
+    t.strictSame(gathered, [], "54.02");
     t.end();
   }
 );
 
-tap.test(`54`, (t) => {
-  t.strictSame(fix("&; &; &;"), [], "54");
+tap.test(`55`, (t) => {
+  t.strictSame(fix("&; &; &;"), [], "55");
   t.end();
 });
 
-tap.test(`55`, (t) => {
+tap.test(`56`, (t) => {
   const gathered = [];
   t.strictSame(
     fix("&; &; &;", {
@@ -1215,8 +1223,8 @@ tap.test(`55`, (t) => {
       },
     }),
     [],
-    "55.01"
+    "56.01"
   );
-  t.strictSame(gathered, [0, 3, 6], "55.02");
+  t.strictSame(gathered, [0, 3, 6], "56.02");
   t.end();
 });

@@ -63,7 +63,7 @@ tap.test(
       [],
       "03.02"
     );
-    t.strictSame(gathered, [], "03.03");
+    t.strictSame(gathered, [0], "03.03");
     t.end();
   }
 );

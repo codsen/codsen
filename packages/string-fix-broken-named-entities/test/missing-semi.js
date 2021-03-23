@@ -365,7 +365,7 @@ tap.test(
       [],
       "18.01 - won't fix, it's a dubious case"
     );
-    t.strictSame(gathered, [], "18.02");
+    t.strictSame(gathered, [4, 11], "18.02");
     t.end();
   }
 );
@@ -404,7 +404,7 @@ tap.test(
       [],
       "20.01 - also won't fix, it's not conclusive"
     );
-    t.strictSame(gathered, [], "20.02");
+    t.strictSame(gathered, [4, 11], "20.02");
     t.end();
   }
 );
@@ -422,7 +422,7 @@ tap.test(
       [],
       "21.01"
     );
-    t.strictSame(gathered, [], "21.02");
+    t.strictSame(gathered, [4, 15], "21.02");
     t.end();
   }
 );
@@ -440,7 +440,7 @@ tap.test(
       [],
       "22.01"
     );
-    t.strictSame(gathered, [], "22.02");
+    t.strictSame(gathered, [4, 13], "22.02");
     t.end();
   }
 );
@@ -479,7 +479,7 @@ tap.test(
       [],
       "24.01"
     );
-    t.strictSame(gathered, [], "24.02");
+    t.strictSame(gathered, [4, 15], "24.02");
     t.end();
   }
 );
@@ -668,7 +668,7 @@ tap.test(
       [],
       "33.01"
     );
-    t.strictSame(gathered, [], "33.02");
+    t.strictSame(gathered, [4, 12], "33.02");
     t.end();
   }
 );
@@ -709,7 +709,7 @@ tap.test(
       [],
       "35.01"
     );
-    t.strictSame(gathered, [], "35.02");
+    t.strictSame(gathered, [4, 12], "35.02");
     t.end();
   }
 );
@@ -728,7 +728,7 @@ tap.test(
       [],
       "36.01"
     );
-    t.strictSame(gathered, [], "36.02");
+    t.strictSame(gathered, [4, 15], "36.02");
     t.end();
   }
 );
@@ -747,7 +747,7 @@ tap.test(
       [],
       "37.01"
     );
-    t.strictSame(gathered, [], "37.02");
+    t.strictSame(gathered, [4, 13], "37.02");
     t.end();
   }
 );
@@ -788,7 +788,7 @@ tap.test(
       [],
       "39.01"
     );
-    t.strictSame(gathered, [], "39.02");
+    t.strictSame(gathered, [4, 15], "39.02");
     t.end();
   }
 );

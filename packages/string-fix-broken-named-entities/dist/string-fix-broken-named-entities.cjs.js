@@ -168,9 +168,17 @@ function fixEnt(str, originalOpts) {
   var letterSeqStartAt = null;
   var brokenNumericEntityStartAt = null;
   var ampPositions = [];
-  function pingAmps() {
-    for (var i = 0, _len = ampPositions.length; i < _len; i++) {
-      opts.textAmpersandCatcherCb(ampPositions.shift());
+  function pingAmps(untilIdx, loopIndexI) {
+    if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
+      while (ampPositions.length) {
+        var currentAmp = ampPositions.shift();
+        if (
+        untilIdx === undefined ||
+        currentAmp < untilIdx ||
+        currentAmp === loopIndexI) {
+          opts.textAmpersandCatcherCb(currentAmp);
+        }
+      }
     }
   }
   var _loop = function _loop(i) {
@@ -189,9 +197,6 @@ function fixEnt(str, originalOpts) {
         counter += 1;
         return "continue";
       }
-    }
-    if (str[i] === "&") {
-      ampPositions.push(i);
     }
     if (letterSeqStartAt !== null && i - letterSeqStartAt > 50) {
       letterSeqStartAt = null;
@@ -236,14 +241,7 @@ function fixEnt(str, originalOpts) {
                 rangeValEncoded: "&" + tempEnt + ";",
                 rangeValDecoded: decodedEntity
               });
-              if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
-                while (ampPositions.length) {
-                  var currentAmp = ampPositions.shift();
-                  if (currentAmp < tempRes.leftmostChar - 1 || currentAmp === i) {
-                    opts.textAmpersandCatcherCb(currentAmp);
-                  }
-                }
-              }
+              pingAmps(whatsOnTheLeft || 0, i);
             }
           }
         } else if (str[whatsOnTheLeft] !== "&" && str[whatsEvenMoreToTheLeft] !== "&" && str[i] === ";") {
@@ -279,6 +277,7 @@ function fixEnt(str, originalOpts) {
                 rangeValEncoded: "&" + _tempEnt + ";",
                 rangeValDecoded: _decodedEntity
               });
+              pingAmps(_tempRes.leftmostChar, i);
             }
           } else if (brokenNumericEntityStartAt !== null) {
             rangesArr2.push({
@@ -289,21 +288,11 @@ function fixEnt(str, originalOpts) {
               rangeValEncoded: null,
               rangeValDecoded: null
             });
+            pingAmps(brokenNumericEntityStartAt, i);
             brokenNumericEntityStartAt = null;
           }
         } else if (str[i] === ";" && (str[whatsOnTheLeft] === "&" || str[whatsOnTheLeft] === ";" && str[whatsEvenMoreToTheLeft] === "&")) {
-          var startOfTheSeq = letterSeqStartAt - 1;
-          if (!str[letterSeqStartAt - 1].trim() && str[whatsOnTheLeft] === "&") {
-            startOfTheSeq = whatsOnTheLeft;
-          }
-          if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length && letterSeqStartAt) {
-            while (ampPositions.length) {
-              var ampIdx = ampPositions.shift();
-              if (ampIdx < startOfTheSeq) {
-                opts.textAmpersandCatcherCb(ampIdx);
-              }
-            }
-          }
+          if (!str[letterSeqStartAt - 1].trim() && str[whatsOnTheLeft] === "&") ;
           /* istanbul ignore else */
           if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
             var situation = resemblesNumericEntity(str, whatsOnTheLeft + 1, i);
@@ -333,6 +322,7 @@ function fixEnt(str, originalOpts) {
                     rangeValDecoded: decodedEntitysValue
                   });
                 }
+                pingAmps(whatsOnTheLeft || 0, i);
               } else {
                 rangesArr2.push({
                   ruleName: "bad-html-entity-malformed-numeric",
@@ -342,6 +332,7 @@ function fixEnt(str, originalOpts) {
                   rangeValEncoded: null,
                   rangeValDecoded: null
                 });
+                pingAmps(whatsOnTheLeft || 0, i);
               }
               if (opts.entityCatcherCb) {
                 opts.entityCatcherCb(whatsOnTheLeft, i + 1);
@@ -351,14 +342,6 @@ function fixEnt(str, originalOpts) {
                 return char.trim().length;
               }).join("");
               if (potentialEntityOnlyNonWhitespaceChars.length <= allNamedHtmlEntities.maxLength && allNamedHtmlEntities.allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
-                if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
-                  while (ampPositions.length) {
-                    var _currentAmp = ampPositions.shift();
-                    if (_currentAmp < letterSeqStartAt - 1) {
-                      opts.textAmpersandCatcherCb(_currentAmp);
-                    }
-                  }
-                }
                 if (
                 !allNamedHtmlEntities.allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
                   var matchingEntitiesOfCorrectCaseArr = [].concat(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (ent) {
@@ -373,6 +356,7 @@ function fixEnt(str, originalOpts) {
                       rangeValEncoded: "&" + matchingEntitiesOfCorrectCaseArr[0] + ";",
                       rangeValDecoded: allNamedHtmlEntities.decode("&" + matchingEntitiesOfCorrectCaseArr[0] + ";")
                     });
+                    pingAmps(whatsOnTheLeft, i);
                   } else {
                     rangesArr2.push({
                       ruleName: "bad-html-entity-unrecognised",
@@ -382,6 +366,7 @@ function fixEnt(str, originalOpts) {
                       rangeValEncoded: null,
                       rangeValDecoded: null
                     });
+                    pingAmps(whatsOnTheLeft, i);
                   }
                 } else if (
                 i - whatsOnTheLeft - 1 !== potentialEntityOnlyNonWhitespaceChars.length || str[whatsOnTheLeft] !== "&") {
@@ -400,6 +385,7 @@ function fixEnt(str, originalOpts) {
                     rangeValEncoded: "&" + potentialEntityOnlyNonWhitespaceChars + ";",
                     rangeValDecoded: allNamedHtmlEntities.decode("&" + potentialEntityOnlyNonWhitespaceChars + ";")
                   });
+                  pingAmps(rangeFrom, i);
                 } else if (opts.decode) {
                   rangesArr2.push({
                     ruleName: "bad-html-entity-encoded-" + potentialEntityOnlyNonWhitespaceChars,
@@ -409,8 +395,14 @@ function fixEnt(str, originalOpts) {
                     rangeValEncoded: "&" + potentialEntityOnlyNonWhitespaceChars + ";",
                     rangeValDecoded: allNamedHtmlEntities.decode("&" + potentialEntityOnlyNonWhitespaceChars + ";")
                   });
-                } else if (opts.entityCatcherCb) {
-                  opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  pingAmps(whatsOnTheLeft, i);
+                } else if (opts.entityCatcherCb || opts.textAmpersandCatcherCb) {
+                  if (opts.entityCatcherCb) {
+                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  }
+                  if (opts.textAmpersandCatcherCb) {
+                    pingAmps(whatsOnTheLeft, i);
+                  }
                 }
                 letterSeqStartAt = null;
                 return "continue";
@@ -430,6 +422,7 @@ function fixEnt(str, originalOpts) {
                   rangeValEncoded: "&" + allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()] + ";",
                   rangeValDecoded: _decodedEntity2
                 });
+                pingAmps(whatsOnTheLeft, i);
               } else if (
               potentialEntity.length < allNamedHtmlEntities.maxLength + 2 && (
               (temp = [].concat(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
@@ -452,6 +445,7 @@ function fixEnt(str, originalOpts) {
                     rangeValEncoded: "&" + _tempEnt2 + ";",
                     rangeValDecoded: allNamedHtmlEntities.decode("&" + _tempEnt2 + ";")
                   });
+                  pingAmps(whatsOnTheLeft, i);
                 }
               }
               if (!_tempEnt2) {
@@ -463,6 +457,7 @@ function fixEnt(str, originalOpts) {
                   rangeValEncoded: null,
                   rangeValDecoded: null
                 });
+                pingAmps(whatsOnTheLeft, i);
               }
             }
           }
@@ -478,12 +473,7 @@ function fixEnt(str, originalOpts) {
             rangeValEncoded: null,
             rangeValDecoded: null
           });
-        } else {
-          if (typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
-            while (ampPositions.length) {
-              opts.textAmpersandCatcherCb(ampPositions.shift());
-            }
-          }
+          pingAmps(whatsEvenMoreToTheLeft, i);
         }
       }
       letterSeqStartAt = null;
@@ -530,6 +520,7 @@ function fixEnt(str, originalOpts) {
               rangeValEncoded: "&" + matchedTemp + ";",
               rangeValDecoded: allNamedHtmlEntities.decode("&" + matchedTemp + ";")
             });
+            pingAmps(_whatsOnTheLeft, i);
           } else if (_whatsOnTheLeft) {
             var _rangeFrom = i;
             var spaceReplacement = "";
@@ -544,6 +535,7 @@ function fixEnt(str, originalOpts) {
                 rangeValEncoded: spaceReplacement + "&" + matchedTemp + ";",
                 rangeValDecoded: "" + spaceReplacement + allNamedHtmlEntities.decode("&" + matchedTemp + ";")
               });
+              pingAmps(_rangeFrom, i);
             }
           }
         }
@@ -553,6 +545,9 @@ function fixEnt(str, originalOpts) {
       if (isNumeric(str[stringLeftRight.right(str, stringLeftRight.right(str, i))])) {
         brokenNumericEntityStartAt = i;
       }
+    }
+    if (str[i] === "&") {
+      ampPositions.push(i);
     }
     if (!str[i] && typeof opts.textAmpersandCatcherCb === "function" && ampPositions.length) {
       pingAmps();
