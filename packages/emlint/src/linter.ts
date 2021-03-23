@@ -5,7 +5,7 @@ import { lineCol, getLineStartIndexes } from "line-column-mini";
 import clone from "lodash.clonedeep";
 import { cparser } from "codsen-parser";
 import { keys } from "ts-transformer-keys";
-import matcher from "matcher";
+import validateCharEncoding from "../src/util/validateCharEncoding";
 import { get, normaliseRequestedRules } from "./rules";
 import {
   isAnEnabledValue,
@@ -64,13 +64,13 @@ class Linter extends TypedEmitter<RuleObjType> {
     this.processedRulesConfig = {};
     const has = Object.prototype.hasOwnProperty;
 
-    console.log(
-      `068 ${`\u001b[${31}m${`██`}\u001b[${39}m`}${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify called for "${str}" and ${JSON.stringify(
-        config,
-        null,
-        4
-      )}`
-    );
+    // console.log(
+    //   `069 ${`\u001b[${31}m${`██`}\u001b[${39}m`}${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify called for "${str}" and ${JSON.stringify(
+    //     config,
+    //     null,
+    //     4
+    //   )}`
+    // );
 
     // VALIDATION FIRST
     if (config) {
@@ -338,134 +338,138 @@ class Linter extends TypedEmitter<RuleObjType> {
     //
 
     // 1. if any of bad named HTML entity catcher rules is requested, run it
-    if (
-      Object.keys(config.rules).some(
-        (ruleName) =>
-          (ruleName === "all" || // group blanket setting
-            ruleName === "bad-html-entity" || // group blanket setting
-            ruleName.startsWith("bad-html-entity") ||
-            ruleName.startsWith("bad-named-html-entity") ||
-            matcher.isMatch(
-              ["bad-malformed-numeric-character-entity"],
-              ruleName
-            )) &&
-          (isAnEnabledValue(config.rules[ruleName]) ||
-            isAnEnabledValue(processedRulesConfig[ruleName]))
-      )
-    ) {
-      console.log(`356 linter.js: call fixEnt()`);
+    // rules come from "string-fix-broken-named-entities":
+    // - bad-html-entity-malformed-...
+    // - bad-html-entity-malformed-numeric
+    // - bad-html-entity-encoded-...
+    // - bad-html-entity-encoded-numeric
+    // - bad-html-entity-unrecognised
+    // - bad-html-entity-multiple-encoding
+
+    // 2. also, using the raw ampersand-as-text catcher, feed
+    // the rule "character-encode" - we need to be aware which
+    // ampersand is raw text, which-one is part of entity
+
+    let severity: 0 | 1 | 2 = 0;
+    const letsCatchBadEntities = Object.keys(config.rules).some(
+      (ruleName) =>
+        (ruleName === "all" || ruleName.startsWith("bad-html-entity")) &&
+        (severity =
+          isAnEnabledValue(config.rules[ruleName]) ||
+          isAnEnabledValue(processedRulesConfig[ruleName]))
+    );
+    const letsCatchRawTextAmpersands = Object.keys(config.rules).some(
+      (ruleName) =>
+        (ruleName === "all" || ruleName === "character-encode") &&
+        (isAnEnabledValue(config.rules[ruleName]) ||
+          isAnEnabledValue(processedRulesConfig[ruleName]))
+    );
+
+    if (letsCatchBadEntities || letsCatchRawTextAmpersands) {
+      console.log(
+        `370 linter.js: we'll call fixEnt(); ${`\u001b[${
+          letsCatchBadEntities ? 32 : 31
+        }m${"letsCatchBadEntities"}\u001b[${39}m`}; ${`\u001b[${
+          letsCatchRawTextAmpersands ? 32 : 31
+        }m${"letsCatchRawTextAmpersands"}\u001b[${39}m`};`
+      );
       fixEnt(str, {
-        cb: (obj) => {
-          console.log(
-            `360 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
-              obj,
-              null,
-              4
-            )}`
-          );
-          // evaluate, does the config have this emitted rule set and enabled
-          let matchedRulesName = "";
-
-          // A severity value can be under array's first element or as digit,
-          // plus rule itself might be group rule ("bad-html-entity") or
-          // mentioned directly.
-          // The plan is to try to extract severity various ways, later if it's
-          // set, then report the error.
-          let severity;
-
-          // rule is group, blanket rule
-          if (Object.keys(config.rules).includes("bad-html-entity")) {
-            if (obj.ruleName === "bad-named-html-entity-unrecognised") {
-              // unrecongnised named HTML entities might be false positives,
-              // mix of ampersand, letters and semicolon, without spaces,
-              // so default level is "warning", not "error":
-              severity = 1;
-            } else if (Array.isArray(config.rules["bad-html-entity"])) {
-              severity = config.rules["bad-html-entity"][0];
-            } else if (Number.isInteger(config.rules["bad-html-entity"])) {
-              severity = config.rules["bad-html-entity"];
-            }
-          } else if (
-            Object.keys(config.rules).some((rulesName) => {
+        cb: letsCatchBadEntities
+          ? (obj) => {
               console.log(
-                `${`\u001b[${36}m${`--- rulesName: ${rulesName}`}\u001b[${39}m`}`
+                `380 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+                  obj,
+                  null,
+                  4
+                )}`
               );
-              if (matcher.isMatch(obj.ruleName, rulesName)) {
-                matchedRulesName = rulesName;
+
+              // Object.keys(config.rules).includes("bad-html-entity")
+
+              if (Number.isInteger(severity) && severity) {
+                let message;
+                if (obj.ruleName === "bad-html-entity-malformed-nbsp") {
+                  message = "Malformed nbsp entity.";
+                } else if (obj.ruleName === "bad-html-entity-unrecognised") {
+                  message = "Unrecognised named entity.";
+                } else if (
+                  obj.ruleName === "bad-html-entity-multiple-encoding"
+                ) {
+                  message = "HTML entity encoding over and over.";
+                } else if (
+                  obj.ruleName === "bad-html-entity-malformed-numeric"
+                ) {
+                  message = "Malformed numeric entity.";
+                } else {
+                  message = `Malformed ${
+                    obj.entityName ? obj.entityName : "named"
+                  } entity.`;
+                }
+
                 console.log(
-                  `${`\u001b[${36}m${`"${rulesName}" matched!`}\u001b[${39}m`}`
+                  `410 FIY, ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
+                    message,
+                    null,
+                    4
+                  )}`
                 );
 
-                return true;
+                let ranges: Ranges = [
+                  [
+                    obj.rangeFrom,
+                    obj.rangeTo,
+                    obj.rangeValEncoded ? obj.rangeValEncoded : "",
+                  ],
+                ];
+                if (obj.ruleName === "bad-html-entity-unrecognised") {
+                  ranges = [];
+                }
+
+                this.report({
+                  severity,
+                  ruleId: obj.ruleName,
+                  message,
+                  idxFrom: obj.rangeFrom,
+                  idxTo: obj.rangeTo,
+                  fix: {
+                    ranges,
+                  },
+                });
               }
-              return false;
-            })
-          ) {
-            if (
-              obj.ruleName === "bad-named-html-entity-unrecognised" &&
-              config.rules["bad-named-html-entity-unrecognised"] === undefined
-            ) {
-              // unless the rule was requested exactly, severity is 1.
-              // This applies to both group blanket rules "bad-html-entity" and
-              // any rules achieved by applying wildcards, for example,
-              // "bad-named-html-entity-*".
-              severity = 1;
-            } else if (Array.isArray(config.rules[matchedRulesName])) {
-              severity = (config.rules as any)[matchedRulesName][0];
-            } else if (Number.isInteger(config.rules[matchedRulesName])) {
-              severity = config.rules[matchedRulesName];
             }
-          }
-
-          if (Number.isInteger(severity)) {
-            let message;
-            if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
-              message = "Malformed NBSP entity.";
-            } else if (obj.ruleName === "bad-named-html-entity-unrecognised") {
-              message = "Unrecognised named entity.";
-            } else if (
-              obj.ruleName === "bad-named-html-entity-multiple-encoding"
-            ) {
-              message = "HTML entity encoding over and over.";
-            } else if (
-              obj.ruleName === "bad-malformed-numeric-character-entity"
-            ) {
-              message = "Malformed numeric entity.";
-            } else {
-              message = `Malformed ${
-                obj.entityName ? obj.entityName : "named"
-              } entity.`;
+          : undefined,
+        entityCatcherCb: letsCatchBadEntities
+          ? (from, to) => {
+              console.log(
+                `444 linter.js: entityCatcher pinging { from: ${from}, to: ${to} }`
+              );
+              this.emit("entity", { idxFrom: from, idxTo: to });
             }
-
-            let ranges: Ranges = [
-              [
-                obj.rangeFrom,
-                obj.rangeTo,
-                obj.rangeValEncoded ? obj.rangeValEncoded : "",
-              ],
-            ];
-            if (obj.ruleName === "bad-named-html-entity-unrecognised") {
-              ranges = [];
+          : undefined,
+        textAmpersandCatcherCb: letsCatchRawTextAmpersands
+          ? (posIdx) => {
+              console.log(`451`);
+              let mode: "numeric" | "named" | undefined;
+              if (
+                Array.isArray(processedRulesConfig["character-encode"]) &&
+                processedRulesConfig["character-encode"].includes("numeric")
+              ) {
+                mode = "numeric";
+                // else, it's undefined which will fall back to "named"
+              }
+              console.log(
+                `461 RAW AMP, ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} validateCharEncoding()`
+              );
+              console.log(
+                `464 ███████████████████*███████████████████ Object.keys(this) = ${JSON.stringify(
+                  Object.keys(this),
+                  null,
+                  4
+                )}`
+              );
+              validateCharEncoding("&", posIdx, mode, this);
             }
-
-            this.report({
-              severity,
-              ruleId: obj.ruleName,
-              message,
-              idxFrom: obj.rangeFrom,
-              idxTo: obj.rangeTo,
-              fix: {
-                ranges,
-              },
-            });
-          }
-        },
-        entityCatcherCb: (from, to) => {
-          console.log(
-            `465 linter.js: entityCatcher pinging { from: ${from}, to: ${to} }`
-          );
-          this.emit("entity", { idxFrom: from, idxTo: to });
-        },
+          : undefined,
       });
     }
 
@@ -478,7 +482,7 @@ class Linter extends TypedEmitter<RuleObjType> {
     });
 
     console.log(
-      `481 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called;\nthis.messages=${JSON.stringify(
+      `485 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called;\nthis.messages=${JSON.stringify(
         this.messages,
         null,
         4
@@ -489,7 +493,7 @@ class Linter extends TypedEmitter<RuleObjType> {
 
   report(obj: ErrorObjWithRuleId): void {
     console.log(
-      `492 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: called with ${JSON.stringify(
+      `496 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: called with ${JSON.stringify(
         obj,
         null,
         4
@@ -506,7 +510,7 @@ class Linter extends TypedEmitter<RuleObjType> {
     ) as Obj;
     let severity: Severity = obj.severity || 0; // rules coming from 3rd party packages will give the severity value
     console.log(
-      `509 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
+      `513 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
         this.processedRulesConfig[obj.ruleId],
         null,
         4
@@ -524,10 +528,10 @@ class Linter extends TypedEmitter<RuleObjType> {
       severity = (this.processedRulesConfig[obj.ruleId] as any[])[0];
     }
     console.log(
-      `527 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: line = ${line}; column = ${col}`
+      `531 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: line = ${line}; column = ${col}`
     );
     console.log(
-      `530 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+      `534 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
         this.messages,
         null,
         4
@@ -544,7 +548,7 @@ class Linter extends TypedEmitter<RuleObjType> {
       ...(this.hasBeenCalledWithKeepSeparateWhenFixing ? { fix: null } : {}),
     });
     console.log(
-      `547 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+      `551 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} AFTER: ${JSON.stringify(
         this.messages,
         null,
         4
@@ -565,7 +569,7 @@ class Linter extends TypedEmitter<RuleObjType> {
     }
 
     console.log(
-      `568 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ENDING this.hasBeenCalledWithKeepSeparateWhenFixing = ${
+      `572 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ENDING this.hasBeenCalledWithKeepSeparateWhenFixing = ${
         this.hasBeenCalledWithKeepSeparateWhenFixing
       }`
     );

@@ -16,7 +16,7 @@ tap.test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, (t) => {
     messages,
     [
       {
-        ruleId: "bad-named-html-entity-not-email-friendly",
+        ruleId: "bad-html-entity-not-email-friendly",
         severity: 2,
         idxFrom: 3,
         idxTo: 17,
@@ -28,6 +28,7 @@ tap.test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, (t) => {
     ],
     "01.02"
   );
+  t.equal(messages.length, 1, "01.03");
   t.end();
 });
 
@@ -35,7 +36,7 @@ tap.test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, (t) => {
   const str = `abc&Intersection;def`;
   const messages = verify(t, str, {
     rules: {
-      "bad-named-html-entity-not-email-friendly": 1,
+      "bad-html-entity-not-email-friendly": 1,
     },
   });
   t.equal(applyFixes(str, messages), "abc&#x22C2;def", "02.01");
@@ -43,7 +44,7 @@ tap.test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, (t) => {
     messages,
     [
       {
-        ruleId: "bad-named-html-entity-not-email-friendly",
+        ruleId: "bad-html-entity-not-email-friendly",
         severity: 1,
         idxFrom: 3,
         idxTo: 17,
@@ -55,6 +56,7 @@ tap.test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, (t) => {
     ],
     "02.02"
   );
+  t.equal(messages.length, 1, "02.03");
   t.end();
 });
 
@@ -64,7 +66,7 @@ tap.test(
     const str = `abc&Intersection;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-not-email-*": 1,
+        all: 1,
       },
     });
     t.equal(applyFixes(str, messages), "abc&#x22C2;def", "03.01");
@@ -72,7 +74,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-named-html-entity-not-email-friendly",
+          ruleId: "bad-html-entity-not-email-friendly",
           severity: 1,
           idxFrom: 3,
           idxTo: 17,
@@ -84,36 +86,35 @@ tap.test(
       ],
       "03.02"
     );
+    t.equal(messages.length, 1, "03.03");
     t.end();
   }
 );
 
-tap.test(
-  `04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - through wildcard`,
-  (t) => {
-    const str = `abc&Intersection;def`;
-    const messages = verify(t, str, {
-      rules: {
-        "bad*": 1,
-      },
-    });
-    t.equal(applyFixes(str, messages), "abc&#x22C2;def", "04.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "bad-named-html-entity-not-email-friendly",
-          severity: 1,
-          idxFrom: 3,
-          idxTo: 17,
-          message: "Email-unfriendly named HTML entity.",
-          fix: {
-            ranges: [[3, 17, "&#x22C2;"]],
-          },
+tap.test(`04 - all`, (t) => {
+  const str = `abc&Intersection;def`;
+  const messages = verify(t, str, {
+    rules: {
+      all: 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), "abc&#x22C2;def", "04.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "bad-html-entity-not-email-friendly",
+        severity: 2,
+        idxFrom: 3,
+        idxTo: 17,
+        message: "Email-unfriendly named HTML entity.",
+        fix: {
+          ranges: [[3, 17, "&#x22C2;"]],
         },
-      ],
-      "04.02"
-    );
-    t.end();
-  }
-);
+      },
+    ],
+    "04.02"
+  );
+  t.equal(messages.length, 1, "04.03");
+  t.end();
+});

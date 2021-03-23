@@ -19,8 +19,10 @@ var astMonkeyTraverse = require('ast-monkey-traverse');
 var lineColumnMini = require('line-column-mini');
 var clone = require('lodash.clonedeep');
 var codsenParser = require('codsen-parser');
-var matcher = require('matcher');
+var he = require('he');
+var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var defineLazyProp = require('define-lazy-prop');
+var matcher = require('matcher');
 var stringProcessCommaSeparated = require('string-process-comma-separated');
 var stringLeftRight = require('string-left-right');
 var isRegExp = require('lodash.isregexp');
@@ -33,8 +35,6 @@ var isRelativeUri = require('is-relative-uri');
 var urlRegex = require('url-regex');
 var isLanguageCode = require('is-language-code');
 var isMediaDescriptor = require('is-media-descriptor');
-var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
-var he = require('he');
 var stringFindMalformed = require('string-find-malformed');
 var stringMatchLeftRight = require('string-match-left-right');
 var astMonkeyUtil = require('ast-monkey-util');
@@ -45,15 +45,52 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _inheritsLoose__default = /*#__PURE__*/_interopDefaultLegacy(_inheritsLoose);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
-var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
+var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 var defineLazyProp__default = /*#__PURE__*/_interopDefaultLegacy(defineLazyProp);
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 var isRegExp__default = /*#__PURE__*/_interopDefaultLegacy(isRegExp);
 var _createForOfIteratorHelperLoose__default = /*#__PURE__*/_interopDefaultLegacy(_createForOfIteratorHelperLoose);
 var leven__default = /*#__PURE__*/_interopDefaultLegacy(leven);
 var db__default = /*#__PURE__*/_interopDefaultLegacy(db);
 var urlRegex__default = /*#__PURE__*/_interopDefaultLegacy(urlRegex);
-var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 var op__default = /*#__PURE__*/_interopDefaultLegacy(op);
+
+function validateCharEncoding(charStr,
+posIdx,
+mode, context) {
+  if (mode === void 0) {
+    mode = "named";
+  }
+  var encodedChr = he__default['default'].encode(charStr, {
+    useNamedReferences: mode === "named"
+  });
+  if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(encodedChr.slice(1, encodedChr.length - 1))) {
+    encodedChr = "&" + htmlEntitiesNotEmailFriendly$1.notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)] + ";";
+  }
+  var charName = "";
+  if (charStr.charCodeAt(0) === 160) {
+    charName = " no-break space";
+  } else if (charStr.charCodeAt(0) === 38) {
+    charName = " ampersand";
+  } else if (charStr.charCodeAt(0) === 60) {
+    charName = " less than";
+  } else if (charStr.charCodeAt(0) === 62) {
+    charName = " greater than";
+  } else if (charStr.charCodeAt(0) === 34) {
+    charName = " double quotes";
+  } else if (charStr.charCodeAt(0) === 163) {
+    charName = " pound sign";
+  }
+  context.report({
+    ruleId: "character-encode",
+    message: "Unencoded" + charName + " character.",
+    idxFrom: posIdx,
+    idxTo: posIdx + 1,
+    fix: {
+      ranges: [[posIdx, posIdx + 1, encodedChr]]
+    }
+  });
+}
 
 var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate-arabic-form-shaping", "bad-character-activate-symmetric-swapping", "bad-character-application-program-command", "bad-character-backspace", "bad-character-bell", "bad-character-break-permitted-here", "bad-character-cancel", "bad-character-cancel-character", "bad-character-character-tabulation-set", "bad-character-character-tabulation-with-justification", "bad-character-control-0080", "bad-character-control-0081", "bad-character-control-0084", "bad-character-control-0099", "bad-character-control-sequence-introducer", "bad-character-data-link-escape", "bad-character-delete", "bad-character-device-control-four", "bad-character-device-control-one", "bad-character-device-control-string", "bad-character-device-control-three", "bad-character-device-control-two", "bad-character-em-quad", "bad-character-em-space", "bad-character-en-quad", "bad-character-en-space", "bad-character-end-of-medium", "bad-character-end-of-protected-area", "bad-character-end-of-selected-area", "bad-character-end-of-text", "bad-character-end-of-transmission", "bad-character-end-of-transmission-block", "bad-character-enquiry", "bad-character-escape", "bad-character-figure-space", "bad-character-first-strong-isolate", "bad-character-form-feed", "bad-character-four-per-em-space", "bad-character-function-application", "bad-character-hair-space", "bad-character-ideographic-space", "bad-character-information-separator-four", "bad-character-information-separator-one", "bad-character-information-separator-three", "bad-character-information-separator-two", "bad-character-inhibit-arabic-form-shaping", "bad-character-inhibit-symmetric-swapping", "bad-character-interlinear-annotation-anchor", "bad-character-interlinear-annotation-separator", "bad-character-interlinear-annotation-terminator", "bad-character-invisible-plus", "bad-character-invisible-separator", "bad-character-invisible-times", "bad-character-left-to-right-embedding", "bad-character-left-to-right-isolate", "bad-character-left-to-right-mark", "bad-character-left-to-right-override", "bad-character-line-separator", "bad-character-line-tabulation", "bad-character-line-tabulation-set", "bad-character-medium-mathematical-space", "bad-character-message-waiting", "bad-character-narrow-no-break-space", "bad-character-national-digit-shapes", "bad-character-negative-acknowledge", "bad-character-next-line", "bad-character-no-break-here", "bad-character-nominal-digit-shapes", "bad-character-non-breaking-space", "bad-character-null", "bad-character-ogham-space-mark", "bad-character-operating-system-command", "bad-character-paragraph-separator", "bad-character-partial-line-backward", "bad-character-partial-line-forward", "bad-character-pop-directional-formatting", "bad-character-pop-directional-isolate", "bad-character-private-message", "bad-character-private-use-1", "bad-character-private-use-2", "bad-character-punctuation-space", "bad-character-replacement-character", "bad-character-reverse-line-feed", "bad-character-right-to-left-embedding", "bad-character-right-to-left-isolate", "bad-character-right-to-left-mark", "bad-character-right-to-left-override", "bad-character-set-transmit-state", "bad-character-shift-in", "bad-character-shift-out", "bad-character-single-character-introducer", "bad-character-single-shift-three", "bad-character-single-shift-two", "bad-character-six-per-em-space", "bad-character-soft-hyphen", "bad-character-start-of-heading", "bad-character-start-of-protected-area", "bad-character-start-of-selected-area", "bad-character-start-of-string", "bad-character-start-of-text", "bad-character-string-terminator", "bad-character-substitute", "bad-character-synchronous-idle", "bad-character-tabulation", "bad-character-thin-space", "bad-character-three-per-em-space", "bad-character-word-joiner", "bad-character-zero-width-joiner", "bad-character-zero-width-no-break-space", "bad-character-zero-width-non-joiner", "bad-character-zero-width-space"];
 
@@ -63,7 +100,7 @@ var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attri
 
 var allCSSRules = ["css-rule-malformed", "css-trailing-semi"];
 
-var allBadNamedHTMLEntityRules = ["bad-malformed-numeric-character-entity", "bad-named-html-entity-malformed-nbsp", "bad-named-html-entity-multiple-encoding", "bad-named-html-entity-not-email-friendly", "bad-named-html-entity-unrecognised"];
+var allBadNamedHTMLEntityRules = ["bad-html-entity-malformed-nbsp", "bad-html-entity-malformed-numeric", "bad-html-entity-multiple-encoding", "bad-html-entity-not-email-friendly", "bad-html-entity-unrecognised"];
 
 function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
   var defaults = {
@@ -8587,7 +8624,7 @@ function htmlEntitiesNotEmailFriendly(context) {
           idxTo = _ref.idxTo;
       if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(context.str.slice(idxFrom + 1, idxTo - 1))) {
         context.report({
-          ruleId: "bad-named-html-entity-not-email-friendly",
+          ruleId: "bad-html-entity-not-email-friendly",
           message: "Email-unfriendly named HTML entity.",
           idxFrom: idxFrom,
           idxTo: idxTo,
@@ -8600,55 +8637,27 @@ function htmlEntitiesNotEmailFriendly(context) {
   };
 }
 
-function processStr(str, offset, context, mode) {
-  for (var i = 0, len = str.length; i < len; i++) {
-    if ((str[i].charCodeAt(0) > 127 || "<>\"&".includes(str[i])) && (str[i].charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isAnEnabledValue(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
-      var encodedChr = he__default['default'].encode(str[i], {
-        useNamedReferences: mode === "named"
-      });
-      if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(encodedChr.slice(1, encodedChr.length - 1))) {
-        encodedChr = "&" + htmlEntitiesNotEmailFriendly$1.notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)] + ";";
-      }
-      var charName = "";
-      if (str[i].charCodeAt(0) === 160) {
-        charName = " no-break space";
-      } else if (str[i].charCodeAt(0) === 38) {
-        charName = " ampersand";
-      } else if (str[i].charCodeAt(0) === 60) {
-        charName = " less than";
-      } else if (str[i].charCodeAt(0) === 62) {
-        charName = " greater than";
-      } else if (str[i].charCodeAt(0) === 34) {
-        charName = " double quotes";
-      } else if (str[i].charCodeAt(0) === 163) {
-        charName = " pound sign";
-      }
-      context.report({
-        ruleId: "character-encode",
-        message: "Unencoded" + charName + " character.",
-        idxFrom: i + offset,
-        idxTo: i + 1 + offset,
-        fix: {
-          ranges: [[i + offset, i + 1 + offset, encodedChr]]
-        }
-      });
-    }
-  }
-}
-var characterEncode = function characterEncode(context) {
-  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    opts[_key - 1] = arguments[_key];
+function characterEncode(context) {
+  for (var _len = arguments.length, config = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    config[_key - 1] = arguments[_key];
   }
   return {
     text: function text(token) {
-      var mode = "named";
-      if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
-        mode = opts[0];
+      if (!token.value) {
+        return;
       }
-      processStr(token.value, token.start, context, mode);
+      var mode = "named";
+      if (config.includes("numeric")) {
+        mode = "numeric";
+      }
+      for (var i = 0, len = token.value.length; i < len; i++) {
+        if ((token.value[i].charCodeAt(0) > 127 || "<>\"".includes(token.value[i])) && (token.value[i].charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isAnEnabledValue(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
+          validateCharEncoding(token.value[i], i + token.start, mode, context);
+        }
+      }
     }
   };
-};
+}
 
 function mediaMalformed(context) {
   return {
@@ -9852,7 +9861,7 @@ defineLazyProp__default['default'](builtInRules, "attribute-validate-vspace", fu
 defineLazyProp__default['default'](builtInRules, "attribute-validate-width", function () {
   return attributeValidateWidth;
 });
-defineLazyProp__default['default'](builtInRules, "bad-named-html-entity-not-email-friendly", function () {
+defineLazyProp__default['default'](builtInRules, "bad-html-entity-not-email-friendly", function () {
   return htmlEntitiesNotEmailFriendly;
 });
 defineLazyProp__default['default'](builtInRules, "character-encode", function () {
@@ -10057,53 +10066,31 @@ var Linter = function (_TypedEmitter) {
       }
       return current;
     }));
-    if (Object.keys(config.rules).some(function (ruleName) {
-      return (ruleName === "all" ||
-      ruleName === "bad-html-entity" ||
-      ruleName.startsWith("bad-html-entity") || ruleName.startsWith("bad-named-html-entity") || matcher__default['default'].isMatch(["bad-malformed-numeric-character-entity"], ruleName)) && (isAnEnabledValue(config.rules[ruleName]) || isAnEnabledValue(processedRulesConfig[ruleName]));
-    })) {
+    var severity = 0;
+    var letsCatchBadEntities = Object.keys(config.rules).some(function (ruleName) {
+      return (ruleName === "all" || ruleName.startsWith("bad-html-entity")) && (severity = isAnEnabledValue(config.rules[ruleName]) || isAnEnabledValue(processedRulesConfig[ruleName]));
+    });
+    var letsCatchRawTextAmpersands = Object.keys(config.rules).some(function (ruleName) {
+      return (ruleName === "all" || ruleName === "character-encode") && (isAnEnabledValue(config.rules[ruleName]) || isAnEnabledValue(processedRulesConfig[ruleName]));
+    });
+    if (letsCatchBadEntities || letsCatchRawTextAmpersands) {
       stringFixBrokenNamedEntities.fixEnt(str, {
-        cb: function cb(obj) {
-          var matchedRulesName = "";
-          var severity;
-          if (Object.keys(config.rules).includes("bad-html-entity")) {
-            if (obj.ruleName === "bad-named-html-entity-unrecognised") {
-              severity = 1;
-            } else if (Array.isArray(config.rules["bad-html-entity"])) {
-              severity = config.rules["bad-html-entity"][0];
-            } else if (Number.isInteger(config.rules["bad-html-entity"])) {
-              severity = config.rules["bad-html-entity"];
-            }
-          } else if (Object.keys(config.rules).some(function (rulesName) {
-            if (matcher__default['default'].isMatch(obj.ruleName, rulesName)) {
-              matchedRulesName = rulesName;
-              return true;
-            }
-            return false;
-          })) {
-            if (obj.ruleName === "bad-named-html-entity-unrecognised" && config.rules["bad-named-html-entity-unrecognised"] === undefined) {
-              severity = 1;
-            } else if (Array.isArray(config.rules[matchedRulesName])) {
-              severity = config.rules[matchedRulesName][0];
-            } else if (Number.isInteger(config.rules[matchedRulesName])) {
-              severity = config.rules[matchedRulesName];
-            }
-          }
-          if (Number.isInteger(severity)) {
+        cb: letsCatchBadEntities ? function (obj) {
+          if (Number.isInteger(severity) && severity) {
             var message;
-            if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
-              message = "Malformed NBSP entity.";
-            } else if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+            if (obj.ruleName === "bad-html-entity-malformed-nbsp") {
+              message = "Malformed nbsp entity.";
+            } else if (obj.ruleName === "bad-html-entity-unrecognised") {
               message = "Unrecognised named entity.";
-            } else if (obj.ruleName === "bad-named-html-entity-multiple-encoding") {
+            } else if (obj.ruleName === "bad-html-entity-multiple-encoding") {
               message = "HTML entity encoding over and over.";
-            } else if (obj.ruleName === "bad-malformed-numeric-character-entity") {
+            } else if (obj.ruleName === "bad-html-entity-malformed-numeric") {
               message = "Malformed numeric entity.";
             } else {
               message = "Malformed " + (obj.entityName ? obj.entityName : "named") + " entity.";
             }
             var ranges = [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded ? obj.rangeValEncoded : ""]];
-            if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+            if (obj.ruleName === "bad-html-entity-unrecognised") {
               ranges = [];
             }
             _this2.report({
@@ -10117,13 +10104,20 @@ var Linter = function (_TypedEmitter) {
               }
             });
           }
-        },
-        entityCatcherCb: function entityCatcherCb(from, to) {
+        } : undefined,
+        entityCatcherCb: letsCatchBadEntities ? function (from, to) {
           _this2.emit("entity", {
             idxFrom: from,
             idxTo: to
           });
-        }
+        } : undefined,
+        textAmpersandCatcherCb: letsCatchRawTextAmpersands ? function (posIdx) {
+          var mode;
+          if (Array.isArray(processedRulesConfig["character-encode"]) && processedRulesConfig["character-encode"].includes("numeric")) {
+            mode = "numeric";
+          }
+          validateCharEncoding("&", posIdx, mode, _this2);
+        } : undefined
       });
     }
     var allEventNames = ["tag", "at", "rule", "text", "esp", "character", "attribute", "ast", "comment", "entity"];

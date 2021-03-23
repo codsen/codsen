@@ -11,7 +11,7 @@ import allBadCharacterRules from "./rules/all-bad-character.json";
 import allTagRules from "./rules/all-tag.json";
 import allAttribRules from "./rules/all-attribute.json";
 import allCSSRules from "./rules/all-css.json";
-import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
+import allBadNamedHTMLEntityRules from "./rules/all-bad-html-entity.json";
 import { isAnEnabledValue } from "./util/util";
 import { Linter } from "./linter";
 import { RulesObj } from "./util/commonTypes";
@@ -531,7 +531,7 @@ import attributeValidateWidth from "./rules/attribute-validate/attribute-validat
 // -----------------------------------------------------------------------------
 // (some of them, only plugin-based-ones - the rest are on linter.js, directly on a callback)
 
-import htmlEntitiesNotEmailFriendly from "./rules/bad-html-entity/bad-named-html-entity-not-email-friendly";
+import htmlEntitiesNotEmailFriendly from "./rules/bad-html-entity/bad-html-entity-not-email-friendly";
 
 // CHARACTER rules
 // -----------------------------------------------------------------------------
@@ -1795,7 +1795,7 @@ defineLazyProp(
 );
 defineLazyProp(
   builtInRules,
-  "bad-named-html-entity-not-email-friendly",
+  "bad-html-entity-not-email-friendly",
   () => htmlEntitiesNotEmailFriendly
 );
 defineLazyProp(builtInRules, "character-encode", () => characterEncode);
@@ -1928,15 +1928,13 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
     }
     if (Object.keys(opts).includes("bad-html-entity")) {
       allBadNamedHTMLEntityRules.forEach((ruleName) => {
-        // whole group of rules, not necessarily starting with "bad-html-entity"
-        // will be added. Currently it's the list:
-        //  * bad-named-html-entity-malformed-nbsp
-        //  * bad-named-html-entity-malformed-*
-        //  * bad-named-html-entity-unrecognised
-        //  * bad-named-html-entity-multiple-encoding
-        //  * bad-malformed-numeric-character-entity
-        //  * encoded-html-entity-nbsp
-        //  * encoded-numeric-html-entity-reference
+        //  * bad-html-entity-malformed-nbsp
+        //  * bad-html-entity-malformed-*
+        //  * bad-html-entity-unrecognised
+        //  * bad-html-entity-multiple-encoding
+        //  * bad-html-entity-malformed-numeric
+        //  * bad-html-entity-encoded-nbsp
+        //  * bad-html-entity-encoded-numeric
 
         res[ruleName] = opts["bad-html-entity"];
       });
@@ -1976,7 +1974,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1979 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1977 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

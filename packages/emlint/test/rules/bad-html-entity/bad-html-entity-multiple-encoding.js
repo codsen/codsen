@@ -16,7 +16,7 @@ tap.test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, (t) => {
     messages,
     [
       {
-        ruleId: "bad-named-html-entity-multiple-encoding",
+        ruleId: "bad-html-entity-multiple-encoding",
         severity: 2,
         idxFrom: 3,
         idxTo: 13,
@@ -28,6 +28,7 @@ tap.test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, (t) => {
     ],
     "01.02"
   );
+  t.equal(messages.length, 1, "01.03");
   t.end();
 });
 
@@ -37,7 +38,7 @@ tap.test(
     const str = `abc&amp;nbsp;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-multiple-encoding": 1,
+        "bad-html-entity-multiple-encoding": 1,
       },
     });
     t.equal(applyFixes(str, messages), "abc&nbsp;def", "02.01");
@@ -45,7 +46,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-named-html-entity-multiple-encoding",
+          ruleId: "bad-html-entity-multiple-encoding",
           severity: 1,
           idxFrom: 3,
           idxTo: 13,
@@ -57,6 +58,7 @@ tap.test(
       ],
       "02.02"
     );
+    t.equal(messages.length, 1, "02.03");
     t.end();
   }
 );
@@ -67,7 +69,7 @@ tap.test(
     const str = `abc&amp;nbsp;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-multiple-encoding": 2,
+        "bad-html-entity-multiple-encoding": 2,
       },
     });
     t.equal(applyFixes(str, messages), "abc&nbsp;def", "03.01");
@@ -75,7 +77,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-named-html-entity-multiple-encoding",
+          ruleId: "bad-html-entity-multiple-encoding",
           severity: 2,
           idxFrom: 3,
           idxTo: 13,
@@ -87,6 +89,7 @@ tap.test(
       ],
       "03.02"
     );
+    t.equal(messages.length, 1, "03.03");
     t.end();
   }
 );
@@ -97,7 +100,7 @@ tap.test(
     const str = `abc&amp;nbsp;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-*": 2,
+        "bad-html-entity-*": 2,
       },
     });
     t.equal(applyFixes(str, messages), "abc&nbsp;def", "04.01");
@@ -105,7 +108,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-named-html-entity-multiple-encoding",
+          ruleId: "bad-html-entity-multiple-encoding",
           severity: 2,
           idxFrom: 3,
           idxTo: 13,
@@ -117,6 +120,7 @@ tap.test(
       ],
       "04.02"
     );
+    t.equal(messages.length, 1, "04.03");
     t.end();
   }
 );
@@ -142,7 +146,7 @@ tap.test(
     const str = `abc&amp;nbsp;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-multiple-encoding": 0,
+        "bad-html-entity-multiple-encoding": 0,
       },
     });
     t.equal(applyFixes(str, messages), str, "06.01");
@@ -157,7 +161,7 @@ tap.test(
     const str = `abc&amp;nbsp;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-*": 0,
+        "bad-html-entity-*": 0,
       },
     });
     t.equal(applyFixes(str, messages), str, "07.01");
@@ -165,3 +169,31 @@ tap.test(
     t.end();
   }
 );
+
+tap.only(`08 - all`, (t) => {
+  const str = `abc&amp;nbsp;def`;
+  const messages = verify(t, str, {
+    rules: {
+      all: 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), "abc&nbsp;def", "08.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "bad-html-entity-multiple-encoding",
+        severity: 2,
+        idxFrom: 3,
+        idxTo: 13,
+        message: "HTML entity encoding over and over.",
+        fix: {
+          ranges: [[3, 13, "&nbsp;"]],
+        },
+      },
+    ],
+    "08.02"
+  );
+  t.equal(messages.length, 1, "08.03");
+  t.end();
+});

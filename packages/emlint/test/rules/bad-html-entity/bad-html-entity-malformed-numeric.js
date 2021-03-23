@@ -18,7 +18,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-malformed-numeric-character-entity",
+          ruleId: "bad-html-entity-malformed-numeric",
           severity: 2,
           idxFrom: 1,
           idxTo: 21,
@@ -30,6 +30,7 @@ tap.test(
       ],
       "01.02"
     );
+    t.equal(messages.length, 1, "01.03");
     t.end();
   }
 );
@@ -40,7 +41,7 @@ tap.test(
     const str = `a&#99999999999999999;z`;
     const messages = verify(t, str, {
       rules: {
-        "bad-malformed-numeric-character-entity": 1,
+        "bad-html-entity-malformed-numeric": 1,
       },
     });
     t.equal(applyFixes(str, messages), "az", "02.01");
@@ -48,7 +49,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-malformed-numeric-character-entity",
+          ruleId: "bad-html-entity-malformed-numeric",
           severity: 1,
           idxFrom: 1,
           idxTo: 21,
@@ -60,6 +61,7 @@ tap.test(
       ],
       "02.02"
     );
+    t.equal(messages.length, 1, "02.03");
     t.end();
   }
 );
@@ -70,7 +72,7 @@ tap.test(
     const str = `a&#99999999999999999;z`;
     const messages = verify(t, str, {
       rules: {
-        "bad-malformed-numeric-character-entity": 2,
+        "bad-html-entity-malformed-numeric": 2,
       },
     });
     t.equal(applyFixes(str, messages), "az", "03.01");
@@ -78,7 +80,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-malformed-numeric-character-entity",
+          ruleId: "bad-html-entity-malformed-numeric",
           severity: 2,
           idxFrom: 1,
           idxTo: 21,
@@ -90,6 +92,7 @@ tap.test(
       ],
       "03.02"
     );
+    t.equal(messages.length, 1, "03.03");
     t.end();
   }
 );
@@ -103,7 +106,7 @@ tap.test(
     const str = `_&$65;_`;
     const messages = verify(t, str, {
       rules: {
-        "bad-malformed-*": 2,
+        "bad-html-entity-malformed-*": 2,
       },
     });
     t.equal(applyFixes(str, messages), "__", "04.01");
@@ -111,7 +114,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-malformed-numeric-character-entity",
+          ruleId: "bad-html-entity-malformed-numeric",
           severity: 2,
           idxFrom: 1,
           idxTo: 6,
@@ -123,6 +126,7 @@ tap.test(
       ],
       "04.02"
     );
+    t.equal(messages.length, 1, "04.03");
     t.end();
   }
 );
@@ -151,7 +155,7 @@ tap.test(
     const str = `a&#99999999999999999;z`;
     const messages = verify(t, str, {
       rules: {
-        "bad-malformed-numeric-character-entity": [0],
+        "bad-html-entity-malformed-numeric": [0],
       },
     });
     t.equal(applyFixes(str, messages), str, "06.01");
@@ -166,7 +170,7 @@ tap.test(
     const str = `a&#99999999999999999;z<br>`;
     const messages = verify(t, str, {
       rules: {
-        "bad-malformed-numeric-character-entity": [0],
+        "bad-html-entity-malformed-numeric": [0],
         "tag-void-slash": [1],
       },
     });

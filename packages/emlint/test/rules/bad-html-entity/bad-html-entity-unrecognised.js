@@ -18,8 +18,8 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-named-html-entity-unrecognised",
-          severity: 1, // <------- unrecognised entities might be false positives so default level is "warning"!
+          ruleId: "bad-html-entity-unrecognised",
+          severity: 2,
           idxFrom: 3,
           idxTo: 7,
           message: "Unrecognised named entity.",
@@ -30,6 +30,7 @@ tap.test(
       ],
       "01.02"
     );
+    t.equal(messages.length, 1, "01.03");
     t.end();
   }
 );
@@ -40,7 +41,7 @@ tap.test(
     const str = `abc&yo;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-unrecognised": 1,
+        "bad-html-entity-unrecognised": 1,
       },
     });
     t.equal(applyFixes(str, messages), str, "02.01");
@@ -48,7 +49,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-named-html-entity-unrecognised",
+          ruleId: "bad-html-entity-unrecognised",
           severity: 1,
           idxFrom: 3,
           idxTo: 7,
@@ -60,6 +61,7 @@ tap.test(
       ],
       "02.02"
     );
+    t.equal(messages.length, 1, "02.03");
     t.end();
   }
 );
@@ -70,7 +72,7 @@ tap.test(
     const str = `abc&yo;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-unrecognised": 2,
+        "bad-html-entity-unrecognised": 2,
       },
     });
     t.equal(applyFixes(str, messages), str, "03.01");
@@ -78,7 +80,7 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-named-html-entity-unrecognised",
+          ruleId: "bad-html-entity-unrecognised",
           severity: 2,
           idxFrom: 3,
           idxTo: 7,
@@ -90,17 +92,18 @@ tap.test(
       ],
       "03.02"
     );
+    t.equal(messages.length, 1, "03.03");
     t.end();
   }
 );
 
 tap.test(
-  `04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard`,
+  `04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`,
   (t) => {
     const str = `abc&yo;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-*": 2,
+        "bad-html-entity": 2,
       },
     });
     t.equal(applyFixes(str, messages), str, "04.01");
@@ -108,8 +111,8 @@ tap.test(
       messages,
       [
         {
-          ruleId: "bad-named-html-entity-unrecognised",
-          severity: 1, // <---- default is warning
+          ruleId: "bad-html-entity-unrecognised",
+          severity: 2,
           idxFrom: 3,
           idxTo: 7,
           message: "Unrecognised named entity.",
@@ -120,6 +123,7 @@ tap.test(
       ],
       "04.02"
     );
+    t.equal(messages.length, 1, "04.03");
     t.end();
   }
 );
@@ -145,7 +149,7 @@ tap.test(
     const str = `abc&yo;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-unrecognised": 0,
+        "bad-html-entity-unrecognised": 0,
       },
     });
     t.equal(applyFixes(str, messages), str, "06.01");
@@ -160,7 +164,7 @@ tap.test(
     const str = `abc&yo;def`;
     const messages = verify(t, str, {
       rules: {
-        "bad-named-html-entity-*": 0,
+        "bad-html-entity-*": 0,
       },
     });
     t.equal(applyFixes(str, messages), str, "07.01");
@@ -168,3 +172,30 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`08 - all`, (t) => {
+  const str = `abc&yo;def`;
+  const messages = verify(t, str, {
+    rules: {
+      all: 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "08.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "bad-html-entity-unrecognised",
+        severity: 2,
+        idxFrom: 3,
+        idxTo: 7,
+        message: "Unrecognised named entity.",
+        fix: {
+          ranges: [], // no fixes
+        },
+      },
+    ],
+    "08.02"
+  );
+  t.end();
+});

@@ -138,7 +138,7 @@ const allBadNamedHTMLEntityRules = fs
   .map((val) => path.parse(val).name);
 
 fs.writeFileSync(
-  path.resolve("src/rules/all-bad-named-html-entity.json"),
+  path.resolve("src/rules/all-bad-html-entity.json"),
   JSON.stringify(allBadNamedHTMLEntityRules.sort(), null, 2)
 );
 
