@@ -31,16 +31,10 @@ resultRanges.forEach((range) => {
   finalRanges.push(range);
 });
 
-// check what's been gathered so far:
-assert.deepEqual(resultRanges, [
-  [1, 6, "&nbsp;"],
-  [7, 12, "&nbsp;"],
-]);
-
 // check the positions of reported raw ampersands:
 assert.deepEqual(indexesOfRawAmpersands, [0, 6, 12]);
 
-// replace each character at these positions: 0, 7 and 14
+// replace each character at these positions: 0, 6 and 12
 // with string "&amp;" - in terms of Ranges, it's a matter
 // of building a Ranges array:
 const replacementRanges = indexesOfRawAmpersands.map((idx) => [
