@@ -1228,3 +1228,88 @@ tap.test(`56`, (t) => {
   t.strictSame(gathered, [0, 3, 6], "56.02");
   t.end();
 });
+
+tap.test(`57 - rsquo, decoding requested`, (t) => {
+  const gathered = [];
+  const inp1 = `&rsquo;`;
+  t.strictSame(
+    fix(inp1, {
+      cb: (obj) => obj,
+      textAmpersandCatcherCb: (idx) => {
+        gathered.push(idx);
+      },
+      decode: true,
+    }),
+    [
+      {
+        ruleName: `bad-html-entity-encoded-rsquo`,
+        entityName: "rsquo",
+        rangeFrom: 0,
+        rangeTo: inp1.length,
+        rangeValEncoded: "&rsquo;",
+        rangeValDecoded: "\u2019",
+      },
+    ],
+    "57.01"
+  );
+  t.strictSame(gathered, [], "57.02");
+  t.end();
+});
+
+tap.test(`58 - rsqo, no decoding`, (t) => {
+  const gathered = [];
+  const inp1 = `&rsqo;`;
+  t.strictSame(
+    fix(inp1, {
+      cb: (obj) => obj,
+      textAmpersandCatcherCb: (idx) => {
+        gathered.push(idx);
+      },
+    }),
+    [
+      {
+        ruleName: `bad-html-entity-malformed-rsquo`,
+        entityName: "rsquo",
+        rangeFrom: 0,
+        rangeTo: inp1.length,
+        rangeValEncoded: "&rsquo;",
+        rangeValDecoded: "\u2019",
+      },
+    ],
+    "58.01"
+  );
+  t.strictSame(gathered, [], "58.02");
+  t.end();
+});
+
+tap.test(`59 - rsqo + decoding, no cb`, (t) => {
+  const inp1 = `&rsqo;`;
+  t.strictSame(fix(inp1, {}), [[0, 6, "&rsquo;"]], "59");
+  t.end();
+});
+
+tap.test(`60 - rsqo + decoding, whole cb`, (t) => {
+  const gathered = [];
+  const inp1 = `&rsqo;`;
+  t.strictSame(
+    fix(inp1, {
+      cb: (obj) => obj,
+      textAmpersandCatcherCb: (idx) => {
+        gathered.push(idx);
+      },
+    }),
+    [
+      {
+        ruleName: `bad-html-entity-malformed-rsquo`,
+        entityName: "rsquo",
+        rangeFrom: 0,
+        rangeTo: inp1.length,
+        rangeValEncoded: "&rsquo;",
+        rangeValDecoded: "\u2019",
+      },
+    ],
+    "60.01"
+  );
+  t.strictSame(gathered, [], "60.02");
+  t.end();
+});

@@ -322,7 +322,7 @@ function fixEnt(str, originalOpts) {
               const potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(char => char.trim().length).join("");
               if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
                 if (
-                !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
+                typeof potentialEntityOnlyNonWhitespaceChars === "string" && !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
                   const matchingEntitiesOfCorrectCaseArr = [...allNamedEntitiesSetOnly].filter(ent => ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase());
                   if (matchingEntitiesOfCorrectCaseArr.length === 1) {
                     rangesArr2.push({
@@ -417,6 +417,35 @@ function fixEnt(str, originalOpts) {
                     rangeValDecoded: decode(`&${tempEnt};`)
                   });
                   pingAmps(whatsOnTheLeft, i);
+                } else if (temp) {
+                  const missingLettersCount = temp.map(ent => {
+                    const splitStr = str.split("");
+                    return ent.split("").reduce((acc, curr) => {
+                      if (splitStr.includes(curr)) {
+                        splitStr.splice(splitStr.indexOf(curr), 1);
+                        return acc + 1;
+                      }
+                      return acc;
+                    }, 0);
+                  });
+                  const maxVal = Math.max(...missingLettersCount);
+                  if (maxVal && missingLettersCount.filter(v => v === maxVal).length === 1) {
+                    for (let z = 0, len = missingLettersCount.length; z < len; z++) {
+                      if (missingLettersCount[z] === maxVal) {
+                        tempEnt = temp[z];
+                        rangesArr2.push({
+                          ruleName: `bad-html-entity-malformed-${tempEnt}`,
+                          entityName: tempEnt,
+                          rangeFrom: whatsOnTheLeft,
+                          rangeTo: i + 1,
+                          rangeValEncoded: `&${tempEnt};`,
+                          rangeValDecoded: decode(`&${tempEnt};`)
+                        });
+                        pingAmps(whatsOnTheLeft, i);
+                        break;
+                      }
+                    }
+                  }
                 }
               }
               if (!tempEnt) {

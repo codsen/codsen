@@ -10374,7 +10374,7 @@ function fixEnt(str, originalOpts) { //
               if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
 
                 if ( // first, check is the letter case allright
-                !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
+                typeof potentialEntityOnlyNonWhitespaceChars === "string" && !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
                   var matchingEntitiesOfCorrectCaseArr = [].concat(allNamedEntitiesSetOnly).filter(function (ent) {
                     return ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase();
                   });
@@ -10495,6 +10495,48 @@ function fixEnt(str, originalOpts) { //
                     rangeValDecoded: decode("&" + _tempEnt2 + ";")
                   });
                   pingAmps(whatsOnTheLeft, i);
+                } else if (temp) {
+                  // For example, &rsqo; could be suspected as
+                  // Lenshtein's distance &rsqb; and &rsquo;
+                  // The last chance, count how many letters are
+                  // absent in this malformed entity.
+                  var missingLettersCount = temp.map(function (ent) {
+                    var splitStr = str.split("");
+                    return ent.split("").reduce(function (acc, curr) {
+                      if (splitStr.includes(curr)) {
+                        // remove that character from splitStr
+                        // so that we count only once, repetitions need to
+                        // be matched equally
+                        splitStr.splice(splitStr.indexOf(curr), 1);
+                        return acc + 1;
+                      }
+
+                      return acc;
+                    }, 0);
+                  });
+                  var maxVal = Math.max.apply(Math, missingLettersCount); // if there's only one value with more characters matched
+                  // than others, &rsqb; vs &rsquo; - latter would win matching
+                  // against messed up &rsqo; - we pick that winning-one
+
+                  if (maxVal && missingLettersCount.filter(function (v) {
+                    return v === maxVal;
+                  }).length === 1) {
+                    for (var z = 0, _len = missingLettersCount.length; z < _len; z++) {
+                      if (missingLettersCount[z] === maxVal) {
+                        _tempEnt2 = temp[z];
+                        rangesArr2.push({
+                          ruleName: "bad-html-entity-malformed-" + _tempEnt2,
+                          entityName: _tempEnt2,
+                          rangeFrom: whatsOnTheLeft,
+                          rangeTo: i + 1,
+                          rangeValEncoded: "&" + _tempEnt2 + ";",
+                          rangeValDecoded: decode("&" + _tempEnt2 + ";")
+                        });
+                        pingAmps(whatsOnTheLeft, i);
+                        break;
+                      }
+                    }
+                  }
                 }
               } // if "tempEnt" was not set by now, it is not a known HTML entity
 
