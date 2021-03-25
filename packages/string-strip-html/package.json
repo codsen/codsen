@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "8.2.6",
+  "version": "8.2.7",
   "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
   "keywords": [
     "code",
@@ -90,9 +90,9 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1",
     "lodash.without": "^4.4.0",
-    "ranges-apply": "^5.0.9",
-    "ranges-push": "^5.0.9",
-    "string-left-right": "^4.0.9"
+    "ranges-apply": "^5.0.10",
+    "ranges-push": "^5.0.10",
+    "string-left-right": "^4.0.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -122,8 +122,8 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.9",
-    "ranges-invert": "^4.0.9",
+    "lect": "^0.16.10",
+    "ranges-invert": "^4.0.10",
     "rollup": "^2.42.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

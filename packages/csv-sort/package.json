@@ -1,6 +1,6 @@
 {
   "name": "csv-sort",
-  "version": "5.0.9",
+  "version": "5.0.10",
   "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
   "keywords": [
     "accountancy",
@@ -83,7 +83,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "csv-split-easy": "^5.0.9",
+    "csv-split-easy": "^5.0.10",
     "currency.js": "^2.0.3",
     "lodash.pull": "^4.1.0"
   },
@@ -113,7 +113,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.9",
+    "lect": "^0.16.10",
     "rollup": "^2.42.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

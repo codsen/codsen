@@ -1,6 +1,6 @@
 {
   "name": "ranges-offset",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Increment or decrement each index in every range",
   "keywords": [
     "array",
@@ -97,7 +97,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.9",
+    "lect": "^0.16.10",
     "rollup": "^2.42.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

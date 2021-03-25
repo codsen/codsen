@@ -1,6 +1,6 @@
 {
   "name": "string-remove-duplicate-heads-tails",
-  "version": "5.0.9",
+  "version": "5.0.10",
   "description": "Detect and (recursively) remove head and tail wrappings around the input string",
   "keywords": [
     "alt",
@@ -81,12 +81,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "arrayiffy-if-string": "^3.13.9",
+    "arrayiffy-if-string": "^3.13.10",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^5.0.9",
-    "ranges-push": "^5.0.9",
-    "string-match-left-right": "^7.0.3",
-    "string-trim-spaces-only": "^3.0.9"
+    "ranges-apply": "^5.0.10",
+    "ranges-push": "^5.0.10",
+    "string-match-left-right": "^7.0.4",
+    "string-trim-spaces-only": "^3.0.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -114,7 +114,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.9",
+    "lect": "^0.16.10",
     "rollup": "^2.42.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

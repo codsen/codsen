@@ -1,6 +1,6 @@
 {
   "name": "object-fill-missing-keys",
-  "version": "8.0.9",
+  "version": "8.0.10",
   "description": "Add missing keys into plain objects, according to a reference object",
   "keywords": [
     "add",
@@ -82,11 +82,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "arrayiffy-if-string": "^3.13.9",
+    "arrayiffy-if-string": "^3.13.10",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "object-all-values-equal-to": "^2.0.9",
-    "object-merge-advanced": "^12.0.6"
+    "object-all-values-equal-to": "^2.0.10",
+    "object-merge-advanced": "^12.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -115,7 +115,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
-    "lect": "^0.16.9",
+    "lect": "^0.16.10",
     "rollup": "^2.42.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

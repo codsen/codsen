@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.10](https://github.com/codsen/codsen/compare/object-flatten-referencing@5.0.9...object-flatten-referencing@5.0.10) (2021-03-25)
+
+**Note:** Version bump only for package object-flatten-referencing
+
+
+
+
+
 ## 5.0.1 (2021-01-28)
 
 ### Bug Fixes
