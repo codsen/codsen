@@ -1,25 +1,14 @@
 import tap from "tap";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.umd";
+import { fixEnt } from "../dist/string-fix-broken-named-entities.umd";
 
-tap.todo(`01`, (t) => {
-  const gathered = [];
-  const inp1 = `Pint & pie costs ~&Pound;4 in the pub these&nbspdays. When they&rsqo;ll open we don&rsquot know.`;
+tap.test(`01`, (t) => {
+  const inp1 = `Pint & pie costs ~&Pound;10 in the pub these&nbspdays. When they&rsqo;ll open we don&rsquot know.`;
   const outp1 = [
     [18, 25, "&pound;"],
-    [43, 48, "&nbsp;"],
-    [63, 69, "&rsquo;"],
-    [83, 89, "&rsquo;"],
+    [44, 49, "&nbsp;"],
+    [64, 70, "&rsquo;"],
+    [84, 90, "&rsquo;"],
   ];
-  t.strictSame(fix(inp1), outp1, "01.01");
-  t.strictSame(
-    fix(inp1, {
-      textAmpersandCatcherCb: (idx) => {
-        gathered.push(idx);
-      },
-    }),
-    outp1,
-    "01.02"
-  );
-  t.strictSame(gathered, [5], "01.03");
+  t.strictSame(fixEnt(inp1), outp1, "01");
   t.end();
 });

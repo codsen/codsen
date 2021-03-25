@@ -1313,3 +1313,9 @@ tap.test(`60 - rsqo + decoding, whole cb`, (t) => {
   t.strictSame(gathered, [], "60.02");
   t.end();
 });
+
+tap.test(`61 - pound in first capital`, (t) => {
+  const inp1 = `&Pound;`;
+  t.strictSame(fix(inp1, {}), [[0, 7, "&pound;"]], "61");
+  t.end();
+});
