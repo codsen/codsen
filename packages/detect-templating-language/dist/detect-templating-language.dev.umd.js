@@ -1,7 +1,7 @@
 /**
  * detect-templating-language
  * Detects various templating languages present in string
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detect-templating-language/
@@ -16,12 +16,11 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * regex-is-jinja-nunjucks
  * Regular expression for detecting Jinja or Nunjucks code
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
  */
-
 function isJinjaNunjucksRegex() {
   return /{%|{{|%}|}}/gi;
 }
@@ -29,12 +28,11 @@ function isJinjaNunjucksRegex() {
 /**
  * regex-is-jsp
  * Regular expression for detecting JSP (Java Server Pages) code
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-is-jsp/
  */
-
 function isJSP() {
   return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
 }
@@ -42,49 +40,43 @@ function isJSP() {
 /**
  * regex-jinja-specific
  * Regular expression for detecting Python-specific Jinja code
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-jinja-specific/
  */
-
 function isJinjaSpecific() {
   return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
 }
 
-var version$1 = "2.0.9";
+var version$1 = "2.0.10";
 
-var version = version$1;
-
+const version = version$1;
 function detectLang(str) {
-  var name = null;
-
-  if (typeof str !== "string") {
-    throw new TypeError("detect-templating-language: [THROW_ID_01] Input must be string! It was given as " + JSON.stringify(str, null, 4) + " (type " + typeof str + ").");
-  }
-
-  if (!str) {
-    // early ending on empty string
-    return {
-      name: name
-    };
-  } // real action starts
-  // ---------------------------------------------------------------------------
-
-
-  if (isJinjaNunjucksRegex().test(str)) {
-    name = "Nunjucks";
-
-    if (isJinjaSpecific().test(str)) {
-      name = "Jinja";
+    let name = null;
+    if (typeof str !== "string") {
+        throw new TypeError(`detect-templating-language: [THROW_ID_01] Input must be string! It was given as ${JSON.stringify(str, null, 4)} (type ${typeof str}).`);
     }
-  } else if (isJSP().test(str)) {
-    name = "JSP";
-  }
-
-  return {
-    name: name
-  };
+    if (!str) {
+        // early ending on empty string
+        return {
+            name,
+        };
+    }
+    // real action starts
+    // ---------------------------------------------------------------------------
+    if (isJinjaNunjucksRegex().test(str)) {
+        name = "Nunjucks";
+        if (isJinjaSpecific().test(str)) {
+            name = "Jinja";
+        }
+    }
+    else if (isJSP().test(str)) {
+        name = "JSP";
+    }
+    return {
+        name,
+    };
 }
 
 exports.detectLang = detectLang;

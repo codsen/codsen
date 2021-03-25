@@ -1,7 +1,7 @@
 /**
  * ranges-ent-decode
  * Recursive HTML entity decoding for Ranges workflow
- * Version: 4.0.9
+ * Version: 4.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-ent-decode/
@@ -11,7 +11,7 @@ import he from 'he';
 import { rMerge } from 'ranges-merge';
 import isObj from 'lodash.isplainobject';
 
-var version$1 = "4.0.9";
+var version$1 = "4.0.10";
 
 const version = version$1;
 function chomp(str) {

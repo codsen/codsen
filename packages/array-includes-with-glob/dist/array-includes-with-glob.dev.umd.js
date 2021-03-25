@@ -1,7 +1,7 @@
 /**
  * array-includes-with-glob
  * Like _.includes but with wildcards
- * Version: 3.0.9
+ * Version: 3.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-includes-with-glob/
@@ -13,261 +13,155 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.arrayIncludesWithGlob = {}));
 }(this, (function (exports) { 'use strict';
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
+var escapeStringRegexp = string => {
+	if (typeof string !== 'string') {
+		throw new TypeError('Expected a string');
+	}
 
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-  return arr2;
-}
-
-function _createForOfIteratorHelperLoose(o, allowArrayLike) {
-  var it;
-
-  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
-    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-      if (it) o = it;
-      var i = 0;
-      return function () {
-        if (i >= o.length) return {
-          done: true
-        };
-        return {
-          done: false,
-          value: o[i++]
-        };
-      };
-    }
-
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
-  it = o[Symbol.iterator]();
-  return it.next.bind(it);
-}
-
-var escapeStringRegexp = function escapeStringRegexp(string) {
-  if (typeof string !== 'string') {
-    throw new TypeError('Expected a string');
-  } // Escape characters with special meaning either inside or outside character sets.
-  // Use a simple backslash escape when it’s always valid, and a \unnnn escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
-
-
-  return string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
+	// Escape characters with special meaning either inside or outside character sets.
+	// Use a simple backslash escape when it’s always valid, and a \unnnn escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
+	return string
+		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+		.replace(/-/g, '\\x2d');
 };
 
-var regexpCache = new Map();
+const regexpCache = new Map();
 
 function sanitizeArray(input, inputName) {
-  if (!Array.isArray(input)) {
-    switch (typeof input) {
-      case 'string':
-        input = [input];
-        break;
+	if (!Array.isArray(input)) {
+		switch (typeof input) {
+			case 'string':
+				input = [input];
+				break;
+			case 'undefined':
+				input = [];
+				break;
+			default:
+				throw new TypeError(`Expected '${inputName}' to be a string or an array, but got a type of '${typeof input}'`);
+		}
+	}
 
-      case 'undefined':
-        input = [];
-        break;
+	return input.filter(string => {
+		if (typeof string !== 'string') {
+			if (typeof string === 'undefined') {
+				return false;
+			}
 
-      default:
-        throw new TypeError("Expected '" + inputName + "' to be a string or an array, but got a type of '" + typeof input + "'");
-    }
-  }
+			throw new TypeError(`Expected '${inputName}' to be an array of strings, but found a type of '${typeof string}' in the array`);
+		}
 
-  return input.filter(function (string) {
-    if (typeof string !== 'string') {
-      if (typeof string === 'undefined') {
-        return false;
-      }
-
-      throw new TypeError("Expected '" + inputName + "' to be an array of strings, but found a type of '" + typeof string + "' in the array");
-    }
-
-    return true;
-  });
+		return true;
+	});
 }
 
 function makeRegexp(pattern, options) {
-  options = _objectSpread2({
-    caseSensitive: false
-  }, options);
-  var cacheKey = pattern + JSON.stringify(options);
+	options = {
+		caseSensitive: false,
+		...options
+	};
 
-  if (regexpCache.has(cacheKey)) {
-    return regexpCache.get(cacheKey);
-  }
+	const cacheKey = pattern + JSON.stringify(options);
 
-  var negated = pattern[0] === '!';
+	if (regexpCache.has(cacheKey)) {
+		return regexpCache.get(cacheKey);
+	}
 
-  if (negated) {
-    pattern = pattern.slice(1);
-  }
+	const negated = pattern[0] === '!';
 
-  pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
-  var regexp = new RegExp("^" + pattern + "$", options.caseSensitive ? '' : 'i');
-  regexp.negated = negated;
-  regexpCache.set(cacheKey, regexp);
-  return regexp;
+	if (negated) {
+		pattern = pattern.slice(1);
+	}
+
+	pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
+
+	const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
+	regexp.negated = negated;
+	regexpCache.set(cacheKey, regexp);
+
+	return regexp;
 }
 
-var matcher = function matcher(inputs, patterns, options) {
-  inputs = sanitizeArray(inputs, 'inputs');
-  patterns = sanitizeArray(patterns, 'patterns');
+var matcher = (inputs, patterns, options) => {
+	inputs = sanitizeArray(inputs, 'inputs');
+	patterns = sanitizeArray(patterns, 'patterns');
 
-  if (patterns.length === 0) {
-    return [];
-  }
+	if (patterns.length === 0) {
+		return [];
+	}
 
-  var isFirstPatternNegated = patterns[0][0] === '!';
-  patterns = patterns.map(function (pattern) {
-    return makeRegexp(pattern, options);
-  });
-  var result = [];
+	const isFirstPatternNegated = patterns[0][0] === '!';
 
-  for (var _iterator = _createForOfIteratorHelperLoose(inputs), _step; !(_step = _iterator()).done;) {
-    var input = _step.value;
-    // If first pattern is negated we include everything to match user expectation.
-    var matches = isFirstPatternNegated;
+	patterns = patterns.map(pattern => makeRegexp(pattern, options));
 
-    for (var _iterator2 = _createForOfIteratorHelperLoose(patterns), _step2; !(_step2 = _iterator2()).done;) {
-      var pattern = _step2.value;
+	const result = [];
 
-      if (pattern.test(input)) {
-        matches = !pattern.negated;
-      }
-    }
+	for (const input of inputs) {
+		// If first pattern is negated we include everything to match user expectation.
+		let matches = isFirstPatternNegated;
 
-    if (matches) {
-      result.push(input);
-    }
-  }
+		for (const pattern of patterns) {
+			if (pattern.test(input)) {
+				matches = !pattern.negated;
+			}
+		}
 
-  return result;
+		if (matches) {
+			result.push(input);
+		}
+	}
+
+	return result;
 };
 
-var isMatch = function isMatch(inputs, patterns, options) {
-  inputs = sanitizeArray(inputs, 'inputs');
-  patterns = sanitizeArray(patterns, 'patterns');
+var isMatch = (inputs, patterns, options) => {
+	inputs = sanitizeArray(inputs, 'inputs');
+	patterns = sanitizeArray(patterns, 'patterns');
 
-  if (patterns.length === 0) {
-    return false;
-  }
+	if (patterns.length === 0) {
+		return false;
+	}
 
-  return inputs.some(function (input) {
-    return patterns.every(function (pattern) {
-      var regexp = makeRegexp(pattern, options);
-      var matches = regexp.test(input);
-      return regexp.negated ? !matches : matches;
-    });
-  });
+	return inputs.some(input => {
+		return patterns.every(pattern => {
+			const regexp = makeRegexp(pattern, options);
+			const matches = regexp.test(input);
+			return regexp.negated ? !matches : matches;
+		});
+	});
 };
 matcher.isMatch = isMatch;
 
-var version$1 = "3.0.9";
+var version$1 = "3.0.10";
 
-var version = version$1;
-var defaults = {
-  arrayVsArrayAllMustBeFound: "any",
-  caseSensitive: true
+const version = version$1;
+const defaults = {
+    arrayVsArrayAllMustBeFound: "any",
+    caseSensitive: true,
 };
 /**
  * Like _.includes but with wildcards
  */
-
 function includesWithGlob(originalInput, stringToFind, originalOpts) {
-  // maybe we can end prematurely:
-  if (!originalInput.length || !stringToFind.length) {
-    return false; // because nothing can be found in it
-  }
-
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-
-  var input = typeof originalInput === "string" ? [originalInput] : Array.from(originalInput);
-
-  if (typeof stringToFind === "string") {
-    return input.some(function (val) {
-      return matcher.isMatch(val, stringToFind, {
-        caseSensitive: opts.caseSensitive
-      });
-    });
-  } // array then.
-
-
-  if (opts.arrayVsArrayAllMustBeFound === "any") {
-    return stringToFind.some(function (stringToFindVal) {
-      return input.some(function (val) {
-        return matcher.isMatch(val, stringToFindVal, {
-          caseSensitive: opts.caseSensitive
-        });
-      });
-    });
-  }
-
-  return stringToFind.every(function (stringToFindVal) {
-    return input.some(function (val) {
-      return matcher.isMatch(val, stringToFindVal, {
-        caseSensitive: opts.caseSensitive
-      });
-    });
-  });
+    // maybe we can end prematurely:
+    if (!originalInput.length || !stringToFind.length) {
+        return false; // because nothing can be found in it
+    }
+    const opts = { ...defaults, ...originalOpts };
+    const input = typeof originalInput === "string"
+        ? [originalInput]
+        : Array.from(originalInput);
+    if (typeof stringToFind === "string") {
+        return input.some((val) => matcher.isMatch(val, stringToFind, { caseSensitive: opts.caseSensitive }));
+    }
+    // array then.
+    if (opts.arrayVsArrayAllMustBeFound === "any") {
+        return stringToFind.some((stringToFindVal) => input.some((val) => matcher.isMatch(val, stringToFindVal, {
+            caseSensitive: opts.caseSensitive,
+        })));
+    }
+    return stringToFind.every((stringToFindVal) => input.some((val) => matcher.isMatch(val, stringToFindVal, {
+        caseSensitive: opts.caseSensitive,
+    })));
 }
 
 exports.defaults = defaults;

@@ -1,7 +1,7 @@
 /**
  * ast-loose-compare
  * Compare anything: AST, objects, arrays and strings
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-loose-compare/
@@ -10,7 +10,7 @@
 import { empty } from 'ast-contains-only-empty-space';
 import isObj from 'lodash.isplainobject';
 
-var version$1 = "2.0.9";
+var version$1 = "2.0.10";
 
 const version = version$1;
 function internalCompare(bigObj, smallObj, res) {

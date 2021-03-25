@@ -1,7 +1,7 @@
 /**
  * detergent
  * Extracts, cleans and encodes text
- * Version: 7.0.9
+ * Version: 7.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detergent/
@@ -24,7 +24,7 @@ import { allNamedEntities } from 'all-named-html-entities';
 import { expander } from 'string-range-expander';
 import { convertOne } from 'string-apostrophes';
 
-var version$1 = "7.0.9";
+var version$1 = "7.0.10";
 
 const defaultOpts = {
   fixBrokenEntities: true,

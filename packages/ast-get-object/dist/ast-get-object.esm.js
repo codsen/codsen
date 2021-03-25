@@ -1,7 +1,7 @@
 /**
  * ast-get-object
  * Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-object/
@@ -11,7 +11,7 @@ import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 import { compare } from 'ast-compare';
 
-var version$1 = "2.0.9";
+var version$1 = "2.0.10";
 
 const version = version$1;
 function existy(x) {

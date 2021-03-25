@@ -1,13 +1,13 @@
 /**
  * regex-empty-conditional-comments
  * Regular expression for matching HTML empty conditional comments
- * Version: 1.10.9
+ * Version: 1.10.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-empty-conditional-comments/
  */
 
-var version$1 = "1.10.9";
+var version$1 = "1.10.10";
 
 const version = version$1;
 function emptyCondCommentRegex() {

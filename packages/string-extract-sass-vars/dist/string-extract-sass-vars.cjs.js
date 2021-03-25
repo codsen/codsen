@@ -1,7 +1,7 @@
 /**
  * string-extract-sass-vars
  * Parse SASS variables file into a plain object of CSS key-value pairs
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-sass-vars/
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version$1 = "2.0.9";
+var version$1 = "2.0.10";
 
 var version = version$1;
 var BACKSLASH = "\\";

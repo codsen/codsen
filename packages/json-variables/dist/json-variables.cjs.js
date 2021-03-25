@@ -1,7 +1,7 @@
 /**
  * json-variables
  * Resolves custom-marked, cross-referenced paths in parsed JSON
- * Version: 10.0.9
+ * Version: 10.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/json-variables/
@@ -29,7 +29,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 var objectPath__default = /*#__PURE__*/_interopDefaultLegacy(objectPath);
 
-var version$1 = "10.0.9";
+var version$1 = "10.0.10";
 
 var version = version$1;
 var has = Object.prototype.hasOwnProperty;

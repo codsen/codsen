@@ -1,13 +1,13 @@
 /**
  * is-relative-uri
  * Is given string a relative URI?
- * Version: 3.0.9
+ * Version: 3.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-relative-uri/
  */
 
-var version$1 = "3.0.9";
+var version$1 = "3.0.10";
 
 const version = version$1;
 const BACKSLASH = "\u005C";

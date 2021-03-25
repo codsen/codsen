@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.2.0](https://github.com/codsen/codsen/compare/string-fix-broken-named-entities@5.1.0...string-fix-broken-named-entities@5.2.0) (2021-03-25)
-
+## 5.2.0 (2021-03-25)
 
 ### Features
 
-* improve the matching algorithm when there are competing fixing choices ([ce43906](https://github.com/codsen/codsen/commit/ce43906e3f22bb7590a6b017271c5933ed5a2bf9))
-
-
-
-
+- improve the matching algorithm when there are competing fixing choices ([ce43906](https://github.com/codsen/codsen/commit/ce43906e3f22bb7590a6b017271c5933ed5a2bf9))
 
 ## 5.1.0 (2021-03-23)
 

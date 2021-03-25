@@ -1,7 +1,7 @@
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -22,7 +22,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "2.0.9";
+var version$1 = "2.0.10";
 
 var version = version$1;
 function traverse(tree1, cb1) {

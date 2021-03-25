@@ -1,7 +1,7 @@
 /**
  * array-pull-all-with-glob
  * Like _.pullAll but with globs (wildcards)
- * Version: 5.0.9
+ * Version: 5.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-pull-all-with-glob/
@@ -9,7 +9,7 @@
 
 import matcher from 'matcher';
 
-var version$1 = "5.0.9";
+var version$1 = "5.0.10";
 
 const version = version$1;
 function pull(originalInput, originalToBeRemoved, originalOpts) {

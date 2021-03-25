@@ -1,7 +1,7 @@
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.9
+ * Version: 3.13.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -15,15 +15,13 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
-  if (typeof something === "string") {
-    if (something.length) {
-      return [something];
+    if (typeof something === "string") {
+        if (something.length) {
+            return [something];
+        }
+        return [];
     }
-
-    return [];
-  }
-
-  return something;
+    return something;
 }
 
 exports.arrayiffy = arrayiffy;

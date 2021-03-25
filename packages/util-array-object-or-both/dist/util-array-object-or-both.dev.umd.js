@@ -1,7 +1,7 @@
 /**
  * util-array-object-or-both
  * Validate and normalise user choice: array, object or both?
- * Version: 3.0.9
+ * Version: 3.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-array-object-or-both/
@@ -13,55 +13,6 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.utilArrayObjectOrBoth = {}));
 }(this, (function (exports) { 'use strict';
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -70,37 +21,37 @@ function _objectSpread2(target) {
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
-
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
     MAX_SAFE_INTEGER = 9007199254740991,
     MAX_INTEGER = 1.7976931348623157e+308,
     NAN = 0 / 0;
-/** `Object#toString` result references. */
 
+/** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
     funcTag = '[object Function]',
     genTag = '[object GeneratorFunction]',
     stringTag = '[object String]',
     symbolTag = '[object Symbol]';
+
 /** Used to match leading and trailing whitespace. */
-
 var reTrim = /^\s+|\s+$/g;
+
 /** Used to detect bad signed hexadecimal string values. */
-
 var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
 /** Used to detect binary string values. */
-
 var reIsBinary = /^0b[01]+$/i;
+
 /** Used to detect octal string values. */
-
 var reIsOctal = /^0o[0-7]+$/i;
+
 /** Used to detect unsigned integer values. */
-
 var reIsUint = /^(?:0|[1-9]\d*)$/;
-/** Built-in method references without a dependency on `root`. */
 
+/** Built-in method references without a dependency on `root`. */
 var freeParseInt = parseInt;
+
 /**
  * A specialized version of `_.map` for arrays without support for iteratee
  * shorthands.
@@ -110,7 +61,6 @@ var freeParseInt = parseInt;
  * @param {Function} iteratee The function invoked per iteration.
  * @returns {Array} Returns the new mapped array.
  */
-
 function arrayMap(array, iteratee) {
   var index = -1,
       length = array ? array.length : 0,
@@ -119,9 +69,9 @@ function arrayMap(array, iteratee) {
   while (++index < length) {
     result[index] = iteratee(array[index], index, array);
   }
-
   return result;
 }
+
 /**
  * The base implementation of `_.findIndex` and `_.findLastIndex` without
  * support for iteratee shorthands.
@@ -133,20 +83,18 @@ function arrayMap(array, iteratee) {
  * @param {boolean} [fromRight] Specify iterating from right to left.
  * @returns {number} Returns the index of the matched value, else `-1`.
  */
-
-
 function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
-  while (fromRight ? index-- : ++index < length) {
+  while ((fromRight ? index-- : ++index < length)) {
     if (predicate(array[index], index, array)) {
       return index;
     }
   }
-
   return -1;
 }
+
 /**
  * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
  *
@@ -156,13 +104,10 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
  * @param {number} fromIndex The index to search from.
  * @returns {number} Returns the index of the matched value, else `-1`.
  */
-
-
 function baseIndexOf(array, value, fromIndex) {
   if (value !== value) {
     return baseFindIndex(array, baseIsNaN, fromIndex);
   }
-
   var index = fromIndex - 1,
       length = array.length;
 
@@ -171,9 +116,9 @@ function baseIndexOf(array, value, fromIndex) {
       return index;
     }
   }
-
   return -1;
 }
+
 /**
  * The base implementation of `_.isNaN` without support for number objects.
  *
@@ -181,11 +126,10 @@ function baseIndexOf(array, value, fromIndex) {
  * @param {*} value The value to check.
  * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
  */
-
-
 function baseIsNaN(value) {
   return value !== value;
 }
+
 /**
  * The base implementation of `_.times` without support for iteratee shorthands
  * or max array length checks.
@@ -195,8 +139,6 @@ function baseIsNaN(value) {
  * @param {Function} iteratee The function invoked per iteration.
  * @returns {Array} Returns the array of results.
  */
-
-
 function baseTimes(n, iteratee) {
   var index = -1,
       result = Array(n);
@@ -204,9 +146,9 @@ function baseTimes(n, iteratee) {
   while (++index < n) {
     result[index] = iteratee(index);
   }
-
   return result;
 }
+
 /**
  * The base implementation of `_.values` and `_.valuesIn` which creates an
  * array of `object` property values corresponding to the property names
@@ -217,13 +159,12 @@ function baseTimes(n, iteratee) {
  * @param {Array} props The property names to get values for.
  * @returns {Object} Returns the array of property values.
  */
-
-
 function baseValues(object, props) {
-  return arrayMap(props, function (key) {
+  return arrayMap(props, function(key) {
     return object[key];
   });
 }
+
 /**
  * Creates a unary function that invokes `func` with its argument transformed.
  *
@@ -232,34 +173,32 @@ function baseValues(object, props) {
  * @param {Function} transform The argument transform.
  * @returns {Function} Returns the new function.
  */
-
-
 function overArg(func, transform) {
-  return function (arg) {
+  return function(arg) {
     return func(transform(arg));
   };
 }
+
 /** Used for built-in method references. */
-
-
 var objectProto = Object.prototype;
-/** Used to check objects for own properties. */
 
+/** Used to check objects for own properties. */
 var hasOwnProperty = objectProto.hasOwnProperty;
+
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
-
 var objectToString = objectProto.toString;
+
 /** Built-in value references. */
-
 var propertyIsEnumerable = objectProto.propertyIsEnumerable;
-/* Built-in method references for those with the same name as other `lodash` methods. */
 
+/* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object),
     nativeMax = Math.max;
+
 /**
  * Creates an array of the enumerable property names of the array-like `value`.
  *
@@ -268,22 +207,25 @@ var nativeKeys = overArg(Object.keys, Object),
  * @param {boolean} inherited Specify returning inherited property names.
  * @returns {Array} Returns the array of property names.
  */
-
 function arrayLikeKeys(value, inherited) {
   // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
   // Safari 9 makes `arguments.length` enumerable in strict mode.
-  var result = isArray(value) || isArguments(value) ? baseTimes(value.length, String) : [];
+  var result = (isArray(value) || isArguments(value))
+    ? baseTimes(value.length, String)
+    : [];
+
   var length = result.length,
       skipIndexes = !!length;
 
   for (var key in value) {
-    if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+    if ((inherited || hasOwnProperty.call(value, key)) &&
+        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
       result.push(key);
     }
   }
-
   return result;
 }
+
 /**
  * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
  *
@@ -291,23 +233,19 @@ function arrayLikeKeys(value, inherited) {
  * @param {Object} object The object to query.
  * @returns {Array} Returns the array of property names.
  */
-
-
 function baseKeys(object) {
   if (!isPrototype(object)) {
     return nativeKeys(object);
   }
-
   var result = [];
-
   for (var key in Object(object)) {
     if (hasOwnProperty.call(object, key) && key != 'constructor') {
       result.push(key);
     }
   }
-
   return result;
 }
+
 /**
  * Checks if `value` is a valid array-like index.
  *
@@ -316,12 +254,13 @@ function baseKeys(object) {
  * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
  * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
  */
-
-
 function isIndex(value, length) {
   length = length == null ? MAX_SAFE_INTEGER : length;
-  return !!length && (typeof value == 'number' || reIsUint.test(value)) && value > -1 && value % 1 == 0 && value < length;
+  return !!length &&
+    (typeof value == 'number' || reIsUint.test(value)) &&
+    (value > -1 && value % 1 == 0 && value < length);
 }
+
 /**
  * Checks if `value` is likely a prototype object.
  *
@@ -329,13 +268,13 @@ function isIndex(value, length) {
  * @param {*} value The value to check.
  * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
  */
-
-
 function isPrototype(value) {
   var Ctor = value && value.constructor,
-      proto = typeof Ctor == 'function' && Ctor.prototype || objectProto;
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
   return value === proto;
 }
+
 /**
  * Checks if `value` is in `collection`. If `collection` is a string, it's
  * checked for a substring of `value`, otherwise
@@ -366,19 +305,19 @@ function isPrototype(value) {
  * _.includes('abcd', 'bc');
  * // => true
  */
-
-
 function includes(collection, value, fromIndex, guard) {
   collection = isArrayLike(collection) ? collection : values(collection);
-  fromIndex = fromIndex && !guard ? toInteger(fromIndex) : 0;
-  var length = collection.length;
+  fromIndex = (fromIndex && !guard) ? toInteger(fromIndex) : 0;
 
+  var length = collection.length;
   if (fromIndex < 0) {
     fromIndex = nativeMax(length + fromIndex, 0);
   }
-
-  return isString(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf(collection, value, fromIndex) > -1;
+  return isString(collection)
+    ? (fromIndex <= length && collection.indexOf(value, fromIndex) > -1)
+    : (!!length && baseIndexOf(collection, value, fromIndex) > -1);
 }
+
 /**
  * Checks if `value` is likely an `arguments` object.
  *
@@ -397,12 +336,12 @@ function includes(collection, value, fromIndex, guard) {
  * _.isArguments([1, 2, 3]);
  * // => false
  */
-
-
 function isArguments(value) {
   // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') && (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
 }
+
 /**
  * Checks if `value` is classified as an `Array` object.
  *
@@ -426,9 +365,8 @@ function isArguments(value) {
  * _.isArray(_.noop);
  * // => false
  */
-
-
 var isArray = Array.isArray;
+
 /**
  * Checks if `value` is array-like. A value is considered array-like if it's
  * not a function and has a `value.length` that's an integer greater than or
@@ -454,10 +392,10 @@ var isArray = Array.isArray;
  * _.isArrayLike(_.noop);
  * // => false
  */
-
 function isArrayLike(value) {
   return value != null && isLength(value.length) && !isFunction(value);
 }
+
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
  * is an object.
@@ -483,11 +421,10 @@ function isArrayLike(value) {
  * _.isArrayLikeObject(_.noop);
  * // => false
  */
-
-
 function isArrayLikeObject(value) {
   return isObjectLike(value) && isArrayLike(value);
 }
+
 /**
  * Checks if `value` is classified as a `Function` object.
  *
@@ -505,14 +442,13 @@ function isArrayLikeObject(value) {
  * _.isFunction(/abc/);
  * // => false
  */
-
-
 function isFunction(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
   var tag = isObject(value) ? objectToString.call(value) : '';
   return tag == funcTag || tag == genTag;
 }
+
 /**
  * Checks if `value` is a valid array-like length.
  *
@@ -539,11 +475,11 @@ function isFunction(value) {
  * _.isLength('3');
  * // => false
  */
-
-
 function isLength(value) {
-  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
 }
+
 /**
  * Checks if `value` is the
  * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
@@ -569,12 +505,11 @@ function isLength(value) {
  * _.isObject(null);
  * // => false
  */
-
-
 function isObject(value) {
   var type = typeof value;
   return !!value && (type == 'object' || type == 'function');
 }
+
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -599,11 +534,10 @@ function isObject(value) {
  * _.isObjectLike(null);
  * // => false
  */
-
-
 function isObjectLike(value) {
   return !!value && typeof value == 'object';
 }
+
 /**
  * Checks if `value` is classified as a `String` primitive or object.
  *
@@ -621,11 +555,11 @@ function isObjectLike(value) {
  * _.isString(1);
  * // => false
  */
-
-
 function isString(value) {
-  return typeof value == 'string' || !isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag;
+  return typeof value == 'string' ||
+    (!isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag);
 }
+
 /**
  * Checks if `value` is classified as a `Symbol` primitive or object.
  *
@@ -643,11 +577,11 @@ function isString(value) {
  * _.isSymbol('abc');
  * // => false
  */
-
-
 function isSymbol(value) {
-  return typeof value == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
 }
+
 /**
  * Converts `value` to a finite number.
  *
@@ -671,22 +605,18 @@ function isSymbol(value) {
  * _.toFinite('3.2');
  * // => 3.2
  */
-
-
 function toFinite(value) {
   if (!value) {
     return value === 0 ? value : 0;
   }
-
   value = toNumber(value);
-
   if (value === INFINITY || value === -INFINITY) {
-    var sign = value < 0 ? -1 : 1;
+    var sign = (value < 0 ? -1 : 1);
     return sign * MAX_INTEGER;
   }
-
   return value === value ? value : 0;
 }
+
 /**
  * Converts `value` to an integer.
  *
@@ -713,13 +643,13 @@ function toFinite(value) {
  * _.toInteger('3.2');
  * // => 3
  */
-
-
 function toInteger(value) {
   var result = toFinite(value),
       remainder = result % 1;
-  return result === result ? remainder ? result - remainder : result : 0;
+
+  return result === result ? (remainder ? result - remainder : result) : 0;
 }
+
 /**
  * Converts `value` to a number.
  *
@@ -743,30 +673,27 @@ function toInteger(value) {
  * _.toNumber('3.2');
  * // => 3.2
  */
-
-
 function toNumber(value) {
   if (typeof value == 'number') {
     return value;
   }
-
   if (isSymbol(value)) {
     return NAN;
   }
-
   if (isObject(value)) {
     var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? other + '' : other;
+    value = isObject(other) ? (other + '') : other;
   }
-
   if (typeof value != 'string') {
     return value === 0 ? value : +value;
   }
-
   value = value.replace(reTrim, '');
   var isBinary = reIsBinary.test(value);
-  return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
 }
+
 /**
  * Creates an array of the own enumerable property names of `object`.
  *
@@ -795,11 +722,10 @@ function toNumber(value) {
  * _.keys('hi');
  * // => ['0', '1']
  */
-
-
 function keys(object) {
   return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
 }
+
 /**
  * Creates an array of the own enumerable string keyed property values of `object`.
  *
@@ -826,8 +752,6 @@ function keys(object) {
  * _.values('hi');
  * // => ['h', 'i']
  */
-
-
 function values(object) {
   return object ? baseValues(object, keys(object)) : [];
 }
@@ -835,37 +759,40 @@ function values(object) {
 var lodash_includes = includes;
 
 function arrObjOrBoth(str, originalOpts) {
-  var onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
-  var onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
-  var onlyAnyValues = ["any", "all", "everything", "both", "either", "each", "whatever", "whatevs", "e"];
-  var defaults = {
-    msg: "",
-    optsVarName: "given variable"
-  };
-
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-
-  if (opts && opts.msg && opts.msg.length > 0) {
-    opts.msg = opts.msg.trim() + " ";
-  }
-
-  if (opts.optsVarName !== "given variable") {
-    opts.optsVarName = "variable \"" + opts.optsVarName + "\"";
-  }
-
-  if (lodash_includes(onlyObjectValues, str.toLowerCase().trim())) {
-    return "object";
-  }
-
-  if (lodash_includes(onlyArrayValues, str.toLowerCase().trim())) {
-    return "array";
-  }
-
-  if (lodash_includes(onlyAnyValues, str.toLowerCase().trim())) {
-    return "any";
-  }
-
-  throw new TypeError(opts.msg + "The " + opts.optsVarName + " was customised to an unrecognised value: " + str + ". Please check it against the API documentation.");
+    const onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
+    const onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
+    const onlyAnyValues = [
+        "any",
+        "all",
+        "everything",
+        "both",
+        "either",
+        "each",
+        "whatever",
+        "whatevs",
+        "e",
+    ];
+    const defaults = {
+        msg: "",
+        optsVarName: "given variable",
+    };
+    const opts = { ...defaults, ...originalOpts };
+    if (opts && opts.msg && opts.msg.length > 0) {
+        opts.msg = `${opts.msg.trim()} `;
+    }
+    if (opts.optsVarName !== "given variable") {
+        opts.optsVarName = `variable "${opts.optsVarName}"`;
+    }
+    if (lodash_includes(onlyObjectValues, str.toLowerCase().trim())) {
+        return "object";
+    }
+    if (lodash_includes(onlyArrayValues, str.toLowerCase().trim())) {
+        return "array";
+    }
+    if (lodash_includes(onlyAnyValues, str.toLowerCase().trim())) {
+        return "any";
+    }
+    throw new TypeError(`${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`);
 }
 
 exports.arrObjOrBoth = arrObjOrBoth;

@@ -1,7 +1,7 @@
 /**
  * regex-is-jinja-nunjucks
  * Regular expression for detecting Jinja or Nunjucks code
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
@@ -13,12 +13,11 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.regexIsJinjaNunjucks = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "2.0.9";
+var version$1 = "2.0.10";
 
-var version = version$1;
-
+const version = version$1;
 function isJinjaNunjucksRegex() {
-  return /{%|{{|%}|}}/gi;
+    return /{%|{{|%}|}}/gi;
 }
 
 exports.isJinjaNunjucksRegex = isJinjaNunjucksRegex;

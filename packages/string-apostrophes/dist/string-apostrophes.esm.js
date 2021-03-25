@@ -1,7 +1,7 @@
 /**
  * string-apostrophes
  * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * Version: 1.4.9
+ * Version: 1.4.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-apostrophes/
@@ -9,7 +9,7 @@
 
 import { rApply } from 'ranges-apply';
 
-var version$1 = "1.4.9";
+var version$1 = "1.4.10";
 
 const version = version$1;
 function convertOne(str, {
