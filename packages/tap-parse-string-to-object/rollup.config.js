@@ -11,6 +11,7 @@ import strip from "@rollup/plugin-strip";
 import json from "@rollup/plugin-json";
 import dts from "rollup-plugin-dts";
 import pkg from "./package.json";
+import { resolve } from "path";
 
 const licensePiece = `${pkg.name}
 ${pkg.description}
@@ -139,6 +140,7 @@ export default (commandLineArgs) => {
         }),
         babel({
           extensions,
+          include: resolve("src", "**", "*.ts"),
           exclude: "node_modules/**",
           babelHelpers: "bundled",
         }),
