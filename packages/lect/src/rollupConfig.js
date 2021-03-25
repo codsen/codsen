@@ -81,6 +81,7 @@ async function rollupConfig({ state }) {
         }),
         babel({
           extensions,
+          include: resolve("src", "**", "*.ts"),
           exclude: "node_modules/**",
           rootMode: "upward",
           babelHelpers: "bundled",
@@ -164,6 +165,7 @@ async function rollupConfig({ state }) {
         commonjs(),
         babel({
           extensions,
+          include: resolve("src", "**", "*.ts"),
           exclude: "node_modules/**",
           rootMode: "upward",
           babelHelpers: "bundled",
@@ -383,6 +385,7 @@ async function rollupConfig({ state }) {
         }),
         babel({
           extensions,
+          include: resolve("src", "**", "*.ts"),
           exclude: "node_modules/**",
           babelHelpers: "bundled",
         }),
@@ -453,6 +456,7 @@ ${
     : ""
 }import dts from "rollup-plugin-dts";
 import pkg from "./package.json";
+import { resolve } from "path";
 
 const licensePiece = \`\${pkg.name}
 \${pkg.description}
