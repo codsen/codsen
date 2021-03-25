@@ -10270,7 +10270,7 @@ function fixEnt(str, originalOpts) {
               }).join("");
 
               if (potentialEntityOnlyNonWhitespaceChars.length <= maxLength && allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
-                if (!allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
+                if (typeof potentialEntityOnlyNonWhitespaceChars === "string" && !allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
                   var matchingEntitiesOfCorrectCaseArr = [].concat(allNamedEntitiesSetOnly).filter(function (ent) {
                     return ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase();
                   });
@@ -10377,6 +10377,39 @@ function fixEnt(str, originalOpts) {
                     rangeValDecoded: decode$1("&" + _tempEnt2 + ";")
                   });
                   pingAmps(whatsOnTheLeft, i);
+                } else if (temp) {
+                  var missingLettersCount = temp.map(function (ent) {
+                    var splitStr = str.split("");
+                    return ent.split("").reduce(function (acc, curr) {
+                      if (splitStr.includes(curr)) {
+                        splitStr.splice(splitStr.indexOf(curr), 1);
+                        return acc + 1;
+                      }
+
+                      return acc;
+                    }, 0);
+                  });
+                  var maxVal = Math.max.apply(Math, missingLettersCount);
+
+                  if (maxVal && missingLettersCount.filter(function (v) {
+                    return v === maxVal;
+                  }).length === 1) {
+                    for (var z = 0, _len = missingLettersCount.length; z < _len; z++) {
+                      if (missingLettersCount[z] === maxVal) {
+                        _tempEnt2 = temp[z];
+                        rangesArr2.push({
+                          ruleName: "bad-html-entity-malformed-" + _tempEnt2,
+                          entityName: _tempEnt2,
+                          rangeFrom: whatsOnTheLeft,
+                          rangeTo: i + 1,
+                          rangeValEncoded: "&" + _tempEnt2 + ";",
+                          rangeValDecoded: decode$1("&" + _tempEnt2 + ";")
+                        });
+                        pingAmps(whatsOnTheLeft, i);
+                        break;
+                      }
+                    }
+                  }
                 }
               }
 

@@ -670,7 +670,7 @@
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 25352,
+        "size": 26813,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
