@@ -3047,6 +3047,13 @@ function crush(str, originalOpts) {
     // final return clauses
     let currentPercentageDone;
     let lastPercentage = 0;
+    let lineEnding = `\n`;
+    if (str.includes(`\r\n`)) {
+        lineEnding = `\r\n`;
+    }
+    else if (str.includes(`\r`)) {
+        lineEnding = `\r`;
+    }
     if (len) {
         for (let i = 0; i < len; i++) {
             //
@@ -3129,7 +3136,7 @@ function crush(str, originalOpts) {
                 if ((opts.removeLineBreaks || opts.removeIndentations) &&
                     whitespaceStartedAt !== null) {
                     if (whitespaceStartedAt > 0) {
-                        whatToInsert = "\n";
+                        whatToInsert = lineEnding;
                     }
                     finalIndexesToDelete.push(whitespaceStartedAt, i, whatToInsert);
                 }
@@ -3272,7 +3279,7 @@ function crush(str, originalOpts) {
                         // line length limit or not
                         if (opts.lineLengthLimit &&
                             cpl - (stageTo - stageFrom) >= opts.lineLengthLimit) {
-                            finalIndexesToDelete.push(stageFrom, stageTo, "\n");
+                            finalIndexesToDelete.push(stageFrom, stageTo, lineEnding);
                             // Currently we're not on the bracket ">" of the comment
                             // closing "-->", we're at the start of it, that first
                             // dash. This means, we'll still traverse to the end
@@ -3359,7 +3366,7 @@ function crush(str, originalOpts) {
                     opts.breakToTheLeftOf.includes("<style") &&
                     str.startsWith(` type="text/css">`, i + 6) &&
                     str[i + 24]) {
-                    finalIndexesToDelete.push(i + 23, i + 23, "\n");
+                    finalIndexesToDelete.push(i + 23, i + 23, lineEnding);
                 }
             }
             // catch start of inline styles
@@ -3445,8 +3452,14 @@ function crush(str, originalOpts) {
                             if (breakToTheLeftOfFirstLetters.includes(str[i]) &&
                                 matchRightIncl(str, i, opts.breakToTheLeftOf)) {
                                 // maybe there was just single line break?
-                                if (!(str[~-i] === "\n" && whitespaceStartedAt === ~-i)) {
-                                    finalIndexesToDelete.push(whitespaceStartedAt, i, "\n");
+                                if (
+                                // CR or LF endings
+                                !(`\r\n`.includes(str[~-i]) && whitespaceStartedAt === ~-i) &&
+                                    // CRLF endings
+                                    !(str[~-i] === "\n" &&
+                                        str[i - 2] === "\r" &&
+                                        whitespaceStartedAt === i - 2)) {
+                                    finalIndexesToDelete.push(whitespaceStartedAt, i, lineEnding);
                                 }
                                 stageFrom = null;
                                 stageTo = null;
@@ -3525,7 +3538,7 @@ function crush(str, originalOpts) {
                                             str[i + 1].trim() &&
                                             !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) &&
                                             !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i + 1]))) {
-                                        whatToAdd = "\n";
+                                        whatToAdd = lineEnding;
                                         countCharactersPerLine = 1;
                                     }
                                     // replace the whitespace only in two cases:
@@ -3591,7 +3604,7 @@ function crush(str, originalOpts) {
                     matchRightIncl(str, i, opts.breakToTheLeftOf) &&
                     str.slice(0, i).trim() &&
                     (!str.startsWith("<![endif]", i) || !matchLeft(str, i, "<!--"))) {
-                    finalIndexesToDelete.push(i, i, "\n");
+                    finalIndexesToDelete.push(i, i, lineEnding);
                     stageFrom = null;
                     stageTo = null;
                     stageAdd = null;
@@ -3619,7 +3632,7 @@ function crush(str, originalOpts) {
                                 str[i + 1].trim() &&
                                 countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
                                     opts.lineLengthLimit) {
-                                whatToAdd = "\n";
+                                whatToAdd = lineEnding;
                             }
                             // if line is beyond the line length limit or whitespace is not
                             // a single space, staged to be replaced with single space,
@@ -3737,7 +3750,7 @@ function crush(str, originalOpts) {
                                     (stageTo - stageFrom - whatToAddLength) -
                                     1 ===
                                     opts.lineLengthLimit) {
-                                    finalIndexesToDelete.push(i, i, "\n");
+                                    finalIndexesToDelete.push(i, i, lineEnding);
                                     countCharactersPerLine = 0;
                                 }
                                 // reset
@@ -3748,7 +3761,7 @@ function crush(str, originalOpts) {
                         }
                         else {
                             //
-                            finalIndexesToDelete.push(i, i, "\n");
+                            finalIndexesToDelete.push(i, i, lineEnding);
                             countCharactersPerLine = 0;
                         }
                     }
@@ -3765,7 +3778,7 @@ function crush(str, originalOpts) {
                             (stageFrom !== stageTo || (stageAdd && stageAdd.length))) ;
                         else {
                             //
-                            finalIndexesToDelete.push(i + 1, i + 1, "\n");
+                            finalIndexesToDelete.push(i + 1, i + 1, lineEnding);
                             countCharactersPerLine = 0;
                         }
                     }
@@ -3777,7 +3790,7 @@ function crush(str, originalOpts) {
                         if (stageFrom !== null &&
                             stageTo !== null &&
                             (stageFrom !== stageTo || (stageAdd && stageAdd.length))) {
-                            finalIndexesToDelete.push(stageFrom, stageTo, "\n");
+                            finalIndexesToDelete.push(stageFrom, stageTo, lineEnding);
                         }
                     }
                 }
@@ -3800,7 +3813,7 @@ function crush(str, originalOpts) {
                     str[i + 1] &&
                     !str[i + 1].trim())) {
                     //
-                    let whatToAdd = "\n";
+                    let whatToAdd = lineEnding;
                     if (str[i + 1] &&
                         !str[i + 1].trim() &&
                         countCharactersPerLine === opts.lineLengthLimit) {
@@ -3808,7 +3821,7 @@ function crush(str, originalOpts) {
                     }
                     // final correction - we might need to extend stageFrom to include
                     // all whitespace on the left if whatToAdd is a line break
-                    if (whatToAdd === "\n" &&
+                    if (whatToAdd === lineEnding &&
                         !str[~-stageFrom].trim() &&
                         left(str, stageFrom)) {
                         stageFrom = left(str, stageFrom) + 1;

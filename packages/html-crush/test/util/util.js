@@ -1,5 +1,11 @@
+import { mixer } from "test-mixer";
 import { rApply } from "ranges-apply";
-import { crush } from "../../dist/html-crush.esm";
+import { crush, defaults } from "../../dist/html-crush.esm";
+
+// sugar-coat the mixer to avoid putting "defaults" everywhere
+function mixerToExport(ref) {
+  return mixer(ref, defaults);
+}
 
 function m(t, str, opts) {
   // check, do ranges really render into the result string
@@ -23,4 +29,4 @@ function m(t, str, opts) {
   return res;
 }
 
-export { m };
+export { m, mixerToExport as mixer };

@@ -93,7 +93,8 @@
     "ranges-push": "^5.0.10",
     "string-left-right": "^4.0.10",
     "string-match-left-right": "^7.0.4",
-    "string-range-expander": "^2.0.10"
+    "string-range-expander": "^2.0.10",
+    "test-mixer": "^2.0.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
