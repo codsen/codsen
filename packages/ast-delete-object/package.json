@@ -1,6 +1,6 @@
 {
   "name": "ast-delete-object",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Delete all plain objects in AST if they contain a certain key/value pair",
   "keywords": [
     "ast",
@@ -87,8 +87,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "ast-compare": "^2.0.10",
-    "ast-monkey-traverse": "^2.0.10",
+    "ast-compare": "^2.0.11",
+    "ast-monkey-traverse": "^2.0.11",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
@@ -119,7 +119,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.23.0",
-    "lect": "^0.16.10",
+    "lect": "^0.16.11",
     "rollup": "^2.43.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

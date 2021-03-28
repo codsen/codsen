@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "description": "Edit package.json without parsing, as string, to keep the formatting intact",
   "keywords": [
     "changes",
@@ -83,8 +83,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "ranges-apply": "^5.0.10",
-    "string-left-right": "^4.0.10"
+    "ranges-apply": "^5.0.11",
+    "string-left-right": "^4.0.11"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -110,10 +110,10 @@
     "@types/tap": "^14.10.3",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
-    "ast-monkey-traverse": "^2.0.10",
+    "ast-monkey-traverse": "^2.0.11",
     "eslint": "^7.23.0",
     "globby": "^11.0.3",
-    "lect": "^0.16.10",
+    "lect": "^0.16.11",
     "lodash.clonedeep": "^4.5.0",
     "object-path": "^0.11.5",
     "p-map": "^4.0.0",

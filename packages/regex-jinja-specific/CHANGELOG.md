@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.11](https://github.com/codsen/codsen/compare/regex-jinja-specific@2.0.10...regex-jinja-specific@2.0.11) (2021-03-28)
+
+**Note:** Version bump only for package regex-jinja-specific
+
+
+
+
+
 ## 2.0.1 (2021-01-28)
 
 ### Bug Fixes

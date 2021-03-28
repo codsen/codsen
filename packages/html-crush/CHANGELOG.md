@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.5](https://github.com/codsen/codsen/compare/html-crush@4.1.4...html-crush@4.1.5) (2021-03-28)
+
+
+### Bug Fixes
+
+* retain the same type of line endings as the input ([b171628](https://github.com/codsen/codsen/commit/b171628d3fc1c0909af61530c1bcaf970c310159))
+
+
+
+
+
 ## 4.1.0 (2021-02-27)
 
 ### Features
