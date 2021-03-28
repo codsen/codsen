@@ -33136,7 +33136,6 @@ var tlds = [
 	"frontier",
 	"ftr",
 	"fujitsu",
-	"fujixerox",
 	"fun",
 	"fund",
 	"furniture",

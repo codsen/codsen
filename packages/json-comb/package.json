@@ -78,7 +78,7 @@
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "execa": "^5.0.0",
     "lect": "^0.16.10",
     "tap": "^14.11.0",

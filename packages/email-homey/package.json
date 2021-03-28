@@ -80,9 +80,9 @@
   },
   "devDependencies": {
     "@types/lodash.uniq": "^4.5.6",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "execa": "^5.0.0",
-    "lect": "^0.16.9",
+    "lect": "^0.16.10",
     "tap": "^14.11.0",
     "tslib": "^2.1.0"
   }

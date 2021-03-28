@@ -137,6 +137,7 @@
         "string-trim-spaces-only": 3,
         "string-uglify": 1,
         "string-unfancy": 1,
+        "test-mixer": 1,
         "through2": 1,
         "tiny-typed-emitter": 1,
         "ts-transformer-keys": 1,
