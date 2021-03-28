@@ -5,8 +5,8 @@ import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
 
 assert.deepEqual(
   convertAll(`In the '60s, rock 'n' roll`, {
-    convertApostrophes: 1,
-    convertEntities: 0,
+    convertApostrophes: true,
+    convertEntities: false,
   }),
   {
     result: "In the ’60s, rock ’n’ roll",

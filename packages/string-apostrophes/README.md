@@ -38,8 +38,8 @@ import { convertOne, convertAll } from "string-apostrophes";
 
 assert.deepEqual(
   convertAll(`In the '60s, rock 'n' roll`, {
-    convertApostrophes: 1,
-    convertEntities: 0,
+    convertApostrophes: true,
+    convertEntities: false,
   }),
   {
     result: "In the ’60s, rock ’n’ roll",
