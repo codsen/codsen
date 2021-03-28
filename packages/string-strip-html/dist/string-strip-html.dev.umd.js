@@ -1,7 +1,7 @@
 /**
  * string-strip-html
  * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 8.2.7
+ * Version: 8.2.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-strip-html/
@@ -6138,7 +6138,7 @@ var decode_1 = decode;
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -6201,7 +6201,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.10
+ * Version: 7.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -6301,7 +6301,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -6397,7 +6397,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -6474,7 +6474,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -8367,7 +8367,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -8470,7 +8470,7 @@ function notWithinAttrQuotes(tag, str, i) {
         !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">"));
 }
 
-var version$1 = "8.2.7";
+var version$1 = "8.2.8";
 
 const version = version$1;
 const defaults = {

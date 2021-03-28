@@ -1,7 +1,7 @@
 /**
  * object-merge-advanced
  * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 12.0.7
+ * Version: 12.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-merge-advanced/
@@ -3674,7 +3674,7 @@ function isObjectLike(value) {
 module.exports = isDate;
 });
 
-var version$1 = "12.0.7";
+var version$1 = "12.0.8";
 
 var escapeStringRegexp = string => {
 	if (typeof string !== 'string') {
@@ -3797,7 +3797,7 @@ matcher.isMatch = isMatch;
 /**
  * array-includes-with-glob
  * Like _.includes but with wildcards
- * Version: 3.0.10
+ * Version: 3.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-includes-with-glob/
@@ -3832,7 +3832,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.10
+ * Version: 3.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/

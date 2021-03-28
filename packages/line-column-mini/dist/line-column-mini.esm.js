@@ -1,13 +1,13 @@
 /**
  * line-column-mini
  * Convert string index to line-column position
- * Version: 1.1.10
+ * Version: 1.1.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/line-column-mini/
  */
 
-var version$1 = "1.1.10";
+var version$1 = "1.1.11";
 
 const version = version$1;
 function binarySearch(el, arr) {

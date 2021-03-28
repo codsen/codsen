@@ -1,7 +1,7 @@
 /**
  * string-collapse-white-space
  * Replace chunks of whitespace with a single spaces
- * Version: 9.0.10
+ * Version: 9.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-white-space/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -79,7 +79,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.10
+ * Version: 7.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -179,7 +179,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -275,7 +275,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -352,7 +352,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -2270,7 +2270,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -2330,7 +2330,7 @@ function right(str, idx = 0) {
   });
 }
 
-var version$1 = "9.0.10";
+var version$1 = "9.0.11";
 
 /* eslint @typescript-eslint/ban-ts-comment:1 */
 const version = version$1;

@@ -1,7 +1,7 @@
 /**
  * array-of-arrays-into-ast
  * Turns an array of arrays of data into a nested tree of plain objects
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-of-arrays-into-ast/
@@ -3795,7 +3795,7 @@ matcher.isMatch = isMatch;
 /**
  * array-includes-with-glob
  * Like _.includes but with wildcards
- * Version: 3.0.10
+ * Version: 3.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-includes-with-glob/
@@ -3830,7 +3830,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.10
+ * Version: 3.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
@@ -3851,7 +3851,7 @@ function nonEmpty(input) {
 /**
  * object-merge-advanced
  * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 12.0.7
+ * Version: 12.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-merge-advanced/
@@ -4354,7 +4354,7 @@ function externalApi(input1orig, input2orig, originalOpts) {
   }, input1orig, input2orig, originalOpts);
 }
 
-var version$1 = "2.0.10";
+var version$1 = "2.0.11";
 
 const version = version$1;
 const defaults = {

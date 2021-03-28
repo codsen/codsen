@@ -1,7 +1,7 @@
 /**
  * detect-templating-language
  * Detects various templating languages present in string
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detect-templating-language/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * regex-is-jinja-nunjucks
  * Regular expression for detecting Jinja or Nunjucks code
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
@@ -28,7 +28,7 @@ function isJinjaNunjucksRegex() {
 /**
  * regex-is-jsp
  * Regular expression for detecting JSP (Java Server Pages) code
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-is-jsp/
@@ -40,7 +40,7 @@ function isJSP() {
 /**
  * regex-jinja-specific
  * Regular expression for detecting Python-specific Jinja code
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-jinja-specific/
@@ -49,7 +49,7 @@ function isJinjaSpecific() {
   return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
 }
 
-var version$1 = "2.0.10";
+var version$1 = "2.0.11";
 
 const version = version$1;
 function detectLang(str) {

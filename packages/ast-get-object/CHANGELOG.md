@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.11](https://github.com/codsen/codsen/compare/ast-get-object@2.0.10...ast-get-object@2.0.11) (2021-03-28)
-
-**Note:** Version bump only for package ast-get-object
-
-
-
-
-
 ## 2.0.1 (2021-01-28)
 
 ### Bug Fixes

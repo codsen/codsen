@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken or mixed code, especially HTML & CSS
- * Version: 0.10.7
+ * Version: 0.10.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-parser/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.10
+ * Version: 1.3.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -1843,7 +1843,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -1959,7 +1959,7 @@ function left(str, idx = 0) {
 /**
  * string-find-malformed
  * Search for a malformed string. Think of Levenshtein distance but in search.
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-find-malformed/
@@ -2059,7 +2059,7 @@ function findMalformed(str, refStr, cb, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.10
+ * Version: 3.13.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -2078,7 +2078,7 @@ function arrayiffy(something) {
 /**
  * string-match-left-right
  * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.4
+ * Version: 7.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-match-left-right/
@@ -2380,7 +2380,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -2390,7 +2390,7 @@ const allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey",
 /**
  * is-char-suitable-for-html-attr-name
  * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -2406,7 +2406,7 @@ function isAttrNameChar(char) {
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.2.1
+ * Version: 2.2.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -2721,7 +2721,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 /**
  * is-html-tag-opening
  * Does an HTML tag start at given position?
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-tag-opening/
@@ -2827,7 +2827,7 @@ function isOpening(str, idx = 0, originalOpts) {
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 5.5.1
+ * Version: 5.5.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -5036,7 +5036,7 @@ var objectPath = createCommonjsModule(function (module) {
 });
 });
 
-var version$1 = "0.10.7";
+var version$1 = "0.10.8";
 
 /* eslint no-use-before-define: 0 */
 const version = version$1;

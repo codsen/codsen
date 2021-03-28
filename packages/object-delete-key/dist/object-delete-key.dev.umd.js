@@ -1,7 +1,7 @@
 /**
  * object-delete-key
  * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-delete-key/
@@ -761,7 +761,7 @@ var lodash_includes = includes;
 /**
  * util-array-object-or-both
  * Validate and normalise user choice: array, object or both?
- * Version: 3.0.10
+ * Version: 3.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-array-object-or-both/
@@ -3296,7 +3296,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.10
+ * Version: 1.3.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -3320,7 +3320,7 @@ function parent(str) {
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -4461,7 +4461,7 @@ var lodash_intersection = intersection;
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.10
+ * Version: 3.13.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -4896,7 +4896,7 @@ matcher.isMatch = isMatch;
 /**
  * check-types-mini
  * Validate options object
- * Version: 6.0.10
+ * Version: 6.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/check-types-mini/
@@ -5067,7 +5067,7 @@ function checkTypesMini(obj, ref, originalOptions) {
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
@@ -5095,7 +5095,7 @@ function empty(input) {
 /**
  * ast-compare
  * Compare anything: AST, objects, arrays, strings and nested thereof
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-compare/
@@ -5235,7 +5235,7 @@ function compare(b, s, originalOpts) {
 /**
  * ast-monkey
  * Traverse and edit AST
- * Version: 7.13.10
+ * Version: 7.13.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey/
@@ -5447,7 +5447,7 @@ function del(input, originalOpts) {
 /**
  * ast-is-empty
  * Find out, is nested array/object/string/AST tree is empty
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-is-empty/
@@ -5492,7 +5492,7 @@ function isEmpty(input) {
   return res;
 }
 
-var version$1 = "2.0.10";
+var version$1 = "2.0.11";
 
 const version = version$1;
 function deleteKey(originalInput, originalOpts) {

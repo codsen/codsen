@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 4.1.4
+ * Version: 4.1.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-crush/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -79,7 +79,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.10
+ * Version: 7.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -179,7 +179,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -275,7 +275,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -352,7 +352,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -494,7 +494,7 @@ class Ranges {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.10
+ * Version: 3.13.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -513,7 +513,7 @@ function arrayiffy(something) {
 /**
  * string-match-left-right
  * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.4
+ * Version: 7.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-match-left-right/
@@ -812,7 +812,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * string-range-expander
  * Expands string index ranges within whitespace boundaries until letters are met
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-range-expander/
@@ -2720,7 +2720,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -2833,7 +2833,7 @@ function left(str, idx = 0) {
   });
 }
 
-var version$1 = "4.1.4";
+var version$1 = "4.1.5";
 
 const version = version$1;
 const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });

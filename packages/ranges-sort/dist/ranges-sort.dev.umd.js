@@ -1,7 +1,7 @@
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.rangesSort = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "4.0.10";
+var version$1 = "4.0.11";
 
 const version = version$1;
 const defaults = {

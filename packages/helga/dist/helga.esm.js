@@ -1,13 +1,13 @@
 /**
  * helga
  * Your next best friend when editing complex nested code
- * Version: 1.3.10
+ * Version: 1.3.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/helga/
  */
 
-var version$1 = "1.3.10";
+var version$1 = "1.3.11";
 
 const version = version$1;
 const defaults = {

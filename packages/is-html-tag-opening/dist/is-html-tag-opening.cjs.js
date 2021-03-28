@@ -1,7 +1,7 @@
 /**
  * is-html-tag-opening
  * Does an HTML tag start at given position?
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-tag-opening/
@@ -35,7 +35,7 @@ function extraRequirements(str, idx) {
   str[stringLeftRight.left(str, idx)] === "<";
 }
 
-var version$1 = "2.0.10";
+var version$1 = "2.0.11";
 
 var version = version$1;
 function isOpening(str, idx, originalOpts) {

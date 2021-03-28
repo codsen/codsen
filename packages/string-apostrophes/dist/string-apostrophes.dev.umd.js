@@ -1,7 +1,7 @@
 /**
  * string-apostrophes
  * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * Version: 1.4.10
+ * Version: 1.4.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-apostrophes/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -79,7 +79,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.10
+ * Version: 7.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -179,7 +179,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -272,7 +272,7 @@ function rApply(str, originalRangesArr, progressFn) {
   return str;
 }
 
-var version$1 = "1.4.10";
+var version$1 = "1.4.11";
 
 const version = version$1;
 function convertOne(str, { from, to, value, convertEntities = true, convertApostrophes = true, offsetBy, }) {

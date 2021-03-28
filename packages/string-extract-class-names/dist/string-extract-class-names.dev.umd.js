@@ -1,7 +1,7 @@
 /**
  * string-extract-class-names
  * Extracts CSS class/id names from a string
- * Version: 6.0.10
+ * Version: 6.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-class-names/
@@ -1792,7 +1792,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -1905,7 +1905,7 @@ function left(str, idx = 0) {
   });
 }
 
-var version$1 = "6.0.10";
+var version$1 = "6.0.11";
 
 const version = version$1;
 /**

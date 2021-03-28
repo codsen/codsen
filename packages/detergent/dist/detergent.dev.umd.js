@@ -1,7 +1,7 @@
 /**
  * detergent
  * Extracts, cleans and encodes text
- * Version: 7.0.10
+ * Version: 7.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detergent/
@@ -1913,7 +1913,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -2365,7 +2365,7 @@ leven_1.default = _default;
 /**
  * all-named-html-entities
  * List of all named HTML entities
- * Version: 1.5.10
+ * Version: 1.5.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/all-named-html-entities/
@@ -9701,7 +9701,7 @@ const maxLength = 31;
 /**
  * string-fix-broken-named-entities
  * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * Version: 5.2.0
+ * Version: 5.2.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-fix-broken-named-entities/
@@ -10261,7 +10261,7 @@ function fixEnt(str, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.10
+ * Version: 3.13.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -10280,7 +10280,7 @@ function arrayiffy(something) {
 /**
  * string-match-left-right
  * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.4
+ * Version: 7.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-match-left-right/
@@ -10573,7 +10573,7 @@ function matchRightIncl(str, position, whatToMatch, opts) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -10650,7 +10650,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -10713,7 +10713,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.10
+ * Version: 7.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -10813,7 +10813,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -10955,7 +10955,7 @@ class Ranges {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -11051,7 +11051,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * string-remove-widows
  * Helps to prevent widow words in a text
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-remove-widows/
@@ -11563,7 +11563,7 @@ runes_1.substr = substr;
 /**
  * ranges-crop
  * Crop array of ranges when they go beyond the reference string's length
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-crop/
@@ -11618,7 +11618,7 @@ function rCrop(arrOfRanges, strLen) {
 /**
  * ranges-invert
  * Invert string index ranges
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-invert/
@@ -11693,7 +11693,7 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
 /**
  * ranges-process-outside
  * Iterate string considering ranges, as if they were already applied
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-process-outside/
@@ -11741,7 +11741,7 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
 /**
  * string-collapse-white-space
  * Replace chunks of whitespace with a single spaces
- * Version: 9.0.10
+ * Version: 9.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-white-space/
@@ -11998,7 +11998,7 @@ function collapse(str, originalOpts) {
 /**
  * string-trim-spaces-only
  * Like String.trim() but you can choose granularly what to trim
- * Version: 3.0.10
+ * Version: 3.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-trim-spaces-only/
@@ -18054,7 +18054,7 @@ var decode_1 = decode;
 /**
  * string-strip-html
  * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 8.2.7
+ * Version: 8.2.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-strip-html/
@@ -19136,12 +19136,12 @@ var he = createCommonjsModule(function (module, exports) {
 }(commonjsGlobal));
 });
 
-var version$1 = "7.0.10";
+var version$1 = "7.0.11";
 
 /**
  * html-entities-not-email-friendly
  * All HTML entities which are not email template friendly
- * Version: 0.4.10
+ * Version: 0.4.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-entities-not-email-friendly/
@@ -20994,7 +20994,7 @@ const notEmailFriendly = {
 /**
  * string-range-expander
  * Expands string index ranges within whitespace boundaries until letters are met
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-range-expander/
@@ -21126,7 +21126,7 @@ function expander(originalOpts) {
 /**
  * string-apostrophes
  * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * Version: 1.4.10
+ * Version: 1.4.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-apostrophes/

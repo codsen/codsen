@@ -1,7 +1,7 @@
 /**
  * generate-atomic-css
  * Generate Atomic CSS
- * Version: 1.4.10
+ * Version: 1.4.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/generate-atomic-css/
@@ -1913,7 +1913,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -2150,7 +2150,7 @@ function rightSeq(str, idx, ...args) {
   return seq("right", str, idx, opts, args);
 }
 
-var version$1 = "1.4.10";
+var version$1 = "1.4.11";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function isStr(something) {

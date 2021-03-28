@@ -1,7 +1,7 @@
 /**
  * html-img-alt
  * Adds missing alt attributes to img tags. Non-parsing.
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-img-alt/
@@ -364,7 +364,7 @@ var he = createCommonjsModule(function (module, exports) {
 /**
  * string-unfancy
  * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-unfancy/
@@ -418,7 +418,7 @@ function unfancy(str) {
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.10
+ * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -481,7 +481,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.10
+ * Version: 7.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -581,7 +581,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -677,7 +677,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -754,7 +754,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.10
+ * Version: 5.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -3386,7 +3386,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.10
+ * Version: 1.3.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -3410,7 +3410,7 @@ function parent(str) {
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.10
+ * Version: 2.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -4551,7 +4551,7 @@ var lodash_intersection = intersection;
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.10
+ * Version: 3.13.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -4986,7 +4986,7 @@ matcher.isMatch = isMatch;
 /**
  * check-types-mini
  * Validate options object
- * Version: 6.0.10
+ * Version: 6.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/check-types-mini/
@@ -5154,7 +5154,7 @@ function checkTypesMini(obj, ref, originalOptions) {
   return internalApi(obj, ref, originalOptions);
 }
 
-var version$1 = "2.0.10";
+var version$1 = "2.0.11";
 
 const version = version$1;
 function isObj(something) {

@@ -1,7 +1,7 @@
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.10
+ * Version: 3.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
@@ -152,7 +152,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version$1 = "3.0.10";
+var version$1 = "3.0.11";
 
 /* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
 const version = version$1;
