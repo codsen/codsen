@@ -34,7 +34,7 @@ npm i is-html-attribute-closing
 
 ```js
 import { strict as assert } from "assert";
-import { isAttrClosing } from "dist/is-html-attribute-closing.esm";
+import { isAttrClosing } from "is-html-attribute-closing";
 
 const str = `<a href="zzz" target="_blank" style="color: black;">`;
 

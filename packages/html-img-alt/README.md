@@ -34,7 +34,7 @@ npm i html-img-alt
 
 ```js
 import { strict as assert } from "assert";
-import { alts } from "dist/html-img-alt.esm";
+import { alts } from "html-img-alt";
 
 // string-in, string-out:
 assert.equal(

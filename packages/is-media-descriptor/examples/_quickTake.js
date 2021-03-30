@@ -1,7 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
-import { isMediaD } from "../dist/is-media-descriptor.esm";
+import { isMediaD } from "../dist/is-media-descriptor.esm.js";
 
 assert.deepEqual(isMediaD("screeen"), [
   {

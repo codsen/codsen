@@ -9,7 +9,7 @@ import {
   sortAllObjectsSync,
   noNewKeysSync,
   findUnusedSync,
-} from "../dist/json-comb-core.esm";
+} from "../dist/json-comb-core.esm.js";
 
 assert.deepEqual(
   findUnusedSync([

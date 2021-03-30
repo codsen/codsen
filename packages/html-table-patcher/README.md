@@ -34,7 +34,7 @@ npm i html-table-patcher
 
 ```js
 import { strict as assert } from "assert";
-import { patcher } from "dist/html-table-patcher.esm";
+import { patcher } from "html-table-patcher";
 
 assert.equal(
   patcher(

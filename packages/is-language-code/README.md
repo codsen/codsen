@@ -34,7 +34,7 @@ npm i is-language-code
 
 ```js
 import { strict as assert } from "assert";
-import { isLangCode } from "dist/is-language-code.esm";
+import { isLangCode } from "is-language-code";
 
 assert.deepEqual(isLangCode("de-419-DE"), {
   res: false,

@@ -34,7 +34,7 @@ npm i edit-package-json
 
 ```js
 import { strict as assert } from "assert";
-import { set, del } from "dist/edit-package-json.esm";
+import { set, del } from "edit-package-json";
 
 // edit JSON as string
 assert.equal(

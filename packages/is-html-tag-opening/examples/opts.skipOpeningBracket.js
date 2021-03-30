@@ -1,7 +1,7 @@
 // `opts.skipOpeningBracket`
 
 import { strict as assert } from "assert";
-import { isOpening } from "../dist/is-html-tag-opening.esm";
+import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 // missing opening bracket:
 assert.equal(isOpening(`<a>div class="w-64 h-3">`, 3), false);

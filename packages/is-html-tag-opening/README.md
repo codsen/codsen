@@ -34,7 +34,7 @@ npm i is-html-tag-opening
 
 ```js
 import { strict as assert } from "assert";
-import { isOpening } from "dist/is-html-tag-opening.esm";
+import { isOpening } from "is-html-tag-opening";
 
 const text = `<span>a < b<span>`;
 

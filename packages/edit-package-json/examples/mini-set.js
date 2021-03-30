@@ -1,7 +1,7 @@
 // Minimal example, `set()`
 
 import { strict as assert } from "assert";
-import { set } from "../dist/edit-package-json.esm";
+import { set } from "../dist/edit-package-json.esm.js";
 
 // edit JSON as string
 assert.equal(

@@ -1,7 +1,7 @@
 // `opts.allowCustomTagNames`
 
 import { strict as assert } from "assert";
-import { isOpening } from "../dist/is-html-tag-opening.esm";
+import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 // recognised tag
 assert.equal(isOpening(`abc <div>`, 4), true);

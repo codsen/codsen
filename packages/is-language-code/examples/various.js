@@ -1,7 +1,7 @@
 // Various examples
 
 import { strict as assert } from "assert";
-import { isLangCode } from "../dist/is-language-code.esm";
+import { isLangCode } from "../dist/is-language-code.esm.js";
 
 assert.equal(isLangCode("de").res, true);
 // => true because it's a German language code

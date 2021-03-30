@@ -1,7 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
-import { fixRowNums } from "../dist/js-row-num.esm";
+import { fixRowNums } from "../dist/js-row-num.esm.js";
 
 // sets line number to 002 because it's on row number two
 assert.equal(

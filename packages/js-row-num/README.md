@@ -34,7 +34,7 @@ npm i js-row-num
 
 ```js
 import { strict as assert } from "assert";
-import { fixRowNums } from "dist/js-row-num.esm";
+import { fixRowNums } from "js-row-num";
 
 // sets line number to 002 because it's on row number two
 assert.equal(

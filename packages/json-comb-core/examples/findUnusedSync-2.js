@@ -9,7 +9,7 @@ import {
   sortAllObjectsSync,
   noNewKeysSync,
   findUnusedSync,
-} from "../dist/json-comb-core.esm";
+} from "../dist/json-comb-core.esm.js";
 
 // This function will work on arrays of both normalised and not normalised object sets.
 assert.deepEqual(

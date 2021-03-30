@@ -9,7 +9,7 @@ import {
   sortAllObjectsSync,
   noNewKeysSync,
   findUnusedSync,
-} from "../dist/json-comb-core.esm";
+} from "../dist/json-comb-core.esm.js";
 
 // Let's calculate the schema of the following arrays of plain objects,
 // and do it asynchronously.

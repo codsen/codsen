@@ -34,7 +34,7 @@ npm i is-char-suitable-for-html-attr-name
 
 ```js
 import { strict as assert } from "assert";
-import { isAttrNameChar } from "dist/is-char-suitable-for-html-attr-name.esm";
+import { isAttrNameChar } from "is-char-suitable-for-html-attr-name";
 
 // Follows the spec:
 // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
