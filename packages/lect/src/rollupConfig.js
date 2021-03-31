@@ -329,87 +329,6 @@ async function rollupConfig({ state }) {
 `;
   }
 
-  let defaultESBrowsersBit = "";
-  if (objectPath.has(state.pack, "module")) {
-    defaultESBrowsersBit = `
-    // ES for Browsers
-    {
-      input: "src/main.ts",
-      output: [{ file: \`dist/\${pkg.name}.mjs\`, format: "es", indent: false }],
-      external: makeExternalPredicate([
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.peerDependencies || {}),
-      ]),
-      plugins: [
-        ${
-          state.pack.devDependencies["rollup-plugin-node-builtins"]
-            ? "builtins(),\n        "
-            : ""
-        }nodeResolve({
-          extensions,
-        })${
-          state.pack.devDependencies["rollup-plugin-node-globals"]
-            ? ",\n        globals()"
-            : ""
-        }${
-      state.pack.devDependencies["@rollup/plugin-json"]
-        ? ",\n        json()"
-        : ""
-    }${
-      state.pack.devDependencies["rollup-plugin-node-polyfills"]
-        ? ",\n        nodePolyfills()"
-        : ""
-    },
-        replace({
-          "process.env.NODE_ENV": JSON.stringify("production"),
-        }),
-        typescript({
-          ${
-            state.pack.devDependencies["ts-transformer-keys"] ||
-            state.pack.dependencies["ts-transformer-keys"]
-              ? `transformers: {
-            before: [
-              {
-                type: "program",
-                factory: (program) => {
-                  return keysTransformer(program);
-                },
-              },
-            ],
-            after: [],
-          },
-              `
-              : ""
-          }tsconfig: "../../tsconfig.build.json",
-          declaration: false,
-        }),
-        babel({
-          extensions,
-          include: resolve("src", "**", "*.ts"),
-          exclude: "node_modules/**",
-          babelHelpers: "bundled",
-        }),
-        !commandLineArgs.dev &&
-          strip({
-            sourceMap: false,
-            include: ["src/**/*.(js|ts)"],
-            functions: ["console.*"],
-          }),
-        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
-        terser({
-          compress: {
-            pure_getters: true,
-            unsafe: false,
-            unsafe_comps: false,
-            warnings: false,
-          },
-        }),
-        banner(licensePiece),
-      ],
-    },
-`;
-  }
-
   let defaultDefinitions = "";
   if (objectPath.has(state.pack, "module")) {
     defaultDefinitions = `
@@ -480,7 +399,7 @@ const makeExternalPredicate = (externalArr) => {
 };
 
 export default (commandLineArgs) => {
-  const finalConfig = [${defaultUmdBit}${defaultDevUmdBit}${defaultCommonJSBit}${defaultESMBit}${defaultESBrowsersBit}${defaultDefinitions}  ];
+  const finalConfig = [${defaultUmdBit}${defaultDevUmdBit}${defaultCommonJSBit}${defaultESMBit}${defaultDefinitions}  ];
 
   if (commandLineArgs.dev) {
     // don't build minified UMD in dev, it takes too long
