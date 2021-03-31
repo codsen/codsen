@@ -200,51 +200,6 @@ export default (commandLineArgs) => {
       ],
     },
 
-    // ES for Browsers
-    {
-      input: "src/main.ts",
-      output: [{ file: `dist/${pkg.name}.mjs`, format: "es", indent: false }],
-      external: makeExternalPredicate([
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.peerDependencies || {}),
-      ]),
-      plugins: [
-        nodeResolve({
-          extensions,
-        }),
-        json(),
-        replace({
-          "process.env.NODE_ENV": JSON.stringify("production"),
-        }),
-        typescript({
-          tsconfig: "../../tsconfig.build.json",
-          declaration: false,
-        }),
-        babel({
-          extensions,
-          include: resolve("src", "**", "*.ts"),
-          exclude: "node_modules/**",
-          babelHelpers: "bundled",
-        }),
-        !commandLineArgs.dev &&
-          strip({
-            sourceMap: false,
-            include: ["src/**/*.(js|ts)"],
-            functions: ["console.*"],
-          }),
-        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
-        terser({
-          compress: {
-            pure_getters: true,
-            unsafe: false,
-            unsafe_comps: false,
-            warnings: false,
-          },
-        }),
-        banner(licensePiece),
-      ],
-    },
-
     // Type definitions
     {
       input: "src/main.ts",
