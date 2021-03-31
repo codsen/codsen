@@ -245,7 +245,7 @@ async function packageJson({ state, lectrc }) {
   try {
     await writeFileAtomic(
       "package.json",
-      JSON.stringify(format(content), null, 2)
+      `${JSON.stringify(format(content), null, 2)}\n`
     );
     // console.log(`lect package.json ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
 

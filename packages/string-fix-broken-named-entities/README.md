@@ -52,7 +52,7 @@ assert.equal(rApply(source, fixEnt(source)), "&nbsp;x&nbsp;y&nbsp;");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-fix-broken-named-entities/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/string-fix-broken-named-entities/) for a full description of the API, examples and even a test <a href="https://codsen.com/os/string-fix-broken-named-entities/play">playground</a>.
 
 ## Contributing
 

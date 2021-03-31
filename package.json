@@ -17,7 +17,7 @@
   },
   "scripts": {
     "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist --ignore-scripts",
-    "build": "lerna run ci_test --bail --concurrency 1 && npm run readme:generate",
+    "build": "lerna run ci_test --bail --concurrency 1 && npm run seed && npm run readme:generate",
     "build:just": "lerna run build --bail --concurrency 1",
     "cm": "git-cz -n",
     "changed": "lerna changed",
@@ -35,13 +35,15 @@
     "test:examples": "FORCE_COLOR=1 lerna run test:examples",
     "wipe": "rm package-lock.json || true && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y",
     "graph": "lerna-dependency-graph -f 'png' -o './deps-graph.png'",
-    "checkPublishedSizeLimit": "node ./scripts/check100MBLimit.js"
+    "checkPublishedSizeLimit": "node ./scripts/check100MBLimit.js",
+    "seed": "node ./scripts/playgrounds.js"
   },
   "browserslist": "> 0.25%, not dead",
   "dependencies": {},
   "devDependencies": {
     "@typescript-eslint/parser": "^4.20.0",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "axios": "^0.21.1",
     "benchmark": "^2.1.4",
     "commitizen": "^4.2.3",
     "cz-conventional-changelog": "^3.3.0",
@@ -62,6 +64,7 @@
     "prettier": "^2.2.1",
     "simple-git": "^2.37.0",
     "tap-parse-string-to-object": "^2.0.11",
-    "title": "^3.4.2"
+    "title": "^3.4.2",
+    "write-file-atomic": "^3.0.3"
   }
 }

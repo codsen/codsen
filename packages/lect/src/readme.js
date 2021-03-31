@@ -2,6 +2,7 @@ const objectPath = require("object-path");
 const writeFileAtomic = require("write-file-atomic");
 const decodeContent = require("./decodeContent");
 const arrayiffy = require("./arrayiffy");
+const webapps = require("../../../stats/webapps.json");
 
 // writes readme
 async function readme({ state, examples, lectrc }) {
@@ -10,6 +11,11 @@ async function readme({ state, examples, lectrc }) {
   const badge2 = `<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center">`;
 
   const badge3 = `<img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">`;
+
+  let play = "";
+  if (webapps[state.pack.name] && !webapps[state.pack.name].url) {
+    play = ` and even a test <a href="https://codsen.com/os/${state.pack.name}/play">playground</a>`;
+  }
 
   // start setting up the final readme's string:
   let content = `# ${state.pack.name}
@@ -78,7 +84,7 @@ ${decodeContent(examples["_quickTake.js"].content)}
 
 Please [visit codsen.com](https://codsen.com/os/${
     state.pack.name
-  }/) for a full description of the API and examples.
+  }/) for a full description of the API${play ? "," : " and"} examples${play}.
 
 ## Contributing
 

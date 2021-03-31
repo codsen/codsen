@@ -65,7 +65,7 @@ assert.equal(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-collapse-white-space/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/string-collapse-white-space/) for a full description of the API, examples and even a test <a href="https://codsen.com/os/string-collapse-white-space/play">playground</a>.
 
 ## Contributing
 

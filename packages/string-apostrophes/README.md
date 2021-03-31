@@ -63,7 +63,7 @@ assert.deepEqual(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-apostrophes/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/string-apostrophes/) for a full description of the API, examples and even a test <a href="https://codsen.com/os/string-apostrophes/play">playground</a>.
 
 ## Contributing
 
