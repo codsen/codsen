@@ -1,6 +1,6 @@
 {
   "name": "is-relative-uri",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "Is given string a relative URI?",
   "keywords": [
     "href",
@@ -103,8 +103,8 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "eslint": "^7.23.0",
-    "lect": "^0.16.11",
-    "ranges-apply": "^5.0.11",
+    "lect": "^0.16.12",
+    "ranges-apply": "^5.0.12",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

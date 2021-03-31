@@ -1,6 +1,6 @@
 {
   "name": "line-column-mini",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "Convert string index to line-column position",
   "keywords": [
     "string",
@@ -97,7 +97,7 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "eslint": "^7.23.0",
-    "lect": "^0.16.11",
+    "lect": "^0.16.12",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

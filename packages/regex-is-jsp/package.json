@@ -1,6 +1,6 @@
 {
   "name": "regex-is-jsp",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "Regular expression for detecting JSP (Java Server Pages) code",
   "keywords": [
     "code",
@@ -105,7 +105,7 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "eslint": "^7.23.0",
-    "lect": "^0.16.11",
+    "lect": "^0.16.12",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

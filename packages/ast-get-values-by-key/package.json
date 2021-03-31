@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "Extract values and paths from AST by keys OR set them by keys",
   "keywords": [
     "ast",
@@ -88,7 +88,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "ast-monkey-traverse": "^2.0.11",
+    "ast-monkey-traverse": "^2.0.12",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^4.0.0"
   },
@@ -118,7 +118,7 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "eslint": "^7.23.0",
-    "lect": "^0.16.11",
+    "lect": "^0.16.12",
     "object-path": "^0.11.5",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",

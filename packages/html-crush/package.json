@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "4.1.5",
+  "version": "4.1.6",
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "keywords": [
     "breaks",
@@ -89,12 +89,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "ranges-apply": "^5.0.11",
-    "ranges-push": "^5.0.11",
-    "string-left-right": "^4.0.11",
-    "string-match-left-right": "^7.0.5",
-    "string-range-expander": "^2.0.11",
-    "test-mixer": "^2.0.11"
+    "ranges-apply": "^5.0.12",
+    "ranges-push": "^5.0.12",
+    "string-left-right": "^4.0.12",
+    "string-match-left-right": "^7.0.6",
+    "string-range-expander": "^2.0.12",
+    "test-mixer": "^2.0.12"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
@@ -122,7 +122,7 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "eslint": "^7.23.0",
-    "lect": "^0.16.11",
+    "lect": "^0.16.12",
     "node-fetch": "^2.6.1",
     "p-map": "^4.0.0",
     "rollup": "^2.44.0",
