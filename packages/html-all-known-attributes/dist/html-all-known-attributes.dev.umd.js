@@ -1,7 +1,7 @@
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.11
+ * Version: 4.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.htmlAllKnownAttributes = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "4.0.11";
+var version$1 = "4.0.12";
 
 const version = version$1;
 const allHtmlAttribs = new Set([

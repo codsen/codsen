@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.5.3](https://github.com/codsen/codsen/compare/codsen-tokenizer@5.5.2...codsen-tokenizer@5.5.3) (2021-03-31)
-
-**Note:** Version bump only for package codsen-tokenizer
-
-
-
-
-
 ## 5.5.0 (2021-03-23)
 
 ### Bug Fixes

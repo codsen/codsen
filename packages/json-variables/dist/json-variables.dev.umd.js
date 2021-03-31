@@ -1,7 +1,7 @@
 /**
  * json-variables
  * Resolves custom-marked, cross-referenced paths in parsed JSON
- * Version: 10.0.11
+ * Version: 10.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/json-variables/
@@ -1913,7 +1913,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.11
+ * Version: 1.3.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -1937,7 +1937,7 @@ function parent(str) {
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.11
+ * Version: 2.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -2428,7 +2428,7 @@ var objectPath = createCommonjsModule(function (module) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.11
+ * Version: 3.13.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -2447,7 +2447,7 @@ function arrayiffy(something) {
 /**
  * string-match-left-right
  * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.5
+ * Version: 7.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-match-left-right/
@@ -2743,7 +2743,7 @@ function matchRightIncl(str, position, whatToMatch, opts) {
 /**
  * string-find-heads-tails
  * Finds where are arbitrary templating marker heads and tails located
- * Version: 4.0.11
+ * Version: 4.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-find-heads-tails/
@@ -2965,7 +2965,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
 /**
  * ast-get-values-by-key
  * Extract values and paths from AST by keys OR set them by keys
- * Version: 3.0.11
+ * Version: 3.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-values-by-key/
@@ -2998,7 +2998,7 @@ function getByKey(originalInput, whatToFind, originalReplacement) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.11
+ * Version: 5.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -3075,7 +3075,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.11
+ * Version: 4.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -3138,7 +3138,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.11
+ * Version: 7.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -3238,7 +3238,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.11
+ * Version: 5.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -3380,7 +3380,7 @@ class Ranges {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.11
+ * Version: 5.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -3476,7 +3476,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * string-trim-spaces-only
  * Like String.trim() but you can choose granularly what to trim
- * Version: 3.0.11
+ * Version: 3.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-trim-spaces-only/
@@ -3556,7 +3556,7 @@ function trimSpaces(str, originalOpts) {
 /**
  * string-remove-duplicate-heads-tails
  * Detect and (recursively) remove head and tail wrappings around the input string
- * Version: 5.0.11
+ * Version: 5.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-remove-duplicate-heads-tails/
@@ -3764,7 +3764,7 @@ function remDup(str, originalOpts) {
   return str.trim();
 }
 
-var version$1 = "10.0.11";
+var version$1 = "10.0.12";
 
 /* eslint max-len:0 */
 const version = version$1;

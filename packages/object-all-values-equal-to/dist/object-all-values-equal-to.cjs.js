@@ -1,7 +1,7 @@
 /**
  * object-all-values-equal-to
  * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * Version: 2.0.11
+ * Version: 2.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-all-values-equal-to/
@@ -21,7 +21,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var isEq__default = /*#__PURE__*/_interopDefaultLegacy(isEq);
 
-var version$1 = "2.0.11";
+var version$1 = "2.0.12";
 
 var version = version$1;
 function allValuesEqualTo(input, value, opts) {

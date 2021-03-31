@@ -1,7 +1,7 @@
 /**
  * string-find-heads-tails
  * Finds where are arbitrary templating marker heads and tails located
- * Version: 4.0.11
+ * Version: 4.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-find-heads-tails/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.11
+ * Version: 3.13.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -35,7 +35,7 @@ function arrayiffy(something) {
 /**
  * string-match-left-right
  * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.5
+ * Version: 7.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-match-left-right/
@@ -325,7 +325,7 @@ function matchRightIncl(str, position, whatToMatch, opts) {
   return main("matchRightIncl", str, position, whatToMatch, opts);
 }
 
-var version$1 = "4.0.11";
+var version$1 = "4.0.12";
 
 const version = version$1;
 function isObj(something) {

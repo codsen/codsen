@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Visual helper to place templating code around table tags into correct places
- * Version: 4.0.11
+ * Version: 4.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-table-patcher/
@@ -12,7 +12,7 @@ import { Ranges } from 'ranges-push';
 import { rApply } from 'ranges-apply';
 import { traverse } from 'ast-monkey-traverse-with-lookahead';
 
-var version$1 = "4.0.11";
+var version$1 = "4.0.12";
 
 const version = version$1;
 const htmlCommentRegex = /<!--([\s\S]*?)-->/g;

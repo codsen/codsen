@@ -1,7 +1,7 @@
 /**
  * string-extract-class-names
  * Extracts CSS class/id names from a string
- * Version: 6.0.11
+ * Version: 6.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-class-names/
@@ -9,7 +9,7 @@
 
 import { right, left } from 'string-left-right';
 
-var version$1 = "6.0.11";
+var version$1 = "6.0.12";
 
 const version = version$1;
 function extract(str) {

@@ -1,7 +1,7 @@
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.11
+ * Version: 5.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -10,7 +10,7 @@
 import { collWhitespace } from 'string-collapse-leading-whitespace';
 import { rMerge } from 'ranges-merge';
 
-var version$1 = "5.0.11";
+var version$1 = "5.0.12";
 
 const version = version$1;
 function existy(x) {

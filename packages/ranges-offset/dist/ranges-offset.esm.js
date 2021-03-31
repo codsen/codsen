@@ -1,13 +1,13 @@
 /**
  * ranges-offset
  * Increment or decrement each index in every range
- * Version: 2.0.11
+ * Version: 2.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-offset/
  */
 
-var version$1 = "2.0.11";
+var version$1 = "2.0.12";
 
 const version = version$1;
 function rOffset(arrOfRanges, offset = 0) {

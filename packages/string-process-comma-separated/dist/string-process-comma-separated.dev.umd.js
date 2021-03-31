@@ -1,7 +1,7 @@
 /**
  * string-process-comma-separated
  * Extracts chunks from possibly comma or whatever-separated string
- * Version: 2.0.11
+ * Version: 2.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-process-comma-separated/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringProcessCommaSeparated = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "2.0.11";
+var version$1 = "2.0.12";
 
 const version = version$1;
 function processCommaSep(str, originalOpts) {

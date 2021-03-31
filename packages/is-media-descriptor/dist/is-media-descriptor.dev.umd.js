@@ -1,7 +1,7 @@
 /**
  * is-media-descriptor
  * Is given string a valid media descriptor (including media query)?
- * Version: 3.0.11
+ * Version: 3.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-media-descriptor/
@@ -94,7 +94,7 @@ leven_1.default = _default;
 /**
  * string-process-comma-separated
  * Extracts chunks from possibly comma or whatever-separated string
- * Version: 2.0.11
+ * Version: 2.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-process-comma-separated/
@@ -594,7 +594,7 @@ function loop(str, opts, res) {
     }
 }
 
-var version$1 = "3.0.11";
+var version$1 = "3.0.12";
 
 const version = version$1;
 const defaults = {

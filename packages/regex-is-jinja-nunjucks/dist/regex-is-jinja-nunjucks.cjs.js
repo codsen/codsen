@@ -1,7 +1,7 @@
 /**
  * regex-is-jinja-nunjucks
  * Regular expression for detecting Jinja or Nunjucks code
- * Version: 2.0.11
+ * Version: 2.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version$1 = "2.0.11";
+var version$1 = "2.0.12";
 
 var version = version$1;
 function isJinjaNunjucksRegex() {

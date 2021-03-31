@@ -1,7 +1,7 @@
 /**
  * detect-templating-language
  * Detects various templating languages present in string
- * Version: 2.0.11
+ * Version: 2.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detect-templating-language/
@@ -11,7 +11,7 @@ import { isJinjaNunjucksRegex } from 'regex-is-jinja-nunjucks';
 import { isJSP } from 'regex-is-jsp';
 import { isJinjaSpecific } from 'regex-jinja-specific';
 
-var version$1 = "2.0.11";
+var version$1 = "2.0.12";
 
 const version = version$1;
 function detectLang(str) {
