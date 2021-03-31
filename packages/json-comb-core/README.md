@@ -42,7 +42,7 @@ import {
   sortAllObjectsSync,
   noNewKeysSync,
   findUnusedSync,
-} from "dist/json-comb-core.esm";
+} from "json-comb-core";
 
 // STEP #1
 // =======
