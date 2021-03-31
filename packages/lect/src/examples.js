@@ -27,9 +27,9 @@ async function examples({ state }) {
         let content = response[currentIndex]
           .replace(/\/\*\s*eslint[^*]*\*\//g, "")
           .trim()
-          .replace(/\.\.\/dist\/([^.]+)\.esm/, "$1")
-          .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.cjs/, "$1")
-          .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.esm/, "$1")
+          .replace(/\.\.\/dist\/([^.]+)\.esm(\.\w+)?/, "$1")
+          .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.cjs(\.\w+)?/, "$1")
+          .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.esm(\.\w+)?/, "$1")
           .replace(/"\.\.\/\.\.\/\.\.\/\.\.\//g, `"`)
           .replace(/"\.\.\/\.\.\/\.\.\//g, `"`)
           .replace(/"\.\.\/\.\.\//g, `"`)
