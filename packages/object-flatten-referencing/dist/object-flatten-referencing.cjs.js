@@ -12,6 +12,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var clone = require('lodash.clonedeep');
 var strIndexesOfPlus = require('str-indexes-of-plus');
 var matcher = require('matcher');
@@ -20,6 +21,7 @@ var isObj = require('lodash.isplainobject');
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
@@ -67,13 +69,9 @@ function flattenObject(objOrig, originalOpts) {
   }
   return res;
 }
-function flattenArr(arrOrig, originalOpts, wrap, joinArraysUsingBrs) {
-  if (wrap === void 0) {
-    wrap = false;
-  }
-  if (joinArraysUsingBrs === void 0) {
-    joinArraysUsingBrs = false;
-  }
+function flattenArr(arrOrig, originalOpts) {
+  var wrap = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var joinArraysUsingBrs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (arguments.length === 0 || arrOrig.length === 0) {
     return "";
@@ -87,7 +85,7 @@ function flattenArr(arrOrig, originalOpts, wrap, joinArraysUsingBrs) {
           var lineBreak = void 0;
           lineBreak = "";
           if (opts.mergeArraysWithLineBreaks && i > 0 && (!opts.mergeWithoutTrailingBrIfLineContainsBr || typeof arr[i - 1] !== "string" || opts.mergeWithoutTrailingBrIfLineContainsBr && arr[i - 1] !== undefined && !arr[i - 1].toLowerCase().includes("<br"))) {
-            lineBreak = "<br" + (opts.xhtml ? " /" : "") + ">";
+            lineBreak = "<br".concat(opts.xhtml ? " /" : "", ">");
           }
           res += lineBreak + (wrap ? opts.wrapHeadsWith : "") + arr[i] + (wrap ? opts.wrapTailsWith : "");
         } else if (Array.isArray(arr[i])) {
@@ -95,7 +93,7 @@ function flattenArr(arrOrig, originalOpts, wrap, joinArraysUsingBrs) {
             (function () {
               var lineBreak = "";
               if (opts.mergeArraysWithLineBreaks && res.length > 0) {
-                lineBreak = "<br" + (opts.xhtml ? " /" : "") + ">";
+                lineBreak = "<br".concat(opts.xhtml ? " /" : "", ">");
               }
               res = arr[i].reduce(function (acc, val, i2, arr2) {
                 var trailingSpace = "";
@@ -112,7 +110,7 @@ function flattenArr(arrOrig, originalOpts, wrap, joinArraysUsingBrs) {
       res = arr.reduce(function (acc, val, i, arr2) {
         var lineBreak = "";
         if (opts.mergeArraysWithLineBreaks && i > 0) {
-          lineBreak = "<br" + (opts.xhtml ? " /" : "") + ">";
+          lineBreak = "<br".concat(opts.xhtml ? " /" : "", ">");
         }
         var trailingSpace = "";
         if (i !== arr2.length - 1) {
@@ -151,7 +149,7 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
     throw new Error("object-flatten-referencing/ofr(): [THROW_ID_02] reference object missing!");
   }
   if (existy(opts1) && !isObj__default['default'](opts1)) {
-    throw new Error("object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: " + typeof opts1);
+    throw new Error("object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: ".concat(_typeof__default['default'](opts1)));
   }
   var originalOpts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), opts1);
   originalOpts.dontWrapKeys = arrayiffyString(originalOpts.dontWrapKeys);
@@ -161,16 +159,10 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
   if (typeof originalOpts.whatToDoWhenReferenceIsMissing !== "number") {
     originalOpts.whatToDoWhenReferenceIsMissing = +originalOpts.whatToDoWhenReferenceIsMissing || 0;
   }
-  function ofr(originalInput, originalReference, opts, wrap, joinArraysUsingBrs, currentRoot) {
-    if (wrap === void 0) {
-      wrap = true;
-    }
-    if (joinArraysUsingBrs === void 0) {
-      joinArraysUsingBrs = true;
-    }
-    if (currentRoot === void 0) {
-      currentRoot = "";
-    }
+  function ofr(originalInput, originalReference, opts) {
+    var wrap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+    var joinArraysUsingBrs = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+    var currentRoot = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
     var input = clone__default['default'](originalInput);
     var reference = clone__default['default'](originalReference);
     if (!opts.wrapGlobalFlipSwitch) {
@@ -178,7 +170,7 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
     }
     if (isObj__default['default'](input)) {
       Object.keys(input).forEach(function (key) {
-        var currentPath = currentRoot + (currentRoot.length === 0 ? key : "." + key);
+        var currentPath = currentRoot + (currentRoot.length === 0 ? key : ".".concat(key));
         if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true;
@@ -233,9 +225,9 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
             } else if (isStr(input[key])) {
               input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
             }
-          } else if (typeof input[key] !== typeof reference[key]) {
+          } else if (_typeof__default['default'](input[key]) !== _typeof__default['default'](reference[key])) {
             if (opts.whatToDoWhenReferenceIsMissing === 1) {
-              throw new Error("object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key " + key + " and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing.");
+              throw new Error("object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key ".concat(key, " and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing."));
             }
           }
         }
@@ -244,9 +236,9 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
       if (Array.isArray(reference)) {
         input.forEach(function (_el, i) {
           if (existy(input[i]) && existy(reference[i])) {
-            input[i] = ofr(input[i], reference[i], opts, wrap, joinArraysUsingBrs, currentRoot + "[" + i + "]");
+            input[i] = ofr(input[i], reference[i], opts, wrap, joinArraysUsingBrs, "".concat(currentRoot, "[").concat(i, "]"));
           } else {
-            input[i] = ofr(input[i], reference[0], opts, wrap, joinArraysUsingBrs, currentRoot + "[" + i + "]");
+            input[i] = ofr(input[i], reference[0], opts, wrap, joinArraysUsingBrs, "".concat(currentRoot, "[").concat(i, "]"));
           }
         });
       } else if (isStr(reference)) {

@@ -11,12 +11,16 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var leven = require('leven');
 var stringProcessCommaSeparated = require('string-process-comma-separated');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var leven__default = /*#__PURE__*/_interopDefaultLegacy(leven);
 
@@ -42,7 +46,7 @@ function loop(str, opts, res) {
             res.push({
               idxFrom: lastOpening + 1 + opts.offset,
               idxTo: i + opts.offset,
-              message: "Unrecognised \"" + extractedValueWithinBrackets.trim() + "\".",
+              message: "Unrecognised \"".concat(extractedValueWithinBrackets.trim(), "\"."),
               fix: null
             });
           }
@@ -55,7 +59,7 @@ function loop(str, opts, res) {
         res.push({
           idxFrom: startingIdx + opts.offset,
           idxTo: startingIdx + mediaTypeFound.length + opts.offset,
-          message: "Media type \"" + mediaTypeFound + "\" inside brackets.",
+          message: "Media type \"".concat(mediaTypeFound, "\" inside brackets."),
           fix: null
         });
       });
@@ -108,14 +112,14 @@ function loop(str, opts, res) {
           res.push({
             idxFrom: chunkStartsAt + opts.offset,
             idxTo: i + opts.offset,
-            message: "Expected \"and\", found \"" + chunk + "\".",
+            message: "Expected \"and\", found \"".concat(chunk, "\"."),
             fix: null
           });
         } else if (!str[i]) {
           res.push({
             idxFrom: chunkStartsAt + opts.offset,
             idxTo: i + opts.offset,
-            message: "Dangling \"" + chunk + "\".",
+            message: "Dangling \"".concat(chunk, "\"."),
             fix: {
               ranges: [[str.slice(0, chunkStartsAt).trim().length + opts.offset, i + opts.offset]]
             }
@@ -129,7 +133,7 @@ function loop(str, opts, res) {
       } else if (nextCanBeMediaType || nextCanBeMediaCondition) {
         if (chunk.startsWith("(")) {
           if (nextCanBeMediaCondition) ; else {
-            var message = "Media condition \"" + str.slice(chunkStartsAt, i) + "\" can't be here.";
+            var message = "Media condition \"".concat(str.slice(chunkStartsAt, i), "\" can't be here.");
             if (gatheredChunksArr[gatheredChunksArr.length - 2] === "not") {
               message = "\"not\" can be only in front of media type.";
             }
@@ -146,11 +150,11 @@ function loop(str, opts, res) {
               nextCanBeMediaType = false;
               nextCanBeMediaCondition = false;
             } else {
-              var _message = "Unrecognised \"" + chunk + "\".";
+              var _message = "Unrecognised \"".concat(chunk, "\".");
               if (!chunk.match(/\w/g)) {
-                _message = "Strange symbol" + (chunk.trim().length === 1 ? "" : "s") + " \"" + chunk + "\".";
+                _message = "Strange symbol".concat(chunk.trim().length === 1 ? "" : "s", " \"").concat(chunk, "\".");
               } else if (["and", "only", "or", "not"].includes(chunk.toLowerCase())) {
-                _message = "\"" + chunk + "\" instead of a media type.";
+                _message = "\"".concat(chunk, "\" instead of a media type.");
               }
               res.push({
                 idxFrom: chunkStartsAt + opts.offset,
@@ -160,11 +164,11 @@ function loop(str, opts, res) {
               });
             }
           } else {
-            var _message2 = "Expected brackets on \"" + chunk + "\".";
+            var _message2 = "Expected brackets on \"".concat(chunk, "\".");
             var fix = null;
             var idxTo = i + opts.offset;
             if (["not", "else", "or"].includes(chunk.toLowerCase())) {
-              _message2 = "\"" + chunk + "\" can't be here.";
+              _message2 = "\"".concat(chunk, "\" can't be here.");
             } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
               _message2 = "Unexpected media type, try using a comma.";
             } else if (recognisedMediaFeatures.includes(chunk.toLowerCase())) {
@@ -174,7 +178,7 @@ function loop(str, opts, res) {
               };
             } else if (str.slice(i).trim().startsWith(":")) {
               var valueWithoutColon = chunk.slice(0, i).trim();
-              _message2 = "Expected brackets on \"" + valueWithoutColon + "\" and its value.";
+              _message2 = "Expected brackets on \"".concat(valueWithoutColon, "\" and its value.");
               idxTo = chunkStartsAt + valueWithoutColon.length + opts.offset;
             }
             res.push({
@@ -191,7 +195,7 @@ function loop(str, opts, res) {
         res.push({
           idxFrom: chunkStartsAt + opts.offset,
           idxTo: i + opts.offset,
-          message: "Unrecognised media type \"" + str.slice(chunkStartsAt, i) + "\".",
+          message: "Unrecognised media type \"".concat(str.slice(chunkStartsAt, i), "\"."),
           fix: null
         });
       }
@@ -216,7 +220,7 @@ var defaults = {
 function isMediaD(originalStr, originalOpts) {
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (opts.offset && !Number.isInteger(opts.offset)) {
-    throw new Error("is-media-descriptor: [THROW_ID_01] opts.offset must be an integer, it was given as " + opts.offset + " (type " + typeof opts.offset + ")");
+    throw new Error("is-media-descriptor: [THROW_ID_01] opts.offset must be an integer, it was given as ".concat(opts.offset, " (type ").concat(_typeof__default['default'](opts.offset), ")"));
   }
   if (!opts.offset) {
     opts.offset = 0;
@@ -276,7 +280,7 @@ function isMediaD(originalStr, originalOpts) {
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
-          message: "Did you mean \"" + recognisedMediaTypes[_i2] + "\"?",
+          message: "Did you mean \"".concat(recognisedMediaTypes[_i2], "\"?"),
           fix: {
             ranges: [[nonWhitespaceStart + opts.offset, nonWhitespaceEnd + opts.offset, recognisedMediaTypes[_i2]]]
           }
@@ -287,7 +291,7 @@ function isMediaD(originalStr, originalOpts) {
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
-          message: "Unrecognised media type \"" + str + "\".",
+          message: "Unrecognised media type \"".concat(str, "\"."),
           fix: null
         });
       }
@@ -314,8 +318,9 @@ function isMediaD(originalStr, originalOpts) {
       }
       return acc;
     }, [0, 0]),
-        openingBracketCount = _Array$from$reduce[0],
-        closingBracketCount = _Array$from$reduce[1];
+        _Array$from$reduce2 = _slicedToArray__default['default'](_Array$from$reduce, 2),
+        openingBracketCount = _Array$from$reduce2[0],
+        closingBracketCount = _Array$from$reduce2[1];
     if (wrongOrder && openingBracketCount === closingBracketCount) {
       res.push({
         idxFrom: nonWhitespaceStart + opts.offset,

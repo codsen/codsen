@@ -11,7 +11,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
 var rangesMerge = require('ranges-merge');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "5.0.12";
 
@@ -23,13 +28,13 @@ function rApply(str, originalRangesArr, _progressFn) {
     throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
   }
   if (typeof str !== "string") {
-    throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
+    throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof__default['default'](str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
   if (originalRangesArr && !Array.isArray(originalRangesArr)) {
-    throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: " + typeof originalRangesArr + ", equal to: " + JSON.stringify(originalRangesArr, null, 4));
+    throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof__default['default'](originalRangesArr), ", equal to: ").concat(JSON.stringify(originalRangesArr, null, 4)));
   }
   if (_progressFn && typeof _progressFn !== "function") {
-    throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: " + typeof _progressFn + ", equal to: " + JSON.stringify(_progressFn, null, 4));
+    throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof__default['default'](_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
   }
   if (!originalRangesArr || !originalRangesArr.filter(function (range) {
     return range;
@@ -56,18 +61,18 @@ function rApply(str, originalRangesArr, _progressFn) {
       }
     }
     if (!Array.isArray(el)) {
-      throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has " + i + "th element not an array: " + JSON.stringify(el, null, 4) + ", which is " + typeof el);
+      throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has ".concat(i, "th element not an array: ").concat(JSON.stringify(el, null, 4), ", which is ").concat(_typeof__default['default'](el)));
     }
     if (!Number.isInteger(el[0])) {
       if (!Number.isInteger(+el[0]) || +el[0] < 0) {
-        throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has " + i + "th element, array " + JSON.stringify(el, null, 0) + ". Its first element is not an integer, string index, but " + typeof el[0] + ", equal to: " + JSON.stringify(el[0], null, 4) + ".");
+        throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has ".concat(i, "th element, array ").concat(JSON.stringify(el, null, 0), ". Its first element is not an integer, string index, but ").concat(_typeof__default['default'](el[0]), ", equal to: ").concat(JSON.stringify(el[0], null, 4), "."));
       } else {
         rangesArr[i][0] = +rangesArr[i][0];
       }
     }
     if (!Number.isInteger(el[1])) {
       if (!Number.isInteger(+el[1]) || +el[1] < 0) {
-        throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has " + i + "th element, array " + JSON.stringify(el, null, 0) + ". Its second element is not an integer, string index, but " + typeof el[1] + ", equal to: " + JSON.stringify(el[1], null, 4) + ".");
+        throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has ".concat(i, "th element, array ").concat(JSON.stringify(el, null, 0), ". Its second element is not an integer, string index, but ").concat(_typeof__default['default'](el[1]), ", equal to: ").concat(JSON.stringify(el[1], null, 4), "."));
       } else {
         rangesArr[i][1] = +rangesArr[i][1];
       }

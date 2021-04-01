@@ -11,12 +11,14 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var clone = require('lodash.clonedeep');
 var isObj = require('lodash.isplainobject');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
@@ -24,10 +26,8 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var version$1 = "2.0.12";
 
 var version = version$1;
-function traverse(tree1, cb1, lookahead) {
-  if (lookahead === void 0) {
-    lookahead = 0;
-  }
+function traverse(tree1, cb1) {
+  var lookahead = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
   function trimFirstDot(str) {
     if (typeof str === "string" && str[0] === ".") {
       return str.slice(1);
@@ -46,7 +46,7 @@ function traverse(tree1, cb1, lookahead) {
         if (stop.now) {
           break;
         }
-        var path = innerObj.path + "." + i;
+        var path = "".concat(innerObj.path, ".").concat(i);
         innerObj.parent = clone__default['default'](tree);
         innerObj.parentType = "array";
         callback(tree[i], undefined, _objectSpread__default['default'](_objectSpread__default['default']({}, innerObj), {}, {
@@ -61,7 +61,7 @@ function traverse(tree1, cb1, lookahead) {
         if (stop.now && key != null) {
           break;
         }
-        var _path = innerObj.path + "." + key;
+        var _path = "".concat(innerObj.path, ".").concat(key);
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
@@ -87,7 +87,7 @@ function traverse(tree1, cb1, lookahead) {
         break;
       }
     }
-    cb1.apply(void 0, currentElem);
+    cb1.apply(void 0, _toConsumableArray__default['default'](currentElem));
   }
   function intermediary() {
     for (var _len = arguments.length, incoming = new Array(_len), _key = 0; _key < _len; _key++) {

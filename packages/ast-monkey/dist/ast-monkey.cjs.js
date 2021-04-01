@@ -11,7 +11,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var utilArrayObjectOrBoth = require('util-array-object-or-both');
 var checkTypesMini = require('check-types-mini');
 var astCompare = require('ast-compare');
@@ -19,7 +21,9 @@ var astMonkeyTraverse = require('ast-monkey-traverse');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "7.13.12";
 
@@ -31,7 +35,7 @@ function notUndef(x) {
   return x !== undefined;
 }
 function compareIsEqual(a, b) {
-  if (typeof a !== typeof b) {
+  if (_typeof__default['default'](a) !== _typeof__default['default'](b)) {
     return false;
   }
   return !!astCompare.compare(a, b, {
@@ -40,7 +44,7 @@ function compareIsEqual(a, b) {
   });
 }
 function isObj(something) {
-  return something && typeof something === "object" && !Array.isArray(something);
+  return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
 }
 function monkey(originalInput, originalOpts) {
   if (!existy(originalInput)) {
@@ -88,7 +92,7 @@ function monkey(originalInput, originalOpts) {
             index: data.count,
             key: key,
             val: val,
-            path: [].concat(data.gatherPath)
+            path: _toConsumableArray__default['default'](data.gatherPath)
           };
           findings.push(temp);
         } else {
@@ -165,7 +169,7 @@ function get(input, originalOpts) {
   if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
     opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
-    throw new Error("ast-monkey/main.js/get(): [THROW_ID_11] opts.index must be a natural number. It was given as: " + opts.index + " (type " + typeof opts.index + ")");
+    throw new Error("ast-monkey/main.js/get(): [THROW_ID_11] opts.index must be a natural number. It was given as: ".concat(opts.index, " (type ").concat(_typeof__default['default'](opts.index), ")"));
   }
   return monkey(input, _objectSpread__default['default'](_objectSpread__default['default']({}, opts), {}, {
     mode: "get"
@@ -188,7 +192,7 @@ function set(input, originalOpts) {
   if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
     opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
-    throw new Error("ast-monkey/main.js/set(): [THROW_ID_17] opts.index must be a natural number. It was given as: " + opts.index);
+    throw new Error("ast-monkey/main.js/set(): [THROW_ID_17] opts.index must be a natural number. It was given as: ".concat(opts.index));
   }
   if (existy(opts.key) && !notUndef(opts.val)) {
     opts.val = opts.key;
@@ -219,7 +223,7 @@ function drop(input, originalOpts) {
   if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
     opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
-    throw new Error("ast-monkey/main.js/drop(): [THROW_ID_23] opts.index must be a natural number. It was given as: " + opts.index);
+    throw new Error("ast-monkey/main.js/drop(): [THROW_ID_23] opts.index must be a natural number. It was given as: ".concat(opts.index));
   }
   return monkey(input, _objectSpread__default['default'](_objectSpread__default['default']({}, opts), {}, {
     mode: "drop"

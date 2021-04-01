@@ -11,18 +11,22 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var stringLeftRight = require('string-left-right');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "2.0.12";
 
 var version = version$1;
 function isObj(something) {
-  return something && typeof something === "object" && !Array.isArray(something);
+  return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
 }
 function isStr(something) {
   return typeof something === "string";
@@ -34,26 +38,26 @@ var defaults = {
 };
 function findMalformed(str, refStr, cb, originalOpts) {
   if (!isStr(str)) {
-    throw new TypeError("string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: " + str + " (type: " + typeof str + ")");
+    throw new TypeError("string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: ".concat(str, " (type: ").concat(_typeof__default['default'](str), ")"));
   } else if (!str.length) {
     return;
   }
   if (!isStr(refStr)) {
-    throw new TypeError("string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: " + refStr + " (type: " + typeof refStr + ")");
+    throw new TypeError("string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: ".concat(refStr, " (type: ").concat(_typeof__default['default'](refStr), ")"));
   } else if (!refStr.length) {
     return;
   }
   if (typeof cb !== "function") {
-    throw new TypeError("string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: " + cb + " (type: " + typeof cb + ")");
+    throw new TypeError("string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: ".concat(cb, " (type: ").concat(_typeof__default['default'](cb), ")"));
   }
   if (originalOpts && !isObj(originalOpts)) {
-    throw new TypeError("string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: " + originalOpts + " (type: " + typeof originalOpts + ")");
+    throw new TypeError("string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ".concat(originalOpts, " (type: ").concat(_typeof__default['default'](originalOpts), ")"));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (typeof opts.stringOffset === "string" && /^\d*$/.test(opts.stringOffset)) {
     opts.stringOffset = Number(opts.stringOffset);
   } else if (!Number.isInteger(opts.stringOffset) || opts.stringOffset < 0) {
-    throw new TypeError("[THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: " + opts.stringOffset);
+    throw new TypeError("[THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: ".concat(opts.stringOffset));
   }
   var len = str.length;
   var len2 = Math.min(refStr.length, (opts.maxDistance || 0) + 1);
@@ -93,7 +97,7 @@ function findMalformed(str, refStr, cb, originalOpts) {
       return obj.startsAt;
     });
     if (Array.isArray(tempArr) && tempArr.length) {
-      var idxFrom = Math.min.apply(Math, tempArr);
+      var idxFrom = Math.min.apply(Math, _toConsumableArray__default['default'](tempArr));
       var idxTo = i + (wasThisLetterMatched ? 1 : 0);
       if (str.slice(idxFrom, idxTo) !== refStr) {
         cb({

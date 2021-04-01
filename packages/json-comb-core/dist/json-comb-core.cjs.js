@@ -11,7 +11,10 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
+var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var objectFlattenAllArrays = require('object-flatten-all-arrays');
 var objectFillMissingKeys = require('object-fill-missing-keys');
 var objectSetAllValuesTo = require('object-set-all-values-to');
@@ -27,7 +30,10 @@ var pOne = require('p-one');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
+var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var compareVersions__default = /*#__PURE__*/_interopDefaultLegacy(compareVersions);
 var includes__default = /*#__PURE__*/_interopDefaultLegacy(includes);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
@@ -59,7 +65,7 @@ function toString(obj) {
   if (typeof obj === "string") {
     return obj;
   }
-  if (typeof obj === "symbol") {
+  if (_typeof__default['default'](obj) === "symbol") {
     throw new TypeError();
   }
   return obj.toString();
@@ -105,7 +111,7 @@ function getKeyset(arrOfPromises, originalOpts) {
     throw new Error("json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!");
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: " + typeof originalOpts + ", equal to: " + JSON.stringify(originalOpts, null, 4));
+    throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: ".concat(_typeof__default['default'](originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var defaults = {
     placeholder: false
@@ -123,7 +129,7 @@ function getKeyset(arrOfPromises, originalOpts) {
       return false;
     }).then(function (res) {
       if (res) {
-        return reject(Error("json-comb-core/getKeyset(): [THROW_ID_13] Oops! " + culpritIndex + "th element resolved not to a plain object but to a " + typeof culpritVal + "\n" + JSON.stringify(culpritVal, null, 4)));
+        return reject(Error("json-comb-core/getKeyset(): [THROW_ID_13] Oops! ".concat(culpritIndex, "th element resolved not to a plain object but to a ").concat(_typeof__default['default'](culpritVal), "\n").concat(JSON.stringify(culpritVal, null, 4))));
       }
       return pReduce__default['default'](arrOfPromises,
       function (previousValue, currentValue) {
@@ -147,13 +153,13 @@ function getKeysetSync(arrOriginal, originalOpts) {
     throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!");
   }
   if (!isArr(arrOriginal)) {
-    throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: " + typeof arrOriginal);
+    throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ".concat(_typeof__default['default'](arrOriginal)));
   }
   if (arrOriginal.length === 0) {
     throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_23] Input array is empty!");
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: " + typeof originalOpts + ", equal to: " + JSON.stringify(originalOpts, null, 4));
+    throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ".concat(_typeof__default['default'](originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var schemaObj = {};
   var arr = clone__default['default'](arrOriginal);
@@ -166,7 +172,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
   };
   arr.forEach(function (obj, i) {
     if (!isObj(obj)) {
-      throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (" + typeof obj + ") detected within an array! It's the " + i + "th element: " + JSON.stringify(obj, null, 4));
+      throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (".concat(_typeof__default['default'](obj), ") detected within an array! It's the ").concat(i, "th element: ").concat(JSON.stringify(obj, null, 4)));
     }
     schemaObj = objectMergeAdvanced.mergeAdvanced(objectFlattenAllArrays.flattenAllArrays(schemaObj, fOpts), objectFlattenAllArrays.flattenAllArrays(obj, fOpts), {
       mergeArraysContainingStringsToBeEmpty: true
@@ -191,17 +197,18 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
     return isStr(val);
   })) {
-    throw new Error("json-comb-core/enforceKeyset(): [THROW_ID_33] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n" + JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4));
+    throw new Error("json-comb-core/enforceKeyset(): [THROW_ID_33] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n".concat(JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4)));
   }
   return new Promise(function (resolve, reject) {
     Promise.all([obj, schemaKeyset]).then(function (_ref) {
-      var objResolved = _ref[0],
-          schemaKeysetResolved = _ref[1];
+      var _ref2 = _slicedToArray__default['default'](_ref, 2),
+          objResolved = _ref2[0],
+          schemaKeysetResolved = _ref2[1];
       if (!isObj(obj)) {
-        return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: " + typeof obj + ", equal to: " + JSON.stringify(obj, null, 4)));
+        return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ".concat(_typeof__default['default'](obj), ", equal to: ").concat(JSON.stringify(obj, null, 4))));
       }
       if (!isObj(schemaKeyset)) {
-        return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: " + typeof schemaKeyset + ", equal to: " + JSON.stringify(schemaKeyset, null, 4)));
+        return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ".concat(_typeof__default['default'](schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4))));
       }
       return resolve(sortAllObjectsSync(clone__default['default'](objectFillMissingKeys.fillMissing(clone__default['default'](objResolved), clone__default['default'](schemaKeysetResolved), opts))));
     });
@@ -215,10 +222,10 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
     throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_42] Second arg missing!");
   }
   if (!isObj(obj)) {
-    throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_43] Input must be a plain object! Currently it's: " + typeof obj + ", equal to: " + JSON.stringify(obj, null, 4));
+    throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_43] Input must be a plain object! Currently it's: ".concat(_typeof__default['default'](obj), ", equal to: ").concat(JSON.stringify(obj, null, 4)));
   }
   if (!isObj(schemaKeyset)) {
-    throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it's: " + typeof schemaKeyset + ", equal to: " + JSON.stringify(schemaKeyset, null, 4));
+    throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it's: ".concat(_typeof__default['default'](schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4)));
   }
   var defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
@@ -229,7 +236,7 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
     return isStr(val);
   })) {
-    throw new Error("json-comb-core/enforceKeyset(): [THROW_ID_45] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n" + JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4));
+    throw new Error("json-comb-core/enforceKeyset(): [THROW_ID_45] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n".concat(JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4)));
   }
   return sortAllObjectsSync(objectFillMissingKeys.fillMissing(clone__default['default'](obj), schemaKeyset, opts));
 }
@@ -241,10 +248,10 @@ function noNewKeysSync(obj, schemaKeyset) {
     throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_52] Schema object is missing!");
   }
   if (!isObj(obj)) {
-    throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_53] Main input (1st arg.) must be a plain object! Currently it's: " + typeof obj + ", equal to: " + JSON.stringify(obj, null, 4));
+    throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_53] Main input (1st arg.) must be a plain object! Currently it's: ".concat(_typeof__default['default'](obj), ", equal to: ").concat(JSON.stringify(obj, null, 4)));
   }
   if (!isObj(schemaKeyset)) {
-    throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: " + typeof schemaKeyset + ", equal to: " + JSON.stringify(schemaKeyset, null, 4));
+    throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: ".concat(_typeof__default['default'](schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4)));
   }
   return objectNoNewKeys.noNewKeys(obj, schemaKeyset);
 }
@@ -254,10 +261,10 @@ function findUnusedSync(arrOriginal, originalOpts) {
       return [];
     }
   } else {
-    throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: " + typeof arrOriginal);
+    throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ".concat(_typeof__default['default'](arrOriginal)));
   }
   if (arguments.length > 1 && !isObj(originalOpts)) {
-    throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not " + typeof originalOpts);
+    throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ".concat(_typeof__default['default'](originalOpts)));
   }
   var defaults = {
     placeholder: false,
@@ -273,13 +280,9 @@ function findUnusedSync(arrOriginal, originalOpts) {
       return finding.charAt(0) === "." ? finding.slice(1) : finding;
     });
   }
-  function findUnusedSyncInner(arr1, opts1, res, path) {
-    if (res === void 0) {
-      res = [];
-    }
-    if (path === void 0) {
-      path = "";
-    }
+  function findUnusedSyncInner(arr1, opts1) {
+    var res = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+    var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
     if (isArr(arr1) && arr1.length === 0) {
       return res;
     }
@@ -287,7 +290,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
     if (arr1.every(function (el) {
       return isObj(el);
     })) {
-      var _ref2;
+      var _ref3;
       keySet = getKeysetSync(arr1);
       if (arr1.length > 1) {
         var unusedKeys = Object.keys(keySet).filter(function (key) {
@@ -296,32 +299,32 @@ function findUnusedSync(arrOriginal, originalOpts) {
           });
         });
         res = res.concat(unusedKeys.map(function (el) {
-          return path + "." + el;
+          return "".concat(path, ".").concat(el);
         }));
       }
-      var keys = (_ref2 = []).concat.apply(_ref2, Object.keys(keySet).filter(function (key) {
+      var keys = (_ref3 = []).concat.apply(_ref3, _toConsumableArray__default['default'](Object.keys(keySet).filter(function (key) {
         return isObj(keySet[key]) || isArr(keySet[key]);
-      }));
+      })));
       var keysContents = keys.map(function (key) {
         return typ__default['default'](keySet[key]);
       });
       var extras = keys.map(function (el) {
-        var _ref3;
-        return (_ref3 = []).concat.apply(_ref3, arr1.reduce(function (res1, obj) {
+        var _ref4;
+        return (_ref4 = []).concat.apply(_ref4, _toConsumableArray__default['default'](arr1.reduce(function (res1, obj) {
           if (obj && existy(obj[el]) && (!opts1 || obj[el] !== opts1.placeholder)) {
             if (!opts1 || !opts1.comments || !includes__default['default'](obj[el], opts1.comments)) {
               res1.push(obj[el]);
             }
           }
           return res1;
-        }, []));
+        }, [])));
       });
       var appendix = "";
       var innerDot = "";
       if (extras.length > 0) {
         extras.forEach(function (singleExtra, i) {
           if (keysContents[i] === "Array") {
-            appendix = "[" + i + "]";
+            appendix = "[".concat(i, "]");
           }
           innerDot = ".";
           res = findUnusedSyncInner(singleExtra, opts1, res, path + innerDot + keys[i] + appendix);
@@ -331,7 +334,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
       return isArr(el);
     })) {
       arr1.forEach(function (singleArray, i) {
-        res = findUnusedSyncInner(singleArray, opts1, res, path + "[" + i + "]");
+        res = findUnusedSyncInner(singleArray, opts1, res, "".concat(path, "[").concat(i, "]"));
       });
     }
     return removeLeadingDot(res);

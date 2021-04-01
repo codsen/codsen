@@ -11,11 +11,13 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
 var astContainsOnlyEmptySpace = require('ast-contains-only-empty-space');
 var isObj = require('lodash.isplainobject');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version$1 = "2.0.12";
@@ -35,7 +37,7 @@ function internalCompare(bigObj, smallObj, res) {
     return false;
   }
   res = res || true;
-  if (typeof bigObj !== typeof smallObj) {
+  if (_typeof__default['default'](bigObj) !== _typeof__default['default'](smallObj)) {
     if (astContainsOnlyEmptySpace.empty(bigObj) && astContainsOnlyEmptySpace.empty(smallObj)) {
       return true;
     }

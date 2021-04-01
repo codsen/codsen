@@ -11,14 +11,19 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
 var stringLeftRight = require('string-left-right');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "6.0.12";
 
 var version = version$1;
 function extract(str) {
   if (typeof str !== "string") {
-    throw new TypeError("string-extract-class-names: [THROW_ID_01] first str should be string, not " + typeof str + ", currently equal to " + JSON.stringify(str, null, 4));
+    throw new TypeError("string-extract-class-names: [THROW_ID_01] first str should be string, not ".concat(_typeof__default['default'](str), ", currently equal to ").concat(JSON.stringify(str, null, 4)));
   }
   var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`";
   var stateCurrentlyIs;
@@ -37,7 +42,7 @@ function extract(str) {
     badChars.includes(str[i]))) {
       if (i > selectorStartsAt + 1) {
         result.ranges.push([selectorStartsAt, i]);
-        result.res.push("" + (stateCurrentlyIs || "") + str.slice(selectorStartsAt, i));
+        result.res.push("".concat(stateCurrentlyIs || "").concat(str.slice(selectorStartsAt, i)));
         if (stateCurrentlyIs) {
           stateCurrentlyIs = undefined;
         }

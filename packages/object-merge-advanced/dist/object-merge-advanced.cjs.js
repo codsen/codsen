@@ -12,6 +12,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var clone = require('lodash.clonedeep');
 var lodashIncludes = require('lodash.includes');
 var uniq = require('lodash.uniq');
@@ -23,6 +24,7 @@ var utilNonempty = require('util-nonempty');
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var lodashIncludes__default = /*#__PURE__*/_interopDefaultLegacy(lodashIncludes);
 var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
@@ -67,7 +69,7 @@ function getType(something) {
   if (isArr(something)) {
     return "array";
   }
-  return typeof something;
+  return _typeof__default['default'](something);
 }
 var defaults = {
   cb: null,
@@ -146,7 +148,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
         var temp = [];
         for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
-          currPath = infoObj.path && infoObj.path.length ? infoObj.path + "." + index : "" + index;
+          currPath = infoObj.path && infoObj.path.length ? "".concat(infoObj.path, ".").concat(index) : "".concat(index);
           if (isObj__default['default'](i1[index]) && isObj__default['default'](i2[index]) && (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index]) || !opts.mergeObjectsOnlyWhenKeysetMatches)) {
             temp.push(mergeAdvanced({
               path: currPath,
@@ -245,7 +247,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
       if (isObj__default['default'](i2)) {
         Object.keys(i2).forEach(function (key) {
-          currPath = infoObj.path && infoObj.path.length ? infoObj.path + "." + key : "" + key;
+          currPath = infoObj.path && infoObj.path.length ? "".concat(infoObj.path, ".").concat(key) : "".concat(key);
           if (i1.hasOwnProperty(key)) {
             if (arrayIncludesWithGlob.includesWithGlob(key, opts.ignoreKeys)) {
               i1[key] = mergeAdvanced({

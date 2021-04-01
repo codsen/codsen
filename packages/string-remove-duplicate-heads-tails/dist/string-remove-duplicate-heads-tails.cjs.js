@@ -12,6 +12,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var isObj = require('lodash.isplainobject');
 var arrayiffyIfString = require('arrayiffy-if-string');
 var stringMatchLeftRight = require('string-match-left-right');
@@ -22,6 +23,7 @@ var stringTrimSpacesOnly = require('string-trim-spaces-only');
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version$1 = "5.0.12";
@@ -40,7 +42,7 @@ function remDup(str, originalOpts) {
     return str;
   }
   if (originalOpts && !isObj__default['default'](originalOpts)) {
-    throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but " + typeof originalOpts + "!");
+    throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ".concat(_typeof__default['default'](originalOpts), "!"));
   }
   var clonedOriginalOpts = _objectSpread__default['default']({}, originalOpts);
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {

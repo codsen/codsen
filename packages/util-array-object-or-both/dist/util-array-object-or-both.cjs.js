@@ -29,10 +29,10 @@ function arrObjOrBoth(str, originalOpts) {
   };
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (opts && opts.msg && opts.msg.length > 0) {
-    opts.msg = opts.msg.trim() + " ";
+    opts.msg = "".concat(opts.msg.trim(), " ");
   }
   if (opts.optsVarName !== "given variable") {
-    opts.optsVarName = "variable \"" + opts.optsVarName + "\"";
+    opts.optsVarName = "variable \"".concat(opts.optsVarName, "\"");
   }
   if (includes__default['default'](onlyObjectValues, str.toLowerCase().trim())) {
     return "object";
@@ -43,7 +43,7 @@ function arrObjOrBoth(str, originalOpts) {
   if (includes__default['default'](onlyAnyValues, str.toLowerCase().trim())) {
     return "any";
   }
-  throw new TypeError(opts.msg + "The " + opts.optsVarName + " was customised to an unrecognised value: " + str + ". Please check it against the API documentation.");
+  throw new TypeError("".concat(opts.msg, "The ").concat(opts.optsVarName, " was customised to an unrecognised value: ").concat(str, ". Please check it against the API documentation."));
 }
 
 exports.arrObjOrBoth = arrObjOrBoth;

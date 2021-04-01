@@ -12,6 +12,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var stringLeftRight = require('string-left-right');
 var stringFixBrokenNamedEntities = require('string-fix-broken-named-entities');
 var stringRemoveWidows = require('string-remove-widows');
@@ -24,6 +25,7 @@ var rangesApply = require('ranges-apply');
 var ansiRegex = require('ansi-regex');
 var rangesPush = require('ranges-push');
 var he = require('he');
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var htmlEntitiesNotEmailFriendly = require('html-entities-not-email-friendly');
 var allNamedHtmlEntities = require('all-named-html-entities');
 var stringRangeExpander = require('string-range-expander');
@@ -32,8 +34,10 @@ var stringApostrophes = require('string-apostrophes');
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var ansiRegex__default = /*#__PURE__*/_interopDefaultLegacy(ansiRegex);
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 
 var version$1 = "7.0.12";
 
@@ -128,7 +132,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
       if (charcode < 32) {
         if (charcode < 9) {
           if (charcode === 3) {
-            rangesArr.push(i, y, opts.removeLineBreaks ? " " : opts.replaceLineBreaks ? "<br" + (opts.useXHTML ? "/" : "") + ">\n" : "\n");
+            rangesArr.push(i, y, opts.removeLineBreaks ? " " : opts.replaceLineBreaks ? "<br".concat(opts.useXHTML ? "/" : "", ">\n") : "\n");
             applicableOpts.removeLineBreaks = true;
             if (!opts.removeLineBreaks) {
               applicableOpts.replaceLineBreaks = true;
@@ -171,12 +175,12 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             if (str[i - 1] === " " && typeof stringLeftRight.leftStopAtNewLines(str, i) === "number") {
               startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
             }
-            rangesArr.push(startingIdx, i + (endOfLineVal === "\r" ? 1 : 0), "<br" + (opts.useXHTML ? "/" : "") + ">" + (endOfLineVal === "\r\n" ? "\r" : "") + (endOfLineVal === "\r" ? "\r" : ""));
+            rangesArr.push(startingIdx, i + (endOfLineVal === "\r" ? 1 : 0), "<br".concat(opts.useXHTML ? "/" : "", ">").concat(endOfLineVal === "\r\n" ? "\r" : "").concat(endOfLineVal === "\r" ? "\r" : ""));
           } else {
             if (str[stringLeftRight.leftStopAtNewLines(str, i)] && str[stringLeftRight.leftStopAtNewLines(str, i)].trim()) {
               var tempIdx = stringLeftRight.leftStopAtNewLines(str, i);
               if (typeof tempIdx === "number" && tempIdx < i - 1) {
-                rangesArr.push(tempIdx + 1, i, "" + (endOfLineVal === "\r\n" ? "\r" : ""));
+                rangesArr.push(tempIdx + 1, i, "".concat(endOfLineVal === "\r\n" ? "\r" : ""));
               }
             }
             if (endOfLineVal === "\r\n" && str[i - 1] !== "\r") {
@@ -239,7 +243,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             } else if (endOfLineVal === "\r" && str[i + 1] === "\n") {
               rangesArr.push(i + 1, i + 2);
             }
-            rangesArr.push(_startingIdx, endingIdx, "<br" + (opts.useXHTML ? "/" : "") + ">" + _whatToInsert2);
+            rangesArr.push(_startingIdx, endingIdx, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(_whatToInsert2));
             if (str[i + 1] === "\n") {
               offsetBy(1);
             }
@@ -258,7 +262,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
                 _endingIdx = i + 1;
               }
               if (tempIdx1 < i - 1) {
-                rangesArr.push(tempIdx1 + 1, _endingIdx, "" + (str[i + 1] === "\n" ? "" : "\n"));
+                rangesArr.push(tempIdx1 + 1, _endingIdx, "".concat(str[i + 1] === "\n" ? "" : "\n"));
               }
             }
             var tempIdx2 = stringLeftRight.rightStopAtNewLines(str, i);
@@ -313,10 +317,10 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
                   offsetBy(_temp.length + 2);
                 }
               } else if (opts.convertEntities && Object.keys(htmlEntitiesNotEmailFriendly.notEmailFriendly).includes(str.slice(i + 1, i + _temp.length + 1))) {
-                rangesArr.push(i, i + _temp.length + 2, "&" + htmlEntitiesNotEmailFriendly.notEmailFriendly[str.slice(i + 1, i + _temp.length + 1)] + ";");
+                rangesArr.push(i, i + _temp.length + 2, "&".concat(htmlEntitiesNotEmailFriendly.notEmailFriendly[str.slice(i + 1, i + _temp.length + 1)], ";"));
                 offsetBy(_temp.length + 1);
               } else if (!opts.convertEntities) {
-                rangesArr.push(i, i + _temp.length + 2, he__default['default'].decode("" + str.slice(i, i + _temp.length + 2)));
+                rangesArr.push(i, i + _temp.length + 2, he__default['default'].decode("".concat(str.slice(i, i + _temp.length + 2))));
                 offsetBy(_temp.length + 1);
               } else {
                 offsetBy(_temp.length + 1);
@@ -419,7 +423,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             applicableOpts.convertDotsToEllipsis = true;
             if (opts.convertDotsToEllipsis) {
               applicableOpts.convertEntities = true;
-              rangesArr.push(i, y + 2, opts.convertEntities ? "&hellip;" : "" + rawEllipsis);
+              rangesArr.push(i, y + 2, opts.convertEntities ? "&hellip;" : "".concat(rawEllipsis));
             }
           }
           var first = str[y] ? str[y].toLowerCase() : "";
@@ -530,7 +534,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             wipeAllWhitespaceOnRight: true,
             addSingleSpaceToPreventAccidentalConcatenation: true
           });
-          rangesArr.push.apply(rangesArr, expandedRange);
+          rangesArr.push.apply(rangesArr, _toConsumableArray__default['default'](expandedRange));
         }
       } else if (charcode === 8206) {
         rangesArr.push(i, y);
@@ -690,7 +694,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         }
         var convertedCharVal = doConvertEntities(str[i], opts.dontEncodeNonLatin);
         if (Object.keys(htmlEntitiesNotEmailFriendly.notEmailFriendly).includes(convertedCharVal.slice(1, convertedCharVal.length - 1))) {
-          convertedCharVal = "&" + htmlEntitiesNotEmailFriendly.notEmailFriendly[convertedCharVal.slice(1, convertedCharVal.length - 1)] + ";";
+          convertedCharVal = "&".concat(htmlEntitiesNotEmailFriendly.notEmailFriendly[convertedCharVal.slice(1, convertedCharVal.length - 1)], ";");
         }
         if (str[i] !== convertedCharVal) {
           applicableOpts.convertEntities = true;
@@ -714,13 +718,13 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
 var version = version$1;
 function det(str, inputOpts) {
   if (typeof str !== "string") {
-    throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not " + typeof str);
+    throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not ".concat(_typeof__default['default'](str)));
   }
-  if (inputOpts && typeof inputOpts !== "object") {
-    throw new Error("detergent(): [THROW_ID_02] Options object must be a plain object, not " + typeof inputOpts);
+  if (inputOpts && _typeof__default['default'](inputOpts) !== "object") {
+    throw new Error("detergent(): [THROW_ID_02] Options object must be a plain object, not ".concat(_typeof__default['default'](inputOpts)));
   }
   if (inputOpts && inputOpts.cb && typeof inputOpts.cb !== "function") {
-    throw new Error("detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not " + typeof inputOpts.cb + " (value was given as:\n" + JSON.stringify(inputOpts.cb, null, 0) + ")");
+    throw new Error("detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ".concat(_typeof__default['default'](inputOpts.cb), " (value was given as:\n").concat(JSON.stringify(inputOpts.cb, null, 0), ")"));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaultOpts), inputOpts);
   if (!["lf", "crlf", "cr"].includes(opts.eol)) {
@@ -787,7 +791,7 @@ function det(str, inputOpts) {
     if (str[i].charCodeAt(0) === 65533) {
       if (str[i - 1] && str[i + 1] && (str[i - 1].toLowerCase() === "n" && str[i + 1].toLowerCase() === "t" || isLetter(str[i - 1]) && str[i + 1].toLowerCase() === "s") || str[i + 2] && ((str[i + 1].toLowerCase() === "r" || str[i + 1].toLowerCase() === "v") && str[i + 2].toLowerCase() === "e" || str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l") && (str[i - 3] && str[i - 3].toLowerCase() === "y" && str[i - 2].toLowerCase() === "o" && str[i - 1].toLowerCase() === "u" || str[i - 2] && str[i - 2].toLowerCase() === "w" && str[i - 1].toLowerCase() === "e" || str[i - 4] && str[i - 4].toLowerCase() === "t" && str[i - 3].toLowerCase() === "h" && str[i - 2].toLowerCase() === "e" && str[i - 1].toLowerCase() === "y") || (str[i - 1] && str[i - 1].toLowerCase() === "i" || str[i - 2] && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e" || str[i - 3] && str[i - 3].toLowerCase() === "s" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e") && str[i + 2] && str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l" || str[i - 5] && str[i + 2] && str[i - 5].toLowerCase() === "m" && str[i - 4].toLowerCase() === "i" && str[i - 3].toLowerCase() === "g" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "t" && str[i + 1] === "v" && str[i + 2] === "e" || str[i - 1] && str[i - 1].toLowerCase() === "s" && (!str[i + 1] || !isLetter(str[i + 1]) && !isNumber(str[i + 1]))) {
         var replacement = opts.convertApostrophes ? rightSingleQuote : "'";
-        finalIndexesToDelete.push(i, i + 1, "" + replacement);
+        finalIndexesToDelete.push(i, i + 1, "".concat(replacement));
         applicableOpts.convertApostrophes = true;
       } else if (str[i - 2] && isLowercaseLetter(str[i - 2]) && !str[i - 1].trim() && str[i + 2] && isLowercaseLetter(str[i + 2]) && !str[i + 1].trim()) {
         finalIndexesToDelete.push(i, i + 1, rawMDash);
@@ -852,7 +856,7 @@ function det(str, inputOpts) {
               if (opts.replaceLineBreaks) {
                 applicableOpts.useXHTML = true;
               }
-              finalIndexesToDelete.push(deleteFrom, deleteTo, (opts.replaceLineBreaks ? "<br" + (opts.useXHTML ? "/" : "") + ">" : "") + "\n");
+              finalIndexesToDelete.push(deleteFrom, deleteTo, "".concat(opts.replaceLineBreaks ? "<br".concat(opts.useXHTML ? "/" : "", ">") : "", "\n"));
             } else {
               finalIndexesToDelete.push(proposedReturn);
             }
@@ -943,7 +947,7 @@ function det(str, inputOpts) {
   }, true);
   applyAndWipe();
   str = str.replace(/ (<br[/]?>)/g, "$1");
-  str = str.replace(/(\r\n|\r|\n){3,}/g, "" + endOfLineVal + endOfLineVal);
+  str = str.replace(/(\r\n|\r|\n){3,}/g, "".concat(endOfLineVal).concat(endOfLineVal));
   var widowFixes = stringRemoveWidows.removeWidows(str, {
     ignore: "all",
     convertEntities: opts.convertEntities,

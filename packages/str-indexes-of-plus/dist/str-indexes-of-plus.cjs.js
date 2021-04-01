@@ -11,21 +11,25 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
+
 var version$1 = "3.0.12";
 
 var version = version$1;
-function strIndexesOfPlus(str, searchValue, fromIndex) {
-  if (fromIndex === void 0) {
-    fromIndex = 0;
-  }
+function strIndexesOfPlus(str, searchValue) {
+  var fromIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
   if (typeof str !== "string") {
-    throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): first input argument must be a string! Currently it's: " + typeof str);
+    throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): first input argument must be a string! Currently it's: ".concat(_typeof__default['default'](str)));
   }
   if (typeof searchValue !== "string") {
-    throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): second input argument must be a string! Currently it's: " + typeof searchValue);
+    throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): second input argument must be a string! Currently it's: ".concat(_typeof__default['default'](searchValue)));
   }
   if (isNaN(+fromIndex) || typeof fromIndex === "string" && !/^\d*$/.test(fromIndex)) {
-    throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: " + fromIndex);
+    throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: ".concat(fromIndex));
   }
   var strArr = Array.from(str);
   var searchValueArr = Array.from(searchValue);

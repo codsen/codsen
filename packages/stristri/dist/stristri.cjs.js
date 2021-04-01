@@ -12,6 +12,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var codsenTokenizer = require('codsen-tokenizer');
 var stringCollapseWhiteSpace = require('string-collapse-white-space');
 var rangesApply = require('ranges-apply');
@@ -20,6 +21,7 @@ var detectTemplatingLanguage = require('detect-templating-language');
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var defaultOpts = {
   html: true,
@@ -38,14 +40,14 @@ var version = version$1;
 function returnHelper(result, applicableOpts, templatingLang, start) {
   /* istanbul ignore next */
   if (arguments.length !== 4) {
-    throw new Error("stristri/returnHelper(): should be 3 input args but " + arguments.length + " were given!");
+    throw new Error("stristri/returnHelper(): should be 3 input args but ".concat(arguments.length, " were given!"));
   }
   /* istanbul ignore next */
   if (typeof result !== "string") {
     throw new Error("stristri/returnHelper(): first arg missing!");
   }
   /* istanbul ignore next */
-  if (typeof applicableOpts !== "object") {
+  if (_typeof__default['default'](applicableOpts) !== "object") {
     throw new Error("stristri/returnHelper(): second arg missing!");
   }
   return {
@@ -60,10 +62,10 @@ function returnHelper(result, applicableOpts, templatingLang, start) {
 function stri(input, originalOpts) {
   var start = Date.now();
   if (typeof input !== "string") {
-    throw new Error("stristri: [THROW_ID_01] the first input arg must be string! It was given as " + JSON.stringify(input, null, 4) + " (" + typeof input + ")");
+    throw new Error("stristri: [THROW_ID_01] the first input arg must be string! It was given as ".concat(JSON.stringify(input, null, 4), " (").concat(_typeof__default['default'](input), ")"));
   }
-  if (originalOpts && typeof originalOpts !== "object") {
-    throw new Error("stristri: [THROW_ID_02] the second input arg must be a plain object! It was given as " + JSON.stringify(originalOpts, null, 4) + " (" + typeof originalOpts + ")");
+  if (originalOpts && _typeof__default['default'](originalOpts) !== "object") {
+    throw new Error("stristri: [THROW_ID_02] the second input arg must be a plain object! It was given as ".concat(JSON.stringify(originalOpts, null, 4), " (").concat(_typeof__default['default'](originalOpts), ")"));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaultOpts), originalOpts);
   var applicableOpts = {

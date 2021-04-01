@@ -71,7 +71,7 @@ function groupStr(originalArr, originalOpts) {
       var rangesArr = [];
       var nThIndex = 0;
       for (var z = 0; z < compiledObj[key].elementsWhichWeCanReplaceWithWildcards.length; z++) {
-        nThIndex = newKey.indexOf("" + (opts.wildcard || ""), nThIndex + (opts.wildcard || "").length);
+        nThIndex = newKey.indexOf("".concat(opts.wildcard || ""), nThIndex + (opts.wildcard || "").length);
         if (compiledObj[key].elementsWhichWeCanReplaceWithWildcards[z] !== false) {
           rangesArr.push([nThIndex, nThIndex + (opts.wildcard || "").length, compiledObj[key].elementsWhichWeCanReplaceWithWildcards[z]]);
         }

@@ -11,6 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+require('@babel/runtime/helpers/typeof');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var objectPath = require('object-path');
 var astMonkeyTraverse = require('ast-monkey-traverse');
@@ -47,7 +48,7 @@ var defaults = {
 function deepContains(tree1, tree2, cb, errCb, originalOpts) {
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (is__default['default'](tree1) !== is__default['default'](tree2)) {
-    errCb("the first input arg is of a type " + is__default['default'](tree1).toLowerCase() + " but the second is " + is__default['default'](tree2).toLowerCase() + ". Values are - 1st:\n" + JSON.stringify(tree1, null, 4) + "\n2nd:\n" + JSON.stringify(tree2, null, 4));
+    errCb("the first input arg is of a type ".concat(is__default['default'](tree1).toLowerCase(), " but the second is ").concat(is__default['default'](tree2).toLowerCase(), ". Values are - 1st:\n").concat(JSON.stringify(tree1, null, 4), "\n2nd:\n").concat(JSON.stringify(tree2, null, 4)));
   } else {
     astMonkeyTraverse.traverse(tree2, function (key, val, innerObj, stop) {
       var current = val !== undefined ? val : key;
@@ -58,7 +59,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
             stop.now = true;
             var arr1 = Array.from(innerObj.path.includes(".") ? objectPath__default['default'].get(tree1, goUp(path)) : tree1);
             if (arr1.length < innerObj.parent.length) {
-              errCb("the first array: " + JSON.stringify(arr1, null, 4) + "\nhas less objects than array we're matching against, " + JSON.stringify(innerObj.parent, null, 4));
+              errCb("the first array: ".concat(JSON.stringify(arr1, null, 4), "\nhas less objects than array we're matching against, ").concat(JSON.stringify(innerObj.parent, null, 4)));
             } else {
               (function () {
                 var arr2 = innerObj.parent;
@@ -130,7 +131,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
           }
         }
       } else {
-        errCb("the first input: " + JSON.stringify(tree1, null, 4) + "\ndoes not have the path \"" + path + "\", we were looking, would it contain a value " + JSON.stringify(current, null, 0) + ".");
+        errCb("the first input: ".concat(JSON.stringify(tree1, null, 4), "\ndoes not have the path \"").concat(path, "\", we were looking, would it contain a value ").concat(JSON.stringify(current, null, 0), "."));
       }
       return current;
     });

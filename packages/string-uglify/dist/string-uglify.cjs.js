@@ -14,10 +14,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var version$1 = "1.4.12";
 
 var version = version$1;
-function tellcp(str, idNum) {
-  if (idNum === void 0) {
-    idNum = 0;
-  }
+function tellcp(str) {
+  var idNum = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   return str.codePointAt(idNum) || 0;
 }
 function uglifyArr(arr) {
@@ -134,7 +132,7 @@ function uglifyArr(arr) {
         continue;
       }
     }
-    var generated = "" + prefix + letters[codePointSum % letters.length] + lettersAndNumbers[codePointSum % lettersAndNumbers.length];
+    var generated = "".concat(prefix).concat(letters[codePointSum % letters.length]).concat(lettersAndNumbers[codePointSum % lettersAndNumbers.length]);
     if (res.includes(generated)) {
       var soFarWeveGot = generated;
       var counter = 0;

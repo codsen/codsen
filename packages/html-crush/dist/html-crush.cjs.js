@@ -11,7 +11,10 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var rangesApply = require('ranges-apply');
 var rangesPush = require('ranges-push');
 var stringMatchLeftRight = require('string-match-left-right');
@@ -20,7 +23,10 @@ var stringLeftRight = require('string-left-right');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "4.1.6";
 
@@ -56,16 +62,16 @@ function crush(str, originalOpts) {
     if (str === undefined) {
       throw new Error("html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
     } else {
-      throw new Error("html-crush: [THROW_ID_02] the first input argument must be string! It was given as \"" + typeof str + "\", equal to:\n" + JSON.stringify(str, null, 4));
+      throw new Error("html-crush: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof__default['default'](str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
     }
   }
-  if (originalOpts && typeof originalOpts !== "object") {
-    throw new Error("html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
+  if (originalOpts && _typeof__default['default'](originalOpts) !== "object") {
+    throw new Error("html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ".concat(_typeof__default['default'](originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   if (originalOpts && Array.isArray(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
     for (var z = 0, _len = originalOpts.breakToTheLeftOf.length; z < _len; z++) {
       if (!isStr(originalOpts.breakToTheLeftOf[z])) {
-        throw new TypeError("html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index " + z + " is of a type \"" + typeof originalOpts.breakToTheLeftOf[z] + "\" and is equal to:\n" + JSON.stringify(originalOpts.breakToTheLeftOf[z], null, 4));
+        throw new TypeError("html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index ".concat(z, " is of a type \"").concat(_typeof__default['default'](originalOpts.breakToTheLeftOf[z]), "\" and is equal to:\n").concat(JSON.stringify(originalOpts.breakToTheLeftOf[z], null, 4)));
       }
     }
   }
@@ -75,7 +81,7 @@ function crush(str, originalOpts) {
   }
   var breakToTheLeftOfFirstLetters = "";
   if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
-    breakToTheLeftOfFirstLetters = [].concat(new Set(opts.breakToTheLeftOf.map(function (val) {
+    breakToTheLeftOfFirstLetters = _toConsumableArray__default['default'](new Set(opts.breakToTheLeftOf.map(function (val) {
       return val[0];
     }))).join("");
   }
@@ -199,8 +205,9 @@ function crush(str, originalOpts) {
           ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
           ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
         });
-        stageFrom = _expander[0];
-        stageTo = _expander[1];
+        var _expander2 = _slicedToArray__default['default'](_expander, 2);
+        stageFrom = _expander2[0];
+        stageTo = _expander2[1];
         styleCommentStartedAt = null;
         if (stageFrom != null) {
           finalIndexesToDelete.push(stageFrom, stageTo);
@@ -229,13 +236,14 @@ function crush(str, originalOpts) {
           distanceFromHereToCommentEnding = 1;
         }
         if (distanceFromHereToCommentEnding) {
-          var _expander2 = stringRangeExpander.expander({
+          var _expander3 = stringRangeExpander.expander({
             str: str,
             from: htmlCommentStartedAt,
             to: i + distanceFromHereToCommentEnding
           });
-          stageFrom = _expander2[0];
-          stageTo = _expander2[1];
+          var _expander4 = _slicedToArray__default['default'](_expander3, 2);
+          stageFrom = _expander4[0];
+          stageTo = _expander4[1];
           htmlCommentStartedAt = null;
           if (stageFrom != null) {
             if (opts.lineLengthLimit && cpl - (stageTo - stageFrom) >= opts.lineLengthLimit) {
@@ -500,13 +508,13 @@ function crush(str, originalOpts) {
       }
       if (!str[i + 1]) {
         if (withinStyleTag && styleCommentStartedAt !== null) {
-          finalIndexesToDelete.push.apply(finalIndexesToDelete, stringRangeExpander.expander({
+          finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](stringRangeExpander.expander({
             str: str,
             from: styleCommentStartedAt,
             to: i,
             ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
             ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
-          }));
+          })));
         } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
           finalIndexesToDelete.push(whitespaceStartedAt, i + 1);
         } else if (whitespaceStartedAt && (str[i] === "\r" && str[i + 1] === "\n" || str[i] === "\n" && str[i - 1] !== "\r")) {

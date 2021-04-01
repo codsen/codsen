@@ -11,10 +11,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version$1 = "2.0.12";
@@ -27,7 +29,7 @@ var defaults = {
 function isIndexWithin(originalIndex, rangesArr, originalOpts) {
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (!Number.isInteger(originalIndex)) {
-    throw new Error("ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as " + originalIndex + " (type " + typeof originalIndex + ")");
+    throw new Error("ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as ".concat(originalIndex, " (type ").concat(_typeof__default['default'](originalIndex), ")"));
   }
   if (!Array.isArray(rangesArr)) {
     return false;

@@ -12,12 +12,14 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var stringMatchLeftRight = require('string-match-left-right');
 var stringLeftRight = require('string-left-right');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var defaultOpts = {
   allowCustomTagNames: false,
@@ -38,28 +40,27 @@ function extraRequirements(str, idx) {
 var version$1 = "2.0.12";
 
 var version = version$1;
-function isOpening(str, idx, originalOpts) {
-  if (idx === void 0) {
-    idx = 0;
-  }
+function isOpening(str) {
+  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var originalOpts = arguments.length > 2 ? arguments[2] : undefined;
   if (typeof str !== "string") {
-    throw new Error("is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as \"" + typeof str + "\", value being " + JSON.stringify(str, null, 4));
+    throw new Error("is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as \"".concat(_typeof__default['default'](str), "\", value being ").concat(JSON.stringify(str, null, 4)));
   }
   if (!Number.isInteger(idx) || idx < 0) {
-    throw new Error("is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as \"" + typeof idx + "\", value being " + JSON.stringify(idx, null, 4));
+    throw new Error("is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as \"".concat(_typeof__default['default'](idx), "\", value being ").concat(JSON.stringify(idx, null, 4)));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaultOpts), originalOpts);
   var whitespaceChunk = "[\\\\ \\t\\r\\n/]*";
   var generalChar = "._a-z0-9\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF";
-  var r1 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+" + whitespaceChunk + "\\/?" + whitespaceChunk + ">", "g");
-  var r5 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*" + whitespaceChunk + ">", "g");
-  var r2 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['\"\\w]", "g");
-  var r6 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\w+\\s+[" + generalChar + "]+[-" + generalChar + "]*(?:-\\w+)?\\s*=\\s*['\"\\w]");
-  var r3 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\/?\\s*\\w+\\s*\\/?\\s*>", "g");
-  var r7 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\/?\\s*[" + generalChar + "]+[-" + generalChar + "]*\\s*\\/?\\s*>", "g");
-  var r4 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
-  var r8 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g");
-  var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", "");
+  var r1 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "\\w+").concat(whitespaceChunk, "\\/?").concat(whitespaceChunk, ">"), "g");
+  var r5 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*").concat(whitespaceChunk, ">"), "g");
+  var r2 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['\"\\w]"), "g");
+  var r6 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\w+\\s+[").concat(generalChar, "]+[-").concat(generalChar, "]*(?:-\\w+)?\\s*=\\s*['\"\\w]"));
+  var r3 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\/?\\s*\\w+\\s*\\/?\\s*>"), "g");
+  var r7 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\/?\\s*[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s*\\/?\\s*>"), "g");
+  var r4 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]"), "g");
+  var r8 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]"), "g");
+  var r9 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?\\/?" : "", "(").concat(whitespaceChunk, "[").concat(generalChar, "]+)+").concat(whitespaceChunk, "[\\\\/=>]"), "");
   var r10 = new RegExp("^\\/\\s*\\w+s*>");
   var whatToTest = idx ? str.slice(idx) : str;
   var leftSideIdx = stringLeftRight.left(str, idx);

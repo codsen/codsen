@@ -12,12 +12,14 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var rangesPush = require('ranges-push');
 var rangesApply = require('ranges-apply');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "4.0.12";
 
@@ -41,7 +43,7 @@ function fixRowNums(str, originalOpts) {
     return /[A-Za-z]/.test(something);
   }
   function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (!opts.padStart || typeof opts.padStart !== "number" || typeof opts.padStart === "number" && opts.padStart < 0) {
@@ -96,7 +98,7 @@ function fixRowNums(str, originalOpts) {
       if (!opts.padStart) {
         if (opts.overrideRowNum != null) ;
       }
-      finalIndexesToDelete.push(digitStartsAt, !isDigit(str[i]) ? i : i + 1, opts.padStart ? String(opts.overrideRowNum != null ? opts.overrideRowNum : currentRow).padStart(opts.padStart, "0") : "" + (opts.overrideRowNum != null ? opts.overrideRowNum : currentRow));
+      finalIndexesToDelete.push(digitStartsAt, !isDigit(str[i]) ? i : i + 1, opts.padStart ? String(opts.overrideRowNum != null ? opts.overrideRowNum : currentRow).padStart(opts.padStart, "0") : "".concat(opts.overrideRowNum != null ? opts.overrideRowNum : currentRow));
       digitStartsAt = null;
       wasLetterDetected = true;
     }

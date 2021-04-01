@@ -12,14 +12,16 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var arrayiffyIfString = require('arrayiffy-if-string');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 function isObj(something) {
-  return something && typeof something === "object" && !Array.isArray(something);
+  return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
 }
 function isStr(something) {
   return typeof something === "string";
@@ -37,13 +39,9 @@ var defaults = {
 var defaultGetNextIdx = function defaultGetNextIdx(index) {
   return index + 1;
 };
-function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
-  if (special === void 0) {
-    special = false;
-  }
-  if (getNextIdx === void 0) {
-    getNextIdx = defaultGetNextIdx;
-  }
+function march(str, position, whatToMatchVal, originalOpts) {
+  var special = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+  var getNextIdx = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : defaultGetNextIdx;
   var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
   if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
@@ -173,7 +171,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 }
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
   if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
+    throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (typeof opts.trimCharsBeforeMatching === "string") {
@@ -189,7 +187,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     return false;
   }
   if (!Number.isInteger(position) || position < 0) {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: " + typeof position + ", equal to:\n" + JSON.stringify(position, null, 4));
+    throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ").concat(_typeof__default['default'](position), ", equal to:\n").concat(JSON.stringify(position, null, 4)));
   }
   var whatToMatch;
   var special;
@@ -203,10 +201,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     whatToMatch = [];
     whatToMatch.push(originalWhatToMatch);
   } else {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + typeof originalWhatToMatch + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
+    throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ").concat(_typeof__default['default'](originalWhatToMatch), ", equal to:\n").concat(JSON.stringify(originalWhatToMatch, null, 4)));
   }
   if (originalOpts && !isObj(originalOpts)) {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + typeof originalOpts + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
+    throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"").concat(_typeof__default['default'](originalOpts), "\", and equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var culpritsIndex = 0;
   var culpritsVal = "";
@@ -218,7 +216,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     }
     return false;
   })) {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index " + culpritsIndex + " is longer than 1 character, " + culpritsVal.length + " (equals to " + culpritsVal + "). Please split it into separate characters and put into array as separate elements.");
+    throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ").concat(culpritsIndex, " is longer than 1 character, ").concat(culpritsVal.length, " (equals to ").concat(culpritsVal, "). Please split it into separate characters and put into array as separate elements."));
   }
   if (!whatToMatch || !Array.isArray(whatToMatch) ||
   Array.isArray(whatToMatch) && !whatToMatch.length ||
@@ -268,7 +266,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       if (!originalOpts) {
         extraNote = " More so, the whole options object, the fourth input argument, is missing!";
       }
-      throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!" + extraNote);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!").concat(extraNote));
     }
   for (var i = 0, len = whatToMatch.length; i < len; i++) {
     special = typeof whatToMatch[i] === "function";

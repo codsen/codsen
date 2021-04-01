@@ -108,7 +108,7 @@ function isLangCode(str) {
     if (regionMatched && region.includes(split[i])) {
       return {
         res: false,
-        message: "Two region subtags, \"" + regionMatched + "\" and \"" + split[i] + "\"."
+        message: "Two region subtags, \"".concat(regionMatched, "\" and \"").concat(split[i], "\".")
       };
     }
     if (i === 0) {
@@ -137,7 +137,7 @@ function isLangCode(str) {
           } else {
             return {
               res: false,
-              message: "Repeated variant subtag, \"" + split[i] + "\"."
+              message: "Repeated variant subtag, \"".concat(split[i], "\".")
             };
           }
         } else ;
@@ -166,7 +166,7 @@ function isLangCode(str) {
             } else {
               return {
                 res: false,
-                message: "Repeated variant subtag, \"" + split[i] + "\"."
+                message: "Repeated variant subtag, \"".concat(split[i], "\".")
               };
             }
           }
@@ -191,7 +191,7 @@ function isLangCode(str) {
       if (i === 0) {
         return {
           res: false,
-          message: "Starts with singleton, \"" + split[i] + "\"."
+          message: "Starts with singleton, \"".concat(split[i], "\".")
         };
       }
       if (!languageMatched) {
@@ -205,7 +205,7 @@ function isLangCode(str) {
       } else {
         return {
           res: false,
-          message: "Two extensions with same single-letter prefix \"" + split[i] + "\"."
+          message: "Two extensions with same single-letter prefix \"".concat(split[i], "\".")
         };
       }
       if (split[i + 1]) {
@@ -217,13 +217,13 @@ function isLangCode(str) {
         } else {
           return {
             res: false,
-            message: "Multiple singleton sequence \"" + split[i] + "\", \"" + split[i + 1] + "\"."
+            message: "Multiple singleton sequence \"".concat(split[i], "\", \"").concat(split[i + 1], "\".")
           };
         }
       } else {
         return {
           res: false,
-          message: "Ends with singleton, \"" + split[i] + "\"."
+          message: "Ends with singleton, \"".concat(split[i], "\".")
         };
       }
     }
@@ -234,7 +234,7 @@ function isLangCode(str) {
         } else {
           return {
             res: false,
-            message: "Repeated variant subtag, \"" + split[i] + "\"."
+            message: "Repeated variant subtag, \"".concat(split[i], "\".")
           };
         }
         allOK = true;
@@ -242,9 +242,9 @@ function isLangCode(str) {
         variantGathered.push(split[i]);
         return {
           res: false,
-          message: "Variant subtags " + variantGathered.map(function (val) {
-            return "\"" + val + "\"";
-          }).join(", ") + "  not in a sequence."
+          message: "Variant subtags ".concat(variantGathered.map(function (val) {
+            return "\"".concat(val, "\"");
+          }).join(", "), "  not in a sequence.")
         };
       }
     }
@@ -256,7 +256,7 @@ function isLangCode(str) {
     if (!allOK) {
       return {
         res: false,
-        message: "Unrecognised language subtag, \"" + split[i] + "\"."
+        message: "Unrecognised language subtag, \"".concat(split[i], "\".")
       };
     }
   }

@@ -12,10 +12,12 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "2.0.12";
 
@@ -44,36 +46,36 @@ function expander(originalOpts) {
   function isStr(something) {
     return typeof something === "string";
   }
-  if (!originalOpts || typeof originalOpts !== "object" || Array.isArray(originalOpts)) {
+  if (!originalOpts || _typeof__default['default'](originalOpts) !== "object" || Array.isArray(originalOpts)) {
     var supplementalString;
     if (originalOpts === undefined) {
       supplementalString = "but it is missing completely.";
     } else if (originalOpts === null) {
       supplementalString = "but it was given as null.";
     } else {
-      supplementalString = "but it was given as " + typeof originalOpts + ", equal to:\n" + JSON.stringify(originalOpts, null, 4) + ".";
+      supplementalString = "but it was given as ".concat(_typeof__default['default'](originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4), ".");
     }
-    throw new Error("string-range-expander: [THROW_ID_01] Input must be a plain object " + supplementalString);
-  } else if (typeof originalOpts === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
+    throw new Error("string-range-expander: [THROW_ID_01] Input must be a plain object ".concat(supplementalString));
+  } else if (_typeof__default['default'](originalOpts) === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
     throw new Error("string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.");
   }
   if (typeof originalOpts.from !== "number") {
-    throw new Error("string-range-expander: [THROW_ID_03] The input's \"from\" value opts.from, is not a number! Currently it's given as " + typeof originalOpts.from + ", equal to " + JSON.stringify(originalOpts.from, null, 0));
+    throw new Error("string-range-expander: [THROW_ID_03] The input's \"from\" value opts.from, is not a number! Currently it's given as ".concat(_typeof__default['default'](originalOpts.from), ", equal to ").concat(JSON.stringify(originalOpts.from, null, 0)));
   }
   if (typeof originalOpts.to !== "number") {
-    throw new Error("string-range-expander: [THROW_ID_04] The input's \"to\" value opts.to, is not a number! Currently it's given as " + typeof originalOpts.to + ", equal to " + JSON.stringify(originalOpts.to, null, 0));
+    throw new Error("string-range-expander: [THROW_ID_04] The input's \"to\" value opts.to, is not a number! Currently it's given as ".concat(_typeof__default['default'](originalOpts.to), ", equal to ").concat(JSON.stringify(originalOpts.to, null, 0)));
   }
   if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
-    throw new Error("string-range-expander: [THROW_ID_05] The given input string opts.str (\"" + originalOpts.str + "\") must contain the character at index \"from\" (\"" + originalOpts.from + "\")");
+    throw new Error("string-range-expander: [THROW_ID_05] The given input string opts.str (\"".concat(originalOpts.str, "\") must contain the character at index \"from\" (\"").concat(originalOpts.from, "\")"));
   }
   if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.to - 1]) {
-    throw new Error("string-range-expander: [THROW_ID_06] The given input string, opts.str (\"" + originalOpts.str + "\") must contain the character at index before \"to\" (\"" + (originalOpts.to - 1) + "\")");
+    throw new Error("string-range-expander: [THROW_ID_06] The given input string, opts.str (\"".concat(originalOpts.str, "\") must contain the character at index before \"to\" (\"").concat(originalOpts.to - 1, "\")"));
   }
   if (originalOpts.from > originalOpts.to) {
-    throw new Error("string-range-expander: [THROW_ID_07] The given \"from\" index, \"" + originalOpts.from + "\" is greater than \"to\" index, \"" + originalOpts.to + "\". That's wrong!");
+    throw new Error("string-range-expander: [THROW_ID_07] The given \"from\" index, \"".concat(originalOpts.from, "\" is greater than \"to\" index, \"").concat(originalOpts.to, "\". That's wrong!"));
   }
   if (isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== "left" && originalOpts.extendToOneSide !== "right" || !isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== undefined && originalOpts.extendToOneSide !== false) {
-    throw new Error("string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: \"" + originalOpts.extendToOneSide + "\" (" + typeof originalOpts.extendToOneSide + "). It has to be either Boolean \"false\" or strings \"left\" or \"right\"");
+    throw new Error("string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: \"".concat(originalOpts.extendToOneSide, "\" (").concat(_typeof__default['default'](originalOpts.extendToOneSide), "). It has to be either Boolean \"false\" or strings \"left\" or \"right\""));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
@@ -89,7 +91,7 @@ function expander(originalOpts) {
     })) {
       opts.ifLeftSideIncludesThisThenCropTightly = opts.ifLeftSideIncludesThisThenCropTightly.join("");
     } else {
-      throw new Error("string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n" + JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4) + ". Now, that array contains not only string elements. For example, an element at index " + culpritsIndex + " is of a type " + typeof culpritsValue + " (equal to " + JSON.stringify(culpritsValue, null, 0) + ").");
+      throw new Error("string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n".concat(JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4), ". Now, that array contains not only string elements. For example, an element at index ").concat(culpritsIndex, " is of a type ").concat(_typeof__default['default'](culpritsValue), " (equal to ").concat(JSON.stringify(culpritsValue, null, 0), ")."));
     }
   }
   var str = opts.str;

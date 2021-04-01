@@ -13,10 +13,10 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function pathNext(str) {
   if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
-    return "" + str.slice(0, str.lastIndexOf(".") + 1) + (+str.slice(str.lastIndexOf(".") + 1) + 1);
+    return "".concat(str.slice(0, str.lastIndexOf(".") + 1)).concat(+str.slice(str.lastIndexOf(".") + 1) + 1);
   }
   if (/^\d*$/.test(str)) {
-    return "" + (+str + 1);
+    return "".concat(+str + 1);
   }
   return str;
 }
@@ -30,10 +30,10 @@ function pathPrev(str) {
     return null;
   }
   if (str.includes(".") && /^\d*$/.test(extractedValue)) {
-    return "" + str.slice(0, str.lastIndexOf(".") + 1) + (+str.slice(str.lastIndexOf(".") + 1) - 1);
+    return "".concat(str.slice(0, str.lastIndexOf(".") + 1)).concat(+str.slice(str.lastIndexOf(".") + 1) - 1);
   }
   if (/^\d*$/.test(str)) {
-    return "" + (+str - 1);
+    return "".concat(+str - 1);
   }
   return null;
 }

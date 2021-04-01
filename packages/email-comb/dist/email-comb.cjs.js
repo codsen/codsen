@@ -11,6 +11,8 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var stringMatchLeftRight = require('string-match-left-right');
 var regexEmptyConditionalComments = require('regex-empty-conditional-comments');
@@ -29,6 +31,8 @@ var matcher = require('matcher');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var intersection__default = /*#__PURE__*/_interopDefaultLegacy(intersection);
 var pullAll__default = /*#__PURE__*/_interopDefaultLegacy(pullAll);
@@ -41,7 +45,7 @@ var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
 var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
 var regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
 function isObj(something) {
-  return something && typeof something === "object" && !Array.isArray(something);
+  return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
 }
 function hasOwnProp(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
@@ -72,10 +76,8 @@ function comb(str, originalOpts) {
   function characterSuitableForNames(char) {
     return /[-_A-Za-z0-9]/.test(char);
   }
-  function resetBodyClassOrId(initObj) {
-    if (initObj === void 0) {
-      initObj = {};
-    }
+  function resetBodyClassOrId() {
+    var initObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     return _objectSpread__default['default']({
       valuesStart: null,
       valueStart: null,
@@ -121,10 +123,10 @@ function comb(str, originalOpts) {
   var atRulesWhichNeedToBeIgnored = ["font-feature-values", "counter-style", "namespace", "font-face", "keyframes", "viewport", "charset", "import", "page"];
   var atRuleBreakCharacters = ["{", "(", "<", '"', "'", "@", ";"];
   if (typeof str !== "string") {
-    throw new TypeError("email-comb: [THROW_ID_01] Input must be string! Currently it's " + typeof str);
+    throw new TypeError("email-comb: [THROW_ID_01] Input must be string! Currently it's ".concat(_typeof__default['default'](str)));
   }
   if (originalOpts && !isObj(originalOpts)) {
-    throw new TypeError("email-comb: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's " + typeof originalOpts + ", equal to: " + JSON.stringify(originalOpts, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's ".concat(_typeof__default['default'](originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (typeof opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains === "string") {
@@ -135,35 +137,35 @@ function comb(str, originalOpts) {
   if (typeof opts.whitelist === "string") {
     opts.whitelist = [opts.whitelist];
   } else if (!Array.isArray(opts.whitelist)) {
-    throw new TypeError("email-comb: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, " + JSON.stringify(opts.whitelist, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.whitelist, null, 4)));
   }
   if (opts.whitelist.length > 0 && !opts.whitelist.every(function (el) {
     return typeof el === "string";
   })) {
-    throw new TypeError("email-comb: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\x0Be got:\n" + JSON.stringify(opts.whitelist, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\x0Be got:\n".concat(JSON.stringify(opts.whitelist, null, 4)));
   }
   if (!Array.isArray(opts.backend)) {
-    throw new TypeError("email-comb: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, " + JSON.stringify(opts.backend, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.backend, null, 4)));
   }
   if (opts.backend.length > 0 && opts.backend.some(function (val) {
     return !isObj(val);
   })) {
-    throw new TypeError("email-comb: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n" + JSON.stringify(opts.backend, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n".concat(JSON.stringify(opts.backend, null, 4)));
   }
   if (opts.backend.length > 0 && !opts.backend.every(function (obj) {
     return hasOwnProp(obj, "heads") && hasOwnProp(obj, "tails");
   })) {
-    throw new TypeError("email-comb: [THROW_ID_07] every object within opts.backend should contain keys \"heads\" and \"tails\" but currently it's not the case. Whole \"opts.backend\" value array is currently equal to:\n" + JSON.stringify(opts.backend, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_07] every object within opts.backend should contain keys \"heads\" and \"tails\" but currently it's not the case. Whole \"opts.backend\" value array is currently equal to:\n".concat(JSON.stringify(opts.backend, null, 4)));
   }
   if (typeof opts.uglify !== "boolean") {
     if (opts.uglify === 1 || opts.uglify === 0) {
       opts.uglify = !!opts.uglify;
     } else {
-      throw new TypeError("email-comb: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: " + JSON.stringify(opts.uglify, null, 4) + "}");
+      throw new TypeError("email-comb: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: ".concat(JSON.stringify(opts.uglify, null, 4), "}"));
     }
   }
   if (opts.reportProgressFunc && typeof opts.reportProgressFunc !== "function") {
-    throw new TypeError("email-comb: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n" + JSON.stringify(opts.reportProgressFunc, null, 4) + " (" + typeof opts.reportProgressFunc + ")");
+    throw new TypeError("email-comb: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n".concat(JSON.stringify(opts.reportProgressFunc, null, 4), " (").concat(_typeof__default['default'](opts.reportProgressFunc), ")"));
   }
   var allHeads = null;
   var allTails = null;
@@ -455,7 +457,7 @@ function comb(str, originalOpts) {
         else if (singleSelectorStartedAt !== null && !characterSuitableForNames(chr)) {
             var singleSelector = str.slice(singleSelectorStartedAt, _i);
             if (singleSelectorType) {
-              singleSelector = "" + singleSelectorType + singleSelector;
+              singleSelector = "".concat(singleSelectorType).concat(singleSelector);
               singleSelectorType = undefined;
             }
             if (round === 2 && !selectorChunkCanBeDeleted && headCssToDelete.includes(singleSelector)) {
@@ -538,7 +540,7 @@ function comb(str, originalOpts) {
                   ifRightSideIncludesThisCropItToo: ",",
                   extendToOneSide: "right"
                 });
-                finalIndexesToDelete.push.apply(finalIndexesToDelete, resToPush);
+                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](resToPush));
                 if (opts.uglify) {
                   currentChunksMinifiedSelectors.wipe();
                 }
@@ -635,7 +637,7 @@ function comb(str, originalOpts) {
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true
             });
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, calculatedRange);
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](calculatedRange));
           }
         } else if (!str[_i + 5].trim()) {
           for (var _y7 = _i + 5; _y7 < len; _y7++) {
@@ -698,7 +700,7 @@ function comb(str, originalOpts) {
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true
             });
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _calculatedRange);
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](_calculatedRange));
           }
         } else if (!str[_i + 2].trim()) {
           for (var _y8 = _i + 2; _y8 < len; _y8++) {
@@ -754,7 +756,7 @@ function comb(str, originalOpts) {
               ifLeftSideIncludesThisThenCropTightly: "\"'",
               ifRightSideIncludesThisThenCropTightly: "\"'"
             });
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _calculatedRange2);
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](_calculatedRange2));
             whitespaceStartedAt = null;
           } else if (whitespaceStartedAt) {
             whitespaceStartedAt = null;
@@ -792,9 +794,9 @@ function comb(str, originalOpts) {
             doNothingUntil = _findings.tails;
           }
         } else {
-          var carvedClass = "" + str.slice(bodyClass.valueStart, _i);
+          var carvedClass = "".concat(str.slice(bodyClass.valueStart, _i));
           if (round === 1) {
-            bodyClassesArr.push("." + carvedClass);
+            bodyClassesArr.push(".".concat(carvedClass));
           }
           else if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
               var expandedRange = stringRangeExpander.expander({
@@ -809,11 +811,11 @@ function comb(str, originalOpts) {
               if (str[expandedRange[0] - 1] && str[expandedRange[0] - 1].trim() && str[expandedRange[1]] && str[expandedRange[1]].trim() && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, expandedRange[1], allHeads))) {
                 whatToInsert = " ";
               }
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, expandedRange.concat([whatToInsert]));
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](expandedRange).concat([whatToInsert]));
             } else {
               bodyClassOrIdCanBeDeleted = false;
-              if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher__default['default'](["." + carvedClass], opts.whitelist).length)) {
-                finalIndexesToDelete.push(bodyClass.valueStart, _i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("." + carvedClass)].slice(1));
+              if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher__default['default']([".".concat(carvedClass)], opts.whitelist).length)) {
+                finalIndexesToDelete.push(bodyClass.valueStart, _i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
               }
             }
           bodyClass.valueStart = null;
@@ -822,7 +824,7 @@ function comb(str, originalOpts) {
       if (!doNothing && bodyId && bodyId.valueStart !== null && _i > bodyId.valueStart && (!characterSuitableForNames(chr) || allTails && stringMatchLeftRight.matchRightIncl(str, _i, allTails))) {
         var carvedId = str.slice(bodyId.valueStart, _i);
         if (round === 1) {
-          bodyIdsArr.push("#" + carvedId);
+          bodyIdsArr.push("#".concat(carvedId));
         }
         else if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
             var _expandedRange = stringRangeExpander.expander({
@@ -835,11 +837,11 @@ function comb(str, originalOpts) {
             if (str[_expandedRange[0] - 1] && str[_expandedRange[0] - 1].trim() && str[_expandedRange[1]] && str[_expandedRange[1]].trim() && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, _expandedRange[0], allTails || []) || allTails && stringMatchLeftRight.matchRightIncl(str, _expandedRange[1], allHeads || []))) {
               _expandedRange[0] += 1;
             }
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _expandedRange);
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](_expandedRange));
           } else {
             bodyClassOrIdCanBeDeleted = false;
-            if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher__default['default'](["#" + carvedId], opts.whitelist).length)) {
-              finalIndexesToDelete.push(bodyId.valueStart, _i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("#" + carvedId)].slice(1));
+            if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher__default['default'](["#".concat(carvedId)], opts.whitelist).length)) {
+              finalIndexesToDelete.push(bodyId.valueStart, _i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))].slice(1));
             }
           }
         bodyId.valueStart = null;
@@ -847,13 +849,13 @@ function comb(str, originalOpts) {
       if (!doNothing && bodyClass.valuesStart != null && (!bodyClass.quoteless && (chr === "'" || chr === '"') || bodyClass.quoteless && !characterSuitableForNames(str[_i])) && _i >= bodyClass.valuesStart) {
         if (_i === bodyClass.valuesStart) {
           if (round === 1) {
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, stringRangeExpander.expander({
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](stringRangeExpander.expander({
               str: str,
               from: bodyClass.nameStart,
               to: _i + 1,
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true
-            }));
+            })));
           }
         } else {
           if (round === 2 && bodyClassOrIdCanBeDeleted) {
@@ -869,7 +871,7 @@ function comb(str, originalOpts) {
             ) {
                 _whatToInsert = " ";
               }
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _expandedRange2.concat([_whatToInsert]));
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](_expandedRange2).concat([_whatToInsert]));
           }
           if (whitespaceStartedAt !== null) {
             finalIndexesToDelete.push(whitespaceStartedAt, _i);
@@ -880,13 +882,13 @@ function comb(str, originalOpts) {
       if (!doNothing && bodyId.valuesStart !== null && (!bodyId.quoteless && (chr === "'" || chr === '"') || bodyId.quoteless && !characterSuitableForNames(str[_i])) && _i >= bodyId.valuesStart) {
         if (_i === bodyId.valuesStart) {
           if (round === 1) {
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, stringRangeExpander.expander({
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](stringRangeExpander.expander({
               str: str,
               from: bodyId.nameStart,
               to: _i + 1,
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true
-            }));
+            })));
           }
         } else {
           if (round === 2 && bodyClassOrIdCanBeDeleted) {
@@ -902,7 +904,7 @@ function comb(str, originalOpts) {
             ) {
                 _whatToInsert2 = " ";
               }
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _expandedRange3.concat([_whatToInsert2]));
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](_expandedRange3).concat([_whatToInsert2]));
           }
           if (whitespaceStartedAt !== null) {
             finalIndexesToDelete.push(whitespaceStartedAt, _i);
@@ -922,7 +924,7 @@ function comb(str, originalOpts) {
               ifLeftSideIncludesThisThenCropTightly: "\"'",
               ifRightSideIncludesThisThenCropTightly: "\"'"
             });
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _calculatedRange3);
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](_calculatedRange3));
             whitespaceStartedAt = null;
           } else if (whitespaceStartedAt) {
             whitespaceStartedAt = null;
@@ -967,7 +969,7 @@ function comb(str, originalOpts) {
               addSingleSpaceToPreventAccidentalConcatenation: true
             });
             if (opts.removeHTMLComments && canDelete) {
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, _calculatedRange4);
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](_calculatedRange4));
             }
             commentsLength += _calculatedRange4[1] - _calculatedRange4[0];
             commentStartedAt = null;
@@ -981,7 +983,7 @@ function comb(str, originalOpts) {
               addSingleSpaceToPreventAccidentalConcatenation: true
             });
             if (opts.removeHTMLComments && canDelete) {
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, _calculatedRange5);
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](_calculatedRange5));
             }
             commentsLength += _calculatedRange5[1] - _calculatedRange5[0];
             commentStartedAt = null;
@@ -1104,7 +1106,7 @@ function comb(str, originalOpts) {
           return allClassesAndIdsWithinBody.includes(el);
         })) {
           var _deletedFromHeadArr;
-          (_deletedFromHeadArr = deletedFromHeadArr).push.apply(_deletedFromHeadArr, stringExtractClassNames.extract(preppedHeadSelectorsArr[y]).res);
+          (_deletedFromHeadArr = deletedFromHeadArr).push.apply(_deletedFromHeadArr, _toConsumableArray__default['default'](stringExtractClassNames.extract(preppedHeadSelectorsArr[y]).res));
           preppedHeadSelectorsArr.splice(y, 1);
           y -= 1;
           len2 -= 1;
@@ -1143,9 +1145,9 @@ function comb(str, originalOpts) {
       })));
       var allClassesAndIdsWithinBodyThatWereWhitelisted = matcher__default['default'](allClassesAndIdsWithinBody, opts.whitelist);
       bodyCssToDelete = uniq__default['default'](bodyCssToDelete.concat(bodyClassesToDelete.map(function (val) {
-        return "." + val;
+        return ".".concat(val);
       }), bodyIdsToDelete.map(function (val) {
-        return "#" + val;
+        return "#".concat(val);
       })));
       allClassesAndIdsWithinHeadFinal = pullAll__default['default'](pullAll__default['default'](Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
       if (Array.isArray(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {

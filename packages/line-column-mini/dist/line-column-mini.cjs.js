@@ -36,10 +36,8 @@ function getLineStartIndexes(str) {
     return acc;
   }, [0]);
 }
-function lineCol(input, idx, skipChecks) {
-  if (skipChecks === void 0) {
-    skipChecks = false;
-  }
+function lineCol(input, idx) {
+  var skipChecks = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   if (!skipChecks && (!Array.isArray(input) && typeof input !== "string" || (typeof input === "string" || Array.isArray(input)) && !input.length)) {
     return null;
   }

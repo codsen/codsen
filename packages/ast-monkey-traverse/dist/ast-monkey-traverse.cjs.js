@@ -42,7 +42,7 @@ function traverse(tree1, cb1) {
         if (stop.now) {
           break;
         }
-        var path = innerObj.path ? innerObj.path + "." + i : "" + i;
+        var path = innerObj.path ? "".concat(innerObj.path, ".").concat(i) : "".concat(i);
         if (tree[i] !== undefined) {
           innerObj.parent = clone__default['default'](tree);
           innerObj.parentType = "array";
@@ -67,7 +67,7 @@ function traverse(tree1, cb1) {
         if (stop.now && key != null) {
           break;
         }
-        var _path = innerObj.path ? innerObj.path + "." + key : key;
+        var _path = innerObj.path ? "".concat(innerObj.path, ".").concat(key) : key;
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }

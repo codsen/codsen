@@ -15,14 +15,17 @@ var htmlAllKnownAttributes = require('html-all-known-attributes');
 var isCharSuitableForHtmlAttrName = require('is-char-suitable-for-html-attr-name');
 var stringLeftRight = require('string-left-right');
 var stringMatchLeftRight = require('string-match-left-right');
+var _typeof = require('@babel/runtime/helpers/typeof');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 function makeTheQuoteOpposite(quoteChar) {
   return quoteChar === "'" ? "\"" : "'";
 }
-function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y) {
-  if (y === void 0) {
-    y = [];
-  }
+function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x) {
+  var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
   var _loop = function _loop(i, len) {
     if (y.some(function (oneOfStr) {
       return str.startsWith(oneOfStr, i);
@@ -39,7 +42,7 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y) {
   };
   for (var i = startingIdx, len = str.length; i < len; i++) {
     var _ret = _loop(i);
-    if (typeof _ret === "object") return _ret.v;
+    if (_typeof__default['default'](_ret) === "object") return _ret.v;
   }
   return true;
 }

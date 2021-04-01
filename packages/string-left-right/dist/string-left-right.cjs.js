@@ -11,12 +11,16 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var isObj = require('lodash.isplainobject');
 var clone = require('lodash.clonedeep');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
@@ -97,10 +101,8 @@ function rightMain(_ref) {
   }
   return null;
 }
-function right(str, idx) {
-  if (idx === void 0) {
-    idx = 0;
-  }
+function right(str) {
+  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   return rightMain({
     str: str,
     idx: idx,
@@ -168,10 +170,8 @@ function leftMain(_ref2) {
   }
   return null;
 }
-function left(str, idx) {
-  if (idx === void 0) {
-    idx = 0;
-  }
+function left(str) {
+  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   return leftMain({
     str: str,
     idx: idx,
@@ -298,10 +298,8 @@ function rightSeq(str, idx) {
   }
   return seq("right", str, idx, opts, args);
 }
-function chomp(direction, str, idx, opts, args) {
-  if (args === void 0) {
-    args = [];
-  }
+function chomp(direction, str, idx, opts) {
+  var args = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -314,7 +312,7 @@ function chomp(direction, str, idx, opts, args) {
   var lastRes = null;
   var lastIdx = null;
   do {
-    lastRes = direction === "right" ? rightSeq.apply(void 0, [str, typeof lastIdx === "number" ? lastIdx : idx].concat(args)) : leftSeq.apply(void 0, [str, typeof lastIdx === "number" ? lastIdx : idx].concat(args));
+    lastRes = direction === "right" ? rightSeq.apply(void 0, [str, typeof lastIdx === "number" ? lastIdx : idx].concat(_toConsumableArray__default['default'](args))) : leftSeq.apply(void 0, [str, typeof lastIdx === "number" ? lastIdx : idx].concat(_toConsumableArray__default['default'](args)));
     if (lastRes !== null) {
       lastIdx = direction === "right" ? lastRes.rightmostChar : lastRes.leftmostChar;
     }
@@ -408,7 +406,7 @@ function chompLeft(str, idx) {
     } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
       opts.mode = Number.parseInt(opts.mode, 10);
     } else if (!isNum(opts.mode)) {
-      throw new Error("string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as " + opts.mode + " (type " + typeof opts.mode + ")");
+      throw new Error("string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof__default['default'](opts.mode), ")"));
     }
     return chomp("left", str, idx, opts, clone__default['default'](args).slice(1));
   }
@@ -434,7 +432,7 @@ function chompRight(str, idx) {
     } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
       opts.mode = Number.parseInt(opts.mode, 10);
     } else if (!isNum(opts.mode)) {
-      throw new Error("string-left-right/chompRight(): [THROW_ID_02] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as " + opts.mode + " (type " + typeof opts.mode + ")");
+      throw new Error("string-left-right/chompRight(): [THROW_ID_02] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof__default['default'](opts.mode), ")"));
     }
     return chomp("right", str, idx, opts, clone__default['default'](args).slice(1));
   }

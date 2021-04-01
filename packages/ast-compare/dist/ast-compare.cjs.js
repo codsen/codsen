@@ -11,7 +11,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var _createForOfIteratorHelperLoose = require('@babel/runtime/helpers/createForOfIteratorHelperLoose');
+var _typeof = require('@babel/runtime/helpers/typeof');
+var _createForOfIteratorHelper = require('@babel/runtime/helpers/createForOfIteratorHelper');
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var typeDetect = require('type-detect');
 var astContainsOnlyEmptySpace = require('ast-contains-only-empty-space');
@@ -20,7 +22,9 @@ var matcher = require('matcher');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var _createForOfIteratorHelperLoose__default = /*#__PURE__*/_interopDefaultLegacy(_createForOfIteratorHelperLoose);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
+var _createForOfIteratorHelper__default = /*#__PURE__*/_interopDefaultLegacy(_createForOfIteratorHelper);
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var typeDetect__default = /*#__PURE__*/_interopDefaultLegacy(typeDetect);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
@@ -59,7 +63,7 @@ function compare(b, s, originalOpts) {
       return true;
     }
     if (opts.verboseWhenMismatches) {
-      return b === s ? true : "Given string " + s + " is not matched! We have " + b + " on the other end.";
+      return b === s ? true : "Given string ".concat(s, " is not matched! We have ").concat(b, " on the other end.");
     }
     return opts.useWildcards ? matcher__default['default'].isMatch(b, s, {
       caseSensitive: true
@@ -73,14 +77,14 @@ function compare(b, s, originalOpts) {
       if (!opts.verboseWhenMismatches) {
         return false;
       }
-      return "The length of a given array, " + JSON.stringify(s, null, 4) + " is " + s.length + " but the length of an array on the other end, " + JSON.stringify(b, null, 4) + " is " + b.length;
+      return "The length of a given array, ".concat(JSON.stringify(s, null, 4), " is ").concat(s.length, " but the length of an array on the other end, ").concat(JSON.stringify(b, null, 4), " is ").concat(b.length);
     }
     if (s.length === 0) {
       if (b.length === 0) {
         return true;
       }
       if (opts.verboseWhenMismatches) {
-        return "The given array has no elements, but the array on the other end, " + JSON.stringify(b, null, 4) + " does have some";
+        return "The given array has no elements, but the array on the other end, ".concat(JSON.stringify(b, null, 4), " does have some");
       }
       return false;
     }
@@ -97,7 +101,7 @@ function compare(b, s, originalOpts) {
         if (!opts.verboseWhenMismatches) {
           return false;
         }
-        return "The given array " + JSON.stringify(s, null, 4) + " is not a subset of an array on the other end, " + JSON.stringify(b, null, 4);
+        return "The given array ".concat(JSON.stringify(s, null, 4), " is not a subset of an array on the other end, ").concat(JSON.stringify(b, null, 4));
       }
     }
   } else if (isObj__default['default'](b) && isObj__default['default'](s)) {
@@ -107,72 +111,80 @@ function compare(b, s, originalOpts) {
       if (!opts.verboseWhenMismatches) {
         return false;
       }
-      var uniqueKeysOnS = new Set([].concat(sKeys).filter(function (x) {
+      var uniqueKeysOnS = new Set(_toConsumableArray__default['default'](sKeys).filter(function (x) {
         return !bKeys.has(x);
       }));
-      var sMessage = uniqueKeysOnS.size ? " First object has unique keys: " + JSON.stringify(uniqueKeysOnS, null, 4) + "." : "";
-      var uniqueKeysOnB = new Set([].concat(bKeys).filter(function (x) {
+      var sMessage = uniqueKeysOnS.size ? " First object has unique keys: ".concat(JSON.stringify(uniqueKeysOnS, null, 4), ".") : "";
+      var uniqueKeysOnB = new Set(_toConsumableArray__default['default'](bKeys).filter(function (x) {
         return !sKeys.has(x);
       }));
-      var bMessage = uniqueKeysOnB.size ? " Second object has unique keys:\n        " + JSON.stringify(uniqueKeysOnB, null, 4) + "." : "";
-      return "When matching strictly, we found that both objects have different amount of keys." + sMessage + bMessage;
+      var bMessage = uniqueKeysOnB.size ? " Second object has unique keys:\n        ".concat(JSON.stringify(uniqueKeysOnB, null, 4), ".") : "";
+      return "When matching strictly, we found that both objects have different amount of keys.".concat(sMessage).concat(bMessage);
     }
-    var _loop = function _loop() {
-      var sKey = _step.value;
-      if (!Object.prototype.hasOwnProperty.call(b, sKey)) {
-        if (!opts.useWildcards || opts.useWildcards && !sKey.includes("*")) {
+    var _iterator = _createForOfIteratorHelper__default['default'](sKeys),
+        _step;
+    try {
+      var _loop = function _loop() {
+        var sKey = _step.value;
+        if (!Object.prototype.hasOwnProperty.call(b, sKey)) {
+          if (!opts.useWildcards || opts.useWildcards && !sKey.includes("*")) {
+            if (!opts.verboseWhenMismatches) {
+              return {
+                v: false
+              };
+            }
+            return {
+              v: "The given object has key \"".concat(sKey, "\" which the other-one does not have.")
+            };
+          }
+          if (Object.keys(b).some(function (bKey) {
+            return matcher__default['default'].isMatch(bKey, sKey, {
+              caseSensitive: true
+            });
+          })) {
+            return {
+              v: true
+            };
+          }
           if (!opts.verboseWhenMismatches) {
             return {
               v: false
             };
           }
           return {
-            v: "The given object has key \"" + sKey + "\" which the other-one does not have."
+            v: "The given object has key \"".concat(sKey, "\" which the other-one does not have.")
           };
         }
-        if (Object.keys(b).some(function (bKey) {
-          return matcher__default['default'].isMatch(bKey, sKey, {
-            caseSensitive: true
-          });
-        })) {
-          return {
-            v: true
-          };
-        }
-        if (!opts.verboseWhenMismatches) {
-          return {
-            v: false
-          };
-        }
-        return {
-          v: "The given object has key \"" + sKey + "\" which the other-one does not have."
-        };
-      }
-      if (b[sKey] != null && typeDetect__default['default'](b[sKey]) !== typeDetect__default['default'](s[sKey])) {
-        if (!(astContainsOnlyEmptySpace.empty(b[sKey]) && astContainsOnlyEmptySpace.empty(s[sKey]) && opts.hungryForWhitespace)) {
+        if (b[sKey] != null && typeDetect__default['default'](b[sKey]) !== typeDetect__default['default'](s[sKey])) {
+          if (!(astContainsOnlyEmptySpace.empty(b[sKey]) && astContainsOnlyEmptySpace.empty(s[sKey]) && opts.hungryForWhitespace)) {
+            if (!opts.verboseWhenMismatches) {
+              return {
+                v: false
+              };
+            }
+            return {
+              v: "The given key ".concat(sKey, " is of a different type on both objects. On the first-one, it's ").concat(typeDetect__default['default'](s[sKey]), ", on the second-one, it's ").concat(typeDetect__default['default'](b[sKey]))
+            };
+          }
+        } else if (compare(b[sKey], s[sKey], opts) !== true) {
           if (!opts.verboseWhenMismatches) {
             return {
               v: false
             };
           }
           return {
-            v: "The given key " + sKey + " is of a different type on both objects. On the first-one, it's " + typeDetect__default['default'](s[sKey]) + ", on the second-one, it's " + typeDetect__default['default'](b[sKey])
+            v: "The given piece ".concat(JSON.stringify(s[sKey], null, 4), " and ").concat(JSON.stringify(b[sKey], null, 4), " don't match.")
           };
         }
-      } else if (compare(b[sKey], s[sKey], opts) !== true) {
-        if (!opts.verboseWhenMismatches) {
-          return {
-            v: false
-          };
-        }
-        return {
-          v: "The given piece " + JSON.stringify(s[sKey], null, 4) + " and " + JSON.stringify(b[sKey], null, 4) + " don't match."
-        };
+      };
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var _ret = _loop();
+        if (_typeof__default['default'](_ret) === "object") return _ret.v;
       }
-    };
-    for (var _iterator = _createForOfIteratorHelperLoose__default['default'](sKeys), _step; !(_step = _iterator()).done;) {
-      var _ret = _loop();
-      if (typeof _ret === "object") return _ret.v;
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
   } else {
     if (opts.hungryForWhitespace && astContainsOnlyEmptySpace.empty(b) && astContainsOnlyEmptySpace.empty(s) && (!opts.matchStrictly || opts.matchStrictly && isBlank(s))) {

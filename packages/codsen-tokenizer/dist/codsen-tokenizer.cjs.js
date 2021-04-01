@@ -11,7 +11,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var stringMatchLeftRight = require('string-match-left-right');
 var clone = require('lodash.clonedeep');
 var stringLeftRight = require('string-left-right');
@@ -22,7 +24,9 @@ var isHtmlTagOpening = require('is-html-tag-opening');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 var allHTMLTagsKnownToHumanity = new Set(["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]);
@@ -46,27 +50,27 @@ function flipEspTag(str) {
   var res = "";
   for (var i = 0, len = str.length; i < len; i++) {
     if (str[i] === "[") {
-      res = "]" + res;
+      res = "]".concat(res);
     } else if (str[i] === "]") {
-      res = "[" + res;
+      res = "[".concat(res);
     } else if (str[i] === "{") {
-      res = "}" + res;
+      res = "}".concat(res);
     } else if (str[i] === "}") {
-      res = "{" + res;
+      res = "{".concat(res);
     } else if (str[i] === "(") {
-      res = ")" + res;
+      res = ")".concat(res);
     } else if (str[i] === ")") {
-      res = "(" + res;
+      res = "(".concat(res);
     } else if (str[i] === "<") {
-      res = ">" + res;
+      res = ">".concat(res);
     } else if (str[i] === ">") {
-      res = "<" + res;
+      res = "<".concat(res);
     } else if (str[i] === LEFTDOUBLEQUOTMARK) {
-      res = "" + RIGHTDOUBLEQUOTMARK + res;
+      res = "".concat(RIGHTDOUBLEQUOTMARK).concat(res);
     } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
-      res = "" + LEFTDOUBLEQUOTMARK + res;
+      res = "".concat(LEFTDOUBLEQUOTMARK).concat(res);
     } else {
-      res = "" + str[i] + res;
+      res = "".concat(str[i]).concat(res);
     }
   }
   return res;
@@ -86,12 +90,12 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   return false;
 }
 function isObj(something) {
-  return something && typeof something === "object" && !Array.isArray(something);
+  return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
 }
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 var inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]);
 var charsThatEndCSSChunks = ["{", "}", ","];
-var SOMEQUOTE = "'\"" + LEFTDOUBLEQUOTMARK + RIGHTDOUBLEQUOTMARK;
+var SOMEQUOTE = "'\"".concat(LEFTDOUBLEQUOTMARK).concat(RIGHTDOUBLEQUOTMARK);
 var attrNameRegexp = /[\w-]/;
 
 function getLastEspLayerObjIdx(layers) {
@@ -142,14 +146,14 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
       }
       if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[_y])) {
         found += 1;
-        uniqueCharsListFromGuessedClosingLumpArr = new Set([].concat(uniqueCharsListFromGuessedClosingLumpArr).filter(function (el) {
+        uniqueCharsListFromGuessedClosingLumpArr = new Set(_toConsumableArray__default['default'](uniqueCharsListFromGuessedClosingLumpArr).filter(function (el) {
           return el !== wholeEspTagLumpOnTheRight[_y];
         }));
       }
     };
     for (var _y = 0, len2 = wholeEspTagLumpOnTheRight.length; _y < len2; _y++) {
       var _ret = _loop(len2, _y);
-      if (typeof _ret === "object") return _ret.v;
+      if (_typeof__default['default'](_ret) === "object") return _ret.v;
     }
   }
   return wholeEspTagLumpOnTheRight;
@@ -186,10 +190,8 @@ function startsCssComment(str, i, _token, _layers, withinStyle) {
   );
 }
 
-function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
-  if (matchFirstInstead === void 0) {
-    matchFirstInstead = false;
-  }
+function matchLayerLast(wholeEspTagLump, layers) {
+  var matchFirstInstead = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   if (!layers.length) {
     return;
   }
@@ -269,20 +271,20 @@ function tokenizer(str, originalOpts) {
     if (str === undefined) {
       throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
     } else {
-      throw new Error("codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as \"" + typeof str + "\", equal to:\n" + JSON.stringify(str, null, 4));
+      throw new Error("codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof__default['default'](str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
     }
   }
   if (originalOpts && !isObj(originalOpts)) {
-    throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
+    throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ".concat(_typeof__default['default'](originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   if (originalOpts && isObj(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
-    throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type " + typeof originalOpts.tagCb + ", equal to " + JSON.stringify(originalOpts.tagCb, null, 4));
+    throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ".concat(_typeof__default['default'](originalOpts.tagCb), ", equal to ").concat(JSON.stringify(originalOpts.tagCb, null, 4)));
   }
   if (originalOpts && isObj(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
-    throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type " + typeof originalOpts.charCb + ", equal to " + JSON.stringify(originalOpts.charCb, null, 4));
+    throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ".concat(_typeof__default['default'](originalOpts.charCb), ", equal to ").concat(JSON.stringify(originalOpts.charCb, null, 4)));
   }
   if (originalOpts && isObj(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
-    throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
+    throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ".concat(_typeof__default['default'](originalOpts.reportProgressFunc), ", equal to ").concat(JSON.stringify(originalOpts.reportProgressFunc, null, 4)));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   var currentPercentageDone = 0;
@@ -477,10 +479,8 @@ function tokenizer(str, originalOpts) {
   function atRuleWaitingForClosingCurlie() {
     return lastLayerIs("at") && isObj(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
   }
-  function getNewToken(type, startVal) {
-    if (startVal === void 0) {
-      startVal = null;
-    }
+  function getNewToken(type) {
+    var startVal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     if (type === "tag") {
       return {
         type: type,
@@ -708,7 +708,7 @@ function tokenizer(str, originalOpts) {
             });
           }
         }
-      } else if (token.type === "esp" && ("'\"" + BACKTICK + "()").includes(str[_i]) && !(
+      } else if (token.type === "esp" && "'\"".concat(BACKTICK, "()").includes(str[_i]) && !(
       ["\"", "'", "`"].includes(str[leftVal]) && str[leftVal] === str[rightVal])) {
         if (
         lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
@@ -1796,11 +1796,11 @@ function tokenizer(str, originalOpts) {
             return str.indexOf(quote, rightVal);
           }).filter(function (val) {
             return val > 0;
-          }).length ? Math.min.apply(Math, SOMEQUOTE.split("").map(function (quote) {
+          }).length ? Math.min.apply(Math, _toConsumableArray__default['default'](SOMEQUOTE.split("").map(function (quote) {
             return str.indexOf(quote, rightVal);
           }).filter(function (val) {
             return val > 0;
-          })) : undefined;
+          }))) : undefined;
           if (
           rightVal &&
           str.slice(rightVal).includes("=") &&
@@ -1832,7 +1832,7 @@ function tokenizer(str, originalOpts) {
         str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (
         !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) &&
         !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
-          return ("<>=" + str[_i]).includes(char);
+          return "<>=".concat(str[_i]).includes(char);
         })) {
           layers.pop();
         } else {

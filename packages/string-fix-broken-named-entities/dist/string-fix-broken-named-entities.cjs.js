@@ -11,18 +11,24 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var leven = require('leven');
 var allNamedHtmlEntities = require('all-named-html-entities');
 var stringLeftRight = require('string-left-right');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var leven__default = /*#__PURE__*/_interopDefaultLegacy(leven);
 
 function isObj(something) {
-  return something && typeof something === "object" && !Array.isArray(something);
+  return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
 }
 function isLatinLetterOrNumberOrHash(char) {
   return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
@@ -128,7 +134,7 @@ var version$1 = "5.2.2";
 var version = version$1;
 function fixEnt(str, originalOpts) {
   if (typeof str !== "string") {
-    throw new Error("string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n" + JSON.stringify(str, null, 4) + " (" + typeof str + "-type)");
+    throw new Error("string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n".concat(JSON.stringify(str, null, 4), " (").concat(_typeof__default['default'](str), "-type)"));
   }
   var defaults = {
     decode: false,
@@ -144,20 +150,20 @@ function fixEnt(str, originalOpts) {
     entityCatcherCb: null
   };
   if (originalOpts && !isObj(originalOpts)) {
-    throw new Error("string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (" + typeof originalOpts + "-type)");
+    throw new Error("string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (").concat(_typeof__default['default'](originalOpts), "-type)"));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (opts.cb && typeof opts.cb !== "function") {
-    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_03] opts.cb must be a function (or falsey)! Currently it's: " + typeof opts.cb + ", equal to: " + JSON.stringify(opts.cb, null, 4));
+    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_03] opts.cb must be a function (or falsey)! Currently it's: ".concat(_typeof__default['default'](opts.cb), ", equal to: ").concat(JSON.stringify(opts.cb, null, 4)));
   }
   if (opts.entityCatcherCb && typeof opts.entityCatcherCb !== "function") {
-    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_04] opts.entityCatcherCb must be a function (or falsey)! Currently it's: " + typeof opts.entityCatcherCb + ", equal to: " + JSON.stringify(opts.entityCatcherCb, null, 4));
+    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_04] opts.entityCatcherCb must be a function (or falsey)! Currently it's: ".concat(_typeof__default['default'](opts.entityCatcherCb), ", equal to: ").concat(JSON.stringify(opts.entityCatcherCb, null, 4)));
   }
   if (opts.progressFn && typeof opts.progressFn !== "function") {
-    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_05] opts.progressFn must be a function (or falsey)! Currently it's: " + typeof opts.progressFn + ", equal to: " + JSON.stringify(opts.progressFn, null, 4));
+    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_05] opts.progressFn must be a function (or falsey)! Currently it's: ".concat(_typeof__default['default'](opts.progressFn), ", equal to: ").concat(JSON.stringify(opts.progressFn, null, 4)));
   }
   if (opts.textAmpersandCatcherCb && typeof opts.textAmpersandCatcherCb !== "function") {
-    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_06] opts.textAmpersandCatcherCb must be a function (or falsey)! Currently it's: " + typeof opts.textAmpersandCatcherCb + ", equal to: " + JSON.stringify(opts.textAmpersandCatcherCb, null, 4));
+    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_06] opts.textAmpersandCatcherCb must be a function (or falsey)! Currently it's: ".concat(_typeof__default['default'](opts.textAmpersandCatcherCb), ", equal to: ").concat(JSON.stringify(opts.textAmpersandCatcherCb, null, 4)));
   }
   var rangesArr2 = [];
   var percentageDone;
@@ -215,7 +221,7 @@ function fixEnt(str, originalOpts) {
             var tempEnt = "";
             var tempRes;
             var temp1 = allNamedHtmlEntities.entStartsWith[str[firstChar]][str[secondChar]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
-              tempRes = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1].concat(oneOfKnownEntities.split("")));
+              tempRes = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1].concat(_toConsumableArray__default['default'](oneOfKnownEntities.split(""))));
               if (tempRes) {
                 return gatheredSoFar.concat([{
                   tempEnt: oneOfKnownEntities,
@@ -232,13 +238,13 @@ function fixEnt(str, originalOpts) {
               tempRes = _temp.tempRes;
             }
             if (tempEnt && (!Object.keys(allNamedHtmlEntities.uncertain).includes(tempEnt) || !str[tempRes.rightmostChar + 1] || ["&"].includes(str[tempRes.rightmostChar + 1]) || (allNamedHtmlEntities.uncertain[tempEnt].addSemiIfAmpPresent === true || allNamedHtmlEntities.uncertain[tempEnt].addSemiIfAmpPresent && (!str[tempRes.rightmostChar + 1] || !str[tempRes.rightmostChar + 1].trim().length)) && str[tempRes.leftmostChar - 1] === "&")) {
-              var decodedEntity = allNamedHtmlEntities.decode("&" + tempEnt + ";");
+              var decodedEntity = allNamedHtmlEntities.decode("&".concat(tempEnt, ";"));
               rangesArr2.push({
-                ruleName: "bad-html-entity-malformed-" + tempEnt,
+                ruleName: "bad-html-entity-malformed-".concat(tempEnt),
                 entityName: tempEnt,
                 rangeFrom: whatsOnTheLeft || 0,
                 rangeTo: tempRes.rightmostChar + 1,
-                rangeValEncoded: "&" + tempEnt + ";",
+                rangeValEncoded: "&".concat(tempEnt, ";"),
                 rangeValDecoded: decodedEntity
               });
               pingAmps(whatsOnTheLeft || 0, i);
@@ -251,7 +257,7 @@ function fixEnt(str, originalOpts) {
             var _tempEnt = "";
             var _tempRes;
             var _temp2 = allNamedHtmlEntities.entEndsWith[str[lastChar]][str[secondToLast]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
-              _tempRes = stringLeftRight.leftSeq.apply(void 0, [str, i].concat(oneOfKnownEntities.split("")));
+              _tempRes = stringLeftRight.leftSeq.apply(void 0, [str, i].concat(_toConsumableArray__default['default'](oneOfKnownEntities.split(""))));
               if (_tempRes && !(oneOfKnownEntities === "block" && str[stringLeftRight.left(str, letterSeqStartAt)] === ":")) {
                 return gatheredSoFar.concat([{
                   tempEnt: oneOfKnownEntities,
@@ -268,13 +274,13 @@ function fixEnt(str, originalOpts) {
               _tempRes = _temp3.tempRes;
             }
             if (_tempEnt && (!Object.keys(allNamedHtmlEntities.uncertain).includes(_tempEnt) || allNamedHtmlEntities.uncertain[_tempEnt].addAmpIfSemiPresent === true || allNamedHtmlEntities.uncertain[_tempEnt].addAmpIfSemiPresent && (!_tempRes.leftmostChar || isStr(str[_tempRes.leftmostChar - 1]) && !str[_tempRes.leftmostChar - 1].trim().length))) {
-              var _decodedEntity = allNamedHtmlEntities.decode("&" + _tempEnt + ";");
+              var _decodedEntity = allNamedHtmlEntities.decode("&".concat(_tempEnt, ";"));
               rangesArr2.push({
-                ruleName: "bad-html-entity-malformed-" + _tempEnt,
+                ruleName: "bad-html-entity-malformed-".concat(_tempEnt),
                 entityName: _tempEnt,
                 rangeFrom: _tempRes.leftmostChar,
                 rangeTo: i + 1,
-                rangeValEncoded: "&" + _tempEnt + ";",
+                rangeValEncoded: "&".concat(_tempEnt, ";"),
                 rangeValDecoded: _decodedEntity
               });
               pingAmps(_tempRes.leftmostChar, i);
@@ -318,7 +324,7 @@ function fixEnt(str, originalOpts) {
                     entityName: situation.charTrimmed,
                     rangeFrom: whatsOnTheLeft || 0,
                     rangeTo: i + 1,
-                    rangeValEncoded: "&" + situation.charTrimmed + ";",
+                    rangeValEncoded: "&".concat(situation.charTrimmed, ";"),
                     rangeValDecoded: decodedEntitysValue
                   });
                 }
@@ -344,17 +350,17 @@ function fixEnt(str, originalOpts) {
               if (potentialEntityOnlyNonWhitespaceChars.length <= allNamedHtmlEntities.maxLength && allNamedHtmlEntities.allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
                 if (
                 typeof potentialEntityOnlyNonWhitespaceChars === "string" && !allNamedHtmlEntities.allNamedEntitiesSetOnly.has(potentialEntityOnlyNonWhitespaceChars)) {
-                  var matchingEntitiesOfCorrectCaseArr = [].concat(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (ent) {
+                  var matchingEntitiesOfCorrectCaseArr = _toConsumableArray__default['default'](allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (ent) {
                     return ent.toLowerCase() === potentialEntityOnlyNonWhitespaceChars.toLowerCase();
                   });
                   if (matchingEntitiesOfCorrectCaseArr.length === 1) {
                     rangesArr2.push({
-                      ruleName: "bad-html-entity-malformed-" + matchingEntitiesOfCorrectCaseArr[0],
+                      ruleName: "bad-html-entity-malformed-".concat(matchingEntitiesOfCorrectCaseArr[0]),
                       entityName: matchingEntitiesOfCorrectCaseArr[0],
                       rangeFrom: whatsOnTheLeft,
                       rangeTo: i + 1,
-                      rangeValEncoded: "&" + matchingEntitiesOfCorrectCaseArr[0] + ";",
-                      rangeValDecoded: allNamedHtmlEntities.decode("&" + matchingEntitiesOfCorrectCaseArr[0] + ";")
+                      rangeValEncoded: "&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"),
+                      rangeValDecoded: allNamedHtmlEntities.decode("&".concat(matchingEntitiesOfCorrectCaseArr[0], ";"))
                     });
                     pingAmps(whatsOnTheLeft, i);
                   } else {
@@ -378,22 +384,22 @@ function fixEnt(str, originalOpts) {
                     return "continue";
                   }
                   rangesArr2.push({
-                    ruleName: "bad-html-entity-malformed-" + potentialEntityOnlyNonWhitespaceChars,
+                    ruleName: "bad-html-entity-malformed-".concat(potentialEntityOnlyNonWhitespaceChars),
                     entityName: potentialEntityOnlyNonWhitespaceChars,
                     rangeFrom: rangeFrom,
                     rangeTo: i + 1,
-                    rangeValEncoded: "&" + potentialEntityOnlyNonWhitespaceChars + ";",
-                    rangeValDecoded: allNamedHtmlEntities.decode("&" + potentialEntityOnlyNonWhitespaceChars + ";")
+                    rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
+                    rangeValDecoded: allNamedHtmlEntities.decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
                   });
                   pingAmps(rangeFrom, i);
                 } else if (opts.decode) {
                   rangesArr2.push({
-                    ruleName: "bad-html-entity-encoded-" + potentialEntityOnlyNonWhitespaceChars,
+                    ruleName: "bad-html-entity-encoded-".concat(potentialEntityOnlyNonWhitespaceChars),
                     entityName: potentialEntityOnlyNonWhitespaceChars,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
-                    rangeValEncoded: "&" + potentialEntityOnlyNonWhitespaceChars + ";",
-                    rangeValDecoded: allNamedHtmlEntities.decode("&" + potentialEntityOnlyNonWhitespaceChars + ";")
+                    rangeValEncoded: "&".concat(potentialEntityOnlyNonWhitespaceChars, ";"),
+                    rangeValDecoded: allNamedHtmlEntities.decode("&".concat(potentialEntityOnlyNonWhitespaceChars, ";"))
                   });
                   pingAmps(whatsOnTheLeft, i);
                 } else if (opts.entityCatcherCb || opts.textAmpersandCatcherCb) {
@@ -413,22 +419,22 @@ function fixEnt(str, originalOpts) {
               var temp;
               if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.brokenNamedEntities, situation.charTrimmed.toLowerCase())) {
                 _tempEnt2 = situation.charTrimmed;
-                var _decodedEntity2 = allNamedHtmlEntities.decode("&" + allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()] + ";");
+                var _decodedEntity2 = allNamedHtmlEntities.decode("&".concat(allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()], ";"));
                 rangesArr2.push({
-                  ruleName: "bad-html-entity-malformed-" + allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()],
+                  ruleName: "bad-html-entity-malformed-".concat(allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()]),
                   entityName: allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()],
                   rangeFrom: whatsOnTheLeft,
                   rangeTo: i + 1,
-                  rangeValEncoded: "&" + allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()] + ";",
+                  rangeValEncoded: "&".concat(allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()], ";"),
                   rangeValDecoded: _decodedEntity2
                 });
                 pingAmps(whatsOnTheLeft, i);
               } else if (
               potentialEntity.length < allNamedHtmlEntities.maxLength + 2 && (
-              (temp = [].concat(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
+              (temp = _toConsumableArray__default['default'](allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
                 return leven__default['default'](curr, potentialEntity) === 1;
               })) && temp.length ||
-              (temp = [].concat(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
+              (temp = _toConsumableArray__default['default'](allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
                 return (
                   /* istanbul ignore next */
                   leven__default['default'](curr, potentialEntity) === 2 && potentialEntity.length > 3
@@ -436,14 +442,15 @@ function fixEnt(str, originalOpts) {
               })) && temp.length)) {
                 if (temp.length === 1) {
                   var _temp4 = temp;
-                  _tempEnt2 = _temp4[0];
+                  var _temp5 = _slicedToArray__default['default'](_temp4, 1);
+                  _tempEnt2 = _temp5[0];
                   rangesArr2.push({
-                    ruleName: "bad-html-entity-malformed-" + _tempEnt2,
+                    ruleName: "bad-html-entity-malformed-".concat(_tempEnt2),
                     entityName: _tempEnt2,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: i + 1,
-                    rangeValEncoded: "&" + _tempEnt2 + ";",
-                    rangeValDecoded: allNamedHtmlEntities.decode("&" + _tempEnt2 + ";")
+                    rangeValEncoded: "&".concat(_tempEnt2, ";"),
+                    rangeValDecoded: allNamedHtmlEntities.decode("&".concat(_tempEnt2, ";"))
                   });
                   pingAmps(whatsOnTheLeft, i);
                 } else if (temp) {
@@ -457,7 +464,7 @@ function fixEnt(str, originalOpts) {
                       return acc;
                     }, 0);
                   });
-                  var maxVal = Math.max.apply(Math, missingLettersCount);
+                  var maxVal = Math.max.apply(Math, _toConsumableArray__default['default'](missingLettersCount));
                   if (maxVal && missingLettersCount.filter(function (v) {
                     return v === maxVal;
                   }).length === 1) {
@@ -465,12 +472,12 @@ function fixEnt(str, originalOpts) {
                       if (missingLettersCount[z] === maxVal) {
                         _tempEnt2 = temp[z];
                         rangesArr2.push({
-                          ruleName: "bad-html-entity-malformed-" + _tempEnt2,
+                          ruleName: "bad-html-entity-malformed-".concat(_tempEnt2),
                           entityName: _tempEnt2,
                           rangeFrom: whatsOnTheLeft,
                           rangeTo: i + 1,
-                          rangeValEncoded: "&" + _tempEnt2 + ";",
-                          rangeValDecoded: allNamedHtmlEntities.decode("&" + _tempEnt2 + ";")
+                          rangeValEncoded: "&".concat(_tempEnt2, ";"),
+                          rangeValDecoded: allNamedHtmlEntities.decode("&".concat(_tempEnt2, ";"))
                         });
                         pingAmps(whatsOnTheLeft, i);
                         break;
@@ -495,7 +502,7 @@ function fixEnt(str, originalOpts) {
         } else if (str[whatsEvenMoreToTheLeft] === "&" && str[i] === ";" && i - whatsEvenMoreToTheLeft < allNamedHtmlEntities.maxLength) {
           var _situation = resemblesNumericEntity(str, whatsEvenMoreToTheLeft + 1, i);
           rangesArr2.push({
-            ruleName: "" + (
+            ruleName: "".concat(
             /* istanbul ignore next */
             _situation.probablyNumeric ? "bad-html-entity-malformed-numeric" : "bad-html-entity-unrecognised"),
             entityName: null,
@@ -519,19 +526,19 @@ function fixEnt(str, originalOpts) {
         var nextAmpOnTheRight = stringLeftRight.rightSeq(str, singleAmpOnTheRight.rightmostChar, "a", "m", "p", ";");
         if (nextAmpOnTheRight) {
           toDeleteAllAmpEndHere = nextAmpOnTheRight.rightmostChar + 1;
-          var _temp5;
+          var _temp6;
           do {
-            _temp5 = stringLeftRight.rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
-            if (_temp5) {
-              toDeleteAllAmpEndHere = _temp5.rightmostChar + 1;
+            _temp6 = stringLeftRight.rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
+            if (_temp6) {
+              toDeleteAllAmpEndHere = _temp6.rightmostChar + 1;
             }
-          } while (_temp5);
+          } while (_temp6);
         }
         var firstCharThatFollows = stringLeftRight.right(str, toDeleteAllAmpEndHere - 1);
         var secondCharThatFollows = firstCharThatFollows ? stringLeftRight.right(str, firstCharThatFollows) : null;
         var matchedTemp = "";
         if (secondCharThatFollows && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith, str[firstCharThatFollows]) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]], str[secondCharThatFollows]) && allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]][str[secondCharThatFollows]].some(function (entity) {
-          var matchEntityOnTheRight = stringLeftRight.rightSeq.apply(void 0, [str, toDeleteAllAmpEndHere - 1].concat(entity.split("")));
+          var matchEntityOnTheRight = stringLeftRight.rightSeq.apply(void 0, [str, toDeleteAllAmpEndHere - 1].concat(_toConsumableArray__default['default'](entity.split(""))));
           /* istanbul ignore else */
           if (matchEntityOnTheRight) {
             matchedTemp = entity;
@@ -548,8 +555,8 @@ function fixEnt(str, originalOpts) {
               entityName: matchedTemp,
               rangeFrom: _whatsOnTheLeft,
               rangeTo: doNothingUntil,
-              rangeValEncoded: "&" + matchedTemp + ";",
-              rangeValDecoded: allNamedHtmlEntities.decode("&" + matchedTemp + ";")
+              rangeValEncoded: "&".concat(matchedTemp, ";"),
+              rangeValDecoded: allNamedHtmlEntities.decode("&".concat(matchedTemp, ";"))
             });
             pingAmps(_whatsOnTheLeft, i);
           } else if (_whatsOnTheLeft) {
@@ -563,8 +570,8 @@ function fixEnt(str, originalOpts) {
                 entityName: matchedTemp,
                 rangeFrom: _rangeFrom,
                 rangeTo: doNothingUntil,
-                rangeValEncoded: spaceReplacement + "&" + matchedTemp + ";",
-                rangeValDecoded: "" + spaceReplacement + allNamedHtmlEntities.decode("&" + matchedTemp + ";")
+                rangeValEncoded: "".concat(spaceReplacement, "&").concat(matchedTemp, ";"),
+                rangeValDecoded: "".concat(spaceReplacement).concat(allNamedHtmlEntities.decode("&".concat(matchedTemp, ";")))
               });
               pingAmps(_rangeFrom, i);
             }

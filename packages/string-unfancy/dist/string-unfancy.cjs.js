@@ -11,10 +11,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
 var he = require('he');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 
 var version$1 = "4.0.12";
@@ -52,7 +54,7 @@ function unfancy(str) {
     throw new Error("string-unfancy/unfancy(): [THROW_ID_01] The input is missing!");
   }
   if (typeof str !== "string") {
-    throw new Error("string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: " + typeof str);
+    throw new Error("string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: ".concat(_typeof__default['default'](str)));
   }
   var res = str;
   while (he__default['default'].decode(res) !== res) {

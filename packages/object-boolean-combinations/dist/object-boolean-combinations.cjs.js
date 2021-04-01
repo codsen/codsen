@@ -26,10 +26,8 @@ var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var version$1 = "4.0.12";
 
 var version = version$1;
-function combinations(originalIncomingObject, originalOverrideObject) {
-  if (originalOverrideObject === void 0) {
-    originalOverrideObject = {};
-  }
+function combinations(originalIncomingObject) {
+  var originalOverrideObject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   function combi(n) {
     var r = [];
     for (var i = 0; i < 1 << n; i++) {

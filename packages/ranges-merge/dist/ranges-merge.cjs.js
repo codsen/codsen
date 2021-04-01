@@ -11,12 +11,16 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var rangesSort = require('ranges-sort');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "7.0.12";
 
@@ -28,7 +32,7 @@ var defaults = {
 };
 function rMerge(arrOfRanges, originalOpts) {
   function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
   }
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return null;
@@ -40,16 +44,16 @@ function rMerge(arrOfRanges, originalOpts) {
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
       } else if (opts.progressFn && typeof opts.progressFn !== "function") {
-        throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"" + typeof opts.progressFn + "\", equal to " + JSON.stringify(opts.progressFn, null, 4));
+        throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"".concat(_typeof__default['default'](opts.progressFn), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
       }
       if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
-        throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
+        throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof__default['default'](opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
       }
       if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
-        throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"" + typeof opts.joinRangesThatTouchEdges + "\", equal to " + JSON.stringify(opts.joinRangesThatTouchEdges, null, 4));
+        throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"".concat(_typeof__default['default'](opts.joinRangesThatTouchEdges), "\", equal to ").concat(JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)));
       }
     } else {
-      throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
+      throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof__default['default'](originalOpts), ")"));
     }
   } else {
     opts = _objectSpread__default['default']({}, defaults);
@@ -58,7 +62,7 @@ function rMerge(arrOfRanges, originalOpts) {
   .filter(function (range) {
     return range;
   }).map(function (subarr) {
-    return [].concat(subarr);
+    return _toConsumableArray__default['default'](subarr);
   }).filter(
   function (rangeArr) {
     return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];

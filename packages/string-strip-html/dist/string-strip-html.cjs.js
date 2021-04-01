@@ -11,7 +11,10 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
+var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
 var isObj = require('lodash.isplainobject');
 var trim = require('lodash.trim');
 var without = require('lodash.without');
@@ -22,7 +25,10 @@ var stringLeftRight = require('string-left-right');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
+var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var trim__default = /*#__PURE__*/_interopDefaultLegacy(trim);
 var without__default = /*#__PURE__*/_interopDefaultLegacy(without);
@@ -44,7 +50,7 @@ function prepHopefullyAnArray(something, name) {
   if (typeof something === "string") {
     return something.trim() ? [something] : [];
   }
-  throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] " + name + " must be array containing zero or more strings or something falsey. Currently it's equal to: " + something + ", that a type of " + typeof something + ".");
+  throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof__default['default'](something), "."));
 }
 /* istanbul ignore next */
 function xBeforeYOnTheRight(str, startingIdx, x, y) {
@@ -122,8 +128,9 @@ function stripHtml(str, originalOpts) {
             /* istanbul ignore else */
             if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
               filteredTagLocations = filteredTagLocations.filter(function (_ref) {
-                var from = _ref[0],
-                    upto = _ref[1];
+                var _ref2 = _slicedToArray__default['default'](_ref, 2),
+                    from = _ref2[0],
+                    upto = _ref2[1];
                 return (from < rangedOpeningTags[y].lastOpeningBracketAt || from >= i + 1) && (upto <= rangedOpeningTags[y].lastOpeningBracketAt || upto > i + 1);
               });
             }
@@ -205,7 +212,7 @@ function stripHtml(str, originalOpts) {
     }
     if (hrefInsertionActive) {
       var lineBreaks = opts.dumpLinkHrefsNearby.putOnNewLine ? "\n\n" : "";
-      stringToInsertAfter = "" + lineBreaks + hrefDump.hrefValue + lineBreaks;
+      stringToInsertAfter = "".concat(lineBreaks).concat(hrefDump.hrefValue).concat(lineBreaks);
     }
   }
   function isOpeningAt(i, customStr) {
@@ -218,10 +225,10 @@ function stripHtml(str, originalOpts) {
     return str[i] === ">" && str[i - 1] !== "%";
   }
   if (typeof str !== "string") {
-    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: " + (typeof str).toLowerCase() + ", equal to:\n" + JSON.stringify(str, null, 4));
+    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof__default['default'](str).toLowerCase(), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
   }
   if (originalOpts && !isObj__default['default'](originalOpts)) {
-    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: " + (typeof originalOpts).toLowerCase() + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
+    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof__default['default'](originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   function resetHrefMarkers() {
     if (hrefInsertionActive) {
@@ -241,7 +248,7 @@ function stripHtml(str, originalOpts) {
   opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
   var onlyStripTagsMode = !!opts.onlyStripTags.length;
   if (opts.onlyStripTags.length && opts.ignoreTags.length) {
-    opts.onlyStripTags = without__default['default'].apply(void 0, [opts.onlyStripTags].concat(opts.ignoreTags));
+    opts.onlyStripTags = without__default['default'].apply(void 0, [opts.onlyStripTags].concat(_toConsumableArray__default['default'](opts.ignoreTags)));
   }
   if (!isObj__default['default'](opts.dumpLinkHrefsNearby)) {
     opts.dumpLinkHrefsNearby = _objectSpread__default['default']({}, defaults.dumpLinkHrefsNearby);
@@ -252,7 +259,7 @@ function stripHtml(str, originalOpts) {
     if (isObj__default['default'](originalOpts.dumpLinkHrefsNearby)) {
       opts.dumpLinkHrefsNearby = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults.dumpLinkHrefsNearby), originalOpts.dumpLinkHrefsNearby);
     } else if (originalOpts.dumpLinkHrefsNearby) {
-      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to " + typeof originalOpts.dumpLinkHrefsNearby + ", equal to " + JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4) + ". The only allowed value is a plain object. See the API reference.");
+      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ".concat(_typeof__default['default'](originalOpts.dumpLinkHrefsNearby), ", equal to ").concat(JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4), ". The only allowed value is a plain object. See the API reference."));
     }
   }
   if (!opts.stripTogetherWithTheirContents) {
@@ -269,14 +276,14 @@ function stripHtml(str, originalOpts) {
     }
     return true;
   })) {
-    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index " + somethingCaught.i + " has a value " + somethingCaught.el + " which is not string but " + (typeof somethingCaught.el).toLowerCase() + ".");
+    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ".concat(somethingCaught.i, " has a value ").concat(somethingCaught.el, " which is not string but ").concat(_typeof__default['default'](somethingCaught.el).toLowerCase(), "."));
   }
   if (!opts.cb) {
-    opts.cb = function (_ref2) {
-      var rangesArr = _ref2.rangesArr,
-          proposedReturn = _ref2.proposedReturn;
+    opts.cb = function (_ref3) {
+      var rangesArr = _ref3.rangesArr,
+          proposedReturn = _ref3.proposedReturn;
       if (proposedReturn) {
-        rangesArr.push.apply(rangesArr, proposedReturn);
+        rangesArr.push.apply(rangesArr, _toConsumableArray__default['default'](proposedReturn));
       }
     };
   }
@@ -304,14 +311,14 @@ function stripHtml(str, originalOpts) {
             var _ret3 = function () {
               var startingPoint = str[y - 1] === undefined ? y : y + 1;
               var culprit = str.slice(startingPoint, _i + 1);
-              if (str !== "<" + trim__default['default'](culprit.trim(), "/>") + ">" &&
-              [].concat(definitelyTagNames).some(function (val) {
+              if (str !== "<".concat(trim__default['default'](culprit.trim(), "/>"), ">") &&
+              _toConsumableArray__default['default'](definitelyTagNames).some(function (val) {
                 return trim__default['default'](culprit.trim().split(/\s+/).filter(function (val2) {
                   return val2.trim();
                 }).filter(function (_val3, i3) {
                   return i3 === 0;
                 }), "/>").toLowerCase() === val;
-              }) && stripHtml("<" + culprit.trim() + ">", opts).result === "") {
+              }) && stripHtml("<".concat(culprit.trim(), ">"), opts).result === "") {
                 /* istanbul ignore else */
                 if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
                   allTagLocations.push([startingPoint, _i + 1]);
@@ -360,7 +367,7 @@ function stripHtml(str, originalOpts) {
         if (opts.dumpLinkHrefsNearby.enabled &&
         tag.attributes.some(function (obj) {
           if (obj.name && obj.name.toLowerCase() === "href") {
-            hrefVal = "" + (opts.dumpLinkHrefsNearby.wrapHeads || "") + obj.value + (opts.dumpLinkHrefsNearby.wrapTails || "");
+            hrefVal = "".concat(opts.dumpLinkHrefsNearby.wrapHeads || "").concat(obj.value).concat(opts.dumpLinkHrefsNearby.wrapTails || "");
             i = _i;
             return true;
           }
@@ -398,9 +405,10 @@ function stripHtml(str, originalOpts) {
         var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i);
         if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
           /* istanbul ignore next */
-          filteredTagLocations = filteredTagLocations.filter(function (_ref3) {
-            var from = _ref3[0],
-                upto = _ref3[1];
+          filteredTagLocations = filteredTagLocations.filter(function (_ref4) {
+            var _ref5 = _slicedToArray__default['default'](_ref4, 2),
+                from = _ref5[0],
+                upto = _ref5[1];
             return !(from === tag.leftOuterWhitespace && upto === _i);
           });
         }
@@ -408,9 +416,9 @@ function stripHtml(str, originalOpts) {
           tag: tag,
           deleteFrom: tag.leftOuterWhitespace,
           deleteTo: _i,
-          insert: "" + whiteSpaceCompensation + stringToInsertAfter + whiteSpaceCompensation,
+          insert: "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation),
           rangesArr: rangesToDelete,
-          proposedReturn: [tag.leftOuterWhitespace, _i, "" + whiteSpaceCompensation + stringToInsertAfter + whiteSpaceCompensation]
+          proposedReturn: [tag.leftOuterWhitespace, _i, "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation)]
         });
         resetHrefMarkers();
         treatRangedTags(_i, opts, rangesToDelete);
@@ -512,9 +520,9 @@ function stripHtml(str, originalOpts) {
               tag: tag,
               deleteFrom: tag.leftOuterWhitespace,
               deleteTo: _i + 1,
-              insert: "" + _whiteSpaceCompensation + stringToInsertAfter + _whiteSpaceCompensation,
+              insert: "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation),
               rangesArr: rangesToDelete,
-              proposedReturn: [tag.leftOuterWhitespace, _i + 1, "" + _whiteSpaceCompensation + stringToInsertAfter + _whiteSpaceCompensation]
+              proposedReturn: [tag.leftOuterWhitespace, _i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation)]
             });
             resetHrefMarkers();
             treatRangedTags(_i, opts, rangesToDelete);
@@ -531,8 +539,9 @@ function stripHtml(str, originalOpts) {
               }
               /* istanbul ignore else */
               if (lastRangedOpeningTag) {
-                filteredTagLocations = filteredTagLocations.filter(function (_ref4) {
-                  var from = _ref4[0];
+                filteredTagLocations = filteredTagLocations.filter(function (_ref6) {
+                  var _ref7 = _slicedToArray__default['default'](_ref6, 1),
+                      from = _ref7[0];
                   return from !== lastRangedOpeningTag.lastOpeningBracketAt;
                 });
                 filteredTagLocations.push([lastRangedOpeningTag.lastOpeningBracketAt, _i + 1]);
@@ -580,7 +589,7 @@ function stripHtml(str, originalOpts) {
           calculateHrefToBeInserted(opts);
           var insert;
           if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
-            insert = "" + _whiteSpaceCompensation2 + stringToInsertAfter + (
+            insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(
             /* istanbul ignore next */
             _whiteSpaceCompensation2 === "\n\n" ? "\n" : _whiteSpaceCompensation2);
           } else {
@@ -651,14 +660,14 @@ function stripHtml(str, originalOpts) {
           } else {
             tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
           }
-          if ("" + str[_i + 1] + str[_i + 2] + str[_i + 3] === "!--" || "" + str[_i + 1] + str[_i + 2] + str[_i + 3] + str[_i + 4] + str[_i + 5] + str[_i + 6] + str[_i + 7] + str[_i + 8] === "![CDATA[") {
+          if ("".concat(str[_i + 1]).concat(str[_i + 2]).concat(str[_i + 3]) === "!--" || "".concat(str[_i + 1]).concat(str[_i + 2]).concat(str[_i + 3]).concat(str[_i + 4]).concat(str[_i + 5]).concat(str[_i + 6]).concat(str[_i + 7]).concat(str[_i + 8]) === "![CDATA[") {
             var cdata = true;
             if (str[_i + 2] === "-") {
               cdata = false;
             }
             var closingFoundAt;
             for (var _y = _i; _y < len; _y++) {
-              if (!closingFoundAt && cdata && "" + str[_y - 2] + str[_y - 1] + str[_y] === "]]>" || !cdata && "" + str[_y - 2] + str[_y - 1] + str[_y] === "-->") {
+              if (!closingFoundAt && cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "]]>" || !cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "-->") {
                 closingFoundAt = _y;
               }
               if (closingFoundAt && (closingFoundAt < _y && str[_y].trim() || str[_y + 1] === undefined)) {

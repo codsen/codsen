@@ -21,10 +21,10 @@ function bSlug(str) {
   if (typeof str !== "string") {
     return "";
   }
-  return "markdown-header-" + deburr__default['default'](str).replace(/\]\((.*?)\)/g, "")
+  return "markdown-header-".concat(deburr__default['default'](str).replace(/\]\((.*?)\)/g, "")
   .replace(/ [-]+ /gi, " ").replace(/[^\w\d\s-]/g, "")
   .replace(/\s+/g, " ")
-  .toLowerCase().trim().replace(/ /g, "-");
+  .toLowerCase().trim().replace(/ /g, "-"));
 }
 
 exports.bSlug = bSlug;

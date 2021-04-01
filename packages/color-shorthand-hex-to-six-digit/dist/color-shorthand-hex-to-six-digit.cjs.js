@@ -29,7 +29,7 @@ function conv(originalInput) {
   function toFullHex(hex, _findings, offset, string) {
     if (string[offset - 1] !== "&" &&
     hex.length === 4 && hex.charAt(0) === "#") {
-      return ("#" + hex.charAt(1) + hex.charAt(1) + hex.charAt(2) + hex.charAt(2) + hex.charAt(3) + hex.charAt(3)).toLowerCase();
+      return "#".concat(hex.charAt(1)).concat(hex.charAt(1)).concat(hex.charAt(2)).concat(hex.charAt(2)).concat(hex.charAt(3)).concat(hex.charAt(3)).toLowerCase();
     }
     return hex.toLowerCase();
   }

@@ -12,10 +12,12 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "3.0.12";
 
@@ -25,10 +27,10 @@ var defaults = {
 };
 function within(str, originalOpts) {
   if (typeof str !== "string") {
-    throw new Error("email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
+    throw new Error("email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ".concat(_typeof__default['default'](str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
-  if (originalOpts && typeof originalOpts !== "object") {
-    throw new Error("email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but " + typeof originalOpts + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
+  if (originalOpts && _typeof__default['default'](originalOpts) !== "object") {
+    throw new Error("email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but ".concat(_typeof__default['default'](originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   if (!str.length) {
     return [];

@@ -12,11 +12,13 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var stringRemoveThousandSeparators = require('string-remove-thousand-separators');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "5.0.12";
 
@@ -33,12 +35,12 @@ function splitEasy(str, originalOpts) {
   var resArray = [];
   var ignoreCommasThatFollow = false;
   var thisRowContainsOnlyEmptySpace = true;
-  if (originalOpts && typeof originalOpts !== "object") {
-    throw new Error("csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type " + typeof originalOpts + " equal to:\n" + JSON.stringify(originalOpts, null, 4));
+  if (originalOpts && _typeof__default['default'](originalOpts) !== "object") {
+    throw new Error("csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ".concat(_typeof__default['default'](originalOpts), " equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (typeof str !== "string") {
-    throw new TypeError("csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
+    throw new TypeError("csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: ".concat(_typeof__default['default'](str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   } else {
     if (str === "") {
       return [[""]];

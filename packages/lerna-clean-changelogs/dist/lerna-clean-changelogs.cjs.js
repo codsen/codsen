@@ -11,6 +11,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
+
 var version$1 = "2.0.12";
 
 var version = version$1;
@@ -21,7 +27,7 @@ function cleanChangelogs(changelogContents) {
   if (changelogContents === undefined) {
     throw new Error("lerna-clean-changelogs: [THROW_ID_01] The first input argument is missing!");
   } else if (!isStr(changelogContents)) {
-    throw new Error("lerna-clean-changelogs: [THROW_ID_02] The first input argument must be a string! It was given as " + (Array.isArray(changelogContents) ? "array" : typeof changelogContents) + ", equal to:\n" + JSON.stringify(changelogContents, null, 4));
+    throw new Error("lerna-clean-changelogs: [THROW_ID_02] The first input argument must be a string! It was given as ".concat(Array.isArray(changelogContents) ? "array" : _typeof__default['default'](changelogContents), ", equal to:\n").concat(JSON.stringify(changelogContents, null, 4)));
   }
   var final;
   var lastLineWasEmpty = false;
@@ -34,7 +40,7 @@ function cleanChangelogs(changelogContents) {
         linesArr[i] = line.replace(/(#+) \[?(\d+\.\d+\.\d+)\s?\]\([^)]*\)/g, "$1 $2");
       }
       if (i && linesArr[i].startsWith("# ")) {
-        linesArr[i] = "#" + linesArr[i];
+        linesArr[i] = "#".concat(linesArr[i]);
       }
     });
     var newLinesArr = [];
@@ -56,7 +62,7 @@ function cleanChangelogs(changelogContents) {
         }
       }
       else if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
-          newLinesArr.unshift("- " + linesArr[i].slice(2));
+          newLinesArr.unshift("- ".concat(linesArr[i].slice(2)));
         } else {
           newLinesArr.unshift(linesArr[i]);
         }
@@ -64,7 +70,7 @@ function cleanChangelogs(changelogContents) {
         lastLineWasEmpty = false;
       }
     }
-    final = "" + newLinesArr.join("\n") + (changelogEndedWithLinebreak ? "\n" : "");
+    final = "".concat(newLinesArr.join("\n")).concat(changelogEndedWithLinebreak ? "\n" : "");
   }
   return {
     version: version,

@@ -12,10 +12,12 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "2.0.12";
 
@@ -26,22 +28,22 @@ var defaults = {
 };
 function overlap(str1, str2, originalOpts) {
   if (typeof str1 !== "string") {
-    throw new Error("string-overlap-one-on-another: [THROW_ID_01] The first input argument must be a string but it was given as " + JSON.stringify(str1, null, 4) + ", which is type \"" + typeof str1 + "\"");
+    throw new Error("string-overlap-one-on-another: [THROW_ID_01] The first input argument must be a string but it was given as ".concat(JSON.stringify(str1, null, 4), ", which is type \"").concat(_typeof__default['default'](str1), "\""));
   }
   if (typeof str2 !== "string") {
-    throw new Error("string-overlap-one-on-another: [THROW_ID_02] The second input argument must be a string but it was given as " + JSON.stringify(str2, null, 4) + ", which is type \"" + typeof str2 + "\"");
+    throw new Error("string-overlap-one-on-another: [THROW_ID_02] The second input argument must be a string but it was given as ".concat(JSON.stringify(str2, null, 4), ", which is type \"").concat(_typeof__default['default'](str2), "\""));
   }
   var opts;
   if (!originalOpts) {
     opts = defaults;
-  } else if (typeof originalOpts !== "object") {
-    throw new Error("string-overlap-one-on-another: [THROW_ID_03] The third input argument must be a plain object but it was given as " + JSON.stringify(str2, null, 4) + ", which is type \"" + typeof originalOpts + "\"");
+  } else if (_typeof__default['default'](originalOpts) !== "object") {
+    throw new Error("string-overlap-one-on-another: [THROW_ID_03] The third input argument must be a plain object but it was given as ".concat(JSON.stringify(str2, null, 4), ", which is type \"").concat(_typeof__default['default'](originalOpts), "\""));
   } else {
     opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
     if (!opts.offset) {
       opts.offset = 0;
     } else if (!Number.isInteger(Math.abs(opts.offset))) {
-      throw new Error("string-overlap-one-on-another: [THROW_ID_04] The second input argument must be a string but it was given as " + JSON.stringify(str2, null, 4) + ", which is type \"" + typeof str2 + "\"");
+      throw new Error("string-overlap-one-on-another: [THROW_ID_04] The second input argument must be a string but it was given as ".concat(JSON.stringify(str2, null, 4), ", which is type \"").concat(_typeof__default['default'](str2), "\""));
     }
     if (!opts.offsetFillerCharacter && opts.offsetFillerCharacter !== "") {
       opts.offsetFillerCharacter = " ";

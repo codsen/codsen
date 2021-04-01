@@ -11,13 +11,18 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
 var astMonkeyTraverse = require('ast-monkey-traverse');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 function empty(input) {
   if (typeof input === "string") {
     return !input.trim();
   }
-  if (!["object", "string"].includes(typeof input) || !input) {
+  if (!["object", "string"].includes(_typeof__default['default'](input)) || !input) {
     return false;
   }
   var found = true;

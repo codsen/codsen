@@ -11,14 +11,18 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var rangesApply = require('ranges-apply');
 var rangesPush = require('ranges-push');
 var stringLeftRight = require('string-left-right');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "9.0.12";
 
@@ -39,10 +43,10 @@ var defaults = {
 var cbSchema = ["suggested", "whiteSpaceStartsAt", "whiteSpaceEndsAt", "str"];
 function collapse(str, originalOpts) {
   if (typeof str !== "string") {
-    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
+    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ".concat(_typeof__default['default'](str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
-  if (originalOpts && typeof originalOpts !== "object") {
-    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but " + typeof originalOpts + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
+  if (originalOpts && _typeof__default['default'](originalOpts) !== "object") {
+    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ".concat(_typeof__default['default'](originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   if (!str.length) {
     return {
@@ -59,10 +63,10 @@ function collapse(str, originalOpts) {
         suggested: something
       }, extras));
       if (Array.isArray(final)) {
-        finalIndexesToDelete.push.apply(finalIndexesToDelete, final);
+        finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](final));
       }
     } else if (something) {
-      finalIndexesToDelete.push.apply(finalIndexesToDelete, something);
+      finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](something));
     }
   }
   var spacesStartAt = null;
@@ -220,7 +224,7 @@ function collapse(str, originalOpts) {
           somethingPushed = true;
           var _startIdx2 = linebreaksStartAt;
           var _endIdx2 = linebreaksEndAt || str.length;
-          var _whatToAdd2 = ("" + (str[linebreaksStartAt] === "\r" && str[linebreaksStartAt + 1] === "\n" ? "\r\n" : str[linebreaksStartAt])).repeat((opts.limitConsecutiveEmptyLinesTo || 0) + 1);
+          var _whatToAdd2 = "".concat(str[linebreaksStartAt] === "\r" && str[linebreaksStartAt + 1] === "\n" ? "\r\n" : str[linebreaksStartAt]).repeat((opts.limitConsecutiveEmptyLinesTo || 0) + 1);
           /* istanbul ignore else */
           if (str.endsWith(_whatToAdd2, linebreaksEndAt)) {
             _endIdx2 -= _whatToAdd2.length || 0;
@@ -238,7 +242,7 @@ function collapse(str, originalOpts) {
         }
         if (staging.length) {
           while (staging.length) {
-            push.apply(void 0, staging.shift());
+            push.apply(void 0, _toConsumableArray__default['default'](staging.shift()));
           }
           somethingPushed = true;
         }

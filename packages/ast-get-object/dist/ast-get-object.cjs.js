@@ -29,10 +29,8 @@ function existy(x) {
 function truthy(x) {
   return x !== false && existy(x);
 }
-function internalApi(originalAst, keyValPair, replacementContentsArr, result) {
-  if (result === void 0) {
-    result = [];
-  }
+function internalApi(originalAst, keyValPair, replacementContentsArr) {
+  var result = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
   if (!existy(originalAst)) {
     throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");
   }

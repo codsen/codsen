@@ -9,7 +9,12 @@
 
 'use strict';
 
+var _typeof = require('@babel/runtime/helpers/typeof');
 var jsRowNum = require('js-row-num');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var create = function create(context) {
   return {
@@ -41,7 +46,7 @@ var create = function create(context) {
                 }
               }
             });
-          } else if (arg.type === "TemplateLiteral" && Array.isArray(arg.quasis) && arg.quasis.length && typeof arg.quasis[0] === "object" && arg.quasis[0].value && arg.quasis[0].value.raw && arg.quasis[0].value.raw !== jsRowNum.fixRowNums(arg.quasis[0].value.raw, {
+          } else if (arg.type === "TemplateLiteral" && Array.isArray(arg.quasis) && arg.quasis.length && _typeof__default['default'](arg.quasis[0]) === "object" && arg.quasis[0].value && arg.quasis[0].value.raw && arg.quasis[0].value.raw !== jsRowNum.fixRowNums(arg.quasis[0].value.raw, {
             overrideRowNum: arg.loc.start.line,
             returnRangesOnly: false,
             extractedLogContentsWereGiven: true

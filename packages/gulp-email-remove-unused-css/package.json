@@ -73,10 +73,11 @@
     "plugin-error": "^1.0.1"
   },
   "devDependencies": {
+    "core-js": "^3.10.0",
     "eslint": "^7.23.0",
     "lect": "^0.16.12",
     "map-stream": "^0.0.7",
-    "tap": "^15.0.0",
+    "tap": "^14.11.0",
     "tempy": "^1.0.1",
     "tslib": "^2.1.0",
     "vinyl-string": "^1.0.2"

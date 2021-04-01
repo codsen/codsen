@@ -12,6 +12,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var codsenParser = require('codsen-parser');
 var rangesPush = require('ranges-push');
 var rangesApply = require('ranges-apply');
@@ -20,6 +21,7 @@ var astMonkeyTraverseWithLookahead = require('ast-monkey-traverse-with-lookahead
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "4.0.12";
 
@@ -27,7 +29,7 @@ var version = version$1;
 var htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 var ranges = new rangesPush.Ranges();
 function isObj(something) {
-  return something && typeof something === "object" && !Array.isArray(something);
+  return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
 }
 var defaults = {
   cssStylesContent: "",
@@ -92,7 +94,7 @@ function patcher(str, generalOpts) {
       })
       .forEach(function (obj) {
         if (obj.value.replace(htmlCommentRegex, "").trim()) {
-          ranges.push(obj.start, obj.end, "\n<tr>\n  <td" + (colspanVal > 1 ? " colspan=\"" + colspanVal + "\"" : "") + (opts.alwaysCenter || centered ? " align=\"center\"" : "") + (opts.cssStylesContent ? " style=\"" + opts.cssStylesContent + "\"" : "") + ">\n    " + obj.value.trim() + "\n  </td>\n</tr>\n");
+          ranges.push(obj.start, obj.end, "\n<tr>\n  <td".concat(colspanVal > 1 ? " colspan=\"".concat(colspanVal, "\"") : "").concat(opts.alwaysCenter || centered ? " align=\"center\"" : "").concat(opts.cssStylesContent ? " style=\"".concat(opts.cssStylesContent, "\"") : "", ">\n    ").concat(obj.value.trim(), "\n  </td>\n</tr>\n"));
         }
       });
       token.children
@@ -112,11 +114,11 @@ function patcher(str, generalOpts) {
           if (!doNothing && ["text", "esp"].includes(childNodeObj.type) && childNodeObj.value.trim()) {
             if (childNodeObj.value.trim()) {
               if (!_i) {
-                ranges.push(childNodeObj.start, childNodeObj.end, "\n  <td" + (colspanVal > 1 ? " colspan=\"" + colspanVal + "\"" : "") + (opts.alwaysCenter || centered ? " align=\"center\"" : "") + (opts.cssStylesContent ? " style=\"" + opts.cssStylesContent + "\"" : "") + ">\n    " + childNodeObj.value.trim() + "\n  </td>\n</tr>\n<tr>\n");
+                ranges.push(childNodeObj.start, childNodeObj.end, "\n  <td".concat(colspanVal > 1 ? " colspan=\"".concat(colspanVal, "\"") : "").concat(opts.alwaysCenter || centered ? " align=\"center\"" : "").concat(opts.cssStylesContent ? " style=\"".concat(opts.cssStylesContent, "\"") : "", ">\n    ").concat(childNodeObj.value.trim(), "\n  </td>\n</tr>\n<tr>\n"));
               } else if (_i && _len > 1 && _i === _len - 1) {
-                ranges.push(childNodeObj.start, childNodeObj.end, "\n</tr>\n<tr>\n  <td" + (colspanVal > 1 ? " colspan=\"" + colspanVal + "\"" : "") + (opts.alwaysCenter || centered ? " align=\"center\"" : "") + (opts.cssStylesContent ? " style=\"" + opts.cssStylesContent + "\"" : "") + ">\n    " + childNodeObj.value.trim() + "\n  </td>\n");
+                ranges.push(childNodeObj.start, childNodeObj.end, "\n</tr>\n<tr>\n  <td".concat(colspanVal > 1 ? " colspan=\"".concat(colspanVal, "\"") : "").concat(opts.alwaysCenter || centered ? " align=\"center\"" : "").concat(opts.cssStylesContent ? " style=\"".concat(opts.cssStylesContent, "\"") : "", ">\n    ").concat(childNodeObj.value.trim(), "\n  </td>\n"));
               } else {
-                ranges.push(childNodeObj.start, childNodeObj.end, "\n</tr>\n<tr>\n  <td" + (colspanVal > 1 ? " colspan=\"" + colspanVal + "\"" : "") + (opts.alwaysCenter || centered ? " align=\"center\"" : "") + (opts.cssStylesContent ? " style=\"" + opts.cssStylesContent + "\"" : "") + ">\n    " + childNodeObj.value.trim() + "\n  </td>\n</tr>\n<tr>\n");
+                ranges.push(childNodeObj.start, childNodeObj.end, "\n</tr>\n<tr>\n  <td".concat(colspanVal > 1 ? " colspan=\"".concat(colspanVal, "\"") : "").concat(opts.alwaysCenter || centered ? " align=\"center\"" : "").concat(opts.cssStylesContent ? " style=\"".concat(opts.cssStylesContent, "\"") : "", ">\n    ").concat(childNodeObj.value.trim(), "\n  </td>\n</tr>\n<tr>\n"));
               }
             }
           }

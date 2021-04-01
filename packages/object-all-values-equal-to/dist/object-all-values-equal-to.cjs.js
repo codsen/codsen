@@ -12,12 +12,14 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var isObj = require('lodash.isplainobject');
 var isEq = require('lodash.isequal');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var isEq__default = /*#__PURE__*/_interopDefaultLegacy(isEq);
 
@@ -63,7 +65,7 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
     throw new Error("object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.");
   }
   if (originalOpts && !isObj__default['default'](originalOpts)) {
-    throw new Error("object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a " + typeof originalOpts + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
+    throw new Error("object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ".concat(_typeof__default['default'](originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var defaults = {
     arraysMustNotContainPlaceholders: true

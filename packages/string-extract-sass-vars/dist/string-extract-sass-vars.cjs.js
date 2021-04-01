@@ -12,10 +12,12 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "2.0.12";
 
@@ -29,12 +31,12 @@ function extractVars(str, originalOpts) {
   if (typeof str !== "string") {
     return {};
   }
-  if (originalOpts && typeof originalOpts !== "object") {
-    throw new Error("string-extract-sass-vars: [THROW_ID_01] the second input argument should be a plain object but it was given as " + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
+  if (originalOpts && _typeof__default['default'](originalOpts) !== "object") {
+    throw new Error("string-extract-sass-vars: [THROW_ID_01] the second input argument should be a plain object but it was given as ".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof__default['default'](originalOpts), ")"));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   if (opts.cb && typeof opts.cb !== "function") {
-    throw new Error("string-extract-sass-vars: [THROW_ID_02] opts.cb should be function! But it was given as " + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
+    throw new Error("string-extract-sass-vars: [THROW_ID_02] opts.cb should be function! But it was given as ".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof__default['default'](originalOpts), ")"));
   }
   var len = str.length;
   var varNameStartsAt = null;

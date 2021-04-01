@@ -11,12 +11,16 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var stringLeftRight = require('string-left-right');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "1.4.12";
 
@@ -116,7 +120,7 @@ function extractConfig(str) {
         }
         extractedConfig = extractedConfig.slice(0, _sliceTo3).trim();
         if (contentInFront.length) {
-          rawContentAbove = contentInFront.join("\n") + "\n";
+          rawContentAbove = "".concat(contentInFront.join("\n"), "\n");
         }
         var _contentAfterStartsAt;
         if (stringLeftRight.right(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length)) {
@@ -130,8 +134,8 @@ function extractConfig(str) {
         }
       }
   } else {
-    var contentHeadsRegex = new RegExp("(\\/\\s*\\*\\s*)*" + CONTENTHEAD + "(\\s*\\*\\s*\\/)*");
-    var contentTailsRegex = new RegExp("(\\/\\s*\\*\\s*)*" + CONTENTTAIL + "(\\s*\\*\\s*\\/)*");
+    var contentHeadsRegex = new RegExp("(\\/\\s*\\*\\s*)*".concat(CONTENTHEAD, "(\\s*\\*\\s*\\/)*"));
+    var contentTailsRegex = new RegExp("(\\/\\s*\\*\\s*)*".concat(CONTENTTAIL, "(\\s*\\*\\s*\\/)*"));
     var stopFiltering = false;
     var gatheredLinesAboveTopmostConfigLine = [];
     var gatheredLinesBelowLastConfigLine = [];
@@ -155,18 +159,16 @@ function extractConfig(str) {
     }
     extractedConfig = configLines.join("\n").replace(contentHeadsRegex, "").replace(contentTailsRegex, "");
     if (gatheredLinesAboveTopmostConfigLine.length) {
-      rawContentAbove = gatheredLinesAboveTopmostConfigLine.join("\n") + "\n";
+      rawContentAbove = "".concat(gatheredLinesAboveTopmostConfigLine.join("\n"), "\n");
     }
     if (gatheredLinesBelowLastConfigLine.length) {
-      rawContentBelow = "\n" + gatheredLinesBelowLastConfigLine.join("\n");
+      rawContentBelow = "\n".concat(gatheredLinesBelowLastConfigLine.join("\n"));
     }
   }
   return [extractedConfig, rawContentAbove, rawContentBelow];
 }
-function trimBlankLinesFromLinesArray(lineArr, trim) {
-  if (trim === void 0) {
-    trim = true;
-  }
+function trimBlankLinesFromLinesArray(lineArr) {
+  var trim = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   if (!trim) {
     return lineArr;
   }
@@ -183,13 +185,9 @@ function trimBlankLinesFromLinesArray(lineArr, trim) {
   }
   return copyArr;
 }
-function extractFromToSource(str, fromDefault, toDefault) {
-  if (fromDefault === void 0) {
-    fromDefault = 0;
-  }
-  if (toDefault === void 0) {
-    toDefault = 500;
-  }
+function extractFromToSource(str) {
+  var fromDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var toDefault = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 500;
   var from = fromDefault;
   var to = toDefault;
   var source = str;
@@ -270,9 +268,10 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
   var currentPercentageDone;
   var lastPercentage = 0;
   var _extractFromToSource = extractFromToSource(str, 0, 500),
-      from = _extractFromToSource[0],
-      to = _extractFromToSource[1],
-      source = _extractFromToSource[2];
+      _extractFromToSource2 = _slicedToArray__default['default'](_extractFromToSource, 3),
+      from = _extractFromToSource2[0],
+      to = _extractFromToSource2[1],
+      source = _extractFromToSource2[2];
   var subsetRange = subsetTo - subsetFrom;
   var res = "";
   var _loop = function _loop(i) {
@@ -290,7 +289,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
             return true;
           }
         }) && (source[stringLeftRight.right(source, y + unitFound.length)] === "{" || !source[y + unitFound.length + 1].trim().length)) {
-          res += "" + source.slice(startPoint, y - 2) + (pad ? String(i).padStart(String(to).length - String(i).length + unitFound.length + 1) : i);
+          res += "".concat(source.slice(startPoint, y - 2)).concat(pad ? String(i).padStart(String(to).length - String(i).length + unitFound.length + 1) : i);
           startPoint = y + 1 + (unitFound ? unitFound.length : 0);
         } else {
           var unitThatFollow;
@@ -307,17 +306,17 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
             var temp = 0;
             if (i === 0) {
               units.some(function (unit) {
-                if (("" + source.slice(startPoint, y - 2)).startsWith(unit)) {
+                if ("".concat(source.slice(startPoint, y - 2)).startsWith(unit)) {
                   temp = unit.length;
                 }
                 return true;
               });
             }
-            res += "" + source.slice(startPoint + temp, y - 2) + (pad ? String(i).padStart(String(to).length + (i === 0 && unitThatFollow ? unitThatFollow.length : 0)) : i);
+            res += "".concat(source.slice(startPoint + temp, y - 2)).concat(pad ? String(i).padStart(String(to).length + (i === 0 && unitThatFollow ? unitThatFollow.length : 0)) : i);
           } else if (!source[y + 1].trim().length || source[stringLeftRight.right(source, y)] === "{") {
-            res += "" + source.slice(startPoint, y - 2) + (pad ? String(i).padEnd(String(to).length + (i === 0 && unitThatFollow ? unitThatFollow.length : 0)) : i);
+            res += "".concat(source.slice(startPoint, y - 2)).concat(pad ? String(i).padEnd(String(to).length + (i === 0 && unitThatFollow ? unitThatFollow.length : 0)) : i);
           } else {
-            res += "" + source.slice(startPoint, y - 2) + i;
+            res += "".concat(source.slice(startPoint, y - 2)).concat(i);
             if (pad) {
               debtPaddingLen = String(to).length - String(i).length;
             }
@@ -327,7 +326,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
       }
       if (source[y] === "{" && pad) {
         if (debtPaddingLen) {
-          res += "" + source.slice(startPoint, y) + " ".repeat(debtPaddingLen);
+          res += "".concat(source.slice(startPoint, y)).concat(" ".repeat(debtPaddingLen));
           startPoint = y;
           debtPaddingLen = 0;
         }
@@ -342,11 +341,11 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
             return true;
           }
         })) {
-          res += "" + source.slice(startPoint + _unitFound.length);
+          res += "".concat(source.slice(startPoint + _unitFound.length));
         } else {
-          res += "" + source.slice(startPoint);
+          res += "".concat(source.slice(startPoint));
         }
-        res += "" + (i !== to ? "\n" : "");
+        res += "".concat(i !== to ? "\n" : "");
       }
     };
     for (var y = 0, len = source.length; y < len; y++) {
@@ -372,10 +371,10 @@ function bump(str, thingToBump) {
   }
   return str;
 }
-function prepConfig(str, progressFn, progressFrom, progressTo, trim, generatedCount, pad) {
-  if (trim === void 0) {
-    trim = true;
-  }
+function prepConfig(str, progressFn, progressFrom, progressTo) {
+  var trim = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+  var generatedCount = arguments.length > 5 ? arguments[5] : undefined;
+  var pad = arguments.length > 6 ? arguments[6] : undefined;
   return trimBlankLinesFromLinesArray(str.split(/\r?\n/).map(function (rowStr, i, arr) {
     return rowStr.includes("$$$") ? prepLine(rowStr, progressFn, progressFrom + (progressTo - progressFrom) / arr.length * i, progressFrom + (progressTo - progressFrom) / arr.length * (i + 1), generatedCount, pad) : bump(rowStr, generatedCount);
   }), trim).join("\n");
@@ -392,17 +391,15 @@ var defaults = {
   reportProgressFuncTo: 100
 };
 function genAtomic(str, originalOpts) {
-  function trimIfNeeded(str2, opts) {
-    if (opts === void 0) {
-      opts = {};
-    }
+  function trimIfNeeded(str2) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     if (!opts.includeConfig && !opts.includeHeadsAndTails) {
       return str2;
     }
     return str2.trim();
   }
   if (typeof str !== "string") {
-    throw new Error("generate-atomic-css: [THROW_ID_01] First input argument must be a string! It was given as \"" + JSON.stringify(str, null, 4) + "\" (type " + typeof str + ")");
+    throw new Error("generate-atomic-css: [THROW_ID_01] First input argument must be a string! It was given as \"".concat(JSON.stringify(str, null, 4), "\" (type ").concat(_typeof__default['default'](str), ")"));
   }
   var CONFIGHEAD = headsAndTails.CONFIGHEAD,
       CONFIGTAIL = headsAndTails.CONFIGTAIL,
@@ -426,9 +423,10 @@ function genAtomic(str, originalOpts) {
   var frontPart = "";
   var endPart = "";
   var _extractConfig = extractConfig(opts.configOverride ? opts.configOverride : str),
-      extractedConfig = _extractConfig[0],
-      rawContentAbove = _extractConfig[1],
-      rawContentBelow = _extractConfig[2];
+      _extractConfig2 = _slicedToArray__default['default'](_extractConfig, 3),
+      extractedConfig = _extractConfig2[0],
+      rawContentAbove = _extractConfig2[1],
+      rawContentBelow = _extractConfig2[2];
   if (typeof extractedConfig !== "string" || !extractedConfig.trim()) {
     return {
       log: {
@@ -438,14 +436,14 @@ function genAtomic(str, originalOpts) {
     };
   }
   if (opts.includeConfig || opts.includeHeadsAndTails) {
-    frontPart = CONTENTHEAD + " */\n";
+    frontPart = "".concat(CONTENTHEAD, " */\n");
     if (!opts.includeConfig) {
-      frontPart = "/* " + frontPart;
+      frontPart = "/* ".concat(frontPart);
     }
-    endPart = "\n/* " + CONTENTTAIL + " */";
+    endPart = "\n/* ".concat(CONTENTTAIL, " */");
   }
   if (opts.includeConfig) {
-    frontPart = "/* " + CONFIGHEAD + "\n" + extractedConfig.trim() + "\n" + CONFIGTAIL + "\n" + frontPart;
+    frontPart = "/* ".concat(CONFIGHEAD, "\n").concat(extractedConfig.trim(), "\n").concat(CONFIGTAIL, "\n").concat(frontPart);
   }
   if (str.includes(CONFIGHEAD)) {
     if (stringLeftRight.left(str, str.indexOf(CONFIGHEAD)) != null) {
@@ -457,7 +455,7 @@ function genAtomic(str, originalOpts) {
       if (str[stringLeftRight.right(str, sliceUpTo - 1)] === "/" && str[stringLeftRight.right(str, stringLeftRight.right(str, sliceUpTo - 1))] === "*" || frontPart.trim().startsWith("/*")) {
         putInFront = "";
       }
-      frontPart = "" + str.slice(0, sliceUpTo) + putInFront + frontPart;
+      frontPart = "".concat(str.slice(0, sliceUpTo)).concat(putInFront).concat(frontPart);
     }
   }
   if (str.includes(CONFIGTAIL) && stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)) {
@@ -485,10 +483,10 @@ function genAtomic(str, originalOpts) {
         sliceFrom = stringLeftRight.right(str, stringLeftRight.right(str, sliceFrom)) + 1;
       }
     }
-    endPart = "" + endPart + (str[sliceFrom] && stringLeftRight.right(str, sliceFrom - 1) ? str.slice(sliceFrom) : "");
+    endPart = "".concat(endPart).concat(str[sliceFrom] && stringLeftRight.right(str, sliceFrom - 1) ? str.slice(sliceFrom) : "");
   }
   if (typeof rawContentAbove === "string") {
-    frontPart = "" + rawContentAbove + frontPart;
+    frontPart = "".concat(rawContentAbove).concat(frontPart);
   }
   if (typeof rawContentBelow === "string") {
     if (rawContentBelow.trim().endsWith("/*") && !rawContentBelow.trim().startsWith("*/")) {
@@ -496,12 +494,12 @@ function genAtomic(str, originalOpts) {
       if (typeof rawContentBelow === "string" && rawContentBelow[0] && !rawContentBelow[0].trim()) {
         frontPart2 = rawContentBelow.slice(0, stringLeftRight.right(rawContentBelow, 0) || 0);
       }
-      rawContentBelow = frontPart2 + "/* " + rawContentBelow.trim();
+      rawContentBelow = "".concat(frontPart2, "/* ").concat(rawContentBelow.trim());
     }
-    endPart = "" + endPart + rawContentBelow;
+    endPart = "".concat(endPart).concat(rawContentBelow);
   }
-  var finalRes = trimIfNeeded("" + frontPart + prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, true,
-  generatedCount, opts.pad) + endPart, opts) + "\n";
+  var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, true,
+  generatedCount, opts.pad)).concat(endPart), opts), "\n");
   return {
     log: {
       count: generatedCount.count

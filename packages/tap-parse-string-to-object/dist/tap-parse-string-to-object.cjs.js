@@ -15,6 +15,8 @@ var isStream = require('isstream');
 var split2 = require('split2');
 var through2 = require('through2');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _classCallCheck = require('@babel/runtime/helpers/classCallCheck');
+var _createClass = require('@babel/runtime/helpers/createClass');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -22,6 +24,8 @@ var isStream__default = /*#__PURE__*/_interopDefaultLegacy(isStream);
 var split2__default = /*#__PURE__*/_interopDefaultLegacy(split2);
 var through2__default = /*#__PURE__*/_interopDefaultLegacy(through2);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _classCallCheck__default = /*#__PURE__*/_interopDefaultLegacy(_classCallCheck);
+var _createClass__default = /*#__PURE__*/_interopDefaultLegacy(_createClass);
 
 function stringPingLineByLine(str, cb) {
   var start = null;
@@ -42,6 +46,7 @@ function stringPingLineByLine(str, cb) {
 }
 var Counter = function () {
   function Counter() {
+    _classCallCheck__default['default'](this, Counter);
     this.canCount = false;
     this.doNothing = false;
     this.thereWereFailuresInThisSuite = null;
@@ -55,73 +60,77 @@ var Counter = function () {
       suitesFailed: 0
     };
   }
-  var _proto = Counter.prototype;
-  _proto.readLine = function readLine(lineStr) {
-    if (!this.doNothing && lineStr.trim() === "---") {
-      this.doNothing = true;
-    }
-    if (this.doNothing && lineStr.trim() === "...") {
-      this.doNothing = false;
-    }
-    else if (!this.doNothing && this.canCount) {
-        if (lineStr.trim().startsWith("ok") || lineStr.trim().startsWith("not ok")) {
-          if (lineStr.trim().startsWith("ok")) {
-            this.total.assertsPassed += 1;
-          } else if (lineStr.trim().startsWith("not ok")) {
-            this.total.assertsFailed += 1;
-            if (!this.thereWereFailuresInThisSuite) {
-              this.thereWereFailuresInThisSuite = true;
+  _createClass__default['default'](Counter, [{
+    key: "readLine",
+    value: function readLine(lineStr) {
+      if (!this.doNothing && lineStr.trim() === "---") {
+        this.doNothing = true;
+      }
+      if (this.doNothing && lineStr.trim() === "...") {
+        this.doNothing = false;
+      }
+      else if (!this.doNothing && this.canCount) {
+          if (lineStr.trim().startsWith("ok") || lineStr.trim().startsWith("not ok")) {
+            if (lineStr.trim().startsWith("ok")) {
+              this.total.assertsPassed += 1;
+            } else if (lineStr.trim().startsWith("not ok")) {
+              this.total.assertsFailed += 1;
+              if (!this.thereWereFailuresInThisSuite) {
+                this.thereWereFailuresInThisSuite = true;
+              }
             }
+            this.total.assertsTotal += 1;
+          } else {
+            this.canCount = false;
           }
-          this.total.assertsTotal += 1;
-        } else {
-          this.canCount = false;
         }
-      }
-    if (!this.doNothing && lineStr.trim() === "{") {
-      this.total.suitesTotal += 1;
-      if (this.thereWereFailuresInThisSuite !== null) {
-        if (this.thereWereFailuresInThisSuite) {
-          this.total.suitesFailed += 1;
-        } else {
-          this.total.suitesPassed += 1;
-        }
-      }
-      this.thereWereFailuresInThisSuite = false;
-    }
-    var magicKeyw = "# Subtest";
-    if (!this.doNothing && !this.canCount && lineStr.includes(magicKeyw)) {
-      this.canCount = true;
-      if (lineStr.slice(0, lineStr.indexOf(magicKeyw)).trim().endsWith("{")) {
+      if (!this.doNothing && lineStr.trim() === "{") {
         this.total.suitesTotal += 1;
-        if (this.thereWereFailuresInThisSuite === null) {
-          this.thereWereFailuresInThisSuite = false;
-        } else if (this.thereWereFailuresInThisSuite) {
-          this.total.suitesFailed += 1;
-          this.thereWereFailuresInThisSuite = false;
-        } else {
-          this.total.suitesPassed += 1;
+        if (this.thereWereFailuresInThisSuite !== null) {
+          if (this.thereWereFailuresInThisSuite) {
+            this.total.suitesFailed += 1;
+          } else {
+            this.total.suitesPassed += 1;
+          }
+        }
+        this.thereWereFailuresInThisSuite = false;
+      }
+      var magicKeyw = "# Subtest";
+      if (!this.doNothing && !this.canCount && lineStr.includes(magicKeyw)) {
+        this.canCount = true;
+        if (lineStr.slice(0, lineStr.indexOf(magicKeyw)).trim().endsWith("{")) {
+          this.total.suitesTotal += 1;
+          if (this.thereWereFailuresInThisSuite === null) {
+            this.thereWereFailuresInThisSuite = false;
+          } else if (this.thereWereFailuresInThisSuite) {
+            this.total.suitesFailed += 1;
+            this.thereWereFailuresInThisSuite = false;
+          } else {
+            this.total.suitesPassed += 1;
+          }
         }
       }
     }
-  };
-  _proto.getTotal = function getTotal() {
-    if (this.thereWereFailuresInThisSuite) {
-      this.total.suitesFailed += 1;
-      this.thereWereFailuresInThisSuite = false;
-    } else if (this.total.suitesTotal) {
-      this.total.suitesPassed += 1;
-    }
-    if (!this.total.suitesTotal && this.total.assertsTotal) {
-      this.total.suitesTotal = 1;
+  }, {
+    key: "getTotal",
+    value: function getTotal() {
       if (this.thereWereFailuresInThisSuite) {
-        this.total.suitesFailed = 1;
-      } else {
-        this.total.suitesPassed = 1;
+        this.total.suitesFailed += 1;
+        this.thereWereFailuresInThisSuite = false;
+      } else if (this.total.suitesTotal) {
+        this.total.suitesPassed += 1;
       }
+      if (!this.total.suitesTotal && this.total.assertsTotal) {
+        this.total.suitesTotal = 1;
+        if (this.thereWereFailuresInThisSuite) {
+          this.total.suitesFailed = 1;
+        } else {
+          this.total.suitesPassed = 1;
+        }
+      }
+      return _objectSpread__default['default']({}, this.total);
     }
-    return _objectSpread__default['default']({}, this.total);
-  };
+  }]);
   return Counter;
 }();
 

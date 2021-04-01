@@ -11,12 +11,14 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _typeof = require('@babel/runtime/helpers/typeof');
 var pull = require('lodash.pull');
 var csvSplitEasy = require('csv-split-easy');
 var currency = require('currency.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var pull__default = /*#__PURE__*/_interopDefaultLegacy(pull);
 var currency__default = /*#__PURE__*/_interopDefaultLegacy(currency);
 
@@ -30,7 +32,7 @@ var currencySigns = ["د.إ", "؋", "L", "֏", "ƒ", "Kz", "$", "ƒ", "₼", "KM
 function findType(something) {
   /* istanbul ignore next */
   if (typeof something !== "string") {
-    throw new Error("csv-sort/util/findType(): input must be string! Currently it's: " + typeof something);
+    throw new Error("csv-sort/util/findType(): input must be string! Currently it's: ".concat(_typeof__default['default'](something)));
   }
   if (isNumeric(something)) {
     return "numeric";
@@ -53,7 +55,7 @@ function sort(input) {
   var msgContent = null;
   var msgType = null;
   if (typeof input !== "string") {
-    throw new TypeError("csv-sort/csvSort(): [THROW_ID_01] The input is of a wrong type! We accept either string of array of arrays. We got instead: " + typeof input + ", equal to:\n" + JSON.stringify(input, null, 4));
+    throw new TypeError("csv-sort/csvSort(): [THROW_ID_01] The input is of a wrong type! We accept either string of array of arrays. We got instead: ".concat(_typeof__default['default'](input), ", equal to:\n").concat(JSON.stringify(input, null, 4)));
   } else if (!input.trim()) {
     return {
       res: [[""]],

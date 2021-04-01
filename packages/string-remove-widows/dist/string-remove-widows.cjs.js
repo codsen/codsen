@@ -12,6 +12,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _typeof = require('@babel/runtime/helpers/typeof');
 var stringMatchLeftRight = require('string-match-left-right');
 var stringLeftRight = require('string-left-right');
 var rangesPush = require('ranges-push');
@@ -20,6 +21,7 @@ var rangesApply = require('ranges-apply');
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
 var version$1 = "2.0.12";
 
@@ -82,11 +84,11 @@ function removeWidows(str, originalOpts) {
     if (str === undefined) {
       throw new Error("string-remove-widows: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
     } else {
-      throw new Error("string-remove-widows: [THROW_ID_02] the first input argument must be string! It was given as \"" + typeof str + "\", equal to:\n" + JSON.stringify(str, null, 4));
+      throw new Error("string-remove-widows: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof__default['default'](str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
     }
   }
-  if (originalOpts && typeof originalOpts !== "object") {
-    throw new Error("string-remove-widows: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
+  if (originalOpts && _typeof__default['default'](originalOpts) !== "object") {
+    throw new Error("string-remove-widows: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ".concat(_typeof__default['default'](originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var isArr = Array.isArray;
   var len = str.length;
@@ -137,7 +139,7 @@ function removeWidows(str, originalOpts) {
           }
           return false;
         }
-        if (typeof val === "object") {
+        if (_typeof__default['default'](val) === "object") {
           return true;
         }
       });
@@ -209,7 +211,7 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && str[_i] && str[_i].trim()) {
       charCount += 1;
     }
-    if (!doNothingUntil && opts.hyphens && (("-" + rawMdash + rawNdash).includes(str[_i]) || str.startsWith(encodedNdashHtml, _i) || str.startsWith(encodedNdashCss, _i) || str.startsWith(encodedNdashJs, _i) || str.startsWith(encodedMdashHtml, _i) || str.startsWith(encodedMdashCss, _i) || str.startsWith(encodedMdashJs, _i)) && str[_i + 1] && (!str[_i + 1].trim() || str[_i] === "&")) {
+    if (!doNothingUntil && opts.hyphens && ("-".concat(rawMdash).concat(rawNdash).includes(str[_i]) || str.startsWith(encodedNdashHtml, _i) || str.startsWith(encodedNdashCss, _i) || str.startsWith(encodedNdashJs, _i) || str.startsWith(encodedMdashHtml, _i) || str.startsWith(encodedMdashCss, _i) || str.startsWith(encodedMdashJs, _i)) && str[_i + 1] && (!str[_i + 1].trim() || str[_i] === "&")) {
       if (str[_i - 1] && !str[_i - 1].trim() && str[stringLeftRight.left(str, _i)]) {
         push(stringLeftRight.left(str, _i) + 1, _i);
         whatWasDone.removeWidows = true;

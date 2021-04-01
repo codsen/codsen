@@ -14,10 +14,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var version$1 = "5.0.12";
 
 var version = version$1;
-function collWhitespace(str, originallineBreakLimit) {
-  if (originallineBreakLimit === void 0) {
-    originallineBreakLimit = 1;
-  }
+function collWhitespace(str) {
+  var originallineBreakLimit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var rawNbsp = "\xA0";
   function reverse(s) {
     return Array.from(s).reverse().join("");
@@ -81,7 +79,7 @@ function collWhitespace(str, originallineBreakLimit) {
         }
       }
     }
-    return "" + prep(frontPart, lineBreakLimit, false) + str.trim() + reverse(prep(reverse(endPart), lineBreakLimit, true));
+    return "".concat(prep(frontPart, lineBreakLimit, false)).concat(str.trim()).concat(reverse(prep(reverse(endPart), lineBreakLimit, true)));
   }
   return str;
 }
