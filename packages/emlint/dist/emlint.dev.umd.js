@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 4.5.3
+ * Version: 4.5.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -592,7 +592,7 @@ leven_1.default = _default;
 /**
  * all-named-html-entities
  * List of all named HTML entities
- * Version: 1.5.12
+ * Version: 1.5.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/all-named-html-entities/
@@ -9818,7 +9818,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -10066,7 +10066,7 @@ function rightSeq(str, idx, ...args) {
 /**
  * string-fix-broken-named-entities
  * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * Version: 5.2.2
+ * Version: 5.2.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-fix-broken-named-entities/
@@ -10626,7 +10626,7 @@ function fixEnt(str, originalOpts) {
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.12
+ * Version: 1.3.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -10692,7 +10692,7 @@ function parent(str) {
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -10767,7 +10767,7 @@ function traverse(tree1, cb1) {
 /**
  * line-column-mini
  * Convert string index to line-column position
- * Version: 1.1.12
+ * Version: 1.1.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/line-column-mini/
@@ -10819,7 +10819,7 @@ function lineCol(input, idx, skipChecks = false) {
 /**
  * string-find-malformed
  * Search for a malformed string. Think of Levenshtein distance but in search.
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-find-malformed/
@@ -10919,7 +10919,7 @@ function findMalformed(str, refStr, cb, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.12
+ * Version: 3.13.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -10938,7 +10938,7 @@ function arrayiffy(something) {
 /**
  * string-match-left-right
  * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.6
+ * Version: 7.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-match-left-right/
@@ -11240,7 +11240,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -11250,7 +11250,7 @@ const allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey",
 /**
  * is-char-suitable-for-html-attr-name
  * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -11266,7 +11266,7 @@ function isAttrNameChar(char) {
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.2.3
+ * Version: 2.2.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -11581,7 +11581,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 /**
  * is-html-tag-opening
  * Does an HTML tag start at given position?
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-tag-opening/
@@ -11687,7 +11687,7 @@ function isOpening(str, idx = 0, originalOpts) {
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 5.5.3
+ * Version: 5.5.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -13899,7 +13899,7 @@ var objectPath = createCommonjsModule(function (module) {
 /**
  * codsen-parser
  * Parser aiming at broken or mixed code, especially HTML & CSS
- * Version: 0.10.9
+ * Version: 0.10.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-parser/
@@ -14563,7 +14563,7 @@ var he = createCommonjsModule(function (module, exports) {
 /**
  * html-entities-not-email-friendly
  * All HTML entities which are not email template friendly
- * Version: 0.4.12
+ * Version: 0.4.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-entities-not-email-friendly/
@@ -16839,7 +16839,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
 /**
  * string-process-comma-separated
  * Extracts chunks from possibly comma or whatever-separated string
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-process-comma-separated/
@@ -20729,7 +20729,7 @@ function tagBadSelfClosing(context) {
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -20792,7 +20792,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.12
+ * Version: 7.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -32486,7 +32486,7 @@ function attributeValidateAccesskey(context) {
 /**
  * is-relative-uri
  * Is given string a relative URI?
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-relative-uri/
@@ -36806,7 +36806,7 @@ function attributeValidateHref(context) {
 /**
  * is-language-code
  * Is given string a language code (as per IANA)
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-language-code/
@@ -37564,7 +37564,7 @@ function attributeValidateMaxlength(context) {
 /**
  * is-media-descriptor
  * Is given string a valid media descriptor (including media query)?
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-media-descriptor/
@@ -42355,7 +42355,7 @@ class Linter extends TypedEmitter {
     }
 }
 
-var version$1 = "4.5.3";
+var version$1 = "4.5.4";
 
 const version = version$1;
 

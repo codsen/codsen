@@ -1,13 +1,13 @@
 /**
  * regex-jinja-specific
  * Regular expression for detecting Python-specific Jinja code
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-jinja-specific/
  */
 
-var version$1 = "2.0.12";
+var version$1 = "2.0.13";
 
 const version = version$1;
 function isJinjaSpecific() {

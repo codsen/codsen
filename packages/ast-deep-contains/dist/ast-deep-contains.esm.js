@@ -1,7 +1,7 @@
 /**
  * ast-deep-contains
  * Like t.same assert on array of objects, where element order doesn't matter.
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-deep-contains/
@@ -11,7 +11,7 @@ import objectPath from 'object-path';
 import { traverse } from 'ast-monkey-traverse';
 import is from '@sindresorhus/is';
 
-var version$1 = "3.0.12";
+var version$1 = "3.0.13";
 
 const version = version$1;
 function goUp(pathStr) {

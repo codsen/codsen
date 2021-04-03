@@ -1,7 +1,7 @@
 /**
  * is-html-tag-opening
  * Does an HTML tag start at given position?
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-tag-opening/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.12
+ * Version: 3.13.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -35,7 +35,7 @@ function arrayiffy(something) {
 /**
  * string-match-left-right
  * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.6
+ * Version: 7.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-match-left-right/
@@ -2107,7 +2107,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -2324,7 +2324,7 @@ function extraRequirements(str, idx) {
     // slash-closing follows, but no opening
 }
 
-var version$1 = "2.0.12";
+var version$1 = "2.0.13";
 
 const version = version$1;
 function isOpening(str, idx = 0, originalOpts) {

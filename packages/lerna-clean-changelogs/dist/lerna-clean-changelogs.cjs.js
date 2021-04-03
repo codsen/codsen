@@ -1,7 +1,7 @@
 /**
  * lerna-clean-changelogs
  * Removes frivolous entries from commitizen generated changelogs
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/lerna-clean-changelogs/
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "2.0.12";
+var version$1 = "2.0.13";
 
 var version = version$1;
 function isStr(something) {

@@ -1,7 +1,7 @@
 /**
  * str-indexes-of-plus
  * Like indexOf but returns array and counts per-grapheme
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/str-indexes-of-plus/
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "3.0.12";
+var version$1 = "3.0.13";
 
 var version = version$1;
 function strIndexesOfPlus(str, searchValue) {

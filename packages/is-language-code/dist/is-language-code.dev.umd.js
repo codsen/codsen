@@ -1,7 +1,7 @@
 /**
  * is-language-code
  * Is given string a language code (as per IANA)
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-language-code/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.isLanguageCode = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "3.0.12";
+var version$1 = "3.0.13";
 
 var languageJson = [
 	"aa",

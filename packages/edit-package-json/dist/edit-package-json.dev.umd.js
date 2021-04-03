@@ -1,7 +1,7 @@
 /**
  * edit-package-json
  * Edit package.json without parsing, as string, to keep the formatting intact
- * Version: 0.3.12
+ * Version: 0.3.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/edit-package-json/
@@ -1913,7 +1913,7 @@ module.exports = cloneDeep;
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -2271,7 +2271,7 @@ function chompLeft(str, idx, ...args) {
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -2334,7 +2334,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.12
+ * Version: 7.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -2434,7 +2434,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.12
+ * Version: 5.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -2527,7 +2527,7 @@ function rApply(str, originalRangesArr, progressFn) {
   return str;
 }
 
-var version$1 = "0.3.12";
+var version$1 = "0.3.13";
 
 const version = version$1;
 function isStr(something) {

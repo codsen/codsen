@@ -1,7 +1,7 @@
 /**
  * ranges-crop
  * Crop array of ranges when they go beyond the reference string's length
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-crop/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -79,7 +79,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.12
+ * Version: 7.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -176,7 +176,7 @@ function rMerge(arrOfRanges, originalOpts) {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-var version$1 = "4.0.12";
+var version$1 = "4.0.13";
 
 const version = version$1;
 function rCrop(arrOfRanges, strLen) {

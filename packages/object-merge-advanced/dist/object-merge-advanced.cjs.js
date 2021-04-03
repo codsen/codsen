@@ -1,7 +1,7 @@
 /**
  * object-merge-advanced
  * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 12.0.9
+ * Version: 12.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-merge-advanced/
@@ -31,7 +31,7 @@ var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var isDate__default = /*#__PURE__*/_interopDefaultLegacy(isDate);
 
-var version$1 = "12.0.9";
+var version$1 = "12.0.10";
 
 var version = version$1;
 function isStr(something) {

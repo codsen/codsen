@@ -1,7 +1,7 @@
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.12
+ * Version: 7.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -22,7 +22,7 @@ var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumab
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "7.0.12";
+var version$1 = "7.0.13";
 
 var version = version$1;
 var defaults = {

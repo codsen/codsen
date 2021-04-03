@@ -1,7 +1,7 @@
 /**
  * test-mixer
  * Test helper to generate function opts object variations
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/test-mixer/
@@ -22,7 +22,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
-var version$1 = "2.0.12";
+var version$1 = "2.0.13";
 
 var version = version$1;
 function mixer() {

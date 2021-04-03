@@ -1,7 +1,7 @@
 /**
  * string-extract-class-names
  * Extracts CSS class/id names from a string
- * Version: 6.0.12
+ * Version: 6.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-class-names/
@@ -18,7 +18,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "6.0.12";
+var version$1 = "6.0.13";
 
 var version = version$1;
 function extract(str) {

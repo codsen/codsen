@@ -1,7 +1,7 @@
 /**
  * test-mixer
  * Test helper to generate function opts object variations
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/test-mixer/
@@ -3268,7 +3268,7 @@ module.exports = cloneDeep;
 /**
  * object-boolean-combinations
  * Consumes a defaults object with booleans, generates all possible variations of it
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-boolean-combinations/
@@ -3320,7 +3320,7 @@ function combinations(originalIncomingObject, originalOverrideObject = {}) {
   return outcomingObjectsArray;
 }
 
-var version$1 = "2.0.12";
+var version$1 = "2.0.13";
 
 const version = version$1;
 function mixer(ref = {}, defaultsObj = {}) {

@@ -1,7 +1,7 @@
 /**
  * object-fill-missing-keys
  * Add missing keys into plain objects, according to a reference object
- * Version: 8.0.12
+ * Version: 8.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-fill-missing-keys/
@@ -3795,7 +3795,7 @@ matcher.isMatch = isMatch;
 /**
  * array-includes-with-glob
  * Like _.includes but with wildcards
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-includes-with-glob/
@@ -3830,7 +3830,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
@@ -3851,7 +3851,7 @@ function nonEmpty(input) {
 /**
  * object-merge-advanced
  * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 12.0.9
+ * Version: 12.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-merge-advanced/
@@ -4357,7 +4357,7 @@ function externalApi(input1orig, input2orig, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.12
+ * Version: 3.13.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -6227,7 +6227,7 @@ module.exports = isEqual;
 /**
  * object-all-values-equal-to
  * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-all-values-equal-to/
@@ -6280,7 +6280,7 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 
-var version$1 = "8.0.12";
+var version$1 = "8.0.13";
 
 const version = version$1;
 const defaults = {

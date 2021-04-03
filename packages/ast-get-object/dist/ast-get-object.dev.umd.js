@@ -1,7 +1,7 @@
 /**
  * ast-get-object
  * Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-object/
@@ -2301,7 +2301,7 @@ return typeDetect;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.12
+ * Version: 1.3.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -2325,7 +2325,7 @@ function parent(str) {
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -2400,7 +2400,7 @@ function traverse(tree1, cb1) {
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
@@ -2546,7 +2546,7 @@ matcher.isMatch = isMatch;
 /**
  * ast-compare
  * Compare anything: AST, objects, arrays, strings and nested thereof
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-compare/
@@ -2683,7 +2683,7 @@ function compare(b, s, originalOpts) {
   return true;
 }
 
-var version$1 = "2.0.12";
+var version$1 = "2.0.13";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version = version$1;

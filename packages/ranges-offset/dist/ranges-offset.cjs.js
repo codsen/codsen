@@ -1,7 +1,7 @@
 /**
  * ranges-offset
  * Increment or decrement each index in every range
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-offset/
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _toArray__default = /*#__PURE__*/_interopDefaultLegacy(_toArray);
 
-var version$1 = "2.0.12";
+var version$1 = "2.0.13";
 
 var version = version$1;
 function rOffset(arrOfRanges) {

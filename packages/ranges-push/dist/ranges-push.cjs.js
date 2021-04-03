@@ -1,7 +1,7 @@
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.12
+ * Version: 5.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -27,7 +27,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _classCallCheck__default = /*#__PURE__*/_interopDefaultLegacy(_classCallCheck);
 var _createClass__default = /*#__PURE__*/_interopDefaultLegacy(_createClass);
 
-var version$1 = "5.0.12";
+var version$1 = "5.0.13";
 
 var version = version$1;
 function existy(x) {

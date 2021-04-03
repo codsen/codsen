@@ -1,7 +1,7 @@
 /**
  * string-split-by-whitespace
  * Split string into array by chunks of whitespace
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-split-by-whitespace/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * ranges-is-index-within
  * Checks if index is within any of the given string index ranges
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-is-index-within/
@@ -41,7 +41,7 @@ function isIndexWithin(originalIndex, rangesArr, originalOpts) {
   return rangesArr.some(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]);
 }
 
-var version$1 = "2.0.12";
+var version$1 = "2.0.13";
 
 const version = version$1;
 function splitByW(str, originalOpts) {

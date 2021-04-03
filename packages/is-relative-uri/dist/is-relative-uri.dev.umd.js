@@ -1,7 +1,7 @@
 /**
  * is-relative-uri
  * Is given string a relative URI?
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-relative-uri/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.isRelativeUri = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "3.0.12";
+var version$1 = "3.0.13";
 
 const version = version$1;
 // Reference used:

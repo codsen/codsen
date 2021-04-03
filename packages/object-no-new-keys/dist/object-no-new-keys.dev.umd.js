@@ -1,7 +1,7 @@
 /**
  * object-no-new-keys
  * Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-no-new-keys/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.objectNoNewKeys = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "3.0.12";
+var version$1 = "3.0.13";
 
 const version = version$1;
 function isObj(something) {

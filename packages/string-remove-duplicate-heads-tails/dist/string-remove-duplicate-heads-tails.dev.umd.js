@@ -1,7 +1,7 @@
 /**
  * string-remove-duplicate-heads-tails
  * Detect and (recursively) remove head and tail wrappings around the input string
- * Version: 5.0.12
+ * Version: 5.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-remove-duplicate-heads-tails/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringRemoveDuplicateHeadsTails = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "5.0.12";
+var version$1 = "5.0.13";
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -157,7 +157,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.12
+ * Version: 3.13.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -176,7 +176,7 @@ function arrayiffy(something) {
 /**
  * string-match-left-right
  * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.6
+ * Version: 7.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-match-left-right/
@@ -472,7 +472,7 @@ function matchRightIncl(str, position, whatToMatch, opts) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.12
+ * Version: 5.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -549,7 +549,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -612,7 +612,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.12
+ * Version: 7.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -712,7 +712,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.12
+ * Version: 5.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -854,7 +854,7 @@ class Ranges {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.12
+ * Version: 5.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -950,7 +950,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * string-trim-spaces-only
  * Like String.trim() but you can choose granularly what to trim
- * Version: 3.0.12
+ * Version: 3.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-trim-spaces-only/

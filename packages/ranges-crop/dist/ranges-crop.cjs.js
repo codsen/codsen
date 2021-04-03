@@ -1,7 +1,7 @@
 /**
  * ranges-crop
  * Crop array of ranges when they go beyond the reference string's length
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-crop/
@@ -18,7 +18,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "4.0.12";
+var version$1 = "4.0.13";
 
 var version = version$1;
 function rCrop(arrOfRanges, strLen) {

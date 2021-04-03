@@ -1,7 +1,7 @@
 /**
  * object-set-all-values-to
  * Recursively walk the input and set all found values in plain objects to something
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-set-all-values-to/
@@ -1910,7 +1910,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version$1 = "4.0.12";
+var version$1 = "4.0.13";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version = version$1;

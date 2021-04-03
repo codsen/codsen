@@ -1,13 +1,13 @@
 /**
  * easy-replace
  * Replace strings with optional lookarounds, but without regexes
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/easy-replace/
  */
 
-var version$1 = "4.0.12";
+var version$1 = "4.0.13";
 
 const version = version$1;
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {

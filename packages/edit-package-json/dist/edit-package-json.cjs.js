@@ -1,7 +1,7 @@
 /**
  * edit-package-json
  * Edit package.json without parsing, as string, to keep the formatting intact
- * Version: 0.3.12
+ * Version: 0.3.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/edit-package-json/
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "0.3.12";
+var version$1 = "0.3.13";
 
 var version = version$1;
 function isStr(something) {

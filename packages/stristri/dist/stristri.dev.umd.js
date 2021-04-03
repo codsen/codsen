@@ -1,7 +1,7 @@
 /**
  * stristri
  * Extracts or deletes HTML, CSS, text and/or templating tags from string
- * Version: 3.1.4
+ * Version: 3.1.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/stristri/
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.12
+ * Version: 3.13.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -35,7 +35,7 @@ function arrayiffy(something) {
 /**
  * string-match-left-right
  * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.6
+ * Version: 7.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-match-left-right/
@@ -2113,7 +2113,7 @@ funcToString.call(Object);
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -2229,7 +2229,7 @@ function left(str, idx = 0) {
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -2239,7 +2239,7 @@ const allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey",
 /**
  * is-char-suitable-for-html-attr-name
  * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -2255,7 +2255,7 @@ function isAttrNameChar(char) {
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.2.3
+ * Version: 2.2.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -2570,7 +2570,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 /**
  * is-html-tag-opening
  * Does an HTML tag start at given position?
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-tag-opening/
@@ -2676,7 +2676,7 @@ function isOpening(str, idx = 0, originalOpts) {
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 5.5.3
+ * Version: 5.5.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -4590,7 +4590,7 @@ function tokenizer(str, originalOpts) {
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -4653,7 +4653,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.12
+ * Version: 7.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -4753,7 +4753,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.12
+ * Version: 5.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -4849,7 +4849,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.12
+ * Version: 5.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -4926,7 +4926,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 5.0.12
+ * Version: 5.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -5068,7 +5068,7 @@ class Ranges {
 /**
  * string-collapse-white-space
  * Replace chunks of whitespace with a single spaces
- * Version: 9.0.12
+ * Version: 9.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-white-space/
@@ -5325,7 +5325,7 @@ function collapse(str, originalOpts) {
 /**
  * regex-is-jinja-nunjucks
  * Regular expression for detecting Jinja or Nunjucks code
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
@@ -5337,7 +5337,7 @@ function isJinjaNunjucksRegex() {
 /**
  * regex-is-jsp
  * Regular expression for detecting JSP (Java Server Pages) code
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-is-jsp/
@@ -5349,7 +5349,7 @@ function isJSP() {
 /**
  * regex-jinja-specific
  * Regular expression for detecting Python-specific Jinja code
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-jinja-specific/
@@ -5361,7 +5361,7 @@ function isJinjaSpecific() {
 /**
  * detect-templating-language
  * Detects various templating languages present in string
- * Version: 2.0.12
+ * Version: 2.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detect-templating-language/
@@ -5400,7 +5400,7 @@ const defaultOpts = {
     reportProgressFuncTo: 100,
 };
 
-var version$1 = "3.1.4";
+var version$1 = "3.1.5";
 
 const version = version$1;
 // return function is in single place to ensure no

@@ -1,7 +1,7 @@
 /**
  * object-fill-missing-keys
  * Add missing keys into plain objects, according to a reference object
- * Version: 8.0.12
+ * Version: 8.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-fill-missing-keys/
@@ -26,7 +26,7 @@ var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "8.0.12";
+var version$1 = "8.0.13";
 
 var version = version$1;
 var defaults = {

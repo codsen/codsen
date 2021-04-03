@@ -1,7 +1,7 @@
 /**
  * ranges-process-outside
  * Iterate string considering ranges, as if they were already applied
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-process-outside/
@@ -179,7 +179,7 @@ runes_1.substr = substr;
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -242,7 +242,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.12
+ * Version: 7.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -342,7 +342,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-crop
  * Crop array of ranges when they go beyond the reference string's length
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-crop/
@@ -397,7 +397,7 @@ function rCrop(arrOfRanges, strLen) {
 /**
  * ranges-invert
  * Invert string index ranges
- * Version: 4.0.12
+ * Version: 4.0.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-invert/
@@ -469,7 +469,7 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
   return rCrop(res, strLen);
 }
 
-var version$1 = "4.0.12";
+var version$1 = "4.0.13";
 
 const version = version$1;
 function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
