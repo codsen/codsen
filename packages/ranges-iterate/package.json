@@ -1,6 +1,6 @@
 {
   "name": "ranges-iterate",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "Iterate a string and any changes within given string index ranges",
   "keywords": [
     "array",
@@ -107,9 +107,9 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.12",
-    "ranges-apply": "^5.0.12",
-    "ranges-merge": "^7.0.12",
+    "lect": "^0.16.13",
+    "ranges-apply": "^5.0.13",
+    "ranges-merge": "^7.0.13",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

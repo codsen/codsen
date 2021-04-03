@@ -1,6 +1,6 @@
 {
   "name": "str-indexes-of-plus",
-  "version": "3.0.12",
+  "version": "3.0.13",
   "description": "Like indexOf but returns array and counts per-grapheme",
   "keywords": [
     "array",
@@ -104,7 +104,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.12",
+    "lect": "^0.16.13",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

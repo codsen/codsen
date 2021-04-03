@@ -1,6 +1,6 @@
 {
   "name": "arrayiffy-if-string",
-  "version": "3.13.12",
+  "version": "3.13.13",
   "description": "Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.",
   "keywords": [
     "api",
@@ -106,7 +106,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.12",
+    "lect": "^0.16.13",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

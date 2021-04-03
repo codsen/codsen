@@ -1,6 +1,6 @@
 {
   "name": "object-set-all-values-to",
-  "version": "4.0.12",
+  "version": "4.0.13",
   "description": "Recursively walk the input and set all found values in plain objects to something",
   "keywords": [
     "all",
@@ -112,7 +112,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.12",
+    "lect": "^0.16.13",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

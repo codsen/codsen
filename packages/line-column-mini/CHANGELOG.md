@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.13](https://github.com/codsen/codsen/compare/line-column-mini@1.1.12...line-column-mini@1.1.13) (2021-04-03)
+
+**Note:** Version bump only for package line-column-mini
+
+
+
+
+
 ## 1.1.1 (2021-01-28)
 
 ### Bug Fixes

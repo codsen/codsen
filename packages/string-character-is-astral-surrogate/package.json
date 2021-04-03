@@ -1,6 +1,6 @@
 {
   "name": "string-character-is-astral-surrogate",
-  "version": "1.12.12",
+  "version": "1.12.13",
   "description": "Tells, is given character a part of astral character, specifically, a high and low surrogate",
   "keywords": [
     "astral",
@@ -107,7 +107,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.12",
+    "lect": "^0.16.13",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
