@@ -1,93 +1,8078 @@
 /**
- * @name email-comb
- * @fileoverview Remove unused CSS from email templates
- * @version 5.0.12
- * @author Roy Revelt, Codsen Ltd
- * @license MIT
- * {@link https://codsen.com/os/email-comb/}
+ * email-comb
+ * Remove unused CSS from email templates
+ * Version: 5.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/email-comb/
  */
 
-var emailComb=(()=>{var Zr=Object.create,an=Object.defineProperty,Xr=Object.getPrototypeOf,Vn=Object.prototype.hasOwnProperty,eo=Object.getOwnPropertyNames,to=Object.getOwnPropertyDescriptor,Yn=Object.getOwnPropertySymbols,no=Object.prototype.propertyIsEnumerable;var Qn=(e,n,i)=>n in e?an(e,n,{enumerable:!0,configurable:!0,writable:!0,value:i}):e[n]=i,ce=(e,n)=>{for(var i in n||(n={}))Vn.call(n,i)&&Qn(e,i,n[i]);if(Yn)for(var i of Yn(n))no.call(n,i)&&Qn(e,i,n[i]);return e},ro=e=>an(e,"__esModule",{value:!0});var St=(e,n)=>()=>(n||e((n={exports:{}}).exports,n),n.exports),oo=(e,n)=>{for(var i in n)an(e,i,{get:n[i],enumerable:!0})},io=(e,n,i)=>{if(n&&typeof n=="object"||typeof n=="function")for(let f of eo(n))!Vn.call(e,f)&&f!=="default"&&an(e,f,{get:()=>n[f],enumerable:!(i=to(n,f))||i.enumerable});return e},Ct=e=>io(ro(an(e!=null?Zr(Xr(e)):{},"default",e&&e.__esModule&&"default"in e?{get:()=>e.default,enumerable:!0}:{value:e,enumerable:!0})),e);var Xn=St((pn,Zn)=>{(function(e,n){typeof pn=="object"&&typeof Zn!="undefined"?n(pn):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).stringMatchLeftRight={})})(pn,function(e){"use strict";function n(c){return c&&typeof c=="object"&&!Array.isArray(c)}function i(c){return typeof c=="string"}let f={cb:void 0,i:!1,trimBeforeMatching:!1,trimCharsBeforeMatching:[],maxMismatches:0,firstMustMatch:!1,lastMustMatch:!1,hungry:!1},J=c=>c+1;function b(c,p,o,l,A=!1,C=J){let D=typeof o=="function"?o():o;if(+p<0&&A&&D==="EOL")return D;let a=ce(ce({},f),l);if(p>=c.length&&!A)return!1;let M=A?1:o.length,U=0,K=!1,N=!1,ue=!1,X=a.maxMismatches,fe=p,Se=!1,$e=!1,Ne=!1;function O(){return U===1&&X<a.maxMismatches-1}for(;c[fe];){let w=C(fe);if(a.trimBeforeMatching&&c[fe].trim()===""){if(!c[w]&&A&&o==="EOL")return!0;fe=C(fe);continue}if(a&&!a.i&&a.trimCharsBeforeMatching&&a.trimCharsBeforeMatching.includes(c[fe])||a&&a.i&&a.trimCharsBeforeMatching&&a.trimCharsBeforeMatching.map(ee=>ee.toLowerCase()).includes(c[fe].toLowerCase())){if(A&&o==="EOL"&&!c[w])return!0;fe=C(fe);continue}let Q=w>fe?o[o.length-M]:o[M-1];if(!a.i&&c[fe]===Q||a.i&&c[fe].toLowerCase()===Q.toLowerCase()){if(Se||(Se=!0),ue||(ue=!0),M===o.length){if($e=!0,X!==a.maxMismatches)return!1}else M===1&&(Ne=!0);if(M-=1,U++,O())return!1;if(!M)return(U!==o.length||X===a.maxMismatches||!K)&&fe}else{if(K||U||(K=!0),!(a.maxMismatches&&X&&fe))return!(fe!==0||M!==1||a.lastMustMatch||!ue)&&0;X-=1;for(let ee=0;ee<=X;ee++){let Z=w>fe?o[o.length-M+1+ee]:o[M-2-ee],t=c[C(fe)];if(Z&&(!a.i&&c[fe]===Z||a.i&&c[fe].toLowerCase()===Z.toLowerCase())&&(!a.firstMustMatch||M!==o.length)){if(U++,O())return!1;M-=2,Se=!0;break}if(t&&Z&&(!a.i&&t===Z||a.i&&t.toLowerCase()===Z.toLowerCase())&&(!a.firstMustMatch||M!==o.length)){if(!U&&!a.hungry)return!1;M-=1,Se=!0;break}if(Z===void 0&&X>=0&&Se&&(!a.firstMustMatch||$e)&&(!a.lastMustMatch||Ne))return fe}Se||(N=fe)}if(N!==!1&&N!==fe&&(N=!1),M<1)return fe;fe=C(fe)}return M>0?!(!A||D!=="EOL")||!!(a&&a.maxMismatches>=M&&ue)&&(N||0):void 0}function v(c,p,o,l,A){if(n(A)&&Object.prototype.hasOwnProperty.call(A,"trimBeforeMatching")&&typeof A.trimBeforeMatching!="boolean")throw new Error(`string-match-left-right/${c}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(A.trimBeforeMatching)?" Did you mean to use opts.trimCharsBeforeMatching?":""}`);let C=ce(ce({},f),A);var D;if(typeof C.trimCharsBeforeMatching=="string"&&(C.trimCharsBeforeMatching=typeof(D=C.trimCharsBeforeMatching)=="string"?D.length?[D]:[]:D),C.trimCharsBeforeMatching=C.trimCharsBeforeMatching.map(N=>i(N)?N:String(N)),!i(p)||!p.length)return!1;if(!Number.isInteger(o)||o<0)throw new Error(`string-match-left-right/${c}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof o}, equal to:
-${JSON.stringify(o,null,4)}`);let a,M;if(i(l))a=[l];else if(Array.isArray(l))a=l;else if(l){if(typeof l!="function")throw new Error(`string-match-left-right/${c}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof l}, equal to:
-${JSON.stringify(l,null,4)}`);a=[],a.push(l)}else a=l;if(A&&!n(A))throw new Error(`string-match-left-right/${c}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof A}", and equal to:
-${JSON.stringify(A,null,4)}`);let U=0,K="";if(C&&C.trimCharsBeforeMatching&&C.trimCharsBeforeMatching.some((N,ue)=>N.length>1&&(U=ue,K=N,!0)))throw new Error(`string-match-left-right/${c}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${U} is longer than 1 character, ${K.length} (equals to ${K}). Please split it into separate characters and put into array as separate elements.`);if(!a||!Array.isArray(a)||Array.isArray(a)&&!a.length||Array.isArray(a)&&a.length===1&&i(a[0])&&!a[0].trim()){if(typeof C.cb=="function"){let ue,X=o;if(c!=="matchLeftIncl"&&c!=="matchRight"||(X+=1),c[5]==="L")for(let Ne=X;Ne--;){let O=p[Ne];if((!C.trimBeforeMatching||C.trimBeforeMatching&&O!==void 0&&O.trim())&&(!C.trimCharsBeforeMatching||!C.trimCharsBeforeMatching.length||O!==void 0&&!C.trimCharsBeforeMatching.includes(O))){ue=Ne;break}}else if(c.startsWith("matchRight"))for(let Ne=X;Ne<p.length;Ne++){let O=p[Ne];if((!C.trimBeforeMatching||C.trimBeforeMatching&&O.trim())&&(!C.trimCharsBeforeMatching||!C.trimCharsBeforeMatching.length||!C.trimCharsBeforeMatching.includes(O))){ue=Ne;break}}if(ue===void 0)return!1;let fe=p[ue],Se=ue+1,$e="";return Se&&Se>0&&($e=p.slice(0,Se)),c[5]==="L"||ue&&ue>0&&($e=p.slice(ue)),C.cb(fe,$e,ue)}let N="";throw A||(N=" More so, the whole options object, the fourth input argument, is missing!"),new Error(`string-match-left-right/${c}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${N}`)}for(let N=0,ue=a.length;N<ue;N++){M=typeof a[N]=="function";let X=a[N],fe,Se,$e="",Ne=o;c==="matchRight"?Ne+=1:c==="matchLeft"&&(Ne-=1);let O=b(p,Ne,X,C,M,w=>c[5]==="L"?w-1:w+1);if(O&&M&&typeof X=="function"&&X()==="EOL")return!(!X()||C.cb&&!C.cb(fe,$e,Se))&&X();if(Number.isInteger(O)&&(Se=c.startsWith("matchLeft")?O-1:O+1,$e=c[5]==="L"?p.slice(0,O):p.slice(Se)),Se<0&&(Se=void 0),p[Se]&&(fe=p[Se]),Number.isInteger(O)&&(!C.cb||C.cb(fe,$e,Se)))return X}return!1}e.matchLeft=function(c,p,o,l){return v("matchLeft",c,p,o,l)},e.matchLeftIncl=function(c,p,o,l){return v("matchLeftIncl",c,p,o,l)},e.matchRight=function(c,p,o,l){return v("matchRight",c,p,o,l)},e.matchRightIncl=function(c,p,o,l){return v("matchRightIncl",c,p,o,l)},Object.defineProperty(e,"__esModule",{value:!0})})});var tr=St((mn,er)=>{(function(e,n){typeof mn=="object"&&typeof er!="undefined"?n(mn):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).regexEmptyConditionalComments={})})(mn,function(e){"use strict";e.emptyCondCommentRegex=function(){return/<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi},e.version="1.10.12",Object.defineProperty(e,"__esModule",{value:!0})})});var rr=St((yn,nr)=>{(function(e,n){typeof yn=="object"&&typeof nr!="undefined"?n(yn):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).stringExtractClassNames={})})(yn,function(e){"use strict";Function.prototype.toString.call(Object);var n=typeof globalThis!="undefined"?globalThis:typeof window!="undefined"?window:typeof global!="undefined"?global:typeof self!="undefined"?self:{};(function(b){var v={exports:{}};b(v,v.exports)})(function(b,v){var c="__lodash_hash_undefined__",p=9007199254740991,o="[object Arguments]",l="[object Boolean]",A="[object Date]",C="[object Function]",D="[object GeneratorFunction]",a="[object Map]",M="[object Number]",U="[object Object]",K="[object Promise]",N="[object RegExp]",ue="[object Set]",X="[object String]",fe="[object Symbol]",Se="[object WeakMap]",$e="[object ArrayBuffer]",Ne="[object DataView]",O="[object Float32Array]",w="[object Float64Array]",Q="[object Int8Array]",ee="[object Int16Array]",Z="[object Int32Array]",t="[object Uint8Array]",I="[object Uint8ClampedArray]",R="[object Uint16Array]",u="[object Uint32Array]",_=/\w*$/,h=/^\[object .+?Constructor\]$/,P=/^(?:0|[1-9]\d*)$/,g={};g[o]=g["[object Array]"]=g[$e]=g[Ne]=g[l]=g[A]=g[O]=g[w]=g[Q]=g[ee]=g[Z]=g[a]=g[M]=g[U]=g[N]=g[ue]=g[X]=g[fe]=g[t]=g[I]=g[R]=g[u]=!0,g["[object Error]"]=g[C]=g[Se]=!1;var F=typeof self=="object"&&self&&self.Object===Object&&self,E=typeof n=="object"&&n&&n.Object===Object&&n||F||Function("return this")(),Oe=v&&!v.nodeType&&v,G=Oe&&b&&!b.nodeType&&b,be=G&&G.exports===Oe;function Te(y,x){return y.set(x[0],x[1]),y}function re(y,x){return y.add(x),y}function Ae(y,x,q,le){var Xe=-1,st=y?y.length:0;for(le&&st&&(q=y[++Xe]);++Xe<st;)q=x(q,y[Xe],Xe,y);return q}function Je(y){var x=!1;if(y!=null&&typeof y.toString!="function")try{x=!!(y+"")}catch(q){}return x}function T(y){var x=-1,q=Array(y.size);return y.forEach(function(le,Xe){q[++x]=[Xe,le]}),q}function z(y,x){return function(q){return y(x(q))}}function oe(y){var x=-1,q=Array(y.size);return y.forEach(function(le){q[++x]=le}),q}var he,Ue=Array.prototype,qe=Function.prototype,Ve=Object.prototype,ve=E["__core-js_shared__"],Re=(he=/[^.]+$/.exec(ve&&ve.keys&&ve.keys.IE_PROTO||""))?"Symbol(src)_1."+he:"",It=qe.toString,ae=Ve.hasOwnProperty,ct=Ve.toString,Ye=RegExp("^"+It.call(ae).replace(/[\\^$.*+?()[\]{}|]/g,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$"),bt=be?E.Buffer:void 0,Ie=E.Symbol,te=E.Uint8Array,gt=z(Object.getPrototypeOf,Object),ne=Object.create,Qe=Ve.propertyIsEnumerable,Ge=Ue.splice,Ee=Object.getOwnPropertySymbols,s=bt?bt.isBuffer:void 0,k=z(Object.keys,Object),Ze=mt(E,"DataView"),nt=mt(E,"Map"),Fe=mt(E,"Promise"),Me=mt(E,"Set"),ze=mt(E,"WeakMap"),Le=mt(Object,"create"),Ke=Tt(Ze),V=Tt(nt),r=Tt(Fe),pe=Tt(Me),$=Tt(ze),W=Ie?Ie.prototype:void 0,S=W?W.valueOf:void 0;function H(y){var x=-1,q=y?y.length:0;for(this.clear();++x<q;){var le=y[x];this.set(le[0],le[1])}}function Pe(y){var x=-1,q=y?y.length:0;for(this.clear();++x<q;){var le=y[x];this.set(le[0],le[1])}}function _e(y){var x=-1,q=y?y.length:0;for(this.clear();++x<q;){var le=y[x];this.set(le[0],le[1])}}function rt(y){this.__data__=new Pe(y)}function Ht(y,x){var q=qt(y)||function(We){return function(He){return function(_t){return!!_t&&typeof _t=="object"}(He)&&Rt(He)}(We)&&ae.call(We,"callee")&&(!Qe.call(We,"callee")||ct.call(We)==o)}(y)?function(We,He){for(var _t=-1,ut=Array(We);++_t<We;)ut[_t]=He(_t);return ut}(y.length,String):[],le=q.length,Xe=!!le;for(var st in y)!x&&!ae.call(y,st)||Xe&&(st=="length"||Kt(st,le))||q.push(st);return q}function nn(y,x,q){var le=y[x];ae.call(y,x)&&Vt(le,q)&&(q!==void 0||x in y)||(y[x]=q)}function Bt(y,x){for(var q=y.length;q--;)if(Vt(y[q][0],x))return q;return-1}function Dt(y,x,q,le,Xe,st,We){var He;if(le&&(He=st?le(y,Xe,st,We):le(y)),He!==void 0)return He;if(!vt(y))return y;var _t=qt(y);if(_t){if(He=function(ye){var we=ye.length,et=ye.constructor(we);return we&&typeof ye[0]=="string"&&ae.call(ye,"index")&&(et.index=ye.index,et.input=ye.input),et}(y),!x)return function(ye,we){var et=-1,yt=ye.length;for(we||(we=Array(yt));++et<yt;)we[et]=ye[et];return we}(y,He)}else{var ut=Et(y),Yt=ut==C||ut==D;if(Nt(y))return function(ye,we){if(we)return ye.slice();var et=new ye.constructor(ye.length);return ye.copy(et),et}(y,x);if(ut==U||ut==o||Yt&&!st){if(Je(y))return st?y:{};if(He=function(ye){return typeof ye.constructor!="function"||Ut(ye)?{}:(we=gt(ye),vt(we)?ne(we):{});var we}(Yt?{}:y),!x)return function(ye,we){return Jt(ye,Mt(ye),we)}(y,function(ye,we){return ye&&Jt(we,Gt(we),ye)}(He,y))}else{if(!g[ut])return st?y:{};He=function(ye,we,et,yt){var $t=ye.constructor;switch(we){case $e:return xt(ye);case l:case A:return new $t(+ye);case Ne:return function(je,d){var L=d?xt(je.buffer):je.buffer;return new je.constructor(L,je.byteOffset,je.byteLength)}(ye,yt);case O:case w:case Q:case ee:case Z:case t:case I:case R:case u:return function(je,d){var L=d?xt(je.buffer):je.buffer;return new je.constructor(L,je.byteOffset,je.length)}(ye,yt);case a:return function(je,d,L){return Ae(d?L(T(je),!0):T(je),Te,new je.constructor)}(ye,yt,et);case M:case X:return new $t(ye);case N:return function(je){var d=new je.constructor(je.source,_.exec(je));return d.lastIndex=je.lastIndex,d}(ye);case ue:return function(je,d,L){return Ae(d?L(oe(je),!0):oe(je),re,new je.constructor)}(ye,yt,et);case fe:return wt=ye,S?Object(S.call(wt)):{}}var wt}(y,ut,Dt,x)}}We||(We=new rt);var Wt=We.get(y);if(Wt)return Wt;if(We.set(y,He),!_t)var dt=q?function(ye){return function(we,et,yt){var $t=et(we);return qt(we)?$t:function(wt,je){for(var d=-1,L=je.length,Y=wt.length;++d<L;)wt[Y+d]=je[d];return wt}($t,yt(we))}(ye,Gt,Mt)}(y):Gt(y);return function(ye,we){for(var et=-1,yt=ye?ye.length:0;++et<yt&&we(ye[et],et,ye)!==!1;);}(dt||y,function(ye,we){dt&&(ye=y[we=ye]),nn(He,we,Dt(ye,x,q,le,we,y,We))}),He}function Ft(y){return!(!vt(y)||(x=y,Re&&Re in x))&&(jt(y)||Je(y)?Ye:h).test(Tt(y));var x}function xt(y){var x=new y.constructor(y.byteLength);return new te(x).set(new te(y)),x}function Jt(y,x,q,le){q||(q={});for(var Xe=-1,st=x.length;++Xe<st;){var We=x[Xe],He=le?le(q[We],y[We],We,q,y):void 0;nn(q,We,He===void 0?y[We]:He)}return q}function Lt(y,x){var q,le,Xe=y.__data__;return((le=typeof(q=x))=="string"||le=="number"||le=="symbol"||le=="boolean"?q!=="__proto__":q===null)?Xe[typeof x=="string"?"string":"hash"]:Xe.map}function mt(y,x){var q=function(le,Xe){return le==null?void 0:le[Xe]}(y,x);return Ft(q)?q:void 0}H.prototype.clear=function(){this.__data__=Le?Le(null):{}},H.prototype.delete=function(y){return this.has(y)&&delete this.__data__[y]},H.prototype.get=function(y){var x=this.__data__;if(Le){var q=x[y];return q===c?void 0:q}return ae.call(x,y)?x[y]:void 0},H.prototype.has=function(y){var x=this.__data__;return Le?x[y]!==void 0:ae.call(x,y)},H.prototype.set=function(y,x){return this.__data__[y]=Le&&x===void 0?c:x,this},Pe.prototype.clear=function(){this.__data__=[]},Pe.prototype.delete=function(y){var x=this.__data__,q=Bt(x,y);return!(q<0)&&(q==x.length-1?x.pop():Ge.call(x,q,1),!0)},Pe.prototype.get=function(y){var x=this.__data__,q=Bt(x,y);return q<0?void 0:x[q][1]},Pe.prototype.has=function(y){return Bt(this.__data__,y)>-1},Pe.prototype.set=function(y,x){var q=this.__data__,le=Bt(q,y);return le<0?q.push([y,x]):q[le][1]=x,this},_e.prototype.clear=function(){this.__data__={hash:new H,map:new(nt||Pe),string:new H}},_e.prototype.delete=function(y){return Lt(this,y).delete(y)},_e.prototype.get=function(y){return Lt(this,y).get(y)},_e.prototype.has=function(y){return Lt(this,y).has(y)},_e.prototype.set=function(y,x){return Lt(this,y).set(y,x),this},rt.prototype.clear=function(){this.__data__=new Pe},rt.prototype.delete=function(y){return this.__data__.delete(y)},rt.prototype.get=function(y){return this.__data__.get(y)},rt.prototype.has=function(y){return this.__data__.has(y)},rt.prototype.set=function(y,x){var q=this.__data__;if(q instanceof Pe){var le=q.__data__;if(!nt||le.length<199)return le.push([y,x]),this;q=this.__data__=new _e(le)}return q.set(y,x),this};var Mt=Ee?z(Ee,Object):function(){return[]},Et=function(y){return ct.call(y)};function Kt(y,x){return!!(x=x==null?p:x)&&(typeof y=="number"||P.test(y))&&y>-1&&y%1==0&&y<x}function Ut(y){var x=y&&y.constructor;return y===(typeof x=="function"&&x.prototype||Ve)}function Tt(y){if(y!=null){try{return It.call(y)}catch(x){}try{return y+""}catch(x){}}return""}function Vt(y,x){return y===x||y!=y&&x!=x}(Ze&&Et(new Ze(new ArrayBuffer(1)))!=Ne||nt&&Et(new nt)!=a||Fe&&Et(Fe.resolve())!=K||Me&&Et(new Me)!=ue||ze&&Et(new ze)!=Se)&&(Et=function(y){var x=ct.call(y),q=x==U?y.constructor:void 0,le=q?Tt(q):void 0;if(le)switch(le){case Ke:return Ne;case V:return a;case r:return K;case pe:return ue;case $:return Se}return x});var qt=Array.isArray;function Rt(y){return y!=null&&function(x){return typeof x=="number"&&x>-1&&x%1==0&&x<=p}(y.length)&&!jt(y)}var Nt=s||function(){return!1};function jt(y){var x=vt(y)?ct.call(y):"";return x==C||x==D}function vt(y){var x=typeof y;return!!y&&(x=="object"||x=="function")}function Gt(y){return Rt(y)?Ht(y):function(x){if(!Ut(x))return k(x);var q=[];for(var le in Object(x))ae.call(x,le)&&le!="constructor"&&q.push(le);return q}(y)}b.exports=function(y){return Dt(y,!0,!0)}});let i="\xA0";function f(b,v=0){return function({str:c,idx:p=0,stopAtNewlines:o=!1,stopAtRawNbsp:l=!1}){if(typeof c!="string"||!c.length||(p&&typeof p=="number"||(p=0),!c[p+1]))return null;if(c[p+1]&&(c[p+1].trim()||o&&`
-\r`.includes(c[p+1])||l&&c[p+1]===i))return p+1;if(c[p+2]&&(c[p+2].trim()||o&&`
-\r`.includes(c[p+2])||l&&c[p+2]===i))return p+2;for(let A=p+1,C=c.length;A<C;A++)if(c[A].trim()||o&&`
-\r`.includes(c[A])||l&&c[A]===i)return A;return null}({str:b,idx:v,stopAtNewlines:!1,stopAtRawNbsp:!1})}function J(b,v=0){return function({str:c,idx:p,stopAtNewlines:o,stopAtRawNbsp:l}){if(typeof c!="string"||!c.length||(p&&typeof p=="number"||(p=0),p<1))return null;if(c[~-p]&&(c[~-p].trim()||o&&`
-\r`.includes(c[~-p])||l&&c[~-p]===i))return~-p;if(c[p-2]&&(c[p-2].trim()||o&&`
-\r`.includes(c[p-2])||l&&c[p-2]===i))return p-2;for(let A=p;A--;)if(c[A]&&(c[A].trim()||o&&`
-\r`.includes(c[A])||l&&c[A]===i))return A;return null}({str:b,idx:v,stopAtNewlines:!1,stopAtRawNbsp:!1})}e.extract=function(b){if(typeof b!="string")throw new TypeError(`string-extract-class-names: [THROW_ID_01] first str should be string, not ${typeof b}, currently equal to ${JSON.stringify(b,null,4)}`);let v=".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`",c;function p(A){return typeof A=="string"&&!!A.length&&(A.charCodeAt(0)>64&&A.charCodeAt(0)<91||A.charCodeAt(0)>96&&A.charCodeAt(0)<123)}let o=null,l={res:[],ranges:[]};for(let A=0,C=b.length;A<=C;A++){o!==null&&A>=o&&(!b[A]||!b[A].trim()||v.includes(b[A]))&&(A>o+1&&(l.ranges.push([o,A]),l.res.push(`${c||""}${b.slice(o,A)}`),c&&(c=void 0)),o=null),!b[A]||o!==null||b[A]!=="."&&b[A]!=="#"||(o=A);let D=f(b,A+4);b.startsWith("class",A)&&typeof J(b,A)=="number"&&b[J(b,A)]==="["&&typeof D=="number"&&b[D]==="="&&(f(b,D)&&p(b[f(b,D)])?o=f(b,D):`'"`.includes(b[f(b,D)])&&p(b[f(b,f(b,D))])&&(o=f(b,f(b,D))),c=".");let a=f(b,A+1);b.startsWith("id",A)&&b[J(b,A)]==="["&&a!==null&&b[a]==="="&&(p(b[f(b,a)])?o=f(b,a):`'"`.includes(b[f(b,a)])&&p(b[f(b,f(b,a))])&&(o=f(b,f(b,a))),c="#")}return l.ranges.length||(l.ranges=null),l},e.version="6.0.12",Object.defineProperty(e,"__esModule",{value:!0})})});var ir=St(($n,or)=>{(function(e,n){typeof $n=="object"&&typeof or!="undefined"?n($n):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).arrayPullAllWithGlob={})})($n,function(e){"use strict";let n=new Map;function i(b,v){if(!Array.isArray(b))switch(typeof b){case"string":b=[b];break;case"undefined":b=[];break;default:throw new TypeError(`Expected '${v}' to be a string or an array, but got a type of '${typeof b}'`)}return b.filter(c=>{if(typeof c!="string"){if(c===void 0)return!1;throw new TypeError(`Expected '${v}' to be an array of strings, but found a type of '${typeof c}' in the array`)}return!0})}function f(b,v){v=ce({caseSensitive:!1},v);let c=b+JSON.stringify(v);if(n.has(c))return n.get(c);let p=b[0]==="!";p&&(b=b.slice(1)),b=(l=>{if(typeof l!="string")throw new TypeError("Expected a string");return l.replace(/[|\\{}()[\]^$+*?.]/g,"\\$&").replace(/-/g,"\\x2d")})(b).replace(/\\\*/g,"[\\s\\S]*");let o=new RegExp(`^${b}$`,v.caseSensitive?"":"i");return o.negated=p,n.set(c,o),o}var J=(b,v,c)=>{if(b=i(b,"inputs"),(v=i(v,"patterns")).length===0)return[];let p=v[0][0]==="!";v=v.map(l=>f(l,c));let o=[];for(let l of b){let A=p;for(let C of v)C.test(l)&&(A=!C.negated);A&&o.push(l)}return o};J.isMatch=(b,v,c)=>(b=i(b,"inputs"),(v=i(v,"patterns")).length!==0&&b.some(p=>v.every(o=>{let l=f(o,c),A=l.test(p);return l.negated?!A:A}))),e.pull=function(b,v,c){if(!b.length)return[];if(!b.length||!v.length)return Array.from(b);let p=typeof v=="string"?[v]:Array.from(v),o=ce({caseSensitive:!0},c);return Array.from(b).filter(l=>!p.some(A=>J.isMatch(l,A,{caseSensitive:o.caseSensitive})))},e.version="5.0.12",Object.defineProperty(e,"__esModule",{value:!0})})});var sr=St((bn,lr)=>{(function(e,n){typeof bn=="object"&&typeof lr!="undefined"?n(bn):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).stringLeftRight={})})(bn,function(e){"use strict";var n,i,f=Object.prototype,J=Function.prototype.toString,b=f.hasOwnProperty,v=J.call(Object),c=f.toString,p=(n=Object.getPrototypeOf,i=Object,function(O){return n(i(O))}),o=function(O){if(!function(ee){return!!ee&&typeof ee=="object"}(O)||c.call(O)!="[object Object]"||function(ee){var Z=!1;if(ee!=null&&typeof ee.toString!="function")try{Z=!!(ee+"")}catch(t){}return Z}(O))return!1;var w=p(O);if(w===null)return!0;var Q=b.call(w,"constructor")&&w.constructor;return typeof Q=="function"&&Q instanceof Q&&J.call(Q)==v},l=typeof globalThis!="undefined"?globalThis:typeof window!="undefined"?window:typeof global!="undefined"?global:typeof self!="undefined"?self:{},A=function(O){var w={exports:{}};return O(w,w.exports),w.exports}(function(O,w){var Q="__lodash_hash_undefined__",ee=9007199254740991,Z="[object Arguments]",t="[object Boolean]",I="[object Date]",R="[object Function]",u="[object GeneratorFunction]",_="[object Map]",h="[object Number]",P="[object Object]",g="[object Promise]",F="[object RegExp]",E="[object Set]",Oe="[object String]",G="[object Symbol]",be="[object WeakMap]",Te="[object ArrayBuffer]",re="[object DataView]",Ae="[object Float32Array]",Je="[object Float64Array]",T="[object Int8Array]",z="[object Int16Array]",oe="[object Int32Array]",he="[object Uint8Array]",Ue="[object Uint8ClampedArray]",qe="[object Uint16Array]",Ve="[object Uint32Array]",ve=/\w*$/,Re=/^\[object .+?Constructor\]$/,It=/^(?:0|[1-9]\d*)$/,ae={};ae[Z]=ae["[object Array]"]=ae[Te]=ae[re]=ae[t]=ae[I]=ae[Ae]=ae[Je]=ae[T]=ae[z]=ae[oe]=ae[_]=ae[h]=ae[P]=ae[F]=ae[E]=ae[Oe]=ae[G]=ae[he]=ae[Ue]=ae[qe]=ae[Ve]=!0,ae["[object Error]"]=ae[R]=ae[be]=!1;var ct=typeof self=="object"&&self&&self.Object===Object&&self,Ye=typeof l=="object"&&l&&l.Object===Object&&l||ct||Function("return this")(),bt=w&&!w.nodeType&&w,Ie=bt&&O&&!O.nodeType&&O,te=Ie&&Ie.exports===bt;function gt(d,L){return d.set(L[0],L[1]),d}function ne(d,L){return d.add(L),d}function Qe(d,L,Y,de){var ot=-1,m=d?d.length:0;for(de&&m&&(Y=d[++ot]);++ot<m;)Y=L(Y,d[ot],ot,d);return Y}function Ge(d){var L=!1;if(d!=null&&typeof d.toString!="function")try{L=!!(d+"")}catch(Y){}return L}function Ee(d){var L=-1,Y=Array(d.size);return d.forEach(function(de,ot){Y[++L]=[ot,de]}),Y}function s(d,L){return function(Y){return d(L(Y))}}function k(d){var L=-1,Y=Array(d.size);return d.forEach(function(de){Y[++L]=de}),Y}var Ze,nt=Array.prototype,Fe=Function.prototype,Me=Object.prototype,ze=Ye["__core-js_shared__"],Le=(Ze=/[^.]+$/.exec(ze&&ze.keys&&ze.keys.IE_PROTO||""))?"Symbol(src)_1."+Ze:"",Ke=Fe.toString,V=Me.hasOwnProperty,r=Me.toString,pe=RegExp("^"+Ke.call(V).replace(/[\\^$.*+?()[\]{}|]/g,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$"),$=te?Ye.Buffer:void 0,W=Ye.Symbol,S=Ye.Uint8Array,H=s(Object.getPrototypeOf,Object),Pe=Object.create,_e=Me.propertyIsEnumerable,rt=nt.splice,Ht=Object.getOwnPropertySymbols,nn=$?$.isBuffer:void 0,Bt=s(Object.keys,Object),Dt=He(Ye,"DataView"),Ft=He(Ye,"Map"),xt=He(Ye,"Promise"),Jt=He(Ye,"Set"),Lt=He(Ye,"WeakMap"),mt=He(Object,"create"),Mt=dt(Dt),Et=dt(Ft),Kt=dt(xt),Ut=dt(Jt),Tt=dt(Lt),Vt=W?W.prototype:void 0,qt=Vt?Vt.valueOf:void 0;function Rt(d){var L=-1,Y=d?d.length:0;for(this.clear();++L<Y;){var de=d[L];this.set(de[0],de[1])}}function Nt(d){var L=-1,Y=d?d.length:0;for(this.clear();++L<Y;){var de=d[L];this.set(de[0],de[1])}}function jt(d){var L=-1,Y=d?d.length:0;for(this.clear();++L<Y;){var de=d[L];this.set(de[0],de[1])}}function vt(d){this.__data__=new Nt(d)}function Gt(d,L){var Y=we(d)||function(j){return function(B){return function(ie){return!!ie&&typeof ie=="object"}(B)&&et(B)}(j)&&V.call(j,"callee")&&(!_e.call(j,"callee")||r.call(j)==Z)}(d)?function(j,B){for(var ie=-1,ke=Array(j);++ie<j;)ke[ie]=B(ie);return ke}(d.length,String):[],de=Y.length,ot=!!de;for(var m in d)!L&&!V.call(d,m)||ot&&(m=="length"||Yt(m,de))||Y.push(m);return Y}function y(d,L,Y){var de=d[L];V.call(d,L)&&ye(de,Y)&&(Y!==void 0||L in d)||(d[L]=Y)}function x(d,L){for(var Y=d.length;Y--;)if(ye(d[Y][0],L))return Y;return-1}function q(d,L,Y,de,ot,m,j){var B;if(de&&(B=m?de(d,ot,m,j):de(d)),B!==void 0)return B;if(!wt(d))return d;var ie=we(d);if(ie){if(B=function(ge){var Ce=ge.length,lt=ge.constructor(Ce);return Ce&&typeof ge[0]=="string"&&V.call(ge,"index")&&(lt.index=ge.index,lt.input=ge.input),lt}(d),!L)return function(ge,Ce){var lt=-1,Ot=ge.length;for(Ce||(Ce=Array(Ot));++lt<Ot;)Ce[lt]=ge[lt];return Ce}(d,B)}else{var ke=ut(d),ft=ke==R||ke==u;if(yt(d))return function(ge,Ce){if(Ce)return ge.slice();var lt=new ge.constructor(ge.length);return ge.copy(lt),lt}(d,L);if(ke==P||ke==Z||ft&&!m){if(Ge(d))return m?d:{};if(B=function(ge){return typeof ge.constructor!="function"||Wt(ge)?{}:(Ce=H(ge),wt(Ce)?Pe(Ce):{});var Ce}(ft?{}:d),!L)return function(ge,Ce){return st(ge,_t(ge),Ce)}(d,function(ge,Ce){return ge&&st(Ce,je(Ce),ge)}(B,d))}else{if(!ae[ke])return m?d:{};B=function(ge,Ce,lt,Ot){var zt=ge.constructor;switch(Ce){case Te:return Xe(ge);case t:case I:return new zt(+ge);case re:return function(se,xe){var at=xe?Xe(se.buffer):se.buffer;return new se.constructor(at,se.byteOffset,se.byteLength)}(ge,Ot);case Ae:case Je:case T:case z:case oe:case he:case Ue:case qe:case Ve:return function(se,xe){var at=xe?Xe(se.buffer):se.buffer;return new se.constructor(at,se.byteOffset,se.length)}(ge,Ot);case _:return function(se,xe,at){return Qe(xe?at(Ee(se),!0):Ee(se),gt,new se.constructor)}(ge,Ot,lt);case h:case Oe:return new zt(ge);case F:return function(se){var xe=new se.constructor(se.source,ve.exec(se));return xe.lastIndex=se.lastIndex,xe}(ge);case E:return function(se,xe,at){return Qe(xe?at(k(se),!0):k(se),ne,new se.constructor)}(ge,Ot,lt);case G:return me=ge,qt?Object(qt.call(me)):{}}var me}(d,ke,q,L)}}j||(j=new vt);var tt=j.get(d);if(tt)return tt;if(j.set(d,B),!ie)var it=Y?function(ge){return function(Ce,lt,Ot){var zt=lt(Ce);return we(Ce)?zt:function(me,se){for(var xe=-1,at=se.length,Qt=me.length;++xe<at;)me[Qt+xe]=se[xe];return me}(zt,Ot(Ce))}(ge,je,_t)}(d):je(d);return function(ge,Ce){for(var lt=-1,Ot=ge?ge.length:0;++lt<Ot&&Ce(ge[lt],lt,ge)!==!1;);}(it||d,function(ge,Ce){it&&(ge=d[Ce=ge]),y(B,Ce,q(ge,L,Y,de,Ce,d,j))}),B}function le(d){return!(!wt(d)||function(L){return!!Le&&Le in L}(d))&&($t(d)||Ge(d)?pe:Re).test(dt(d))}function Xe(d){var L=new d.constructor(d.byteLength);return new S(L).set(new S(d)),L}function st(d,L,Y,de){Y||(Y={});for(var ot=-1,m=L.length;++ot<m;){var j=L[ot],B=de?de(Y[j],d[j],j,Y,d):void 0;y(Y,j,B===void 0?d[j]:B)}return Y}function We(d,L){var Y,de,ot=d.__data__;return((de=typeof(Y=L))=="string"||de=="number"||de=="symbol"||de=="boolean"?Y!=="__proto__":Y===null)?ot[typeof L=="string"?"string":"hash"]:ot.map}function He(d,L){var Y=function(de,ot){return de==null?void 0:de[ot]}(d,L);return le(Y)?Y:void 0}Rt.prototype.clear=function(){this.__data__=mt?mt(null):{}},Rt.prototype.delete=function(d){return this.has(d)&&delete this.__data__[d]},Rt.prototype.get=function(d){var L=this.__data__;if(mt){var Y=L[d];return Y===Q?void 0:Y}return V.call(L,d)?L[d]:void 0},Rt.prototype.has=function(d){var L=this.__data__;return mt?L[d]!==void 0:V.call(L,d)},Rt.prototype.set=function(d,L){return this.__data__[d]=mt&&L===void 0?Q:L,this},Nt.prototype.clear=function(){this.__data__=[]},Nt.prototype.delete=function(d){var L=this.__data__,Y=x(L,d);return!(Y<0)&&(Y==L.length-1?L.pop():rt.call(L,Y,1),!0)},Nt.prototype.get=function(d){var L=this.__data__,Y=x(L,d);return Y<0?void 0:L[Y][1]},Nt.prototype.has=function(d){return x(this.__data__,d)>-1},Nt.prototype.set=function(d,L){var Y=this.__data__,de=x(Y,d);return de<0?Y.push([d,L]):Y[de][1]=L,this},jt.prototype.clear=function(){this.__data__={hash:new Rt,map:new(Ft||Nt),string:new Rt}},jt.prototype.delete=function(d){return We(this,d).delete(d)},jt.prototype.get=function(d){return We(this,d).get(d)},jt.prototype.has=function(d){return We(this,d).has(d)},jt.prototype.set=function(d,L){return We(this,d).set(d,L),this},vt.prototype.clear=function(){this.__data__=new Nt},vt.prototype.delete=function(d){return this.__data__.delete(d)},vt.prototype.get=function(d){return this.__data__.get(d)},vt.prototype.has=function(d){return this.__data__.has(d)},vt.prototype.set=function(d,L){var Y=this.__data__;if(Y instanceof Nt){var de=Y.__data__;if(!Ft||de.length<199)return de.push([d,L]),this;Y=this.__data__=new jt(de)}return Y.set(d,L),this};var _t=Ht?s(Ht,Object):function(){return[]},ut=function(d){return r.call(d)};function Yt(d,L){return!!(L=L==null?ee:L)&&(typeof d=="number"||It.test(d))&&d>-1&&d%1==0&&d<L}function Wt(d){var L=d&&d.constructor;return d===(typeof L=="function"&&L.prototype||Me)}function dt(d){if(d!=null){try{return Ke.call(d)}catch(L){}try{return d+""}catch(L){}}return""}function ye(d,L){return d===L||d!=d&&L!=L}(Dt&&ut(new Dt(new ArrayBuffer(1)))!=re||Ft&&ut(new Ft)!=_||xt&&ut(xt.resolve())!=g||Jt&&ut(new Jt)!=E||Lt&&ut(new Lt)!=be)&&(ut=function(d){var L=r.call(d),Y=L==P?d.constructor:void 0,de=Y?dt(Y):void 0;if(de)switch(de){case Mt:return re;case Et:return _;case Kt:return g;case Ut:return E;case Tt:return be}return L});var we=Array.isArray;function et(d){return d!=null&&function(L){return typeof L=="number"&&L>-1&&L%1==0&&L<=ee}(d.length)&&!$t(d)}var yt=nn||function(){return!1};function $t(d){var L=wt(d)?r.call(d):"";return L==R||L==u}function wt(d){var L=typeof d;return!!d&&(L=="object"||L=="function")}function je(d){return et(d)?Gt(d):function(L){if(!Wt(L))return Bt(L);var Y=[];for(var de in Object(L))V.call(L,de)&&de!="constructor"&&Y.push(de);return Y}(d)}O.exports=function(d){return q(d,!0,!0)}});let C="\xA0";function D(O){let w={value:O,hungry:!1,optional:!1};return(w.value.endsWith("?*")||w.value.endsWith("*?"))&&w.value.length>2?(w.value=w.value.slice(0,w.value.length-2),w.optional=!0,w.hungry=!0):w.value.endsWith("?")&&w.value.length>1?(w.value=w.value.slice(0,~-w.value.length),w.optional=!0):w.value.endsWith("*")&&w.value.length>1&&(w.value=w.value.slice(0,~-w.value.length),w.hungry=!0),w}function a(O){return typeof O=="number"}function M(O){return typeof O=="string"}function U({str:O,idx:w=0,stopAtNewlines:Q=!1,stopAtRawNbsp:ee=!1}){if(typeof O!="string"||!O.length||(w&&typeof w=="number"||(w=0),!O[w+1]))return null;if(O[w+1]&&(O[w+1].trim()||Q&&`
-\r`.includes(O[w+1])||ee&&O[w+1]===C))return w+1;if(O[w+2]&&(O[w+2].trim()||Q&&`
-\r`.includes(O[w+2])||ee&&O[w+2]===C))return w+2;for(let Z=w+1,t=O.length;Z<t;Z++)if(O[Z].trim()||Q&&`
-\r`.includes(O[Z])||ee&&O[Z]===C)return Z;return null}function K(O,w=0){return U({str:O,idx:w,stopAtNewlines:!1,stopAtRawNbsp:!1})}function N({str:O,idx:w,stopAtNewlines:Q,stopAtRawNbsp:ee}){if(typeof O!="string"||!O.length||(w&&typeof w=="number"||(w=0),w<1))return null;if(O[~-w]&&(O[~-w].trim()||Q&&`
-\r`.includes(O[~-w])||ee&&O[~-w]===C))return~-w;if(O[w-2]&&(O[w-2].trim()||Q&&`
-\r`.includes(O[w-2])||ee&&O[w-2]===C))return w-2;for(let Z=w;Z--;)if(O[Z]&&(O[Z].trim()||Q&&`
-\r`.includes(O[Z])||ee&&O[Z]===C))return Z;return null}function ue(O,w=0){return N({str:O,idx:w,stopAtNewlines:!1,stopAtRawNbsp:!1})}function X(O,w,Q,ee,Z){if(typeof w!="string"||!w.length||(typeof Q!="number"&&(Q=0),O==="right"&&!w[Q+1]||O==="left"&&!w[~-Q]))return null;let t=Q,I=[],R,u,_,h=0;for(;h<Z.length;){if(!M(Z[h])||!Z[h].length){h+=1;continue}let{value:P,optional:g,hungry:F}=D(Z[h]),E=O==="right"?K(w,t):ue(w,t);if(!(ee.i&&w[E].toLowerCase()===P.toLowerCase()||!ee.i&&w[E]===P)){if(g){h+=1;continue}if(_){h+=1,_=void 0;continue}return null}{let Oe=O==="right"?K(w,E):ue(w,E);F&&(ee.i&&w[Oe].toLowerCase()===P.toLowerCase()||!ee.i&&w[Oe]===P)?_=!0:h+=1,typeof E=="number"&&O==="right"&&E>t+1?I.push([t+1,E]):O==="left"&&typeof E=="number"&&E<~-t&&I.unshift([E+1,t]),t=E,O==="right"?(R===void 0&&(R=E),u=E):(u===void 0&&(u=E),R=E)}}return R===void 0||u===void 0?null:{gaps:I,leftmostChar:R,rightmostChar:u}}let fe={i:!1};function Se(O,w,...Q){if(!Q||!Q.length)throw new Error("string-left-right/leftSeq(): only two input arguments were passed! Did you intend to use left() method instead?");let ee;return ee=o(Q[0])?ce(ce({},fe),Q.shift()):fe,X("left",O,w,ee,Array.from(Q).reverse())}function $e(O,w,...Q){if(!Q||!Q.length)throw new Error("string-left-right/rightSeq(): only two input arguments were passed! Did you intend to use right() method instead?");let ee;return ee=o(Q[0])?ce(ce({},fe),Q.shift()):fe,X("right",O,w,ee,Q)}function Ne(O,w,Q,ee,Z=[]){if(typeof w!="string"||!w.length||(Q&&typeof Q=="number"||(Q=0),O==="right"&&!w[Q+1]||O==="left"&&+Q==0))return null;let t=null,I=null;do t=O==="right"?$e(w,typeof I=="number"?I:Q,...Z):Se(w,typeof I=="number"?I:Q,...Z),t!==null&&(I=O==="right"?t.rightmostChar:t.leftmostChar);while(t);if(I!=null&&O==="right"&&(I+=1),I===null)return null;if(O==="right"){if(w[I]&&w[I].trim())return I;let u=K(w,I);if(ee&&ee.mode!==0){if(ee.mode===1)return I;if(ee.mode===2){let _=w.slice(I);if(_.trim()||_.includes(`
-`)||_.includes("\r")){for(let h=I,P=w.length;h<P;h++)if(w[h].trim()||`
-\r`.includes(w[h]))return h}return w.length}}else{if(u===I+1)return I;if(!(w.slice(I,u||w.length).trim()||w.slice(I,u||w.length).includes(`
-`)||w.slice(I,u||w.length).includes("\r")))return u?~-u:w.length;for(let _=I,h=w.length;_<h;_++)if(`
-\r`.includes(w[_]))return _}return u||w.length}if(w[I]&&w[~-I]&&w[~-I].trim())return I;let R=ue(w,I);if(!ee||ee.mode===0){if(R===I-2)return I;if(w.slice(0,I).trim()||w.slice(0,I).includes(`
-`)||w.slice(0,I).includes("\r")){for(let u=I;u--;)if(`
-\r`.includes(w[u])||w[u].trim())return u+1+(w[u].trim()?1:0)}return 0}if(ee.mode===1)return I;if(ee.mode===2){let u=w.slice(0,I);if(u.trim()||u.includes(`
-`)||u.includes("\r")){for(let _=I;_--;)if(w[_].trim()||`
-\r`.includes(w[_]))return _+1}return 0}return R!==null?R+1:0}e.chompLeft=function(O,w,...Q){if(!Q.length||Q.length===1&&o(Q[0]))return null;let ee={mode:0};if(o(Q[0])){let Z=ce(ce({},ee),A(Q[0]));if(Z.mode){if(M(Z.mode)&&"0123".includes(Z.mode))Z.mode=Number.parseInt(Z.mode,10);else if(!a(Z.mode))throw new Error(`string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ${Z.mode} (type ${typeof Z.mode})`)}else Z.mode=0;return Ne("left",O,w,Z,A(Q).slice(1))}return M(Q[0])?Ne("left",O,w,ee,A(Q)):Ne("left",O,w,ee,A(Q).slice(1))},e.chompRight=function(O,w,...Q){if(!Q.length||Q.length===1&&o(Q[0]))return null;let ee={mode:0};if(o(Q[0])){let Z=ce(ce({},ee),A(Q[0]));if(Z.mode){if(M(Z.mode)&&"0123".includes(Z.mode))Z.mode=Number.parseInt(Z.mode,10);else if(!a(Z.mode))throw new Error(`string-left-right/chompRight(): [THROW_ID_02] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ${Z.mode} (type ${typeof Z.mode})`)}else Z.mode=0;return Ne("right",O,w,Z,A(Q).slice(1))}return M(Q[0])?Ne("right",O,w,ee,A(Q)):Ne("right",O,w,ee,A(Q).slice(1))},e.left=ue,e.leftSeq=Se,e.leftStopAtNewLines=function(O,w){return N({str:O,idx:w,stopAtNewlines:!0,stopAtRawNbsp:!1})},e.leftStopAtRawNbsp=function(O,w){return N({str:O,idx:w,stopAtNewlines:!1,stopAtRawNbsp:!0})},e.right=K,e.rightSeq=$e,e.rightStopAtNewLines=function(O,w){return U({str:O,idx:w,stopAtNewlines:!0,stopAtRawNbsp:!1})},e.rightStopAtRawNbsp=function(O,w){return U({str:O,idx:w,stopAtNewlines:!1,stopAtRawNbsp:!0})},e.version="4.0.12",Object.defineProperty(e,"__esModule",{value:!0})})});var Tr=St(($l,ar)=>{var xn="__lodash_hash_undefined__",lo=9007199254740991,so="[object Function]",uo="[object GeneratorFunction]",ao=/[\\^$.*+?()[\]{}|]/g,co=/^\[object .+?Constructor\]$/,fo=typeof global=="object"&&global&&global.Object===Object&&global,ho=typeof self=="object"&&self&&self.Object===Object&&self,cr=fo||ho||Function("return this")();function go(e,n,i){switch(i.length){case 0:return e.call(n);case 1:return e.call(n,i[0]);case 2:return e.call(n,i[0],i[1]);case 3:return e.call(n,i[0],i[1],i[2])}return e.apply(n,i)}function mo(e,n){var i=e?e.length:0;return!!i&&po(e,n,0)>-1}function yo(e,n,i){for(var f=-1,J=e?e.length:0;++f<J;)if(i(n,e[f]))return!0;return!1}function fr(e,n){for(var i=-1,f=e?e.length:0,J=Array(f);++i<f;)J[i]=n(e[i],i,e);return J}function $o(e,n,i,f){for(var J=e.length,b=i+(f?1:-1);f?b--:++b<J;)if(n(e[b],b,e))return b;return-1}function po(e,n,i){if(n!==n)return $o(e,bo,i);for(var f=i-1,J=e.length;++f<J;)if(e[f]===n)return f;return-1}function bo(e){return e!==e}function To(e){return function(n){return e(n)}}function hr(e,n){return e.has(n)}function So(e,n){return e==null?void 0:e[n]}function vo(e){var n=!1;if(e!=null&&typeof e.toString!="function")try{n=!!(e+"")}catch(i){}return n}var _o=Array.prototype,wo=Function.prototype,gr=Object.prototype,Ln=cr["__core-js_shared__"],dr=function(){var e=/[^.]+$/.exec(Ln&&Ln.keys&&Ln.keys.IE_PROTO||"");return e?"Symbol(src)_1."+e:""}(),pr=wo.toString,Mn=gr.hasOwnProperty,Oo=gr.toString,Ao=RegExp("^"+pr.call(Mn).replace(ao,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$"),Co=_o.splice,mr=Math.max,Io=Math.min,Eo=yr(cr,"Map"),cn=yr(Object,"create");function Zt(e){var n=-1,i=e?e.length:0;for(this.clear();++n<i;){var f=e[n];this.set(f[0],f[1])}}function No(){this.__data__=cn?cn(null):{}}function Ro(e){return this.has(e)&&delete this.__data__[e]}function jo(e){var n=this.__data__;if(cn){var i=n[e];return i===xn?void 0:i}return Mn.call(n,e)?n[e]:void 0}function xo(e){var n=this.__data__;return cn?n[e]!==void 0:Mn.call(n,e)}function Lo(e,n){var i=this.__data__;return i[e]=cn&&n===void 0?xn:n,this}Zt.prototype.clear=No;Zt.prototype.delete=Ro;Zt.prototype.get=jo;Zt.prototype.has=xo;Zt.prototype.set=Lo;function on(e){var n=-1,i=e?e.length:0;for(this.clear();++n<i;){var f=e[n];this.set(f[0],f[1])}}function Mo(){this.__data__=[]}function Wo(e){var n=this.__data__,i=Tn(n,e);if(i<0)return!1;var f=n.length-1;return i==f?n.pop():Co.call(n,i,1),!0}function Ho(e){var n=this.__data__,i=Tn(n,e);return i<0?void 0:n[i][1]}function Do(e){return Tn(this.__data__,e)>-1}function Fo(e,n){var i=this.__data__,f=Tn(i,e);return f<0?i.push([e,n]):i[f][1]=n,this}on.prototype.clear=Mo;on.prototype.delete=Wo;on.prototype.get=Ho;on.prototype.has=Do;on.prototype.set=Fo;function ln(e){var n=-1,i=e?e.length:0;for(this.clear();++n<i;){var f=e[n];this.set(f[0],f[1])}}function Po(){this.__data__={hash:new Zt,map:new(Eo||on),string:new Zt}}function ko(e){return Sn(this,e).delete(e)}function Bo(e){return Sn(this,e).get(e)}function Jo(e){return Sn(this,e).has(e)}function Uo(e,n){return Sn(this,e).set(e,n),this}ln.prototype.clear=Po;ln.prototype.delete=ko;ln.prototype.get=Bo;ln.prototype.has=Jo;ln.prototype.set=Uo;function vn(e){var n=-1,i=e?e.length:0;for(this.__data__=new ln;++n<i;)this.add(e[n])}function qo(e){return this.__data__.set(e,xn),this}function Go(e){return this.__data__.has(e)}vn.prototype.add=vn.prototype.push=qo;vn.prototype.has=Go;function Tn(e,n){for(var i=e.length;i--;)if(zo(e[i][0],n))return i;return-1}function Ko(e,n,i){for(var f=i?yo:mo,J=e[0].length,b=e.length,v=b,c=Array(b),p=Infinity,o=[];v--;){var l=e[v];v&&n&&(l=fr(l,To(n))),p=Io(l.length,p),c[v]=!i&&(n||J>=120&&l.length>=120)?new vn(v&&l):void 0}l=e[0];var A=-1,C=c[0];e:for(;++A<J&&o.length<p;){var D=l[A],a=n?n(D):D;if(D=i||D!==0?D:0,!(C?hr(C,a):f(o,a,i))){for(v=b;--v;){var M=c[v];if(!(M?hr(M,a):f(e[v],a,i)))continue e}C&&C.push(a),o.push(D)}}return o}function Qo(e){if(!br(e)||Vo(e))return!1;var n=$r(e)||vo(e)?Ao:co;return n.test(Yo(e))}function Zo(e,n){return n=mr(n===void 0?e.length-1:n,0),function(){for(var i=arguments,f=-1,J=mr(i.length-n,0),b=Array(J);++f<J;)b[f]=i[n+f];f=-1;for(var v=Array(n+1);++f<n;)v[f]=i[f];return v[n]=b,go(e,this,v)}}function ei(e){return Xo(e)?e:[]}function Sn(e,n){var i=e.__data__;return ti(n)?i[typeof n=="string"?"string":"hash"]:i.map}function yr(e,n){var i=So(e,n);return Qo(i)?i:void 0}function ti(e){var n=typeof e;return n=="string"||n=="number"||n=="symbol"||n=="boolean"?e!=="__proto__":e===null}function Vo(e){return!!dr&&dr in e}function Yo(e){if(e!=null){try{return pr.call(e)}catch(n){}try{return e+""}catch(n){}}return""}var ni=Zo(function(e){var n=fr(e,ei);return n.length&&n[0]===e[0]?Ko(n):[]});function zo(e,n){return e===n||e!==e&&n!==n}function oi(e){return e!=null&&ri(e.length)&&!$r(e)}function Xo(e){return ii(e)&&oi(e)}function $r(e){var n=br(e)?Oo.call(e):"";return n==so||n==uo}function ri(e){return typeof e=="number"&&e>-1&&e%1==0&&e<=lo}function br(e){var n=typeof e;return!!e&&(n=="object"||n=="function")}function ii(e){return!!e&&typeof e=="object"}ar.exports=ni});var vr=St((_n,Sr)=>{(function(e,n){typeof _n=="object"&&typeof Sr!="undefined"?n(_n):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).stringRangeExpander={})})(_n,function(e){"use strict";let n={str:"",from:0,to:0,ifLeftSideIncludesThisThenCropTightly:"",ifLeftSideIncludesThisCropItToo:"",ifRightSideIncludesThisThenCropTightly:"",ifRightSideIncludesThisCropItToo:"",extendToOneSide:!1,wipeAllWhitespaceOnLeft:!1,wipeAllWhitespaceOnRight:!1,addSingleSpaceToPreventAccidentalConcatenation:!1};e.defaults=n,e.expander=function(i){let f=/^[0-9a-zA-Z]+$/;function J(l){return!(!l||typeof l!="string")&&!l.trim()}function b(l){return typeof l=="string"}if(!i||typeof i!="object"||Array.isArray(i)){let l;throw l=i===void 0?"but it is missing completely.":i===null?"but it was given as null.":`but it was given as ${typeof i}, equal to:
-${JSON.stringify(i,null,4)}.`,new Error(`string-range-expander: [THROW_ID_01] Input must be a plain object ${l}`)}if(typeof i=="object"&&i!==null&&!Array.isArray(i)&&!Object.keys(i).length)throw new Error("string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.");if(typeof i.from!="number")throw new Error(`string-range-expander: [THROW_ID_03] The input's "from" value opts.from, is not a number! Currently it's given as ${typeof i.from}, equal to ${JSON.stringify(i.from,null,0)}`);if(typeof i.to!="number")throw new Error(`string-range-expander: [THROW_ID_04] The input's "to" value opts.to, is not a number! Currently it's given as ${typeof i.to}, equal to ${JSON.stringify(i.to,null,0)}`);if(i&&i.str&&!i.str[i.from]&&i.from!==i.to)throw new Error(`string-range-expander: [THROW_ID_05] The given input string opts.str ("${i.str}") must contain the character at index "from" ("${i.from}")`);if(i&&i.str&&!i.str[i.to-1])throw new Error(`string-range-expander: [THROW_ID_06] The given input string, opts.str ("${i.str}") must contain the character at index before "to" ("${i.to-1}")`);if(i.from>i.to)throw new Error(`string-range-expander: [THROW_ID_07] The given "from" index, "${i.from}" is greater than "to" index, "${i.to}". That's wrong!`);if(b(i.extendToOneSide)&&i.extendToOneSide!=="left"&&i.extendToOneSide!=="right"||!b(i.extendToOneSide)&&i.extendToOneSide!==void 0&&i.extendToOneSide!==!1)throw new Error(`string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: "${i.extendToOneSide}" (${typeof i.extendToOneSide}). It has to be either Boolean "false" or strings "left" or "right"`);let v=ce(ce({},n),i);if(Array.isArray(v.ifLeftSideIncludesThisThenCropTightly)){let l,A;if(!v.ifLeftSideIncludesThisThenCropTightly.every((C,D)=>!!b(C)||(l=D,A=C,!1)))throw new Error(`string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:
-${JSON.stringify(v.ifLeftSideIncludesThisThenCropTightly,null,4)}. Now, that array contains not only string elements. For example, an element at index ${l} is of a type ${typeof A} (equal to ${JSON.stringify(A,null,0)}).`);v.ifLeftSideIncludesThisThenCropTightly=v.ifLeftSideIncludesThisThenCropTightly.join("")}let c=v.str,p=v.from,o=v.to;if(v.extendToOneSide!=="right"&&(J(c[p-1])&&(J(c[p-2])||v.ifLeftSideIncludesThisCropItToo.includes(c[p-2]))||c[p-1]&&v.ifLeftSideIncludesThisCropItToo.includes(c[p-1])||v.wipeAllWhitespaceOnLeft&&J(c[p-1]))){for(let l=p;l--;)if(!v.ifLeftSideIncludesThisCropItToo.includes(c[l])){if(c[l].trim()){p=v.wipeAllWhitespaceOnLeft||v.ifLeftSideIncludesThisCropItToo.includes(c[l+1])?l+1:l+2;break}if(l===0){p=v.wipeAllWhitespaceOnLeft?0:1;break}}}if(v.extendToOneSide!=="left"&&(J(c[o])&&(v.wipeAllWhitespaceOnRight||J(c[o+1]))||v.ifRightSideIncludesThisCropItToo.includes(c[o]))){for(let l=o,A=c.length;l<A;l++)if(!v.ifRightSideIncludesThisCropItToo.includes(c[l])&&(c[l]&&c[l].trim()||c[l]===void 0)){o=v.wipeAllWhitespaceOnRight||v.ifRightSideIncludesThisCropItToo.includes(c[l-1])?l:l-1;break}}return(v.extendToOneSide!=="right"&&b(v.ifLeftSideIncludesThisThenCropTightly)&&v.ifLeftSideIncludesThisThenCropTightly&&(c[p-2]&&v.ifLeftSideIncludesThisThenCropTightly.includes(c[p-2])||c[p-1]&&v.ifLeftSideIncludesThisThenCropTightly.includes(c[p-1]))||v.extendToOneSide!=="left"&&b(v.ifRightSideIncludesThisThenCropTightly)&&v.ifRightSideIncludesThisThenCropTightly&&(c[o+1]&&v.ifRightSideIncludesThisThenCropTightly.includes(c[o+1])||c[o]&&v.ifRightSideIncludesThisThenCropTightly.includes(c[o])))&&(v.extendToOneSide!=="right"&&J(c[p-1])&&!v.wipeAllWhitespaceOnLeft&&(p-=1),v.extendToOneSide!=="left"&&J(c[o])&&!v.wipeAllWhitespaceOnRight&&(o+=1)),v.addSingleSpaceToPreventAccidentalConcatenation&&c[p-1]&&c[p-1].trim()&&c[o]&&c[o].trim()&&(!v.ifLeftSideIncludesThisThenCropTightly&&!v.ifRightSideIncludesThisThenCropTightly||v.ifLeftSideIncludesThisThenCropTightly&&!v.ifLeftSideIncludesThisThenCropTightly.includes(c[p-1])||!(!v.ifRightSideIncludesThisThenCropTightly||c[o]&&v.ifRightSideIncludesThisThenCropTightly.includes(c[o])))&&(f.test(c[p-1])||f.test(c[o]))?[p,o," "]:[p,o]},e.version="2.0.12",Object.defineProperty(e,"__esModule",{value:!0})})});var wr=St((wn,_r)=>{(function(e,n){typeof wn=="object"&&typeof _r!="undefined"?n(wn):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).stringUglify={})})(wn,function(e){"use strict";function n(f,J=0){return f.codePointAt(J)||0}function i(f){let J="abcdefghijklmnopqrstuvwxyz",b="abcdefghijklmnopqrstuvwxyz0123456789",v={a:!1,b:!1,c:!1,d:!1,e:!1,f:!1,g:!1,h:!1,i:!1,j:!1,k:!1,l:!1,m:!1,n:!1,o:!1,p:!1,q:!1,r:!1,s:!1,t:!1,u:!1,v:!1,w:!1,x:!1,y:!1,z:!1},c={a:!1,b:!1,c:!1,d:!1,e:!1,f:!1,g:!1,h:!1,i:!1,j:!1,k:!1,l:!1,m:!1,n:!1,o:!1,p:!1,q:!1,r:!1,s:!1,t:!1,u:!1,v:!1,w:!1,x:!1,y:!1,z:!1},p={a:!1,b:!1,c:!1,d:!1,e:!1,f:!1,g:!1,h:!1,i:!1,j:!1,k:!1,l:!1,m:!1,n:!1,o:!1,p:!1,q:!1,r:!1,s:!1,t:!1,u:!1,v:!1,w:!1,x:!1,y:!1,z:!1},o=[];if(!Array.isArray(f)||!f.length)return f;for(let l=0,A=f.length;l<A;l++){if(f.indexOf(f[l])<l){o.push(o[f.indexOf(f[l])]);continue}let C=".#".includes(f[l][0])?f[l][0]:"",D=Array.from(f[l]).reduce((M,U)=>M+n(U),0);if(".#".includes(f[l][0])&&f[l].length<4||!".#".includes(f[l][0])&&f[l].length<3){let M=f[l];if(!o.includes(M)){o.push(M),M.startsWith(".")&&M.length===2&&v[M.slice(1)]===!1?v[M.slice(1)]=!0:M.startsWith("#")&&M.length===2&&c[M.slice(1)]===!1?c[M.slice(1)]=!0:M.startsWith(".")||M.startsWith("#")||M.length!==1||p[M]!==!1||(p[M]=!0);continue}}let a=`${C}${J[D%J.length]}${b[D%b.length]}`;if(o.includes(a)){let M=a,U=0,K=Array.from(f[l]).reduce((ue,X)=>ue<200?ue+n(X):(ue+n(X))%b.length,0),N=Array.from(f[l]).map(ue=>n(ue)).reduce((ue,X)=>{let fe=ue+X;do fe=String(fe).split("").reduce((Se,$e)=>Se+Number.parseInt($e,10),0);while(fe>=10);return fe},0);for(;o.includes(M);)U+=1,M+=b[K*N*U%b.length];a=M}o.push(a),a.startsWith(".")&&a.length===2&&v[a.slice(1)]===!1?v[a.slice(1)]=!0:a.startsWith("#")&&a.length===2&&c[a.slice(1)]===!1?c[a.slice(1)]=!0:a.startsWith(".")||a.startsWith("#")||a.length!==1||p[a]!==!1||(p[a]=!0)}for(let l=0,A=o.length;l<A;l++)o[l].startsWith(".")?v[o[l].slice(1,2)]===!1?(v[o[l].slice(1,2)]=o[l],o[l]=o[l].slice(0,2)):v[o[l].slice(1,2)]===o[l]&&(o[l]=o[l].slice(0,2)):o[l].startsWith("#")?c[o[l].slice(1,2)]===!1?(c[o[l].slice(1,2)]=o[l],o[l]=o[l].slice(0,2)):c[o[l].slice(1,2)]===o[l]&&(o[l]=o[l].slice(0,2)):o[l].startsWith(".")||o[l].startsWith("#")||(p[o[l].slice(0,1)]?p[o[l].slice(0,1)]===o[l]&&(o[l]=o[l].slice(0,1)):(p[o[l].slice(0,1)]=o[l],o[l]=o[l].slice(0,1)));return o}e.uglifyArr=i,e.uglifyById=function(f,J){return i(f)[J]},e.version="1.4.12",Object.defineProperty(e,"__esModule",{value:!0})})});var Ar=St((On,Or)=>{(function(e,n){typeof On=="object"&&typeof Or!="undefined"?n(On):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).rangesApply={})})(On,function(e){"use strict";let n={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function i(b,v){if(!Array.isArray(b)||!b.length)return b;let c=ce(ce({},n),v),p,o;if(c.strictlyTwoElementsInRangeArrays&&!b.filter(C=>C).every((C,D)=>C.length===2||(p=D,o=C.length,!1)))throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${p}th range (${JSON.stringify(b[p],null,4)}) has not two but ${o} elements!`);if(!b.filter(C=>C).every((C,D)=>!(!Number.isInteger(C[0])||C[0]<0||!Number.isInteger(C[1])||C[1]<0)||(p=D,!1)))throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${p}th range (${JSON.stringify(b[p],null,4)}) does not consist of only natural numbers!`);let l=b.filter(C=>C).length**2,A=0;return Array.from(b).filter(C=>C).sort((C,D)=>(c.progressFn&&(A+=1,c.progressFn(Math.floor(100*A/l))),C[0]===D[0]?C[1]<D[1]?-1:C[1]>D[1]?1:0:C[0]<D[0]?-1:1))}let f={mergeType:1,progressFn:null,joinRangesThatTouchEdges:!0};function J(b,v){function c(a){return a&&typeof a=="object"&&!Array.isArray(a)}if(!Array.isArray(b)||!b.length)return null;let p;if(v){if(!c(v))throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:
-${JSON.stringify(v,null,4)} (type ${typeof v})`);if(p=ce(ce({},f),v),p.progressFn&&c(p.progressFn)&&!Object.keys(p.progressFn).length)p.progressFn=null;else if(p.progressFn&&typeof p.progressFn!="function")throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof p.progressFn}", equal to ${JSON.stringify(p.progressFn,null,4)}`);if(p.mergeType&&+p.mergeType!=1&&+p.mergeType!=2)throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof p.mergeType}", equal to ${JSON.stringify(p.mergeType,null,4)}`);if(typeof p.joinRangesThatTouchEdges!="boolean")throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof p.joinRangesThatTouchEdges}", equal to ${JSON.stringify(p.joinRangesThatTouchEdges,null,4)}`)}else p=ce({},f);let o=b.filter(a=>a).map(a=>[...a]).filter(a=>a[2]!==void 0||a[0]!==a[1]),l,A,C;if(l=p.progressFn?i(o,{progressFn:a=>{C=Math.floor(a/5),C!==A&&(A=C,p.progressFn(C))}}):i(o),!l)return null;let D=l.length-1;for(let a=D;a>0;a--)p.progressFn&&(C=Math.floor(78*(1-a/D))+21,C!==A&&C>A&&(A=C,p.progressFn(C))),(l[a][0]<=l[a-1][0]||!p.joinRangesThatTouchEdges&&l[a][0]<l[a-1][1]||p.joinRangesThatTouchEdges&&l[a][0]<=l[a-1][1])&&(l[a-1][0]=Math.min(l[a][0],l[a-1][0]),l[a-1][1]=Math.max(l[a][1],l[a-1][1]),l[a][2]!==void 0&&(l[a-1][0]>=l[a][0]||l[a-1][1]<=l[a][1])&&l[a-1][2]!==null&&(l[a][2]===null&&l[a-1][2]!==null?l[a-1][2]=null:l[a-1][2]!=null?+p.mergeType==2&&l[a-1][0]===l[a][0]?l[a-1][2]=l[a][2]:l[a-1][2]+=l[a][2]:l[a-1][2]=l[a][2]),l.splice(a,1),a=l.length);return l.length?l:null}e.rApply=function(b,v,c){let p,o=0,l=0;if(arguments.length===0)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if(typeof b!="string")throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof b}, equal to: ${JSON.stringify(b,null,4)}`);if(v&&!Array.isArray(v))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof v}, equal to: ${JSON.stringify(v,null,4)}`);if(c&&typeof c!="function")throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof c}, equal to: ${JSON.stringify(c,null,4)}`);if(!v||!v.filter(M=>M).length)return b;p=Array.isArray(v)&&Number.isInteger(v[0])&&Number.isInteger(v[1])?[Array.from(v)]:Array.from(v);let A=p.length,C=0;p.filter(M=>M).forEach((M,U)=>{if(c&&(o=Math.floor(C/A*10),o!==l&&(l=o,c(o))),!Array.isArray(M))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${U}th element not an array: ${JSON.stringify(M,null,4)}, which is ${typeof M}`);if(!Number.isInteger(M[0])){if(!Number.isInteger(+M[0])||+M[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${U}th element, array ${JSON.stringify(M,null,0)}. Its first element is not an integer, string index, but ${typeof M[0]}, equal to: ${JSON.stringify(M[0],null,4)}.`);p[U][0]=+p[U][0]}if(!Number.isInteger(M[1])){if(!Number.isInteger(+M[1])||+M[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${U}th element, array ${JSON.stringify(M,null,0)}. Its second element is not an integer, string index, but ${typeof M[1]}, equal to: ${JSON.stringify(M[1],null,4)}.`);p[U][1]=+p[U][1]}C+=1});let D=J(p,{progressFn:M=>{c&&(o=10+Math.floor(M/10),o!==l&&(l=o,c(o)))}}),a=Array.isArray(D)?D.length:0;if(a>0){let M=b.slice(D[a-1][1]);b=D.reduce((U,K,N,ue)=>(c&&(o=20+Math.floor(N/a*80),o!==l&&(l=o,c(o))),U+b.slice(N===0?0:ue[N-1][1],ue[N][0])+(ue[N][2]||"")),""),b+=M}return b},e.version="5.0.12",Object.defineProperty(e,"__esModule",{value:!0})})});var Er=St((bl,Cr)=>{function li(e,n){for(var i=-1,f=e?e.length:0,J=Array(f);++i<f;)J[i]=n(e[i],i,e);return J}function si(e,n,i,f){for(var J=e.length,b=i+(f?1:-1);f?b--:++b<J;)if(n(e[b],b,e))return b;return-1}function ai(e,n,i){if(n!==n)return si(e,ui,i);for(var f=i-1,J=e.length;++f<J;)if(e[f]===n)return f;return-1}function ci(e,n,i,f){for(var J=i-1,b=e.length;++J<b;)if(f(e[J],n))return J;return-1}function ui(e){return e!==e}function fi(e){return function(n){return e(n)}}var hi=Array.prototype,Ir=hi.splice;function di(e,n,i,f){var J=f?ci:ai,b=-1,v=n.length,c=e;for(e===n&&(n=gi(n)),i&&(c=li(e,fi(i)));++b<v;)for(var p=0,o=n[b],l=i?i(o):o;(p=J(c,l,p,f))>-1;)c!==e&&Ir.call(c,p,1),Ir.call(e,p,1);return e}function gi(e,n){var i=-1,f=e.length;for(n||(n=Array(f));++i<f;)n[i]=e[i];return n}function pi(e,n){return e&&e.length&&n&&n.length?di(e,n):e}Cr.exports=pi});var Rr=St((An,Nr)=>{(function(e,n){typeof An=="object"&&typeof Nr!="undefined"?n(An):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).htmlCrush={})})(An,function(e){"use strict";let n={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function i(t,I){if(!Array.isArray(t)||!t.length)return t;let R=ce(ce({},n),I),u,_;if(R.strictlyTwoElementsInRangeArrays&&!t.filter(g=>g).every((g,F)=>g.length===2||(u=F,_=g.length,!1)))throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${u}th range (${JSON.stringify(t[u],null,4)}) has not two but ${_} elements!`);if(!t.filter(g=>g).every((g,F)=>!(!Number.isInteger(g[0])||g[0]<0||!Number.isInteger(g[1])||g[1]<0)||(u=F,!1)))throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${u}th range (${JSON.stringify(t[u],null,4)}) does not consist of only natural numbers!`);let h=t.filter(g=>g).length**2,P=0;return Array.from(t).filter(g=>g).sort((g,F)=>(R.progressFn&&(P+=1,R.progressFn(Math.floor(100*P/h))),g[0]===F[0]?g[1]<F[1]?-1:g[1]>F[1]?1:0:g[0]<F[0]?-1:1))}let f={mergeType:1,progressFn:null,joinRangesThatTouchEdges:!0};function J(t,I){function R(E){return E&&typeof E=="object"&&!Array.isArray(E)}if(!Array.isArray(t)||!t.length)return null;let u;if(I){if(!R(I))throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:
-${JSON.stringify(I,null,4)} (type ${typeof I})`);if(u=ce(ce({},f),I),u.progressFn&&R(u.progressFn)&&!Object.keys(u.progressFn).length)u.progressFn=null;else if(u.progressFn&&typeof u.progressFn!="function")throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof u.progressFn}", equal to ${JSON.stringify(u.progressFn,null,4)}`);if(u.mergeType&&+u.mergeType!=1&&+u.mergeType!=2)throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof u.mergeType}", equal to ${JSON.stringify(u.mergeType,null,4)}`);if(typeof u.joinRangesThatTouchEdges!="boolean")throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof u.joinRangesThatTouchEdges}", equal to ${JSON.stringify(u.joinRangesThatTouchEdges,null,4)}`)}else u=ce({},f);let _=t.filter(E=>E).map(E=>[...E]).filter(E=>E[2]!==void 0||E[0]!==E[1]),h,P,g;if(h=u.progressFn?i(_,{progressFn:E=>{g=Math.floor(E/5),g!==P&&(P=g,u.progressFn(g))}}):i(_),!h)return null;let F=h.length-1;for(let E=F;E>0;E--)u.progressFn&&(g=Math.floor(78*(1-E/F))+21,g!==P&&g>P&&(P=g,u.progressFn(g))),(h[E][0]<=h[E-1][0]||!u.joinRangesThatTouchEdges&&h[E][0]<h[E-1][1]||u.joinRangesThatTouchEdges&&h[E][0]<=h[E-1][1])&&(h[E-1][0]=Math.min(h[E][0],h[E-1][0]),h[E-1][1]=Math.max(h[E][1],h[E-1][1]),h[E][2]!==void 0&&(h[E-1][0]>=h[E][0]||h[E-1][1]<=h[E][1])&&h[E-1][2]!==null&&(h[E][2]===null&&h[E-1][2]!==null?h[E-1][2]=null:h[E-1][2]!=null?+u.mergeType==2&&h[E-1][0]===h[E][0]?h[E-1][2]=h[E][2]:h[E-1][2]+=h[E][2]:h[E-1][2]=h[E][2]),h.splice(E,1),E=h.length);return h.length?h:null}function b(t,I=1){function R(_){return Array.from(_).reverse().join("")}function u(_,h,P){let g=P?`
-`:"\r",F=P?"\r":`
-`;if(!_)return _;let E=0,Oe="";for(let G=0,be=_.length;G<be;G++)(_[G]===g||_[G]===F&&_[G-1]!==g)&&E++,`\r
-`.includes(_[G])||_[G]==="\xA0"?_[G]==="\xA0"?Oe+=_[G]:_[G]===g?E<=h&&(Oe+=_[G],_[G+1]===F&&(Oe+=_[G+1],G++)):_[G]===F&&(!_[G-1]||_[G-1]!==g)&&E<=h&&(Oe+=_[G]):_[G+1]||E||(Oe+=" ");return Oe}if(typeof t=="string"&&t.length){let _=1;typeof+I=="number"&&Number.isInteger(+I)&&+I>=0&&(_=+I);let h="",P="";if(t.trim()){if(!t[0].trim()){for(let g=0,F=t.length;g<F;g++)if(t[g].trim()){h=t.slice(0,g);break}}}else h=t;if(t.trim()&&(t.slice(-1).trim()===""||t.slice(-1)==="\xA0")){for(let g=t.length;g--;)if(t[g].trim()){P=t.slice(g+1);break}}return`${u(h,_,!1)}${t.trim()}${R(u(R(P),_,!0))}`}return t}function v(t){return t!=null}function c(t){return Number.isInteger(t)&&t>=0}function p(t){return typeof t=="string"}let o={limitToBeAddedWhitespace:!1,limitLinebreaksCount:1,mergeType:1};function l(t){return t&&typeof t=="object"&&!Array.isArray(t)}function A(t){return typeof t=="string"}let C={cb:void 0,i:!1,trimBeforeMatching:!1,trimCharsBeforeMatching:[],maxMismatches:0,firstMustMatch:!1,lastMustMatch:!1,hungry:!1},D=t=>t+1;function a(t,I,R,u,_=!1,h=D){let P=typeof R=="function"?R():R;if(+I<0&&_&&P==="EOL")return P;let g=ce(ce({},C),u);if(I>=t.length&&!_)return!1;let F=_?1:R.length,E=0,Oe=!1,G=!1,be=!1,Te=g.maxMismatches,re=I,Ae=!1,Je=!1,T=!1;function z(){return E===1&&Te<g.maxMismatches-1}for(;t[re];){let oe=h(re);if(g.trimBeforeMatching&&t[re].trim()===""){if(!t[oe]&&_&&R==="EOL")return!0;re=h(re);continue}if(g&&!g.i&&g.trimCharsBeforeMatching&&g.trimCharsBeforeMatching.includes(t[re])||g&&g.i&&g.trimCharsBeforeMatching&&g.trimCharsBeforeMatching.map(Ue=>Ue.toLowerCase()).includes(t[re].toLowerCase())){if(_&&R==="EOL"&&!t[oe])return!0;re=h(re);continue}let he=oe>re?R[R.length-F]:R[F-1];if(!g.i&&t[re]===he||g.i&&t[re].toLowerCase()===he.toLowerCase()){if(Ae||(Ae=!0),be||(be=!0),F===R.length){if(Je=!0,Te!==g.maxMismatches)return!1}else F===1&&(T=!0);if(F-=1,E++,z())return!1;if(!F)return(E!==R.length||Te===g.maxMismatches||!Oe)&&re}else{if(Oe||E||(Oe=!0),!(g.maxMismatches&&Te&&re))return!(re!==0||F!==1||g.lastMustMatch||!be)&&0;Te-=1;for(let Ue=0;Ue<=Te;Ue++){let qe=oe>re?R[R.length-F+1+Ue]:R[F-2-Ue],Ve=t[h(re)];if(qe&&(!g.i&&t[re]===qe||g.i&&t[re].toLowerCase()===qe.toLowerCase())&&(!g.firstMustMatch||F!==R.length)){if(E++,z())return!1;F-=2,Ae=!0;break}if(Ve&&qe&&(!g.i&&Ve===qe||g.i&&Ve.toLowerCase()===qe.toLowerCase())&&(!g.firstMustMatch||F!==R.length)){if(!E&&!g.hungry)return!1;F-=1,Ae=!0;break}if(qe===void 0&&Te>=0&&Ae&&(!g.firstMustMatch||Je)&&(!g.lastMustMatch||T))return re}Ae||(G=re)}if(G!==!1&&G!==re&&(G=!1),F<1)return re;re=h(re)}return F>0?!(!_||P!=="EOL")||!!(g&&g.maxMismatches>=F&&be)&&(G||0):void 0}function M(t,I,R,u,_){if(l(_)&&Object.prototype.hasOwnProperty.call(_,"trimBeforeMatching")&&typeof _.trimBeforeMatching!="boolean")throw new Error(`string-match-left-right/${t}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(_.trimBeforeMatching)?" Did you mean to use opts.trimCharsBeforeMatching?":""}`);let h=ce(ce({},C),_);var P;if(typeof h.trimCharsBeforeMatching=="string"&&(h.trimCharsBeforeMatching=typeof(P=h.trimCharsBeforeMatching)=="string"?P.length?[P]:[]:P),h.trimCharsBeforeMatching=h.trimCharsBeforeMatching.map(G=>A(G)?G:String(G)),!A(I)||!I.length)return!1;if(!Number.isInteger(R)||R<0)throw new Error(`string-match-left-right/${t}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof R}, equal to:
-${JSON.stringify(R,null,4)}`);let g,F;if(A(u))g=[u];else if(Array.isArray(u))g=u;else if(u){if(typeof u!="function")throw new Error(`string-match-left-right/${t}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof u}, equal to:
-${JSON.stringify(u,null,4)}`);g=[],g.push(u)}else g=u;if(_&&!l(_))throw new Error(`string-match-left-right/${t}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof _}", and equal to:
-${JSON.stringify(_,null,4)}`);let E=0,Oe="";if(h&&h.trimCharsBeforeMatching&&h.trimCharsBeforeMatching.some((G,be)=>G.length>1&&(E=be,Oe=G,!0)))throw new Error(`string-match-left-right/${t}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${E} is longer than 1 character, ${Oe.length} (equals to ${Oe}). Please split it into separate characters and put into array as separate elements.`);if(!g||!Array.isArray(g)||Array.isArray(g)&&!g.length||Array.isArray(g)&&g.length===1&&A(g[0])&&!g[0].trim()){if(typeof h.cb=="function"){let be,Te=R;if(t!=="matchLeftIncl"&&t!=="matchRight"||(Te+=1),t[5]==="L")for(let T=Te;T--;){let z=I[T];if((!h.trimBeforeMatching||h.trimBeforeMatching&&z!==void 0&&z.trim())&&(!h.trimCharsBeforeMatching||!h.trimCharsBeforeMatching.length||z!==void 0&&!h.trimCharsBeforeMatching.includes(z))){be=T;break}}else if(t.startsWith("matchRight"))for(let T=Te;T<I.length;T++){let z=I[T];if((!h.trimBeforeMatching||h.trimBeforeMatching&&z.trim())&&(!h.trimCharsBeforeMatching||!h.trimCharsBeforeMatching.length||!h.trimCharsBeforeMatching.includes(z))){be=T;break}}if(be===void 0)return!1;let re=I[be],Ae=be+1,Je="";return Ae&&Ae>0&&(Je=I.slice(0,Ae)),t[5]==="L"||be&&be>0&&(Je=I.slice(be)),h.cb(re,Je,be)}let G="";throw _||(G=" More so, the whole options object, the fourth input argument, is missing!"),new Error(`string-match-left-right/${t}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${G}`)}for(let G=0,be=g.length;G<be;G++){F=typeof g[G]=="function";let Te=g[G],re,Ae,Je="",T=R;t==="matchRight"?T+=1:t==="matchLeft"&&(T-=1);let z=a(I,T,Te,h,F,oe=>t[5]==="L"?oe-1:oe+1);if(z&&F&&typeof Te=="function"&&Te()==="EOL")return!(!Te()||h.cb&&!h.cb(re,Je,Ae))&&Te();if(Number.isInteger(z)&&(Ae=t.startsWith("matchLeft")?z-1:z+1,Je=t[5]==="L"?I.slice(0,z):I.slice(Ae)),Ae<0&&(Ae=void 0),I[Ae]&&(re=I[Ae]),Number.isInteger(z)&&(!h.cb||h.cb(re,Je,Ae)))return Te}return!1}function U(t,I,R,u){return M("matchLeft",t,I,R,u)}function K(t,I,R,u){return M("matchRightIncl",t,I,R,u)}function N(t,I,R,u){return M("matchRight",t,I,R,u)}let ue={str:"",from:0,to:0,ifLeftSideIncludesThisThenCropTightly:"",ifLeftSideIncludesThisCropItToo:"",ifRightSideIncludesThisThenCropTightly:"",ifRightSideIncludesThisCropItToo:"",extendToOneSide:!1,wipeAllWhitespaceOnLeft:!1,wipeAllWhitespaceOnRight:!1,addSingleSpaceToPreventAccidentalConcatenation:!1};function X(t){let I=/^[0-9a-zA-Z]+$/;function R(F){return!(!F||typeof F!="string")&&!F.trim()}function u(F){return typeof F=="string"}if(!t||typeof t!="object"||Array.isArray(t)){let F;throw F=t===void 0?"but it is missing completely.":t===null?"but it was given as null.":`but it was given as ${typeof t}, equal to:
-${JSON.stringify(t,null,4)}.`,new Error(`string-range-expander: [THROW_ID_01] Input must be a plain object ${F}`)}if(typeof t=="object"&&t!==null&&!Array.isArray(t)&&!Object.keys(t).length)throw new Error("string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.");if(typeof t.from!="number")throw new Error(`string-range-expander: [THROW_ID_03] The input's "from" value opts.from, is not a number! Currently it's given as ${typeof t.from}, equal to ${JSON.stringify(t.from,null,0)}`);if(typeof t.to!="number")throw new Error(`string-range-expander: [THROW_ID_04] The input's "to" value opts.to, is not a number! Currently it's given as ${typeof t.to}, equal to ${JSON.stringify(t.to,null,0)}`);if(t&&t.str&&!t.str[t.from]&&t.from!==t.to)throw new Error(`string-range-expander: [THROW_ID_05] The given input string opts.str ("${t.str}") must contain the character at index "from" ("${t.from}")`);if(t&&t.str&&!t.str[t.to-1])throw new Error(`string-range-expander: [THROW_ID_06] The given input string, opts.str ("${t.str}") must contain the character at index before "to" ("${t.to-1}")`);if(t.from>t.to)throw new Error(`string-range-expander: [THROW_ID_07] The given "from" index, "${t.from}" is greater than "to" index, "${t.to}". That's wrong!`);if(u(t.extendToOneSide)&&t.extendToOneSide!=="left"&&t.extendToOneSide!=="right"||!u(t.extendToOneSide)&&t.extendToOneSide!==void 0&&t.extendToOneSide!==!1)throw new Error(`string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: "${t.extendToOneSide}" (${typeof t.extendToOneSide}). It has to be either Boolean "false" or strings "left" or "right"`);let _=ce(ce({},ue),t);if(Array.isArray(_.ifLeftSideIncludesThisThenCropTightly)){let F,E;if(!_.ifLeftSideIncludesThisThenCropTightly.every((Oe,G)=>!!u(Oe)||(F=G,E=Oe,!1)))throw new Error(`string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:
-${JSON.stringify(_.ifLeftSideIncludesThisThenCropTightly,null,4)}. Now, that array contains not only string elements. For example, an element at index ${F} is of a type ${typeof E} (equal to ${JSON.stringify(E,null,0)}).`);_.ifLeftSideIncludesThisThenCropTightly=_.ifLeftSideIncludesThisThenCropTightly.join("")}let h=_.str,P=_.from,g=_.to;if(_.extendToOneSide!=="right"&&(R(h[P-1])&&(R(h[P-2])||_.ifLeftSideIncludesThisCropItToo.includes(h[P-2]))||h[P-1]&&_.ifLeftSideIncludesThisCropItToo.includes(h[P-1])||_.wipeAllWhitespaceOnLeft&&R(h[P-1]))){for(let F=P;F--;)if(!_.ifLeftSideIncludesThisCropItToo.includes(h[F])){if(h[F].trim()){P=_.wipeAllWhitespaceOnLeft||_.ifLeftSideIncludesThisCropItToo.includes(h[F+1])?F+1:F+2;break}if(F===0){P=_.wipeAllWhitespaceOnLeft?0:1;break}}}if(_.extendToOneSide!=="left"&&(R(h[g])&&(_.wipeAllWhitespaceOnRight||R(h[g+1]))||_.ifRightSideIncludesThisCropItToo.includes(h[g]))){for(let F=g,E=h.length;F<E;F++)if(!_.ifRightSideIncludesThisCropItToo.includes(h[F])&&(h[F]&&h[F].trim()||h[F]===void 0)){g=_.wipeAllWhitespaceOnRight||_.ifRightSideIncludesThisCropItToo.includes(h[F-1])?F:F-1;break}}return(_.extendToOneSide!=="right"&&u(_.ifLeftSideIncludesThisThenCropTightly)&&_.ifLeftSideIncludesThisThenCropTightly&&(h[P-2]&&_.ifLeftSideIncludesThisThenCropTightly.includes(h[P-2])||h[P-1]&&_.ifLeftSideIncludesThisThenCropTightly.includes(h[P-1]))||_.extendToOneSide!=="left"&&u(_.ifRightSideIncludesThisThenCropTightly)&&_.ifRightSideIncludesThisThenCropTightly&&(h[g+1]&&_.ifRightSideIncludesThisThenCropTightly.includes(h[g+1])||h[g]&&_.ifRightSideIncludesThisThenCropTightly.includes(h[g])))&&(_.extendToOneSide!=="right"&&R(h[P-1])&&!_.wipeAllWhitespaceOnLeft&&(P-=1),_.extendToOneSide!=="left"&&R(h[g])&&!_.wipeAllWhitespaceOnRight&&(g+=1)),_.addSingleSpaceToPreventAccidentalConcatenation&&h[P-1]&&h[P-1].trim()&&h[g]&&h[g].trim()&&(!_.ifLeftSideIncludesThisThenCropTightly&&!_.ifRightSideIncludesThisThenCropTightly||_.ifLeftSideIncludesThisThenCropTightly&&!_.ifLeftSideIncludesThisThenCropTightly.includes(h[P-1])||!(!_.ifRightSideIncludesThisThenCropTightly||h[g]&&_.ifRightSideIncludesThisThenCropTightly.includes(h[g])))&&(I.test(h[P-1])||I.test(h[g]))?[P,g," "]:[P,g]}Function.prototype.toString.call(Object);var fe=typeof globalThis!="undefined"?globalThis:typeof window!="undefined"?window:typeof global!="undefined"?global:typeof self!="undefined"?self:{};(function(t){var I={exports:{}};t(I,I.exports)})(function(t,I){var R="__lodash_hash_undefined__",u=9007199254740991,_="[object Arguments]",h="[object Boolean]",P="[object Date]",g="[object Function]",F="[object GeneratorFunction]",E="[object Map]",Oe="[object Number]",G="[object Object]",be="[object Promise]",Te="[object RegExp]",re="[object Set]",Ae="[object String]",Je="[object Symbol]",T="[object WeakMap]",z="[object ArrayBuffer]",oe="[object DataView]",he="[object Float32Array]",Ue="[object Float64Array]",qe="[object Int8Array]",Ve="[object Int16Array]",ve="[object Int32Array]",Re="[object Uint8Array]",It="[object Uint8ClampedArray]",ae="[object Uint16Array]",ct="[object Uint32Array]",Ye=/\w*$/,bt=/^\[object .+?Constructor\]$/,Ie=/^(?:0|[1-9]\d*)$/,te={};te[_]=te["[object Array]"]=te[z]=te[oe]=te[h]=te[P]=te[he]=te[Ue]=te[qe]=te[Ve]=te[ve]=te[E]=te[Oe]=te[G]=te[Te]=te[re]=te[Ae]=te[Je]=te[Re]=te[It]=te[ae]=te[ct]=!0,te["[object Error]"]=te[g]=te[T]=!1;var gt=typeof self=="object"&&self&&self.Object===Object&&self,ne=typeof fe=="object"&&fe&&fe.Object===Object&&fe||gt||Function("return this")(),Qe=I&&!I.nodeType&&I,Ge=Qe&&t&&!t.nodeType&&t,Ee=Ge&&Ge.exports===Qe;function s(m,j){return m.set(j[0],j[1]),m}function k(m,j){return m.add(j),m}function Ze(m,j,B,ie){var ke=-1,ft=m?m.length:0;for(ie&&ft&&(B=m[++ke]);++ke<ft;)B=j(B,m[ke],ke,m);return B}function nt(m){var j=!1;if(m!=null&&typeof m.toString!="function")try{j=!!(m+"")}catch(B){}return j}function Fe(m){var j=-1,B=Array(m.size);return m.forEach(function(ie,ke){B[++j]=[ke,ie]}),B}function Me(m,j){return function(B){return m(j(B))}}function ze(m){var j=-1,B=Array(m.size);return m.forEach(function(ie){B[++j]=ie}),B}var Le,Ke=Array.prototype,V=Function.prototype,r=Object.prototype,pe=ne["__core-js_shared__"],$=(Le=/[^.]+$/.exec(pe&&pe.keys&&pe.keys.IE_PROTO||""))?"Symbol(src)_1."+Le:"",W=V.toString,S=r.hasOwnProperty,H=r.toString,Pe=RegExp("^"+W.call(S).replace(/[\\^$.*+?()[\]{}|]/g,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$"),_e=Ee?ne.Buffer:void 0,rt=ne.Symbol,Ht=ne.Uint8Array,nn=Me(Object.getPrototypeOf,Object),Bt=Object.create,Dt=r.propertyIsEnumerable,Ft=Ke.splice,xt=Object.getOwnPropertySymbols,Jt=_e?_e.isBuffer:void 0,Lt=Me(Object.keys,Object),mt=dt(ne,"DataView"),Mt=dt(ne,"Map"),Et=dt(ne,"Promise"),Kt=dt(ne,"Set"),Ut=dt(ne,"WeakMap"),Tt=dt(Object,"create"),Vt=$t(mt),qt=$t(Mt),Rt=$t(Et),Nt=$t(Kt),jt=$t(Ut),vt=rt?rt.prototype:void 0,Gt=vt?vt.valueOf:void 0;function y(m){var j=-1,B=m?m.length:0;for(this.clear();++j<B;){var ie=m[j];this.set(ie[0],ie[1])}}function x(m){var j=-1,B=m?m.length:0;for(this.clear();++j<B;){var ie=m[j];this.set(ie[0],ie[1])}}function q(m){var j=-1,B=m?m.length:0;for(this.clear();++j<B;){var ie=m[j];this.set(ie[0],ie[1])}}function le(m){this.__data__=new x(m)}function Xe(m,j){var B=je(m)||function(tt){return function(it){return function(ge){return!!ge&&typeof ge=="object"}(it)&&d(it)}(tt)&&S.call(tt,"callee")&&(!Dt.call(tt,"callee")||H.call(tt)==_)}(m)?function(tt,it){for(var ge=-1,Ce=Array(tt);++ge<tt;)Ce[ge]=it(ge);return Ce}(m.length,String):[],ie=B.length,ke=!!ie;for(var ft in m)!j&&!S.call(m,ft)||ke&&(ft=="length"||et(ft,ie))||B.push(ft);return B}function st(m,j,B){var ie=m[j];S.call(m,j)&&wt(ie,B)&&(B!==void 0||j in m)||(m[j]=B)}function We(m,j){for(var B=m.length;B--;)if(wt(m[B][0],j))return B;return-1}function He(m,j,B,ie,ke,ft,tt){var it;if(ie&&(it=ft?ie(m,ke,ft,tt):ie(m)),it!==void 0)return it;if(!de(m))return m;var ge=je(m);if(ge){if(it=function(me){var se=me.length,xe=me.constructor(se);return se&&typeof me[0]=="string"&&S.call(me,"index")&&(xe.index=me.index,xe.input=me.input),xe}(m),!j)return function(me,se){var xe=-1,at=me.length;for(se||(se=Array(at));++xe<at;)se[xe]=me[xe];return se}(m,it)}else{var Ce=we(m),lt=Ce==g||Ce==F;if(L(m))return function(me,se){if(se)return me.slice();var xe=new me.constructor(me.length);return me.copy(xe),xe}(m,j);if(Ce==G||Ce==_||lt&&!ft){if(nt(m))return ft?m:{};if(it=function(me){return typeof me.constructor!="function"||yt(me)?{}:(se=nn(me),de(se)?Bt(se):{});var se}(lt?{}:m),!j)return function(me,se){return Yt(me,ye(me),se)}(m,function(me,se){return me&&Yt(se,ot(se),me)}(it,m))}else{if(!te[Ce])return ft?m:{};it=function(me,se,xe,at){var Qt=me.constructor;switch(se){case z:return ut(me);case h:case P:return new Qt(+me);case oe:return function(Be,At){var Pt=At?ut(Be.buffer):Be.buffer;return new Be.constructor(Pt,Be.byteOffset,Be.byteLength)}(me,at);case he:case Ue:case qe:case Ve:case ve:case Re:case It:case ae:case ct:return function(Be,At){var Pt=At?ut(Be.buffer):Be.buffer;return new Be.constructor(Pt,Be.byteOffset,Be.length)}(me,at);case E:return function(Be,At,Pt){return Ze(At?Pt(Fe(Be),!0):Fe(Be),s,new Be.constructor)}(me,at,xe);case Oe:case Ae:return new Qt(me);case Te:return function(Be){var At=new Be.constructor(Be.source,Ye.exec(Be));return At.lastIndex=Be.lastIndex,At}(me);case re:return function(Be,At,Pt){return Ze(At?Pt(ze(Be),!0):ze(Be),k,new Be.constructor)}(me,at,xe);case Je:return rn=me,Gt?Object(Gt.call(rn)):{}}var rn}(m,Ce,He,j)}}tt||(tt=new le);var Ot=tt.get(m);if(Ot)return Ot;if(tt.set(m,it),!ge)var zt=B?function(me){return function(se,xe,at){var Qt=xe(se);return je(se)?Qt:function(rn,Be){for(var At=-1,Pt=Be.length,Qr=rn.length;++At<Pt;)rn[Qr+At]=Be[At];return rn}(Qt,at(se))}(me,ot,ye)}(m):ot(m);return function(me,se){for(var xe=-1,at=me?me.length:0;++xe<at&&se(me[xe],xe,me)!==!1;);}(zt||m,function(me,se){zt&&(me=m[se=me]),st(it,se,He(me,j,B,ie,se,m,tt))}),it}function _t(m){return!(!de(m)||(j=m,$&&$ in j))&&(Y(m)||nt(m)?Pe:bt).test($t(m));var j}function ut(m){var j=new m.constructor(m.byteLength);return new Ht(j).set(new Ht(m)),j}function Yt(m,j,B,ie){B||(B={});for(var ke=-1,ft=j.length;++ke<ft;){var tt=j[ke],it=ie?ie(B[tt],m[tt],tt,B,m):void 0;st(B,tt,it===void 0?m[tt]:it)}return B}function Wt(m,j){var B,ie,ke=m.__data__;return((ie=typeof(B=j))=="string"||ie=="number"||ie=="symbol"||ie=="boolean"?B!=="__proto__":B===null)?ke[typeof j=="string"?"string":"hash"]:ke.map}function dt(m,j){var B=function(ie,ke){return ie==null?void 0:ie[ke]}(m,j);return _t(B)?B:void 0}y.prototype.clear=function(){this.__data__=Tt?Tt(null):{}},y.prototype.delete=function(m){return this.has(m)&&delete this.__data__[m]},y.prototype.get=function(m){var j=this.__data__;if(Tt){var B=j[m];return B===R?void 0:B}return S.call(j,m)?j[m]:void 0},y.prototype.has=function(m){var j=this.__data__;return Tt?j[m]!==void 0:S.call(j,m)},y.prototype.set=function(m,j){return this.__data__[m]=Tt&&j===void 0?R:j,this},x.prototype.clear=function(){this.__data__=[]},x.prototype.delete=function(m){var j=this.__data__,B=We(j,m);return!(B<0)&&(B==j.length-1?j.pop():Ft.call(j,B,1),!0)},x.prototype.get=function(m){var j=this.__data__,B=We(j,m);return B<0?void 0:j[B][1]},x.prototype.has=function(m){return We(this.__data__,m)>-1},x.prototype.set=function(m,j){var B=this.__data__,ie=We(B,m);return ie<0?B.push([m,j]):B[ie][1]=j,this},q.prototype.clear=function(){this.__data__={hash:new y,map:new(Mt||x),string:new y}},q.prototype.delete=function(m){return Wt(this,m).delete(m)},q.prototype.get=function(m){return Wt(this,m).get(m)},q.prototype.has=function(m){return Wt(this,m).has(m)},q.prototype.set=function(m,j){return Wt(this,m).set(m,j),this},le.prototype.clear=function(){this.__data__=new x},le.prototype.delete=function(m){return this.__data__.delete(m)},le.prototype.get=function(m){return this.__data__.get(m)},le.prototype.has=function(m){return this.__data__.has(m)},le.prototype.set=function(m,j){var B=this.__data__;if(B instanceof x){var ie=B.__data__;if(!Mt||ie.length<199)return ie.push([m,j]),this;B=this.__data__=new q(ie)}return B.set(m,j),this};var ye=xt?Me(xt,Object):function(){return[]},we=function(m){return H.call(m)};function et(m,j){return!!(j=j==null?u:j)&&(typeof m=="number"||Ie.test(m))&&m>-1&&m%1==0&&m<j}function yt(m){var j=m&&m.constructor;return m===(typeof j=="function"&&j.prototype||r)}function $t(m){if(m!=null){try{return W.call(m)}catch(j){}try{return m+""}catch(j){}}return""}function wt(m,j){return m===j||m!=m&&j!=j}(mt&&we(new mt(new ArrayBuffer(1)))!=oe||Mt&&we(new Mt)!=E||Et&&we(Et.resolve())!=be||Kt&&we(new Kt)!=re||Ut&&we(new Ut)!=T)&&(we=function(m){var j=H.call(m),B=j==G?m.constructor:void 0,ie=B?$t(B):void 0;if(ie)switch(ie){case Vt:return oe;case qt:return E;case Rt:return be;case Nt:return re;case jt:return T}return j});var je=Array.isArray;function d(m){return m!=null&&function(j){return typeof j=="number"&&j>-1&&j%1==0&&j<=u}(m.length)&&!Y(m)}var L=Jt||function(){return!1};function Y(m){var j=de(m)?H.call(m):"";return j==g||j==F}function de(m){var j=typeof m;return!!m&&(j=="object"||j=="function")}function ot(m){return d(m)?Xe(m):function(j){if(!yt(j))return Lt(j);var B=[];for(var ie in Object(j))S.call(j,ie)&&ie!="constructor"&&B.push(ie);return B}(m)}t.exports=function(m){return He(m,!0,!0)}});let Se="\xA0";function $e(t,I=0){return function({str:R,idx:u=0,stopAtNewlines:_=!1,stopAtRawNbsp:h=!1}){if(typeof R!="string"||!R.length||(u&&typeof u=="number"||(u=0),!R[u+1]))return null;if(R[u+1]&&(R[u+1].trim()||_&&`
-\r`.includes(R[u+1])||h&&R[u+1]===Se))return u+1;if(R[u+2]&&(R[u+2].trim()||_&&`
-\r`.includes(R[u+2])||h&&R[u+2]===Se))return u+2;for(let P=u+1,g=R.length;P<g;P++)if(R[P].trim()||_&&`
-\r`.includes(R[P])||h&&R[P]===Se)return P;return null}({str:t,idx:I,stopAtNewlines:!1,stopAtRawNbsp:!1})}function Ne(t,I=0){return function({str:R,idx:u,stopAtNewlines:_,stopAtRawNbsp:h}){if(typeof R!="string"||!R.length||(u&&typeof u=="number"||(u=0),u<1))return null;if(R[~-u]&&(R[~-u].trim()||_&&`
-\r`.includes(R[~-u])||h&&R[~-u]===Se))return~-u;if(R[u-2]&&(R[u-2].trim()||_&&`
-\r`.includes(R[u-2])||h&&R[u-2]===Se))return u-2;for(let P=u;P--;)if(R[P]&&(R[P].trim()||_&&`
-\r`.includes(R[P])||h&&R[P]===Se))return P;return null}({str:t,idx:I,stopAtNewlines:!1,stopAtRawNbsp:!1})}let O=new class{constructor(t){let I=ce(ce({},o),t);if(I.mergeType&&I.mergeType!==1&&I.mergeType!==2)if(p(I.mergeType)&&I.mergeType.trim()==="1")I.mergeType=1;else{if(!p(I.mergeType)||I.mergeType.trim()!=="2")throw new Error(`ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof I.mergeType}", equal to ${JSON.stringify(I.mergeType,null,4)}`);I.mergeType=2}this.opts=I,this.ranges=[]}add(t,I,R){if(t==null&&I==null)return;if(v(t)&&!v(I)){if(Array.isArray(t)){if(t.length){if(t.some(h=>Array.isArray(h)))return void t.forEach(h=>{Array.isArray(h)&&this.add(...h)});t.length&&c(+t[0])&&c(+t[1])&&this.add(...t)}return}throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(t,null,0)}) but second-one, "to" is not (${JSON.stringify(I,null,0)})`)}if(!v(t)&&v(I))throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(I,null,0)}) but first-one, "from" is not (${JSON.stringify(t,null,0)})`);let u=+t,_=+I;if(c(R)&&(R=String(R)),!c(u)||!c(_))throw c(u)&&u>=0?new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof _}" equal to: ${JSON.stringify(_,null,4)}`):new TypeError(`ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof u}" equal to: ${JSON.stringify(u,null,4)}`);if(v(R)&&!p(R)&&!c(R))throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof R}, equal to:
-${JSON.stringify(R,null,4)}`);if(v(this.ranges)&&Array.isArray(this.last())&&u===this.last()[1]){if(this.last()[1]=_,this.last(),this.last()[2]!==null&&v(R)){let h=!(this.last()[2]&&this.last()[2].length>0)||this.opts&&this.opts.mergeType&&this.opts.mergeType!==1?R:this.last()[2]+R;this.opts.limitToBeAddedWhitespace&&(h=b(h,this.opts.limitLinebreaksCount)),p(h)&&!h.length||(this.last()[2]=h)}}else{this.ranges||(this.ranges=[]);let h=R===void 0||p(R)&&!R.length?[u,_]:[u,_,R&&this.opts.limitToBeAddedWhitespace?b(R,this.opts.limitLinebreaksCount):R];this.ranges.push(h)}}push(t,I,R){this.add(t,I,R)}current(){return Array.isArray(this.ranges)&&this.ranges.length?(this.ranges=J(this.ranges,{mergeType:this.opts.mergeType}),this.ranges&&this.opts.limitToBeAddedWhitespace?this.ranges.map(t=>v(t[2])?[t[0],t[1],b(t[2],this.opts.limitLinebreaksCount)]:t):this.ranges):null}wipe(){this.ranges=[]}replace(t){if(Array.isArray(t)&&t.length){if(!Array.isArray(t[0])||!c(t[0][0]))throw new Error(`ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(t[0],null,4)} should be an array and its first element should be an integer, a string index.`);this.ranges=Array.from(t)}else this.ranges=[]}last(){return Array.isArray(this.ranges)&&this.ranges.length?this.ranges[this.ranges.length-1]:null}}({limitToBeAddedWhitespace:!0}),w={lineLengthLimit:500,removeIndentations:!0,removeLineBreaks:!1,removeHTMLComments:!1,removeCSSComments:!0,reportProgressFunc:null,reportProgressFuncFrom:0,reportProgressFuncTo:100,breakToTheLeftOf:["</td","<html","</html","<head","</head","<meta","<link","<table","<script","</script","<!DOCTYPE","<style","</style","<title","<body","@media","</body","<!--[if","<!--<![endif","<![endif]"],mindTheInlineTags:["a","abbr","acronym","audio","b","bdi","bdo","big","br","button","canvas","cite","code","data","datalist","del","dfn","em","embed","i","iframe","img","input","ins","kbd","label","map","mark","meter","noscript","object","output","picture","progress","q","ruby","s","samp","script","select","slot","small","span","strong","sub","sup","svg","template","textarea","time","u","tt","var","video","wbr"]},Q={removeHTMLComments:!1,removeCSSComments:!1};function ee(t){return typeof t=="string"}function Z(t){return typeof t=="string"&&t.toUpperCase()!==t.toLowerCase()}e.crush=function(t,I){let R=Date.now();if(!ee(t))throw t===void 0?new Error("html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string."):new Error(`html-crush: [THROW_ID_02] the first input argument must be string! It was given as "${typeof t}", equal to:
-${JSON.stringify(t,null,4)}`);if(I&&typeof I!="object")throw new Error(`html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof I}, equal to ${JSON.stringify(I,null,4)}`);if(I&&Array.isArray(I.breakToTheLeftOf)&&I.breakToTheLeftOf.length){for(let s=0,k=I.breakToTheLeftOf.length;s<k;s++)if(!ee(I.breakToTheLeftOf[s]))throw new TypeError(`html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index ${s} is of a type "${typeof I.breakToTheLeftOf[s]}" and is equal to:
-${JSON.stringify(I.breakToTheLeftOf[s],null,4)}`)}let u=ce(ce({},w),I);typeof u.removeHTMLComments=="boolean"&&(u.removeHTMLComments=u.removeHTMLComments?1:0);let _="";Array.isArray(u.breakToTheLeftOf)&&u.breakToTheLeftOf.length&&(_=[...new Set(u.breakToTheLeftOf.map(s=>s[0]))].join(""));let h,P=null,g=null,F=!1,E=0,Oe=0,G=!1,be=!1,Te=null,re=null,Ae=null,Je=null,T=null,z=null,oe=null,he=null,Ue=null,qe=null,Ve=">};",ve="<",Re="!",It=">",ae="<",ct="{},:;<>~+",Ye=ct,bt=ct,Ie=!0,te=t.length,gt=Math.floor(te/2),ne,Qe;u.reportProgressFunc&&(ne=Math.floor(u.reportProgressFuncTo-.01*(u.reportProgressFuncTo-u.reportProgressFuncFrom)-u.reportProgressFuncFrom));let Ge=0,Ee=`
-`;if(t.includes(`\r
-`)?Ee=`\r
-`:t.includes("\r")&&(Ee="\r"),te){for(let s=0;s<te;s++)if(u.reportProgressFunc&&(te>1e3&&te<2e3?s===gt&&u.reportProgressFunc(Math.floor((u.reportProgressFuncTo-u.reportProgressFuncFrom)/2)):te>=2e3&&(Qe=u.reportProgressFuncFrom+Math.floor(s/te*(ne||1)),Qe!==Ge&&(Ge=Qe,u.reportProgressFunc(Qe)))),Oe++,h&&typeof h=="number"&&s>=h&&(h=void 0),Je===null||!t.startsWith("</script",s)||Z(t[s+8])){if(!h&&!G&&t.startsWith("<script",s)&&!Z(t[s+7])){Je=s,h=!0;let k="";(u.removeLineBreaks||u.removeIndentations)&&g!==null&&(g>0&&(k=Ee),O.push(g,s,k)),g=null,P=null}if(Ue!==null&&he===null&&!/\w/.test(t[s])){he=t.slice(Ue,s);let k=$e(t,~-s);typeof k=="number"&&t[k]===">"&&!t[s].trim()&&$e(t,s)?O.push(s,$e(t,s)):k&&t[k]==="/"&&t[$e(t,k)]===">"&&(!t[s].trim()&&$e(t,s)&&O.push(s,$e(t,s)),t[k+1]!==">"&&$e(t,k+1)&&O.push(k+1,$e(t,k+1)))}if(h||G||Te||t[~-s]!=="<"||Ue!==null||(/\w/.test(t[s])?Ue=s:t[$e(t,~-s)]==="/"&&/\w/.test(t[$e(t,$e(t,~-s))]||"")&&(Ue=$e(t,$e(t,~-s)))),h||!G&&!Te||re===null||t[s]!=="*"||t[s+1]!=="/"||([T,z]=X({str:t,from:re,to:s+2,ifLeftSideIncludesThisThenCropTightly:Ye,ifRightSideIncludesThisThenCropTightly:bt}),re=null,T!=null?O.push(T,z):(E+=1,s+=1),h=s+2),h||!G&&!Te||re!==null||t[s]!=="/"||t[s+1]!=="*"||(Q.removeCSSComments||(Q.removeCSSComments=!0),u.removeCSSComments&&(re=s)),be&&t.startsWith("![endif",s+1)&&(be=!1),!h&&!G&&!Te&&Ae!==null){let k;t.startsWith("-->",s)?k=3:t[s]===">"&&t[s-1]==="]"&&(k=1),k&&([T,z]=X({str:t,from:Ae,to:s+k}),Ae=null,T!=null?u.lineLengthLimit&&Oe-(z-T)>=u.lineLengthLimit?(O.push(T,z,Ee),Oe=-k):(O.push(T,z),Oe-=z-T):(E+=k-1,s+=k-1),h=s+k)}if(h||G||Te||!t.startsWith("<!--",s)||Ae!==null||(t.startsWith("[if",s+4)?(be||(be=!0),u.removeHTMLComments===2&&(Ae=s)):!u.removeHTMLComments||be&&u.removeHTMLComments!==2||(Ae=s),Q.removeHTMLComments||(Q.removeHTMLComments=!0)),!h&&G&&re===null&&t.startsWith("</style",s)&&!Z(t[s+7])?G=!1:h||G||re!==null||!t.startsWith("<style",s)||Z(t[s+6])||(G=!0,(u.removeLineBreaks||u.removeIndentations)&&u.breakToTheLeftOf.includes("<style")&&t.startsWith(' type="text/css">',s+6)&&t[s+24]&&O.push(s+23,s+23,Ee)),!h&&!Te&&`"'`.includes(t[s])&&t.endsWith("style=",s)&&(Te=s),h||t[s].trim()){if(!h&&(!G&&!Te||re===null)){if(g!==null){if(u.removeLineBreaks&&(E+=1),Ie)Ie=!1,(u.removeIndentations||u.removeLineBreaks)&&O.push(0,s);else if(u.removeIndentations&&!u.removeLineBreaks&&(!F&&P!==null&&s>P?O.push(P+1,s):g+1<s&&(t.endsWith("]>",g)||t.endsWith("-->",g)||t.startsWith("<![",s)||t.startsWith("<!--<![",s)?O.push(g,s):t[g]===" "?O.push(g+1,s):t[~-s]===" "?O.push(g,~-s):O.push(g,s," "))),u.removeLineBreaks||Te){if(_.includes(t[s])&&K(t,s,u.breakToTheLeftOf)){`\r
-`.includes(t[~-s])&&g===~-s||t[~-s]===`
-`&&t[s-2]==="\r"&&g===s-2||O.push(g,s,Ee),T=null,z=null,oe=null,g=null,E=1;continue}let k=" ";t[s]==="<"&&N(t,s,u.mindTheInlineTags,{cb:Ze=>!Ze||!/\w/.test(Ze)})||(t[~-g]&&It.includes(t[~-g])&&ae.includes(t[s])||(G||Te)&&re===null&&(Ye.includes(t[~-g])||bt.includes(t[s]))||t.startsWith("!important",s)&&!be||Te&&(t[~-g]==="'"||t[~-g]==='"')||t[~-g]==="}"&&t.startsWith("</style",s)||t[s]===">"&&(`'"`.includes(t[Ne(t,s)])||t[$e(t,s)]==="<")||t[s]==="/"&&t[$e(t,s)]===">")&&(k="",t[s]==="/"&&t[s+1]===">"&&$e(t,s)&&$e(t,s)>s+1&&(O.push(s+1,$e(t,s)),E-=$e(t,s)-s+1)),k&&k.length&&(E+=1),u.lineLengthLimit?E>=u.lineLengthLimit||!t[s+1]||t[s]===">"||t[s]==="/"&&t[s+1]===">"?((E>u.lineLengthLimit||E===u.lineLengthLimit&&t[s+1]&&t[s+1].trim()&&!Ve.includes(t[s])&&!ve.includes(t[s+1]))&&(k=Ee,E=1),(E>u.lineLengthLimit||k!==" "||s!==g+1)&&(O.push(g,s,k),P=null),T=null,z=null,oe=null):(T===null||g<T)&&(T=g,z=s,oe=k):s===g+1&&k===" "||O.push(g,s,k)}g=null,F||(F=!0)}else Ie&&(Ie=!1),u.removeLineBreaks&&(E+=1);F||(F=!0)}}else g===null&&(g=s);if(!h&&!Ie&&s!==0&&u.removeLineBreaks&&(u.lineLengthLimit||_)&&!t.startsWith("</a",s)){if(_&&K(t,s,u.breakToTheLeftOf)&&t.slice(0,s).trim()&&(!t.startsWith("<![endif]",s)||!U(t,s,"<!--"))){O.push(s,s,Ee),T=null,z=null,oe=null,E=1;continue}if(u.lineLengthLimit&&E<=u.lineLengthLimit){if(!t[s+1]||ve.includes(t[s])&&!Re.includes(t[s])||Ve.includes(t[s])||!t[s].trim()){if(T!==null&&z!==null&&(T!==z||oe&&oe.length)){let k=oe;t[s].trim()&&t[s+1]&&t[s+1].trim()&&E+(oe?oe.length:0)>u.lineLengthLimit&&(k=Ee),E+(k?k.length:0)>u.lineLengthLimit||k!==" "||z!==T+1||t[T]!==" "?t[~-T]==="}"&&t[z]==="{"||(O.push(T,z,k),P=null):E-=P||0}!(t[s].trim()&&(ve.includes(t[s])||t[~-s]&&Ve.includes(t[~-s]))&&ee(qe))||he&&u.mindTheInlineTags.includes(he)||t[s]==="<"&&N(t,s,u.mindTheInlineTags,{cb:k=>!k||!/\w/.test(k)})||t[s]==="<"&&N(t,s,u.mindTheInlineTags,{trimCharsBeforeMatching:"/",cb:k=>!k||!/\w/.test(k)})?re!==null||T===null||!(Te||!u.mindTheInlineTags||!Array.isArray(u.mindTheInlineTags)||Array.isArray(u.mindTheInlineTags.length)&&!u.mindTheInlineTags.length||!ee(he)||Array.isArray(u.mindTheInlineTags)&&u.mindTheInlineTags.length&&ee(he)&&!u.mindTheInlineTags.includes(he))||t[s]==="<"&&N(t,s,u.mindTheInlineTags,{trimCharsBeforeMatching:"/",cb:k=>!k||!/\w/.test(k)})||(T=null,z=null,oe=null):(T=s,z=s,oe=null)}}else if(u.lineLengthLimit)if(!ve.includes(t[s])||t[s]==="<"&&N(t,s,u.mindTheInlineTags,{trimCharsBeforeMatching:"/",cb:k=>!k||!/\w/.test(k)}))t[s+1]&&Ve.includes(t[s])&&ee(he)&&Array.isArray(u.mindTheInlineTags)&&u.mindTheInlineTags.length&&!u.mindTheInlineTags.includes(he)?T!==null&&z!==null&&(T!==z||oe&&oe.length)||(O.push(s+1,s+1,Ee),E=0):t[s].trim()&&(t[s+1]||T!==null&&z!==null&&(T!==z||oe&&oe.length)&&O.push(T,z,Ee));else if(T!==null&&z!==null&&(T!==z||oe&&oe.length)){let k=oe&&oe.length?oe.length:0;E-(z-T-k)-1>u.lineLengthLimit||(O.push(T,z,oe),E-(z-T-k)-1===u.lineLengthLimit&&(O.push(s,s,Ee),E=0),T=null,z=null,oe=null)}else O.push(s,s,Ee),E=0}if(!h&&!Ie&&u.removeLineBreaks&&u.lineLengthLimit&&E>=u.lineLengthLimit&&T!==null&&z!==null&&!Ve.includes(t[s])&&!ve.includes(t[s])&&!"/".includes(t[s])&&(E!==u.lineLengthLimit||!t[s+1]||t[s+1].trim())){let k=Ee;t[s+1]&&!t[s+1].trim()&&E===u.lineLengthLimit&&(k=oe),k===Ee&&!t[~-T].trim()&&Ne(t,T)&&(T=Ne(t,T)+1),O.push(T,z,k),E=s-z,t[s].length&&(E+=1),T=null,z=null,oe=null}if((!h&&t[s]===`
-`||t[s]==="\r"&&(!t[s+1]||t[s+1]&&t[s+1]!==`
-`))&&(P=s,F&&(F=!1),!u.removeLineBreaks&&g!==null&&g<s&&t[s+1]&&t[s+1]!=="\r"&&t[s+1]!==`
-`&&O.push(g,s)),t[s+1]||(G&&re!==null?O.push(...X({str:t,from:re,to:s,ifLeftSideIncludesThisThenCropTightly:Ye,ifRightSideIncludesThisThenCropTightly:bt})):g&&t[s]!==`
-`&&t[s]!=="\r"?O.push(g,s+1):g&&(t[s]==="\r"&&t[s+1]===`
-`||t[s]===`
-`&&t[s-1]!=="\r")&&O.push(g,s)),!h&&Te&&Te<s&&t[Te]===t[s]&&(Te=null),!h&&!G&&t.startsWith("<pre",s)&&!Z(t[s+4])){let k=t.indexOf("</pre",s+5);k>0&&(h=k)}if(!h&&!G&&t.startsWith("<code",s)&&!Z(t[s+5])){let k=t.indexOf("</code",s+5);k>0&&(h=k)}if(!h&&t.startsWith("<![CDATA[",s)){let k=t.indexOf("]]>",s+9);k>0&&(h=k)}h||G||Te||Ue===null||t[s]!==">"||(t[$e(t,s)]==="<"&&(qe=he),Ue=null,he=null),t[s]==="<"&&qe!==null&&(qe=null)}else{if((u.removeIndentations||u.removeLineBreaks)&&s>0&&t[~-s]&&!t[~-s].trim()){for(let k=s;k--;)if(t[k]===`
-`||t[k]==="\r"||t[k].trim()){k+1<s&&O.push(k+1,s);break}}Je=null,h=!1,s+=8}if(O.current()){let s=O.current();O.wipe();let k=u.reportProgressFuncTo-.01*(u.reportProgressFuncTo-u.reportProgressFuncFrom),Ze=function(Fe,Me,ze){let Le,Ke=0,V=0;if(arguments.length===0)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if(typeof Fe!="string")throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof Fe}, equal to: ${JSON.stringify(Fe,null,4)}`);if(Me&&!Array.isArray(Me))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof Me}, equal to: ${JSON.stringify(Me,null,4)}`);if(ze&&typeof ze!="function")throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof ze}, equal to: ${JSON.stringify(ze,null,4)}`);if(!Me||!Me.filter(S=>S).length)return Fe;Le=Array.isArray(Me)&&Number.isInteger(Me[0])&&Number.isInteger(Me[1])?[Array.from(Me)]:Array.from(Me);let r=Le.length,pe=0;Le.filter(S=>S).forEach((S,H)=>{if(ze&&(Ke=Math.floor(pe/r*10),Ke!==V&&(V=Ke,ze(Ke))),!Array.isArray(S))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${H}th element not an array: ${JSON.stringify(S,null,4)}, which is ${typeof S}`);if(!Number.isInteger(S[0])){if(!Number.isInteger(+S[0])||+S[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${H}th element, array ${JSON.stringify(S,null,0)}. Its first element is not an integer, string index, but ${typeof S[0]}, equal to: ${JSON.stringify(S[0],null,4)}.`);Le[H][0]=+Le[H][0]}if(!Number.isInteger(S[1])){if(!Number.isInteger(+S[1])||+S[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${H}th element, array ${JSON.stringify(S,null,0)}. Its second element is not an integer, string index, but ${typeof S[1]}, equal to: ${JSON.stringify(S[1],null,4)}.`);Le[H][1]=+Le[H][1]}pe+=1});let $=J(Le,{progressFn:S=>{ze&&(Ke=10+Math.floor(S/10),Ke!==V&&(V=Ke,ze(Ke)))}}),W=Array.isArray($)?$.length:0;if(W>0){let S=Fe.slice($[W-1][1]);Fe=$.reduce((H,Pe,_e,rt)=>(ze&&(Ke=20+Math.floor(_e/W*80),Ke!==V&&(V=Ke,ze(Ke))),H+Fe.slice(_e===0?0:rt[_e-1][1],rt[_e][0])+(rt[_e][2]||"")),""),Fe+=S}return Fe}(t,s,Fe=>{u.reportProgressFunc&&te>=2e3&&(Qe=Math.floor(k+Fe/100*(u.reportProgressFuncTo-k)),Qe!==Ge&&(Ge=Qe,u.reportProgressFunc(Qe)))}),nt=Ze.length;return{log:{timeTakenInMilliseconds:Date.now()-R,originalLength:te,cleanedLength:nt,bytesSaved:Math.max(te-nt,0),percentageReducedOfOriginal:te?Math.round(100*Math.max(te-nt,0)/te):0},ranges:s,applicableOpts:Q,result:Ze}}}return{log:{timeTakenInMilliseconds:Date.now()-R,originalLength:te,cleanedLength:te,bytesSaved:0,percentageReducedOfOriginal:0},applicableOpts:Q,ranges:null,result:t}},e.defaults=w,e.version="4.1.6",Object.defineProperty(e,"__esModule",{value:!0})})});var xr=St((Cn,jr)=>{(function(e,n){typeof Cn=="object"&&typeof jr!="undefined"?n(Cn):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).rangesPush={})})(Cn,function(e){"use strict";function n(o,l=1){function A(D){return Array.from(D).reverse().join("")}function C(D,a,M){let U=M?`
-`:"\r",K=M?"\r":`
-`;if(!D)return D;let N=0,ue="";for(let X=0,fe=D.length;X<fe;X++)(D[X]===U||D[X]===K&&D[X-1]!==U)&&N++,`\r
-`.includes(D[X])||D[X]==="\xA0"?D[X]==="\xA0"?ue+=D[X]:D[X]===U?N<=a&&(ue+=D[X],D[X+1]===K&&(ue+=D[X+1],X++)):D[X]===K&&(!D[X-1]||D[X-1]!==U)&&N<=a&&(ue+=D[X]):D[X+1]||N||(ue+=" ");return ue}if(typeof o=="string"&&o.length){let D=1;typeof+l=="number"&&Number.isInteger(+l)&&+l>=0&&(D=+l);let a="",M="";if(o.trim()){if(!o[0].trim()){for(let U=0,K=o.length;U<K;U++)if(o[U].trim()){a=o.slice(0,U);break}}}else a=o;if(o.trim()&&(o.slice(-1).trim()===""||o.slice(-1)==="\xA0")){for(let U=o.length;U--;)if(o[U].trim()){M=o.slice(U+1);break}}return`${C(a,D,!1)}${o.trim()}${A(C(A(M),D,!0))}`}return o}let i={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function f(o,l){if(!Array.isArray(o)||!o.length)return o;let A=ce(ce({},i),l),C,D;if(A.strictlyTwoElementsInRangeArrays&&!o.filter(U=>U).every((U,K)=>U.length===2||(C=K,D=U.length,!1)))throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${C}th range (${JSON.stringify(o[C],null,4)}) has not two but ${D} elements!`);if(!o.filter(U=>U).every((U,K)=>!(!Number.isInteger(U[0])||U[0]<0||!Number.isInteger(U[1])||U[1]<0)||(C=K,!1)))throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${C}th range (${JSON.stringify(o[C],null,4)}) does not consist of only natural numbers!`);let a=o.filter(U=>U).length**2,M=0;return Array.from(o).filter(U=>U).sort((U,K)=>(A.progressFn&&(M+=1,A.progressFn(Math.floor(100*M/a))),U[0]===K[0]?U[1]<K[1]?-1:U[1]>K[1]?1:0:U[0]<K[0]?-1:1))}let J={mergeType:1,progressFn:null,joinRangesThatTouchEdges:!0};function b(o){return o!=null}function v(o){return Number.isInteger(o)&&o>=0}function c(o){return typeof o=="string"}let p={limitToBeAddedWhitespace:!1,limitLinebreaksCount:1,mergeType:1};e.Ranges=class{constructor(o){let l=ce(ce({},p),o);if(l.mergeType&&l.mergeType!==1&&l.mergeType!==2)if(c(l.mergeType)&&l.mergeType.trim()==="1")l.mergeType=1;else{if(!c(l.mergeType)||l.mergeType.trim()!=="2")throw new Error(`ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof l.mergeType}", equal to ${JSON.stringify(l.mergeType,null,4)}`);l.mergeType=2}this.opts=l,this.ranges=[]}add(o,l,A){if(o==null&&l==null)return;if(b(o)&&!b(l)){if(Array.isArray(o)){if(o.length){if(o.some(a=>Array.isArray(a)))return void o.forEach(a=>{Array.isArray(a)&&this.add(...a)});o.length&&v(+o[0])&&v(+o[1])&&this.add(...o)}return}throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(o,null,0)}) but second-one, "to" is not (${JSON.stringify(l,null,0)})`)}if(!b(o)&&b(l))throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(l,null,0)}) but first-one, "from" is not (${JSON.stringify(o,null,0)})`);let C=+o,D=+l;if(v(A)&&(A=String(A)),!v(C)||!v(D))throw v(C)&&C>=0?new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof D}" equal to: ${JSON.stringify(D,null,4)}`):new TypeError(`ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof C}" equal to: ${JSON.stringify(C,null,4)}`);if(b(A)&&!c(A)&&!v(A))throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof A}, equal to:
-${JSON.stringify(A,null,4)}`);if(b(this.ranges)&&Array.isArray(this.last())&&C===this.last()[1]){if(this.last()[1]=D,this.last(),this.last()[2]!==null&&b(A)){let a=!(this.last()[2]&&this.last()[2].length>0)||this.opts&&this.opts.mergeType&&this.opts.mergeType!==1?A:this.last()[2]+A;this.opts.limitToBeAddedWhitespace&&(a=n(a,this.opts.limitLinebreaksCount)),c(a)&&!a.length||(this.last()[2]=a)}}else{this.ranges||(this.ranges=[]);let a=A===void 0||c(A)&&!A.length?[C,D]:[C,D,A&&this.opts.limitToBeAddedWhitespace?n(A,this.opts.limitLinebreaksCount):A];this.ranges.push(a)}}push(o,l,A){this.add(o,l,A)}current(){return Array.isArray(this.ranges)&&this.ranges.length?(this.ranges=function(o,l){function A(N){return N&&typeof N=="object"&&!Array.isArray(N)}if(!Array.isArray(o)||!o.length)return null;let C;if(l){if(!A(l))throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:
-${JSON.stringify(l,null,4)} (type ${typeof l})`);if(C=ce(ce({},J),l),C.progressFn&&A(C.progressFn)&&!Object.keys(C.progressFn).length)C.progressFn=null;else if(C.progressFn&&typeof C.progressFn!="function")throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof C.progressFn}", equal to ${JSON.stringify(C.progressFn,null,4)}`);if(C.mergeType&&+C.mergeType!=1&&+C.mergeType!=2)throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof C.mergeType}", equal to ${JSON.stringify(C.mergeType,null,4)}`);if(typeof C.joinRangesThatTouchEdges!="boolean")throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof C.joinRangesThatTouchEdges}", equal to ${JSON.stringify(C.joinRangesThatTouchEdges,null,4)}`)}else C=ce({},J);let D=o.filter(N=>N).map(N=>[...N]).filter(N=>N[2]!==void 0||N[0]!==N[1]),a,M,U;if(a=C.progressFn?f(D,{progressFn:N=>{U=Math.floor(N/5),U!==M&&(M=U,C.progressFn(U))}}):f(D),!a)return null;let K=a.length-1;for(let N=K;N>0;N--)C.progressFn&&(U=Math.floor(78*(1-N/K))+21,U!==M&&U>M&&(M=U,C.progressFn(U))),(a[N][0]<=a[N-1][0]||!C.joinRangesThatTouchEdges&&a[N][0]<a[N-1][1]||C.joinRangesThatTouchEdges&&a[N][0]<=a[N-1][1])&&(a[N-1][0]=Math.min(a[N][0],a[N-1][0]),a[N-1][1]=Math.max(a[N][1],a[N-1][1]),a[N][2]!==void 0&&(a[N-1][0]>=a[N][0]||a[N-1][1]<=a[N][1])&&a[N-1][2]!==null&&(a[N][2]===null&&a[N-1][2]!==null?a[N-1][2]=null:a[N-1][2]!=null?+C.mergeType==2&&a[N-1][0]===a[N][0]?a[N-1][2]=a[N][2]:a[N-1][2]+=a[N][2]:a[N-1][2]=a[N][2]),a.splice(N,1),N=a.length);return a.length?a:null}(this.ranges,{mergeType:this.opts.mergeType}),this.ranges&&this.opts.limitToBeAddedWhitespace?this.ranges.map(o=>b(o[2])?[o[0],o[1],n(o[2],this.opts.limitLinebreaksCount)]:o):this.ranges):null}wipe(){this.ranges=[]}replace(o){if(Array.isArray(o)&&o.length){if(!Array.isArray(o[0])||!v(o[0][0]))throw new Error(`ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(o[0],null,4)} should be an array and its first element should be an integer, a string index.`);this.ranges=Array.from(o)}else this.ranges=[]}last(){return Array.isArray(this.ranges)&&this.ranges.length?this.ranges[this.ranges.length-1]:null}},e.defaults=p,e.version="5.0.12",Object.defineProperty(e,"__esModule",{value:!0})})});var Pr=St((vl,Lr)=>{var mi=200,Wn="__lodash_hash_undefined__",yi=1/0,$i="[object Function]",bi="[object GeneratorFunction]",Ti=/[\\^$.*+?()[\]{}|]/g,Si=/^\[object .+?Constructor\]$/,vi=typeof global=="object"&&global&&global.Object===Object&&global,_i=typeof self=="object"&&self&&self.Object===Object&&self,Hn=vi||_i||Function("return this")();function Oi(e,n){var i=e?e.length:0;return!!i&&wi(e,n,0)>-1}function Ai(e,n,i){for(var f=-1,J=e?e.length:0;++f<J;)if(i(n,e[f]))return!0;return!1}function Ci(e,n,i,f){for(var J=e.length,b=i+(f?1:-1);f?b--:++b<J;)if(n(e[b],b,e))return b;return-1}function wi(e,n,i){if(n!==n)return Ci(e,Ii,i);for(var f=i-1,J=e.length;++f<J;)if(e[f]===n)return f;return-1}function Ii(e){return e!==e}function Ei(e,n){return e.has(n)}function Ni(e,n){return e==null?void 0:e[n]}function Ri(e){var n=!1;if(e!=null&&typeof e.toString!="function")try{n=!!(e+"")}catch(i){}return n}function Mr(e){var n=-1,i=Array(e.size);return e.forEach(function(f){i[++n]=f}),i}var ji=Array.prototype,xi=Function.prototype,Wr=Object.prototype,Dn=Hn["__core-js_shared__"],Hr=function(){var e=/[^.]+$/.exec(Dn&&Dn.keys&&Dn.keys.IE_PROTO||"");return e?"Symbol(src)_1."+e:""}(),Dr=xi.toString,Fn=Wr.hasOwnProperty,Li=Wr.toString,Mi=RegExp("^"+Dr.call(Fn).replace(Ti,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$"),Wi=ji.splice,Hi=Pn(Hn,"Map"),kn=Pn(Hn,"Set"),fn=Pn(Object,"create");function Xt(e){var n=-1,i=e?e.length:0;for(this.clear();++n<i;){var f=e[n];this.set(f[0],f[1])}}function Di(){this.__data__=fn?fn(null):{}}function Fi(e){return this.has(e)&&delete this.__data__[e]}function Pi(e){var n=this.__data__;if(fn){var i=n[e];return i===Wn?void 0:i}return Fn.call(n,e)?n[e]:void 0}function ki(e){var n=this.__data__;return fn?n[e]!==void 0:Fn.call(n,e)}function Bi(e,n){var i=this.__data__;return i[e]=fn&&n===void 0?Wn:n,this}Xt.prototype.clear=Di;Xt.prototype.delete=Fi;Xt.prototype.get=Pi;Xt.prototype.has=ki;Xt.prototype.set=Bi;function sn(e){var n=-1,i=e?e.length:0;for(this.clear();++n<i;){var f=e[n];this.set(f[0],f[1])}}function Ji(){this.__data__=[]}function Ui(e){var n=this.__data__,i=In(n,e);if(i<0)return!1;var f=n.length-1;return i==f?n.pop():Wi.call(n,i,1),!0}function qi(e){var n=this.__data__,i=In(n,e);return i<0?void 0:n[i][1]}function Gi(e){return In(this.__data__,e)>-1}function zi(e,n){var i=this.__data__,f=In(i,e);return f<0?i.push([e,n]):i[f][1]=n,this}sn.prototype.clear=Ji;sn.prototype.delete=Ui;sn.prototype.get=qi;sn.prototype.has=Gi;sn.prototype.set=zi;function un(e){var n=-1,i=e?e.length:0;for(this.clear();++n<i;){var f=e[n];this.set(f[0],f[1])}}function Ki(){this.__data__={hash:new Xt,map:new(Hi||sn),string:new Xt}}function Vi(e){return En(this,e).delete(e)}function Yi(e){return En(this,e).get(e)}function Qi(e){return En(this,e).has(e)}function Zi(e,n){return En(this,e).set(e,n),this}un.prototype.clear=Ki;un.prototype.delete=Vi;un.prototype.get=Yi;un.prototype.has=Qi;un.prototype.set=Zi;function Nn(e){var n=-1,i=e?e.length:0;for(this.__data__=new un;++n<i;)this.add(e[n])}function Xi(e){return this.__data__.set(e,Wn),this}function el(e){return this.__data__.has(e)}Nn.prototype.add=Nn.prototype.push=Xi;Nn.prototype.has=el;function In(e,n){for(var i=e.length;i--;)if(tl(e[i][0],n))return i;return-1}function il(e){if(!Fr(e)||nl(e))return!1;var n=ol(e)||Ri(e)?Mi:Si;return n.test(rl(e))}function sl(e,n,i){var f=-1,J=Oi,b=e.length,v=!0,c=[],p=c;if(i)v=!1,J=Ai;else if(b>=mi){var o=n?null:ll(e);if(o)return Mr(o);v=!1,J=Ei,p=new Nn}else p=n?[]:c;e:for(;++f<b;){var l=e[f],A=n?n(l):l;if(l=i||l!==0?l:0,v&&A===A){for(var C=p.length;C--;)if(p[C]===A)continue e;n&&p.push(A),c.push(l)}else J(p,A,i)||(p!==c&&p.push(A),c.push(l))}return c}var ll=kn&&1/Mr(new kn([,-0]))[1]==yi?function(e){return new kn(e)}:ul;function En(e,n){var i=e.__data__;return al(n)?i[typeof n=="string"?"string":"hash"]:i.map}function Pn(e,n){var i=Ni(e,n);return il(i)?i:void 0}function al(e){var n=typeof e;return n=="string"||n=="number"||n=="symbol"||n=="boolean"?e!=="__proto__":e===null}function nl(e){return!!Hr&&Hr in e}function rl(e){if(e!=null){try{return Dr.call(e)}catch(n){}try{return e+""}catch(n){}}return""}function cl(e){return e&&e.length?sl(e):[]}function tl(e,n){return e===n||e!==e&&n!==n}function ol(e){var n=Fr(e)?Li.call(e):"";return n==$i||n==bi}function Fr(e){var n=typeof e;return!!e&&(n=="object"||n=="function")}function ul(){}Lr.exports=cl});var Br=St((_l,kr)=>{"use strict";kr.exports=e=>{if(typeof e!="string")throw new TypeError("Expected a string");return e.replace(/[|\\{}()[\]^$+*?.]/g,"\\$&").replace(/-/g,"\\x2d")}});var Ur=St((wl,Bn)=>{"use strict";var fl=Br(),Jn=new Map;function Rn(e,n){if(!Array.isArray(e))switch(typeof e){case"string":e=[e];break;case"undefined":e=[];break;default:throw new TypeError(`Expected '${n}' to be a string or an array, but got a type of '${typeof e}'`)}return e.filter(i=>{if(typeof i!="string"){if(typeof i=="undefined")return!1;throw new TypeError(`Expected '${n}' to be an array of strings, but found a type of '${typeof i}' in the array`)}return!0})}function Jr(e,n){n=ce({caseSensitive:!1},n);let i=e+JSON.stringify(n);if(Jn.has(i))return Jn.get(i);let f=e[0]==="!";f&&(e=e.slice(1)),e=fl(e).replace(/\\\*/g,"[\\s\\S]*");let J=new RegExp(`^${e}$`,n.caseSensitive?"":"i");return J.negated=f,Jn.set(i,J),J}Bn.exports=(e,n,i)=>{if(e=Rn(e,"inputs"),n=Rn(n,"patterns"),n.length===0)return[];let f=n[0][0]==="!";n=n.map(b=>Jr(b,i));let J=[];for(let b of e){let v=f;for(let c of n)c.test(b)&&(v=!c.negated);v&&J.push(b)}return J};Bn.exports.isMatch=(e,n,i)=>(e=Rn(e,"inputs"),n=Rn(n,"patterns"),n.length===0?!1:e.some(f=>n.every(J=>{let b=Jr(J,i),v=b.test(f);return b.negated?!v:v})))});var hl={};oo(hl,{comb:()=>dl,defaults:()=>Yr,version:()=>gl});var De=Ct(Xn()),Gr=Ct(tr()),en=Ct(rr()),gn=Ct(ir()),pt=Ct(sr());var ur="5.0.12";var Kn=Ct(Tr()),ht=Ct(vr()),zr=Ct(wr()),Kr=Ct(Ar()),dn=Ct(Er()),Vr=Ct(Rr()),jn=Ct(xr()),kt=Ct(Pr()),tn=Ct(Ur());var qr=/[\n]?\s*<style[^>]*>\s*<\/style\s*>/g,Un=/[\n]?\s*@(media|supports|document)[^{]*{\s*}/g,qn=/@media[^{@}]+{(?=\s*<\/style>)/g;function Gn(e){return e&&typeof e=="object"&&!Array.isArray(e)}function zn(e,n){return Object.prototype.hasOwnProperty.call(e,n)}function hn(e){return typeof e=="string"&&e.length===1&&(e.charCodeAt(0)>64&&e.charCodeAt(0)<91||e.charCodeAt(0)>96&&e.charCodeAt(0)<123)}var gl=ur,Yr={whitelist:[],backend:[],uglify:!1,removeHTMLComments:!0,removeCSSComments:!0,doNotRemoveHTMLCommentsWhoseOpeningTagContains:["[if","[endif"],reportProgressFunc:null,reportProgressFuncFrom:0,reportProgressFuncTo:100};function dl(e,n){let i=Date.now(),f=new jn.Ranges({limitToBeAddedWhitespace:!0}),J=new jn.Ranges,b=new jn.Ranges;function v(V){return/[-_A-Za-z0-9]/.test(V)}function c(V={}){return ce({valuesStart:null,valueStart:null,nameStart:null,quoteless:!1},V)}let p,o,l,A=[],C=[],D=[],a,M,U,K,N,ue={},X=0,fe,Se,$e,Ne=null,O=[],w=0,Q=0,ee=0,Z,t,I,R,u=!1,_,h,P,g=null,F=!1,E,Oe,G=0,be=0,Te=`.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`	
-`,re=["media","supports","document"],Ae=["font-feature-values","counter-style","namespace","font-face","keyframes","viewport","charset","import","page"],Je=["{","(","<",'"',"'","@",";"];if(typeof e!="string")throw new TypeError(`email-comb: [THROW_ID_01] Input must be string! Currently it's ${typeof e}`);if(n&&!Gn(n))throw new TypeError(`email-comb: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's ${typeof n}, equal to: ${JSON.stringify(n,null,4)}`);let T=ce(ce({},Yr),n);if(typeof T.doNotRemoveHTMLCommentsWhoseOpeningTagContains=="string"&&(T.doNotRemoveHTMLCommentsWhoseOpeningTagContains=[T.doNotRemoveHTMLCommentsWhoseOpeningTagContains].filter(V=>V.trim())),typeof T.whitelist=="string")T.whitelist=[T.whitelist];else if(!Array.isArray(T.whitelist))throw new TypeError(`email-comb: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ${JSON.stringify(T.whitelist,null,4)}`);if(T.whitelist.length>0&&!T.whitelist.every(V=>typeof V=="string"))throw new TypeError(`email-comb: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\ve got:
-${JSON.stringify(T.whitelist,null,4)}`);if(!Array.isArray(T.backend))throw new TypeError(`email-comb: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ${JSON.stringify(T.backend,null,4)}`);if(T.backend.length>0&&T.backend.some(V=>!Gn(V)))throw new TypeError(`email-comb: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:
-${JSON.stringify(T.backend,null,4)}`);if(T.backend.length>0&&!T.backend.every(V=>zn(V,"heads")&&zn(V,"tails")))throw new TypeError(`email-comb: [THROW_ID_07] every object within opts.backend should contain keys "heads" and "tails" but currently it's not the case. Whole "opts.backend" value array is currently equal to:
-${JSON.stringify(T.backend,null,4)}`);if(typeof T.uglify!="boolean")if(T.uglify===1||T.uglify===0)T.uglify=!!T.uglify;else throw new TypeError(`email-comb: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: ${JSON.stringify(T.uglify,null,4)}}`);if(T.reportProgressFunc&&typeof T.reportProgressFunc!="function")throw new TypeError(`email-comb: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :
-${JSON.stringify(T.reportProgressFunc,null,4)} (${typeof T.reportProgressFunc})`);let z=null,oe=null;Array.isArray(T.backend)&&T.backend.length&&(z=T.backend.map(V=>V.heads),oe=T.backend.map(V=>V.tails));let he=e.length,Ue=.06,qe=1;T.reportProgressFunc&&(qe=Math.floor((T.reportProgressFuncTo-(T.reportProgressFuncTo-T.reportProgressFuncFrom)*Ue-T.reportProgressFuncFrom)/2),""+`[${33}mceil[${39}m`+JSON.stringify(qe,null,4));let Ve=0;(!e.length||!`\r
-`.includes(e[e.length-1]))&&(Ve=1);let ve,Re,It=[],ae=[],ct=[],Ye=[],bt={},Ie,te,gt,ne,Qe=[],Ge=0,Ee,s=[],k=[],Ze=[],nt,Fe,Me,ze={n:0,r:0,rn:0};for(let V=1;V<=2;V++){fe=!1,Se=!1,R=null,u=!1,E=!0,P=!0,K=c(),Z=!0,F=!1,_=null,N=c(),M=null,g=null,gt=null,te=!1,ne=null,$e=!1,I=null,Ee=!1,a=null,Re=null,p=null,U=null,nt=null,o=null,ve=!1,X+=he;e:for(let r=0;r<he;r++){V===1&&""+`[${39}m${`---${`[${32}m round ${V} [${39}m`}-----------------------`}[${36}m`+`[${35}m${r}[${39}m`+(e[r]&&e[r].trim()!==""?e[r]:JSON.stringify(e[r],null,0)),T.reportProgressFunc&&(he>1e3&&he<2e3?V===1&&r===0&&T.reportProgressFunc(Math.floor((T.reportProgressFuncTo-T.reportProgressFuncFrom)/2)):he>=2e3&&(Ie=T.reportProgressFuncFrom+Math.floor(r/he*qe)+(V===1?0:qe),Ie!==Ge&&(Ge=Ie,T.reportProgressFunc(Ie))));let pe=e[r];if(e[r]===`
-`?e[r-1]==="\r"?V===1&&(ze.rn+=1):V===1&&(ze.n+=1):e[r]==="\r"&&e[r+1]!==`
-`&&V===1&&(ze.r+=1),te!==!0&&(o===null&&p!==null&&r>=p||p!==null&&o!==null&&p>o&&p<r)?(""+`[${33}mstyleStartedAt[${39}m`+JSON.stringify(p,null,4),""+`[${33}mstyleEndedAt[${39}m`+JSON.stringify(o,null,4),te=!0,Ee=!1):Ee!==!0&&U!==null&&(p===null||p<r)&&(o===null||o<r)&&(""+Ee,Ee=!0,te=!1),!ve&&(e[r]==='"'||e[r]==="'")){if(gt)if(e[r]==='"'&&e[(0,pt.right)(e,r)]==="'"&&e[(0,pt.right)(e,(0,pt.right)(e,r))]==='"'||e[r]==="'"&&e[(0,pt.right)(e,r)]==='"'&&e[(0,pt.right)(e,(0,pt.right)(e,r))]==="'"){r=(0,pt.right)(e,(0,pt.right)(e,r)),""+(0,pt.right)(e,(0,pt.right)(e,r));continue}else gt===e[r]&&(gt=null,""+`[${31}mRESET[${39}m`+`[${33}mcurrentlyWithinQuotes[${39}m`);else{let $=(0,pt.left)(e,r);typeof $=="number"&&(te&&["(",",",":"].includes(e[$])||Ee&&!te&&["(",",",":","="].includes(e[$]))&&(gt=e[r],""+`[${33}mcurrentlyWithinQuotes[${39}m`+gt)}Ee&&typeof l=="number"&&l<r&&(l=null,""+`[${31}m\u2588\u2588[${39}m`+`[${33}mstyleAttributeStartedAt[${39}m`)}if(ve){if(Re===null||typeof Re!="string"||typeof Re=="string"&&!Re)""+31+39,ve=!1;else if((0,De.matchRightIncl)(e,r,Re)){if(""+Re,a!==null){if(V===1&&T.removeCSSComments){let $=(0,De.matchLeft)(e,a,[`\r
-`,`
-`,"\r"]);""+`[${33}mlineBreakPresentOnTheLeft[${39}m`+JSON.stringify($,null,4);let W=a;typeof $=="string"&&$.length&&(W-=$.length,""+33+39+W),e[W-1]&&v(e[W-1])&&e[r+Re.length]&&v(e[r+Re.length])?(""+W+(r+Re.length),f.push(W,r+Re.length,";"),be+=r+Re.length-W):(""+W+(r+Re.length),f.push(W,r+Re.length),be+=r+Re.length-W)}a=null,""+`[${33}mcommentStartedAt[${39}m`+a}r=r+Re.length-1,""+r,Re=null,""+`[${33}mdoNothingUntil[${39}m`+Re,ve=!1,""+`[${33}mdoNothing[${39}m`+ve;continue}}if(!ve&&e[r]==="<"&&e[r+1]==="s"&&e[r+2]==="t"&&e[r+3]==="y"&&e[r+4]==="l"&&e[r+5]==="e"){Se=!0,""+`[${33}mcheckingInsideCurlyBraces[${39}m`+Se,""+36+39,te||(te=!0,""+te),""+36+39;for(let $=r;$<he;$++)if(X+=1,""+36+`str[i=${$}]=${e[$]}`+39,e[$]===">"){""+36+39,p=$+1,I=$+1,""+`[${33}mstyleStartedAt[${39}m`+p+`[${33}mruleChunkStartedAt[${39}m`+I,""+36+39;break}}if(!ve&&te&&e[r]==="<"&&e[r+1]==="/"&&e[r+2]==="s"&&e[r+3]==="t"&&e[r+4]==="y"&&e[r+5]==="l"&&e[r+6]==="e"&&(o=r-1,""+`[${33}mcheckingInsideCurlyBraces[${39}m`+Se,""+`[${33}mstyleEndedAt[${39}m`+o,I=null,Se=!1,te&&(te=!1,""+te)),V===1&&(te||Ee)&&e[r]==="/"&&e[r+1]==="*"&&a===null){a=r,""+`[${33}mcommentStartedAt[${39}m`+r,ve=!0,""+`[${33}mdoNothing[${39}m`,Re="*/",r+=1;continue}if(!ve&&te&&e[r]==="@"){""+r,ne&&(ne=null);let $=(0,De.matchRight)(e,r,re)||(0,De.matchRight)(e,r,Ae);if(typeof $=="string"){""+$;let W;(e[r+$.length+1]===";"||e[r+$.length+1]&&!e[r+$.length+1].trim()&&(0,De.matchRight)(e,r+$.length+1,";",{trimBeforeMatching:!0,cb:(H,Pe,_e)=>(W=_e,!0)}))&&f.push(r,W||r+$.length+2);let S;""+36+39;for(let H=r+1;H<he;H++){if(X+=1,""+36+`str[${H}] = ${e[H]}`+39+`[${33}msecondaryStopper[${39}m`+S,S&&e[H]===S)if(""+36+`atRulesWhichNeedToBeIgnored = ${JSON.stringify(Ae,null,0)} - VS - matchedAtTagsName = ${$}
-atRulesWhichMightWrapStyles = ${JSON.stringify(re,null,0)} - VS - matchedAtTagsName = ${$}`+39,e[H]==="}"&&Ae.includes($)||e[H]==="{"&&re.includes($)){r=H,""+31+`i = ${r}`+39,I=H+1,""+`[${33}mruleChunkStartedAt[${39}m`+I;continue e}else{S=void 0,""+35+39;continue}if(e[H]==='"'&&!S?(S='"',""+35+39+S):e[H]==="'"&&!S?(S="'",""+35+39+S):e[H]==="("&&!S?(S=")",""+35+39+S):Ae.includes($)&&e[H]==="{"&&!S&&(S="}",""+35+39+S),!S&&Je.includes(e[H])){""+H+e[H];let Pe,_e;if(e[H]==="{"||e[H]===";"){$e=!1,I=H+1,""+`[${33}minsideCurlyBraces[${39}m`+`[${33}mruleChunkStartedAt[${39}m`+I,r=H;continue e}else(e[H]==="@"||e[H]==="<")&&V===1&&!e.slice(r,H).includes("{")&&!e.slice(r,H).includes("(")&&!e.slice(r,H).includes('"')&&!e.slice(r,H).includes("'")&&(Pe=r,_e=H+(e[H]===";"?1:0),""+Pe+_e+e.slice(Pe,_e),f.push(Pe,_e));""+`[${33}mpushRangeTo[${39}m`+_e+`[${33}mz[${39}m`+H;let rt=_e?_e-1:H-1+(e[H]==="{"?1:0);""+`[${33}miOffset[${39}m`+rt,""+31+`i = ${rt}; ruleChunkStartedAt = ${rt+1};`+39,r=rt,I=rt+1;continue e}}}}if(!ve&&te&&$e&&Se&&pe==="}"&&!gt&&!ee&&(""+`[${32}m\u2588\u2588[${39}m`,V===2&&P&&I&&(f.push(I,r+1),""+`[${32}mPUSH[${39}m`+I+(r+1)+JSON.stringify(f,null,4)),$e=!1,""+`[${33}minsideCurlyBraces[${39}m`,""+31+`headWholeLineCanBeDeleted = ${P}`+39+31+`lastKeptChunksCommaAt = ${g}`+39+31+`onlyDeletedChunksFollow = ${F}`+39,I&&(I=r+1,""+`[${33}mruleChunkStartedAt[${39}m`+I),R=null,u=!1,P=!0,_=null,g=null,F=!1,""+`[${33}mselectorChunkStartedAt[${39}m`+`[${33}msingleSelectorStartedAt[${39}m`+`[${33}mheadWholeLineCanBeDeleted[${39}m`+`[${33}mselectorChunkCanBeDeleted[${39}m`+`[${33}mlastKeptChunksCommaAt[${39}m`+`[${33}monlyDeletedChunksFollow[${39}m`),!ve&&!a&&p&&r>=p&&(o===null&&r>=p||o&&p>o&&p<=r)&&!$e){if(_===null){if(pe==="."||pe==="#")_=r,""+`[${33}msingleSelectorStartedAt[${39}m`+_;else if((0,De.matchLeft)(e,r,"[class="))""+`[${33}m\u2588\u2588[${39}m`,hn(pe)?(_=r,h=".",""+`[${33}msingleSelectorStartedAt[${39}m`+_+`[${33}msingleSelectorType[${39}m`+h):`"'`.includes(pe)&&hn(e[(0,pt.right)(e,r)])&&(_=(0,pt.right)(e,r),h=".",""+`[${33}msingleSelectorStartedAt[${39}m`+_+`[${33}msingleSelectorType[${39}m`+h);else if((0,De.matchLeft)(e,r,"[id="))""+`[${33}m\u2588\u2588[${39}m`,hn(pe)?(_=r,h="#",""+`[${33}msingleSelectorStartedAt[${39}m`+_+`[${33}msingleSelectorType[${39}m`+h):`"'`.includes(pe)&&hn(e[(0,pt.right)(e,r)])&&(_=(0,pt.right)(e,r),h="#",""+`[${33}msingleSelectorStartedAt[${39}m`+_+`[${33}msingleSelectorType[${39}m`+h);else if(pe.trim()){if(pe==="}")I=r+1,nt=null,""+`[${33}mruleChunkStartedAt[${39}m`+(r+1)+`[${33}mcurrentChunk[${39}m`;else if(pe==="<"&&e[r+1]==="!"){""+36+39;for(let $=r;$<he;$++)if(X+=1,""+36+`-----str[${$}]=${e[$]}`+39,e[$]===">"){I=$+1,R=$+1,""+36+`1323 ruleChunkStartedAt=${I}`+39+36+`selectorChunkStartedAt=${R}`+39,r=$;continue e}}}}else if(_!==null&&!v(pe)){let $=e.slice(_,r);h&&($=`${h}${$}`,h=void 0),""+32+$+39,V===2&&!u&&Ze.includes($)?(u=!0,""+`[${31}mCHUNK CAN BE DELETED[${39}m`,F=!0,""+`[${33}monlyDeletedChunksFollow[${39}m`):V===2&&!u&&(""+`[${32}mBTW, THIS CHUNK MIGHT NOT BE DELETED[${39}m`,""+`[${33}mopts.whitelist[${39}m`+JSON.stringify(T.whitelist,null,4),T.uglify&&(!Array.isArray(T.whitelist)||!T.whitelist.length||!(0,tn.default)([$],T.whitelist).length)&&(""+`[${31}m${`PUSH [${_}, ${r}, ${O[ae.indexOf($)]}]`}[${39}m`,J.push(_,r,O[ae.indexOf($)])),pe===","&&(g=r,F=!1,""+`[${33}mlastKeptChunksCommaAt[${39}m`+g+`[${33}monlyDeletedChunksFollow[${39}m`+F)),pe==="."||pe==="#"?(_=r,""+`[${33}msingleSelectorStartedAt[${39}m`+_):_=null}if(R===null)pe.trim()&&pe!=="}"&&pe!==";"&&!(e[r]==="/"&&e[r+1]==="*")&&(u=!1,""+`[${33}mselectorChunkCanBeDeleted[${39}m`+u,R=r,""+`[${33}mselectorChunkStartedAt[${39}m`+R);else if(",{".includes(pe)){let $=ne||r;if(nt=e.slice(R,$),""+`[${33}mcurrentChunk[${39}m`+JSON.stringify(nt,null,0)+R+$,V===1)ne&&(pe===","&&ne<r?(f.push(ne,r),""+ne+r,G+=r-ne):pe==="{"&&ne<r-1&&(f.push(ne,r-1),""+ne+(r-1),G+=r-1-ne)),A.push(nt),""+`[${32}m${nt}[${39}m`+JSON.stringify(A,null,0);else if(u){let W=R,S=r;""+`[${33}mfromIndex[${39}m`+W;let H=0;if(pe==="{"&&e[W-1]!==">"&&e[W-1]!=="}"){""+36+39;for(let _e=R;_e--;)if(X+=1,""+36+`----- str[${_e}]=${e[_e]}`+39,e[_e].trim()&&e[_e]!==","){W=_e+1;break}""+`[${33}mfromIndex[${39}m`+JSON.stringify(W,null,4),e[r-1].trim()||(S=r-1)}else if(pe===","&&!e[r+1].trim()){for(let _e=r+1;_e<he;_e++)if(X+=1,e[_e].trim()){S=_e;break}}else(0,De.matchLeft)(e,W,"{",{trimBeforeMatching:!0,cb:(_e,rt,Ht)=>(H=Ht,!0)})&&(W=H+2);""+`[${33}mfromIndex[${39}m`+W,""+`[${33}mtoIndex[${39}m`+S;let Pe=(0,ht.expander)({str:e,from:W,to:S,ifRightSideIncludesThisThenCropTightly:".#",ifRightSideIncludesThisCropItToo:",",extendToOneSide:"right"});""+`[${33}mresToPush[${39}m`+JSON.stringify(Pe,null,4),f.push(...Pe),""+JSON.stringify(Pe,null,0),T.uglify&&J.wipe()}else P&&(P=!1,""+`[${32}mBTW, WHOLE LINE CAN'T BE DELETED NOW[${39}m`),F&&(F=!1),T.uglify&&(""+`[${31}mMERGE WITH FINAL INDEXES[${39}m`+JSON.stringify(J.current(),null,0),f.push(J.current()),J.wipe());if(pe!=="{")R=null,""+`[${33}mselectorChunkStartedAt[${39}m`;else if(V===2&&(""+`[${33}mheadWholeLineCanBeDeleted[${39}m`+P,!P&&g!==null&&F)){let W=g+1;if(`
-\r`.includes(e[g+1])){for(let S=g+1;S<he;S++)if(e[S].trim()){W=S;break}}f.push(g,W),""+g+W,g=null,F=!1}}}else fe&&(fe=!1,""+`[${33}mselectorSinceLinebreakDetected[${39}m`);if(!ve&&!te&&Ee&&e[r]==="/"&&(0,De.matchRight)(e,r,"body",{trimBeforeMatching:!0,i:!0})&&(0,De.matchLeft)(e,r,"<",{trimBeforeMatching:!0})&&(Ee=!1,U=null),!ve&&e[r]==="<"&&(0,De.matchRight)(e,r,"body",{i:!0,trimBeforeMatching:!0,cb:($,W,S)=>{if(V===1){if($!==void 0&&($.trim()===""||$===">")&&typeof S=="number")if(S-r>5)""+`[${33}mPUSH[${39}m`+r+S,f.push(r,S,"<body"),G+=S-r-5;else return!0;return!0}return!0}})){""+36+39;for(let $=r;$<he;$++)if(X+=1,e[$]===">"){U=$+1,""+`[${33}mbodyStartedAt[${39}m`+U;break}""+36+39}if(!ve&&Ee&&!te&&e[r]==="s"&&e[r+1]==="t"&&e[r+2]==="y"&&e[r+3]==="l"&&e[r+4]==="e"&&e[r+5]==="="&&Te.includes(e[r-1])&&`"'`.includes(e[r+6])&&(l=r+7,""+`[${33}mstyleAttributeStartedAt[${39}m`+l),!ve&&Ee&&!te&&!gt&&e[r]==="c"&&e[r+1]==="l"&&e[r+2]==="a"&&e[r+3]==="s"&&e[r+4]==="s"&&e[r-1]&&!e[r-1].trim()){let $,W=!1;if(e[r+5]==="="){if(e[r+6]==='"'||e[r+6]==="'")$=r+7,""+$;else if(v(e[r+6]))$=r+6,""+$,W=!0;else if(e[r+6]&&(!e[r+6].trim()||"/>".includes(e[r+6]))){let S=(0,ht.expander)({str:e,from:r,to:r+6,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0});""+JSON.stringify(S,null,0),f.push(...S)}}else if(!e[r+5].trim()){for(let S=r+5;S<he;S++)if(X+=1,e[S].trim()){if(e[S]==="="){if(S>r+5&&V===1&&(""+(r+5)+S,f.push(r+5,S)),(e[S+1]==='"'||e[S+1]==="'")&&e[S+2])$=S+2;else if(e[S+1]&&!e[S+1].trim()){for(let H=S+1;H<he;H++)if(X+=1,e[H].trim()){H>S+1&&V===1&&(""+(S+1)+H,f.push(S+1,H)),(e[H]==='"'||e[H]==="'")&&e[H+1]&&($=H+1);break}}}break}}""+`[${33}mvaluesStart[${39}m`+$,$&&(K=c({valuesStart:$,quoteless:W,nameStart:r}),""+`[${33}mbodyClass[${39}m`+JSON.stringify(K,null,4),V===1?(Z=!0,""+`[${33}mbodyItsTheFirstClassOrId[${39}m`):V===2&&(E=!0,""+`[${33}mbodyClassOrIdCanBeDeleted[${39}m`))}if(!ve&&Ee&&!te&&!gt&&e[r]==="i"&&e[r+1]==="d"&&e[r-1]&&!e[r-1].trim()){let $,W=!1;if(e[r+2]==="="){if(e[r+3]==='"'||e[r+3]==="'")$=r+4,""+$;else if(v(e[r+3]))$=r+3,""+$,W=!0;else if(e[r+3]&&(!e[r+3].trim()||"/>".includes(e[r+3]))){let S=(0,ht.expander)({str:e,from:r,to:r+3,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0});""+JSON.stringify(S,null,0),f.push(...S)}}else if(!e[r+2].trim()){for(let S=r+2;S<he;S++)if(X+=1,e[S].trim()){if(e[S]==="="){if(S>r+2&&V===1&&(""+(r+2)+S,f.push(r+2,S)),(e[S+1]==='"'||e[S+1]==="'")&&e[S+2])$=S+2;else if(e[S+1]&&!e[S+1].trim()){for(let H=S+1;H<he;H++)if(X+=1,e[H].trim()){H>S+1&&V===1&&(""+(S+1)+H,f.push(S+1,H)),(e[H]==='"'||e[H]==="'")&&e[H+1]&&($=H+1);break}}}break}}""+`[${33}mvaluesStart[${39}m`+$,$&&(N=c({valuesStart:$,quoteless:W,nameStart:r}),""+`[${33}mbodyId[${39}m`+JSON.stringify(N,null,4),V===1?(Z=!0,""+`[${33}mbodyItsTheFirstClassOrId[${39}m`):V===2&&(E=!0,""+`[${33}mbodyClassOrIdCanBeDeleted[${39}m`))}if(!ve&&K.valuesStart!==null&&r>=K.valuesStart&&K.valueStart===null)if(z&&(0,De.matchRightIncl)(e,r,z)){if(ve=!0,""+`[${33}mdoNothing[${39}m`,E=!1,ne&&r>ne+1){let S=(0,ht.expander)({str:e,from:ne,to:r,ifLeftSideIncludesThisThenCropTightly:`"'`,ifRightSideIncludesThisThenCropTightly:`"'`});f.push(...S),""+JSON.stringify(S,null,4),ne=null,""+`[${33}mwhitespaceStartedAt[${39}m`}else ne&&(ne=null);let $=(0,De.matchRightIncl)(e,r,z);""+`[${33}mmatchedHeads[${39}m`+$;let W=T.backend.find(S=>S.heads===$);""+`[${33}mfindings[${39}m`+JSON.stringify(W,null,4),W&&W.tails&&(Re=W.tails,""+`[${33}mdoNothingUntil[${39}m`+Re)}else v(pe)&&(K.valueStart=r,""+`[${33}mbodyClass.valueStart[${39}m`+K.valueStart,V===1&&(Z&&K.valuesStart!==null&&!e.slice(K.valuesStart,r).trim()&&K.valuesStart<r?(f.push(K.valuesStart,r),""+`[${32}mPUSH[${39}m`+K.valuesStart+r,G+=r-K.valuesStart,Z=!1,""+`[${33}mbodyItsTheFirstClassOrId[${39}m`):ne!==null&&ne<r-1&&(f.push(ne+1,r),""+`[${32}mPUSH[${39}m`+(ne+1)+r,G+=r-ne+1)));if(!ve&&K.valueStart!==null&&r>K.valueStart&&(!v(pe)||oe&&(0,De.matchRightIncl)(e,r,oe)))if(z&&(0,De.matchRightIncl)(e,r,z)){K.valueStart=null,""+`[${33}mbodyClass.valueStart[${39}m`,K=c();let $=(0,De.matchRightIncl)(e,r,z);""+`[${33}mmatchedHeads[${39}m`+$;let W=T.backend.find(S=>S.heads===$);""+`[${33}mfindings[${39}m`+JSON.stringify(W,null,4),W&&W.tails&&(Re=W.tails,""+`[${33}mdoNothingUntil[${39}m`+Re)}else{let $=`${e.slice(K.valueStart,r)}`;if(""+`[${32}m${$}[${39}m`,""+`[${33}mallTails[${39}m`+JSON.stringify(oe,null,4),V===1)C.push(`.${$}`),""+35+39+$+JSON.stringify(C,null,0);else if(K.valueStart!=null&&Qe.includes($)){""+`[${33}mcarvedClass[${39}m`+$,""+`[${33}mbodyClass.valueStart[${39}m`+JSON.stringify(K.valueStart,null,0);let W=(0,ht.expander)({str:e,from:K.valueStart,to:r,ifLeftSideIncludesThisThenCropTightly:`"'`,ifRightSideIncludesThisThenCropTightly:`"'`,wipeAllWhitespaceOnLeft:!0}),S="";e[W[0]-1]&&e[W[0]-1].trim()&&e[W[1]]&&e[W[1]].trim()&&(z||oe)&&(z&&(0,De.matchLeft)(e,W[0],oe)||oe&&(0,De.matchRightIncl)(e,W[1],z))&&(S=" "),f.push(...W,S),""+`[${32}mPUSH[${39}m`+JSON.stringify([W[0],W[1],S],null,0)}else E=!1,""+`[${33}mbodyClassOrIdCanBeDeleted[${39}m`,T.uglify&&!(Array.isArray(T.whitelist)&&T.whitelist.length&&(0,tn.default)([`.${$}`],T.whitelist).length)&&(""+`[${31}m${`PUSH [${K.valueStart}, ${r},
-                  ${O[ae.indexOf(`.${$}`)]}]`}[${39}m`,f.push(K.valueStart,r,O[ae.indexOf(`.${$}`)].slice(1)));K.valueStart=null,""+`[${33}mbodyClass.valueStart[${39}m`}if(!ve&&N&&N.valueStart!==null&&r>N.valueStart&&(!v(pe)||oe&&(0,De.matchRightIncl)(e,r,oe))){let $=e.slice(N.valueStart,r);if(""+`[${32}m${$}[${39}m`,V===1)D.push(`#${$}`),""+35+39+`#${$}`+JSON.stringify(D,null,4);else if(N.valueStart!=null&&s.includes($)){""+`[${33}mcarvedId[${39}m`+$,""+`[${33}mbodyId.valueStart[${39}m`+JSON.stringify(N.valueStart,null,4);let W=(0,ht.expander)({str:e,from:N.valueStart,to:r,ifRightSideIncludesThisThenCropTightly:`"'`,wipeAllWhitespaceOnLeft:!0});e[W[0]-1]&&e[W[0]-1].trim()&&e[W[1]]&&e[W[1]].trim()&&(z||oe)&&(z&&(0,De.matchLeft)(e,W[0],oe||[])||oe&&(0,De.matchRightIncl)(e,W[1],z||[]))&&(W[0]+=1),f.push(...W),""+`[${32}mPUSH[${39}m`+JSON.stringify(W,null,0)}else E=!1,""+`[${33}mbodyClassOrIdCanBeDeleted[${39}m`,""+`[${33}mcarvedId[${39}m`+JSON.stringify($,null,4),""+JSON.stringify(T.whitelist,null,4),""+$+(0,tn.default)([`#${$}`],T.whitelist),T.uglify&&!(Array.isArray(T.whitelist)&&T.whitelist.length&&(0,tn.default)([`#${$}`],T.whitelist).length)&&(""+`[${31}m${`PUSH [${N.valueStart}, ${r},
-                ${O[ae.indexOf(`#${$}`)]}]`}[${39}m`,f.push(N.valueStart,r,O[ae.indexOf(`#${$}`)].slice(1)));N.valueStart=null,""+`[${33}mbodyId.valueStart[${39}m`}if(!ve&&K.valuesStart!=null&&(!K.quoteless&&(pe==="'"||pe==='"')||K.quoteless&&!v(e[r]))&&r>=K.valuesStart){if(r===K.valuesStart)V===1&&(""+JSON.stringify((0,ht.expander)({str:e,from:K.nameStart,to:r+1,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0}),null,0),f.push(...(0,ht.expander)({str:e,from:K.nameStart,to:r+1,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0})));else{if(V===2&&E){""+`[${33}minitial range[${39}m`+(K.valuesStart-7)+(`'"`.includes(e[r])?r+1:r);let $=(0,ht.expander)({str:e,from:K.valuesStart-7,to:`'"`.includes(e[r])?r+1:r,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0});""+`[${32}mSET[${39}m`+`[${33}mexpandedRange[${39}m`+JSON.stringify($,null,4);let W="";e[$[0]-1]&&e[$[0]-1].trim()&&e[$[1]]&&e[$[1]].trim()&&!"/>".includes(e[$[1]])&&(W=" ",""+($[0]-1)+e[$[0]-1]+$[1]+e[$[1]]),f.push(...$,W),""+`[${32}mPUSH[${39}m`+JSON.stringify([$[0],$[1],W],null,4)}ne!==null&&(f.push(ne,r),""+`[${32}mPUSH[${39}m`+ne+r)}K=c(),""+`[${33}mbodyClass[${39}m`}if(!ve&&N.valuesStart!==null&&(!N.quoteless&&(pe==="'"||pe==='"')||N.quoteless&&!v(e[r]))&&r>=N.valuesStart){if(r===N.valuesStart)V===1&&(""+N.nameStart+(r+1)+(0,ht.expander)({str:e,from:N.nameStart,to:r+1,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0})[0]+(0,ht.expander)({str:e,from:N.nameStart,to:r+1,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0})[1],""+JSON.stringify((0,ht.expander)({str:e,from:N.nameStart,to:r+1,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0}),null,0),f.push(...(0,ht.expander)({str:e,from:N.nameStart,to:r+1,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0})));else{if(V===2&&E){let $=(0,ht.expander)({str:e,from:N.valuesStart-4,to:r+1,ifRightSideIncludesThisThenCropTightly:"/>",wipeAllWhitespaceOnLeft:!0}),W="";e[$[0]-1]&&e[$[0]-1].trim()&&e[$[1]]&&e[$[1]].trim()&&!"/>".includes(e[$[1]])&&(W=" "),f.push(...$,W),""+`[${32}mPUSH[${39}m`+JSON.stringify([$[0],$[1],W],null,4)}ne!==null&&(f.push(ne,r),""+`[${32}mPUSH[${39}m`+ne+r)}N=c(),""+`[${33}mbodyId[${39}m`}if(!ve&&N.valuesStart&&r>=N.valuesStart&&N.valueStart===null)if(z&&(0,De.matchRightIncl)(e,r,z)){if(ve=!0,""+`[${33}mdoNothing[${39}m`,E=!1,ne&&r>ne+1){let S=(0,ht.expander)({str:e,from:ne,to:r,ifLeftSideIncludesThisThenCropTightly:`"'`,ifRightSideIncludesThisThenCropTightly:`"'`});f.push(...S),""+JSON.stringify(S,null,4),ne=null,""+`[${33}mwhitespaceStartedAt[${39}m`}else ne&&(ne=null);let $=(0,De.matchRightIncl)(e,r,z);""+`[${33}mmatchedHeads[${39}m`+$;let W=T.backend.find(S=>S.heads===$);""+`[${33}mfindings[${39}m`+JSON.stringify(W,null,4),W&&W.tails&&(Re=W.tails,""+`[${33}mdoNothingUntil[${39}m`+Re)}else v(pe)&&(N.valueStart=r,""+`[${33}mbodyId.valueStart[${39}m`+N.valueStart,V===1&&(Z&&N.valuesStart!==null&&!e.slice(N.valuesStart,r).trim()&&N.valuesStart<r?(f.push(N.valuesStart,r),""+`[${32}mPUSH[${39}m`+N.valuesStart+r,G+=r-N.valuesStart,Z=!1,""+`[${33}mbodyItsTheFirstClassOrId[${39}m`):ne!==null&&ne<r-1&&(f.push(ne+1,r),""+`[${32}mPUSH[${39}m`+(ne+1)+r,G+=r-ne+1)));if(!ve&&V===1){if(a!==null&&a<r&&e[r]===">"&&!Me&&(""+`[${33}mstr.slice(commentStartedAt, i)[${39}m`+JSON.stringify(e.slice(a,r),null,4),T.doNotRemoveHTMLCommentsWhoseOpeningTagContains&&Array.isArray(T.doNotRemoveHTMLCommentsWhoseOpeningTagContains)&&T.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length&&T.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some($=>$.trim()&&e.slice(a,r).toLowerCase().includes($))&&(Fe=!1,""+`[${33}mcanDelete[${39}m`+Fe),Me=!0,""+33+39+Me),a!==null&&e[r]===">"){if(""+`[${33}mcanDelete[${39}m`+JSON.stringify(Fe,null,4),!t&&e[r-1]==="-"&&e[r-2]==="-"){let $=(0,ht.expander)({str:e,from:a,to:r+1,wipeAllWhitespaceOnLeft:!0,addSingleSpaceToPreventAccidentalConcatenation:!0});T.removeHTMLComments&&Fe&&(""+JSON.stringify($,null,0),f.push(...$)),be+=$[1]-$[0],a=null,t=void 0,""+`[${33}mcommentStartedAt[${39}m`+`[${33}mbogusHTMLComment[${39}m`}else if(t){let $=(0,ht.expander)({str:e,from:a,to:r+1,wipeAllWhitespaceOnLeft:!0,addSingleSpaceToPreventAccidentalConcatenation:!0});T.removeHTMLComments&&Fe&&(""+JSON.stringify($,null,0),f.push(...$)),be+=$[1]-$[0],a=null,t=void 0,""+`[${33}mcommentStartedAt[${39}m`+`[${33}mbogusHTMLComment[${39}m`}}T.removeHTMLComments&&a===null&&e[r]==="<"&&e[r+1]==="!"&&((!z||Array.isArray(z)&&z.length&&!z.includes("<!"))&&(!oe||Array.isArray(oe)&&oe.length&&!oe.includes("<!"))&&(""+`[${33}mcommentNearlyStartedAt[${39}m`+JSON.stringify(M,null,4),!(0,De.matchRight)(e,r+1,"doctype",{i:!0,trimBeforeMatching:!0})&&!(e[r+2]==="-"&&e[r+3]==="-"&&Array.isArray(T.doNotRemoveHTMLCommentsWhoseOpeningTagContains)&&T.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length&&(0,De.matchRight)(e,r+3,T.doNotRemoveHTMLCommentsWhoseOpeningTagContains,{trimBeforeMatching:!0}))&&(a=r,Me=!1,Fe=!0,""+`[${33}mcommentStartedAt[${39}m`+a+`[${33}musedOnce[${39}m`+Me+`[${33}mcanDelete[${39}m`+Fe),t=!(e[r+2]==="-"&&e[r+3]==="-"),""+`[${33}mbogusHTMLComment[${39}m`+t),a!==r&&(M=r))}if(pe==="}"&&ee&&(ee-=1,""+ee),!ve&&pe==="{"&&Se&&($e?(ee+=1,""+ee):($e=!0,""+`[${33}minsideCurlyBraces[${39}m`,ne!==null&&(e.slice(ne,r).includes(`
-`)||e.slice(ne,r).includes("\r"))&&(f.push(ne,r),""+ne+r))),ve||(e[r].trim()?ne!==null&&(ne=null):ne===null&&(ne=r)),!ve&&V===2&&Array.isArray(Oe)&&Oe.length&&r===Oe[0][0]){let $=Oe.shift();""+`[${33}mtemp[${39}m`+JSON.stringify($,null,0),$&&$[1]-1>r&&(""+31+`\u2588\u2588 OFFSET MAIN INDEX FROM ${r} TO ${$[1]-1}`+39,r=$[1]-1);continue}if(M!==null&&e[r]===">"){M=null,""+`[${33}mcommentNearlyStartedAt[${39}m`;let $=0;if(T.removeHTMLComments&&Array.isArray(T.doNotRemoveHTMLCommentsWhoseOpeningTagContains)&&T.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length&&(T.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(W=>W.includes("if"))||T.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(W=>W.includes("mso"))||T.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(W=>W.includes("ie")))&&(0,De.matchRight)(e,r,"<!--",{trimBeforeMatching:!0,cb:(W,S,H)=>($=H,!0)})){""+`[${33}mtemp[${39}m`+JSON.stringify($,null,4)+JSON.stringify(e.slice($,$+10),null,4),(0,De.matchRight)(e,$-1,"-->",{trimBeforeMatching:!0,cb:(W,S,H)=>($=H,!0)})&&""+`[${33}mtemp[${39}m`+JSON.stringify($,null,4)+JSON.stringify(e.slice($,$+10),null,4),typeof $=="number"&&(r=$-1),""+`[${33}mi[${39}m`+JSON.stringify(r,null,4)+`[${32}mCONTINUE[${39}m`;continue}}V===9&&(Ee?(""+(K.valueStart?`
-* ${`[${90}mbodyClass.valueStart[${39}m`} = ${K.valueStart}`:"")+(N.valueStart?`
-* ${`[${90}mbodyId.valueStart[${39}m`} = ${N.valueStart}`:"")+(K.valuesStart?`
-* ${`[${90}mbodyClass[${39}m`} = ${JSON.stringify(K,null,0)}`:"")+(N.valuesStart?`
-* ${`[${90}mbodyId[${39}m`} = ${JSON.stringify(N,null,0)}`:""),""+`[${33}mbodyItsTheFirstClassOrId[${39}m`+Z+34+`headWholeLineCanBeDeleted = ${P}`+39):te&&(""+36+`headWholeLineCanBeDeleted = ${P}`+39+36+`headWholeLineCanBeDeleted = ${P}`+39+36+`insideCurlyBraces = ${$e}`+39+36+`curliesDepth = ${ee}`+39,V===9&&""+`[${90}mruleChunkStartedAt[${39}m = ${I}`+`[${90}mselectorChunkStartedAt[${39}m = ${R}`+`[${90}mselectorChunkCanBeDeleted[${39}m = ${u}`+`[${90}mcurrentChunk[${39}m = ${nt}`+`[${90}mwhitespaceStartedAt[${39}m = ${ne}`+`[${90}msingleSelectorStartedAt[${39}m = ${_}`+`[${90}mcommentStartedAt[${39}m = ${a}`+`[${90}mcheckingInsideCurlyBraces[${39}m = ${Se}`+`[${90}minsideCurlyBraces[${39}m = ${$e}`),""+`[${Ee?32:31}mstateWithinBody[${39}m`+`[${te?32:31}mstateWithinStyleTag[${39}m`+33+39+g+33+39+F)}if(V===1){Ye=(0,kt.default)(C.concat(D)),""+35+39,""+JSON.stringify(A,null,4),""+JSON.stringify(C,null,4),""+JSON.stringify(D,null,4),""+JSON.stringify(Ye,null,4),""+JSON.stringify(T.whitelist,null,4),""+`[${32}mstarting headSelectorsCount[${39}m`+JSON.stringify(ue,null,4),A.forEach(S=>{(0,en.extract)(S).res.forEach(H=>{Object.prototype.hasOwnProperty.call(ue,H)?ue[H]+=1:ue[H]=1})}),""+JSON.stringify(ue,null,4),bt=ce({},ue),ct=(0,kt.default)(A.reduce((S,H)=>S.concat((0,en.extract)(H).res),[])),Q=ct.length,""+`[${33}m1238 AFTER TRAVERSAL,
-allClassesAndIdsWithinHead[${39}m`+JSON.stringify(ct,null,4);let r=Array.from(A),pe=[];""+36+`3330 LOOP preppedHeadSelectorsArr = ${JSON.stringify(r,null,4)}`+39;for(let S=0,H=r.length;S<H;S++){X+=1,""+36+39,""+`[${36}m\u2588\u2588[${39}m`+S+JSON.stringify(r[S],null,4);let Pe;r[S]!=null&&(Pe=(0,en.extract)(r[S]).res),Pe&&!Pe.every(_e=>Ye.includes(_e))&&(""+(0,en.extract)(r[S]),pe.push(...(0,en.extract)(r[S]).res),""+JSON.stringify(pe,null,4),r.splice(S,1),S-=1,H-=1)}""+36+39,pe=(0,kt.default)((0,gn.pull)(pe,T.whitelist));let $;r&&r.length?($=r.reduce((S,H)=>S.concat((0,en.extract)(H).res),[]),""+`[${32}mSET[${39}m`+`[${33}mpreppedAllClassesAndIdsWithinHead[${39}m`+JSON.stringify($,null,4)):$=[],Ze=(0,gn.pull)((0,dn.default)((0,kt.default)(Array.from(ct)),C.concat(D)),T.whitelist),""+`[${32}mheadCssToDelete[${39}m`+JSON.stringify(Ze,null,4),k=(0,kt.default)((0,gn.pull)((0,dn.default)(C.concat(D),$),T.whitelist)),""+`[${32}mbodyCssToDelete[${39}m`+JSON.stringify(k,null,4),Ze=(0,kt.default)(Ze.concat((0,Kn.default)(pe,k))),""+`[${32}mheadCssToDelete[${39}m`+JSON.stringify(Ze,null,4),Qe=k.filter(S=>S.startsWith(".")).map(S=>S.slice(1)),""+JSON.stringify(Qe,null,4),s=k.filter(S=>S.startsWith("#")).map(S=>S.slice(1)),""+`[${33}mbodyIdsToDelete[${39}m`+JSON.stringify(s,null,4),""+JSON.stringify(f.current(),null,4),It=Object.keys(bt).filter(S=>bt[S]<1),""+`[${33}mallClassesAndIdsThatWereCompletelyDeletedFromHead[${39}m`+JSON.stringify(It,null,4),Qe=(0,kt.default)(Qe.concat((0,Kn.default)((0,gn.pull)(Ye,T.whitelist),It).filter(S=>S[0]===".").map(S=>S.slice(1)))),""+`[${33}mbodyClassesToDelete[${39}m`+JSON.stringify(Qe,null,4);let W=(0,tn.default)(Ye,T.whitelist);""+`[${31}m\u2588\u2588 \u2588\u2588 \u2588\u2588[${39}m`+`[${33}mallClassesAndIdsWithinBodyThatWereWhitelisted[${39}m`+JSON.stringify(W,null,4),k=(0,kt.default)(k.concat(Qe.map(S=>`.${S}`),s.map(S=>`#${S}`))),""+`[${90}mbodyCssToDelete[${39}m`+JSON.stringify(k,null,4),ae=(0,dn.default)((0,dn.default)(Array.from(ct),k),Ze),Array.isArray(W)&&W.length&&W.forEach(S=>{ae.includes(S)||ae.push(S)}),T.uglify&&(O=(0,zr.uglifyArr)(ae)),w=ae.length,Ne=T.uglify?ae.map((S,H)=>[S,O[H]]).filter(S=>!T.whitelist.some(H=>tn.default.isMatch(S[0],H))):null,""+`[${33}mfinalIndexesToDelete.current()[${39}m`+JSON.stringify(f.current(),null,4),""+`[${33}muglified[${39}m`+JSON.stringify(Ne,null,4),f.current()?Oe=Array.from(f.current()||[]):Oe=null}else V===2&&(""+JSON.stringify(ae,null,4),T.uglify&&""+`[${36}mUGLIFICATION[${39}m`+(ae.reduce((r,pe)=>`${r}   ${`[${33}m${O[ae.indexOf(pe)]}[${39}m`} --- ${`[${31}m${pe}[${39}m`}`),`
-`))}f.push(b.current()),""+`[${33}mstr[${39}m`+e,""+JSON.stringify(f.current(),null,4),e.length&&f.current()&&(e=(0,Kr.rApply)(e,f.current()),f.wipe());let Le=T.reportProgressFuncTo-(T.reportProgressFuncTo-T.reportProgressFuncFrom)*Ue;for(""+`[${33}mstartingPercentageDone[${39}m`+JSON.stringify(Le,null,4),T.reportProgressFunc&&he>=2e3&&(Ie=Math.floor(Le+(T.reportProgressFuncTo-Le)/5),Ie!==Ge&&(Ge=Ie,T.reportProgressFunc(Ie))),""+e;Un.test(e)||qn.test(e);)e=e.replace(Un,""),e=e.replace(qn,""),X+=e.length;T.reportProgressFunc&&he>=2e3&&(Ie=Math.floor(Le+(T.reportProgressFuncTo-Le)/5*2),Ie!==Ge&&(Ge=Ie,T.reportProgressFunc(Ie))),e=e.replace(qr,`
-`),X+=e.length,T.reportProgressFunc&&he>=2e3&&(Ie=Math.floor(Le+(T.reportProgressFuncTo-Le)/5*3),Ie!==Ge&&(Ge=Ie,T.reportProgressFunc(Ie)));let Ke=e.length;return e=e.replace((0,Gr.emptyCondCommentRegex)(),""),X+=e.length,Ke!==e.length&&(be+=e.length-Ke),T.reportProgressFunc&&he>=2e3&&(Ie=Math.floor(Le+(T.reportProgressFuncTo-Le)/5*4),Ie!==Ge&&(Ge=Ie,T.reportProgressFunc(Ie))),e=(0,Vr.crush)(e,{removeLineBreaks:!1,removeIndentations:!1,removeHTMLComments:!1,removeCSSComments:!1,lineLengthLimit:500}).result,Ke=e.length,Ke!==e.length&&(G+=e.length-Ke),X+=e.length,T.reportProgressFunc&&he>=2e3&&(Ie=Math.floor(Le+(T.reportProgressFuncTo-Le)),Ie!==Ge&&(Ge=Ie,T.reportProgressFunc(Ie))),e.length&&((!e[0].trim()||!e[e.length-1].trim())&&e.length!==e.trim().length&&(G+=e.length-e.trim().length),e=e.trimStart()),""+`[${33}mallClassesAndIdsWithinHeadFinal[${39}m`+JSON.stringify(ae,null,4),e=e.replace(/ ((class|id)=["']) /g," $1"),{log:{timeTakenInMilliseconds:Date.now()-i,traversedTotalCharacters:X,traversedTimesInputLength:he?Math.round(X/he*100)/100:0,originalLength:he,cleanedLength:e.length,bytesSaved:Math.max(he-e.length,0),percentageReducedOfOriginal:he?Math.round(Math.max(he-e.length,0)*100/he):0,nonIndentationsWhitespaceLength:Math.max(G-Ve,0),nonIndentationsTakeUpPercentageOfOriginal:he&&Math.max(G-Ve,0)?Math.round(Math.max(G,0)*100/he):0,commentsLength:be,commentsTakeUpPercentageOfOriginal:he&&be?Math.round(be*100/he):0,uglified:Ne},result:e,countAfterCleaning:w,countBeforeCleaning:Q,allInHead:ct.sort(),allInBody:Ye.sort(),deletedFromHead:Ze.sort(),deletedFromBody:k.sort()}}return hl;})();
+(function (global, factory) {
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+typeof define === 'function' && define.amd ? define(['exports'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.emailComb = {}));
+}(this, (function (exports) { 'use strict';
+
+/**
+ * arrayiffy-if-string
+ * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+ * Version: 3.13.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/arrayiffy-if-string/
+ */
+
+function arrayiffy(something) {
+  if (typeof something === "string") {
+    if (something.length) {
+      return [something];
+    }
+    return [];
+  }
+  return something;
+}
+
+/**
+ * string-match-left-right
+ * Match substrings on the left or right of a given index, ignoring whitespace
+ * Version: 7.0.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-match-left-right/
+ */
+
+function isObj$1(something) {
+  return something && typeof something === "object" && !Array.isArray(something);
+}
+function isStr$2(something) {
+  return typeof something === "string";
+}
+const defaults$6 = {
+  cb: undefined,
+  i: false,
+  trimBeforeMatching: false,
+  trimCharsBeforeMatching: [],
+  maxMismatches: 0,
+  firstMustMatch: false,
+  lastMustMatch: false,
+  hungry: false
+};
+const defaultGetNextIdx = index => index + 1;
+function march(str, position, whatToMatchVal, originalOpts, special = false, getNextIdx = defaultGetNextIdx) {
+  const whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
+  if (+position < 0 && special && whatToMatchValVal === "EOL") {
+    return whatToMatchValVal;
+  }
+  const opts = { ...defaults$6,
+    ...originalOpts
+  };
+  if (position >= str.length && !special) {
+    return false;
+  }
+  let charsToCheckCount = special ? 1 : whatToMatchVal.length;
+  let charsMatchedTotal = 0;
+  let patienceReducedBeforeFirstMatch = false;
+  let lastWasMismatched = false;
+  let atLeastSomethingWasMatched = false;
+  let patience = opts.maxMismatches;
+  let i = position;
+  let somethingFound = false;
+  let firstCharacterMatched = false;
+  let lastCharacterMatched = false;
+  function whitespaceInFrontOfFirstChar() {
+    return (
+      charsMatchedTotal === 1 &&
+      patience < opts.maxMismatches - 1
+    );
+  }
+  while (str[i]) {
+    const nextIdx = getNextIdx(i);
+    if (opts.trimBeforeMatching && str[i].trim() === "") {
+      if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
+        return true;
+      }
+      i = getNextIdx(i);
+      continue;
+    }
+    if (opts && !opts.i && opts.trimCharsBeforeMatching && opts.trimCharsBeforeMatching.includes(str[i]) || opts && opts.i && opts.trimCharsBeforeMatching && opts.trimCharsBeforeMatching.map(val => val.toLowerCase()).includes(str[i].toLowerCase())) {
+      if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
+        return true;
+      }
+      i = getNextIdx(i);
+      continue;
+    }
+    const charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
+    if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
+      if (!somethingFound) {
+        somethingFound = true;
+      }
+      if (!atLeastSomethingWasMatched) {
+        atLeastSomethingWasMatched = true;
+      }
+      if (charsToCheckCount === whatToMatchVal.length) {
+        firstCharacterMatched = true;
+        if (patience !== opts.maxMismatches) {
+          return false;
+        }
+      } else if (charsToCheckCount === 1) {
+        lastCharacterMatched = true;
+      }
+      charsToCheckCount -= 1;
+      charsMatchedTotal++;
+      if (whitespaceInFrontOfFirstChar()) {
+        return false;
+      }
+      if (!charsToCheckCount) {
+        return (
+          charsMatchedTotal !== whatToMatchVal.length ||
+          patience === opts.maxMismatches ||
+          !patienceReducedBeforeFirstMatch ? i : false
+        );
+      }
+    } else {
+      if (!patienceReducedBeforeFirstMatch && !charsMatchedTotal) {
+        patienceReducedBeforeFirstMatch = true;
+      }
+      if (opts.maxMismatches && patience && i) {
+        patience -= 1;
+        for (let y = 0; y <= patience; y++) {
+          const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
+          const nextCharInSource = str[getNextIdx(i)];
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (
+          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsMatchedTotal++;
+            if (whitespaceInFrontOfFirstChar()) {
+              return false;
+            }
+            charsToCheckCount -= 2;
+            somethingFound = true;
+            break;
+          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (
+          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            if (!charsMatchedTotal && !opts.hungry) {
+              return false;
+            }
+            charsToCheckCount -= 1;
+            somethingFound = true;
+            break;
+          } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
+            return i;
+          }
+        }
+        if (!somethingFound) {
+          lastWasMismatched = i;
+        }
+      } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
+        return 0;
+      } else {
+        return false;
+      }
+    }
+    if (lastWasMismatched !== false && lastWasMismatched !== i) {
+      lastWasMismatched = false;
+    }
+    if (charsToCheckCount < 1) {
+      return i;
+    }
+    i = getNextIdx(i);
+  }
+  if (charsToCheckCount > 0) {
+    if (special && whatToMatchValVal === "EOL") {
+      return true;
+    }
+    if (opts && opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+      return lastWasMismatched || 0;
+    }
+    return false;
+  }
+}
+function main(mode, str, position, originalWhatToMatch, originalOpts) {
+  if (isObj$1(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
+  }
+  const opts = { ...defaults$6,
+    ...originalOpts
+  };
+  if (typeof opts.trimCharsBeforeMatching === "string") {
+    opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  }
+  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr$2(el) ? el : String(el));
+  if (!isStr$2(str)) {
+    return false;
+  }
+  if (!str.length) {
+    return false;
+  }
+  if (!Number.isInteger(position) || position < 0) {
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`);
+  }
+  let whatToMatch;
+  let special;
+  if (isStr$2(originalWhatToMatch)) {
+    whatToMatch = [originalWhatToMatch];
+  } else if (Array.isArray(originalWhatToMatch)) {
+    whatToMatch = originalWhatToMatch;
+  } else if (!originalWhatToMatch) {
+    whatToMatch = originalWhatToMatch;
+  } else if (typeof originalWhatToMatch === "function") {
+    whatToMatch = [];
+    whatToMatch.push(originalWhatToMatch);
+  } else {
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`);
+  }
+  if (originalOpts && !isObj$1(originalOpts)) {
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+  }
+  let culpritsIndex = 0;
+  let culpritsVal = "";
+  if (opts && opts.trimCharsBeforeMatching && opts.trimCharsBeforeMatching.some((el, i) => {
+    if (el.length > 1) {
+      culpritsIndex = i;
+      culpritsVal = el;
+      return true;
+    }
+    return false;
+  })) {
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
+  }
+  if (!whatToMatch || !Array.isArray(whatToMatch) ||
+  Array.isArray(whatToMatch) && !whatToMatch.length ||
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim()
+  ) {
+      if (typeof opts.cb === "function") {
+        let firstCharOutsideIndex;
+        let startingPosition = position;
+        if (mode === "matchLeftIncl" || mode === "matchRight") {
+          startingPosition += 1;
+        }
+        if (mode[5] === "L") {
+          for (let y = startingPosition; y--;) {
+            const currentChar = str[y];
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+              firstCharOutsideIndex = y;
+              break;
+            }
+          }
+        } else if (mode.startsWith("matchRight")) {
+          for (let y = startingPosition; y < str.length; y++) {
+            const currentChar = str[y];
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
+              firstCharOutsideIndex = y;
+              break;
+            }
+          }
+        }
+        if (firstCharOutsideIndex === undefined) {
+          return false;
+        }
+        const wholeCharacterOutside = str[firstCharOutsideIndex];
+        const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+        let theRemainderOfTheString = "";
+        if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
+          theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
+        }
+        if (mode[5] === "L") {
+          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+        }
+        if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
+          theRemainderOfTheString = str.slice(firstCharOutsideIndex);
+        }
+        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+      }
+      let extraNote = "";
+      if (!originalOpts) {
+        extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+      }
+      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
+    }
+  for (let i = 0, len = whatToMatch.length; i < len; i++) {
+    special = typeof whatToMatch[i] === "function";
+    const whatToMatchVal = whatToMatch[i];
+    let fullCharacterInFront;
+    let indexOfTheCharacterInFront;
+    let restOfStringInFront = "";
+    let startingPosition = position;
+    if (mode === "matchRight") {
+      startingPosition += 1;
+    } else if (mode === "matchLeft") {
+      startingPosition -= 1;
+    }
+    const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
+    if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
+      return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
+    }
+    if (Number.isInteger(found)) {
+      indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
+      if (mode[5] === "L") {
+        restOfStringInFront = str.slice(0, found);
+      } else {
+        restOfStringInFront = str.slice(indexOfTheCharacterInFront);
+      }
+    }
+    if (indexOfTheCharacterInFront < 0) {
+      indexOfTheCharacterInFront = undefined;
+    }
+    if (str[indexOfTheCharacterInFront]) {
+      fullCharacterInFront = str[indexOfTheCharacterInFront];
+    }
+    if (Number.isInteger(found) && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true)) {
+      return whatToMatchVal;
+    }
+  }
+  return false;
+}
+function matchLeft(str, position, whatToMatch, opts) {
+  return main("matchLeft", str, position, whatToMatch, opts);
+}
+function matchRightIncl(str, position, whatToMatch, opts) {
+  return main("matchRightIncl", str, position, whatToMatch, opts);
+}
+function matchRight(str, position, whatToMatch, opts) {
+  return main("matchRight", str, position, whatToMatch, opts);
+}
+
+/**
+ * regex-empty-conditional-comments
+ * Regular expression for matching HTML empty conditional comments
+ * Version: 1.10.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/regex-empty-conditional-comments/
+ */
+function emptyCondCommentRegex() {
+  return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
+}
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used for built-in method references. */
+var funcProto$2 = Function.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString$2 = funcProto$2.toString;
+
+/** Used to infer the `Object` constructor. */
+funcToString$2.call(Object);
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
+}
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+createCommonjsModule(function (module, exports) {
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    promiseTag = '[object Promise]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to match `RegExp` flags from their coerced string values. */
+var reFlags = /\w*$/;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used to detect unsigned integer values. */
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+/** Used to identify `toStringTag` values supported by `_.clone`. */
+var cloneableTags = {};
+cloneableTags[argsTag] = cloneableTags[arrayTag] =
+cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
+cloneableTags[boolTag] = cloneableTags[dateTag] =
+cloneableTags[float32Tag] = cloneableTags[float64Tag] =
+cloneableTags[int8Tag] = cloneableTags[int16Tag] =
+cloneableTags[int32Tag] = cloneableTags[mapTag] =
+cloneableTags[numberTag] = cloneableTags[objectTag] =
+cloneableTags[regexpTag] = cloneableTags[setTag] =
+cloneableTags[stringTag] = cloneableTags[symbolTag] =
+cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
+cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+cloneableTags[errorTag] = cloneableTags[funcTag] =
+cloneableTags[weakMapTag] = false;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Detect free variable `exports`. */
+var freeExports = exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/**
+ * Adds the key-value `pair` to `map`.
+ *
+ * @private
+ * @param {Object} map The map to modify.
+ * @param {Array} pair The key-value pair to add.
+ * @returns {Object} Returns `map`.
+ */
+function addMapEntry(map, pair) {
+  // Don't return `map.set` because it's not chainable in IE 11.
+  map.set(pair[0], pair[1]);
+  return map;
+}
+
+/**
+ * Adds `value` to `set`.
+ *
+ * @private
+ * @param {Object} set The set to modify.
+ * @param {*} value The value to add.
+ * @returns {Object} Returns `set`.
+ */
+function addSetEntry(set, value) {
+  // Don't return `set.add` because it's not chainable in IE 11.
+  set.add(value);
+  return set;
+}
+
+/**
+ * A specialized version of `_.forEach` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns `array`.
+ */
+function arrayEach(array, iteratee) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
+      break;
+    }
+  }
+  return array;
+}
+
+/**
+ * Appends the elements of `values` to `array`.
+ *
+ * @private
+ * @param {Array} array The array to modify.
+ * @param {Array} values The values to append.
+ * @returns {Array} Returns `array`.
+ */
+function arrayPush(array, values) {
+  var index = -1,
+      length = values.length,
+      offset = array.length;
+
+  while (++index < length) {
+    array[offset + index] = values[index];
+  }
+  return array;
+}
+
+/**
+ * A specialized version of `_.reduce` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {*} [accumulator] The initial value.
+ * @param {boolean} [initAccum] Specify using the first element of `array` as
+ *  the initial value.
+ * @returns {*} Returns the accumulated value.
+ */
+function arrayReduce(array, iteratee, accumulator, initAccum) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  if (initAccum && length) {
+    accumulator = array[++index];
+  }
+  while (++index < length) {
+    accumulator = iteratee(accumulator, array[index], index, array);
+  }
+  return accumulator;
+}
+
+/**
+ * The base implementation of `_.times` without support for iteratee shorthands
+ * or max array length checks.
+ *
+ * @private
+ * @param {number} n The number of times to invoke `iteratee`.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the array of results.
+ */
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
+
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
+}
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/**
+ * Converts `map` to its key-value pairs.
+ *
+ * @private
+ * @param {Object} map The map to convert.
+ * @returns {Array} Returns the key-value pairs.
+ */
+function mapToArray(map) {
+  var index = -1,
+      result = Array(map.size);
+
+  map.forEach(function(value, key) {
+    result[++index] = [key, value];
+  });
+  return result;
+}
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+/**
+ * Converts `set` to an array of its values.
+ *
+ * @private
+ * @param {Object} set The set to convert.
+ * @returns {Array} Returns the values.
+ */
+function setToArray(set) {
+  var index = -1,
+      result = Array(set.size);
+
+  set.forEach(function(value) {
+    result[++index] = value;
+  });
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined,
+    Symbol = root.Symbol,
+    Uint8Array = root.Uint8Array,
+    getPrototype = overArg(Object.getPrototypeOf, Object),
+    objectCreate = Object.create,
+    propertyIsEnumerable = objectProto.propertyIsEnumerable,
+    splice = arrayProto.splice;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeGetSymbols = Object.getOwnPropertySymbols,
+    nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
+    nativeKeys = overArg(Object.keys, Object);
+
+/* Built-in method references that are verified to be native. */
+var DataView = getNative(root, 'DataView'),
+    Map = getNative(root, 'Map'),
+    Promise = getNative(root, 'Promise'),
+    Set = getNative(root, 'Set'),
+    WeakMap = getNative(root, 'WeakMap'),
+    nativeCreate = getNative(Object, 'create');
+
+/** Used to detect maps, sets, and weakmaps. */
+var dataViewCtorString = toSource(DataView),
+    mapCtorString = toSource(Map),
+    promiseCtorString = toSource(Promise),
+    setCtorString = toSource(Set),
+    weakMapCtorString = toSource(WeakMap);
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ * Creates a stack cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Stack(entries) {
+  this.__data__ = new ListCache(entries);
+}
+
+/**
+ * Removes all key-value entries from the stack.
+ *
+ * @private
+ * @name clear
+ * @memberOf Stack
+ */
+function stackClear() {
+  this.__data__ = new ListCache;
+}
+
+/**
+ * Removes `key` and its value from the stack.
+ *
+ * @private
+ * @name delete
+ * @memberOf Stack
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function stackDelete(key) {
+  return this.__data__['delete'](key);
+}
+
+/**
+ * Gets the stack value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Stack
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function stackGet(key) {
+  return this.__data__.get(key);
+}
+
+/**
+ * Checks if a stack value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Stack
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function stackHas(key) {
+  return this.__data__.has(key);
+}
+
+/**
+ * Sets the stack `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Stack
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the stack cache instance.
+ */
+function stackSet(key, value) {
+  var cache = this.__data__;
+  if (cache instanceof ListCache) {
+    var pairs = cache.__data__;
+    if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
+      pairs.push([key, value]);
+      return this;
+    }
+    cache = this.__data__ = new MapCache(pairs);
+  }
+  cache.set(key, value);
+  return this;
+}
+
+// Add methods to `Stack`.
+Stack.prototype.clear = stackClear;
+Stack.prototype['delete'] = stackDelete;
+Stack.prototype.get = stackGet;
+Stack.prototype.has = stackHas;
+Stack.prototype.set = stackSet;
+
+/**
+ * Creates an array of the enumerable property names of the array-like `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @param {boolean} inherited Specify returning inherited property names.
+ * @returns {Array} Returns the array of property names.
+ */
+function arrayLikeKeys(value, inherited) {
+  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+  // Safari 9 makes `arguments.length` enumerable in strict mode.
+  var result = (isArray(value) || isArguments(value))
+    ? baseTimes(value.length, String)
+    : [];
+
+  var length = result.length,
+      skipIndexes = !!length;
+
+  for (var key in value) {
+    if ((inherited || hasOwnProperty.call(value, key)) &&
+        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * Assigns `value` to `key` of `object` if the existing value is not equivalent
+ * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {string} key The key of the property to assign.
+ * @param {*} value The value to assign.
+ */
+function assignValue(object, key, value) {
+  var objValue = object[key];
+  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+      (value === undefined && !(key in object))) {
+    object[key] = value;
+  }
+}
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.assign` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+function baseAssign(object, source) {
+  return object && copyObject(source, keys(source), object);
+}
+
+/**
+ * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+ * traversed objects.
+ *
+ * @private
+ * @param {*} value The value to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @param {boolean} [isFull] Specify a clone including symbols.
+ * @param {Function} [customizer] The function to customize cloning.
+ * @param {string} [key] The key of `value`.
+ * @param {Object} [object] The parent object of `value`.
+ * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+ * @returns {*} Returns the cloned value.
+ */
+function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
+  var result;
+  if (customizer) {
+    result = object ? customizer(value, key, object, stack) : customizer(value);
+  }
+  if (result !== undefined) {
+    return result;
+  }
+  if (!isObject(value)) {
+    return value;
+  }
+  var isArr = isArray(value);
+  if (isArr) {
+    result = initCloneArray(value);
+    if (!isDeep) {
+      return copyArray(value, result);
+    }
+  } else {
+    var tag = getTag(value),
+        isFunc = tag == funcTag || tag == genTag;
+
+    if (isBuffer(value)) {
+      return cloneBuffer(value, isDeep);
+    }
+    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
+      if (isHostObject(value)) {
+        return object ? value : {};
+      }
+      result = initCloneObject(isFunc ? {} : value);
+      if (!isDeep) {
+        return copySymbols(value, baseAssign(result, value));
+      }
+    } else {
+      if (!cloneableTags[tag]) {
+        return object ? value : {};
+      }
+      result = initCloneByTag(value, tag, baseClone, isDeep);
+    }
+  }
+  // Check for circular references and return its corresponding clone.
+  stack || (stack = new Stack);
+  var stacked = stack.get(value);
+  if (stacked) {
+    return stacked;
+  }
+  stack.set(value, result);
+
+  if (!isArr) {
+    var props = isFull ? getAllKeys(value) : keys(value);
+  }
+  arrayEach(props || value, function(subValue, key) {
+    if (props) {
+      key = subValue;
+      subValue = value[key];
+    }
+    // Recursively populate clone (susceptible to call stack limits).
+    assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
+  });
+  return result;
+}
+
+/**
+ * The base implementation of `_.create` without support for assigning
+ * properties to the created object.
+ *
+ * @private
+ * @param {Object} prototype The object to inherit from.
+ * @returns {Object} Returns the new object.
+ */
+function baseCreate(proto) {
+  return isObject(proto) ? objectCreate(proto) : {};
+}
+
+/**
+ * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+ * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+ * symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Function} keysFunc The function to get the keys of `object`.
+ * @param {Function} symbolsFunc The function to get the symbols of `object`.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+  var result = keysFunc(object);
+  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+}
+
+/**
+ * The base implementation of `getTag`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  return objectToString.call(value);
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * Creates a clone of  `buffer`.
+ *
+ * @private
+ * @param {Buffer} buffer The buffer to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Buffer} Returns the cloned buffer.
+ */
+function cloneBuffer(buffer, isDeep) {
+  if (isDeep) {
+    return buffer.slice();
+  }
+  var result = new buffer.constructor(buffer.length);
+  buffer.copy(result);
+  return result;
+}
+
+/**
+ * Creates a clone of `arrayBuffer`.
+ *
+ * @private
+ * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+ * @returns {ArrayBuffer} Returns the cloned array buffer.
+ */
+function cloneArrayBuffer(arrayBuffer) {
+  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+  return result;
+}
+
+/**
+ * Creates a clone of `dataView`.
+ *
+ * @private
+ * @param {Object} dataView The data view to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned data view.
+ */
+function cloneDataView(dataView, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+}
+
+/**
+ * Creates a clone of `map`.
+ *
+ * @private
+ * @param {Object} map The map to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned map.
+ */
+function cloneMap(map, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
+  return arrayReduce(array, addMapEntry, new map.constructor);
+}
+
+/**
+ * Creates a clone of `regexp`.
+ *
+ * @private
+ * @param {Object} regexp The regexp to clone.
+ * @returns {Object} Returns the cloned regexp.
+ */
+function cloneRegExp(regexp) {
+  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+  result.lastIndex = regexp.lastIndex;
+  return result;
+}
+
+/**
+ * Creates a clone of `set`.
+ *
+ * @private
+ * @param {Object} set The set to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned set.
+ */
+function cloneSet(set, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
+  return arrayReduce(array, addSetEntry, new set.constructor);
+}
+
+/**
+ * Creates a clone of the `symbol` object.
+ *
+ * @private
+ * @param {Object} symbol The symbol object to clone.
+ * @returns {Object} Returns the cloned symbol object.
+ */
+function cloneSymbol(symbol) {
+  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+}
+
+/**
+ * Creates a clone of `typedArray`.
+ *
+ * @private
+ * @param {Object} typedArray The typed array to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned typed array.
+ */
+function cloneTypedArray(typedArray, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+}
+
+/**
+ * Copies the values of `source` to `array`.
+ *
+ * @private
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
+ * @returns {Array} Returns `array`.
+ */
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
+}
+
+/**
+ * Copies properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy properties from.
+ * @param {Array} props The property identifiers to copy.
+ * @param {Object} [object={}] The object to copy properties to.
+ * @param {Function} [customizer] The function to customize copied values.
+ * @returns {Object} Returns `object`.
+ */
+function copyObject(source, props, object, customizer) {
+  object || (object = {});
+
+  var index = -1,
+      length = props.length;
+
+  while (++index < length) {
+    var key = props[index];
+
+    var newValue = customizer
+      ? customizer(object[key], source[key], key, object, source)
+      : undefined;
+
+    assignValue(object, key, newValue === undefined ? source[key] : newValue);
+  }
+  return object;
+}
+
+/**
+ * Copies own symbol properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+function copySymbols(source, object) {
+  return copyObject(source, getSymbols(source), object);
+}
+
+/**
+ * Creates an array of own enumerable property names and symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function getAllKeys(object) {
+  return baseGetAllKeys(object, keys, getSymbols);
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * Creates an array of the own enumerable symbol properties of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of symbols.
+ */
+var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+var getTag = baseGetTag;
+
+// Fallback for data views, maps, sets, and weak maps in IE 11,
+// for data views in Edge < 14, and promises in Node.js.
+if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+    (Map && getTag(new Map) != mapTag) ||
+    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+    (Set && getTag(new Set) != setTag) ||
+    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+  getTag = function(value) {
+    var result = objectToString.call(value),
+        Ctor = result == objectTag ? value.constructor : undefined,
+        ctorString = Ctor ? toSource(Ctor) : undefined;
+
+    if (ctorString) {
+      switch (ctorString) {
+        case dataViewCtorString: return dataViewTag;
+        case mapCtorString: return mapTag;
+        case promiseCtorString: return promiseTag;
+        case setCtorString: return setTag;
+        case weakMapCtorString: return weakMapTag;
+      }
+    }
+    return result;
+  };
+}
+
+/**
+ * Initializes an array clone.
+ *
+ * @private
+ * @param {Array} array The array to clone.
+ * @returns {Array} Returns the initialized clone.
+ */
+function initCloneArray(array) {
+  var length = array.length,
+      result = array.constructor(length);
+
+  // Add properties assigned by `RegExp#exec`.
+  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+    result.index = array.index;
+    result.input = array.input;
+  }
+  return result;
+}
+
+/**
+ * Initializes an object clone.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneObject(object) {
+  return (typeof object.constructor == 'function' && !isPrototype(object))
+    ? baseCreate(getPrototype(object))
+    : {};
+}
+
+/**
+ * Initializes an object clone based on its `toStringTag`.
+ *
+ * **Note:** This function only supports cloning values with tags of
+ * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @param {string} tag The `toStringTag` of the object to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneByTag(object, tag, cloneFunc, isDeep) {
+  var Ctor = object.constructor;
+  switch (tag) {
+    case arrayBufferTag:
+      return cloneArrayBuffer(object);
+
+    case boolTag:
+    case dateTag:
+      return new Ctor(+object);
+
+    case dataViewTag:
+      return cloneDataView(object, isDeep);
+
+    case float32Tag: case float64Tag:
+    case int8Tag: case int16Tag: case int32Tag:
+    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
+      return cloneTypedArray(object, isDeep);
+
+    case mapTag:
+      return cloneMap(object, isDeep, cloneFunc);
+
+    case numberTag:
+    case stringTag:
+      return new Ctor(object);
+
+    case regexpTag:
+      return cloneRegExp(object);
+
+    case setTag:
+      return cloneSet(object, isDeep, cloneFunc);
+
+    case symbolTag:
+      return cloneSymbol(object);
+  }
+}
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  length = length == null ? MAX_SAFE_INTEGER : length;
+  return !!length &&
+    (typeof value == 'number' || reIsUint.test(value)) &&
+    (value > -1 && value % 1 == 0 && value < length);
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * This method is like `_.clone` except that it recursively clones `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 1.0.0
+ * @category Lang
+ * @param {*} value The value to recursively clone.
+ * @returns {*} Returns the deep cloned value.
+ * @see _.clone
+ * @example
+ *
+ * var objects = [{ 'a': 1 }, { 'b': 2 }];
+ *
+ * var deep = _.cloneDeep(objects);
+ * console.log(deep[0] === objects[0]);
+ * // => false
+ */
+function cloneDeep(value) {
+  return baseClone(value, true, true);
+}
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is likely an `arguments` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArguments(function() { return arguments; }());
+ * // => true
+ *
+ * _.isArguments([1, 2, 3]);
+ * // => false
+ */
+function isArguments(value) {
+  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+}
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
+}
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || stubFalse;
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+/**
+ * This method returns a new empty array.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {Array} Returns the new empty array.
+ * @example
+ *
+ * var arrays = _.times(2, _.stubArray);
+ *
+ * console.log(arrays);
+ * // => [[], []]
+ *
+ * console.log(arrays[0] === arrays[1]);
+ * // => false
+ */
+function stubArray() {
+  return [];
+}
+
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+module.exports = cloneDeep;
+});
+
+/**
+ * string-left-right
+ * Looks up the first non-whitespace character to the left/right of a given index
+ * Version: 4.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-left-right/
+ */
+const RAWNBSP = "\u00A0";
+function rightMain({
+  str,
+  idx = 0,
+  stopAtNewlines = false,
+  stopAtRawNbsp = false
+}) {
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+  if (!idx || typeof idx !== "number") {
+    idx = 0;
+  }
+  if (!str[idx + 1]) {
+    return null;
+  }
+  if (
+  str[idx + 1] && (
+  str[idx + 1].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx + 1]) ||
+  stopAtRawNbsp &&
+  str[idx + 1] === RAWNBSP)) {
+    return idx + 1;
+  }
+  if (
+  str[idx + 2] && (
+  str[idx + 2].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx + 2]) ||
+  stopAtRawNbsp &&
+  str[idx + 2] === RAWNBSP)) {
+    return idx + 2;
+  }
+  for (let i = idx + 1, len = str.length; i < len; i++) {
+    if (
+    str[i].trim() ||
+    stopAtNewlines &&
+    "\n\r".includes(str[i]) ||
+    stopAtRawNbsp &&
+    str[i] === RAWNBSP) {
+      return i;
+    }
+  }
+  return null;
+}
+function right(str, idx = 0) {
+  return rightMain({
+    str,
+    idx,
+    stopAtNewlines: false,
+    stopAtRawNbsp: false
+  });
+}
+function leftMain({
+  str,
+  idx,
+  stopAtNewlines,
+  stopAtRawNbsp
+}) {
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+  if (!idx || typeof idx !== "number") {
+    idx = 0;
+  }
+  if (idx < 1) {
+    return null;
+  }
+  if (
+  str[~-idx] && (
+  str[~-idx].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[~-idx]) ||
+  stopAtRawNbsp &&
+  str[~-idx] === RAWNBSP)) {
+    return ~-idx;
+  }
+  if (
+  str[idx - 2] && (
+  str[idx - 2].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx - 2]) ||
+  stopAtRawNbsp &&
+  str[idx - 2] === RAWNBSP)) {
+    return idx - 2;
+  }
+  for (let i = idx; i--;) {
+    if (str[i] && (
+    str[i].trim() ||
+    stopAtNewlines &&
+    "\n\r".includes(str[i]) ||
+    stopAtRawNbsp &&
+    str[i] === RAWNBSP)) {
+      return i;
+    }
+  }
+  return null;
+}
+function left(str, idx = 0) {
+  return leftMain({
+    str,
+    idx,
+    stopAtNewlines: false,
+    stopAtRawNbsp: false
+  });
+}
+
+/**
+ * string-extract-class-names
+ * Extracts CSS class/id names from a string
+ * Version: 6.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-extract-class-names/
+ */
+function extract(str) {
+  if (typeof str !== "string") {
+    throw new TypeError(`string-extract-class-names: [THROW_ID_01] first str should be string, not ${typeof str}, currently equal to ${JSON.stringify(str, null, 4)}`);
+  }
+  const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\``;
+  let stateCurrentlyIs;
+  function isLatinLetter(char) {
+    return typeof char === "string" && !!char.length && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+  }
+  let selectorStartsAt = null;
+  const result = {
+    res: [],
+    ranges: []
+  };
+  for (let i = 0, len = str.length; i <= len; i++) {
+    if (selectorStartsAt !== null && i >= selectorStartsAt && (
+    !str[i] ||
+    !str[i].trim() ||
+    badChars.includes(str[i]))) {
+      if (i > selectorStartsAt + 1) {
+        result.ranges.push([selectorStartsAt, i]);
+        result.res.push(`${stateCurrentlyIs || ""}${str.slice(selectorStartsAt, i)}`);
+        if (stateCurrentlyIs) {
+          stateCurrentlyIs = undefined;
+        }
+      }
+      selectorStartsAt = null;
+    }
+    if (str[i] && selectorStartsAt === null && (str[i] === "." || str[i] === "#")) {
+      selectorStartsAt = i;
+    }
+    const temp1 = right(str, i + 4);
+    if (str.startsWith("class", i) && typeof left(str, i) === "number" && str[left(str, i)] === "[" && typeof temp1 === "number" && str[temp1] === "=") {
+      /* istanbul ignore else */
+      if (right(str, temp1) && isLatinLetter(str[right(str, temp1)])) {
+        selectorStartsAt = right(str, temp1);
+      } else if (`'"`.includes(str[right(str, temp1)]) && isLatinLetter(str[right(str, right(str, temp1))])) {
+        selectorStartsAt = right(str, right(str, temp1));
+      }
+      stateCurrentlyIs = ".";
+    }
+    const temp2 = right(str, i + 1);
+    if (str.startsWith("id", i) && str[left(str, i)] === "[" && temp2 !== null && str[temp2] === "=") {
+      if (isLatinLetter(str[right(str, temp2)])) {
+        selectorStartsAt = right(str, temp2);
+      } else if (`'"`.includes(str[right(str, temp2)]) && isLatinLetter(str[right(str, right(str, temp2))])) {
+        selectorStartsAt = right(str, right(str, temp2));
+      }
+      stateCurrentlyIs = "#";
+    }
+  }
+  if (!result.ranges.length) {
+    result.ranges = null;
+  }
+  return result;
+}
+
+var escapeStringRegexp = string => {
+	if (typeof string !== 'string') {
+		throw new TypeError('Expected a string');
+	}
+
+	// Escape characters with special meaning either inside or outside character sets.
+	// Use a simple backslash escape when it’s always valid, and a \unnnn escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
+	return string
+		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+		.replace(/-/g, '\\x2d');
+};
+
+const regexpCache = new Map();
+
+function sanitizeArray(input, inputName) {
+	if (!Array.isArray(input)) {
+		switch (typeof input) {
+			case 'string':
+				input = [input];
+				break;
+			case 'undefined':
+				input = [];
+				break;
+			default:
+				throw new TypeError(`Expected '${inputName}' to be a string or an array, but got a type of '${typeof input}'`);
+		}
+	}
+
+	return input.filter(string => {
+		if (typeof string !== 'string') {
+			if (typeof string === 'undefined') {
+				return false;
+			}
+
+			throw new TypeError(`Expected '${inputName}' to be an array of strings, but found a type of '${typeof string}' in the array`);
+		}
+
+		return true;
+	});
+}
+
+function makeRegexp(pattern, options) {
+	options = {
+		caseSensitive: false,
+		...options
+	};
+
+	const cacheKey = pattern + JSON.stringify(options);
+
+	if (regexpCache.has(cacheKey)) {
+		return regexpCache.get(cacheKey);
+	}
+
+	const negated = pattern[0] === '!';
+
+	if (negated) {
+		pattern = pattern.slice(1);
+	}
+
+	pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
+
+	const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
+	regexp.negated = negated;
+	regexpCache.set(cacheKey, regexp);
+
+	return regexp;
+}
+
+var matcher = (inputs, patterns, options) => {
+	inputs = sanitizeArray(inputs, 'inputs');
+	patterns = sanitizeArray(patterns, 'patterns');
+
+	if (patterns.length === 0) {
+		return [];
+	}
+
+	const isFirstPatternNegated = patterns[0][0] === '!';
+
+	patterns = patterns.map(pattern => makeRegexp(pattern, options));
+
+	const result = [];
+
+	for (const input of inputs) {
+		// If first pattern is negated we include everything to match user expectation.
+		let matches = isFirstPatternNegated;
+
+		for (const pattern of patterns) {
+			if (pattern.test(input)) {
+				matches = !pattern.negated;
+			}
+		}
+
+		if (matches) {
+			result.push(input);
+		}
+	}
+
+	return result;
+};
+
+var isMatch = (inputs, patterns, options) => {
+	inputs = sanitizeArray(inputs, 'inputs');
+	patterns = sanitizeArray(patterns, 'patterns');
+
+	if (patterns.length === 0) {
+		return false;
+	}
+
+	return inputs.some(input => {
+		return patterns.every(pattern => {
+			const regexp = makeRegexp(pattern, options);
+			const matches = regexp.test(input);
+			return regexp.negated ? !matches : matches;
+		});
+	});
+};
+matcher.isMatch = isMatch;
+
+/**
+ * array-pull-all-with-glob
+ * Like _.pullAll but with globs (wildcards)
+ * Version: 5.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/array-pull-all-with-glob/
+ */
+function pull(originalInput, originalToBeRemoved, originalOpts) {
+  if (!originalInput.length) {
+    return [];
+  }
+  if (!originalInput.length || !originalToBeRemoved.length) {
+    return Array.from(originalInput);
+  }
+  const toBeRemoved = typeof originalToBeRemoved === "string" ? [originalToBeRemoved] : Array.from(originalToBeRemoved);
+  const defaults = {
+    caseSensitive: true
+  };
+  const opts = { ...defaults,
+    ...originalOpts
+  };
+  const res = Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => matcher.isMatch(originalVal, remVal, {
+    caseSensitive: opts.caseSensitive
+  })));
+  return res;
+}
+
+var version$1 = "5.0.12";
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED$1 = '__lodash_hash_undefined__';
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** `Object#toString` result references. */
+var funcTag$1 = '[object Function]',
+    genTag$1 = '[object GeneratorFunction]';
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar$1 = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor$1 = /^\[object .+?Constructor\]$/;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+/** Detect free variable `self`. */
+var freeSelf$1 = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root$1 = freeGlobal$1 || freeSelf$1 || Function('return this')();
+
+/**
+ * A faster alternative to `Function#apply`, this function invokes `func`
+ * with the `this` binding of `thisArg` and the arguments of `args`.
+ *
+ * @private
+ * @param {Function} func The function to invoke.
+ * @param {*} thisArg The `this` binding of `func`.
+ * @param {Array} args The arguments to invoke `func` with.
+ * @returns {*} Returns the result of `func`.
+ */
+function apply(func, thisArg, args) {
+  switch (args.length) {
+    case 0: return func.call(thisArg);
+    case 1: return func.call(thisArg, args[0]);
+    case 2: return func.call(thisArg, args[0], args[1]);
+    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+  }
+  return func.apply(thisArg, args);
+}
+
+/**
+ * A specialized version of `_.includes` for arrays without support for
+ * specifying an index to search from.
+ *
+ * @private
+ * @param {Array} [array] The array to inspect.
+ * @param {*} target The value to search for.
+ * @returns {boolean} Returns `true` if `target` is found, else `false`.
+ */
+function arrayIncludes$1(array, value) {
+  var length = array ? array.length : 0;
+  return !!length && baseIndexOf$2(array, value, 0) > -1;
+}
+
+/**
+ * This function is like `arrayIncludes` except that it accepts a comparator.
+ *
+ * @private
+ * @param {Array} [array] The array to inspect.
+ * @param {*} target The value to search for.
+ * @param {Function} comparator The comparator invoked per element.
+ * @returns {boolean} Returns `true` if `target` is found, else `false`.
+ */
+function arrayIncludesWith$1(array, value, comparator) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  while (++index < length) {
+    if (comparator(value, array[index])) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap$1(array, iteratee) {
+  var index = -1,
+      length = array ? array.length : 0,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+/**
+ * The base implementation of `_.findIndex` and `_.findLastIndex` without
+ * support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {Function} predicate The function invoked per iteration.
+ * @param {number} fromIndex The index to search from.
+ * @param {boolean} [fromRight] Specify iterating from right to left.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseFindIndex$2(array, predicate, fromIndex, fromRight) {
+  var length = array.length,
+      index = fromIndex + (fromRight ? 1 : -1);
+
+  while ((fromRight ? index-- : ++index < length)) {
+    if (predicate(array[index], index, array)) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} fromIndex The index to search from.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseIndexOf$2(array, value, fromIndex) {
+  if (value !== value) {
+    return baseFindIndex$2(array, baseIsNaN$2, fromIndex);
+  }
+  var index = fromIndex - 1,
+      length = array.length;
+
+  while (++index < length) {
+    if (array[index] === value) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.isNaN` without support for number objects.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+ */
+function baseIsNaN$2(value) {
+  return value !== value;
+}
+
+/**
+ * The base implementation of `_.unary` without support for storing metadata.
+ *
+ * @private
+ * @param {Function} func The function to cap arguments for.
+ * @returns {Function} Returns the new capped function.
+ */
+function baseUnary$1(func) {
+  return function(value) {
+    return func(value);
+  };
+}
+
+/**
+ * Checks if a cache value for `key` exists.
+ *
+ * @private
+ * @param {Object} cache The cache to query.
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function cacheHas$1(cache, key) {
+  return cache.has(key);
+}
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue$1(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject$1(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto$2 = Array.prototype,
+    funcProto$1 = Function.prototype,
+    objectProto$1 = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData$1 = root$1['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey$1 = (function() {
+  var uid = /[^.]+$/.exec(coreJsData$1 && coreJsData$1.keys && coreJsData$1.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString$1 = funcProto$1.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString$1 = objectProto$1.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative$1 = RegExp('^' +
+  funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar$1, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var splice$2 = arrayProto$2.splice;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/* Built-in method references that are verified to be native. */
+var Map$2 = getNative$1(root$1, 'Map'),
+    nativeCreate$1 = getNative$1(Object, 'create');
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash$1(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear$1() {
+  this.__data__ = nativeCreate$1 ? nativeCreate$1(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete$1(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet$1(key) {
+  var data = this.__data__;
+  if (nativeCreate$1) {
+    var result = data[key];
+    return result === HASH_UNDEFINED$1 ? undefined : result;
+  }
+  return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas$1(key) {
+  var data = this.__data__;
+  return nativeCreate$1 ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet$1(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate$1 && value === undefined) ? HASH_UNDEFINED$1 : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash$1.prototype.clear = hashClear$1;
+Hash$1.prototype['delete'] = hashDelete$1;
+Hash$1.prototype.get = hashGet$1;
+Hash$1.prototype.has = hashHas$1;
+Hash$1.prototype.set = hashSet$1;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache$1(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear$1() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete$1(key) {
+  var data = this.__data__,
+      index = assocIndexOf$1(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice$2.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet$1(key) {
+  var data = this.__data__,
+      index = assocIndexOf$1(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas$1(key) {
+  return assocIndexOf$1(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet$1(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf$1(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache$1.prototype.clear = listCacheClear$1;
+ListCache$1.prototype['delete'] = listCacheDelete$1;
+ListCache$1.prototype.get = listCacheGet$1;
+ListCache$1.prototype.has = listCacheHas$1;
+ListCache$1.prototype.set = listCacheSet$1;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache$1(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear$1() {
+  this.__data__ = {
+    'hash': new Hash$1,
+    'map': new (Map$2 || ListCache$1),
+    'string': new Hash$1
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete$1(key) {
+  return getMapData$1(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet$1(key) {
+  return getMapData$1(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas$1(key) {
+  return getMapData$1(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet$1(key, value) {
+  getMapData$1(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache$1.prototype.clear = mapCacheClear$1;
+MapCache$1.prototype['delete'] = mapCacheDelete$1;
+MapCache$1.prototype.get = mapCacheGet$1;
+MapCache$1.prototype.has = mapCacheHas$1;
+MapCache$1.prototype.set = mapCacheSet$1;
+
+/**
+ *
+ * Creates an array cache object to store unique values.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [values] The values to cache.
+ */
+function SetCache$1(values) {
+  var index = -1,
+      length = values ? values.length : 0;
+
+  this.__data__ = new MapCache$1;
+  while (++index < length) {
+    this.add(values[index]);
+  }
+}
+
+/**
+ * Adds `value` to the array cache.
+ *
+ * @private
+ * @name add
+ * @memberOf SetCache
+ * @alias push
+ * @param {*} value The value to cache.
+ * @returns {Object} Returns the cache instance.
+ */
+function setCacheAdd$1(value) {
+  this.__data__.set(value, HASH_UNDEFINED$1);
+  return this;
+}
+
+/**
+ * Checks if `value` is in the array cache.
+ *
+ * @private
+ * @name has
+ * @memberOf SetCache
+ * @param {*} value The value to search for.
+ * @returns {number} Returns `true` if `value` is found, else `false`.
+ */
+function setCacheHas$1(value) {
+  return this.__data__.has(value);
+}
+
+// Add methods to `SetCache`.
+SetCache$1.prototype.add = SetCache$1.prototype.push = setCacheAdd$1;
+SetCache$1.prototype.has = setCacheHas$1;
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf$1(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq$1(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of methods like `_.intersection`, without support
+ * for iteratee shorthands, that accepts an array of arrays to inspect.
+ *
+ * @private
+ * @param {Array} arrays The arrays to inspect.
+ * @param {Function} [iteratee] The iteratee invoked per element.
+ * @param {Function} [comparator] The comparator invoked per element.
+ * @returns {Array} Returns the new array of shared values.
+ */
+function baseIntersection(arrays, iteratee, comparator) {
+  var includes = comparator ? arrayIncludesWith$1 : arrayIncludes$1,
+      length = arrays[0].length,
+      othLength = arrays.length,
+      othIndex = othLength,
+      caches = Array(othLength),
+      maxLength = Infinity,
+      result = [];
+
+  while (othIndex--) {
+    var array = arrays[othIndex];
+    if (othIndex && iteratee) {
+      array = arrayMap$1(array, baseUnary$1(iteratee));
+    }
+    maxLength = nativeMin(array.length, maxLength);
+    caches[othIndex] = !comparator && (iteratee || (length >= 120 && array.length >= 120))
+      ? new SetCache$1(othIndex && array)
+      : undefined;
+  }
+  array = arrays[0];
+
+  var index = -1,
+      seen = caches[0];
+
+  outer:
+  while (++index < length && result.length < maxLength) {
+    var value = array[index],
+        computed = iteratee ? iteratee(value) : value;
+
+    value = (comparator || value !== 0) ? value : 0;
+    if (!(seen
+          ? cacheHas$1(seen, computed)
+          : includes(result, computed, comparator)
+        )) {
+      othIndex = othLength;
+      while (--othIndex) {
+        var cache = caches[othIndex];
+        if (!(cache
+              ? cacheHas$1(cache, computed)
+              : includes(arrays[othIndex], computed, comparator))
+            ) {
+          continue outer;
+        }
+      }
+      if (seen) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+  }
+  return result;
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative$1(value) {
+  if (!isObject$1(value) || isMasked$1(value)) {
+    return false;
+  }
+  var pattern = (isFunction$1(value) || isHostObject$1(value)) ? reIsNative$1 : reIsHostCtor$1;
+  return pattern.test(toSource$1(value));
+}
+
+/**
+ * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @param {number} [start=func.length-1] The start position of the rest parameter.
+ * @returns {Function} Returns the new function.
+ */
+function baseRest(func, start) {
+  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+  return function() {
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        array = Array(length);
+
+    while (++index < length) {
+      array[index] = args[start + index];
+    }
+    index = -1;
+    var otherArgs = Array(start + 1);
+    while (++index < start) {
+      otherArgs[index] = args[index];
+    }
+    otherArgs[start] = array;
+    return apply(func, this, otherArgs);
+  };
+}
+
+/**
+ * Casts `value` to an empty array if it's not an array like object.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {Array|Object} Returns the cast array-like object.
+ */
+function castArrayLikeObject(value) {
+  return isArrayLikeObject(value) ? value : [];
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData$1(map, key) {
+  var data = map.__data__;
+  return isKeyable$1(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative$1(object, key) {
+  var value = getValue$1(object, key);
+  return baseIsNative$1(value) ? value : undefined;
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable$1(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked$1(func) {
+  return !!maskSrcKey$1 && (maskSrcKey$1 in func);
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource$1(func) {
+  if (func != null) {
+    try {
+      return funcToString$1.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * Creates an array of unique values that are included in all given arrays
+ * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons. The order of result values is determined by the
+ * order they occur in the first array.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Array
+ * @param {...Array} [arrays] The arrays to inspect.
+ * @returns {Array} Returns the new array of intersecting values.
+ * @example
+ *
+ * _.intersection([2, 1], [2, 3]);
+ * // => [2]
+ */
+var intersection = baseRest(function(arrays) {
+  var mapped = arrayMap$1(arrays, castArrayLikeObject);
+  return (mapped.length && mapped[0] === arrays[0])
+    ? baseIntersection(mapped)
+    : [];
+});
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq$1(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction$1(value);
+}
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
+}
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction$1(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject$1(value) ? objectToString$1.call(value) : '';
+  return tag == funcTag$1 || tag == genTag$1;
+}
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject$1(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+var lodash_intersection = intersection;
+
+/**
+ * string-range-expander
+ * Expands string index ranges within whitespace boundaries until letters are met
+ * Version: 2.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-range-expander/
+ */
+const defaults$5 = {
+  str: "",
+  from: 0,
+  to: 0,
+  ifLeftSideIncludesThisThenCropTightly: "",
+  ifLeftSideIncludesThisCropItToo: "",
+  ifRightSideIncludesThisThenCropTightly: "",
+  ifRightSideIncludesThisCropItToo: "",
+  extendToOneSide: false,
+  wipeAllWhitespaceOnLeft: false,
+  wipeAllWhitespaceOnRight: false,
+  addSingleSpaceToPreventAccidentalConcatenation: false
+};
+function expander(originalOpts) {
+  const letterOrDigit = /^[0-9a-zA-Z]+$/;
+  function isWhitespace(char) {
+    if (!char || typeof char !== "string") {
+      return false;
+    }
+    return !char.trim();
+  }
+  function isStr(something) {
+    return typeof something === "string";
+  }
+  if (!originalOpts || typeof originalOpts !== "object" || Array.isArray(originalOpts)) {
+    let supplementalString;
+    if (originalOpts === undefined) {
+      supplementalString = "but it is missing completely.";
+    } else if (originalOpts === null) {
+      supplementalString = "but it was given as null.";
+    } else {
+      supplementalString = `but it was given as ${typeof originalOpts}, equal to:\n${JSON.stringify(originalOpts, null, 4)}.`;
+    }
+    throw new Error(`string-range-expander: [THROW_ID_01] Input must be a plain object ${supplementalString}`);
+  } else if (typeof originalOpts === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
+    throw new Error(`string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.`);
+  }
+  if (typeof originalOpts.from !== "number") {
+    throw new Error(`string-range-expander: [THROW_ID_03] The input's "from" value opts.from, is not a number! Currently it's given as ${typeof originalOpts.from}, equal to ${JSON.stringify(originalOpts.from, null, 0)}`);
+  }
+  if (typeof originalOpts.to !== "number") {
+    throw new Error(`string-range-expander: [THROW_ID_04] The input's "to" value opts.to, is not a number! Currently it's given as ${typeof originalOpts.to}, equal to ${JSON.stringify(originalOpts.to, null, 0)}`);
+  }
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
+    throw new Error(`string-range-expander: [THROW_ID_05] The given input string opts.str ("${originalOpts.str}") must contain the character at index "from" ("${originalOpts.from}")`);
+  }
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.to - 1]) {
+    throw new Error(`string-range-expander: [THROW_ID_06] The given input string, opts.str ("${originalOpts.str}") must contain the character at index before "to" ("${originalOpts.to - 1}")`);
+  }
+  if (originalOpts.from > originalOpts.to) {
+    throw new Error(`string-range-expander: [THROW_ID_07] The given "from" index, "${originalOpts.from}" is greater than "to" index, "${originalOpts.to}". That's wrong!`);
+  }
+  if (isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== "left" && originalOpts.extendToOneSide !== "right" || !isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== undefined && originalOpts.extendToOneSide !== false) {
+    throw new Error(`string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: "${originalOpts.extendToOneSide}" (${typeof originalOpts.extendToOneSide}). It has to be either Boolean "false" or strings "left" or "right"`);
+  }
+  const opts = { ...defaults$5,
+    ...originalOpts
+  };
+  if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
+    let culpritsIndex;
+    let culpritsValue;
+    if (opts.ifLeftSideIncludesThisThenCropTightly.every((val, i) => {
+      if (!isStr(val)) {
+        culpritsIndex = i;
+        culpritsValue = val;
+        return false;
+      }
+      return true;
+    })) {
+      opts.ifLeftSideIncludesThisThenCropTightly = opts.ifLeftSideIncludesThisThenCropTightly.join("");
+    } else {
+      throw new Error(`string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n${JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4)}. Now, that array contains not only string elements. For example, an element at index ${culpritsIndex} is of a type ${typeof culpritsValue} (equal to ${JSON.stringify(culpritsValue, null, 0)}).`);
+    }
+  }
+  const str = opts.str;
+  let from = opts.from;
+  let to = opts.to;
+  if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
+    for (let i = from; i--;) {
+      if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
+        if (str[i].trim()) {
+          if (opts.wipeAllWhitespaceOnLeft || opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])) {
+            from = i + 1;
+          } else {
+            from = i + 2;
+          }
+          break;
+        } else if (i === 0) {
+          if (opts.wipeAllWhitespaceOnLeft) {
+            from = 0;
+          } else {
+            from = 1;
+          }
+          break;
+        }
+      }
+    }
+  }
+  if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
+    for (let i = to, len = str.length; i < len; i++) {
+      if (!opts.ifRightSideIncludesThisCropItToo.includes(str[i]) && (str[i] && str[i].trim() || str[i] === undefined)) {
+        if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])) {
+          to = i;
+        } else {
+          to = i - 1;
+        }
+        break;
+      }
+    }
+  }
+  if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
+    if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
+      from -= 1;
+    }
+    if (opts.extendToOneSide !== "left" && isWhitespace(str[to]) && !opts.wipeAllWhitespaceOnRight) {
+      to += 1;
+    }
+  }
+  if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim() && str[to] && str[to].trim() && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))) && (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))) {
+    return [from, to, " "];
+  }
+  return [from, to];
+}
+
+/**
+ * string-uglify
+ * Shorten sets of strings deterministically, to be git-friendly
+ * Version: 1.4.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-uglify/
+ */
+function tellcp(str, idNum = 0) {
+  return str.codePointAt(idNum) || 0;
+}
+function uglifyArr(arr) {
+  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const lettersAndNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const singleClasses = {
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+    g: false,
+    h: false,
+    i: false,
+    j: false,
+    k: false,
+    l: false,
+    m: false,
+    n: false,
+    o: false,
+    p: false,
+    q: false,
+    r: false,
+    s: false,
+    t: false,
+    u: false,
+    v: false,
+    w: false,
+    x: false,
+    y: false,
+    z: false
+  };
+  const singleIds = {
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+    g: false,
+    h: false,
+    i: false,
+    j: false,
+    k: false,
+    l: false,
+    m: false,
+    n: false,
+    o: false,
+    p: false,
+    q: false,
+    r: false,
+    s: false,
+    t: false,
+    u: false,
+    v: false,
+    w: false,
+    x: false,
+    y: false,
+    z: false
+  };
+  const singleNameonly = {
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+    g: false,
+    h: false,
+    i: false,
+    j: false,
+    k: false,
+    l: false,
+    m: false,
+    n: false,
+    o: false,
+    p: false,
+    q: false,
+    r: false,
+    s: false,
+    t: false,
+    u: false,
+    v: false,
+    w: false,
+    x: false,
+    y: false,
+    z: false
+  };
+  const res = [];
+  if (!Array.isArray(arr) || !arr.length) {
+    return arr;
+  }
+  for (let id = 0, len = arr.length; id < len; id++) {
+    if (arr.indexOf(arr[id]) < id) {
+      res.push(res[arr.indexOf(arr[id])]);
+      continue;
+    }
+    const prefix = `.#`.includes(arr[id][0]) ? arr[id][0] : "";
+    const codePointSum = Array.from(arr[id]).reduce((acc, curr) => acc + tellcp(curr), 0);
+    if (`.#`.includes(arr[id][0]) && arr[id].length < 4 || !`.#`.includes(arr[id][0]) && arr[id].length < 3) {
+      const val = arr[id];
+      if (!res.includes(val)) {
+        res.push(val);
+        if (val.startsWith(".") && val.length === 2 && singleClasses[val.slice(1)] === false) {
+          singleClasses[val.slice(1)] = true;
+        } else if (val.startsWith("#") && val.length === 2 && singleIds[val.slice(1)] === false) {
+          singleIds[val.slice(1)] = true;
+        } else if (!val.startsWith(".") && !val.startsWith("#") && val.length === 1 && singleNameonly[val] === false) {
+          singleNameonly[val] = true;
+        }
+        continue;
+      }
+    }
+    let generated = `${prefix}${letters[codePointSum % letters.length]}${lettersAndNumbers[codePointSum % lettersAndNumbers.length]}`;
+    if (res.includes(generated)) {
+      let soFarWeveGot = generated;
+      let counter = 0;
+      const reducedCodePointSum = Array.from(arr[id]).reduce((acc, curr) => acc < 200 ? acc + tellcp(curr) : (acc + tellcp(curr)) % lettersAndNumbers.length, 0);
+      const magicNumber = Array.from(arr[id]).map(val => tellcp(val)).reduce((accum, curr) => {
+        let temp = accum + curr;
+        do {
+          temp = String(temp).split("").reduce((acc, curr1) => acc + Number.parseInt(curr1, 10), 0);
+        } while (temp >= 10);
+        return temp;
+      }, 0);
+      while (res.includes(soFarWeveGot)) {
+        counter += 1;
+        soFarWeveGot += lettersAndNumbers[reducedCodePointSum * magicNumber * counter % lettersAndNumbers.length];
+      }
+      generated = soFarWeveGot;
+    }
+    res.push(generated);
+    if (generated.startsWith(".") && generated.length === 2 && singleClasses[generated.slice(1)] === false) {
+      singleClasses[generated.slice(1)] = true;
+    } else if (generated.startsWith("#") && generated.length === 2 && singleIds[generated.slice(1)] === false) {
+      singleIds[generated.slice(1)] = true;
+    } else if (!generated.startsWith(".") && !generated.startsWith("#") && generated.length === 1 && singleNameonly[generated] === false) {
+      singleNameonly[generated] = true;
+    }
+  }
+  for (let i = 0, len = res.length; i < len; i++) {
+    if (res[i].startsWith(".")) {
+      if (singleClasses[res[i].slice(1, 2)] === false) {
+        singleClasses[res[i].slice(1, 2)] = res[i];
+        res[i] = res[i].slice(0, 2);
+      } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
+        res[i] = res[i].slice(0, 2);
+      }
+    } else if (res[i].startsWith("#")) {
+      if (singleIds[res[i].slice(1, 2)] === false) {
+        singleIds[res[i].slice(1, 2)] = res[i];
+        res[i] = res[i].slice(0, 2);
+      } else if (singleIds[res[i].slice(1, 2)] === res[i]) {
+        res[i] = res[i].slice(0, 2);
+      }
+    } else if (!res[i].startsWith(".") && !res[i].startsWith("#")) {
+      if (!singleNameonly[res[i].slice(0, 1)]) {
+        singleNameonly[res[i].slice(0, 1)] = res[i];
+        res[i] = res[i].slice(0, 1);
+      } else if (singleNameonly[res[i].slice(0, 1)] === res[i]) {
+        res[i] = res[i].slice(0, 1);
+      }
+    }
+  }
+  return res;
+}
+
+/**
+ * ranges-sort
+ * Sort string index ranges
+ * Version: 4.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-sort/
+ */
+const defaults$4 = {
+  strictlyTwoElementsInRangeArrays: false,
+  progressFn: null
+};
+function rSort(arrOfRanges, originalOptions) {
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
+    return arrOfRanges;
+  }
+  const opts = { ...defaults$4,
+    ...originalOptions
+  };
+  let culpritsIndex;
+  let culpritsLen;
+  if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(range => range).every((rangeArr, indx) => {
+    if (rangeArr.length !== 2) {
+      culpritsIndex = indx;
+      culpritsLen = rangeArr.length;
+      return false;
+    }
+    return true;
+  })) {
+    throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) has not two but ${culpritsLen} elements!`);
+  }
+  if (!arrOfRanges.filter(range => range).every((rangeArr, indx) => {
+    if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
+      culpritsIndex = indx;
+      return false;
+    }
+    return true;
+  })) {
+    throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) does not consist of only natural numbers!`);
+  }
+  const maxPossibleIterations = arrOfRanges.filter(range => range).length ** 2;
+  let counter = 0;
+  return Array.from(arrOfRanges).filter(range => range).sort((range1, range2) => {
+    if (opts.progressFn) {
+      counter += 1;
+      opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
+    }
+    if (range1[0] === range2[0]) {
+      if (range1[1] < range2[1]) {
+        return -1;
+      }
+      if (range1[1] > range2[1]) {
+        return 1;
+      }
+      return 0;
+    }
+    if (range1[0] < range2[0]) {
+      return -1;
+    }
+    return 1;
+  });
+}
+
+/**
+ * ranges-merge
+ * Merge and sort string index ranges
+ * Version: 7.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-merge/
+ */
+const defaults$3 = {
+  mergeType: 1,
+  progressFn: null,
+  joinRangesThatTouchEdges: true
+};
+function rMerge(arrOfRanges, originalOpts) {
+  function isObj(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
+    return null;
+  }
+  let opts;
+  if (originalOpts) {
+    if (isObj(originalOpts)) {
+      opts = { ...defaults$3,
+        ...originalOpts
+      };
+      if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
+        opts.progressFn = null;
+      } else if (opts.progressFn && typeof opts.progressFn !== "function") {
+        throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(opts.progressFn, null, 4)}`);
+      }
+      if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
+        throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+      }
+      if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
+        throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)}`);
+      }
+    } else {
+      throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
+    }
+  } else {
+    opts = { ...defaults$3
+    };
+  }
+  const filtered = arrOfRanges
+  .filter(range => range).map(subarr => [...subarr]).filter(
+  rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
+  let sortedRanges;
+  let lastPercentageDone;
+  let percentageDone;
+  if (opts.progressFn) {
+    sortedRanges = rSort(filtered, {
+      progressFn: percentage => {
+        percentageDone = Math.floor(percentage / 5);
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          opts.progressFn(percentageDone);
+        }
+      }
+    });
+  } else {
+    sortedRanges = rSort(filtered);
+  }
+  if (!sortedRanges) {
+    return null;
+  }
+  const len = sortedRanges.length - 1;
+  for (let i = len; i > 0; i--) {
+    if (opts.progressFn) {
+      percentageDone = Math.floor((1 - i / len) * 78) + 21;
+      if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        opts.progressFn(percentageDone);
+      }
+    }
+    if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
+      sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
+      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
+      if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
+        if (sortedRanges[i - 1][2] !== null) {
+          if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
+            sortedRanges[i - 1][2] = null;
+          } else if (sortedRanges[i - 1][2] != null) {
+            if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
+              sortedRanges[i - 1][2] = sortedRanges[i][2];
+            } else {
+              sortedRanges[i - 1][2] += sortedRanges[i][2];
+            }
+          } else {
+            sortedRanges[i - 1][2] = sortedRanges[i][2];
+          }
+        }
+      }
+      sortedRanges.splice(i, 1);
+      i = sortedRanges.length;
+    }
+  }
+  return sortedRanges.length ? sortedRanges : null;
+}
+
+/**
+ * ranges-apply
+ * Take an array of string index ranges, delete/replace the string according to them
+ * Version: 5.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-apply/
+ */
+function rApply(str, originalRangesArr, progressFn) {
+  let percentageDone = 0;
+  let lastPercentageDone = 0;
+  if (arguments.length === 0) {
+    throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
+  }
+  if (typeof str !== "string") {
+    throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
+  }
+  if (originalRangesArr && !Array.isArray(originalRangesArr)) {
+    throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
+  }
+  if (progressFn && typeof progressFn !== "function") {
+    throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
+  }
+  if (!originalRangesArr || !originalRangesArr.filter(range => range).length) {
+    return str;
+  }
+  let rangesArr;
+  if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
+    rangesArr = [Array.from(originalRangesArr)];
+  } else {
+    rangesArr = Array.from(originalRangesArr);
+  }
+  const len = rangesArr.length;
+  let counter = 0;
+  rangesArr.filter(range => range).forEach((el, i) => {
+    if (progressFn) {
+      percentageDone = Math.floor(counter / len * 10);
+      /* istanbul ignore else */
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        progressFn(percentageDone);
+      }
+    }
+    if (!Array.isArray(el)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(el, null, 4)}, which is ${typeof el}`);
+    }
+    if (!Number.isInteger(el[0])) {
+      if (!Number.isInteger(+el[0]) || +el[0] < 0) {
+        throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(el, null, 0)}. Its first element is not an integer, string index, but ${typeof el[0]}, equal to: ${JSON.stringify(el[0], null, 4)}.`);
+      } else {
+        rangesArr[i][0] = +rangesArr[i][0];
+      }
+    }
+    if (!Number.isInteger(el[1])) {
+      if (!Number.isInteger(+el[1]) || +el[1] < 0) {
+        throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(el, null, 0)}. Its second element is not an integer, string index, but ${typeof el[1]}, equal to: ${JSON.stringify(el[1], null, 4)}.`);
+      } else {
+        rangesArr[i][1] = +rangesArr[i][1];
+      }
+    }
+    counter += 1;
+  });
+  const workingRanges = rMerge(rangesArr, {
+    progressFn: perc => {
+      if (progressFn) {
+        percentageDone = 10 + Math.floor(perc / 10);
+        /* istanbul ignore else */
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
+      }
+    }
+  });
+  const len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
+  /* istanbul ignore else */
+  if (len2 > 0) {
+    const tails = str.slice(workingRanges[len2 - 1][1]);
+    str = workingRanges.reduce((acc, _val, i, arr) => {
+      if (progressFn) {
+        percentageDone = 20 + Math.floor(i / len2 * 80);
+        /* istanbul ignore else */
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
+      }
+      const beginning = i === 0 ? 0 : arr[i - 1][1];
+      const ending = arr[i][0];
+      return acc + str.slice(beginning, ending) + (arr[i][2] || "");
+    }, "");
+    str += tails;
+  }
+  return str;
+}
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array ? array.length : 0,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+/**
+ * The base implementation of `_.findIndex` and `_.findLastIndex` without
+ * support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to search.
+ * @param {Function} predicate The function invoked per iteration.
+ * @param {number} fromIndex The index to search from.
+ * @param {boolean} [fromRight] Specify iterating from right to left.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
+  var length = array.length,
+      index = fromIndex + (fromRight ? 1 : -1);
+
+  while ((fromRight ? index-- : ++index < length)) {
+    if (predicate(array[index], index, array)) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+ *
+ * @private
+ * @param {Array} array The array to search.
+ * @param {*} value The value to search for.
+ * @param {number} fromIndex The index to search from.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseIndexOf$1(array, value, fromIndex) {
+  if (value !== value) {
+    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
+  }
+  var index = fromIndex - 1,
+      length = array.length;
+
+  while (++index < length) {
+    if (array[index] === value) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * This function is like `baseIndexOf` except that it accepts a comparator.
+ *
+ * @private
+ * @param {Array} array The array to search.
+ * @param {*} value The value to search for.
+ * @param {number} fromIndex The index to search from.
+ * @param {Function} comparator The comparator invoked per element.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseIndexOfWith(array, value, fromIndex, comparator) {
+  var index = fromIndex - 1,
+      length = array.length;
+
+  while (++index < length) {
+    if (comparator(array[index], value)) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.isNaN` without support for number objects.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+ */
+function baseIsNaN$1(value) {
+  return value !== value;
+}
+
+/**
+ * The base implementation of `_.unary` without support for storing metadata.
+ *
+ * @private
+ * @param {Function} func The function to cap arguments for.
+ * @returns {Function} Returns the new capped function.
+ */
+function baseUnary(func) {
+  return function(value) {
+    return func(value);
+  };
+}
+
+/** Used for built-in method references. */
+var arrayProto$1 = Array.prototype;
+
+/** Built-in value references. */
+var splice$1 = arrayProto$1.splice;
+
+/**
+ * The base implementation of `_.pullAllBy` without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} array The array to modify.
+ * @param {Array} values The values to remove.
+ * @param {Function} [iteratee] The iteratee invoked per element.
+ * @param {Function} [comparator] The comparator invoked per element.
+ * @returns {Array} Returns `array`.
+ */
+function basePullAll(array, values, iteratee, comparator) {
+  var indexOf = comparator ? baseIndexOfWith : baseIndexOf$1,
+      index = -1,
+      length = values.length,
+      seen = array;
+
+  if (array === values) {
+    values = copyArray(values);
+  }
+  if (iteratee) {
+    seen = arrayMap(array, baseUnary(iteratee));
+  }
+  while (++index < length) {
+    var fromIndex = 0,
+        value = values[index],
+        computed = iteratee ? iteratee(value) : value;
+
+    while ((fromIndex = indexOf(seen, computed, fromIndex, comparator)) > -1) {
+      if (seen !== array) {
+        splice$1.call(seen, fromIndex, 1);
+      }
+      splice$1.call(array, fromIndex, 1);
+    }
+  }
+  return array;
+}
+
+/**
+ * Copies the values of `source` to `array`.
+ *
+ * @private
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
+ * @returns {Array} Returns `array`.
+ */
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
+}
+
+/**
+ * This method is like `_.pull` except that it accepts an array of values to remove.
+ *
+ * **Note:** Unlike `_.difference`, this method mutates `array`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Array
+ * @param {Array} array The array to modify.
+ * @param {Array} values The values to remove.
+ * @returns {Array} Returns `array`.
+ * @example
+ *
+ * var array = ['a', 'b', 'c', 'a', 'b', 'c'];
+ *
+ * _.pullAll(array, ['a', 'c']);
+ * console.log(array);
+ * // => ['b', 'b']
+ */
+function pullAll(array, values) {
+  return (array && array.length && values && values.length)
+    ? basePullAll(array, values)
+    : array;
+}
+
+var lodash_pullall = pullAll;
+
+/**
+ * string-collapse-leading-whitespace
+ * Collapse the leading and trailing whitespace of a string
+ * Version: 5.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
+ */
+function collWhitespace(str, originallineBreakLimit = 1) {
+  const rawNbsp = "\u00A0";
+  function reverse(s) {
+    return Array.from(s).reverse().join("");
+  }
+  function prep(whitespaceChunk, limit, trailing) {
+    const firstBreakChar = trailing ? "\n" : "\r";
+    const secondBreakChar = trailing ? "\r" : "\n";
+    if (!whitespaceChunk) {
+      return whitespaceChunk;
+    }
+    let crlfCount = 0;
+    let res = "";
+    for (let i = 0, len = whitespaceChunk.length; i < len; i++) {
+      if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
+        crlfCount++;
+      }
+      if (`\r\n`.includes(whitespaceChunk[i]) || whitespaceChunk[i] === rawNbsp) {
+        if (whitespaceChunk[i] === rawNbsp) {
+          res += whitespaceChunk[i];
+        } else if (whitespaceChunk[i] === firstBreakChar) {
+          if (crlfCount <= limit) {
+            res += whitespaceChunk[i];
+            if (whitespaceChunk[i + 1] === secondBreakChar) {
+              res += whitespaceChunk[i + 1];
+              i++;
+            }
+          }
+        } else if (whitespaceChunk[i] === secondBreakChar && (!whitespaceChunk[i - 1] || whitespaceChunk[i - 1] !== firstBreakChar) && crlfCount <= limit) {
+          res += whitespaceChunk[i];
+        }
+      } else {
+        if (!whitespaceChunk[i + 1] && !crlfCount) {
+          res += " ";
+        }
+      }
+    }
+    return res;
+  }
+  if (typeof str === "string" && str.length) {
+    let lineBreakLimit = 1;
+    if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
+      lineBreakLimit = +originallineBreakLimit;
+    }
+    let frontPart = "";
+    let endPart = "";
+    if (!str.trim()) {
+      frontPart = str;
+    } else if (!str[0].trim()) {
+      for (let i = 0, len = str.length; i < len; i++) {
+        if (str[i].trim()) {
+          frontPart = str.slice(0, i);
+          break;
+        }
+      }
+    }
+    if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
+      for (let i = str.length; i--;) {
+        if (str[i].trim()) {
+          endPart = str.slice(i + 1);
+          break;
+        }
+      }
+    }
+    return `${prep(frontPart, lineBreakLimit, false)}${str.trim()}${reverse(prep(reverse(endPart), lineBreakLimit, true))}`;
+  }
+  return str;
+}
+
+/**
+ * ranges-push
+ * Gather string index ranges
+ * Version: 5.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-push/
+ */
+function existy(x) {
+  return x != null;
+}
+function isNum(something) {
+  return Number.isInteger(something) && something >= 0;
+}
+function isStr$1(something) {
+  return typeof something === "string";
+}
+const defaults$2 = {
+  limitToBeAddedWhitespace: false,
+  limitLinebreaksCount: 1,
+  mergeType: 1
+};
+class Ranges {
+  constructor(originalOpts) {
+    const opts = { ...defaults$2,
+      ...originalOpts
+    };
+    if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
+      if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "1") {
+        opts.mergeType = 1;
+      } else if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "2") {
+        opts.mergeType = 2;
+      } else {
+        throw new Error(`ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+      }
+    }
+    this.opts = opts;
+    this.ranges = [];
+  }
+  add(originalFrom, originalTo, addVal) {
+    if (originalFrom == null && originalTo == null) {
+      return;
+    }
+    if (existy(originalFrom) && !existy(originalTo)) {
+      if (Array.isArray(originalFrom)) {
+        if (originalFrom.length) {
+          if (originalFrom.some(el => Array.isArray(el))) {
+            originalFrom.forEach(thing => {
+              if (Array.isArray(thing)) {
+                this.add(...thing);
+              }
+            });
+            return;
+          }
+          if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
+            this.add(...originalFrom);
+          }
+        }
+        return;
+      }
+      throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(originalFrom, null, 0)}) but second-one, "to" is not (${JSON.stringify(originalTo, null, 0)})`);
+    } else if (!existy(originalFrom) && existy(originalTo)) {
+      throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(originalTo, null, 0)}) but first-one, "from" is not (${JSON.stringify(originalFrom, null, 0)})`);
+    }
+    const from = +originalFrom;
+    const to = +originalTo;
+    if (isNum(addVal)) {
+      addVal = String(addVal);
+    }
+    if (isNum(from) && isNum(to)) {
+      if (existy(addVal) && !isStr$1(addVal) && !isNum(addVal)) {
+        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(addVal, null, 4)}`);
+      }
+      if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
+        this.last()[1] = to;
+        if (this.last()[2] === null || addVal === null) ;
+        if (this.last()[2] !== null && existy(addVal)) {
+          let calculatedVal = this.last()[2] && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
+          if (this.opts.limitToBeAddedWhitespace) {
+            calculatedVal = collWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
+          }
+          if (!(isStr$1(calculatedVal) && !calculatedVal.length)) {
+            this.last()[2] = calculatedVal;
+          }
+        }
+      } else {
+        if (!this.ranges) {
+          this.ranges = [];
+        }
+        const whatToPush = addVal !== undefined && !(isStr$1(addVal) && !addVal.length) ? [from, to, addVal && this.opts.limitToBeAddedWhitespace ? collWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+        this.ranges.push(whatToPush);
+      }
+    } else {
+      if (!(isNum(from) && from >= 0)) {
+        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(from, null, 4)}`);
+      } else {
+        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(to, null, 4)}`);
+      }
+    }
+  }
+  push(originalFrom, originalTo, addVal) {
+    this.add(originalFrom, originalTo, addVal);
+  }
+  current() {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
+      this.ranges = rMerge(this.ranges, {
+        mergeType: this.opts.mergeType
+      });
+      if (this.ranges && this.opts.limitToBeAddedWhitespace) {
+        return this.ranges.map(val => {
+          if (existy(val[2])) {
+            return [val[0], val[1], collWhitespace(val[2], this.opts.limitLinebreaksCount)];
+          }
+          return val;
+        });
+      }
+      return this.ranges;
+    }
+    return null;
+  }
+  wipe() {
+    this.ranges = [];
+  }
+  replace(givenRanges) {
+    if (Array.isArray(givenRanges) && givenRanges.length) {
+      if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+        throw new Error(`ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(givenRanges[0], null, 4)} should be an array and its first element should be an integer, a string index.`);
+      } else {
+        this.ranges = Array.from(givenRanges);
+      }
+    } else {
+      this.ranges = [];
+    }
+  }
+  last() {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
+      return this.ranges[this.ranges.length - 1];
+    }
+    return null;
+  }
+}
+
+/**
+ * html-crush
+ * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
+ * Version: 4.1.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/html-crush/
+ */
+const finalIndexesToDelete = new Ranges({
+  limitToBeAddedWhitespace: true
+});
+const defaults$1 = {
+  lineLengthLimit: 500,
+  removeIndentations: true,
+  removeLineBreaks: false,
+  removeHTMLComments: false,
+  removeCSSComments: true,
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100,
+  breakToTheLeftOf: ["</td", "<html", "</html", "<head", "</head", "<meta", "<link", "<table", "<script", "</script", "<!DOCTYPE", "<style", "</style", "<title", "<body", "@media", "</body", "<!--[if", "<!--<![endif", "<![endif]"],
+  mindTheInlineTags: ["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]
+};
+const applicableOpts = {
+  removeHTMLComments: false,
+  removeCSSComments: false
+};
+function isStr(something) {
+  return typeof something === "string";
+}
+function isLetter(something) {
+  return typeof something === "string" && something.toUpperCase() !== something.toLowerCase();
+}
+function crush(str, originalOpts) {
+  const start = Date.now();
+  if (!isStr(str)) {
+    if (str === undefined) {
+      throw new Error("html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
+    } else {
+      throw new Error(`html-crush: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(str, null, 4)}`);
+    }
+  }
+  if (originalOpts && typeof originalOpts !== "object") {
+    throw new Error(`html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(originalOpts, null, 4)}`);
+  }
+  if (originalOpts && Array.isArray(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
+    for (let z = 0, len = originalOpts.breakToTheLeftOf.length; z < len; z++) {
+      if (!isStr(originalOpts.breakToTheLeftOf[z])) {
+        throw new TypeError(`html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index ${z} is of a type "${typeof originalOpts.breakToTheLeftOf[z]}" and is equal to:\n${JSON.stringify(originalOpts.breakToTheLeftOf[z], null, 4)}`);
+      }
+    }
+  }
+  const opts = { ...defaults$1,
+    ...originalOpts
+  };
+  if (typeof opts.removeHTMLComments === "boolean") {
+    opts.removeHTMLComments = opts.removeHTMLComments ? 1 : 0;
+  }
+  let breakToTheLeftOfFirstLetters = "";
+  if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
+    breakToTheLeftOfFirstLetters = [...new Set(opts.breakToTheLeftOf.map(val => val[0]))].join("");
+  }
+  let lastLinebreak = null;
+  let whitespaceStartedAt = null;
+  let nonWhitespaceCharMet = false;
+  let countCharactersPerLine = 0;
+  let cpl = 0;
+  let withinStyleTag = false;
+  let withinHTMLConditional = false;
+  let withinInlineStyle = null;
+  let styleCommentStartedAt = null;
+  let htmlCommentStartedAt = null;
+  let scriptStartedAt = null;
+  let doNothing;
+  let stageFrom = null;
+  let stageTo = null;
+  let stageAdd = null;
+  let tagName = null;
+  let tagNameStartsAt = null;
+  let leftTagName = null;
+  const CHARS_BREAK_ON_THE_RIGHT_OF_THEM = `>};`;
+  const CHARS_BREAK_ON_THE_LEFT_OF_THEM = `<`;
+  const CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = `!`;
+  const DELETE_TIGHTLY_IF_ON_LEFT_IS = `>`;
+  const DELETE_TIGHTLY_IF_ON_RIGHT_IS = `<`;
+  const set = `{},:;<>~+`;
+  const DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS = set;
+  const DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS = set;
+  let beginningOfAFile = true;
+  const len = str.length;
+  const midLen = Math.floor(len / 2);
+  const leavePercForLastStage = 0.01;
+  let ceil;
+  if (opts.reportProgressFunc) {
+    ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
+  }
+  let currentPercentageDone;
+  let lastPercentage = 0;
+  let lineEnding = `\n`;
+  if (str.includes(`\r\n`)) {
+    lineEnding = `\r\n`;
+  } else if (str.includes(`\r`)) {
+    lineEnding = `\r`;
+  }
+  if (len) {
+    for (let i = 0; i < len; i++) {
+      if (opts.reportProgressFunc) {
+        if (len > 1000 && len < 2000) {
+          if (i === midLen) {
+            opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
+          }
+        } else if (len >= 2000) {
+          currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * (ceil || 1));
+          if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+          }
+        }
+      }
+      cpl++;
+      if (doNothing && typeof doNothing === "number" && i >= doNothing) {
+        doNothing = undefined;
+      }
+      if (scriptStartedAt !== null && str.startsWith("</script", i) && !isLetter(str[i + 8])) {
+        if ((opts.removeIndentations || opts.removeLineBreaks) && i > 0 && str[~-i] && !str[~-i].trim()) {
+          for (let y = i; y--;) {
+            if (str[y] === "\n" || str[y] === "\r" || str[y].trim()) {
+              if (y + 1 < i) {
+                finalIndexesToDelete.push(y + 1, i);
+              }
+              break;
+            }
+          }
+        }
+        scriptStartedAt = null;
+        doNothing = false;
+        i += 8;
+        continue;
+      }
+      if (!doNothing && !withinStyleTag && str.startsWith("<script", i) && !isLetter(str[i + 7])) {
+        scriptStartedAt = i;
+        doNothing = true;
+        let whatToInsert = "";
+        if ((opts.removeLineBreaks || opts.removeIndentations) && whitespaceStartedAt !== null) {
+          if (whitespaceStartedAt > 0) {
+            whatToInsert = lineEnding;
+          }
+          finalIndexesToDelete.push(whitespaceStartedAt, i, whatToInsert);
+        }
+        whitespaceStartedAt = null;
+        lastLinebreak = null;
+      }
+      if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[i])
+      ) {
+          tagName = str.slice(tagNameStartsAt, i);
+          const idxOnTheRight = right(str, ~-i);
+          if (typeof idxOnTheRight === "number" && str[idxOnTheRight] === ">" && !str[i].trim() && right(str, i)) {
+            finalIndexesToDelete.push(i, right(str, i));
+          } else if (idxOnTheRight && str[idxOnTheRight] === "/" && str[right(str, idxOnTheRight)] === ">") {
+            if (!str[i].trim() && right(str, i)) {
+              finalIndexesToDelete.push(i, right(str, i));
+            }
+            if (str[idxOnTheRight + 1] !== ">" && right(str, idxOnTheRight + 1)) {
+              finalIndexesToDelete.push(idxOnTheRight + 1, right(str, idxOnTheRight + 1));
+            }
+          }
+        }
+      if (!doNothing && !withinStyleTag && !withinInlineStyle && str[~-i] === "<" && tagNameStartsAt === null) {
+        if (/\w/.test(str[i])) {
+          tagNameStartsAt = i;
+        } else if (str[right(str, ~-i)] === "/" && /\w/.test(str[right(str, right(str, ~-i))] || "")) {
+          tagNameStartsAt = right(str, right(str, ~-i));
+        }
+      }
+      if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null && str[i] === "*" && str[i + 1] === "/") {
+        [stageFrom, stageTo] = expander({
+          str,
+          from: styleCommentStartedAt,
+          to: i + 2,
+          ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
+          ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
+        });
+        styleCommentStartedAt = null;
+        if (stageFrom != null) {
+          finalIndexesToDelete.push(stageFrom, stageTo);
+        } else {
+          countCharactersPerLine += 1;
+          i += 1;
+        }
+        doNothing = i + 2;
+      }
+      if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && str[i] === "/" && str[i + 1] === "*") {
+        if (!applicableOpts.removeCSSComments) {
+          applicableOpts.removeCSSComments = true;
+        }
+        if (opts.removeCSSComments) {
+          styleCommentStartedAt = i;
+        }
+      }
+      if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
+        withinHTMLConditional = false;
+      }
+      if (!doNothing && !withinStyleTag && !withinInlineStyle && htmlCommentStartedAt !== null) {
+        let distanceFromHereToCommentEnding;
+        if (str.startsWith("-->", i)) {
+          distanceFromHereToCommentEnding = 3;
+        } else if (str[i] === ">" && str[i - 1] === "]") {
+          distanceFromHereToCommentEnding = 1;
+        }
+        if (distanceFromHereToCommentEnding) {
+          [stageFrom, stageTo] = expander({
+            str,
+            from: htmlCommentStartedAt,
+            to: i + distanceFromHereToCommentEnding
+          });
+          htmlCommentStartedAt = null;
+          if (stageFrom != null) {
+            if (opts.lineLengthLimit && cpl - (stageTo - stageFrom) >= opts.lineLengthLimit) {
+              finalIndexesToDelete.push(stageFrom, stageTo, lineEnding);
+              cpl = -distanceFromHereToCommentEnding;
+            } else {
+              finalIndexesToDelete.push(stageFrom, stageTo);
+              cpl -= stageTo - stageFrom;
+            }
+          } else {
+            countCharactersPerLine += distanceFromHereToCommentEnding - 1;
+            i += distanceFromHereToCommentEnding - 1;
+          }
+          doNothing = i + distanceFromHereToCommentEnding;
+        }
+      }
+      if (!doNothing && !withinStyleTag && !withinInlineStyle && str.startsWith("<!--", i) && htmlCommentStartedAt === null) {
+        if (str.startsWith("[if", i + 4)) {
+          if (!withinHTMLConditional) {
+            withinHTMLConditional = true;
+          }
+          if (opts.removeHTMLComments === 2) {
+            htmlCommentStartedAt = i;
+          }
+        } else if (
+        opts.removeHTMLComments && (
+        !withinHTMLConditional || opts.removeHTMLComments === 2)) {
+          htmlCommentStartedAt = i;
+        }
+        if (!applicableOpts.removeHTMLComments) {
+          applicableOpts.removeHTMLComments = true;
+        }
+      }
+      if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str.startsWith("</style", i) && !isLetter(str[i + 7])) {
+        withinStyleTag = false;
+      } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str.startsWith("<style", i) && !isLetter(str[i + 6])) {
+        withinStyleTag = true;
+        if ((opts.removeLineBreaks || opts.removeIndentations) && opts.breakToTheLeftOf.includes("<style") && str.startsWith(` type="text/css">`, i + 6) && str[i + 24]) {
+          finalIndexesToDelete.push(i + 23, i + 23, lineEnding);
+        }
+      }
+      if (!doNothing && !withinInlineStyle && `"'`.includes(str[i]) && str.endsWith("style=", i)) {
+        withinInlineStyle = i;
+      }
+      if (!doNothing && !str[i].trim()) {
+        if (whitespaceStartedAt === null) {
+          whitespaceStartedAt = i;
+        }
+      } else if (!doNothing && !((withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null)) {
+        if (whitespaceStartedAt !== null) {
+          if (opts.removeLineBreaks) {
+            countCharactersPerLine += 1;
+          }
+          if (beginningOfAFile) {
+            beginningOfAFile = false;
+            if (opts.removeIndentations || opts.removeLineBreaks) {
+              finalIndexesToDelete.push(0, i);
+            }
+          } else {
+            if (opts.removeIndentations && !opts.removeLineBreaks) {
+              if (!nonWhitespaceCharMet && lastLinebreak !== null && i > lastLinebreak) {
+                finalIndexesToDelete.push(lastLinebreak + 1, i);
+              } else if (whitespaceStartedAt + 1 < i) {
+                if (
+                str.endsWith("]>", whitespaceStartedAt) ||
+                str.endsWith("-->", whitespaceStartedAt) ||
+                str.startsWith("<![", i) ||
+                str.startsWith("<!--<![", i)) {
+                  finalIndexesToDelete.push(whitespaceStartedAt, i);
+                } else if (str[whitespaceStartedAt] === " ") {
+                  finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
+                } else if (str[~-i] === " ") {
+                  finalIndexesToDelete.push(whitespaceStartedAt, ~-i);
+                } else {
+                  finalIndexesToDelete.push(whitespaceStartedAt, i, " ");
+                }
+              }
+            }
+            if (opts.removeLineBreaks || withinInlineStyle) {
+              if (breakToTheLeftOfFirstLetters.includes(str[i]) && matchRightIncl(str, i, opts.breakToTheLeftOf)) {
+                if (
+                !(`\r\n`.includes(str[~-i]) && whitespaceStartedAt === ~-i) &&
+                !(str[~-i] === "\n" && str[i - 2] === "\r" && whitespaceStartedAt === i - 2)) {
+                  finalIndexesToDelete.push(whitespaceStartedAt, i, lineEnding);
+                }
+                stageFrom = null;
+                stageTo = null;
+                stageAdd = null;
+                whitespaceStartedAt = null;
+                countCharactersPerLine = 1;
+                continue;
+              }
+              let whatToAdd = " ";
+              if (
+              str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+                cb: nextChar => !nextChar || !/\w/.test(nextChar)
+              })
+              ) ; else if (str[~-whitespaceStartedAt] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i])) || str.startsWith("!important", i) && !withinHTMLConditional || withinInlineStyle && (str[~-whitespaceStartedAt] === "'" || str[~-whitespaceStartedAt] === '"') || str[~-whitespaceStartedAt] === "}" && str.startsWith("</style", i) || str[i] === ">" && (`'"`.includes(str[left(str, i)]) || str[right(str, i)] === "<") || str[i] === "/" && str[right(str, i)] === ">") {
+                whatToAdd = "";
+                if (str[i] === "/" && str[i + 1] === ">" && right(str, i) && right(str, i) > i + 1) {
+                  finalIndexesToDelete.push(i + 1, right(str, i));
+                  countCharactersPerLine -= right(str, i) - i + 1;
+                }
+              }
+              if (whatToAdd && whatToAdd.length) {
+                countCharactersPerLine += 1;
+              }
+              if (!opts.lineLengthLimit) {
+                if (!(i === whitespaceStartedAt + 1 &&
+                whatToAdd === " ")) {
+                  finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
+                }
+              } else {
+                if (countCharactersPerLine >= opts.lineLengthLimit || !str[i + 1] || str[i] === ">" || str[i] === "/" && str[i + 1] === ">") {
+                  if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[i + 1] && str[i + 1].trim() && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i + 1])) {
+                    whatToAdd = lineEnding;
+                    countCharactersPerLine = 1;
+                  }
+                  if (countCharactersPerLine > opts.lineLengthLimit || !(whatToAdd === " " && i === whitespaceStartedAt + 1)) {
+                    finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
+                    lastLinebreak = null;
+                  }
+                  stageFrom = null;
+                  stageTo = null;
+                  stageAdd = null;
+                } else if (stageFrom === null || whitespaceStartedAt < stageFrom) {
+                  stageFrom = whitespaceStartedAt;
+                  stageTo = i;
+                  stageAdd = whatToAdd;
+                }
+              }
+            }
+          }
+          whitespaceStartedAt = null;
+          if (!nonWhitespaceCharMet) {
+            nonWhitespaceCharMet = true;
+          }
+        } else {
+          if (beginningOfAFile) {
+            beginningOfAFile = false;
+          }
+          if (opts.removeLineBreaks) {
+            countCharactersPerLine += 1;
+          }
+        }
+        if (!nonWhitespaceCharMet) {
+          nonWhitespaceCharMet = true;
+        }
+      }
+      if (!doNothing && !beginningOfAFile && i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters) && !str.startsWith("</a", i)) {
+        if (breakToTheLeftOfFirstLetters && matchRightIncl(str, i, opts.breakToTheLeftOf) && str.slice(0, i).trim() && (!str.startsWith("<![endif]", i) || !matchLeft(str, i, "<!--"))) {
+          finalIndexesToDelete.push(i, i, lineEnding);
+          stageFrom = null;
+          stageTo = null;
+          stageAdd = null;
+          countCharactersPerLine = 1;
+          continue;
+        } else if (opts.lineLengthLimit && countCharactersPerLine <= opts.lineLengthLimit) {
+          if (!str[i + 1] || CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) || !str[i].trim()) {
+            if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
+              let whatToAdd = stageAdd;
+              if (str[i].trim() && str[i + 1] && str[i + 1].trim() && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
+                whatToAdd = lineEnding;
+              }
+              if (countCharactersPerLine + (whatToAdd ? whatToAdd.length : 0) > opts.lineLengthLimit || !(whatToAdd === " " && stageTo === stageFrom + 1 && str[stageFrom] === " ")) {
+                if (!(str[~-stageFrom] === "}" && str[stageTo] === "{")) {
+                  finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+                  lastLinebreak = null;
+                }
+              } else {
+                countCharactersPerLine -= lastLinebreak || 0;
+              }
+            }
+            if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+              cb: nextChar => !nextChar || !/\w/.test(nextChar)
+            })) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+              trimCharsBeforeMatching: "/",
+              cb: nextChar => !nextChar || !/\w/.test(nextChar)
+            }))) {
+              stageFrom = i;
+              stageTo = i;
+              stageAdd = null;
+            } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+              trimCharsBeforeMatching: "/",
+              cb: nextChar => !nextChar || !/\w/.test(nextChar)
+            }))) {
+              stageFrom = null;
+              stageTo = null;
+              stageAdd = null;
+            }
+          }
+        } else if (opts.lineLengthLimit) {
+          if (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+            trimCharsBeforeMatching: "/",
+            cb: nextChar => !nextChar || !/\w/.test(nextChar)
+          }))) {
+            if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
+              const whatToAddLength = stageAdd && stageAdd.length ? stageAdd.length : 0;
+              if (countCharactersPerLine - (stageTo - stageFrom - whatToAddLength) - 1 > opts.lineLengthLimit) ; else {
+                finalIndexesToDelete.push(stageFrom, stageTo, stageAdd);
+                if (countCharactersPerLine - (stageTo - stageFrom - whatToAddLength) - 1 === opts.lineLengthLimit) {
+                  finalIndexesToDelete.push(i, i, lineEnding);
+                  countCharactersPerLine = 0;
+                }
+                stageFrom = null;
+                stageTo = null;
+                stageAdd = null;
+              }
+            } else {
+              finalIndexesToDelete.push(i, i, lineEnding);
+              countCharactersPerLine = 0;
+            }
+          } else if (str[i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && isStr(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
+            if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) ; else {
+              finalIndexesToDelete.push(i + 1, i + 1, lineEnding);
+              countCharactersPerLine = 0;
+            }
+          } else if (!str[i].trim()) ; else if (!str[i + 1]) {
+            if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
+              finalIndexesToDelete.push(stageFrom, stageTo, lineEnding);
+            }
+          }
+        }
+      }
+      if (!doNothing && !beginningOfAFile && opts.removeLineBreaks && opts.lineLengthLimit && countCharactersPerLine >= opts.lineLengthLimit && stageFrom !== null && stageTo !== null && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !"/".includes(str[i])) {
+        if (!(countCharactersPerLine === opts.lineLengthLimit && str[i + 1] && !str[i + 1].trim())) {
+          let whatToAdd = lineEnding;
+          if (str[i + 1] && !str[i + 1].trim() && countCharactersPerLine === opts.lineLengthLimit) {
+            whatToAdd = stageAdd;
+          }
+          if (whatToAdd === lineEnding && !str[~-stageFrom].trim() && left(str, stageFrom)) {
+            stageFrom = left(str, stageFrom) + 1;
+          }
+          finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+          countCharactersPerLine = i - stageTo;
+          if (str[i].length) {
+            countCharactersPerLine += 1;
+          }
+          stageFrom = null;
+          stageTo = null;
+          stageAdd = null;
+        }
+      }
+      if (!doNothing && str[i] === "\n" || str[i] === "\r" && (!str[i + 1] || str[i + 1] && str[i + 1] !== "\n")) {
+        lastLinebreak = i;
+        if (nonWhitespaceCharMet) {
+          nonWhitespaceCharMet = false;
+        }
+        if (!opts.removeLineBreaks && whitespaceStartedAt !== null && whitespaceStartedAt < i && str[i + 1] && str[i + 1] !== "\r" && str[i + 1] !== "\n") {
+          finalIndexesToDelete.push(whitespaceStartedAt, i);
+        }
+      }
+      if (!str[i + 1]) {
+        if (withinStyleTag && styleCommentStartedAt !== null) {
+          finalIndexesToDelete.push(...expander({
+            str,
+            from: styleCommentStartedAt,
+            to: i,
+            ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
+            ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
+          }));
+        } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
+          finalIndexesToDelete.push(whitespaceStartedAt, i + 1);
+        } else if (whitespaceStartedAt && (str[i] === "\r" && str[i + 1] === "\n" || str[i] === "\n" && str[i - 1] !== "\r")) {
+          finalIndexesToDelete.push(whitespaceStartedAt, i);
+        }
+      }
+      if (!doNothing && withinInlineStyle && withinInlineStyle < i && str[withinInlineStyle] === str[i]) {
+        withinInlineStyle = null;
+      }
+      if (!doNothing && !withinStyleTag && str.startsWith("<pre", i) && !isLetter(str[i + 4])) {
+        const locationOfClosingPre = str.indexOf("</pre", i + 5);
+        if (locationOfClosingPre > 0) {
+          doNothing = locationOfClosingPre;
+        }
+      }
+      if (!doNothing && !withinStyleTag && str.startsWith("<code", i) && !isLetter(str[i + 5])) {
+        const locationOfClosingCode = str.indexOf("</code", i + 5);
+        if (locationOfClosingCode > 0) {
+          doNothing = locationOfClosingCode;
+        }
+      }
+      if (!doNothing && str.startsWith("<![CDATA[", i)) {
+        const locationOfClosingCData = str.indexOf("]]>", i + 9);
+        if (locationOfClosingCData > 0) {
+          doNothing = locationOfClosingCData;
+        }
+      }
+      if (!doNothing && !withinStyleTag && !withinInlineStyle && tagNameStartsAt !== null && str[i] === ">") {
+        if (str[right(str, i)] === "<") {
+          leftTagName = tagName;
+        }
+        tagNameStartsAt = null;
+        tagName = null;
+      }
+      if (str[i] === "<" && leftTagName !== null) {
+        leftTagName = null;
+      }
+    }
+    if (finalIndexesToDelete.current()) {
+      const ranges = finalIndexesToDelete.current();
+      finalIndexesToDelete.wipe();
+      const startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
+      const res = rApply(str, ranges, applyPercDone => {
+        if (opts.reportProgressFunc && len >= 2000) {
+          currentPercentageDone = Math.floor(startingPercentageDone + (opts.reportProgressFuncTo - startingPercentageDone) * (applyPercDone / 100));
+          if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+          }
+        }
+      });
+      const resLen = res.length;
+      return {
+        log: {
+          timeTakenInMilliseconds: Date.now() - start,
+          originalLength: len,
+          cleanedLength: resLen,
+          bytesSaved: Math.max(len - resLen, 0),
+          percentageReducedOfOriginal: len ? Math.round(Math.max(len - resLen, 0) * 100 / len) : 0
+        },
+        ranges,
+        applicableOpts,
+        result: res
+      };
+    }
+  }
+  return {
+    log: {
+      timeTakenInMilliseconds: Date.now() - start,
+      originalLength: len,
+      cleanedLength: len,
+      bytesSaved: 0,
+      percentageReducedOfOriginal: 0
+    },
+    applicableOpts,
+    ranges: null,
+    result: str
+  };
+}
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/** `Object#toString` result references. */
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/**
+ * A specialized version of `_.includes` for arrays without support for
+ * specifying an index to search from.
+ *
+ * @private
+ * @param {Array} [array] The array to inspect.
+ * @param {*} target The value to search for.
+ * @returns {boolean} Returns `true` if `target` is found, else `false`.
+ */
+function arrayIncludes(array, value) {
+  var length = array ? array.length : 0;
+  return !!length && baseIndexOf(array, value, 0) > -1;
+}
+
+/**
+ * This function is like `arrayIncludes` except that it accepts a comparator.
+ *
+ * @private
+ * @param {Array} [array] The array to inspect.
+ * @param {*} target The value to search for.
+ * @param {Function} comparator The comparator invoked per element.
+ * @returns {boolean} Returns `true` if `target` is found, else `false`.
+ */
+function arrayIncludesWith(array, value, comparator) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  while (++index < length) {
+    if (comparator(value, array[index])) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * The base implementation of `_.findIndex` and `_.findLastIndex` without
+ * support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {Function} predicate The function invoked per iteration.
+ * @param {number} fromIndex The index to search from.
+ * @param {boolean} [fromRight] Specify iterating from right to left.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
+  var length = array.length,
+      index = fromIndex + (fromRight ? 1 : -1);
+
+  while ((fromRight ? index-- : ++index < length)) {
+    if (predicate(array[index], index, array)) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} fromIndex The index to search from.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseIndexOf(array, value, fromIndex) {
+  if (value !== value) {
+    return baseFindIndex(array, baseIsNaN, fromIndex);
+  }
+  var index = fromIndex - 1,
+      length = array.length;
+
+  while (++index < length) {
+    if (array[index] === value) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.isNaN` without support for number objects.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+ */
+function baseIsNaN(value) {
+  return value !== value;
+}
+
+/**
+ * Checks if a cache value for `key` exists.
+ *
+ * @private
+ * @param {Object} cache The cache to query.
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function cacheHas(cache, key) {
+  return cache.has(key);
+}
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/**
+ * Converts `set` to an array of its values.
+ *
+ * @private
+ * @param {Object} set The set to convert.
+ * @returns {Array} Returns the values.
+ */
+function setToArray(set) {
+  var index = -1,
+      result = Array(set.size);
+
+  set.forEach(function(value) {
+    result[++index] = value;
+  });
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var splice = arrayProto.splice;
+
+/* Built-in method references that are verified to be native. */
+var Map$1 = getNative(root, 'Map'),
+    Set$1 = getNative(root, 'Set'),
+    nativeCreate = getNative(Object, 'create');
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map$1 || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ *
+ * Creates an array cache object to store unique values.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [values] The values to cache.
+ */
+function SetCache(values) {
+  var index = -1,
+      length = values ? values.length : 0;
+
+  this.__data__ = new MapCache;
+  while (++index < length) {
+    this.add(values[index]);
+  }
+}
+
+/**
+ * Adds `value` to the array cache.
+ *
+ * @private
+ * @name add
+ * @memberOf SetCache
+ * @alias push
+ * @param {*} value The value to cache.
+ * @returns {Object} Returns the cache instance.
+ */
+function setCacheAdd(value) {
+  this.__data__.set(value, HASH_UNDEFINED);
+  return this;
+}
+
+/**
+ * Checks if `value` is in the array cache.
+ *
+ * @private
+ * @name has
+ * @memberOf SetCache
+ * @param {*} value The value to search for.
+ * @returns {number} Returns `true` if `value` is found, else `false`.
+ */
+function setCacheHas(value) {
+  return this.__data__.has(value);
+}
+
+// Add methods to `SetCache`.
+SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
+SetCache.prototype.has = setCacheHas;
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * The base implementation of `_.uniqBy` without support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {Function} [iteratee] The iteratee invoked per element.
+ * @param {Function} [comparator] The comparator invoked per element.
+ * @returns {Array} Returns the new duplicate free array.
+ */
+function baseUniq(array, iteratee, comparator) {
+  var index = -1,
+      includes = arrayIncludes,
+      length = array.length,
+      isCommon = true,
+      result = [],
+      seen = result;
+
+  if (comparator) {
+    isCommon = false;
+    includes = arrayIncludesWith;
+  }
+  else if (length >= LARGE_ARRAY_SIZE) {
+    var set = iteratee ? null : createSet(array);
+    if (set) {
+      return setToArray(set);
+    }
+    isCommon = false;
+    includes = cacheHas;
+    seen = new SetCache;
+  }
+  else {
+    seen = iteratee ? [] : result;
+  }
+  outer:
+  while (++index < length) {
+    var value = array[index],
+        computed = iteratee ? iteratee(value) : value;
+
+    value = (comparator || value !== 0) ? value : 0;
+    if (isCommon && computed === computed) {
+      var seenIndex = seen.length;
+      while (seenIndex--) {
+        if (seen[seenIndex] === computed) {
+          continue outer;
+        }
+      }
+      if (iteratee) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+    else if (!includes(seen, computed, comparator)) {
+      if (seen !== result) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+  }
+  return result;
+}
+
+/**
+ * Creates a set object of `values`.
+ *
+ * @private
+ * @param {Array} values The values to add to the set.
+ * @returns {Object} Returns the new set.
+ */
+var createSet = !(Set$1 && (1 / setToArray(new Set$1([,-0]))[1]) == INFINITY) ? noop : function(values) {
+  return new Set$1(values);
+};
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * Creates a duplicate-free version of an array, using
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons, in which only the first occurrence of each
+ * element is kept.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Array
+ * @param {Array} array The array to inspect.
+ * @returns {Array} Returns the new duplicate free array.
+ * @example
+ *
+ * _.uniq([2, 1, 2]);
+ * // => [2, 1]
+ */
+function uniq(array) {
+  return (array && array.length)
+    ? baseUniq(array)
+    : [];
+}
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * This method returns `undefined`.
+ *
+ * @static
+ * @memberOf _
+ * @since 2.3.0
+ * @category Util
+ * @example
+ *
+ * _.times(2, _.noop);
+ * // => [undefined, undefined]
+ */
+function noop() {
+  // No operation performed.
+}
+
+var lodash_uniq = uniq;
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
+const regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
+const regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
+// proper plain object checks such as lodash's cost more perf than this below
+function isObj(something) {
+    return (something && typeof something === "object" && !Array.isArray(something));
+}
+function hasOwnProp(obj, prop) {
+    return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+function isLatinLetter(char) {
+    // we mean Latin letters A-Z, a-z
+    return (typeof char === "string" &&
+        char.length === 1 &&
+        ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
+            (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123)));
+}
+
+const version = version$1;
+const defaults = {
+    whitelist: [],
+    backend: [],
+    uglify: false,
+    removeHTMLComments: true,
+    removeCSSComments: true,
+    doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
+    reportProgressFunc: null,
+    reportProgressFuncFrom: 0,
+    reportProgressFuncTo: 100,
+};
+/**
+ * Remove unused CSS from email templates
+ */
+function comb(str, originalOpts) {
+    const start = Date.now();
+    const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
+    const currentChunksMinifiedSelectors = new Ranges();
+    const lineBreaksToDelete = new Ranges();
+    // PS. badChars is also used
+    function characterSuitableForNames(char) {
+        return /[-_A-Za-z0-9]/.test(char); // notice, there's no dot or hash!
+    }
+    function resetBodyClassOrId(initObj = {}) {
+        return {
+            valuesStart: null,
+            valueStart: null,
+            nameStart: null,
+            quoteless: false,
+            ...initObj,
+        };
+    }
+    let styleStartedAt;
+    let styleEndedAt;
+    const headSelectorsArr = [];
+    const bodyClassesArr = [];
+    const bodyIdsArr = [];
+    // const selectorsRemovedDuringRoundOne = [];
+    let commentStartedAt;
+    let commentNearlyStartedAt;
+    let bodyStartedAt;
+    let bodyClass;
+    let bodyId;
+    const headSelectorsCount = {};
+    // for each single character traversed on any FOR loop, we increment this counter:
+    let totalCounter = 0;
+    let checkingInsideCurlyBraces;
+    let insideCurlyBraces;
+    let uglified = null;
+    let allClassesAndIdsWithinHeadFinalUglified = [];
+    let countAfterCleaning = 0;
+    let countBeforeCleaning = 0;
+    let curliesDepth = 0;
+    // this flag is on just for the first class or id value on the class/id within body
+    // we use it to check leading whitespace, not to waste resources on 2nd class/id
+    // onwards..
+    let bodyItsTheFirstClassOrId;
+    // marker to identify bogus comments. Bogus comments according to the HTML spec
+    // are when there's opening bracket and exclamation mark, not followed by doctype
+    // or two dashes. In that case, comment is considered to be everything up to
+    // the first encountered closing bracket. That's opposed to the healthy comment
+    // where only "-->" is considered to be a closing mark.
+    let bogusHTMLComment;
+    // ---------------------------------------------------------------------------
+    // the two below are used to identify where to delete the selectors:
+    // the following marker is for marking the beginning of where we would delete
+    // the whole "line" in head CSS. For example:
+    //
+    // <style type="text/css"><----------- rule chunk #1 starts here
+    //   .unused1[z], .unused2 {a:1;}<---- rule chunk #1 ends here
+    //   .used[z] {a:2;}<----------------- rule chunk #2 ends here
+    //
+    // * In case of "unused1" class (chunk #1), "ruleChunkStartedAt" would be the
+    // index of line break after ">".
+    // * In case of "used" class, the "ruleChunkStartedAt" would be the line
+    // break after "{a:1;}".
+    //
+    // TLDR; It's used to mark from where to delete the whole "style" (line if you may):
+    let ruleChunkStartedAt;
+    // ---------------------------------------------------------------------------
+    // the following marker is for marking the beginning of a selector, where we
+    // would delete only that particular selector. It will be used when we can't
+    // delete the whole line.
+    // For example:
+    //
+    //       <style type="text/css">
+    //         .unused1[z].unused2, .used[z] {a:1;}
+    //         |                 |
+    //         <-selector chunk ->
+    //
+    //
+    // We've got two classes, "used" and "unused". We must delete only
+    // ".unused1[z].unused2".
+    // The following marker would mark where to delete from.
+    // When we traverse the whole string, it will be reassigned again and again
+    // as we shift through each selector:
+    //
+    // TLDR; It's used to mark from where to delete only that selector, usually
+    // marking pieces between commas and brackets and curlies:
+    let selectorChunkStartedAt;
+    // flag used to mark can the selector chunk be deleted (in Round 2 only)
+    let selectorChunkCanBeDeleted = false;
+    //               ALSO,
+    //       <style type="text/css">
+    //         .unused1[z].unused2, .used[z] {a:1;}
+    //         |         |
+    //         | single  |
+    //    ---> | selector| <---
+    let singleSelectorStartedAt;
+    // Used in marking is it class or id (because there's no dot/hash in front
+    // when square bracket notation is used), for example:
+    //
+    // a[class="used"]{x:1;}
+    //
+    // in which case, singleSelectorType would be === "."
+    let singleSelectorType;
+    // ---------------------------------------------------------------------------
+    // marker to identify when we can delete the whole CSS declaration (or "line" if you keep one style-per-line)
+    //       <style type="text/css">
+    //         .unused1[z].unused2, .unused3[z] {a:1;}
+    //         |                                     |
+    //    ---> | means we can delete all this        | <---
+    let headWholeLineCanBeDeleted;
+    // if used chunk is followed by bunch of unused chunks, that comma that follows
+    // used chunk needs to be deleted. Last chunk's comma is registered at index:
+    // lastKeptChunksCommaAt and flag which instructs to delete it is the
+    // "onlyDeletedChunksFollow":
+    let lastKeptChunksCommaAt = null;
+    let onlyDeletedChunksFollow = false;
+    // marker to identify when we can delete the whole id or class, not just some of classes/id's inside
+    let bodyClassOrIdCanBeDeleted;
+    // copy of the first round's ranges, used to skip the same ranges
+    // in round 2:
+    let round1RangesClone;
+    // counters:
+    let nonIndentationsWhitespaceLength = 0;
+    let commentsLength = 0;
+    // same as used in string-extract-class-names
+    const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
+    // Rules which might wrap the media queries, for example:
+    // @supports (display: grid) {...
+    // We need to process their contents only (and disregard their curlies).
+    const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
+    // One-liners like:
+    // "@charset "utf-8";"
+    // and one-liners with URL's:
+    // @import url("https://codsen.com/style.css");
+    const atRulesWhichNeedToBeIgnored = [
+        "font-feature-values",
+        "counter-style",
+        "namespace",
+        "font-face",
+        "keyframes",
+        "viewport",
+        "charset",
+        "import",
+        "page",
+    ];
+    const atRuleBreakCharacters = ["{", "(", "<", '"', "'", "@", ";"];
+    // insurance
+    if (typeof str !== "string") {
+        throw new TypeError(`email-comb: [THROW_ID_01] Input must be string! Currently it's ${typeof str}`);
+    }
+    if (originalOpts && !isObj(originalOpts)) {
+        throw new TypeError(`email-comb: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`);
+    }
+    const opts = { ...defaults, ...originalOpts };
+    // arrayiffy if string:
+    if (typeof opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains === "string") {
+        opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [
+            opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains,
+        ].filter((val) => val.trim());
+    }
+    if (typeof opts.whitelist === "string") {
+        opts.whitelist = [opts.whitelist];
+    }
+    else if (!Array.isArray(opts.whitelist)) {
+        throw new TypeError(`email-comb: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ${JSON.stringify(opts.whitelist, null, 4)}`);
+    }
+    if (opts.whitelist.length > 0 &&
+        !opts.whitelist.every((el) => typeof el === "string")) {
+        throw new TypeError(`email-comb: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\ve got:\n${JSON.stringify(opts.whitelist, null, 4)}`);
+    }
+    if (!Array.isArray(opts.backend)) {
+        throw new TypeError(`email-comb: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ${JSON.stringify(opts.backend, null, 4)}`);
+    }
+    if (opts.backend.length > 0 && opts.backend.some((val) => !isObj(val))) {
+        throw new TypeError(`email-comb: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n${JSON.stringify(opts.backend, null, 4)}`);
+    }
+    if (opts.backend.length > 0 &&
+        !opts.backend.every((obj) => hasOwnProp(obj, "heads") && hasOwnProp(obj, "tails"))) {
+        throw new TypeError(`email-comb: [THROW_ID_07] every object within opts.backend should contain keys "heads" and "tails" but currently it's not the case. Whole "opts.backend" value array is currently equal to:\n${JSON.stringify(opts.backend, null, 4)}`);
+    }
+    if (typeof opts.uglify !== "boolean") {
+        if (opts.uglify === 1 || opts.uglify === 0) {
+            opts.uglify = !!opts.uglify; // turn it into a Boolean
+        }
+        else {
+            throw new TypeError(`email-comb: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: ${JSON.stringify(opts.uglify, null, 4)}}`);
+        }
+    }
+    if (opts.reportProgressFunc &&
+        typeof opts.reportProgressFunc !== "function") {
+        throw new TypeError(`email-comb: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(opts.reportProgressFunc, null, 4)} (${typeof opts.reportProgressFunc})`);
+    }
+    let allHeads = null;
+    let allTails = null;
+    if (Array.isArray(opts.backend) && opts.backend.length) {
+        allHeads = opts.backend.map((headsAndTailsObj) => headsAndTailsObj.heads);
+        allTails = opts.backend.map((headsAndTailsObj) => headsAndTailsObj.tails);
+    }
+    const len = str.length;
+    const leavePercForLastStage = 0.06; // in range of [0, 1]
+    let ceil = 1;
+    if (opts.reportProgressFunc) {
+        // ceil is middle of the range [0, 100], or whatever it was customised to,
+        // [opts.reportProgressFuncFrom, opts.reportProgressFuncTo].
+        // Also, leavePercForLastStage needs to be left to next stage, so "100" or
+        // "opts.reportProgressFuncTo" is multiplied by (1 - leavePercForLastStage).
+        ceil = Math.floor((opts.reportProgressFuncTo -
+            (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
+                leavePercForLastStage -
+            opts.reportProgressFuncFrom) /
+            2);
+    }
+    let trailingLinebreakLengthCorrection = 0;
+    if (!str.length || !"\r\n".includes(str[str.length - 1])) {
+        // if there's no trailing line break in the input, mark this because
+        // output will have it and we need to consider this for matematically
+        // precise calculations:
+        trailingLinebreakLengthCorrection = 1;
+    }
+    // global "do nothing" flag. When active, nothing is done, characters are just skipped.
+    let doNothing;
+    // when "doNothing" is on, only the following value can stop it:
+    let doNothingUntil;
+    let allClassesAndIdsThatWereCompletelyDeletedFromHead = [];
+    let allClassesAndIdsWithinHeadFinal = [];
+    let allClassesAndIdsWithinHead = [];
+    let allClassesAndIdsWithinBody = [];
+    let headSelectorsCountClone = {};
+    let currentPercentageDone;
+    let stateWithinStyleTag;
+    let currentlyWithinQuotes;
+    let whitespaceStartedAt;
+    let bodyClassesToDelete = [];
+    let lastPercentage = 0;
+    let stateWithinBody;
+    let bodyIdsToDelete = [];
+    let bodyCssToDelete = [];
+    let headCssToDelete = [];
+    let currentChunk;
+    let canDelete;
+    let usedOnce;
+    // ---------------------------------------------------------------------------
+    // this is the main FOR loop which will traverse the input string twice:
+    for (let round = 1; round <= 2; round++) {
+        checkingInsideCurlyBraces = false;
+        selectorChunkStartedAt = null;
+        selectorChunkCanBeDeleted = false;
+        bodyClassOrIdCanBeDeleted = true;
+        headWholeLineCanBeDeleted = true;
+        bodyClass = resetBodyClassOrId();
+        bodyItsTheFirstClassOrId = true;
+        onlyDeletedChunksFollow = false;
+        singleSelectorStartedAt = null;
+        bodyId = resetBodyClassOrId();
+        commentNearlyStartedAt = null;
+        lastKeptChunksCommaAt = null;
+        currentlyWithinQuotes = null;
+        stateWithinStyleTag = false;
+        whitespaceStartedAt = null;
+        insideCurlyBraces = false;
+        ruleChunkStartedAt = null;
+        stateWithinBody = false;
+        commentStartedAt = null;
+        doNothingUntil = null;
+        styleStartedAt = null;
+        bodyStartedAt = null;
+        currentChunk = null;
+        styleEndedAt = null;
+        doNothing = false;
+        //                    inner FOR loop starts
+        //                              |
+        //                              |
+        //                              |
+        //                              |
+        //                              |
+        //                              |
+        //                              |
+        //                              |
+        //                              |
+        //                              V
+        totalCounter += len;
+        // eslint-disable-next-line no-restricted-syntax
+        stepouter: for (let i = 0; i < len; i++) {
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //
+            //                        RULES AT THE TOP
+            //
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            // Report the progress. We'll allocate 94% (47% + 47% on each traversal)
+            // of the total progress bar to this stage. Now that's considering the
+            // opts.reportProgressFuncFrom and opts.reportProgressFuncTo are 0-to-100.
+            // If either is skewed then the value will be in that range accordingly.
+            if (opts.reportProgressFunc) {
+                if (len > 1000 && len < 2000) {
+                    // if input is too short, just call once, for the middle value
+                    if (round === 1 && i === 0) {
+                        opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2) // if range is [0, 100], this would be 50
+                        );
+                    }
+                }
+                else if (len >= 2000) {
+                    // defaults:
+                    // opts.reportProgressFuncFrom = 0
+                    // opts.reportProgressFuncTo = 100
+                    currentPercentageDone =
+                        opts.reportProgressFuncFrom +
+                            Math.floor((i / len) * ceil) +
+                            (round === 1 ? 0 : ceil);
+                    if (currentPercentageDone !== lastPercentage) {
+                        lastPercentage = currentPercentageDone;
+                        opts.reportProgressFunc(currentPercentageDone);
+                    }
+                }
+            }
+            const chr = str[i];
+            // count line endings:
+            if (str[i] === "\n") {
+                if (str[i - 1] === "\r") ;
+            }
+            else if (str[i] === "\r" && str[i + 1] !== "\n") ;
+            if (stateWithinStyleTag !== true &&
+                // a) either it's the first style tag and currently we haven't traversed
+                // it's closing yet:
+                ((styleEndedAt === null &&
+                    styleStartedAt !== null &&
+                    i >= styleStartedAt) ||
+                    // b) or, style tag was closed, later another-one was opened and we
+                    // haven't traversed through its closing tag yet:
+                    (styleStartedAt !== null &&
+                        styleEndedAt !== null &&
+                        styleStartedAt > styleEndedAt &&
+                        styleStartedAt < i))) {
+                // ---------------------------------------------------------------------
+                stateWithinStyleTag = true;
+                stateWithinBody = false;
+            }
+            else if (stateWithinBody !== true &&
+                bodyStartedAt !== null &&
+                (styleStartedAt === null || styleStartedAt < i) &&
+                (styleEndedAt === null || styleEndedAt < i)) {
+                stateWithinBody = true;
+                stateWithinStyleTag = false;
+            }
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //
+            //                       RULES AT THE MIDDLE
+            //
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            // =============================================
+            if (!doNothing && (str[i] === '"' || str[i] === "'")) {
+                // head: protection against false early curlie endings
+                // if we are "insideCurlyBraces" and any kind of quote is detected,
+                // traverse until the same is met again, ignore any curlies within.
+                if (!currentlyWithinQuotes) {
+                    const leftSideIdx = left(str, i);
+                    if (typeof leftSideIdx === "number" &&
+                        ((stateWithinStyleTag &&
+                            ["(", ",", ":"].includes(str[leftSideIdx])) ||
+                            (stateWithinBody &&
+                                !stateWithinStyleTag &&
+                                ["(", ",", ":", "="].includes(str[leftSideIdx])))) {
+                        currentlyWithinQuotes = str[i];
+                    }
+                }
+                else if ((str[i] === `"` &&
+                    str[right(str, i)] === `'` &&
+                    str[right(str, right(str, i))] === `"`) ||
+                    (str[i] === `'` &&
+                        str[right(str, i)] === `"` &&
+                        str[right(str, right(str, i))] === `'`)) {
+                    i = right(str, right(str, i));
+                    continue;
+                }
+                else if (currentlyWithinQuotes === str[i]) {
+                    currentlyWithinQuotes = null;
+                }
+            }
+            // everywhere: stop the "doNothing"
+            // ================
+            if (doNothing) {
+                if (doNothingUntil === null ||
+                    typeof doNothingUntil !== "string" ||
+                    (typeof doNothingUntil === "string" && !doNothingUntil)) {
+                    // it's some bad case scenario/bug, just turn off the "doNothing"
+                    doNothing = false;
+                    // just turn it off and move on.
+                }
+                else if (matchRightIncl(str, i, doNothingUntil)) {
+                    // Normally doNothingUntil is a single character.
+                    // However, when matching back-end characters, it can be multiple chars.
+                    // That's why above we can't compare with '===' and need the
+                    // "string-match-left-right" library.
+                    // 1. COMMENTS-RELATED SKIPS ARE TENDED SEPARATELY:
+                    if (commentStartedAt !== null) {
+                        // submit the comment characters range for deletion:
+                        // logging:
+                        if (round === 1 && opts.removeCSSComments) {
+                            const lineBreakPresentOnTheLeft = matchLeft(str, commentStartedAt, ["\r\n", "\n", "\r"]);
+                            let startingIndex = commentStartedAt;
+                            if (typeof lineBreakPresentOnTheLeft === "string" &&
+                                lineBreakPresentOnTheLeft.length) {
+                                startingIndex -= lineBreakPresentOnTheLeft.length;
+                            }
+                            if (str[startingIndex - 1] &&
+                                characterSuitableForNames(str[startingIndex - 1]) &&
+                                str[i + doNothingUntil.length] &&
+                                characterSuitableForNames(str[i + doNothingUntil.length])) {
+                                finalIndexesToDelete.push(startingIndex, i + doNothingUntil.length, ";");
+                                commentsLength += i + doNothingUntil.length - startingIndex;
+                            }
+                            else {
+                                finalIndexesToDelete.push(startingIndex, i + doNothingUntil.length);
+                                commentsLength += i + doNothingUntil.length - startingIndex;
+                            }
+                        }
+                        commentStartedAt = null;
+                    }
+                    // 2. ALL OTHER CASES OF "DO-NOTHING":
+                    // offset the index:
+                    i = i + doNothingUntil.length - 1;
+                    // Switch off the mode
+                    doNothingUntil = null;
+                    doNothing = false;
+                    continue;
+                }
+            }
+            // head: pinpoint any <style... tag, anywhere within the given HTML
+            // ================
+            if (!doNothing &&
+                str[i] === "<" &&
+                str[i + 1] === "s" &&
+                str[i + 2] === "t" &&
+                str[i + 3] === "y" &&
+                str[i + 4] === "l" &&
+                str[i + 5] === "e") {
+                checkingInsideCurlyBraces = true;
+                if (!stateWithinStyleTag) {
+                    stateWithinStyleTag = true;
+                }
+                for (let y = i; y < len; y++) {
+                    totalCounter += 1;
+                    if (str[y] === ">") {
+                        styleStartedAt = y + 1;
+                        ruleChunkStartedAt = y + 1;
+                        // We can offset the main index ("jump" to an already-traversed closing
+                        // closing bracket character of <style.....> tag because this tag
+                        // will not have any CLASS or ID attributes).
+                        // We would not do that with BODY tag for example.
+                        // Offset the index because we traversed it already:
+                        // i = y;
+                        break;
+                        // continue stepouter;
+                    }
+                }
+            }
+            // head: pinpoint closing style tag, </style>
+            // It's not that easy.
+            // There can be whitespace to the left and right of closing slash.
+            // ================
+            if (!doNothing &&
+                stateWithinStyleTag &&
+                str[i] === "<" &&
+                str[i + 1] === "/" &&
+                str[i + 2] === "s" &&
+                str[i + 3] === "t" &&
+                str[i + 4] === "y" &&
+                str[i + 5] === "l" &&
+                str[i + 6] === "e") {
+                // TODO: take care of any spaces around: 1. slash; 2. brackets
+                styleEndedAt = i - 1;
+                // we don't need the chunk end tracking marker any more
+                ruleChunkStartedAt = null;
+                checkingInsideCurlyBraces = false;
+                if (stateWithinStyleTag) {
+                    stateWithinStyleTag = false;
+                }
+            }
+            // mark where CSS comments start - ROUND 1-only rule
+            // ================
+            if (round === 1 &&
+                (stateWithinStyleTag || stateWithinBody) &&
+                str[i] === "/" &&
+                str[i + 1] === "*" &&
+                commentStartedAt === null) {
+                // 1. mark the beginning
+                commentStartedAt = i;
+                // 2. activate doNothing:
+                doNothing = true;
+                doNothingUntil = "*/";
+                // just over the "*":
+                i += 1;
+                continue;
+            }
+            // pinpoint "@"
+            if (!doNothing && stateWithinStyleTag && str[i] === "@") {
+                // since we are going to march forward, rest the whitespaceStartedAt
+                // marker since it might not get reset otherwise
+                if (whitespaceStartedAt) {
+                    whitespaceStartedAt = null;
+                }
+                const matchedAtTagsName = matchRight(str, i, atRulesWhichMightWrapStyles) ||
+                    matchRight(str, i, atRulesWhichNeedToBeIgnored);
+                if (typeof matchedAtTagsName === "string") {
+                    let temp;
+                    // rare case when semicolon follows the at-tag - in that
+                    // case, we remove the at-rule because it's broken
+                    if (str[i + matchedAtTagsName.length + 1] === ";" ||
+                        (str[i + matchedAtTagsName.length + 1] &&
+                            !str[i + matchedAtTagsName.length + 1].trim() &&
+                            matchRight(str, i + matchedAtTagsName.length + 1, ";", {
+                                trimBeforeMatching: true,
+                                cb: (_char, _theRemainderOfTheString, index) => {
+                                    temp = index;
+                                    return true;
+                                },
+                            }))) {
+                        finalIndexesToDelete.push(i, temp || i + matchedAtTagsName.length + 2);
+                    }
+                    // these can wrap styles and each other and their pesky curlies can throw
+                    // our algorithm off-track. We need to jump past the chunk from "@..."
+                    // to, and including, first curly bracket. But mind the dirty code cases.
+                    let secondaryStopper;
+                    for (let z = i + 1; z < len; z++) {
+                        totalCounter += 1;
+                        // ------------------------------------------------------------------
+                        // a secondary stopper is any character which must be matched with its
+                        // closing counterpart before anything continues. For example, we look
+                        // for semicolon. On the way, we encounter an opening bracket. Now,
+                        // we must march forward until we meet closing bracket. If, in the way,
+                        // we encounter semicolon, it will be ignored, only closing bracket is
+                        // what we look. When it is found, THEN continue looking for (new) semicolon.
+                        // catch the ending of a secondary stopper
+                        if (secondaryStopper && str[z] === secondaryStopper) {
+                            if ((str[z] === "}" &&
+                                atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName)) ||
+                                (str[z] === "{" &&
+                                    atRulesWhichMightWrapStyles.includes(matchedAtTagsName))) {
+                                i = z;
+                                ruleChunkStartedAt = z + 1;
+                                continue stepouter;
+                            }
+                            else {
+                                secondaryStopper = undefined;
+                                continue;
+                                // continue stepouter;
+                            }
+                        }
+                        // set the seconddary stopper
+                        if (str[z] === '"' && !secondaryStopper) {
+                            secondaryStopper = '"';
+                        }
+                        else if (str[z] === "'" && !secondaryStopper) {
+                            secondaryStopper = "'";
+                        }
+                        else if (str[z] === "(" && !secondaryStopper) {
+                            secondaryStopper = ")";
+                        }
+                        else if (atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName) &&
+                            str[z] === "{" &&
+                            !secondaryStopper) {
+                            secondaryStopper = "}";
+                        }
+                        // catch the final, closing character
+                        if (!secondaryStopper && atRuleBreakCharacters.includes(str[z])) {
+                            // ensure that any wrapped chunks get completely covered and their
+                            // contents don't trigger any clauses. There can be links with "@"
+                            // for example, and there can be stray tags like @media @media.
+                            // These two different cases can be recognised by requiring that any
+                            // wrapped chunks like {...} or (...) or "..." or '...' get covered
+                            // completely before anything else is considered.
+                            // bail out clauses
+                            let pushRangeFrom;
+                            let pushRangeTo;
+                            // normal cases:
+                            if (str[z] === "{" || str[z] === ";") {
+                                insideCurlyBraces = false;
+                                ruleChunkStartedAt = z + 1;
+                                i = z;
+                                continue stepouter;
+                            }
+                            else if (str[z] === "@" || str[z] === "<") {
+                                if (round === 1 &&
+                                    !str.slice(i, z).includes("{") &&
+                                    !str.slice(i, z).includes("(") &&
+                                    !str.slice(i, z).includes('"') &&
+                                    !str.slice(i, z).includes("'")) {
+                                    pushRangeFrom = i;
+                                    pushRangeTo = z + (str[z] === ";" ? 1 : 0);
+                                    finalIndexesToDelete.push(pushRangeFrom, pushRangeTo);
+                                }
+                            }
+                            const iOffset = pushRangeTo
+                                ? pushRangeTo - 1
+                                : z - 1 + (str[z] === "{" ? 1 : 0);
+                            i = iOffset;
+                            ruleChunkStartedAt = iOffset + 1;
+                            continue stepouter;
+                        }
+                    }
+                }
+            }
+            // pinpoint closing curly braces
+            // ================
+            if (!doNothing &&
+                stateWithinStyleTag &&
+                insideCurlyBraces &&
+                checkingInsideCurlyBraces &&
+                chr === "}" &&
+                !currentlyWithinQuotes &&
+                !curliesDepth) {
+                // submit whole chunk for deletion if applicable:
+                if (round === 2 && headWholeLineCanBeDeleted && ruleChunkStartedAt) {
+                    finalIndexesToDelete.push(ruleChunkStartedAt, i + 1);
+                }
+                insideCurlyBraces = false;
+                if (ruleChunkStartedAt) {
+                    ruleChunkStartedAt = i + 1;
+                }
+                // reset selectorChunkStartedAt:
+                selectorChunkStartedAt = null;
+                selectorChunkCanBeDeleted = false;
+                headWholeLineCanBeDeleted = true;
+                singleSelectorStartedAt = null;
+                lastKeptChunksCommaAt = null;
+                onlyDeletedChunksFollow = false;
+            }
+            // catch the beginning/ending of CSS selectors in head
+            // ================
+            // markers we'll be dealing with:
+            // * selectorChunkStartedAt
+            // * ruleChunkStartedAt
+            // * selectorChunkCanBeDeleted
+            // * singleSelectorStartedAt
+            // * headWholeLineCanBeDeleted
+            if (!doNothing &&
+                !commentStartedAt &&
+                styleStartedAt &&
+                i >= styleStartedAt &&
+                // a) either it's the first style tag and currently we haven't traversed
+                // its closing yet:
+                ((styleEndedAt === null && i >= styleStartedAt) ||
+                    // b) or, style tag was closed, later another-one was opened and we
+                    // haven't traversed through its closing tag yet:
+                    (styleEndedAt &&
+                        styleStartedAt > styleEndedAt &&
+                        styleStartedAt <= i)) &&
+                !insideCurlyBraces) {
+                // TODO: skip all false-positive characters within quotes, like curlies
+                // PART 1.
+                // catch the START of single selectors (for example, "#head-only-id-2")
+                // any character, not permitted in CSS class/id names stops the recording
+                if (singleSelectorStartedAt === null) {
+                    // catch the start of a single
+                    if (chr === "." || chr === "#") {
+                        singleSelectorStartedAt = i;
+                    }
+                    else if (matchLeft(str, i, "[class=")) {
+                        if (isLatinLetter(chr)) {
+                            singleSelectorStartedAt = i;
+                            singleSelectorType = ".";
+                        }
+                        else if (`"'`.includes(chr) &&
+                            isLatinLetter(str[right(str, i)])) {
+                            singleSelectorStartedAt = right(str, i);
+                            singleSelectorType = ".";
+                        }
+                    }
+                    else if (matchLeft(str, i, "[id=")) {
+                        if (isLatinLetter(chr)) {
+                            singleSelectorStartedAt = i;
+                            singleSelectorType = "#";
+                        }
+                        else if (`"'`.includes(chr) &&
+                            isLatinLetter(str[right(str, i)])) {
+                            singleSelectorStartedAt = right(str, i);
+                            singleSelectorType = "#";
+                        }
+                    }
+                    else if (chr.trim()) {
+                        // logging:
+                        if (chr === "}") {
+                            ruleChunkStartedAt = i + 1;
+                            currentChunk = null;
+                        }
+                        else if (chr === "<" && str[i + 1] === "!") {
+                            // catch comment blocks, probably Outlook conditional comments
+                            // like <!--[if mso]>
+                            for (let y = i; y < len; y++) {
+                                totalCounter += 1;
+                                if (str[y] === ">") {
+                                    ruleChunkStartedAt = y + 1;
+                                    selectorChunkStartedAt = y + 1;
+                                    i = y;
+                                    continue stepouter;
+                                }
+                            }
+                        }
+                    }
+                }
+                // catch the END of a single selectors
+                else if (singleSelectorStartedAt !== null &&
+                    !characterSuitableForNames(chr)) {
+                    let singleSelector = str.slice(singleSelectorStartedAt, i);
+                    if (singleSelectorType) {
+                        singleSelector = `${singleSelectorType}${singleSelector}`;
+                        singleSelectorType = undefined;
+                    }
+                    if (round === 2 &&
+                        !selectorChunkCanBeDeleted &&
+                        headCssToDelete.includes(singleSelector)) {
+                        selectorChunkCanBeDeleted = true;
+                        onlyDeletedChunksFollow = true;
+                    }
+                    else if (round === 2 && !selectorChunkCanBeDeleted) {
+                        // 1. uglify part
+                        if (opts.uglify &&
+                            (!Array.isArray(opts.whitelist) ||
+                                !opts.whitelist.length ||
+                                !matcher([singleSelector], opts.whitelist).length)) {
+                            currentChunksMinifiedSelectors.push(singleSelectorStartedAt, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)]);
+                        }
+                        // 2. tend trailing comma issue (lastKeptChunksCommaAt and
+                        // onlyDeletedChunksFollow):
+                        if (chr === ",") {
+                            lastKeptChunksCommaAt = i;
+                            onlyDeletedChunksFollow = false;
+                        }
+                    }
+                    if (chr === "." || chr === "#") {
+                        singleSelectorStartedAt = i;
+                    }
+                    else {
+                        singleSelectorStartedAt = null;
+                    }
+                }
+                // PART 2.
+                // catch the selectorChunks (for example, #head-only-id-2.real-class-1[lang|en]):
+                // only opening curly brace or comma stops the recording.
+                if (selectorChunkStartedAt === null) {
+                    // catch the start of a chunk
+                    // if (chr === "." || chr === "#") {
+                    if (chr.trim() &&
+                        chr !== "}" &&
+                        chr !== ";" &&
+                        !(str[i] === "/" && str[i + 1] === "*")) {
+                        // reset the deletion flag:
+                        selectorChunkCanBeDeleted = false;
+                        // set the chunk's starting marker:
+                        selectorChunkStartedAt = i;
+                    }
+                }
+                // catch the ending of a chunk
+                else if (",{".includes(chr)) {
+                    const sliceTo = whitespaceStartedAt || i;
+                    currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
+                    if (round === 1) {
+                        // delete whitespace in front of commas or more than two spaces
+                        // in front of opening curly braces:
+                        if (whitespaceStartedAt) {
+                            if (chr === "," && whitespaceStartedAt < i) {
+                                finalIndexesToDelete.push(whitespaceStartedAt, i);
+                                nonIndentationsWhitespaceLength += i - whitespaceStartedAt;
+                            }
+                            else if (chr === "{" && whitespaceStartedAt < i - 1) {
+                                finalIndexesToDelete.push(whitespaceStartedAt, i - 1);
+                                nonIndentationsWhitespaceLength += i - 1 - whitespaceStartedAt;
+                            }
+                        }
+                        headSelectorsArr.push(currentChunk);
+                    }
+                    // it's round 2
+                    else if (selectorChunkCanBeDeleted) {
+                        let fromIndex = selectorChunkStartedAt;
+                        let toIndex = i;
+                        let tempFindingIndex = 0;
+                        if (chr === "{" &&
+                            str[fromIndex - 1] !== ">" &&
+                            str[fromIndex - 1] !== "}") {
+                            // take care not to loop backwards from ending of <!--[if mso]>
+                            // also, not to loop then CSS is minified, imagine,
+                            // we're at here:
+                            // .col-3{z:2%}.col-4{y:3%}
+                            //             ^
+                            //            here
+                            //
+                            // 1. expand the left side to include comma, if such is present
+                            for (let y = selectorChunkStartedAt; y--;) {
+                                totalCounter += 1;
+                                if (str[y].trim() && str[y] !== ",") {
+                                    fromIndex = y + 1;
+                                    break;
+                                }
+                            }
+                            // 2. if we're on the opening curly brace currently and there's
+                            // a space in front of it, we need to go back by 1 character
+                            // to retain that single space in front of opening curly.
+                            // Otherwise, we'd crop tightly up to curly which would be wrong.
+                            if (!str[i - 1].trim()) {
+                                toIndex = i - 1;
+                            }
+                        }
+                        else if (chr === "," && !str[i + 1].trim()) {
+                            for (let y = i + 1; y < len; y++) {
+                                totalCounter += 1;
+                                if (str[y].trim()) {
+                                    toIndex = y;
+                                    break;
+                                }
+                            }
+                        }
+                        else if (matchLeft(str, fromIndex, "{", {
+                            trimBeforeMatching: true,
+                            cb: (_char, _theRemainderOfTheString, index) => {
+                                tempFindingIndex = index;
+                                return true;
+                            },
+                        })) {
+                            fromIndex = tempFindingIndex + 2; // "1" being the length of
+                            // the finding, the "{" then another + "1" to get to the right
+                            // side of opening curly.
+                        }
+                        const resToPush = expander({
+                            str,
+                            from: fromIndex,
+                            to: toIndex,
+                            ifRightSideIncludesThisThenCropTightly: ".#",
+                            ifRightSideIncludesThisCropItToo: ",",
+                            extendToOneSide: "right",
+                        });
+                        finalIndexesToDelete.push(...resToPush);
+                        // wipe any gathered selectors to be uglified
+                        if (opts.uglify) {
+                            currentChunksMinifiedSelectors.wipe();
+                        }
+                    }
+                    else {
+                        // not selectorChunkCanBeDeleted
+                        // 1. reset headWholeLineCanBeDeleted
+                        if (headWholeLineCanBeDeleted) {
+                            headWholeLineCanBeDeleted = false;
+                        }
+                        // 2. reset onlyDeletedChunksFollow because this chunk was not
+                        // deleted, so this breaks the chain of "onlyDeletedChunksFollow"
+                        if (onlyDeletedChunksFollow) {
+                            onlyDeletedChunksFollow = false;
+                        }
+                        // 3. tend uglification
+                        if (opts.uglify) {
+                            finalIndexesToDelete.push(currentChunksMinifiedSelectors.current());
+                            currentChunksMinifiedSelectors.wipe();
+                        }
+                    }
+                    // wipe the marker:
+                    if (chr !== "{") {
+                        selectorChunkStartedAt = null;
+                    }
+                    else if (round === 2) {
+                        // the last chunk was reached so let's evaluate, can we delete
+                        // the whole "row":
+                        // Cater the case when there was used class/id, comma, then at
+                        // least one unused class/id after (only unused-ones after, no
+                        // used classes/id's follow).
+                        if (!headWholeLineCanBeDeleted &&
+                            lastKeptChunksCommaAt !== null &&
+                            onlyDeletedChunksFollow) {
+                            let deleteUpTo = lastKeptChunksCommaAt + 1;
+                            if ("\n\r".includes(str[lastKeptChunksCommaAt + 1])) {
+                                for (let y = lastKeptChunksCommaAt + 1; y < len; y++) {
+                                    if (str[y].trim()) {
+                                        deleteUpTo = y;
+                                        break;
+                                    }
+                                }
+                            }
+                            finalIndexesToDelete.push(lastKeptChunksCommaAt, deleteUpTo);
+                            // reset:
+                            lastKeptChunksCommaAt = null;
+                            onlyDeletedChunksFollow = false;
+                        }
+                    }
+                }
+                //
+            }
+            // catch the closing body tag
+            // ================
+            if (!doNothing &&
+                !stateWithinStyleTag &&
+                stateWithinBody &&
+                str[i] === "/" &&
+                matchRight(str, i, "body", { trimBeforeMatching: true, i: true }) &&
+                matchLeft(str, i, "<", { trimBeforeMatching: true })) {
+                stateWithinBody = false;
+                bodyStartedAt = null;
+            }
+            // catch the opening body tag
+            // ================
+            if (!doNothing &&
+                str[i] === "<" &&
+                matchRight(str, i, "body", {
+                    i: true,
+                    trimBeforeMatching: true,
+                    cb: (char, _theRemainderOfTheString, index) => {
+                        // remove any whitespace after opening bracket of a body tag:
+                        if (round === 1) {
+                            if (char !== undefined &&
+                                (char.trim() === "" || char === ">") &&
+                                typeof index === "number") {
+                                if (index - i > 5) {
+                                    finalIndexesToDelete.push(i, index, "<body");
+                                    // remove the whitespace between < and body
+                                    nonIndentationsWhitespaceLength += index - i - 5;
+                                }
+                                else {
+                                    // do nothing
+                                    return true;
+                                }
+                            }
+                            return true;
+                        }
+                        // do nothing in round 2 because fix will already be implemented
+                        // during round 1:
+                        return true;
+                    },
+                })) {
+                // Find the ending of the body tag:
+                for (let y = i; y < len; y++) {
+                    totalCounter += 1;
+                    if (str[y] === ">") {
+                        bodyStartedAt = y + 1;
+                        // we can't offset the index because there might be unused classes
+                        // or id's on the body tag itself.
+                        break;
+                    }
+                }
+            }
+            // catch the start of a style attribute within body
+            // ================
+            if (!doNothing &&
+                stateWithinBody &&
+                !stateWithinStyleTag &&
+                str[i] === "s" &&
+                str[i + 1] === "t" &&
+                str[i + 2] === "y" &&
+                str[i + 3] === "l" &&
+                str[i + 4] === "e" &&
+                str[i + 5] === "=" &&
+                badChars.includes(str[i - 1]) // this is to prevent false positives like attribute "urlid=..."
+            ) {
+                // TODO - tend the case when there are spaces around equal in style attribute
+                if (`"'`.includes(str[i + 6])) ;
+            }
+            // catch the start of a class attribute within body
+            // ================
+            if (!doNothing &&
+                stateWithinBody &&
+                !stateWithinStyleTag &&
+                !currentlyWithinQuotes &&
+                str[i] === "c" &&
+                str[i + 1] === "l" &&
+                str[i + 2] === "a" &&
+                str[i + 3] === "s" &&
+                str[i + 4] === "s" &&
+                // a character in front exists
+                str[i - 1] &&
+                // it's a whitespace character
+                !str[i - 1].trim()) {
+                // TODO: record which double quote it was exactly, single or double
+                let valuesStart;
+                let quoteless = false;
+                if (str[i + 5] === "=") {
+                    if (str[i + 6] === '"' || str[i + 6] === "'") {
+                        valuesStart = i + 7;
+                    }
+                    else if (characterSuitableForNames(str[i + 6])) {
+                        valuesStart = i + 6;
+                        quoteless = true;
+                    }
+                    else if (str[i + 6] &&
+                        (!str[i + 6].trim() || "/>".includes(str[i + 6]))) {
+                        const calculatedRange = expander({
+                            str,
+                            from: i,
+                            to: i + 6,
+                            ifRightSideIncludesThisThenCropTightly: "/>",
+                            wipeAllWhitespaceOnLeft: true,
+                        });
+                        finalIndexesToDelete.push(...calculatedRange);
+                    }
+                }
+                else if (!str[i + 5].trim()) {
+                    // loop forward:
+                    for (let y = i + 5; y < len; y++) {
+                        totalCounter += 1;
+                        if (str[y].trim()) {
+                            // 1. is it the "equals" character?
+                            if (str[y] === "=") {
+                                // 1-1. remove this gap:
+                                if (y > i + 5 && round === 1) {
+                                    finalIndexesToDelete.push(i + 5, y);
+                                }
+                                // 1-2. check what's next:
+                                if ((str[y + 1] === '"' || str[y + 1] === "'") && str[y + 2]) {
+                                    // 1-2-1. we found where values start:
+                                    valuesStart = y + 2;
+                                }
+                                else if (str[y + 1] && !str[y + 1].trim()) {
+                                    // 1-2-2. traverse even more forward:
+                                    for (let z = y + 1; z < len; z++) {
+                                        totalCounter += 1;
+                                        if (str[z].trim()) {
+                                            if (z > y + 1 && round === 1) {
+                                                finalIndexesToDelete.push(y + 1, z);
+                                            }
+                                            if ((str[z] === '"' || str[z] === "'") && str[z + 1]) {
+                                                valuesStart = z + 1;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            // // not equals is followed by "class" attribute's name
+                            // else if (round === 1) {
+                            //   const calculatedRange = expander({
+                            //     str,
+                            //     from: i,
+                            //     to: y - 1, // leave that space in front
+                            //     ifRightSideIncludesThisThenCropTightly: "/>",
+                            //     wipeAllWhitespaceOnLeft: true,
+                            //   });
+                            //   console.log(
+                            //     `1856 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+                            //   );
+                            //   finalIndexesToDelete.push(...calculatedRange);
+                            // }
+                            // 2. stop anyway
+                            break;
+                        }
+                    }
+                }
+                if (valuesStart) {
+                    // 1. mark it
+                    bodyClass = resetBodyClassOrId({
+                        valuesStart,
+                        quoteless,
+                        nameStart: i,
+                    });
+                    // 2. resets:
+                    if (round === 1) {
+                        bodyItsTheFirstClassOrId = true;
+                    }
+                    else if (round === 2) {
+                        // 2. reset the we-can-delete-whole-class/id marker:
+                        bodyClassOrIdCanBeDeleted = true;
+                    }
+                }
+            }
+            // catch the start of an id attribute within body
+            // ================
+            if (!doNothing &&
+                stateWithinBody &&
+                !stateWithinStyleTag &&
+                !currentlyWithinQuotes &&
+                str[i] === "i" &&
+                str[i + 1] === "d" &&
+                // a character in front exists
+                str[i - 1] &&
+                // it's a whitespace character
+                !str[i - 1].trim()) {
+                let valuesStart;
+                let quoteless = false;
+                if (str[i + 2] === "=") {
+                    if (str[i + 3] === '"' || str[i + 3] === "'") {
+                        valuesStart = i + 4;
+                    }
+                    else if (characterSuitableForNames(str[i + 3])) {
+                        valuesStart = i + 3;
+                        quoteless = true;
+                    }
+                    else if (str[i + 3] &&
+                        (!str[i + 3].trim() || "/>".includes(str[i + 3]))) {
+                        const calculatedRange = expander({
+                            str,
+                            from: i,
+                            to: i + 3,
+                            ifRightSideIncludesThisThenCropTightly: "/>",
+                            wipeAllWhitespaceOnLeft: true,
+                        });
+                        finalIndexesToDelete.push(...calculatedRange);
+                    }
+                }
+                else if (!str[i + 2].trim()) {
+                    // loop forward:
+                    for (let y = i + 2; y < len; y++) {
+                        totalCounter += 1;
+                        if (str[y].trim()) {
+                            // 1. is it the "equals" character?
+                            if (str[y] === "=") {
+                                // 1-1. remove this gap:
+                                if (y > i + 2 && round === 1) {
+                                    finalIndexesToDelete.push(i + 2, y);
+                                }
+                                // 1-2. check what's next:
+                                if ((str[y + 1] === '"' || str[y + 1] === "'") && str[y + 2]) {
+                                    // 1-2-1. we found where values start:
+                                    valuesStart = y + 2;
+                                }
+                                else if (str[y + 1] && !str[y + 1].trim()) {
+                                    // 1-2-2. traverse even more forward:
+                                    for (let z = y + 1; z < len; z++) {
+                                        totalCounter += 1;
+                                        if (str[z].trim()) {
+                                            if (z > y + 1 && round === 1) {
+                                                finalIndexesToDelete.push(y + 1, z);
+                                            }
+                                            if ((str[z] === '"' || str[z] === "'") && str[z + 1]) {
+                                                valuesStart = z + 1;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            // // not equals is followed by "id" attribute's name
+                            // else if (round === 1) {
+                            //   const calculatedRange = expander({
+                            //     str,
+                            //     from: i,
+                            //     to: y - 1, // leave that space in front
+                            //     ifRightSideIncludesThisThenCropTightly: "/>",
+                            //     wipeAllWhitespaceOnLeft: true,
+                            //   });
+                            //   console.log(
+                            //     `1987 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+                            //   );
+                            //   finalIndexesToDelete.push(...calculatedRange);
+                            // }
+                            // 2. stop anyway
+                            break;
+                        }
+                    }
+                }
+                if (valuesStart) {
+                    // 1. mark it
+                    bodyId = resetBodyClassOrId({
+                        valuesStart,
+                        quoteless,
+                        nameStart: i,
+                    });
+                    // 2. resets:
+                    if (round === 1) {
+                        bodyItsTheFirstClassOrId = true;
+                    }
+                    else if (round === 2) {
+                        // 2. reset the we-can-delete-whole-class/id marker:
+                        bodyClassOrIdCanBeDeleted = true;
+                    }
+                }
+            }
+            // body: catch the first letter within each class attribute
+            // ================
+            if (!doNothing &&
+                bodyClass.valuesStart !== null &&
+                i >= bodyClass.valuesStart &&
+                bodyClass.valueStart === null) {
+                if (allHeads && matchRightIncl(str, i, allHeads)) {
+                    // 1. activate do-nothing flag
+                    doNothing = true;
+                    // 2. mark this class as not to be removed (as a whole)
+                    bodyClassOrIdCanBeDeleted = false;
+                    if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
+                        const calculatedRange = expander({
+                            str,
+                            from: whitespaceStartedAt,
+                            to: i,
+                            ifLeftSideIncludesThisThenCropTightly: "\"'",
+                            ifRightSideIncludesThisThenCropTightly: "\"'",
+                        });
+                        finalIndexesToDelete.push(...calculatedRange);
+                        whitespaceStartedAt = null;
+                    }
+                    else if (whitespaceStartedAt) {
+                        whitespaceStartedAt = null;
+                    }
+                    // 3. set doNothingUntil to corresponding tails
+                    const matchedHeads = matchRightIncl(str, i, allHeads);
+                    const findings = opts.backend.find((headsTailsObj) => headsTailsObj.heads === matchedHeads);
+                    if (findings && findings.tails) {
+                        doNothingUntil = findings.tails;
+                    }
+                }
+                else if (characterSuitableForNames(chr)) {
+                    // 1. mark the class' starting index
+                    bodyClass.valueStart = i;
+                    // 2. maybe there was whitespace between quotes and this?, like class="  zzz"
+                    if (round === 1) {
+                        //
+                        if (bodyItsTheFirstClassOrId &&
+                            bodyClass.valuesStart !== null &&
+                            !str.slice(bodyClass.valuesStart, i).trim() &&
+                            bodyClass.valuesStart < i) {
+                            // 1. submit the whitespace characters in the range for deletion:
+                            finalIndexesToDelete.push(bodyClass.valuesStart, i);
+                            nonIndentationsWhitespaceLength += i - bodyClass.valuesStart;
+                            // 2. disable bodyItsTheFirstClassOrId flag so we won't waste resources on
+                            // further classes/id's:
+                            bodyItsTheFirstClassOrId = false;
+                        }
+                        else if (whitespaceStartedAt !== null &&
+                            whitespaceStartedAt < i - 1) {
+                            // maybe there's whitespace between classes?
+                            finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
+                            nonIndentationsWhitespaceLength += i - whitespaceStartedAt + 1;
+                        }
+                    }
+                }
+            }
+            // catch the ending of a class name
+            // ================
+            if (!doNothing &&
+                bodyClass.valueStart !== null &&
+                i > bodyClass.valueStart &&
+                (!characterSuitableForNames(chr) ||
+                    (allTails && matchRightIncl(str, i, allTails)))) {
+                // insurance against ESP tag joined with a class
+                // <table class="zzz-{{ loop.index }}">
+                if (allHeads && matchRightIncl(str, i, allHeads)) {
+                    bodyClass.valueStart = null;
+                    bodyClass = resetBodyClassOrId();
+                    const matchedHeads = matchRightIncl(str, i, allHeads);
+                    const findings = opts.backend.find((headsTailsObj) => headsTailsObj.heads === matchedHeads);
+                    if (findings && findings.tails) {
+                        doNothingUntil = findings.tails;
+                    }
+                }
+                else {
+                    // normal operations can continue
+                    const carvedClass = `${str.slice(bodyClass.valueStart, i)}`;
+                    // console.log(
+                    //   `2206 R1 = ${!!(allTails && matchRightIncl(str, i, allTails))}`
+                    // );
+                    // console.log(`2208 R2 = ${!!matchRightIncl(str, i, allTails)}`);
+                    // console.log(
+                    //   `2210 R3 = ${!!(allHeads && matchRightIncl(str, i, allHeads))}`
+                    // );
+                    if (round === 1) {
+                        bodyClassesArr.push(`.${carvedClass}`);
+                    }
+                    // round 2
+                    else if (bodyClass.valueStart != null &&
+                        bodyClassesToDelete.includes(carvedClass)) {
+                        // submit this class for deletion
+                        const expandedRange = expander({
+                            str,
+                            from: bodyClass.valueStart,
+                            to: i,
+                            ifLeftSideIncludesThisThenCropTightly: `"'`,
+                            ifRightSideIncludesThisThenCropTightly: `"'`,
+                            wipeAllWhitespaceOnLeft: true,
+                        });
+                        // precaution against too tight crop when backend markers are involved
+                        let whatToInsert = "";
+                        if (str[expandedRange[0] - 1] &&
+                            str[expandedRange[0] - 1].trim() &&
+                            str[expandedRange[1]] &&
+                            str[expandedRange[1]].trim() &&
+                            (allHeads || allTails) &&
+                            ((allHeads &&
+                                matchLeft(str, expandedRange[0], allTails)) ||
+                                (allTails &&
+                                    matchRightIncl(str, expandedRange[1], allHeads)))) {
+                            whatToInsert = " ";
+                        }
+                        finalIndexesToDelete.push(...expandedRange, whatToInsert);
+                    }
+                    else {
+                        // 1. turn off the bodyClassOrIdCanBeDeleted
+                        bodyClassOrIdCanBeDeleted = false;
+                        // 2. uglify?
+                        if (opts.uglify &&
+                            !(Array.isArray(opts.whitelist) &&
+                                opts.whitelist.length &&
+                                matcher([`.${carvedClass}`], opts.whitelist).length)) {
+                            finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(`.${carvedClass}`)].slice(1));
+                        }
+                    }
+                    bodyClass.valueStart = null;
+                }
+            }
+            // catch the ending of an id name
+            // ================
+            if (!doNothing &&
+                bodyId &&
+                bodyId.valueStart !== null &&
+                i > bodyId.valueStart &&
+                (!characterSuitableForNames(chr) ||
+                    (allTails && matchRightIncl(str, i, allTails)))) {
+                const carvedId = str.slice(bodyId.valueStart, i);
+                if (round === 1) {
+                    bodyIdsArr.push(`#${carvedId}`);
+                }
+                // round 2
+                else if (bodyId.valueStart != null &&
+                    bodyIdsToDelete.includes(carvedId)) {
+                    // submit this id for deletion
+                    const expandedRange = expander({
+                        str,
+                        from: bodyId.valueStart,
+                        to: i,
+                        ifRightSideIncludesThisThenCropTightly: `"'`,
+                        wipeAllWhitespaceOnLeft: true,
+                    });
+                    // precaution against too tight crop when backend markers are involved
+                    if (str[expandedRange[0] - 1] &&
+                        str[expandedRange[0] - 1].trim() &&
+                        str[expandedRange[1]] &&
+                        str[expandedRange[1]].trim() &&
+                        (allHeads || allTails) &&
+                        ((allHeads && matchLeft(str, expandedRange[0], allTails || [])) ||
+                            (allTails &&
+                                matchRightIncl(str, expandedRange[1], allHeads || [])))) {
+                        expandedRange[0] += 1;
+                    }
+                    finalIndexesToDelete.push(...expandedRange);
+                }
+                else {
+                    // 1. turn off the bodyClassOrIdCanBeDeleted
+                    bodyClassOrIdCanBeDeleted = false;
+                    // 2. uglify?
+                    if (opts.uglify &&
+                        !(Array.isArray(opts.whitelist) &&
+                            opts.whitelist.length &&
+                            matcher([`#${carvedId}`], opts.whitelist).length)) {
+                        finalIndexesToDelete.push(bodyId.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(`#${carvedId}`)].slice(1));
+                    }
+                }
+                bodyId.valueStart = null;
+            }
+            // body: stop the class attribute's recording if closing single/double quote encountered
+            // ================
+            // TODO: replace chr check against any quote with exact quote that was previously recorded on opening
+            if (!doNothing &&
+                bodyClass.valuesStart != null &&
+                ((!bodyClass.quoteless && (chr === "'" || chr === '"')) ||
+                    (bodyClass.quoteless && !characterSuitableForNames(str[i]))) &&
+                i >= bodyClass.valuesStart) {
+                if (i === bodyClass.valuesStart) {
+                    if (round === 1) {
+                        finalIndexesToDelete.push(...expander({
+                            str,
+                            from: bodyClass.nameStart,
+                            to: i + 1,
+                            ifRightSideIncludesThisThenCropTightly: "/>",
+                            wipeAllWhitespaceOnLeft: true,
+                        }));
+                    }
+                }
+                else {
+                    // 1. if it's second round and by now the delete-whole-class/id marker
+                    // is active (no skipped classes/id which had turn it off yet) then
+                    // delete this class or id completely:
+                    if (round === 2 && bodyClassOrIdCanBeDeleted) {
+                        // 1. submit the range of whole class/id for deletion
+                        // finalIndexesToDelete.push(bodyClass.valuesStart - 7, i + 1);
+                        const expandedRange = expander({
+                            str,
+                            from: bodyClass.valuesStart - 7,
+                            to: `'"`.includes(str[i]) ? i + 1 : i,
+                            ifRightSideIncludesThisThenCropTightly: "/>",
+                            wipeAllWhitespaceOnLeft: true,
+                        });
+                        // precaution against too tight crop when backend markers are involved
+                        let whatToInsert = "";
+                        if (str[expandedRange[0] - 1] &&
+                            str[expandedRange[0] - 1].trim() &&
+                            str[expandedRange[1]] &&
+                            str[expandedRange[1]].trim() &&
+                            !"/>".includes(str[expandedRange[1]])
+                        // (allHeads || allTails) &&
+                        // ((allHeads && matchLeft(str, expandedRange[0], allHeads)) ||
+                        //   (allTails && matchRightIncl(str, expandedRange[1], allTails)))
+                        ) {
+                            whatToInsert = " ";
+                        }
+                        finalIndexesToDelete.push(...expandedRange, whatToInsert);
+                    }
+                    // 3. tend the trailing whitespace, as in class="zzzz  "
+                    if (whitespaceStartedAt !== null) {
+                        finalIndexesToDelete.push(whitespaceStartedAt, i);
+                    }
+                }
+                // 2. reset the marker
+                bodyClass = resetBodyClassOrId();
+            }
+            // body: stop the id attribute's recording if closing single/double quote encountered
+            // ================
+            // TODO: replace chr check against any quote with exact quote that was previously
+            if (!doNothing &&
+                bodyId.valuesStart !== null &&
+                ((!bodyId.quoteless && (chr === "'" || chr === '"')) ||
+                    (bodyId.quoteless && !characterSuitableForNames(str[i]))) &&
+                i >= bodyId.valuesStart) {
+                if (i === bodyId.valuesStart) {
+                    if (round === 1) {
+                        finalIndexesToDelete.push(...expander({
+                            str,
+                            from: bodyId.nameStart,
+                            to: i + 1,
+                            ifRightSideIncludesThisThenCropTightly: "/>",
+                            wipeAllWhitespaceOnLeft: true,
+                        }));
+                    }
+                }
+                else {
+                    // not an empty id attribute
+                    // 1. if it's second round and by now the delete-whole-class/id marker
+                    // is active (no skipped classes/id which had turn it off yet) then
+                    // delete this class or id completely:
+                    if (round === 2 && bodyClassOrIdCanBeDeleted) {
+                        // 1. submit the range of whole class/id for deletion
+                        const expandedRange = expander({
+                            str,
+                            from: bodyId.valuesStart - 4,
+                            to: i + 1,
+                            ifRightSideIncludesThisThenCropTightly: "/>",
+                            wipeAllWhitespaceOnLeft: true,
+                        });
+                        // precaution against too tight crop when backend markers are involved
+                        let whatToInsert = "";
+                        if (str[expandedRange[0] - 1] &&
+                            str[expandedRange[0] - 1].trim() &&
+                            str[expandedRange[1]] &&
+                            str[expandedRange[1]].trim() &&
+                            !"/>".includes(str[expandedRange[1]])
+                        // (allHeads || allTails) &&
+                        // ((allHeads && matchLeft(str, expandedRange[0], allHeads)) ||
+                        //   (allTails && matchRightIncl(str, expandedRange[1], allTails)))
+                        ) {
+                            whatToInsert = " ";
+                        }
+                        finalIndexesToDelete.push(...expandedRange, whatToInsert);
+                    }
+                    // 3. tend the trailing whitespace, as in id="zzzz  "
+                    if (whitespaceStartedAt !== null) {
+                        finalIndexesToDelete.push(whitespaceStartedAt, i);
+                    }
+                }
+                // reset the marker in either case
+                bodyId = resetBodyClassOrId();
+            }
+            // body: catch the first letter within each id attribute
+            // ================
+            if (!doNothing &&
+                bodyId.valuesStart &&
+                i >= bodyId.valuesStart &&
+                bodyId.valueStart === null) {
+                if (allHeads && matchRightIncl(str, i, allHeads)) {
+                    // 1. activate do-nothing flag
+                    doNothing = true;
+                    // 2. mark this id as not to be removed (as a whole)
+                    bodyClassOrIdCanBeDeleted = false;
+                    if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
+                        const calculatedRange = expander({
+                            str,
+                            from: whitespaceStartedAt,
+                            to: i,
+                            ifLeftSideIncludesThisThenCropTightly: "\"'",
+                            ifRightSideIncludesThisThenCropTightly: "\"'",
+                        });
+                        finalIndexesToDelete.push(...calculatedRange);
+                        whitespaceStartedAt = null;
+                    }
+                    else if (whitespaceStartedAt) {
+                        whitespaceStartedAt = null;
+                    }
+                    // 3. set doNothingUntil to corresponding tails
+                    const matchedHeads = matchRightIncl(str, i, allHeads);
+                    const findings = opts.backend.find((headsTailsObj) => headsTailsObj.heads === matchedHeads);
+                    if (findings && findings.tails) {
+                        doNothingUntil = findings.tails;
+                    }
+                }
+                else if (characterSuitableForNames(chr)) {
+                    // 1. mark the id's starting index
+                    bodyId.valueStart = i;
+                    // 2. maybe there was whitespace between quotes and this?, like id="  zzz"
+                    if (round === 1) {
+                        //
+                        if (bodyItsTheFirstClassOrId &&
+                            bodyId.valuesStart !== null &&
+                            !str.slice(bodyId.valuesStart, i).trim() &&
+                            bodyId.valuesStart < i) {
+                            // 1. submit the whitespace characters in the range for deletion:
+                            finalIndexesToDelete.push(bodyId.valuesStart, i);
+                            nonIndentationsWhitespaceLength += i - bodyId.valuesStart;
+                            // 2. disable bodyItsTheFirstClassOrId flag so we won't waste resources on
+                            // further classes/id's:
+                            bodyItsTheFirstClassOrId = false;
+                        }
+                        else if (whitespaceStartedAt !== null &&
+                            whitespaceStartedAt < i - 1) {
+                            // maybe there's whitespace between classes?
+                            finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
+                            nonIndentationsWhitespaceLength += i - whitespaceStartedAt + 1;
+                        }
+                    }
+                }
+            }
+            // body: catch the start and end of HTML comments
+            // ================
+            if (!doNothing && round === 1) {
+                // 1. catch the HTML comments' cut off point to check for blocking
+                // characters (mso, IE, whatever given in the
+                // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains)
+                // ==================================
+                if (commentStartedAt !== null &&
+                    commentStartedAt < i &&
+                    str[i] === ">" &&
+                    !usedOnce) {
+                    if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains &&
+                        Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) &&
+                        opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length &&
+                        opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some((val) => val.trim() &&
+                            str
+                                .slice(commentStartedAt, i)
+                                .toLowerCase()
+                                .includes(val))) {
+                        canDelete = false;
+                    }
+                    usedOnce = true;
+                }
+                // 2. catch the HTML comments' ending
+                // ==================================
+                if (commentStartedAt !== null && str[i] === ">") {
+                    // 1. catch healthy comment ending
+                    if (!bogusHTMLComment && str[i - 1] === "-" && str[i - 2] === "-") {
+                        // not bogus
+                        const calculatedRange = expander({
+                            str,
+                            from: commentStartedAt,
+                            to: i + 1,
+                            wipeAllWhitespaceOnLeft: true,
+                            addSingleSpaceToPreventAccidentalConcatenation: true,
+                        });
+                        if (opts.removeHTMLComments && canDelete) {
+                            // Instead of finalIndexesToDelete.push(i, y + 3); use expander()
+                            // so that we manage the whitespace outwards properly:
+                            finalIndexesToDelete.push(...calculatedRange);
+                        }
+                        commentsLength += calculatedRange[1] - calculatedRange[0];
+                        // reset the markers:
+                        commentStartedAt = null;
+                        bogusHTMLComment = undefined;
+                    }
+                    else if (bogusHTMLComment) {
+                        const calculatedRange = expander({
+                            str,
+                            from: commentStartedAt,
+                            to: i + 1,
+                            wipeAllWhitespaceOnLeft: true,
+                            addSingleSpaceToPreventAccidentalConcatenation: true,
+                        });
+                        if (opts.removeHTMLComments && canDelete) {
+                            finalIndexesToDelete.push(...calculatedRange);
+                        }
+                        commentsLength += calculatedRange[1] - calculatedRange[0];
+                        // reset the markers:
+                        commentStartedAt = null;
+                        bogusHTMLComment = undefined;
+                    }
+                }
+                // 3. catch the HTML comments' starting
+                // ====================================
+                if (opts.removeHTMLComments &&
+                    commentStartedAt === null &&
+                    str[i] === "<" &&
+                    str[i + 1] === "!") {
+                    if ((!allHeads ||
+                        (Array.isArray(allHeads) &&
+                            allHeads.length &&
+                            !allHeads.includes("<!"))) &&
+                        (!allTails ||
+                            (Array.isArray(allTails) &&
+                                allTails.length &&
+                                !allTails.includes("<!")))) {
+                        // 3.1. if there's no DOCTYPE on the right, mark the comment's start,
+                        // except in cases when it's been whitelisted (Outlook conditionals for example):
+                        if (!matchRight(str, i + 1, "doctype", {
+                            i: true,
+                            trimBeforeMatching: true,
+                        }) &&
+                            !(str[i + 2] === "-" &&
+                                str[i + 3] === "-" &&
+                                Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) &&
+                                opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length &&
+                                matchRight(str, i + 3, opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains, {
+                                    trimBeforeMatching: true,
+                                }))) {
+                            commentStartedAt = i;
+                            usedOnce = false;
+                            canDelete = true;
+                        }
+                        // 3.2. detect, is it healthy or bogus comment (bogusHTMLComment = true/false)
+                        bogusHTMLComment = !(str[i + 2] === "-" && str[i + 3] === "-");
+                    }
+                    // if the comment beginning rule was not triggered, mark it as
+                    // would-have-been comment anyway because we need to cater empty
+                    // comment chunks ("<!-- -->") which follow conditional not-Outlook
+                    // comment chunks and without this, there's no way to know that
+                    // regular comment chunk was in front.
+                    if (commentStartedAt !== i) {
+                        commentNearlyStartedAt = i;
+                    }
+                }
+            }
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //
+            //                       RULES AT THE BOTTOM
+            //
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            //                                S
+            // reduce curliesDepth on each closing curlie met
+            // ================
+            if (chr === "}" && curliesDepth) {
+                curliesDepth -= 1;
+            }
+            // pinpoint opening curly braces (in head styles), but not @media's.
+            // ================
+            if (!doNothing && chr === "{" && checkingInsideCurlyBraces) {
+                if (!insideCurlyBraces) {
+                    // 1. flip the flag
+                    insideCurlyBraces = true;
+                    // 2. if the whitespace was in front and it contained line breaks, wipe
+                    // that whitespace:
+                    if (whitespaceStartedAt !== null &&
+                        (str.slice(whitespaceStartedAt, i).includes("\n") ||
+                            str.slice(whitespaceStartedAt, i).includes("\r"))) {
+                        finalIndexesToDelete.push(whitespaceStartedAt, i);
+                    }
+                }
+                else {
+                    curliesDepth += 1;
+                }
+            }
+            // catch the whitespace
+            if (!doNothing) {
+                if (!str[i].trim()) {
+                    if (whitespaceStartedAt === null) {
+                        whitespaceStartedAt = i;
+                        // console.log(
+                        //   `2974 SET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = ${whitespaceStartedAt}`
+                        // );
+                    }
+                }
+                else if (whitespaceStartedAt !== null) {
+                    // reset the marker
+                    whitespaceStartedAt = null;
+                }
+            }
+            // query the ranges clone from round 1, get the first range,
+            // if current index is at the "start" index of that range,
+            // offset the current index to its "to" index. This way,
+            // in round 2 we "jump" over what was submitted for deletion
+            // in round 1.
+            if (!doNothing &&
+                round === 2 &&
+                Array.isArray(round1RangesClone) &&
+                round1RangesClone.length &&
+                i === round1RangesClone[0][0]) {
+                // offset index, essentially "jumping over" what was submitted for deletion in round 1
+                const temp = round1RangesClone.shift();
+                if (temp && temp[1] - 1 > i) {
+                    i = temp[1] - 1;
+                }
+                // if (doNothing) {
+                //   doNothing = false;
+                //   console.log(
+                //     `3015 SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = false`
+                //   );
+                // }
+                // if (ruleChunkStartedAt !== null) {
+                //   ruleChunkStartedAt = i + 1;
+                //   console.log(
+                //     `3021 SET \u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m = ${ruleChunkStartedAt}`
+                //   );
+                // }
+                // if (selectorChunkStartedAt !== null) {
+                //   selectorChunkStartedAt = i + 1;
+                //   console.log(
+                //     `3027 SET \u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m = ${selectorChunkStartedAt}`
+                //   );
+                // }
+                continue;
+            }
+            // catch would-have-been comment endings
+            if (commentNearlyStartedAt !== null && str[i] === ">") {
+                // 1. reset the marker
+                commentNearlyStartedAt = null;
+                // 2. check, is there empty comment block on the right which sometimes
+                // follows outlook conditionals
+                let temp = 0;
+                if (opts.removeHTMLComments &&
+                    Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) &&
+                    opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length &&
+                    (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some((val) => val.includes("if")) ||
+                        opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some((val) => val.includes("mso")) ||
+                        opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some((val) => val.includes("ie"))) &&
+                    matchRight(str, i, "<!--", {
+                        trimBeforeMatching: true,
+                        cb: (_char, _theRemainderOfTheString, index) => {
+                            temp = index;
+                            return true;
+                        },
+                    })) {
+                    if (matchRight(str, temp - 1, "-->", {
+                        trimBeforeMatching: true,
+                        cb: (_char, _theRemainderOfTheString, index) => {
+                            temp = index;
+                            return true;
+                        },
+                    })) ;
+                    if (typeof temp === "number") {
+                        i = temp - 1;
+                    }
+                    continue;
+                }
+            }
+            // console.log(`styleStartedAt = ${styleStartedAt}`);
+        }
+        //
+        //
+        //
+        //
+        //
+        //
+        //              F R U I T S   O F   T H E   L A B O U R
+        //
+        //
+        //
+        //
+        //
+        //
+        if (round === 1) {
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            allClassesAndIdsWithinBody = lodash_uniq(bodyClassesArr.concat(bodyIdsArr));
+            // extract all classes or id's from `headSelectorsArr` and get count of each.
+            // That's so we can later exclude sandwitched classes. Each time "collateral"
+            // legit, but sandwitched with false-one class gets deleted, we keep count, and
+            // later compare totals with these below.
+            // If it turns out that a class was in both head and body, but it was sandwitched
+            // with unused classes and removed as collateral, we need to remove it from body too.
+            // starting point is the selectors, removed from head during first stage.
+            headSelectorsArr.forEach((el) => {
+                extract(el).res.forEach((selector) => {
+                    if (Object.prototype.hasOwnProperty.call(headSelectorsCount, selector)) {
+                        headSelectorsCount[selector] += 1;
+                    }
+                    else {
+                        headSelectorsCount[selector] = 1;
+                    }
+                });
+            });
+            // create a working copy of `headSelectorsCount` which we'll mutate, subtracting
+            // each deleted class/id:
+            headSelectorsCountClone = { ...headSelectorsCount };
+            // compile list of to-be-terminated
+            // ================
+            allClassesAndIdsWithinHead = lodash_uniq(headSelectorsArr.reduce((arr, el) => arr.concat(extract(el).res), []));
+            countBeforeCleaning = allClassesAndIdsWithinHead.length;
+            // to avoid false positives, let's apply two cycles when removing unused classes/id's from head:
+            // ---------------------------------------
+            // TWO-CYCLE UNUSED CSS IDENTIFICATION:
+            // ---------------------------------------
+            // cycle #1 - remove comparing separate classes/id's from body against
+            // potentially sandwitched lumps from head. Let's see what's left afterwards.
+            // ================
+            const preppedHeadSelectorsArr = Array.from(headSelectorsArr);
+            let deletedFromHeadArr = [];
+            for (let y = 0, len2 = preppedHeadSelectorsArr.length; y < len2; y++) {
+                totalCounter += 1;
+                let temp;
+                // intentional loose comparison !=, that's existy():
+                if (preppedHeadSelectorsArr[y] != null) {
+                    temp = extract(preppedHeadSelectorsArr[y]).res;
+                }
+                if (temp &&
+                    !temp.every((el) => allClassesAndIdsWithinBody.includes(el))) {
+                    deletedFromHeadArr.push(...extract(preppedHeadSelectorsArr[y]).res);
+                    preppedHeadSelectorsArr.splice(y, 1);
+                    y -= 1;
+                    len2 -= 1;
+                }
+            }
+            deletedFromHeadArr = lodash_uniq(pull(deletedFromHeadArr, opts.whitelist));
+            let preppedAllClassesAndIdsWithinHead;
+            if (preppedHeadSelectorsArr && preppedHeadSelectorsArr.length) {
+                preppedAllClassesAndIdsWithinHead = preppedHeadSelectorsArr.reduce((acc, curr) => acc.concat(extract(curr).res), []);
+            }
+            else {
+                preppedAllClassesAndIdsWithinHead = [];
+            }
+            // console.log(`\n* preppedAllClassesAndIdsWithinHead = ${JSON.stringify(preppedAllClassesAndIdsWithinHead, null, 4)}`)
+            // cycle #2 - now treat remaining lumps as definite sources of
+            // "what classes or id's are present in the head"
+            // use "preppedAllClassesAndIdsWithinHead" as a head selector reference when comparing
+            // against the body classes/id's.
+            // ================
+            headCssToDelete = pull(lodash_pullall(lodash_uniq(Array.from(allClassesAndIdsWithinHead)), bodyClassesArr.concat(bodyIdsArr)), opts.whitelist);
+            bodyCssToDelete = lodash_uniq(pull(lodash_pullall(bodyClassesArr.concat(bodyIdsArr), preppedAllClassesAndIdsWithinHead), opts.whitelist));
+            // now that we know final to-be-deleted selectors list, compare them with `deletedFromHeadArr`
+            // and fill any missing CSS in `headCssToDelete`:
+            headCssToDelete = lodash_uniq(headCssToDelete.concat(lodash_intersection(deletedFromHeadArr, bodyCssToDelete)));
+            bodyClassesToDelete = bodyCssToDelete
+                .filter((s) => s.startsWith("."))
+                .map((s) => s.slice(1));
+            bodyIdsToDelete = bodyCssToDelete
+                .filter((s) => s.startsWith("#"))
+                .map((s) => s.slice(1));
+            allClassesAndIdsThatWereCompletelyDeletedFromHead = Object.keys(headSelectorsCountClone).filter((singleSelector) => headSelectorsCountClone[singleSelector] < 1);
+            // at this point, if any classes in `headSelectorsCountClone` have zero counters
+            // that means those have all been deleted from head.
+            bodyClassesToDelete = lodash_uniq(bodyClassesToDelete.concat(lodash_intersection(pull(allClassesAndIdsWithinBody, opts.whitelist), allClassesAndIdsThatWereCompletelyDeletedFromHead)
+                .filter((val) => val[0] === ".") // filter out all classes
+                .map((val) => val.slice(1)))); // remove dots from them
+            const allClassesAndIdsWithinBodyThatWereWhitelisted = matcher(allClassesAndIdsWithinBody, opts.whitelist);
+            // update `bodyCssToDelete` with sandwitched classes, because will be
+            // used in reporting
+            bodyCssToDelete = lodash_uniq(bodyCssToDelete.concat(bodyClassesToDelete.map((val) => `.${val}`), bodyIdsToDelete.map((val) => `#${val}`)));
+            allClassesAndIdsWithinHeadFinal = lodash_pullall(lodash_pullall(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
+            if (Array.isArray(allClassesAndIdsWithinBodyThatWereWhitelisted) &&
+                allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
+                allClassesAndIdsWithinBodyThatWereWhitelisted.forEach((classOrId) => {
+                    if (!allClassesAndIdsWithinHeadFinal.includes(classOrId)) {
+                        allClassesAndIdsWithinHeadFinal.push(classOrId);
+                    }
+                });
+            }
+            if (opts.uglify) {
+                allClassesAndIdsWithinHeadFinalUglified = uglifyArr(allClassesAndIdsWithinHeadFinal);
+            }
+            countAfterCleaning = allClassesAndIdsWithinHeadFinal.length;
+            uglified = opts.uglify
+                ? allClassesAndIdsWithinHeadFinal
+                    .map((name, id) => [
+                    name,
+                    allClassesAndIdsWithinHeadFinalUglified[id],
+                ])
+                    .filter((arr) => !opts.whitelist.some((whitelistVal) => matcher.isMatch(arr[0], whitelistVal)))
+                : null;
+            if (finalIndexesToDelete.current()) {
+                round1RangesClone = Array.from(finalIndexesToDelete.current() || []);
+            }
+            else {
+                round1RangesClone = null;
+            }
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+        }
+    }
+    //                              ^
+    //                              |
+    //                              |
+    //                              |
+    //                              |
+    //                              |
+    //                              |
+    //                              |
+    //                              |
+    //                              |
+    //                     inned FOR loop ends
+    //
+    //
+    //
+    //                   F I N A L   P R O C E S S I N G
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // actual deletion/insertion:
+    // ==========================
+    finalIndexesToDelete.push(lineBreaksToDelete.current());
+    if (str.length && finalIndexesToDelete.current()) {
+        str = rApply(str, finalIndexesToDelete.current());
+        finalIndexesToDelete.wipe();
+    }
+    const startingPercentageDone = opts.reportProgressFuncTo -
+        (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
+            leavePercForLastStage;
+    if (opts.reportProgressFunc && len >= 2000) {
+        // opts.reportProgressFunc(95);
+        currentPercentageDone = Math.floor(startingPercentageDone +
+            (opts.reportProgressFuncTo - startingPercentageDone) / 5 // * 1
+        );
+        if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+        }
+    }
+    // final fixing:
+    // =============
+    // remove empty media queries:
+    while (regexEmptyMediaQuery.test(str) ||
+        regexEmptyUnclosedMediaQuery.test(str)) {
+        str = str.replace(regexEmptyMediaQuery, "");
+        str = str.replace(regexEmptyUnclosedMediaQuery, "");
+        totalCounter += str.length;
+    }
+    if (opts.reportProgressFunc && len >= 2000) {
+        // opts.reportProgressFunc(96);
+        currentPercentageDone = Math.floor(startingPercentageDone +
+            ((opts.reportProgressFuncTo - startingPercentageDone) / 5) * 2);
+        if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+        }
+    }
+    // remove empty style tags:
+    str = str.replace(regexEmptyStyleTag, "\n");
+    totalCounter += str.length;
+    if (opts.reportProgressFunc && len >= 2000) {
+        // opts.reportProgressFunc(97);
+        currentPercentageDone = Math.floor(startingPercentageDone +
+            ((opts.reportProgressFuncTo - startingPercentageDone) / 5) * 3);
+        if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+        }
+    }
+    // remove empty Outlook conditional comments:
+    let tempLen = str.length;
+    str = str.replace(emptyCondCommentRegex(), "");
+    totalCounter += str.length;
+    if (tempLen !== str.length) {
+        commentsLength += str.length - tempLen;
+    }
+    if (opts.reportProgressFunc && len >= 2000) {
+        // opts.reportProgressFunc(98);
+        currentPercentageDone = Math.floor(startingPercentageDone +
+            ((opts.reportProgressFuncTo - startingPercentageDone) / 5) * 4);
+        if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+        }
+    }
+    // minify, limit the line length
+    str = crush(str, {
+        removeLineBreaks: false,
+        removeIndentations: false,
+        removeHTMLComments: false,
+        removeCSSComments: false,
+        lineLengthLimit: 500,
+    }).result;
+    tempLen = str.length;
+    if (tempLen !== str.length) {
+        nonIndentationsWhitespaceLength += str.length - tempLen;
+    }
+    totalCounter += str.length;
+    if (opts.reportProgressFunc && len >= 2000) {
+        // opts.reportProgressFunc(99);
+        currentPercentageDone = Math.floor(startingPercentageDone +
+            (opts.reportProgressFuncTo - startingPercentageDone));
+        if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+        }
+    }
+    if (str.length) {
+        if ((!str[0].trim() || !str[str.length - 1].trim()) &&
+            str.length !== str.trim().length) {
+            nonIndentationsWhitespaceLength += str.length - str.trim().length;
+        }
+        str = str.trimStart();
+    }
+    // remove first character, space, inside classes/id's - it might
+    // be a leftover after class/id removal
+    str = str.replace(/ ((class|id)=["']) /g, " $1");
+    return {
+        log: {
+            timeTakenInMilliseconds: Date.now() - start,
+            traversedTotalCharacters: totalCounter,
+            traversedTimesInputLength: len
+                ? Math.round((totalCounter / len) * 100) / 100
+                : 0,
+            originalLength: len,
+            cleanedLength: str.length,
+            bytesSaved: Math.max(len - str.length, 0),
+            percentageReducedOfOriginal: len
+                ? Math.round((Math.max(len - str.length, 0) * 100) / len)
+                : 0,
+            nonIndentationsWhitespaceLength: Math.max(nonIndentationsWhitespaceLength - trailingLinebreakLengthCorrection, 0),
+            nonIndentationsTakeUpPercentageOfOriginal: len &&
+                Math.max(nonIndentationsWhitespaceLength - trailingLinebreakLengthCorrection, 0)
+                ? Math.round((Math.max(nonIndentationsWhitespaceLength, 0) * 100) / len)
+                : 0,
+            commentsLength,
+            commentsTakeUpPercentageOfOriginal: len && commentsLength ? Math.round((commentsLength * 100) / len) : 0,
+            uglified,
+        },
+        result: str,
+        countAfterCleaning,
+        countBeforeCleaning,
+        allInHead: allClassesAndIdsWithinHead.sort(),
+        allInBody: allClassesAndIdsWithinBody.sort(),
+        deletedFromHead: headCssToDelete.sort(),
+        deletedFromBody: bodyCssToDelete.sort(),
+    };
+}
+
+exports.comb = comb;
+exports.defaults = defaults;
+exports.version = version;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

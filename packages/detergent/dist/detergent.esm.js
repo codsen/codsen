@@ -1,53 +1,959 @@
 /**
- * @name detergent
- * @fileoverview Extracts, cleans and encodes text
- * @version 7.0.12
- * @author Roy Revelt, Codsen Ltd
- * @license MIT
- * {@link https://codsen.com/os/detergent/}
+ * detergent
+ * Extracts, cleans and encodes text
+ * Version: 7.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/detergent/
  */
 
-import{left as L,right as R,leftStopAtNewLines as z,chompLeft as D}from"string-left-right";import{fixEnt as ue}from"string-fix-broken-named-entities";import{removeWidows as ie}from"string-remove-widows";import{rProcessOutside as ae}from"ranges-process-outside";import{collapse as ne}from"string-collapse-white-space";import{trimSpaces as me}from"string-trim-spaces-only";import{stripHtml as te}from"string-strip-html";import{rInvert as be}from"ranges-invert";import{rApply as N}from"ranges-apply";import pe from"ansi-regex";import{Ranges as le}from"ranges-push";import he from"he";var G="7.0.12";import{notEmailFriendly as A}from"html-entities-not-email-friendly";import{allNamedEntities as $e}from"all-named-html-entities";import{expander as ce}from"string-range-expander";import{convertOne as H}from"string-apostrophes";import M from"he";import{left as C,right as T,leftStopAtNewLines as k,rightStopAtNewLines as oe}from"string-left-right";import K from"he";var Y={fixBrokenEntities:!0,removeWidows:!0,convertEntities:!0,convertDashes:!0,convertApostrophes:!0,replaceLineBreaks:!0,removeLineBreaks:!1,useXHTML:!0,dontEncodeNonLatin:!0,addMissingSpaces:!0,convertDotsToEllipsis:!0,stripHtml:!0,eol:"lf",stripHtmlButIgnoreTags:["b","strong","i","em","br","sup"],stripHtmlAddNewLine:["li","/ul"],cb:null},O="\u2018",B="\u2019",W="\u201C",X="\u201D",_=[".",",",";","!","?"],Z="\u2013",j="\u2014",S="\xA0",q="\u2026";var V=/. ./g,re=[[0,880],[887,890],[894,900],[906,908],[908,910],[929,931],[1319,1329],[1366,1369],[1375,1377],[1415,1417],[1418,1423],[1423,1425],[1479,1488],[1514,1520],[1524,1536],[1540,1542],[1563,1566],[1805,1807],[1866,1869],[1969,1984],[2042,2048],[2093,2096],[2110,2112],[2139,2142],[2142,2208],[2208,2210],[2220,2276],[2302,2304],[2423,2425],[2431,2433],[2435,2437],[2444,2447],[2448,2451],[2472,2474],[2480,2482],[2482,2486],[2489,2492],[2500,2503],[2504,2507],[2510,2519],[2519,2524],[2525,2527],[2531,2534],[2555,2561],[2563,2565],[2570,2575],[2576,2579],[2600,2602],[2608,2610],[2611,2613],[2614,2616],[2617,2620],[2620,2622],[2626,2631],[2632,2635],[2637,2641],[2641,2649],[2652,2654],[2654,2662],[2677,2689],[2691,2693],[2701,2703],[2705,2707],[2728,2730],[2736,2738],[2739,2741],[2745,2748],[2757,2759],[2761,2763],[2765,2768],[2768,2784],[2787,2790],[2801,2817],[2819,2821],[2828,2831],[2832,2835],[2856,2858],[2864,2866],[2867,2869],[2873,2876],[2884,2887],[2888,2891],[2893,2902],[2903,2908],[2909,2911],[2915,2918],[2935,2946],[2947,2949],[2954,2958],[2960,2962],[2965,2969],[2970,2972],[2972,2974],[2975,2979],[2980,2984],[2986,2990],[3001,3006],[3010,3014],[3016,3018],[3021,3024],[3024,3031],[3031,3046],[3066,3073],[3075,3077],[3084,3086],[3088,3090],[3112,3114],[3123,3125],[3129,3133],[3140,3142],[3144,3146],[3149,3157],[3158,3160],[3161,3168],[3171,3174],[3183,3192],[3199,3202],[3203,3205],[3212,3214],[3216,3218],[3240,3242],[3251,3253],[3257,3260],[3268,3270],[3272,3274],[3277,3285],[3286,3294],[3294,3296],[3299,3302],[3311,3313],[3314,3330],[3331,3333],[3340,3342],[3344,3346],[3386,3389],[3396,3398],[3400,3402],[3406,3415],[3415,3424],[3427,3430],[3445,3449],[3455,3458],[3459,3461],[3478,3482],[3505,3507],[3515,3517],[3517,3520],[3526,3530],[3530,3535],[3540,3542],[3542,3544],[3551,3570],[3572,3585],[3642,3647],[3675,3713],[3714,3716],[3716,3719],[3720,3722],[3722,3725],[3725,3732],[3735,3737],[3743,3745],[3747,3749],[3749,3751],[3751,3754],[3755,3757],[3769,3771],[3773,3776],[3780,3782],[3782,3784],[3789,3792],[3801,3804],[3807,3840],[3911,3913],[3948,3953],[3991,3993],[4028,4030],[4044,4046],[4058,4096],[4293,4295],[4295,4301],[4301,4304],[4680,4682],[4685,4688],[4694,4696],[4696,4698],[4701,4704],[4744,4746],[4749,4752],[4784,4786],[4789,4792],[4798,4800],[4800,4802],[4805,4808],[4822,4824],[4880,4882],[4885,4888],[4954,4957],[4988,4992],[5017,5024],[5108,5120],[5788,5792],[5872,5888],[5900,5902],[5908,5920],[5942,5952],[5971,5984],[5996,5998],[6e3,6002],[6003,6016],[6109,6112],[6121,6128],[6137,6144],[6158,6160],[6169,6176],[6263,6272],[6314,7936],[7957,7960],[7965,7968],[8005,8008],[8013,8016],[8023,8025],[8025,8027],[8027,8029],[8029,8031],[8061,8064],[8116,8118],[8132,8134],[8147,8150],[8155,8157],[8175,8178],[8180,8182],[8190,11904],[11929,11931],[12019,12032],[12245,12288],[12351,12353],[12438,12441],[12543,12549],[12589,12593],[12686,12688],[12730,12736],[12771,12784],[12830,12832],[13054,13056],[13312,19893],[19893,19904],[40869,40908],[40908,40960],[42124,42128],[42182,42192],[42539,42560],[42647,42655],[42743,42752],[42894,42896],[42899,42912],[42922,43e3],[43051,43056],[43065,43072],[43127,43136],[43204,43214],[43225,43232],[43259,43264],[43347,43359],[43388,43392],[43469,43471],[43481,43486],[43487,43520],[43574,43584],[43597,43600],[43609,43612],[43643,43648],[43714,43739],[43766,43777],[43782,43785],[43790,43793],[43798,43808],[43814,43816],[43822,43968],[44013,44016],[44025,44032],[55203,55216],[55238,55243],[55291,63744],[64109,64112],[64217,64256],[64262,64275],[64279,64285],[64310,64312],[64316,64318],[64318,64320],[64321,64323],[64324,64326],[64449,64467],[64831,64848],[64911,64914],[64967,65008],[65021,65136],[65140,65142],[65276,66560],[66717,66720],[66729,67584],[67589,67592],[67592,67594],[67637,67639],[67640,67644],[67644,67647],[67669,67671],[67679,67840],[67867,67871],[67897,67903],[67903,67968],[68023,68030],[68031,68096],[68099,68101],[68102,68108],[68115,68117],[68119,68121],[68147,68152],[68154,68159],[68167,68176],[68184,68192],[68223,68352],[68405,68409],[68437,68440],[68466,68472],[68479,68608],[68680,69216],[69246,69632],[69709,69714],[69743,69760],[69825,69840],[69864,69872],[69881,69888],[69940,69942],[69955,70016],[70088,70096],[70105,71296],[71351,71360],[71369,73728],[74606,74752],[74850,74864],[74867,77824],[78894,92160],[92728,93952],[94020,94032],[94078,94095],[94111,110592],[110593,131072],[131072,173782],[173782,173824],[173824,177972],[177972,177984],[177984,178205],[178205,194560]],F=["area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"];function w(e,$){return $?Array.from(e).map(r=>r.charCodeAt(0)<880||re.some(o=>r.charCodeAt(0)>o[0]&&r.charCodeAt(0)<o[1])?K.encode(r,{useNamedReferences:!0}):r).join(""):K.encode(e,{useNamedReferences:!0})}function p(e){return typeof e=="string"&&e.charCodeAt(0)>=48&&e.charCodeAt(0)<=57||Number.isInteger(e)}function E(e){return typeof e=="string"&&e.length===1&&e.toUpperCase()!==e.toLowerCase()}function y(e){return e==='"'||e==="'"||e===O||e===B||e===W||e===X}function P(e){return E(e)?e===e.toLowerCase()&&e!==e.toUpperCase():!1}function Q(e){return E(e)?e===e.toUpperCase()&&e!==e.toLowerCase():!1}function ee(e){return typeof e=="string"&&e.length&&e.endsWith("/")?e.slice(0,-1).trim():e}function se(e,$,r,o,s,h,a,f,t,b){let J=e.length;if(""+36+39+35+`str[i] at ${o} = ${e[o].trim()?e.slice(o,s):JSON.stringify(e[o],null,0)}`+39+`[${90}m (${e.slice(o,s).split("").map(u=>`#${u.charCodeAt(0)}`).join("; ")}); i = ${o}; y = ${s}[${39}m`+36+39,""+`[${90}m${`state = ${JSON.stringify(f,null,4)}`}[${39}m`,/[\uD800-\uDFFF]/g.test(e[o])&&!(e.charCodeAt(o+1)>=56320&&e.charCodeAt(o+1)<=57343||e.charCodeAt(o-1)>=55296&&e.charCodeAt(o-1)<=56319))r.push(o,o+1),""+`[${32}mPUSH[${39}m`+o+(o+1);else if(s-o>1)t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,t.dontEncodeNonLatin=t.dontEncodeNonLatin||w(e.slice(o,s),!0)!==w(e.slice(o,s),!1),""+`[${32}mSET[${39}m`+t.dontEncodeNonLatin,$.convertEntities&&r.push(o,s,w(e.slice(o,s),$.dontEncodeNonLatin));else{let u=e[o].charCodeAt(0);if(u<127){if(""+`[${90}mcharacter within ASCII[${39}m`,u<32)if(u<9)u===3?(""+`[${32}mPUSH[${39}m`+o+s+($.removeLineBreaks?" ":"\\n"),r.push(o,s,$.removeLineBreaks?" ":$.replaceLineBreaks?`<br${$.useXHTML?"/":""}>
-`:`
-`),t.removeLineBreaks=!0,""+`[${32}mSET[${39}m`+t.removeLineBreaks,$.removeLineBreaks||(t.replaceLineBreaks=!0,""+`[${32}mSET[${39}m`+t.replaceLineBreaks,$.replaceLineBreaks&&(t.useXHTML=!0,""+`[${32}mSET[${39}m`+t.useXHTML))):(""+`[${32}mPUSH[${39}m`+o+s,r.push(o,s));else if(u===9)""+`[${32}mPUSH[${39}m`+o+s,r.push(o,s," ");else if(u===10){if(t.removeLineBreaks||(t.removeLineBreaks=!0,""+`[${32}mapplicableOpts.removeLineBreaks[${39}m`+t.removeLineBreaks),!$.removeLineBreaks&&(!a||Array.isArray(a)&&!a.some(l=>C(e,o)===l))&&($.replaceLineBreaks?(t.useXHTML=!0,t.replaceLineBreaks=!0,""+`[${32}mapplicableOpts.useXHTML[${39}m`+t.useXHTML+`[${32}mapplicableOpts.replaceLineBreaks[${39}m`+t.replaceLineBreaks):$.replaceLineBreaks||(t.replaceLineBreaks=!0,""+`[${32}mapplicableOpts.replaceLineBreaks[${39}m`+t.replaceLineBreaks)),$.removeLineBreaks||(t.eol=!0,""+`[${32}mapplicableOpts.eol[${39}m`+t.eol),$.removeLineBreaks){let l=" ";_.includes(e[T(e,o)])&&(l=""),""+`[${32}mPUSH[${39}m`+o+s+JSON.stringify(l,null,0),r.push(o,s,l)}else if($.replaceLineBreaks&&(!a||Array.isArray(a)&&!a.some(l=>C(e,o)===l))){let l=o;e[o-1]===" "&&typeof k(e,o)=="number"&&(l=k(e,o)+1),r.push(l,o+(b==="\r"?1:0),`<br${$.useXHTML?"/":""}>${b===`\r
-`?"\r":""}${b==="\r"?"\r":""}`),""+`[${32}mPUSH[${39}m`+l+(o+(b==="\r"?1:0))+`<br${$.useXHTML?"/":""}>${JSON.stringify(b===`\r
-`?"\r":"",null,4)}${JSON.stringify(b==="\r"?"\r":"",null,4)}`}else{if(e[k(e,o)]&&e[k(e,o)].trim()){let i=k(e,o);typeof i=="number"&&i<o-1&&(""+`[${32}mPUSH[${39}m`+(i+1)+o,r.push(i+1,o,`${b===`\r
-`?"\r":""}`))}b===`\r
-`&&e[o-1]!=="\r"?(r.push(o,o,"\r"),""+`[${32}mPUSH[${39}m`+o+o):b==="\r"&&(r.push(o,o+1),""+`[${32}mPUSH[${39}m`+o+(o+1));let l=oe(e,o);l&&e[l].trim()&&l>o+1&&(""+`[${32}mPUSH[${39}m`+(o+1)+l,r.push(o+1,l))}f.onUrlCurrently=!1,""+`[${33}mstate.onUrlCurrently[${39}m`}else if(u===11||u===12)t.removeLineBreaks=!0,""+`[${32}mSET[${39}m`+t.removeLineBreaks,r.push(o,s,$.removeLineBreaks?" ":`
-`),""+`[${32}mPUSH[${39}m`+o+s+($.removeLineBreaks?" ":"\\n");else if(u===13)if(t.removeLineBreaks||(t.removeLineBreaks=!0,""+`[${32}mapplicableOpts.removeLineBreaks[${39}m`+t.removeLineBreaks),!$.removeLineBreaks&&(!a||Array.isArray(a)&&!a.some(l=>C(e,o)===l))&&($.replaceLineBreaks&&!$.removeLineBreaks?(t.useXHTML=!0,t.replaceLineBreaks=!0,""+`[${32}mapplicableOpts.useXHTML[${39}m`+t.useXHTML+`[${32}mapplicableOpts.replaceLineBreaks[${39}m`+t.replaceLineBreaks):$.replaceLineBreaks||(t.replaceLineBreaks=!0,""+`[${32}mapplicableOpts.replaceLineBreaks[${39}m`+t.replaceLineBreaks)),$.removeLineBreaks||(t.eol=!0,""+`[${32}mapplicableOpts.eol[${39}m`+t.eol),$.removeLineBreaks){let l=" ";(_.includes(e[T(e,o)])||[`
-`,"\r"].includes(e[o+1]))&&(l=""),r.push(o,s,l),""+`[${32}mPUSH[${39}m`+o+s+JSON.stringify(l,null,0)}else if($.replaceLineBreaks&&(!a||Array.isArray(a)&&!a.some(l=>C(e,o)===l))){let l=o;e[o-1]===" "&&typeof k(e,o)=="number"&&(l=k(e,o)+1);let i=o,m="";e[o+1]!==`
-`&&(b===`
-`?m=`
-`:b===`\r
-`&&(r.push(o+1,o+1,`
-`),""+`[${32}mPUSH[${39}m`+(o+1)+(o+1))),b===`
-`?i=o+1:b==="\r"&&e[o+1]===`
-`&&(r.push(o+1,o+2),""+`[${32}mPUSH[${39}m`+(o+1)+(o+2)),r.push(l,i,`<br${$.useXHTML?"/":""}>${m}`),""+`[${32}mPUSH[${39}m`+l+i+JSON.stringify(m,null,4),e[o+1]===`
-`&&h(1)}else{b===`
-`?(r.push(o,o+1,e[o+1]===`
-`?"":`
-`),""+o+(o+1)+JSON.stringify(e[o+1]===`
-`?"":`
-`,null,0)):b==="\r"&&e[o+1]===`
-`?(r.push(o+1,o+2),""+(o+1)+(o+2)):b===`\r
-`&&e[o+1]!==`
-`&&(r.push(o,o+1,`
-`),""+o+(o+1));let l=k(e,o);if(typeof l=="number"&&e[l].trim()){let m=o;b===`
-`&&(m=o+1),l<o-1&&(""+`[${32}mPUSH[${39}m`+(l+1)+m+JSON.stringify(`${e[o+1]===`
-`?"":`
-`}`,null,4),r.push(l+1,m,`${e[o+1]===`
-`?"":`
-`}`))}let i=oe(e,o);i&&e[i].trim()&&e[o+1]!==`
-`&&i>o+1&&(""+`[${32}mPUSH[${39}m`+(o+1)+i,r.push(o+1,i))}else u>13&&(r.push(o,s),""+`[${32}mPUSH[${39}m`+o+s);else if(u!==32){if(u===34){t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,(p(C(e,o))||p(T(e,o)))&&(t.convertApostrophes=!0,""+`[${32}mSET[${39}m`+t.convertApostrophes);let l=H(e,{from:o,convertEntities:$.convertEntities,convertApostrophes:$.convertApostrophes,offsetBy:h});""+`[${33}mtempRes[${39}m`+JSON.stringify(l,null,4),l&&l.length?r.push(l):$.convertEntities&&r.push(o,o+1,"&quot;")}else if(u===38)if(E(e[o+1])){let l=Object.keys($e).find(i=>e.startsWith(i,o+1)&&e[o+i.length+1]===";");if(""+`[${33}mtemp[${39}m`+JSON.stringify(l,null,4),t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,l)if(""+`[${32}m${l}[${39}m`,l==="apos"){t.convertApostrophes=!0,""+`[${32}mSET[${39}m`+t.convertApostrophes;let i=H(e,{from:o,to:o+l.length+2,value:"'",convertEntities:$.convertEntities,convertApostrophes:$.convertApostrophes,offsetBy:h});Array.isArray(i)&&i.length?(r.push(i),""+`[${32}mPUSH[${39}m`+JSON.stringify(i,null,0),""+(l.length+2),h(l.length+2)):(r.push([o,o+l.length+2,"'"]),""+`[${32}mPUSH[${39}m`+JSON.stringify([o,o+l.length+2,"'"],null,0),""+(l.length+2),h(l.length+2))}else $.convertEntities&&Object.keys(A).includes(e.slice(o+1,o+l.length+1))?(r.push(o,o+l.length+2,`&${A[e.slice(o+1,o+l.length+1)]};`),""+`[${32}mPUSH[${39}m`+o+(o+l.length+2)+JSON.stringify(A[e.slice(o+1,o+l.length+1)],null,4),h(l.length+1),""+(l.length+1)):$.convertEntities?(h(l.length+1),""+(l.length+1)):(""+JSON.stringify(e.slice(o,o+l.length+2),null,4)+M.decode(`${e.slice(o,o+l.length+2)}`).charCodeAt(0),""+`[${32}mPUSH[${39}m`+o+(o+l.length+2)+JSON.stringify(M.decode(`${e.slice(o,o+l.length+2)}`),null,4),r.push(o,o+l.length+2,M.decode(`${e.slice(o,o+l.length+2)}`)),h(l.length+1),""+(l.length+1));else $.convertEntities&&(r.push(o,o+1,"&amp;"),""+`[${32}mPUSH[${39}m`+o+(o+1))}else if(e[T(e,o)]==="#"){for(let l=T(e,o);l<J;l++)if(e[l].trim()&&!p(e[l])&&e[l]!=="#"&&e[l]===";"){""+e.slice(o,l+1);let i=M.encode(M.decode(e.slice(o,l+1)),{useNamedReferences:!0});""+`[${33}mtempRes[${39}m`+JSON.stringify(i,null,4),i&&(r.push(o,l+1,i),""+`[${32}mPUSH[${39}m`+o+(l+1)+i),h(l+1-o),""+(l+1-o)}}else t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,$.convertEntities&&(r.push(o,o+1,"&amp;"),""+`[${32}mPUSH[${39}m`+o+(o+1));else if(u===39){let l=H(e,{from:o,convertEntities:!0,convertApostrophes:!0});l&&l.length&&(t.convertApostrophes=!0,""+`[${32}mSET[${39}m`+t.convertApostrophes,$.convertApostrophes&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities),r.push(H(e,{from:o,convertEntities:$.convertEntities,convertApostrophes:$.convertApostrophes,offsetBy:h})))}else if(u===44||u===59){if(e[o-1]&&!e[o-1].trim()){let l=C(e,o);typeof l=="number"&&l<o-1&&(r.push(l+1,o),""+`[${32}mPUSH[${39}m`+(l+1)+o)}u===44&&e[s]!==void 0&&!f.onUrlCurrently&&!p(e[s])&&e[s].trim()&&e[s]!==" "&&e[s]!==`
-`&&e[s]!=='"'&&e[s]!=="'"&&e[s]!==O&&e[s]!==W&&e[s]!==B&&e[s]!==X&&(t.addMissingSpaces=!0,""+`[${32}mSET[${39}m`+t.addMissingSpaces,$.addMissingSpaces&&(r.push(s,s," "),""+`[${32}mPUSH[${39}m`+s+s)),u===59&&e[s]!==void 0&&!f.onUrlCurrently&&e[s].trim()&&e[s]!=="&"&&e[s]!=='"'&&e[s]!=="'"&&e[s]!==O&&e[s]!==W&&e[s]!==B&&e[s]!==X&&(t.addMissingSpaces=!0,""+`[${32}mSET[${39}m`+t.addMissingSpaces,$.addMissingSpaces&&(r.push(s,s," "),""+`[${32}mPUSH[${39}m`+s+s))}else if(u===45)e[o-1]===" "&&e[s]===" "&&p(e[C(e,o)])&&p(e[T(e,s)])||((e[o-1]===S||e[o-1]===" ")&&e[s]!=="$"&&e[s]!=="\xA3"&&e[s]!=="\u20AC"&&e[s]!=="\u20BD"&&e[s]!=="0"&&e[s]!=="1"&&e[s]!=="2"&&e[s]!=="3"&&e[s]!=="4"&&e[s]!=="5"&&e[s]!=="6"&&e[s]!=="7"&&e[s]!=="8"&&e[s]!=="9"&&e[s]!=="-"&&e[s]!==">"&&e[s]!==" "?(t.addMissingSpaces=!0,""+`[${32}mSET[${39}m`+t.addMissingSpaces,$.addMissingSpaces&&(r.push(s,s," "),""+`[${32}mPUSH[${39}m`+s+s)):e[o-1]&&e[s]&&(p(e[o-1])&&p(e[s])||e[o-1].toLowerCase()==="a"&&e[s].toLowerCase()==="z")?(t.convertDashes=!0,""+`[${32}mSET[${39}m`+t.convertDashes,$.convertDashes&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,""+`[${32}mPUSH[${39}m`+o+s+($.convertEntities?"&ndash;":"\u2013"),r.push(o,s,$.convertEntities?"&ndash;":"\u2013"))):e[o-1]&&e[s]&&(!e[o-1].trim()&&!e[s].trim()||P(e[o-1])&&e[s]==="'")?(t.convertDashes=!0,""+`[${32}mSET[${39}m`+t.convertDashes,$.convertDashes&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,""+`[${32}mPUSH[${39}m`+o+s+($.convertEntities?"&mdash;":j),r.push(o,s,$.convertEntities?"&mdash;":j))):e[o-1]&&e[s]&&E(e[o-1])&&y(e[s])&&(t.convertDashes=!0,""+`[${32}mSET[${39}m`+t.convertDashes,$.convertDashes&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,""+`[${32}mPUSH[${39}m`+o+s+($.convertEntities?"&mdash;":j),r.push(o,s,$.convertEntities?"&mdash;":j)))),e[o-2]&&e[o-2].trim()&&!e[o-1].trim()&&![`
-`,"\r"].includes(e[o-1])&&(t.removeWidows=!0,""+`[${32}mSET[${39}m`+`[${33}mapplicableOpts.removeWidows[${39}m`+t.removeWidows,$.removeWidows&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+`[${33}mapplicableOpts.convertEntities[${39}m`+t.convertEntities,r.push(o-1,o,$.convertEntities?"&nbsp;":S),""+`[${32}mPUSH[${39}m`+(o-1)+o+($.convertEntities?"&nbsp;":S)));else if(u===46){e[o-1]!=="."&&e[s]==="."&&e[s+1]==="."&&e[s+2]!=="."&&(t.convertDotsToEllipsis=!0,""+`[${32}mSET[${39}m`+t.convertDotsToEllipsis,$.convertDotsToEllipsis&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,""+`[${32}mPUSH[${39}m`+o+(s+2)+($.convertEntities?"&hellip;":`${q}`),r.push(o,s+2,$.convertEntities?"&hellip;":`${q}`)));let l=e[s]?e[s].toLowerCase():"",i=e[s+1]?e[s+1].toLowerCase():"",m=e[s+2]?e[s+2].toLowerCase():"",c=e[s+3]?e[s+3].toLowerCase():"",n=l+i+m;if(l+i!=="js"&&n!=="jpg"&&n!=="png"&&n!=="gif"&&n!=="svg"&&n!=="htm"&&n!=="pdf"&&n!=="psd"&&n!=="tar"&&n!=="zip"&&n!=="rar"&&n!=="otf"&&n!=="ttf"&&n!=="eot"&&n!=="php"&&n!=="rss"&&n!=="asp"&&n!=="ppt"&&n!=="doc"&&n!=="txt"&&n!=="rtf"&&n!=="git"&&n+c!=="jpeg"&&n+c!=="html"&&n+c!=="woff"&&!(!E(e[o-2])&&e[o-1]==="p"&&e[s]==="s"&&e[s+1]==="t"&&!E(e[s+2]))&&(e[s]!==void 0&&(!f.onUrlCurrently&&Q(e[s])||f.onUrlCurrently&&E(e[s])&&Q(e[s])&&E(e[s+1])&&P(e[s+1]))&&e[s]!==" "&&e[s]!=="."&&e[s]!==`
-`&&(t.addMissingSpaces=!0,""+`[${32}mSET[${39}m`+t.addMissingSpaces,$.addMissingSpaces&&(r.push(s,s," "),""+`[${32}mPUSH[${39}m`+s+s)),e[o-1]!==void 0&&e[o-1].trim()===""&&e[s]!=="."&&(e[o-2]===void 0||e[o-2]!=="."))){for(s=o-1;s--;)if(e[s].trim()!==""){r.push(s+1,o),""+`[${32}mPUSH[${39}m`+(s+1)+o;break}}}else if(u!==47){if(u===58)e[s-1]&&e[T(e,s-1)]==="/"&&e[T(e,T(e,s-1))]==="/"&&(f.onUrlCurrently=!0,""+`[${32}mSET[${39}m`+`[${33}mstate.onUrlCurrently[${39}m`);else if(u===60)t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,$.convertEntities&&(r.push(o,o+1,"&lt;"),""+`[${32}mPUSH[${39}m`+o+(o+1));else if(u===62)t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,$.convertEntities&&(r.push(o,o+1,"&gt;"),""+`[${32}mPUSH[${39}m`+o+(o+1));else if(u===119)e[s+1]&&e[s].toLowerCase()==="w"&&e[s+1].toLowerCase()==="w"&&(f.onUrlCurrently=!0,""+`[${33}mstate.onUrlCurrently[${39}m`);else if(u===123){let l;if(e[s]==="{"?l="}}":e[s]==="%"&&(l="%}"),l){""+l;for(let i=o;i<J;i++)if(""+e[i],e[i]===l[0]&&e[i+1]===l[1]){""+(i+1-o),h(i+1-o);break}}}}}}else if(""+`[${90}mcharacter outside ASCII[${39}m`+u,u>126&&u<160)u!==133?(r.push(o,s),""+`[${32}mPUSH[${39}m`+o+s):(t.removeLineBreaks=!0,""+`[${32}mSET[${39}m`+t.removeLineBreaks,r.push(o,s,$.removeLineBreaks?"":`
-`),""+`[${32}mPUSH[${39}m`+o+s+($.removeLineBreaks?"":"\\n"));else if(u===160)if($.removeWidows)t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,t.removeWidows=!0,""+`[${32}mSET[${39}m`+t.removeWidows,$.convertEntities&&(""+`[${32}mPUSH[${39}m`+o+s,r.push(o,s,"&nbsp;"));else{let l=o,i=s,m=" ",c=C(e,o);""+`[${32}mSET[${39}m`+`[${33}mcharOnTheLeft[${39}m`+JSON.stringify(c,null,4);let n=T(e,i-1);""+`[${32}mSET[${39}m`+`[${33}mcharOnTheRight[${39}m`+JSON.stringify(n,null,4),c===null||n===null?(m=$.convertEntities?"&nbsp;":S,""+`[${32}mSET[${39}m`+`[${33}mcalculatedValue[${39}m`+JSON.stringify(m,null,4),t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities):(t.removeWidows=!0,""+`[${32}mSET[${39}m`+t.removeWidows),m?(r.push(l,i,m),""+`[${32}mPUSH[${39}m`+l+i+JSON.stringify(m,null,4)+m.charCodeAt(0)):(r.push(l,i),""+`[${32}mPUSH[${39}m`+l+i)}else if(u===173)r.push(o,s),""+`[${32}mPUSH[${39}m`+o+s;else if(u===8232||u===8233)t.removeLineBreaks=!0,""+`[${32}mSET[${39}m`+t.removeLineBreaks,r.push(o,s,$.removeLineBreaks?"":`
-`),""+`[${32}mPUSH[${39}m`+o+s+($.removeLineBreaks?"":"\\n");else if([5760,8191,8192,8193,8194,8195,8196,8197,8198,8199,8200,8201,8202,8239,8287,12288].includes(u))if(!e[s])r.push(o,s),""+`[${32}mPUSH[${39}m`+o+s;else{let l=ce({str:e,from:o,to:s,wipeAllWhitespaceOnLeft:!0,wipeAllWhitespaceOnRight:!0,addSingleSpaceToPreventAccidentalConcatenation:!0});""+JSON.stringify(l,null,0),r.push(...l)}else if(u===8206)r.push(o,s),""+`[${32}mPUSH[${39}m`+o+s;else if(u===8207)r.push(o,s),""+`[${32}mPUSH[${39}m`+o+s;else if(u===8211||u===65533&&p(e[o-1])&&p(e[s])){if(t.convertDashes=!0,""+`[${32}mSET[${39}m`+t.convertDashes,$.convertDashes?(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,$.convertEntities?e[o-1]&&!e[o-1].trim()&&e[o+1]&&!e[o+1].trim()&&!(p(e[o-2])&&p(e[o+2]))?(r.push(o,s,"&mdash;"),""+`[${32}mPUSH[${39}m`+o+s):(r.push(o,s,"&ndash;"),""+`[${32}mPUSH[${39}m`+o+s):u===65533&&(e[o-1]&&!e[o-1].trim()&&e[o+1]&&!e[o+1].trim()?(r.push(o,s,j),""+`[${32}mPUSH[${39}m`+o+s):(r.push(o,s,Z),""+`[${32}mPUSH[${39}m`+o+s))):(r.push(o,s,"-"),""+`[${32}mPUSH[${39}m`+o+s),e[o-1]&&!e[o-1].trim()&&e[s].trim())if(e[o-2]&&p(e[o-2])&&p(e[s]))r.push(o-1,o),""+`[${32}mPUSH[${39}m`+(o-1)+o;else{if(t.addMissingSpaces=!0,""+`[${32}mSET[${39}m`+t.addMissingSpaces,t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,$.addMissingSpaces){let l=" ";V.test(e.slice(s))||(t.removeWidows=!0,""+`[${32}mSET[${39}m`+t.removeWidows,$.removeWidows&&(l=$.convertEntities?"&nbsp;":S,""+`[${32}mSET[${39}m`+($.convertEntities?l:"rawNbsp"))),r.push(s,s,l),""+`[${32}mPUSH[${39}m`+s+s+JSON.stringify(l,null,0)}e.slice(o-1,o)!==S&&(t.removeWidows=!0,""+`[${32}mSET[${39}m`+t.removeWidows,$.removeWidows&&(r.push(o-1,o,$.convertEntities?"&nbsp;":S),""+`[${32}mPUSH[${39}m`+(o-1)+o+JSON.stringify($.convertEntities?"&nbsp;":S,null,0)))}else e[o-2]&&e[o-1]&&e[s]&&e[s+1]&&p(e[o-2])&&p(e[s+1])&&!e[o-1].trim()&&!e[s].trim()&&(r.push(o-1,o),r.push(s,s+1),""+`[${32}mPUSH[${39}m`+(o-1)+o+s+(s+1));e[o-2]&&e[o+1]&&!e[o-1].trim()&&e[o-2].trim()&&!e[o+1].trim()&&!(p(e[o-2])&&p(e[o+2]))&&(t.removeWidows=!0,$.removeWidows&&(r.push(o-1,o,$.convertEntities?"&nbsp;":S),""+`[${32}mPUSH[${39}m`+(o-1)+o+JSON.stringify($.convertEntities?"&nbsp;":S,null,4)))}else if(u===8212||u===65533&&e[o-1]===" "&&e[s]===" ")t.convertDashes=!0,""+`[${32}mSET[${39}m`+t.convertDashes,e[o-1]===" "&&C(e,o)!==null&&(t.removeWidows=!0,""+`[${32}mSET[${39}m`+t.removeWidows,$.removeWidows&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,typeof C(e,o)=="number"&&(r.push(C(e,o)+1,o,$.convertEntities?"&nbsp;":S),""+`[${32}mPUSH[${39}m`+(C(e,o)+1)+o+JSON.stringify($.convertEntities?"&nbsp;":S,null,4)+S.charCodeAt(0)))),$.convertDashes?(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,e[o-1]&&!e[o-1].trim()&&e[s].trim()&&(t.addMissingSpaces=!0,""+`[${32}mSET[${39}m`+t.addMissingSpaces,$.addMissingSpaces&&(r.push(s,s," "),""+`[${32}mPUSH[${39}m`+s+s)),$.convertEntities?(r.push(o,s,"&mdash;"),""+`[${32}mPUSH[${39}m`+o+s):u===65533&&(r.push(o,s,j),""+`[${32}mPUSH[${39}m`+o+s),""+`[${33}mrangesArr.current()[${39}m`+JSON.stringify(r.current(),null,4)):(r.push(o,s,"-"),""+`[${32}mPUSH[${39}m`+o+s);else if(u===8216){let l=H(e,{from:o,to:s,convertEntities:!0,convertApostrophes:!0});l&&l.length&&(t.convertApostrophes=!0,""+`[${32}mSET[${39}m`+t.convertApostrophes,H(e,{from:o,to:s,convertEntities:!0,convertApostrophes:!0})&&($.convertApostrophes&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities),r.push(H(e,{from:o,to:s,convertEntities:$.convertEntities,convertApostrophes:$.convertApostrophes,offsetBy:h}))))}else if(u===8217)t.convertApostrophes=!0,""+`[${32}mSET[${39}m`+t.convertApostrophes,$.convertApostrophes?(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,$.convertEntities&&(r.push(o,s,"&rsquo;"),""+`[${32}mPUSH[${39}m`+o+s)):(r.push(o,s,"'"),""+`[${32}mPUSH[${39}m`+o+s);else if(u===8220)t.convertApostrophes=!0,""+`[${32}mSET[${39}m`+t.convertApostrophes,$.convertApostrophes?$.convertEntities&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,r.push(o,s,"&ldquo;"),""+`[${32}mPUSH[${39}m`+o+s):(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,r.push(o,s,$.convertEntities?"&quot;":'"'),""+`[${32}mPUSH[${39}m`+o+s+JSON.stringify($.convertEntities?"&quot;":'"',null,0));else if(u===8221)t.convertApostrophes=!0,""+`[${32}mSET[${39}m`+t.convertApostrophes,$.convertApostrophes?$.convertEntities&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,r.push(o,s,"&rdquo;"),""+`[${32}mPUSH[${39}m`+o+s):(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,r.push(o,s,$.convertEntities?"&quot;":'"'),""+`[${32}mPUSH[${39}m`+o+s+JSON.stringify($.convertEntities?"&quot;":'"',null,0));else if(u===8230)t.convertDotsToEllipsis=!0,""+`[${32}mSET[${39}m`+t.convertDotsToEllipsis,$.convertDotsToEllipsis?(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,$.convertEntities&&(r.push(o,s,"&hellip;"),""+`[${32}mPUSH[${39}m`+o+s)):(r.push(o,s,"..."),""+`[${32}mPUSH[${39}m`+o+s);else if(u===65279)r.push(o,s),""+`[${32}mPUSH[${39}m`+o+s;else{""+`[${90}melse clause leading to encode[${39}m`,!t.dontEncodeNonLatin&&w(e[o],!0)!==w(e[o],!1)&&(t.dontEncodeNonLatin=!0,""+`[${32}mSET[${39}m`+t.dontEncodeNonLatin);let l=w(e[o],$.dontEncodeNonLatin);""+`[${33}mconvertedCharVal[${39}m`+JSON.stringify(l,null,4),Object.keys(A).includes(l.slice(1,l.length-1))&&(l=`&${A[l.slice(1,l.length-1)]};`),""+`[${33}mconvertedCharVal[${39}m`+JSON.stringify(l,null,4),e[o]!==l&&(t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities,$.convertEntities&&(l==="&mldr;"?(""+`[${32}mPUSH[${39}m`+o+s,r.push(o,s,"&hellip;")):l!=="&apos;"&&(""+`[${32}mPUSH[${39}m`+o+s+l,r.push(o,s,l)),t.convertEntities=!0,""+`[${32}mSET[${39}m`+t.convertEntities))}f.onUrlCurrently&&!e[o].trim()&&(""+`[${33}mstate.onUrlCurrently[${39}m`,f.onUrlCurrently=!1)}""+`[${32}mfinally[${39}m`+JSON.stringify(r.current(),null,4)}var eo=G;function oo(e,$){if(typeof e!="string")throw new Error(`detergent(): [THROW_ID_01] the first input argument must be of a string type, not ${typeof e}`);if($&&typeof $!="object")throw new Error(`detergent(): [THROW_ID_02] Options object must be a plain object, not ${typeof $}`);if($&&$.cb&&typeof $.cb!="function")throw new Error(`detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ${typeof $.cb} (value was given as:
-${JSON.stringify($.cb,null,0)})`);let r={...Y,...$};["lf","crlf","cr"].includes(r.eol)||(r.eol="lf");let o={fixBrokenEntities:!1,removeWidows:!1,convertEntities:!1,convertDashes:!1,convertApostrophes:!1,replaceLineBreaks:!1,removeLineBreaks:!1,useXHTML:!1,dontEncodeNonLatin:!1,addMissingSpaces:!1,convertDotsToEllipsis:!1,stripHtml:!1,eol:!1},s=`
-`;r.eol==="crlf"?s=`\r
-`:r.eol==="cr"&&(s="\r");let h=[],a=new le({limitToBeAddedWhitespace:!1}),f=new le;function t(){e=N(e,a.current()),a.wipe()}function b(c){return Number.isInteger(c)}let J={onUrlCurrently:!1};""+`[${32}mFINAL[${39}m`+`[${33}mopts[${39}m`+JSON.stringify(r,null,4),""+`[${90}m================= NEXT STEP. Initial =================[${39}m`,e=me(e.replace(pe(),"").replace(/\u200A/g," "),{cr:!0,lf:!0,tab:!0,space:!0,nbsp:!1}).res,""+JSON.stringify(e,null,0);let u=e,l;do l=u,u=he.decode(u);while(u!==e&&l!==u);e!==u&&(e=u),""+JSON.stringify(e,null,0),e=ne(e,{trimLines:!0,removeEmptyLines:!0,limitConsecutiveEmptyLinesTo:1}).result,""+JSON.stringify(e,null,0);for(let c=0,n=e.length;c<n;c++)if(e[c].charCodeAt(0)===65533)if(e[c-1]&&e[c+1]&&(e[c-1].toLowerCase()==="n"&&e[c+1].toLowerCase()==="t"||E(e[c-1])&&e[c+1].toLowerCase()==="s")||e[c+2]&&((e[c+1].toLowerCase()==="r"||e[c+1].toLowerCase()==="v")&&e[c+2].toLowerCase()==="e"||e[c+1].toLowerCase()==="l"&&e[c+2].toLowerCase()==="l")&&(e[c-3]&&e[c-3].toLowerCase()==="y"&&e[c-2].toLowerCase()==="o"&&e[c-1].toLowerCase()==="u"||e[c-2]&&e[c-2].toLowerCase()==="w"&&e[c-1].toLowerCase()==="e"||e[c-4]&&e[c-4].toLowerCase()==="t"&&e[c-3].toLowerCase()==="h"&&e[c-2].toLowerCase()==="e"&&e[c-1].toLowerCase()==="y")||(e[c-1]&&e[c-1].toLowerCase()==="i"||e[c-2]&&e[c-2].toLowerCase()==="h"&&e[c-1].toLowerCase()==="e"||e[c-3]&&e[c-3].toLowerCase()==="s"&&e[c-2].toLowerCase()==="h"&&e[c-1].toLowerCase()==="e")&&e[c+2]&&e[c+1].toLowerCase()==="l"&&e[c+2].toLowerCase()==="l"||e[c-5]&&e[c+2]&&e[c-5].toLowerCase()==="m"&&e[c-4].toLowerCase()==="i"&&e[c-3].toLowerCase()==="g"&&e[c-2].toLowerCase()==="h"&&e[c-1].toLowerCase()==="t"&&e[c+1]==="v"&&e[c+2]==="e"||e[c-1]&&e[c-1].toLowerCase()==="s"&&(!e[c+1]||!E(e[c+1])&&!p(e[c+1]))){let g=r.convertApostrophes?B:"'";a.push(c,c+1,`${g}`),""+c+(c+1)+g,o.convertApostrophes=!0}else e[c-2]&&P(e[c-2])&&!e[c-1].trim()&&e[c+2]&&P(e[c+2])&&!e[c+1].trim()?(a.push(c,c+1,j),""+c+(c+1)+j):(a.push(c,c+1),""+c+(c+1));t(),""+`[${90}m================= NEXT STEP. fix broken HTML entity references =================[${39}m`;let i=ue(e,{decode:!1});if(i&&i.length&&(o.fixBrokenEntities=!0,r.fixBrokenEntities&&(e=N(e,i),""+JSON.stringify(e,null,0))),typeof r.cb=="function")if(e.includes("<")||e.includes(">")){""+`[${90}m================= NEXT STEP. HTML tags, pt.1 =================[${39}m`;let c=te(e,{cb:({tag:g,rangesArr:v})=>(""+`[${33}mtag[${39}m`+JSON.stringify(g,null,4),v.push(g.lastOpeningBracketAt,g.lastClosingBracketAt+1)),skipHtmlDecoding:!0}).ranges,n=(be(c,e.length)||[]).reduce((g,v)=>typeof r.cb=="function"&&e.slice(v[0],v[1])!==r.cb(e.slice(v[0],v[1]))?g.concat([[v[0],v[1],r.cb(e.slice(v[0],v[1]))]]):g,[]);""+`[${33}moutsideTagRanges[${39}m`+JSON.stringify(n,null,4),Array.isArray(n)&&n.length&&(""+e,e=N(e,n),""+e)}else""+e,e=r.cb(e),""+e;if(e.includes("<")||e.includes(">")){""+`[${90}m================= NEXT STEP. HTML tags, pt.2 =================[${39}m`;let c=({tag:n,deleteFrom:g,deleteTo:v,proposedReturn:U})=>{if(""+`[${33}mtag[${39}m`+JSON.stringify(n,null,4),b(n.lastOpeningBracketAt)&&b(n.lastClosingBracketAt)&&n.lastOpeningBracketAt<n.lastClosingBracketAt||n.slashPresent){if(o.stripHtml=!0,""+`[${32}mSET[${39}m`+o.stripHtml,f.push(n.lastOpeningBracketAt,n.lastClosingBracketAt?n.lastClosingBracketAt+1:e.length),""+`[${32}mPUSH[${39}m`+n.lastOpeningBracketAt+(n.lastClosingBracketAt?n.lastClosingBracketAt+1:e.length),r.stripHtml&&!r.stripHtmlButIgnoreTags.includes(n.name.toLowerCase()))Array.isArray(r.stripHtmlAddNewLine)&&r.stripHtmlAddNewLine.length&&r.stripHtmlAddNewLine.some(d=>d.startsWith("/")&&n.slashPresent&&n.slashPresent<n.nameEnds&&n.name.toLowerCase()===d.slice(1)||!d.startsWith("/")&&!(n.slashPresent&&n.slashPresent<n.nameEnds)&&n.name.toLowerCase()===ee(d))?(o.removeLineBreaks=!0,""+`[${32}mSET[${39}m`+`[${33}mapplicableOpts.removeLineBreaks[${39}m`+o.removeLineBreaks,!r.removeLineBreaks&&typeof g=="number"&&typeof v=="number"?(o.replaceLineBreaks=!0,""+`[${32}mSET[${39}m`+`[${33}mapplicableOpts.replaceLineBreaks[${39}m`+o.replaceLineBreaks,r.replaceLineBreaks&&(o.useXHTML=!0,""+`[${32}mSET[${39}m`+`[${33}mapplicableOpts.useXHTML[${39}m`+o.useXHTML),a.push(g,v,`${r.replaceLineBreaks?`<br${r.useXHTML?"/":""}>`:""}
-`),""+`[${32}mPUSH[${39}m`+JSON.stringify([g,v,`${r.replaceLineBreaks?`<br${r.useXHTML?"/":""}>`:""}
-`],null,0),""+JSON.stringify(a.current(),null,4)):(a.push(U),""+`[${32}mPUSH[${39}m`+JSON.stringify(U,null,4))):(a.push(U),f.push(U),""+`[${32}mPUSH[${39}m`+`[${33}mfinalIndexesToDelete[${39}m`+`[${33}mskipArr[${39}m`+JSON.stringify(U,null,4));else{if(F.includes(n.name.toLowerCase())){if(o.useXHTML=!0,""+`[${32}mSET[${39}m`+o.useXHTML,e[L(e,n.lastClosingBracketAt)]!=="/"&&n.lastClosingBracketAt&&r.useXHTML&&(""+`[${32}mPUSH[${39}m`+n.lastClosingBracketAt+n.lastClosingBracketAt,a.push(n.lastClosingBracketAt,n.lastClosingBracketAt,"/")),n.slashPresent&&b(n.lastOpeningBracketAt)&&n.nameStarts&&n.lastOpeningBracketAt<n.nameStarts-1&&e.slice(n.lastOpeningBracketAt+1,n.nameStarts).split("").every(d=>!d.trim()||d==="/")&&(""+`[${32}mPUSH[${39}m`+(n.lastOpeningBracketAt+1)+n.nameStarts,a.push(n.lastOpeningBracketAt+1,n.nameStarts)),""+JSON.stringify(a.current(),null,4),n.slashPresent&&e[L(e,n.lastClosingBracketAt)]==="/"){if(e[L(e,L(e,n.lastClosingBracketAt))]==="/")o.useXHTML=!0,""+`[${32}mSET[${39}m`+o.useXHTML,(!r.useXHTML||typeof D(e,n.lastClosingBracketAt,{mode:2},"/")=="number"&&e.slice(D(e,n.lastClosingBracketAt,{mode:2},"/"),n.lastClosingBracketAt)!=="/")&&(a.push(D(e,n.lastClosingBracketAt,{mode:2},"/"),n.lastClosingBracketAt,r.useXHTML?"/":void 0),""+`[${32}mPUSH[${39}m`+D(e,n.lastClosingBracketAt,{mode:2},"/")+n.lastClosingBracketAt+(r.useXHTML?"/":void 0));else if(!r.useXHTML||typeof L(e,n.slashPresent)!="number"||e.slice(L(e,n.slashPresent)+1,n.lastClosingBracketAt)!=="/"){let d=L(e,n.slashPresent)+1,x=n.lastClosingBracketAt,I=r.useXHTML?"/":null;I?(""+`[${32}mPUSH[${39}m`+d+x+I,a.push(d,x,I)):(""+`[${32}mPUSH[${39}m`+d+x,a.push(d,x))}}}else n.slashPresent&&e[L(e,n.lastClosingBracketAt)]==="/"&&(a.push(D(e,n.lastClosingBracketAt,{mode:2},"/"),n.lastClosingBracketAt),a.push(n.lastOpeningBracketAt+1,n.lastOpeningBracketAt+1,"/"));""+JSON.stringify(a.current(),null,4),n.name.toLowerCase()!==n.name&&(""+`[${32}mPUSH[${39}m`+n.nameStarts+n.nameEnds+n.name.toLowerCase(),a.push(n.nameStarts,n.nameEnds,n.name.toLowerCase())),"/>".includes(e[R(e,n.nameEnds-1)])&&(R(e,n.nameEnds-1)||0)>n.nameEnds&&(""+`[${32}mPUSH[${39}m`+n.nameEnds+R(e,n.nameEnds-1),a.push(n.nameEnds,R(e,n.nameEnds-1))),b(n.lastOpeningBracketAt)&&b(n.nameStarts)&&n.lastOpeningBracketAt+1<n.nameStarts&&(e.slice(n.lastOpeningBracketAt+1,n.nameStarts).trim().length?!F.includes(n.name.toLowerCase())&&e.slice(n.lastOpeningBracketAt+1,n.nameStarts).split("").every(d=>!d.trim()||d==="/")&&(a.push(n.lastOpeningBracketAt+1,n.nameStarts,"/"),""+`[${32}mPUSH[${39}m`+(n.lastOpeningBracketAt+1)+n.nameStarts):(""+`[${32}mPUSH[${39}m`+(n.lastOpeningBracketAt+1)+n.nameStarts,a.push(n.lastOpeningBracketAt+1,n.nameStarts)))}n.name.toLowerCase()==="br"&&n.lastClosingBracketAt&&(h.push(n.lastClosingBracketAt),""+JSON.stringify(h,null,0)),["ul","li"].includes(n.name.toLowerCase())&&!r.removeLineBreaks&&e[n.lastOpeningBracketAt-1]&&!e[n.lastOpeningBracketAt-1].trim()&&typeof n.lastOpeningBracketAt=="number"&&typeof z(e,n.lastOpeningBracketAt)=="number"&&(a.push(z(e,n.lastOpeningBracketAt)+1,n.lastOpeningBracketAt),""+`[${32}mPUSH[${39}m`+(z(e,n.lastOpeningBracketAt)+1)+n.lastOpeningBracketAt),e[n.lastClosingBracketAt-1]&&!e[n.lastClosingBracketAt-1].trim()&&typeof n.lastClosingBracketAt=="number"&&typeof L(e,n.lastClosingBracketAt)=="number"&&(a.push(L(e,n.lastClosingBracketAt)+1,n.lastClosingBracketAt),""+`[${32}mPUSH[${39}m`+(L(e,n.lastClosingBracketAt)+1)+n.lastClosingBracketAt)}""+`[${90}m========================================
-ENDING finalIndexesToDelete[]:
-[${39}m`,""+`[${90}m${JSON.stringify(a.current(),null,4)}[${39}m`};""+`[${90}m========================================[${39}m`,te(e,{cb:c,trimOnlySpaces:!0,ignoreTags:r.stripHtml?r.stripHtmlButIgnoreTags:[],skipHtmlDecoding:!0})}""+(e.includes("<")||e.includes(">")?"":"no tags found"),""+`[${33}mrangesArr[${39}m`+JSON.stringify(a.current(),null,0)+`[${33}mskipArr[${39}m`+JSON.stringify(f.current(),null,0),""+`[${90}m================= NEXT STEP. Process outside tags =================[${39}m`,ae(e,f.current(),(c,n,g)=>se(e,r,a,c,n,g,h,J,o,s),!0),""+36+39+35+36+39,""+`[${33}mstr[${39}m`+JSON.stringify(e,null,0)+`[${33}mrangesArr.current()[${39}m`+JSON.stringify(a.current(),null,4),""+`[${33}mapplicableOpts[${39}m`+JSON.stringify(o,null,4),""+`[${90}m================= NEXT STEP. apply+wipe =================[${39}m`,""+`[${33}mstr[${39}m`+JSON.stringify(e,null,4),t(),""+`[${33}mstr[${39}m`+JSON.stringify(e,null,4),e=e.replace(/ (<br[/]?>)/g,"$1"),e=e.replace(/(\r\n|\r|\n){3,}/g,`${s}${s}`),""+`[${33}mstr[${39}m`+JSON.stringify(e,null,4),""+`[${33}mfinalIndexesToDelete.current()[${39}m`+JSON.stringify(a.current(),null,4),""+`[${90}m================= NEXT STEP. widows =================[${39}m`,""+`[${33}mskipArr.current()[${39}m`+JSON.stringify(f.current(),null,4);let m=ie(e,{ignore:"all",convertEntities:r.convertEntities,targetLanguage:"html",UKPostcodes:!0,hyphens:r.convertDashes,tagRanges:f.current()});return""+`[${33}mwidowFixes[${39}m`+JSON.stringify(m,null,4),m&&m.ranges&&m.ranges.length&&(!o.removeWidows&&m.whatWasDone.removeWidows&&(o.removeWidows=!0,""+`[${32}mSET[${39}m`+`[${33}mapplicableOpts.removeWidows[${39}m`,r.removeWidows&&(o.convertEntities=!0,""+`[${32}mSET[${39}m`+`[${33}mapplicableOpts.convertEntities[${39}m`)),!o.convertEntities&&m.whatWasDone.convertEntities&&(o.convertEntities=!0,""+`[${32}mSET[${39}m`+`[${33}mapplicableOpts.convertEntities[${39}m`),r.removeWidows&&(e=m.res,""+JSON.stringify(e,null,0))),""+`[${90}m================= NEXT STEP. linebreaks =================[${39}m`,""+`[${33}mbrClosingBracketIndexesArr[${39}m`+JSON.stringify(h,null,4),e!==e.replace(/\r\n|\r|\n/gm," ")&&(o.removeLineBreaks=!0,r.removeLineBreaks&&(e=e.replace(/\r\n|\r|\n/gm," "))),""+`[${90}m================= NEXT STEP. collapse =================[${39}m`,""+JSON.stringify(e,null,0),e=ne(e,{trimLines:!0}).result,""+JSON.stringify(e,null,0),""+`[${90}m================= NEXT STEP. final =================[${39}m`,N(e,a.current()).split("").forEach((c,n)=>{""+n+`[${33}mkey[${39}m`+JSON.stringify(c,null,4)+`[${35}m${c.charCodeAt(0)}[${39}m`}),""+JSON.stringify({res:N(e,a.current()),applicableOpts:o},null,4),{res:N(e,a.current()),applicableOpts:o}}export{oo as det,Y as opts,eo as version};
+import { left, right, leftStopAtNewLines, rightStopAtNewLines, chompLeft } from 'string-left-right';
+import { fixEnt } from 'string-fix-broken-named-entities';
+import { removeWidows } from 'string-remove-widows';
+import { rProcessOutside } from 'ranges-process-outside';
+import { collapse } from 'string-collapse-white-space';
+import { trimSpaces } from 'string-trim-spaces-only';
+import { stripHtml } from 'string-strip-html';
+import { rInvert } from 'ranges-invert';
+import { rApply } from 'ranges-apply';
+import ansiRegex from 'ansi-regex';
+import { Ranges } from 'ranges-push';
+import he from 'he';
+import { notEmailFriendly } from 'html-entities-not-email-friendly';
+import { allNamedEntities } from 'all-named-html-entities';
+import { expander } from 'string-range-expander';
+import { convertOne } from 'string-apostrophes';
+
+var version$1 = "7.0.12";
+
+const defaultOpts = {
+  fixBrokenEntities: true,
+  removeWidows: true,
+  convertEntities: true,
+  convertDashes: true,
+  convertApostrophes: true,
+  replaceLineBreaks: true,
+  removeLineBreaks: false,
+  useXHTML: true,
+  dontEncodeNonLatin: true,
+  addMissingSpaces: true,
+  convertDotsToEllipsis: true,
+  stripHtml: true,
+  eol: "lf",
+  stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
+  stripHtmlAddNewLine: ["li", "/ul"],
+  cb: null
+};
+const leftSingleQuote = "\u2018";
+const rightSingleQuote = "\u2019";
+const leftDoubleQuote = "\u201C";
+const rightDoubleQuote = "\u201D";
+const punctuationChars = [".", ",", ";", "!", "?"];
+const rawNDash = "\u2013";
+const rawMDash = "\u2014";
+const rawNbsp = "\u00A0";
+const rawEllipsis = "\u2026";
+const widowRegexTest = /. ./g;
+const latinAndNonNonLatinRanges = [[0, 880], [887, 890], [894, 900], [906, 908], [908, 910], [929, 931], [1319, 1329], [1366, 1369], [1375, 1377], [1415, 1417], [1418, 1423], [1423, 1425], [1479, 1488], [1514, 1520], [1524, 1536], [1540, 1542], [1563, 1566], [1805, 1807], [1866, 1869], [1969, 1984], [2042, 2048], [2093, 2096], [2110, 2112], [2139, 2142], [2142, 2208], [2208, 2210], [2220, 2276], [2302, 2304], [2423, 2425], [2431, 2433], [2435, 2437], [2444, 2447], [2448, 2451], [2472, 2474], [2480, 2482], [2482, 2486], [2489, 2492], [2500, 2503], [2504, 2507], [2510, 2519], [2519, 2524], [2525, 2527], [2531, 2534], [2555, 2561], [2563, 2565], [2570, 2575], [2576, 2579], [2600, 2602], [2608, 2610], [2611, 2613], [2614, 2616], [2617, 2620], [2620, 2622], [2626, 2631], [2632, 2635], [2637, 2641], [2641, 2649], [2652, 2654], [2654, 2662], [2677, 2689], [2691, 2693], [2701, 2703], [2705, 2707], [2728, 2730], [2736, 2738], [2739, 2741], [2745, 2748], [2757, 2759], [2761, 2763], [2765, 2768], [2768, 2784], [2787, 2790], [2801, 2817], [2819, 2821], [2828, 2831], [2832, 2835], [2856, 2858], [2864, 2866], [2867, 2869], [2873, 2876], [2884, 2887], [2888, 2891], [2893, 2902], [2903, 2908], [2909, 2911], [2915, 2918], [2935, 2946], [2947, 2949], [2954, 2958], [2960, 2962], [2965, 2969], [2970, 2972], [2972, 2974], [2975, 2979], [2980, 2984], [2986, 2990], [3001, 3006], [3010, 3014], [3016, 3018], [3021, 3024], [3024, 3031], [3031, 3046], [3066, 3073], [3075, 3077], [3084, 3086], [3088, 3090], [3112, 3114], [3123, 3125], [3129, 3133], [3140, 3142], [3144, 3146], [3149, 3157], [3158, 3160], [3161, 3168], [3171, 3174], [3183, 3192], [3199, 3202], [3203, 3205], [3212, 3214], [3216, 3218], [3240, 3242], [3251, 3253], [3257, 3260], [3268, 3270], [3272, 3274], [3277, 3285], [3286, 3294], [3294, 3296], [3299, 3302], [3311, 3313], [3314, 3330], [3331, 3333], [3340, 3342], [3344, 3346], [3386, 3389], [3396, 3398], [3400, 3402], [3406, 3415], [3415, 3424], [3427, 3430], [3445, 3449], [3455, 3458], [3459, 3461], [3478, 3482], [3505, 3507], [3515, 3517], [3517, 3520], [3526, 3530], [3530, 3535], [3540, 3542], [3542, 3544], [3551, 3570], [3572, 3585], [3642, 3647], [3675, 3713], [3714, 3716], [3716, 3719], [3720, 3722], [3722, 3725], [3725, 3732], [3735, 3737], [3743, 3745], [3747, 3749], [3749, 3751], [3751, 3754], [3755, 3757], [3769, 3771], [3773, 3776], [3780, 3782], [3782, 3784], [3789, 3792], [3801, 3804], [3807, 3840], [3911, 3913], [3948, 3953], [3991, 3993], [4028, 4030], [4044, 4046], [4058, 4096], [4293, 4295], [4295, 4301], [4301, 4304], [4680, 4682], [4685, 4688], [4694, 4696], [4696, 4698], [4701, 4704], [4744, 4746], [4749, 4752], [4784, 4786], [4789, 4792], [4798, 4800], [4800, 4802], [4805, 4808], [4822, 4824], [4880, 4882], [4885, 4888], [4954, 4957], [4988, 4992], [5017, 5024], [5108, 5120], [5788, 5792], [5872, 5888], [5900, 5902], [5908, 5920], [5942, 5952], [5971, 5984], [5996, 5998], [6000, 6002], [6003, 6016], [6109, 6112], [6121, 6128], [6137, 6144], [6158, 6160], [6169, 6176], [6263, 6272], [6314, 7936], [7957, 7960], [7965, 7968], [8005, 8008], [8013, 8016], [8023, 8025], [8025, 8027], [8027, 8029], [8029, 8031], [8061, 8064], [8116, 8118], [8132, 8134], [8147, 8150], [8155, 8157], [8175, 8178], [8180, 8182], [8190, 11904], [11929, 11931], [12019, 12032], [12245, 12288], [12351, 12353], [12438, 12441], [12543, 12549], [12589, 12593], [12686, 12688], [12730, 12736], [12771, 12784], [12830, 12832], [13054, 13056], [13312, 19893], [19893, 19904], [40869, 40908], [40908, 40960], [42124, 42128], [42182, 42192], [42539, 42560], [42647, 42655], [42743, 42752], [42894, 42896], [42899, 42912], [42922, 43000], [43051, 43056], [43065, 43072], [43127, 43136], [43204, 43214], [43225, 43232], [43259, 43264], [43347, 43359], [43388, 43392], [43469, 43471], [43481, 43486], [43487, 43520], [43574, 43584], [43597, 43600], [43609, 43612], [43643, 43648], [43714, 43739], [43766, 43777], [43782, 43785], [43790, 43793], [43798, 43808], [43814, 43816], [43822, 43968], [44013, 44016], [44025, 44032], [55203, 55216], [55238, 55243], [55291, 63744], [64109, 64112], [64217, 64256], [64262, 64275], [64279, 64285], [64310, 64312], [64316, 64318], [64318, 64320], [64321, 64323], [64324, 64326], [64449, 64467], [64831, 64848], [64911, 64914], [64967, 65008], [65021, 65136], [65140, 65142], [65276, 66560], [66717, 66720], [66729, 67584], [67589, 67592], [67592, 67594], [67637, 67639], [67640, 67644], [67644, 67647], [67669, 67671], [67679, 67840], [67867, 67871], [67897, 67903], [67903, 67968], [68023, 68030], [68031, 68096], [68099, 68101], [68102, 68108], [68115, 68117], [68119, 68121], [68147, 68152], [68154, 68159], [68167, 68176], [68184, 68192], [68223, 68352], [68405, 68409], [68437, 68440], [68466, 68472], [68479, 68608], [68680, 69216], [69246, 69632], [69709, 69714], [69743, 69760], [69825, 69840], [69864, 69872], [69881, 69888], [69940, 69942], [69955, 70016], [70088, 70096], [70105, 71296], [71351, 71360], [71369, 73728], [74606, 74752], [74850, 74864], [74867, 77824], [78894, 92160], [92728, 93952], [94020, 94032], [94078, 94095], [94111, 110592], [110593, 131072], [131072, 173782], [173782, 173824], [173824, 177972], [177972, 177984], [177984, 178205], [178205, 194560]];
+const voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
+function doConvertEntities(inputString, dontEncodeNonLatin) {
+  if (dontEncodeNonLatin) {
+    return Array.from(inputString).map(char => {
+      if (char.charCodeAt(0) < 880 || latinAndNonNonLatinRanges.some(rangeArr => char.charCodeAt(0) > rangeArr[0] && char.charCodeAt(0) < rangeArr[1])) {
+        return he.encode(char, {
+          useNamedReferences: true
+        });
+      }
+      return char;
+    }).join("");
+  }
+  return he.encode(inputString, {
+    useNamedReferences: true
+  });
+}
+function isNumber(something) {
+  return typeof something === "string" && something.charCodeAt(0) >= 48 && something.charCodeAt(0) <= 57 || Number.isInteger(something);
+}
+function isLetter(str) {
+  return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
+}
+function isQuote(str) {
+  return str === '"' || str === "'" || str === leftSingleQuote || str === rightSingleQuote || str === leftDoubleQuote || str === rightDoubleQuote;
+}
+function isLowercaseLetter(str) {
+  if (!isLetter(str)) {
+    return false;
+  }
+  return str === str.toLowerCase() && str !== str.toUpperCase();
+}
+function isUppercaseLetter(str) {
+  if (!isLetter(str)) {
+    return false;
+  }
+  return str === str.toUpperCase() && str !== str.toLowerCase();
+}
+function removeTrailingSlash(str) {
+  if (typeof str === "string" && str.length && str.endsWith("/")) {
+    return str.slice(0, -1).trim();
+  }
+  return str;
+}
+
+function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLineVal) {
+  const len = str.length;
+  if (/[\uD800-\uDFFF]/g.test(str[i]) && !(str.charCodeAt(i + 1) >= 0xdc00 && str.charCodeAt(i + 1) <= 0xdfff || str.charCodeAt(i - 1) >= 0xd800 && str.charCodeAt(i - 1) <= 0xdbff)) {
+    rangesArr.push(i, i + 1);
+  } else if (y - i > 1) {
+    applicableOpts.convertEntities = true;
+    applicableOpts.dontEncodeNonLatin = applicableOpts.dontEncodeNonLatin || doConvertEntities(str.slice(i, y), true) !== doConvertEntities(str.slice(i, y), false);
+    if (opts.convertEntities) {
+      rangesArr.push(i, y, doConvertEntities(str.slice(i, y), opts.dontEncodeNonLatin));
+    }
+  } else {
+    const charcode = str[i].charCodeAt(0);
+    if (charcode < 127) {
+      if (charcode < 32) {
+        if (charcode < 9) {
+          if (charcode === 3) {
+            rangesArr.push(i, y, opts.removeLineBreaks ? " " : opts.replaceLineBreaks ? `<br${opts.useXHTML ? "/" : ""}>\n` : "\n");
+            applicableOpts.removeLineBreaks = true;
+            if (!opts.removeLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
+              if (opts.replaceLineBreaks) {
+                applicableOpts.useXHTML = true;
+              }
+            }
+          } else {
+            rangesArr.push(i, y);
+          }
+        } else if (charcode === 9) {
+          rangesArr.push(i, y, " ");
+        } else if (charcode === 10) {
+          if (!applicableOpts.removeLineBreaks) {
+            applicableOpts.removeLineBreaks = true;
+          }
+          if (!opts.removeLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(idx => left(str, i) === idx))) {
+            if (opts.replaceLineBreaks) {
+              applicableOpts.useXHTML = true;
+              applicableOpts.replaceLineBreaks = true;
+            } else if (!opts.replaceLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
+            }
+          }
+          if (!opts.removeLineBreaks) {
+            applicableOpts.eol = true;
+          }
+          if (opts.removeLineBreaks) {
+            let whatToInsert = " ";
+            if (punctuationChars.includes(str[right(str, i)])) {
+              whatToInsert = "";
+            }
+            rangesArr.push(i, y, whatToInsert);
+          } else if (opts.replaceLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(idx => left(str, i) === idx))) {
+            let startingIdx = i;
+            if (str[i - 1] === " " && typeof leftStopAtNewLines(str, i) === "number") {
+              startingIdx = leftStopAtNewLines(str, i) + 1;
+            }
+            rangesArr.push(startingIdx, i + (endOfLineVal === "\r" ? 1 : 0), `<br${opts.useXHTML ? "/" : ""}>${endOfLineVal === "\r\n" ? "\r" : ""}${endOfLineVal === "\r" ? "\r" : ""}`);
+          } else {
+            if (str[leftStopAtNewLines(str, i)] && str[leftStopAtNewLines(str, i)].trim()) {
+              const tempIdx = leftStopAtNewLines(str, i);
+              if (typeof tempIdx === "number" && tempIdx < i - 1) {
+                rangesArr.push(tempIdx + 1, i, `${endOfLineVal === "\r\n" ? "\r" : ""}`);
+              }
+            }
+            if (endOfLineVal === "\r\n" && str[i - 1] !== "\r") {
+              rangesArr.push(i, i, "\r");
+            } else if (endOfLineVal === "\r") {
+              rangesArr.push(i, i + 1);
+            }
+            const temp = rightStopAtNewLines(str, i);
+            if (temp && str[temp].trim()) {
+              if (temp > i + 1) {
+                rangesArr.push(i + 1, temp);
+              }
+            }
+          }
+          state.onUrlCurrently = false;
+        } else if (charcode === 11 || charcode === 12) {
+          applicableOpts.removeLineBreaks = true;
+          rangesArr.push(i, y, opts.removeLineBreaks ? " " : "\n");
+        } else if (charcode === 13) {
+          if (!applicableOpts.removeLineBreaks) {
+            applicableOpts.removeLineBreaks = true;
+          }
+          if (!opts.removeLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(idx => left(str, i) === idx))) {
+            if (opts.replaceLineBreaks && !opts.removeLineBreaks) {
+              applicableOpts.useXHTML = true;
+              applicableOpts.replaceLineBreaks = true;
+            } else if (!opts.replaceLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
+            }
+          }
+          if (!opts.removeLineBreaks) {
+            applicableOpts.eol = true;
+          }
+          if (opts.removeLineBreaks) {
+            let whatToInsert = " ";
+            if (punctuationChars.includes(str[right(str, i)]) || ["\n", "\r"].includes(str[i + 1])) {
+              whatToInsert = "";
+            }
+            rangesArr.push(i, y, whatToInsert);
+          } else if (opts.replaceLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(idx => left(str, i) === idx))) {
+            let startingIdx = i;
+            if (str[i - 1] === " " && typeof leftStopAtNewLines(str, i) === "number") {
+              startingIdx = leftStopAtNewLines(str, i) + 1;
+            }
+            let endingIdx = i;
+            let whatToInsert = "";
+            if (str[i + 1] !== "\n") {
+              if (endOfLineVal === "\n") {
+                whatToInsert = "\n";
+              } else if (endOfLineVal === "\r\n") {
+                rangesArr.push(i + 1, i + 1, "\n");
+              }
+            }
+            if (endOfLineVal === "\n") {
+              endingIdx = i + 1;
+            } else if (endOfLineVal === "\r" && str[i + 1] === "\n") {
+              rangesArr.push(i + 1, i + 2);
+            }
+            rangesArr.push(startingIdx, endingIdx, `<br${opts.useXHTML ? "/" : ""}>${whatToInsert}`);
+            if (str[i + 1] === "\n") {
+              offsetBy(1);
+            }
+          } else {
+            if (endOfLineVal === "\n") {
+              rangesArr.push(i, i + 1, str[i + 1] === "\n" ? "" : "\n");
+            } else if (endOfLineVal === "\r" && str[i + 1] === "\n") {
+              rangesArr.push(i + 1, i + 2);
+            } else if (endOfLineVal === "\r\n" && str[i + 1] !== "\n") {
+              rangesArr.push(i, i + 1, "\n");
+            }
+            const tempIdx1 = leftStopAtNewLines(str, i);
+            if (typeof tempIdx1 === "number" && str[tempIdx1].trim()) {
+              let endingIdx = i;
+              if (endOfLineVal === "\n") {
+                endingIdx = i + 1;
+              }
+              if (tempIdx1 < i - 1) {
+                rangesArr.push(tempIdx1 + 1, endingIdx, `${str[i + 1] === "\n" ? "" : "\n"}`);
+              }
+            }
+            const tempIdx2 = rightStopAtNewLines(str, i);
+            if (tempIdx2 && str[tempIdx2].trim() && str[i + 1] !== "\n") {
+              if (tempIdx2 > i + 1) {
+                rangesArr.push(i + 1, tempIdx2);
+              }
+            }
+          }
+        } else if (charcode > 13) {
+          rangesArr.push(i, y);
+        }
+      } else {
+        if (charcode === 32) ; else if (charcode === 34) {
+          applicableOpts.convertEntities = true;
+          if (isNumber(left(str, i)) || isNumber(right(str, i))) {
+            applicableOpts.convertApostrophes = true;
+          }
+          const tempRes = convertOne(str, {
+            from: i,
+            convertEntities: opts.convertEntities,
+            convertApostrophes: opts.convertApostrophes,
+            offsetBy
+          });
+          if (tempRes && tempRes.length) {
+            rangesArr.push(tempRes);
+          } else if (opts.convertEntities) {
+            rangesArr.push(i, i + 1, "&quot;");
+          }
+        } else if (charcode === 38) {
+          if (isLetter(str[i + 1])) {
+            const temp = Object.keys(allNamedEntities).find(entName => str.startsWith(entName, i + 1) && str[i + entName.length + 1] === ";");
+            applicableOpts.convertEntities = true;
+            if (temp) {
+              if (temp === "apos") {
+                applicableOpts.convertApostrophes = true;
+                const decodedTempRes = convertOne(str, {
+                  from: i,
+                  to: i + temp.length + 2,
+                  value: `'`,
+                  convertEntities: opts.convertEntities,
+                  convertApostrophes: opts.convertApostrophes,
+                  offsetBy
+                });
+                if (Array.isArray(decodedTempRes) && decodedTempRes.length) {
+                  rangesArr.push(decodedTempRes);
+                  offsetBy(temp.length + 2);
+                } else {
+                  rangesArr.push([i, i + temp.length + 2, `'`]);
+                  offsetBy(temp.length + 2);
+                }
+              } else if (opts.convertEntities && Object.keys(notEmailFriendly).includes(str.slice(i + 1, i + temp.length + 1))) {
+                rangesArr.push(i, i + temp.length + 2, `&${notEmailFriendly[str.slice(i + 1, i + temp.length + 1)]};`);
+                offsetBy(temp.length + 1);
+              } else if (!opts.convertEntities) {
+                rangesArr.push(i, i + temp.length + 2, he.decode(`${str.slice(i, i + temp.length + 2)}`));
+                offsetBy(temp.length + 1);
+              } else {
+                offsetBy(temp.length + 1);
+              }
+            } else if (opts.convertEntities) {
+              rangesArr.push(i, i + 1, "&amp;");
+            }
+          } else if (str[right(str, i)] === "#") {
+            for (let z = right(str, i); z < len; z++) {
+              if (str[z].trim() && !isNumber(str[z]) && str[z] !== "#") {
+                if (str[z] === ";") {
+                  const tempRes = he.encode(he.decode(str.slice(i, z + 1)), {
+                    useNamedReferences: true
+                  });
+                  if (tempRes) {
+                    rangesArr.push(i, z + 1, tempRes);
+                  }
+                  offsetBy(z + 1 - i);
+                }
+              }
+            }
+          } else {
+            applicableOpts.convertEntities = true;
+            if (opts.convertEntities) {
+              rangesArr.push(i, i + 1, "&amp;");
+            }
+          }
+        } else if (charcode === 39) {
+          const temp = convertOne(str, {
+            from: i,
+            convertEntities: true,
+            convertApostrophes: true
+          });
+          if (temp && temp.length) {
+            applicableOpts.convertApostrophes = true;
+            if (opts.convertApostrophes) {
+              applicableOpts.convertEntities = true;
+            }
+            rangesArr.push(convertOne(str, {
+              from: i,
+              convertEntities: opts.convertEntities,
+              convertApostrophes: opts.convertApostrophes,
+              offsetBy
+            }));
+          }
+        } else if (charcode === 44 || charcode === 59) {
+          if (str[i - 1] && !str[i - 1].trim()) {
+            const whatsOnTheLeft = left(str, i);
+            if (typeof whatsOnTheLeft === "number" && whatsOnTheLeft < i - 1) {
+              rangesArr.push(whatsOnTheLeft + 1, i);
+            }
+          }
+          if (charcode === 44 && str[y] !== undefined && !state.onUrlCurrently && !isNumber(str[y]) && str[y].trim() && str[y] !== " " && str[y] !== "\n" && str[y] !== '"' && str[y] !== "'" && str[y] !== leftSingleQuote && str[y] !== leftDoubleQuote && str[y] !== rightSingleQuote && str[y] !== rightDoubleQuote) {
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
+          }
+          if (charcode === 59 && str[y] !== undefined && !state.onUrlCurrently && str[y].trim() && str[y] !== "&" && str[y] !== '"' && str[y] !== "'" && str[y] !== leftSingleQuote && str[y] !== leftDoubleQuote && str[y] !== rightSingleQuote && str[y] !== rightDoubleQuote) {
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
+          }
+        } else if (charcode === 45) {
+          if (str[i - 1] === " " && str[y] === " " && isNumber(str[left(str, i)]) && isNumber(str[right(str, y)])) ;
+          else if ((str[i - 1] === rawNbsp || str[i - 1] === " ") && str[y] !== "$" && str[y] !== "£" && str[y] !== "€" && str[y] !== "₽" && str[y] !== "0" && str[y] !== "1" && str[y] !== "2" && str[y] !== "3" && str[y] !== "4" && str[y] !== "5" && str[y] !== "6" && str[y] !== "7" && str[y] !== "8" && str[y] !== "9" && str[y] !== "-" && str[y] !== ">" && str[y] !== " ") {
+              applicableOpts.addMissingSpaces = true;
+              if (opts.addMissingSpaces) {
+                rangesArr.push(y, y, " ");
+              }
+            } else if (str[i - 1] && str[y] && (isNumber(str[i - 1]) && isNumber(str[y]) || str[i - 1].toLowerCase() === "a" && str[y].toLowerCase() === "z")) {
+              applicableOpts.convertDashes = true;
+              if (opts.convertDashes) {
+                applicableOpts.convertEntities = true;
+                rangesArr.push(i, y, opts.convertEntities ? "&ndash;" : "\u2013");
+              }
+            } else if (str[i - 1] && str[y] && (!str[i - 1].trim() && !str[y].trim() || isLowercaseLetter(str[i - 1]) && str[y] === "'")) {
+              applicableOpts.convertDashes = true;
+              if (opts.convertDashes) {
+                applicableOpts.convertEntities = true;
+                rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
+              }
+            } else if (str[i - 1] && str[y] && isLetter(str[i - 1]) && isQuote(str[y])) {
+              applicableOpts.convertDashes = true;
+              if (opts.convertDashes) {
+                applicableOpts.convertEntities = true;
+                rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
+              }
+            }
+          if (str[i - 2] && str[i - 2].trim() && !str[i - 1].trim() && !["\n", "\r"].includes(str[i - 1])) {
+            applicableOpts.removeWidows = true;
+            if (opts.removeWidows) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+            }
+          }
+        } else if (charcode === 46) {
+          if (str[i - 1] !== "." && str[y] === "." && str[y + 1] === "." && str[y + 2] !== ".") {
+            applicableOpts.convertDotsToEllipsis = true;
+            if (opts.convertDotsToEllipsis) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(i, y + 2, opts.convertEntities ? "&hellip;" : `${rawEllipsis}`);
+            }
+          }
+          const first = str[y] ? str[y].toLowerCase() : "";
+          const second = str[y + 1] ? str[y + 1].toLowerCase() : "";
+          const third = str[y + 2] ? str[y + 2].toLowerCase() : "";
+          const fourth = str[y + 3] ? str[y + 3].toLowerCase() : "";
+          const nextThreeChars = first + second + third;
+          if (first + second !== "js" && nextThreeChars !== "jpg" && nextThreeChars !== "png" && nextThreeChars !== "gif" && nextThreeChars !== "svg" && nextThreeChars !== "htm" && nextThreeChars !== "pdf" && nextThreeChars !== "psd" && nextThreeChars !== "tar" && nextThreeChars !== "zip" && nextThreeChars !== "rar" && nextThreeChars !== "otf" && nextThreeChars !== "ttf" && nextThreeChars !== "eot" && nextThreeChars !== "php" && nextThreeChars !== "rss" && nextThreeChars !== "asp" && nextThreeChars !== "ppt" && nextThreeChars !== "doc" && nextThreeChars !== "txt" && nextThreeChars !== "rtf" && nextThreeChars !== "git" && nextThreeChars + fourth !== "jpeg" && nextThreeChars + fourth !== "html" && nextThreeChars + fourth !== "woff" && !(!isLetter(str[i - 2]) && str[i - 1] === "p" && str[y] === "s" && str[y + 1] === "t" && !isLetter(str[y + 2]))) {
+            if (str[y] !== undefined && (
+            !state.onUrlCurrently && isUppercaseLetter(str[y]) || state.onUrlCurrently && isLetter(str[y]) && isUppercaseLetter(str[y]) && isLetter(str[y + 1]) && isLowercaseLetter(str[y + 1])) && str[y] !== " " && str[y] !== "." && str[y] !== "\n") {
+              applicableOpts.addMissingSpaces = true;
+              if (opts.addMissingSpaces) {
+                rangesArr.push(y, y, " ");
+              }
+            }
+            if (str[i - 1] !== undefined && str[i - 1].trim() === "" && str[y] !== "." && (str[i - 2] === undefined || str[i - 2] !== ".")
+            ) {
+                for (y = i - 1; y--;) {
+                  if (str[y].trim() !== "") {
+                    rangesArr.push(y + 1, i);
+                    break;
+                  }
+                }
+              }
+          }
+        } else if (charcode === 47) ; else if (charcode === 58) {
+          if (str[y - 1] && str[right(str, y - 1)] === "/" && str[right(str, right(str, y - 1))] === "/") {
+            state.onUrlCurrently = true;
+          }
+        } else if (charcode === 60) {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, i + 1, "&lt;");
+          }
+        } else if (charcode === 62) {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, i + 1, "&gt;");
+          }
+        } else if (charcode === 119) {
+          if (str[y + 1] && str[y].toLowerCase() === "w" && str[y + 1].toLowerCase() === "w") {
+            state.onUrlCurrently = true;
+          }
+        } else if (charcode === 123) {
+          let stopUntil;
+          if (str[y] === "{") {
+            stopUntil = "}}";
+          } else if (str[y] === "%") {
+            stopUntil = "%}";
+          }
+          if (stopUntil) {
+            for (let z = i; z < len; z++) {
+              if (str[z] === stopUntil[0] && str[z + 1] === stopUntil[1]) {
+                offsetBy(z + 1 - i);
+                break;
+              }
+            }
+          }
+        }
+      }
+    } else {
+      if (charcode > 126 && charcode < 160) {
+        if (charcode !== 133) {
+          rangesArr.push(i, y);
+        } else {
+          applicableOpts.removeLineBreaks = true;
+          rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
+        }
+      } else if (charcode === 160) {
+        if (!opts.removeWidows) {
+          const calculatedFrom = i;
+          const calculatedTo = y;
+          let calculatedValue = " ";
+          const charOnTheLeft = left(str, i);
+          const charOnTheRight = right(str, calculatedTo - 1);
+          if (charOnTheLeft === null || charOnTheRight === null) {
+            calculatedValue = opts.convertEntities ? "&nbsp;" : rawNbsp;
+            applicableOpts.convertEntities = true;
+          } else {
+            applicableOpts.removeWidows = true;
+          }
+          if (calculatedValue) {
+            rangesArr.push(calculatedFrom, calculatedTo, calculatedValue);
+          } else {
+            rangesArr.push(calculatedFrom, calculatedTo);
+          }
+        } else {
+          applicableOpts.convertEntities = true;
+          applicableOpts.removeWidows = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&nbsp;");
+          }
+        }
+      } else if (charcode === 173) {
+        rangesArr.push(i, y);
+      } else if (charcode === 8232 || charcode === 8233) {
+        applicableOpts.removeLineBreaks = true;
+        rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
+      } else if ([5760, 8191, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200, 8201, 8202, 8239, 8287, 12288].includes(charcode)) {
+        if (!str[y]) {
+          rangesArr.push(i, y);
+        } else {
+          const expandedRange = expander({
+            str,
+            from: i,
+            to: y,
+            wipeAllWhitespaceOnLeft: true,
+            wipeAllWhitespaceOnRight: true,
+            addSingleSpaceToPreventAccidentalConcatenation: true
+          });
+          rangesArr.push(...expandedRange);
+        }
+      } else if (charcode === 8206) {
+        rangesArr.push(i, y);
+      } else if (charcode === 8207) {
+        rangesArr.push(i, y);
+      } else if (charcode === 8211 || charcode === 65533 && isNumber(str[i - 1]) && isNumber(str[y])) {
+        applicableOpts.convertDashes = true;
+        if (!opts.convertDashes) {
+          rangesArr.push(i, y, "-");
+        } else {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            if (str[i - 1] && !str[i - 1].trim() && str[i + 1] && !str[i + 1].trim() && !(isNumber(str[i - 2]) && isNumber(str[i + 2]))) {
+              rangesArr.push(i, y, "&mdash;");
+            } else {
+              rangesArr.push(i, y, "&ndash;");
+            }
+          } else if (charcode === 65533) {
+            if (str[i - 1] && !str[i - 1].trim() && str[i + 1] && !str[i + 1].trim()) {
+              rangesArr.push(i, y, rawMDash);
+            } else {
+              rangesArr.push(i, y, rawNDash);
+            }
+          }
+        }
+        if (str[i - 1] && !str[i - 1].trim() && str[y].trim()) {
+          if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
+            rangesArr.push(i - 1, i);
+          } else {
+            applicableOpts.addMissingSpaces = true;
+            applicableOpts.convertEntities = true;
+            if (opts.addMissingSpaces) {
+              let whatToAdd = " ";
+              if (!widowRegexTest.test(str.slice(y))) {
+                applicableOpts.removeWidows = true;
+                if (opts.removeWidows) {
+                  whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp;
+                }
+              }
+              rangesArr.push(y, y, whatToAdd);
+            }
+            if (str.slice(i - 1, i) !== rawNbsp) {
+              applicableOpts.removeWidows = true;
+              if (opts.removeWidows) {
+                rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+              }
+            }
+          }
+        } else if (str[i - 2] && str[i - 1] && str[y] && str[y + 1] && isNumber(str[i - 2]) && isNumber(str[y + 1]) && !str[i - 1].trim() && !str[y].trim()) {
+          rangesArr.push(i - 1, i);
+          rangesArr.push(y, y + 1);
+        }
+        if (str[i - 2] && str[i + 1] && !str[i - 1].trim() && str[i - 2].trim() && !str[i + 1].trim() && !(isNumber(str[i - 2]) && isNumber(str[i + 2]))) {
+          applicableOpts.removeWidows = true;
+          if (opts.removeWidows) {
+            rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+          }
+        }
+      } else if (charcode === 8212 || charcode === 65533 && str[i - 1] === " " && str[y] === " ") {
+        applicableOpts.convertDashes = true;
+        if (str[i - 1] === " " && left(str, i) !== null) {
+          applicableOpts.removeWidows = true;
+          if (opts.removeWidows) {
+            applicableOpts.convertEntities = true;
+            if (typeof left(str, i) === "number") {
+              rangesArr.push(left(str, i) + 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+            }
+          }
+        }
+        if (!opts.convertDashes) {
+          rangesArr.push(i, y, "-");
+        } else {
+          applicableOpts.convertEntities = true;
+          if (str[i - 1] && !str[i - 1].trim() && str[y].trim()) {
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
+          }
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&mdash;");
+          } else if (charcode === 65533) {
+            rangesArr.push(i, y, rawMDash);
+          }
+        }
+      } else if (charcode === 8216) {
+        const tempRes = convertOne(str, {
+          from: i,
+          to: y,
+          convertEntities: true,
+          convertApostrophes: true
+        });
+        if (tempRes && tempRes.length) {
+          applicableOpts.convertApostrophes = true;
+          const tempRes2 = convertOne(str, {
+            from: i,
+            to: y,
+            convertEntities: true,
+            convertApostrophes: true
+          });
+          if (tempRes2) {
+            if (opts.convertApostrophes) {
+              applicableOpts.convertEntities = true;
+            }
+            rangesArr.push(convertOne(str, {
+              from: i,
+              to: y,
+              convertEntities: opts.convertEntities,
+              convertApostrophes: opts.convertApostrophes,
+              offsetBy
+            }));
+          }
+        }
+      } else if (charcode === 8217) {
+        applicableOpts.convertApostrophes = true;
+        if (!opts.convertApostrophes) {
+          rangesArr.push(i, y, "'");
+        } else {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&rsquo;");
+          }
+        }
+      } else if (charcode === 8220) {
+        applicableOpts.convertApostrophes = true;
+        if (!opts.convertApostrophes) {
+          applicableOpts.convertEntities = true;
+          rangesArr.push(i, y, opts.convertEntities ? `&quot;` : `"`);
+        } else if (opts.convertEntities) {
+          applicableOpts.convertEntities = true;
+          rangesArr.push(i, y, "&ldquo;");
+        }
+      } else if (charcode === 8221) {
+        applicableOpts.convertApostrophes = true;
+        if (!opts.convertApostrophes) {
+          applicableOpts.convertEntities = true;
+          rangesArr.push(i, y, opts.convertEntities ? `&quot;` : `"`);
+        } else if (opts.convertEntities) {
+          applicableOpts.convertEntities = true;
+          rangesArr.push(i, y, "&rdquo;");
+        }
+      } else if (charcode === 8230) {
+        applicableOpts.convertDotsToEllipsis = true;
+        if (!opts.convertDotsToEllipsis) {
+          rangesArr.push(i, y, "...");
+        } else {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&hellip;");
+          }
+        }
+      } else if (charcode === 65279) {
+        rangesArr.push(i, y);
+      } else {
+        if (!applicableOpts.dontEncodeNonLatin && doConvertEntities(str[i], true) !== doConvertEntities(str[i], false)) {
+          applicableOpts.dontEncodeNonLatin = true;
+        }
+        let convertedCharVal = doConvertEntities(str[i], opts.dontEncodeNonLatin);
+        if (Object.keys(notEmailFriendly).includes(convertedCharVal.slice(1, convertedCharVal.length - 1))) {
+          convertedCharVal = `&${notEmailFriendly[convertedCharVal.slice(1, convertedCharVal.length - 1)]};`;
+        }
+        if (str[i] !== convertedCharVal) {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            if (convertedCharVal === "&mldr;") {
+              rangesArr.push(i, y, "&hellip;");
+            } else if (convertedCharVal !== "&apos;") {
+              rangesArr.push(i, y, convertedCharVal);
+            }
+            applicableOpts.convertEntities = true;
+          }
+        }
+      }
+    }
+    if (state.onUrlCurrently && !str[i].trim()) {
+      state.onUrlCurrently = false;
+    }
+  }
+}
+
+const version = version$1;
+function det(str, inputOpts) {
+  if (typeof str !== "string") {
+    throw new Error(`detergent(): [THROW_ID_01] the first input argument must be of a string type, not ${typeof str}`);
+  }
+  if (inputOpts && typeof inputOpts !== "object") {
+    throw new Error(`detergent(): [THROW_ID_02] Options object must be a plain object, not ${typeof inputOpts}`);
+  }
+  if (inputOpts && inputOpts.cb && typeof inputOpts.cb !== "function") {
+    throw new Error(`detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ${typeof inputOpts.cb} (value was given as:\n${JSON.stringify(inputOpts.cb, null, 0)})`);
+  }
+  const opts = { ...defaultOpts,
+    ...inputOpts
+  };
+  if (!["lf", "crlf", "cr"].includes(opts.eol)) {
+    opts.eol = "lf";
+  }
+  const applicableOpts = {
+    fixBrokenEntities: false,
+    removeWidows: false,
+    convertEntities: false,
+    convertDashes: false,
+    convertApostrophes: false,
+    replaceLineBreaks: false,
+    removeLineBreaks: false,
+    useXHTML: false,
+    dontEncodeNonLatin: false,
+    addMissingSpaces: false,
+    convertDotsToEllipsis: false,
+    stripHtml: false,
+    eol: false
+  };
+  let endOfLineVal = "\n";
+  if (opts.eol === "crlf") {
+    endOfLineVal = "\r\n";
+  } else if (opts.eol === "cr") {
+    endOfLineVal = "\r";
+  }
+  const brClosingBracketIndexesArr = [];
+  const finalIndexesToDelete = new Ranges({
+    limitToBeAddedWhitespace: false
+  });
+  const skipArr = new Ranges();
+  function applyAndWipe() {
+    str = rApply(str, finalIndexesToDelete.current());
+    finalIndexesToDelete.wipe();
+  }
+  function isNum(something) {
+    return Number.isInteger(something);
+  }
+  const state = {
+    onUrlCurrently: false
+  };
+  str = trimSpaces(str.replace(ansiRegex(), "").replace(/\u200A/g, " "), {
+    cr: true,
+    lf: true,
+    tab: true,
+    space: true,
+    nbsp: false
+  }).res;
+  let temp = str;
+  let lastVal;
+  do {
+    lastVal = temp;
+    temp = he.decode(temp);
+  } while (temp !== str && lastVal !== temp);
+  if (str !== temp) {
+    str = temp;
+  }
+  str = collapse(str, {
+    trimLines: true,
+    removeEmptyLines: true,
+    limitConsecutiveEmptyLinesTo: 1
+  }).result;
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (str[i].charCodeAt(0) === 65533) {
+      if (str[i - 1] && str[i + 1] && (str[i - 1].toLowerCase() === "n" && str[i + 1].toLowerCase() === "t" || isLetter(str[i - 1]) && str[i + 1].toLowerCase() === "s") || str[i + 2] && ((str[i + 1].toLowerCase() === "r" || str[i + 1].toLowerCase() === "v") && str[i + 2].toLowerCase() === "e" || str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l") && (str[i - 3] && str[i - 3].toLowerCase() === "y" && str[i - 2].toLowerCase() === "o" && str[i - 1].toLowerCase() === "u" || str[i - 2] && str[i - 2].toLowerCase() === "w" && str[i - 1].toLowerCase() === "e" || str[i - 4] && str[i - 4].toLowerCase() === "t" && str[i - 3].toLowerCase() === "h" && str[i - 2].toLowerCase() === "e" && str[i - 1].toLowerCase() === "y") || (str[i - 1] && str[i - 1].toLowerCase() === "i" || str[i - 2] && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e" || str[i - 3] && str[i - 3].toLowerCase() === "s" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e") && str[i + 2] && str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l" || str[i - 5] && str[i + 2] && str[i - 5].toLowerCase() === "m" && str[i - 4].toLowerCase() === "i" && str[i - 3].toLowerCase() === "g" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "t" && str[i + 1] === "v" && str[i + 2] === "e" || str[i - 1] && str[i - 1].toLowerCase() === "s" && (!str[i + 1] || !isLetter(str[i + 1]) && !isNumber(str[i + 1]))) {
+        const replacement = opts.convertApostrophes ? rightSingleQuote : "'";
+        finalIndexesToDelete.push(i, i + 1, `${replacement}`);
+        applicableOpts.convertApostrophes = true;
+      } else if (str[i - 2] && isLowercaseLetter(str[i - 2]) && !str[i - 1].trim() && str[i + 2] && isLowercaseLetter(str[i + 2]) && !str[i + 1].trim()) {
+        finalIndexesToDelete.push(i, i + 1, rawMDash);
+      } else {
+        finalIndexesToDelete.push(i, i + 1);
+      }
+    }
+  }
+  applyAndWipe();
+  const entityFixes = fixEnt(str, {
+    decode: false
+  });
+  if (entityFixes && entityFixes.length) {
+    applicableOpts.fixBrokenEntities = true;
+    if (opts.fixBrokenEntities) {
+      str = rApply(str, entityFixes);
+    }
+  }
+  if (typeof opts.cb === "function") {
+    if (str.includes("<") || str.includes(">")) {
+      const calcRanges = stripHtml(str, {
+        cb: ({
+          tag,
+          rangesArr
+        }) => {
+          return rangesArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1);
+        },
+        skipHtmlDecoding: true
+      }).ranges;
+      const outsideTagRanges = (rInvert(calcRanges, str.length) || []).reduce((accumRanges, currRange) => {
+        if (typeof opts.cb === "function" && str.slice(currRange[0], currRange[1]) !== opts.cb(str.slice(currRange[0], currRange[1]))) {
+          return accumRanges.concat([[currRange[0], currRange[1], opts.cb(str.slice(currRange[0], currRange[1]))]]);
+        }
+        return accumRanges;
+      }, []);
+      if (Array.isArray(outsideTagRanges) && outsideTagRanges.length) {
+        str = rApply(str, outsideTagRanges);
+      }
+    } else {
+      str = opts.cb(str);
+    }
+  }
+  if (str.includes("<") || str.includes(">")) {
+    const cb = ({
+      tag,
+      deleteFrom,
+      deleteTo,
+      proposedReturn
+    }) => {
+      if (isNum(tag.lastOpeningBracketAt) && isNum(tag.lastClosingBracketAt) && tag.lastOpeningBracketAt < tag.lastClosingBracketAt || tag.slashPresent) {
+        applicableOpts.stripHtml = true;
+        skipArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt ? tag.lastClosingBracketAt + 1 : str.length);
+        if (opts.stripHtml && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())) {
+          if (Array.isArray(opts.stripHtmlAddNewLine) && opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(tagName => tagName.startsWith("/") &&
+          tag.slashPresent &&
+          tag.slashPresent < tag.nameEnds && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !(
+          tag.slashPresent &&
+          tag.slashPresent < tag.nameEnds) && tag.name.toLowerCase() === removeTrailingSlash(tagName))) {
+            applicableOpts.removeLineBreaks = true;
+            if (!opts.removeLineBreaks && typeof deleteFrom === "number" && typeof deleteTo === "number") {
+              applicableOpts.replaceLineBreaks = true;
+              if (opts.replaceLineBreaks) {
+                applicableOpts.useXHTML = true;
+              }
+              finalIndexesToDelete.push(deleteFrom, deleteTo, `${opts.replaceLineBreaks ? `<br${opts.useXHTML ? "/" : ""}>` : ""}\n`);
+            } else {
+              finalIndexesToDelete.push(proposedReturn);
+            }
+          } else {
+            finalIndexesToDelete.push(proposedReturn);
+            skipArr.push(proposedReturn);
+          }
+        } else {
+          if (voidTags.includes(tag.name.toLowerCase())) {
+            applicableOpts.useXHTML = true;
+            if (str[left(str, tag.lastClosingBracketAt)] !== "/" && tag.lastClosingBracketAt) {
+              if (opts.useXHTML) {
+                finalIndexesToDelete.push(tag.lastClosingBracketAt, tag.lastClosingBracketAt, "/");
+              }
+            }
+            if (tag.slashPresent && isNum(tag.lastOpeningBracketAt) && tag.nameStarts && tag.lastOpeningBracketAt < tag.nameStarts - 1 && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(char => !char.trim() || char === "/")) {
+              finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
+            }
+            if (tag.slashPresent && str[left(str, tag.lastClosingBracketAt)] === "/") {
+              if (str[left(str, left(str, tag.lastClosingBracketAt))] === "/") {
+                applicableOpts.useXHTML = true;
+                if (!opts.useXHTML || typeof chompLeft(str, tag.lastClosingBracketAt, {
+                  mode: 2
+                }, "/") === "number" && str.slice(chompLeft(str, tag.lastClosingBracketAt, {
+                  mode: 2
+                }, "/"), tag.lastClosingBracketAt) !== "/") {
+                  finalIndexesToDelete.push(
+                  chompLeft(str, tag.lastClosingBracketAt, {
+                    mode: 2
+                  }, "/"), tag.lastClosingBracketAt, opts.useXHTML ? "/" : undefined);
+                }
+              } else if (!opts.useXHTML || typeof left(str, tag.slashPresent) !== "number" || str.slice(left(str, tag.slashPresent) + 1, tag.lastClosingBracketAt) !== "/") {
+                const calculatedFrom = left(str, tag.slashPresent) + 1;
+                const calculatedTo = tag.lastClosingBracketAt;
+                const whatToInsert = opts.useXHTML ? "/" : null;
+                if (whatToInsert) {
+                  finalIndexesToDelete.push(calculatedFrom, calculatedTo, whatToInsert);
+                } else {
+                  finalIndexesToDelete.push(calculatedFrom, calculatedTo);
+                }
+              }
+            }
+          }
+          else if (tag.slashPresent && str[left(str, tag.lastClosingBracketAt)] === "/") {
+              finalIndexesToDelete.push(chompLeft(str, tag.lastClosingBracketAt, {
+                mode: 2
+              }, "/"), tag.lastClosingBracketAt);
+              finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.lastOpeningBracketAt + 1, "/");
+            }
+          if (tag.name.toLowerCase() !== tag.name) {
+            finalIndexesToDelete.push(tag.nameStarts, tag.nameEnds, tag.name.toLowerCase());
+          }
+          if (`/>`.includes(str[right(str, tag.nameEnds - 1)]) && (right(str, tag.nameEnds - 1) || 0) > tag.nameEnds) {
+            finalIndexesToDelete.push(tag.nameEnds, right(str, tag.nameEnds - 1));
+          }
+          if (isNum(tag.lastOpeningBracketAt) && isNum(tag.nameStarts) && tag.lastOpeningBracketAt + 1 < tag.nameStarts) {
+            if (!str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim().length) {
+              finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
+            } else if (!voidTags.includes(tag.name.toLowerCase()) && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(char => !char.trim() || char === "/")) {
+              finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts, "/");
+            }
+          }
+        }
+        if (tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt) {
+          brClosingBracketIndexesArr.push(tag.lastClosingBracketAt);
+        }
+        if (["ul", "li"].includes(tag.name.toLowerCase()) && !opts.removeLineBreaks && str[tag.lastOpeningBracketAt - 1] && !str[tag.lastOpeningBracketAt - 1].trim() && typeof tag.lastOpeningBracketAt === "number" && typeof leftStopAtNewLines(str, tag.lastOpeningBracketAt) === "number") {
+          finalIndexesToDelete.push(leftStopAtNewLines(str, tag.lastOpeningBracketAt) + 1, tag.lastOpeningBracketAt);
+        }
+        if (str[tag.lastClosingBracketAt - 1] && !str[tag.lastClosingBracketAt - 1].trim() && typeof tag.lastClosingBracketAt === "number" && typeof left(str, tag.lastClosingBracketAt) === "number") {
+          finalIndexesToDelete.push(left(str, tag.lastClosingBracketAt) + 1, tag.lastClosingBracketAt);
+        }
+      }
+    };
+    stripHtml(str, {
+      cb,
+      trimOnlySpaces: true,
+      ignoreTags: opts.stripHtml ? opts.stripHtmlButIgnoreTags : [],
+      skipHtmlDecoding: true
+    });
+  }
+  rProcessOutside(str, skipArr.current(), (idxFrom, idxTo, offsetBy) => processCharacter(str, opts, finalIndexesToDelete, idxFrom, idxTo, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLineVal), true);
+  applyAndWipe();
+  str = str.replace(/ (<br[/]?>)/g, "$1");
+  str = str.replace(/(\r\n|\r|\n){3,}/g, `${endOfLineVal}${endOfLineVal}`);
+  const widowFixes = removeWidows(str, {
+    ignore: "all",
+    convertEntities: opts.convertEntities,
+    targetLanguage: "html",
+    UKPostcodes: true,
+    hyphens: opts.convertDashes,
+    tagRanges: skipArr.current()
+  });
+  if (widowFixes && widowFixes.ranges && widowFixes.ranges.length) {
+    if (!applicableOpts.removeWidows && widowFixes.whatWasDone.removeWidows) {
+      applicableOpts.removeWidows = true;
+      if (opts.removeWidows) {
+        applicableOpts.convertEntities = true;
+      }
+    }
+    if (!applicableOpts.convertEntities && widowFixes.whatWasDone.convertEntities) {
+      applicableOpts.convertEntities = true;
+    }
+    if (opts.removeWidows) {
+      str = widowFixes.res;
+    }
+  }
+  if (str !== str.replace(/\r\n|\r|\n/gm, " ")) {
+    applicableOpts.removeLineBreaks = true;
+    if (opts.removeLineBreaks) {
+      str = str.replace(/\r\n|\r|\n/gm, " ");
+    }
+  }
+  str = collapse(str, {
+    trimLines: true
+  }).result;
+  rApply(str, finalIndexesToDelete.current()).split("").forEach((key, idx) => {
+  });
+  return {
+    res: rApply(str, finalIndexesToDelete.current()),
+    applicableOpts
+  };
+}
+
+export { det, defaultOpts as opts, version };

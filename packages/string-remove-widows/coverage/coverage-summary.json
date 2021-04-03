@@ -1,1 +1,1 @@
-{"total":{"lines":{"total":5,"covered":5,"skipped":0,"pct":100},"statements":{"total":76,"covered":71,"skipped":0,"pct":93.42},"functions":{"total":14,"covered":14,"skipped":0,"pct":100},"branches":{"total":289,"covered":255,"skipped":0,"pct":88.24}}}
+{"total":{"lines":{"total":205,"covered":187,"skipped":0,"pct":91.22},"statements":{"total":209,"covered":191,"skipped":0,"pct":91.39},"functions":{"total":14,"covered":14,"skipped":0,"pct":100},"branches":{"total":297,"covered":262,"skipped":0,"pct":88.22}}}

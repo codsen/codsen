@@ -1,48 +1,5430 @@
 /**
- * @name string-strip-html
- * @fileoverview Strips HTML tags from strings. No parser, accepts mixed sources.
- * @version 8.2.9
- * @author Roy Revelt, Codsen Ltd
- * @license MIT
- * {@link https://codsen.com/os/string-strip-html/}
+ * string-strip-html
+ * Strips HTML tags from strings. No parser, accepts mixed sources.
+ * Version: 8.2.9
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-strip-html/
  */
 
-var stringStripHtml=(()=>{var En=Object.create,ke=Object.defineProperty,kn=Object.getPrototypeOf,rt=Object.prototype.hasOwnProperty,xn=Object.getOwnPropertyNames,Nn=Object.getOwnPropertyDescriptor,tt=Object.getOwnPropertySymbols,Dn=Object.prototype.propertyIsEnumerable;var nt=(e,n,i)=>n in e?ke(e,n,{enumerable:!0,configurable:!0,writable:!0,value:i}):e[n]=i,H=(e,n)=>{for(var i in n||(n={}))rt.call(n,i)&&nt(e,i,n[i]);if(tt)for(var i of tt(n))Dn.call(n,i)&&nt(e,i,n[i]);return e},Rn=e=>ke(e,"__esModule",{value:!0});var re=(e,n)=>()=>(n||e((n={exports:{}}).exports,n),n.exports),_n=(e,n)=>{for(var i in n)ke(e,i,{get:n[i],enumerable:!0})},jn=(e,n,i)=>{if(n&&typeof n=="object"||typeof n=="function")for(let p of xn(n))!rt.call(e,p)&&p!=="default"&&ke(e,p,{get:()=>n[p],enumerable:!(i=Nn(n,p))||i.enumerable});return e},ge=e=>jn(Rn(ke(e!=null?En(kn(e)):{},"default",e&&e.__esModule&&"default"in e?{get:()=>e.default,enumerable:!0}:{value:e,enumerable:!0})),e);var st=re((Ro,at)=>{var Ln="[object Object]";function Cn(e){var n=!1;if(e!=null&&typeof e.toString!="function")try{n=!!(e+"")}catch(i){}return n}function Bn(e,n){return function(i){return e(n(i))}}var In=Function.prototype,ot=Object.prototype,it=In.toString,Hn=ot.hasOwnProperty,Fn=it.call(Object),Un=ot.toString,Pn=Bn(Object.getPrototypeOf,Object);function Wn(e){return!!e&&typeof e=="object"}function Jn(e){if(!Wn(e)||Un.call(e)!=Ln||Cn(e))return!1;var n=Pn(e);if(n===null)return!0;var i=Hn.call(n,"constructor")&&n.constructor;return typeof i=="function"&&i instanceof i&&it.call(i)==Fn}at.exports=Jn});var At=re((_o,lt)=>{var Vn=1/0,Gn="[object Symbol]",zn=/^\s+|\s+$/g,nr="\\ud800-\\udfff",ut="\\u0300-\\u036f\\ufe20-\\ufe23",ct="\\u20d0-\\u20f0",gt="\\ufe0e\\ufe0f",Mn="["+nr+"]",ar="["+ut+ct+"]",or="\\ud83c[\\udffb-\\udfff]",Yn="(?:"+ar+"|"+or+")",pt="[^"+nr+"]",ft="(?:\\ud83c[\\udde6-\\uddff]){2}",mt="[\\ud800-\\udbff][\\udc00-\\udfff]",dt="\\u200d",ht=Yn+"?",bt="["+gt+"]?",Zn="(?:"+dt+"(?:"+[pt,ft,mt].join("|")+")"+bt+ht+")*",Kn=bt+ht+Zn,Xn="(?:"+[pt+ar+"?",ar,ft,mt,Mn].join("|")+")",Qn=RegExp(or+"(?="+or+")|"+Xn+Kn,"g"),ea=RegExp("["+dt+nr+ut+ct+gt+"]"),ra=typeof global=="object"&&global&&global.Object===Object&&global,ta=typeof self=="object"&&self&&self.Object===Object&&self,na=ra||ta||Function("return this")();function aa(e){return e.split("")}function oa(e,n,i,p){for(var x=e.length,y=i+(p?1:-1);p?y--:++y<x;)if(n(e[y],y,e))return y;return-1}function yt(e,n,i){if(n!==n)return oa(e,ia,i);for(var p=i-1,x=e.length;++p<x;)if(e[p]===n)return p;return-1}function ia(e){return e!==e}function sa(e,n){for(var i=-1,p=e.length;++i<p&&yt(n,e[i],0)>-1;);return i}function la(e,n){for(var i=e.length;i--&&yt(n,e[i],0)>-1;);return i}function ua(e){return ea.test(e)}function $t(e){return ua(e)?ca(e):aa(e)}function ca(e){return e.match(Qn)||[]}var ga=Object.prototype,pa=ga.toString,vt=na.Symbol,wt=vt?vt.prototype:void 0,Tt=wt?wt.toString:void 0;function fa(e,n,i){var p=-1,x=e.length;n<0&&(n=-n>x?0:x+n),i=i>x?x:i,i<0&&(i+=x),x=n>i?0:i-n>>>0,n>>>=0;for(var y=Array(x);++p<x;)y[p]=e[p+n];return y}function Ot(e){if(typeof e=="string")return e;if(ma(e))return Tt?Tt.call(e):"";var n=e+"";return n=="0"&&1/e==-Vn?"-0":n}function da(e,n,i){var p=e.length;return i=i===void 0?p:i,!n&&i>=p?e:fa(e,n,i)}function ha(e){return!!e&&typeof e=="object"}function ma(e){return typeof e=="symbol"||ha(e)&&pa.call(e)==Gn}function ba(e){return e==null?"":Ot(e)}function ya(e,n,i){if(e=ba(e),e&&(i||n===void 0))return e.replace(zn,"");if(!e||!(n=Ot(n)))return e;var p=$t(e),x=$t(n),y=sa(p,x),$=la(p,x)+1;return da(p,y,$).join("")}lt.exports=ya});var jt=re((jo,qt)=>{var $a=200,ir="__lodash_hash_undefined__",va=9007199254740991,wa="[object Function]",Ta="[object GeneratorFunction]",Oa=/[\\^$.*+?()[\]{}|]/g,Aa=/^\[object .+?Constructor\]$/,qa=typeof global=="object"&&global&&global.Object===Object&&global,Sa=typeof self=="object"&&self&&self.Object===Object&&self,St=qa||Sa||Function("return this")();function Ea(e,n,i){switch(i.length){case 0:return e.call(n);case 1:return e.call(n,i[0]);case 2:return e.call(n,i[0],i[1]);case 3:return e.call(n,i[0],i[1],i[2])}return e.apply(n,i)}function xa(e,n){var i=e?e.length:0;return!!i&&ka(e,n,0)>-1}function Na(e,n,i){for(var p=-1,x=e?e.length:0;++p<x;)if(i(n,e[p]))return!0;return!1}function Da(e,n){for(var i=-1,p=e?e.length:0,x=Array(p);++i<p;)x[i]=n(e[i],i,e);return x}function Ra(e,n,i,p){for(var x=e.length,y=i+(p?1:-1);p?y--:++y<x;)if(n(e[y],y,e))return y;return-1}function ka(e,n,i){if(n!==n)return Ra(e,_a,i);for(var p=i-1,x=e.length;++p<x;)if(e[p]===n)return p;return-1}function _a(e){return e!==e}function ja(e){return function(n){return e(n)}}function La(e,n){return e.has(n)}function Ca(e,n){return e==null?void 0:e[n]}function Ba(e){var n=!1;if(e!=null&&typeof e.toString!="function")try{n=!!(e+"")}catch(i){}return n}var Ia=Array.prototype,Ha=Function.prototype,Et=Object.prototype,sr=St["__core-js_shared__"],kt=function(){var e=/[^.]+$/.exec(sr&&sr.keys&&sr.keys.IE_PROTO||"");return e?"Symbol(src)_1."+e:""}(),xt=Ha.toString,lr=Et.hasOwnProperty,Fa=Et.toString,Ua=RegExp("^"+xt.call(lr).replace(Oa,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$"),Pa=Ia.splice,Nt=Math.max,Wa=Dt(St,"Map"),xe=Dt(Object,"create");function pe(e){var n=-1,i=e?e.length:0;for(this.clear();++n<i;){var p=e[n];this.set(p[0],p[1])}}function Ja(){this.__data__=xe?xe(null):{}}function Va(e){return this.has(e)&&delete this.__data__[e]}function Ga(e){var n=this.__data__;if(xe){var i=n[e];return i===ir?void 0:i}return lr.call(n,e)?n[e]:void 0}function za(e){var n=this.__data__;return xe?n[e]!==void 0:lr.call(n,e)}function Ma(e,n){var i=this.__data__;return i[e]=xe&&n===void 0?ir:n,this}pe.prototype.clear=Ja;pe.prototype.delete=Va;pe.prototype.get=Ga;pe.prototype.has=za;pe.prototype.set=Ma;function $e(e){var n=-1,i=e?e.length:0;for(this.clear();++n<i;){var p=e[n];this.set(p[0],p[1])}}function Ya(){this.__data__=[]}function Za(e){var n=this.__data__,i=Ie(n,e);if(i<0)return!1;var p=n.length-1;return i==p?n.pop():Pa.call(n,i,1),!0}function Ka(e){var n=this.__data__,i=Ie(n,e);return i<0?void 0:n[i][1]}function Xa(e){return Ie(this.__data__,e)>-1}function Qa(e,n){var i=this.__data__,p=Ie(i,e);return p<0?i.push([e,n]):i[p][1]=n,this}$e.prototype.clear=Ya;$e.prototype.delete=Za;$e.prototype.get=Ka;$e.prototype.has=Xa;$e.prototype.set=Qa;function ve(e){var n=-1,i=e?e.length:0;for(this.clear();++n<i;){var p=e[n];this.set(p[0],p[1])}}function eo(){this.__data__={hash:new pe,map:new(Wa||$e),string:new pe}}function ro(e){return He(this,e).delete(e)}function to(e){return He(this,e).get(e)}function no(e){return He(this,e).has(e)}function ao(e,n){return He(this,e).set(e,n),this}ve.prototype.clear=eo;ve.prototype.delete=ro;ve.prototype.get=to;ve.prototype.has=no;ve.prototype.set=ao;function Fe(e){var n=-1,i=e?e.length:0;for(this.__data__=new ve;++n<i;)this.add(e[n])}function oo(e){return this.__data__.set(e,ir),this}function io(e){return this.__data__.has(e)}Fe.prototype.add=Fe.prototype.push=oo;Fe.prototype.has=io;function Ie(e,n){for(var i=e.length;i--;)if(so(e[i][0],n))return i;return-1}function lo(e,n,i,p){var x=-1,y=xa,$=!0,S=e.length,d=[],r=n.length;if(!S)return d;i&&(n=Da(n,ja(i))),p?(y=Na,$=!1):n.length>=$a&&(y=La,$=!1,n=new Fe(n));e:for(;++x<S;){var g=e[x],v=i?i(g):g;if(g=p||g!==0?g:0,$&&v===v){for(var c=r;c--;)if(n[c]===v)continue e;d.push(g)}else y(n,v,p)||d.push(g)}return d}function go(e){if(!_t(e)||uo(e))return!1;var n=Rt(e)||Ba(e)?Ua:Aa;return n.test(co(e))}function po(e,n){return n=Nt(n===void 0?e.length-1:n,0),function(){for(var i=arguments,p=-1,x=Nt(i.length-n,0),y=Array(x);++p<x;)y[p]=i[n+p];p=-1;for(var $=Array(n+1);++p<n;)$[p]=i[p];return $[n]=y,Ea(e,this,$)}}function He(e,n){var i=e.__data__;return fo(n)?i[typeof n=="string"?"string":"hash"]:i.map}function Dt(e,n){var i=Ca(e,n);return go(i)?i:void 0}function fo(e){var n=typeof e;return n=="string"||n=="number"||n=="symbol"||n=="boolean"?e!=="__proto__":e===null}function uo(e){return!!kt&&kt in e}function co(e){if(e!=null){try{return xt.call(e)}catch(n){}try{return e+""}catch(n){}}return""}var ho=po(function(e,n){return mo(e)?lo(e,n):[]});function so(e,n){return e===n||e!==e&&n!==n}function yo(e){return e!=null&&bo(e.length)&&!Rt(e)}function mo(e){return $o(e)&&yo(e)}function Rt(e){var n=_t(e)?Fa.call(e):"";return n==wa||n==Ta}function bo(e){return typeof e=="number"&&e>-1&&e%1==0&&e<=va}function _t(e){var n=typeof e;return!!e&&(n=="object"||n=="function")}function $o(e){return!!e&&typeof e=="object"}qt.exports=ho});var Lt=re(Ue=>{"use strict";Object.defineProperty(Ue,"__esModule",{value:!0});Ue.bodyRegExps={xml:/&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g,html4:/&(?:nbsp|iexcl|cent|pound|curren|yen|brvbar|sect|uml|copy|ordf|laquo|not|shy|reg|macr|deg|plusmn|sup2|sup3|acute|micro|para|middot|cedil|sup1|ordm|raquo|frac14|frac12|frac34|iquest|Agrave|Aacute|Acirc|Atilde|Auml|Aring|AElig|Ccedil|Egrave|Eacute|Ecirc|Euml|Igrave|Iacute|Icirc|Iuml|ETH|Ntilde|Ograve|Oacute|Ocirc|Otilde|Ouml|times|Oslash|Ugrave|Uacute|Ucirc|Uuml|Yacute|THORN|szlig|agrave|aacute|acirc|atilde|auml|aring|aelig|ccedil|egrave|eacute|ecirc|euml|igrave|iacute|icirc|iuml|eth|ntilde|ograve|oacute|ocirc|otilde|ouml|divide|oslash|ugrave|uacute|ucirc|uuml|yacute|thorn|yuml|quot|amp|lt|gt|#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g,html5:/&(?:AElig|AMP|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|GT|Iacute|Icirc|Igrave|Iuml|LT|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|QUOT|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|amp|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|gt|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|lt|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|quot|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml|#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g};Ue.namedReferences={xml:{entities:{"&lt;":"<","&gt;":">","&quot;":'"',"&apos;":"'","&amp;":"&"},characters:{"<":"&lt;",">":"&gt;",'"':"&quot;","'":"&apos;","&":"&amp;"}},html4:{entities:{"&apos;":"'","&nbsp":"\xA0","&nbsp;":"\xA0","&iexcl":"\xA1","&iexcl;":"\xA1","&cent":"\xA2","&cent;":"\xA2","&pound":"\xA3","&pound;":"\xA3","&curren":"\xA4","&curren;":"\xA4","&yen":"\xA5","&yen;":"\xA5","&brvbar":"\xA6","&brvbar;":"\xA6","&sect":"\xA7","&sect;":"\xA7","&uml":"\xA8","&uml;":"\xA8","&copy":"\xA9","&copy;":"\xA9","&ordf":"\xAA","&ordf;":"\xAA","&laquo":"\xAB","&laquo;":"\xAB","&not":"\xAC","&not;":"\xAC","&shy":"\xAD","&shy;":"\xAD","&reg":"\xAE","&reg;":"\xAE","&macr":"\xAF","&macr;":"\xAF","&deg":"\xB0","&deg;":"\xB0","&plusmn":"\xB1","&plusmn;":"\xB1","&sup2":"\xB2","&sup2;":"\xB2","&sup3":"\xB3","&sup3;":"\xB3","&acute":"\xB4","&acute;":"\xB4","&micro":"\xB5","&micro;":"\xB5","&para":"\xB6","&para;":"\xB6","&middot":"\xB7","&middot;":"\xB7","&cedil":"\xB8","&cedil;":"\xB8","&sup1":"\xB9","&sup1;":"\xB9","&ordm":"\xBA","&ordm;":"\xBA","&raquo":"\xBB","&raquo;":"\xBB","&frac14":"\xBC","&frac14;":"\xBC","&frac12":"\xBD","&frac12;":"\xBD","&frac34":"\xBE","&frac34;":"\xBE","&iquest":"\xBF","&iquest;":"\xBF","&Agrave":"\xC0","&Agrave;":"\xC0","&Aacute":"\xC1","&Aacute;":"\xC1","&Acirc":"\xC2","&Acirc;":"\xC2","&Atilde":"\xC3","&Atilde;":"\xC3","&Auml":"\xC4","&Auml;":"\xC4","&Aring":"\xC5","&Aring;":"\xC5","&AElig":"\xC6","&AElig;":"\xC6","&Ccedil":"\xC7","&Ccedil;":"\xC7","&Egrave":"\xC8","&Egrave;":"\xC8","&Eacute":"\xC9","&Eacute;":"\xC9","&Ecirc":"\xCA","&Ecirc;":"\xCA","&Euml":"\xCB","&Euml;":"\xCB","&Igrave":"\xCC","&Igrave;":"\xCC","&Iacute":"\xCD","&Iacute;":"\xCD","&Icirc":"\xCE","&Icirc;":"\xCE","&Iuml":"\xCF","&Iuml;":"\xCF","&ETH":"\xD0","&ETH;":"\xD0","&Ntilde":"\xD1","&Ntilde;":"\xD1","&Ograve":"\xD2","&Ograve;":"\xD2","&Oacute":"\xD3","&Oacute;":"\xD3","&Ocirc":"\xD4","&Ocirc;":"\xD4","&Otilde":"\xD5","&Otilde;":"\xD5","&Ouml":"\xD6","&Ouml;":"\xD6","&times":"\xD7","&times;":"\xD7","&Oslash":"\xD8","&Oslash;":"\xD8","&Ugrave":"\xD9","&Ugrave;":"\xD9","&Uacute":"\xDA","&Uacute;":"\xDA","&Ucirc":"\xDB","&Ucirc;":"\xDB","&Uuml":"\xDC","&Uuml;":"\xDC","&Yacute":"\xDD","&Yacute;":"\xDD","&THORN":"\xDE","&THORN;":"\xDE","&szlig":"\xDF","&szlig;":"\xDF","&agrave":"\xE0","&agrave;":"\xE0","&aacute":"\xE1","&aacute;":"\xE1","&acirc":"\xE2","&acirc;":"\xE2","&atilde":"\xE3","&atilde;":"\xE3","&auml":"\xE4","&auml;":"\xE4","&aring":"\xE5","&aring;":"\xE5","&aelig":"\xE6","&aelig;":"\xE6","&ccedil":"\xE7","&ccedil;":"\xE7","&egrave":"\xE8","&egrave;":"\xE8","&eacute":"\xE9","&eacute;":"\xE9","&ecirc":"\xEA","&ecirc;":"\xEA","&euml":"\xEB","&euml;":"\xEB","&igrave":"\xEC","&igrave;":"\xEC","&iacute":"\xED","&iacute;":"\xED","&icirc":"\xEE","&icirc;":"\xEE","&iuml":"\xEF","&iuml;":"\xEF","&eth":"\xF0","&eth;":"\xF0","&ntilde":"\xF1","&ntilde;":"\xF1","&ograve":"\xF2","&ograve;":"\xF2","&oacute":"\xF3","&oacute;":"\xF3","&ocirc":"\xF4","&ocirc;":"\xF4","&otilde":"\xF5","&otilde;":"\xF5","&ouml":"\xF6","&ouml;":"\xF6","&divide":"\xF7","&divide;":"\xF7","&oslash":"\xF8","&oslash;":"\xF8","&ugrave":"\xF9","&ugrave;":"\xF9","&uacute":"\xFA","&uacute;":"\xFA","&ucirc":"\xFB","&ucirc;":"\xFB","&uuml":"\xFC","&uuml;":"\xFC","&yacute":"\xFD","&yacute;":"\xFD","&thorn":"\xFE","&thorn;":"\xFE","&yuml":"\xFF","&yuml;":"\xFF","&quot":'"',"&quot;":'"',"&amp":"&","&amp;":"&","&lt":"<","&lt;":"<","&gt":">","&gt;":">","&OElig;":"\u0152","&oelig;":"\u0153","&Scaron;":"\u0160","&scaron;":"\u0161","&Yuml;":"\u0178","&circ;":"\u02C6","&tilde;":"\u02DC","&ensp;":"\u2002","&emsp;":"\u2003","&thinsp;":"\u2009","&zwnj;":"\u200C","&zwj;":"\u200D","&lrm;":"\u200E","&rlm;":"\u200F","&ndash;":"\u2013","&mdash;":"\u2014","&lsquo;":"\u2018","&rsquo;":"\u2019","&sbquo;":"\u201A","&ldquo;":"\u201C","&rdquo;":"\u201D","&bdquo;":"\u201E","&dagger;":"\u2020","&Dagger;":"\u2021","&permil;":"\u2030","&lsaquo;":"\u2039","&rsaquo;":"\u203A","&euro;":"\u20AC","&fnof;":"\u0192","&Alpha;":"\u0391","&Beta;":"\u0392","&Gamma;":"\u0393","&Delta;":"\u0394","&Epsilon;":"\u0395","&Zeta;":"\u0396","&Eta;":"\u0397","&Theta;":"\u0398","&Iota;":"\u0399","&Kappa;":"\u039A","&Lambda;":"\u039B","&Mu;":"\u039C","&Nu;":"\u039D","&Xi;":"\u039E","&Omicron;":"\u039F","&Pi;":"\u03A0","&Rho;":"\u03A1","&Sigma;":"\u03A3","&Tau;":"\u03A4","&Upsilon;":"\u03A5","&Phi;":"\u03A6","&Chi;":"\u03A7","&Psi;":"\u03A8","&Omega;":"\u03A9","&alpha;":"\u03B1","&beta;":"\u03B2","&gamma;":"\u03B3","&delta;":"\u03B4","&epsilon;":"\u03B5","&zeta;":"\u03B6","&eta;":"\u03B7","&theta;":"\u03B8","&iota;":"\u03B9","&kappa;":"\u03BA","&lambda;":"\u03BB","&mu;":"\u03BC","&nu;":"\u03BD","&xi;":"\u03BE","&omicron;":"\u03BF","&pi;":"\u03C0","&rho;":"\u03C1","&sigmaf;":"\u03C2","&sigma;":"\u03C3","&tau;":"\u03C4","&upsilon;":"\u03C5","&phi;":"\u03C6","&chi;":"\u03C7","&psi;":"\u03C8","&omega;":"\u03C9","&thetasym;":"\u03D1","&upsih;":"\u03D2","&piv;":"\u03D6","&bull;":"\u2022","&hellip;":"\u2026","&prime;":"\u2032","&Prime;":"\u2033","&oline;":"\u203E","&frasl;":"\u2044","&weierp;":"\u2118","&image;":"\u2111","&real;":"\u211C","&trade;":"\u2122","&alefsym;":"\u2135","&larr;":"\u2190","&uarr;":"\u2191","&rarr;":"\u2192","&darr;":"\u2193","&harr;":"\u2194","&crarr;":"\u21B5","&lArr;":"\u21D0","&uArr;":"\u21D1","&rArr;":"\u21D2","&dArr;":"\u21D3","&hArr;":"\u21D4","&forall;":"\u2200","&part;":"\u2202","&exist;":"\u2203","&empty;":"\u2205","&nabla;":"\u2207","&isin;":"\u2208","&notin;":"\u2209","&ni;":"\u220B","&prod;":"\u220F","&sum;":"\u2211","&minus;":"\u2212","&lowast;":"\u2217","&radic;":"\u221A","&prop;":"\u221D","&infin;":"\u221E","&ang;":"\u2220","&and;":"\u2227","&or;":"\u2228","&cap;":"\u2229","&cup;":"\u222A","&int;":"\u222B","&there4;":"\u2234","&sim;":"\u223C","&cong;":"\u2245","&asymp;":"\u2248","&ne;":"\u2260","&equiv;":"\u2261","&le;":"\u2264","&ge;":"\u2265","&sub;":"\u2282","&sup;":"\u2283","&nsub;":"\u2284","&sube;":"\u2286","&supe;":"\u2287","&oplus;":"\u2295","&otimes;":"\u2297","&perp;":"\u22A5","&sdot;":"\u22C5","&lceil;":"\u2308","&rceil;":"\u2309","&lfloor;":"\u230A","&rfloor;":"\u230B","&lang;":"\u2329","&rang;":"\u232A","&loz;":"\u25CA","&spades;":"\u2660","&clubs;":"\u2663","&hearts;":"\u2665","&diams;":"\u2666"},characters:{"'":"&apos;","\xA0":"&nbsp;","\xA1":"&iexcl;","\xA2":"&cent;","\xA3":"&pound;","\xA4":"&curren;","\xA5":"&yen;","\xA6":"&brvbar;","\xA7":"&sect;","\xA8":"&uml;","\xA9":"&copy;",\u00AA:"&ordf;","\xAB":"&laquo;","\xAC":"&not;","\xAD":"&shy;","\xAE":"&reg;","\xAF":"&macr;","\xB0":"&deg;","\xB1":"&plusmn;","\xB2":"&sup2;","\xB3":"&sup3;","\xB4":"&acute;",\u00B5:"&micro;","\xB6":"&para;","\xB7":"&middot;","\xB8":"&cedil;","\xB9":"&sup1;",\u00BA:"&ordm;","\xBB":"&raquo;","\xBC":"&frac14;","\xBD":"&frac12;","\xBE":"&frac34;","\xBF":"&iquest;",\u00C0:"&Agrave;",\u00C1:"&Aacute;",\u00C2:"&Acirc;",\u00C3:"&Atilde;",\u00C4:"&Auml;",\u00C5:"&Aring;",\u00C6:"&AElig;",\u00C7:"&Ccedil;",\u00C8:"&Egrave;",\u00C9:"&Eacute;",\u00CA:"&Ecirc;",\u00CB:"&Euml;",\u00CC:"&Igrave;",\u00CD:"&Iacute;",\u00CE:"&Icirc;",\u00CF:"&Iuml;",\u00D0:"&ETH;",\u00D1:"&Ntilde;",\u00D2:"&Ograve;",\u00D3:"&Oacute;",\u00D4:"&Ocirc;",\u00D5:"&Otilde;",\u00D6:"&Ouml;","\xD7":"&times;",\u00D8:"&Oslash;",\u00D9:"&Ugrave;",\u00DA:"&Uacute;",\u00DB:"&Ucirc;",\u00DC:"&Uuml;",\u00DD:"&Yacute;",\u00DE:"&THORN;",\u00DF:"&szlig;",\u00E0:"&agrave;",\u00E1:"&aacute;",\u00E2:"&acirc;",\u00E3:"&atilde;",\u00E4:"&auml;",\u00E5:"&aring;",\u00E6:"&aelig;",\u00E7:"&ccedil;",\u00E8:"&egrave;",\u00E9:"&eacute;",\u00EA:"&ecirc;",\u00EB:"&euml;",\u00EC:"&igrave;",\u00ED:"&iacute;",\u00EE:"&icirc;",\u00EF:"&iuml;",\u00F0:"&eth;",\u00F1:"&ntilde;",\u00F2:"&ograve;",\u00F3:"&oacute;",\u00F4:"&ocirc;",\u00F5:"&otilde;",\u00F6:"&ouml;","\xF7":"&divide;",\u00F8:"&oslash;",\u00F9:"&ugrave;",\u00FA:"&uacute;",\u00FB:"&ucirc;",\u00FC:"&uuml;",\u00FD:"&yacute;",\u00FE:"&thorn;",\u00FF:"&yuml;",'"':"&quot;","&":"&amp;","<":"&lt;",">":"&gt;",\u0152:"&OElig;",\u0153:"&oelig;",\u0160:"&Scaron;",\u0161:"&scaron;",\u0178:"&Yuml;",\u02C6:"&circ;","\u02DC":"&tilde;","\u2002":"&ensp;","\u2003":"&emsp;","\u2009":"&thinsp;","\u200C":"&zwnj;","\u200D":"&zwj;","\u200E":"&lrm;","\u200F":"&rlm;","\u2013":"&ndash;","\u2014":"&mdash;","\u2018":"&lsquo;","\u2019":"&rsquo;","\u201A":"&sbquo;","\u201C":"&ldquo;","\u201D":"&rdquo;","\u201E":"&bdquo;","\u2020":"&dagger;","\u2021":"&Dagger;","\u2030":"&permil;","\u2039":"&lsaquo;","\u203A":"&rsaquo;","\u20AC":"&euro;",\u0192:"&fnof;",\u0391:"&Alpha;",\u0392:"&Beta;",\u0393:"&Gamma;",\u0394:"&Delta;",\u0395:"&Epsilon;",\u0396:"&Zeta;",\u0397:"&Eta;",\u0398:"&Theta;",\u0399:"&Iota;",\u039A:"&Kappa;",\u039B:"&Lambda;",\u039C:"&Mu;",\u039D:"&Nu;",\u039E:"&Xi;",\u039F:"&Omicron;",\u03A0:"&Pi;",\u03A1:"&Rho;",\u03A3:"&Sigma;",\u03A4:"&Tau;",\u03A5:"&Upsilon;",\u03A6:"&Phi;",\u03A7:"&Chi;",\u03A8:"&Psi;",\u03A9:"&Omega;",\u03B1:"&alpha;",\u03B2:"&beta;",\u03B3:"&gamma;",\u03B4:"&delta;",\u03B5:"&epsilon;",\u03B6:"&zeta;",\u03B7:"&eta;",\u03B8:"&theta;",\u03B9:"&iota;",\u03BA:"&kappa;",\u03BB:"&lambda;",\u03BC:"&mu;",\u03BD:"&nu;",\u03BE:"&xi;",\u03BF:"&omicron;",\u03C0:"&pi;",\u03C1:"&rho;",\u03C2:"&sigmaf;",\u03C3:"&sigma;",\u03C4:"&tau;",\u03C5:"&upsilon;",\u03C6:"&phi;",\u03C7:"&chi;",\u03C8:"&psi;",\u03C9:"&omega;",\u03D1:"&thetasym;",\u03D2:"&upsih;",\u03D6:"&piv;","\u2022":"&bull;","\u2026":"&hellip;","\u2032":"&prime;","\u2033":"&Prime;","\u203E":"&oline;","\u2044":"&frasl;",\u2118:"&weierp;",\u2111:"&image;",\u211C:"&real;","\u2122":"&trade;",\u2135:"&alefsym;","\u2190":"&larr;","\u2191":"&uarr;","\u2192":"&rarr;","\u2193":"&darr;","\u2194":"&harr;","\u21B5":"&crarr;","\u21D0":"&lArr;","\u21D1":"&uArr;","\u21D2":"&rArr;","\u21D3":"&dArr;","\u21D4":"&hArr;","\u2200":"&forall;","\u2202":"&part;","\u2203":"&exist;","\u2205":"&empty;","\u2207":"&nabla;","\u2208":"&isin;","\u2209":"&notin;","\u220B":"&ni;","\u220F":"&prod;","\u2211":"&sum;","\u2212":"&minus;","\u2217":"&lowast;","\u221A":"&radic;","\u221D":"&prop;","\u221E":"&infin;","\u2220":"&ang;","\u2227":"&and;","\u2228":"&or;","\u2229":"&cap;","\u222A":"&cup;","\u222B":"&int;","\u2234":"&there4;","\u223C":"&sim;","\u2245":"&cong;","\u2248":"&asymp;","\u2260":"&ne;","\u2261":"&equiv;","\u2264":"&le;","\u2265":"&ge;","\u2282":"&sub;","\u2283":"&sup;","\u2284":"&nsub;","\u2286":"&sube;","\u2287":"&supe;","\u2295":"&oplus;","\u2297":"&otimes;","\u22A5":"&perp;","\u22C5":"&sdot;","\u2308":"&lceil;","\u2309":"&rceil;","\u230A":"&lfloor;","\u230B":"&rfloor;","\u2329":"&lang;","\u232A":"&rang;","\u25CA":"&loz;","\u2660":"&spades;","\u2663":"&clubs;","\u2665":"&hearts;","\u2666":"&diams;"}},html5:{entities:{"&AElig":"\xC6","&AElig;":"\xC6","&AMP":"&","&AMP;":"&","&Aacute":"\xC1","&Aacute;":"\xC1","&Abreve;":"\u0102","&Acirc":"\xC2","&Acirc;":"\xC2","&Acy;":"\u0410","&Afr;":"\u{1D504}","&Agrave":"\xC0","&Agrave;":"\xC0","&Alpha;":"\u0391","&Amacr;":"\u0100","&And;":"\u2A53","&Aogon;":"\u0104","&Aopf;":"\u{1D538}","&ApplyFunction;":"\u2061","&Aring":"\xC5","&Aring;":"\xC5","&Ascr;":"\u{1D49C}","&Assign;":"\u2254","&Atilde":"\xC3","&Atilde;":"\xC3","&Auml":"\xC4","&Auml;":"\xC4","&Backslash;":"\u2216","&Barv;":"\u2AE7","&Barwed;":"\u2306","&Bcy;":"\u0411","&Because;":"\u2235","&Bernoullis;":"\u212C","&Beta;":"\u0392","&Bfr;":"\u{1D505}","&Bopf;":"\u{1D539}","&Breve;":"\u02D8","&Bscr;":"\u212C","&Bumpeq;":"\u224E","&CHcy;":"\u0427","&COPY":"\xA9","&COPY;":"\xA9","&Cacute;":"\u0106","&Cap;":"\u22D2","&CapitalDifferentialD;":"\u2145","&Cayleys;":"\u212D","&Ccaron;":"\u010C","&Ccedil":"\xC7","&Ccedil;":"\xC7","&Ccirc;":"\u0108","&Cconint;":"\u2230","&Cdot;":"\u010A","&Cedilla;":"\xB8","&CenterDot;":"\xB7","&Cfr;":"\u212D","&Chi;":"\u03A7","&CircleDot;":"\u2299","&CircleMinus;":"\u2296","&CirclePlus;":"\u2295","&CircleTimes;":"\u2297","&ClockwiseContourIntegral;":"\u2232","&CloseCurlyDoubleQuote;":"\u201D","&CloseCurlyQuote;":"\u2019","&Colon;":"\u2237","&Colone;":"\u2A74","&Congruent;":"\u2261","&Conint;":"\u222F","&ContourIntegral;":"\u222E","&Copf;":"\u2102","&Coproduct;":"\u2210","&CounterClockwiseContourIntegral;":"\u2233","&Cross;":"\u2A2F","&Cscr;":"\u{1D49E}","&Cup;":"\u22D3","&CupCap;":"\u224D","&DD;":"\u2145","&DDotrahd;":"\u2911","&DJcy;":"\u0402","&DScy;":"\u0405","&DZcy;":"\u040F","&Dagger;":"\u2021","&Darr;":"\u21A1","&Dashv;":"\u2AE4","&Dcaron;":"\u010E","&Dcy;":"\u0414","&Del;":"\u2207","&Delta;":"\u0394","&Dfr;":"\u{1D507}","&DiacriticalAcute;":"\xB4","&DiacriticalDot;":"\u02D9","&DiacriticalDoubleAcute;":"\u02DD","&DiacriticalGrave;":"`","&DiacriticalTilde;":"\u02DC","&Diamond;":"\u22C4","&DifferentialD;":"\u2146","&Dopf;":"\u{1D53B}","&Dot;":"\xA8","&DotDot;":"\u20DC","&DotEqual;":"\u2250","&DoubleContourIntegral;":"\u222F","&DoubleDot;":"\xA8","&DoubleDownArrow;":"\u21D3","&DoubleLeftArrow;":"\u21D0","&DoubleLeftRightArrow;":"\u21D4","&DoubleLeftTee;":"\u2AE4","&DoubleLongLeftArrow;":"\u27F8","&DoubleLongLeftRightArrow;":"\u27FA","&DoubleLongRightArrow;":"\u27F9","&DoubleRightArrow;":"\u21D2","&DoubleRightTee;":"\u22A8","&DoubleUpArrow;":"\u21D1","&DoubleUpDownArrow;":"\u21D5","&DoubleVerticalBar;":"\u2225","&DownArrow;":"\u2193","&DownArrowBar;":"\u2913","&DownArrowUpArrow;":"\u21F5","&DownBreve;":"\u0311","&DownLeftRightVector;":"\u2950","&DownLeftTeeVector;":"\u295E","&DownLeftVector;":"\u21BD","&DownLeftVectorBar;":"\u2956","&DownRightTeeVector;":"\u295F","&DownRightVector;":"\u21C1","&DownRightVectorBar;":"\u2957","&DownTee;":"\u22A4","&DownTeeArrow;":"\u21A7","&Downarrow;":"\u21D3","&Dscr;":"\u{1D49F}","&Dstrok;":"\u0110","&ENG;":"\u014A","&ETH":"\xD0","&ETH;":"\xD0","&Eacute":"\xC9","&Eacute;":"\xC9","&Ecaron;":"\u011A","&Ecirc":"\xCA","&Ecirc;":"\xCA","&Ecy;":"\u042D","&Edot;":"\u0116","&Efr;":"\u{1D508}","&Egrave":"\xC8","&Egrave;":"\xC8","&Element;":"\u2208","&Emacr;":"\u0112","&EmptySmallSquare;":"\u25FB","&EmptyVerySmallSquare;":"\u25AB","&Eogon;":"\u0118","&Eopf;":"\u{1D53C}","&Epsilon;":"\u0395","&Equal;":"\u2A75","&EqualTilde;":"\u2242","&Equilibrium;":"\u21CC","&Escr;":"\u2130","&Esim;":"\u2A73","&Eta;":"\u0397","&Euml":"\xCB","&Euml;":"\xCB","&Exists;":"\u2203","&ExponentialE;":"\u2147","&Fcy;":"\u0424","&Ffr;":"\u{1D509}","&FilledSmallSquare;":"\u25FC","&FilledVerySmallSquare;":"\u25AA","&Fopf;":"\u{1D53D}","&ForAll;":"\u2200","&Fouriertrf;":"\u2131","&Fscr;":"\u2131","&GJcy;":"\u0403","&GT":">","&GT;":">","&Gamma;":"\u0393","&Gammad;":"\u03DC","&Gbreve;":"\u011E","&Gcedil;":"\u0122","&Gcirc;":"\u011C","&Gcy;":"\u0413","&Gdot;":"\u0120","&Gfr;":"\u{1D50A}","&Gg;":"\u22D9","&Gopf;":"\u{1D53E}","&GreaterEqual;":"\u2265","&GreaterEqualLess;":"\u22DB","&GreaterFullEqual;":"\u2267","&GreaterGreater;":"\u2AA2","&GreaterLess;":"\u2277","&GreaterSlantEqual;":"\u2A7E","&GreaterTilde;":"\u2273","&Gscr;":"\u{1D4A2}","&Gt;":"\u226B","&HARDcy;":"\u042A","&Hacek;":"\u02C7","&Hat;":"^","&Hcirc;":"\u0124","&Hfr;":"\u210C","&HilbertSpace;":"\u210B","&Hopf;":"\u210D","&HorizontalLine;":"\u2500","&Hscr;":"\u210B","&Hstrok;":"\u0126","&HumpDownHump;":"\u224E","&HumpEqual;":"\u224F","&IEcy;":"\u0415","&IJlig;":"\u0132","&IOcy;":"\u0401","&Iacute":"\xCD","&Iacute;":"\xCD","&Icirc":"\xCE","&Icirc;":"\xCE","&Icy;":"\u0418","&Idot;":"\u0130","&Ifr;":"\u2111","&Igrave":"\xCC","&Igrave;":"\xCC","&Im;":"\u2111","&Imacr;":"\u012A","&ImaginaryI;":"\u2148","&Implies;":"\u21D2","&Int;":"\u222C","&Integral;":"\u222B","&Intersection;":"\u22C2","&InvisibleComma;":"\u2063","&InvisibleTimes;":"\u2062","&Iogon;":"\u012E","&Iopf;":"\u{1D540}","&Iota;":"\u0399","&Iscr;":"\u2110","&Itilde;":"\u0128","&Iukcy;":"\u0406","&Iuml":"\xCF","&Iuml;":"\xCF","&Jcirc;":"\u0134","&Jcy;":"\u0419","&Jfr;":"\u{1D50D}","&Jopf;":"\u{1D541}","&Jscr;":"\u{1D4A5}","&Jsercy;":"\u0408","&Jukcy;":"\u0404","&KHcy;":"\u0425","&KJcy;":"\u040C","&Kappa;":"\u039A","&Kcedil;":"\u0136","&Kcy;":"\u041A","&Kfr;":"\u{1D50E}","&Kopf;":"\u{1D542}","&Kscr;":"\u{1D4A6}","&LJcy;":"\u0409","&LT":"<","&LT;":"<","&Lacute;":"\u0139","&Lambda;":"\u039B","&Lang;":"\u27EA","&Laplacetrf;":"\u2112","&Larr;":"\u219E","&Lcaron;":"\u013D","&Lcedil;":"\u013B","&Lcy;":"\u041B","&LeftAngleBracket;":"\u27E8","&LeftArrow;":"\u2190","&LeftArrowBar;":"\u21E4","&LeftArrowRightArrow;":"\u21C6","&LeftCeiling;":"\u2308","&LeftDoubleBracket;":"\u27E6","&LeftDownTeeVector;":"\u2961","&LeftDownVector;":"\u21C3","&LeftDownVectorBar;":"\u2959","&LeftFloor;":"\u230A","&LeftRightArrow;":"\u2194","&LeftRightVector;":"\u294E","&LeftTee;":"\u22A3","&LeftTeeArrow;":"\u21A4","&LeftTeeVector;":"\u295A","&LeftTriangle;":"\u22B2","&LeftTriangleBar;":"\u29CF","&LeftTriangleEqual;":"\u22B4","&LeftUpDownVector;":"\u2951","&LeftUpTeeVector;":"\u2960","&LeftUpVector;":"\u21BF","&LeftUpVectorBar;":"\u2958","&LeftVector;":"\u21BC","&LeftVectorBar;":"\u2952","&Leftarrow;":"\u21D0","&Leftrightarrow;":"\u21D4","&LessEqualGreater;":"\u22DA","&LessFullEqual;":"\u2266","&LessGreater;":"\u2276","&LessLess;":"\u2AA1","&LessSlantEqual;":"\u2A7D","&LessTilde;":"\u2272","&Lfr;":"\u{1D50F}","&Ll;":"\u22D8","&Lleftarrow;":"\u21DA","&Lmidot;":"\u013F","&LongLeftArrow;":"\u27F5","&LongLeftRightArrow;":"\u27F7","&LongRightArrow;":"\u27F6","&Longleftarrow;":"\u27F8","&Longleftrightarrow;":"\u27FA","&Longrightarrow;":"\u27F9","&Lopf;":"\u{1D543}","&LowerLeftArrow;":"\u2199","&LowerRightArrow;":"\u2198","&Lscr;":"\u2112","&Lsh;":"\u21B0","&Lstrok;":"\u0141","&Lt;":"\u226A","&Map;":"\u2905","&Mcy;":"\u041C","&MediumSpace;":"\u205F","&Mellintrf;":"\u2133","&Mfr;":"\u{1D510}","&MinusPlus;":"\u2213","&Mopf;":"\u{1D544}","&Mscr;":"\u2133","&Mu;":"\u039C","&NJcy;":"\u040A","&Nacute;":"\u0143","&Ncaron;":"\u0147","&Ncedil;":"\u0145","&Ncy;":"\u041D","&NegativeMediumSpace;":"\u200B","&NegativeThickSpace;":"\u200B","&NegativeThinSpace;":"\u200B","&NegativeVeryThinSpace;":"\u200B","&NestedGreaterGreater;":"\u226B","&NestedLessLess;":"\u226A","&NewLine;":`
-`,"&Nfr;":"\u{1D511}","&NoBreak;":"\u2060","&NonBreakingSpace;":"\xA0","&Nopf;":"\u2115","&Not;":"\u2AEC","&NotCongruent;":"\u2262","&NotCupCap;":"\u226D","&NotDoubleVerticalBar;":"\u2226","&NotElement;":"\u2209","&NotEqual;":"\u2260","&NotEqualTilde;":"\u2242\u0338","&NotExists;":"\u2204","&NotGreater;":"\u226F","&NotGreaterEqual;":"\u2271","&NotGreaterFullEqual;":"\u2267\u0338","&NotGreaterGreater;":"\u226B\u0338","&NotGreaterLess;":"\u2279","&NotGreaterSlantEqual;":"\u2A7E\u0338","&NotGreaterTilde;":"\u2275","&NotHumpDownHump;":"\u224E\u0338","&NotHumpEqual;":"\u224F\u0338","&NotLeftTriangle;":"\u22EA","&NotLeftTriangleBar;":"\u29CF\u0338","&NotLeftTriangleEqual;":"\u22EC","&NotLess;":"\u226E","&NotLessEqual;":"\u2270","&NotLessGreater;":"\u2278","&NotLessLess;":"\u226A\u0338","&NotLessSlantEqual;":"\u2A7D\u0338","&NotLessTilde;":"\u2274","&NotNestedGreaterGreater;":"\u2AA2\u0338","&NotNestedLessLess;":"\u2AA1\u0338","&NotPrecedes;":"\u2280","&NotPrecedesEqual;":"\u2AAF\u0338","&NotPrecedesSlantEqual;":"\u22E0","&NotReverseElement;":"\u220C","&NotRightTriangle;":"\u22EB","&NotRightTriangleBar;":"\u29D0\u0338","&NotRightTriangleEqual;":"\u22ED","&NotSquareSubset;":"\u228F\u0338","&NotSquareSubsetEqual;":"\u22E2","&NotSquareSuperset;":"\u2290\u0338","&NotSquareSupersetEqual;":"\u22E3","&NotSubset;":"\u2282\u20D2","&NotSubsetEqual;":"\u2288","&NotSucceeds;":"\u2281","&NotSucceedsEqual;":"\u2AB0\u0338","&NotSucceedsSlantEqual;":"\u22E1","&NotSucceedsTilde;":"\u227F\u0338","&NotSuperset;":"\u2283\u20D2","&NotSupersetEqual;":"\u2289","&NotTilde;":"\u2241","&NotTildeEqual;":"\u2244","&NotTildeFullEqual;":"\u2247","&NotTildeTilde;":"\u2249","&NotVerticalBar;":"\u2224","&Nscr;":"\u{1D4A9}","&Ntilde":"\xD1","&Ntilde;":"\xD1","&Nu;":"\u039D","&OElig;":"\u0152","&Oacute":"\xD3","&Oacute;":"\xD3","&Ocirc":"\xD4","&Ocirc;":"\xD4","&Ocy;":"\u041E","&Odblac;":"\u0150","&Ofr;":"\u{1D512}","&Ograve":"\xD2","&Ograve;":"\xD2","&Omacr;":"\u014C","&Omega;":"\u03A9","&Omicron;":"\u039F","&Oopf;":"\u{1D546}","&OpenCurlyDoubleQuote;":"\u201C","&OpenCurlyQuote;":"\u2018","&Or;":"\u2A54","&Oscr;":"\u{1D4AA}","&Oslash":"\xD8","&Oslash;":"\xD8","&Otilde":"\xD5","&Otilde;":"\xD5","&Otimes;":"\u2A37","&Ouml":"\xD6","&Ouml;":"\xD6","&OverBar;":"\u203E","&OverBrace;":"\u23DE","&OverBracket;":"\u23B4","&OverParenthesis;":"\u23DC","&PartialD;":"\u2202","&Pcy;":"\u041F","&Pfr;":"\u{1D513}","&Phi;":"\u03A6","&Pi;":"\u03A0","&PlusMinus;":"\xB1","&Poincareplane;":"\u210C","&Popf;":"\u2119","&Pr;":"\u2ABB","&Precedes;":"\u227A","&PrecedesEqual;":"\u2AAF","&PrecedesSlantEqual;":"\u227C","&PrecedesTilde;":"\u227E","&Prime;":"\u2033","&Product;":"\u220F","&Proportion;":"\u2237","&Proportional;":"\u221D","&Pscr;":"\u{1D4AB}","&Psi;":"\u03A8","&QUOT":'"',"&QUOT;":'"',"&Qfr;":"\u{1D514}","&Qopf;":"\u211A","&Qscr;":"\u{1D4AC}","&RBarr;":"\u2910","&REG":"\xAE","&REG;":"\xAE","&Racute;":"\u0154","&Rang;":"\u27EB","&Rarr;":"\u21A0","&Rarrtl;":"\u2916","&Rcaron;":"\u0158","&Rcedil;":"\u0156","&Rcy;":"\u0420","&Re;":"\u211C","&ReverseElement;":"\u220B","&ReverseEquilibrium;":"\u21CB","&ReverseUpEquilibrium;":"\u296F","&Rfr;":"\u211C","&Rho;":"\u03A1","&RightAngleBracket;":"\u27E9","&RightArrow;":"\u2192","&RightArrowBar;":"\u21E5","&RightArrowLeftArrow;":"\u21C4","&RightCeiling;":"\u2309","&RightDoubleBracket;":"\u27E7","&RightDownTeeVector;":"\u295D","&RightDownVector;":"\u21C2","&RightDownVectorBar;":"\u2955","&RightFloor;":"\u230B","&RightTee;":"\u22A2","&RightTeeArrow;":"\u21A6","&RightTeeVector;":"\u295B","&RightTriangle;":"\u22B3","&RightTriangleBar;":"\u29D0","&RightTriangleEqual;":"\u22B5","&RightUpDownVector;":"\u294F","&RightUpTeeVector;":"\u295C","&RightUpVector;":"\u21BE","&RightUpVectorBar;":"\u2954","&RightVector;":"\u21C0","&RightVectorBar;":"\u2953","&Rightarrow;":"\u21D2","&Ropf;":"\u211D","&RoundImplies;":"\u2970","&Rrightarrow;":"\u21DB","&Rscr;":"\u211B","&Rsh;":"\u21B1","&RuleDelayed;":"\u29F4","&SHCHcy;":"\u0429","&SHcy;":"\u0428","&SOFTcy;":"\u042C","&Sacute;":"\u015A","&Sc;":"\u2ABC","&Scaron;":"\u0160","&Scedil;":"\u015E","&Scirc;":"\u015C","&Scy;":"\u0421","&Sfr;":"\u{1D516}","&ShortDownArrow;":"\u2193","&ShortLeftArrow;":"\u2190","&ShortRightArrow;":"\u2192","&ShortUpArrow;":"\u2191","&Sigma;":"\u03A3","&SmallCircle;":"\u2218","&Sopf;":"\u{1D54A}","&Sqrt;":"\u221A","&Square;":"\u25A1","&SquareIntersection;":"\u2293","&SquareSubset;":"\u228F","&SquareSubsetEqual;":"\u2291","&SquareSuperset;":"\u2290","&SquareSupersetEqual;":"\u2292","&SquareUnion;":"\u2294","&Sscr;":"\u{1D4AE}","&Star;":"\u22C6","&Sub;":"\u22D0","&Subset;":"\u22D0","&SubsetEqual;":"\u2286","&Succeeds;":"\u227B","&SucceedsEqual;":"\u2AB0","&SucceedsSlantEqual;":"\u227D","&SucceedsTilde;":"\u227F","&SuchThat;":"\u220B","&Sum;":"\u2211","&Sup;":"\u22D1","&Superset;":"\u2283","&SupersetEqual;":"\u2287","&Supset;":"\u22D1","&THORN":"\xDE","&THORN;":"\xDE","&TRADE;":"\u2122","&TSHcy;":"\u040B","&TScy;":"\u0426","&Tab;":"	","&Tau;":"\u03A4","&Tcaron;":"\u0164","&Tcedil;":"\u0162","&Tcy;":"\u0422","&Tfr;":"\u{1D517}","&Therefore;":"\u2234","&Theta;":"\u0398","&ThickSpace;":"\u205F\u200A","&ThinSpace;":"\u2009","&Tilde;":"\u223C","&TildeEqual;":"\u2243","&TildeFullEqual;":"\u2245","&TildeTilde;":"\u2248","&Topf;":"\u{1D54B}","&TripleDot;":"\u20DB","&Tscr;":"\u{1D4AF}","&Tstrok;":"\u0166","&Uacute":"\xDA","&Uacute;":"\xDA","&Uarr;":"\u219F","&Uarrocir;":"\u2949","&Ubrcy;":"\u040E","&Ubreve;":"\u016C","&Ucirc":"\xDB","&Ucirc;":"\xDB","&Ucy;":"\u0423","&Udblac;":"\u0170","&Ufr;":"\u{1D518}","&Ugrave":"\xD9","&Ugrave;":"\xD9","&Umacr;":"\u016A","&UnderBar;":"_","&UnderBrace;":"\u23DF","&UnderBracket;":"\u23B5","&UnderParenthesis;":"\u23DD","&Union;":"\u22C3","&UnionPlus;":"\u228E","&Uogon;":"\u0172","&Uopf;":"\u{1D54C}","&UpArrow;":"\u2191","&UpArrowBar;":"\u2912","&UpArrowDownArrow;":"\u21C5","&UpDownArrow;":"\u2195","&UpEquilibrium;":"\u296E","&UpTee;":"\u22A5","&UpTeeArrow;":"\u21A5","&Uparrow;":"\u21D1","&Updownarrow;":"\u21D5","&UpperLeftArrow;":"\u2196","&UpperRightArrow;":"\u2197","&Upsi;":"\u03D2","&Upsilon;":"\u03A5","&Uring;":"\u016E","&Uscr;":"\u{1D4B0}","&Utilde;":"\u0168","&Uuml":"\xDC","&Uuml;":"\xDC","&VDash;":"\u22AB","&Vbar;":"\u2AEB","&Vcy;":"\u0412","&Vdash;":"\u22A9","&Vdashl;":"\u2AE6","&Vee;":"\u22C1","&Verbar;":"\u2016","&Vert;":"\u2016","&VerticalBar;":"\u2223","&VerticalLine;":"|","&VerticalSeparator;":"\u2758","&VerticalTilde;":"\u2240","&VeryThinSpace;":"\u200A","&Vfr;":"\u{1D519}","&Vopf;":"\u{1D54D}","&Vscr;":"\u{1D4B1}","&Vvdash;":"\u22AA","&Wcirc;":"\u0174","&Wedge;":"\u22C0","&Wfr;":"\u{1D51A}","&Wopf;":"\u{1D54E}","&Wscr;":"\u{1D4B2}","&Xfr;":"\u{1D51B}","&Xi;":"\u039E","&Xopf;":"\u{1D54F}","&Xscr;":"\u{1D4B3}","&YAcy;":"\u042F","&YIcy;":"\u0407","&YUcy;":"\u042E","&Yacute":"\xDD","&Yacute;":"\xDD","&Ycirc;":"\u0176","&Ycy;":"\u042B","&Yfr;":"\u{1D51C}","&Yopf;":"\u{1D550}","&Yscr;":"\u{1D4B4}","&Yuml;":"\u0178","&ZHcy;":"\u0416","&Zacute;":"\u0179","&Zcaron;":"\u017D","&Zcy;":"\u0417","&Zdot;":"\u017B","&ZeroWidthSpace;":"\u200B","&Zeta;":"\u0396","&Zfr;":"\u2128","&Zopf;":"\u2124","&Zscr;":"\u{1D4B5}","&aacute":"\xE1","&aacute;":"\xE1","&abreve;":"\u0103","&ac;":"\u223E","&acE;":"\u223E\u0333","&acd;":"\u223F","&acirc":"\xE2","&acirc;":"\xE2","&acute":"\xB4","&acute;":"\xB4","&acy;":"\u0430","&aelig":"\xE6","&aelig;":"\xE6","&af;":"\u2061","&afr;":"\u{1D51E}","&agrave":"\xE0","&agrave;":"\xE0","&alefsym;":"\u2135","&aleph;":"\u2135","&alpha;":"\u03B1","&amacr;":"\u0101","&amalg;":"\u2A3F","&amp":"&","&amp;":"&","&and;":"\u2227","&andand;":"\u2A55","&andd;":"\u2A5C","&andslope;":"\u2A58","&andv;":"\u2A5A","&ang;":"\u2220","&ange;":"\u29A4","&angle;":"\u2220","&angmsd;":"\u2221","&angmsdaa;":"\u29A8","&angmsdab;":"\u29A9","&angmsdac;":"\u29AA","&angmsdad;":"\u29AB","&angmsdae;":"\u29AC","&angmsdaf;":"\u29AD","&angmsdag;":"\u29AE","&angmsdah;":"\u29AF","&angrt;":"\u221F","&angrtvb;":"\u22BE","&angrtvbd;":"\u299D","&angsph;":"\u2222","&angst;":"\xC5","&angzarr;":"\u237C","&aogon;":"\u0105","&aopf;":"\u{1D552}","&ap;":"\u2248","&apE;":"\u2A70","&apacir;":"\u2A6F","&ape;":"\u224A","&apid;":"\u224B","&apos;":"'","&approx;":"\u2248","&approxeq;":"\u224A","&aring":"\xE5","&aring;":"\xE5","&ascr;":"\u{1D4B6}","&ast;":"*","&asymp;":"\u2248","&asympeq;":"\u224D","&atilde":"\xE3","&atilde;":"\xE3","&auml":"\xE4","&auml;":"\xE4","&awconint;":"\u2233","&awint;":"\u2A11","&bNot;":"\u2AED","&backcong;":"\u224C","&backepsilon;":"\u03F6","&backprime;":"\u2035","&backsim;":"\u223D","&backsimeq;":"\u22CD","&barvee;":"\u22BD","&barwed;":"\u2305","&barwedge;":"\u2305","&bbrk;":"\u23B5","&bbrktbrk;":"\u23B6","&bcong;":"\u224C","&bcy;":"\u0431","&bdquo;":"\u201E","&becaus;":"\u2235","&because;":"\u2235","&bemptyv;":"\u29B0","&bepsi;":"\u03F6","&bernou;":"\u212C","&beta;":"\u03B2","&beth;":"\u2136","&between;":"\u226C","&bfr;":"\u{1D51F}","&bigcap;":"\u22C2","&bigcirc;":"\u25EF","&bigcup;":"\u22C3","&bigodot;":"\u2A00","&bigoplus;":"\u2A01","&bigotimes;":"\u2A02","&bigsqcup;":"\u2A06","&bigstar;":"\u2605","&bigtriangledown;":"\u25BD","&bigtriangleup;":"\u25B3","&biguplus;":"\u2A04","&bigvee;":"\u22C1","&bigwedge;":"\u22C0","&bkarow;":"\u290D","&blacklozenge;":"\u29EB","&blacksquare;":"\u25AA","&blacktriangle;":"\u25B4","&blacktriangledown;":"\u25BE","&blacktriangleleft;":"\u25C2","&blacktriangleright;":"\u25B8","&blank;":"\u2423","&blk12;":"\u2592","&blk14;":"\u2591","&blk34;":"\u2593","&block;":"\u2588","&bne;":"=\u20E5","&bnequiv;":"\u2261\u20E5","&bnot;":"\u2310","&bopf;":"\u{1D553}","&bot;":"\u22A5","&bottom;":"\u22A5","&bowtie;":"\u22C8","&boxDL;":"\u2557","&boxDR;":"\u2554","&boxDl;":"\u2556","&boxDr;":"\u2553","&boxH;":"\u2550","&boxHD;":"\u2566","&boxHU;":"\u2569","&boxHd;":"\u2564","&boxHu;":"\u2567","&boxUL;":"\u255D","&boxUR;":"\u255A","&boxUl;":"\u255C","&boxUr;":"\u2559","&boxV;":"\u2551","&boxVH;":"\u256C","&boxVL;":"\u2563","&boxVR;":"\u2560","&boxVh;":"\u256B","&boxVl;":"\u2562","&boxVr;":"\u255F","&boxbox;":"\u29C9","&boxdL;":"\u2555","&boxdR;":"\u2552","&boxdl;":"\u2510","&boxdr;":"\u250C","&boxh;":"\u2500","&boxhD;":"\u2565","&boxhU;":"\u2568","&boxhd;":"\u252C","&boxhu;":"\u2534","&boxminus;":"\u229F","&boxplus;":"\u229E","&boxtimes;":"\u22A0","&boxuL;":"\u255B","&boxuR;":"\u2558","&boxul;":"\u2518","&boxur;":"\u2514","&boxv;":"\u2502","&boxvH;":"\u256A","&boxvL;":"\u2561","&boxvR;":"\u255E","&boxvh;":"\u253C","&boxvl;":"\u2524","&boxvr;":"\u251C","&bprime;":"\u2035","&breve;":"\u02D8","&brvbar":"\xA6","&brvbar;":"\xA6","&bscr;":"\u{1D4B7}","&bsemi;":"\u204F","&bsim;":"\u223D","&bsime;":"\u22CD","&bsol;":"\\","&bsolb;":"\u29C5","&bsolhsub;":"\u27C8","&bull;":"\u2022","&bullet;":"\u2022","&bump;":"\u224E","&bumpE;":"\u2AAE","&bumpe;":"\u224F","&bumpeq;":"\u224F","&cacute;":"\u0107","&cap;":"\u2229","&capand;":"\u2A44","&capbrcup;":"\u2A49","&capcap;":"\u2A4B","&capcup;":"\u2A47","&capdot;":"\u2A40","&caps;":"\u2229\uFE00","&caret;":"\u2041","&caron;":"\u02C7","&ccaps;":"\u2A4D","&ccaron;":"\u010D","&ccedil":"\xE7","&ccedil;":"\xE7","&ccirc;":"\u0109","&ccups;":"\u2A4C","&ccupssm;":"\u2A50","&cdot;":"\u010B","&cedil":"\xB8","&cedil;":"\xB8","&cemptyv;":"\u29B2","&cent":"\xA2","&cent;":"\xA2","&centerdot;":"\xB7","&cfr;":"\u{1D520}","&chcy;":"\u0447","&check;":"\u2713","&checkmark;":"\u2713","&chi;":"\u03C7","&cir;":"\u25CB","&cirE;":"\u29C3","&circ;":"\u02C6","&circeq;":"\u2257","&circlearrowleft;":"\u21BA","&circlearrowright;":"\u21BB","&circledR;":"\xAE","&circledS;":"\u24C8","&circledast;":"\u229B","&circledcirc;":"\u229A","&circleddash;":"\u229D","&cire;":"\u2257","&cirfnint;":"\u2A10","&cirmid;":"\u2AEF","&cirscir;":"\u29C2","&clubs;":"\u2663","&clubsuit;":"\u2663","&colon;":":","&colone;":"\u2254","&coloneq;":"\u2254","&comma;":",","&commat;":"@","&comp;":"\u2201","&compfn;":"\u2218","&complement;":"\u2201","&complexes;":"\u2102","&cong;":"\u2245","&congdot;":"\u2A6D","&conint;":"\u222E","&copf;":"\u{1D554}","&coprod;":"\u2210","&copy":"\xA9","&copy;":"\xA9","&copysr;":"\u2117","&crarr;":"\u21B5","&cross;":"\u2717","&cscr;":"\u{1D4B8}","&csub;":"\u2ACF","&csube;":"\u2AD1","&csup;":"\u2AD0","&csupe;":"\u2AD2","&ctdot;":"\u22EF","&cudarrl;":"\u2938","&cudarrr;":"\u2935","&cuepr;":"\u22DE","&cuesc;":"\u22DF","&cularr;":"\u21B6","&cularrp;":"\u293D","&cup;":"\u222A","&cupbrcap;":"\u2A48","&cupcap;":"\u2A46","&cupcup;":"\u2A4A","&cupdot;":"\u228D","&cupor;":"\u2A45","&cups;":"\u222A\uFE00","&curarr;":"\u21B7","&curarrm;":"\u293C","&curlyeqprec;":"\u22DE","&curlyeqsucc;":"\u22DF","&curlyvee;":"\u22CE","&curlywedge;":"\u22CF","&curren":"\xA4","&curren;":"\xA4","&curvearrowleft;":"\u21B6","&curvearrowright;":"\u21B7","&cuvee;":"\u22CE","&cuwed;":"\u22CF","&cwconint;":"\u2232","&cwint;":"\u2231","&cylcty;":"\u232D","&dArr;":"\u21D3","&dHar;":"\u2965","&dagger;":"\u2020","&daleth;":"\u2138","&darr;":"\u2193","&dash;":"\u2010","&dashv;":"\u22A3","&dbkarow;":"\u290F","&dblac;":"\u02DD","&dcaron;":"\u010F","&dcy;":"\u0434","&dd;":"\u2146","&ddagger;":"\u2021","&ddarr;":"\u21CA","&ddotseq;":"\u2A77","&deg":"\xB0","&deg;":"\xB0","&delta;":"\u03B4","&demptyv;":"\u29B1","&dfisht;":"\u297F","&dfr;":"\u{1D521}","&dharl;":"\u21C3","&dharr;":"\u21C2","&diam;":"\u22C4","&diamond;":"\u22C4","&diamondsuit;":"\u2666","&diams;":"\u2666","&die;":"\xA8","&digamma;":"\u03DD","&disin;":"\u22F2","&div;":"\xF7","&divide":"\xF7","&divide;":"\xF7","&divideontimes;":"\u22C7","&divonx;":"\u22C7","&djcy;":"\u0452","&dlcorn;":"\u231E","&dlcrop;":"\u230D","&dollar;":"$","&dopf;":"\u{1D555}","&dot;":"\u02D9","&doteq;":"\u2250","&doteqdot;":"\u2251","&dotminus;":"\u2238","&dotplus;":"\u2214","&dotsquare;":"\u22A1","&doublebarwedge;":"\u2306","&downarrow;":"\u2193","&downdownarrows;":"\u21CA","&downharpoonleft;":"\u21C3","&downharpoonright;":"\u21C2","&drbkarow;":"\u2910","&drcorn;":"\u231F","&drcrop;":"\u230C","&dscr;":"\u{1D4B9}","&dscy;":"\u0455","&dsol;":"\u29F6","&dstrok;":"\u0111","&dtdot;":"\u22F1","&dtri;":"\u25BF","&dtrif;":"\u25BE","&duarr;":"\u21F5","&duhar;":"\u296F","&dwangle;":"\u29A6","&dzcy;":"\u045F","&dzigrarr;":"\u27FF","&eDDot;":"\u2A77","&eDot;":"\u2251","&eacute":"\xE9","&eacute;":"\xE9","&easter;":"\u2A6E","&ecaron;":"\u011B","&ecir;":"\u2256","&ecirc":"\xEA","&ecirc;":"\xEA","&ecolon;":"\u2255","&ecy;":"\u044D","&edot;":"\u0117","&ee;":"\u2147","&efDot;":"\u2252","&efr;":"\u{1D522}","&eg;":"\u2A9A","&egrave":"\xE8","&egrave;":"\xE8","&egs;":"\u2A96","&egsdot;":"\u2A98","&el;":"\u2A99","&elinters;":"\u23E7","&ell;":"\u2113","&els;":"\u2A95","&elsdot;":"\u2A97","&emacr;":"\u0113","&empty;":"\u2205","&emptyset;":"\u2205","&emptyv;":"\u2205","&emsp13;":"\u2004","&emsp14;":"\u2005","&emsp;":"\u2003","&eng;":"\u014B","&ensp;":"\u2002","&eogon;":"\u0119","&eopf;":"\u{1D556}","&epar;":"\u22D5","&eparsl;":"\u29E3","&eplus;":"\u2A71","&epsi;":"\u03B5","&epsilon;":"\u03B5","&epsiv;":"\u03F5","&eqcirc;":"\u2256","&eqcolon;":"\u2255","&eqsim;":"\u2242","&eqslantgtr;":"\u2A96","&eqslantless;":"\u2A95","&equals;":"=","&equest;":"\u225F","&equiv;":"\u2261","&equivDD;":"\u2A78","&eqvparsl;":"\u29E5","&erDot;":"\u2253","&erarr;":"\u2971","&escr;":"\u212F","&esdot;":"\u2250","&esim;":"\u2242","&eta;":"\u03B7","&eth":"\xF0","&eth;":"\xF0","&euml":"\xEB","&euml;":"\xEB","&euro;":"\u20AC","&excl;":"!","&exist;":"\u2203","&expectation;":"\u2130","&exponentiale;":"\u2147","&fallingdotseq;":"\u2252","&fcy;":"\u0444","&female;":"\u2640","&ffilig;":"\uFB03","&fflig;":"\uFB00","&ffllig;":"\uFB04","&ffr;":"\u{1D523}","&filig;":"\uFB01","&fjlig;":"fj","&flat;":"\u266D","&fllig;":"\uFB02","&fltns;":"\u25B1","&fnof;":"\u0192","&fopf;":"\u{1D557}","&forall;":"\u2200","&fork;":"\u22D4","&forkv;":"\u2AD9","&fpartint;":"\u2A0D","&frac12":"\xBD","&frac12;":"\xBD","&frac13;":"\u2153","&frac14":"\xBC","&frac14;":"\xBC","&frac15;":"\u2155","&frac16;":"\u2159","&frac18;":"\u215B","&frac23;":"\u2154","&frac25;":"\u2156","&frac34":"\xBE","&frac34;":"\xBE","&frac35;":"\u2157","&frac38;":"\u215C","&frac45;":"\u2158","&frac56;":"\u215A","&frac58;":"\u215D","&frac78;":"\u215E","&frasl;":"\u2044","&frown;":"\u2322","&fscr;":"\u{1D4BB}","&gE;":"\u2267","&gEl;":"\u2A8C","&gacute;":"\u01F5","&gamma;":"\u03B3","&gammad;":"\u03DD","&gap;":"\u2A86","&gbreve;":"\u011F","&gcirc;":"\u011D","&gcy;":"\u0433","&gdot;":"\u0121","&ge;":"\u2265","&gel;":"\u22DB","&geq;":"\u2265","&geqq;":"\u2267","&geqslant;":"\u2A7E","&ges;":"\u2A7E","&gescc;":"\u2AA9","&gesdot;":"\u2A80","&gesdoto;":"\u2A82","&gesdotol;":"\u2A84","&gesl;":"\u22DB\uFE00","&gesles;":"\u2A94","&gfr;":"\u{1D524}","&gg;":"\u226B","&ggg;":"\u22D9","&gimel;":"\u2137","&gjcy;":"\u0453","&gl;":"\u2277","&glE;":"\u2A92","&gla;":"\u2AA5","&glj;":"\u2AA4","&gnE;":"\u2269","&gnap;":"\u2A8A","&gnapprox;":"\u2A8A","&gne;":"\u2A88","&gneq;":"\u2A88","&gneqq;":"\u2269","&gnsim;":"\u22E7","&gopf;":"\u{1D558}","&grave;":"`","&gscr;":"\u210A","&gsim;":"\u2273","&gsime;":"\u2A8E","&gsiml;":"\u2A90","&gt":">","&gt;":">","&gtcc;":"\u2AA7","&gtcir;":"\u2A7A","&gtdot;":"\u22D7","&gtlPar;":"\u2995","&gtquest;":"\u2A7C","&gtrapprox;":"\u2A86","&gtrarr;":"\u2978","&gtrdot;":"\u22D7","&gtreqless;":"\u22DB","&gtreqqless;":"\u2A8C","&gtrless;":"\u2277","&gtrsim;":"\u2273","&gvertneqq;":"\u2269\uFE00","&gvnE;":"\u2269\uFE00","&hArr;":"\u21D4","&hairsp;":"\u200A","&half;":"\xBD","&hamilt;":"\u210B","&hardcy;":"\u044A","&harr;":"\u2194","&harrcir;":"\u2948","&harrw;":"\u21AD","&hbar;":"\u210F","&hcirc;":"\u0125","&hearts;":"\u2665","&heartsuit;":"\u2665","&hellip;":"\u2026","&hercon;":"\u22B9","&hfr;":"\u{1D525}","&hksearow;":"\u2925","&hkswarow;":"\u2926","&hoarr;":"\u21FF","&homtht;":"\u223B","&hookleftarrow;":"\u21A9","&hookrightarrow;":"\u21AA","&hopf;":"\u{1D559}","&horbar;":"\u2015","&hscr;":"\u{1D4BD}","&hslash;":"\u210F","&hstrok;":"\u0127","&hybull;":"\u2043","&hyphen;":"\u2010","&iacute":"\xED","&iacute;":"\xED","&ic;":"\u2063","&icirc":"\xEE","&icirc;":"\xEE","&icy;":"\u0438","&iecy;":"\u0435","&iexcl":"\xA1","&iexcl;":"\xA1","&iff;":"\u21D4","&ifr;":"\u{1D526}","&igrave":"\xEC","&igrave;":"\xEC","&ii;":"\u2148","&iiiint;":"\u2A0C","&iiint;":"\u222D","&iinfin;":"\u29DC","&iiota;":"\u2129","&ijlig;":"\u0133","&imacr;":"\u012B","&image;":"\u2111","&imagline;":"\u2110","&imagpart;":"\u2111","&imath;":"\u0131","&imof;":"\u22B7","&imped;":"\u01B5","&in;":"\u2208","&incare;":"\u2105","&infin;":"\u221E","&infintie;":"\u29DD","&inodot;":"\u0131","&int;":"\u222B","&intcal;":"\u22BA","&integers;":"\u2124","&intercal;":"\u22BA","&intlarhk;":"\u2A17","&intprod;":"\u2A3C","&iocy;":"\u0451","&iogon;":"\u012F","&iopf;":"\u{1D55A}","&iota;":"\u03B9","&iprod;":"\u2A3C","&iquest":"\xBF","&iquest;":"\xBF","&iscr;":"\u{1D4BE}","&isin;":"\u2208","&isinE;":"\u22F9","&isindot;":"\u22F5","&isins;":"\u22F4","&isinsv;":"\u22F3","&isinv;":"\u2208","&it;":"\u2062","&itilde;":"\u0129","&iukcy;":"\u0456","&iuml":"\xEF","&iuml;":"\xEF","&jcirc;":"\u0135","&jcy;":"\u0439","&jfr;":"\u{1D527}","&jmath;":"\u0237","&jopf;":"\u{1D55B}","&jscr;":"\u{1D4BF}","&jsercy;":"\u0458","&jukcy;":"\u0454","&kappa;":"\u03BA","&kappav;":"\u03F0","&kcedil;":"\u0137","&kcy;":"\u043A","&kfr;":"\u{1D528}","&kgreen;":"\u0138","&khcy;":"\u0445","&kjcy;":"\u045C","&kopf;":"\u{1D55C}","&kscr;":"\u{1D4C0}","&lAarr;":"\u21DA","&lArr;":"\u21D0","&lAtail;":"\u291B","&lBarr;":"\u290E","&lE;":"\u2266","&lEg;":"\u2A8B","&lHar;":"\u2962","&lacute;":"\u013A","&laemptyv;":"\u29B4","&lagran;":"\u2112","&lambda;":"\u03BB","&lang;":"\u27E8","&langd;":"\u2991","&langle;":"\u27E8","&lap;":"\u2A85","&laquo":"\xAB","&laquo;":"\xAB","&larr;":"\u2190","&larrb;":"\u21E4","&larrbfs;":"\u291F","&larrfs;":"\u291D","&larrhk;":"\u21A9","&larrlp;":"\u21AB","&larrpl;":"\u2939","&larrsim;":"\u2973","&larrtl;":"\u21A2","&lat;":"\u2AAB","&latail;":"\u2919","&late;":"\u2AAD","&lates;":"\u2AAD\uFE00","&lbarr;":"\u290C","&lbbrk;":"\u2772","&lbrace;":"{","&lbrack;":"[","&lbrke;":"\u298B","&lbrksld;":"\u298F","&lbrkslu;":"\u298D","&lcaron;":"\u013E","&lcedil;":"\u013C","&lceil;":"\u2308","&lcub;":"{","&lcy;":"\u043B","&ldca;":"\u2936","&ldquo;":"\u201C","&ldquor;":"\u201E","&ldrdhar;":"\u2967","&ldrushar;":"\u294B","&ldsh;":"\u21B2","&le;":"\u2264","&leftarrow;":"\u2190","&leftarrowtail;":"\u21A2","&leftharpoondown;":"\u21BD","&leftharpoonup;":"\u21BC","&leftleftarrows;":"\u21C7","&leftrightarrow;":"\u2194","&leftrightarrows;":"\u21C6","&leftrightharpoons;":"\u21CB","&leftrightsquigarrow;":"\u21AD","&leftthreetimes;":"\u22CB","&leg;":"\u22DA","&leq;":"\u2264","&leqq;":"\u2266","&leqslant;":"\u2A7D","&les;":"\u2A7D","&lescc;":"\u2AA8","&lesdot;":"\u2A7F","&lesdoto;":"\u2A81","&lesdotor;":"\u2A83","&lesg;":"\u22DA\uFE00","&lesges;":"\u2A93","&lessapprox;":"\u2A85","&lessdot;":"\u22D6","&lesseqgtr;":"\u22DA","&lesseqqgtr;":"\u2A8B","&lessgtr;":"\u2276","&lesssim;":"\u2272","&lfisht;":"\u297C","&lfloor;":"\u230A","&lfr;":"\u{1D529}","&lg;":"\u2276","&lgE;":"\u2A91","&lhard;":"\u21BD","&lharu;":"\u21BC","&lharul;":"\u296A","&lhblk;":"\u2584","&ljcy;":"\u0459","&ll;":"\u226A","&llarr;":"\u21C7","&llcorner;":"\u231E","&llhard;":"\u296B","&lltri;":"\u25FA","&lmidot;":"\u0140","&lmoust;":"\u23B0","&lmoustache;":"\u23B0","&lnE;":"\u2268","&lnap;":"\u2A89","&lnapprox;":"\u2A89","&lne;":"\u2A87","&lneq;":"\u2A87","&lneqq;":"\u2268","&lnsim;":"\u22E6","&loang;":"\u27EC","&loarr;":"\u21FD","&lobrk;":"\u27E6","&longleftarrow;":"\u27F5","&longleftrightarrow;":"\u27F7","&longmapsto;":"\u27FC","&longrightarrow;":"\u27F6","&looparrowleft;":"\u21AB","&looparrowright;":"\u21AC","&lopar;":"\u2985","&lopf;":"\u{1D55D}","&loplus;":"\u2A2D","&lotimes;":"\u2A34","&lowast;":"\u2217","&lowbar;":"_","&loz;":"\u25CA","&lozenge;":"\u25CA","&lozf;":"\u29EB","&lpar;":"(","&lparlt;":"\u2993","&lrarr;":"\u21C6","&lrcorner;":"\u231F","&lrhar;":"\u21CB","&lrhard;":"\u296D","&lrm;":"\u200E","&lrtri;":"\u22BF","&lsaquo;":"\u2039","&lscr;":"\u{1D4C1}","&lsh;":"\u21B0","&lsim;":"\u2272","&lsime;":"\u2A8D","&lsimg;":"\u2A8F","&lsqb;":"[","&lsquo;":"\u2018","&lsquor;":"\u201A","&lstrok;":"\u0142","&lt":"<","&lt;":"<","&ltcc;":"\u2AA6","&ltcir;":"\u2A79","&ltdot;":"\u22D6","&lthree;":"\u22CB","&ltimes;":"\u22C9","&ltlarr;":"\u2976","&ltquest;":"\u2A7B","&ltrPar;":"\u2996","&ltri;":"\u25C3","&ltrie;":"\u22B4","&ltrif;":"\u25C2","&lurdshar;":"\u294A","&luruhar;":"\u2966","&lvertneqq;":"\u2268\uFE00","&lvnE;":"\u2268\uFE00","&mDDot;":"\u223A","&macr":"\xAF","&macr;":"\xAF","&male;":"\u2642","&malt;":"\u2720","&maltese;":"\u2720","&map;":"\u21A6","&mapsto;":"\u21A6","&mapstodown;":"\u21A7","&mapstoleft;":"\u21A4","&mapstoup;":"\u21A5","&marker;":"\u25AE","&mcomma;":"\u2A29","&mcy;":"\u043C","&mdash;":"\u2014","&measuredangle;":"\u2221","&mfr;":"\u{1D52A}","&mho;":"\u2127","&micro":"\xB5","&micro;":"\xB5","&mid;":"\u2223","&midast;":"*","&midcir;":"\u2AF0","&middot":"\xB7","&middot;":"\xB7","&minus;":"\u2212","&minusb;":"\u229F","&minusd;":"\u2238","&minusdu;":"\u2A2A","&mlcp;":"\u2ADB","&mldr;":"\u2026","&mnplus;":"\u2213","&models;":"\u22A7","&mopf;":"\u{1D55E}","&mp;":"\u2213","&mscr;":"\u{1D4C2}","&mstpos;":"\u223E","&mu;":"\u03BC","&multimap;":"\u22B8","&mumap;":"\u22B8","&nGg;":"\u22D9\u0338","&nGt;":"\u226B\u20D2","&nGtv;":"\u226B\u0338","&nLeftarrow;":"\u21CD","&nLeftrightarrow;":"\u21CE","&nLl;":"\u22D8\u0338","&nLt;":"\u226A\u20D2","&nLtv;":"\u226A\u0338","&nRightarrow;":"\u21CF","&nVDash;":"\u22AF","&nVdash;":"\u22AE","&nabla;":"\u2207","&nacute;":"\u0144","&nang;":"\u2220\u20D2","&nap;":"\u2249","&napE;":"\u2A70\u0338","&napid;":"\u224B\u0338","&napos;":"\u0149","&napprox;":"\u2249","&natur;":"\u266E","&natural;":"\u266E","&naturals;":"\u2115","&nbsp":"\xA0","&nbsp;":"\xA0","&nbump;":"\u224E\u0338","&nbumpe;":"\u224F\u0338","&ncap;":"\u2A43","&ncaron;":"\u0148","&ncedil;":"\u0146","&ncong;":"\u2247","&ncongdot;":"\u2A6D\u0338","&ncup;":"\u2A42","&ncy;":"\u043D","&ndash;":"\u2013","&ne;":"\u2260","&neArr;":"\u21D7","&nearhk;":"\u2924","&nearr;":"\u2197","&nearrow;":"\u2197","&nedot;":"\u2250\u0338","&nequiv;":"\u2262","&nesear;":"\u2928","&nesim;":"\u2242\u0338","&nexist;":"\u2204","&nexists;":"\u2204","&nfr;":"\u{1D52B}","&ngE;":"\u2267\u0338","&nge;":"\u2271","&ngeq;":"\u2271","&ngeqq;":"\u2267\u0338","&ngeqslant;":"\u2A7E\u0338","&nges;":"\u2A7E\u0338","&ngsim;":"\u2275","&ngt;":"\u226F","&ngtr;":"\u226F","&nhArr;":"\u21CE","&nharr;":"\u21AE","&nhpar;":"\u2AF2","&ni;":"\u220B","&nis;":"\u22FC","&nisd;":"\u22FA","&niv;":"\u220B","&njcy;":"\u045A","&nlArr;":"\u21CD","&nlE;":"\u2266\u0338","&nlarr;":"\u219A","&nldr;":"\u2025","&nle;":"\u2270","&nleftarrow;":"\u219A","&nleftrightarrow;":"\u21AE","&nleq;":"\u2270","&nleqq;":"\u2266\u0338","&nleqslant;":"\u2A7D\u0338","&nles;":"\u2A7D\u0338","&nless;":"\u226E","&nlsim;":"\u2274","&nlt;":"\u226E","&nltri;":"\u22EA","&nltrie;":"\u22EC","&nmid;":"\u2224","&nopf;":"\u{1D55F}","&not":"\xAC","&not;":"\xAC","&notin;":"\u2209","&notinE;":"\u22F9\u0338","&notindot;":"\u22F5\u0338","&notinva;":"\u2209","&notinvb;":"\u22F7","&notinvc;":"\u22F6","&notni;":"\u220C","&notniva;":"\u220C","&notnivb;":"\u22FE","&notnivc;":"\u22FD","&npar;":"\u2226","&nparallel;":"\u2226","&nparsl;":"\u2AFD\u20E5","&npart;":"\u2202\u0338","&npolint;":"\u2A14","&npr;":"\u2280","&nprcue;":"\u22E0","&npre;":"\u2AAF\u0338","&nprec;":"\u2280","&npreceq;":"\u2AAF\u0338","&nrArr;":"\u21CF","&nrarr;":"\u219B","&nrarrc;":"\u2933\u0338","&nrarrw;":"\u219D\u0338","&nrightarrow;":"\u219B","&nrtri;":"\u22EB","&nrtrie;":"\u22ED","&nsc;":"\u2281","&nsccue;":"\u22E1","&nsce;":"\u2AB0\u0338","&nscr;":"\u{1D4C3}","&nshortmid;":"\u2224","&nshortparallel;":"\u2226","&nsim;":"\u2241","&nsime;":"\u2244","&nsimeq;":"\u2244","&nsmid;":"\u2224","&nspar;":"\u2226","&nsqsube;":"\u22E2","&nsqsupe;":"\u22E3","&nsub;":"\u2284","&nsubE;":"\u2AC5\u0338","&nsube;":"\u2288","&nsubset;":"\u2282\u20D2","&nsubseteq;":"\u2288","&nsubseteqq;":"\u2AC5\u0338","&nsucc;":"\u2281","&nsucceq;":"\u2AB0\u0338","&nsup;":"\u2285","&nsupE;":"\u2AC6\u0338","&nsupe;":"\u2289","&nsupset;":"\u2283\u20D2","&nsupseteq;":"\u2289","&nsupseteqq;":"\u2AC6\u0338","&ntgl;":"\u2279","&ntilde":"\xF1","&ntilde;":"\xF1","&ntlg;":"\u2278","&ntriangleleft;":"\u22EA","&ntrianglelefteq;":"\u22EC","&ntriangleright;":"\u22EB","&ntrianglerighteq;":"\u22ED","&nu;":"\u03BD","&num;":"#","&numero;":"\u2116","&numsp;":"\u2007","&nvDash;":"\u22AD","&nvHarr;":"\u2904","&nvap;":"\u224D\u20D2","&nvdash;":"\u22AC","&nvge;":"\u2265\u20D2","&nvgt;":">\u20D2","&nvinfin;":"\u29DE","&nvlArr;":"\u2902","&nvle;":"\u2264\u20D2","&nvlt;":"<\u20D2","&nvltrie;":"\u22B4\u20D2","&nvrArr;":"\u2903","&nvrtrie;":"\u22B5\u20D2","&nvsim;":"\u223C\u20D2","&nwArr;":"\u21D6","&nwarhk;":"\u2923","&nwarr;":"\u2196","&nwarrow;":"\u2196","&nwnear;":"\u2927","&oS;":"\u24C8","&oacute":"\xF3","&oacute;":"\xF3","&oast;":"\u229B","&ocir;":"\u229A","&ocirc":"\xF4","&ocirc;":"\xF4","&ocy;":"\u043E","&odash;":"\u229D","&odblac;":"\u0151","&odiv;":"\u2A38","&odot;":"\u2299","&odsold;":"\u29BC","&oelig;":"\u0153","&ofcir;":"\u29BF","&ofr;":"\u{1D52C}","&ogon;":"\u02DB","&ograve":"\xF2","&ograve;":"\xF2","&ogt;":"\u29C1","&ohbar;":"\u29B5","&ohm;":"\u03A9","&oint;":"\u222E","&olarr;":"\u21BA","&olcir;":"\u29BE","&olcross;":"\u29BB","&oline;":"\u203E","&olt;":"\u29C0","&omacr;":"\u014D","&omega;":"\u03C9","&omicron;":"\u03BF","&omid;":"\u29B6","&ominus;":"\u2296","&oopf;":"\u{1D560}","&opar;":"\u29B7","&operp;":"\u29B9","&oplus;":"\u2295","&or;":"\u2228","&orarr;":"\u21BB","&ord;":"\u2A5D","&order;":"\u2134","&orderof;":"\u2134","&ordf":"\xAA","&ordf;":"\xAA","&ordm":"\xBA","&ordm;":"\xBA","&origof;":"\u22B6","&oror;":"\u2A56","&orslope;":"\u2A57","&orv;":"\u2A5B","&oscr;":"\u2134","&oslash":"\xF8","&oslash;":"\xF8","&osol;":"\u2298","&otilde":"\xF5","&otilde;":"\xF5","&otimes;":"\u2297","&otimesas;":"\u2A36","&ouml":"\xF6","&ouml;":"\xF6","&ovbar;":"\u233D","&par;":"\u2225","&para":"\xB6","&para;":"\xB6","&parallel;":"\u2225","&parsim;":"\u2AF3","&parsl;":"\u2AFD","&part;":"\u2202","&pcy;":"\u043F","&percnt;":"%","&period;":".","&permil;":"\u2030","&perp;":"\u22A5","&pertenk;":"\u2031","&pfr;":"\u{1D52D}","&phi;":"\u03C6","&phiv;":"\u03D5","&phmmat;":"\u2133","&phone;":"\u260E","&pi;":"\u03C0","&pitchfork;":"\u22D4","&piv;":"\u03D6","&planck;":"\u210F","&planckh;":"\u210E","&plankv;":"\u210F","&plus;":"+","&plusacir;":"\u2A23","&plusb;":"\u229E","&pluscir;":"\u2A22","&plusdo;":"\u2214","&plusdu;":"\u2A25","&pluse;":"\u2A72","&plusmn":"\xB1","&plusmn;":"\xB1","&plussim;":"\u2A26","&plustwo;":"\u2A27","&pm;":"\xB1","&pointint;":"\u2A15","&popf;":"\u{1D561}","&pound":"\xA3","&pound;":"\xA3","&pr;":"\u227A","&prE;":"\u2AB3","&prap;":"\u2AB7","&prcue;":"\u227C","&pre;":"\u2AAF","&prec;":"\u227A","&precapprox;":"\u2AB7","&preccurlyeq;":"\u227C","&preceq;":"\u2AAF","&precnapprox;":"\u2AB9","&precneqq;":"\u2AB5","&precnsim;":"\u22E8","&precsim;":"\u227E","&prime;":"\u2032","&primes;":"\u2119","&prnE;":"\u2AB5","&prnap;":"\u2AB9","&prnsim;":"\u22E8","&prod;":"\u220F","&profalar;":"\u232E","&profline;":"\u2312","&profsurf;":"\u2313","&prop;":"\u221D","&propto;":"\u221D","&prsim;":"\u227E","&prurel;":"\u22B0","&pscr;":"\u{1D4C5}","&psi;":"\u03C8","&puncsp;":"\u2008","&qfr;":"\u{1D52E}","&qint;":"\u2A0C","&qopf;":"\u{1D562}","&qprime;":"\u2057","&qscr;":"\u{1D4C6}","&quaternions;":"\u210D","&quatint;":"\u2A16","&quest;":"?","&questeq;":"\u225F","&quot":'"',"&quot;":'"',"&rAarr;":"\u21DB","&rArr;":"\u21D2","&rAtail;":"\u291C","&rBarr;":"\u290F","&rHar;":"\u2964","&race;":"\u223D\u0331","&racute;":"\u0155","&radic;":"\u221A","&raemptyv;":"\u29B3","&rang;":"\u27E9","&rangd;":"\u2992","&range;":"\u29A5","&rangle;":"\u27E9","&raquo":"\xBB","&raquo;":"\xBB","&rarr;":"\u2192","&rarrap;":"\u2975","&rarrb;":"\u21E5","&rarrbfs;":"\u2920","&rarrc;":"\u2933","&rarrfs;":"\u291E","&rarrhk;":"\u21AA","&rarrlp;":"\u21AC","&rarrpl;":"\u2945","&rarrsim;":"\u2974","&rarrtl;":"\u21A3","&rarrw;":"\u219D","&ratail;":"\u291A","&ratio;":"\u2236","&rationals;":"\u211A","&rbarr;":"\u290D","&rbbrk;":"\u2773","&rbrace;":"}","&rbrack;":"]","&rbrke;":"\u298C","&rbrksld;":"\u298E","&rbrkslu;":"\u2990","&rcaron;":"\u0159","&rcedil;":"\u0157","&rceil;":"\u2309","&rcub;":"}","&rcy;":"\u0440","&rdca;":"\u2937","&rdldhar;":"\u2969","&rdquo;":"\u201D","&rdquor;":"\u201D","&rdsh;":"\u21B3","&real;":"\u211C","&realine;":"\u211B","&realpart;":"\u211C","&reals;":"\u211D","&rect;":"\u25AD","&reg":"\xAE","&reg;":"\xAE","&rfisht;":"\u297D","&rfloor;":"\u230B","&rfr;":"\u{1D52F}","&rhard;":"\u21C1","&rharu;":"\u21C0","&rharul;":"\u296C","&rho;":"\u03C1","&rhov;":"\u03F1","&rightarrow;":"\u2192","&rightarrowtail;":"\u21A3","&rightharpoondown;":"\u21C1","&rightharpoonup;":"\u21C0","&rightleftarrows;":"\u21C4","&rightleftharpoons;":"\u21CC","&rightrightarrows;":"\u21C9","&rightsquigarrow;":"\u219D","&rightthreetimes;":"\u22CC","&ring;":"\u02DA","&risingdotseq;":"\u2253","&rlarr;":"\u21C4","&rlhar;":"\u21CC","&rlm;":"\u200F","&rmoust;":"\u23B1","&rmoustache;":"\u23B1","&rnmid;":"\u2AEE","&roang;":"\u27ED","&roarr;":"\u21FE","&robrk;":"\u27E7","&ropar;":"\u2986","&ropf;":"\u{1D563}","&roplus;":"\u2A2E","&rotimes;":"\u2A35","&rpar;":")","&rpargt;":"\u2994","&rppolint;":"\u2A12","&rrarr;":"\u21C9","&rsaquo;":"\u203A","&rscr;":"\u{1D4C7}","&rsh;":"\u21B1","&rsqb;":"]","&rsquo;":"\u2019","&rsquor;":"\u2019","&rthree;":"\u22CC","&rtimes;":"\u22CA","&rtri;":"\u25B9","&rtrie;":"\u22B5","&rtrif;":"\u25B8","&rtriltri;":"\u29CE","&ruluhar;":"\u2968","&rx;":"\u211E","&sacute;":"\u015B","&sbquo;":"\u201A","&sc;":"\u227B","&scE;":"\u2AB4","&scap;":"\u2AB8","&scaron;":"\u0161","&sccue;":"\u227D","&sce;":"\u2AB0","&scedil;":"\u015F","&scirc;":"\u015D","&scnE;":"\u2AB6","&scnap;":"\u2ABA","&scnsim;":"\u22E9","&scpolint;":"\u2A13","&scsim;":"\u227F","&scy;":"\u0441","&sdot;":"\u22C5","&sdotb;":"\u22A1","&sdote;":"\u2A66","&seArr;":"\u21D8","&searhk;":"\u2925","&searr;":"\u2198","&searrow;":"\u2198","&sect":"\xA7","&sect;":"\xA7","&semi;":";","&seswar;":"\u2929","&setminus;":"\u2216","&setmn;":"\u2216","&sext;":"\u2736","&sfr;":"\u{1D530}","&sfrown;":"\u2322","&sharp;":"\u266F","&shchcy;":"\u0449","&shcy;":"\u0448","&shortmid;":"\u2223","&shortparallel;":"\u2225","&shy":"\xAD","&shy;":"\xAD","&sigma;":"\u03C3","&sigmaf;":"\u03C2","&sigmav;":"\u03C2","&sim;":"\u223C","&simdot;":"\u2A6A","&sime;":"\u2243","&simeq;":"\u2243","&simg;":"\u2A9E","&simgE;":"\u2AA0","&siml;":"\u2A9D","&simlE;":"\u2A9F","&simne;":"\u2246","&simplus;":"\u2A24","&simrarr;":"\u2972","&slarr;":"\u2190","&smallsetminus;":"\u2216","&smashp;":"\u2A33","&smeparsl;":"\u29E4","&smid;":"\u2223","&smile;":"\u2323","&smt;":"\u2AAA","&smte;":"\u2AAC","&smtes;":"\u2AAC\uFE00","&softcy;":"\u044C","&sol;":"/","&solb;":"\u29C4","&solbar;":"\u233F","&sopf;":"\u{1D564}","&spades;":"\u2660","&spadesuit;":"\u2660","&spar;":"\u2225","&sqcap;":"\u2293","&sqcaps;":"\u2293\uFE00","&sqcup;":"\u2294","&sqcups;":"\u2294\uFE00","&sqsub;":"\u228F","&sqsube;":"\u2291","&sqsubset;":"\u228F","&sqsubseteq;":"\u2291","&sqsup;":"\u2290","&sqsupe;":"\u2292","&sqsupset;":"\u2290","&sqsupseteq;":"\u2292","&squ;":"\u25A1","&square;":"\u25A1","&squarf;":"\u25AA","&squf;":"\u25AA","&srarr;":"\u2192","&sscr;":"\u{1D4C8}","&ssetmn;":"\u2216","&ssmile;":"\u2323","&sstarf;":"\u22C6","&star;":"\u2606","&starf;":"\u2605","&straightepsilon;":"\u03F5","&straightphi;":"\u03D5","&strns;":"\xAF","&sub;":"\u2282","&subE;":"\u2AC5","&subdot;":"\u2ABD","&sube;":"\u2286","&subedot;":"\u2AC3","&submult;":"\u2AC1","&subnE;":"\u2ACB","&subne;":"\u228A","&subplus;":"\u2ABF","&subrarr;":"\u2979","&subset;":"\u2282","&subseteq;":"\u2286","&subseteqq;":"\u2AC5","&subsetneq;":"\u228A","&subsetneqq;":"\u2ACB","&subsim;":"\u2AC7","&subsub;":"\u2AD5","&subsup;":"\u2AD3","&succ;":"\u227B","&succapprox;":"\u2AB8","&succcurlyeq;":"\u227D","&succeq;":"\u2AB0","&succnapprox;":"\u2ABA","&succneqq;":"\u2AB6","&succnsim;":"\u22E9","&succsim;":"\u227F","&sum;":"\u2211","&sung;":"\u266A","&sup1":"\xB9","&sup1;":"\xB9","&sup2":"\xB2","&sup2;":"\xB2","&sup3":"\xB3","&sup3;":"\xB3","&sup;":"\u2283","&supE;":"\u2AC6","&supdot;":"\u2ABE","&supdsub;":"\u2AD8","&supe;":"\u2287","&supedot;":"\u2AC4","&suphsol;":"\u27C9","&suphsub;":"\u2AD7","&suplarr;":"\u297B","&supmult;":"\u2AC2","&supnE;":"\u2ACC","&supne;":"\u228B","&supplus;":"\u2AC0","&supset;":"\u2283","&supseteq;":"\u2287","&supseteqq;":"\u2AC6","&supsetneq;":"\u228B","&supsetneqq;":"\u2ACC","&supsim;":"\u2AC8","&supsub;":"\u2AD4","&supsup;":"\u2AD6","&swArr;":"\u21D9","&swarhk;":"\u2926","&swarr;":"\u2199","&swarrow;":"\u2199","&swnwar;":"\u292A","&szlig":"\xDF","&szlig;":"\xDF","&target;":"\u2316","&tau;":"\u03C4","&tbrk;":"\u23B4","&tcaron;":"\u0165","&tcedil;":"\u0163","&tcy;":"\u0442","&tdot;":"\u20DB","&telrec;":"\u2315","&tfr;":"\u{1D531}","&there4;":"\u2234","&therefore;":"\u2234","&theta;":"\u03B8","&thetasym;":"\u03D1","&thetav;":"\u03D1","&thickapprox;":"\u2248","&thicksim;":"\u223C","&thinsp;":"\u2009","&thkap;":"\u2248","&thksim;":"\u223C","&thorn":"\xFE","&thorn;":"\xFE","&tilde;":"\u02DC","&times":"\xD7","&times;":"\xD7","&timesb;":"\u22A0","&timesbar;":"\u2A31","&timesd;":"\u2A30","&tint;":"\u222D","&toea;":"\u2928","&top;":"\u22A4","&topbot;":"\u2336","&topcir;":"\u2AF1","&topf;":"\u{1D565}","&topfork;":"\u2ADA","&tosa;":"\u2929","&tprime;":"\u2034","&trade;":"\u2122","&triangle;":"\u25B5","&triangledown;":"\u25BF","&triangleleft;":"\u25C3","&trianglelefteq;":"\u22B4","&triangleq;":"\u225C","&triangleright;":"\u25B9","&trianglerighteq;":"\u22B5","&tridot;":"\u25EC","&trie;":"\u225C","&triminus;":"\u2A3A","&triplus;":"\u2A39","&trisb;":"\u29CD","&tritime;":"\u2A3B","&trpezium;":"\u23E2","&tscr;":"\u{1D4C9}","&tscy;":"\u0446","&tshcy;":"\u045B","&tstrok;":"\u0167","&twixt;":"\u226C","&twoheadleftarrow;":"\u219E","&twoheadrightarrow;":"\u21A0","&uArr;":"\u21D1","&uHar;":"\u2963","&uacute":"\xFA","&uacute;":"\xFA","&uarr;":"\u2191","&ubrcy;":"\u045E","&ubreve;":"\u016D","&ucirc":"\xFB","&ucirc;":"\xFB","&ucy;":"\u0443","&udarr;":"\u21C5","&udblac;":"\u0171","&udhar;":"\u296E","&ufisht;":"\u297E","&ufr;":"\u{1D532}","&ugrave":"\xF9","&ugrave;":"\xF9","&uharl;":"\u21BF","&uharr;":"\u21BE","&uhblk;":"\u2580","&ulcorn;":"\u231C","&ulcorner;":"\u231C","&ulcrop;":"\u230F","&ultri;":"\u25F8","&umacr;":"\u016B","&uml":"\xA8","&uml;":"\xA8","&uogon;":"\u0173","&uopf;":"\u{1D566}","&uparrow;":"\u2191","&updownarrow;":"\u2195","&upharpoonleft;":"\u21BF","&upharpoonright;":"\u21BE","&uplus;":"\u228E","&upsi;":"\u03C5","&upsih;":"\u03D2","&upsilon;":"\u03C5","&upuparrows;":"\u21C8","&urcorn;":"\u231D","&urcorner;":"\u231D","&urcrop;":"\u230E","&uring;":"\u016F","&urtri;":"\u25F9","&uscr;":"\u{1D4CA}","&utdot;":"\u22F0","&utilde;":"\u0169","&utri;":"\u25B5","&utrif;":"\u25B4","&uuarr;":"\u21C8","&uuml":"\xFC","&uuml;":"\xFC","&uwangle;":"\u29A7","&vArr;":"\u21D5","&vBar;":"\u2AE8","&vBarv;":"\u2AE9","&vDash;":"\u22A8","&vangrt;":"\u299C","&varepsilon;":"\u03F5","&varkappa;":"\u03F0","&varnothing;":"\u2205","&varphi;":"\u03D5","&varpi;":"\u03D6","&varpropto;":"\u221D","&varr;":"\u2195","&varrho;":"\u03F1","&varsigma;":"\u03C2","&varsubsetneq;":"\u228A\uFE00","&varsubsetneqq;":"\u2ACB\uFE00","&varsupsetneq;":"\u228B\uFE00","&varsupsetneqq;":"\u2ACC\uFE00","&vartheta;":"\u03D1","&vartriangleleft;":"\u22B2","&vartriangleright;":"\u22B3","&vcy;":"\u0432","&vdash;":"\u22A2","&vee;":"\u2228","&veebar;":"\u22BB","&veeeq;":"\u225A","&vellip;":"\u22EE","&verbar;":"|","&vert;":"|","&vfr;":"\u{1D533}","&vltri;":"\u22B2","&vnsub;":"\u2282\u20D2","&vnsup;":"\u2283\u20D2","&vopf;":"\u{1D567}","&vprop;":"\u221D","&vrtri;":"\u22B3","&vscr;":"\u{1D4CB}","&vsubnE;":"\u2ACB\uFE00","&vsubne;":"\u228A\uFE00","&vsupnE;":"\u2ACC\uFE00","&vsupne;":"\u228B\uFE00","&vzigzag;":"\u299A","&wcirc;":"\u0175","&wedbar;":"\u2A5F","&wedge;":"\u2227","&wedgeq;":"\u2259","&weierp;":"\u2118","&wfr;":"\u{1D534}","&wopf;":"\u{1D568}","&wp;":"\u2118","&wr;":"\u2240","&wreath;":"\u2240","&wscr;":"\u{1D4CC}","&xcap;":"\u22C2","&xcirc;":"\u25EF","&xcup;":"\u22C3","&xdtri;":"\u25BD","&xfr;":"\u{1D535}","&xhArr;":"\u27FA","&xharr;":"\u27F7","&xi;":"\u03BE","&xlArr;":"\u27F8","&xlarr;":"\u27F5","&xmap;":"\u27FC","&xnis;":"\u22FB","&xodot;":"\u2A00","&xopf;":"\u{1D569}","&xoplus;":"\u2A01","&xotime;":"\u2A02","&xrArr;":"\u27F9","&xrarr;":"\u27F6","&xscr;":"\u{1D4CD}","&xsqcup;":"\u2A06","&xuplus;":"\u2A04","&xutri;":"\u25B3","&xvee;":"\u22C1","&xwedge;":"\u22C0","&yacute":"\xFD","&yacute;":"\xFD","&yacy;":"\u044F","&ycirc;":"\u0177","&ycy;":"\u044B","&yen":"\xA5","&yen;":"\xA5","&yfr;":"\u{1D536}","&yicy;":"\u0457","&yopf;":"\u{1D56A}","&yscr;":"\u{1D4CE}","&yucy;":"\u044E","&yuml":"\xFF","&yuml;":"\xFF","&zacute;":"\u017A","&zcaron;":"\u017E","&zcy;":"\u0437","&zdot;":"\u017C","&zeetrf;":"\u2128","&zeta;":"\u03B6","&zfr;":"\u{1D537}","&zhcy;":"\u0436","&zigrarr;":"\u21DD","&zopf;":"\u{1D56B}","&zscr;":"\u{1D4CF}","&zwj;":"\u200D","&zwnj;":"\u200C"},characters:{\u00C6:"&AElig;","&":"&amp;",\u00C1:"&Aacute;",\u0102:"&Abreve;",\u00C2:"&Acirc;",\u0410:"&Acy;",\u{1D504}:"&Afr;",\u00C0:"&Agrave;",\u0391:"&Alpha;",\u0100:"&Amacr;","\u2A53":"&And;",\u0104:"&Aogon;",\u{1D538}:"&Aopf;","\u2061":"&af;",\u00C5:"&angst;",\u{1D49C}:"&Ascr;","\u2254":"&coloneq;",\u00C3:"&Atilde;",\u00C4:"&Auml;","\u2216":"&ssetmn;","\u2AE7":"&Barv;","\u2306":"&doublebarwedge;",\u0411:"&Bcy;","\u2235":"&because;",\u212C:"&bernou;",\u0392:"&Beta;",\u{1D505}:"&Bfr;",\u{1D539}:"&Bopf;","\u02D8":"&breve;","\u224E":"&bump;",\u0427:"&CHcy;","\xA9":"&copy;",\u0106:"&Cacute;","\u22D2":"&Cap;",\u2145:"&DD;",\u212D:"&Cfr;",\u010C:"&Ccaron;",\u00C7:"&Ccedil;",\u0108:"&Ccirc;","\u2230":"&Cconint;",\u010A:"&Cdot;","\xB8":"&cedil;","\xB7":"&middot;",\u03A7:"&Chi;","\u2299":"&odot;","\u2296":"&ominus;","\u2295":"&oplus;","\u2297":"&otimes;","\u2232":"&cwconint;","\u201D":"&rdquor;","\u2019":"&rsquor;","\u2237":"&Proportion;","\u2A74":"&Colone;","\u2261":"&equiv;","\u222F":"&DoubleContourIntegral;","\u222E":"&oint;",\u2102:"&complexes;","\u2210":"&coprod;","\u2233":"&awconint;","\u2A2F":"&Cross;",\u{1D49E}:"&Cscr;","\u22D3":"&Cup;","\u224D":"&asympeq;","\u2911":"&DDotrahd;",\u0402:"&DJcy;",\u0405:"&DScy;",\u040F:"&DZcy;","\u2021":"&ddagger;","\u21A1":"&Darr;","\u2AE4":"&DoubleLeftTee;",\u010E:"&Dcaron;",\u0414:"&Dcy;","\u2207":"&nabla;",\u0394:"&Delta;",\u{1D507}:"&Dfr;","\xB4":"&acute;","\u02D9":"&dot;","\u02DD":"&dblac;","`":"&grave;","\u02DC":"&tilde;","\u22C4":"&diamond;",\u2146:"&dd;",\u{1D53B}:"&Dopf;","\xA8":"&uml;","\u20DC":"&DotDot;","\u2250":"&esdot;","\u21D3":"&dArr;","\u21D0":"&lArr;","\u21D4":"&iff;","\u27F8":"&xlArr;","\u27FA":"&xhArr;","\u27F9":"&xrArr;","\u21D2":"&rArr;","\u22A8":"&vDash;","\u21D1":"&uArr;","\u21D5":"&vArr;","\u2225":"&spar;","\u2193":"&downarrow;","\u2913":"&DownArrowBar;","\u21F5":"&duarr;","\u0311":"&DownBreve;","\u2950":"&DownLeftRightVector;","\u295E":"&DownLeftTeeVector;","\u21BD":"&lhard;","\u2956":"&DownLeftVectorBar;","\u295F":"&DownRightTeeVector;","\u21C1":"&rightharpoondown;","\u2957":"&DownRightVectorBar;","\u22A4":"&top;","\u21A7":"&mapstodown;",\u{1D49F}:"&Dscr;",\u0110:"&Dstrok;",\u014A:"&ENG;",\u00D0:"&ETH;",\u00C9:"&Eacute;",\u011A:"&Ecaron;",\u00CA:"&Ecirc;",\u042D:"&Ecy;",\u0116:"&Edot;",\u{1D508}:"&Efr;",\u00C8:"&Egrave;","\u2208":"&isinv;",\u0112:"&Emacr;","\u25FB":"&EmptySmallSquare;","\u25AB":"&EmptyVerySmallSquare;",\u0118:"&Eogon;",\u{1D53C}:"&Eopf;",\u0395:"&Epsilon;","\u2A75":"&Equal;","\u2242":"&esim;","\u21CC":"&rlhar;",\u2130:"&expectation;","\u2A73":"&Esim;",\u0397:"&Eta;",\u00CB:"&Euml;","\u2203":"&exist;",\u2147:"&exponentiale;",\u0424:"&Fcy;",\u{1D509}:"&Ffr;","\u25FC":"&FilledSmallSquare;","\u25AA":"&squf;",\u{1D53D}:"&Fopf;","\u2200":"&forall;",\u2131:"&Fscr;",\u0403:"&GJcy;",">":"&gt;",\u0393:"&Gamma;",\u03DC:"&Gammad;",\u011E:"&Gbreve;",\u0122:"&Gcedil;",\u011C:"&Gcirc;",\u0413:"&Gcy;",\u0120:"&Gdot;",\u{1D50A}:"&Gfr;","\u22D9":"&ggg;",\u{1D53E}:"&Gopf;","\u2265":"&geq;","\u22DB":"&gtreqless;","\u2267":"&geqq;","\u2AA2":"&GreaterGreater;","\u2277":"&gtrless;","\u2A7E":"&ges;","\u2273":"&gtrsim;",\u{1D4A2}:"&Gscr;","\u226B":"&gg;",\u042A:"&HARDcy;",\u02C7:"&caron;","^":"&Hat;",\u0124:"&Hcirc;",\u210C:"&Poincareplane;",\u210B:"&hamilt;",\u210D:"&quaternions;","\u2500":"&boxh;",\u0126:"&Hstrok;","\u224F":"&bumpeq;",\u0415:"&IEcy;",\u0132:"&IJlig;",\u0401:"&IOcy;",\u00CD:"&Iacute;",\u00CE:"&Icirc;",\u0418:"&Icy;",\u0130:"&Idot;",\u2111:"&imagpart;",\u00CC:"&Igrave;",\u012A:"&Imacr;",\u2148:"&ii;","\u222C":"&Int;","\u222B":"&int;","\u22C2":"&xcap;","\u2063":"&ic;","\u2062":"&it;",\u012E:"&Iogon;",\u{1D540}:"&Iopf;",\u0399:"&Iota;",\u2110:"&imagline;",\u0128:"&Itilde;",\u0406:"&Iukcy;",\u00CF:"&Iuml;",\u0134:"&Jcirc;",\u0419:"&Jcy;",\u{1D50D}:"&Jfr;",\u{1D541}:"&Jopf;",\u{1D4A5}:"&Jscr;",\u0408:"&Jsercy;",\u0404:"&Jukcy;",\u0425:"&KHcy;",\u040C:"&KJcy;",\u039A:"&Kappa;",\u0136:"&Kcedil;",\u041A:"&Kcy;",\u{1D50E}:"&Kfr;",\u{1D542}:"&Kopf;",\u{1D4A6}:"&Kscr;",\u0409:"&LJcy;","<":"&lt;",\u0139:"&Lacute;",\u039B:"&Lambda;","\u27EA":"&Lang;",\u2112:"&lagran;","\u219E":"&twoheadleftarrow;",\u013D:"&Lcaron;",\u013B:"&Lcedil;",\u041B:"&Lcy;","\u27E8":"&langle;","\u2190":"&slarr;","\u21E4":"&larrb;","\u21C6":"&lrarr;","\u2308":"&lceil;","\u27E6":"&lobrk;","\u2961":"&LeftDownTeeVector;","\u21C3":"&downharpoonleft;","\u2959":"&LeftDownVectorBar;","\u230A":"&lfloor;","\u2194":"&leftrightarrow;","\u294E":"&LeftRightVector;","\u22A3":"&dashv;","\u21A4":"&mapstoleft;","\u295A":"&LeftTeeVector;","\u22B2":"&vltri;","\u29CF":"&LeftTriangleBar;","\u22B4":"&trianglelefteq;","\u2951":"&LeftUpDownVector;","\u2960":"&LeftUpTeeVector;","\u21BF":"&upharpoonleft;","\u2958":"&LeftUpVectorBar;","\u21BC":"&lharu;","\u2952":"&LeftVectorBar;","\u22DA":"&lesseqgtr;","\u2266":"&leqq;","\u2276":"&lg;","\u2AA1":"&LessLess;","\u2A7D":"&les;","\u2272":"&lsim;",\u{1D50F}:"&Lfr;","\u22D8":"&Ll;","\u21DA":"&lAarr;",\u013F:"&Lmidot;","\u27F5":"&xlarr;","\u27F7":"&xharr;","\u27F6":"&xrarr;",\u{1D543}:"&Lopf;","\u2199":"&swarrow;","\u2198":"&searrow;","\u21B0":"&lsh;",\u0141:"&Lstrok;","\u226A":"&ll;","\u2905":"&Map;",\u041C:"&Mcy;","\u205F":"&MediumSpace;",\u2133:"&phmmat;",\u{1D510}:"&Mfr;","\u2213":"&mp;",\u{1D544}:"&Mopf;",\u039C:"&Mu;",\u040A:"&NJcy;",\u0143:"&Nacute;",\u0147:"&Ncaron;",\u0145:"&Ncedil;",\u041D:"&Ncy;","\u200B":"&ZeroWidthSpace;","\n":"&NewLine;",\u{1D511}:"&Nfr;","\u2060":"&NoBreak;","\xA0":"&nbsp;",\u2115:"&naturals;","\u2AEC":"&Not;","\u2262":"&nequiv;","\u226D":"&NotCupCap;","\u2226":"&nspar;","\u2209":"&notinva;","\u2260":"&ne;","\u2242\u0338":"&nesim;","\u2204":"&nexists;","\u226F":"&ngtr;","\u2271":"&ngeq;","\u2267\u0338":"&ngeqq;","\u226B\u0338":"&nGtv;","\u2279":"&ntgl;","\u2A7E\u0338":"&nges;","\u2275":"&ngsim;","\u224E\u0338":"&nbump;","\u224F\u0338":"&nbumpe;","\u22EA":"&ntriangleleft;","\u29CF\u0338":"&NotLeftTriangleBar;","\u22EC":"&ntrianglelefteq;","\u226E":"&nlt;","\u2270":"&nleq;","\u2278":"&ntlg;","\u226A\u0338":"&nLtv;","\u2A7D\u0338":"&nles;","\u2274":"&nlsim;","\u2AA2\u0338":"&NotNestedGreaterGreater;","\u2AA1\u0338":"&NotNestedLessLess;","\u2280":"&nprec;","\u2AAF\u0338":"&npreceq;","\u22E0":"&nprcue;","\u220C":"&notniva;","\u22EB":"&ntriangleright;","\u29D0\u0338":"&NotRightTriangleBar;","\u22ED":"&ntrianglerighteq;","\u228F\u0338":"&NotSquareSubset;","\u22E2":"&nsqsube;","\u2290\u0338":"&NotSquareSuperset;","\u22E3":"&nsqsupe;","\u2282\u20D2":"&vnsub;","\u2288":"&nsubseteq;","\u2281":"&nsucc;","\u2AB0\u0338":"&nsucceq;","\u22E1":"&nsccue;","\u227F\u0338":"&NotSucceedsTilde;","\u2283\u20D2":"&vnsup;","\u2289":"&nsupseteq;","\u2241":"&nsim;","\u2244":"&nsimeq;","\u2247":"&ncong;","\u2249":"&napprox;","\u2224":"&nsmid;",\u{1D4A9}:"&Nscr;",\u00D1:"&Ntilde;",\u039D:"&Nu;",\u0152:"&OElig;",\u00D3:"&Oacute;",\u00D4:"&Ocirc;",\u041E:"&Ocy;",\u0150:"&Odblac;",\u{1D512}:"&Ofr;",\u00D2:"&Ograve;",\u014C:"&Omacr;",\u03A9:"&ohm;",\u039F:"&Omicron;",\u{1D546}:"&Oopf;","\u201C":"&ldquo;","\u2018":"&lsquo;","\u2A54":"&Or;",\u{1D4AA}:"&Oscr;",\u00D8:"&Oslash;",\u00D5:"&Otilde;","\u2A37":"&Otimes;",\u00D6:"&Ouml;","\u203E":"&oline;","\u23DE":"&OverBrace;","\u23B4":"&tbrk;","\u23DC":"&OverParenthesis;","\u2202":"&part;",\u041F:"&Pcy;",\u{1D513}:"&Pfr;",\u03A6:"&Phi;",\u03A0:"&Pi;","\xB1":"&pm;",\u2119:"&primes;","\u2ABB":"&Pr;","\u227A":"&prec;","\u2AAF":"&preceq;","\u227C":"&preccurlyeq;","\u227E":"&prsim;","\u2033":"&Prime;","\u220F":"&prod;","\u221D":"&vprop;",\u{1D4AB}:"&Pscr;",\u03A8:"&Psi;",'"':"&quot;",\u{1D514}:"&Qfr;",\u211A:"&rationals;",\u{1D4AC}:"&Qscr;","\u2910":"&drbkarow;","\xAE":"&reg;",\u0154:"&Racute;","\u27EB":"&Rang;","\u21A0":"&twoheadrightarrow;","\u2916":"&Rarrtl;",\u0158:"&Rcaron;",\u0156:"&Rcedil;",\u0420:"&Rcy;",\u211C:"&realpart;","\u220B":"&niv;","\u21CB":"&lrhar;","\u296F":"&duhar;",\u03A1:"&Rho;","\u27E9":"&rangle;","\u2192":"&srarr;","\u21E5":"&rarrb;","\u21C4":"&rlarr;","\u2309":"&rceil;","\u27E7":"&robrk;","\u295D":"&RightDownTeeVector;","\u21C2":"&downharpoonright;","\u2955":"&RightDownVectorBar;","\u230B":"&rfloor;","\u22A2":"&vdash;","\u21A6":"&mapsto;","\u295B":"&RightTeeVector;","\u22B3":"&vrtri;","\u29D0":"&RightTriangleBar;","\u22B5":"&trianglerighteq;","\u294F":"&RightUpDownVector;","\u295C":"&RightUpTeeVector;","\u21BE":"&upharpoonright;","\u2954":"&RightUpVectorBar;","\u21C0":"&rightharpoonup;","\u2953":"&RightVectorBar;",\u211D:"&reals;","\u2970":"&RoundImplies;","\u21DB":"&rAarr;",\u211B:"&realine;","\u21B1":"&rsh;","\u29F4":"&RuleDelayed;",\u0429:"&SHCHcy;",\u0428:"&SHcy;",\u042C:"&SOFTcy;",\u015A:"&Sacute;","\u2ABC":"&Sc;",\u0160:"&Scaron;",\u015E:"&Scedil;",\u015C:"&Scirc;",\u0421:"&Scy;",\u{1D516}:"&Sfr;","\u2191":"&uparrow;",\u03A3:"&Sigma;","\u2218":"&compfn;",\u{1D54A}:"&Sopf;","\u221A":"&radic;","\u25A1":"&square;","\u2293":"&sqcap;","\u228F":"&sqsubset;","\u2291":"&sqsubseteq;","\u2290":"&sqsupset;","\u2292":"&sqsupseteq;","\u2294":"&sqcup;",\u{1D4AE}:"&Sscr;","\u22C6":"&sstarf;","\u22D0":"&Subset;","\u2286":"&subseteq;","\u227B":"&succ;","\u2AB0":"&succeq;","\u227D":"&succcurlyeq;","\u227F":"&succsim;","\u2211":"&sum;","\u22D1":"&Supset;","\u2283":"&supset;","\u2287":"&supseteq;",\u00DE:"&THORN;","\u2122":"&trade;",\u040B:"&TSHcy;",\u0426:"&TScy;","	":"&Tab;",\u03A4:"&Tau;",\u0164:"&Tcaron;",\u0162:"&Tcedil;",\u0422:"&Tcy;",\u{1D517}:"&Tfr;","\u2234":"&therefore;",\u0398:"&Theta;","\u205F\u200A":"&ThickSpace;","\u2009":"&thinsp;","\u223C":"&thksim;","\u2243":"&simeq;","\u2245":"&cong;","\u2248":"&thkap;",\u{1D54B}:"&Topf;","\u20DB":"&tdot;",\u{1D4AF}:"&Tscr;",\u0166:"&Tstrok;",\u00DA:"&Uacute;","\u219F":"&Uarr;","\u2949":"&Uarrocir;",\u040E:"&Ubrcy;",\u016C:"&Ubreve;",\u00DB:"&Ucirc;",\u0423:"&Ucy;",\u0170:"&Udblac;",\u{1D518}:"&Ufr;",\u00D9:"&Ugrave;",\u016A:"&Umacr;",_:"&lowbar;","\u23DF":"&UnderBrace;","\u23B5":"&bbrk;","\u23DD":"&UnderParenthesis;","\u22C3":"&xcup;","\u228E":"&uplus;",\u0172:"&Uogon;",\u{1D54C}:"&Uopf;","\u2912":"&UpArrowBar;","\u21C5":"&udarr;","\u2195":"&varr;","\u296E":"&udhar;","\u22A5":"&perp;","\u21A5":"&mapstoup;","\u2196":"&nwarrow;","\u2197":"&nearrow;",\u03D2:"&upsih;",\u03A5:"&Upsilon;",\u016E:"&Uring;",\u{1D4B0}:"&Uscr;",\u0168:"&Utilde;",\u00DC:"&Uuml;","\u22AB":"&VDash;","\u2AEB":"&Vbar;",\u0412:"&Vcy;","\u22A9":"&Vdash;","\u2AE6":"&Vdashl;","\u22C1":"&xvee;","\u2016":"&Vert;","\u2223":"&smid;","|":"&vert;","\u2758":"&VerticalSeparator;","\u2240":"&wreath;","\u200A":"&hairsp;",\u{1D519}:"&Vfr;",\u{1D54D}:"&Vopf;",\u{1D4B1}:"&Vscr;","\u22AA":"&Vvdash;",\u0174:"&Wcirc;","\u22C0":"&xwedge;",\u{1D51A}:"&Wfr;",\u{1D54E}:"&Wopf;",\u{1D4B2}:"&Wscr;",\u{1D51B}:"&Xfr;",\u039E:"&Xi;",\u{1D54F}:"&Xopf;",\u{1D4B3}:"&Xscr;",\u042F:"&YAcy;",\u0407:"&YIcy;",\u042E:"&YUcy;",\u00DD:"&Yacute;",\u0176:"&Ycirc;",\u042B:"&Ycy;",\u{1D51C}:"&Yfr;",\u{1D550}:"&Yopf;",\u{1D4B4}:"&Yscr;",\u0178:"&Yuml;",\u0416:"&ZHcy;",\u0179:"&Zacute;",\u017D:"&Zcaron;",\u0417:"&Zcy;",\u017B:"&Zdot;",\u0396:"&Zeta;",\u2128:"&zeetrf;",\u2124:"&integers;",\u{1D4B5}:"&Zscr;",\u00E1:"&aacute;",\u0103:"&abreve;","\u223E":"&mstpos;","\u223E\u0333":"&acE;","\u223F":"&acd;",\u00E2:"&acirc;",\u0430:"&acy;",\u00E6:"&aelig;",\u{1D51E}:"&afr;",\u00E0:"&agrave;",\u2135:"&aleph;",\u03B1:"&alpha;",\u0101:"&amacr;","\u2A3F":"&amalg;","\u2227":"&wedge;","\u2A55":"&andand;","\u2A5C":"&andd;","\u2A58":"&andslope;","\u2A5A":"&andv;","\u2220":"&angle;","\u29A4":"&ange;","\u2221":"&measuredangle;","\u29A8":"&angmsdaa;","\u29A9":"&angmsdab;","\u29AA":"&angmsdac;","\u29AB":"&angmsdad;","\u29AC":"&angmsdae;","\u29AD":"&angmsdaf;","\u29AE":"&angmsdag;","\u29AF":"&angmsdah;","\u221F":"&angrt;","\u22BE":"&angrtvb;","\u299D":"&angrtvbd;","\u2222":"&angsph;","\u237C":"&angzarr;",\u0105:"&aogon;",\u{1D552}:"&aopf;","\u2A70":"&apE;","\u2A6F":"&apacir;","\u224A":"&approxeq;","\u224B":"&apid;","'":"&apos;",\u00E5:"&aring;",\u{1D4B6}:"&ascr;","*":"&midast;",\u00E3:"&atilde;",\u00E4:"&auml;","\u2A11":"&awint;","\u2AED":"&bNot;","\u224C":"&bcong;","\u03F6":"&bepsi;","\u2035":"&bprime;","\u223D":"&bsim;","\u22CD":"&bsime;","\u22BD":"&barvee;","\u2305":"&barwedge;","\u23B6":"&bbrktbrk;",\u0431:"&bcy;","\u201E":"&ldquor;","\u29B0":"&bemptyv;",\u03B2:"&beta;",\u2136:"&beth;","\u226C":"&twixt;",\u{1D51F}:"&bfr;","\u25EF":"&xcirc;","\u2A00":"&xodot;","\u2A01":"&xoplus;","\u2A02":"&xotime;","\u2A06":"&xsqcup;","\u2605":"&starf;","\u25BD":"&xdtri;","\u25B3":"&xutri;","\u2A04":"&xuplus;","\u290D":"&rbarr;","\u29EB":"&lozf;","\u25B4":"&utrif;","\u25BE":"&dtrif;","\u25C2":"&ltrif;","\u25B8":"&rtrif;","\u2423":"&blank;","\u2592":"&blk12;","\u2591":"&blk14;","\u2593":"&blk34;","\u2588":"&block;","=\u20E5":"&bne;","\u2261\u20E5":"&bnequiv;","\u2310":"&bnot;",\u{1D553}:"&bopf;","\u22C8":"&bowtie;","\u2557":"&boxDL;","\u2554":"&boxDR;","\u2556":"&boxDl;","\u2553":"&boxDr;","\u2550":"&boxH;","\u2566":"&boxHD;","\u2569":"&boxHU;","\u2564":"&boxHd;","\u2567":"&boxHu;","\u255D":"&boxUL;","\u255A":"&boxUR;","\u255C":"&boxUl;","\u2559":"&boxUr;","\u2551":"&boxV;","\u256C":"&boxVH;","\u2563":"&boxVL;","\u2560":"&boxVR;","\u256B":"&boxVh;","\u2562":"&boxVl;","\u255F":"&boxVr;","\u29C9":"&boxbox;","\u2555":"&boxdL;","\u2552":"&boxdR;","\u2510":"&boxdl;","\u250C":"&boxdr;","\u2565":"&boxhD;","\u2568":"&boxhU;","\u252C":"&boxhd;","\u2534":"&boxhu;","\u229F":"&minusb;","\u229E":"&plusb;","\u22A0":"&timesb;","\u255B":"&boxuL;","\u2558":"&boxuR;","\u2518":"&boxul;","\u2514":"&boxur;","\u2502":"&boxv;","\u256A":"&boxvH;","\u2561":"&boxvL;","\u255E":"&boxvR;","\u253C":"&boxvh;","\u2524":"&boxvl;","\u251C":"&boxvr;","\xA6":"&brvbar;",\u{1D4B7}:"&bscr;","\u204F":"&bsemi;","\\":"&bsol;","\u29C5":"&bsolb;","\u27C8":"&bsolhsub;","\u2022":"&bullet;","\u2AAE":"&bumpE;",\u0107:"&cacute;","\u2229":"&cap;","\u2A44":"&capand;","\u2A49":"&capbrcup;","\u2A4B":"&capcap;","\u2A47":"&capcup;","\u2A40":"&capdot;","\u2229\uFE00":"&caps;","\u2041":"&caret;","\u2A4D":"&ccaps;",\u010D:"&ccaron;",\u00E7:"&ccedil;",\u0109:"&ccirc;","\u2A4C":"&ccups;","\u2A50":"&ccupssm;",\u010B:"&cdot;","\u29B2":"&cemptyv;","\xA2":"&cent;",\u{1D520}:"&cfr;",\u0447:"&chcy;","\u2713":"&checkmark;",\u03C7:"&chi;","\u25CB":"&cir;","\u29C3":"&cirE;",\u02C6:"&circ;","\u2257":"&cire;","\u21BA":"&olarr;","\u21BB":"&orarr;","\u24C8":"&oS;","\u229B":"&oast;","\u229A":"&ocir;","\u229D":"&odash;","\u2A10":"&cirfnint;","\u2AEF":"&cirmid;","\u29C2":"&cirscir;","\u2663":"&clubsuit;",":":"&colon;",",":"&comma;","@":"&commat;","\u2201":"&complement;","\u2A6D":"&congdot;",\u{1D554}:"&copf;","\u2117":"&copysr;","\u21B5":"&crarr;","\u2717":"&cross;",\u{1D4B8}:"&cscr;","\u2ACF":"&csub;","\u2AD1":"&csube;","\u2AD0":"&csup;","\u2AD2":"&csupe;","\u22EF":"&ctdot;","\u2938":"&cudarrl;","\u2935":"&cudarrr;","\u22DE":"&curlyeqprec;","\u22DF":"&curlyeqsucc;","\u21B6":"&curvearrowleft;","\u293D":"&cularrp;","\u222A":"&cup;","\u2A48":"&cupbrcap;","\u2A46":"&cupcap;","\u2A4A":"&cupcup;","\u228D":"&cupdot;","\u2A45":"&cupor;","\u222A\uFE00":"&cups;","\u21B7":"&curvearrowright;","\u293C":"&curarrm;","\u22CE":"&cuvee;","\u22CF":"&cuwed;","\xA4":"&curren;","\u2231":"&cwint;","\u232D":"&cylcty;","\u2965":"&dHar;","\u2020":"&dagger;",\u2138:"&daleth;","\u2010":"&hyphen;","\u290F":"&rBarr;",\u010F:"&dcaron;",\u0434:"&dcy;","\u21CA":"&downdownarrows;","\u2A77":"&eDDot;","\xB0":"&deg;",\u03B4:"&delta;","\u29B1":"&demptyv;","\u297F":"&dfisht;",\u{1D521}:"&dfr;","\u2666":"&diams;",\u03DD:"&gammad;","\u22F2":"&disin;","\xF7":"&divide;","\u22C7":"&divonx;",\u0452:"&djcy;","\u231E":"&llcorner;","\u230D":"&dlcrop;",$:"&dollar;",\u{1D555}:"&dopf;","\u2251":"&eDot;","\u2238":"&minusd;","\u2214":"&plusdo;","\u22A1":"&sdotb;","\u231F":"&lrcorner;","\u230C":"&drcrop;",\u{1D4B9}:"&dscr;",\u0455:"&dscy;","\u29F6":"&dsol;",\u0111:"&dstrok;","\u22F1":"&dtdot;","\u25BF":"&triangledown;","\u29A6":"&dwangle;",\u045F:"&dzcy;","\u27FF":"&dzigrarr;",\u00E9:"&eacute;","\u2A6E":"&easter;",\u011B:"&ecaron;","\u2256":"&eqcirc;",\u00EA:"&ecirc;","\u2255":"&eqcolon;",\u044D:"&ecy;",\u0117:"&edot;","\u2252":"&fallingdotseq;",\u{1D522}:"&efr;","\u2A9A":"&eg;",\u00E8:"&egrave;","\u2A96":"&eqslantgtr;","\u2A98":"&egsdot;","\u2A99":"&el;","\u23E7":"&elinters;",\u2113:"&ell;","\u2A95":"&eqslantless;","\u2A97":"&elsdot;",\u0113:"&emacr;","\u2205":"&varnothing;","\u2004":"&emsp13;","\u2005":"&emsp14;","\u2003":"&emsp;",\u014B:"&eng;","\u2002":"&ensp;",\u0119:"&eogon;",\u{1D556}:"&eopf;","\u22D5":"&epar;","\u29E3":"&eparsl;","\u2A71":"&eplus;",\u03B5:"&epsilon;",\u03F5:"&varepsilon;","=":"&equals;","\u225F":"&questeq;","\u2A78":"&equivDD;","\u29E5":"&eqvparsl;","\u2253":"&risingdotseq;","\u2971":"&erarr;",\u212F:"&escr;",\u03B7:"&eta;",\u00F0:"&eth;",\u00EB:"&euml;","\u20AC":"&euro;","!":"&excl;",\u0444:"&fcy;","\u2640":"&female;",\uFB03:"&ffilig;",\uFB00:"&fflig;",\uFB04:"&ffllig;",\u{1D523}:"&ffr;",\uFB01:"&filig;",fj:"&fjlig;","\u266D":"&flat;",\uFB02:"&fllig;","\u25B1":"&fltns;",\u0192:"&fnof;",\u{1D557}:"&fopf;","\u22D4":"&pitchfork;","\u2AD9":"&forkv;","\u2A0D":"&fpartint;","\xBD":"&half;","\u2153":"&frac13;","\xBC":"&frac14;","\u2155":"&frac15;","\u2159":"&frac16;","\u215B":"&frac18;","\u2154":"&frac23;","\u2156":"&frac25;","\xBE":"&frac34;","\u2157":"&frac35;","\u215C":"&frac38;","\u2158":"&frac45;","\u215A":"&frac56;","\u215D":"&frac58;","\u215E":"&frac78;","\u2044":"&frasl;","\u2322":"&sfrown;",\u{1D4BB}:"&fscr;","\u2A8C":"&gtreqqless;",\u01F5:"&gacute;",\u03B3:"&gamma;","\u2A86":"&gtrapprox;",\u011F:"&gbreve;",\u011D:"&gcirc;",\u0433:"&gcy;",\u0121:"&gdot;","\u2AA9":"&gescc;","\u2A80":"&gesdot;","\u2A82":"&gesdoto;","\u2A84":"&gesdotol;","\u22DB\uFE00":"&gesl;","\u2A94":"&gesles;",\u{1D524}:"&gfr;",\u2137:"&gimel;",\u0453:"&gjcy;","\u2A92":"&glE;","\u2AA5":"&gla;","\u2AA4":"&glj;","\u2269":"&gneqq;","\u2A8A":"&gnapprox;","\u2A88":"&gneq;","\u22E7":"&gnsim;",\u{1D558}:"&gopf;",\u210A:"&gscr;","\u2A8E":"&gsime;","\u2A90":"&gsiml;","\u2AA7":"&gtcc;","\u2A7A":"&gtcir;","\u22D7":"&gtrdot;","\u2995":"&gtlPar;","\u2A7C":"&gtquest;","\u2978":"&gtrarr;","\u2269\uFE00":"&gvnE;",\u044A:"&hardcy;","\u2948":"&harrcir;","\u21AD":"&leftrightsquigarrow;",\u210F:"&plankv;",\u0125:"&hcirc;","\u2665":"&heartsuit;","\u2026":"&mldr;","\u22B9":"&hercon;",\u{1D525}:"&hfr;","\u2925":"&searhk;","\u2926":"&swarhk;","\u21FF":"&hoarr;","\u223B":"&homtht;","\u21A9":"&larrhk;","\u21AA":"&rarrhk;",\u{1D559}:"&hopf;","\u2015":"&horbar;",\u{1D4BD}:"&hscr;",\u0127:"&hstrok;","\u2043":"&hybull;",\u00ED:"&iacute;",\u00EE:"&icirc;",\u0438:"&icy;",\u0435:"&iecy;","\xA1":"&iexcl;",\u{1D526}:"&ifr;",\u00EC:"&igrave;","\u2A0C":"&qint;","\u222D":"&tint;","\u29DC":"&iinfin;","\u2129":"&iiota;",\u0133:"&ijlig;",\u012B:"&imacr;",\u0131:"&inodot;","\u22B7":"&imof;",\u01B5:"&imped;","\u2105":"&incare;","\u221E":"&infin;","\u29DD":"&infintie;","\u22BA":"&intercal;","\u2A17":"&intlarhk;","\u2A3C":"&iprod;",\u0451:"&iocy;",\u012F:"&iogon;",\u{1D55A}:"&iopf;",\u03B9:"&iota;","\xBF":"&iquest;",\u{1D4BE}:"&iscr;","\u22F9":"&isinE;","\u22F5":"&isindot;","\u22F4":"&isins;","\u22F3":"&isinsv;",\u0129:"&itilde;",\u0456:"&iukcy;",\u00EF:"&iuml;",\u0135:"&jcirc;",\u0439:"&jcy;",\u{1D527}:"&jfr;",\u0237:"&jmath;",\u{1D55B}:"&jopf;",\u{1D4BF}:"&jscr;",\u0458:"&jsercy;",\u0454:"&jukcy;",\u03BA:"&kappa;",\u03F0:"&varkappa;",\u0137:"&kcedil;",\u043A:"&kcy;",\u{1D528}:"&kfr;",\u0138:"&kgreen;",\u0445:"&khcy;",\u045C:"&kjcy;",\u{1D55C}:"&kopf;",\u{1D4C0}:"&kscr;","\u291B":"&lAtail;","\u290E":"&lBarr;","\u2A8B":"&lesseqqgtr;","\u2962":"&lHar;",\u013A:"&lacute;","\u29B4":"&laemptyv;",\u03BB:"&lambda;","\u2991":"&langd;","\u2A85":"&lessapprox;","\xAB":"&laquo;","\u291F":"&larrbfs;","\u291D":"&larrfs;","\u21AB":"&looparrowleft;","\u2939":"&larrpl;","\u2973":"&larrsim;","\u21A2":"&leftarrowtail;","\u2AAB":"&lat;","\u2919":"&latail;","\u2AAD":"&late;","\u2AAD\uFE00":"&lates;","\u290C":"&lbarr;","\u2772":"&lbbrk;","{":"&lcub;","[":"&lsqb;","\u298B":"&lbrke;","\u298F":"&lbrksld;","\u298D":"&lbrkslu;",\u013E:"&lcaron;",\u013C:"&lcedil;",\u043B:"&lcy;","\u2936":"&ldca;","\u2967":"&ldrdhar;","\u294B":"&ldrushar;","\u21B2":"&ldsh;","\u2264":"&leq;","\u21C7":"&llarr;","\u22CB":"&lthree;","\u2AA8":"&lescc;","\u2A7F":"&lesdot;","\u2A81":"&lesdoto;","\u2A83":"&lesdotor;","\u22DA\uFE00":"&lesg;","\u2A93":"&lesges;","\u22D6":"&ltdot;","\u297C":"&lfisht;",\u{1D529}:"&lfr;","\u2A91":"&lgE;","\u296A":"&lharul;","\u2584":"&lhblk;",\u0459:"&ljcy;","\u296B":"&llhard;","\u25FA":"&lltri;",\u0140:"&lmidot;","\u23B0":"&lmoustache;","\u2268":"&lneqq;","\u2A89":"&lnapprox;","\u2A87":"&lneq;","\u22E6":"&lnsim;","\u27EC":"&loang;","\u21FD":"&loarr;","\u27FC":"&xmap;","\u21AC":"&rarrlp;","\u2985":"&lopar;",\u{1D55D}:"&lopf;","\u2A2D":"&loplus;","\u2A34":"&lotimes;","\u2217":"&lowast;","\u25CA":"&lozenge;","(":"&lpar;","\u2993":"&lparlt;","\u296D":"&lrhard;","\u200E":"&lrm;","\u22BF":"&lrtri;","\u2039":"&lsaquo;",\u{1D4C1}:"&lscr;","\u2A8D":"&lsime;","\u2A8F":"&lsimg;","\u201A":"&sbquo;",\u0142:"&lstrok;","\u2AA6":"&ltcc;","\u2A79":"&ltcir;","\u22C9":"&ltimes;","\u2976":"&ltlarr;","\u2A7B":"&ltquest;","\u2996":"&ltrPar;","\u25C3":"&triangleleft;","\u294A":"&lurdshar;","\u2966":"&luruhar;","\u2268\uFE00":"&lvnE;","\u223A":"&mDDot;","\xAF":"&strns;","\u2642":"&male;","\u2720":"&maltese;","\u25AE":"&marker;","\u2A29":"&mcomma;",\u043C:"&mcy;","\u2014":"&mdash;",\u{1D52A}:"&mfr;","\u2127":"&mho;",\u00B5:"&micro;","\u2AF0":"&midcir;","\u2212":"&minus;","\u2A2A":"&minusdu;","\u2ADB":"&mlcp;","\u22A7":"&models;",\u{1D55E}:"&mopf;",\u{1D4C2}:"&mscr;",\u03BC:"&mu;","\u22B8":"&mumap;","\u22D9\u0338":"&nGg;","\u226B\u20D2":"&nGt;","\u21CD":"&nlArr;","\u21CE":"&nhArr;","\u22D8\u0338":"&nLl;","\u226A\u20D2":"&nLt;","\u21CF":"&nrArr;","\u22AF":"&nVDash;","\u22AE":"&nVdash;",\u0144:"&nacute;","\u2220\u20D2":"&nang;","\u2A70\u0338":"&napE;","\u224B\u0338":"&napid;",\u0149:"&napos;","\u266E":"&natural;","\u2A43":"&ncap;",\u0148:"&ncaron;",\u0146:"&ncedil;","\u2A6D\u0338":"&ncongdot;","\u2A42":"&ncup;",\u043D:"&ncy;","\u2013":"&ndash;","\u21D7":"&neArr;","\u2924":"&nearhk;","\u2250\u0338":"&nedot;","\u2928":"&toea;",\u{1D52B}:"&nfr;","\u21AE":"&nleftrightarrow;","\u2AF2":"&nhpar;","\u22FC":"&nis;","\u22FA":"&nisd;",\u045A:"&njcy;","\u2266\u0338":"&nleqq;","\u219A":"&nleftarrow;","\u2025":"&nldr;",\u{1D55F}:"&nopf;","\xAC":"&not;","\u22F9\u0338":"&notinE;","\u22F5\u0338":"&notindot;","\u22F7":"&notinvb;","\u22F6":"&notinvc;","\u22FE":"&notnivb;","\u22FD":"&notnivc;","\u2AFD\u20E5":"&nparsl;","\u2202\u0338":"&npart;","\u2A14":"&npolint;","\u219B":"&nrightarrow;","\u2933\u0338":"&nrarrc;","\u219D\u0338":"&nrarrw;",\u{1D4C3}:"&nscr;","\u2284":"&nsub;","\u2AC5\u0338":"&nsubseteqq;","\u2285":"&nsup;","\u2AC6\u0338":"&nsupseteqq;",\u00F1:"&ntilde;",\u03BD:"&nu;","#":"&num;","\u2116":"&numero;","\u2007":"&numsp;","\u22AD":"&nvDash;","\u2904":"&nvHarr;","\u224D\u20D2":"&nvap;","\u22AC":"&nvdash;","\u2265\u20D2":"&nvge;",">\u20D2":"&nvgt;","\u29DE":"&nvinfin;","\u2902":"&nvlArr;","\u2264\u20D2":"&nvle;","<\u20D2":"&nvlt;","\u22B4\u20D2":"&nvltrie;","\u2903":"&nvrArr;","\u22B5\u20D2":"&nvrtrie;","\u223C\u20D2":"&nvsim;","\u21D6":"&nwArr;","\u2923":"&nwarhk;","\u2927":"&nwnear;",\u00F3:"&oacute;",\u00F4:"&ocirc;",\u043E:"&ocy;",\u0151:"&odblac;","\u2A38":"&odiv;","\u29BC":"&odsold;",\u0153:"&oelig;","\u29BF":"&ofcir;",\u{1D52C}:"&ofr;","\u02DB":"&ogon;",\u00F2:"&ograve;","\u29C1":"&ogt;","\u29B5":"&ohbar;","\u29BE":"&olcir;","\u29BB":"&olcross;","\u29C0":"&olt;",\u014D:"&omacr;",\u03C9:"&omega;",\u03BF:"&omicron;","\u29B6":"&omid;",\u{1D560}:"&oopf;","\u29B7":"&opar;","\u29B9":"&operp;","\u2228":"&vee;","\u2A5D":"&ord;",\u2134:"&oscr;",\u00AA:"&ordf;",\u00BA:"&ordm;","\u22B6":"&origof;","\u2A56":"&oror;","\u2A57":"&orslope;","\u2A5B":"&orv;",\u00F8:"&oslash;","\u2298":"&osol;",\u00F5:"&otilde;","\u2A36":"&otimesas;",\u00F6:"&ouml;","\u233D":"&ovbar;","\xB6":"&para;","\u2AF3":"&parsim;","\u2AFD":"&parsl;",\u043F:"&pcy;","%":"&percnt;",".":"&period;","\u2030":"&permil;","\u2031":"&pertenk;",\u{1D52D}:"&pfr;",\u03C6:"&phi;",\u03D5:"&varphi;","\u260E":"&phone;",\u03C0:"&pi;",\u03D6:"&varpi;",\u210E:"&planckh;","+":"&plus;","\u2A23":"&plusacir;","\u2A22":"&pluscir;","\u2A25":"&plusdu;","\u2A72":"&pluse;","\u2A26":"&plussim;","\u2A27":"&plustwo;","\u2A15":"&pointint;",\u{1D561}:"&popf;","\xA3":"&pound;","\u2AB3":"&prE;","\u2AB7":"&precapprox;","\u2AB9":"&prnap;","\u2AB5":"&prnE;","\u22E8":"&prnsim;","\u2032":"&prime;","\u232E":"&profalar;","\u2312":"&profline;","\u2313":"&profsurf;","\u22B0":"&prurel;",\u{1D4C5}:"&pscr;",\u03C8:"&psi;","\u2008":"&puncsp;",\u{1D52E}:"&qfr;",\u{1D562}:"&qopf;","\u2057":"&qprime;",\u{1D4C6}:"&qscr;","\u2A16":"&quatint;","?":"&quest;","\u291C":"&rAtail;","\u2964":"&rHar;","\u223D\u0331":"&race;",\u0155:"&racute;","\u29B3":"&raemptyv;","\u2992":"&rangd;","\u29A5":"&range;","\xBB":"&raquo;","\u2975":"&rarrap;","\u2920":"&rarrbfs;","\u2933":"&rarrc;","\u291E":"&rarrfs;","\u2945":"&rarrpl;","\u2974":"&rarrsim;","\u21A3":"&rightarrowtail;","\u219D":"&rightsquigarrow;","\u291A":"&ratail;","\u2236":"&ratio;","\u2773":"&rbbrk;","}":"&rcub;","]":"&rsqb;","\u298C":"&rbrke;","\u298E":"&rbrksld;","\u2990":"&rbrkslu;",\u0159:"&rcaron;",\u0157:"&rcedil;",\u0440:"&rcy;","\u2937":"&rdca;","\u2969":"&rdldhar;","\u21B3":"&rdsh;","\u25AD":"&rect;","\u297D":"&rfisht;",\u{1D52F}:"&rfr;","\u296C":"&rharul;",\u03C1:"&rho;",\u03F1:"&varrho;","\u21C9":"&rrarr;","\u22CC":"&rthree;","\u02DA":"&ring;","\u200F":"&rlm;","\u23B1":"&rmoustache;","\u2AEE":"&rnmid;","\u27ED":"&roang;","\u21FE":"&roarr;","\u2986":"&ropar;",\u{1D563}:"&ropf;","\u2A2E":"&roplus;","\u2A35":"&rotimes;",")":"&rpar;","\u2994":"&rpargt;","\u2A12":"&rppolint;","\u203A":"&rsaquo;",\u{1D4C7}:"&rscr;","\u22CA":"&rtimes;","\u25B9":"&triangleright;","\u29CE":"&rtriltri;","\u2968":"&ruluhar;","\u211E":"&rx;",\u015B:"&sacute;","\u2AB4":"&scE;","\u2AB8":"&succapprox;",\u0161:"&scaron;",\u015F:"&scedil;",\u015D:"&scirc;","\u2AB6":"&succneqq;","\u2ABA":"&succnapprox;","\u22E9":"&succnsim;","\u2A13":"&scpolint;",\u0441:"&scy;","\u22C5":"&sdot;","\u2A66":"&sdote;","\u21D8":"&seArr;","\xA7":"&sect;",";":"&semi;","\u2929":"&tosa;","\u2736":"&sext;",\u{1D530}:"&sfr;","\u266F":"&sharp;",\u0449:"&shchcy;",\u0448:"&shcy;","\xAD":"&shy;",\u03C3:"&sigma;",\u03C2:"&varsigma;","\u2A6A":"&simdot;","\u2A9E":"&simg;","\u2AA0":"&simgE;","\u2A9D":"&siml;","\u2A9F":"&simlE;","\u2246":"&simne;","\u2A24":"&simplus;","\u2972":"&simrarr;","\u2A33":"&smashp;","\u29E4":"&smeparsl;","\u2323":"&ssmile;","\u2AAA":"&smt;","\u2AAC":"&smte;","\u2AAC\uFE00":"&smtes;",\u044C:"&softcy;","/":"&sol;","\u29C4":"&solb;","\u233F":"&solbar;",\u{1D564}:"&sopf;","\u2660":"&spadesuit;","\u2293\uFE00":"&sqcaps;","\u2294\uFE00":"&sqcups;",\u{1D4C8}:"&sscr;","\u2606":"&star;","\u2282":"&subset;","\u2AC5":"&subseteqq;","\u2ABD":"&subdot;","\u2AC3":"&subedot;","\u2AC1":"&submult;","\u2ACB":"&subsetneqq;","\u228A":"&subsetneq;","\u2ABF":"&subplus;","\u2979":"&subrarr;","\u2AC7":"&subsim;","\u2AD5":"&subsub;","\u2AD3":"&subsup;","\u266A":"&sung;","\xB9":"&sup1;","\xB2":"&sup2;","\xB3":"&sup3;","\u2AC6":"&supseteqq;","\u2ABE":"&supdot;","\u2AD8":"&supdsub;","\u2AC4":"&supedot;","\u27C9":"&suphsol;","\u2AD7":"&suphsub;","\u297B":"&suplarr;","\u2AC2":"&supmult;","\u2ACC":"&supsetneqq;","\u228B":"&supsetneq;","\u2AC0":"&supplus;","\u2AC8":"&supsim;","\u2AD4":"&supsub;","\u2AD6":"&supsup;","\u21D9":"&swArr;","\u292A":"&swnwar;",\u00DF:"&szlig;","\u2316":"&target;",\u03C4:"&tau;",\u0165:"&tcaron;",\u0163:"&tcedil;",\u0442:"&tcy;","\u2315":"&telrec;",\u{1D531}:"&tfr;",\u03B8:"&theta;",\u03D1:"&vartheta;",\u00FE:"&thorn;","\xD7":"&times;","\u2A31":"&timesbar;","\u2A30":"&timesd;","\u2336":"&topbot;","\u2AF1":"&topcir;",\u{1D565}:"&topf;","\u2ADA":"&topfork;","\u2034":"&tprime;","\u25B5":"&utri;","\u225C":"&trie;","\u25EC":"&tridot;","\u2A3A":"&triminus;","\u2A39":"&triplus;","\u29CD":"&trisb;","\u2A3B":"&tritime;","\u23E2":"&trpezium;",\u{1D4C9}:"&tscr;",\u0446:"&tscy;",\u045B:"&tshcy;",\u0167:"&tstrok;","\u2963":"&uHar;",\u00FA:"&uacute;",\u045E:"&ubrcy;",\u016D:"&ubreve;",\u00FB:"&ucirc;",\u0443:"&ucy;",\u0171:"&udblac;","\u297E":"&ufisht;",\u{1D532}:"&ufr;",\u00F9:"&ugrave;","\u2580":"&uhblk;","\u231C":"&ulcorner;","\u230F":"&ulcrop;","\u25F8":"&ultri;",\u016B:"&umacr;",\u0173:"&uogon;",\u{1D566}:"&uopf;",\u03C5:"&upsilon;","\u21C8":"&uuarr;","\u231D":"&urcorner;","\u230E":"&urcrop;",\u016F:"&uring;","\u25F9":"&urtri;",\u{1D4CA}:"&uscr;","\u22F0":"&utdot;",\u0169:"&utilde;",\u00FC:"&uuml;","\u29A7":"&uwangle;","\u2AE8":"&vBar;","\u2AE9":"&vBarv;","\u299C":"&vangrt;","\u228A\uFE00":"&vsubne;","\u2ACB\uFE00":"&vsubnE;","\u228B\uFE00":"&vsupne;","\u2ACC\uFE00":"&vsupnE;",\u0432:"&vcy;","\u22BB":"&veebar;","\u225A":"&veeeq;","\u22EE":"&vellip;",\u{1D533}:"&vfr;",\u{1D567}:"&vopf;",\u{1D4CB}:"&vscr;","\u299A":"&vzigzag;",\u0175:"&wcirc;","\u2A5F":"&wedbar;","\u2259":"&wedgeq;",\u2118:"&wp;",\u{1D534}:"&wfr;",\u{1D568}:"&wopf;",\u{1D4CC}:"&wscr;",\u{1D535}:"&xfr;",\u03BE:"&xi;","\u22FB":"&xnis;",\u{1D569}:"&xopf;",\u{1D4CD}:"&xscr;",\u00FD:"&yacute;",\u044F:"&yacy;",\u0177:"&ycirc;",\u044B:"&ycy;","\xA5":"&yen;",\u{1D536}:"&yfr;",\u0457:"&yicy;",\u{1D56A}:"&yopf;",\u{1D4CE}:"&yscr;",\u044E:"&yucy;",\u00FF:"&yuml;",\u017A:"&zacute;",\u017E:"&zcaron;",\u0437:"&zcy;",\u017C:"&zdot;",\u03B6:"&zeta;",\u{1D537}:"&zfr;",\u0436:"&zhcy;","\u21DD":"&zigrarr;",\u{1D56B}:"&zopf;",\u{1D4CF}:"&zscr;","\u200D":"&zwj;","\u200C":"&zwnj;"}}}});var Ct=re(ur=>{"use strict";Object.defineProperty(ur,"__esModule",{value:!0});ur.numericUnicodeMap={0:65533,128:8364,130:8218,131:402,132:8222,133:8230,134:8224,135:8225,136:710,137:8240,138:352,139:8249,140:338,142:381,145:8216,146:8217,147:8220,148:8221,149:8226,150:8211,151:8212,152:732,153:8482,154:353,155:8250,156:339,158:382,159:376}});var Bt=re(we=>{"use strict";Object.defineProperty(we,"__esModule",{value:!0});we.fromCodePoint=String.fromCodePoint||function(e){return String.fromCharCode(Math.floor((e-65536)/1024)+55296,(e-65536)%1024+56320)};we.getCodePoint=String.prototype.codePointAt?function(e,n){return e.codePointAt(n)}:function(e,n){return(e.charCodeAt(n)-55296)*1024+e.charCodeAt(n+1)-56320+65536};we.highSurrogateFrom=55296;we.highSurrogateTo=56319});var Ut=re(fe=>{"use strict";var Te=fe&&fe.__assign||function(){return Te=Object.assign||function(e){for(var n,i=1,p=arguments.length;i<p;i++){n=arguments[i];for(var x in n)Object.prototype.hasOwnProperty.call(n,x)&&(e[x]=n[x])}return e},Te.apply(this,arguments)};Object.defineProperty(fe,"__esModule",{value:!0});var Ne=Lt(),It=Ct(),cr=Bt(),gr=Te(Te({},Ne.namedReferences),{all:Ne.namedReferences.html5}),vo={specialChars:/[<>'"&]/g,nonAscii:/(?:[<>'"&\u0080-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])/g,nonAsciiPrintable:/(?:[<>'"&\x01-\x08\x11-\x15\x17-\x1F\x7f-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])/g,extensive:/(?:[\x01-\x0c\x0e-\x1f\x21-\x2c\x2e-\x2f\x3a-\x40\x5b-\x60\x7b-\x7d\x7f-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])/g},wo={mode:"specialChars",level:"all",numeric:"decimal"};function To(e,n){var i=n===void 0?wo:n,p=i.mode,x=p===void 0?"specialChars":p,y=i.numeric,$=y===void 0?"decimal":y,S=i.level,d=S===void 0?"all":S;if(!e)return"";var r=vo[x],g=gr[d].characters,v=$==="hexadecimal";r.lastIndex=0;var i=r.exec(e),p;if(i){p="";var y=0;do{y!==i.index&&(p+=e.substring(y,i.index));var S=i[0],c=g[S];if(!c){var s=S.length>1?cr.getCodePoint(S,0):S.charCodeAt(0);c=(v?"&#x"+s.toString(16):"&#"+s)+";"}p+=c,y=i.index+S.length}while(i=r.exec(e));y!==e.length&&(p+=e.substring(y))}else p=e;return p}fe.encode=To;var Oo={scope:"body",level:"all"},pr=/&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);/g,fr=/&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+)[;=]?/g,Ht={xml:{strict:pr,attribute:fr,body:Ne.bodyRegExps.xml},html4:{strict:pr,attribute:fr,body:Ne.bodyRegExps.html4},html5:{strict:pr,attribute:fr,body:Ne.bodyRegExps.html5}},Ao=Te(Te({},Ht),{all:Ht.html5}),mr=String.fromCharCode,Ft=mr(65533),qo={level:"all"};function So(e,n){var i=(n===void 0?qo:n).level,p=i===void 0?"all":i;if(!e)return"";var i=e,x=e[e.length-1],y=gr[p].entities[e];if(y)i=y;else if(e[0]==="&"&&e[1]==="#"){var $=e[2],S=$=="x"||$=="X"?parseInt(e.substr(3),16):parseInt(e.substr(2));i=S>=1114111?Ft:S>65535?cr.fromCodePoint(S):mr(It.numericUnicodeMap[S]||S)}return i}fe.decodeEntity=So;function Eo(e,n){var i=n===void 0?Oo:n,p=i.level,x=p===void 0?"all":p,y=i.scope,$=y===void 0?x==="xml"?"strict":"body":y;if(!e)return"";var S=Ao[x][$],d=gr[x].entities,r=$==="attribute",g=$==="strict";S.lastIndex=0;var v=S.exec(e),c;if(v){c="";var s=0;do{s!==v.index&&(c+=e.substring(s,v.index));var l=v[0],q=l,O=l[l.length-1];if(r&&O==="=")q=l;else if(g&&O!==";")q=l;else{var C=d[l];if(C)q=C;else if(l[0]==="&"&&l[1]==="#"){var T=l[2],J=T=="x"||T=="X"?parseInt(l.substr(3),16):parseInt(l.substr(2));q=J>=1114111?Ft:J>65535?cr.fromCodePoint(J):mr(It.numericUnicodeMap[J]||J)}}c+=q,s=v.index+l.length}while(v=S.exec(e));s!==e.length&&(c+=e.substring(s))}else c=e;return c}fe.decode=Eo});var Wt=re((Pe,Pt)=>{(function(e,n){typeof Pe=="object"&&typeof Pt!="undefined"?n(Pe):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).rangesApply={})})(Pe,function(e){"use strict";let n={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function i(y,$){if(!Array.isArray(y)||!y.length)return y;let S=H(H({},n),$),d,r;if(S.strictlyTwoElementsInRangeArrays&&!y.filter(c=>c).every((c,s)=>c.length===2||(d=s,r=c.length,!1)))throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${d}th range (${JSON.stringify(y[d],null,4)}) has not two but ${r} elements!`);if(!y.filter(c=>c).every((c,s)=>!(!Number.isInteger(c[0])||c[0]<0||!Number.isInteger(c[1])||c[1]<0)||(d=s,!1)))throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${d}th range (${JSON.stringify(y[d],null,4)}) does not consist of only natural numbers!`);let g=y.filter(c=>c).length**2,v=0;return Array.from(y).filter(c=>c).sort((c,s)=>(S.progressFn&&(v+=1,S.progressFn(Math.floor(100*v/g))),c[0]===s[0]?c[1]<s[1]?-1:c[1]>s[1]?1:0:c[0]<s[0]?-1:1))}let p={mergeType:1,progressFn:null,joinRangesThatTouchEdges:!0};function x(y,$){function S(l){return l&&typeof l=="object"&&!Array.isArray(l)}if(!Array.isArray(y)||!y.length)return null;let d;if($){if(!S($))throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:
-${JSON.stringify($,null,4)} (type ${typeof $})`);if(d=H(H({},p),$),d.progressFn&&S(d.progressFn)&&!Object.keys(d.progressFn).length)d.progressFn=null;else if(d.progressFn&&typeof d.progressFn!="function")throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof d.progressFn}", equal to ${JSON.stringify(d.progressFn,null,4)}`);if(d.mergeType&&+d.mergeType!=1&&+d.mergeType!=2)throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof d.mergeType}", equal to ${JSON.stringify(d.mergeType,null,4)}`);if(typeof d.joinRangesThatTouchEdges!="boolean")throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof d.joinRangesThatTouchEdges}", equal to ${JSON.stringify(d.joinRangesThatTouchEdges,null,4)}`)}else d=H({},p);let r=y.filter(l=>l).map(l=>[...l]).filter(l=>l[2]!==void 0||l[0]!==l[1]),g,v,c;if(g=d.progressFn?i(r,{progressFn:l=>{c=Math.floor(l/5),c!==v&&(v=c,d.progressFn(c))}}):i(r),!g)return null;let s=g.length-1;for(let l=s;l>0;l--)d.progressFn&&(c=Math.floor(78*(1-l/s))+21,c!==v&&c>v&&(v=c,d.progressFn(c))),(g[l][0]<=g[l-1][0]||!d.joinRangesThatTouchEdges&&g[l][0]<g[l-1][1]||d.joinRangesThatTouchEdges&&g[l][0]<=g[l-1][1])&&(g[l-1][0]=Math.min(g[l][0],g[l-1][0]),g[l-1][1]=Math.max(g[l][1],g[l-1][1]),g[l][2]!==void 0&&(g[l-1][0]>=g[l][0]||g[l-1][1]<=g[l][1])&&g[l-1][2]!==null&&(g[l][2]===null&&g[l-1][2]!==null?g[l-1][2]=null:g[l-1][2]!=null?+d.mergeType==2&&g[l-1][0]===g[l][0]?g[l-1][2]=g[l][2]:g[l-1][2]+=g[l][2]:g[l-1][2]=g[l][2]),g.splice(l,1),l=g.length);return g.length?g:null}e.rApply=function(y,$,S){let d,r=0,g=0;if(arguments.length===0)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if(typeof y!="string")throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof y}, equal to: ${JSON.stringify(y,null,4)}`);if($&&!Array.isArray($))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof $}, equal to: ${JSON.stringify($,null,4)}`);if(S&&typeof S!="function")throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof S}, equal to: ${JSON.stringify(S,null,4)}`);if(!$||!$.filter(q=>q).length)return y;d=Array.isArray($)&&Number.isInteger($[0])&&Number.isInteger($[1])?[Array.from($)]:Array.from($);let v=d.length,c=0;d.filter(q=>q).forEach((q,O)=>{if(S&&(r=Math.floor(c/v*10),r!==g&&(g=r,S(r))),!Array.isArray(q))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${O}th element not an array: ${JSON.stringify(q,null,4)}, which is ${typeof q}`);if(!Number.isInteger(q[0])){if(!Number.isInteger(+q[0])||+q[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${O}th element, array ${JSON.stringify(q,null,0)}. Its first element is not an integer, string index, but ${typeof q[0]}, equal to: ${JSON.stringify(q[0],null,4)}.`);d[O][0]=+d[O][0]}if(!Number.isInteger(q[1])){if(!Number.isInteger(+q[1])||+q[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${O}th element, array ${JSON.stringify(q,null,0)}. Its second element is not an integer, string index, but ${typeof q[1]}, equal to: ${JSON.stringify(q[1],null,4)}.`);d[O][1]=+d[O][1]}c+=1});let s=x(d,{progressFn:q=>{S&&(r=10+Math.floor(q/10),r!==g&&(g=r,S(r)))}}),l=Array.isArray(s)?s.length:0;if(l>0){let q=y.slice(s[l-1][1]);y=s.reduce((O,C,T,J)=>(S&&(r=20+Math.floor(T/l*80),r!==g&&(g=r,S(r))),O+y.slice(T===0?0:J[T-1][1],J[T][0])+(J[T][2]||"")),""),y+=q}return y},e.version="5.0.12",Object.defineProperty(e,"__esModule",{value:!0})})});var Vt=re((We,Jt)=>{(function(e,n){typeof We=="object"&&typeof Jt!="undefined"?n(We):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).rangesPush={})})(We,function(e){"use strict";function n(r,g=1){function v(s){return Array.from(s).reverse().join("")}function c(s,l,q){let O=q?`
-`:"\r",C=q?"\r":`
-`;if(!s)return s;let T=0,J="";for(let F=0,X=s.length;F<X;F++)(s[F]===O||s[F]===C&&s[F-1]!==O)&&T++,`\r
-`.includes(s[F])||s[F]==="\xA0"?s[F]==="\xA0"?J+=s[F]:s[F]===O?T<=l&&(J+=s[F],s[F+1]===C&&(J+=s[F+1],F++)):s[F]===C&&(!s[F-1]||s[F-1]!==O)&&T<=l&&(J+=s[F]):s[F+1]||T||(J+=" ");return J}if(typeof r=="string"&&r.length){let s=1;typeof+g=="number"&&Number.isInteger(+g)&&+g>=0&&(s=+g);let l="",q="";if(r.trim()){if(!r[0].trim()){for(let O=0,C=r.length;O<C;O++)if(r[O].trim()){l=r.slice(0,O);break}}}else l=r;if(r.trim()&&(r.slice(-1).trim()===""||r.slice(-1)==="\xA0")){for(let O=r.length;O--;)if(r[O].trim()){q=r.slice(O+1);break}}return`${c(l,s,!1)}${r.trim()}${v(c(v(q),s,!0))}`}return r}let i={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function p(r,g){if(!Array.isArray(r)||!r.length)return r;let v=H(H({},i),g),c,s;if(v.strictlyTwoElementsInRangeArrays&&!r.filter(O=>O).every((O,C)=>O.length===2||(c=C,s=O.length,!1)))throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${c}th range (${JSON.stringify(r[c],null,4)}) has not two but ${s} elements!`);if(!r.filter(O=>O).every((O,C)=>!(!Number.isInteger(O[0])||O[0]<0||!Number.isInteger(O[1])||O[1]<0)||(c=C,!1)))throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${c}th range (${JSON.stringify(r[c],null,4)}) does not consist of only natural numbers!`);let l=r.filter(O=>O).length**2,q=0;return Array.from(r).filter(O=>O).sort((O,C)=>(v.progressFn&&(q+=1,v.progressFn(Math.floor(100*q/l))),O[0]===C[0]?O[1]<C[1]?-1:O[1]>C[1]?1:0:O[0]<C[0]?-1:1))}let x={mergeType:1,progressFn:null,joinRangesThatTouchEdges:!0};function y(r){return r!=null}function $(r){return Number.isInteger(r)&&r>=0}function S(r){return typeof r=="string"}let d={limitToBeAddedWhitespace:!1,limitLinebreaksCount:1,mergeType:1};e.Ranges=class{constructor(r){let g=H(H({},d),r);if(g.mergeType&&g.mergeType!==1&&g.mergeType!==2)if(S(g.mergeType)&&g.mergeType.trim()==="1")g.mergeType=1;else{if(!S(g.mergeType)||g.mergeType.trim()!=="2")throw new Error(`ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof g.mergeType}", equal to ${JSON.stringify(g.mergeType,null,4)}`);g.mergeType=2}this.opts=g,this.ranges=[]}add(r,g,v){if(r==null&&g==null)return;if(y(r)&&!y(g)){if(Array.isArray(r)){if(r.length){if(r.some(l=>Array.isArray(l)))return void r.forEach(l=>{Array.isArray(l)&&this.add(...l)});r.length&&$(+r[0])&&$(+r[1])&&this.add(...r)}return}throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(r,null,0)}) but second-one, "to" is not (${JSON.stringify(g,null,0)})`)}if(!y(r)&&y(g))throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(g,null,0)}) but first-one, "from" is not (${JSON.stringify(r,null,0)})`);let c=+r,s=+g;if($(v)&&(v=String(v)),!$(c)||!$(s))throw $(c)&&c>=0?new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof s}" equal to: ${JSON.stringify(s,null,4)}`):new TypeError(`ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof c}" equal to: ${JSON.stringify(c,null,4)}`);if(y(v)&&!S(v)&&!$(v))throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof v}, equal to:
-${JSON.stringify(v,null,4)}`);if(y(this.ranges)&&Array.isArray(this.last())&&c===this.last()[1]){if(this.last()[1]=s,this.last(),this.last()[2]!==null&&y(v)){let l=!(this.last()[2]&&this.last()[2].length>0)||this.opts&&this.opts.mergeType&&this.opts.mergeType!==1?v:this.last()[2]+v;this.opts.limitToBeAddedWhitespace&&(l=n(l,this.opts.limitLinebreaksCount)),S(l)&&!l.length||(this.last()[2]=l)}}else{this.ranges||(this.ranges=[]);let l=v===void 0||S(v)&&!v.length?[c,s]:[c,s,v&&this.opts.limitToBeAddedWhitespace?n(v,this.opts.limitLinebreaksCount):v];this.ranges.push(l)}}push(r,g,v){this.add(r,g,v)}current(){return Array.isArray(this.ranges)&&this.ranges.length?(this.ranges=function(r,g){function v(T){return T&&typeof T=="object"&&!Array.isArray(T)}if(!Array.isArray(r)||!r.length)return null;let c;if(g){if(!v(g))throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:
-${JSON.stringify(g,null,4)} (type ${typeof g})`);if(c=H(H({},x),g),c.progressFn&&v(c.progressFn)&&!Object.keys(c.progressFn).length)c.progressFn=null;else if(c.progressFn&&typeof c.progressFn!="function")throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof c.progressFn}", equal to ${JSON.stringify(c.progressFn,null,4)}`);if(c.mergeType&&+c.mergeType!=1&&+c.mergeType!=2)throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof c.mergeType}", equal to ${JSON.stringify(c.mergeType,null,4)}`);if(typeof c.joinRangesThatTouchEdges!="boolean")throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof c.joinRangesThatTouchEdges}", equal to ${JSON.stringify(c.joinRangesThatTouchEdges,null,4)}`)}else c=H({},x);let s=r.filter(T=>T).map(T=>[...T]).filter(T=>T[2]!==void 0||T[0]!==T[1]),l,q,O;if(l=c.progressFn?p(s,{progressFn:T=>{O=Math.floor(T/5),O!==q&&(q=O,c.progressFn(O))}}):p(s),!l)return null;let C=l.length-1;for(let T=C;T>0;T--)c.progressFn&&(O=Math.floor(78*(1-T/C))+21,O!==q&&O>q&&(q=O,c.progressFn(O))),(l[T][0]<=l[T-1][0]||!c.joinRangesThatTouchEdges&&l[T][0]<l[T-1][1]||c.joinRangesThatTouchEdges&&l[T][0]<=l[T-1][1])&&(l[T-1][0]=Math.min(l[T][0],l[T-1][0]),l[T-1][1]=Math.max(l[T][1],l[T-1][1]),l[T][2]!==void 0&&(l[T-1][0]>=l[T][0]||l[T-1][1]<=l[T][1])&&l[T-1][2]!==null&&(l[T][2]===null&&l[T-1][2]!==null?l[T-1][2]=null:l[T-1][2]!=null?+c.mergeType==2&&l[T-1][0]===l[T][0]?l[T-1][2]=l[T][2]:l[T-1][2]+=l[T][2]:l[T-1][2]=l[T][2]),l.splice(T,1),T=l.length);return l.length?l:null}(this.ranges,{mergeType:this.opts.mergeType}),this.ranges&&this.opts.limitToBeAddedWhitespace?this.ranges.map(r=>y(r[2])?[r[0],r[1],n(r[2],this.opts.limitLinebreaksCount)]:r):this.ranges):null}wipe(){this.ranges=[]}replace(r){if(Array.isArray(r)&&r.length){if(!Array.isArray(r[0])||!$(r[0][0]))throw new Error(`ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(r[0],null,4)} should be an array and its first element should be an integer, a string index.`);this.ranges=Array.from(r)}else this.ranges=[]}last(){return Array.isArray(this.ranges)&&this.ranges.length?this.ranges[this.ranges.length-1]:null}},e.defaults=d,e.version="5.0.12",Object.defineProperty(e,"__esModule",{value:!0})})});var zt=re((Je,Gt)=>{(function(e,n){typeof Je=="object"&&typeof Gt!="undefined"?n(Je):typeof define=="function"&&define.amd?define(["exports"],n):n((e=typeof globalThis!="undefined"?globalThis:e||self).stringLeftRight={})})(Je,function(e){"use strict";var n,i,p=Object.prototype,x=Function.prototype.toString,y=p.hasOwnProperty,$=x.call(Object),S=p.toString,d=(n=Object.getPrototypeOf,i=Object,function(m){return n(i(m))}),r=function(m){if(!function(N){return!!N&&typeof N=="object"}(m)||S.call(m)!="[object Object]"||function(N){var h=!1;if(N!=null&&typeof N.toString!="function")try{h=!!(N+"")}catch(B){}return h}(m))return!1;var a=d(m);if(a===null)return!0;var E=y.call(a,"constructor")&&a.constructor;return typeof E=="function"&&E instanceof E&&x.call(E)==$},g=typeof globalThis!="undefined"?globalThis:typeof window!="undefined"?window:typeof global!="undefined"?global:typeof self!="undefined"?self:{},v=function(m){var a={exports:{}};return m(a,a.exports),a.exports}(function(m,a){var E="__lodash_hash_undefined__",N=9007199254740991,h="[object Arguments]",B="[object Boolean]",_="[object Date]",t="[object Function]",A="[object GeneratorFunction]",f="[object Map]",b="[object Number]",k="[object Object]",U="[object Promise]",j="[object RegExp]",L="[object Set]",Ae="[object String]",$r="[object Symbol]",Ge="[object WeakMap]",vr="[object ArrayBuffer]",Re="[object DataView]",wr="[object Float32Array]",Tr="[object Float64Array]",Or="[object Int8Array]",Ar="[object Int16Array]",qr="[object Int32Array]",Sr="[object Uint8Array]",Er="[object Uint8ClampedArray]",kr="[object Uint16Array]",xr="[object Uint32Array]",en=/\w*$/,rn=/^\[object .+?Constructor\]$/,tn=/^(?:0|[1-9]\d*)$/,W={};W[h]=W["[object Array]"]=W[vr]=W[Re]=W[B]=W[_]=W[wr]=W[Tr]=W[Or]=W[Ar]=W[qr]=W[f]=W[b]=W[k]=W[j]=W[L]=W[Ae]=W[$r]=W[Sr]=W[Er]=W[kr]=W[xr]=!0,W["[object Error]"]=W[t]=W[Ge]=!1;var nn=typeof self=="object"&&self&&self.Object===Object&&self,te=typeof g=="object"&&g&&g.Object===Object&&g||nn||Function("return this")(),Nr=a&&!a.nodeType&&a,Dr=Nr&&m&&!m.nodeType&&m,an=Dr&&Dr.exports===Nr;function on(o,u){return o.set(u[0],u[1]),o}function sn(o,u){return o.add(u),o}function Rr(o,u,w,D){var M=-1,Z=o?o.length:0;for(D&&Z&&(w=o[++M]);++M<Z;)w=u(w,o[M],M,o);return w}function _r(o){var u=!1;if(o!=null&&typeof o.toString!="function")try{u=!!(o+"")}catch(w){}return u}function jr(o){var u=-1,w=Array(o.size);return o.forEach(function(D,M){w[++u]=[M,D]}),w}function ze(o,u){return function(w){return o(u(w))}}function Lr(o){var u=-1,w=Array(o.size);return o.forEach(function(D){w[++u]=D}),w}var Cr,ln=Array.prototype,un=Function.prototype,_e=Object.prototype,Me=te["__core-js_shared__"],Br=(Cr=/[^.]+$/.exec(Me&&Me.keys&&Me.keys.IE_PROTO||""))?"Symbol(src)_1."+Cr:"",Ir=un.toString,se=_e.hasOwnProperty,je=_e.toString,cn=RegExp("^"+Ir.call(se).replace(/[\\^$.*+?()[\]{}|]/g,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$"),Hr=an?te.Buffer:void 0,Fr=te.Symbol,Ur=te.Uint8Array,gn=ze(Object.getPrototypeOf,Object),pn=Object.create,fn=_e.propertyIsEnumerable,mn=ln.splice,Pr=Object.getOwnPropertySymbols,dn=Hr?Hr.isBuffer:void 0,hn=ze(Object.keys,Object),Ye=be(te,"DataView"),qe=be(te,"Map"),Ze=be(te,"Promise"),Ke=be(te,"Set"),Xe=be(te,"WeakMap"),Se=be(Object,"create"),bn=ce(Ye),yn=ce(qe),$n=ce(Ze),vn=ce(Ke),wn=ce(Xe),Wr=Fr?Fr.prototype:void 0,Jr=Wr?Wr.valueOf:void 0;function le(o){var u=-1,w=o?o.length:0;for(this.clear();++u<w;){var D=o[u];this.set(D[0],D[1])}}function ne(o){var u=-1,w=o?o.length:0;for(this.clear();++u<w;){var D=o[u];this.set(D[0],D[1])}}function de(o){var u=-1,w=o?o.length:0;for(this.clear();++u<w;){var D=o[u];this.set(D[0],D[1])}}function he(o){this.__data__=new ne(o)}function Tn(o,u){var w=rr(o)||function(V){return function(G){return function(ae){return!!ae&&typeof ae=="object"}(G)&&Zr(G)}(V)&&se.call(V,"callee")&&(!fn.call(V,"callee")||je.call(V)==h)}(o)?function(V,G){for(var ae=-1,oe=Array(V);++ae<V;)oe[ae]=G(ae);return oe}(o.length,String):[],D=w.length,M=!!D;for(var Z in o)!u&&!se.call(o,Z)||M&&(Z=="length"||An(Z,D))||w.push(Z);return w}function Vr(o,u,w){var D=o[u];se.call(o,u)&&Yr(D,w)&&(w!==void 0||u in o)||(o[u]=w)}function Le(o,u){for(var w=o.length;w--;)if(Yr(o[w][0],u))return w;return-1}function Qe(o,u,w,D,M,Z,V){var G;if(D&&(G=Z?D(o,M,Z,V):D(o)),G!==void 0)return G;if(!Be(o))return o;var ae=rr(o);if(ae){if(G=function(R){var I=R.length,z=R.constructor(I);return I&&typeof R[0]=="string"&&se.call(R,"index")&&(z.index=R.index,z.input=R.input),z}(o),!u)return function(R,I){var z=-1,ee=R.length;for(I||(I=Array(ee));++z<ee;)I[z]=R[z];return I}(o,G)}else{var oe=ue(o),Xr=oe==t||oe==A;if(qn(o))return function(R,I){if(I)return R.slice();var z=new R.constructor(R.length);return R.copy(z),z}(o,u);if(oe==k||oe==h||Xr&&!Z){if(_r(o))return Z?o:{};if(G=function(R){return typeof R.constructor!="function"||Mr(R)?{}:(I=gn(R),Be(I)?pn(I):{});var I}(Xr?{}:o),!u)return function(R,I){return Gr(R,zr(R),I)}(o,function(R,I){return R&&Gr(I,tr(I),R)}(G,o))}else{if(!W[oe])return Z?o:{};G=function(R,I,z,ee){var Ee=R.constructor;switch(I){case vr:return er(R);case B:case _:return new Ee(+R);case Re:return function(P,K){var ie=K?er(P.buffer):P.buffer;return new P.constructor(ie,P.byteOffset,P.byteLength)}(R,ee);case wr:case Tr:case Or:case Ar:case qr:case Sr:case Er:case kr:case xr:return function(P,K){var ie=K?er(P.buffer):P.buffer;return new P.constructor(ie,P.byteOffset,P.length)}(R,ee);case f:return function(P,K,ie){return Rr(K?ie(jr(P),!0):jr(P),on,new P.constructor)}(R,ee,z);case b:case Ae:return new Ee(R);case j:return function(P){var K=new P.constructor(P.source,en.exec(P));return K.lastIndex=P.lastIndex,K}(R);case L:return function(P,K,ie){return Rr(K?ie(Lr(P),!0):Lr(P),sn,new P.constructor)}(R,ee,z);case $r:return ye=R,Jr?Object(Jr.call(ye)):{}}var ye}(o,oe,Qe,u)}}V||(V=new he);var Qr=V.get(o);if(Qr)return Qr;if(V.set(o,G),!ae)var et=w?function(R){return function(I,z,ee){var Ee=z(I);return rr(I)?Ee:function(ye,P){for(var K=-1,ie=P.length,Sn=ye.length;++K<ie;)ye[Sn+K]=P[K];return ye}(Ee,ee(I))}(R,tr,zr)}(o):tr(o);return function(R,I){for(var z=-1,ee=R?R.length:0;++z<ee&&I(R[z],z,R)!==!1;);}(et||o,function(R,I){et&&(R=o[I=R]),Vr(G,I,Qe(R,u,w,D,I,o,V))}),G}function On(o){return!(!Be(o)||function(u){return!!Br&&Br in u}(o))&&(Kr(o)||_r(o)?cn:rn).test(ce(o))}function er(o){var u=new o.constructor(o.byteLength);return new Ur(u).set(new Ur(o)),u}function Gr(o,u,w,D){w||(w={});for(var M=-1,Z=u.length;++M<Z;){var V=u[M],G=D?D(w[V],o[V],V,w,o):void 0;Vr(w,V,G===void 0?o[V]:G)}return w}function Ce(o,u){var w,D,M=o.__data__;return((D=typeof(w=u))=="string"||D=="number"||D=="symbol"||D=="boolean"?w!=="__proto__":w===null)?M[typeof u=="string"?"string":"hash"]:M.map}function be(o,u){var w=function(D,M){return D==null?void 0:D[M]}(o,u);return On(w)?w:void 0}le.prototype.clear=function(){this.__data__=Se?Se(null):{}},le.prototype.delete=function(o){return this.has(o)&&delete this.__data__[o]},le.prototype.get=function(o){var u=this.__data__;if(Se){var w=u[o];return w===E?void 0:w}return se.call(u,o)?u[o]:void 0},le.prototype.has=function(o){var u=this.__data__;return Se?u[o]!==void 0:se.call(u,o)},le.prototype.set=function(o,u){return this.__data__[o]=Se&&u===void 0?E:u,this},ne.prototype.clear=function(){this.__data__=[]},ne.prototype.delete=function(o){var u=this.__data__,w=Le(u,o);return!(w<0)&&(w==u.length-1?u.pop():mn.call(u,w,1),!0)},ne.prototype.get=function(o){var u=this.__data__,w=Le(u,o);return w<0?void 0:u[w][1]},ne.prototype.has=function(o){return Le(this.__data__,o)>-1},ne.prototype.set=function(o,u){var w=this.__data__,D=Le(w,o);return D<0?w.push([o,u]):w[D][1]=u,this},de.prototype.clear=function(){this.__data__={hash:new le,map:new(qe||ne),string:new le}},de.prototype.delete=function(o){return Ce(this,o).delete(o)},de.prototype.get=function(o){return Ce(this,o).get(o)},de.prototype.has=function(o){return Ce(this,o).has(o)},de.prototype.set=function(o,u){return Ce(this,o).set(o,u),this},he.prototype.clear=function(){this.__data__=new ne},he.prototype.delete=function(o){return this.__data__.delete(o)},he.prototype.get=function(o){return this.__data__.get(o)},he.prototype.has=function(o){return this.__data__.has(o)},he.prototype.set=function(o,u){var w=this.__data__;if(w instanceof ne){var D=w.__data__;if(!qe||D.length<199)return D.push([o,u]),this;w=this.__data__=new de(D)}return w.set(o,u),this};var zr=Pr?ze(Pr,Object):function(){return[]},ue=function(o){return je.call(o)};function An(o,u){return!!(u=u==null?N:u)&&(typeof o=="number"||tn.test(o))&&o>-1&&o%1==0&&o<u}function Mr(o){var u=o&&o.constructor;return o===(typeof u=="function"&&u.prototype||_e)}function ce(o){if(o!=null){try{return Ir.call(o)}catch(u){}try{return o+""}catch(u){}}return""}function Yr(o,u){return o===u||o!=o&&u!=u}(Ye&&ue(new Ye(new ArrayBuffer(1)))!=Re||qe&&ue(new qe)!=f||Ze&&ue(Ze.resolve())!=U||Ke&&ue(new Ke)!=L||Xe&&ue(new Xe)!=Ge)&&(ue=function(o){var u=je.call(o),w=u==k?o.constructor:void 0,D=w?ce(w):void 0;if(D)switch(D){case bn:return Re;case yn:return f;case $n:return U;case vn:return L;case wn:return Ge}return u});var rr=Array.isArray;function Zr(o){return o!=null&&function(u){return typeof u=="number"&&u>-1&&u%1==0&&u<=N}(o.length)&&!Kr(o)}var qn=dn||function(){return!1};function Kr(o){var u=Be(o)?je.call(o):"";return u==t||u==A}function Be(o){var u=typeof o;return!!o&&(u=="object"||u=="function")}function tr(o){return Zr(o)?Tn(o):function(u){if(!Mr(u))return hn(u);var w=[];for(var D in Object(u))se.call(u,D)&&D!="constructor"&&w.push(D);return w}(o)}m.exports=function(o){return Qe(o,!0,!0)}});let c="\xA0";function s(m){let a={value:m,hungry:!1,optional:!1};return(a.value.endsWith("?*")||a.value.endsWith("*?"))&&a.value.length>2?(a.value=a.value.slice(0,a.value.length-2),a.optional=!0,a.hungry=!0):a.value.endsWith("?")&&a.value.length>1?(a.value=a.value.slice(0,~-a.value.length),a.optional=!0):a.value.endsWith("*")&&a.value.length>1&&(a.value=a.value.slice(0,~-a.value.length),a.hungry=!0),a}function l(m){return typeof m=="number"}function q(m){return typeof m=="string"}function O({str:m,idx:a=0,stopAtNewlines:E=!1,stopAtRawNbsp:N=!1}){if(typeof m!="string"||!m.length||(a&&typeof a=="number"||(a=0),!m[a+1]))return null;if(m[a+1]&&(m[a+1].trim()||E&&`
-\r`.includes(m[a+1])||N&&m[a+1]===c))return a+1;if(m[a+2]&&(m[a+2].trim()||E&&`
-\r`.includes(m[a+2])||N&&m[a+2]===c))return a+2;for(let h=a+1,B=m.length;h<B;h++)if(m[h].trim()||E&&`
-\r`.includes(m[h])||N&&m[h]===c)return h;return null}function C(m,a=0){return O({str:m,idx:a,stopAtNewlines:!1,stopAtRawNbsp:!1})}function T({str:m,idx:a,stopAtNewlines:E,stopAtRawNbsp:N}){if(typeof m!="string"||!m.length||(a&&typeof a=="number"||(a=0),a<1))return null;if(m[~-a]&&(m[~-a].trim()||E&&`
-\r`.includes(m[~-a])||N&&m[~-a]===c))return~-a;if(m[a-2]&&(m[a-2].trim()||E&&`
-\r`.includes(m[a-2])||N&&m[a-2]===c))return a-2;for(let h=a;h--;)if(m[h]&&(m[h].trim()||E&&`
-\r`.includes(m[h])||N&&m[h]===c))return h;return null}function J(m,a=0){return T({str:m,idx:a,stopAtNewlines:!1,stopAtRawNbsp:!1})}function F(m,a,E,N,h){if(typeof a!="string"||!a.length||(typeof E!="number"&&(E=0),m==="right"&&!a[E+1]||m==="left"&&!a[~-E]))return null;let B=E,_=[],t,A,f,b=0;for(;b<h.length;){if(!q(h[b])||!h[b].length){b+=1;continue}let{value:k,optional:U,hungry:j}=s(h[b]),L=m==="right"?C(a,B):J(a,B);if(!(N.i&&a[L].toLowerCase()===k.toLowerCase()||!N.i&&a[L]===k)){if(U){b+=1;continue}if(f){b+=1,f=void 0;continue}return null}{let Ae=m==="right"?C(a,L):J(a,L);j&&(N.i&&a[Ae].toLowerCase()===k.toLowerCase()||!N.i&&a[Ae]===k)?f=!0:b+=1,typeof L=="number"&&m==="right"&&L>B+1?_.push([B+1,L]):m==="left"&&typeof L=="number"&&L<~-B&&_.unshift([L+1,B]),B=L,m==="right"?(t===void 0&&(t=L),A=L):(A===void 0&&(A=L),t=L)}}return t===void 0||A===void 0?null:{gaps:_,leftmostChar:t,rightmostChar:A}}let X={i:!1};function me(m,a,...E){if(!E||!E.length)throw new Error("string-left-right/leftSeq(): only two input arguments were passed! Did you intend to use left() method instead?");let N;return N=r(E[0])?H(H({},X),E.shift()):X,F("left",m,a,N,Array.from(E).reverse())}function Q(m,a,...E){if(!E||!E.length)throw new Error("string-left-right/rightSeq(): only two input arguments were passed! Did you intend to use right() method instead?");let N;return N=r(E[0])?H(H({},X),E.shift()):X,F("right",m,a,N,E)}function Y(m,a,E,N,h=[]){if(typeof a!="string"||!a.length||(E&&typeof E=="number"||(E=0),m==="right"&&!a[E+1]||m==="left"&&+E==0))return null;let B=null,_=null;do B=m==="right"?Q(a,typeof _=="number"?_:E,...h):me(a,typeof _=="number"?_:E,...h),B!==null&&(_=m==="right"?B.rightmostChar:B.leftmostChar);while(B);if(_!=null&&m==="right"&&(_+=1),_===null)return null;if(m==="right"){if(a[_]&&a[_].trim())return _;let A=C(a,_);if(N&&N.mode!==0){if(N.mode===1)return _;if(N.mode===2){let f=a.slice(_);if(f.trim()||f.includes(`
-`)||f.includes("\r")){for(let b=_,k=a.length;b<k;b++)if(a[b].trim()||`
-\r`.includes(a[b]))return b}return a.length}}else{if(A===_+1)return _;if(!(a.slice(_,A||a.length).trim()||a.slice(_,A||a.length).includes(`
-`)||a.slice(_,A||a.length).includes("\r")))return A?~-A:a.length;for(let f=_,b=a.length;f<b;f++)if(`
-\r`.includes(a[f]))return f}return A||a.length}if(a[_]&&a[~-_]&&a[~-_].trim())return _;let t=J(a,_);if(!N||N.mode===0){if(t===_-2)return _;if(a.slice(0,_).trim()||a.slice(0,_).includes(`
-`)||a.slice(0,_).includes("\r")){for(let A=_;A--;)if(`
-\r`.includes(a[A])||a[A].trim())return A+1+(a[A].trim()?1:0)}return 0}if(N.mode===1)return _;if(N.mode===2){let A=a.slice(0,_);if(A.trim()||A.includes(`
-`)||A.includes("\r")){for(let f=_;f--;)if(a[f].trim()||`
-\r`.includes(a[f]))return f+1}return 0}return t!==null?t+1:0}e.chompLeft=function(m,a,...E){if(!E.length||E.length===1&&r(E[0]))return null;let N={mode:0};if(r(E[0])){let h=H(H({},N),v(E[0]));if(h.mode){if(q(h.mode)&&"0123".includes(h.mode))h.mode=Number.parseInt(h.mode,10);else if(!l(h.mode))throw new Error(`string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ${h.mode} (type ${typeof h.mode})`)}else h.mode=0;return Y("left",m,a,h,v(E).slice(1))}return q(E[0])?Y("left",m,a,N,v(E)):Y("left",m,a,N,v(E).slice(1))},e.chompRight=function(m,a,...E){if(!E.length||E.length===1&&r(E[0]))return null;let N={mode:0};if(r(E[0])){let h=H(H({},N),v(E[0]));if(h.mode){if(q(h.mode)&&"0123".includes(h.mode))h.mode=Number.parseInt(h.mode,10);else if(!l(h.mode))throw new Error(`string-left-right/chompRight(): [THROW_ID_02] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ${h.mode} (type ${typeof h.mode})`)}else h.mode=0;return Y("right",m,a,h,v(E).slice(1))}return q(E[0])?Y("right",m,a,N,v(E)):Y("right",m,a,N,v(E).slice(1))},e.left=J,e.leftSeq=me,e.leftStopAtNewLines=function(m,a){return T({str:m,idx:a,stopAtNewlines:!0,stopAtRawNbsp:!1})},e.leftStopAtRawNbsp=function(m,a){return T({str:m,idx:a,stopAtNewlines:!1,stopAtRawNbsp:!0})},e.right=C,e.rightSeq=Q,e.rightStopAtNewLines=function(m,a){return O({str:m,idx:a,stopAtNewlines:!0,stopAtRawNbsp:!1})},e.rightStopAtRawNbsp=function(m,a){return O({str:m,idx:a,stopAtNewlines:!1,stopAtRawNbsp:!0})},e.version="4.0.12",Object.defineProperty(e,"__esModule",{value:!0})})});var xo={};_n(xo,{defaults:()=>De,stripHtml:()=>Qt,version:()=>No});var Oe=ge(st()),Ve=ge(At()),Zt=ge(jt()),br=ge(Ut()),Kt=ge(Wt()),Xt=ge(Vt()),yr=ge(zt());function Mt(e){return/[-_A-Za-z0-9]/.test(e)}function dr(e,n){if(!e)return[];if(Array.isArray(e))return e.filter(i=>typeof i=="string"&&i.trim());if(typeof e=="string")return e.trim()?[e]:[];throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] ${n} must be array containing zero or more strings or something falsey. Currently it's equal to: ${e}, that a type of ${typeof e}.`)}function ko(e,n,i,p){for(let x=n,y=e.length;x<y;x++){if(e.startsWith(i,x))return!0;if(e.startsWith(p,x))return!1}return!1}function hr(e,n,i){return!e||!e.quotes||!ko(n,i+1,e.quotes.value,">")}var Yt="8.2.9";var No=Yt,De={ignoreTags:[],onlyStripTags:[],stripTogetherWithTheirContents:["script","style","xml"],skipHtmlDecoding:!1,trimOnlySpaces:!1,dumpLinkHrefsNearby:{enabled:!1,putOnNewLine:!1,wrapHeads:"",wrapTails:""},cb:null};function Qt(e,n){let i=Date.now(),p=new Set(["!doctype","abbr","address","area","article","aside","audio","base","bdi","bdo","blockquote","body","br","button","canvas","caption","cite","code","col","colgroup","data","datalist","dd","del","details","dfn","dialog","div","dl","doctype","dt","em","embed","fieldset","figcaption","figure","footer","form","h1","h2","h3","h4","h5","h6","head","header","hgroup","hr","html","iframe","img","input","ins","kbd","keygen","label","legend","li","link","main","map","mark","math","menu","menuitem","meta","meter","nav","noscript","object","ol","optgroup","option","output","param","picture","pre","progress","rb","rp","rt","rtc","ruby","samp","script","section","select","slot","small","source","span","strong","style","sub","summary","sup","svg","table","tbody","td","template","textarea","tfoot","th","thead","time","title","tr","track","ul","var","video","wbr","xml"]),x=new Set(["a","b","i","p","q","s","u"]),y=new Set([".",",","?",";",")","\u2026",'"',"\xBB"]),$=[],S=[],d=[],r={};function g(){r={attributes:[]}}g();let v=null,c=null,s={},l={tagName:"",hrefValue:"",openingTagEnds:void 0},q="",O=!1,C=null;function T(t){return t!=null}function J(t){return typeof t=="string"}function F(t,A,f){if(""+t,""+JSON.stringify(A.stripTogetherWithTheirContents,null,0)+r.name,Array.isArray(A.stripTogetherWithTheirContents)&&(A.stripTogetherWithTheirContents.includes(r.name)||A.stripTogetherWithTheirContents.includes("*")))if(""+`[${33}mrangedOpeningTags[${39}m`+JSON.stringify($,null,4),Array.isArray($)&&$.some(b=>b.name===r.name&&b.lastClosingBracketAt<t)){""+31+39;for(let b=$.length;b--;)if($[b].name===r.name){""+JSON.stringify(f.current(),null,0),""+$[b].lastOpeningBracketAt+t,""+`[${33}mrangedOpeningTags[${39}m`+JSON.stringify($,null,4),(A.stripTogetherWithTheirContents.includes(r.name)||A.stripTogetherWithTheirContents.includes("*"))&&(""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(d,null,4),d=d.filter(([U,j])=>(U<$[b].lastOpeningBracketAt||U>=t+1)&&(j<=$[b].lastOpeningBracketAt||j>t+1)),""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(d,null,4));let k=t+1;r.lastClosingBracketAt&&(k=r.lastClosingBracketAt+1),""+`[${32}mPUSH[${39}m`+$[b].lastOpeningBracketAt+k,d.push([$[b].lastOpeningBracketAt,k]),y.has(e[t])&&A.cb?A.cb({tag:r,deleteFrom:$[b].lastOpeningBracketAt,deleteTo:t+1,insert:null,rangesArr:f,proposedReturn:[$[b].lastOpeningBracketAt,t,null]}):A.cb&&A.cb({tag:r,deleteFrom:$[b].lastOpeningBracketAt,deleteTo:t,insert:"",rangesArr:f,proposedReturn:[$[b].lastOpeningBracketAt,t,""]}),$.splice(b,1),""+33+39+JSON.stringify($,null,4);break}}else""+31+39,$.push(r),""+33+39+JSON.stringify($,null,4)}function X(t,A,f,b,k,U){""+35+39,""+`[${33}mcurrCharIdx[${39}m`+JSON.stringify(A,null,0)+`[${33}mstr2[currCharIdx][${39}m`+JSON.stringify(t[A],null,0)+`[${33}mstr2[tag.leftOuterWhitespace][${39}m`+JSON.stringify(t[r.leftOuterWhitespace],null,0)+`[${33}mstr2[tag.leftOuterWhitespace - 1][${39}m`+JSON.stringify(t[r.leftOuterWhitespace-1],null,0)+`[${33}mfromIdx[${39}m`+JSON.stringify(f,null,0)+`[${33}mtoIdx[${39}m`+JSON.stringify(b,null,0);let j="";if(Number.isInteger(f)&&f<k&&(j+=t.slice(f,k),""+JSON.stringify(j,null,0)+j.length+f+k),Number.isInteger(b)&&b>U+1){let L=t.slice(U+1,b);L.includes(`
-`)&&Q(b,t)?j+=" ":j+=L,""+JSON.stringify(j,null,0)+j.length+(U+1)+b}if(""+JSON.stringify(j,null,0)+j.length,!y.has(t[A])&&t[A]!=="!"){let L=j.match(/\n/g);return Array.isArray(L)&&L.length?L.length===1?`
-`:L.length===2?`
+(function (global, factory) {
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+typeof define === 'function' && define.amd ? define(['exports'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringStripHtml = {}));
+}(this, (function (exports) { 'use strict';
 
-`:`
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+/** `Object#toString` result references. */
+var objectTag = '[object Object]';
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject$1(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+/** Used for built-in method references. */
+var funcProto$1 = Function.prototype,
+    objectProto$2 = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString$1 = funcProto$1.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty$1 = objectProto$2.hasOwnProperty;
+
+/** Used to infer the `Object` constructor. */
+var objectCtorString = funcToString$1.call(Object);
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString$2 = objectProto$2.toString;
+
+/** Built-in value references. */
+var getPrototype = overArg(Object.getPrototypeOf, Object);
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike$2(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is a plain object, that is, an object created by the
+ * `Object` constructor or one with a `[[Prototype]]` of `null`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.8.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ * }
+ *
+ * _.isPlainObject(new Foo);
+ * // => false
+ *
+ * _.isPlainObject([1, 2, 3]);
+ * // => false
+ *
+ * _.isPlainObject({ 'x': 0, 'y': 0 });
+ * // => true
+ *
+ * _.isPlainObject(Object.create(null));
+ * // => true
+ */
+function isPlainObject(value) {
+  if (!isObjectLike$2(value) ||
+      objectToString$2.call(value) != objectTag || isHostObject$1(value)) {
+    return false;
+  }
+  var proto = getPrototype(value);
+  if (proto === null) {
+    return true;
+  }
+  var Ctor = hasOwnProperty$1.call(proto, 'constructor') && proto.constructor;
+  return (typeof Ctor == 'function' &&
+    Ctor instanceof Ctor && funcToString$1.call(Ctor) == objectCtorString);
+}
+
+var lodash_isplainobject = isPlainObject;
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
+}
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/** Used to match leading and trailing whitespace. */
+var reTrim = /^\s+|\s+$/g;
+
+/** Used to compose unicode character classes. */
+var rsAstralRange = '\\ud800-\\udfff',
+    rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
+    rsComboSymbolsRange = '\\u20d0-\\u20f0',
+    rsVarRange = '\\ufe0e\\ufe0f';
+
+/** Used to compose unicode capture groups. */
+var rsAstral = '[' + rsAstralRange + ']',
+    rsCombo = '[' + rsComboMarksRange + rsComboSymbolsRange + ']',
+    rsFitz = '\\ud83c[\\udffb-\\udfff]',
+    rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
+    rsNonAstral = '[^' + rsAstralRange + ']',
+    rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
+    rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
+    rsZWJ = '\\u200d';
+
+/** Used to compose unicode regexes. */
+var reOptMod = rsModifier + '?',
+    rsOptVar = '[' + rsVarRange + ']?',
+    rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
+    rsSeq = rsOptVar + reOptMod + rsOptJoin,
+    rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
+
+/** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
+var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
+
+/** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
+var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+/** Detect free variable `self`. */
+var freeSelf$1 = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root$1 = freeGlobal$1 || freeSelf$1 || Function('return this')();
+
+/**
+ * Converts an ASCII `string` to an array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function asciiToArray(string) {
+  return string.split('');
+}
+
+/**
+ * The base implementation of `_.findIndex` and `_.findLastIndex` without
+ * support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {Function} predicate The function invoked per iteration.
+ * @param {number} fromIndex The index to search from.
+ * @param {boolean} [fromRight] Specify iterating from right to left.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
+  var length = array.length,
+      index = fromIndex + (fromRight ? 1 : -1);
+
+  while ((fromRight ? index-- : ++index < length)) {
+    if (predicate(array[index], index, array)) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} fromIndex The index to search from.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseIndexOf$1(array, value, fromIndex) {
+  if (value !== value) {
+    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
+  }
+  var index = fromIndex - 1,
+      length = array.length;
+
+  while (++index < length) {
+    if (array[index] === value) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.isNaN` without support for number objects.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+ */
+function baseIsNaN$1(value) {
+  return value !== value;
+}
+
+/**
+ * Used by `_.trim` and `_.trimStart` to get the index of the first string symbol
+ * that is not found in the character symbols.
+ *
+ * @private
+ * @param {Array} strSymbols The string symbols to inspect.
+ * @param {Array} chrSymbols The character symbols to find.
+ * @returns {number} Returns the index of the first unmatched string symbol.
+ */
+function charsStartIndex(strSymbols, chrSymbols) {
+  var index = -1,
+      length = strSymbols.length;
+
+  while (++index < length && baseIndexOf$1(chrSymbols, strSymbols[index], 0) > -1) {}
+  return index;
+}
+
+/**
+ * Used by `_.trim` and `_.trimEnd` to get the index of the last string symbol
+ * that is not found in the character symbols.
+ *
+ * @private
+ * @param {Array} strSymbols The string symbols to inspect.
+ * @param {Array} chrSymbols The character symbols to find.
+ * @returns {number} Returns the index of the last unmatched string symbol.
+ */
+function charsEndIndex(strSymbols, chrSymbols) {
+  var index = strSymbols.length;
+
+  while (index-- && baseIndexOf$1(chrSymbols, strSymbols[index], 0) > -1) {}
+  return index;
+}
+
+/**
+ * Checks if `string` contains Unicode symbols.
+ *
+ * @private
+ * @param {string} string The string to inspect.
+ * @returns {boolean} Returns `true` if a symbol is found, else `false`.
+ */
+function hasUnicode(string) {
+  return reHasUnicode.test(string);
+}
+
+/**
+ * Converts `string` to an array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function stringToArray(string) {
+  return hasUnicode(string)
+    ? unicodeToArray(string)
+    : asciiToArray(string);
+}
+
+/**
+ * Converts a Unicode `string` to an array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function unicodeToArray(string) {
+  return string.match(reUnicode) || [];
+}
+
+/** Used for built-in method references. */
+var objectProto$1 = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString$1 = objectProto$1.toString;
+
+/** Built-in value references. */
+var Symbol = root$1.Symbol;
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolToString = symbolProto ? symbolProto.toString : undefined;
+
+/**
+ * The base implementation of `_.slice` without an iteratee call guard.
+ *
+ * @private
+ * @param {Array} array The array to slice.
+ * @param {number} [start=0] The start position.
+ * @param {number} [end=array.length] The end position.
+ * @returns {Array} Returns the slice of `array`.
+ */
+function baseSlice(array, start, end) {
+  var index = -1,
+      length = array.length;
+
+  if (start < 0) {
+    start = -start > length ? 0 : (length + start);
+  }
+  end = end > length ? length : end;
+  if (end < 0) {
+    end += length;
+  }
+  length = start > end ? 0 : ((end - start) >>> 0);
+  start >>>= 0;
+
+  var result = Array(length);
+  while (++index < length) {
+    result[index] = array[index + start];
+  }
+  return result;
+}
+
+/**
+ * The base implementation of `_.toString` which doesn't convert nullish
+ * values to empty strings.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return symbolToString ? symbolToString.call(value) : '';
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+/**
+ * Casts `array` to a slice if it's needed.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {number} start The start position.
+ * @param {number} [end=array.length] The end position.
+ * @returns {Array} Returns the cast slice.
+ */
+function castSlice(array, start, end) {
+  var length = array.length;
+  end = end === undefined ? length : end;
+  return (!start && end >= length) ? array : baseSlice(array, start, end);
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike$1(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike$1(value) && objectToString$1.call(value) == symbolTag);
+}
+
+/**
+ * Converts `value` to a string. An empty string is returned for `null`
+ * and `undefined` values. The sign of `-0` is preserved.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ * @example
+ *
+ * _.toString(null);
+ * // => ''
+ *
+ * _.toString(-0);
+ * // => '-0'
+ *
+ * _.toString([1, 2, 3]);
+ * // => '1,2,3'
+ */
+function toString(value) {
+  return value == null ? '' : baseToString(value);
+}
+
+/**
+ * Removes leading and trailing whitespace or specified characters from `string`.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category String
+ * @param {string} [string=''] The string to trim.
+ * @param {string} [chars=whitespace] The characters to trim.
+ * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
+ * @returns {string} Returns the trimmed string.
+ * @example
+ *
+ * _.trim('  abc  ');
+ * // => 'abc'
+ *
+ * _.trim('-_-abc-_-', '_-');
+ * // => 'abc'
+ *
+ * _.map(['  foo  ', '  bar  '], _.trim);
+ * // => ['foo', 'bar']
+ */
+function trim(string, chars, guard) {
+  string = toString(string);
+  if (string && (guard || chars === undefined)) {
+    return string.replace(reTrim, '');
+  }
+  if (!string || !(chars = baseToString(chars))) {
+    return string;
+  }
+  var strSymbols = stringToArray(string),
+      chrSymbols = stringToArray(chars),
+      start = charsStartIndex(strSymbols, chrSymbols),
+      end = charsEndIndex(strSymbols, chrSymbols) + 1;
+
+  return castSlice(strSymbols, start, end).join('');
+}
+
+var lodash_trim = trim;
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** `Object#toString` result references. */
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/**
+ * A faster alternative to `Function#apply`, this function invokes `func`
+ * with the `this` binding of `thisArg` and the arguments of `args`.
+ *
+ * @private
+ * @param {Function} func The function to invoke.
+ * @param {*} thisArg The `this` binding of `func`.
+ * @param {Array} args The arguments to invoke `func` with.
+ * @returns {*} Returns the result of `func`.
+ */
+function apply(func, thisArg, args) {
+  switch (args.length) {
+    case 0: return func.call(thisArg);
+    case 1: return func.call(thisArg, args[0]);
+    case 2: return func.call(thisArg, args[0], args[1]);
+    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+  }
+  return func.apply(thisArg, args);
+}
+
+/**
+ * A specialized version of `_.includes` for arrays without support for
+ * specifying an index to search from.
+ *
+ * @private
+ * @param {Array} [array] The array to inspect.
+ * @param {*} target The value to search for.
+ * @returns {boolean} Returns `true` if `target` is found, else `false`.
+ */
+function arrayIncludes(array, value) {
+  var length = array ? array.length : 0;
+  return !!length && baseIndexOf(array, value, 0) > -1;
+}
+
+/**
+ * This function is like `arrayIncludes` except that it accepts a comparator.
+ *
+ * @private
+ * @param {Array} [array] The array to inspect.
+ * @param {*} target The value to search for.
+ * @param {Function} comparator The comparator invoked per element.
+ * @returns {boolean} Returns `true` if `target` is found, else `false`.
+ */
+function arrayIncludesWith(array, value, comparator) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  while (++index < length) {
+    if (comparator(value, array[index])) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array ? array.length : 0,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+/**
+ * The base implementation of `_.findIndex` and `_.findLastIndex` without
+ * support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {Function} predicate The function invoked per iteration.
+ * @param {number} fromIndex The index to search from.
+ * @param {boolean} [fromRight] Specify iterating from right to left.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
+  var length = array.length,
+      index = fromIndex + (fromRight ? 1 : -1);
+
+  while ((fromRight ? index-- : ++index < length)) {
+    if (predicate(array[index], index, array)) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} fromIndex The index to search from.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseIndexOf(array, value, fromIndex) {
+  if (value !== value) {
+    return baseFindIndex(array, baseIsNaN, fromIndex);
+  }
+  var index = fromIndex - 1,
+      length = array.length;
+
+  while (++index < length) {
+    if (array[index] === value) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.isNaN` without support for number objects.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+ */
+function baseIsNaN(value) {
+  return value !== value;
+}
+
+/**
+ * The base implementation of `_.unary` without support for storing metadata.
+ *
+ * @private
+ * @param {Function} func The function to cap arguments for.
+ * @returns {Function} Returns the new capped function.
+ */
+function baseUnary(func) {
+  return function(value) {
+    return func(value);
+  };
+}
+
+/**
+ * Checks if a cache value for `key` exists.
+ *
+ * @private
+ * @param {Object} cache The cache to query.
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function cacheHas(cache, key) {
+  return cache.has(key);
+}
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var splice = arrayProto.splice;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max;
+
+/* Built-in method references that are verified to be native. */
+var Map = getNative(root, 'Map'),
+    nativeCreate = getNative(Object, 'create');
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ *
+ * Creates an array cache object to store unique values.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [values] The values to cache.
+ */
+function SetCache(values) {
+  var index = -1,
+      length = values ? values.length : 0;
+
+  this.__data__ = new MapCache;
+  while (++index < length) {
+    this.add(values[index]);
+  }
+}
+
+/**
+ * Adds `value` to the array cache.
+ *
+ * @private
+ * @name add
+ * @memberOf SetCache
+ * @alias push
+ * @param {*} value The value to cache.
+ * @returns {Object} Returns the cache instance.
+ */
+function setCacheAdd(value) {
+  this.__data__.set(value, HASH_UNDEFINED);
+  return this;
+}
+
+/**
+ * Checks if `value` is in the array cache.
+ *
+ * @private
+ * @name has
+ * @memberOf SetCache
+ * @param {*} value The value to search for.
+ * @returns {number} Returns `true` if `value` is found, else `false`.
+ */
+function setCacheHas(value) {
+  return this.__data__.has(value);
+}
+
+// Add methods to `SetCache`.
+SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
+SetCache.prototype.has = setCacheHas;
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of methods like `_.difference` without support
+ * for excluding multiple arrays or iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {Array} values The values to exclude.
+ * @param {Function} [iteratee] The iteratee invoked per element.
+ * @param {Function} [comparator] The comparator invoked per element.
+ * @returns {Array} Returns the new array of filtered values.
+ */
+function baseDifference(array, values, iteratee, comparator) {
+  var index = -1,
+      includes = arrayIncludes,
+      isCommon = true,
+      length = array.length,
+      result = [],
+      valuesLength = values.length;
+
+  if (!length) {
+    return result;
+  }
+  if (iteratee) {
+    values = arrayMap(values, baseUnary(iteratee));
+  }
+  if (comparator) {
+    includes = arrayIncludesWith;
+    isCommon = false;
+  }
+  else if (values.length >= LARGE_ARRAY_SIZE) {
+    includes = cacheHas;
+    isCommon = false;
+    values = new SetCache(values);
+  }
+  outer:
+  while (++index < length) {
+    var value = array[index],
+        computed = iteratee ? iteratee(value) : value;
+
+    value = (comparator || value !== 0) ? value : 0;
+    if (isCommon && computed === computed) {
+      var valuesIndex = valuesLength;
+      while (valuesIndex--) {
+        if (values[valuesIndex] === computed) {
+          continue outer;
+        }
+      }
+      result.push(value);
+    }
+    else if (!includes(values, computed, comparator)) {
+      result.push(value);
+    }
+  }
+  return result;
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @param {number} [start=func.length-1] The start position of the rest parameter.
+ * @returns {Function} Returns the new function.
+ */
+function baseRest(func, start) {
+  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+  return function() {
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        array = Array(length);
+
+    while (++index < length) {
+      array[index] = args[start + index];
+    }
+    index = -1;
+    var otherArgs = Array(start + 1);
+    while (++index < start) {
+      otherArgs[index] = args[index];
+    }
+    otherArgs[start] = array;
+    return apply(func, this, otherArgs);
+  };
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * Creates an array excluding all given values using
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons.
+ *
+ * **Note:** Unlike `_.pull`, this method returns a new array.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Array
+ * @param {Array} array The array to inspect.
+ * @param {...*} [values] The values to exclude.
+ * @returns {Array} Returns the new array of filtered values.
+ * @see _.difference, _.xor
+ * @example
+ *
+ * _.without([2, 1, 2, 3], 1, 2);
+ * // => [3]
+ */
+var without = baseRest(function(array, values) {
+  return isArrayLikeObject(array)
+    ? baseDifference(array, values)
+    : [];
+});
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
+}
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+var lodash_without = without;
+
+var bodyRegExps={xml:/&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g,html4:/&(?:nbsp|iexcl|cent|pound|curren|yen|brvbar|sect|uml|copy|ordf|laquo|not|shy|reg|macr|deg|plusmn|sup2|sup3|acute|micro|para|middot|cedil|sup1|ordm|raquo|frac14|frac12|frac34|iquest|Agrave|Aacute|Acirc|Atilde|Auml|Aring|AElig|Ccedil|Egrave|Eacute|Ecirc|Euml|Igrave|Iacute|Icirc|Iuml|ETH|Ntilde|Ograve|Oacute|Ocirc|Otilde|Ouml|times|Oslash|Ugrave|Uacute|Ucirc|Uuml|Yacute|THORN|szlig|agrave|aacute|acirc|atilde|auml|aring|aelig|ccedil|egrave|eacute|ecirc|euml|igrave|iacute|icirc|iuml|eth|ntilde|ograve|oacute|ocirc|otilde|ouml|divide|oslash|ugrave|uacute|ucirc|uuml|yacute|thorn|yuml|quot|amp|lt|gt|#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g,html5:/&(?:AElig|AMP|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|GT|Iacute|Icirc|Igrave|Iuml|LT|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|QUOT|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|amp|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|gt|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|lt|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|quot|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml|#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g};var namedReferences_1={xml:{entities:{"&lt;":"<","&gt;":">","&quot;":'"',"&apos;":"'","&amp;":"&"},characters:{"<":"&lt;",">":"&gt;",'"':"&quot;","'":"&apos;","&":"&amp;"}},html4:{entities:{"&apos;":"'","&nbsp":" ","&nbsp;":" ","&iexcl":"¡","&iexcl;":"¡","&cent":"¢","&cent;":"¢","&pound":"£","&pound;":"£","&curren":"¤","&curren;":"¤","&yen":"¥","&yen;":"¥","&brvbar":"¦","&brvbar;":"¦","&sect":"§","&sect;":"§","&uml":"¨","&uml;":"¨","&copy":"©","&copy;":"©","&ordf":"ª","&ordf;":"ª","&laquo":"«","&laquo;":"«","&not":"¬","&not;":"¬","&shy":"­","&shy;":"­","&reg":"®","&reg;":"®","&macr":"¯","&macr;":"¯","&deg":"°","&deg;":"°","&plusmn":"±","&plusmn;":"±","&sup2":"²","&sup2;":"²","&sup3":"³","&sup3;":"³","&acute":"´","&acute;":"´","&micro":"µ","&micro;":"µ","&para":"¶","&para;":"¶","&middot":"·","&middot;":"·","&cedil":"¸","&cedil;":"¸","&sup1":"¹","&sup1;":"¹","&ordm":"º","&ordm;":"º","&raquo":"»","&raquo;":"»","&frac14":"¼","&frac14;":"¼","&frac12":"½","&frac12;":"½","&frac34":"¾","&frac34;":"¾","&iquest":"¿","&iquest;":"¿","&Agrave":"À","&Agrave;":"À","&Aacute":"Á","&Aacute;":"Á","&Acirc":"Â","&Acirc;":"Â","&Atilde":"Ã","&Atilde;":"Ã","&Auml":"Ä","&Auml;":"Ä","&Aring":"Å","&Aring;":"Å","&AElig":"Æ","&AElig;":"Æ","&Ccedil":"Ç","&Ccedil;":"Ç","&Egrave":"È","&Egrave;":"È","&Eacute":"É","&Eacute;":"É","&Ecirc":"Ê","&Ecirc;":"Ê","&Euml":"Ë","&Euml;":"Ë","&Igrave":"Ì","&Igrave;":"Ì","&Iacute":"Í","&Iacute;":"Í","&Icirc":"Î","&Icirc;":"Î","&Iuml":"Ï","&Iuml;":"Ï","&ETH":"Ð","&ETH;":"Ð","&Ntilde":"Ñ","&Ntilde;":"Ñ","&Ograve":"Ò","&Ograve;":"Ò","&Oacute":"Ó","&Oacute;":"Ó","&Ocirc":"Ô","&Ocirc;":"Ô","&Otilde":"Õ","&Otilde;":"Õ","&Ouml":"Ö","&Ouml;":"Ö","&times":"×","&times;":"×","&Oslash":"Ø","&Oslash;":"Ø","&Ugrave":"Ù","&Ugrave;":"Ù","&Uacute":"Ú","&Uacute;":"Ú","&Ucirc":"Û","&Ucirc;":"Û","&Uuml":"Ü","&Uuml;":"Ü","&Yacute":"Ý","&Yacute;":"Ý","&THORN":"Þ","&THORN;":"Þ","&szlig":"ß","&szlig;":"ß","&agrave":"à","&agrave;":"à","&aacute":"á","&aacute;":"á","&acirc":"â","&acirc;":"â","&atilde":"ã","&atilde;":"ã","&auml":"ä","&auml;":"ä","&aring":"å","&aring;":"å","&aelig":"æ","&aelig;":"æ","&ccedil":"ç","&ccedil;":"ç","&egrave":"è","&egrave;":"è","&eacute":"é","&eacute;":"é","&ecirc":"ê","&ecirc;":"ê","&euml":"ë","&euml;":"ë","&igrave":"ì","&igrave;":"ì","&iacute":"í","&iacute;":"í","&icirc":"î","&icirc;":"î","&iuml":"ï","&iuml;":"ï","&eth":"ð","&eth;":"ð","&ntilde":"ñ","&ntilde;":"ñ","&ograve":"ò","&ograve;":"ò","&oacute":"ó","&oacute;":"ó","&ocirc":"ô","&ocirc;":"ô","&otilde":"õ","&otilde;":"õ","&ouml":"ö","&ouml;":"ö","&divide":"÷","&divide;":"÷","&oslash":"ø","&oslash;":"ø","&ugrave":"ù","&ugrave;":"ù","&uacute":"ú","&uacute;":"ú","&ucirc":"û","&ucirc;":"û","&uuml":"ü","&uuml;":"ü","&yacute":"ý","&yacute;":"ý","&thorn":"þ","&thorn;":"þ","&yuml":"ÿ","&yuml;":"ÿ","&quot":'"',"&quot;":'"',"&amp":"&","&amp;":"&","&lt":"<","&lt;":"<","&gt":">","&gt;":">","&OElig;":"Œ","&oelig;":"œ","&Scaron;":"Š","&scaron;":"š","&Yuml;":"Ÿ","&circ;":"ˆ","&tilde;":"˜","&ensp;":" ","&emsp;":" ","&thinsp;":" ","&zwnj;":"‌","&zwj;":"‍","&lrm;":"‎","&rlm;":"‏","&ndash;":"–","&mdash;":"—","&lsquo;":"‘","&rsquo;":"’","&sbquo;":"‚","&ldquo;":"“","&rdquo;":"”","&bdquo;":"„","&dagger;":"†","&Dagger;":"‡","&permil;":"‰","&lsaquo;":"‹","&rsaquo;":"›","&euro;":"€","&fnof;":"ƒ","&Alpha;":"Α","&Beta;":"Β","&Gamma;":"Γ","&Delta;":"Δ","&Epsilon;":"Ε","&Zeta;":"Ζ","&Eta;":"Η","&Theta;":"Θ","&Iota;":"Ι","&Kappa;":"Κ","&Lambda;":"Λ","&Mu;":"Μ","&Nu;":"Ν","&Xi;":"Ξ","&Omicron;":"Ο","&Pi;":"Π","&Rho;":"Ρ","&Sigma;":"Σ","&Tau;":"Τ","&Upsilon;":"Υ","&Phi;":"Φ","&Chi;":"Χ","&Psi;":"Ψ","&Omega;":"Ω","&alpha;":"α","&beta;":"β","&gamma;":"γ","&delta;":"δ","&epsilon;":"ε","&zeta;":"ζ","&eta;":"η","&theta;":"θ","&iota;":"ι","&kappa;":"κ","&lambda;":"λ","&mu;":"μ","&nu;":"ν","&xi;":"ξ","&omicron;":"ο","&pi;":"π","&rho;":"ρ","&sigmaf;":"ς","&sigma;":"σ","&tau;":"τ","&upsilon;":"υ","&phi;":"φ","&chi;":"χ","&psi;":"ψ","&omega;":"ω","&thetasym;":"ϑ","&upsih;":"ϒ","&piv;":"ϖ","&bull;":"•","&hellip;":"…","&prime;":"′","&Prime;":"″","&oline;":"‾","&frasl;":"⁄","&weierp;":"℘","&image;":"ℑ","&real;":"ℜ","&trade;":"™","&alefsym;":"ℵ","&larr;":"←","&uarr;":"↑","&rarr;":"→","&darr;":"↓","&harr;":"↔","&crarr;":"↵","&lArr;":"⇐","&uArr;":"⇑","&rArr;":"⇒","&dArr;":"⇓","&hArr;":"⇔","&forall;":"∀","&part;":"∂","&exist;":"∃","&empty;":"∅","&nabla;":"∇","&isin;":"∈","&notin;":"∉","&ni;":"∋","&prod;":"∏","&sum;":"∑","&minus;":"−","&lowast;":"∗","&radic;":"√","&prop;":"∝","&infin;":"∞","&ang;":"∠","&and;":"∧","&or;":"∨","&cap;":"∩","&cup;":"∪","&int;":"∫","&there4;":"∴","&sim;":"∼","&cong;":"≅","&asymp;":"≈","&ne;":"≠","&equiv;":"≡","&le;":"≤","&ge;":"≥","&sub;":"⊂","&sup;":"⊃","&nsub;":"⊄","&sube;":"⊆","&supe;":"⊇","&oplus;":"⊕","&otimes;":"⊗","&perp;":"⊥","&sdot;":"⋅","&lceil;":"⌈","&rceil;":"⌉","&lfloor;":"⌊","&rfloor;":"⌋","&lang;":"〈","&rang;":"〉","&loz;":"◊","&spades;":"♠","&clubs;":"♣","&hearts;":"♥","&diams;":"♦"},characters:{"'":"&apos;"," ":"&nbsp;","¡":"&iexcl;","¢":"&cent;","£":"&pound;","¤":"&curren;","¥":"&yen;","¦":"&brvbar;","§":"&sect;","¨":"&uml;","©":"&copy;","ª":"&ordf;","«":"&laquo;","¬":"&not;","­":"&shy;","®":"&reg;","¯":"&macr;","°":"&deg;","±":"&plusmn;","²":"&sup2;","³":"&sup3;","´":"&acute;","µ":"&micro;","¶":"&para;","·":"&middot;","¸":"&cedil;","¹":"&sup1;","º":"&ordm;","»":"&raquo;","¼":"&frac14;","½":"&frac12;","¾":"&frac34;","¿":"&iquest;","À":"&Agrave;","Á":"&Aacute;","Â":"&Acirc;","Ã":"&Atilde;","Ä":"&Auml;","Å":"&Aring;","Æ":"&AElig;","Ç":"&Ccedil;","È":"&Egrave;","É":"&Eacute;","Ê":"&Ecirc;","Ë":"&Euml;","Ì":"&Igrave;","Í":"&Iacute;","Î":"&Icirc;","Ï":"&Iuml;","Ð":"&ETH;","Ñ":"&Ntilde;","Ò":"&Ograve;","Ó":"&Oacute;","Ô":"&Ocirc;","Õ":"&Otilde;","Ö":"&Ouml;","×":"&times;","Ø":"&Oslash;","Ù":"&Ugrave;","Ú":"&Uacute;","Û":"&Ucirc;","Ü":"&Uuml;","Ý":"&Yacute;","Þ":"&THORN;","ß":"&szlig;","à":"&agrave;","á":"&aacute;","â":"&acirc;","ã":"&atilde;","ä":"&auml;","å":"&aring;","æ":"&aelig;","ç":"&ccedil;","è":"&egrave;","é":"&eacute;","ê":"&ecirc;","ë":"&euml;","ì":"&igrave;","í":"&iacute;","î":"&icirc;","ï":"&iuml;","ð":"&eth;","ñ":"&ntilde;","ò":"&ograve;","ó":"&oacute;","ô":"&ocirc;","õ":"&otilde;","ö":"&ouml;","÷":"&divide;","ø":"&oslash;","ù":"&ugrave;","ú":"&uacute;","û":"&ucirc;","ü":"&uuml;","ý":"&yacute;","þ":"&thorn;","ÿ":"&yuml;",'"':"&quot;","&":"&amp;","<":"&lt;",">":"&gt;","Œ":"&OElig;","œ":"&oelig;","Š":"&Scaron;","š":"&scaron;","Ÿ":"&Yuml;","ˆ":"&circ;","˜":"&tilde;"," ":"&ensp;"," ":"&emsp;"," ":"&thinsp;","‌":"&zwnj;","‍":"&zwj;","‎":"&lrm;","‏":"&rlm;","–":"&ndash;","—":"&mdash;","‘":"&lsquo;","’":"&rsquo;","‚":"&sbquo;","“":"&ldquo;","”":"&rdquo;","„":"&bdquo;","†":"&dagger;","‡":"&Dagger;","‰":"&permil;","‹":"&lsaquo;","›":"&rsaquo;","€":"&euro;","ƒ":"&fnof;","Α":"&Alpha;","Β":"&Beta;","Γ":"&Gamma;","Δ":"&Delta;","Ε":"&Epsilon;","Ζ":"&Zeta;","Η":"&Eta;","Θ":"&Theta;","Ι":"&Iota;","Κ":"&Kappa;","Λ":"&Lambda;","Μ":"&Mu;","Ν":"&Nu;","Ξ":"&Xi;","Ο":"&Omicron;","Π":"&Pi;","Ρ":"&Rho;","Σ":"&Sigma;","Τ":"&Tau;","Υ":"&Upsilon;","Φ":"&Phi;","Χ":"&Chi;","Ψ":"&Psi;","Ω":"&Omega;","α":"&alpha;","β":"&beta;","γ":"&gamma;","δ":"&delta;","ε":"&epsilon;","ζ":"&zeta;","η":"&eta;","θ":"&theta;","ι":"&iota;","κ":"&kappa;","λ":"&lambda;","μ":"&mu;","ν":"&nu;","ξ":"&xi;","ο":"&omicron;","π":"&pi;","ρ":"&rho;","ς":"&sigmaf;","σ":"&sigma;","τ":"&tau;","υ":"&upsilon;","φ":"&phi;","χ":"&chi;","ψ":"&psi;","ω":"&omega;","ϑ":"&thetasym;","ϒ":"&upsih;","ϖ":"&piv;","•":"&bull;","…":"&hellip;","′":"&prime;","″":"&Prime;","‾":"&oline;","⁄":"&frasl;","℘":"&weierp;","ℑ":"&image;","ℜ":"&real;","™":"&trade;","ℵ":"&alefsym;","←":"&larr;","↑":"&uarr;","→":"&rarr;","↓":"&darr;","↔":"&harr;","↵":"&crarr;","⇐":"&lArr;","⇑":"&uArr;","⇒":"&rArr;","⇓":"&dArr;","⇔":"&hArr;","∀":"&forall;","∂":"&part;","∃":"&exist;","∅":"&empty;","∇":"&nabla;","∈":"&isin;","∉":"&notin;","∋":"&ni;","∏":"&prod;","∑":"&sum;","−":"&minus;","∗":"&lowast;","√":"&radic;","∝":"&prop;","∞":"&infin;","∠":"&ang;","∧":"&and;","∨":"&or;","∩":"&cap;","∪":"&cup;","∫":"&int;","∴":"&there4;","∼":"&sim;","≅":"&cong;","≈":"&asymp;","≠":"&ne;","≡":"&equiv;","≤":"&le;","≥":"&ge;","⊂":"&sub;","⊃":"&sup;","⊄":"&nsub;","⊆":"&sube;","⊇":"&supe;","⊕":"&oplus;","⊗":"&otimes;","⊥":"&perp;","⋅":"&sdot;","⌈":"&lceil;","⌉":"&rceil;","⌊":"&lfloor;","⌋":"&rfloor;","〈":"&lang;","〉":"&rang;","◊":"&loz;","♠":"&spades;","♣":"&clubs;","♥":"&hearts;","♦":"&diams;"}},html5:{entities:{"&AElig":"Æ","&AElig;":"Æ","&AMP":"&","&AMP;":"&","&Aacute":"Á","&Aacute;":"Á","&Abreve;":"Ă","&Acirc":"Â","&Acirc;":"Â","&Acy;":"А","&Afr;":"𝔄","&Agrave":"À","&Agrave;":"À","&Alpha;":"Α","&Amacr;":"Ā","&And;":"⩓","&Aogon;":"Ą","&Aopf;":"𝔸","&ApplyFunction;":"⁡","&Aring":"Å","&Aring;":"Å","&Ascr;":"𝒜","&Assign;":"≔","&Atilde":"Ã","&Atilde;":"Ã","&Auml":"Ä","&Auml;":"Ä","&Backslash;":"∖","&Barv;":"⫧","&Barwed;":"⌆","&Bcy;":"Б","&Because;":"∵","&Bernoullis;":"ℬ","&Beta;":"Β","&Bfr;":"𝔅","&Bopf;":"𝔹","&Breve;":"˘","&Bscr;":"ℬ","&Bumpeq;":"≎","&CHcy;":"Ч","&COPY":"©","&COPY;":"©","&Cacute;":"Ć","&Cap;":"⋒","&CapitalDifferentialD;":"ⅅ","&Cayleys;":"ℭ","&Ccaron;":"Č","&Ccedil":"Ç","&Ccedil;":"Ç","&Ccirc;":"Ĉ","&Cconint;":"∰","&Cdot;":"Ċ","&Cedilla;":"¸","&CenterDot;":"·","&Cfr;":"ℭ","&Chi;":"Χ","&CircleDot;":"⊙","&CircleMinus;":"⊖","&CirclePlus;":"⊕","&CircleTimes;":"⊗","&ClockwiseContourIntegral;":"∲","&CloseCurlyDoubleQuote;":"”","&CloseCurlyQuote;":"’","&Colon;":"∷","&Colone;":"⩴","&Congruent;":"≡","&Conint;":"∯","&ContourIntegral;":"∮","&Copf;":"ℂ","&Coproduct;":"∐","&CounterClockwiseContourIntegral;":"∳","&Cross;":"⨯","&Cscr;":"𝒞","&Cup;":"⋓","&CupCap;":"≍","&DD;":"ⅅ","&DDotrahd;":"⤑","&DJcy;":"Ђ","&DScy;":"Ѕ","&DZcy;":"Џ","&Dagger;":"‡","&Darr;":"↡","&Dashv;":"⫤","&Dcaron;":"Ď","&Dcy;":"Д","&Del;":"∇","&Delta;":"Δ","&Dfr;":"𝔇","&DiacriticalAcute;":"´","&DiacriticalDot;":"˙","&DiacriticalDoubleAcute;":"˝","&DiacriticalGrave;":"`","&DiacriticalTilde;":"˜","&Diamond;":"⋄","&DifferentialD;":"ⅆ","&Dopf;":"𝔻","&Dot;":"¨","&DotDot;":"⃜","&DotEqual;":"≐","&DoubleContourIntegral;":"∯","&DoubleDot;":"¨","&DoubleDownArrow;":"⇓","&DoubleLeftArrow;":"⇐","&DoubleLeftRightArrow;":"⇔","&DoubleLeftTee;":"⫤","&DoubleLongLeftArrow;":"⟸","&DoubleLongLeftRightArrow;":"⟺","&DoubleLongRightArrow;":"⟹","&DoubleRightArrow;":"⇒","&DoubleRightTee;":"⊨","&DoubleUpArrow;":"⇑","&DoubleUpDownArrow;":"⇕","&DoubleVerticalBar;":"∥","&DownArrow;":"↓","&DownArrowBar;":"⤓","&DownArrowUpArrow;":"⇵","&DownBreve;":"̑","&DownLeftRightVector;":"⥐","&DownLeftTeeVector;":"⥞","&DownLeftVector;":"↽","&DownLeftVectorBar;":"⥖","&DownRightTeeVector;":"⥟","&DownRightVector;":"⇁","&DownRightVectorBar;":"⥗","&DownTee;":"⊤","&DownTeeArrow;":"↧","&Downarrow;":"⇓","&Dscr;":"𝒟","&Dstrok;":"Đ","&ENG;":"Ŋ","&ETH":"Ð","&ETH;":"Ð","&Eacute":"É","&Eacute;":"É","&Ecaron;":"Ě","&Ecirc":"Ê","&Ecirc;":"Ê","&Ecy;":"Э","&Edot;":"Ė","&Efr;":"𝔈","&Egrave":"È","&Egrave;":"È","&Element;":"∈","&Emacr;":"Ē","&EmptySmallSquare;":"◻","&EmptyVerySmallSquare;":"▫","&Eogon;":"Ę","&Eopf;":"𝔼","&Epsilon;":"Ε","&Equal;":"⩵","&EqualTilde;":"≂","&Equilibrium;":"⇌","&Escr;":"ℰ","&Esim;":"⩳","&Eta;":"Η","&Euml":"Ë","&Euml;":"Ë","&Exists;":"∃","&ExponentialE;":"ⅇ","&Fcy;":"Ф","&Ffr;":"𝔉","&FilledSmallSquare;":"◼","&FilledVerySmallSquare;":"▪","&Fopf;":"𝔽","&ForAll;":"∀","&Fouriertrf;":"ℱ","&Fscr;":"ℱ","&GJcy;":"Ѓ","&GT":">","&GT;":">","&Gamma;":"Γ","&Gammad;":"Ϝ","&Gbreve;":"Ğ","&Gcedil;":"Ģ","&Gcirc;":"Ĝ","&Gcy;":"Г","&Gdot;":"Ġ","&Gfr;":"𝔊","&Gg;":"⋙","&Gopf;":"𝔾","&GreaterEqual;":"≥","&GreaterEqualLess;":"⋛","&GreaterFullEqual;":"≧","&GreaterGreater;":"⪢","&GreaterLess;":"≷","&GreaterSlantEqual;":"⩾","&GreaterTilde;":"≳","&Gscr;":"𝒢","&Gt;":"≫","&HARDcy;":"Ъ","&Hacek;":"ˇ","&Hat;":"^","&Hcirc;":"Ĥ","&Hfr;":"ℌ","&HilbertSpace;":"ℋ","&Hopf;":"ℍ","&HorizontalLine;":"─","&Hscr;":"ℋ","&Hstrok;":"Ħ","&HumpDownHump;":"≎","&HumpEqual;":"≏","&IEcy;":"Е","&IJlig;":"Ĳ","&IOcy;":"Ё","&Iacute":"Í","&Iacute;":"Í","&Icirc":"Î","&Icirc;":"Î","&Icy;":"И","&Idot;":"İ","&Ifr;":"ℑ","&Igrave":"Ì","&Igrave;":"Ì","&Im;":"ℑ","&Imacr;":"Ī","&ImaginaryI;":"ⅈ","&Implies;":"⇒","&Int;":"∬","&Integral;":"∫","&Intersection;":"⋂","&InvisibleComma;":"⁣","&InvisibleTimes;":"⁢","&Iogon;":"Į","&Iopf;":"𝕀","&Iota;":"Ι","&Iscr;":"ℐ","&Itilde;":"Ĩ","&Iukcy;":"І","&Iuml":"Ï","&Iuml;":"Ï","&Jcirc;":"Ĵ","&Jcy;":"Й","&Jfr;":"𝔍","&Jopf;":"𝕁","&Jscr;":"𝒥","&Jsercy;":"Ј","&Jukcy;":"Є","&KHcy;":"Х","&KJcy;":"Ќ","&Kappa;":"Κ","&Kcedil;":"Ķ","&Kcy;":"К","&Kfr;":"𝔎","&Kopf;":"𝕂","&Kscr;":"𝒦","&LJcy;":"Љ","&LT":"<","&LT;":"<","&Lacute;":"Ĺ","&Lambda;":"Λ","&Lang;":"⟪","&Laplacetrf;":"ℒ","&Larr;":"↞","&Lcaron;":"Ľ","&Lcedil;":"Ļ","&Lcy;":"Л","&LeftAngleBracket;":"⟨","&LeftArrow;":"←","&LeftArrowBar;":"⇤","&LeftArrowRightArrow;":"⇆","&LeftCeiling;":"⌈","&LeftDoubleBracket;":"⟦","&LeftDownTeeVector;":"⥡","&LeftDownVector;":"⇃","&LeftDownVectorBar;":"⥙","&LeftFloor;":"⌊","&LeftRightArrow;":"↔","&LeftRightVector;":"⥎","&LeftTee;":"⊣","&LeftTeeArrow;":"↤","&LeftTeeVector;":"⥚","&LeftTriangle;":"⊲","&LeftTriangleBar;":"⧏","&LeftTriangleEqual;":"⊴","&LeftUpDownVector;":"⥑","&LeftUpTeeVector;":"⥠","&LeftUpVector;":"↿","&LeftUpVectorBar;":"⥘","&LeftVector;":"↼","&LeftVectorBar;":"⥒","&Leftarrow;":"⇐","&Leftrightarrow;":"⇔","&LessEqualGreater;":"⋚","&LessFullEqual;":"≦","&LessGreater;":"≶","&LessLess;":"⪡","&LessSlantEqual;":"⩽","&LessTilde;":"≲","&Lfr;":"𝔏","&Ll;":"⋘","&Lleftarrow;":"⇚","&Lmidot;":"Ŀ","&LongLeftArrow;":"⟵","&LongLeftRightArrow;":"⟷","&LongRightArrow;":"⟶","&Longleftarrow;":"⟸","&Longleftrightarrow;":"⟺","&Longrightarrow;":"⟹","&Lopf;":"𝕃","&LowerLeftArrow;":"↙","&LowerRightArrow;":"↘","&Lscr;":"ℒ","&Lsh;":"↰","&Lstrok;":"Ł","&Lt;":"≪","&Map;":"⤅","&Mcy;":"М","&MediumSpace;":" ","&Mellintrf;":"ℳ","&Mfr;":"𝔐","&MinusPlus;":"∓","&Mopf;":"𝕄","&Mscr;":"ℳ","&Mu;":"Μ","&NJcy;":"Њ","&Nacute;":"Ń","&Ncaron;":"Ň","&Ncedil;":"Ņ","&Ncy;":"Н","&NegativeMediumSpace;":"​","&NegativeThickSpace;":"​","&NegativeThinSpace;":"​","&NegativeVeryThinSpace;":"​","&NestedGreaterGreater;":"≫","&NestedLessLess;":"≪","&NewLine;":"\n","&Nfr;":"𝔑","&NoBreak;":"⁠","&NonBreakingSpace;":" ","&Nopf;":"ℕ","&Not;":"⫬","&NotCongruent;":"≢","&NotCupCap;":"≭","&NotDoubleVerticalBar;":"∦","&NotElement;":"∉","&NotEqual;":"≠","&NotEqualTilde;":"≂̸","&NotExists;":"∄","&NotGreater;":"≯","&NotGreaterEqual;":"≱","&NotGreaterFullEqual;":"≧̸","&NotGreaterGreater;":"≫̸","&NotGreaterLess;":"≹","&NotGreaterSlantEqual;":"⩾̸","&NotGreaterTilde;":"≵","&NotHumpDownHump;":"≎̸","&NotHumpEqual;":"≏̸","&NotLeftTriangle;":"⋪","&NotLeftTriangleBar;":"⧏̸","&NotLeftTriangleEqual;":"⋬","&NotLess;":"≮","&NotLessEqual;":"≰","&NotLessGreater;":"≸","&NotLessLess;":"≪̸","&NotLessSlantEqual;":"⩽̸","&NotLessTilde;":"≴","&NotNestedGreaterGreater;":"⪢̸","&NotNestedLessLess;":"⪡̸","&NotPrecedes;":"⊀","&NotPrecedesEqual;":"⪯̸","&NotPrecedesSlantEqual;":"⋠","&NotReverseElement;":"∌","&NotRightTriangle;":"⋫","&NotRightTriangleBar;":"⧐̸","&NotRightTriangleEqual;":"⋭","&NotSquareSubset;":"⊏̸","&NotSquareSubsetEqual;":"⋢","&NotSquareSuperset;":"⊐̸","&NotSquareSupersetEqual;":"⋣","&NotSubset;":"⊂⃒","&NotSubsetEqual;":"⊈","&NotSucceeds;":"⊁","&NotSucceedsEqual;":"⪰̸","&NotSucceedsSlantEqual;":"⋡","&NotSucceedsTilde;":"≿̸","&NotSuperset;":"⊃⃒","&NotSupersetEqual;":"⊉","&NotTilde;":"≁","&NotTildeEqual;":"≄","&NotTildeFullEqual;":"≇","&NotTildeTilde;":"≉","&NotVerticalBar;":"∤","&Nscr;":"𝒩","&Ntilde":"Ñ","&Ntilde;":"Ñ","&Nu;":"Ν","&OElig;":"Œ","&Oacute":"Ó","&Oacute;":"Ó","&Ocirc":"Ô","&Ocirc;":"Ô","&Ocy;":"О","&Odblac;":"Ő","&Ofr;":"𝔒","&Ograve":"Ò","&Ograve;":"Ò","&Omacr;":"Ō","&Omega;":"Ω","&Omicron;":"Ο","&Oopf;":"𝕆","&OpenCurlyDoubleQuote;":"“","&OpenCurlyQuote;":"‘","&Or;":"⩔","&Oscr;":"𝒪","&Oslash":"Ø","&Oslash;":"Ø","&Otilde":"Õ","&Otilde;":"Õ","&Otimes;":"⨷","&Ouml":"Ö","&Ouml;":"Ö","&OverBar;":"‾","&OverBrace;":"⏞","&OverBracket;":"⎴","&OverParenthesis;":"⏜","&PartialD;":"∂","&Pcy;":"П","&Pfr;":"𝔓","&Phi;":"Φ","&Pi;":"Π","&PlusMinus;":"±","&Poincareplane;":"ℌ","&Popf;":"ℙ","&Pr;":"⪻","&Precedes;":"≺","&PrecedesEqual;":"⪯","&PrecedesSlantEqual;":"≼","&PrecedesTilde;":"≾","&Prime;":"″","&Product;":"∏","&Proportion;":"∷","&Proportional;":"∝","&Pscr;":"𝒫","&Psi;":"Ψ","&QUOT":'"',"&QUOT;":'"',"&Qfr;":"𝔔","&Qopf;":"ℚ","&Qscr;":"𝒬","&RBarr;":"⤐","&REG":"®","&REG;":"®","&Racute;":"Ŕ","&Rang;":"⟫","&Rarr;":"↠","&Rarrtl;":"⤖","&Rcaron;":"Ř","&Rcedil;":"Ŗ","&Rcy;":"Р","&Re;":"ℜ","&ReverseElement;":"∋","&ReverseEquilibrium;":"⇋","&ReverseUpEquilibrium;":"⥯","&Rfr;":"ℜ","&Rho;":"Ρ","&RightAngleBracket;":"⟩","&RightArrow;":"→","&RightArrowBar;":"⇥","&RightArrowLeftArrow;":"⇄","&RightCeiling;":"⌉","&RightDoubleBracket;":"⟧","&RightDownTeeVector;":"⥝","&RightDownVector;":"⇂","&RightDownVectorBar;":"⥕","&RightFloor;":"⌋","&RightTee;":"⊢","&RightTeeArrow;":"↦","&RightTeeVector;":"⥛","&RightTriangle;":"⊳","&RightTriangleBar;":"⧐","&RightTriangleEqual;":"⊵","&RightUpDownVector;":"⥏","&RightUpTeeVector;":"⥜","&RightUpVector;":"↾","&RightUpVectorBar;":"⥔","&RightVector;":"⇀","&RightVectorBar;":"⥓","&Rightarrow;":"⇒","&Ropf;":"ℝ","&RoundImplies;":"⥰","&Rrightarrow;":"⇛","&Rscr;":"ℛ","&Rsh;":"↱","&RuleDelayed;":"⧴","&SHCHcy;":"Щ","&SHcy;":"Ш","&SOFTcy;":"Ь","&Sacute;":"Ś","&Sc;":"⪼","&Scaron;":"Š","&Scedil;":"Ş","&Scirc;":"Ŝ","&Scy;":"С","&Sfr;":"𝔖","&ShortDownArrow;":"↓","&ShortLeftArrow;":"←","&ShortRightArrow;":"→","&ShortUpArrow;":"↑","&Sigma;":"Σ","&SmallCircle;":"∘","&Sopf;":"𝕊","&Sqrt;":"√","&Square;":"□","&SquareIntersection;":"⊓","&SquareSubset;":"⊏","&SquareSubsetEqual;":"⊑","&SquareSuperset;":"⊐","&SquareSupersetEqual;":"⊒","&SquareUnion;":"⊔","&Sscr;":"𝒮","&Star;":"⋆","&Sub;":"⋐","&Subset;":"⋐","&SubsetEqual;":"⊆","&Succeeds;":"≻","&SucceedsEqual;":"⪰","&SucceedsSlantEqual;":"≽","&SucceedsTilde;":"≿","&SuchThat;":"∋","&Sum;":"∑","&Sup;":"⋑","&Superset;":"⊃","&SupersetEqual;":"⊇","&Supset;":"⋑","&THORN":"Þ","&THORN;":"Þ","&TRADE;":"™","&TSHcy;":"Ћ","&TScy;":"Ц","&Tab;":"\t","&Tau;":"Τ","&Tcaron;":"Ť","&Tcedil;":"Ţ","&Tcy;":"Т","&Tfr;":"𝔗","&Therefore;":"∴","&Theta;":"Θ","&ThickSpace;":"  ","&ThinSpace;":" ","&Tilde;":"∼","&TildeEqual;":"≃","&TildeFullEqual;":"≅","&TildeTilde;":"≈","&Topf;":"𝕋","&TripleDot;":"⃛","&Tscr;":"𝒯","&Tstrok;":"Ŧ","&Uacute":"Ú","&Uacute;":"Ú","&Uarr;":"↟","&Uarrocir;":"⥉","&Ubrcy;":"Ў","&Ubreve;":"Ŭ","&Ucirc":"Û","&Ucirc;":"Û","&Ucy;":"У","&Udblac;":"Ű","&Ufr;":"𝔘","&Ugrave":"Ù","&Ugrave;":"Ù","&Umacr;":"Ū","&UnderBar;":"_","&UnderBrace;":"⏟","&UnderBracket;":"⎵","&UnderParenthesis;":"⏝","&Union;":"⋃","&UnionPlus;":"⊎","&Uogon;":"Ų","&Uopf;":"𝕌","&UpArrow;":"↑","&UpArrowBar;":"⤒","&UpArrowDownArrow;":"⇅","&UpDownArrow;":"↕","&UpEquilibrium;":"⥮","&UpTee;":"⊥","&UpTeeArrow;":"↥","&Uparrow;":"⇑","&Updownarrow;":"⇕","&UpperLeftArrow;":"↖","&UpperRightArrow;":"↗","&Upsi;":"ϒ","&Upsilon;":"Υ","&Uring;":"Ů","&Uscr;":"𝒰","&Utilde;":"Ũ","&Uuml":"Ü","&Uuml;":"Ü","&VDash;":"⊫","&Vbar;":"⫫","&Vcy;":"В","&Vdash;":"⊩","&Vdashl;":"⫦","&Vee;":"⋁","&Verbar;":"‖","&Vert;":"‖","&VerticalBar;":"∣","&VerticalLine;":"|","&VerticalSeparator;":"❘","&VerticalTilde;":"≀","&VeryThinSpace;":" ","&Vfr;":"𝔙","&Vopf;":"𝕍","&Vscr;":"𝒱","&Vvdash;":"⊪","&Wcirc;":"Ŵ","&Wedge;":"⋀","&Wfr;":"𝔚","&Wopf;":"𝕎","&Wscr;":"𝒲","&Xfr;":"𝔛","&Xi;":"Ξ","&Xopf;":"𝕏","&Xscr;":"𝒳","&YAcy;":"Я","&YIcy;":"Ї","&YUcy;":"Ю","&Yacute":"Ý","&Yacute;":"Ý","&Ycirc;":"Ŷ","&Ycy;":"Ы","&Yfr;":"𝔜","&Yopf;":"𝕐","&Yscr;":"𝒴","&Yuml;":"Ÿ","&ZHcy;":"Ж","&Zacute;":"Ź","&Zcaron;":"Ž","&Zcy;":"З","&Zdot;":"Ż","&ZeroWidthSpace;":"​","&Zeta;":"Ζ","&Zfr;":"ℨ","&Zopf;":"ℤ","&Zscr;":"𝒵","&aacute":"á","&aacute;":"á","&abreve;":"ă","&ac;":"∾","&acE;":"∾̳","&acd;":"∿","&acirc":"â","&acirc;":"â","&acute":"´","&acute;":"´","&acy;":"а","&aelig":"æ","&aelig;":"æ","&af;":"⁡","&afr;":"𝔞","&agrave":"à","&agrave;":"à","&alefsym;":"ℵ","&aleph;":"ℵ","&alpha;":"α","&amacr;":"ā","&amalg;":"⨿","&amp":"&","&amp;":"&","&and;":"∧","&andand;":"⩕","&andd;":"⩜","&andslope;":"⩘","&andv;":"⩚","&ang;":"∠","&ange;":"⦤","&angle;":"∠","&angmsd;":"∡","&angmsdaa;":"⦨","&angmsdab;":"⦩","&angmsdac;":"⦪","&angmsdad;":"⦫","&angmsdae;":"⦬","&angmsdaf;":"⦭","&angmsdag;":"⦮","&angmsdah;":"⦯","&angrt;":"∟","&angrtvb;":"⊾","&angrtvbd;":"⦝","&angsph;":"∢","&angst;":"Å","&angzarr;":"⍼","&aogon;":"ą","&aopf;":"𝕒","&ap;":"≈","&apE;":"⩰","&apacir;":"⩯","&ape;":"≊","&apid;":"≋","&apos;":"'","&approx;":"≈","&approxeq;":"≊","&aring":"å","&aring;":"å","&ascr;":"𝒶","&ast;":"*","&asymp;":"≈","&asympeq;":"≍","&atilde":"ã","&atilde;":"ã","&auml":"ä","&auml;":"ä","&awconint;":"∳","&awint;":"⨑","&bNot;":"⫭","&backcong;":"≌","&backepsilon;":"϶","&backprime;":"‵","&backsim;":"∽","&backsimeq;":"⋍","&barvee;":"⊽","&barwed;":"⌅","&barwedge;":"⌅","&bbrk;":"⎵","&bbrktbrk;":"⎶","&bcong;":"≌","&bcy;":"б","&bdquo;":"„","&becaus;":"∵","&because;":"∵","&bemptyv;":"⦰","&bepsi;":"϶","&bernou;":"ℬ","&beta;":"β","&beth;":"ℶ","&between;":"≬","&bfr;":"𝔟","&bigcap;":"⋂","&bigcirc;":"◯","&bigcup;":"⋃","&bigodot;":"⨀","&bigoplus;":"⨁","&bigotimes;":"⨂","&bigsqcup;":"⨆","&bigstar;":"★","&bigtriangledown;":"▽","&bigtriangleup;":"△","&biguplus;":"⨄","&bigvee;":"⋁","&bigwedge;":"⋀","&bkarow;":"⤍","&blacklozenge;":"⧫","&blacksquare;":"▪","&blacktriangle;":"▴","&blacktriangledown;":"▾","&blacktriangleleft;":"◂","&blacktriangleright;":"▸","&blank;":"␣","&blk12;":"▒","&blk14;":"░","&blk34;":"▓","&block;":"█","&bne;":"=⃥","&bnequiv;":"≡⃥","&bnot;":"⌐","&bopf;":"𝕓","&bot;":"⊥","&bottom;":"⊥","&bowtie;":"⋈","&boxDL;":"╗","&boxDR;":"╔","&boxDl;":"╖","&boxDr;":"╓","&boxH;":"═","&boxHD;":"╦","&boxHU;":"╩","&boxHd;":"╤","&boxHu;":"╧","&boxUL;":"╝","&boxUR;":"╚","&boxUl;":"╜","&boxUr;":"╙","&boxV;":"║","&boxVH;":"╬","&boxVL;":"╣","&boxVR;":"╠","&boxVh;":"╫","&boxVl;":"╢","&boxVr;":"╟","&boxbox;":"⧉","&boxdL;":"╕","&boxdR;":"╒","&boxdl;":"┐","&boxdr;":"┌","&boxh;":"─","&boxhD;":"╥","&boxhU;":"╨","&boxhd;":"┬","&boxhu;":"┴","&boxminus;":"⊟","&boxplus;":"⊞","&boxtimes;":"⊠","&boxuL;":"╛","&boxuR;":"╘","&boxul;":"┘","&boxur;":"└","&boxv;":"│","&boxvH;":"╪","&boxvL;":"╡","&boxvR;":"╞","&boxvh;":"┼","&boxvl;":"┤","&boxvr;":"├","&bprime;":"‵","&breve;":"˘","&brvbar":"¦","&brvbar;":"¦","&bscr;":"𝒷","&bsemi;":"⁏","&bsim;":"∽","&bsime;":"⋍","&bsol;":"\\","&bsolb;":"⧅","&bsolhsub;":"⟈","&bull;":"•","&bullet;":"•","&bump;":"≎","&bumpE;":"⪮","&bumpe;":"≏","&bumpeq;":"≏","&cacute;":"ć","&cap;":"∩","&capand;":"⩄","&capbrcup;":"⩉","&capcap;":"⩋","&capcup;":"⩇","&capdot;":"⩀","&caps;":"∩︀","&caret;":"⁁","&caron;":"ˇ","&ccaps;":"⩍","&ccaron;":"č","&ccedil":"ç","&ccedil;":"ç","&ccirc;":"ĉ","&ccups;":"⩌","&ccupssm;":"⩐","&cdot;":"ċ","&cedil":"¸","&cedil;":"¸","&cemptyv;":"⦲","&cent":"¢","&cent;":"¢","&centerdot;":"·","&cfr;":"𝔠","&chcy;":"ч","&check;":"✓","&checkmark;":"✓","&chi;":"χ","&cir;":"○","&cirE;":"⧃","&circ;":"ˆ","&circeq;":"≗","&circlearrowleft;":"↺","&circlearrowright;":"↻","&circledR;":"®","&circledS;":"Ⓢ","&circledast;":"⊛","&circledcirc;":"⊚","&circleddash;":"⊝","&cire;":"≗","&cirfnint;":"⨐","&cirmid;":"⫯","&cirscir;":"⧂","&clubs;":"♣","&clubsuit;":"♣","&colon;":":","&colone;":"≔","&coloneq;":"≔","&comma;":",","&commat;":"@","&comp;":"∁","&compfn;":"∘","&complement;":"∁","&complexes;":"ℂ","&cong;":"≅","&congdot;":"⩭","&conint;":"∮","&copf;":"𝕔","&coprod;":"∐","&copy":"©","&copy;":"©","&copysr;":"℗","&crarr;":"↵","&cross;":"✗","&cscr;":"𝒸","&csub;":"⫏","&csube;":"⫑","&csup;":"⫐","&csupe;":"⫒","&ctdot;":"⋯","&cudarrl;":"⤸","&cudarrr;":"⤵","&cuepr;":"⋞","&cuesc;":"⋟","&cularr;":"↶","&cularrp;":"⤽","&cup;":"∪","&cupbrcap;":"⩈","&cupcap;":"⩆","&cupcup;":"⩊","&cupdot;":"⊍","&cupor;":"⩅","&cups;":"∪︀","&curarr;":"↷","&curarrm;":"⤼","&curlyeqprec;":"⋞","&curlyeqsucc;":"⋟","&curlyvee;":"⋎","&curlywedge;":"⋏","&curren":"¤","&curren;":"¤","&curvearrowleft;":"↶","&curvearrowright;":"↷","&cuvee;":"⋎","&cuwed;":"⋏","&cwconint;":"∲","&cwint;":"∱","&cylcty;":"⌭","&dArr;":"⇓","&dHar;":"⥥","&dagger;":"†","&daleth;":"ℸ","&darr;":"↓","&dash;":"‐","&dashv;":"⊣","&dbkarow;":"⤏","&dblac;":"˝","&dcaron;":"ď","&dcy;":"д","&dd;":"ⅆ","&ddagger;":"‡","&ddarr;":"⇊","&ddotseq;":"⩷","&deg":"°","&deg;":"°","&delta;":"δ","&demptyv;":"⦱","&dfisht;":"⥿","&dfr;":"𝔡","&dharl;":"⇃","&dharr;":"⇂","&diam;":"⋄","&diamond;":"⋄","&diamondsuit;":"♦","&diams;":"♦","&die;":"¨","&digamma;":"ϝ","&disin;":"⋲","&div;":"÷","&divide":"÷","&divide;":"÷","&divideontimes;":"⋇","&divonx;":"⋇","&djcy;":"ђ","&dlcorn;":"⌞","&dlcrop;":"⌍","&dollar;":"$","&dopf;":"𝕕","&dot;":"˙","&doteq;":"≐","&doteqdot;":"≑","&dotminus;":"∸","&dotplus;":"∔","&dotsquare;":"⊡","&doublebarwedge;":"⌆","&downarrow;":"↓","&downdownarrows;":"⇊","&downharpoonleft;":"⇃","&downharpoonright;":"⇂","&drbkarow;":"⤐","&drcorn;":"⌟","&drcrop;":"⌌","&dscr;":"𝒹","&dscy;":"ѕ","&dsol;":"⧶","&dstrok;":"đ","&dtdot;":"⋱","&dtri;":"▿","&dtrif;":"▾","&duarr;":"⇵","&duhar;":"⥯","&dwangle;":"⦦","&dzcy;":"џ","&dzigrarr;":"⟿","&eDDot;":"⩷","&eDot;":"≑","&eacute":"é","&eacute;":"é","&easter;":"⩮","&ecaron;":"ě","&ecir;":"≖","&ecirc":"ê","&ecirc;":"ê","&ecolon;":"≕","&ecy;":"э","&edot;":"ė","&ee;":"ⅇ","&efDot;":"≒","&efr;":"𝔢","&eg;":"⪚","&egrave":"è","&egrave;":"è","&egs;":"⪖","&egsdot;":"⪘","&el;":"⪙","&elinters;":"⏧","&ell;":"ℓ","&els;":"⪕","&elsdot;":"⪗","&emacr;":"ē","&empty;":"∅","&emptyset;":"∅","&emptyv;":"∅","&emsp13;":" ","&emsp14;":" ","&emsp;":" ","&eng;":"ŋ","&ensp;":" ","&eogon;":"ę","&eopf;":"𝕖","&epar;":"⋕","&eparsl;":"⧣","&eplus;":"⩱","&epsi;":"ε","&epsilon;":"ε","&epsiv;":"ϵ","&eqcirc;":"≖","&eqcolon;":"≕","&eqsim;":"≂","&eqslantgtr;":"⪖","&eqslantless;":"⪕","&equals;":"=","&equest;":"≟","&equiv;":"≡","&equivDD;":"⩸","&eqvparsl;":"⧥","&erDot;":"≓","&erarr;":"⥱","&escr;":"ℯ","&esdot;":"≐","&esim;":"≂","&eta;":"η","&eth":"ð","&eth;":"ð","&euml":"ë","&euml;":"ë","&euro;":"€","&excl;":"!","&exist;":"∃","&expectation;":"ℰ","&exponentiale;":"ⅇ","&fallingdotseq;":"≒","&fcy;":"ф","&female;":"♀","&ffilig;":"ﬃ","&fflig;":"ﬀ","&ffllig;":"ﬄ","&ffr;":"𝔣","&filig;":"ﬁ","&fjlig;":"fj","&flat;":"♭","&fllig;":"ﬂ","&fltns;":"▱","&fnof;":"ƒ","&fopf;":"𝕗","&forall;":"∀","&fork;":"⋔","&forkv;":"⫙","&fpartint;":"⨍","&frac12":"½","&frac12;":"½","&frac13;":"⅓","&frac14":"¼","&frac14;":"¼","&frac15;":"⅕","&frac16;":"⅙","&frac18;":"⅛","&frac23;":"⅔","&frac25;":"⅖","&frac34":"¾","&frac34;":"¾","&frac35;":"⅗","&frac38;":"⅜","&frac45;":"⅘","&frac56;":"⅚","&frac58;":"⅝","&frac78;":"⅞","&frasl;":"⁄","&frown;":"⌢","&fscr;":"𝒻","&gE;":"≧","&gEl;":"⪌","&gacute;":"ǵ","&gamma;":"γ","&gammad;":"ϝ","&gap;":"⪆","&gbreve;":"ğ","&gcirc;":"ĝ","&gcy;":"г","&gdot;":"ġ","&ge;":"≥","&gel;":"⋛","&geq;":"≥","&geqq;":"≧","&geqslant;":"⩾","&ges;":"⩾","&gescc;":"⪩","&gesdot;":"⪀","&gesdoto;":"⪂","&gesdotol;":"⪄","&gesl;":"⋛︀","&gesles;":"⪔","&gfr;":"𝔤","&gg;":"≫","&ggg;":"⋙","&gimel;":"ℷ","&gjcy;":"ѓ","&gl;":"≷","&glE;":"⪒","&gla;":"⪥","&glj;":"⪤","&gnE;":"≩","&gnap;":"⪊","&gnapprox;":"⪊","&gne;":"⪈","&gneq;":"⪈","&gneqq;":"≩","&gnsim;":"⋧","&gopf;":"𝕘","&grave;":"`","&gscr;":"ℊ","&gsim;":"≳","&gsime;":"⪎","&gsiml;":"⪐","&gt":">","&gt;":">","&gtcc;":"⪧","&gtcir;":"⩺","&gtdot;":"⋗","&gtlPar;":"⦕","&gtquest;":"⩼","&gtrapprox;":"⪆","&gtrarr;":"⥸","&gtrdot;":"⋗","&gtreqless;":"⋛","&gtreqqless;":"⪌","&gtrless;":"≷","&gtrsim;":"≳","&gvertneqq;":"≩︀","&gvnE;":"≩︀","&hArr;":"⇔","&hairsp;":" ","&half;":"½","&hamilt;":"ℋ","&hardcy;":"ъ","&harr;":"↔","&harrcir;":"⥈","&harrw;":"↭","&hbar;":"ℏ","&hcirc;":"ĥ","&hearts;":"♥","&heartsuit;":"♥","&hellip;":"…","&hercon;":"⊹","&hfr;":"𝔥","&hksearow;":"⤥","&hkswarow;":"⤦","&hoarr;":"⇿","&homtht;":"∻","&hookleftarrow;":"↩","&hookrightarrow;":"↪","&hopf;":"𝕙","&horbar;":"―","&hscr;":"𝒽","&hslash;":"ℏ","&hstrok;":"ħ","&hybull;":"⁃","&hyphen;":"‐","&iacute":"í","&iacute;":"í","&ic;":"⁣","&icirc":"î","&icirc;":"î","&icy;":"и","&iecy;":"е","&iexcl":"¡","&iexcl;":"¡","&iff;":"⇔","&ifr;":"𝔦","&igrave":"ì","&igrave;":"ì","&ii;":"ⅈ","&iiiint;":"⨌","&iiint;":"∭","&iinfin;":"⧜","&iiota;":"℩","&ijlig;":"ĳ","&imacr;":"ī","&image;":"ℑ","&imagline;":"ℐ","&imagpart;":"ℑ","&imath;":"ı","&imof;":"⊷","&imped;":"Ƶ","&in;":"∈","&incare;":"℅","&infin;":"∞","&infintie;":"⧝","&inodot;":"ı","&int;":"∫","&intcal;":"⊺","&integers;":"ℤ","&intercal;":"⊺","&intlarhk;":"⨗","&intprod;":"⨼","&iocy;":"ё","&iogon;":"į","&iopf;":"𝕚","&iota;":"ι","&iprod;":"⨼","&iquest":"¿","&iquest;":"¿","&iscr;":"𝒾","&isin;":"∈","&isinE;":"⋹","&isindot;":"⋵","&isins;":"⋴","&isinsv;":"⋳","&isinv;":"∈","&it;":"⁢","&itilde;":"ĩ","&iukcy;":"і","&iuml":"ï","&iuml;":"ï","&jcirc;":"ĵ","&jcy;":"й","&jfr;":"𝔧","&jmath;":"ȷ","&jopf;":"𝕛","&jscr;":"𝒿","&jsercy;":"ј","&jukcy;":"є","&kappa;":"κ","&kappav;":"ϰ","&kcedil;":"ķ","&kcy;":"к","&kfr;":"𝔨","&kgreen;":"ĸ","&khcy;":"х","&kjcy;":"ќ","&kopf;":"𝕜","&kscr;":"𝓀","&lAarr;":"⇚","&lArr;":"⇐","&lAtail;":"⤛","&lBarr;":"⤎","&lE;":"≦","&lEg;":"⪋","&lHar;":"⥢","&lacute;":"ĺ","&laemptyv;":"⦴","&lagran;":"ℒ","&lambda;":"λ","&lang;":"⟨","&langd;":"⦑","&langle;":"⟨","&lap;":"⪅","&laquo":"«","&laquo;":"«","&larr;":"←","&larrb;":"⇤","&larrbfs;":"⤟","&larrfs;":"⤝","&larrhk;":"↩","&larrlp;":"↫","&larrpl;":"⤹","&larrsim;":"⥳","&larrtl;":"↢","&lat;":"⪫","&latail;":"⤙","&late;":"⪭","&lates;":"⪭︀","&lbarr;":"⤌","&lbbrk;":"❲","&lbrace;":"{","&lbrack;":"[","&lbrke;":"⦋","&lbrksld;":"⦏","&lbrkslu;":"⦍","&lcaron;":"ľ","&lcedil;":"ļ","&lceil;":"⌈","&lcub;":"{","&lcy;":"л","&ldca;":"⤶","&ldquo;":"“","&ldquor;":"„","&ldrdhar;":"⥧","&ldrushar;":"⥋","&ldsh;":"↲","&le;":"≤","&leftarrow;":"←","&leftarrowtail;":"↢","&leftharpoondown;":"↽","&leftharpoonup;":"↼","&leftleftarrows;":"⇇","&leftrightarrow;":"↔","&leftrightarrows;":"⇆","&leftrightharpoons;":"⇋","&leftrightsquigarrow;":"↭","&leftthreetimes;":"⋋","&leg;":"⋚","&leq;":"≤","&leqq;":"≦","&leqslant;":"⩽","&les;":"⩽","&lescc;":"⪨","&lesdot;":"⩿","&lesdoto;":"⪁","&lesdotor;":"⪃","&lesg;":"⋚︀","&lesges;":"⪓","&lessapprox;":"⪅","&lessdot;":"⋖","&lesseqgtr;":"⋚","&lesseqqgtr;":"⪋","&lessgtr;":"≶","&lesssim;":"≲","&lfisht;":"⥼","&lfloor;":"⌊","&lfr;":"𝔩","&lg;":"≶","&lgE;":"⪑","&lhard;":"↽","&lharu;":"↼","&lharul;":"⥪","&lhblk;":"▄","&ljcy;":"љ","&ll;":"≪","&llarr;":"⇇","&llcorner;":"⌞","&llhard;":"⥫","&lltri;":"◺","&lmidot;":"ŀ","&lmoust;":"⎰","&lmoustache;":"⎰","&lnE;":"≨","&lnap;":"⪉","&lnapprox;":"⪉","&lne;":"⪇","&lneq;":"⪇","&lneqq;":"≨","&lnsim;":"⋦","&loang;":"⟬","&loarr;":"⇽","&lobrk;":"⟦","&longleftarrow;":"⟵","&longleftrightarrow;":"⟷","&longmapsto;":"⟼","&longrightarrow;":"⟶","&looparrowleft;":"↫","&looparrowright;":"↬","&lopar;":"⦅","&lopf;":"𝕝","&loplus;":"⨭","&lotimes;":"⨴","&lowast;":"∗","&lowbar;":"_","&loz;":"◊","&lozenge;":"◊","&lozf;":"⧫","&lpar;":"(","&lparlt;":"⦓","&lrarr;":"⇆","&lrcorner;":"⌟","&lrhar;":"⇋","&lrhard;":"⥭","&lrm;":"‎","&lrtri;":"⊿","&lsaquo;":"‹","&lscr;":"𝓁","&lsh;":"↰","&lsim;":"≲","&lsime;":"⪍","&lsimg;":"⪏","&lsqb;":"[","&lsquo;":"‘","&lsquor;":"‚","&lstrok;":"ł","&lt":"<","&lt;":"<","&ltcc;":"⪦","&ltcir;":"⩹","&ltdot;":"⋖","&lthree;":"⋋","&ltimes;":"⋉","&ltlarr;":"⥶","&ltquest;":"⩻","&ltrPar;":"⦖","&ltri;":"◃","&ltrie;":"⊴","&ltrif;":"◂","&lurdshar;":"⥊","&luruhar;":"⥦","&lvertneqq;":"≨︀","&lvnE;":"≨︀","&mDDot;":"∺","&macr":"¯","&macr;":"¯","&male;":"♂","&malt;":"✠","&maltese;":"✠","&map;":"↦","&mapsto;":"↦","&mapstodown;":"↧","&mapstoleft;":"↤","&mapstoup;":"↥","&marker;":"▮","&mcomma;":"⨩","&mcy;":"м","&mdash;":"—","&measuredangle;":"∡","&mfr;":"𝔪","&mho;":"℧","&micro":"µ","&micro;":"µ","&mid;":"∣","&midast;":"*","&midcir;":"⫰","&middot":"·","&middot;":"·","&minus;":"−","&minusb;":"⊟","&minusd;":"∸","&minusdu;":"⨪","&mlcp;":"⫛","&mldr;":"…","&mnplus;":"∓","&models;":"⊧","&mopf;":"𝕞","&mp;":"∓","&mscr;":"𝓂","&mstpos;":"∾","&mu;":"μ","&multimap;":"⊸","&mumap;":"⊸","&nGg;":"⋙̸","&nGt;":"≫⃒","&nGtv;":"≫̸","&nLeftarrow;":"⇍","&nLeftrightarrow;":"⇎","&nLl;":"⋘̸","&nLt;":"≪⃒","&nLtv;":"≪̸","&nRightarrow;":"⇏","&nVDash;":"⊯","&nVdash;":"⊮","&nabla;":"∇","&nacute;":"ń","&nang;":"∠⃒","&nap;":"≉","&napE;":"⩰̸","&napid;":"≋̸","&napos;":"ŉ","&napprox;":"≉","&natur;":"♮","&natural;":"♮","&naturals;":"ℕ","&nbsp":" ","&nbsp;":" ","&nbump;":"≎̸","&nbumpe;":"≏̸","&ncap;":"⩃","&ncaron;":"ň","&ncedil;":"ņ","&ncong;":"≇","&ncongdot;":"⩭̸","&ncup;":"⩂","&ncy;":"н","&ndash;":"–","&ne;":"≠","&neArr;":"⇗","&nearhk;":"⤤","&nearr;":"↗","&nearrow;":"↗","&nedot;":"≐̸","&nequiv;":"≢","&nesear;":"⤨","&nesim;":"≂̸","&nexist;":"∄","&nexists;":"∄","&nfr;":"𝔫","&ngE;":"≧̸","&nge;":"≱","&ngeq;":"≱","&ngeqq;":"≧̸","&ngeqslant;":"⩾̸","&nges;":"⩾̸","&ngsim;":"≵","&ngt;":"≯","&ngtr;":"≯","&nhArr;":"⇎","&nharr;":"↮","&nhpar;":"⫲","&ni;":"∋","&nis;":"⋼","&nisd;":"⋺","&niv;":"∋","&njcy;":"њ","&nlArr;":"⇍","&nlE;":"≦̸","&nlarr;":"↚","&nldr;":"‥","&nle;":"≰","&nleftarrow;":"↚","&nleftrightarrow;":"↮","&nleq;":"≰","&nleqq;":"≦̸","&nleqslant;":"⩽̸","&nles;":"⩽̸","&nless;":"≮","&nlsim;":"≴","&nlt;":"≮","&nltri;":"⋪","&nltrie;":"⋬","&nmid;":"∤","&nopf;":"𝕟","&not":"¬","&not;":"¬","&notin;":"∉","&notinE;":"⋹̸","&notindot;":"⋵̸","&notinva;":"∉","&notinvb;":"⋷","&notinvc;":"⋶","&notni;":"∌","&notniva;":"∌","&notnivb;":"⋾","&notnivc;":"⋽","&npar;":"∦","&nparallel;":"∦","&nparsl;":"⫽⃥","&npart;":"∂̸","&npolint;":"⨔","&npr;":"⊀","&nprcue;":"⋠","&npre;":"⪯̸","&nprec;":"⊀","&npreceq;":"⪯̸","&nrArr;":"⇏","&nrarr;":"↛","&nrarrc;":"⤳̸","&nrarrw;":"↝̸","&nrightarrow;":"↛","&nrtri;":"⋫","&nrtrie;":"⋭","&nsc;":"⊁","&nsccue;":"⋡","&nsce;":"⪰̸","&nscr;":"𝓃","&nshortmid;":"∤","&nshortparallel;":"∦","&nsim;":"≁","&nsime;":"≄","&nsimeq;":"≄","&nsmid;":"∤","&nspar;":"∦","&nsqsube;":"⋢","&nsqsupe;":"⋣","&nsub;":"⊄","&nsubE;":"⫅̸","&nsube;":"⊈","&nsubset;":"⊂⃒","&nsubseteq;":"⊈","&nsubseteqq;":"⫅̸","&nsucc;":"⊁","&nsucceq;":"⪰̸","&nsup;":"⊅","&nsupE;":"⫆̸","&nsupe;":"⊉","&nsupset;":"⊃⃒","&nsupseteq;":"⊉","&nsupseteqq;":"⫆̸","&ntgl;":"≹","&ntilde":"ñ","&ntilde;":"ñ","&ntlg;":"≸","&ntriangleleft;":"⋪","&ntrianglelefteq;":"⋬","&ntriangleright;":"⋫","&ntrianglerighteq;":"⋭","&nu;":"ν","&num;":"#","&numero;":"№","&numsp;":" ","&nvDash;":"⊭","&nvHarr;":"⤄","&nvap;":"≍⃒","&nvdash;":"⊬","&nvge;":"≥⃒","&nvgt;":">⃒","&nvinfin;":"⧞","&nvlArr;":"⤂","&nvle;":"≤⃒","&nvlt;":"<⃒","&nvltrie;":"⊴⃒","&nvrArr;":"⤃","&nvrtrie;":"⊵⃒","&nvsim;":"∼⃒","&nwArr;":"⇖","&nwarhk;":"⤣","&nwarr;":"↖","&nwarrow;":"↖","&nwnear;":"⤧","&oS;":"Ⓢ","&oacute":"ó","&oacute;":"ó","&oast;":"⊛","&ocir;":"⊚","&ocirc":"ô","&ocirc;":"ô","&ocy;":"о","&odash;":"⊝","&odblac;":"ő","&odiv;":"⨸","&odot;":"⊙","&odsold;":"⦼","&oelig;":"œ","&ofcir;":"⦿","&ofr;":"𝔬","&ogon;":"˛","&ograve":"ò","&ograve;":"ò","&ogt;":"⧁","&ohbar;":"⦵","&ohm;":"Ω","&oint;":"∮","&olarr;":"↺","&olcir;":"⦾","&olcross;":"⦻","&oline;":"‾","&olt;":"⧀","&omacr;":"ō","&omega;":"ω","&omicron;":"ο","&omid;":"⦶","&ominus;":"⊖","&oopf;":"𝕠","&opar;":"⦷","&operp;":"⦹","&oplus;":"⊕","&or;":"∨","&orarr;":"↻","&ord;":"⩝","&order;":"ℴ","&orderof;":"ℴ","&ordf":"ª","&ordf;":"ª","&ordm":"º","&ordm;":"º","&origof;":"⊶","&oror;":"⩖","&orslope;":"⩗","&orv;":"⩛","&oscr;":"ℴ","&oslash":"ø","&oslash;":"ø","&osol;":"⊘","&otilde":"õ","&otilde;":"õ","&otimes;":"⊗","&otimesas;":"⨶","&ouml":"ö","&ouml;":"ö","&ovbar;":"⌽","&par;":"∥","&para":"¶","&para;":"¶","&parallel;":"∥","&parsim;":"⫳","&parsl;":"⫽","&part;":"∂","&pcy;":"п","&percnt;":"%","&period;":".","&permil;":"‰","&perp;":"⊥","&pertenk;":"‱","&pfr;":"𝔭","&phi;":"φ","&phiv;":"ϕ","&phmmat;":"ℳ","&phone;":"☎","&pi;":"π","&pitchfork;":"⋔","&piv;":"ϖ","&planck;":"ℏ","&planckh;":"ℎ","&plankv;":"ℏ","&plus;":"+","&plusacir;":"⨣","&plusb;":"⊞","&pluscir;":"⨢","&plusdo;":"∔","&plusdu;":"⨥","&pluse;":"⩲","&plusmn":"±","&plusmn;":"±","&plussim;":"⨦","&plustwo;":"⨧","&pm;":"±","&pointint;":"⨕","&popf;":"𝕡","&pound":"£","&pound;":"£","&pr;":"≺","&prE;":"⪳","&prap;":"⪷","&prcue;":"≼","&pre;":"⪯","&prec;":"≺","&precapprox;":"⪷","&preccurlyeq;":"≼","&preceq;":"⪯","&precnapprox;":"⪹","&precneqq;":"⪵","&precnsim;":"⋨","&precsim;":"≾","&prime;":"′","&primes;":"ℙ","&prnE;":"⪵","&prnap;":"⪹","&prnsim;":"⋨","&prod;":"∏","&profalar;":"⌮","&profline;":"⌒","&profsurf;":"⌓","&prop;":"∝","&propto;":"∝","&prsim;":"≾","&prurel;":"⊰","&pscr;":"𝓅","&psi;":"ψ","&puncsp;":" ","&qfr;":"𝔮","&qint;":"⨌","&qopf;":"𝕢","&qprime;":"⁗","&qscr;":"𝓆","&quaternions;":"ℍ","&quatint;":"⨖","&quest;":"?","&questeq;":"≟","&quot":'"',"&quot;":'"',"&rAarr;":"⇛","&rArr;":"⇒","&rAtail;":"⤜","&rBarr;":"⤏","&rHar;":"⥤","&race;":"∽̱","&racute;":"ŕ","&radic;":"√","&raemptyv;":"⦳","&rang;":"⟩","&rangd;":"⦒","&range;":"⦥","&rangle;":"⟩","&raquo":"»","&raquo;":"»","&rarr;":"→","&rarrap;":"⥵","&rarrb;":"⇥","&rarrbfs;":"⤠","&rarrc;":"⤳","&rarrfs;":"⤞","&rarrhk;":"↪","&rarrlp;":"↬","&rarrpl;":"⥅","&rarrsim;":"⥴","&rarrtl;":"↣","&rarrw;":"↝","&ratail;":"⤚","&ratio;":"∶","&rationals;":"ℚ","&rbarr;":"⤍","&rbbrk;":"❳","&rbrace;":"}","&rbrack;":"]","&rbrke;":"⦌","&rbrksld;":"⦎","&rbrkslu;":"⦐","&rcaron;":"ř","&rcedil;":"ŗ","&rceil;":"⌉","&rcub;":"}","&rcy;":"р","&rdca;":"⤷","&rdldhar;":"⥩","&rdquo;":"”","&rdquor;":"”","&rdsh;":"↳","&real;":"ℜ","&realine;":"ℛ","&realpart;":"ℜ","&reals;":"ℝ","&rect;":"▭","&reg":"®","&reg;":"®","&rfisht;":"⥽","&rfloor;":"⌋","&rfr;":"𝔯","&rhard;":"⇁","&rharu;":"⇀","&rharul;":"⥬","&rho;":"ρ","&rhov;":"ϱ","&rightarrow;":"→","&rightarrowtail;":"↣","&rightharpoondown;":"⇁","&rightharpoonup;":"⇀","&rightleftarrows;":"⇄","&rightleftharpoons;":"⇌","&rightrightarrows;":"⇉","&rightsquigarrow;":"↝","&rightthreetimes;":"⋌","&ring;":"˚","&risingdotseq;":"≓","&rlarr;":"⇄","&rlhar;":"⇌","&rlm;":"‏","&rmoust;":"⎱","&rmoustache;":"⎱","&rnmid;":"⫮","&roang;":"⟭","&roarr;":"⇾","&robrk;":"⟧","&ropar;":"⦆","&ropf;":"𝕣","&roplus;":"⨮","&rotimes;":"⨵","&rpar;":")","&rpargt;":"⦔","&rppolint;":"⨒","&rrarr;":"⇉","&rsaquo;":"›","&rscr;":"𝓇","&rsh;":"↱","&rsqb;":"]","&rsquo;":"’","&rsquor;":"’","&rthree;":"⋌","&rtimes;":"⋊","&rtri;":"▹","&rtrie;":"⊵","&rtrif;":"▸","&rtriltri;":"⧎","&ruluhar;":"⥨","&rx;":"℞","&sacute;":"ś","&sbquo;":"‚","&sc;":"≻","&scE;":"⪴","&scap;":"⪸","&scaron;":"š","&sccue;":"≽","&sce;":"⪰","&scedil;":"ş","&scirc;":"ŝ","&scnE;":"⪶","&scnap;":"⪺","&scnsim;":"⋩","&scpolint;":"⨓","&scsim;":"≿","&scy;":"с","&sdot;":"⋅","&sdotb;":"⊡","&sdote;":"⩦","&seArr;":"⇘","&searhk;":"⤥","&searr;":"↘","&searrow;":"↘","&sect":"§","&sect;":"§","&semi;":";","&seswar;":"⤩","&setminus;":"∖","&setmn;":"∖","&sext;":"✶","&sfr;":"𝔰","&sfrown;":"⌢","&sharp;":"♯","&shchcy;":"щ","&shcy;":"ш","&shortmid;":"∣","&shortparallel;":"∥","&shy":"­","&shy;":"­","&sigma;":"σ","&sigmaf;":"ς","&sigmav;":"ς","&sim;":"∼","&simdot;":"⩪","&sime;":"≃","&simeq;":"≃","&simg;":"⪞","&simgE;":"⪠","&siml;":"⪝","&simlE;":"⪟","&simne;":"≆","&simplus;":"⨤","&simrarr;":"⥲","&slarr;":"←","&smallsetminus;":"∖","&smashp;":"⨳","&smeparsl;":"⧤","&smid;":"∣","&smile;":"⌣","&smt;":"⪪","&smte;":"⪬","&smtes;":"⪬︀","&softcy;":"ь","&sol;":"/","&solb;":"⧄","&solbar;":"⌿","&sopf;":"𝕤","&spades;":"♠","&spadesuit;":"♠","&spar;":"∥","&sqcap;":"⊓","&sqcaps;":"⊓︀","&sqcup;":"⊔","&sqcups;":"⊔︀","&sqsub;":"⊏","&sqsube;":"⊑","&sqsubset;":"⊏","&sqsubseteq;":"⊑","&sqsup;":"⊐","&sqsupe;":"⊒","&sqsupset;":"⊐","&sqsupseteq;":"⊒","&squ;":"□","&square;":"□","&squarf;":"▪","&squf;":"▪","&srarr;":"→","&sscr;":"𝓈","&ssetmn;":"∖","&ssmile;":"⌣","&sstarf;":"⋆","&star;":"☆","&starf;":"★","&straightepsilon;":"ϵ","&straightphi;":"ϕ","&strns;":"¯","&sub;":"⊂","&subE;":"⫅","&subdot;":"⪽","&sube;":"⊆","&subedot;":"⫃","&submult;":"⫁","&subnE;":"⫋","&subne;":"⊊","&subplus;":"⪿","&subrarr;":"⥹","&subset;":"⊂","&subseteq;":"⊆","&subseteqq;":"⫅","&subsetneq;":"⊊","&subsetneqq;":"⫋","&subsim;":"⫇","&subsub;":"⫕","&subsup;":"⫓","&succ;":"≻","&succapprox;":"⪸","&succcurlyeq;":"≽","&succeq;":"⪰","&succnapprox;":"⪺","&succneqq;":"⪶","&succnsim;":"⋩","&succsim;":"≿","&sum;":"∑","&sung;":"♪","&sup1":"¹","&sup1;":"¹","&sup2":"²","&sup2;":"²","&sup3":"³","&sup3;":"³","&sup;":"⊃","&supE;":"⫆","&supdot;":"⪾","&supdsub;":"⫘","&supe;":"⊇","&supedot;":"⫄","&suphsol;":"⟉","&suphsub;":"⫗","&suplarr;":"⥻","&supmult;":"⫂","&supnE;":"⫌","&supne;":"⊋","&supplus;":"⫀","&supset;":"⊃","&supseteq;":"⊇","&supseteqq;":"⫆","&supsetneq;":"⊋","&supsetneqq;":"⫌","&supsim;":"⫈","&supsub;":"⫔","&supsup;":"⫖","&swArr;":"⇙","&swarhk;":"⤦","&swarr;":"↙","&swarrow;":"↙","&swnwar;":"⤪","&szlig":"ß","&szlig;":"ß","&target;":"⌖","&tau;":"τ","&tbrk;":"⎴","&tcaron;":"ť","&tcedil;":"ţ","&tcy;":"т","&tdot;":"⃛","&telrec;":"⌕","&tfr;":"𝔱","&there4;":"∴","&therefore;":"∴","&theta;":"θ","&thetasym;":"ϑ","&thetav;":"ϑ","&thickapprox;":"≈","&thicksim;":"∼","&thinsp;":" ","&thkap;":"≈","&thksim;":"∼","&thorn":"þ","&thorn;":"þ","&tilde;":"˜","&times":"×","&times;":"×","&timesb;":"⊠","&timesbar;":"⨱","&timesd;":"⨰","&tint;":"∭","&toea;":"⤨","&top;":"⊤","&topbot;":"⌶","&topcir;":"⫱","&topf;":"𝕥","&topfork;":"⫚","&tosa;":"⤩","&tprime;":"‴","&trade;":"™","&triangle;":"▵","&triangledown;":"▿","&triangleleft;":"◃","&trianglelefteq;":"⊴","&triangleq;":"≜","&triangleright;":"▹","&trianglerighteq;":"⊵","&tridot;":"◬","&trie;":"≜","&triminus;":"⨺","&triplus;":"⨹","&trisb;":"⧍","&tritime;":"⨻","&trpezium;":"⏢","&tscr;":"𝓉","&tscy;":"ц","&tshcy;":"ћ","&tstrok;":"ŧ","&twixt;":"≬","&twoheadleftarrow;":"↞","&twoheadrightarrow;":"↠","&uArr;":"⇑","&uHar;":"⥣","&uacute":"ú","&uacute;":"ú","&uarr;":"↑","&ubrcy;":"ў","&ubreve;":"ŭ","&ucirc":"û","&ucirc;":"û","&ucy;":"у","&udarr;":"⇅","&udblac;":"ű","&udhar;":"⥮","&ufisht;":"⥾","&ufr;":"𝔲","&ugrave":"ù","&ugrave;":"ù","&uharl;":"↿","&uharr;":"↾","&uhblk;":"▀","&ulcorn;":"⌜","&ulcorner;":"⌜","&ulcrop;":"⌏","&ultri;":"◸","&umacr;":"ū","&uml":"¨","&uml;":"¨","&uogon;":"ų","&uopf;":"𝕦","&uparrow;":"↑","&updownarrow;":"↕","&upharpoonleft;":"↿","&upharpoonright;":"↾","&uplus;":"⊎","&upsi;":"υ","&upsih;":"ϒ","&upsilon;":"υ","&upuparrows;":"⇈","&urcorn;":"⌝","&urcorner;":"⌝","&urcrop;":"⌎","&uring;":"ů","&urtri;":"◹","&uscr;":"𝓊","&utdot;":"⋰","&utilde;":"ũ","&utri;":"▵","&utrif;":"▴","&uuarr;":"⇈","&uuml":"ü","&uuml;":"ü","&uwangle;":"⦧","&vArr;":"⇕","&vBar;":"⫨","&vBarv;":"⫩","&vDash;":"⊨","&vangrt;":"⦜","&varepsilon;":"ϵ","&varkappa;":"ϰ","&varnothing;":"∅","&varphi;":"ϕ","&varpi;":"ϖ","&varpropto;":"∝","&varr;":"↕","&varrho;":"ϱ","&varsigma;":"ς","&varsubsetneq;":"⊊︀","&varsubsetneqq;":"⫋︀","&varsupsetneq;":"⊋︀","&varsupsetneqq;":"⫌︀","&vartheta;":"ϑ","&vartriangleleft;":"⊲","&vartriangleright;":"⊳","&vcy;":"в","&vdash;":"⊢","&vee;":"∨","&veebar;":"⊻","&veeeq;":"≚","&vellip;":"⋮","&verbar;":"|","&vert;":"|","&vfr;":"𝔳","&vltri;":"⊲","&vnsub;":"⊂⃒","&vnsup;":"⊃⃒","&vopf;":"𝕧","&vprop;":"∝","&vrtri;":"⊳","&vscr;":"𝓋","&vsubnE;":"⫋︀","&vsubne;":"⊊︀","&vsupnE;":"⫌︀","&vsupne;":"⊋︀","&vzigzag;":"⦚","&wcirc;":"ŵ","&wedbar;":"⩟","&wedge;":"∧","&wedgeq;":"≙","&weierp;":"℘","&wfr;":"𝔴","&wopf;":"𝕨","&wp;":"℘","&wr;":"≀","&wreath;":"≀","&wscr;":"𝓌","&xcap;":"⋂","&xcirc;":"◯","&xcup;":"⋃","&xdtri;":"▽","&xfr;":"𝔵","&xhArr;":"⟺","&xharr;":"⟷","&xi;":"ξ","&xlArr;":"⟸","&xlarr;":"⟵","&xmap;":"⟼","&xnis;":"⋻","&xodot;":"⨀","&xopf;":"𝕩","&xoplus;":"⨁","&xotime;":"⨂","&xrArr;":"⟹","&xrarr;":"⟶","&xscr;":"𝓍","&xsqcup;":"⨆","&xuplus;":"⨄","&xutri;":"△","&xvee;":"⋁","&xwedge;":"⋀","&yacute":"ý","&yacute;":"ý","&yacy;":"я","&ycirc;":"ŷ","&ycy;":"ы","&yen":"¥","&yen;":"¥","&yfr;":"𝔶","&yicy;":"ї","&yopf;":"𝕪","&yscr;":"𝓎","&yucy;":"ю","&yuml":"ÿ","&yuml;":"ÿ","&zacute;":"ź","&zcaron;":"ž","&zcy;":"з","&zdot;":"ż","&zeetrf;":"ℨ","&zeta;":"ζ","&zfr;":"𝔷","&zhcy;":"ж","&zigrarr;":"⇝","&zopf;":"𝕫","&zscr;":"𝓏","&zwj;":"‍","&zwnj;":"‌"},characters:{"Æ":"&AElig;","&":"&amp;","Á":"&Aacute;","Ă":"&Abreve;","Â":"&Acirc;","А":"&Acy;","𝔄":"&Afr;","À":"&Agrave;","Α":"&Alpha;","Ā":"&Amacr;","⩓":"&And;","Ą":"&Aogon;","𝔸":"&Aopf;","⁡":"&af;","Å":"&angst;","𝒜":"&Ascr;","≔":"&coloneq;","Ã":"&Atilde;","Ä":"&Auml;","∖":"&ssetmn;","⫧":"&Barv;","⌆":"&doublebarwedge;","Б":"&Bcy;","∵":"&because;","ℬ":"&bernou;","Β":"&Beta;","𝔅":"&Bfr;","𝔹":"&Bopf;","˘":"&breve;","≎":"&bump;","Ч":"&CHcy;","©":"&copy;","Ć":"&Cacute;","⋒":"&Cap;","ⅅ":"&DD;","ℭ":"&Cfr;","Č":"&Ccaron;","Ç":"&Ccedil;","Ĉ":"&Ccirc;","∰":"&Cconint;","Ċ":"&Cdot;","¸":"&cedil;","·":"&middot;","Χ":"&Chi;","⊙":"&odot;","⊖":"&ominus;","⊕":"&oplus;","⊗":"&otimes;","∲":"&cwconint;","”":"&rdquor;","’":"&rsquor;","∷":"&Proportion;","⩴":"&Colone;","≡":"&equiv;","∯":"&DoubleContourIntegral;","∮":"&oint;","ℂ":"&complexes;","∐":"&coprod;","∳":"&awconint;","⨯":"&Cross;","𝒞":"&Cscr;","⋓":"&Cup;","≍":"&asympeq;","⤑":"&DDotrahd;","Ђ":"&DJcy;","Ѕ":"&DScy;","Џ":"&DZcy;","‡":"&ddagger;","↡":"&Darr;","⫤":"&DoubleLeftTee;","Ď":"&Dcaron;","Д":"&Dcy;","∇":"&nabla;","Δ":"&Delta;","𝔇":"&Dfr;","´":"&acute;","˙":"&dot;","˝":"&dblac;","`":"&grave;","˜":"&tilde;","⋄":"&diamond;","ⅆ":"&dd;","𝔻":"&Dopf;","¨":"&uml;","⃜":"&DotDot;","≐":"&esdot;","⇓":"&dArr;","⇐":"&lArr;","⇔":"&iff;","⟸":"&xlArr;","⟺":"&xhArr;","⟹":"&xrArr;","⇒":"&rArr;","⊨":"&vDash;","⇑":"&uArr;","⇕":"&vArr;","∥":"&spar;","↓":"&downarrow;","⤓":"&DownArrowBar;","⇵":"&duarr;","̑":"&DownBreve;","⥐":"&DownLeftRightVector;","⥞":"&DownLeftTeeVector;","↽":"&lhard;","⥖":"&DownLeftVectorBar;","⥟":"&DownRightTeeVector;","⇁":"&rightharpoondown;","⥗":"&DownRightVectorBar;","⊤":"&top;","↧":"&mapstodown;","𝒟":"&Dscr;","Đ":"&Dstrok;","Ŋ":"&ENG;","Ð":"&ETH;","É":"&Eacute;","Ě":"&Ecaron;","Ê":"&Ecirc;","Э":"&Ecy;","Ė":"&Edot;","𝔈":"&Efr;","È":"&Egrave;","∈":"&isinv;","Ē":"&Emacr;","◻":"&EmptySmallSquare;","▫":"&EmptyVerySmallSquare;","Ę":"&Eogon;","𝔼":"&Eopf;","Ε":"&Epsilon;","⩵":"&Equal;","≂":"&esim;","⇌":"&rlhar;","ℰ":"&expectation;","⩳":"&Esim;","Η":"&Eta;","Ë":"&Euml;","∃":"&exist;","ⅇ":"&exponentiale;","Ф":"&Fcy;","𝔉":"&Ffr;","◼":"&FilledSmallSquare;","▪":"&squf;","𝔽":"&Fopf;","∀":"&forall;","ℱ":"&Fscr;","Ѓ":"&GJcy;",">":"&gt;","Γ":"&Gamma;","Ϝ":"&Gammad;","Ğ":"&Gbreve;","Ģ":"&Gcedil;","Ĝ":"&Gcirc;","Г":"&Gcy;","Ġ":"&Gdot;","𝔊":"&Gfr;","⋙":"&ggg;","𝔾":"&Gopf;","≥":"&geq;","⋛":"&gtreqless;","≧":"&geqq;","⪢":"&GreaterGreater;","≷":"&gtrless;","⩾":"&ges;","≳":"&gtrsim;","𝒢":"&Gscr;","≫":"&gg;","Ъ":"&HARDcy;","ˇ":"&caron;","^":"&Hat;","Ĥ":"&Hcirc;","ℌ":"&Poincareplane;","ℋ":"&hamilt;","ℍ":"&quaternions;","─":"&boxh;","Ħ":"&Hstrok;","≏":"&bumpeq;","Е":"&IEcy;","Ĳ":"&IJlig;","Ё":"&IOcy;","Í":"&Iacute;","Î":"&Icirc;","И":"&Icy;","İ":"&Idot;","ℑ":"&imagpart;","Ì":"&Igrave;","Ī":"&Imacr;","ⅈ":"&ii;","∬":"&Int;","∫":"&int;","⋂":"&xcap;","⁣":"&ic;","⁢":"&it;","Į":"&Iogon;","𝕀":"&Iopf;","Ι":"&Iota;","ℐ":"&imagline;","Ĩ":"&Itilde;","І":"&Iukcy;","Ï":"&Iuml;","Ĵ":"&Jcirc;","Й":"&Jcy;","𝔍":"&Jfr;","𝕁":"&Jopf;","𝒥":"&Jscr;","Ј":"&Jsercy;","Є":"&Jukcy;","Х":"&KHcy;","Ќ":"&KJcy;","Κ":"&Kappa;","Ķ":"&Kcedil;","К":"&Kcy;","𝔎":"&Kfr;","𝕂":"&Kopf;","𝒦":"&Kscr;","Љ":"&LJcy;","<":"&lt;","Ĺ":"&Lacute;","Λ":"&Lambda;","⟪":"&Lang;","ℒ":"&lagran;","↞":"&twoheadleftarrow;","Ľ":"&Lcaron;","Ļ":"&Lcedil;","Л":"&Lcy;","⟨":"&langle;","←":"&slarr;","⇤":"&larrb;","⇆":"&lrarr;","⌈":"&lceil;","⟦":"&lobrk;","⥡":"&LeftDownTeeVector;","⇃":"&downharpoonleft;","⥙":"&LeftDownVectorBar;","⌊":"&lfloor;","↔":"&leftrightarrow;","⥎":"&LeftRightVector;","⊣":"&dashv;","↤":"&mapstoleft;","⥚":"&LeftTeeVector;","⊲":"&vltri;","⧏":"&LeftTriangleBar;","⊴":"&trianglelefteq;","⥑":"&LeftUpDownVector;","⥠":"&LeftUpTeeVector;","↿":"&upharpoonleft;","⥘":"&LeftUpVectorBar;","↼":"&lharu;","⥒":"&LeftVectorBar;","⋚":"&lesseqgtr;","≦":"&leqq;","≶":"&lg;","⪡":"&LessLess;","⩽":"&les;","≲":"&lsim;","𝔏":"&Lfr;","⋘":"&Ll;","⇚":"&lAarr;","Ŀ":"&Lmidot;","⟵":"&xlarr;","⟷":"&xharr;","⟶":"&xrarr;","𝕃":"&Lopf;","↙":"&swarrow;","↘":"&searrow;","↰":"&lsh;","Ł":"&Lstrok;","≪":"&ll;","⤅":"&Map;","М":"&Mcy;"," ":"&MediumSpace;","ℳ":"&phmmat;","𝔐":"&Mfr;","∓":"&mp;","𝕄":"&Mopf;","Μ":"&Mu;","Њ":"&NJcy;","Ń":"&Nacute;","Ň":"&Ncaron;","Ņ":"&Ncedil;","Н":"&Ncy;","​":"&ZeroWidthSpace;","\n":"&NewLine;","𝔑":"&Nfr;","⁠":"&NoBreak;"," ":"&nbsp;","ℕ":"&naturals;","⫬":"&Not;","≢":"&nequiv;","≭":"&NotCupCap;","∦":"&nspar;","∉":"&notinva;","≠":"&ne;","≂̸":"&nesim;","∄":"&nexists;","≯":"&ngtr;","≱":"&ngeq;","≧̸":"&ngeqq;","≫̸":"&nGtv;","≹":"&ntgl;","⩾̸":"&nges;","≵":"&ngsim;","≎̸":"&nbump;","≏̸":"&nbumpe;","⋪":"&ntriangleleft;","⧏̸":"&NotLeftTriangleBar;","⋬":"&ntrianglelefteq;","≮":"&nlt;","≰":"&nleq;","≸":"&ntlg;","≪̸":"&nLtv;","⩽̸":"&nles;","≴":"&nlsim;","⪢̸":"&NotNestedGreaterGreater;","⪡̸":"&NotNestedLessLess;","⊀":"&nprec;","⪯̸":"&npreceq;","⋠":"&nprcue;","∌":"&notniva;","⋫":"&ntriangleright;","⧐̸":"&NotRightTriangleBar;","⋭":"&ntrianglerighteq;","⊏̸":"&NotSquareSubset;","⋢":"&nsqsube;","⊐̸":"&NotSquareSuperset;","⋣":"&nsqsupe;","⊂⃒":"&vnsub;","⊈":"&nsubseteq;","⊁":"&nsucc;","⪰̸":"&nsucceq;","⋡":"&nsccue;","≿̸":"&NotSucceedsTilde;","⊃⃒":"&vnsup;","⊉":"&nsupseteq;","≁":"&nsim;","≄":"&nsimeq;","≇":"&ncong;","≉":"&napprox;","∤":"&nsmid;","𝒩":"&Nscr;","Ñ":"&Ntilde;","Ν":"&Nu;","Œ":"&OElig;","Ó":"&Oacute;","Ô":"&Ocirc;","О":"&Ocy;","Ő":"&Odblac;","𝔒":"&Ofr;","Ò":"&Ograve;","Ō":"&Omacr;","Ω":"&ohm;","Ο":"&Omicron;","𝕆":"&Oopf;","“":"&ldquo;","‘":"&lsquo;","⩔":"&Or;","𝒪":"&Oscr;","Ø":"&Oslash;","Õ":"&Otilde;","⨷":"&Otimes;","Ö":"&Ouml;","‾":"&oline;","⏞":"&OverBrace;","⎴":"&tbrk;","⏜":"&OverParenthesis;","∂":"&part;","П":"&Pcy;","𝔓":"&Pfr;","Φ":"&Phi;","Π":"&Pi;","±":"&pm;","ℙ":"&primes;","⪻":"&Pr;","≺":"&prec;","⪯":"&preceq;","≼":"&preccurlyeq;","≾":"&prsim;","″":"&Prime;","∏":"&prod;","∝":"&vprop;","𝒫":"&Pscr;","Ψ":"&Psi;",'"':"&quot;","𝔔":"&Qfr;","ℚ":"&rationals;","𝒬":"&Qscr;","⤐":"&drbkarow;","®":"&reg;","Ŕ":"&Racute;","⟫":"&Rang;","↠":"&twoheadrightarrow;","⤖":"&Rarrtl;","Ř":"&Rcaron;","Ŗ":"&Rcedil;","Р":"&Rcy;","ℜ":"&realpart;","∋":"&niv;","⇋":"&lrhar;","⥯":"&duhar;","Ρ":"&Rho;","⟩":"&rangle;","→":"&srarr;","⇥":"&rarrb;","⇄":"&rlarr;","⌉":"&rceil;","⟧":"&robrk;","⥝":"&RightDownTeeVector;","⇂":"&downharpoonright;","⥕":"&RightDownVectorBar;","⌋":"&rfloor;","⊢":"&vdash;","↦":"&mapsto;","⥛":"&RightTeeVector;","⊳":"&vrtri;","⧐":"&RightTriangleBar;","⊵":"&trianglerighteq;","⥏":"&RightUpDownVector;","⥜":"&RightUpTeeVector;","↾":"&upharpoonright;","⥔":"&RightUpVectorBar;","⇀":"&rightharpoonup;","⥓":"&RightVectorBar;","ℝ":"&reals;","⥰":"&RoundImplies;","⇛":"&rAarr;","ℛ":"&realine;","↱":"&rsh;","⧴":"&RuleDelayed;","Щ":"&SHCHcy;","Ш":"&SHcy;","Ь":"&SOFTcy;","Ś":"&Sacute;","⪼":"&Sc;","Š":"&Scaron;","Ş":"&Scedil;","Ŝ":"&Scirc;","С":"&Scy;","𝔖":"&Sfr;","↑":"&uparrow;","Σ":"&Sigma;","∘":"&compfn;","𝕊":"&Sopf;","√":"&radic;","□":"&square;","⊓":"&sqcap;","⊏":"&sqsubset;","⊑":"&sqsubseteq;","⊐":"&sqsupset;","⊒":"&sqsupseteq;","⊔":"&sqcup;","𝒮":"&Sscr;","⋆":"&sstarf;","⋐":"&Subset;","⊆":"&subseteq;","≻":"&succ;","⪰":"&succeq;","≽":"&succcurlyeq;","≿":"&succsim;","∑":"&sum;","⋑":"&Supset;","⊃":"&supset;","⊇":"&supseteq;","Þ":"&THORN;","™":"&trade;","Ћ":"&TSHcy;","Ц":"&TScy;","\t":"&Tab;","Τ":"&Tau;","Ť":"&Tcaron;","Ţ":"&Tcedil;","Т":"&Tcy;","𝔗":"&Tfr;","∴":"&therefore;","Θ":"&Theta;","  ":"&ThickSpace;"," ":"&thinsp;","∼":"&thksim;","≃":"&simeq;","≅":"&cong;","≈":"&thkap;","𝕋":"&Topf;","⃛":"&tdot;","𝒯":"&Tscr;","Ŧ":"&Tstrok;","Ú":"&Uacute;","↟":"&Uarr;","⥉":"&Uarrocir;","Ў":"&Ubrcy;","Ŭ":"&Ubreve;","Û":"&Ucirc;","У":"&Ucy;","Ű":"&Udblac;","𝔘":"&Ufr;","Ù":"&Ugrave;","Ū":"&Umacr;",_:"&lowbar;","⏟":"&UnderBrace;","⎵":"&bbrk;","⏝":"&UnderParenthesis;","⋃":"&xcup;","⊎":"&uplus;","Ų":"&Uogon;","𝕌":"&Uopf;","⤒":"&UpArrowBar;","⇅":"&udarr;","↕":"&varr;","⥮":"&udhar;","⊥":"&perp;","↥":"&mapstoup;","↖":"&nwarrow;","↗":"&nearrow;","ϒ":"&upsih;","Υ":"&Upsilon;","Ů":"&Uring;","𝒰":"&Uscr;","Ũ":"&Utilde;","Ü":"&Uuml;","⊫":"&VDash;","⫫":"&Vbar;","В":"&Vcy;","⊩":"&Vdash;","⫦":"&Vdashl;","⋁":"&xvee;","‖":"&Vert;","∣":"&smid;","|":"&vert;","❘":"&VerticalSeparator;","≀":"&wreath;"," ":"&hairsp;","𝔙":"&Vfr;","𝕍":"&Vopf;","𝒱":"&Vscr;","⊪":"&Vvdash;","Ŵ":"&Wcirc;","⋀":"&xwedge;","𝔚":"&Wfr;","𝕎":"&Wopf;","𝒲":"&Wscr;","𝔛":"&Xfr;","Ξ":"&Xi;","𝕏":"&Xopf;","𝒳":"&Xscr;","Я":"&YAcy;","Ї":"&YIcy;","Ю":"&YUcy;","Ý":"&Yacute;","Ŷ":"&Ycirc;","Ы":"&Ycy;","𝔜":"&Yfr;","𝕐":"&Yopf;","𝒴":"&Yscr;","Ÿ":"&Yuml;","Ж":"&ZHcy;","Ź":"&Zacute;","Ž":"&Zcaron;","З":"&Zcy;","Ż":"&Zdot;","Ζ":"&Zeta;","ℨ":"&zeetrf;","ℤ":"&integers;","𝒵":"&Zscr;","á":"&aacute;","ă":"&abreve;","∾":"&mstpos;","∾̳":"&acE;","∿":"&acd;","â":"&acirc;","а":"&acy;","æ":"&aelig;","𝔞":"&afr;","à":"&agrave;","ℵ":"&aleph;","α":"&alpha;","ā":"&amacr;","⨿":"&amalg;","∧":"&wedge;","⩕":"&andand;","⩜":"&andd;","⩘":"&andslope;","⩚":"&andv;","∠":"&angle;","⦤":"&ange;","∡":"&measuredangle;","⦨":"&angmsdaa;","⦩":"&angmsdab;","⦪":"&angmsdac;","⦫":"&angmsdad;","⦬":"&angmsdae;","⦭":"&angmsdaf;","⦮":"&angmsdag;","⦯":"&angmsdah;","∟":"&angrt;","⊾":"&angrtvb;","⦝":"&angrtvbd;","∢":"&angsph;","⍼":"&angzarr;","ą":"&aogon;","𝕒":"&aopf;","⩰":"&apE;","⩯":"&apacir;","≊":"&approxeq;","≋":"&apid;","'":"&apos;","å":"&aring;","𝒶":"&ascr;","*":"&midast;","ã":"&atilde;","ä":"&auml;","⨑":"&awint;","⫭":"&bNot;","≌":"&bcong;","϶":"&bepsi;","‵":"&bprime;","∽":"&bsim;","⋍":"&bsime;","⊽":"&barvee;","⌅":"&barwedge;","⎶":"&bbrktbrk;","б":"&bcy;","„":"&ldquor;","⦰":"&bemptyv;","β":"&beta;","ℶ":"&beth;","≬":"&twixt;","𝔟":"&bfr;","◯":"&xcirc;","⨀":"&xodot;","⨁":"&xoplus;","⨂":"&xotime;","⨆":"&xsqcup;","★":"&starf;","▽":"&xdtri;","△":"&xutri;","⨄":"&xuplus;","⤍":"&rbarr;","⧫":"&lozf;","▴":"&utrif;","▾":"&dtrif;","◂":"&ltrif;","▸":"&rtrif;","␣":"&blank;","▒":"&blk12;","░":"&blk14;","▓":"&blk34;","█":"&block;","=⃥":"&bne;","≡⃥":"&bnequiv;","⌐":"&bnot;","𝕓":"&bopf;","⋈":"&bowtie;","╗":"&boxDL;","╔":"&boxDR;","╖":"&boxDl;","╓":"&boxDr;","═":"&boxH;","╦":"&boxHD;","╩":"&boxHU;","╤":"&boxHd;","╧":"&boxHu;","╝":"&boxUL;","╚":"&boxUR;","╜":"&boxUl;","╙":"&boxUr;","║":"&boxV;","╬":"&boxVH;","╣":"&boxVL;","╠":"&boxVR;","╫":"&boxVh;","╢":"&boxVl;","╟":"&boxVr;","⧉":"&boxbox;","╕":"&boxdL;","╒":"&boxdR;","┐":"&boxdl;","┌":"&boxdr;","╥":"&boxhD;","╨":"&boxhU;","┬":"&boxhd;","┴":"&boxhu;","⊟":"&minusb;","⊞":"&plusb;","⊠":"&timesb;","╛":"&boxuL;","╘":"&boxuR;","┘":"&boxul;","└":"&boxur;","│":"&boxv;","╪":"&boxvH;","╡":"&boxvL;","╞":"&boxvR;","┼":"&boxvh;","┤":"&boxvl;","├":"&boxvr;","¦":"&brvbar;","𝒷":"&bscr;","⁏":"&bsemi;","\\":"&bsol;","⧅":"&bsolb;","⟈":"&bsolhsub;","•":"&bullet;","⪮":"&bumpE;","ć":"&cacute;","∩":"&cap;","⩄":"&capand;","⩉":"&capbrcup;","⩋":"&capcap;","⩇":"&capcup;","⩀":"&capdot;","∩︀":"&caps;","⁁":"&caret;","⩍":"&ccaps;","č":"&ccaron;","ç":"&ccedil;","ĉ":"&ccirc;","⩌":"&ccups;","⩐":"&ccupssm;","ċ":"&cdot;","⦲":"&cemptyv;","¢":"&cent;","𝔠":"&cfr;","ч":"&chcy;","✓":"&checkmark;","χ":"&chi;","○":"&cir;","⧃":"&cirE;","ˆ":"&circ;","≗":"&cire;","↺":"&olarr;","↻":"&orarr;","Ⓢ":"&oS;","⊛":"&oast;","⊚":"&ocir;","⊝":"&odash;","⨐":"&cirfnint;","⫯":"&cirmid;","⧂":"&cirscir;","♣":"&clubsuit;",":":"&colon;",",":"&comma;","@":"&commat;","∁":"&complement;","⩭":"&congdot;","𝕔":"&copf;","℗":"&copysr;","↵":"&crarr;","✗":"&cross;","𝒸":"&cscr;","⫏":"&csub;","⫑":"&csube;","⫐":"&csup;","⫒":"&csupe;","⋯":"&ctdot;","⤸":"&cudarrl;","⤵":"&cudarrr;","⋞":"&curlyeqprec;","⋟":"&curlyeqsucc;","↶":"&curvearrowleft;","⤽":"&cularrp;","∪":"&cup;","⩈":"&cupbrcap;","⩆":"&cupcap;","⩊":"&cupcup;","⊍":"&cupdot;","⩅":"&cupor;","∪︀":"&cups;","↷":"&curvearrowright;","⤼":"&curarrm;","⋎":"&cuvee;","⋏":"&cuwed;","¤":"&curren;","∱":"&cwint;","⌭":"&cylcty;","⥥":"&dHar;","†":"&dagger;","ℸ":"&daleth;","‐":"&hyphen;","⤏":"&rBarr;","ď":"&dcaron;","д":"&dcy;","⇊":"&downdownarrows;","⩷":"&eDDot;","°":"&deg;","δ":"&delta;","⦱":"&demptyv;","⥿":"&dfisht;","𝔡":"&dfr;","♦":"&diams;","ϝ":"&gammad;","⋲":"&disin;","÷":"&divide;","⋇":"&divonx;","ђ":"&djcy;","⌞":"&llcorner;","⌍":"&dlcrop;",$:"&dollar;","𝕕":"&dopf;","≑":"&eDot;","∸":"&minusd;","∔":"&plusdo;","⊡":"&sdotb;","⌟":"&lrcorner;","⌌":"&drcrop;","𝒹":"&dscr;","ѕ":"&dscy;","⧶":"&dsol;","đ":"&dstrok;","⋱":"&dtdot;","▿":"&triangledown;","⦦":"&dwangle;","џ":"&dzcy;","⟿":"&dzigrarr;","é":"&eacute;","⩮":"&easter;","ě":"&ecaron;","≖":"&eqcirc;","ê":"&ecirc;","≕":"&eqcolon;","э":"&ecy;","ė":"&edot;","≒":"&fallingdotseq;","𝔢":"&efr;","⪚":"&eg;","è":"&egrave;","⪖":"&eqslantgtr;","⪘":"&egsdot;","⪙":"&el;","⏧":"&elinters;","ℓ":"&ell;","⪕":"&eqslantless;","⪗":"&elsdot;","ē":"&emacr;","∅":"&varnothing;"," ":"&emsp13;"," ":"&emsp14;"," ":"&emsp;","ŋ":"&eng;"," ":"&ensp;","ę":"&eogon;","𝕖":"&eopf;","⋕":"&epar;","⧣":"&eparsl;","⩱":"&eplus;","ε":"&epsilon;","ϵ":"&varepsilon;","=":"&equals;","≟":"&questeq;","⩸":"&equivDD;","⧥":"&eqvparsl;","≓":"&risingdotseq;","⥱":"&erarr;","ℯ":"&escr;","η":"&eta;","ð":"&eth;","ë":"&euml;","€":"&euro;","!":"&excl;","ф":"&fcy;","♀":"&female;","ﬃ":"&ffilig;","ﬀ":"&fflig;","ﬄ":"&ffllig;","𝔣":"&ffr;","ﬁ":"&filig;",fj:"&fjlig;","♭":"&flat;","ﬂ":"&fllig;","▱":"&fltns;","ƒ":"&fnof;","𝕗":"&fopf;","⋔":"&pitchfork;","⫙":"&forkv;","⨍":"&fpartint;","½":"&half;","⅓":"&frac13;","¼":"&frac14;","⅕":"&frac15;","⅙":"&frac16;","⅛":"&frac18;","⅔":"&frac23;","⅖":"&frac25;","¾":"&frac34;","⅗":"&frac35;","⅜":"&frac38;","⅘":"&frac45;","⅚":"&frac56;","⅝":"&frac58;","⅞":"&frac78;","⁄":"&frasl;","⌢":"&sfrown;","𝒻":"&fscr;","⪌":"&gtreqqless;","ǵ":"&gacute;","γ":"&gamma;","⪆":"&gtrapprox;","ğ":"&gbreve;","ĝ":"&gcirc;","г":"&gcy;","ġ":"&gdot;","⪩":"&gescc;","⪀":"&gesdot;","⪂":"&gesdoto;","⪄":"&gesdotol;","⋛︀":"&gesl;","⪔":"&gesles;","𝔤":"&gfr;","ℷ":"&gimel;","ѓ":"&gjcy;","⪒":"&glE;","⪥":"&gla;","⪤":"&glj;","≩":"&gneqq;","⪊":"&gnapprox;","⪈":"&gneq;","⋧":"&gnsim;","𝕘":"&gopf;","ℊ":"&gscr;","⪎":"&gsime;","⪐":"&gsiml;","⪧":"&gtcc;","⩺":"&gtcir;","⋗":"&gtrdot;","⦕":"&gtlPar;","⩼":"&gtquest;","⥸":"&gtrarr;","≩︀":"&gvnE;","ъ":"&hardcy;","⥈":"&harrcir;","↭":"&leftrightsquigarrow;","ℏ":"&plankv;","ĥ":"&hcirc;","♥":"&heartsuit;","…":"&mldr;","⊹":"&hercon;","𝔥":"&hfr;","⤥":"&searhk;","⤦":"&swarhk;","⇿":"&hoarr;","∻":"&homtht;","↩":"&larrhk;","↪":"&rarrhk;","𝕙":"&hopf;","―":"&horbar;","𝒽":"&hscr;","ħ":"&hstrok;","⁃":"&hybull;","í":"&iacute;","î":"&icirc;","и":"&icy;","е":"&iecy;","¡":"&iexcl;","𝔦":"&ifr;","ì":"&igrave;","⨌":"&qint;","∭":"&tint;","⧜":"&iinfin;","℩":"&iiota;","ĳ":"&ijlig;","ī":"&imacr;","ı":"&inodot;","⊷":"&imof;","Ƶ":"&imped;","℅":"&incare;","∞":"&infin;","⧝":"&infintie;","⊺":"&intercal;","⨗":"&intlarhk;","⨼":"&iprod;","ё":"&iocy;","į":"&iogon;","𝕚":"&iopf;","ι":"&iota;","¿":"&iquest;","𝒾":"&iscr;","⋹":"&isinE;","⋵":"&isindot;","⋴":"&isins;","⋳":"&isinsv;","ĩ":"&itilde;","і":"&iukcy;","ï":"&iuml;","ĵ":"&jcirc;","й":"&jcy;","𝔧":"&jfr;","ȷ":"&jmath;","𝕛":"&jopf;","𝒿":"&jscr;","ј":"&jsercy;","є":"&jukcy;","κ":"&kappa;","ϰ":"&varkappa;","ķ":"&kcedil;","к":"&kcy;","𝔨":"&kfr;","ĸ":"&kgreen;","х":"&khcy;","ќ":"&kjcy;","𝕜":"&kopf;","𝓀":"&kscr;","⤛":"&lAtail;","⤎":"&lBarr;","⪋":"&lesseqqgtr;","⥢":"&lHar;","ĺ":"&lacute;","⦴":"&laemptyv;","λ":"&lambda;","⦑":"&langd;","⪅":"&lessapprox;","«":"&laquo;","⤟":"&larrbfs;","⤝":"&larrfs;","↫":"&looparrowleft;","⤹":"&larrpl;","⥳":"&larrsim;","↢":"&leftarrowtail;","⪫":"&lat;","⤙":"&latail;","⪭":"&late;","⪭︀":"&lates;","⤌":"&lbarr;","❲":"&lbbrk;","{":"&lcub;","[":"&lsqb;","⦋":"&lbrke;","⦏":"&lbrksld;","⦍":"&lbrkslu;","ľ":"&lcaron;","ļ":"&lcedil;","л":"&lcy;","⤶":"&ldca;","⥧":"&ldrdhar;","⥋":"&ldrushar;","↲":"&ldsh;","≤":"&leq;","⇇":"&llarr;","⋋":"&lthree;","⪨":"&lescc;","⩿":"&lesdot;","⪁":"&lesdoto;","⪃":"&lesdotor;","⋚︀":"&lesg;","⪓":"&lesges;","⋖":"&ltdot;","⥼":"&lfisht;","𝔩":"&lfr;","⪑":"&lgE;","⥪":"&lharul;","▄":"&lhblk;","љ":"&ljcy;","⥫":"&llhard;","◺":"&lltri;","ŀ":"&lmidot;","⎰":"&lmoustache;","≨":"&lneqq;","⪉":"&lnapprox;","⪇":"&lneq;","⋦":"&lnsim;","⟬":"&loang;","⇽":"&loarr;","⟼":"&xmap;","↬":"&rarrlp;","⦅":"&lopar;","𝕝":"&lopf;","⨭":"&loplus;","⨴":"&lotimes;","∗":"&lowast;","◊":"&lozenge;","(":"&lpar;","⦓":"&lparlt;","⥭":"&lrhard;","‎":"&lrm;","⊿":"&lrtri;","‹":"&lsaquo;","𝓁":"&lscr;","⪍":"&lsime;","⪏":"&lsimg;","‚":"&sbquo;","ł":"&lstrok;","⪦":"&ltcc;","⩹":"&ltcir;","⋉":"&ltimes;","⥶":"&ltlarr;","⩻":"&ltquest;","⦖":"&ltrPar;","◃":"&triangleleft;","⥊":"&lurdshar;","⥦":"&luruhar;","≨︀":"&lvnE;","∺":"&mDDot;","¯":"&strns;","♂":"&male;","✠":"&maltese;","▮":"&marker;","⨩":"&mcomma;","м":"&mcy;","—":"&mdash;","𝔪":"&mfr;","℧":"&mho;","µ":"&micro;","⫰":"&midcir;","−":"&minus;","⨪":"&minusdu;","⫛":"&mlcp;","⊧":"&models;","𝕞":"&mopf;","𝓂":"&mscr;","μ":"&mu;","⊸":"&mumap;","⋙̸":"&nGg;","≫⃒":"&nGt;","⇍":"&nlArr;","⇎":"&nhArr;","⋘̸":"&nLl;","≪⃒":"&nLt;","⇏":"&nrArr;","⊯":"&nVDash;","⊮":"&nVdash;","ń":"&nacute;","∠⃒":"&nang;","⩰̸":"&napE;","≋̸":"&napid;","ŉ":"&napos;","♮":"&natural;","⩃":"&ncap;","ň":"&ncaron;","ņ":"&ncedil;","⩭̸":"&ncongdot;","⩂":"&ncup;","н":"&ncy;","–":"&ndash;","⇗":"&neArr;","⤤":"&nearhk;","≐̸":"&nedot;","⤨":"&toea;","𝔫":"&nfr;","↮":"&nleftrightarrow;","⫲":"&nhpar;","⋼":"&nis;","⋺":"&nisd;","њ":"&njcy;","≦̸":"&nleqq;","↚":"&nleftarrow;","‥":"&nldr;","𝕟":"&nopf;","¬":"&not;","⋹̸":"&notinE;","⋵̸":"&notindot;","⋷":"&notinvb;","⋶":"&notinvc;","⋾":"&notnivb;","⋽":"&notnivc;","⫽⃥":"&nparsl;","∂̸":"&npart;","⨔":"&npolint;","↛":"&nrightarrow;","⤳̸":"&nrarrc;","↝̸":"&nrarrw;","𝓃":"&nscr;","⊄":"&nsub;","⫅̸":"&nsubseteqq;","⊅":"&nsup;","⫆̸":"&nsupseteqq;","ñ":"&ntilde;","ν":"&nu;","#":"&num;","№":"&numero;"," ":"&numsp;","⊭":"&nvDash;","⤄":"&nvHarr;","≍⃒":"&nvap;","⊬":"&nvdash;","≥⃒":"&nvge;",">⃒":"&nvgt;","⧞":"&nvinfin;","⤂":"&nvlArr;","≤⃒":"&nvle;","<⃒":"&nvlt;","⊴⃒":"&nvltrie;","⤃":"&nvrArr;","⊵⃒":"&nvrtrie;","∼⃒":"&nvsim;","⇖":"&nwArr;","⤣":"&nwarhk;","⤧":"&nwnear;","ó":"&oacute;","ô":"&ocirc;","о":"&ocy;","ő":"&odblac;","⨸":"&odiv;","⦼":"&odsold;","œ":"&oelig;","⦿":"&ofcir;","𝔬":"&ofr;","˛":"&ogon;","ò":"&ograve;","⧁":"&ogt;","⦵":"&ohbar;","⦾":"&olcir;","⦻":"&olcross;","⧀":"&olt;","ō":"&omacr;","ω":"&omega;","ο":"&omicron;","⦶":"&omid;","𝕠":"&oopf;","⦷":"&opar;","⦹":"&operp;","∨":"&vee;","⩝":"&ord;","ℴ":"&oscr;","ª":"&ordf;","º":"&ordm;","⊶":"&origof;","⩖":"&oror;","⩗":"&orslope;","⩛":"&orv;","ø":"&oslash;","⊘":"&osol;","õ":"&otilde;","⨶":"&otimesas;","ö":"&ouml;","⌽":"&ovbar;","¶":"&para;","⫳":"&parsim;","⫽":"&parsl;","п":"&pcy;","%":"&percnt;",".":"&period;","‰":"&permil;","‱":"&pertenk;","𝔭":"&pfr;","φ":"&phi;","ϕ":"&varphi;","☎":"&phone;","π":"&pi;","ϖ":"&varpi;","ℎ":"&planckh;","+":"&plus;","⨣":"&plusacir;","⨢":"&pluscir;","⨥":"&plusdu;","⩲":"&pluse;","⨦":"&plussim;","⨧":"&plustwo;","⨕":"&pointint;","𝕡":"&popf;","£":"&pound;","⪳":"&prE;","⪷":"&precapprox;","⪹":"&prnap;","⪵":"&prnE;","⋨":"&prnsim;","′":"&prime;","⌮":"&profalar;","⌒":"&profline;","⌓":"&profsurf;","⊰":"&prurel;","𝓅":"&pscr;","ψ":"&psi;"," ":"&puncsp;","𝔮":"&qfr;","𝕢":"&qopf;","⁗":"&qprime;","𝓆":"&qscr;","⨖":"&quatint;","?":"&quest;","⤜":"&rAtail;","⥤":"&rHar;","∽̱":"&race;","ŕ":"&racute;","⦳":"&raemptyv;","⦒":"&rangd;","⦥":"&range;","»":"&raquo;","⥵":"&rarrap;","⤠":"&rarrbfs;","⤳":"&rarrc;","⤞":"&rarrfs;","⥅":"&rarrpl;","⥴":"&rarrsim;","↣":"&rightarrowtail;","↝":"&rightsquigarrow;","⤚":"&ratail;","∶":"&ratio;","❳":"&rbbrk;","}":"&rcub;","]":"&rsqb;","⦌":"&rbrke;","⦎":"&rbrksld;","⦐":"&rbrkslu;","ř":"&rcaron;","ŗ":"&rcedil;","р":"&rcy;","⤷":"&rdca;","⥩":"&rdldhar;","↳":"&rdsh;","▭":"&rect;","⥽":"&rfisht;","𝔯":"&rfr;","⥬":"&rharul;","ρ":"&rho;","ϱ":"&varrho;","⇉":"&rrarr;","⋌":"&rthree;","˚":"&ring;","‏":"&rlm;","⎱":"&rmoustache;","⫮":"&rnmid;","⟭":"&roang;","⇾":"&roarr;","⦆":"&ropar;","𝕣":"&ropf;","⨮":"&roplus;","⨵":"&rotimes;",")":"&rpar;","⦔":"&rpargt;","⨒":"&rppolint;","›":"&rsaquo;","𝓇":"&rscr;","⋊":"&rtimes;","▹":"&triangleright;","⧎":"&rtriltri;","⥨":"&ruluhar;","℞":"&rx;","ś":"&sacute;","⪴":"&scE;","⪸":"&succapprox;","š":"&scaron;","ş":"&scedil;","ŝ":"&scirc;","⪶":"&succneqq;","⪺":"&succnapprox;","⋩":"&succnsim;","⨓":"&scpolint;","с":"&scy;","⋅":"&sdot;","⩦":"&sdote;","⇘":"&seArr;","§":"&sect;",";":"&semi;","⤩":"&tosa;","✶":"&sext;","𝔰":"&sfr;","♯":"&sharp;","щ":"&shchcy;","ш":"&shcy;","­":"&shy;","σ":"&sigma;","ς":"&varsigma;","⩪":"&simdot;","⪞":"&simg;","⪠":"&simgE;","⪝":"&siml;","⪟":"&simlE;","≆":"&simne;","⨤":"&simplus;","⥲":"&simrarr;","⨳":"&smashp;","⧤":"&smeparsl;","⌣":"&ssmile;","⪪":"&smt;","⪬":"&smte;","⪬︀":"&smtes;","ь":"&softcy;","/":"&sol;","⧄":"&solb;","⌿":"&solbar;","𝕤":"&sopf;","♠":"&spadesuit;","⊓︀":"&sqcaps;","⊔︀":"&sqcups;","𝓈":"&sscr;","☆":"&star;","⊂":"&subset;","⫅":"&subseteqq;","⪽":"&subdot;","⫃":"&subedot;","⫁":"&submult;","⫋":"&subsetneqq;","⊊":"&subsetneq;","⪿":"&subplus;","⥹":"&subrarr;","⫇":"&subsim;","⫕":"&subsub;","⫓":"&subsup;","♪":"&sung;","¹":"&sup1;","²":"&sup2;","³":"&sup3;","⫆":"&supseteqq;","⪾":"&supdot;","⫘":"&supdsub;","⫄":"&supedot;","⟉":"&suphsol;","⫗":"&suphsub;","⥻":"&suplarr;","⫂":"&supmult;","⫌":"&supsetneqq;","⊋":"&supsetneq;","⫀":"&supplus;","⫈":"&supsim;","⫔":"&supsub;","⫖":"&supsup;","⇙":"&swArr;","⤪":"&swnwar;","ß":"&szlig;","⌖":"&target;","τ":"&tau;","ť":"&tcaron;","ţ":"&tcedil;","т":"&tcy;","⌕":"&telrec;","𝔱":"&tfr;","θ":"&theta;","ϑ":"&vartheta;","þ":"&thorn;","×":"&times;","⨱":"&timesbar;","⨰":"&timesd;","⌶":"&topbot;","⫱":"&topcir;","𝕥":"&topf;","⫚":"&topfork;","‴":"&tprime;","▵":"&utri;","≜":"&trie;","◬":"&tridot;","⨺":"&triminus;","⨹":"&triplus;","⧍":"&trisb;","⨻":"&tritime;","⏢":"&trpezium;","𝓉":"&tscr;","ц":"&tscy;","ћ":"&tshcy;","ŧ":"&tstrok;","⥣":"&uHar;","ú":"&uacute;","ў":"&ubrcy;","ŭ":"&ubreve;","û":"&ucirc;","у":"&ucy;","ű":"&udblac;","⥾":"&ufisht;","𝔲":"&ufr;","ù":"&ugrave;","▀":"&uhblk;","⌜":"&ulcorner;","⌏":"&ulcrop;","◸":"&ultri;","ū":"&umacr;","ų":"&uogon;","𝕦":"&uopf;","υ":"&upsilon;","⇈":"&uuarr;","⌝":"&urcorner;","⌎":"&urcrop;","ů":"&uring;","◹":"&urtri;","𝓊":"&uscr;","⋰":"&utdot;","ũ":"&utilde;","ü":"&uuml;","⦧":"&uwangle;","⫨":"&vBar;","⫩":"&vBarv;","⦜":"&vangrt;","⊊︀":"&vsubne;","⫋︀":"&vsubnE;","⊋︀":"&vsupne;","⫌︀":"&vsupnE;","в":"&vcy;","⊻":"&veebar;","≚":"&veeeq;","⋮":"&vellip;","𝔳":"&vfr;","𝕧":"&vopf;","𝓋":"&vscr;","⦚":"&vzigzag;","ŵ":"&wcirc;","⩟":"&wedbar;","≙":"&wedgeq;","℘":"&wp;","𝔴":"&wfr;","𝕨":"&wopf;","𝓌":"&wscr;","𝔵":"&xfr;","ξ":"&xi;","⋻":"&xnis;","𝕩":"&xopf;","𝓍":"&xscr;","ý":"&yacute;","я":"&yacy;","ŷ":"&ycirc;","ы":"&ycy;","¥":"&yen;","𝔶":"&yfr;","ї":"&yicy;","𝕪":"&yopf;","𝓎":"&yscr;","ю":"&yucy;","ÿ":"&yuml;","ź":"&zacute;","ž":"&zcaron;","з":"&zcy;","ż":"&zdot;","ζ":"&zeta;","𝔷":"&zfr;","ж":"&zhcy;","⇝":"&zigrarr;","𝕫":"&zopf;","𝓏":"&zscr;","‍":"&zwj;","‌":"&zwnj;"}}};
+
+var namedReferences = /*#__PURE__*/Object.defineProperty({
+	bodyRegExps: bodyRegExps,
+	namedReferences: namedReferences_1
+}, '__esModule', {value: true});
+
+var numericUnicodeMap_1={0:65533,128:8364,130:8218,131:402,132:8222,133:8230,134:8224,135:8225,136:710,137:8240,138:352,139:8249,140:338,142:381,145:8216,146:8217,147:8220,148:8221,149:8226,150:8211,151:8212,152:732,153:8482,154:353,155:8250,156:339,158:382,159:376};
+
+var numericUnicodeMap = /*#__PURE__*/Object.defineProperty({
+	numericUnicodeMap: numericUnicodeMap_1
+}, '__esModule', {value: true});
+
+var fromCodePoint=String.fromCodePoint||function(astralCodePoint){return String.fromCharCode(Math.floor((astralCodePoint-65536)/1024)+55296,(astralCodePoint-65536)%1024+56320)};var getCodePoint=String.prototype.codePointAt?function(input,position){return input.codePointAt(position)}:function(input,position){return (input.charCodeAt(position)-55296)*1024+input.charCodeAt(position+1)-56320+65536};var highSurrogateFrom=55296;var highSurrogateTo=56319;
+
+var surrogatePairs = /*#__PURE__*/Object.defineProperty({
+	fromCodePoint: fromCodePoint,
+	getCodePoint: getCodePoint,
+	highSurrogateFrom: highSurrogateFrom,
+	highSurrogateTo: highSurrogateTo
+}, '__esModule', {value: true});
+
+var __assign = (commonjsGlobal && commonjsGlobal.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 
 
-`:" "}return""}function me(t){if(t.dumpLinkHrefsNearby.enabled&&l.tagName&&l.tagName===r.name&&r.lastOpeningBracketAt&&(l.openingTagEnds&&r.lastOpeningBracketAt>l.openingTagEnds||!l.openingTagEnds)&&(O=!0,""+O),O){let A=t.dumpLinkHrefsNearby.putOnNewLine?`
 
-`:"";q=`${A}${l.hrefValue}${A}`,""+q}}function Q(t,A){return A?A[t]==="<"&&A[t+1]!=="%":e[t]==="<"&&e[t+1]!=="%"}function Y(t){return e[t]===">"&&e[t-1]!=="%"}if(typeof e!="string")throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof e).toLowerCase()}, equal to:
-${JSON.stringify(e,null,4)}`);if(n&&!(0,Oe.default)(n))throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${(typeof n).toLowerCase()}, equal to:
-${JSON.stringify(n,null,4)}`);function m(){O&&(l={tagName:"",hrefValue:"",openingTagEnds:void 0},O=!1)}let a=H(H({},De),n);if(Object.prototype.hasOwnProperty.call(a,"returnRangesOnly"))throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] opts.returnRangesOnly has been removed from the API since v.5 release.");a.ignoreTags=dr(a.ignoreTags,"opts.ignoreTags"),a.onlyStripTags=dr(a.onlyStripTags,"opts.onlyStripTags");let E=!!a.onlyStripTags.length;if(a.onlyStripTags.length&&a.ignoreTags.length&&(a.onlyStripTags=(0,Zt.default)(a.onlyStripTags,...a.ignoreTags)),(0,Oe.default)(a.dumpLinkHrefsNearby)||(a.dumpLinkHrefsNearby=H({},De.dumpLinkHrefsNearby)),a.dumpLinkHrefsNearby=De.dumpLinkHrefsNearby,n&&Object.prototype.hasOwnProperty.call(n,"dumpLinkHrefsNearby")&&T(n.dumpLinkHrefsNearby)){if((0,Oe.default)(n.dumpLinkHrefsNearby))a.dumpLinkHrefsNearby=H(H({},De.dumpLinkHrefsNearby),n.dumpLinkHrefsNearby);else if(n.dumpLinkHrefsNearby)throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof n.dumpLinkHrefsNearby}, equal to ${JSON.stringify(n.dumpLinkHrefsNearby,null,4)}. The only allowed value is a plain object. See the API reference.`)}a.stripTogetherWithTheirContents?typeof a.stripTogetherWithTheirContents=="string"&&a.stripTogetherWithTheirContents.length&&(a.stripTogetherWithTheirContents=[a.stripTogetherWithTheirContents]):a.stripTogetherWithTheirContents=[];let N={};if(a.stripTogetherWithTheirContents&&Array.isArray(a.stripTogetherWithTheirContents)&&a.stripTogetherWithTheirContents.length&&!a.stripTogetherWithTheirContents.every((t,A)=>typeof t!="string"?(N.el=t,N.i=A,!1):!0))throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${N.i} has a value ${N.el} which is not string but ${(typeof N.el).toLowerCase()}.`);""+typeof a.cb,a.cb||(a.cb=({rangesArr:t,proposedReturn:A})=>{A&&t.push(...A)}),""+`[${33}mopts[${39}m`+JSON.stringify(a,null,4)+`[${33}minput[${39}m`+e;let h=new Xt.Ranges({limitToBeAddedWhitespace:!0,limitLinebreaksCount:2});if(!a.skipHtmlDecoding)for(;e!==(0,br.decode)(e,{scope:"strict"});)e=(0,br.decode)(e,{scope:"strict"});for(let t=0,A=e.length;t<A;t++){if(""+36+39+35+`str[ ${t} ] = ${`[${31}m${e[t]&&e[t].trim()===""?e[t]===null?"null":e[t]===`
-`?"line break":e[t]==="	"?"tab":"space":e[t]}[${39}m`}`+39+36+39,Object.keys(r).length>1&&r.lastClosingBracketAt&&r.lastClosingBracketAt<t&&e[t]!==" "&&C===null&&(C=t),Y(t)&&(!r||Object.keys(r).length<2)&&t>1){for(let f=t;f--;)if(""+35+`str[${f}] = ${e[f]}`+39,e[f-1]===void 0||Y(f)){let b=e[f-1]===void 0?f:f+1,k=e.slice(b,t+1);if(""+`[${31}m${k}[${39}m`,""+(0,Ve.default)(k.trim().split(/\s+/).filter(U=>U.trim()).filter((U,j)=>j===0),"/>"),e!==`<${(0,Ve.default)(k.trim(),"/>")}>`&&[...p].some(U=>(0,Ve.default)(k.trim().split(/\s+/).filter(j=>j.trim()).filter((j,L)=>L===0),"/>").toLowerCase()===U)&&Qt(`<${k.trim()}>`,a).result===""){(!S.length||S[S.length-1][0]!==r.lastOpeningBracketAt)&&(S.push([b,t+1]),""+`[${32}mPUSH[${39}m`+r.lastOpeningBracketAt+(r.lastClosingBracketAt+1)),(!d.length||d[d.length-1][0]!==r.lastOpeningBracketAt)&&(d.push([b,t+1]),""+`[${32}mPUSH[${39}m`+r.lastOpeningBracketAt+(r.lastClosingBracketAt+1));let U=X(e,t,b,t+1,b,t+1);""+33+`SUBMIT RANGE #3: [${b}, ${t+1}, "${U}"]`+39;let j=t+1;if(e[j]&&!e[j].trim()){for(let L=j;L<A;L++)if(e[L].trim()){j=L;break}}""+b+j+U,a.cb({tag:r,deleteFrom:b,deleteTo:j,insert:U,rangesArr:h,proposedReturn:[b,j,U]})}break}}if(e[t]==="/"&&!(r.quotes&&r.quotes.value)&&Number.isInteger(r.lastOpeningBracketAt)&&!Number.isInteger(r.lastClosingBracketAt)&&(""+33+39,r.slashPresent=t),e[t]==='"'||e[t]==="'")if(r.nameStarts&&r.quotes&&r.quotes.value&&r.quotes.value===e[t]){s.valueEnds=t,s.value=e.slice(s.valueStarts,t),""+`[${33}mattrObj[${39}m`+JSON.stringify(s,null,4),r.attributes.push(s),s={},r.quotes=void 0;let f;a.dumpLinkHrefsNearby.enabled&&r.attributes.some(b=>{if(b.name&&b.name.toLowerCase()==="href")return f=`${a.dumpLinkHrefsNearby.wrapHeads||""}${b.value}${a.dumpLinkHrefsNearby.wrapTails||""}`,!0})&&(l={tagName:r.name,hrefValue:f,openingTagEnds:void 0},""+`[${32}mSET[${39}m`+`[${33}mhrefDump[${39}m`+JSON.stringify(l,null,4))}else!r.quotes&&r.nameStarts&&(""+`[${32}mSET[${39}m`+e[t]+t,r.quotes={},r.quotes.value=e[t],r.quotes.start=t,s.nameStarts&&s.nameEnds&&s.nameEnds<t&&s.nameStarts<t&&!s.valueStarts&&(s.name=e.slice(s.nameStarts,s.nameEnds),""+`[${32}mSET[${39}m`+`[${33}mattrObj[${39}m`+JSON.stringify(s,null,4)));if(r.nameStarts!==void 0&&r.nameEnds===void 0&&(!e[t].trim()||!Mt(e[t]))){if(r.nameEnds=t,""+`[${32}mSET[${39}m`+33+39+r.nameEnds,r.name=e.slice(r.nameStarts,r.nameEnds+(!Y(t)&&e[t]!=="/"&&e[t+1]===void 0?1:0)),""+`[${32}mSET[${39}m`+33+39+r.name,""+`[${33}mtag[${39}m`+JSON.stringify(r,null,4),e[r.nameStarts-1]!=="!"&&!r.name.replace(/-/g,"").length||/^\d+$/.test(r.name[0])){r={};continue}if(Q(t)){me(a),""+`[${33}mstringToInsertAfter[${39}m`+JSON.stringify(q,null,4);let f=X(e,t,r.leftOuterWhitespace,t,r.lastOpeningBracketAt,t);""+33+`cb()-PUSH: [${r.leftOuterWhitespace}, ${t}, "${f}${q}${f}"]`+39,""+`[${33}mtag[${39}m`+JSON.stringify(r,null,4),(a.stripTogetherWithTheirContents.includes(r.name)||a.stripTogetherWithTheirContents.includes("*"))&&(""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(d,null,4),d=d.filter(([b,k])=>!(b===r.leftOuterWhitespace&&k===t)),""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(d,null,4)),a.cb({tag:r,deleteFrom:r.leftOuterWhitespace,deleteTo:t,insert:`${f}${q}${f}`,rangesArr:h,proposedReturn:[r.leftOuterWhitespace,t,`${f}${q}${f}`]}),m(),F(t,a,h)}}if(r.quotes&&r.quotes.start&&r.quotes.start<t&&!r.quotes.end&&s.nameEnds&&s.equalsAt&&!s.valueStarts&&(""+`[${32}mSET[${39}m`+33+39+s.valueStarts,s.valueStarts=t),!r.quotes&&s.nameEnds&&e[t]==="="&&!s.valueStarts&&!s.equalsAt&&(s.equalsAt=t,""+`[${32}mSET[${39}m`+33+39+s.equalsAt),!r.quotes&&s.nameStarts&&s.nameEnds&&!s.valueStarts&&e[t].trim()&&e[t]!=="="&&(r.attributes.push(s),s={}),!r.quotes&&s.nameStarts&&!s.nameEnds&&(e[t].trim()?e[t]==="="?s.equalsAt||(s.nameEnds=t,""+`[${32}mSET[${39}m`+`[${33}mattrObj.nameEnds[${39}m`+JSON.stringify(s.nameEnds,null,4),s.equalsAt=t,""+`[${32}mSET[${39}m`+`[${33}mattrObj.equalsAt[${39}m`+JSON.stringify(s.equalsAt,null,4),s.name=e.slice(s.nameStarts,s.nameEnds)):e[t]==="/"||Y(t)?(""+`[${32}mSET[${39}m`+`[${33}mattrObj.nameEnds[${39}m`+JSON.stringify(s.nameEnds,null,4),s.nameEnds=t,s.name=e.slice(s.nameStarts,s.nameEnds),""+33+39,r.attributes.push(s),s={}):Q(t)&&(""+33+39+`[${31}mTODO[${39}m`,s.nameEnds=t,s.name=e.slice(s.nameStarts,s.nameEnds),r.attributes.push(s),s={}):(s.nameEnds=t,""+`[${32}mSET[${39}m`+`[${33}mattrObj.nameEnds[${39}m`+JSON.stringify(s.nameEnds,null,4),s.name=e.slice(s.nameStarts,s.nameEnds))),!r.quotes&&r.nameEnds<t&&!e[t-1].trim()&&e[t].trim()&&!"<>/!".includes(e[t])&&!s.nameStarts&&!r.lastClosingBracketAt&&(s.nameStarts=t,""+`[${32}mSET[${39}m`+33+39+s.nameStarts),r.lastOpeningBracketAt!==null&&r.lastOpeningBracketAt<t&&e[t]==="/"&&r.onlyPlausible&&(r.onlyPlausible=!1),r.lastOpeningBracketAt!==null&&r.lastOpeningBracketAt<t&&e[t]!=="/"&&(r.onlyPlausible===void 0&&((!e[t].trim()||Q(t))&&!r.slashPresent?r.onlyPlausible=!0:r.onlyPlausible=!1,""+`[${32}mSET[${39}m`+33+39+r.onlyPlausible),e[t].trim()&&r.nameStarts===void 0&&!Q(t)&&e[t]!=="/"&&!Y(t)&&e[t]!=="!"&&(r.nameStarts=t,r.nameContainsLetters=!1,""+33+39+r.nameStarts)),r.nameStarts&&!r.quotes&&e[t].toLowerCase()!==e[t].toUpperCase()&&(r.nameContainsLetters=!0),Y(t)&&hr(r,e,t)&&!0&&r.lastOpeningBracketAt!==void 0&&(r.lastClosingBracketAt=t,""+`[${32}mSET[${39}m`+r.lastClosingBracketAt,C=null,Object.keys(s).length&&(""+`[${32}mPUSH[${39}m`+33+39,r.attributes.push(s),s={}),a.dumpLinkHrefsNearby.enabled&&l.tagName&&!l.openingTagEnds&&(l.openingTagEnds=t,""+`[${32}mSET[${39}m`+`[${33}mhrefDump[${39}m`+JSON.stringify(l,null,4))),r.lastOpeningBracketAt!==void 0){if(""+`[${33}mtag.lastClosingBracketAt[${39}m`+JSON.stringify(r.lastClosingBracketAt,null,4),r.lastClosingBracketAt===void 0){if(r.lastOpeningBracketAt<t&&!Q(t)&&(e[t+1]===void 0||Q(t+1))&&r.nameContainsLetters){if(""+e[t+1],r.name=e.slice(r.nameStarts,r.nameEnds?r.nameEnds:t+1).toLowerCase(),""+`[${32}mSET[${39}m`+`[${33}mtag.name[${39}m`+JSON.stringify(r.name,null,4),(!S.length||S[S.length-1][0]!==r.lastOpeningBracketAt)&&(S.push([r.lastOpeningBracketAt,t+1]),""+`[${32}mPUSH[${39}m`+r.lastOpeningBracketAt+(t+1)),a.ignoreTags.includes(r.name)||r.onlyPlausible&&!p.has(r.name)){""+31+39,r={},s={};continue}if((p.has(r.name)||x.has(r.name))&&(r.onlyPlausible===!1||r.onlyPlausible===!0&&r.attributes.length)||e[t+1]===void 0){me(a),""+`[${33}mstringToInsertAfter[${39}m`+JSON.stringify(q,null,4);let f=X(e,t,r.leftOuterWhitespace,t+1,r.lastOpeningBracketAt,r.lastClosingBracketAt);""+33+`cb()-PUSH: [${r.leftOuterWhitespace}, ${t+1}, "${f}${q}${f}"]`+39,""+`[${33}mtag[${39}m`+JSON.stringify(r,null,4),a.cb({tag:r,deleteFrom:r.leftOuterWhitespace,deleteTo:t+1,insert:`${f}${q}${f}`,rangesArr:h,proposedReturn:[r.leftOuterWhitespace,t+1,`${f}${q}${f}`]}),m(),F(t,a,h)}if(!d.length||d[d.length-1][0]!==r.lastOpeningBracketAt&&d[d.length-1][1]!==t+1)if(a.stripTogetherWithTheirContents.includes(r.name)||a.stripTogetherWithTheirContents.includes("*")){""+`[${33}mrangedOpeningTags[${39}m`+JSON.stringify($,null,4);let f;for(let b=$.length;b--;)$[b].name===r.name&&(f=$[b],""+`[${32}mSET[${39}m`+`[${33}mlastRangedOpeningTag[${39}m`+JSON.stringify(f,null,4));f?(""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(d,null,4),d=d.filter(([b])=>b!==f.lastOpeningBracketAt),""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(d,null,4),d.push([f.lastOpeningBracketAt,t+1]),""+`[${32}mPUSH[${39}m`+f.lastOpeningBracketAt+(t+1)):(d.push([r.lastOpeningBracketAt,t+1]),""+`[${32}mPUSH[${39}m`+r.lastOpeningBracketAt+(t+1))}else d.push([r.lastOpeningBracketAt,t+1]),""+`[${32}mPUSH[${39}m`+r.lastOpeningBracketAt+(t+1)}}else if(t>r.lastClosingBracketAt&&e[t].trim()||e[t+1]===void 0){let f=r.lastClosingBracketAt===t?t+1:t;if(""+`[${33}mendingRangeIndex[${39}m`+JSON.stringify(f,null,4),a.trimOnlySpaces&&f===A-1&&C!==null&&C<t&&(f=C),""+`[${33}mtag.name[${39}m`+JSON.stringify(r.name,null,4),(!S.length||S[S.length-1][0]!==r.lastOpeningBracketAt)&&(S.push([r.lastOpeningBracketAt,r.lastClosingBracketAt+1]),""+`[${32}mPUSH[${39}m`+r.lastOpeningBracketAt+(r.lastClosingBracketAt+1)),!E&&a.ignoreTags.includes(r.name)||E&&!a.onlyStripTags.includes(r.name))a.cb({tag:r,deleteFrom:null,deleteTo:null,insert:null,rangesArr:h,proposedReturn:null}),""+31+39,r={},s={};else if(!r.onlyPlausible||r.attributes.length===0&&r.name&&(p.has(r.name.toLowerCase())||x.has(r.name.toLowerCase()))||r.attributes&&r.attributes.some(b=>b.equalsAt)){(!d.length||d[d.length-1][0]!==r.lastOpeningBracketAt)&&(d.push([r.lastOpeningBracketAt,r.lastClosingBracketAt+1]),""+`[${32}mPUSH[${39}m`+r.lastOpeningBracketAt+(r.lastClosingBracketAt+1));let b=X(e,t,r.leftOuterWhitespace,f,r.lastOpeningBracketAt,r.lastClosingBracketAt);""+`[${33}mwhiteSpaceCompensation[${39}m`+JSON.stringify(b,null,4)+b.length,q="",O=!1,me(a),""+`[${33}mstringToInsertAfter[${39}m`+JSON.stringify(q,null,4);let k;J(q)&&q.length?(k=`${b}${q}${b===`
 
-`?`
-`:b}`,""+`[${32}mSET[${39}m`+`[${33}minsert[${39}m`+JSON.stringify(k,null,4)):(k=b,""+`[${32}mSET[${39}m`+`[${33}minsert[${39}m`+JSON.stringify(k,null,4)),(r.leftOuterWhitespace===0||!(0,yr.right)(e,f-1))&&(k="",""+`[${32}mSET[${39}m`+`[${33}minsert[${39}m`+JSON.stringify(k,null,4)),""+33+`cb()-SUBMIT RANGE #2: [${r.leftOuterWhitespace}, ${f}, ${JSON.stringify(k,null,0)}]`+39,a.cb({tag:r,deleteFrom:r.leftOuterWhitespace,deleteTo:f,insert:k,rangesArr:h,proposedReturn:[r.leftOuterWhitespace,f,k]}),m(),F(t,a,h)}else""+33+39,r={};Y(t)||(""+33+39,r={})}}if(Q(t)&&!Q(t-1)&&!`'"`.includes(e[t+1])&&(!`'"`.includes(e[t+2])||/\w/.test(e[t+1]))&&!(e[t+1]==="c"&&e[t+2]===":")&&!(e[t+1]==="f"&&e[t+2]==="m"&&e[t+3]==="t"&&e[t+4]===":")&&!(e[t+1]==="s"&&e[t+2]==="q"&&e[t+3]==="l"&&e[t+4]===":")&&!(e[t+1]==="x"&&e[t+2]===":")&&!(e[t+1]==="f"&&e[t+2]==="n"&&e[t+3]===":")&&hr(r,e,t)){if(Y((0,yr.right)(e,t)))continue;if(""+!!r.nameEnds+(r.nameEnds<t)+!r.lastClosingBracketAt,r.nameEnds&&r.nameEnds<t&&!r.lastClosingBracketAt&&(""+!!r.onlyPlausible+!p.has(r.name)+!x.has(r.name)+!(r.attributes&&r.attributes.length),r.onlyPlausible===!0&&r.attributes&&r.attributes.length||r.onlyPlausible===!1)){let f=X(e,t,r.leftOuterWhitespace,t,r.lastOpeningBracketAt,t);""+r.leftOuterWhitespace+t+f,a.cb({tag:r,deleteFrom:r.leftOuterWhitespace,deleteTo:t,insert:f,rangesArr:h,proposedReturn:[r.leftOuterWhitespace,t,f]}),F(t,a,h),r={},s={}}if(r.lastOpeningBracketAt!==void 0&&r.onlyPlausible&&r.name&&!r.quotes&&(""+`[${31}mRESET[${39}m`,r.lastOpeningBracketAt=void 0,r.name=void 0,r.onlyPlausible=!1,""+`[${33}mtag[${39}m`+JSON.stringify(r,null,4)),(r.lastOpeningBracketAt===void 0||!r.onlyPlausible)&&!r.quotes&&(r.lastOpeningBracketAt=t,r.slashPresent=!1,r.attributes=[],v===null?r.leftOuterWhitespace=t:a.trimOnlySpaces&&v===0?r.leftOuterWhitespace=c||t:r.leftOuterWhitespace=v,""+`[${32}mSET[${39}m`+33+39+r.leftOuterWhitespace+33+39+r.lastOpeningBracketAt+33+39,`${e[t+1]}${e[t+2]}${e[t+3]}`=="!--"||`${e[t+1]}${e[t+2]}${e[t+3]}${e[t+4]}${e[t+5]}${e[t+6]}${e[t+7]}${e[t+8]}`=="![CDATA[")){""+31+39;let f=!0;e[t+2]==="-"&&(f=!1);let b;for(let k=t;k<A;k++)if(""+`[${33}m${`str[${k}]`}[${39}m`+e[k],(!b&&f&&`${e[k-2]}${e[k-1]}${e[k]}`=="]]>"||!f&&`${e[k-2]}${e[k-1]}${e[k]}`=="-->")&&(b=k,""+b),b&&(b<k&&e[k].trim()||e[k+1]===void 0)){let U=k;(e[k+1]===void 0&&!e[k].trim()||e[k]===">")&&(U+=1),(!S.length||S[S.length-1][0]!==r.lastOpeningBracketAt)&&(S.push([r.lastOpeningBracketAt,b+1]),""+`[${32}mPUSH[${39}m`+r.lastOpeningBracketAt+(b+1)),(!d.length||d[d.length-1][0]!==r.lastOpeningBracketAt)&&(d.push([r.lastOpeningBracketAt,b+1]),""+`[${32}mPUSH[${39}m`+r.lastOpeningBracketAt+(b+1));let j=X(e,k,r.leftOuterWhitespace,U,r.lastOpeningBracketAt,b);""+r.leftOuterWhitespace+U+j,a.cb({tag:r,deleteFrom:r.leftOuterWhitespace,deleteTo:U,insert:j,rangesArr:h,proposedReturn:[r.leftOuterWhitespace,U,j]}),t=k-1,e[k]===">"&&(t=k),r={},s={};break}}}e[t].trim()?v!==null&&(!r.quotes&&s.equalsAt>v-1&&s.nameEnds&&s.equalsAt>s.nameEnds&&e[t]!=='"'&&e[t]!=="'"&&((0,Oe.default)(s)&&(""+`[${33}mattrObj[${39}m`+JSON.stringify(s,null,4),r.attributes.push(s)),s={},r.equalsSpottedAt=void 0),v=null,""+`[${32}mSET[${39}m`+33+39+v):v===null&&(v=t,""+`[${32}mSET[${39}m`+33+39+v,r.lastOpeningBracketAt!==void 0&&r.lastOpeningBracketAt<t&&r.nameStarts&&r.nameStarts<r.lastOpeningBracketAt&&t===r.lastOpeningBracketAt+1&&!$.some(f=>f.name===r.name)&&(""+31+39,r.onlyPlausible=!0,r.name=void 0,r.nameStarts=void 0)),e[t]===" "?c===null&&(c=t,""+`[${32}mSET[${39}m`+33+39+c):c!==null&&(c=null,""+`[${32}mSET[${39}m`+33+39+c),""+32+39,""+`[${33}mrangedOpeningTags[${39}m`+JSON.stringify($,null,4),""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(d,null,4),""+`[${33}mspacesChunkWhichFollowsTheClosingBracketEndsAt[${39}m`+JSON.stringify(C,null,4),""+`[${33}mhrefDump[${39}m`+JSON.stringify(l,null,4),""+`[${33}mattrObj[${39}m`+JSON.stringify(s,null,4),""+(Object.keys(r).length?`${`[${35}mtag[${39}m`} = ${Object.keys(r).map(f=>`${`[${90}m${`[${7}m${f}[${27}m`}[${39}m`} ${`[${90}m: ${(0,Oe.default)(r[f])||Array.isArray(r[f])?JSON.stringify(r[f],null,4):r[f]}[${39}m`}`).join(`,
-`)}
-`:"")+(h.current()?`RANGES: ${JSON.stringify(h.current(),null,0)}`:"")}if(e&&(a.trimOnlySpaces&&e[0]===" "||!a.trimOnlySpaces&&!e[0].trim()))for(let t=0,A=e.length;t<A;t++)if(a.trimOnlySpaces&&e[t]!==" "||!a.trimOnlySpaces&&e[t].trim()){""+t,h.push([0,t]);break}else e[t+1]||(""+(t+1),h.push([0,t+1]));if(e&&(a.trimOnlySpaces&&e[e.length-1]===" "||!a.trimOnlySpaces&&!e[e.length-1].trim())){for(let t=e.length;t--;)if(a.trimOnlySpaces&&e[t]!==" "||!a.trimOnlySpaces&&e[t].trim()){""+e.length,h.push([t+1,e.length]);break}}let B=h.current();if((!n||!n.cb)&&B){if(B[0]&&!B[0][0]){""+`[${33}mthe first range[${39}m`+JSON.stringify(B[0],null,4);let t=B[0][1];""+`[${33}mstartingIdx[${39}m`+JSON.stringify(t,null,4),h.ranges[0]=[h.ranges[0][0],h.ranges[0][1]]}if(B[B.length-1]&&B[B.length-1][1]===e.length){""+`[${33}mthe last range[${39}m`+JSON.stringify(B[B.length-1],null,4)+e.length;let t=B[B.length-1][0];if(""+`[${33}mstartingIdx[${39}m`+JSON.stringify(t,null,4),h.ranges){let A=h.ranges[h.ranges.length-1][0];e[A-1]&&(a.trimOnlySpaces&&e[A-1]===" "||!a.trimOnlySpaces&&!e[A-1].trim())&&(A-=1);let f=h.ranges[h.ranges.length-1][2];h.ranges[h.ranges.length-1]=[A,h.ranges[h.ranges.length-1][1]],f&&f.trim()&&h.ranges[h.ranges.length-1].push(f.trimEnd())}}}let _={log:{timeTakenInMilliseconds:Date.now()-i},result:(0,Kt.rApply)(e,h.current()),ranges:h.current(),allTagLocations:S,filteredTagLocations:d};return""+`[${32}mFINAL RESULT[${39}m`+JSON.stringify(_,null,4),_}return xo;})();
+var allNamedReferences = __assign(__assign({}, namedReferences.namedReferences), { all: namedReferences.namedReferences.html5 });
+var defaultDecodeOptions = {
+    scope: 'body',
+    level: 'all'
+};
+var strict = /&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);/g;
+var attribute = /&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+)[;=]?/g;
+var baseDecodeRegExps = {
+    xml: {
+        strict: strict,
+        attribute: attribute,
+        body: namedReferences.bodyRegExps.xml
+    },
+    html4: {
+        strict: strict,
+        attribute: attribute,
+        body: namedReferences.bodyRegExps.html4
+    },
+    html5: {
+        strict: strict,
+        attribute: attribute,
+        body: namedReferences.bodyRegExps.html5
+    }
+};
+var decodeRegExps = __assign(__assign({}, baseDecodeRegExps), { all: baseDecodeRegExps.html5 });
+var fromCharCode = String.fromCharCode;
+var outOfBoundsChar = fromCharCode(65533);
+/** Decodes all entities in the text */
+function decode(text, _a) {
+    var decodeSecondChar_1 = _a === void 0 ? defaultDecodeOptions : _a, decodeCode_1 = decodeSecondChar_1.level, level = decodeCode_1 === void 0 ? 'all' : decodeCode_1, _b = decodeSecondChar_1.scope, scope = _b === void 0 ? level === 'xml' ? 'strict' : 'body' : _b;
+    if (!text) {
+        return '';
+    }
+    var decodeRegExp = decodeRegExps[level][scope];
+    var references = allNamedReferences[level].entities;
+    var isAttribute = scope === 'attribute';
+    var isStrict = scope === 'strict';
+    decodeRegExp.lastIndex = 0;
+    var replaceMatch_1 = decodeRegExp.exec(text);
+    var replaceResult_1;
+    if (replaceMatch_1) {
+        replaceResult_1 = '';
+        var replaceLastIndex_1 = 0;
+        do {
+            if (replaceLastIndex_1 !== replaceMatch_1.index) {
+                replaceResult_1 += text.substring(replaceLastIndex_1, replaceMatch_1.index);
+            }
+            var replaceInput_1 = replaceMatch_1[0];
+            var decodeResult_1 = replaceInput_1;
+            var decodeEntityLastChar_2 = replaceInput_1[replaceInput_1.length - 1];
+            if (isAttribute
+                && decodeEntityLastChar_2 === '=') {
+                decodeResult_1 = replaceInput_1;
+            }
+            else if (isStrict
+                && decodeEntityLastChar_2 !== ';') {
+                decodeResult_1 = replaceInput_1;
+            }
+            else {
+                var decodeResultByReference_2 = references[replaceInput_1];
+                if (decodeResultByReference_2) {
+                    decodeResult_1 = decodeResultByReference_2;
+                }
+                else if (replaceInput_1[0] === '&' && replaceInput_1[1] === '#') {
+                    var decodeSecondChar_2 = replaceInput_1[2];
+                    var decodeCode_2 = decodeSecondChar_2 == 'x' || decodeSecondChar_2 == 'X'
+                        ? parseInt(replaceInput_1.substr(3), 16)
+                        : parseInt(replaceInput_1.substr(2));
+                    decodeResult_1 =
+                        decodeCode_2 >= 0x10ffff
+                            ? outOfBoundsChar
+                            : decodeCode_2 > 65535
+                                ? surrogatePairs.fromCodePoint(decodeCode_2)
+                                : fromCharCode(numericUnicodeMap.numericUnicodeMap[decodeCode_2] || decodeCode_2);
+                }
+            }
+            replaceResult_1 += decodeResult_1;
+            replaceLastIndex_1 = replaceMatch_1.index + replaceInput_1.length;
+        } while ((replaceMatch_1 = decodeRegExp.exec(text)));
+        if (replaceLastIndex_1 !== text.length) {
+            replaceResult_1 += text.substring(replaceLastIndex_1);
+        }
+    }
+    else {
+        replaceResult_1 =
+            text;
+    }
+    return replaceResult_1;
+}
+var decode_1 = decode;
+
+/**
+ * ranges-sort
+ * Sort string index ranges
+ * Version: 4.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-sort/
+ */
+const defaults$3 = {
+  strictlyTwoElementsInRangeArrays: false,
+  progressFn: null
+};
+function rSort(arrOfRanges, originalOptions) {
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
+    return arrOfRanges;
+  }
+  const opts = { ...defaults$3,
+    ...originalOptions
+  };
+  let culpritsIndex;
+  let culpritsLen;
+  if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(range => range).every((rangeArr, indx) => {
+    if (rangeArr.length !== 2) {
+      culpritsIndex = indx;
+      culpritsLen = rangeArr.length;
+      return false;
+    }
+    return true;
+  })) {
+    throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) has not two but ${culpritsLen} elements!`);
+  }
+  if (!arrOfRanges.filter(range => range).every((rangeArr, indx) => {
+    if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
+      culpritsIndex = indx;
+      return false;
+    }
+    return true;
+  })) {
+    throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) does not consist of only natural numbers!`);
+  }
+  const maxPossibleIterations = arrOfRanges.filter(range => range).length ** 2;
+  let counter = 0;
+  return Array.from(arrOfRanges).filter(range => range).sort((range1, range2) => {
+    if (opts.progressFn) {
+      counter += 1;
+      opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
+    }
+    if (range1[0] === range2[0]) {
+      if (range1[1] < range2[1]) {
+        return -1;
+      }
+      if (range1[1] > range2[1]) {
+        return 1;
+      }
+      return 0;
+    }
+    if (range1[0] < range2[0]) {
+      return -1;
+    }
+    return 1;
+  });
+}
+
+/**
+ * ranges-merge
+ * Merge and sort string index ranges
+ * Version: 7.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-merge/
+ */
+const defaults$2 = {
+  mergeType: 1,
+  progressFn: null,
+  joinRangesThatTouchEdges: true
+};
+function rMerge(arrOfRanges, originalOpts) {
+  function isObj(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
+    return null;
+  }
+  let opts;
+  if (originalOpts) {
+    if (isObj(originalOpts)) {
+      opts = { ...defaults$2,
+        ...originalOpts
+      };
+      if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
+        opts.progressFn = null;
+      } else if (opts.progressFn && typeof opts.progressFn !== "function") {
+        throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(opts.progressFn, null, 4)}`);
+      }
+      if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
+        throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+      }
+      if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
+        throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)}`);
+      }
+    } else {
+      throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
+    }
+  } else {
+    opts = { ...defaults$2
+    };
+  }
+  const filtered = arrOfRanges
+  .filter(range => range).map(subarr => [...subarr]).filter(
+  rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
+  let sortedRanges;
+  let lastPercentageDone;
+  let percentageDone;
+  if (opts.progressFn) {
+    sortedRanges = rSort(filtered, {
+      progressFn: percentage => {
+        percentageDone = Math.floor(percentage / 5);
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          opts.progressFn(percentageDone);
+        }
+      }
+    });
+  } else {
+    sortedRanges = rSort(filtered);
+  }
+  if (!sortedRanges) {
+    return null;
+  }
+  const len = sortedRanges.length - 1;
+  for (let i = len; i > 0; i--) {
+    if (opts.progressFn) {
+      percentageDone = Math.floor((1 - i / len) * 78) + 21;
+      if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        opts.progressFn(percentageDone);
+      }
+    }
+    if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
+      sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
+      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
+      if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
+        if (sortedRanges[i - 1][2] !== null) {
+          if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
+            sortedRanges[i - 1][2] = null;
+          } else if (sortedRanges[i - 1][2] != null) {
+            if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
+              sortedRanges[i - 1][2] = sortedRanges[i][2];
+            } else {
+              sortedRanges[i - 1][2] += sortedRanges[i][2];
+            }
+          } else {
+            sortedRanges[i - 1][2] = sortedRanges[i][2];
+          }
+        }
+      }
+      sortedRanges.splice(i, 1);
+      i = sortedRanges.length;
+    }
+  }
+  return sortedRanges.length ? sortedRanges : null;
+}
+
+/**
+ * ranges-apply
+ * Take an array of string index ranges, delete/replace the string according to them
+ * Version: 5.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-apply/
+ */
+function rApply(str, originalRangesArr, progressFn) {
+  let percentageDone = 0;
+  let lastPercentageDone = 0;
+  if (arguments.length === 0) {
+    throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
+  }
+  if (typeof str !== "string") {
+    throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
+  }
+  if (originalRangesArr && !Array.isArray(originalRangesArr)) {
+    throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
+  }
+  if (progressFn && typeof progressFn !== "function") {
+    throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
+  }
+  if (!originalRangesArr || !originalRangesArr.filter(range => range).length) {
+    return str;
+  }
+  let rangesArr;
+  if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
+    rangesArr = [Array.from(originalRangesArr)];
+  } else {
+    rangesArr = Array.from(originalRangesArr);
+  }
+  const len = rangesArr.length;
+  let counter = 0;
+  rangesArr.filter(range => range).forEach((el, i) => {
+    if (progressFn) {
+      percentageDone = Math.floor(counter / len * 10);
+      /* istanbul ignore else */
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        progressFn(percentageDone);
+      }
+    }
+    if (!Array.isArray(el)) {
+      throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(el, null, 4)}, which is ${typeof el}`);
+    }
+    if (!Number.isInteger(el[0])) {
+      if (!Number.isInteger(+el[0]) || +el[0] < 0) {
+        throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(el, null, 0)}. Its first element is not an integer, string index, but ${typeof el[0]}, equal to: ${JSON.stringify(el[0], null, 4)}.`);
+      } else {
+        rangesArr[i][0] = +rangesArr[i][0];
+      }
+    }
+    if (!Number.isInteger(el[1])) {
+      if (!Number.isInteger(+el[1]) || +el[1] < 0) {
+        throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(el, null, 0)}. Its second element is not an integer, string index, but ${typeof el[1]}, equal to: ${JSON.stringify(el[1], null, 4)}.`);
+      } else {
+        rangesArr[i][1] = +rangesArr[i][1];
+      }
+    }
+    counter += 1;
+  });
+  const workingRanges = rMerge(rangesArr, {
+    progressFn: perc => {
+      if (progressFn) {
+        percentageDone = 10 + Math.floor(perc / 10);
+        /* istanbul ignore else */
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
+      }
+    }
+  });
+  const len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
+  /* istanbul ignore else */
+  if (len2 > 0) {
+    const tails = str.slice(workingRanges[len2 - 1][1]);
+    str = workingRanges.reduce((acc, _val, i, arr) => {
+      if (progressFn) {
+        percentageDone = 20 + Math.floor(i / len2 * 80);
+        /* istanbul ignore else */
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
+      }
+      const beginning = i === 0 ? 0 : arr[i - 1][1];
+      const ending = arr[i][0];
+      return acc + str.slice(beginning, ending) + (arr[i][2] || "");
+    }, "");
+    str += tails;
+  }
+  return str;
+}
+
+/**
+ * string-collapse-leading-whitespace
+ * Collapse the leading and trailing whitespace of a string
+ * Version: 5.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
+ */
+function collWhitespace(str, originallineBreakLimit = 1) {
+  const rawNbsp = "\u00A0";
+  function reverse(s) {
+    return Array.from(s).reverse().join("");
+  }
+  function prep(whitespaceChunk, limit, trailing) {
+    const firstBreakChar = trailing ? "\n" : "\r";
+    const secondBreakChar = trailing ? "\r" : "\n";
+    if (!whitespaceChunk) {
+      return whitespaceChunk;
+    }
+    let crlfCount = 0;
+    let res = "";
+    for (let i = 0, len = whitespaceChunk.length; i < len; i++) {
+      if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
+        crlfCount++;
+      }
+      if (`\r\n`.includes(whitespaceChunk[i]) || whitespaceChunk[i] === rawNbsp) {
+        if (whitespaceChunk[i] === rawNbsp) {
+          res += whitespaceChunk[i];
+        } else if (whitespaceChunk[i] === firstBreakChar) {
+          if (crlfCount <= limit) {
+            res += whitespaceChunk[i];
+            if (whitespaceChunk[i + 1] === secondBreakChar) {
+              res += whitespaceChunk[i + 1];
+              i++;
+            }
+          }
+        } else if (whitespaceChunk[i] === secondBreakChar && (!whitespaceChunk[i - 1] || whitespaceChunk[i - 1] !== firstBreakChar) && crlfCount <= limit) {
+          res += whitespaceChunk[i];
+        }
+      } else {
+        if (!whitespaceChunk[i + 1] && !crlfCount) {
+          res += " ";
+        }
+      }
+    }
+    return res;
+  }
+  if (typeof str === "string" && str.length) {
+    let lineBreakLimit = 1;
+    if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
+      lineBreakLimit = +originallineBreakLimit;
+    }
+    let frontPart = "";
+    let endPart = "";
+    if (!str.trim()) {
+      frontPart = str;
+    } else if (!str[0].trim()) {
+      for (let i = 0, len = str.length; i < len; i++) {
+        if (str[i].trim()) {
+          frontPart = str.slice(0, i);
+          break;
+        }
+      }
+    }
+    if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
+      for (let i = str.length; i--;) {
+        if (str[i].trim()) {
+          endPart = str.slice(i + 1);
+          break;
+        }
+      }
+    }
+    return `${prep(frontPart, lineBreakLimit, false)}${str.trim()}${reverse(prep(reverse(endPart), lineBreakLimit, true))}`;
+  }
+  return str;
+}
+
+/**
+ * ranges-push
+ * Gather string index ranges
+ * Version: 5.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-push/
+ */
+function existy(x) {
+  return x != null;
+}
+function isNum(something) {
+  return Number.isInteger(something) && something >= 0;
+}
+function isStr(something) {
+  return typeof something === "string";
+}
+const defaults$1 = {
+  limitToBeAddedWhitespace: false,
+  limitLinebreaksCount: 1,
+  mergeType: 1
+};
+class Ranges {
+  constructor(originalOpts) {
+    const opts = { ...defaults$1,
+      ...originalOpts
+    };
+    if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
+      if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
+        opts.mergeType = 1;
+      } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
+        opts.mergeType = 2;
+      } else {
+        throw new Error(`ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+      }
+    }
+    this.opts = opts;
+    this.ranges = [];
+  }
+  add(originalFrom, originalTo, addVal) {
+    if (originalFrom == null && originalTo == null) {
+      return;
+    }
+    if (existy(originalFrom) && !existy(originalTo)) {
+      if (Array.isArray(originalFrom)) {
+        if (originalFrom.length) {
+          if (originalFrom.some(el => Array.isArray(el))) {
+            originalFrom.forEach(thing => {
+              if (Array.isArray(thing)) {
+                this.add(...thing);
+              }
+            });
+            return;
+          }
+          if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
+            this.add(...originalFrom);
+          }
+        }
+        return;
+      }
+      throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(originalFrom, null, 0)}) but second-one, "to" is not (${JSON.stringify(originalTo, null, 0)})`);
+    } else if (!existy(originalFrom) && existy(originalTo)) {
+      throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(originalTo, null, 0)}) but first-one, "from" is not (${JSON.stringify(originalFrom, null, 0)})`);
+    }
+    const from = +originalFrom;
+    const to = +originalTo;
+    if (isNum(addVal)) {
+      addVal = String(addVal);
+    }
+    if (isNum(from) && isNum(to)) {
+      if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
+        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(addVal, null, 4)}`);
+      }
+      if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
+        this.last()[1] = to;
+        if (this.last()[2] === null || addVal === null) ;
+        if (this.last()[2] !== null && existy(addVal)) {
+          let calculatedVal = this.last()[2] && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
+          if (this.opts.limitToBeAddedWhitespace) {
+            calculatedVal = collWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
+          }
+          if (!(isStr(calculatedVal) && !calculatedVal.length)) {
+            this.last()[2] = calculatedVal;
+          }
+        }
+      } else {
+        if (!this.ranges) {
+          this.ranges = [];
+        }
+        const whatToPush = addVal !== undefined && !(isStr(addVal) && !addVal.length) ? [from, to, addVal && this.opts.limitToBeAddedWhitespace ? collWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+        this.ranges.push(whatToPush);
+      }
+    } else {
+      if (!(isNum(from) && from >= 0)) {
+        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(from, null, 4)}`);
+      } else {
+        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(to, null, 4)}`);
+      }
+    }
+  }
+  push(originalFrom, originalTo, addVal) {
+    this.add(originalFrom, originalTo, addVal);
+  }
+  current() {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
+      this.ranges = rMerge(this.ranges, {
+        mergeType: this.opts.mergeType
+      });
+      if (this.ranges && this.opts.limitToBeAddedWhitespace) {
+        return this.ranges.map(val => {
+          if (existy(val[2])) {
+            return [val[0], val[1], collWhitespace(val[2], this.opts.limitLinebreaksCount)];
+          }
+          return val;
+        });
+      }
+      return this.ranges;
+    }
+    return null;
+  }
+  wipe() {
+    this.ranges = [];
+  }
+  replace(givenRanges) {
+    if (Array.isArray(givenRanges) && givenRanges.length) {
+      if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+        throw new Error(`ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(givenRanges[0], null, 4)} should be an array and its first element should be an integer, a string index.`);
+      } else {
+        this.ranges = Array.from(givenRanges);
+      }
+    } else {
+      this.ranges = [];
+    }
+  }
+  last() {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
+      return this.ranges[this.ranges.length - 1];
+    }
+    return null;
+  }
+}
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+createCommonjsModule(function (module, exports) {
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    promiseTag = '[object Promise]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to match `RegExp` flags from their coerced string values. */
+var reFlags = /\w*$/;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used to detect unsigned integer values. */
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+/** Used to identify `toStringTag` values supported by `_.clone`. */
+var cloneableTags = {};
+cloneableTags[argsTag] = cloneableTags[arrayTag] =
+cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
+cloneableTags[boolTag] = cloneableTags[dateTag] =
+cloneableTags[float32Tag] = cloneableTags[float64Tag] =
+cloneableTags[int8Tag] = cloneableTags[int16Tag] =
+cloneableTags[int32Tag] = cloneableTags[mapTag] =
+cloneableTags[numberTag] = cloneableTags[objectTag] =
+cloneableTags[regexpTag] = cloneableTags[setTag] =
+cloneableTags[stringTag] = cloneableTags[symbolTag] =
+cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
+cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+cloneableTags[errorTag] = cloneableTags[funcTag] =
+cloneableTags[weakMapTag] = false;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Detect free variable `exports`. */
+var freeExports = exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/**
+ * Adds the key-value `pair` to `map`.
+ *
+ * @private
+ * @param {Object} map The map to modify.
+ * @param {Array} pair The key-value pair to add.
+ * @returns {Object} Returns `map`.
+ */
+function addMapEntry(map, pair) {
+  // Don't return `map.set` because it's not chainable in IE 11.
+  map.set(pair[0], pair[1]);
+  return map;
+}
+
+/**
+ * Adds `value` to `set`.
+ *
+ * @private
+ * @param {Object} set The set to modify.
+ * @param {*} value The value to add.
+ * @returns {Object} Returns `set`.
+ */
+function addSetEntry(set, value) {
+  // Don't return `set.add` because it's not chainable in IE 11.
+  set.add(value);
+  return set;
+}
+
+/**
+ * A specialized version of `_.forEach` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns `array`.
+ */
+function arrayEach(array, iteratee) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
+      break;
+    }
+  }
+  return array;
+}
+
+/**
+ * Appends the elements of `values` to `array`.
+ *
+ * @private
+ * @param {Array} array The array to modify.
+ * @param {Array} values The values to append.
+ * @returns {Array} Returns `array`.
+ */
+function arrayPush(array, values) {
+  var index = -1,
+      length = values.length,
+      offset = array.length;
+
+  while (++index < length) {
+    array[offset + index] = values[index];
+  }
+  return array;
+}
+
+/**
+ * A specialized version of `_.reduce` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {*} [accumulator] The initial value.
+ * @param {boolean} [initAccum] Specify using the first element of `array` as
+ *  the initial value.
+ * @returns {*} Returns the accumulated value.
+ */
+function arrayReduce(array, iteratee, accumulator, initAccum) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  if (initAccum && length) {
+    accumulator = array[++index];
+  }
+  while (++index < length) {
+    accumulator = iteratee(accumulator, array[index], index, array);
+  }
+  return accumulator;
+}
+
+/**
+ * The base implementation of `_.times` without support for iteratee shorthands
+ * or max array length checks.
+ *
+ * @private
+ * @param {number} n The number of times to invoke `iteratee`.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the array of results.
+ */
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
+
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
+}
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/**
+ * Converts `map` to its key-value pairs.
+ *
+ * @private
+ * @param {Object} map The map to convert.
+ * @returns {Array} Returns the key-value pairs.
+ */
+function mapToArray(map) {
+  var index = -1,
+      result = Array(map.size);
+
+  map.forEach(function(value, key) {
+    result[++index] = [key, value];
+  });
+  return result;
+}
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+/**
+ * Converts `set` to an array of its values.
+ *
+ * @private
+ * @param {Object} set The set to convert.
+ * @returns {Array} Returns the values.
+ */
+function setToArray(set) {
+  var index = -1,
+      result = Array(set.size);
+
+  set.forEach(function(value) {
+    result[++index] = value;
+  });
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined,
+    Symbol = root.Symbol,
+    Uint8Array = root.Uint8Array,
+    getPrototype = overArg(Object.getPrototypeOf, Object),
+    objectCreate = Object.create,
+    propertyIsEnumerable = objectProto.propertyIsEnumerable,
+    splice = arrayProto.splice;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeGetSymbols = Object.getOwnPropertySymbols,
+    nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
+    nativeKeys = overArg(Object.keys, Object);
+
+/* Built-in method references that are verified to be native. */
+var DataView = getNative(root, 'DataView'),
+    Map = getNative(root, 'Map'),
+    Promise = getNative(root, 'Promise'),
+    Set = getNative(root, 'Set'),
+    WeakMap = getNative(root, 'WeakMap'),
+    nativeCreate = getNative(Object, 'create');
+
+/** Used to detect maps, sets, and weakmaps. */
+var dataViewCtorString = toSource(DataView),
+    mapCtorString = toSource(Map),
+    promiseCtorString = toSource(Promise),
+    setCtorString = toSource(Set),
+    weakMapCtorString = toSource(WeakMap);
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ * Creates a stack cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Stack(entries) {
+  this.__data__ = new ListCache(entries);
+}
+
+/**
+ * Removes all key-value entries from the stack.
+ *
+ * @private
+ * @name clear
+ * @memberOf Stack
+ */
+function stackClear() {
+  this.__data__ = new ListCache;
+}
+
+/**
+ * Removes `key` and its value from the stack.
+ *
+ * @private
+ * @name delete
+ * @memberOf Stack
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function stackDelete(key) {
+  return this.__data__['delete'](key);
+}
+
+/**
+ * Gets the stack value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Stack
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function stackGet(key) {
+  return this.__data__.get(key);
+}
+
+/**
+ * Checks if a stack value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Stack
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function stackHas(key) {
+  return this.__data__.has(key);
+}
+
+/**
+ * Sets the stack `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Stack
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the stack cache instance.
+ */
+function stackSet(key, value) {
+  var cache = this.__data__;
+  if (cache instanceof ListCache) {
+    var pairs = cache.__data__;
+    if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
+      pairs.push([key, value]);
+      return this;
+    }
+    cache = this.__data__ = new MapCache(pairs);
+  }
+  cache.set(key, value);
+  return this;
+}
+
+// Add methods to `Stack`.
+Stack.prototype.clear = stackClear;
+Stack.prototype['delete'] = stackDelete;
+Stack.prototype.get = stackGet;
+Stack.prototype.has = stackHas;
+Stack.prototype.set = stackSet;
+
+/**
+ * Creates an array of the enumerable property names of the array-like `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @param {boolean} inherited Specify returning inherited property names.
+ * @returns {Array} Returns the array of property names.
+ */
+function arrayLikeKeys(value, inherited) {
+  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+  // Safari 9 makes `arguments.length` enumerable in strict mode.
+  var result = (isArray(value) || isArguments(value))
+    ? baseTimes(value.length, String)
+    : [];
+
+  var length = result.length,
+      skipIndexes = !!length;
+
+  for (var key in value) {
+    if ((inherited || hasOwnProperty.call(value, key)) &&
+        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * Assigns `value` to `key` of `object` if the existing value is not equivalent
+ * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {string} key The key of the property to assign.
+ * @param {*} value The value to assign.
+ */
+function assignValue(object, key, value) {
+  var objValue = object[key];
+  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+      (value === undefined && !(key in object))) {
+    object[key] = value;
+  }
+}
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.assign` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+function baseAssign(object, source) {
+  return object && copyObject(source, keys(source), object);
+}
+
+/**
+ * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+ * traversed objects.
+ *
+ * @private
+ * @param {*} value The value to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @param {boolean} [isFull] Specify a clone including symbols.
+ * @param {Function} [customizer] The function to customize cloning.
+ * @param {string} [key] The key of `value`.
+ * @param {Object} [object] The parent object of `value`.
+ * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+ * @returns {*} Returns the cloned value.
+ */
+function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
+  var result;
+  if (customizer) {
+    result = object ? customizer(value, key, object, stack) : customizer(value);
+  }
+  if (result !== undefined) {
+    return result;
+  }
+  if (!isObject(value)) {
+    return value;
+  }
+  var isArr = isArray(value);
+  if (isArr) {
+    result = initCloneArray(value);
+    if (!isDeep) {
+      return copyArray(value, result);
+    }
+  } else {
+    var tag = getTag(value),
+        isFunc = tag == funcTag || tag == genTag;
+
+    if (isBuffer(value)) {
+      return cloneBuffer(value, isDeep);
+    }
+    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
+      if (isHostObject(value)) {
+        return object ? value : {};
+      }
+      result = initCloneObject(isFunc ? {} : value);
+      if (!isDeep) {
+        return copySymbols(value, baseAssign(result, value));
+      }
+    } else {
+      if (!cloneableTags[tag]) {
+        return object ? value : {};
+      }
+      result = initCloneByTag(value, tag, baseClone, isDeep);
+    }
+  }
+  // Check for circular references and return its corresponding clone.
+  stack || (stack = new Stack);
+  var stacked = stack.get(value);
+  if (stacked) {
+    return stacked;
+  }
+  stack.set(value, result);
+
+  if (!isArr) {
+    var props = isFull ? getAllKeys(value) : keys(value);
+  }
+  arrayEach(props || value, function(subValue, key) {
+    if (props) {
+      key = subValue;
+      subValue = value[key];
+    }
+    // Recursively populate clone (susceptible to call stack limits).
+    assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
+  });
+  return result;
+}
+
+/**
+ * The base implementation of `_.create` without support for assigning
+ * properties to the created object.
+ *
+ * @private
+ * @param {Object} prototype The object to inherit from.
+ * @returns {Object} Returns the new object.
+ */
+function baseCreate(proto) {
+  return isObject(proto) ? objectCreate(proto) : {};
+}
+
+/**
+ * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+ * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+ * symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Function} keysFunc The function to get the keys of `object`.
+ * @param {Function} symbolsFunc The function to get the symbols of `object`.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+  var result = keysFunc(object);
+  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+}
+
+/**
+ * The base implementation of `getTag`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  return objectToString.call(value);
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * Creates a clone of  `buffer`.
+ *
+ * @private
+ * @param {Buffer} buffer The buffer to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Buffer} Returns the cloned buffer.
+ */
+function cloneBuffer(buffer, isDeep) {
+  if (isDeep) {
+    return buffer.slice();
+  }
+  var result = new buffer.constructor(buffer.length);
+  buffer.copy(result);
+  return result;
+}
+
+/**
+ * Creates a clone of `arrayBuffer`.
+ *
+ * @private
+ * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+ * @returns {ArrayBuffer} Returns the cloned array buffer.
+ */
+function cloneArrayBuffer(arrayBuffer) {
+  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+  return result;
+}
+
+/**
+ * Creates a clone of `dataView`.
+ *
+ * @private
+ * @param {Object} dataView The data view to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned data view.
+ */
+function cloneDataView(dataView, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+}
+
+/**
+ * Creates a clone of `map`.
+ *
+ * @private
+ * @param {Object} map The map to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned map.
+ */
+function cloneMap(map, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
+  return arrayReduce(array, addMapEntry, new map.constructor);
+}
+
+/**
+ * Creates a clone of `regexp`.
+ *
+ * @private
+ * @param {Object} regexp The regexp to clone.
+ * @returns {Object} Returns the cloned regexp.
+ */
+function cloneRegExp(regexp) {
+  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+  result.lastIndex = regexp.lastIndex;
+  return result;
+}
+
+/**
+ * Creates a clone of `set`.
+ *
+ * @private
+ * @param {Object} set The set to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned set.
+ */
+function cloneSet(set, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
+  return arrayReduce(array, addSetEntry, new set.constructor);
+}
+
+/**
+ * Creates a clone of the `symbol` object.
+ *
+ * @private
+ * @param {Object} symbol The symbol object to clone.
+ * @returns {Object} Returns the cloned symbol object.
+ */
+function cloneSymbol(symbol) {
+  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+}
+
+/**
+ * Creates a clone of `typedArray`.
+ *
+ * @private
+ * @param {Object} typedArray The typed array to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned typed array.
+ */
+function cloneTypedArray(typedArray, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+}
+
+/**
+ * Copies the values of `source` to `array`.
+ *
+ * @private
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
+ * @returns {Array} Returns `array`.
+ */
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
+}
+
+/**
+ * Copies properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy properties from.
+ * @param {Array} props The property identifiers to copy.
+ * @param {Object} [object={}] The object to copy properties to.
+ * @param {Function} [customizer] The function to customize copied values.
+ * @returns {Object} Returns `object`.
+ */
+function copyObject(source, props, object, customizer) {
+  object || (object = {});
+
+  var index = -1,
+      length = props.length;
+
+  while (++index < length) {
+    var key = props[index];
+
+    var newValue = customizer
+      ? customizer(object[key], source[key], key, object, source)
+      : undefined;
+
+    assignValue(object, key, newValue === undefined ? source[key] : newValue);
+  }
+  return object;
+}
+
+/**
+ * Copies own symbol properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+function copySymbols(source, object) {
+  return copyObject(source, getSymbols(source), object);
+}
+
+/**
+ * Creates an array of own enumerable property names and symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function getAllKeys(object) {
+  return baseGetAllKeys(object, keys, getSymbols);
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * Creates an array of the own enumerable symbol properties of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of symbols.
+ */
+var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+var getTag = baseGetTag;
+
+// Fallback for data views, maps, sets, and weak maps in IE 11,
+// for data views in Edge < 14, and promises in Node.js.
+if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+    (Map && getTag(new Map) != mapTag) ||
+    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+    (Set && getTag(new Set) != setTag) ||
+    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+  getTag = function(value) {
+    var result = objectToString.call(value),
+        Ctor = result == objectTag ? value.constructor : undefined,
+        ctorString = Ctor ? toSource(Ctor) : undefined;
+
+    if (ctorString) {
+      switch (ctorString) {
+        case dataViewCtorString: return dataViewTag;
+        case mapCtorString: return mapTag;
+        case promiseCtorString: return promiseTag;
+        case setCtorString: return setTag;
+        case weakMapCtorString: return weakMapTag;
+      }
+    }
+    return result;
+  };
+}
+
+/**
+ * Initializes an array clone.
+ *
+ * @private
+ * @param {Array} array The array to clone.
+ * @returns {Array} Returns the initialized clone.
+ */
+function initCloneArray(array) {
+  var length = array.length,
+      result = array.constructor(length);
+
+  // Add properties assigned by `RegExp#exec`.
+  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+    result.index = array.index;
+    result.input = array.input;
+  }
+  return result;
+}
+
+/**
+ * Initializes an object clone.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneObject(object) {
+  return (typeof object.constructor == 'function' && !isPrototype(object))
+    ? baseCreate(getPrototype(object))
+    : {};
+}
+
+/**
+ * Initializes an object clone based on its `toStringTag`.
+ *
+ * **Note:** This function only supports cloning values with tags of
+ * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @param {string} tag The `toStringTag` of the object to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneByTag(object, tag, cloneFunc, isDeep) {
+  var Ctor = object.constructor;
+  switch (tag) {
+    case arrayBufferTag:
+      return cloneArrayBuffer(object);
+
+    case boolTag:
+    case dateTag:
+      return new Ctor(+object);
+
+    case dataViewTag:
+      return cloneDataView(object, isDeep);
+
+    case float32Tag: case float64Tag:
+    case int8Tag: case int16Tag: case int32Tag:
+    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
+      return cloneTypedArray(object, isDeep);
+
+    case mapTag:
+      return cloneMap(object, isDeep, cloneFunc);
+
+    case numberTag:
+    case stringTag:
+      return new Ctor(object);
+
+    case regexpTag:
+      return cloneRegExp(object);
+
+    case setTag:
+      return cloneSet(object, isDeep, cloneFunc);
+
+    case symbolTag:
+      return cloneSymbol(object);
+  }
+}
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  length = length == null ? MAX_SAFE_INTEGER : length;
+  return !!length &&
+    (typeof value == 'number' || reIsUint.test(value)) &&
+    (value > -1 && value % 1 == 0 && value < length);
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * This method is like `_.clone` except that it recursively clones `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 1.0.0
+ * @category Lang
+ * @param {*} value The value to recursively clone.
+ * @returns {*} Returns the deep cloned value.
+ * @see _.clone
+ * @example
+ *
+ * var objects = [{ 'a': 1 }, { 'b': 2 }];
+ *
+ * var deep = _.cloneDeep(objects);
+ * console.log(deep[0] === objects[0]);
+ * // => false
+ */
+function cloneDeep(value) {
+  return baseClone(value, true, true);
+}
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is likely an `arguments` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArguments(function() { return arguments; }());
+ * // => true
+ *
+ * _.isArguments([1, 2, 3]);
+ * // => false
+ */
+function isArguments(value) {
+  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+}
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
+}
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || stubFalse;
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+/**
+ * This method returns a new empty array.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {Array} Returns the new empty array.
+ * @example
+ *
+ * var arrays = _.times(2, _.stubArray);
+ *
+ * console.log(arrays);
+ * // => [[], []]
+ *
+ * console.log(arrays[0] === arrays[1]);
+ * // => false
+ */
+function stubArray() {
+  return [];
+}
+
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+module.exports = cloneDeep;
+});
+
+/**
+ * string-left-right
+ * Looks up the first non-whitespace character to the left/right of a given index
+ * Version: 4.0.12
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-left-right/
+ */
+const RAWNBSP = "\u00A0";
+function rightMain({
+  str,
+  idx = 0,
+  stopAtNewlines = false,
+  stopAtRawNbsp = false
+}) {
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+  if (!idx || typeof idx !== "number") {
+    idx = 0;
+  }
+  if (!str[idx + 1]) {
+    return null;
+  }
+  if (
+  str[idx + 1] && (
+  str[idx + 1].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx + 1]) ||
+  stopAtRawNbsp &&
+  str[idx + 1] === RAWNBSP)) {
+    return idx + 1;
+  }
+  if (
+  str[idx + 2] && (
+  str[idx + 2].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx + 2]) ||
+  stopAtRawNbsp &&
+  str[idx + 2] === RAWNBSP)) {
+    return idx + 2;
+  }
+  for (let i = idx + 1, len = str.length; i < len; i++) {
+    if (
+    str[i].trim() ||
+    stopAtNewlines &&
+    "\n\r".includes(str[i]) ||
+    stopAtRawNbsp &&
+    str[i] === RAWNBSP) {
+      return i;
+    }
+  }
+  return null;
+}
+function right(str, idx = 0) {
+  return rightMain({
+    str,
+    idx,
+    stopAtNewlines: false,
+    stopAtRawNbsp: false
+  });
+}
+
+/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
+/* istanbul ignore next */
+function characterSuitableForNames(char) {
+    return /[-_A-Za-z0-9]/.test(char);
+}
+/* istanbul ignore next */
+function prepHopefullyAnArray(something, name) {
+    if (!something) {
+        return [];
+    }
+    if (Array.isArray(something)) {
+        return something.filter((val) => typeof val === "string" && val.trim());
+    }
+    if (typeof something === "string") {
+        return something.trim() ? [something] : [];
+    }
+    throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`);
+}
+/* istanbul ignore next */
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
+    for (let i = startingIdx, len = str.length; i < len; i++) {
+        if (str.startsWith(x, i)) {
+            return true;
+        }
+        if (str.startsWith(y, i)) {
+            return false;
+        }
+    }
+    return false;
+}
+//
+// precaution against JSP comparison
+// kl <c:when test="${!empty ab.cd && ab.cd > 0.00}"> mn
+//                                          ^
+//                                        we're here, it's false ending
+//
+/* istanbul ignore next */
+function notWithinAttrQuotes(tag, str, i) {
+    return (!tag ||
+        !tag.quotes ||
+        !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">"));
+}
+
+var version$1 = "8.2.9";
+
+const version = version$1;
+const defaults = {
+    ignoreTags: [],
+    onlyStripTags: [],
+    stripTogetherWithTheirContents: ["script", "style", "xml"],
+    skipHtmlDecoding: false,
+    trimOnlySpaces: false,
+    dumpLinkHrefsNearby: {
+        enabled: false,
+        putOnNewLine: false,
+        wrapHeads: "",
+        wrapTails: "",
+    },
+    cb: null,
+};
+/**
+ * Strips HTML tags from strings. No parser, accepts mixed sources.
+ */
+function stripHtml(str, originalOpts) {
+    // const
+    // ===========================================================================
+    const start = Date.now();
+    const definitelyTagNames = new Set([
+        "!doctype",
+        "abbr",
+        "address",
+        "area",
+        "article",
+        "aside",
+        "audio",
+        "base",
+        "bdi",
+        "bdo",
+        "blockquote",
+        "body",
+        "br",
+        "button",
+        "canvas",
+        "caption",
+        "cite",
+        "code",
+        "col",
+        "colgroup",
+        "data",
+        "datalist",
+        "dd",
+        "del",
+        "details",
+        "dfn",
+        "dialog",
+        "div",
+        "dl",
+        "doctype",
+        "dt",
+        "em",
+        "embed",
+        "fieldset",
+        "figcaption",
+        "figure",
+        "footer",
+        "form",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "head",
+        "header",
+        "hgroup",
+        "hr",
+        "html",
+        "iframe",
+        "img",
+        "input",
+        "ins",
+        "kbd",
+        "keygen",
+        "label",
+        "legend",
+        "li",
+        "link",
+        "main",
+        "map",
+        "mark",
+        "math",
+        "menu",
+        "menuitem",
+        "meta",
+        "meter",
+        "nav",
+        "noscript",
+        "object",
+        "ol",
+        "optgroup",
+        "option",
+        "output",
+        "param",
+        "picture",
+        "pre",
+        "progress",
+        "rb",
+        "rp",
+        "rt",
+        "rtc",
+        "ruby",
+        "samp",
+        "script",
+        "section",
+        "select",
+        "slot",
+        "small",
+        "source",
+        "span",
+        "strong",
+        "style",
+        "sub",
+        "summary",
+        "sup",
+        "svg",
+        "table",
+        "tbody",
+        "td",
+        "template",
+        "textarea",
+        "tfoot",
+        "th",
+        "thead",
+        "time",
+        "title",
+        "tr",
+        "track",
+        "ul",
+        "var",
+        "video",
+        "wbr",
+        "xml",
+    ]);
+    const singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
+    const punctuation = new Set([
+        ".",
+        ",",
+        "?",
+        ";",
+        ")",
+        "\u2026",
+        '"',
+        "\u00BB",
+    ]);
+    // \u00BB is &raquo; - guillemet - right angled quote
+    // \u2026 is &hellip; - ellipsis
+    // we'll gather opening tags from ranged-pairs here:
+    const rangedOpeningTags = [];
+    // we'll put tag locations here
+    const allTagLocations = [];
+    let filteredTagLocations = [];
+    // variables
+    // ===========================================================================
+    // records the info about the suspected tag:
+    let tag = {};
+    function resetTag() {
+        tag = { attributes: [] };
+    }
+    resetTag();
+    // records the beginning of the current whitespace chunk:
+    let chunkOfWhitespaceStartsAt = null;
+    // records the beginning of the current chunk of spaces (strictly spaces-only):
+    let chunkOfSpacesStartsAt = null;
+    // temporary variable to assemble the attribute pieces:
+    let attrObj = {};
+    // marker to store captured href, used in opts.dumpLinkHrefsNearby.enabled
+    let hrefDump = {
+        tagName: "",
+        hrefValue: "",
+        openingTagEnds: undefined,
+    };
+    // used to insert extra things when pushing into ranges array
+    let stringToInsertAfter = "";
+    // state flag
+    let hrefInsertionActive = false;
+    // marker to keep a note where does the whitespace chunk that follows closing bracket end.
+    // It's necessary for opts.trimOnlySpaces when there's closing bracket, whitespace, non-space
+    // whitespace character ("\n", "\t" etc), whitspace, end-of-file. Trim will kick in and will
+    // try to trim up until the EOF, be we'll have to pull the end of trim back, back to the first
+    // character of aforementioned non-space whitespace character sequence.
+    // This variable will tell exactly where it is located.
+    let spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
+    // functions
+    // ===========================================================================
+    function existy(x) {
+        return x != null;
+    }
+    function isStr(something) {
+        return typeof something === "string";
+    }
+    function treatRangedTags(i, opts, rangesToDelete) {
+        if (Array.isArray(opts.stripTogetherWithTheirContents) &&
+            (opts.stripTogetherWithTheirContents.includes(tag.name) ||
+                opts.stripTogetherWithTheirContents.includes("*"))) {
+            // it depends, is it opening or closing range tag:
+            // We could try to distinguish opening from closing tags by presence of
+            // slash, but that would be a liability for dirty code cases where clash
+            // is missing. Better, instead, just see if an entry for that tag name
+            // already exists in the rangesToDelete[].
+            if (Array.isArray(rangedOpeningTags) &&
+                rangedOpeningTags.some((obj) => obj.name === tag.name && obj.lastClosingBracketAt < i)) {
+                // if (tag.slashPresent) {
+                // closing tag.
+                // filter and remove the found tag
+                for (let y = rangedOpeningTags.length; y--;) {
+                    if (rangedOpeningTags[y].name === tag.name) {
+                        // we'll remove from opening tag's opening bracket to closing tag's
+                        // closing bracket because whitespace will be taken care of separately,
+                        // when tags themselves will be removed.
+                        // Basically, for each range tag there will be 3 removals:
+                        // opening tag, closing tag and all from opening to closing tag.
+                        // We keep removing opening and closing tags along whole range
+                        // because of few reasons: 1. cases of broken/dirty code, 2. keeping
+                        // the algorithm simpler, 3. opts that control whitespace removal
+                        // around tags.
+                        // 1. add range without caring about surrounding whitespace around
+                        // the range
+                        // also, tend filteredTagLocations in the output - tags which are to be
+                        // deleted with contents should be reported as one large range in
+                        // filteredTagLocations - from opening to closing - not two ranges
+                        /* istanbul ignore else */
+                        if (opts.stripTogetherWithTheirContents.includes(tag.name) ||
+                            opts.stripTogetherWithTheirContents.includes("*")) {
+                            filteredTagLocations = filteredTagLocations.filter(([from, upto]) => (from < rangedOpeningTags[y].lastOpeningBracketAt ||
+                                from >= i + 1) &&
+                                (upto <= rangedOpeningTags[y].lastOpeningBracketAt ||
+                                    upto > i + 1));
+                        }
+                        let endingIdx = i + 1;
+                        if (tag.lastClosingBracketAt) {
+                            endingIdx = tag.lastClosingBracketAt + 1;
+                        }
+                        filteredTagLocations.push([
+                            rangedOpeningTags[y].lastOpeningBracketAt,
+                            endingIdx,
+                        ]);
+                        /* istanbul ignore else */
+                        if (punctuation.has(str[i]) && opts.cb) {
+                            opts.cb({
+                                tag: tag,
+                                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                                deleteTo: i + 1,
+                                insert: null,
+                                rangesArr: rangesToDelete,
+                                proposedReturn: [
+                                    rangedOpeningTags[y].lastOpeningBracketAt,
+                                    i,
+                                    null,
+                                ],
+                            });
+                            // null will remove any spaces added so far. Opening and closing range tags might
+                            // have received spaces as separate entities, but those might not be necessary for range:
+                            // "text <script>deleteme</script>."
+                        }
+                        else if (opts.cb) {
+                            opts.cb({
+                                tag: tag,
+                                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                                deleteTo: i,
+                                insert: "",
+                                rangesArr: rangesToDelete,
+                                proposedReturn: [
+                                    rangedOpeningTags[y].lastOpeningBracketAt,
+                                    i,
+                                    "",
+                                ],
+                            });
+                        }
+                        // 2. delete the reference to this range from rangedOpeningTags[]
+                        // because there might be more ranged tags of the same name or
+                        // different, overlapping or encompassing ranged tags with same
+                        // or different name.
+                        rangedOpeningTags.splice(y, 1);
+                        // 3. stop the loop
+                        break;
+                    }
+                }
+            }
+            else {
+                // opening tag.
+                rangedOpeningTags.push(tag);
+            }
+        }
+    }
+    function calculateWhitespaceToInsert(str2, // whole string
+    currCharIdx, // current index
+    fromIdx, // leftmost whitespace edge around tag
+    toIdx, // rightmost whitespace edge around tag
+    lastOpeningBracketAt, // tag actually starts here (<)
+    lastClosingBracketAt // tag actually ends here (>)
+    ) {
+        let strToEvaluateForLineBreaks = "";
+        if (Number.isInteger(fromIdx) &&
+            fromIdx < lastOpeningBracketAt) {
+            strToEvaluateForLineBreaks += str2.slice(fromIdx, lastOpeningBracketAt);
+        }
+        if (Number.isInteger(toIdx) &&
+            toIdx > lastClosingBracketAt + 1) {
+            // limit whitespace that follows the tag, stop at linebreak. That's to make
+            // the algorithm composable - we include linebreaks in front but not after.
+            const temp = str2.slice(lastClosingBracketAt + 1, toIdx);
+            if (temp.includes("\n") && isOpeningAt(toIdx, str2)) {
+                strToEvaluateForLineBreaks += " ";
+            }
+            else {
+                strToEvaluateForLineBreaks += temp;
+            }
+        }
+        if (!punctuation.has(str2[currCharIdx]) && str2[currCharIdx] !== "!") {
+            const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
+            if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
+                if (foundLineBreaks.length === 1) {
+                    return "\n";
+                }
+                if (foundLineBreaks.length === 2) {
+                    return "\n\n";
+                }
+                // return three line breaks maximum
+                return "\n\n\n";
+            }
+            // default spacer - a single space
+            return " ";
+        }
+        // default case: space
+        return "";
+    }
+    function calculateHrefToBeInserted(opts) {
+        if (opts.dumpLinkHrefsNearby.enabled &&
+            hrefDump.tagName &&
+            hrefDump.tagName === tag.name &&
+            tag.lastOpeningBracketAt &&
+            ((hrefDump.openingTagEnds &&
+                tag.lastOpeningBracketAt > hrefDump.openingTagEnds) ||
+                !hrefDump.openingTagEnds)) {
+            hrefInsertionActive = true;
+        }
+        if (hrefInsertionActive) {
+            const lineBreaks = opts.dumpLinkHrefsNearby.putOnNewLine ? "\n\n" : "";
+            stringToInsertAfter = `${lineBreaks}${hrefDump.hrefValue}${lineBreaks}`;
+        }
+    }
+    function isOpeningAt(i, customStr) {
+        if (customStr) {
+            return customStr[i] === "<" && customStr[i + 1] !== "%";
+        }
+        return str[i] === "<" && str[i + 1] !== "%";
+    }
+    function isClosingAt(i) {
+        return str[i] === ">" && str[i - 1] !== "%";
+    }
+    // validation
+    // ===========================================================================
+    if (typeof str !== "string") {
+        throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(str, null, 4)}`);
+    }
+    if (originalOpts && !lodash_isplainobject(originalOpts)) {
+        throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${(typeof originalOpts).toLowerCase()}, equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+    }
+    // eslint-disable-next-line consistent-return
+    function resetHrefMarkers() {
+        // reset the hrefDump
+        if (hrefInsertionActive) {
+            hrefDump = {
+                tagName: "",
+                hrefValue: "",
+                openingTagEnds: undefined,
+            };
+            hrefInsertionActive = false;
+        }
+    }
+    // prep opts
+    // ===========================================================================
+    const opts = { ...defaults, ...originalOpts };
+    if (Object.prototype.hasOwnProperty.call(opts, "returnRangesOnly")) {
+        throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] opts.returnRangesOnly has been removed from the API since v.5 release.`);
+    }
+    // filter non-string or whitespace entries from the following arrays or turn
+    // them into arrays:
+    opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
+    opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
+    // let's define the onlyStripTagsMode. Since opts.onlyStripTags can cancel
+    // out the entries in opts.onlyStripTags, it can be empty but this mode has
+    // to be switched on:
+    const onlyStripTagsMode = !!opts.onlyStripTags.length;
+    // if both opts.onlyStripTags and opts.ignoreTags are set, latter is respected,
+    // we simply exclude ignored tags from the opts.onlyStripTags.
+    if (opts.onlyStripTags.length && opts.ignoreTags.length) {
+        opts.onlyStripTags = lodash_without(opts.onlyStripTags, ...opts.ignoreTags);
+    }
+    if (!lodash_isplainobject(opts.dumpLinkHrefsNearby)) {
+        opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby };
+    }
+    // Object.assign doesn't deep merge, so we take care of opts.dumpLinkHrefsNearby:
+    opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
+    if (originalOpts &&
+        Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") &&
+        existy(originalOpts.dumpLinkHrefsNearby)) {
+        /* istanbul ignore else */
+        if (lodash_isplainobject(originalOpts.dumpLinkHrefsNearby)) {
+            opts.dumpLinkHrefsNearby = {
+                ...defaults.dumpLinkHrefsNearby,
+                ...originalOpts.dumpLinkHrefsNearby,
+            };
+        }
+        else if (originalOpts.dumpLinkHrefsNearby) {
+            // checking to omit value as number zero
+            throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof originalOpts.dumpLinkHrefsNearby}, equal to ${JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4)}. The only allowed value is a plain object. See the API reference.`);
+        }
+    }
+    if (!opts.stripTogetherWithTheirContents) {
+        opts.stripTogetherWithTheirContents = [];
+    }
+    else if (typeof opts.stripTogetherWithTheirContents === "string" &&
+        opts.stripTogetherWithTheirContents.length) {
+        opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
+    }
+    const somethingCaught = {};
+    if (opts.stripTogetherWithTheirContents &&
+        Array.isArray(opts.stripTogetherWithTheirContents) &&
+        opts.stripTogetherWithTheirContents.length &&
+        !opts.stripTogetherWithTheirContents.every((el, i) => {
+            if (!(typeof el === "string")) {
+                somethingCaught.el = el;
+                somethingCaught.i = i;
+                return false;
+            }
+            return true;
+        })) {
+        throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${somethingCaught.i} has a value ${somethingCaught.el} which is not string but ${(typeof somethingCaught.el).toLowerCase()}.`);
+    }
+    // prep the opts.cb
+    if (!opts.cb) {
+        opts.cb = ({ rangesArr, proposedReturn }) => {
+            if (proposedReturn) {
+                rangesArr.push(...proposedReturn);
+            }
+        };
+    }
+    // if the links have to be on a new line, we need to increase the allowance for line breaks
+    // in Ranges class, it's the ranges-push API setting opts.limitLinebreaksCount
+    // see https://www.npmjs.com/package/ranges-push#optional-options-object
+    const rangesToDelete = new Ranges({
+        limitToBeAddedWhitespace: true,
+        limitLinebreaksCount: 2,
+    });
+    // TODO: it's chummy - ranges will be unreliable if initial str has changed
+    // use ranges-ent-decode
+    if (!opts.skipHtmlDecoding) {
+        while (str !== decode_1(str, { scope: "strict" })) {
+            // eslint-disable-next-line no-param-reassign
+            str = decode_1(str, { scope: "strict" });
+        }
+    }
+    // step 1.
+    // ===========================================================================
+    for (let i = 0, len = str.length; i < len; i++) {
+        // catch the first ending of the spaces chunk that follows the closing bracket.
+        // -------------------------------------------------------------------------
+        // There can be no space after bracket, in that case, the result will be that character that
+        // follows the closing bracket.
+        // There can be bunch of spaces that end with EOF. In that case it's fine, this variable will
+        // be null.
+        if (Object.keys(tag).length > 1 &&
+            tag.lastClosingBracketAt &&
+            tag.lastClosingBracketAt < i &&
+            str[i] !== " " &&
+            spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
+            spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
+        }
+        // catch the closing bracket of dirty tags with missing opening brackets
+        // -------------------------------------------------------------------------
+        if (isClosingAt(i)) {
+            // tend cases where opening bracket of a tag is missing:
+            if ((!tag || Object.keys(tag).length < 2) && i > 1) {
+                // traverse backwards either until start of string or ">" is found
+                for (let y = i; y--;) {
+                    if (str[y - 1] === undefined || isClosingAt(y)) {
+                        const startingPoint = str[y - 1] === undefined ? y : y + 1;
+                        const culprit = str.slice(startingPoint, i + 1);
+                        // Check if the culprit starts with a tag that's more likely a tag
+                        // name (like "body" or "article"). Single-letter tag names are excluded
+                        // because they can be plausible, ie. in math texts and so on.
+                        // Nobody uses puts comparison signs between words like: "article > ",
+                        // but single letter names can be plausible: "a > b" in math.
+                        if (str !== `<${lodash_trim(culprit.trim(), "/>")}>` && // recursion prevention
+                            [...definitelyTagNames].some((val) => lodash_trim(culprit
+                                .trim()
+                                .split(/\s+/)
+                                .filter((val2) => val2.trim())
+                                .filter((_val3, i3) => i3 === 0), "/>").toLowerCase() === val) &&
+                            stripHtml(`<${culprit.trim()}>`, opts).result === "") {
+                            /* istanbul ignore else */
+                            if (!allTagLocations.length ||
+                                allTagLocations[allTagLocations.length - 1][0] !==
+                                    tag.lastOpeningBracketAt) {
+                                allTagLocations.push([startingPoint, i + 1]);
+                            }
+                            /* istanbul ignore else */
+                            if (!filteredTagLocations.length ||
+                                filteredTagLocations[filteredTagLocations.length - 1][0] !==
+                                    tag.lastOpeningBracketAt) {
+                                filteredTagLocations.push([startingPoint, i + 1]);
+                            }
+                            const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
+                            let deleteUpTo = i + 1;
+                            if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
+                                for (let z = deleteUpTo; z < len; z++) {
+                                    if (str[z].trim()) {
+                                        deleteUpTo = z;
+                                        break;
+                                    }
+                                }
+                            }
+                            opts.cb({
+                                tag: tag,
+                                deleteFrom: startingPoint,
+                                deleteTo: deleteUpTo,
+                                insert: whiteSpaceCompensation,
+                                rangesArr: rangesToDelete,
+                                proposedReturn: [
+                                    startingPoint,
+                                    deleteUpTo,
+                                    whiteSpaceCompensation,
+                                ],
+                            });
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        // catch slash
+        // -------------------------------------------------------------------------
+        if (str[i] === "/" &&
+            !(tag.quotes && tag.quotes.value) &&
+            Number.isInteger(tag.lastOpeningBracketAt) &&
+            !Number.isInteger(tag.lastClosingBracketAt)) {
+            tag.slashPresent = i;
+        }
+        // catch double or single quotes
+        // -------------------------------------------------------------------------
+        if (str[i] === '"' || str[i] === "'") {
+            if (tag.nameStarts &&
+                tag.quotes &&
+                tag.quotes.value &&
+                tag.quotes.value === str[i]) {
+                // 1. finish assembling the "attrObj{}"
+                attrObj.valueEnds = i;
+                attrObj.value = str.slice(attrObj.valueStarts, i);
+                tag.attributes.push(attrObj);
+                // reset:
+                attrObj = {};
+                // 2. finally, delete the quotes marker, we don't need it any more
+                tag.quotes = undefined;
+                // 3. if opts.dumpLinkHrefsNearby.enabled is on, catch href
+                let hrefVal;
+                if (opts.dumpLinkHrefsNearby.enabled &&
+                    // eslint-disable-next-line
+                    tag.attributes.some((obj) => {
+                        if (obj.name && obj.name.toLowerCase() === "href") {
+                            hrefVal = `${opts.dumpLinkHrefsNearby.wrapHeads || ""}${obj.value}${opts.dumpLinkHrefsNearby.wrapTails || ""}`;
+                            return true;
+                        }
+                    })) {
+                    hrefDump = {
+                        tagName: tag.name,
+                        hrefValue: hrefVal,
+                        openingTagEnds: undefined,
+                    };
+                }
+            }
+            else if (!tag.quotes && tag.nameStarts) {
+                // 1. if it's opening marker, record the type and location of quotes
+                tag.quotes = {};
+                tag.quotes.value = str[i];
+                tag.quotes.start = i;
+                // 2. start assembling the attribute object which we'll dump into tag.attributes[] array:
+                if (attrObj.nameStarts &&
+                    attrObj.nameEnds &&
+                    attrObj.nameEnds < i &&
+                    attrObj.nameStarts < i &&
+                    !attrObj.valueStarts) {
+                    attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+                }
+            }
+        }
+        // catch the ending of the tag name:
+        // -------------------------------------------------------------------------
+        if (tag.nameStarts !== undefined &&
+            tag.nameEnds === undefined &&
+            (!str[i].trim() || !characterSuitableForNames(str[i]))) {
+            // 1. mark the name ending
+            tag.nameEnds = i;
+            // 2. extract the full name string
+            tag.name = str.slice(tag.nameStarts, tag.nameEnds +
+                /* istanbul ignore next */
+                (!isClosingAt(i) && str[i] !== "/" && str[i + 1] === undefined
+                    ? 1
+                    : 0));
+            if (
+            // if we caught "----" from "<----" or "---->", bail:
+            (str[tag.nameStarts - 1] !== "!" && // protection against <!--
+                !tag.name.replace(/-/g, "").length) ||
+                // if tag name starts with a number character
+                /^\d+$/.test(tag.name[0])) {
+                tag = {};
+                continue;
+            }
+            if (isOpeningAt(i)) {
+                // process it because we need to tackle this new tag
+                calculateHrefToBeInserted(opts);
+                // calculateWhitespaceToInsert() API:
+                // str, // whole string
+                // currCharIdx, // current index
+                // fromIdx, // leftmost whitespace edge around tag
+                // toIdx, // rightmost whitespace edge around tag
+                // lastOpeningBracketAt, // tag actually starts here (<)
+                // lastClosingBracketAt // tag actually ends here (>)
+                const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+                // only on pair tags, exclude the opening counterpart and closing
+                // counterpart if whole pair is to be deleted
+                if (opts.stripTogetherWithTheirContents.includes(tag.name) ||
+                    opts.stripTogetherWithTheirContents.includes("*")) {
+                    /* istanbul ignore next */
+                    filteredTagLocations = filteredTagLocations.filter(([from, upto]) => !(from === tag.leftOuterWhitespace && upto === i));
+                }
+                // console.log(
+                //   `1011 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                //     tag.leftOuterWhitespace
+                //   }, ${i}] to filteredTagLocations`
+                // );
+                // filteredTagLocations.push([tag.leftOuterWhitespace, i]);
+                opts.cb({
+                    tag: tag,
+                    deleteFrom: tag.leftOuterWhitespace,
+                    deleteTo: i,
+                    insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+                    rangesArr: rangesToDelete,
+                    proposedReturn: [
+                        tag.leftOuterWhitespace,
+                        i,
+                        `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+                    ],
+                });
+                resetHrefMarkers();
+                // also,
+                treatRangedTags(i, opts, rangesToDelete);
+            }
+        }
+        // catch beginning of an attribute value
+        // -------------------------------------------------------------------------
+        if (tag.quotes &&
+            tag.quotes.start &&
+            tag.quotes.start < i &&
+            !tag.quotes.end &&
+            attrObj.nameEnds &&
+            attrObj.equalsAt &&
+            !attrObj.valueStarts) {
+            attrObj.valueStarts = i;
+        }
+        // catch rare cases when attributes name has some space after it, before equals
+        // -------------------------------------------------------------------------
+        if (!tag.quotes &&
+            attrObj.nameEnds &&
+            str[i] === "=" &&
+            !attrObj.valueStarts &&
+            !attrObj.equalsAt) {
+            attrObj.equalsAt = i;
+        }
+        // catch the ending of the whole attribute
+        // -------------------------------------------------------------------------
+        // for example, <a b c> this "c" ends "b" because it's not "equals" sign.
+        // We even anticipate for cases where whitespace anywhere between attribute parts:
+        // < article class = " something " / >
+        if (!tag.quotes &&
+            attrObj.nameStarts &&
+            attrObj.nameEnds &&
+            !attrObj.valueStarts &&
+            str[i].trim() &&
+            str[i] !== "=") {
+            // if (!tag.attributes) {
+            //   tag.attributes = [];
+            // }
+            tag.attributes.push(attrObj);
+            attrObj = {};
+        }
+        // catch the ending of an attribute's name
+        // -------------------------------------------------------------------------
+        if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
+            if (!str[i].trim()) {
+                attrObj.nameEnds = i;
+                attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+            }
+            else if (str[i] === "=") {
+                /* istanbul ignore else */
+                if (!attrObj.equalsAt) {
+                    attrObj.nameEnds = i;
+                    attrObj.equalsAt = i;
+                    attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+                }
+            }
+            else if (str[i] === "/" || isClosingAt(i)) {
+                attrObj.nameEnds = i;
+                attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+                // if (!tag.attributes) {
+                //   tag.attributes = [];
+                // }
+                tag.attributes.push(attrObj);
+                attrObj = {};
+            }
+            else if (isOpeningAt(i)) {
+                // TODO - address both cases of onlyPlausible
+                attrObj.nameEnds = i;
+                attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+                // if (!tag.attributes) {
+                //   tag.attributes = [];
+                // }
+                tag.attributes.push(attrObj);
+                attrObj = {};
+            }
+        }
+        // catch the beginning of an attribute's name
+        // -------------------------------------------------------------------------
+        if (!tag.quotes &&
+            tag.nameEnds < i &&
+            !str[i - 1].trim() &&
+            str[i].trim() &&
+            !`<>/!`.includes(str[i]) &&
+            !attrObj.nameStarts &&
+            !tag.lastClosingBracketAt) {
+            attrObj.nameStarts = i;
+        }
+        // catch "< /" - turn off "onlyPlausible"
+        // -------------------------------------------------------------------------
+        if (tag.lastOpeningBracketAt !== null &&
+            tag.lastOpeningBracketAt < i &&
+            str[i] === "/" &&
+            tag.onlyPlausible) {
+            tag.onlyPlausible = false;
+        }
+        // catch character that follows an opening bracket:
+        // -------------------------------------------------------------------------
+        if (tag.lastOpeningBracketAt !== null &&
+            tag.lastOpeningBracketAt < i &&
+            str[i] !== "/" // there can be closing slashes in various places, legit and not
+        ) {
+            // 1. identify, is it definite or just plausible tag
+            if (tag.onlyPlausible === undefined) {
+                if ((!str[i].trim() || isOpeningAt(i)) && !tag.slashPresent) {
+                    tag.onlyPlausible = true;
+                }
+                else {
+                    tag.onlyPlausible = false;
+                }
+            }
+            // 2. catch the beginning of the tag name. Consider custom HTML tag names
+            // and also known (X)HTML tags:
+            if (str[i].trim() &&
+                tag.nameStarts === undefined &&
+                !isOpeningAt(i) &&
+                str[i] !== "/" &&
+                !isClosingAt(i) &&
+                str[i] !== "!") {
+                tag.nameStarts = i;
+                tag.nameContainsLetters = false;
+            }
+        }
+        // Catch letters in the tag name. Necessary to filter out false positives like "<------"
+        if (tag.nameStarts &&
+            !tag.quotes &&
+            str[i].toLowerCase() !== str[i].toUpperCase()) {
+            tag.nameContainsLetters = true;
+        }
+        // catch closing bracket
+        // -------------------------------------------------------------------------
+        if (
+        // it's closing bracket
+        isClosingAt(i) &&
+            //
+            // precaution against JSP comparison
+            // kl <c:when test="${!empty ab.cd && ab.cd > 0.00}"> mn
+            //                                          ^
+            //                                        we're here, it's false ending
+            //
+            notWithinAttrQuotes(tag, str, i)) {
+            if (tag.lastOpeningBracketAt !== undefined) {
+                // 1. mark the index
+                tag.lastClosingBracketAt = i;
+                // 2. reset the spacesChunkWhichFollowsTheClosingBracketEndsAt
+                spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
+                // 3. push attrObj into tag.attributes[]
+                if (Object.keys(attrObj).length) {
+                    // if (!tag.attributes) {
+                    //   tag.attributes = [];
+                    // }
+                    tag.attributes.push(attrObj);
+                    attrObj = {};
+                }
+                // 4. if opts.dumpLinkHrefsNearby.enabled is on and we just recorded an href,
+                if (opts.dumpLinkHrefsNearby.enabled &&
+                    hrefDump.tagName &&
+                    !hrefDump.openingTagEnds) {
+                    // finish assembling the hrefDump{}
+                    hrefDump.openingTagEnds = i; // or tag.lastClosingBracketAt, same
+                }
+            }
+        }
+        // catch the ending of the tag
+        // -------------------------------------------------------------------------
+        // the tag is "released" into "rApply":
+        if (tag.lastOpeningBracketAt !== undefined) {
+            if (tag.lastClosingBracketAt === undefined) {
+                if (tag.lastOpeningBracketAt < i &&
+                    !isOpeningAt(i) && // to prevent cases like "text <<<<<< text"
+                    (str[i + 1] === undefined || isOpeningAt(i + 1)) &&
+                    tag.nameContainsLetters) {
+                    // find out the tag name earlier than dedicated tag name ending catching section:
+                    // if (str[i + 1] === undefined) {
+                    tag.name = str
+                        .slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1)
+                        .toLowerCase();
+                    // submit tag to allTagLocations
+                    /* istanbul ignore else */
+                    if (!allTagLocations.length ||
+                        allTagLocations[allTagLocations.length - 1][0] !==
+                            tag.lastOpeningBracketAt) {
+                        allTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+                    }
+                    if (
+                    // if it's an ignored tag
+                    opts.ignoreTags.includes(tag.name) ||
+                        // or just plausible and unrecognised
+                        (tag.onlyPlausible && !definitelyTagNames.has(tag.name))) {
+                        tag = {};
+                        attrObj = {};
+                        continue;
+                    }
+                    // if the tag is only plausible (there's space after opening bracket) and it's not among
+                    // recognised tags, leave it as it is:
+                    if (((definitelyTagNames.has(tag.name) ||
+                        singleLetterTags.has(tag.name)) &&
+                        (tag.onlyPlausible === false ||
+                            (tag.onlyPlausible === true && tag.attributes.length))) ||
+                        str[i + 1] === undefined) {
+                        calculateHrefToBeInserted(opts);
+                        const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+                        opts.cb({
+                            tag: tag,
+                            deleteFrom: tag.leftOuterWhitespace,
+                            deleteTo: i + 1,
+                            insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+                            rangesArr: rangesToDelete,
+                            proposedReturn: [
+                                tag.leftOuterWhitespace,
+                                i + 1,
+                                `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+                            ],
+                        });
+                        resetHrefMarkers();
+                        // also,
+                        treatRangedTags(i, opts, rangesToDelete);
+                    }
+                    /* istanbul ignore else */
+                    if (!filteredTagLocations.length ||
+                        (filteredTagLocations[filteredTagLocations.length - 1][0] !==
+                            tag.lastOpeningBracketAt &&
+                            filteredTagLocations[filteredTagLocations.length - 1][1] !==
+                                i + 1)) {
+                        // filter out opening/closing tag pair because whole chunk
+                        // from opening's opening to closing's closing will be pushed
+                        if (opts.stripTogetherWithTheirContents.includes(tag.name) ||
+                            opts.stripTogetherWithTheirContents.includes("*")) {
+                            // get the last opening counterpart of the pair
+                            // iterate rangedOpeningTags from the, pick the first
+                            // ranged opening tag whose name is same like current, closing's
+                            let lastRangedOpeningTag;
+                            for (let z = rangedOpeningTags.length; z--;) {
+                                /* istanbul ignore else */
+                                if (rangedOpeningTags[z].name === tag.name) {
+                                    lastRangedOpeningTag = rangedOpeningTags[z];
+                                }
+                            }
+                            /* istanbul ignore else */
+                            if (lastRangedOpeningTag) {
+                                filteredTagLocations = filteredTagLocations.filter(([from]) => from !== lastRangedOpeningTag.lastOpeningBracketAt);
+                                filteredTagLocations.push([
+                                    lastRangedOpeningTag.lastOpeningBracketAt,
+                                    i + 1,
+                                ]);
+                            }
+                            else {
+                                /* istanbul ignore next */
+                                filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+                            }
+                        }
+                        else {
+                            // if it's not ranged tag, just push it as it is to filteredTagLocations
+                            filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+                        }
+                    }
+                }
+            }
+            else if ((i > tag.lastClosingBracketAt && str[i].trim()) ||
+                str[i + 1] === undefined) {
+                // case 2. closing bracket HAS BEEN met
+                // we'll look for a non-whitespace character and delete up to it
+                // BUT, we'll wipe the tag object only if that non-whitespace character
+                // is not a ">". This way we'll catch and delete sequences of closing brackets.
+                // part 1.
+                let endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
+                if (opts.trimOnlySpaces &&
+                    endingRangeIndex === len - 1 &&
+                    spacesChunkWhichFollowsTheClosingBracketEndsAt !== null &&
+                    spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
+                    endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
+                }
+                // if it's a dodgy suspicious tag where space follows opening bracket, there's an extra requirement
+                // for this tag to be considered a tag - there has to be at least one attribute with equals if
+                // the tag name is not recognised.
+                // submit tag to allTagLocations
+                /* istanbul ignore else */
+                if (!allTagLocations.length ||
+                    allTagLocations[allTagLocations.length - 1][0] !==
+                        tag.lastOpeningBracketAt) {
+                    allTagLocations.push([
+                        tag.lastOpeningBracketAt,
+                        tag.lastClosingBracketAt + 1,
+                    ]);
+                }
+                if ((!onlyStripTagsMode && opts.ignoreTags.includes(tag.name)) ||
+                    (onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name))) {
+                    // ping the callback with nulls:
+                    opts.cb({
+                        tag: tag,
+                        deleteFrom: null,
+                        deleteTo: null,
+                        insert: null,
+                        rangesArr: rangesToDelete,
+                        proposedReturn: null,
+                    });
+                    // don't submit the tag onto "filteredTagLocations"
+                    // then reset:
+                    tag = {};
+                    attrObj = {};
+                    // continue;
+                }
+                else if (!tag.onlyPlausible ||
+                    // tag name is recognised and there are no attributes:
+                    (tag.attributes.length === 0 &&
+                        tag.name &&
+                        (definitelyTagNames.has(tag.name.toLowerCase()) ||
+                            singleLetterTags.has(tag.name.toLowerCase()))) ||
+                    // OR there is at least one equals that follow the attribute's name:
+                    (tag.attributes &&
+                        tag.attributes.some((attrObj2) => attrObj2.equalsAt))) {
+                    // submit tag to filteredTagLocations
+                    /* istanbul ignore else */
+                    if (!filteredTagLocations.length ||
+                        filteredTagLocations[filteredTagLocations.length - 1][0] !==
+                            tag.lastOpeningBracketAt) {
+                        filteredTagLocations.push([
+                            tag.lastOpeningBracketAt,
+                            tag.lastClosingBracketAt + 1,
+                        ]);
+                    }
+                    // if this was an ignored tag name, algorithm would have bailed earlier,
+                    // in stage "catch the ending of the tag name".
+                    const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+                    // calculate optional opts.dumpLinkHrefsNearby.enabled HREF to insert
+                    stringToInsertAfter = "";
+                    hrefInsertionActive = false;
+                    calculateHrefToBeInserted(opts);
+                    let insert;
+                    if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
+                        insert = `${whiteSpaceCompensation}${stringToInsertAfter}${
+                        /* istanbul ignore next */
+                        whiteSpaceCompensation === "\n\n" ? "\n" : whiteSpaceCompensation}`;
+                    }
+                    else {
+                        insert = whiteSpaceCompensation;
+                    }
+                    if (tag.leftOuterWhitespace === 0 ||
+                        !right(str, endingRangeIndex - 1)) {
+                        insert = "";
+                    }
+                    // pass the range onto the callback function, be it default or user's
+                    opts.cb({
+                        tag: tag,
+                        deleteFrom: tag.leftOuterWhitespace,
+                        deleteTo: endingRangeIndex,
+                        insert,
+                        rangesArr: rangesToDelete,
+                        proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert],
+                    });
+                    resetHrefMarkers();
+                    // also,
+                    treatRangedTags(i, opts, rangesToDelete);
+                }
+                else {
+                    tag = {};
+                }
+                // part 2.
+                if (!isClosingAt(i)) {
+                    tag = {};
+                }
+            }
+        }
+        // catch an opening bracket
+        // -------------------------------------------------------------------------
+        if (isOpeningAt(i) &&
+            !isOpeningAt(i - 1) &&
+            !`'"`.includes(str[i + 1]) &&
+            (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1])) &&
+            //
+            // precaution JSP,
+            // against <c:
+            !(str[i + 1] === "c" && str[i + 2] === ":") &&
+            // against <fmt:
+            !(str[i + 1] === "f" &&
+                str[i + 2] === "m" &&
+                str[i + 3] === "t" &&
+                str[i + 4] === ":") &&
+            // against <sql:
+            !(str[i + 1] === "s" &&
+                str[i + 2] === "q" &&
+                str[i + 3] === "l" &&
+                str[i + 4] === ":") &&
+            // against <x:
+            !(str[i + 1] === "x" && str[i + 2] === ":") &&
+            // against <fn:
+            !(str[i + 1] === "f" && str[i + 2] === "n" && str[i + 3] === ":") &&
+            //
+            // kl <c:when test="${!empty ab.cd && ab.cd < 0.00}"> mn
+            //                                          ^
+            //                                  we're here, it's false alarm
+            notWithinAttrQuotes(tag, str, i)) {
+            // cater sequences of opening brackets "<<<<div>>>"
+            if (isClosingAt(right(str, i))) {
+                // cater cases like: "<><><>"
+                continue;
+            }
+            else {
+                // 1. Before (re)setting flags, check, do we have a case of a tag with a
+                // missing closing bracket, and this is a new tag following it.
+                if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
+                    if ((tag.onlyPlausible === true &&
+                        tag.attributes &&
+                        tag.attributes.length) ||
+                        tag.onlyPlausible === false) {
+                        // tag.onlyPlausible can be undefined too
+                        const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+                        opts.cb({
+                            tag: tag,
+                            deleteFrom: tag.leftOuterWhitespace,
+                            deleteTo: i,
+                            insert: whiteSpaceCompensation,
+                            rangesArr: rangesToDelete,
+                            proposedReturn: [
+                                tag.leftOuterWhitespace,
+                                i,
+                                whiteSpaceCompensation,
+                            ],
+                        });
+                        // also,
+                        treatRangedTags(i, opts, rangesToDelete);
+                        // then, for continuity, mark everything up accordingly if it's a new bracket:
+                        tag = {};
+                        attrObj = {};
+                    }
+                }
+                // 2. if new tag starts, reset:
+                if (tag.lastOpeningBracketAt !== undefined &&
+                    tag.onlyPlausible &&
+                    tag.name &&
+                    !tag.quotes) {
+                    // reset:
+                    tag.lastOpeningBracketAt = undefined;
+                    tag.name = undefined;
+                    tag.onlyPlausible = false;
+                }
+                if ((tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) &&
+                    !tag.quotes) {
+                    tag.lastOpeningBracketAt = i;
+                    tag.slashPresent = false;
+                    tag.attributes = [];
+                    // since 2.1.0 we started to care about not trimming outer whitespace which is not spaces.
+                    // For example, " \t <a> \n ". Tag's whitespace boundaries should not extend to string
+                    // edges but until "\t" on the left and "\n" on the right IF opts.trimOnlySpaces is on.
+                    if (chunkOfWhitespaceStartsAt === null) {
+                        tag.leftOuterWhitespace = i;
+                    }
+                    else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
+                        // if whitespace extends to the beginning of a string, there's a risk it might include
+                        // not only spaces. To fix that, switch to space-only range marker:
+                        /* istanbul ignore next */
+                        tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
+                    }
+                    else {
+                        tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
+                    }
+                    // tag.leftOuterWhitespace =
+                    //   chunkOfWhitespaceStartsAt === null ? i : chunkOfWhitespaceStartsAt;
+                    // tend the HTML comments: <!-- --> or CDATA: <![CDATA[ ... ]]>
+                    // if opening comment tag is detected, traverse forward aggressively
+                    // until EOL or "-->" is reached and offset outer index "i".
+                    if (`${str[i + 1]}${str[i + 2]}${str[i + 3]}` === "!--" ||
+                        `${str[i + 1]}${str[i + 2]}${str[i + 3]}${str[i + 4]}${str[i + 5]}${str[i + 6]}${str[i + 7]}${str[i + 8]}` === "![CDATA[") {
+                        // make a note which one it is:
+                        let cdata = true;
+                        if (str[i + 2] === "-") {
+                            cdata = false;
+                        }
+                        let closingFoundAt;
+                        for (let y = i; y < len; y++) {
+                            if ((!closingFoundAt &&
+                                cdata &&
+                                `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>") ||
+                                (!cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->")) {
+                                closingFoundAt = y;
+                            }
+                            if (closingFoundAt &&
+                                ((closingFoundAt < y && str[y].trim()) ||
+                                    str[y + 1] === undefined)) {
+                                let rangeEnd = y;
+                                if ((str[y + 1] === undefined && !str[y].trim()) ||
+                                    str[y] === ">") {
+                                    rangeEnd += 1;
+                                }
+                                // submit the tag
+                                /* istanbul ignore else */
+                                if (!allTagLocations.length ||
+                                    allTagLocations[allTagLocations.length - 1][0] !==
+                                        tag.lastOpeningBracketAt) {
+                                    allTagLocations.push([
+                                        tag.lastOpeningBracketAt,
+                                        closingFoundAt + 1,
+                                    ]);
+                                }
+                                /* istanbul ignore else */
+                                if (!filteredTagLocations.length ||
+                                    filteredTagLocations[filteredTagLocations.length - 1][0] !==
+                                        tag.lastOpeningBracketAt) {
+                                    filteredTagLocations.push([
+                                        tag.lastOpeningBracketAt,
+                                        closingFoundAt + 1,
+                                    ]);
+                                }
+                                const whiteSpaceCompensation = calculateWhitespaceToInsert(str, y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt);
+                                opts.cb({
+                                    tag: tag,
+                                    deleteFrom: tag.leftOuterWhitespace,
+                                    deleteTo: rangeEnd,
+                                    insert: whiteSpaceCompensation,
+                                    rangesArr: rangesToDelete,
+                                    proposedReturn: [
+                                        tag.leftOuterWhitespace,
+                                        rangeEnd,
+                                        whiteSpaceCompensation,
+                                    ],
+                                });
+                                // offset:
+                                i = y - 1;
+                                if (str[y] === ">") {
+                                    i = y;
+                                }
+                                // resets:
+                                tag = {};
+                                attrObj = {};
+                                // finally,
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // catch whitespace
+        // -------------------------------------------------------------------------
+        if (!str[i].trim()) {
+            // 1. catch chunk boundaries:
+            if (chunkOfWhitespaceStartsAt === null) {
+                chunkOfWhitespaceStartsAt = i;
+                if (tag.lastOpeningBracketAt !== undefined &&
+                    tag.lastOpeningBracketAt < i &&
+                    tag.nameStarts &&
+                    tag.nameStarts < tag.lastOpeningBracketAt &&
+                    i === tag.lastOpeningBracketAt + 1 &&
+                    // insurance against tail part of ranged tag being deleted:
+                    !rangedOpeningTags.some(
+                    // eslint-disable-next-line no-loop-func
+                    (rangedTagObj) => rangedTagObj.name === tag.name)) {
+                    tag.onlyPlausible = true;
+                    tag.name = undefined;
+                    tag.nameStarts = undefined;
+                }
+            }
+        }
+        else if (chunkOfWhitespaceStartsAt !== null) {
+            // 1. piggyback the catching of the attributes with equal and no value
+            if (!tag.quotes &&
+                attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 &&
+                attrObj.nameEnds &&
+                attrObj.equalsAt > attrObj.nameEnds &&
+                str[i] !== '"' &&
+                str[i] !== "'") {
+                /* istanbul ignore else */
+                if (lodash_isplainobject(attrObj)) {
+                    tag.attributes.push(attrObj);
+                }
+                // reset:
+                attrObj = {};
+                tag.equalsSpottedAt = undefined;
+            }
+            // 2. reset whitespace marker
+            chunkOfWhitespaceStartsAt = null;
+        }
+        // catch spaces-only chunks (needed for outer trim option opts.trimOnlySpaces)
+        // -------------------------------------------------------------------------
+        if (str[i] === " ") {
+            // 1. catch spaces boundaries:
+            if (chunkOfSpacesStartsAt === null) {
+                chunkOfSpacesStartsAt = i;
+            }
+        }
+        else if (chunkOfSpacesStartsAt !== null) {
+            // 2. reset the marker
+            chunkOfSpacesStartsAt = null;
+        }
+        // log all
+        // -------------------------------------------------------------------------
+        // console.log(
+        //   `${`\u001b[${33}m${`chunkOfSpacesStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+        //     chunkOfSpacesStartsAt,
+        //     null,
+        //     4
+        //   )}`
+        // );
+        // console.log(
+        //   `${`\u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+        //     chunkOfWhitespaceStartsAt,
+        //     null,
+        //     4
+        //   )}`
+        // );
+    }
+    // trim but in ranges
+    // first tackle the beginning on the string
+    if (str &&
+        // if only spaces were meant to be trimmed,
+        ((opts.trimOnlySpaces &&
+            // and first character is a space
+            str[0] === " ") ||
+            // if normal trim is requested
+            (!opts.trimOnlySpaces &&
+                // and the first character is whitespace character
+                !str[0].trim()))) {
+        for (let i = 0, len = str.length; i < len; i++) {
+            if ((opts.trimOnlySpaces && str[i] !== " ") ||
+                (!opts.trimOnlySpaces && str[i].trim())) {
+                rangesToDelete.push([0, i]);
+                break;
+            }
+            else if (!str[i + 1]) {
+                // if end has been reached and whole string has been trimmable
+                rangesToDelete.push([0, i + 1]);
+            }
+        }
+    }
+    if (str &&
+        // if only spaces were meant to be trimmed,
+        ((opts.trimOnlySpaces &&
+            // and last character is a space
+            str[str.length - 1] === " ") ||
+            // if normal trim is requested
+            (!opts.trimOnlySpaces &&
+                // and the last character is whitespace character
+                !str[str.length - 1].trim()))) {
+        for (let i = str.length; i--;) {
+            if ((opts.trimOnlySpaces && str[i] !== " ") ||
+                (!opts.trimOnlySpaces && str[i].trim())) {
+                rangesToDelete.push([i + 1, str.length]);
+                break;
+            }
+            // don't tackle end-to-end because it would have been already caught on the
+            // start-to-end direction loop above.
+        }
+    }
+    // last correction, imagine we've got text-whitespace-tag.
+    // That last part "tag" was removed but "whitespace" in between is on the left.
+    // We need to trim() that too if applicable.
+    // By now we'll be able to tell, is starting/ending range array touching
+    // the start (index 0) or end (str.length - 1) character indexes, and if so,
+    // their inner sides will need to be trimmed accordingly, considering the
+    // "opts.trimOnlySpaces" of course.
+    const curr = rangesToDelete.current();
+    if ((!originalOpts || !originalOpts.cb) && curr) {
+        // check front - the first range of gathered ranges, does it touch start (0)
+        if (curr[0] && !curr[0][0]) {
+            curr[0][1];
+            // check the character at str[startingIdx]
+            // manually edit Ranges class:
+            rangesToDelete.ranges[0] = [
+                rangesToDelete.ranges[0][0],
+                rangesToDelete.ranges[0][1],
+            ];
+        }
+        // check end - the last range of gathered ranges, does it touch the end (str.length)
+        // PS. remember ending is not inclusive, so ranges covering the whole ending
+        // would go up to str.length, not up to str.length - 1!
+        if (curr[curr.length - 1] && curr[curr.length - 1][1] === str.length) {
+            curr[curr.length - 1][0];
+            // check character at str[startingIdx - 1]
+            // remove third element from the last range "what to add" - because
+            // ranges will crop aggressively, covering all whitespace, but they
+            // then restore missing spaces (in which case it's not missing).
+            // We already have tight crop, we just need to remove that "what to add"
+            // third element.
+            // hard edit:
+            /* istanbul ignore else */
+            if (rangesToDelete.ranges) {
+                let startingIdx2 = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];
+                if (str[startingIdx2 - 1] &&
+                    ((opts.trimOnlySpaces && str[startingIdx2 - 1] === " ") ||
+                        (!opts.trimOnlySpaces && !str[startingIdx2 - 1].trim()))) {
+                    startingIdx2 -= 1;
+                }
+                const backupWhatToAdd = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][2];
+                rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [
+                    startingIdx2,
+                    rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1],
+                ];
+                // for cases of opts.dumpLinkHrefsNearby
+                if (backupWhatToAdd && backupWhatToAdd.trim()) {
+                    rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(backupWhatToAdd.trimEnd());
+                }
+            }
+        }
+    }
+    const res = {
+        log: {
+            timeTakenInMilliseconds: Date.now() - start,
+        },
+        result: rApply(str, rangesToDelete.current()),
+        ranges: rangesToDelete.current(),
+        allTagLocations,
+        filteredTagLocations,
+    };
+    return res;
+}
+
+exports.defaults = defaults;
+exports.stripHtml = stripHtml;
+exports.version = version;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

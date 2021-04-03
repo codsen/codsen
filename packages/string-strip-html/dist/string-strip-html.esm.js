@@ -1,27 +1,748 @@
 /**
- * @name string-strip-html
- * @fileoverview Strips HTML tags from strings. No parser, accepts mixed sources.
- * @version 8.2.9
- * @author Roy Revelt, Codsen Ltd
- * @license MIT
- * {@link https://codsen.com/os/string-strip-html/}
+ * string-strip-html
+ * Strips HTML tags from strings. No parser, accepts mixed sources.
+ * Version: 8.2.9
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-strip-html/
  */
 
-import L from"lodash.isplainobject";import I from"lodash.trim";import K from"lodash.without";import{decode as _}from"html-entities";import{rApply as Q}from"ranges-apply";import{Ranges as Z}from"ranges-push";import{right as M}from"string-left-right";function x(n){return/[-_A-Za-z0-9]/.test(n)}function P(n,b){if(!n)return[];if(Array.isArray(n))return n.filter(S=>typeof S=="string"&&S.trim());if(typeof n=="string")return n.trim()?[n]:[];throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] ${b} must be array containing zero or more strings or something falsey. Currently it's equal to: ${n}, that a type of ${typeof n}.`)}function z(n,b,S,E){for(let A=b,j=n.length;A<j;A++){if(n.startsWith(S,A))return!0;if(n.startsWith(E,A))return!1}return!1}function q(n,b,S){return!n||!n.quotes||!z(b,S+1,n.quotes.value,">")}var D="8.2.9";var be=D,v={ignoreTags:[],onlyStripTags:[],stripTogetherWithTheirContents:["script","style","xml"],skipHtmlDecoding:!1,trimOnlySpaces:!1,dumpLinkHrefsNearby:{enabled:!1,putOnNewLine:!1,wrapHeads:"",wrapTails:""},cb:null};function X(n,b){let S=Date.now(),E=new Set(["!doctype","abbr","address","area","article","aside","audio","base","bdi","bdo","blockquote","body","br","button","canvas","caption","cite","code","col","colgroup","data","datalist","dd","del","details","dfn","dialog","div","dl","doctype","dt","em","embed","fieldset","figcaption","figure","footer","form","h1","h2","h3","h4","h5","h6","head","header","hgroup","hr","html","iframe","img","input","ins","kbd","keygen","label","legend","li","link","main","map","mark","math","menu","menuitem","meta","meter","nav","noscript","object","ol","optgroup","option","output","param","picture","pre","progress","rb","rp","rt","rtc","ruby","samp","script","section","select","slot","small","source","span","strong","style","sub","summary","sup","svg","table","tbody","td","template","textarea","tfoot","th","thead","time","title","tr","track","ul","var","video","wbr","xml"]),A=new Set(["a","b","i","p","q","s","u"]),j=new Set([".",",","?",";",")","\u2026",'"',"\xBB"]),m=[],p=[],u=[],e={};function G(){e={attributes:[]}}G();let O=null,N=null,l={},d={tagName:"",hrefValue:"",openingTagEnds:void 0},f="",C=!1,B=null;function V(t){return t!=null}function Y(t){return typeof t=="string"}function R(t,r,s){if(""+t,""+JSON.stringify(r.stripTogetherWithTheirContents,null,0)+e.name,Array.isArray(r.stripTogetherWithTheirContents)&&(r.stripTogetherWithTheirContents.includes(e.name)||r.stripTogetherWithTheirContents.includes("*")))if(""+`[${33}mrangedOpeningTags[${39}m`+JSON.stringify(m,null,4),Array.isArray(m)&&m.some(i=>i.name===e.name&&i.lastClosingBracketAt<t)){""+31+39;for(let i=m.length;i--;)if(m[i].name===e.name){""+JSON.stringify(s.current(),null,0),""+m[i].lastOpeningBracketAt+t,""+`[${33}mrangedOpeningTags[${39}m`+JSON.stringify(m,null,4),(r.stripTogetherWithTheirContents.includes(e.name)||r.stripTogetherWithTheirContents.includes("*"))&&(""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(u,null,4),u=u.filter(([c,$])=>(c<m[i].lastOpeningBracketAt||c>=t+1)&&($<=m[i].lastOpeningBracketAt||$>t+1)),""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(u,null,4));let o=t+1;e.lastClosingBracketAt&&(o=e.lastClosingBracketAt+1),""+`[${32}mPUSH[${39}m`+m[i].lastOpeningBracketAt+o,u.push([m[i].lastOpeningBracketAt,o]),j.has(n[t])&&r.cb?r.cb({tag:e,deleteFrom:m[i].lastOpeningBracketAt,deleteTo:t+1,insert:null,rangesArr:s,proposedReturn:[m[i].lastOpeningBracketAt,t,null]}):r.cb&&r.cb({tag:e,deleteFrom:m[i].lastOpeningBracketAt,deleteTo:t,insert:"",rangesArr:s,proposedReturn:[m[i].lastOpeningBracketAt,t,""]}),m.splice(i,1),""+33+39+JSON.stringify(m,null,4);break}}else""+31+39,m.push(e),""+33+39+JSON.stringify(m,null,4)}function W(t,r,s,i,o,c){""+35+39,""+`[${33}mcurrCharIdx[${39}m`+JSON.stringify(r,null,0)+`[${33}mstr2[currCharIdx][${39}m`+JSON.stringify(t[r],null,0)+`[${33}mstr2[tag.leftOuterWhitespace][${39}m`+JSON.stringify(t[e.leftOuterWhitespace],null,0)+`[${33}mstr2[tag.leftOuterWhitespace - 1][${39}m`+JSON.stringify(t[e.leftOuterWhitespace-1],null,0)+`[${33}mfromIdx[${39}m`+JSON.stringify(s,null,0)+`[${33}mtoIdx[${39}m`+JSON.stringify(i,null,0);let $="";if(Number.isInteger(s)&&s<o&&($+=t.slice(s,o),""+JSON.stringify($,null,0)+$.length+s+o),Number.isInteger(i)&&i>c+1){let h=t.slice(c+1,i);h.includes(`
-`)&&T(i,t)?$+=" ":$+=h,""+JSON.stringify($,null,0)+$.length+(c+1)+i}if(""+JSON.stringify($,null,0)+$.length,!j.has(t[r])&&t[r]!=="!"){let h=$.match(/\n/g);return Array.isArray(h)&&h.length?h.length===1?`
-`:h.length===2?`
+import isObj from 'lodash.isplainobject';
+import trim from 'lodash.trim';
+import without from 'lodash.without';
+import { decode } from 'html-entities';
+import { rApply } from 'ranges-apply';
+import { Ranges } from 'ranges-push';
+import { right } from 'string-left-right';
 
-`:`
+/* istanbul ignore next */
+function characterSuitableForNames(char) {
+  return /[-_A-Za-z0-9]/.test(char);
+}
+/* istanbul ignore next */
+function prepHopefullyAnArray(something, name) {
+  if (!something) {
+    return [];
+  }
+  if (Array.isArray(something)) {
+    return something.filter(val => typeof val === "string" && val.trim());
+  }
+  if (typeof something === "string") {
+    return something.trim() ? [something] : [];
+  }
+  throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`);
+}
+/* istanbul ignore next */
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
+  for (let i = startingIdx, len = str.length; i < len; i++) {
+    if (str.startsWith(x, i)) {
+      return true;
+    }
+    if (str.startsWith(y, i)) {
+      return false;
+    }
+  }
+  return false;
+}
+/* istanbul ignore next */
+function notWithinAttrQuotes(tag, str, i) {
+  return !tag || !tag.quotes || !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
+}
 
+var version$1 = "8.2.9";
 
-`:" "}return""}function w(t){if(t.dumpLinkHrefsNearby.enabled&&d.tagName&&d.tagName===e.name&&e.lastOpeningBracketAt&&(d.openingTagEnds&&e.lastOpeningBracketAt>d.openingTagEnds||!d.openingTagEnds)&&(C=!0,""+C),C){let r=t.dumpLinkHrefsNearby.putOnNewLine?`
+const version = version$1;
+const defaults = {
+  ignoreTags: [],
+  onlyStripTags: [],
+  stripTogetherWithTheirContents: ["script", "style", "xml"],
+  skipHtmlDecoding: false,
+  trimOnlySpaces: false,
+  dumpLinkHrefsNearby: {
+    enabled: false,
+    putOnNewLine: false,
+    wrapHeads: "",
+    wrapTails: ""
+  },
+  cb: null
+};
+function stripHtml(str, originalOpts) {
+  const start = Date.now();
+  const definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
+  const singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
+  const punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\u00BB"]);
+  const rangedOpeningTags = [];
+  const allTagLocations = [];
+  let filteredTagLocations = [];
+  let tag = {};
+  function resetTag() {
+    tag = {
+      attributes: []
+    };
+  }
+  resetTag();
+  let chunkOfWhitespaceStartsAt = null;
+  let chunkOfSpacesStartsAt = null;
+  let attrObj = {};
+  let hrefDump = {
+    tagName: "",
+    hrefValue: "",
+    openingTagEnds: undefined
+  };
+  let stringToInsertAfter = "";
+  let hrefInsertionActive = false;
+  let spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
+  function existy(x) {
+    return x != null;
+  }
+  function isStr(something) {
+    return typeof something === "string";
+  }
+  function treatRangedTags(i, opts, rangesToDelete) {
+    if (Array.isArray(opts.stripTogetherWithTheirContents) && (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*"))) {
+      if (Array.isArray(rangedOpeningTags) && rangedOpeningTags.some(obj => obj.name === tag.name && obj.lastClosingBracketAt < i)) {
+        for (let y = rangedOpeningTags.length; y--;) {
+          if (rangedOpeningTags[y].name === tag.name) {
+            /* istanbul ignore else */
+            if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
+              filteredTagLocations = filteredTagLocations.filter(([from, upto]) => (from < rangedOpeningTags[y].lastOpeningBracketAt || from >= i + 1) && (upto <= rangedOpeningTags[y].lastOpeningBracketAt || upto > i + 1));
+            }
+            let endingIdx = i + 1;
+            if (tag.lastClosingBracketAt) {
+              endingIdx = tag.lastClosingBracketAt + 1;
+            }
+            filteredTagLocations.push([rangedOpeningTags[y].lastOpeningBracketAt, endingIdx]);
+            /* istanbul ignore else */
+            if (punctuation.has(str[i]) && opts.cb) {
+              opts.cb({
+                tag: tag,
+                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                deleteTo: i + 1,
+                insert: null,
+                rangesArr: rangesToDelete,
+                proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, null]
+              });
+            } else if (opts.cb) {
+              opts.cb({
+                tag: tag,
+                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                deleteTo: i,
+                insert: "",
+                rangesArr: rangesToDelete,
+                proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, ""]
+              });
+            }
+            rangedOpeningTags.splice(y, 1);
+            break;
+          }
+        }
+      } else {
+        rangedOpeningTags.push(tag);
+      }
+    }
+  }
+  function calculateWhitespaceToInsert(str2,
+  currCharIdx,
+  fromIdx,
+  toIdx,
+  lastOpeningBracketAt,
+  lastClosingBracketAt
+  ) {
+    let strToEvaluateForLineBreaks = "";
+    if (Number.isInteger(fromIdx) && fromIdx < lastOpeningBracketAt) {
+      strToEvaluateForLineBreaks += str2.slice(fromIdx, lastOpeningBracketAt);
+    }
+    if (Number.isInteger(toIdx) && toIdx > lastClosingBracketAt + 1) {
+      const temp = str2.slice(lastClosingBracketAt + 1, toIdx);
+      if (temp.includes("\n") && isOpeningAt(toIdx, str2)) {
+        strToEvaluateForLineBreaks += " ";
+      } else {
+        strToEvaluateForLineBreaks += temp;
+      }
+    }
+    if (!punctuation.has(str2[currCharIdx]) && str2[currCharIdx] !== "!") {
+      const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
+      if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
+        if (foundLineBreaks.length === 1) {
+          return "\n";
+        }
+        if (foundLineBreaks.length === 2) {
+          return "\n\n";
+        }
+        return "\n\n\n";
+      }
+      return " ";
+    }
+    return "";
+  }
+  function calculateHrefToBeInserted(opts) {
+    if (opts.dumpLinkHrefsNearby.enabled && hrefDump.tagName && hrefDump.tagName === tag.name && tag.lastOpeningBracketAt && (hrefDump.openingTagEnds && tag.lastOpeningBracketAt > hrefDump.openingTagEnds || !hrefDump.openingTagEnds)) {
+      hrefInsertionActive = true;
+    }
+    if (hrefInsertionActive) {
+      const lineBreaks = opts.dumpLinkHrefsNearby.putOnNewLine ? "\n\n" : "";
+      stringToInsertAfter = `${lineBreaks}${hrefDump.hrefValue}${lineBreaks}`;
+    }
+  }
+  function isOpeningAt(i, customStr) {
+    if (customStr) {
+      return customStr[i] === "<" && customStr[i + 1] !== "%";
+    }
+    return str[i] === "<" && str[i + 1] !== "%";
+  }
+  function isClosingAt(i) {
+    return str[i] === ">" && str[i - 1] !== "%";
+  }
+  if (typeof str !== "string") {
+    throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(str, null, 4)}`);
+  }
+  if (originalOpts && !isObj(originalOpts)) {
+    throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${(typeof originalOpts).toLowerCase()}, equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+  }
+  function resetHrefMarkers() {
+    if (hrefInsertionActive) {
+      hrefDump = {
+        tagName: "",
+        hrefValue: "",
+        openingTagEnds: undefined
+      };
+      hrefInsertionActive = false;
+    }
+  }
+  const opts = { ...defaults,
+    ...originalOpts
+  };
+  if (Object.prototype.hasOwnProperty.call(opts, "returnRangesOnly")) {
+    throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] opts.returnRangesOnly has been removed from the API since v.5 release.`);
+  }
+  opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
+  opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
+  const onlyStripTagsMode = !!opts.onlyStripTags.length;
+  if (opts.onlyStripTags.length && opts.ignoreTags.length) {
+    opts.onlyStripTags = without(opts.onlyStripTags, ...opts.ignoreTags);
+  }
+  if (!isObj(opts.dumpLinkHrefsNearby)) {
+    opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby
+    };
+  }
+  opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
+  if (originalOpts && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
+    /* istanbul ignore else */
+    if (isObj(originalOpts.dumpLinkHrefsNearby)) {
+      opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby,
+        ...originalOpts.dumpLinkHrefsNearby
+      };
+    } else if (originalOpts.dumpLinkHrefsNearby) {
+      throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof originalOpts.dumpLinkHrefsNearby}, equal to ${JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4)}. The only allowed value is a plain object. See the API reference.`);
+    }
+  }
+  if (!opts.stripTogetherWithTheirContents) {
+    opts.stripTogetherWithTheirContents = [];
+  } else if (typeof opts.stripTogetherWithTheirContents === "string" && opts.stripTogetherWithTheirContents.length) {
+    opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
+  }
+  const somethingCaught = {};
+  if (opts.stripTogetherWithTheirContents && Array.isArray(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every((el, i) => {
+    if (!(typeof el === "string")) {
+      somethingCaught.el = el;
+      somethingCaught.i = i;
+      return false;
+    }
+    return true;
+  })) {
+    throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${somethingCaught.i} has a value ${somethingCaught.el} which is not string but ${(typeof somethingCaught.el).toLowerCase()}.`);
+  }
+  if (!opts.cb) {
+    opts.cb = ({
+      rangesArr,
+      proposedReturn
+    }) => {
+      if (proposedReturn) {
+        rangesArr.push(...proposedReturn);
+      }
+    };
+  }
+  const rangesToDelete = new Ranges({
+    limitToBeAddedWhitespace: true,
+    limitLinebreaksCount: 2
+  });
+  if (!opts.skipHtmlDecoding) {
+    while (str !== decode(str, {
+      scope: "strict"
+    })) {
+      str = decode(str, {
+        scope: "strict"
+      });
+    }
+  }
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < i && str[i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
+      spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
+    }
+    if (isClosingAt(i)) {
+      if ((!tag || Object.keys(tag).length < 2) && i > 1) {
+        for (let y = i; y--;) {
+          if (str[y - 1] === undefined || isClosingAt(y)) {
+            const startingPoint = str[y - 1] === undefined ? y : y + 1;
+            const culprit = str.slice(startingPoint, i + 1);
+            if (str !== `<${trim(culprit.trim(), "/>")}>` &&
+            [...definitelyTagNames].some(val => trim(culprit.trim().split(/\s+/).filter(val2 => val2.trim()).filter((_val3, i3) => i3 === 0), "/>").toLowerCase() === val) && stripHtml(`<${culprit.trim()}>`, opts).result === "") {
+              /* istanbul ignore else */
+              if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                allTagLocations.push([startingPoint, i + 1]);
+              }
+              /* istanbul ignore else */
+              if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                filteredTagLocations.push([startingPoint, i + 1]);
+              }
+              const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
+              let deleteUpTo = i + 1;
+              if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
+                for (let z = deleteUpTo; z < len; z++) {
+                  if (str[z].trim()) {
+                    deleteUpTo = z;
+                    break;
+                  }
+                }
+              }
+              opts.cb({
+                tag: tag,
+                deleteFrom: startingPoint,
+                deleteTo: deleteUpTo,
+                insert: whiteSpaceCompensation,
+                rangesArr: rangesToDelete,
+                proposedReturn: [startingPoint, deleteUpTo, whiteSpaceCompensation]
+              });
+            }
+            break;
+          }
+        }
+      }
+    }
+    if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
+      tag.slashPresent = i;
+    }
+    if (str[i] === '"' || str[i] === "'") {
+      if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
+        attrObj.valueEnds = i;
+        attrObj.value = str.slice(attrObj.valueStarts, i);
+        tag.attributes.push(attrObj);
+        attrObj = {};
+        tag.quotes = undefined;
+        let hrefVal;
+        if (opts.dumpLinkHrefsNearby.enabled &&
+        tag.attributes.some(obj => {
+          if (obj.name && obj.name.toLowerCase() === "href") {
+            hrefVal = `${opts.dumpLinkHrefsNearby.wrapHeads || ""}${obj.value}${opts.dumpLinkHrefsNearby.wrapTails || ""}`;
+            return true;
+          }
+        })) {
+          hrefDump = {
+            tagName: tag.name,
+            hrefValue: hrefVal,
+            openingTagEnds: undefined
+          };
+        }
+      } else if (!tag.quotes && tag.nameStarts) {
+        tag.quotes = {};
+        tag.quotes.value = str[i];
+        tag.quotes.start = i;
+        if (attrObj.nameStarts && attrObj.nameEnds && attrObj.nameEnds < i && attrObj.nameStarts < i && !attrObj.valueStarts) {
+          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+        }
+      }
+    }
+    if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
+      tag.nameEnds = i;
+      tag.name = str.slice(tag.nameStarts, tag.nameEnds + (
+      /* istanbul ignore next */
+      !isClosingAt(i) && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+      if (
+      str[tag.nameStarts - 1] !== "!" &&
+      !tag.name.replace(/-/g, "").length ||
+      /^\d+$/.test(tag.name[0])) {
+        tag = {};
+        continue;
+      }
+      if (isOpeningAt(i)) {
+        calculateHrefToBeInserted(opts);
+        const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+        if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
+          /* istanbul ignore next */
+          filteredTagLocations = filteredTagLocations.filter(([from, upto]) => !(from === tag.leftOuterWhitespace && upto === i));
+        }
+        opts.cb({
+          tag: tag,
+          deleteFrom: tag.leftOuterWhitespace,
+          deleteTo: i,
+          insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+          rangesArr: rangesToDelete,
+          proposedReturn: [tag.leftOuterWhitespace, i, `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`]
+        });
+        resetHrefMarkers();
+        treatRangedTags(i, opts, rangesToDelete);
+      }
+    }
+    if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
+      attrObj.valueStarts = i;
+    }
+    if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts && !attrObj.equalsAt) {
+      attrObj.equalsAt = i;
+    }
+    if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim() && str[i] !== "=") {
+      tag.attributes.push(attrObj);
+      attrObj = {};
+    }
+    if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
+      if (!str[i].trim()) {
+        attrObj.nameEnds = i;
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+      } else if (str[i] === "=") {
+        /* istanbul ignore else */
+        if (!attrObj.equalsAt) {
+          attrObj.nameEnds = i;
+          attrObj.equalsAt = i;
+          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+        }
+      } else if (str[i] === "/" || isClosingAt(i)) {
+        attrObj.nameEnds = i;
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+        tag.attributes.push(attrObj);
+        attrObj = {};
+      } else if (isOpeningAt(i)) {
+        attrObj.nameEnds = i;
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+        tag.attributes.push(attrObj);
+        attrObj = {};
+      }
+    }
+    if (!tag.quotes && tag.nameEnds < i && !str[i - 1].trim() && str[i].trim() && !`<>/!`.includes(str[i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
+      attrObj.nameStarts = i;
+    }
+    if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] === "/" && tag.onlyPlausible) {
+      tag.onlyPlausible = false;
+    }
+    if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] !== "/"
+    ) {
+        if (tag.onlyPlausible === undefined) {
+          if ((!str[i].trim() || isOpeningAt(i)) && !tag.slashPresent) {
+            tag.onlyPlausible = true;
+          } else {
+            tag.onlyPlausible = false;
+          }
+        }
+        if (str[i].trim() && tag.nameStarts === undefined && !isOpeningAt(i) && str[i] !== "/" && !isClosingAt(i) && str[i] !== "!") {
+          tag.nameStarts = i;
+          tag.nameContainsLetters = false;
+        }
+      }
+    if (tag.nameStarts && !tag.quotes && str[i].toLowerCase() !== str[i].toUpperCase()) {
+      tag.nameContainsLetters = true;
+    }
+    if (
+    isClosingAt(i) &&
+    notWithinAttrQuotes(tag, str, i)) {
+      if (tag.lastOpeningBracketAt !== undefined) {
+        tag.lastClosingBracketAt = i;
+        spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
+        if (Object.keys(attrObj).length) {
+          tag.attributes.push(attrObj);
+          attrObj = {};
+        }
+        if (opts.dumpLinkHrefsNearby.enabled && hrefDump.tagName && !hrefDump.openingTagEnds) {
+          hrefDump.openingTagEnds = i;
+        }
+      }
+    }
+    if (tag.lastOpeningBracketAt !== undefined) {
+      if (tag.lastClosingBracketAt === undefined) {
+        if (tag.lastOpeningBracketAt < i && !isOpeningAt(i) && (
+        str[i + 1] === undefined || isOpeningAt(i + 1)) && tag.nameContainsLetters) {
+          tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
+          /* istanbul ignore else */
+          if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+            allTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+          }
+          if (
+          opts.ignoreTags.includes(tag.name) ||
+          tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
+            tag = {};
+            attrObj = {};
+            continue;
+          }
+          if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
+            calculateHrefToBeInserted(opts);
+            const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+            opts.cb({
+              tag: tag,
+              deleteFrom: tag.leftOuterWhitespace,
+              deleteTo: i + 1,
+              insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+              rangesArr: rangesToDelete,
+              proposedReturn: [tag.leftOuterWhitespace, i + 1, `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`]
+            });
+            resetHrefMarkers();
+            treatRangedTags(i, opts, rangesToDelete);
+          }
+          /* istanbul ignore else */
+          if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt && filteredTagLocations[filteredTagLocations.length - 1][1] !== i + 1) {
+            if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
+              let lastRangedOpeningTag;
+              for (let z = rangedOpeningTags.length; z--;) {
+                /* istanbul ignore else */
+                if (rangedOpeningTags[z].name === tag.name) {
+                  lastRangedOpeningTag = rangedOpeningTags[z];
+                }
+              }
+              /* istanbul ignore else */
+              if (lastRangedOpeningTag) {
+                filteredTagLocations = filteredTagLocations.filter(([from]) => from !== lastRangedOpeningTag.lastOpeningBracketAt);
+                filteredTagLocations.push([lastRangedOpeningTag.lastOpeningBracketAt, i + 1]);
+              } else {
+                /* istanbul ignore next */
+                filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+              }
+            } else {
+              filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            }
+          }
+        }
+      } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
+        let endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
+        if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
+          endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
+        }
+        /* istanbul ignore else */
+        if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+          allTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
+        }
+        if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
+          opts.cb({
+            tag: tag,
+            deleteFrom: null,
+            deleteTo: null,
+            insert: null,
+            rangesArr: rangesToDelete,
+            proposedReturn: null
+          });
+          tag = {};
+          attrObj = {};
+        } else if (!tag.onlyPlausible ||
+        tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) ||
+        tag.attributes && tag.attributes.some(attrObj2 => attrObj2.equalsAt)) {
+          /* istanbul ignore else */
+          if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+            filteredTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
+          }
+          const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+          stringToInsertAfter = "";
+          hrefInsertionActive = false;
+          calculateHrefToBeInserted(opts);
+          let insert;
+          if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
+            insert = `${whiteSpaceCompensation}${stringToInsertAfter}${
+            /* istanbul ignore next */
+            whiteSpaceCompensation === "\n\n" ? "\n" : whiteSpaceCompensation}`;
+          } else {
+            insert = whiteSpaceCompensation;
+          }
+          if (tag.leftOuterWhitespace === 0 || !right(str, endingRangeIndex - 1)) {
+            insert = "";
+          }
+          opts.cb({
+            tag: tag,
+            deleteFrom: tag.leftOuterWhitespace,
+            deleteTo: endingRangeIndex,
+            insert,
+            rangesArr: rangesToDelete,
+            proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert]
+          });
+          resetHrefMarkers();
+          treatRangedTags(i, opts, rangesToDelete);
+        } else {
+          tag = {};
+        }
+        if (!isClosingAt(i)) {
+          tag = {};
+        }
+      }
+    }
+    if (isOpeningAt(i) && !isOpeningAt(i - 1) && !`'"`.includes(str[i + 1]) && (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1])) &&
+    !(str[i + 1] === "c" && str[i + 2] === ":") &&
+    !(str[i + 1] === "f" && str[i + 2] === "m" && str[i + 3] === "t" && str[i + 4] === ":") &&
+    !(str[i + 1] === "s" && str[i + 2] === "q" && str[i + 3] === "l" && str[i + 4] === ":") &&
+    !(str[i + 1] === "x" && str[i + 2] === ":") &&
+    !(str[i + 1] === "f" && str[i + 2] === "n" && str[i + 3] === ":") &&
+    notWithinAttrQuotes(tag, str, i)) {
+      if (isClosingAt(right(str, i))) {
+        continue;
+      } else {
+        if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
+          if (tag.onlyPlausible === true && tag.attributes && tag.attributes.length || tag.onlyPlausible === false) {
+            const whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+            opts.cb({
+              tag: tag,
+              deleteFrom: tag.leftOuterWhitespace,
+              deleteTo: i,
+              insert: whiteSpaceCompensation,
+              rangesArr: rangesToDelete,
+              proposedReturn: [tag.leftOuterWhitespace, i, whiteSpaceCompensation]
+            });
+            treatRangedTags(i, opts, rangesToDelete);
+            tag = {};
+            attrObj = {};
+          }
+        }
+        if (tag.lastOpeningBracketAt !== undefined && tag.onlyPlausible && tag.name && !tag.quotes) {
+          tag.lastOpeningBracketAt = undefined;
+          tag.name = undefined;
+          tag.onlyPlausible = false;
+        }
+        if ((tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) && !tag.quotes) {
+          tag.lastOpeningBracketAt = i;
+          tag.slashPresent = false;
+          tag.attributes = [];
+          if (chunkOfWhitespaceStartsAt === null) {
+            tag.leftOuterWhitespace = i;
+          } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
+            /* istanbul ignore next */
+            tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
+          } else {
+            tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
+          }
+          if (`${str[i + 1]}${str[i + 2]}${str[i + 3]}` === "!--" || `${str[i + 1]}${str[i + 2]}${str[i + 3]}${str[i + 4]}${str[i + 5]}${str[i + 6]}${str[i + 7]}${str[i + 8]}` === "![CDATA[") {
+            let cdata = true;
+            if (str[i + 2] === "-") {
+              cdata = false;
+            }
+            let closingFoundAt;
+            for (let y = i; y < len; y++) {
+              if (!closingFoundAt && cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>" || !cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->") {
+                closingFoundAt = y;
+              }
+              if (closingFoundAt && (closingFoundAt < y && str[y].trim() || str[y + 1] === undefined)) {
+                let rangeEnd = y;
+                if (str[y + 1] === undefined && !str[y].trim() || str[y] === ">") {
+                  rangeEnd += 1;
+                }
+                /* istanbul ignore else */
+                if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                  allTagLocations.push([tag.lastOpeningBracketAt, closingFoundAt + 1]);
+                }
+                /* istanbul ignore else */
+                if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                  filteredTagLocations.push([tag.lastOpeningBracketAt, closingFoundAt + 1]);
+                }
+                const whiteSpaceCompensation = calculateWhitespaceToInsert(str, y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt);
+                opts.cb({
+                  tag: tag,
+                  deleteFrom: tag.leftOuterWhitespace,
+                  deleteTo: rangeEnd,
+                  insert: whiteSpaceCompensation,
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [tag.leftOuterWhitespace, rangeEnd, whiteSpaceCompensation]
+                });
+                i = y - 1;
+                if (str[y] === ">") {
+                  i = y;
+                }
+                tag = {};
+                attrObj = {};
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    if (!str[i].trim()) {
+      if (chunkOfWhitespaceStartsAt === null) {
+        chunkOfWhitespaceStartsAt = i;
+        if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1 &&
+        !rangedOpeningTags.some(
+        rangedTagObj => rangedTagObj.name === tag.name)) {
+          tag.onlyPlausible = true;
+          tag.name = undefined;
+          tag.nameStarts = undefined;
+        }
+      }
+    } else if (chunkOfWhitespaceStartsAt !== null) {
+      if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[i] !== '"' && str[i] !== "'") {
+        /* istanbul ignore else */
+        if (isObj(attrObj)) {
+          tag.attributes.push(attrObj);
+        }
+        attrObj = {};
+        tag.equalsSpottedAt = undefined;
+      }
+      chunkOfWhitespaceStartsAt = null;
+    }
+    if (str[i] === " ") {
+      if (chunkOfSpacesStartsAt === null) {
+        chunkOfSpacesStartsAt = i;
+      }
+    } else if (chunkOfSpacesStartsAt !== null) {
+      chunkOfSpacesStartsAt = null;
+    }
+  }
+  if (str && (
+  opts.trimOnlySpaces &&
+  str[0] === " " ||
+  !opts.trimOnlySpaces &&
+  !str[0].trim())) {
+    for (let i = 0, len = str.length; i < len; i++) {
+      if (opts.trimOnlySpaces && str[i] !== " " || !opts.trimOnlySpaces && str[i].trim()) {
+        rangesToDelete.push([0, i]);
+        break;
+      } else if (!str[i + 1]) {
+        rangesToDelete.push([0, i + 1]);
+      }
+    }
+  }
+  if (str && (
+  opts.trimOnlySpaces &&
+  str[str.length - 1] === " " ||
+  !opts.trimOnlySpaces &&
+  !str[str.length - 1].trim())) {
+    for (let i = str.length; i--;) {
+      if (opts.trimOnlySpaces && str[i] !== " " || !opts.trimOnlySpaces && str[i].trim()) {
+        rangesToDelete.push([i + 1, str.length]);
+        break;
+      }
+    }
+  }
+  const curr = rangesToDelete.current();
+  if ((!originalOpts || !originalOpts.cb) && curr) {
+    if (curr[0] && !curr[0][0]) {
+      curr[0][1];
+      rangesToDelete.ranges[0] = [rangesToDelete.ranges[0][0], rangesToDelete.ranges[0][1]];
+    }
+    if (curr[curr.length - 1] && curr[curr.length - 1][1] === str.length) {
+      curr[curr.length - 1][0];
+      /* istanbul ignore else */
+      if (rangesToDelete.ranges) {
+        let startingIdx2 = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];
+        if (str[startingIdx2 - 1] && (opts.trimOnlySpaces && str[startingIdx2 - 1] === " " || !opts.trimOnlySpaces && !str[startingIdx2 - 1].trim())) {
+          startingIdx2 -= 1;
+        }
+        const backupWhatToAdd = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][2];
+        rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [startingIdx2, rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1]];
+        if (backupWhatToAdd && backupWhatToAdd.trim()) {
+          rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(backupWhatToAdd.trimEnd());
+        }
+      }
+    }
+  }
+  const res = {
+    log: {
+      timeTakenInMilliseconds: Date.now() - start
+    },
+    result: rApply(str, rangesToDelete.current()),
+    ranges: rangesToDelete.current(),
+    allTagLocations,
+    filteredTagLocations
+  };
+  return res;
+}
 
-`:"";f=`${r}${d.hrefValue}${r}`,""+f}}function T(t,r){return r?r[t]==="<"&&r[t+1]!=="%":n[t]==="<"&&n[t+1]!=="%"}function k(t){return n[t]===">"&&n[t-1]!=="%"}if(typeof n!="string")throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof n).toLowerCase()}, equal to:
-${JSON.stringify(n,null,4)}`);if(b&&!L(b))throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${(typeof b).toLowerCase()}, equal to:
-${JSON.stringify(b,null,4)}`);function J(){C&&(d={tagName:"",hrefValue:"",openingTagEnds:void 0},C=!1)}let a={...v,...b};if(Object.prototype.hasOwnProperty.call(a,"returnRangesOnly"))throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] opts.returnRangesOnly has been removed from the API since v.5 release.");a.ignoreTags=P(a.ignoreTags,"opts.ignoreTags"),a.onlyStripTags=P(a.onlyStripTags,"opts.onlyStripTags");let F=!!a.onlyStripTags.length;if(a.onlyStripTags.length&&a.ignoreTags.length&&(a.onlyStripTags=K(a.onlyStripTags,...a.ignoreTags)),L(a.dumpLinkHrefsNearby)||(a.dumpLinkHrefsNearby={...v.dumpLinkHrefsNearby}),a.dumpLinkHrefsNearby=v.dumpLinkHrefsNearby,b&&Object.prototype.hasOwnProperty.call(b,"dumpLinkHrefsNearby")&&V(b.dumpLinkHrefsNearby)){if(L(b.dumpLinkHrefsNearby))a.dumpLinkHrefsNearby={...v.dumpLinkHrefsNearby,...b.dumpLinkHrefsNearby};else if(b.dumpLinkHrefsNearby)throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof b.dumpLinkHrefsNearby}, equal to ${JSON.stringify(b.dumpLinkHrefsNearby,null,4)}. The only allowed value is a plain object. See the API reference.`)}a.stripTogetherWithTheirContents?typeof a.stripTogetherWithTheirContents=="string"&&a.stripTogetherWithTheirContents.length&&(a.stripTogetherWithTheirContents=[a.stripTogetherWithTheirContents]):a.stripTogetherWithTheirContents=[];let H={};if(a.stripTogetherWithTheirContents&&Array.isArray(a.stripTogetherWithTheirContents)&&a.stripTogetherWithTheirContents.length&&!a.stripTogetherWithTheirContents.every((t,r)=>typeof t!="string"?(H.el=t,H.i=r,!1):!0))throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${H.i} has a value ${H.el} which is not string but ${(typeof H.el).toLowerCase()}.`);""+typeof a.cb,a.cb||(a.cb=({rangesArr:t,proposedReturn:r})=>{r&&t.push(...r)}),""+`[${33}mopts[${39}m`+JSON.stringify(a,null,4)+`[${33}minput[${39}m`+n;let g=new Z({limitToBeAddedWhitespace:!0,limitLinebreaksCount:2});if(!a.skipHtmlDecoding)for(;n!==_(n,{scope:"strict"});)n=_(n,{scope:"strict"});for(let t=0,r=n.length;t<r;t++){if(""+36+39+35+`str[ ${t} ] = ${`[${31}m${n[t]&&n[t].trim()===""?n[t]===null?"null":n[t]===`
-`?"line break":n[t]==="	"?"tab":"space":n[t]}[${39}m`}`+39+36+39,Object.keys(e).length>1&&e.lastClosingBracketAt&&e.lastClosingBracketAt<t&&n[t]!==" "&&B===null&&(B=t),k(t)&&(!e||Object.keys(e).length<2)&&t>1){for(let s=t;s--;)if(""+35+`str[${s}] = ${n[s]}`+39,n[s-1]===void 0||k(s)){let i=n[s-1]===void 0?s:s+1,o=n.slice(i,t+1);if(""+`[${31}m${o}[${39}m`,""+I(o.trim().split(/\s+/).filter(c=>c.trim()).filter((c,$)=>$===0),"/>"),n!==`<${I(o.trim(),"/>")}>`&&[...E].some(c=>I(o.trim().split(/\s+/).filter($=>$.trim()).filter(($,h)=>h===0),"/>").toLowerCase()===c)&&X(`<${o.trim()}>`,a).result===""){(!p.length||p[p.length-1][0]!==e.lastOpeningBracketAt)&&(p.push([i,t+1]),""+`[${32}mPUSH[${39}m`+e.lastOpeningBracketAt+(e.lastClosingBracketAt+1)),(!u.length||u[u.length-1][0]!==e.lastOpeningBracketAt)&&(u.push([i,t+1]),""+`[${32}mPUSH[${39}m`+e.lastOpeningBracketAt+(e.lastClosingBracketAt+1));let c=W(n,t,i,t+1,i,t+1);""+33+`SUBMIT RANGE #3: [${i}, ${t+1}, "${c}"]`+39;let $=t+1;if(n[$]&&!n[$].trim()){for(let h=$;h<r;h++)if(n[h].trim()){$=h;break}}""+i+$+c,a.cb({tag:e,deleteFrom:i,deleteTo:$,insert:c,rangesArr:g,proposedReturn:[i,$,c]})}break}}if(n[t]==="/"&&!(e.quotes&&e.quotes.value)&&Number.isInteger(e.lastOpeningBracketAt)&&!Number.isInteger(e.lastClosingBracketAt)&&(""+33+39,e.slashPresent=t),n[t]==='"'||n[t]==="'")if(e.nameStarts&&e.quotes&&e.quotes.value&&e.quotes.value===n[t]){l.valueEnds=t,l.value=n.slice(l.valueStarts,t),""+`[${33}mattrObj[${39}m`+JSON.stringify(l,null,4),e.attributes.push(l),l={},e.quotes=void 0;let s;a.dumpLinkHrefsNearby.enabled&&e.attributes.some(i=>{if(i.name&&i.name.toLowerCase()==="href")return s=`${a.dumpLinkHrefsNearby.wrapHeads||""}${i.value}${a.dumpLinkHrefsNearby.wrapTails||""}`,!0})&&(d={tagName:e.name,hrefValue:s,openingTagEnds:void 0},""+`[${32}mSET[${39}m`+`[${33}mhrefDump[${39}m`+JSON.stringify(d,null,4))}else!e.quotes&&e.nameStarts&&(""+`[${32}mSET[${39}m`+n[t]+t,e.quotes={},e.quotes.value=n[t],e.quotes.start=t,l.nameStarts&&l.nameEnds&&l.nameEnds<t&&l.nameStarts<t&&!l.valueStarts&&(l.name=n.slice(l.nameStarts,l.nameEnds),""+`[${32}mSET[${39}m`+`[${33}mattrObj[${39}m`+JSON.stringify(l,null,4)));if(e.nameStarts!==void 0&&e.nameEnds===void 0&&(!n[t].trim()||!x(n[t]))){if(e.nameEnds=t,""+`[${32}mSET[${39}m`+33+39+e.nameEnds,e.name=n.slice(e.nameStarts,e.nameEnds+(!k(t)&&n[t]!=="/"&&n[t+1]===void 0?1:0)),""+`[${32}mSET[${39}m`+33+39+e.name,""+`[${33}mtag[${39}m`+JSON.stringify(e,null,4),n[e.nameStarts-1]!=="!"&&!e.name.replace(/-/g,"").length||/^\d+$/.test(e.name[0])){e={};continue}if(T(t)){w(a),""+`[${33}mstringToInsertAfter[${39}m`+JSON.stringify(f,null,4);let s=W(n,t,e.leftOuterWhitespace,t,e.lastOpeningBracketAt,t);""+33+`cb()-PUSH: [${e.leftOuterWhitespace}, ${t}, "${s}${f}${s}"]`+39,""+`[${33}mtag[${39}m`+JSON.stringify(e,null,4),(a.stripTogetherWithTheirContents.includes(e.name)||a.stripTogetherWithTheirContents.includes("*"))&&(""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(u,null,4),u=u.filter(([i,o])=>!(i===e.leftOuterWhitespace&&o===t)),""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(u,null,4)),a.cb({tag:e,deleteFrom:e.leftOuterWhitespace,deleteTo:t,insert:`${s}${f}${s}`,rangesArr:g,proposedReturn:[e.leftOuterWhitespace,t,`${s}${f}${s}`]}),J(),R(t,a,g)}}if(e.quotes&&e.quotes.start&&e.quotes.start<t&&!e.quotes.end&&l.nameEnds&&l.equalsAt&&!l.valueStarts&&(""+`[${32}mSET[${39}m`+33+39+l.valueStarts,l.valueStarts=t),!e.quotes&&l.nameEnds&&n[t]==="="&&!l.valueStarts&&!l.equalsAt&&(l.equalsAt=t,""+`[${32}mSET[${39}m`+33+39+l.equalsAt),!e.quotes&&l.nameStarts&&l.nameEnds&&!l.valueStarts&&n[t].trim()&&n[t]!=="="&&(e.attributes.push(l),l={}),!e.quotes&&l.nameStarts&&!l.nameEnds&&(n[t].trim()?n[t]==="="?l.equalsAt||(l.nameEnds=t,""+`[${32}mSET[${39}m`+`[${33}mattrObj.nameEnds[${39}m`+JSON.stringify(l.nameEnds,null,4),l.equalsAt=t,""+`[${32}mSET[${39}m`+`[${33}mattrObj.equalsAt[${39}m`+JSON.stringify(l.equalsAt,null,4),l.name=n.slice(l.nameStarts,l.nameEnds)):n[t]==="/"||k(t)?(""+`[${32}mSET[${39}m`+`[${33}mattrObj.nameEnds[${39}m`+JSON.stringify(l.nameEnds,null,4),l.nameEnds=t,l.name=n.slice(l.nameStarts,l.nameEnds),""+33+39,e.attributes.push(l),l={}):T(t)&&(""+33+39+`[${31}mTODO[${39}m`,l.nameEnds=t,l.name=n.slice(l.nameStarts,l.nameEnds),e.attributes.push(l),l={}):(l.nameEnds=t,""+`[${32}mSET[${39}m`+`[${33}mattrObj.nameEnds[${39}m`+JSON.stringify(l.nameEnds,null,4),l.name=n.slice(l.nameStarts,l.nameEnds))),!e.quotes&&e.nameEnds<t&&!n[t-1].trim()&&n[t].trim()&&!"<>/!".includes(n[t])&&!l.nameStarts&&!e.lastClosingBracketAt&&(l.nameStarts=t,""+`[${32}mSET[${39}m`+33+39+l.nameStarts),e.lastOpeningBracketAt!==null&&e.lastOpeningBracketAt<t&&n[t]==="/"&&e.onlyPlausible&&(e.onlyPlausible=!1),e.lastOpeningBracketAt!==null&&e.lastOpeningBracketAt<t&&n[t]!=="/"&&(e.onlyPlausible===void 0&&((!n[t].trim()||T(t))&&!e.slashPresent?e.onlyPlausible=!0:e.onlyPlausible=!1,""+`[${32}mSET[${39}m`+33+39+e.onlyPlausible),n[t].trim()&&e.nameStarts===void 0&&!T(t)&&n[t]!=="/"&&!k(t)&&n[t]!=="!"&&(e.nameStarts=t,e.nameContainsLetters=!1,""+33+39+e.nameStarts)),e.nameStarts&&!e.quotes&&n[t].toLowerCase()!==n[t].toUpperCase()&&(e.nameContainsLetters=!0),k(t)&&q(e,n,t)&&!0&&e.lastOpeningBracketAt!==void 0&&(e.lastClosingBracketAt=t,""+`[${32}mSET[${39}m`+e.lastClosingBracketAt,B=null,Object.keys(l).length&&(""+`[${32}mPUSH[${39}m`+33+39,e.attributes.push(l),l={}),a.dumpLinkHrefsNearby.enabled&&d.tagName&&!d.openingTagEnds&&(d.openingTagEnds=t,""+`[${32}mSET[${39}m`+`[${33}mhrefDump[${39}m`+JSON.stringify(d,null,4))),e.lastOpeningBracketAt!==void 0){if(""+`[${33}mtag.lastClosingBracketAt[${39}m`+JSON.stringify(e.lastClosingBracketAt,null,4),e.lastClosingBracketAt===void 0){if(e.lastOpeningBracketAt<t&&!T(t)&&(n[t+1]===void 0||T(t+1))&&e.nameContainsLetters){if(""+n[t+1],e.name=n.slice(e.nameStarts,e.nameEnds?e.nameEnds:t+1).toLowerCase(),""+`[${32}mSET[${39}m`+`[${33}mtag.name[${39}m`+JSON.stringify(e.name,null,4),(!p.length||p[p.length-1][0]!==e.lastOpeningBracketAt)&&(p.push([e.lastOpeningBracketAt,t+1]),""+`[${32}mPUSH[${39}m`+e.lastOpeningBracketAt+(t+1)),a.ignoreTags.includes(e.name)||e.onlyPlausible&&!E.has(e.name)){""+31+39,e={},l={};continue}if((E.has(e.name)||A.has(e.name))&&(e.onlyPlausible===!1||e.onlyPlausible===!0&&e.attributes.length)||n[t+1]===void 0){w(a),""+`[${33}mstringToInsertAfter[${39}m`+JSON.stringify(f,null,4);let s=W(n,t,e.leftOuterWhitespace,t+1,e.lastOpeningBracketAt,e.lastClosingBracketAt);""+33+`cb()-PUSH: [${e.leftOuterWhitespace}, ${t+1}, "${s}${f}${s}"]`+39,""+`[${33}mtag[${39}m`+JSON.stringify(e,null,4),a.cb({tag:e,deleteFrom:e.leftOuterWhitespace,deleteTo:t+1,insert:`${s}${f}${s}`,rangesArr:g,proposedReturn:[e.leftOuterWhitespace,t+1,`${s}${f}${s}`]}),J(),R(t,a,g)}if(!u.length||u[u.length-1][0]!==e.lastOpeningBracketAt&&u[u.length-1][1]!==t+1)if(a.stripTogetherWithTheirContents.includes(e.name)||a.stripTogetherWithTheirContents.includes("*")){""+`[${33}mrangedOpeningTags[${39}m`+JSON.stringify(m,null,4);let s;for(let i=m.length;i--;)m[i].name===e.name&&(s=m[i],""+`[${32}mSET[${39}m`+`[${33}mlastRangedOpeningTag[${39}m`+JSON.stringify(s,null,4));s?(""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(u,null,4),u=u.filter(([i])=>i!==s.lastOpeningBracketAt),""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(u,null,4),u.push([s.lastOpeningBracketAt,t+1]),""+`[${32}mPUSH[${39}m`+s.lastOpeningBracketAt+(t+1)):(u.push([e.lastOpeningBracketAt,t+1]),""+`[${32}mPUSH[${39}m`+e.lastOpeningBracketAt+(t+1))}else u.push([e.lastOpeningBracketAt,t+1]),""+`[${32}mPUSH[${39}m`+e.lastOpeningBracketAt+(t+1)}}else if(t>e.lastClosingBracketAt&&n[t].trim()||n[t+1]===void 0){let s=e.lastClosingBracketAt===t?t+1:t;if(""+`[${33}mendingRangeIndex[${39}m`+JSON.stringify(s,null,4),a.trimOnlySpaces&&s===r-1&&B!==null&&B<t&&(s=B),""+`[${33}mtag.name[${39}m`+JSON.stringify(e.name,null,4),(!p.length||p[p.length-1][0]!==e.lastOpeningBracketAt)&&(p.push([e.lastOpeningBracketAt,e.lastClosingBracketAt+1]),""+`[${32}mPUSH[${39}m`+e.lastOpeningBracketAt+(e.lastClosingBracketAt+1)),!F&&a.ignoreTags.includes(e.name)||F&&!a.onlyStripTags.includes(e.name))a.cb({tag:e,deleteFrom:null,deleteTo:null,insert:null,rangesArr:g,proposedReturn:null}),""+31+39,e={},l={};else if(!e.onlyPlausible||e.attributes.length===0&&e.name&&(E.has(e.name.toLowerCase())||A.has(e.name.toLowerCase()))||e.attributes&&e.attributes.some(i=>i.equalsAt)){(!u.length||u[u.length-1][0]!==e.lastOpeningBracketAt)&&(u.push([e.lastOpeningBracketAt,e.lastClosingBracketAt+1]),""+`[${32}mPUSH[${39}m`+e.lastOpeningBracketAt+(e.lastClosingBracketAt+1));let i=W(n,t,e.leftOuterWhitespace,s,e.lastOpeningBracketAt,e.lastClosingBracketAt);""+`[${33}mwhiteSpaceCompensation[${39}m`+JSON.stringify(i,null,4)+i.length,f="",C=!1,w(a),""+`[${33}mstringToInsertAfter[${39}m`+JSON.stringify(f,null,4);let o;Y(f)&&f.length?(o=`${i}${f}${i===`
-
-`?`
-`:i}`,""+`[${32}mSET[${39}m`+`[${33}minsert[${39}m`+JSON.stringify(o,null,4)):(o=i,""+`[${32}mSET[${39}m`+`[${33}minsert[${39}m`+JSON.stringify(o,null,4)),(e.leftOuterWhitespace===0||!M(n,s-1))&&(o="",""+`[${32}mSET[${39}m`+`[${33}minsert[${39}m`+JSON.stringify(o,null,4)),""+33+`cb()-SUBMIT RANGE #2: [${e.leftOuterWhitespace}, ${s}, ${JSON.stringify(o,null,0)}]`+39,a.cb({tag:e,deleteFrom:e.leftOuterWhitespace,deleteTo:s,insert:o,rangesArr:g,proposedReturn:[e.leftOuterWhitespace,s,o]}),J(),R(t,a,g)}else""+33+39,e={};k(t)||(""+33+39,e={})}}if(T(t)&&!T(t-1)&&!`'"`.includes(n[t+1])&&(!`'"`.includes(n[t+2])||/\w/.test(n[t+1]))&&!(n[t+1]==="c"&&n[t+2]===":")&&!(n[t+1]==="f"&&n[t+2]==="m"&&n[t+3]==="t"&&n[t+4]===":")&&!(n[t+1]==="s"&&n[t+2]==="q"&&n[t+3]==="l"&&n[t+4]===":")&&!(n[t+1]==="x"&&n[t+2]===":")&&!(n[t+1]==="f"&&n[t+2]==="n"&&n[t+3]===":")&&q(e,n,t)){if(k(M(n,t)))continue;if(""+!!e.nameEnds+(e.nameEnds<t)+!e.lastClosingBracketAt,e.nameEnds&&e.nameEnds<t&&!e.lastClosingBracketAt&&(""+!!e.onlyPlausible+!E.has(e.name)+!A.has(e.name)+!(e.attributes&&e.attributes.length),e.onlyPlausible===!0&&e.attributes&&e.attributes.length||e.onlyPlausible===!1)){let s=W(n,t,e.leftOuterWhitespace,t,e.lastOpeningBracketAt,t);""+e.leftOuterWhitespace+t+s,a.cb({tag:e,deleteFrom:e.leftOuterWhitespace,deleteTo:t,insert:s,rangesArr:g,proposedReturn:[e.leftOuterWhitespace,t,s]}),R(t,a,g),e={},l={}}if(e.lastOpeningBracketAt!==void 0&&e.onlyPlausible&&e.name&&!e.quotes&&(""+`[${31}mRESET[${39}m`,e.lastOpeningBracketAt=void 0,e.name=void 0,e.onlyPlausible=!1,""+`[${33}mtag[${39}m`+JSON.stringify(e,null,4)),(e.lastOpeningBracketAt===void 0||!e.onlyPlausible)&&!e.quotes&&(e.lastOpeningBracketAt=t,e.slashPresent=!1,e.attributes=[],O===null?e.leftOuterWhitespace=t:a.trimOnlySpaces&&O===0?e.leftOuterWhitespace=N||t:e.leftOuterWhitespace=O,""+`[${32}mSET[${39}m`+33+39+e.leftOuterWhitespace+33+39+e.lastOpeningBracketAt+33+39,`${n[t+1]}${n[t+2]}${n[t+3]}`=="!--"||`${n[t+1]}${n[t+2]}${n[t+3]}${n[t+4]}${n[t+5]}${n[t+6]}${n[t+7]}${n[t+8]}`=="![CDATA[")){""+31+39;let s=!0;n[t+2]==="-"&&(s=!1);let i;for(let o=t;o<r;o++)if(""+`[${33}m${`str[${o}]`}[${39}m`+n[o],(!i&&s&&`${n[o-2]}${n[o-1]}${n[o]}`=="]]>"||!s&&`${n[o-2]}${n[o-1]}${n[o]}`=="-->")&&(i=o,""+i),i&&(i<o&&n[o].trim()||n[o+1]===void 0)){let c=o;(n[o+1]===void 0&&!n[o].trim()||n[o]===">")&&(c+=1),(!p.length||p[p.length-1][0]!==e.lastOpeningBracketAt)&&(p.push([e.lastOpeningBracketAt,i+1]),""+`[${32}mPUSH[${39}m`+e.lastOpeningBracketAt+(i+1)),(!u.length||u[u.length-1][0]!==e.lastOpeningBracketAt)&&(u.push([e.lastOpeningBracketAt,i+1]),""+`[${32}mPUSH[${39}m`+e.lastOpeningBracketAt+(i+1));let $=W(n,o,e.leftOuterWhitespace,c,e.lastOpeningBracketAt,i);""+e.leftOuterWhitespace+c+$,a.cb({tag:e,deleteFrom:e.leftOuterWhitespace,deleteTo:c,insert:$,rangesArr:g,proposedReturn:[e.leftOuterWhitespace,c,$]}),t=o-1,n[o]===">"&&(t=o),e={},l={};break}}}n[t].trim()?O!==null&&(!e.quotes&&l.equalsAt>O-1&&l.nameEnds&&l.equalsAt>l.nameEnds&&n[t]!=='"'&&n[t]!=="'"&&(L(l)&&(""+`[${33}mattrObj[${39}m`+JSON.stringify(l,null,4),e.attributes.push(l)),l={},e.equalsSpottedAt=void 0),O=null,""+`[${32}mSET[${39}m`+33+39+O):O===null&&(O=t,""+`[${32}mSET[${39}m`+33+39+O,e.lastOpeningBracketAt!==void 0&&e.lastOpeningBracketAt<t&&e.nameStarts&&e.nameStarts<e.lastOpeningBracketAt&&t===e.lastOpeningBracketAt+1&&!m.some(s=>s.name===e.name)&&(""+31+39,e.onlyPlausible=!0,e.name=void 0,e.nameStarts=void 0)),n[t]===" "?N===null&&(N=t,""+`[${32}mSET[${39}m`+33+39+N):N!==null&&(N=null,""+`[${32}mSET[${39}m`+33+39+N),""+32+39,""+`[${33}mrangedOpeningTags[${39}m`+JSON.stringify(m,null,4),""+`[${33}mfilteredTagLocations[${39}m`+JSON.stringify(u,null,4),""+`[${33}mspacesChunkWhichFollowsTheClosingBracketEndsAt[${39}m`+JSON.stringify(B,null,4),""+`[${33}mhrefDump[${39}m`+JSON.stringify(d,null,4),""+`[${33}mattrObj[${39}m`+JSON.stringify(l,null,4),""+(Object.keys(e).length?`${`[${35}mtag[${39}m`} = ${Object.keys(e).map(s=>`${`[${90}m${`[${7}m${s}[${27}m`}[${39}m`} ${`[${90}m: ${L(e[s])||Array.isArray(e[s])?JSON.stringify(e[s],null,4):e[s]}[${39}m`}`).join(`,
-`)}
-`:"")+(g.current()?`RANGES: ${JSON.stringify(g.current(),null,0)}`:"")}if(n&&(a.trimOnlySpaces&&n[0]===" "||!a.trimOnlySpaces&&!n[0].trim()))for(let t=0,r=n.length;t<r;t++)if(a.trimOnlySpaces&&n[t]!==" "||!a.trimOnlySpaces&&n[t].trim()){""+t,g.push([0,t]);break}else n[t+1]||(""+(t+1),g.push([0,t+1]));if(n&&(a.trimOnlySpaces&&n[n.length-1]===" "||!a.trimOnlySpaces&&!n[n.length-1].trim())){for(let t=n.length;t--;)if(a.trimOnlySpaces&&n[t]!==" "||!a.trimOnlySpaces&&n[t].trim()){""+n.length,g.push([t+1,n.length]);break}}let y=g.current();if((!b||!b.cb)&&y){if(y[0]&&!y[0][0]){""+`[${33}mthe first range[${39}m`+JSON.stringify(y[0],null,4);let t=y[0][1];""+`[${33}mstartingIdx[${39}m`+JSON.stringify(t,null,4),g.ranges[0]=[g.ranges[0][0],g.ranges[0][1]]}if(y[y.length-1]&&y[y.length-1][1]===n.length){""+`[${33}mthe last range[${39}m`+JSON.stringify(y[y.length-1],null,4)+n.length;let t=y[y.length-1][0];if(""+`[${33}mstartingIdx[${39}m`+JSON.stringify(t,null,4),g.ranges){let r=g.ranges[g.ranges.length-1][0];n[r-1]&&(a.trimOnlySpaces&&n[r-1]===" "||!a.trimOnlySpaces&&!n[r-1].trim())&&(r-=1);let s=g.ranges[g.ranges.length-1][2];g.ranges[g.ranges.length-1]=[r,g.ranges[g.ranges.length-1][1]],s&&s.trim()&&g.ranges[g.ranges.length-1].push(s.trimEnd())}}}let U={log:{timeTakenInMilliseconds:Date.now()-S},result:Q(n,g.current()),ranges:g.current(),allTagLocations:p,filteredTagLocations:u};return""+`[${32}mFINAL RESULT[${39}m`+JSON.stringify(U,null,4),U}export{v as defaults,X as stripHtml,be as version};
+export { defaults, stripHtml, version };
