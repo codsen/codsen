@@ -1,10 +1,10 @@
 /**
- * is-html-tag-opening
- * Does an HTML tag start at given position?
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/is-html-tag-opening/
+ * @name is-html-tag-opening
+ * @fileoverview Does an HTML tag start at given position?
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/is-html-tag-opening/}
  */
 
 'use strict';

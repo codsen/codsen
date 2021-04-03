@@ -1,10 +1,10 @@
 /**
- * ranges-ent-decode
- * Recursive HTML entity decoding for Ranges workflow
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-ent-decode/
+ * @name ranges-ent-decode
+ * @fileoverview Recursive HTML entity decoding for Ranges workflow
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-ent-decode/}
  */
 
 import he from 'he';

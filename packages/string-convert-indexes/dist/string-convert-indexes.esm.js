@@ -1,10 +1,10 @@
 /**
- * string-convert-indexes
- * Convert between native JS string character indexes and grapheme-count-based indexes
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-convert-indexes/
+ * @name string-convert-indexes
+ * @fileoverview Convert between native JS string character indexes and grapheme-count-based indexes
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-convert-indexes/}
  */
 
 import { traverse } from 'ast-monkey-traverse';

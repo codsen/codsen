@@ -1,10 +1,10 @@
 /**
- * string-apostrophes
- * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * Version: 1.4.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-apostrophes/
+ * @name string-apostrophes
+ * @fileoverview Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
+ * @version 1.4.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-apostrophes/}
  */
 
 (function (global, factory) {
@@ -14,12 +14,12 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 }(this, (function (exports) { 'use strict';
 
 /**
- * ranges-sort
- * Sort string index ranges
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-sort/
+ * @name ranges-sort
+ * @fileoverview Sort string index ranges
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-sort/}
  */
 const defaults$1 = {
   strictlyTwoElementsInRangeArrays: false,
@@ -77,12 +77,12 @@ function rSort(arrOfRanges, originalOptions) {
 }
 
 /**
- * ranges-merge
- * Merge and sort string index ranges
- * Version: 7.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-merge/
+ * @name ranges-merge
+ * @fileoverview Merge and sort string index ranges
+ * @version 7.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-merge/}
  */
 const defaults = {
   mergeType: 1,
@@ -177,12 +177,12 @@ function rMerge(arrOfRanges, originalOpts) {
 }
 
 /**
- * ranges-apply
- * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-apply/
+ * @name ranges-apply
+ * @fileoverview Take an array of string index ranges, delete/replace the string according to them
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-apply/}
  */
 function rApply(str, originalRangesArr, progressFn) {
   let percentageDone = 0;

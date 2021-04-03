@@ -1,10 +1,10 @@
 /**
- * string-unfancy
- * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-unfancy/
+ * @name string-unfancy
+ * @fileoverview Replace all n/m dashes, curly quotes with their simpler equivalents
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-unfancy/}
  */
 
 import he from 'he';

@@ -1,10 +1,10 @@
 /**
- * array-group-str-omit-num-char
- * Groups array of strings by omitting number characters
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/array-group-str-omit-num-char/
+ * @name array-group-str-omit-num-char
+ * @fileoverview Groups array of strings by omitting number characters
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/array-group-str-omit-num-char/}
  */
 
 'use strict';

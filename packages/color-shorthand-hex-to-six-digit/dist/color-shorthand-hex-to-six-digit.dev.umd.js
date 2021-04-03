@@ -1,10 +1,10 @@
 /**
- * color-shorthand-hex-to-six-digit
- * Convert shorthand hex color codes into full
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/color-shorthand-hex-to-six-digit/
+ * @name color-shorthand-hex-to-six-digit
+ * @fileoverview Convert shorthand hex color codes into full
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/color-shorthand-hex-to-six-digit/}
  */
 
 (function (global, factory) {

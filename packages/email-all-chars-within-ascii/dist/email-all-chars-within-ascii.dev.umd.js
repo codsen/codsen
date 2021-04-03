@@ -1,10 +1,10 @@
 /**
- * email-all-chars-within-ascii
- * Scans all characters within a string and checks are they within ASCII range
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/email-all-chars-within-ascii/
+ * @name email-all-chars-within-ascii
+ * @fileoverview Scans all characters within a string and checks are they within ASCII range
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/email-all-chars-within-ascii/}
  */
 
 (function (global, factory) {

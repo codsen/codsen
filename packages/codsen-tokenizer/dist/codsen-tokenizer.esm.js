@@ -1,10 +1,10 @@
 /**
- * codsen-tokenizer
- * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 5.5.4
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/codsen-tokenizer/
+ * @name codsen-tokenizer
+ * @fileoverview HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
+ * @version 5.5.4
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/codsen-tokenizer/}
  */
 
 import { matchRight, matchRightIncl, matchLeft, matchLeftIncl } from 'string-match-left-right';

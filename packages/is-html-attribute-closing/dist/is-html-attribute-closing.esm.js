@@ -1,10 +1,10 @@
 /**
- * is-html-attribute-closing
- * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.2.4
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/is-html-attribute-closing/
+ * @name is-html-attribute-closing
+ * @fileoverview Is a character on a given index a closing of an HTML attribute?
+ * @version 2.2.4
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/is-html-attribute-closing/}
  */
 
 import { allHtmlAttribs } from 'html-all-known-attributes';

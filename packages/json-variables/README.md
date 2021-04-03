@@ -54,7 +54,7 @@ assert.deepEqual(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/json-variables/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/json-variables/) for a full description of the API, examples and even a test <a href="https://codsen.com/os/json-variables/play">playground</a>.
 
 ## Contributing
 

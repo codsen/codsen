@@ -1,10 +1,10 @@
 /**
- * helga
- * Your next best friend when editing complex nested code
- * Version: 1.3.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/helga/
+ * @name helga
+ * @fileoverview Your next best friend when editing complex nested code
+ * @version 1.3.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/helga/}
  */
 
 (function (global, factory) {

@@ -1,10 +1,10 @@
 /**
- * line-column-mini
- * Convert string index to line-column position
- * Version: 1.1.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/line-column-mini/
+ * @name line-column-mini
+ * @fileoverview Convert string index to line-column position
+ * @version 1.1.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/line-column-mini/}
  */
 
 (function (global, factory) {

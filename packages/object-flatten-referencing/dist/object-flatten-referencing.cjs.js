@@ -1,10 +1,10 @@
 /**
- * object-flatten-referencing
- * Flatten complex nested objects according to a reference objects
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-flatten-referencing/
+ * @name object-flatten-referencing
+ * @fileoverview Flatten complex nested objects according to a reference objects
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-flatten-referencing/}
  */
 
 'use strict';

@@ -1,10 +1,10 @@
 /**
- * ast-get-object
- * Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-get-object/
+ * @name ast-get-object
+ * @fileoverview Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-get-object/}
  */
 
 'use strict';

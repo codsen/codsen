@@ -1,10 +1,10 @@
 /**
- * object-flatten-referencing
- * Flatten complex nested objects according to a reference objects
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-flatten-referencing/
+ * @name object-flatten-referencing
+ * @fileoverview Flatten complex nested objects according to a reference objects
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-flatten-referencing/}
  */
 
 (function (global, factory) {
@@ -1772,12 +1772,12 @@ module.exports = cloneDeep;
 });
 
 /**
- * str-indexes-of-plus
- * Like indexOf but returns array and counts per-grapheme
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/str-indexes-of-plus/
+ * @name str-indexes-of-plus
+ * @fileoverview Like indexOf but returns array and counts per-grapheme
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/str-indexes-of-plus/}
  */
 function strIndexesOfPlus(str, searchValue, fromIndex = 0) {
   if (typeof str !== "string") {

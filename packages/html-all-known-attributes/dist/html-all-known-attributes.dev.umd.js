@@ -1,10 +1,10 @@
 /**
- * html-all-known-attributes
- * All HTML attributes known to the Humanity
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/html-all-known-attributes/
+ * @name html-all-known-attributes
+ * @fileoverview All HTML attributes known to the Humanity
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/html-all-known-attributes/}
  */
 
 (function (global, factory) {

@@ -1,10 +1,10 @@
 /**
- * is-language-code
- * Is given string a language code (as per IANA)
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/is-language-code/
+ * @name is-language-code
+ * @fileoverview Is given string a language code (as per IANA)
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/is-language-code/}
  */
 
 'use strict';

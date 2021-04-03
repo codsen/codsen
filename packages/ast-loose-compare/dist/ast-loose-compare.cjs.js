@@ -1,10 +1,10 @@
 /**
- * ast-loose-compare
- * Compare anything: AST, objects, arrays and strings
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-loose-compare/
+ * @name ast-loose-compare
+ * @fileoverview Compare anything: AST, objects, arrays and strings
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-loose-compare/}
  */
 
 'use strict';

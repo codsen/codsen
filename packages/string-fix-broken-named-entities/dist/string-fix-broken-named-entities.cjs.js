@@ -1,10 +1,10 @@
 /**
- * string-fix-broken-named-entities
- * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * Version: 5.2.3
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-fix-broken-named-entities/
+ * @name string-fix-broken-named-entities
+ * @fileoverview Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
+ * @version 5.2.3
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-fix-broken-named-entities/}
  */
 
 'use strict';

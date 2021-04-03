@@ -1,10 +1,10 @@
 /**
- * string-extract-class-names
- * Extracts CSS class/id names from a string
- * Version: 6.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-extract-class-names/
+ * @name string-extract-class-names
+ * @fileoverview Extracts CSS class/id names from a string
+ * @version 6.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-extract-class-names/}
  */
 
 import { right, left } from 'string-left-right';

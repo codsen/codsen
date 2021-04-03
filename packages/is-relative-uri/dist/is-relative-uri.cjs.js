@@ -1,10 +1,10 @@
 /**
- * is-relative-uri
- * Is given string a relative URI?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/is-relative-uri/
+ * @name is-relative-uri
+ * @fileoverview Is given string a relative URI?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/is-relative-uri/}
  */
 
 'use strict';

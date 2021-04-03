@@ -1,10 +1,10 @@
 /**
- * string-range-expander
- * Expands string index ranges within whitespace boundaries until letters are met
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-range-expander/
+ * @name string-range-expander
+ * @fileoverview Expands string index ranges within whitespace boundaries until letters are met
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-range-expander/}
  */
 
 (function (global, factory) {

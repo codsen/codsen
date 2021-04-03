@@ -1,10 +1,10 @@
 /**
- * ranges-regex
- * Integrate regex operations into Ranges workflow
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-regex/
+ * @name ranges-regex
+ * @fileoverview Integrate regex operations into Ranges workflow
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-regex/}
  */
 
 'use strict';

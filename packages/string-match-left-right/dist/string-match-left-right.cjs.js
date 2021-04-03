@@ -1,10 +1,10 @@
 /**
- * string-match-left-right
- * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.7
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-match-left-right/
+ * @name string-match-left-right
+ * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
+ * @version 7.0.7
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-match-left-right/}
  */
 
 'use strict';

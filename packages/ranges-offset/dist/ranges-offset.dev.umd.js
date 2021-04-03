@@ -1,10 +1,10 @@
 /**
- * ranges-offset
- * Increment or decrement each index in every range
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-offset/
+ * @name ranges-offset
+ * @fileoverview Increment or decrement each index in every range
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-offset/}
  */
 
 (function (global, factory) {

@@ -1,10 +1,10 @@
 /**
- * string-fix-broken-named-entities
- * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * Version: 5.2.3
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-fix-broken-named-entities/
+ * @name string-fix-broken-named-entities
+ * @fileoverview Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
+ * @version 5.2.3
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-fix-broken-named-entities/}
  */
 
 (function (global, factory) {
@@ -92,12 +92,12 @@ var _default = leven;
 leven_1.default = _default;
 
 /**
- * all-named-html-entities
- * List of all named HTML entities
- * Version: 1.5.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/all-named-html-entities/
+ * @name all-named-html-entities
+ * @fileoverview List of all named HTML entities
+ * @version 1.5.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/all-named-html-entities/}
  */
 
 var Aacute = "Á";
@@ -9325,12 +9325,12 @@ module.exports = cloneDeep;
 });
 
 /**
- * string-left-right
- * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-left-right/
+ * @name string-left-right
+ * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-left-right/}
  */
 const RAWNBSP = "\u00A0";
 function x(something) {

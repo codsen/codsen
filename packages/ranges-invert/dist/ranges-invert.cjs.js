@@ -1,10 +1,10 @@
 /**
- * ranges-invert
- * Invert string index ranges
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-invert/
+ * @name ranges-invert
+ * @fileoverview Invert string index ranges
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-invert/}
  */
 
 'use strict';

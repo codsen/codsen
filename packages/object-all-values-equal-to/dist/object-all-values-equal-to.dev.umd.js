@@ -1,10 +1,10 @@
 /**
- * object-all-values-equal-to
- * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-all-values-equal-to/
+ * @name object-all-values-equal-to
+ * @fileoverview Does the AST/nested-plain-object/array/whatever contain only one kind of value?
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-all-values-equal-to/}
  */
 
 (function (global, factory) {

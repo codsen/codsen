@@ -1,10 +1,10 @@
 /**
- * util-array-object-or-both
- * Validate and normalise user choice: array, object or both?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/util-array-object-or-both/
+ * @name util-array-object-or-both
+ * @fileoverview Validate and normalise user choice: array, object or both?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/util-array-object-or-both/}
  */
 
 'use strict';

@@ -1,10 +1,10 @@
 /**
- * edit-package-json
- * Edit package.json without parsing, as string, to keep the formatting intact
- * Version: 0.3.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/edit-package-json/
+ * @name edit-package-json
+ * @fileoverview Edit package.json without parsing, as string, to keep the formatting intact
+ * @version 0.3.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/edit-package-json/}
  */
 
 'use strict';

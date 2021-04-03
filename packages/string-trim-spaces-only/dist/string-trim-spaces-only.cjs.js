@@ -1,10 +1,10 @@
 /**
- * string-trim-spaces-only
- * Like String.trim() but you can choose granularly what to trim
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-trim-spaces-only/
+ * @name string-trim-spaces-only
+ * @fileoverview Like String.trim() but you can choose granularly what to trim
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-trim-spaces-only/}
  */
 
 'use strict';

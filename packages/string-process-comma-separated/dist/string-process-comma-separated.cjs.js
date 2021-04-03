@@ -1,10 +1,10 @@
 /**
- * string-process-comma-separated
- * Extracts chunks from possibly comma or whatever-separated string
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-process-comma-separated/
+ * @name string-process-comma-separated
+ * @fileoverview Extracts chunks from possibly comma or whatever-separated string
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-process-comma-separated/}
  */
 
 'use strict';

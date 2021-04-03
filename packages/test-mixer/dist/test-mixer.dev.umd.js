@@ -1,10 +1,10 @@
 /**
- * test-mixer
- * Test helper to generate function opts object variations
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/test-mixer/
+ * @name test-mixer
+ * @fileoverview Test helper to generate function opts object variations
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/test-mixer/}
  */
 
 (function (global, factory) {
@@ -3266,12 +3266,12 @@ module.exports = cloneDeep;
 });
 
 /**
- * object-boolean-combinations
- * Consumes a defaults object with booleans, generates all possible variations of it
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-boolean-combinations/
+ * @name object-boolean-combinations
+ * @fileoverview Consumes a defaults object with booleans, generates all possible variations of it
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-boolean-combinations/}
  */
 function combinations(originalIncomingObject, originalOverrideObject = {}) {
   function combi(n) {

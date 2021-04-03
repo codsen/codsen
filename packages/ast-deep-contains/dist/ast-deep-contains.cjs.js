@@ -1,10 +1,10 @@
 /**
- * ast-deep-contains
- * Like t.same assert on array of objects, where element order doesn't matter.
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-deep-contains/
+ * @name ast-deep-contains
+ * @fileoverview Like t.same assert on array of objects, where element order doesn't matter.
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-deep-contains/}
  */
 
 'use strict';

@@ -1,10 +1,10 @@
 /**
- * object-flatten-all-arrays
- * Merge and flatten any arrays found in all values within plain objects
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-flatten-all-arrays/
+ * @name object-flatten-all-arrays
+ * @fileoverview Merge and flatten any arrays found in all values within plain objects
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-flatten-all-arrays/}
  */
 
 import merge from 'lodash.merge';

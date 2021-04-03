@@ -1,10 +1,10 @@
 /**
- * ast-monkey-traverse
- * Utility library to traverse AST
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey-traverse/
+ * @name ast-monkey-traverse
+ * @fileoverview Utility library to traverse AST
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey-traverse/}
  */
 
 import clone from 'lodash.clonedeep';

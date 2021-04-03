@@ -1,10 +1,10 @@
 /**
- * util-nonempty
- * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/util-nonempty/
+ * @name util-nonempty
+ * @fileoverview Is the input (plain object, array, string or whatever) not empty?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/util-nonempty/}
  */
 
 import isPlainObject from 'lodash.isplainobject';

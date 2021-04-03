@@ -1,10 +1,10 @@
 /**
- * string-unfancy
- * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-unfancy/
+ * @name string-unfancy
+ * @fileoverview Replace all n/m dashes, curly quotes with their simpler equivalents
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-unfancy/}
  */
 
 !function(r,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((r="undefined"!=typeof globalThis?globalThis:r||self).stringUnfancy={})}(this,(function(r){"use strict";var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{};

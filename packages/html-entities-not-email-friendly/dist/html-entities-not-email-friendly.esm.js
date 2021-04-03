@@ -1,10 +1,10 @@
 /**
- * html-entities-not-email-friendly
- * All HTML entities which are not email template friendly
- * Version: 0.4.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/html-entities-not-email-friendly/
+ * @name html-entities-not-email-friendly
+ * @fileoverview All HTML entities which are not email template friendly
+ * @version 0.4.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/html-entities-not-email-friendly/}
  */
 
 const notEmailFriendly = {

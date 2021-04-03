@@ -1,10 +1,10 @@
 /**
- * ast-monkey
- * Traverse and edit AST
- * Version: 7.13.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey/
+ * @name ast-monkey
+ * @fileoverview Traverse and edit AST
+ * @version 7.13.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey/}
  */
 
 import { arrObjOrBoth } from 'util-array-object-or-both';

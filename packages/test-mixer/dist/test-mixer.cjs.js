@@ -1,10 +1,10 @@
 /**
- * test-mixer
- * Test helper to generate function opts object variations
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/test-mixer/
+ * @name test-mixer
+ * @fileoverview Test helper to generate function opts object variations
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/test-mixer/}
  */
 
 'use strict';

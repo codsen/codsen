@@ -1,10 +1,10 @@
 /**
- * is-media-descriptor
- * Is given string a valid media descriptor (including media query)?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/is-media-descriptor/
+ * @name is-media-descriptor
+ * @fileoverview Is given string a valid media descriptor (including media query)?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/is-media-descriptor/}
  */
 
 (function (global, factory) {
@@ -92,12 +92,12 @@ var _default = leven;
 leven_1.default = _default;
 
 /**
- * string-process-comma-separated
- * Extracts chunks from possibly comma or whatever-separated string
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-process-comma-separated/
+ * @name string-process-comma-separated
+ * @fileoverview Extracts chunks from possibly comma or whatever-separated string
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-process-comma-separated/}
  */
 function processCommaSep(str, originalOpts) {
   if (typeof str !== "string") {

@@ -1,10 +1,10 @@
 /**
- * easy-replace
- * Replace strings with optional lookarounds, but without regexes
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/easy-replace/
+ * @name easy-replace
+ * @fileoverview Replace strings with optional lookarounds, but without regexes
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/easy-replace/}
  */
 
 'use strict';

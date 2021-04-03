@@ -1,10 +1,10 @@
 /**
- * emlint
- * Pluggable email template code linter
- * Version: 4.5.4
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/emlint/
+ * @name emlint
+ * @fileoverview Pluggable email template code linter
+ * @version 4.5.4
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/emlint/}
  */
 
 import { TypedEmitter } from 'tiny-typed-emitter';

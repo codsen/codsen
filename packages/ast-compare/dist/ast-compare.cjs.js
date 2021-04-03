@@ -1,10 +1,10 @@
 /**
- * ast-compare
- * Compare anything: AST, objects, arrays, strings and nested thereof
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-compare/
+ * @name ast-compare
+ * @fileoverview Compare anything: AST, objects, arrays, strings and nested thereof
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-compare/}
  */
 
 'use strict';

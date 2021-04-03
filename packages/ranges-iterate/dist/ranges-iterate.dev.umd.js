@@ -1,10 +1,10 @@
 /**
- * ranges-iterate
- * Iterate a string and any changes within given string index ranges
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-iterate/
+ * @name ranges-iterate
+ * @fileoverview Iterate a string and any changes within given string index ranges
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-iterate/}
  */
 
 (function (global, factory) {

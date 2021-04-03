@@ -1,10 +1,10 @@
 /**
- * ranges-push
- * Gather string index ranges
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-push/
+ * @name ranges-push
+ * @fileoverview Gather string index ranges
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-push/}
  */
 
 'use strict';

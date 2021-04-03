@@ -1,10 +1,10 @@
 /**
- * string-find-malformed
- * Search for a malformed string. Think of Levenshtein distance but in search.
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-find-malformed/
+ * @name string-find-malformed
+ * @fileoverview Search for a malformed string. Think of Levenshtein distance but in search.
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-find-malformed/}
  */
 
 (function (global, factory) {
@@ -1790,12 +1790,12 @@ module.exports = cloneDeep;
 });
 
 /**
- * string-left-right
- * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-left-right/
+ * @name string-left-right
+ * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-left-right/}
  */
 const RAWNBSP = "\u00A0";
 function rightMain({

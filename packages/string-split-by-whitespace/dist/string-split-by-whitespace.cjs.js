@@ -1,10 +1,10 @@
 /**
- * string-split-by-whitespace
- * Split string into array by chunks of whitespace
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-split-by-whitespace/
+ * @name string-split-by-whitespace
+ * @fileoverview Split string into array by chunks of whitespace
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-split-by-whitespace/}
  */
 
 'use strict';

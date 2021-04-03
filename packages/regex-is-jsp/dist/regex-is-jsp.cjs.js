@@ -1,10 +1,10 @@
 /**
- * regex-is-jsp
- * Regular expression for detecting JSP (Java Server Pages) code
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/regex-is-jsp/
+ * @name regex-is-jsp
+ * @fileoverview Regular expression for detecting JSP (Java Server Pages) code
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/regex-is-jsp/}
  */
 
 'use strict';

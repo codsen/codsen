@@ -13,12 +13,12 @@ import dts from "rollup-plugin-dts";
 import pkg from "./package.json";
 import { resolve } from "path";
 
-const licensePiece = `${pkg.name}
-${pkg.description}
-Version: ${pkg.version}
-Author: Roy Revelt, Codsen Ltd
-License: ${pkg.license}
-Homepage: ${pkg.homepage}`;
+const licensePiece = `@name ${pkg.name}
+@fileoverview ${pkg.description}
+@version ${pkg.version}
+@author Roy Revelt, Codsen Ltd
+@license ${pkg.license}
+{@link ${pkg.homepage}}`;
 
 const extensions = [".mjs", ".js", ".json", ".node", ".ts"];
 const babelRuntimeVersion = pkg.dependencies["@babel/runtime"].replace(

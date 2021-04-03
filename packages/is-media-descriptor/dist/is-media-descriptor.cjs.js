@@ -1,10 +1,10 @@
 /**
- * is-media-descriptor
- * Is given string a valid media descriptor (including media query)?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/is-media-descriptor/
+ * @name is-media-descriptor
+ * @fileoverview Is given string a valid media descriptor (including media query)?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/is-media-descriptor/}
  */
 
 'use strict';

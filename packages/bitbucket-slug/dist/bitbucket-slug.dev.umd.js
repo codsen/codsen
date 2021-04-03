@@ -1,10 +1,10 @@
 /**
- * bitbucket-slug
- * Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond.
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/bitbucket-slug/
+ * @name bitbucket-slug
+ * @fileoverview Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond.
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/bitbucket-slug/}
  */
 
 (function (global, factory) {

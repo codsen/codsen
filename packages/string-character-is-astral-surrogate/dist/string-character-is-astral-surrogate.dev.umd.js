@@ -1,10 +1,10 @@
 /**
- * string-character-is-astral-surrogate
- * Tells, is given character a part of astral character, specifically, a high and low surrogate
- * Version: 1.12.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-character-is-astral-surrogate/
+ * @name string-character-is-astral-surrogate
+ * @fileoverview Tells, is given character a part of astral character, specifically, a high and low surrogate
+ * @version 1.12.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-character-is-astral-surrogate/}
  */
 
 (function (global, factory) {

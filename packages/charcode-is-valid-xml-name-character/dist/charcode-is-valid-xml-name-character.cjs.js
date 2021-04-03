@@ -1,10 +1,10 @@
 /**
- * charcode-is-valid-xml-name-character
- * Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
- * Version: 1.12.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/charcode-is-valid-xml-name-character/
+ * @name charcode-is-valid-xml-name-character
+ * @fileoverview Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
+ * @version 1.12.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/charcode-is-valid-xml-name-character/}
  */
 
 'use strict';

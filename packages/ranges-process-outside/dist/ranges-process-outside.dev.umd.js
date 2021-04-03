@@ -1,10 +1,10 @@
 /**
- * ranges-process-outside
- * Iterate string considering ranges, as if they were already applied
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-process-outside/
+ * @name ranges-process-outside
+ * @fileoverview Iterate string considering ranges, as if they were already applied
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-process-outside/}
  */
 
 (function (global, factory) {
@@ -177,12 +177,12 @@ var substr = substring;
 runes_1.substr = substr;
 
 /**
- * ranges-sort
- * Sort string index ranges
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-sort/
+ * @name ranges-sort
+ * @fileoverview Sort string index ranges
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-sort/}
  */
 const defaults$1 = {
   strictlyTwoElementsInRangeArrays: false,
@@ -240,12 +240,12 @@ function rSort(arrOfRanges, originalOptions) {
 }
 
 /**
- * ranges-merge
- * Merge and sort string index ranges
- * Version: 7.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-merge/
+ * @name ranges-merge
+ * @fileoverview Merge and sort string index ranges
+ * @version 7.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-merge/}
  */
 const defaults = {
   mergeType: 1,
@@ -340,12 +340,12 @@ function rMerge(arrOfRanges, originalOpts) {
 }
 
 /**
- * ranges-crop
- * Crop array of ranges when they go beyond the reference string's length
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-crop/
+ * @name ranges-crop
+ * @fileoverview Crop array of ranges when they go beyond the reference string's length
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-crop/}
  */
 function rCrop(arrOfRanges, strLen) {
   if (arrOfRanges === null) {
@@ -395,12 +395,12 @@ function rCrop(arrOfRanges, strLen) {
 }
 
 /**
- * ranges-invert
- * Invert string index ranges
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-invert/
+ * @name ranges-invert
+ * @fileoverview Invert string index ranges
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-invert/}
  */
 function rInvert(arrOfRanges, strLen, originalOptions) {
   if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {

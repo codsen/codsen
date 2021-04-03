@@ -1,10 +1,10 @@
 /**
- * string-overlap-one-on-another
- * Lay one string on top of another, with an optional offset
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-overlap-one-on-another/
+ * @name string-overlap-one-on-another
+ * @fileoverview Lay one string on top of another, with an optional offset
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-overlap-one-on-another/}
  */
 
 (function (global, factory) {

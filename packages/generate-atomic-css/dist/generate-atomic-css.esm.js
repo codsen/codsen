@@ -1,10 +1,10 @@
 /**
- * generate-atomic-css
- * Generate Atomic CSS
- * Version: 1.4.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/generate-atomic-css/
+ * @name generate-atomic-css
+ * @fileoverview Generate Atomic CSS
+ * @version 1.4.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/generate-atomic-css/}
  */
 
 import { right, left, leftSeq, rightSeq } from 'string-left-right';

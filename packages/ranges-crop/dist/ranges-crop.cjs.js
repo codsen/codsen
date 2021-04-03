@@ -1,10 +1,10 @@
 /**
- * ranges-crop
- * Crop array of ranges when they go beyond the reference string's length
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-crop/
+ * @name ranges-crop
+ * @fileoverview Crop array of ranges when they go beyond the reference string's length
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-crop/}
  */
 
 'use strict';

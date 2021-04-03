@@ -1,10 +1,10 @@
 /**
- * ast-get-values-by-key
- * Extract values and paths from AST by keys OR set them by keys
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-get-values-by-key/
+ * @name ast-get-values-by-key
+ * @fileoverview Extract values and paths from AST by keys OR set them by keys
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-get-values-by-key/}
  */
 
 'use strict';

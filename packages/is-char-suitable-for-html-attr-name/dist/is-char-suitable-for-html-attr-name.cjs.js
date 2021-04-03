@@ -1,10 +1,10 @@
 /**
- * is-char-suitable-for-html-attr-name
- * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
+ * @name is-char-suitable-for-html-attr-name
+ * @fileoverview Is given character suitable to be in an HTML attribute's name?
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/is-char-suitable-for-html-attr-name/}
  */
 
 'use strict';

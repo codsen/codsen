@@ -1,10 +1,10 @@
 /**
- * string-uglify
- * Shorten sets of strings deterministically, to be git-friendly
- * Version: 1.4.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-uglify/
+ * @name string-uglify
+ * @fileoverview Shorten sets of strings deterministically, to be git-friendly
+ * @version 1.4.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-uglify/}
  */
 
 'use strict';

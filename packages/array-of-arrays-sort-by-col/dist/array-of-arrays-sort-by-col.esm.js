@@ -1,10 +1,10 @@
 /**
- * array-of-arrays-sort-by-col
- * Sort array of arrays by column, rippling the sorting outwards from that column
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/array-of-arrays-sort-by-col/
+ * @name array-of-arrays-sort-by-col
+ * @fileoverview Sort array of arrays by column, rippling the sorting outwards from that column
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/array-of-arrays-sort-by-col/}
  */
 
 var version$1 = "3.0.13";

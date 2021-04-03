@@ -1,10 +1,10 @@
 /**
- * tap-parse-string-to-object
- * Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/tap-parse-string-to-object/
+ * @name tap-parse-string-to-object
+ * @fileoverview Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/tap-parse-string-to-object/}
  */
 
 import isStream from 'isstream';

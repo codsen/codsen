@@ -1,10 +1,10 @@
 /**
- * eslint-plugin-test-num
- * ESLint plugin to update unit test numbers automatically
- * Version: 1.5.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/eslint-plugin-test-num/
+ * @name eslint-plugin-test-num
+ * @fileoverview ESLint plugin to update unit test numbers automatically
+ * @version 1.5.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/eslint-plugin-test-num/}
  */
 
 'use strict';

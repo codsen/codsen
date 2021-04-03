@@ -46,7 +46,7 @@ assert.equal(res, "Some text with many words on one&nbsp;line.");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-remove-widows/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/string-remove-widows/) for a full description of the API, examples and even a test <a href="https://codsen.com/os/string-remove-widows/play">playground</a>.
 
 ## Contributing
 

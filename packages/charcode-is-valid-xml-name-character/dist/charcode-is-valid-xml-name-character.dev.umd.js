@@ -1,10 +1,10 @@
 /**
- * charcode-is-valid-xml-name-character
- * Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
- * Version: 1.12.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/charcode-is-valid-xml-name-character/
+ * @name charcode-is-valid-xml-name-character
+ * @fileoverview Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
+ * @version 1.12.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/charcode-is-valid-xml-name-character/}
  */
 
 (function (global, factory) {
@@ -14,12 +14,12 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 }(this, (function (exports) { 'use strict';
 
 /**
- * ranges-is-index-within
- * Checks if index is within any of the given string index ranges
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-is-index-within/
+ * @name ranges-is-index-within
+ * @fileoverview Checks if index is within any of the given string index ranges
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-is-index-within/}
  */
 const defaults = {
   inclusiveRangeEnds: false,

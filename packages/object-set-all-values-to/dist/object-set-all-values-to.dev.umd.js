@@ -1,10 +1,10 @@
 /**
- * object-set-all-values-to
- * Recursively walk the input and set all found values in plain objects to something
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-set-all-values-to/
+ * @name object-set-all-values-to
+ * @fileoverview Recursively walk the input and set all found values in plain objects to something
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-set-all-values-to/}
  */
 
 (function (global, factory) {

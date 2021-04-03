@@ -1,10 +1,10 @@
 /**
- * ast-monkey-traverse-with-lookahead
- * Utility library to traverse AST, reports upcoming values
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey-traverse-with-lookahead/
+ * @name ast-monkey-traverse-with-lookahead
+ * @fileoverview Utility library to traverse AST, reports upcoming values
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey-traverse-with-lookahead/}
  */
 
 (function (global, factory) {

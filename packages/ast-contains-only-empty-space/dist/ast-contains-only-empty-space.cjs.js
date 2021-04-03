@@ -1,10 +1,10 @@
 /**
- * ast-contains-only-empty-space
- * Does AST contain only empty space?
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
+ * @name ast-contains-only-empty-space
+ * @fileoverview Does AST contain only empty space?
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-contains-only-empty-space/}
  */
 
 'use strict';

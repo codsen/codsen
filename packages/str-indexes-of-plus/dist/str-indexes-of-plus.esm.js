@@ -1,10 +1,10 @@
 /**
- * str-indexes-of-plus
- * Like indexOf but returns array and counts per-grapheme
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/str-indexes-of-plus/
+ * @name str-indexes-of-plus
+ * @fileoverview Like indexOf but returns array and counts per-grapheme
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/str-indexes-of-plus/}
  */
 
 var version$1 = "3.0.13";

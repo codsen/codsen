@@ -1,10 +1,10 @@
 /**
- * string-convert-indexes
- * Convert between native JS string character indexes and grapheme-count-based indexes
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-convert-indexes/
+ * @name string-convert-indexes
+ * @fileoverview Convert between native JS string character indexes and grapheme-count-based indexes
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-convert-indexes/}
  */
 
 (function (global, factory) {
@@ -1911,12 +1911,12 @@ function isPlainObject(value) {
 var lodash_isplainobject = isPlainObject;
 
 /**
- * ast-monkey-util
- * Utility library of AST helper functions
- * Version: 1.3.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey-util/
+ * @name ast-monkey-util
+ * @fileoverview Utility library of AST helper functions
+ * @version 1.3.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey-util/}
  */
 
 function parent(str) {
@@ -1935,12 +1935,12 @@ function parent(str) {
 }
 
 /**
- * ast-monkey-traverse
- * Utility library to traverse AST
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey-traverse/
+ * @name ast-monkey-traverse
+ * @fileoverview Utility library to traverse AST
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey-traverse/}
  */
 function traverse(tree1, cb1) {
   const stop2 = {

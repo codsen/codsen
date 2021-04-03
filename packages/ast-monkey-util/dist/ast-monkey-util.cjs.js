@@ -1,10 +1,10 @@
 /**
- * ast-monkey-util
- * Utility library of AST helper functions
- * Version: 1.3.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey-util/
+ * @name ast-monkey-util
+ * @fileoverview Utility library of AST helper functions
+ * @version 1.3.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey-util/}
  */
 
 'use strict';

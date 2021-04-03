@@ -1,10 +1,10 @@
 /**
- * detect-templating-language
- * Detects various templating languages present in string
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/detect-templating-language/
+ * @name detect-templating-language
+ * @fileoverview Detects various templating languages present in string
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/detect-templating-language/}
  */
 
 (function (global, factory) {
@@ -14,36 +14,36 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 }(this, (function (exports) { 'use strict';
 
 /**
- * regex-is-jinja-nunjucks
- * Regular expression for detecting Jinja or Nunjucks code
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
+ * @name regex-is-jinja-nunjucks
+ * @fileoverview Regular expression for detecting Jinja or Nunjucks code
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/regex-is-jinja-nunjucks/}
  */
 function isJinjaNunjucksRegex() {
   return /{%|{{|%}|}}/gi;
 }
 
 /**
- * regex-is-jsp
- * Regular expression for detecting JSP (Java Server Pages) code
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/regex-is-jsp/
+ * @name regex-is-jsp
+ * @fileoverview Regular expression for detecting JSP (Java Server Pages) code
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/regex-is-jsp/}
  */
 function isJSP() {
   return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
 }
 
 /**
- * regex-jinja-specific
- * Regular expression for detecting Python-specific Jinja code
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/regex-jinja-specific/
+ * @name regex-jinja-specific
+ * @fileoverview Regular expression for detecting Python-specific Jinja code
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/regex-jinja-specific/}
  */
 function isJinjaSpecific() {
   return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;

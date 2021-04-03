@@ -1,10 +1,10 @@
 /**
- * is-html-tag-opening
- * Does an HTML tag start at given position?
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/is-html-tag-opening/
+ * @name is-html-tag-opening
+ * @fileoverview Does an HTML tag start at given position?
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/is-html-tag-opening/}
  */
 
 (function (global, factory) {
@@ -14,12 +14,12 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 }(this, (function (exports) { 'use strict';
 
 /**
- * arrayiffy-if-string
- * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/arrayiffy-if-string/
+ * @name arrayiffy-if-string
+ * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+ * @version 3.13.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/arrayiffy-if-string/}
  */
 
 function arrayiffy(something) {
@@ -33,12 +33,12 @@ function arrayiffy(something) {
 }
 
 /**
- * string-match-left-right
- * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.7
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-match-left-right/
+ * @name string-match-left-right
+ * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
+ * @version 7.0.7
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-match-left-right/}
  */
 
 function isObj(something) {
@@ -2105,12 +2105,12 @@ module.exports = cloneDeep;
 });
 
 /**
- * string-left-right
- * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-left-right/
+ * @name string-left-right
+ * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-left-right/}
  */
 const RAWNBSP = "\u00A0";
 function leftMain({

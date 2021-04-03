@@ -1,10 +1,10 @@
 /**
- * regex-jinja-specific
- * Regular expression for detecting Python-specific Jinja code
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/regex-jinja-specific/
+ * @name regex-jinja-specific
+ * @fileoverview Regular expression for detecting Python-specific Jinja code
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/regex-jinja-specific/}
  */
 
 (function (global, factory) {

@@ -1,10 +1,10 @@
 /**
- * string-strip-html
- * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 8.2.10
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-strip-html/
+ * @name string-strip-html
+ * @fileoverview Strips HTML tags from strings. No parser, accepts mixed sources.
+ * @version 8.2.10
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-strip-html/}
  */
 
 import isObj from 'lodash.isplainobject';

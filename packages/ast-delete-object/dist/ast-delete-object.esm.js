@@ -1,10 +1,10 @@
 /**
- * ast-delete-object
- * Delete all plain objects in AST if they contain a certain key/value pair
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-delete-object/
+ * @name ast-delete-object
+ * @fileoverview Delete all plain objects in AST if they contain a certain key/value pair
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-delete-object/}
  */
 
 import clone from 'lodash.clonedeep';

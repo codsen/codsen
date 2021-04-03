@@ -1,10 +1,10 @@
 /**
- * object-delete-key
- * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-delete-key/
+ * @name object-delete-key
+ * @fileoverview Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-delete-key/}
  */
 
 (function (global, factory) {
@@ -759,12 +759,12 @@ function values(object) {
 var lodash_includes = includes;
 
 /**
- * util-array-object-or-both
- * Validate and normalise user choice: array, object or both?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/util-array-object-or-both/
+ * @name util-array-object-or-both
+ * @fileoverview Validate and normalise user choice: array, object or both?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/util-array-object-or-both/}
  */
 
 function arrObjOrBoth(str, originalOpts) {
@@ -3294,12 +3294,12 @@ function isPlainObject(value) {
 var lodash_isplainobject = isPlainObject;
 
 /**
- * ast-monkey-util
- * Utility library of AST helper functions
- * Version: 1.3.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey-util/
+ * @name ast-monkey-util
+ * @fileoverview Utility library of AST helper functions
+ * @version 1.3.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey-util/}
  */
 
 function parent(str) {
@@ -3318,12 +3318,12 @@ function parent(str) {
 }
 
 /**
- * ast-monkey-traverse
- * Utility library to traverse AST
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey-traverse/
+ * @name ast-monkey-traverse
+ * @fileoverview Utility library to traverse AST
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey-traverse/}
  */
 function traverse(tree1, cb1) {
   const stop2 = {
@@ -4459,12 +4459,12 @@ function isObjectLike(value) {
 var lodash_intersection = intersection;
 
 /**
- * arrayiffy-if-string
- * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/arrayiffy-if-string/
+ * @name arrayiffy-if-string
+ * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+ * @version 3.13.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/arrayiffy-if-string/}
  */
 
 function arrayiffy(something) {
@@ -4894,12 +4894,12 @@ var isMatch = (inputs, patterns, options) => {
 matcher.isMatch = isMatch;
 
 /**
- * check-types-mini
- * Validate options object
- * Version: 6.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/check-types-mini/
+ * @name check-types-mini
+ * @fileoverview Validate options object
+ * @version 6.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/check-types-mini/}
  */
 
 const defaults = {
@@ -5065,12 +5065,12 @@ function checkTypesMini(obj, ref, originalOptions) {
 }
 
 /**
- * ast-contains-only-empty-space
- * Does AST contain only empty space?
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
+ * @name ast-contains-only-empty-space
+ * @fileoverview Does AST contain only empty space?
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-contains-only-empty-space/}
  */
 
 function empty(input) {
@@ -5093,12 +5093,12 @@ function empty(input) {
 }
 
 /**
- * ast-compare
- * Compare anything: AST, objects, arrays, strings and nested thereof
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-compare/
+ * @name ast-compare
+ * @fileoverview Compare anything: AST, objects, arrays, strings and nested thereof
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-compare/}
  */
 
 /* istanbul ignore next */
@@ -5233,12 +5233,12 @@ function compare(b, s, originalOpts) {
 }
 
 /**
- * ast-monkey
- * Traverse and edit AST
- * Version: 7.13.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey/
+ * @name ast-monkey
+ * @fileoverview Traverse and edit AST
+ * @version 7.13.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey/}
  */
 function existy(x) {
   return x != null;
@@ -5445,12 +5445,12 @@ function del(input, originalOpts) {
 }
 
 /**
- * ast-is-empty
- * Find out, is nested array/object/string/AST tree is empty
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-is-empty/
+ * @name ast-is-empty
+ * @fileoverview Find out, is nested array/object/string/AST tree is empty
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-is-empty/}
  */
 function isEmpty(input) {
   let i;

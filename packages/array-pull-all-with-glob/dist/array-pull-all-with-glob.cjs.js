@@ -1,10 +1,10 @@
 /**
- * array-pull-all-with-glob
- * Like _.pullAll but with globs (wildcards)
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/array-pull-all-with-glob/
+ * @name array-pull-all-with-glob
+ * @fileoverview Like _.pullAll but with globs (wildcards)
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/array-pull-all-with-glob/}
  */
 
 'use strict';
