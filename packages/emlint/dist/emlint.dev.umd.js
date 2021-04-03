@@ -22343,8 +22343,8 @@ var require$$0 = {
 	source: "iana",
 	compressible: true,
 	extensions: [
-		"ecma",
-		"es"
+		"es",
+		"ecma"
 	]
 },
 	"application/edi-consent": {
@@ -22987,17 +22987,11 @@ var require$$0 = {
 },
 	"application/mrb-consumer+xml": {
 	source: "iana",
-	compressible: true,
-	extensions: [
-		"xdf"
-	]
+	compressible: true
 },
 	"application/mrb-publish+xml": {
 	source: "iana",
-	compressible: true,
-	extensions: [
-		"xdf"
-	]
+	compressible: true
 },
 	"application/msc-ivr+xml": {
 	source: "iana",
@@ -24681,6 +24675,9 @@ var require$$0 = {
 	compressible: true
 },
 	"application/vnd.crypto-shade-file": {
+	source: "iana"
+},
+	"application/vnd.cryptomator.encrypted": {
 	source: "iana"
 },
 	"application/vnd.ctc-posml": {
@@ -26532,6 +26529,9 @@ var require$$0 = {
 	"application/vnd.nearst.inv+json": {
 	source: "iana",
 	compressible: true
+},
+	"application/vnd.nebumind.line": {
+	source: "iana"
 },
 	"application/vnd.nervana": {
 	source: "iana"
@@ -29448,10 +29448,7 @@ var require$$0 = {
 },
 	"application/xcap-error+xml": {
 	source: "iana",
-	compressible: true,
-	extensions: [
-		"xer"
-	]
+	compressible: true
 },
 	"application/xcap-ns+xml": {
 	source: "iana",
@@ -31167,6 +31164,12 @@ var require$$0 = {
 	"model/vnd.rosette.annotated-data-model": {
 	source: "iana"
 },
+	"model/vnd.sap.vds": {
+	source: "iana",
+	extensions: [
+		"vds"
+	]
+},
 	"model/vnd.usdz+zip": {
 	source: "iana",
 	compressible: false,
@@ -31935,6 +31938,9 @@ var require$$0 = {
 	source: "iana"
 },
 	"video/encaprtp": {
+	source: "iana"
+},
+	"video/ffv1": {
 	source: "iana"
 },
 	"video/flexfec": {

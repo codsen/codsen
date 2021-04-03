@@ -32,9 +32,11 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
+    "esbuild": "node '../../scripts/esbuild.js'",
+    "esbuild_dev": "cross-env MODE=dev node '../../scripts/esbuild.js'",
     "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
     "dev": "rollup -c --dev",
-    "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run tsd && npm run clean_cov",
+    "devunittest": "npm run dev && tap --only -R 'base'",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "../../node_modules/eslint/bin/eslint.js . --ext .js --ext .ts --fix --config \"../../.eslintrc.json\" --quiet",
@@ -43,11 +45,10 @@
     "republish": "npm publish || :",
     "tap": "tap",
     "tsc": "tsc",
-    "tsd": "test ! -f index.d.ts || tsd",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
-    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run tsd && npm run clean_cov && npm run perf",
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run clean_cov && npm run perf",
     "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
     "clean_types": "../../scripts/cleanTypes.js"
   },
@@ -104,6 +105,7 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "core-js": "^3.10.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
     "lect": "^0.16.12",
     "rollup": "^2.44.0",
@@ -113,7 +115,6 @@
     "rollup-plugin-dts": "^3.0.1",
     "rollup-plugin-terser": "^7.0.2",
     "tap": "^14.11.0",
-    "tsd": "^0.14.0",
     "tslib": "^2.1.0",
     "typescript": "^4.2.3"
   }

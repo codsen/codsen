@@ -37,7 +37,7 @@
   "scripts": {
     "ci_test": "npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
     "dev": "echo\"\"",
-    "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run clean_cov",
+    "devunittest": "npm run dev && tap --only -R 'base'",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "../../node_modules/eslint/bin/eslint.js . --ext .js --fix --config \"../../.eslintrc.json\" --quiet",
@@ -81,6 +81,7 @@
   },
   "devDependencies": {
     "core-js": "^3.10.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
     "execa": "^5.0.0",
     "lect": "^0.16.12",

@@ -23,7 +23,7 @@ const websitesToTest = [
   ["https://sjhgldgldgjdlfgldgldflkgjd.com", "Non-existent URL"],
 ];
 
-tap.test(
+tap.skip(
   `01-0${
     websitesToTest.length
   } - ${`\u001b[${90}m${`real websites`}\u001b[${39}m`}`,

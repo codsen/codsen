@@ -185,7 +185,7 @@ tap.test(`08 - ${`\u001b[${90}m${`adhoc 8`}\u001b[${39}m`} - nunjucks`, (t) => {
   t.end();
 });
 
-tap.test(`09 - ${`\u001b[${90}m${`adhoc 9`}\u001b[${39}m`} - nunjucks`, (t) => {
+tap.only(`09 - ${`\u001b[${90}m${`adhoc 9`}\u001b[${39}m`} - nunjucks`, (t) => {
   const source =
     '{%- if (((not a.b) and (a.b | c("d") | e > 1)) or ((a.b) and (a.f | c("d") | e > 2))) -%}';
   t.strictSame(
