@@ -4,6 +4,7 @@ const path = require("path");
 const { sortAllObjectsSync } = require("../packages/json-comb-core");
 
 function runPerf(cb, callerDir) {
+  const BENCH = false;
   const logThreshold = 1000;
 
   // read historical data
@@ -16,11 +17,13 @@ function runPerf(cb, callerDir) {
     fs.readFileSync(path.resolve(callerDir, "package.json"))
   );
 
-  console.log(
-    `${`\u001b[${90}m${`scripts/run-perf.js:`}\u001b[${39}m`}${" ".repeat(
-      Math.max(0, name.length - 5)
-    )} 📦 ${`\u001b[${33}m${name}\u001b[${39}m`} v${version}`
-  );
+  if (!BENCH) {
+    console.log(
+      `${`\u001b[${90}m${`scripts/run-perf.js:`}\u001b[${39}m`}${" ".repeat(
+        Math.max(0, name.length - 5)
+      )} 📦 ${`\u001b[${33}m${name}\u001b[${39}m`} v${version}`
+    );
+  }
 
   // functions
   // ---------------------------------------------------------------------------
@@ -81,7 +84,9 @@ function runPerf(cb, callerDir) {
             if (err) {
               throw err;
             }
-            console.log(`${heads}✅ historical.json written`);
+            if (!BENCH) {
+              console.log(`${heads}✅ historical.json written`);
+            }
           }
         );
       }
@@ -95,12 +100,14 @@ function runPerf(cb, callerDir) {
           historicalData.lastRan
         ) <= 2
       ) {
-        console.log(
-          `${heads}${"⚡️"} ${`\u001b[${32}m${`current code is just as fast as before`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
-            historicalData.lastRan
-          )} \u2014 now ${round(optsPerSec)} opts/sec)`}\u001b[${39}m`}`
-        );
-      } else {
+        if (!BENCH) {
+          console.log(
+            `${heads}${"⚡️"} ${`\u001b[${32}m${`current code is just as fast as before`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
+              historicalData.lastRan
+            )} \u2014 now ${round(optsPerSec)} opts/sec)`}\u001b[${39}m`}`
+          );
+        }
+      } else if (!BENCH) {
         console.log(
           `${heads}${
             historicalData.lastRan < optsPerSec ? "⚡️" : "🐌"
@@ -116,6 +123,11 @@ function runPerf(cb, callerDir) {
           )} \u2014 now ${round(optsPerSec)} opts/sec)`}\u001b[${39}m`}`
         );
       }
+
+      if (BENCH) {
+        console.log(`${name},${optsPerSec}`);
+      }
+
       //                                  ^
       //                                 /|\
       //                                / | \
