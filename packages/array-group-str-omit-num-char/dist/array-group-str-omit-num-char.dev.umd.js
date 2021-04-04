@@ -1,7 +1,7 @@
 /**
  * @name array-group-str-omit-num-char
  * @fileoverview Groups array of strings by omitting number characters
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-group-str-omit-num-char/}
@@ -915,7 +915,7 @@ var lodash_uniq = uniq;
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -978,7 +978,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.13
+ * @version 7.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -1078,7 +1078,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -1171,7 +1171,7 @@ function rApply(str, originalRangesArr, progressFn) {
   return str;
 }
 
-var version$1 = "4.0.13";
+var version$1 = "4.0.14";
 
 const version = version$1;
 const defaults = {

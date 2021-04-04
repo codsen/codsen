@@ -1,7 +1,7 @@
 /**
  * @name easy-replace
  * @fileoverview Replace strings with optional lookarounds, but without regexes
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/easy-replace/}
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version$1 = "4.0.13";
+var version$1 = "4.0.14";
 
 var version = version$1;
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {

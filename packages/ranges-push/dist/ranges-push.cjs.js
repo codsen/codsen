@@ -1,7 +1,7 @@
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -27,7 +27,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _classCallCheck__default = /*#__PURE__*/_interopDefaultLegacy(_classCallCheck);
 var _createClass__default = /*#__PURE__*/_interopDefaultLegacy(_createClass);
 
-var version$1 = "5.0.13";
+var version$1 = "5.0.14";
 
 var version = version$1;
 function existy(x) {

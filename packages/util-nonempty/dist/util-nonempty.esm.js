@@ -1,7 +1,7 @@
 /**
  * @name util-nonempty
  * @fileoverview Is the input (plain object, array, string or whatever) not empty?
- * @version 3.0.13
+ * @version 3.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/util-nonempty/}
@@ -9,7 +9,7 @@
 
 import isPlainObject from 'lodash.isplainobject';
 
-var version$1 = "3.0.13";
+var version$1 = "3.0.14";
 
 const version = version$1;
 function nonEmpty(input) {

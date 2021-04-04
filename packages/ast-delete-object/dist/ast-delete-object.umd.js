@@ -1,7 +1,7 @@
 /**
  * @name ast-delete-object
  * @fileoverview Delete all plain objects in AST if they contain a certain key/value pair
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-delete-object/}
@@ -11,7 +11,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.13
+ * @version 1.3.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -19,7 +19,7 @@
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -27,7 +27,7 @@
 /**
  * @name ast-contains-only-empty-space
  * @fileoverview Does AST contain only empty space?
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-contains-only-empty-space/}
@@ -35,9 +35,9 @@
 /**
  * @name ast-compare
  * @fileoverview Compare anything: AST, objects, arrays, strings and nested thereof
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-compare/}
  */
-var s;return!0}j.isMatch=(t,e,r)=>(t=v(t,"inputs"),0!==(e=v(e,"patterns")).length&&t.some((t=>e.every((e=>{const n=_(e,r),o=n.test(t);return n.negated?!o:o})))));const m={matchKeysStrictly:!1,hungryForWhitespace:!1};t.defaults=m,t.deleteObj=function(t,e,r){if(!t)throw new Error("ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!");if(!e)throw new Error("ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!");if(r&&!y(r))throw new Error("ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!");const o={...m,...r};let i,a=n(t);return w(a,e,{hungryForWhitespace:o.hungryForWhitespace,matchStrictly:o.matchKeysStrictly})?{}:(a=d(a,((t,r)=>{if(i=void 0!==r?r:t,y(i)){if(y(e)&&y(i)&&!Object.keys(e).length&&!Object.keys(i).length)return NaN;if(w(i,e,{hungryForWhitespace:o.hungryForWhitespace,matchStrictly:o.matchKeysStrictly}))return NaN}return i})),a)},t.version="2.0.13",Object.defineProperty(t,"__esModule",{value:!0})}));
+var s;return!0}j.isMatch=(t,e,r)=>(t=v(t,"inputs"),0!==(e=v(e,"patterns")).length&&t.some((t=>e.every((e=>{const n=_(e,r),o=n.test(t);return n.negated?!o:o})))));const m={matchKeysStrictly:!1,hungryForWhitespace:!1};t.defaults=m,t.deleteObj=function(t,e,r){if(!t)throw new Error("ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!");if(!e)throw new Error("ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!");if(r&&!y(r))throw new Error("ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!");const o={...m,...r};let i,a=n(t);return w(a,e,{hungryForWhitespace:o.hungryForWhitespace,matchStrictly:o.matchKeysStrictly})?{}:(a=d(a,((t,r)=>{if(i=void 0!==r?r:t,y(i)){if(y(e)&&y(i)&&!Object.keys(e).length&&!Object.keys(i).length)return NaN;if(w(i,e,{hungryForWhitespace:o.hungryForWhitespace,matchStrictly:o.matchKeysStrictly}))return NaN}return i})),a)},t.version="2.0.14",Object.defineProperty(t,"__esModule",{value:!0})}));

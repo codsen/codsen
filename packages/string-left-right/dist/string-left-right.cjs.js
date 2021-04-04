@@ -1,7 +1,7 @@
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -25,7 +25,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
-var version$1 = "4.0.13";
+var version$1 = "4.0.14";
 
 var version = version$1;
 var RAWNBSP = "\xA0";

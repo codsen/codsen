@@ -1,7 +1,7 @@
 /**
  * @name detergent
  * @fileoverview Extracts, cleans and encodes text
- * @version 7.0.13
+ * @version 7.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/detergent/}
@@ -1913,7 +1913,7 @@ module.exports = cloneDeep;
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -2365,7 +2365,7 @@ leven_1.default = _default;
 /**
  * @name all-named-html-entities
  * @fileoverview List of all named HTML entities
- * @version 1.5.13
+ * @version 1.5.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/all-named-html-entities/}
@@ -9701,7 +9701,7 @@ const maxLength = 31;
 /**
  * @name string-fix-broken-named-entities
  * @fileoverview Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * @version 5.2.3
+ * @version 5.2.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-fix-broken-named-entities/}
@@ -10261,7 +10261,7 @@ function fixEnt(str, originalOpts) {
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.13
+ * @version 3.13.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -10280,7 +10280,7 @@ function arrayiffy(something) {
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 7.0.7
+ * @version 7.0.8
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -10573,7 +10573,7 @@ function matchRightIncl(str, position, whatToMatch, opts) {
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -10650,7 +10650,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -10713,7 +10713,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.13
+ * @version 7.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -10813,7 +10813,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -10955,7 +10955,7 @@ class Ranges {
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -11051,7 +11051,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * @name string-remove-widows
  * @fileoverview Helps to prevent widow words in a text
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-remove-widows/}
@@ -11563,7 +11563,7 @@ runes_1.substr = substr;
 /**
  * @name ranges-crop
  * @fileoverview Crop array of ranges when they go beyond the reference string's length
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-crop/}
@@ -11618,7 +11618,7 @@ function rCrop(arrOfRanges, strLen) {
 /**
  * @name ranges-invert
  * @fileoverview Invert string index ranges
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-invert/}
@@ -11693,7 +11693,7 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
 /**
  * @name ranges-process-outside
  * @fileoverview Iterate string considering ranges, as if they were already applied
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-process-outside/}
@@ -11741,7 +11741,7 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
 /**
  * @name string-collapse-white-space
  * @fileoverview Replace chunks of whitespace with a single spaces
- * @version 9.0.13
+ * @version 9.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-white-space/}
@@ -11998,7 +11998,7 @@ function collapse(str, originalOpts) {
 /**
  * @name string-trim-spaces-only
  * @fileoverview Like String.trim() but you can choose granularly what to trim
- * @version 3.0.13
+ * @version 3.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-trim-spaces-only/}
@@ -13648,7 +13648,7 @@ var decode_1 = decode;
 /**
  * @name string-strip-html
  * @fileoverview Strips HTML tags from strings. No parser, accepts mixed sources.
- * @version 8.2.10
+ * @version 8.2.11
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-strip-html/}
@@ -14730,12 +14730,12 @@ var he = createCommonjsModule(function (module, exports) {
 }(commonjsGlobal));
 });
 
-var version$1 = "7.0.13";
+var version$1 = "7.0.14";
 
 /**
  * @name html-entities-not-email-friendly
  * @fileoverview All HTML entities which are not email template friendly
- * @version 0.4.13
+ * @version 0.4.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-entities-not-email-friendly/}
@@ -16588,7 +16588,7 @@ const notEmailFriendly = {
 /**
  * @name string-range-expander
  * @fileoverview Expands string index ranges within whitespace boundaries until letters are met
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-range-expander/}
@@ -16720,7 +16720,7 @@ function expander(originalOpts) {
 /**
  * @name string-apostrophes
  * @fileoverview Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * @version 1.4.13
+ * @version 1.4.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-apostrophes/}

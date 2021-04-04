@@ -1,7 +1,7 @@
 /**
  * @name string-fix-broken-named-entities
  * @fileoverview Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * @version 5.2.3
+ * @version 5.2.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-fix-broken-named-entities/}
@@ -129,7 +129,7 @@ function removeGappedFromMixedCases(str, temp1) {
   return findLongest(temp1);
 }
 
-var version$1 = "5.2.3";
+var version$1 = "5.2.4";
 
 var version = version$1;
 function fixEnt(str, originalOpts) {

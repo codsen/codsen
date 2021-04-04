@@ -1,7 +1,7 @@
 /**
  * @name generate-atomic-css
  * @fileoverview Generate Atomic CSS
- * @version 1.4.13
+ * @version 1.4.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/generate-atomic-css/}
@@ -22,7 +22,7 @@ var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray)
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "1.4.13";
+var version$1 = "1.4.14";
 
 function isStr(something) {
   return typeof something === "string";

@@ -1,7 +1,7 @@
 /**
  * @name string-find-malformed
  * @fileoverview Search for a malformed string. Think of Levenshtein distance but in search.
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-find-malformed/}
@@ -1792,7 +1792,7 @@ module.exports = cloneDeep;
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -1852,7 +1852,7 @@ function right(str, idx = 0) {
   });
 }
 
-var version$1 = "2.0.13";
+var version$1 = "2.0.14";
 
 const version = version$1;
 function isObj(something) {

@@ -1,13 +1,13 @@
 /**
  * @name ranges-iterate
  * @fileoverview Iterate a string and any changes within given string index ranges
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-iterate/}
  */
 
-var version$1 = "2.0.13";
+var version$1 = "2.0.14";
 
 const version = version$1;
 function rIterate(str, originalRanges, cb, offset = 0) {

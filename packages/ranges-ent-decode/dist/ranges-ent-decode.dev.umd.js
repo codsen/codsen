@@ -1,7 +1,7 @@
 /**
  * @name ranges-ent-decode
  * @fileoverview Recursive HTML entity decoding for Ranges workflow
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-ent-decode/}
@@ -364,7 +364,7 @@ var he = createCommonjsModule(function (module, exports) {
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -427,7 +427,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.13
+ * @version 7.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -663,7 +663,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version$1 = "4.0.13";
+var version$1 = "4.0.14";
 
 const version = version$1;
 function chomp(str) {

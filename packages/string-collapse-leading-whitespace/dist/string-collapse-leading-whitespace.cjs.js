@@ -1,7 +1,7 @@
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version$1 = "5.0.13";
+var version$1 = "5.0.14";
 
 var version = version$1;
 function collWhitespace(str) {

@@ -1,7 +1,7 @@
 /**
  * @name test-mixer
  * @fileoverview Test helper to generate function opts object variations
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/test-mixer/}
@@ -11,9 +11,9 @@
 /**
  * @name object-boolean-combinations
  * @fileoverview Consumes a defaults object with booleans, generates all possible variations of it
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-boolean-combinations/}
  */
-function(t,r={}){if(!t)throw new Error("[THROW_ID_01] missing input object");if(!nt(t))throw new Error("[THROW_ID_02] the first input object must be a true object");if(r&&!nt(r))throw new Error("[THROW_ID_03] the second override object must be a true object");const e=ot(t),n=ot(r),o=Object.keys(e),u=[];let c=[];nt(n)&&Object.keys(n).length&&(c=z(Object.keys(n),Object.keys(e)),c.forEach((t=>Q(o,t))));const i=function(t){const r=[];for(let e=0;e<1<<t;e++){const n=[];for(let r=0;r<t;r++)n.push(e&1<<r?1:0);r.push(n)}return r}(Object.keys(o).length);let a;return i.forEach(((t,r)=>{a={},o.forEach(((t,e)=>{a[t]=1===i[r][e]})),u.push(a)})),nt(n)&&Object.keys(n).length&&u.forEach((t=>c.forEach((r=>{t[r]=n[r]})))),u}(u).map((t=>({...r,...n,...t})))},t.version="2.0.13",Object.defineProperty(t,"__esModule",{value:!0})}));
+function(t,r={}){if(!t)throw new Error("[THROW_ID_01] missing input object");if(!nt(t))throw new Error("[THROW_ID_02] the first input object must be a true object");if(r&&!nt(r))throw new Error("[THROW_ID_03] the second override object must be a true object");const e=ot(t),n=ot(r),o=Object.keys(e),u=[];let c=[];nt(n)&&Object.keys(n).length&&(c=z(Object.keys(n),Object.keys(e)),c.forEach((t=>Q(o,t))));const i=function(t){const r=[];for(let e=0;e<1<<t;e++){const n=[];for(let r=0;r<t;r++)n.push(e&1<<r?1:0);r.push(n)}return r}(Object.keys(o).length);let a;return i.forEach(((t,r)=>{a={},o.forEach(((t,e)=>{a[t]=1===i[r][e]})),u.push(a)})),nt(n)&&Object.keys(n).length&&u.forEach((t=>c.forEach((r=>{t[r]=n[r]})))),u}(u).map((t=>({...r,...n,...t})))},t.version="2.0.14",Object.defineProperty(t,"__esModule",{value:!0})}));

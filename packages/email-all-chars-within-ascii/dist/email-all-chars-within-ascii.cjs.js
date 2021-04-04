@@ -1,7 +1,7 @@
 /**
  * @name email-all-chars-within-ascii
  * @fileoverview Scans all characters within a string and checks are they within ASCII range
- * @version 3.0.13
+ * @version 3.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/email-all-chars-within-ascii/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "3.0.13";
+var version$1 = "3.0.14";
 
 var version = version$1;
 var defaults = {

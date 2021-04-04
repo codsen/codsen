@@ -1,7 +1,7 @@
 /**
  * @name helga
  * @fileoverview Your next best friend when editing complex nested code
- * @version 1.3.13
+ * @version 1.3.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/helga/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.helga = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "1.3.13";
+var version$1 = "1.3.14";
 
 const version = version$1;
 const defaults = {

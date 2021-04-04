@@ -1,7 +1,7 @@
 /**
  * @name ranges-offset
  * @fileoverview Increment or decrement each index in every range
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-offset/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.rangesOffset = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "2.0.13";
+var version$1 = "2.0.14";
 
 const version = version$1;
 function rOffset(arrOfRanges, offset = 0) {

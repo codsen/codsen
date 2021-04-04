@@ -1,7 +1,7 @@
 /**
  * @name string-unfancy
  * @fileoverview Replace all n/m dashes, curly quotes with their simpler equivalents
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-unfancy/}
@@ -361,7 +361,7 @@ var he = createCommonjsModule(function (module, exports) {
 }(commonjsGlobal));
 });
 
-var version$1 = "4.0.13";
+var version$1 = "4.0.14";
 
 /* eslint quote-props:0 */
 const version = version$1;

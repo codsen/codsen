@@ -1,7 +1,7 @@
 /**
  * @name edit-package-json
  * @fileoverview Edit package.json without parsing, as string, to keep the formatting intact
- * @version 0.3.13
+ * @version 0.3.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/edit-package-json/}
@@ -10,7 +10,7 @@
 import { left, right, chompLeft } from 'string-left-right';
 import { rApply } from 'ranges-apply';
 
-var version$1 = "0.3.13";
+var version$1 = "0.3.14";
 
 const version = version$1;
 function isStr(something) {

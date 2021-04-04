@@ -1,7 +1,7 @@
 /**
  * @name ranges-invert
  * @fileoverview Invert string index ranges
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-invert/}
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -79,7 +79,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.13
+ * @version 7.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -179,7 +179,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * @name ranges-crop
  * @fileoverview Crop array of ranges when they go beyond the reference string's length
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-crop/}
@@ -231,7 +231,7 @@ function rCrop(arrOfRanges, strLen) {
   return res === [] ? null : res;
 }
 
-var version$1 = "4.0.13";
+var version$1 = "4.0.14";
 
 const version = version$1;
 function rInvert(arrOfRanges, strLen, originalOptions) {

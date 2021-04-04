@@ -1,7 +1,7 @@
 /**
  * @name js-row-num
  * @fileoverview Update all row numbers in all console.logs in JS code
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/js-row-num/}
@@ -11,7 +11,7 @@
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -19,7 +19,7 @@
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -27,7 +27,7 @@
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.13
+ * @version 7.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -35,7 +35,7 @@
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -43,8 +43,8 @@
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
- */const f={padStart:3,overrideRowNum:null,returnRangesOnly:!1,triggerKeywords:["console.log"],extractedLogContentsWereGiven:!1};e.defaults=f,e.fixRowNums=function(e,r){if("string"!=typeof e||!e.length)return e;function t(e){return/[0-9]/.test(e)}function n(e){return e&&"object"==typeof e&&!Array.isArray(e)}const s={...f,...r};(!s.padStart||"number"!=typeof s.padStart||"number"==typeof s.padStart&&s.padStart<0)&&(s.padStart=0);const o=new g;let a;const l=e.length;let u=null,y=null,p=null,h=1,m=!1,d=null;for(s.padStart&&l>45e3&&(s.padStart=4),a=0;a<l;a++){if(null===s.overrideRowNum&&("\n"===e[a]||"\r"===e[a]&&"\n"!==e[a+1])&&(h+=1),!s.extractedLogContentsWereGiven&&null!==u&&u.start<a&&u.type===e[a]&&(u=null,y=null,p=null,d=null,m=!1),null===u&&(s.extractedLogContentsWereGiven||y&&y<a&&p&&p<a)&&e[a].trim())if('"'===e[a]||"'"===e[a]||"`"===e[a])u={start:a,type:e[a]},m=!1;else if(s.extractedLogContentsWereGiven&&null===d){if(!t(e[a]))break;d=a}else e[a].trim()&&"/"!==e[a]&&!s.extractedLogContentsWereGiven&&(y=null,p=null,d=null);if(u&&Number.isInteger(u.start)&&u.start<a&&!m&&null===d&&t(e[a])&&(d=a),!Number.isInteger(d)||t(e[a])&&e[a+1]||!(a>d)&&e[a+1]||(o.push(d,t(e[a])?a+1:a,s.padStart?String(null!=s.overrideRowNum?s.overrideRowNum:h).padStart(s.padStart,"0"):`${null!=s.overrideRowNum?s.overrideRowNum:h}`),d=null,m=!0),u&&Number.isInteger(u.start)&&u.start<a&&!m&&/[A-Za-z]/.test(e[a])&&("n"!==e[a]||"\\"!==e[a-1])){if("\\"===e[a-1]&&"u"===e[a]&&"0"===e[a+1]&&"0"===e[a+2]&&"1"===e[a+3]&&("b"===e[a+4]||"B"===e[a+5])&&"["===e[a+5]){let r,n,s;if(t(e[a+6])?r=a+6:"$"===e[a+6]&&"{"===e[a+7]&&t(e[a+8])&&(r=a+8),r)for(let s=r;s<l;s++)if(!t(e[s])){n=s;break}if(void 0!==n&&"m"===e[n]?s=n:void 0!==n&&"}"===e[n]&&"m"===e[n+1]&&(s=n+1),!s){m=!0;continue}if("$"===e[s+1]&&"{"===e[s+2]&&"`"===e[s+3]){a=s+3;continue}}m=!0}if(!p&&e[a].trim()&&y&&y<=a&&("("===e[a]?p=a:(y=null,d=null)),n(s)&&s.triggerKeywords&&Array.isArray(s.triggerKeywords)){let r;for(let t=0,n=s.triggerKeywords.length;t<n;t++)if(e.startsWith(s.triggerKeywords[t],a)){r=s.triggerKeywords[t];break}if(r){y=a+r.length,a=a+r.length-1;continue}}}return u=null,y=null,p=null,h=1,m=void 0,d=null,h=1,s.returnRangesOnly?o.current():o.current()?function(e,r,t){let n,s=0,o=0;if(0===arguments.length)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if("string"!=typeof e)throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(r&&!Array.isArray(r))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(t&&"function"!=typeof t)throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof t}, equal to: ${JSON.stringify(t,null,4)}`);if(!r||!r.filter((e=>e)).length)return e;n=Array.isArray(r)&&Number.isInteger(r[0])&&Number.isInteger(r[1])?[Array.from(r)]:Array.from(r);const a=n.length;let l=0;n.filter((e=>e)).forEach(((e,r)=>{if(t&&(s=Math.floor(l/a*10),s!==o&&(o=s,t(s))),!Array.isArray(e))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${r}th element not an array: ${JSON.stringify(e,null,4)}, which is ${typeof e}`);if(!Number.isInteger(e[0])){if(!Number.isInteger(+e[0])||+e[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${r}th element, array ${JSON.stringify(e,null,0)}. Its first element is not an integer, string index, but ${typeof e[0]}, equal to: ${JSON.stringify(e[0],null,4)}.`);n[r][0]=+n[r][0]}if(!Number.isInteger(e[1])){if(!Number.isInteger(+e[1])||+e[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${r}th element, array ${JSON.stringify(e,null,0)}. Its second element is not an integer, string index, but ${typeof e[1]}, equal to: ${JSON.stringify(e[1],null,4)}.`);n[r][1]=+n[r][1]}l+=1}));const u=i(n,{progressFn:e=>{t&&(s=10+Math.floor(e/10),s!==o&&(o=s,t(s)))}}),g=Array.isArray(u)?u.length:0;if(g>0){const r=e.slice(u[g-1][1]);e=u.reduce(((r,n,i,a)=>(t&&(s=20+Math.floor(i/g*80),s!==o&&(o=s,t(s))),r+e.slice(0===i?0:a[i-1][1],a[i][0])+(a[i][2]||""))),""),e+=r}return e}(e,o.current()):e},e.version="4.0.13",Object.defineProperty(e,"__esModule",{value:!0})}));
+ */const f={padStart:3,overrideRowNum:null,returnRangesOnly:!1,triggerKeywords:["console.log"],extractedLogContentsWereGiven:!1};e.defaults=f,e.fixRowNums=function(e,r){if("string"!=typeof e||!e.length)return e;function t(e){return/[0-9]/.test(e)}function n(e){return e&&"object"==typeof e&&!Array.isArray(e)}const s={...f,...r};(!s.padStart||"number"!=typeof s.padStart||"number"==typeof s.padStart&&s.padStart<0)&&(s.padStart=0);const o=new g;let a;const l=e.length;let u=null,y=null,p=null,h=1,m=!1,d=null;for(s.padStart&&l>45e3&&(s.padStart=4),a=0;a<l;a++){if(null===s.overrideRowNum&&("\n"===e[a]||"\r"===e[a]&&"\n"!==e[a+1])&&(h+=1),!s.extractedLogContentsWereGiven&&null!==u&&u.start<a&&u.type===e[a]&&(u=null,y=null,p=null,d=null,m=!1),null===u&&(s.extractedLogContentsWereGiven||y&&y<a&&p&&p<a)&&e[a].trim())if('"'===e[a]||"'"===e[a]||"`"===e[a])u={start:a,type:e[a]},m=!1;else if(s.extractedLogContentsWereGiven&&null===d){if(!t(e[a]))break;d=a}else e[a].trim()&&"/"!==e[a]&&!s.extractedLogContentsWereGiven&&(y=null,p=null,d=null);if(u&&Number.isInteger(u.start)&&u.start<a&&!m&&null===d&&t(e[a])&&(d=a),!Number.isInteger(d)||t(e[a])&&e[a+1]||!(a>d)&&e[a+1]||(o.push(d,t(e[a])?a+1:a,s.padStart?String(null!=s.overrideRowNum?s.overrideRowNum:h).padStart(s.padStart,"0"):`${null!=s.overrideRowNum?s.overrideRowNum:h}`),d=null,m=!0),u&&Number.isInteger(u.start)&&u.start<a&&!m&&/[A-Za-z]/.test(e[a])&&("n"!==e[a]||"\\"!==e[a-1])){if("\\"===e[a-1]&&"u"===e[a]&&"0"===e[a+1]&&"0"===e[a+2]&&"1"===e[a+3]&&("b"===e[a+4]||"B"===e[a+5])&&"["===e[a+5]){let r,n,s;if(t(e[a+6])?r=a+6:"$"===e[a+6]&&"{"===e[a+7]&&t(e[a+8])&&(r=a+8),r)for(let s=r;s<l;s++)if(!t(e[s])){n=s;break}if(void 0!==n&&"m"===e[n]?s=n:void 0!==n&&"}"===e[n]&&"m"===e[n+1]&&(s=n+1),!s){m=!0;continue}if("$"===e[s+1]&&"{"===e[s+2]&&"`"===e[s+3]){a=s+3;continue}}m=!0}if(!p&&e[a].trim()&&y&&y<=a&&("("===e[a]?p=a:(y=null,d=null)),n(s)&&s.triggerKeywords&&Array.isArray(s.triggerKeywords)){let r;for(let t=0,n=s.triggerKeywords.length;t<n;t++)if(e.startsWith(s.triggerKeywords[t],a)){r=s.triggerKeywords[t];break}if(r){y=a+r.length,a=a+r.length-1;continue}}}return u=null,y=null,p=null,h=1,m=void 0,d=null,h=1,s.returnRangesOnly?o.current():o.current()?function(e,r,t){let n,s=0,o=0;if(0===arguments.length)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if("string"!=typeof e)throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(r&&!Array.isArray(r))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(t&&"function"!=typeof t)throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof t}, equal to: ${JSON.stringify(t,null,4)}`);if(!r||!r.filter((e=>e)).length)return e;n=Array.isArray(r)&&Number.isInteger(r[0])&&Number.isInteger(r[1])?[Array.from(r)]:Array.from(r);const a=n.length;let l=0;n.filter((e=>e)).forEach(((e,r)=>{if(t&&(s=Math.floor(l/a*10),s!==o&&(o=s,t(s))),!Array.isArray(e))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${r}th element not an array: ${JSON.stringify(e,null,4)}, which is ${typeof e}`);if(!Number.isInteger(e[0])){if(!Number.isInteger(+e[0])||+e[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${r}th element, array ${JSON.stringify(e,null,0)}. Its first element is not an integer, string index, but ${typeof e[0]}, equal to: ${JSON.stringify(e[0],null,4)}.`);n[r][0]=+n[r][0]}if(!Number.isInteger(e[1])){if(!Number.isInteger(+e[1])||+e[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${r}th element, array ${JSON.stringify(e,null,0)}. Its second element is not an integer, string index, but ${typeof e[1]}, equal to: ${JSON.stringify(e[1],null,4)}.`);n[r][1]=+n[r][1]}l+=1}));const u=i(n,{progressFn:e=>{t&&(s=10+Math.floor(e/10),s!==o&&(o=s,t(s)))}}),g=Array.isArray(u)?u.length:0;if(g>0){const r=e.slice(u[g-1][1]);e=u.reduce(((r,n,i,a)=>(t&&(s=20+Math.floor(i/g*80),s!==o&&(o=s,t(s))),r+e.slice(0===i?0:a[i-1][1],a[i][0])+(a[i][2]||""))),""),e+=r}return e}(e,o.current()):e},e.version="4.0.14",Object.defineProperty(e,"__esModule",{value:!0})}));

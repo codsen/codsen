@@ -1,7 +1,7 @@
 /**
  * @name html-crush
  * @fileoverview Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * @version 4.1.7
+ * @version 4.1.8
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-crush/}
@@ -28,7 +28,7 @@ var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumab
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "4.1.7";
+var version$1 = "4.1.8";
 
 var version = version$1;
 var finalIndexesToDelete = new rangesPush.Ranges({

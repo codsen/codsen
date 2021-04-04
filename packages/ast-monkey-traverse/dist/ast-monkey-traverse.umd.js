@@ -1,7 +1,7 @@
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -11,8 +11,8 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.13
+ * @version 1.3.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
- */function p(t){if(t.includes(".")){const e=t.lastIndexOf(".");if(!t.slice(0,e).includes("."))return t.slice(0,e);for(let r=e-1;r--;)if("."===t[r])return t.slice(r+1,e)}return null}t.traverse=function(t,e){return function t(e,n,o,c){const u=r(e);let a;const i={depth:-1,path:"",...o};if(i.depth+=1,Array.isArray(u))for(let e=0,o=u.length;e<o&&!c.now;e++){const o=i.path?`${i.path}.${e}`:`${e}`;void 0!==u[e]?(i.parent=r(u),i.parentType="array",i.parentKey=p(o),a=t(n(u[e],void 0,{...i,path:o},c),n,{...i,path:o},c),Number.isNaN(a)&&e<u.length?(u.splice(e,1),e-=1):u[e]=a):u.splice(e,1)}else if(l(u))for(const e in u){if(c.now&&null!=e)break;const o=i.path?`${i.path}.${e}`:e;0===i.depth&&null!=e&&(i.topmostKey=e),i.parent=r(u),i.parentType="object",i.parentKey=p(o),a=t(n(e,u[e],{...i,path:o},c),n,{...i,path:o},c),Number.isNaN(a)?delete u[e]:u[e]=a}return u}(t,e,{},{now:!1})},t.version="2.0.13",Object.defineProperty(t,"__esModule",{value:!0})}));
+ */function p(t){if(t.includes(".")){const e=t.lastIndexOf(".");if(!t.slice(0,e).includes("."))return t.slice(0,e);for(let r=e-1;r--;)if("."===t[r])return t.slice(r+1,e)}return null}t.traverse=function(t,e){return function t(e,n,o,c){const u=r(e);let a;const i={depth:-1,path:"",...o};if(i.depth+=1,Array.isArray(u))for(let e=0,o=u.length;e<o&&!c.now;e++){const o=i.path?`${i.path}.${e}`:`${e}`;void 0!==u[e]?(i.parent=r(u),i.parentType="array",i.parentKey=p(o),a=t(n(u[e],void 0,{...i,path:o},c),n,{...i,path:o},c),Number.isNaN(a)&&e<u.length?(u.splice(e,1),e-=1):u[e]=a):u.splice(e,1)}else if(l(u))for(const e in u){if(c.now&&null!=e)break;const o=i.path?`${i.path}.${e}`:e;0===i.depth&&null!=e&&(i.topmostKey=e),i.parent=r(u),i.parentType="object",i.parentKey=p(o),a=t(n(e,u[e],{...i,path:o},c),n,{...i,path:o},c),Number.isNaN(a)?delete u[e]:u[e]=a}return u}(t,e,{},{now:!1})},t.version="2.0.14",Object.defineProperty(t,"__esModule",{value:!0})}));

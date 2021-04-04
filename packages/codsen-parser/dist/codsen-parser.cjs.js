@@ -1,7 +1,7 @@
 /**
  * @name codsen-parser
  * @fileoverview Parser aiming at broken or mixed code, especially HTML & CSS
- * @version 0.10.10
+ * @version 0.10.11
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/codsen-parser/}
@@ -25,7 +25,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var op__default = /*#__PURE__*/_interopDefaultLegacy(op);
 
-var version$1 = "0.10.10";
+var version$1 = "0.10.11";
 
 var version = version$1;
 var defaults = {

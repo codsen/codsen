@@ -1,7 +1,7 @@
 /**
  * @name array-pull-all-with-glob
  * @fileoverview Like _.pullAll but with globs (wildcards)
- * @version 5.0.13
+ * @version 5.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-pull-all-with-glob/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
-var version$1 = "5.0.13";
+var version$1 = "5.0.14";
 
 var version = version$1;
 function pull(originalInput, originalToBeRemoved, originalOpts) {

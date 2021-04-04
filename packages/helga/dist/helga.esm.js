@@ -1,13 +1,13 @@
 /**
  * @name helga
  * @fileoverview Your next best friend when editing complex nested code
- * @version 1.3.13
+ * @version 1.3.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/helga/}
  */
 
-var version$1 = "1.3.13";
+var version$1 = "1.3.14";
 
 const version = version$1;
 const defaults = {

@@ -1,7 +1,7 @@
 /**
  * @name ast-get-object
  * @fileoverview Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-get-object/}
@@ -11,7 +11,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.13
+ * @version 1.3.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -20,7 +20,7 @@ function h(t){if(t.includes(".")){const e=t.lastIndexOf(".");if(!t.slice(0,e).in
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -28,7 +28,7 @@ function h(t){if(t.includes(".")){const e=t.lastIndexOf(".");if(!t.slice(0,e).in
 /**
  * @name ast-contains-only-empty-space
  * @fileoverview Does AST contain only empty space?
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-contains-only-empty-space/}
@@ -37,9 +37,9 @@ function g(t){if("string"==typeof t)return!t.trim();if(!["object","string"].incl
 /**
  * @name ast-compare
  * @fileoverview Compare anything: AST, objects, arrays, strings and nested thereof
- * @version 2.0.13
+ * @version 2.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-compare/}
  */
-var u;return!0}_.isMatch=(t,e,r)=>(t=b(t,"inputs"),0!==(e=b(e,"patterns")).length&&t.some((t=>e.every((e=>{const n=v(e,r),o=n.test(t);return n.negated?!o:o})))));function w(t){return null!=t}function m(t,e,r,o=[]){if(!w(t))throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");if(!w(e))throw new Error("ast-get-object: [THROW_ID_02] Second argument is missing!");let i=!1;w(r)&&Array.isArray(r)&&(i=!0);let a=n(t);return p(a)?j(a,e)?i?r.length>0&&(a=r[0],r.shift()):o.push(a):Object.keys(a).forEach((t=>{(Array.isArray(a[t])||p(a[t]))&&(i?a[t]=m(a[t],e,r,o):m(a[t],e,r,o))})):Array.isArray(a)&&a.forEach(((t,n)=>{(p(a[n])||Array.isArray(a[n]))&&(i?a[n]=m(a[n],e,r,o):m(a[n],e,r,o))})),!1!==(c=r)&&w(c)?a:o;var c}t.getObj=function(t,e,r){return m(t,e,r)},t.version="2.0.13",Object.defineProperty(t,"__esModule",{value:!0})}));
+var u;return!0}_.isMatch=(t,e,r)=>(t=b(t,"inputs"),0!==(e=b(e,"patterns")).length&&t.some((t=>e.every((e=>{const n=v(e,r),o=n.test(t);return n.negated?!o:o})))));function w(t){return null!=t}function m(t,e,r,o=[]){if(!w(t))throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");if(!w(e))throw new Error("ast-get-object: [THROW_ID_02] Second argument is missing!");let i=!1;w(r)&&Array.isArray(r)&&(i=!0);let a=n(t);return p(a)?j(a,e)?i?r.length>0&&(a=r[0],r.shift()):o.push(a):Object.keys(a).forEach((t=>{(Array.isArray(a[t])||p(a[t]))&&(i?a[t]=m(a[t],e,r,o):m(a[t],e,r,o))})):Array.isArray(a)&&a.forEach(((t,n)=>{(p(a[n])||Array.isArray(a[n]))&&(i?a[n]=m(a[n],e,r,o):m(a[n],e,r,o))})),!1!==(c=r)&&w(c)?a:o;var c}t.getObj=function(t,e,r){return m(t,e,r)},t.version="2.0.14",Object.defineProperty(t,"__esModule",{value:!0})}));

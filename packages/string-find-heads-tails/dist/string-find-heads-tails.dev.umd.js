@@ -1,7 +1,7 @@
 /**
  * @name string-find-heads-tails
  * @fileoverview Finds where are arbitrary templating marker heads and tails located
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-find-heads-tails/}
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.13
+ * @version 3.13.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -35,7 +35,7 @@ function arrayiffy(something) {
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 7.0.7
+ * @version 7.0.8
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -325,7 +325,7 @@ function matchRightIncl(str, position, whatToMatch, opts) {
   return main("matchRightIncl", str, position, whatToMatch, opts);
 }
 
-var version$1 = "4.0.13";
+var version$1 = "4.0.14";
 
 const version = version$1;
 function isObj(something) {

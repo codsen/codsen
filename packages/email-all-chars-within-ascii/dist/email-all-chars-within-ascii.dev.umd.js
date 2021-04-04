@@ -1,7 +1,7 @@
 /**
  * @name email-all-chars-within-ascii
  * @fileoverview Scans all characters within a string and checks are they within ASCII range
- * @version 3.0.13
+ * @version 3.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/email-all-chars-within-ascii/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.emailAllCharsWithinAscii = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "3.0.13";
+var version$1 = "3.0.14";
 
 const version = version$1;
 const defaults = {

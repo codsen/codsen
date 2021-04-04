@@ -1,7 +1,7 @@
 /**
  * @name string-unfancy
  * @fileoverview Replace all n/m dashes, curly quotes with their simpler equivalents
- * @version 4.0.13
+ * @version 4.0.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-unfancy/}
@@ -9,7 +9,7 @@
 
 import he from 'he';
 
-var version$1 = "4.0.13";
+var version$1 = "4.0.14";
 
 const version = version$1;
 function existy(x) {

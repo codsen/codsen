@@ -1,13 +1,13 @@
 /**
  * @name string-uglify
  * @fileoverview Shorten sets of strings deterministically, to be git-friendly
- * @version 1.4.13
+ * @version 1.4.14
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-uglify/}
  */
 
-var version$1 = "1.4.13";
+var version$1 = "1.4.14";
 
 const version = version$1;
 function tellcp(str, idNum = 0) {
