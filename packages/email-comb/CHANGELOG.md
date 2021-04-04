@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.14](https://github.com/codsen/codsen/compare/email-comb@5.0.13...email-comb@5.0.14) (2021-04-04)
+
+
+### Bug Fixes
+
+* recognise Nunjucks/Jinja within head CSS [@font-face](https://github.com/font-face) ([4fd803b](https://github.com/codsen/codsen/commit/4fd803bbb0734c192309e95bbafbd1d029e07571))
+
+
+
+
+
 ## 5.0.7 (2021-03-07)
 
 ### Bug Fixes

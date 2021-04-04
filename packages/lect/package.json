@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.16.13",
+  "version": "0.16.14",
   "description": "Maintenance CLI for internal consumption",
   "keywords": [
     "amend",
@@ -80,7 +80,7 @@
     }
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^5.0.13",
+    "array-pull-all-with-glob": "^5.0.14",
     "colorette": "^1.2.2",
     "inquirer": "^8.0.0",
     "lodash.camelcase": "^4.3.0",
@@ -90,7 +90,7 @@
     "lodash.partition": "^4.6.0",
     "lodash.trim": "^4.5.1",
     "matcher": "^4.0.0",
-    "object-merge-advanced": "^12.0.10",
+    "object-merge-advanced": "^12.0.11",
     "object-path": "^0.11.5",
     "pacote": "^11.3.1",
     "prettier": "^2.2.1",
@@ -108,7 +108,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.13",
+    "lect": "^0.16.14",
     "tap": "^14.11.0",
     "tempy": "^1.0.1",
     "tslib": "^2.1.0"

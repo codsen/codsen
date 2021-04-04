@@ -1,6 +1,6 @@
 {
   "name": "regex-empty-conditional-comments",
-  "version": "1.10.13",
+  "version": "1.10.14",
   "description": "Regular expression for matching HTML empty conditional comments",
   "keywords": [
     "code",
@@ -106,7 +106,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.13",
+    "lect": "^0.16.14",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
