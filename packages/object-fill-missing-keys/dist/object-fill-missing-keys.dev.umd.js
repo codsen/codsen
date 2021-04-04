@@ -1,10 +1,10 @@
 /**
- * object-fill-missing-keys
- * Add missing keys into plain objects, according to a reference object
- * Version: 8.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-fill-missing-keys/
+ * @name object-fill-missing-keys
+ * @fileoverview Add missing keys into plain objects, according to a reference object
+ * @version 8.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-fill-missing-keys/}
  */
 
 (function (global, factory) {
@@ -3793,12 +3793,12 @@ var isMatch = (inputs, patterns, options) => {
 matcher.isMatch = isMatch;
 
 /**
- * array-includes-with-glob
- * Like _.includes but with wildcards
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/array-includes-with-glob/
+ * @name array-includes-with-glob
+ * @fileoverview Like _.includes but with wildcards
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/array-includes-with-glob/}
  */
 const defaults$2 = {
   arrayVsArrayAllMustBeFound: "any",
@@ -3828,12 +3828,12 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 }
 
 /**
- * util-nonempty
- * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/util-nonempty/
+ * @name util-nonempty
+ * @fileoverview Is the input (plain object, array, string or whatever) not empty?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/util-nonempty/}
  */
 function nonEmpty(input) {
   if (input == null) {
@@ -3849,12 +3849,12 @@ function nonEmpty(input) {
 }
 
 /**
- * object-merge-advanced
- * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 12.0.10
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-merge-advanced/
+ * @name object-merge-advanced
+ * @fileoverview Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
+ * @version 12.0.10
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-merge-advanced/}
  */
 function isStr$1(something) {
   return typeof something === "string";
@@ -4355,12 +4355,12 @@ function externalApi(input1orig, input2orig, originalOpts) {
 }
 
 /**
- * arrayiffy-if-string
- * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/arrayiffy-if-string/
+ * @name arrayiffy-if-string
+ * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+ * @version 3.13.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/arrayiffy-if-string/}
  */
 
 function arrayiffy(something) {
@@ -6225,12 +6225,12 @@ module.exports = isEqual;
 });
 
 /**
- * object-all-values-equal-to
- * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-all-values-equal-to/
+ * @name object-all-values-equal-to
+ * @fileoverview Does the AST/nested-plain-object/array/whatever contain only one kind of value?
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-all-values-equal-to/}
  */
 function allValuesEqualTo(input, value, opts) {
   if (Array.isArray(input)) {

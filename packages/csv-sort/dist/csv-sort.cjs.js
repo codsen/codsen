@@ -1,10 +1,10 @@
 /**
- * csv-sort
- * Sorts double-entry bookkeeping CSV coming from internet banking
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/csv-sort/
+ * @name csv-sort
+ * @fileoverview Sorts double-entry bookkeeping CSV coming from internet banking
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/csv-sort/}
  */
 
 'use strict';

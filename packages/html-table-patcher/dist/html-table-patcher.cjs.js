@@ -1,10 +1,10 @@
 /**
- * html-table-patcher
- * Visual helper to place templating code around table tags into correct places
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/html-table-patcher/
+ * @name html-table-patcher
+ * @fileoverview Visual helper to place templating code around table tags into correct places
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/html-table-patcher/}
  */
 
 'use strict';

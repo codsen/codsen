@@ -1,10 +1,10 @@
 /**
- * html-img-alt
- * Adds missing alt attributes to img tags. Non-parsing.
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/html-img-alt/
+ * @name html-img-alt
+ * @fileoverview Adds missing alt attributes to img tags. Non-parsing.
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/html-img-alt/}
  */
 
 (function (global, factory) {
@@ -362,12 +362,12 @@ var he = createCommonjsModule(function (module, exports) {
 });
 
 /**
- * string-unfancy
- * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-unfancy/
+ * @name string-unfancy
+ * @fileoverview Replace all n/m dashes, curly quotes with their simpler equivalents
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-unfancy/}
  */
 function existy$1(x) {
   return x != null;
@@ -416,12 +416,12 @@ function unfancy(str) {
 }
 
 /**
- * ranges-sort
- * Sort string index ranges
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-sort/
+ * @name ranges-sort
+ * @fileoverview Sort string index ranges
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-sort/}
  */
 const defaults$3 = {
   strictlyTwoElementsInRangeArrays: false,
@@ -479,12 +479,12 @@ function rSort(arrOfRanges, originalOptions) {
 }
 
 /**
- * ranges-merge
- * Merge and sort string index ranges
- * Version: 7.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-merge/
+ * @name ranges-merge
+ * @fileoverview Merge and sort string index ranges
+ * @version 7.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-merge/}
  */
 const defaults$2 = {
   mergeType: 1,
@@ -579,12 +579,12 @@ function rMerge(arrOfRanges, originalOpts) {
 }
 
 /**
- * ranges-apply
- * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-apply/
+ * @name ranges-apply
+ * @fileoverview Take an array of string index ranges, delete/replace the string according to them
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-apply/}
  */
 function rApply(str, originalRangesArr, progressFn) {
   let percentageDone = 0;
@@ -675,12 +675,12 @@ function rApply(str, originalRangesArr, progressFn) {
 }
 
 /**
- * string-collapse-leading-whitespace
- * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
+ * @name string-collapse-leading-whitespace
+ * @fileoverview Collapse the leading and trailing whitespace of a string
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
  */
 function collWhitespace(str, originallineBreakLimit = 1) {
   const rawNbsp = "\u00A0";
@@ -752,12 +752,12 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 }
 
 /**
- * ranges-push
- * Gather string index ranges
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-push/
+ * @name ranges-push
+ * @fileoverview Gather string index ranges
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-push/}
  */
 function existy(x) {
   return x != null;
@@ -3384,12 +3384,12 @@ function isPlainObject(value) {
 var lodash_isplainobject = isPlainObject;
 
 /**
- * ast-monkey-util
- * Utility library of AST helper functions
- * Version: 1.3.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey-util/
+ * @name ast-monkey-util
+ * @fileoverview Utility library of AST helper functions
+ * @version 1.3.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey-util/}
  */
 
 function parent(str) {
@@ -3408,12 +3408,12 @@ function parent(str) {
 }
 
 /**
- * ast-monkey-traverse
- * Utility library to traverse AST
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ast-monkey-traverse/
+ * @name ast-monkey-traverse
+ * @fileoverview Utility library to traverse AST
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ast-monkey-traverse/}
  */
 function traverse(tree1, cb1) {
   const stop2 = {
@@ -4549,12 +4549,12 @@ function isObjectLike(value) {
 var lodash_intersection = intersection;
 
 /**
- * arrayiffy-if-string
- * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/arrayiffy-if-string/
+ * @name arrayiffy-if-string
+ * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+ * @version 3.13.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/arrayiffy-if-string/}
  */
 
 function arrayiffy(something) {
@@ -4984,12 +4984,12 @@ var isMatch = (inputs, patterns, options) => {
 matcher.isMatch = isMatch;
 
 /**
- * check-types-mini
- * Validate options object
- * Version: 6.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/check-types-mini/
+ * @name check-types-mini
+ * @fileoverview Validate options object
+ * @version 6.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/check-types-mini/}
  */
 
 const defaults = {

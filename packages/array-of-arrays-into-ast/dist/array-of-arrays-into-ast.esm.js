@@ -1,10 +1,10 @@
 /**
- * array-of-arrays-into-ast
- * Turns an array of arrays of data into a nested tree of plain objects
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/array-of-arrays-into-ast/
+ * @name array-of-arrays-into-ast
+ * @fileoverview Turns an array of arrays of data into a nested tree of plain objects
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/array-of-arrays-into-ast/}
  */
 
 import { mergeAdvanced } from 'object-merge-advanced';

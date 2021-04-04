@@ -1,10 +1,10 @@
 /**
- * json-variables
- * Resolves custom-marked, cross-referenced paths in parsed JSON
- * Version: 10.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/json-variables/
+ * @name json-variables
+ * @fileoverview Resolves custom-marked, cross-referenced paths in parsed JSON
+ * @version 10.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/json-variables/}
  */
 
 import { traverse } from 'ast-monkey-traverse';

@@ -1,10 +1,10 @@
 /**
- * string-remove-widows
- * Helps to prevent widow words in a text
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-remove-widows/
+ * @name string-remove-widows
+ * @fileoverview Helps to prevent widow words in a text
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-remove-widows/}
  */
 
 (function (global, factory) {
@@ -14,12 +14,12 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 }(this, (function (exports) { 'use strict';
 
 /**
- * arrayiffy-if-string
- * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/arrayiffy-if-string/
+ * @name arrayiffy-if-string
+ * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+ * @version 3.13.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/arrayiffy-if-string/}
  */
 
 function arrayiffy(something) {
@@ -33,12 +33,12 @@ function arrayiffy(something) {
 }
 
 /**
- * string-match-left-right
- * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.7
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-match-left-right/
+ * @name string-match-left-right
+ * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
+ * @version 7.0.7
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-match-left-right/}
  */
 
 function isObj(something) {
@@ -2102,12 +2102,12 @@ module.exports = cloneDeep;
 });
 
 /**
- * string-left-right
- * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-left-right/
+ * @name string-left-right
+ * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-left-right/}
  */
 const RAWNBSP = "\u00A0";
 function rightMain({
@@ -2218,12 +2218,12 @@ function left(str, idx = 0) {
 }
 
 /**
- * string-collapse-leading-whitespace
- * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
+ * @name string-collapse-leading-whitespace
+ * @fileoverview Collapse the leading and trailing whitespace of a string
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
  */
 function collWhitespace(str, originallineBreakLimit = 1) {
   const rawNbsp = "\u00A0";
@@ -2295,12 +2295,12 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 }
 
 /**
- * ranges-sort
- * Sort string index ranges
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-sort/
+ * @name ranges-sort
+ * @fileoverview Sort string index ranges
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-sort/}
  */
 const defaults$3 = {
   strictlyTwoElementsInRangeArrays: false,
@@ -2358,12 +2358,12 @@ function rSort(arrOfRanges, originalOptions) {
 }
 
 /**
- * ranges-merge
- * Merge and sort string index ranges
- * Version: 7.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-merge/
+ * @name ranges-merge
+ * @fileoverview Merge and sort string index ranges
+ * @version 7.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-merge/}
  */
 const defaults$2 = {
   mergeType: 1,
@@ -2458,12 +2458,12 @@ function rMerge(arrOfRanges, originalOpts) {
 }
 
 /**
- * ranges-push
- * Gather string index ranges
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-push/
+ * @name ranges-push
+ * @fileoverview Gather string index ranges
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-push/}
  */
 function existy(x) {
   return x != null;
@@ -2600,12 +2600,12 @@ class Ranges {
 }
 
 /**
- * ranges-apply
- * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-apply/
+ * @name ranges-apply
+ * @fileoverview Take an array of string index ranges, delete/replace the string according to them
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-apply/}
  */
 function rApply(str, originalRangesArr, progressFn) {
   let percentageDone = 0;

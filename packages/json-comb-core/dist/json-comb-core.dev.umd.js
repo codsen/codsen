@@ -1,10 +1,10 @@
 /**
- * json-comb-core
- * The inner core of json-comb
- * Version: 6.8.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/json-comb-core/
+ * @name json-comb-core
+ * @fileoverview The inner core of json-comb
+ * @version 6.8.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/json-comb-core/}
  */
 
 (function (global, factory) {
@@ -3891,12 +3891,12 @@ function isPlainObject(value) {
 var lodash_isplainobject = isPlainObject;
 
 /**
- * object-flatten-all-arrays
- * Merge and flatten any arrays found in all values within plain objects
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-flatten-all-arrays/
+ * @name object-flatten-all-arrays
+ * @fileoverview Merge and flatten any arrays found in all values within plain objects
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-flatten-all-arrays/}
  */
 function flattenAllArrays(originalIncommingObj, originalOpts) {
   function arrayContainsStr(arr) {
@@ -5834,12 +5834,12 @@ var isMatch = (inputs, patterns, options) => {
 matcher.isMatch = isMatch;
 
 /**
- * array-includes-with-glob
- * Like _.includes but with wildcards
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/array-includes-with-glob/
+ * @name array-includes-with-glob
+ * @fileoverview Like _.includes but with wildcards
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/array-includes-with-glob/}
  */
 const defaults$2 = {
   arrayVsArrayAllMustBeFound: "any",
@@ -5869,12 +5869,12 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 }
 
 /**
- * util-nonempty
- * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/util-nonempty/
+ * @name util-nonempty
+ * @fileoverview Is the input (plain object, array, string or whatever) not empty?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/util-nonempty/}
  */
 function nonEmpty(input) {
   if (input == null) {
@@ -5890,12 +5890,12 @@ function nonEmpty(input) {
 }
 
 /**
- * object-merge-advanced
- * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 12.0.10
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-merge-advanced/
+ * @name object-merge-advanced
+ * @fileoverview Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
+ * @version 12.0.10
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-merge-advanced/}
  */
 function isStr$2(something) {
   return typeof something === "string";
@@ -6396,12 +6396,12 @@ function externalApi(input1orig, input2orig, originalOpts) {
 }
 
 /**
- * arrayiffy-if-string
- * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/arrayiffy-if-string/
+ * @name arrayiffy-if-string
+ * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+ * @version 3.13.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/arrayiffy-if-string/}
  */
 
 function arrayiffy(something) {
@@ -8266,12 +8266,12 @@ module.exports = isEqual;
 });
 
 /**
- * object-all-values-equal-to
- * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-all-values-equal-to/
+ * @name object-all-values-equal-to
+ * @fileoverview Does the AST/nested-plain-object/array/whatever contain only one kind of value?
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-all-values-equal-to/}
  */
 function allValuesEqualTo(input, value, opts) {
   if (Array.isArray(input)) {
@@ -8322,12 +8322,12 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
 }
 
 /**
- * object-fill-missing-keys
- * Add missing keys into plain objects, according to a reference object
- * Version: 8.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-fill-missing-keys/
+ * @name object-fill-missing-keys
+ * @fileoverview Add missing keys into plain objects, according to a reference object
+ * @version 8.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-fill-missing-keys/}
  */
 const defaults = {
   placeholder: false,
@@ -8421,12 +8421,12 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
 }
 
 /**
- * object-set-all-values-to
- * Recursively walk the input and set all found values in plain objects to something
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-set-all-values-to/
+ * @name object-set-all-values-to
+ * @fileoverview Recursively walk the input and set all found values in plain objects to something
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-set-all-values-to/}
  */
 function setAllValuesTo(inputOriginal, valueOriginal) {
   let value;
@@ -8571,12 +8571,12 @@ var compareVersions = createCommonjsModule(function (module, exports) {
 });
 
 /**
- * object-no-new-keys
- * Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-no-new-keys/
+ * @name object-no-new-keys
+ * @fileoverview Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-no-new-keys/}
  */
 function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);

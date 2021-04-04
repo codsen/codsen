@@ -1,10 +1,10 @@
 /**
- * html-img-alt
- * Adds missing alt attributes to img tags. Non-parsing.
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/html-img-alt/
+ * @name html-img-alt
+ * @fileoverview Adds missing alt attributes to img tags. Non-parsing.
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/html-img-alt/}
  */
 
 'use strict';

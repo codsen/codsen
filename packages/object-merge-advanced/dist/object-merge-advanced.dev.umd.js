@@ -3795,12 +3795,12 @@ var isMatch = (inputs, patterns, options) => {
 matcher.isMatch = isMatch;
 
 /**
- * array-includes-with-glob
- * Like _.includes but with wildcards
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/array-includes-with-glob/
+ * @name array-includes-with-glob
+ * @fileoverview Like _.includes but with wildcards
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/array-includes-with-glob/}
  */
 const defaults$1 = {
   arrayVsArrayAllMustBeFound: "any",
@@ -3830,12 +3830,12 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 }
 
 /**
- * util-nonempty
- * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/util-nonempty/
+ * @name util-nonempty
+ * @fileoverview Is the input (plain object, array, string or whatever) not empty?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/util-nonempty/}
  */
 function nonEmpty(input) {
   if (input == null) {

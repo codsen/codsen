@@ -1,10 +1,10 @@
 /**
- * string-remove-duplicate-heads-tails
- * Detect and (recursively) remove head and tail wrappings around the input string
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-remove-duplicate-heads-tails/
+ * @name string-remove-duplicate-heads-tails
+ * @fileoverview Detect and (recursively) remove head and tail wrappings around the input string
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-remove-duplicate-heads-tails/}
  */
 
 import isObj from 'lodash.isplainobject';

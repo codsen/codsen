@@ -1,10 +1,10 @@
 /**
- * csv-split-easy
- * Splits the CSV string into array of arrays, each representing a row of columns
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/csv-split-easy/
+ * @name csv-split-easy
+ * @fileoverview Splits the CSV string into array of arrays, each representing a row of columns
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/csv-split-easy/}
  */
 
 (function (global, factory) {
@@ -16,12 +16,12 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 var version$1 = "5.0.13";
 
 /**
- * ranges-sort
- * Sort string index ranges
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-sort/
+ * @name ranges-sort
+ * @fileoverview Sort string index ranges
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-sort/}
  */
 const defaults$3 = {
   strictlyTwoElementsInRangeArrays: false,
@@ -79,12 +79,12 @@ function rSort(arrOfRanges, originalOptions) {
 }
 
 /**
- * ranges-merge
- * Merge and sort string index ranges
- * Version: 7.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-merge/
+ * @name ranges-merge
+ * @fileoverview Merge and sort string index ranges
+ * @version 7.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-merge/}
  */
 const defaults$2 = {
   mergeType: 1,
@@ -179,12 +179,12 @@ function rMerge(arrOfRanges, originalOpts) {
 }
 
 /**
- * ranges-apply
- * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-apply/
+ * @name ranges-apply
+ * @fileoverview Take an array of string index ranges, delete/replace the string according to them
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-apply/}
  */
 function rApply(str, originalRangesArr, progressFn) {
   let percentageDone = 0;
@@ -275,12 +275,12 @@ function rApply(str, originalRangesArr, progressFn) {
 }
 
 /**
- * string-collapse-leading-whitespace
- * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
+ * @name string-collapse-leading-whitespace
+ * @fileoverview Collapse the leading and trailing whitespace of a string
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
  */
 function collWhitespace(str, originallineBreakLimit = 1) {
   const rawNbsp = "\u00A0";
@@ -352,12 +352,12 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 }
 
 /**
- * ranges-push
- * Gather string index ranges
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-push/
+ * @name ranges-push
+ * @fileoverview Gather string index ranges
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-push/}
  */
 function existy(x) {
   return x != null;
@@ -886,12 +886,12 @@ function trim(string, chars, guard) {
 var lodash_trim = trim;
 
 /**
- * string-remove-thousand-separators
- * Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-remove-thousand-separators/
+ * @name string-remove-thousand-separators
+ * @fileoverview Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-remove-thousand-separators/}
  */
 function remSep(str, originalOpts) {
   let allOK = true;

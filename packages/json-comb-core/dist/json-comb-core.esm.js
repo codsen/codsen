@@ -1,10 +1,10 @@
 /**
- * json-comb-core
- * The inner core of json-comb
- * Version: 6.8.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/json-comb-core/
+ * @name json-comb-core
+ * @fileoverview The inner core of json-comb
+ * @version 6.8.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/json-comb-core/}
  */
 
 import { flattenAllArrays } from 'object-flatten-all-arrays';

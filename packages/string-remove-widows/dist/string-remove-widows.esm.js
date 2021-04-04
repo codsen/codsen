@@ -1,10 +1,10 @@
 /**
- * string-remove-widows
- * Helps to prevent widow words in a text
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-remove-widows/
+ * @name string-remove-widows
+ * @fileoverview Helps to prevent widow words in a text
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-remove-widows/}
  */
 
 import { matchRightIncl } from 'string-match-left-right';

@@ -1,10 +1,10 @@
 /**
- * stristri
- * Extracts or deletes HTML, CSS, text and/or templating tags from string
- * Version: 3.1.5
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/stristri/
+ * @name stristri
+ * @fileoverview Extracts or deletes HTML, CSS, text and/or templating tags from string
+ * @version 3.1.5
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/stristri/}
  */
 
 'use strict';

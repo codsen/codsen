@@ -1,10 +1,10 @@
 /**
- * array-of-arrays-into-ast
- * Turns an array of arrays of data into a nested tree of plain objects
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/array-of-arrays-into-ast/
+ * @name array-of-arrays-into-ast
+ * @fileoverview Turns an array of arrays of data into a nested tree of plain objects
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/array-of-arrays-into-ast/}
  */
 
 (function (global, factory) {
@@ -3793,12 +3793,12 @@ var isMatch = (inputs, patterns, options) => {
 matcher.isMatch = isMatch;
 
 /**
- * array-includes-with-glob
- * Like _.includes but with wildcards
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/array-includes-with-glob/
+ * @name array-includes-with-glob
+ * @fileoverview Like _.includes but with wildcards
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/array-includes-with-glob/}
  */
 const defaults$2 = {
   arrayVsArrayAllMustBeFound: "any",
@@ -3828,12 +3828,12 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 }
 
 /**
- * util-nonempty
- * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/util-nonempty/
+ * @name util-nonempty
+ * @fileoverview Is the input (plain object, array, string or whatever) not empty?
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/util-nonempty/}
  */
 function nonEmpty(input) {
   if (input == null) {
@@ -3849,12 +3849,12 @@ function nonEmpty(input) {
 }
 
 /**
- * object-merge-advanced
- * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 12.0.10
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/object-merge-advanced/
+ * @name object-merge-advanced
+ * @fileoverview Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
+ * @version 12.0.10
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/object-merge-advanced/}
  */
 function isStr(something) {
   return typeof something === "string";

@@ -1,10 +1,10 @@
 /**
- * detergent
- * Extracts, cleans and encodes text
- * Version: 7.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/detergent/
+ * @name detergent
+ * @fileoverview Extracts, cleans and encodes text
+ * @version 7.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/detergent/}
  */
 
 (function (global, factory) {
@@ -1911,12 +1911,12 @@ module.exports = cloneDeep;
 });
 
 /**
- * string-left-right
- * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-left-right/
+ * @name string-left-right
+ * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-left-right/}
  */
 const RAWNBSP = "\u00A0";
 function x(something) {
@@ -2363,12 +2363,12 @@ var _default = leven;
 leven_1.default = _default;
 
 /**
- * all-named-html-entities
- * List of all named HTML entities
- * Version: 1.5.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/all-named-html-entities/
+ * @name all-named-html-entities
+ * @fileoverview List of all named HTML entities
+ * @version 1.5.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/all-named-html-entities/}
  */
 
 var Aacute = "Á";
@@ -9699,12 +9699,12 @@ function decode$1(ent) {
 const maxLength = 31;
 
 /**
- * string-fix-broken-named-entities
- * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * Version: 5.2.3
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-fix-broken-named-entities/
+ * @name string-fix-broken-named-entities
+ * @fileoverview Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
+ * @version 5.2.3
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-fix-broken-named-entities/}
  */
 
 function isObj$1(something) {
@@ -10259,12 +10259,12 @@ function fixEnt(str, originalOpts) {
 }
 
 /**
- * arrayiffy-if-string
- * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/arrayiffy-if-string/
+ * @name arrayiffy-if-string
+ * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+ * @version 3.13.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/arrayiffy-if-string/}
  */
 
 function arrayiffy(something) {
@@ -10278,12 +10278,12 @@ function arrayiffy(something) {
 }
 
 /**
- * string-match-left-right
- * Match substrings on the left or right of a given index, ignoring whitespace
- * Version: 7.0.7
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-match-left-right/
+ * @name string-match-left-right
+ * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
+ * @version 7.0.7
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-match-left-right/}
  */
 
 function isObj(something) {
@@ -10571,12 +10571,12 @@ function matchRightIncl(str, position, whatToMatch, opts) {
 }
 
 /**
- * string-collapse-leading-whitespace
- * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
+ * @name string-collapse-leading-whitespace
+ * @fileoverview Collapse the leading and trailing whitespace of a string
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
  */
 function collWhitespace(str, originallineBreakLimit = 1) {
   const rawNbsp = "\u00A0";
@@ -10648,12 +10648,12 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 }
 
 /**
- * ranges-sort
- * Sort string index ranges
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-sort/
+ * @name ranges-sort
+ * @fileoverview Sort string index ranges
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-sort/}
  */
 const defaults$7 = {
   strictlyTwoElementsInRangeArrays: false,
@@ -10711,12 +10711,12 @@ function rSort(arrOfRanges, originalOptions) {
 }
 
 /**
- * ranges-merge
- * Merge and sort string index ranges
- * Version: 7.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-merge/
+ * @name ranges-merge
+ * @fileoverview Merge and sort string index ranges
+ * @version 7.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-merge/}
  */
 const defaults$6 = {
   mergeType: 1,
@@ -10811,12 +10811,12 @@ function rMerge(arrOfRanges, originalOpts) {
 }
 
 /**
- * ranges-push
- * Gather string index ranges
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-push/
+ * @name ranges-push
+ * @fileoverview Gather string index ranges
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-push/}
  */
 function existy(x) {
   return x != null;
@@ -10953,12 +10953,12 @@ class Ranges {
 }
 
 /**
- * ranges-apply
- * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-apply/
+ * @name ranges-apply
+ * @fileoverview Take an array of string index ranges, delete/replace the string according to them
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-apply/}
  */
 function rApply(str, originalRangesArr, progressFn) {
   let percentageDone = 0;
@@ -11049,12 +11049,12 @@ function rApply(str, originalRangesArr, progressFn) {
 }
 
 /**
- * string-remove-widows
- * Helps to prevent widow words in a text
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-remove-widows/
+ * @name string-remove-widows
+ * @fileoverview Helps to prevent widow words in a text
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-remove-widows/}
  */
 
 const rawnbsp = "\u00A0";
@@ -11561,12 +11561,12 @@ var substr = substring;
 runes_1.substr = substr;
 
 /**
- * ranges-crop
- * Crop array of ranges when they go beyond the reference string's length
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-crop/
+ * @name ranges-crop
+ * @fileoverview Crop array of ranges when they go beyond the reference string's length
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-crop/}
  */
 function rCrop(arrOfRanges, strLen) {
   if (arrOfRanges === null) {
@@ -11616,12 +11616,12 @@ function rCrop(arrOfRanges, strLen) {
 }
 
 /**
- * ranges-invert
- * Invert string index ranges
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-invert/
+ * @name ranges-invert
+ * @fileoverview Invert string index ranges
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-invert/}
  */
 function rInvert(arrOfRanges, strLen, originalOptions) {
   if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
@@ -11691,12 +11691,12 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
 }
 
 /**
- * ranges-process-outside
- * Iterate string considering ranges, as if they were already applied
- * Version: 4.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/ranges-process-outside/
+ * @name ranges-process-outside
+ * @fileoverview Iterate string considering ranges, as if they were already applied
+ * @version 4.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/ranges-process-outside/}
  */
 function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
   if (typeof originalStr !== "string") {
@@ -11739,12 +11739,12 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
 }
 
 /**
- * string-collapse-white-space
- * Replace chunks of whitespace with a single spaces
- * Version: 9.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-collapse-white-space/
+ * @name string-collapse-white-space
+ * @fileoverview Replace chunks of whitespace with a single spaces
+ * @version 9.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-collapse-white-space/}
  */
 const defaults$3 = {
   trimStart: true,
@@ -11996,12 +11996,12 @@ function collapse(str, originalOpts) {
 }
 
 /**
- * string-trim-spaces-only
- * Like String.trim() but you can choose granularly what to trim
- * Version: 3.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-trim-spaces-only/
+ * @name string-trim-spaces-only
+ * @fileoverview Like String.trim() but you can choose granularly what to trim
+ * @version 3.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-trim-spaces-only/}
  */
 const defaults$2 = {
   classicTrim: false,
@@ -13646,12 +13646,12 @@ function decode(text, _a) {
 var decode_1 = decode;
 
 /**
- * string-strip-html
- * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 8.2.10
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-strip-html/
+ * @name string-strip-html
+ * @fileoverview Strips HTML tags from strings. No parser, accepts mixed sources.
+ * @version 8.2.10
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-strip-html/}
  */
 
 /* istanbul ignore next */
@@ -14733,12 +14733,12 @@ var he = createCommonjsModule(function (module, exports) {
 var version$1 = "7.0.13";
 
 /**
- * html-entities-not-email-friendly
- * All HTML entities which are not email template friendly
- * Version: 0.4.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/html-entities-not-email-friendly/
+ * @name html-entities-not-email-friendly
+ * @fileoverview All HTML entities which are not email template friendly
+ * @version 0.4.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/html-entities-not-email-friendly/}
  */
 
 const notEmailFriendly = {
@@ -16586,12 +16586,12 @@ const notEmailFriendly = {
 };
 
 /**
- * string-range-expander
- * Expands string index ranges within whitespace boundaries until letters are met
- * Version: 2.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-range-expander/
+ * @name string-range-expander
+ * @fileoverview Expands string index ranges within whitespace boundaries until letters are met
+ * @version 2.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-range-expander/}
  */
 const defaults = {
   str: "",
@@ -16718,12 +16718,12 @@ function expander(originalOpts) {
 }
 
 /**
- * string-apostrophes
- * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * Version: 1.4.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/string-apostrophes/
+ * @name string-apostrophes
+ * @fileoverview Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
+ * @version 1.4.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/string-apostrophes/}
  */
 function convertOne(str, {
   from,
