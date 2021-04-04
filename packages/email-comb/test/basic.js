@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // basic class/id removal
 // -----------------------------------------------------------------------------
@@ -24,7 +24,7 @@ tap.test("01 - mvp", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "01");
+  t.equal(comb(t, source).result, intended, "01");
   t.end();
 });
 
@@ -49,7 +49,7 @@ tap.test("02 - multiple classes and id's", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "02");
+  t.equal(comb(t, source).result, intended, "02");
   t.end();
 });
 
@@ -72,7 +72,7 @@ tap.test("03 - mixed classes and non-classes", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "03");
+  t.equal(comb(t, source).result, intended, "03");
   t.end();
 });
 
@@ -95,7 +95,7 @@ tap.test("04 - mixed classes and non-classes", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "04");
+  t.equal(comb(t, source).result, intended, "04");
   t.end();
 });
 
@@ -119,19 +119,22 @@ tap.test("05 - sandwitched used and unused", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "05");
+  t.equal(comb(t, source).result, intended, "05");
   t.end();
 });
 
 tap.test("06 - sandwitched used and unused", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
   <style>
     #ab.cd[lang|en]   , .cd   { w:1; }
   </style>
 </head>
 <body><br class="cd">
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<head>
   <style>
@@ -147,14 +150,17 @@ tap.test("06 - sandwitched used and unused", (t) => {
 });
 
 tap.test("07 - sandwitched used and unused", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
   <style>
     #ab.cd[lang|en]   , .cd#ef, .cd, .cd#ef   { w:1; }
   </style>
 </head>
 <body><br class="cd">
 </body>
-  `).result;
+  `
+  ).result;
 
   const intended = `<head>
   <style>
@@ -169,14 +175,17 @@ tap.test("07 - sandwitched used and unused", (t) => {
 });
 
 tap.test("08 - sandwitched used and unused", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
   <style>
     #ab.cd[lang|en]   , .cd#ef { w:1; }
   </style>
 </head>
 <body><br class="cd">
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<head>
 </head>
@@ -189,7 +198,9 @@ tap.test("08 - sandwitched used and unused", (t) => {
 });
 
 tap.test("09 - mixed classes and non-classes", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style type="text/css">
   @import;
   aa, .unused[z], bb {z:2;}
@@ -197,7 +208,8 @@ tap.test("09 - mixed classes and non-classes", (t) => {
 </head>
 <body><a>z</a>
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<head>
 <style type="text/css">
@@ -266,12 +278,13 @@ tap.test("10 - removes classes and id's from HTML5 (normal input)", (t) => {
 </html>
 `;
 
-  t.strictSame(comb(source).result, intended, "10");
+  t.strictSame(comb(t, source).result, intended, "10");
   t.end();
 });
 
 tap.test("11 - removes classes and id's from HTML5 - uglifies", (t) => {
   const actual = comb(
+    t,
     `
 <!DOCTYPE html>
 <html lang="en">
@@ -336,7 +349,9 @@ tap.test("11 - removes classes and id's from HTML5 - uglifies", (t) => {
 });
 
 tap.test("12 - deletes blank class/id attrs", (t) => {
-  const actual = comb(`
+  const actual = comb(
+    t,
+    `
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -363,7 +378,8 @@ tap.test("12 - deletes blank class/id attrs", (t) => {
     </table>
   </body>
 </html>
-`).result;
+`
+  ).result;
 
   const intended = `<!DOCTYPE html>
 <html lang="en">
@@ -400,7 +416,9 @@ tap.test("12 - deletes blank class/id attrs", (t) => {
 tap.test(
   "13 - class present in both head and body, but head has it joined with nonexistent id",
   (t) => {
-    const actual = comb(`
+    const actual = comb(
+      t,
+      `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -420,7 +438,8 @@ tap.test(
   </table>
 </body>
 </html>
-`).result;
+`
+    ).result;
 
     const intended = `<!DOCTYPE html>
 <html lang="en">
@@ -445,7 +464,9 @@ tap.test(
 );
 
 tap.test("14 - multiple style tags recognised and transformed", (t) => {
-  const actual = comb(`
+  const actual = comb(
+    t,
+    `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -473,7 +494,8 @@ tap.test("14 - multiple style tags recognised and transformed", (t) => {
 </table>
 </body>
 </html>
-`).result;
+`
+  ).result;
 
   const intended = `<!DOCTYPE html>
 <html lang="en">
@@ -503,7 +525,9 @@ tap.test("14 - multiple style tags recognised and transformed", (t) => {
 });
 
 tap.test("15 - style tags are outside HEAD", (t) => {
-  const actual = comb(`
+  const actual = comb(
+    t,
+    `
 <!DOCTYPE html>
 <style>
 @media (max-width: 600px) {
@@ -538,7 +562,8 @@ tap.test("15 - style tags are outside HEAD", (t) => {
 </table>
 </body>
 </html>
-`).result;
+`
+  ).result;
 
   const intended = `<!DOCTYPE html>
 <head>
@@ -561,7 +586,9 @@ tap.test("15 - style tags are outside HEAD", (t) => {
 });
 
 tap.test("16 - removes last styles together with the whole style tag", (t) => {
-  const actual = comb(`<!doctype html>
+  const actual = comb(
+    t,
+    `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -575,7 +602,8 @@ color:  black;
 <body>
 </body>
 </html>
-`).result;
+`
+  ).result;
 
   const intended = `<!doctype html>
 <html>
@@ -594,7 +622,9 @@ color:  black;
 });
 
 tap.test("17 - deletes multiple empty style tags", (t) => {
-  const actual = comb(`
+  const actual = comb(
+    t,
+    `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -615,7 +645,8 @@ tap.test("17 - deletes multiple empty style tags", (t) => {
   </table>
 </body>
 </html>
-`).result;
+`
+  ).result;
 
   const intended = `<!DOCTYPE html>
 <html lang="en">
@@ -673,8 +704,8 @@ tap.test(
 </html>
 `;
 
-    const actual = comb(source).result;
-    const actualUglified = comb(source, {
+    const actual = comb(t, source).result;
+    const actualUglified = comb(t, source, {
       uglify: true,
     }).result;
 
@@ -788,7 +819,7 @@ tap.test(
   </body>
 </html>
 `;
-    t.strictSame(comb(source).result, intended, "19");
+    t.strictSame(comb(t, source).result, intended, "19");
     t.end();
   }
 );
@@ -828,8 +859,8 @@ tap.test("20 - head CSS is given minified", (t) => {
 </body>
 </html>
 `;
-  t.strictSame(comb(source1).result, intended1, "20.01");
-  t.strictSame(comb(source2).result, intended2, "20.02");
+  t.strictSame(comb(t, source1).result, intended1, "20.01");
+  t.strictSame(comb(t, source2).result, intended2, "20.02");
   t.end();
 });
 
@@ -871,9 +902,9 @@ tap.test("21 - head CSS is given minified, comma separated", (t) => {
 </html>
 `;
 
-  t.strictSame(comb(source1).result, intended, "21.01");
-  t.strictSame(comb(source2).result, intended, "21.02");
-  t.strictSame(comb(source3).result, intended, "21.03");
+  t.strictSame(comb(t, source1).result, intended, "21.01");
+  t.strictSame(comb(t, source2).result, intended, "21.02");
+  t.strictSame(comb(t, source3).result, intended, "21.03");
   t.end();
 });
 
@@ -905,12 +936,12 @@ tap.test("22 - head CSS is expanded", (t) => {
 </html>
 `;
 
-  t.strictSame(comb(source).result, intended, "22");
+  t.strictSame(comb(t, source).result, intended, "22");
   t.end();
 });
 
 tap.test("23 - empty string produces empty string", (t) => {
-  t.strictSame(comb("").result, "", "23");
+  t.strictSame(comb(t, "").result, "", "23");
   t.end();
 });
 
@@ -937,12 +968,14 @@ tap.test("24 - issue no.2 - mini", (t) => {
 </html>
 `;
 
-  t.equal(source, comb(source).result, "24");
+  t.equal(source, comb(t, source).result, "24");
   t.end();
 });
 
 tap.test("25 - issue no.2 - full", (t) => {
-  const actual = comb(`<!DOCTYPE html>
+  const actual = comb(
+    t,
+    `<!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <!--[if gte mso 9]>
@@ -973,7 +1006,8 @@ tap.test("25 - issue no.2 - full", (t) => {
    <div class="banana">Banana</div>
 </body>
 </html>
-`).result;
+`
+  ).result;
 
   const intended = `<!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -1042,8 +1076,8 @@ tap.test(
 </html>
 `;
 
-    const actual = comb(source).result;
-    const actualUglified = comb(source, {
+    const actual = comb(t, source).result;
+    const actualUglified = comb(t, source, {
       uglify: true,
     }).result;
 
@@ -1140,8 +1174,8 @@ tap.test(
 </html>
 `;
 
-    const actual = comb(source).result;
-    const actualUglified = comb(source, {
+    const actual = comb(t, source).result;
+    const actualUglified = comb(t, source, {
       uglify: true,
     }).result;
 
@@ -1230,14 +1264,14 @@ tap.test(
 </html>
 `;
 
-    const actual = comb(source).result;
-    const actualUglified = comb(source, {
+    const actual = comb(t, source).result;
+    const actualUglified = comb(t, source, {
       uglify: true,
     }).result;
-    const actualAllCommentsDeleted = comb(source, {
+    const actualAllCommentsDeleted = comb(t, source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result;
-    const actualAllCommentsDeletedUglified = comb(source, {
+    const actualAllCommentsDeletedUglified = comb(t, source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
       uglify: true,
     }).result;
@@ -1356,18 +1390,18 @@ tap.test(
     );
 
     // comment removal off:
-    const actualUglifiedCommentsOffAndIgnored = comb(source, {
+    const actualUglifiedCommentsOffAndIgnored = comb(t, source, {
       removeHTMLComments: false,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result;
     t.strictSame(actualUglifiedCommentsOffAndIgnored, intended, "28.05");
 
-    const actualUglifiedCommentsOff = comb(source, {
+    const actualUglifiedCommentsOff = comb(t, source, {
       removeHTMLComments: false,
     }).result;
     t.strictSame(actualUglifiedCommentsOff, intended, "28.06");
 
-    const actualUglifiedCommentsOffUglify = comb(source, {
+    const actualUglifiedCommentsOffUglify = comb(t, source, {
       removeHTMLComments: false,
       uglify: true,
     }).result;
@@ -1377,7 +1411,9 @@ tap.test(
 );
 
 tap.test("29 - plus selector", (t) => {
-  const actual1 = comb(`<style>
+  const actual1 = comb(
+    t,
+    `<style>
 [owa] .klm,
 body[nop] .klm,
 u+.a .klm,
@@ -1387,7 +1423,8 @@ u+.a .jb{uvw}
 <body>
 <u><a class="a"><i class="klm">x</i></a></u>
 <u><a class="a"><i class="zb">y</i></a></u>
-<u><a class="a"><i class="jb">z</i></a></u>`).result;
+<u><a class="a"><i class="jb">z</i></a></u>`
+  ).result;
   const intended1 = `<style>
 [owa] .klm,
 body[nop] .klm,
@@ -1404,7 +1441,9 @@ u+.a .jb{uvw}
 });
 
 tap.test("30 - double curlies around values", (t) => {
-  const actual1 = comb(`<style>
+  const actual1 = comb(
+    t,
+    `<style>
 .used-1 {
 display: {{ abc.de_fg | hi_jk: 10 }};
 }
@@ -1417,7 +1456,8 @@ height: {{ abc.de_fg | hi_jk: 10 }};
 <table class="unused-4 used-1">
 <tr>
 <td class="unused-5 unused-6">
-text`).result;
+text`
+  ).result;
   const intended1 = `<style>
 .used-1 {
 display: {{ abc.de_fg | hi_jk: 10 }};

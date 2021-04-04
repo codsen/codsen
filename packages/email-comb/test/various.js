@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // various
 // -----------------------------------------------------------------------------
@@ -11,7 +11,9 @@ tap.test("01 - bug #01", (t) => {
     result,
     deletedFromHead,
     deletedFromBody,
-  } = comb(`<head>
+  } = comb(
+    t,
+    `<head>
 <style type="text/css">
 @font-face {zzz}
 .unused {zzz}
@@ -19,7 +21,8 @@ tap.test("01 - bug #01", (t) => {
 </head>
 <body a="z;">
 </body>
-`);
+`
+  );
 
   t.strictSame(allInBody, [], "01.01");
   t.strictSame(allInHead, [".unused"], "01.02");
@@ -87,7 +90,7 @@ tap.test("02 - working on early (stage I) per-line removal", (t) => {
 </html>
 `;
 
-  t.strictSame(comb(source).result, intended, "02");
+  t.strictSame(comb(t, source).result, intended, "02");
   t.end();
 });
 
@@ -111,7 +114,7 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "03");
+    t.equal(comb(t, source).result, intended, "03");
     t.end();
   }
 );
@@ -135,7 +138,7 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "04");
+    t.equal(comb(t, source).result, intended, "04");
     t.end();
   }
 );
@@ -161,7 +164,7 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "05");
+    t.equal(comb(t, source).result, intended, "05");
     t.end();
   }
 );
@@ -182,7 +185,7 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "06");
+    t.equal(comb(t, source).result, intended, "06");
     t.end();
   }
 );
@@ -201,7 +204,7 @@ tap.todo("07 - empty class/id without equals and value gets deleted", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "07");
+  t.equal(comb(t, source).result, intended, "07");
   t.end();
 });
 
@@ -224,7 +227,7 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "08");
+    t.equal(comb(t, source).result, intended, "08");
     t.end();
   }
 );
@@ -249,30 +252,32 @@ tap.test("09 - cleans spaces within classes and id's", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "09");
+  t.equal(comb(t, source).result, intended, "09");
   t.end();
 });
 
 tap.test("10 - does not mangle different-type line endings, LF", (t) => {
   const source = "a\n";
-  t.equal(comb(source).result, source, "10");
+  t.equal(comb(t, source).result, source, "10");
   t.end();
 });
 
 tap.test("11 - does not mangle different-type line endings, CR", (t) => {
   const source = "a\r";
-  t.equal(comb(source).result, source, "11");
+  t.equal(comb(t, source).result, source, "11");
   t.end();
 });
 
 tap.test("12 - does not mangle different-type line endings, LFCR", (t) => {
   const source = "a\r\n";
-  t.equal(comb(source).result, source, "12");
+  t.equal(comb(t, source).result, source, "12");
   t.end();
 });
 
 tap.test("13 - dirty code #1", (t) => {
-  const actual = comb(`<body>
+  const actual = comb(
+    t,
+    `<body>
 
 <style>
 
@@ -291,7 +296,8 @@ td[class=jj] { font-family: 'GillSans', Gill Sans, Gill Sans MT, Arial, sans-ser
 float:left !important;}
 }
 
-</style>`).result;
+</style>`
+  ).result;
 
   const intended = `<body>
 <td align="left" style="color:#00000;"><a href="https://email.yo.com" style="color:#000000;">p</a>
@@ -302,13 +308,16 @@ float:left !important;}
 });
 
 tap.test("14 - adhoc #1", (t) => {
-  const actual = comb(`<style>
+  const actual = comb(
+    t,
+    `<style>
   .aa{b: c;}
 </style>
 <body>
 <table  id="  zz"  class="aa">
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<style>
   .aa{b: c;}
@@ -323,14 +332,17 @@ tap.test("14 - adhoc #1", (t) => {
 });
 
 tap.test("15 - adhoc 2", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style type="text/css">
   .aa {z:2;}
 </style>
 </head>
 <body><a class="  aa   bb  cc  ">z</a>
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<head>
 <style type="text/css">
@@ -346,14 +358,17 @@ tap.test("15 - adhoc 2", (t) => {
 });
 
 tap.test("16 - adhoc 3", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style type="text/css">
   @media y z (a-a:0px){.col-1,.col-2,.zz{m:100%!n}}
 </style>
 </head>
 <body><a class="  zz   bb  cc  ">z</a>
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<head>
 <style type="text/css">
@@ -378,7 +393,7 @@ tap.test("17 - bug #36", (t) => {
     result,
     deletedFromHead,
     deletedFromBody,
-  } = comb(input);
+  } = comb(t, input);
 
   t.strictSame(allInBody, [".foo"], "17.01");
   t.strictSame(allInHead, [".foo"], "17.02");
@@ -401,7 +416,7 @@ tap.test("18 - bug #45 - id", (t) => {
     result,
     deletedFromHead,
     deletedFromBody,
-  } = comb(input);
+  } = comb(t, input);
 
   t.strictSame(allInBody, [], "18.01");
   t.strictSame(allInHead, [], "18.02");
@@ -419,7 +434,7 @@ tap.test("19 - bug #45 - class", (t) => {
     result,
     deletedFromHead,
     deletedFromBody,
-  } = comb(input);
+  } = comb(t, input);
 
   t.strictSame(allInBody, [], "19.01");
   t.strictSame(allInHead, [], "19.02");

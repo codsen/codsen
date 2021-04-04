@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // HTML Comment removal
 // -----------------------------------------------------------------------------
@@ -35,29 +35,33 @@ tap.test("01 - removes HTML comments - healthy code", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "01.01");
+  t.equal(comb(t, source).result, intended, "01.01");
   t.equal(
-    comb(source, { removeHTMLComments: true }).result,
+    comb(t, source, { removeHTMLComments: true }).result,
     intended,
     "01.02 - hardcoded default"
   );
-  t.equal(comb(source, { removeHTMLComments: false }).result, source, "01.03");
+  t.equal(
+    comb(t, source, { removeHTMLComments: false }).result,
+    source,
+    "01.03"
+  );
 
   // uglify on:
   t.equal(
-    comb(source, {
+    comb(t, source, {
       uglify: true,
     }).result,
     uglified,
     "01.04"
   );
   t.equal(
-    comb(source, { removeHTMLComments: true, uglify: true }).result,
+    comb(t, source, { removeHTMLComments: true, uglify: true }).result,
     uglified,
     "01.05 - hardcoded default"
   );
   t.equal(
-    comb(source, { removeHTMLComments: false, uglify: true }).result,
+    comb(t, source, { removeHTMLComments: false, uglify: true }).result,
     uglifiedWithComments,
     "01.06"
   );
@@ -88,12 +92,16 @@ tap.test("02 - removes bogus HTML comments", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "02.01");
-  t.equal(comb(source, { removeHTMLComments: true }).result, intended, "02.02");
+  t.equal(comb(t, source).result, intended, "02.01");
+  t.equal(
+    comb(t, source, { removeHTMLComments: true }).result,
+    intended,
+    "02.02"
+  );
   // when HTML comment removal is off, redundant whitespace within the tag is
   // still removed
   t.equal(
-    comb(source, { removeHTMLComments: false }).result,
+    comb(t, source, { removeHTMLComments: false }).result,
     slightlyProcessed,
     "02.03"
   );
@@ -109,47 +117,47 @@ tap.test(
     const conditionalRemoved = `abc xyz
 `;
 
-    t.equal(comb(source).result, source, "03.01");
+    t.equal(comb(t, source).result, source, "03.01");
     t.equal(
-      comb(source, { removeHTMLComments: true }).result,
+      comb(t, source, { removeHTMLComments: true }).result,
       source,
       "03.02 - hardcoded default"
     );
     t.equal(
-      comb(source, { removeHTMLComments: false }).result,
+      comb(t, source, { removeHTMLComments: false }).result,
       source,
       "03.03"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "ie"],
       }).result,
       source,
       "03.04 - both mso and ie ignores cause a complete skip"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: "mso",
       }).result,
       source,
       "03.05 - mso ignore causes a complete skip"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: "ie",
       }).result,
       conditionalRemoved,
       "03.06 - ie ignore is redundant and comment is removed"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: "",
       }).result,
       conditionalRemoved,
       "03.07 - empty string"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
       }).result,
       conditionalRemoved,
@@ -171,19 +179,19 @@ tap.test(
 <meta http-equiv="X-UA-Compatible" content="IE=edge" /> bbb
 `;
 
-    t.equal(comb(source).result, source, "04.01");
+    t.equal(comb(t, source).result, source, "04.01");
     t.equal(
-      comb(source, { removeHTMLComments: true }).result,
+      comb(t, source, { removeHTMLComments: true }).result,
       source,
       "04.02 - hardcoded default"
     );
     t.equal(
-      comb(source, { removeHTMLComments: false }).result,
+      comb(t, source, { removeHTMLComments: false }).result,
       source,
       "04.03"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         removeHTMLComments: true,
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
       }).result,
@@ -208,19 +216,19 @@ tap.test(
 <meta http-equiv="X-UA-Compatible" content="IE=edge" /> bbb
 `;
 
-    t.equal(comb(source2).result, source2, "05.01");
+    t.equal(comb(t, source2).result, source2, "05.01");
     t.equal(
-      comb(source2, { removeHTMLComments: true }).result,
+      comb(t, source2, { removeHTMLComments: true }).result,
       source2,
       "05.02 - hardcoded default"
     );
     t.equal(
-      comb(source2, { removeHTMLComments: false }).result,
+      comb(t, source2, { removeHTMLComments: false }).result,
       source2,
       "05.03"
     );
     t.equal(
-      comb(source2, {
+      comb(t, source2, {
         removeHTMLComments: true,
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
       }).result,
@@ -241,7 +249,7 @@ tap.test(
 `;
 
     t.equal(
-      comb(source3, {
+      comb(t, source3, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "endif"],
       }).result,
       source3,
@@ -254,7 +262,7 @@ tap.test(
 `;
 
     t.equal(
-      comb(source4, {
+      comb(t, source4, {
         doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["ie", "endif"],
       }).result,
       source4,
@@ -284,14 +292,14 @@ tap.test(
 </table>
 `;
 
-    t.equal(comb(source).result, source, "07.01");
+    t.equal(comb(t, source).result, source, "07.01");
     t.equal(
-      comb(source, { removeHTMLComments: true }).result,
+      comb(t, source, { removeHTMLComments: true }).result,
       source,
       "07.02 - hardcoded default"
     );
     t.equal(
-      comb(source, { removeHTMLComments: false }).result,
+      comb(t, source, { removeHTMLComments: false }).result,
       source,
       "07.03"
     );
@@ -318,13 +326,17 @@ tap.test("08 - trims commented-out HTML", (t) => {
 </table>
 `;
 
-  t.equal(comb(source).result, intended, "08.01");
+  t.equal(comb(t, source).result, intended, "08.01");
   t.equal(
-    comb(source, { removeHTMLComments: true }).result,
+    comb(t, source, { removeHTMLComments: true }).result,
     intended,
     "08.02 - hardcoded default"
   );
-  t.equal(comb(source, { removeHTMLComments: false }).result, source, "08.03");
+  t.equal(
+    comb(t, source, { removeHTMLComments: false }).result,
+    source,
+    "08.03"
+  );
   t.end();
 });
 
@@ -332,7 +344,7 @@ tap.test("09 - outer trims - single leading space", (t) => {
   const source = ` <body>`;
   const intended = `<body>`;
 
-  t.equal(comb(source).result, intended, "09");
+  t.equal(comb(t, source).result, intended, "09");
   t.end();
 });
 
@@ -344,7 +356,7 @@ tap.test("10 - outer trims - doctype with leading line break", (t) => {
 <html>`;
 
   t.equal(
-    comb(source, { uglify: true, removeIndentations: true }).result,
+    comb(t, source, { uglify: true, removeIndentations: true }).result,
     intended,
     "10"
   );
@@ -356,7 +368,7 @@ tap.test("11 - outer trims - trailing line breaks", (t) => {
   const intended = `<body>
 `;
 
-  t.equal(comb(source).result, intended, "11");
+  t.equal(comb(t, source).result, intended, "11");
   t.end();
 });
 
@@ -364,7 +376,7 @@ tap.test("12 - comment surrounded by tags", (t) => {
   const source = ` <strong><!-- --></strong> `;
   const intended = `<strong></strong>`;
 
-  t.equal(comb(source).result, intended, "12");
+  t.equal(comb(t, source).result, intended, "12");
   t.end();
 });
 
@@ -372,7 +384,7 @@ tap.test("13 - leading comment", (t) => {
   const source = `<!-- something -->zzz`;
   const intended = `zzz`;
 
-  t.equal(comb(source).result, intended, "13");
+  t.equal(comb(t, source).result, intended, "13");
   t.end();
 });
 
@@ -380,7 +392,7 @@ tap.test("14 - leading spaces #1 - just text", (t) => {
   const source = `  a`;
   const intended = `a`;
 
-  t.equal(comb(source).result, intended, "14");
+  t.equal(comb(t, source).result, intended, "14");
   t.end();
 });
 
@@ -400,7 +412,7 @@ tap.test("15 - leading spaces #2 - no body", (t) => {
 </style>
 `;
 
-  t.equal(comb(source).result, intended, "15");
+  t.equal(comb(t, source).result, intended, "15");
   t.end();
 });
 
@@ -408,7 +420,7 @@ tap.test("16 - outer trims - some leading tabs", (t) => {
   const source = `\n\t\t<body>`;
   const intended = `<body>`;
 
-  t.equal(comb(source).result, intended, "16");
+  t.equal(comb(t, source).result, intended, "16");
   t.end();
 });
 
@@ -416,12 +428,14 @@ tap.test("17 - outer trims - doctype with leading space", (t) => {
   const source = ` <!DOCTYPE>`;
   const intended = `<!DOCTYPE>`;
 
-  t.equal(comb(source).result, intended, "17");
+  t.equal(comb(t, source).result, intended, "17");
   t.end();
 });
 
 tap.test("18 - mixed: classes and tag names", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style>
 /*! .x *//*! .y */
 /*! #z */
@@ -429,7 +443,8 @@ tap.test("18 - mixed: classes and tag names", (t) => {
 </style>
 <body><br class="dd">
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<head>
 <style>
@@ -590,41 +605,41 @@ tap.test(
 </html>
 `;
     t.strictSame(
-      comb(source).result,
+      comb(t, source).result,
       cssAndHtmlCommentsRemoved,
       "19.01 - defaults"
     );
     t.strictSame(
-      comb(source, { removeCSSComments: true }).result,
+      comb(t, source, { removeCSSComments: true }).result,
       cssAndHtmlCommentsRemoved,
       "19.02 - hardcoded defaults"
     );
     t.strictSame(
-      comb(source, { removeCSSComments: false }).result,
+      comb(t, source, { removeCSSComments: false }).result,
       htmlRemovedCssNot,
       "19.03 - off"
     );
 
     t.strictSame(
-      comb(source, { removeCSSComments: true, removeHTMLComments: true })
+      comb(t, source, { removeCSSComments: true, removeHTMLComments: true })
         .result,
       cssAndHtmlCommentsRemoved,
       "19.04 - html on, css on"
     );
     t.strictSame(
-      comb(source, { removeCSSComments: false, removeHTMLComments: true })
+      comb(t, source, { removeCSSComments: false, removeHTMLComments: true })
         .result,
       htmlRemovedCssNot,
       "19.05 - html on, css off"
     );
     t.strictSame(
-      comb(source, { removeCSSComments: true, removeHTMLComments: false })
+      comb(t, source, { removeCSSComments: true, removeHTMLComments: false })
         .result,
       cssRemovedHtmlNot,
       "19.06 - html off, css on"
     );
     t.strictSame(
-      comb(source, { removeCSSComments: false, removeHTMLComments: false })
+      comb(t, source, { removeCSSComments: false, removeHTMLComments: false })
         .result,
       neitherCssNorHtml,
       "19.07 - html off, css off"
@@ -692,19 +707,22 @@ tap.test(
 </html>
 `;
 
-    t.strictSame(comb(source).result, intended, "20");
+    t.strictSame(comb(t, source).result, intended, "20");
     t.end();
   }
 );
 
 tap.test("21 - comments in the inline styles", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style>
   .aa, .bb { w:1; }
 </style>
 <body><br class="bb" style="font-size: 10px;/*\r\ncolor:#333333;\r\n*/line-height: 14px;">
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<head>
 <style>

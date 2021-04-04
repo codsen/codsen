@@ -1,4 +1,5 @@
 import tap from "tap";
+// consume plain, real comb, we're just testing the api
 import { comb } from "../dist/email-comb.esm";
 
 // api bits: throws and such

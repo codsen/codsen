@@ -1,11 +1,12 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // whitelisting
 // -----------------------------------------------------------------------------
 
 tap.test("01 - nothing removed because of settings.whitelist", (t) => {
   const actual = comb(
+    t,
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -66,6 +67,7 @@ tap.test("01 - nothing removed because of settings.whitelist", (t) => {
 
 tap.test("02 - some removed, some whitelisted", (t) => {
   const actual = comb(
+    t,
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -126,6 +128,7 @@ tap.test("02 - some removed, some whitelisted", (t) => {
 
 tap.test("03 - case of whitelisting everything", (t) => {
   const actual = comb(
+    t,
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -187,14 +190,17 @@ tap.test("03 - case of whitelisting everything", (t) => {
 });
 
 tap.test("04 - special case - checking adjacent markers #1", (t) => {
-  const actual = comb(`<style type="text/css">
+  const actual = comb(
+    t,
+    `<style type="text/css">
   .del-1{display: none;}
   .real{display: none;}
   .del-3{display: none;}
 </style>
 <body class="real">
 zzz
-</body>`).result;
+</body>`
+  ).result;
 
   const intended = `<style type="text/css">
   .real{display: none;}
@@ -208,11 +214,14 @@ zzz
 });
 
 tap.test("05 - special case - checking adjacent markers #2", (t) => {
-  const actual = comb(`<style type="text/css">.del-1{display: none;}.del-2{display: none;}.del-3{display: none;}</style>
+  const actual = comb(
+    t,
+    `<style type="text/css">.del-1{display: none;}.del-2{display: none;}.del-3{display: none;}</style>
 <body>
 zzz
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<body>
 zzz
@@ -225,14 +234,17 @@ zzz
 
 // div~[^whatever] .del-1 {display: none;}
 tap.test("06 - special case - checking commas within curly braces", (t) => {
-  const actual = comb(`
+  const actual = comb(
+    t,
+    `
 <style type="text/css">
   .used {display: block;}
   .deleteme{,,,<<<,>>>,,,,,}
 </style>
 <body class="used">
 zzz
-</body>`).result;
+</body>`
+  ).result;
 
   const intended = `<style type="text/css">
   .used {display: block;}

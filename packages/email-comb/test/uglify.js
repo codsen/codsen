@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // opts.uglify
 // -----------------------------------------------------------------------------
@@ -32,9 +32,9 @@ tap.test("01 - removes unused classes and uglifies at the same time", (t) => {
 </body>
 `;
 
-  const actual = comb(source, { uglify: true }).result;
-  const actualNotUglified = comb(source, { uglify: false }).result;
-  const actual2 = comb(source, { uglify: 1 }).result;
+  const actual = comb(t, source, { uglify: true }).result;
+  const actualNotUglified = comb(t, source, { uglify: false }).result;
+  const actual2 = comb(t, source, { uglify: 1 }).result;
 
   t.equal(actual, uglified, "01.01");
 
@@ -45,13 +45,13 @@ tap.test("01 - removes unused classes and uglifies at the same time", (t) => {
   t.equal(actualNotUglified, intended, "01.03");
 
   // uglification disabled:
-  const actual3 = comb(source, { uglify: false }).result;
+  const actual3 = comb(t, source, { uglify: false }).result;
   t.equal(actual3, intended, "01.04");
 
-  const actual4 = comb(source, { uglify: 0 }).result;
+  const actual4 = comb(t, source, { uglify: 0 }).result;
   t.equal(actual4, intended, "01.05");
 
-  const actual5 = comb(source, { uglify: 1 }).result;
+  const actual5 = comb(t, source, { uglify: 1 }).result;
   t.equal(actual5, uglified, "01.06");
   t.end();
 });
@@ -98,19 +98,19 @@ tap.test(`02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, (t) => {
 `;
 
   t.equal(
-    comb(source, { uglify: false }).result,
+    comb(t, source, { uglify: false }).result,
     baseline,
     "02.01 - default settings (no uglify, no ignores)"
   );
 
   t.equal(
-    comb(source, { uglify: true }).result,
+    comb(t, source, { uglify: true }).result,
     baselineUglified,
     "02.02 - uglified, no ignores"
   );
 
   t.equal(
-    comb(source, {
+    comb(t, source, {
       uglify: false,
       whitelist: ".zzz*",
     }).result,
@@ -119,7 +119,7 @@ tap.test(`02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, (t) => {
   );
 
   t.equal(
-    comb(source, {
+    comb(t, source, {
       uglify: true,
       whitelist: ".zzz*",
     }).result,
@@ -208,12 +208,12 @@ tap.test(
 `;
 
     t.equal(
-      comb(actual, { uglify: false }).result,
+      comb(t, actual, { uglify: false }).result,
       actual,
       "03.01 - uglify is off"
     );
 
-    const res = comb(actual, { uglify: true });
+    const res = comb(t, actual, { uglify: true });
     t.equal(res.result, intended, "03.02 - uglify is on");
 
     t.strictSame(
@@ -301,14 +301,14 @@ tap.test(
 `;
 
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: false,
       }).result,
       intended,
       "04.01"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: true,
       }).result,
       uglified,
@@ -369,14 +369,14 @@ tap.test(
 `;
 
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: false,
       }).result,
       intended,
       "05.01"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: true,
       }).result,
       uglified,
@@ -384,7 +384,7 @@ tap.test(
     );
     // now ignores are set, so deletion is prevented:
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: false,
         whitelist: ["#outlook", ".myclass"],
       }).result,
@@ -392,7 +392,7 @@ tap.test(
       "05.03"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: true,
         whitelist: ["#outlook", ".myclass"],
       }).result,
@@ -415,7 +415,7 @@ tap.test(
 <body id="mn"><a>
 `;
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: true,
         whitelist: ["#mn", ".op"],
       }).result,
@@ -423,7 +423,7 @@ tap.test(
       "06.01"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: true,
         whitelist: ["#mn"],
       }).result,
@@ -446,7 +446,7 @@ tap.test(
 <body class="mn"><a>
 `;
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: true,
         whitelist: [".mn", ".op"],
       }).result,
@@ -454,7 +454,7 @@ tap.test(
       "07.01"
     );
     t.equal(
-      comb(source, {
+      comb(t, source, {
         uglify: true,
         whitelist: [".mn"],
       }).result,
@@ -469,6 +469,7 @@ tap.test(
   `08 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignored values don't appear among uglified legend entries`,
   (t) => {
     const actual = comb(
+      t,
       `<html lang="en">
 <head>
 <style type="text/css">

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // false positives
 // -----------------------------------------------------------------------------
@@ -15,7 +15,7 @@ tap.test(
   </body>
 </html>
 `;
-    t.equal(comb(source).result, source, "01");
+    t.equal(comb(t, source).result, source, "01");
     t.end();
   }
 );
@@ -31,7 +31,7 @@ tap.test(
   </body>
 </html>
 `;
-    t.equal(comb(source).result, source, "02");
+    t.equal(comb(t, source).result, source, "02");
     t.end();
   }
 );

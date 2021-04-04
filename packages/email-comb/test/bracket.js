@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // bracket notation
 // -----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "01");
+    t.equal(comb(t, source).result, intended, "01");
 
     t.end();
   }
@@ -54,7 +54,7 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(source).result, intended, "02");
+    t.equal(comb(t, source).result, intended, "02");
 
     t.end();
   }

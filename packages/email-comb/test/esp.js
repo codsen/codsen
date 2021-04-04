@@ -1,11 +1,13 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // release 2.11.0 - backend variables with spaces as classes
 // -----------------------------------------------------------------------------
 
 tap.test("01 - nunjucks variable as a class name", (t) => {
-  const actual = comb(`<!doctype html>
+  const actual = comb(
+    t,
+    `<!doctype html>
 <html>
 <head>
 <style>
@@ -18,7 +20,8 @@ color:  black;
 </div>
 </body>
 </html>
-`).result;
+`
+  ).result;
 
   const intended = `<!doctype html>
 <html>
@@ -40,7 +43,9 @@ color:  black;
 });
 
 tap.test("02 - nunjucks variable as a class name", (t) => {
-  const actual = comb(`<!doctype html>
+  const actual = comb(
+    t,
+    `<!doctype html>
 <html>
 <head>
 <style>
@@ -53,7 +58,8 @@ color: black;
 </div>
 </body>
 </html>
-`).result;
+`
+  ).result;
 
   const intended = `<!doctype html>
 <html>
@@ -80,6 +86,7 @@ color: black;
 
 tap.test("03 - nunjucks variable as a class name (simplified version)", (t) => {
   const actual = comb(
+    t,
     `<style>
 .aa {bb: cc;}
 </style></head>
@@ -117,6 +124,7 @@ tap.test("03 - nunjucks variable as a class name (simplified version)", (t) => {
 
 tap.test("04 - nunjucks variable as a class name (full version)", (t) => {
   const actual = comb(
+    t,
     `<!doctype html>
 <html>
 <head>
@@ -168,6 +176,7 @@ tap.test(
   "05 - nunjucks variables mixed with classes and id's (minimal version)",
   (t) => {
     const actual = comb(
+      t,
       `<style>
 #aa {bb: cc;}
 </style></head>
@@ -208,6 +217,7 @@ tap.test(
   "06 - nunjucks variables mixed with classes and id's (full version)",
   (t) => {
     const actual = comb(
+      t,
       `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -276,6 +286,7 @@ tap.test(
 
 tap.test("07 - esp tag at the end of ignored class", (t) => {
   const actual = comb(
+    t,
     `<body>
 <table class="module-zzz-{{ loop.index }}">
 `,
@@ -311,6 +322,7 @@ tap.test("07 - esp tag at the end of ignored class", (t) => {
 
 tap.test("08 - esp tag at the end of ignored class", (t) => {
   const actual = comb(
+    t,
     `<body>
 <table class="module-zzz-{{ loop.index }}">
 `,
@@ -349,7 +361,7 @@ tap.test("09 - bug #6 - esp in head css within @font-face", (t) => {
 </style>
 </head>
 <body>yo</body>`;
-  const actual = comb(input).result;
+  const actual = comb(t, input).result;
 
   t.strictSame(actual, input, "09");
   t.end();
@@ -368,7 +380,7 @@ tap.test(
 </style>
 </head>
 <body>yo</body>`;
-    const actual = comb(input).result;
+    const actual = comb(t, input).result;
 
     t.strictSame(actual, input, "10");
     t.end();
@@ -394,7 +406,7 @@ tap.test("11 - bug #6 - jinja/liquid blocks, spaced", (t) => {
 </style>
 </head>
 <body>yo</body>`;
-  const actual = comb(input).result;
+  const actual = comb(t, input).result;
 
   t.strictSame(actual, input, "11");
   t.end();
@@ -413,7 +425,7 @@ tap.test(
 </style>
 </head>
 <body>yo</body>`;
-    const actual = comb(input).result;
+    const actual = comb(t, input).result;
 
     t.strictSame(actual, input, "12");
     t.end();

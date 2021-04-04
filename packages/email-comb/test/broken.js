@@ -1,16 +1,19 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // broken code
 // -----------------------------------------------------------------------------
 
 tap.test("01 - missing closing TD, TR, TABLE will not throw", (t) => {
-  const actual = comb(`
+  const actual = comb(
+    t,
+    `
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
   <td>
     some text
-`).result;
+`
+  ).result;
 
   const intended = `<table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
@@ -25,14 +28,17 @@ tap.test("01 - missing closing TD, TR, TABLE will not throw", (t) => {
 tap.test(
   "02 - doesn't remove any other empty attributes besides class/id (mini)",
   (t) => {
-    const actual = comb(`<html>
+    const actual = comb(
+      t,
+      `<html>
 <body>
 <tr whatnot="">
 <td class="">
 <img alt=""/>
 </body>
 </html>
-`).result;
+`
+    ).result;
 
     const intended = `<html>
 <body>
@@ -51,7 +57,9 @@ tap.test(
 tap.test(
   "03 - doesn't remove any other empty attributes besides class/id",
   (t) => {
-    const actual = comb(`<html>
+    const actual = comb(
+      t,
+      `<html>
 <body>
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr whatnot="">
@@ -62,7 +70,8 @@ tap.test(
   </table>
 </body>
 </html>
-`).result;
+`
+    ).result;
 
     const intended = `<html>
 <body>
@@ -85,7 +94,9 @@ tap.test(
 tap.test(
   "04 - removes classes and id's from HTML even if it's heavily messed up",
   (t) => {
-    const actual = comb(`
+    const actual = comb(
+      t,
+      `
 <title>Dummy HTML</title>
 <style type="text/css">
   .real-class-1:active, #head-only-id1[whatnot], whatever[lang|en]{width:100% !important;}
@@ -104,7 +115,8 @@ tap.test(
     </td>
   </tr>
 </table>
-</body>`).result;
+</body>`
+    ).result;
 
     const intended = `<title>Dummy HTML</title>
 <style type="text/css">
@@ -156,17 +168,20 @@ tap.test("05 - missing last @media curlie", (t) => {
 </body>
 `;
 
-  t.equal(comb(source).result, intended, "05");
+  t.equal(comb(t, source).result, intended, "05");
   t.end();
 });
 
 tap.test("06 - dirty code - blank class attribute name", (t) => {
-  const actual1 = comb(`<head>
+  const actual1 = comb(
+    t,
+    `<head>
 <style>@media screen and (min-width:1px){.unused {color: red;}}</style>
 </head>
 <body>
 zzz
-</body>`).result;
+</body>`
+  ).result;
   const intended1 = `<head>
 </head>
 <body>
@@ -178,13 +193,16 @@ zzz
 });
 
 tap.test("07 - dirty code - space between class and =", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style>
   .aa, .bb { w:1; }
 </style>
 <body><br class ="bb" align="left">
 </body>
-`).result;
+`
+  ).result;
 
   const intended = `<head>
 <style>
@@ -199,13 +217,16 @@ tap.test("07 - dirty code - space between class and =", (t) => {
 });
 
 tap.todo("08 - dirty code - blank class attribute name", (t) => {
-  const actual1 = comb(`<head>
+  const actual1 = comb(
+    t,
+    `<head>
 <style>
   .aa, .bb { w:1; }
 </style>
 <body class="bb"><br class >
 </body>
-`).result;
+`
+  ).result;
   const intended1 = `<head>
 <style>
   .bb { w:1; }
@@ -214,13 +235,16 @@ tap.todo("08 - dirty code - blank class attribute name", (t) => {
 </body>
 `;
 
-  const actual2 = comb(`<head>
+  const actual2 = comb(
+    t,
+    `<head>
 <style>
   .aa, .bb { w:1; }
 </style>
 <body class="bb"><br class />
 </body>
-`).result;
+`
+  ).result;
   const intended2 = `<head>
 <style>
   .bb { w:1; }

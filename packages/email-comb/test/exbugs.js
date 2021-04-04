@@ -1,11 +1,13 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // ex-bugs
 // -----------------------------------------------------------------------------
 
 tap.test("01 - color code hashes within head styles with no selectors", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style>
 a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-events: none; cursor: default;}
 </style>
@@ -13,7 +15,8 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
 <body>
   some code
 </body>
-`);
+`
+  );
 
   const intended = `<head>
 <style>
@@ -34,7 +37,9 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
 });
 
 tap.test("02 - selectors in head styles without classes or ids", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style>
 a {color: #525252;}
 </style>
@@ -42,7 +47,8 @@ a {color: #525252;}
 <body>
   some code
 </body>
-`);
+`
+  );
 
   const intended = `<head>
 <style>
@@ -63,7 +69,9 @@ a {color: #525252;}
 });
 
 tap.test('03 - sneaky attributes that end with characters "id"', (t) => {
-  const actual = comb(`<!DOCTYPE html>
+  const actual = comb(
+    t,
+    `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -89,7 +97,8 @@ tap.test('03 - sneaky attributes that end with characters "id"', (t) => {
 </table>
 </body>
 </html>
-`);
+`
+  );
 
   const intended = `<!DOCTYPE html>
 <html lang="en">
@@ -126,11 +135,14 @@ tap.test('03 - sneaky attributes that end with characters "id"', (t) => {
 tap.test(
   '04 - mini version of 08.05, sneaky attributes ending with "class"',
   (t) => {
-    const actual = comb(`<body>
+    const actual = comb(
+      t,
+      `<body>
 <a href="zzz" superclass="26489" >Links</a>
 </body>
 </html>
-`);
+`
+    );
 
     const intended = `<body>
 <a href="zzz" superclass="26489" >Links</a>
@@ -144,7 +156,9 @@ tap.test(
 );
 
 tap.test('05 - sneaky attributes that end with characters "class"', (t) => {
-  const actual = comb(`<!DOCTYPE html>
+  const actual = comb(
+    t,
+    `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -170,7 +184,8 @@ tap.test('05 - sneaky attributes that end with characters "class"', (t) => {
 </table>
 </body>
 </html>
-`);
+`
+  );
 
   const intended = `<!DOCTYPE html>
 <html lang="en">
@@ -205,7 +220,9 @@ tap.test('05 - sneaky attributes that end with characters "class"', (t) => {
 });
 
 tap.test("06 - color code hashes interpreted correctly, not as id's", (t) => {
-  const actual = comb(`<!DOCTYPE html>
+  const actual = comb(
+    t,
+    `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -234,7 +251,8 @@ tap.test("06 - color code hashes interpreted correctly, not as id's", (t) => {
 </table>
 </body>
 </html>
-`);
+`
+  );
 
   const intended = ["#head-only-id1", ".mobile_link"];
 
@@ -247,7 +265,9 @@ tap.test("06 - color code hashes interpreted correctly, not as id's", (t) => {
 });
 
 tap.test("07 - one-letter classes (modern notation)", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style type="text/css">
 .h{display:none !important;}
 </style>
@@ -255,7 +275,8 @@ tap.test("07 - one-letter classes (modern notation)", (t) => {
 <body>
 <span class="h">z</span>
 </body>
-`);
+`
+  );
 
   const intended = `<head>
 <style type="text/css">
@@ -272,7 +293,9 @@ tap.test("07 - one-letter classes (modern notation)", (t) => {
 });
 
 tap.test("08 - one-letter classes (old notation)", (t) => {
-  const actual = comb(`<head>
+  const actual = comb(
+    t,
+    `<head>
 <style type="text/css">
 *[class].h{display:none !important;}
 </style>
@@ -280,7 +303,8 @@ tap.test("08 - one-letter classes (old notation)", (t) => {
 <body>
 <span class="h">z</span>
 </body>
-`);
+`
+  );
 
   const intended = `<head>
 <style type="text/css">
@@ -297,7 +321,9 @@ tap.test("08 - one-letter classes (old notation)", (t) => {
 });
 
 tap.test("09 - one-letter classes - comprehensive comparison", (t) => {
-  const actual = comb(`<html>
+  const actual = comb(
+    t,
+    `<html>
 <head>
   <style>
     .used-1 .aaaaa.aaaaaa {
@@ -317,7 +343,8 @@ tap.test("09 - one-letter classes - comprehensive comparison", (t) => {
     </tr>
   </table>
 </body>
-</html>`);
+</html>`
+  );
 
   const intended = {
     result: `<html>
@@ -370,7 +397,9 @@ tap.test("09 - one-letter classes - comprehensive comparison", (t) => {
 });
 
 tap.test("10 - checking whole results object, all its keys #1", (t) => {
-  const actual = comb(`<html>
+  const actual = comb(
+    t,
+    `<html>
 <head>
   <style>
     .used-1 .unused-2.unused-3 {
@@ -381,7 +410,8 @@ tap.test("10 - checking whole results object, all its keys #1", (t) => {
 <body>
   <span class="used-1 unused-4"></span>
 </body>
-</html>`);
+</html>`
+  );
 
   const intended = {
     result: `<html>
@@ -422,7 +452,9 @@ tap.test("10 - checking whole results object, all its keys #1", (t) => {
 });
 
 tap.test("11 - checking whole results object, all its keys #2", (t) => {
-  const actual = comb(`<html>
+  const actual = comb(
+    t,
+    `<html>
 <head>
   <style>
     .used-1, .unused-2.unused-3 {
@@ -434,7 +466,8 @@ tap.test("11 - checking whole results object, all its keys #2", (t) => {
   <span class="used-1 unused-4"></span>
 </body>
 </html>
-`);
+`
+  );
 
   const intended = {
     result: `<html>
@@ -486,7 +519,7 @@ tap.test("12 - Cosmin's reported bug", (t) => {
     `<body><a href="http://a.b/c?d=2&class=xyz&e=0">\n`,
   ];
   srcs.forEach((src) => {
-    t.strictSame(comb(src).result, src);
+    t.strictSame(comb(t, src).result, src);
   });
   t.end();
 });
@@ -509,7 +542,7 @@ tap.test("13 - inner whitespace #1", (t) => {
 <br class="abc">
 </td>
 `;
-  t.strictSame(comb(inp).result, outp, "13");
+  t.strictSame(comb(t, inp).result, outp, "13");
   t.end();
 });
 
@@ -531,7 +564,7 @@ tap.test("14 - inner whitespace #2", (t) => {
 <br class="abc">
 </td>
 `;
-  t.strictSame(comb(inp).result, outp, "14");
+  t.strictSame(comb(t, inp).result, outp, "14");
   t.end();
 });
 
@@ -553,7 +586,7 @@ tap.test("15 - inner whitespace #3", (t) => {
 <br class="abc">
 </td>
 `;
-  t.strictSame(comb(inp).result, outp, "15");
+  t.strictSame(comb(t, inp).result, outp, "15");
   t.end();
 });
 
@@ -577,7 +610,7 @@ tap.test("16 - adhoc", (t) => {
 <a href="a("'")">
 <td class="klm">
 `;
-  t.strictSame(comb(inp).result, outp, "16");
+  t.strictSame(comb(t, inp).result, outp, "16");
   t.end();
 });
 
@@ -601,7 +634,7 @@ tap.test("17 - adhoc", (t) => {
 <a href="https://www.maps.com/search/?api=1&query={{ prs.tuv.wxy | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
 <td class="klm">
 `;
-  t.strictSame(comb(inp).result, outp, "17");
+  t.strictSame(comb(t, inp).result, outp, "17");
   t.end();
 });
 
@@ -629,7 +662,7 @@ tap.test("18 - adhoc", (t) => {
 <span>S's</span>
 <td class="sm-border-0">
 `;
-  t.strictSame(comb(inp).result, outp, "18");
+  t.strictSame(comb(t, inp).result, outp, "18");
   t.end();
 });
 
@@ -640,6 +673,6 @@ How are you?
 Yours sincerely,
 
 	Good person</pre>`;
-  t.strictSame(comb(inp).result, inp, "19");
+  t.strictSame(comb(t, inp).result, inp, "19");
   t.end();
 });

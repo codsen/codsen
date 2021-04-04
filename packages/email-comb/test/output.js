@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "./util/util";
 
 // output info object
 // -----------------------------------------------------------------------------
@@ -7,7 +7,9 @@ import { comb } from "../dist/email-comb.esm";
 tap.test(
   "01 - returned correct info object, nothing to delete from body, damaged HTML",
   (t) => {
-    const actual = comb(`<!DOCTYPE html>
+    const actual = comb(
+      t,
+      `<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -24,7 +26,8 @@ tap.test(
     <img src="image.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">
     <br><br>
     <hr>
-    <br><br>`);
+    <br><br>`
+    );
 
     t.strictSame(
       actual.allInHead,
@@ -43,7 +46,9 @@ tap.test(
 );
 
 tap.test("02 - returned correct info object, clean HTML", (t) => {
-  const actual = comb(`<!DOCTYPE html>
+  const actual = comb(
+    t,
+    `<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -65,7 +70,8 @@ tap.test("02 - returned correct info object, clean HTML", (t) => {
 </table>
 </body>
 </html>
-`);
+`
+  );
 
   t.strictSame(
     actual.allInHead,
@@ -92,6 +98,7 @@ tap.test("02 - returned correct info object, clean HTML", (t) => {
 
 tap.test("03 - as 06.02 but now with whitelist, dirty HTML", (t) => {
   const actual = comb(
+    t,
     `<!DOCTYPE html>
 <html>
 <head>
@@ -143,7 +150,9 @@ tap.test("03 - as 06.02 but now with whitelist, dirty HTML", (t) => {
 });
 
 tap.test("04 - correct classes reported in info/deletedFromBody", (t) => {
-  const actual = comb(`<!DOCTYPE html>
+  const actual = comb(
+    t,
+    `<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -162,7 +171,8 @@ tap.test("04 - correct classes reported in info/deletedFromBody", (t) => {
 </table>
 </body>
 </html>
-`);
+`
+  );
 
   t.strictSame(actual.allInHead, [".unused", ".used"], "04.01");
   t.strictSame(actual.allInBody, [".used"], "04.02");
@@ -176,7 +186,9 @@ tap.test("04 - correct classes reported in info/deletedFromBody", (t) => {
 });
 
 tap.test("05 - more sandwitched classes/ids cases", (t) => {
-  const actual = comb(`<!DOCTYPE html>
+  const actual = comb(
+    t,
+    `<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -197,7 +209,8 @@ tap.test("05 - more sandwitched classes/ids cases", (t) => {
 </table>
 </body>
 </html>
-`);
+`
+  );
 
   t.strictSame(
     actual.allInHead,
