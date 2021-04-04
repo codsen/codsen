@@ -335,3 +335,87 @@ tap.test("08 - esp tag at the end of ignored class", (t) => {
   t.strictSame(actual, intended, "08");
   t.end();
 });
+
+tap.test("09 - bug #6 - esp in head css within @font-face", (t) => {
+  const input = `<head>
+<style>
+@font-face {
+  font-family: 'SomeFont';
+  font-style: normal;
+  font-weight: 400;
+  src: url({{ static_url }}/some-path.ttf) format('truetype');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+</style>
+</head>
+<body>yo</body>`;
+  const actual = comb(input).result;
+
+  t.strictSame(actual, input, "09");
+  t.end();
+});
+
+tap.test(
+  "10 - bug #6 - unlikely case, Jinja curlies end right at real closing-ones (unlikely scenario)",
+  (t) => {
+    const input = `<head>
+<style>
+@font-face {
+  font-family: 'SomeFont';
+  font-style: normal;
+  font-weight: 400;
+  src: url({{ static_url }}}
+</style>
+</head>
+<body>yo</body>`;
+    const actual = comb(input).result;
+
+    t.strictSame(actual, input, "10");
+    t.end();
+  }
+);
+
+tap.only("11 - bug #6 - jinja/liquid blocks, spaced", (t) => {
+  const input = `<head>
+<style>
+@font-face {
+  font-family: 'SomeFont';
+  font-style: normal;
+  font-weight: 400;
+  src: url(
+  {%- if z -%}
+    {{ static_url }}
+  {%- else -%}
+    {{ other_url }}
+  {%- endif -%}
+  /some-path.ttf) format('truetype');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+</style>
+</head>
+<body>yo</body>`;
+  const actual = comb(input).result;
+
+  t.strictSame(actual, input, "11");
+  t.end();
+});
+
+tap.test(
+  "12 - bug #6 - jinja/liquid blocks, tight (unlikely, but possible in theory)",
+  (t) => {
+    const input = `<head>
+<style>
+@font-face {
+  font-family: 'SomeFont';
+  font-style: normal;
+  font-weight: 400;
+  src: url({% if z %}{{ static_url }}{% endif %}}
+</style>
+</head>
+<body>yo</body>`;
+    const actual = comb(input).result;
+
+    t.strictSame(actual, input, "12");
+    t.end();
+  }
+);

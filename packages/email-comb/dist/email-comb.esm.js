@@ -1,10 +1,10 @@
 /**
- * email-comb
- * Remove unused CSS from email templates
- * Version: 5.0.13
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/email-comb/
+ * @name email-comb
+ * @fileoverview Remove unused CSS from email templates
+ * @version 5.0.13
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/email-comb/}
  */
 
 import { matchRightIncl, matchLeft, matchRight } from 'string-match-left-right';
@@ -323,6 +323,19 @@ function comb(str, originalOpts) {
           let secondaryStopper;
           for (let z = i + 1; z < len; z++) {
             totalCounter += 1;
+            let espTails = "";
+            if (str[z] === "{" && str[z + 1] === "{") {
+              espTails = "}}";
+            }
+            if (str[z] === "{" && str[z + 1] === "%") {
+              espTails = "%}";
+            }
+            if (espTails && str.includes(espTails, z + 1)) {
+              z = str.indexOf(espTails, z + 1) + espTails.length - 1;
+              continue;
+            } else if (espTails) {
+              espTails = "";
+            }
             if (secondaryStopper && str[z] === secondaryStopper) {
               if (str[z] === "}" && atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName) || str[z] === "{" && atRulesWhichMightWrapStyles.includes(matchedAtTagsName)) {
                 i = z;
