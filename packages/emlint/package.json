@@ -116,7 +116,7 @@
     "lodash.isregexp": "^4.0.1",
     "matcher": "^4.0.0",
     "meow": "^9.0.0",
-    "mime-db": "^1.46.0",
+    "mime-db": "^1.47.0",
     "object-path": "^0.11.5",
     "p-reduce": "^2.1.0",
     "ranges-merge": "^7.0.13",

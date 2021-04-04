@@ -1,10 +1,10 @@
 /**
- * html-crush
- * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 4.1.7
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://codsen.com/os/html-crush/
+ * @name html-crush
+ * @fileoverview Minifies HTML/CSS: valid or broken, pure or mixed with other languages
+ * @version 4.1.7
+ * @author Roy Revelt, Codsen Ltd
+ * @license MIT
+ * {@link https://codsen.com/os/html-crush/}
  */
 
 import { rApply } from 'ranges-apply';

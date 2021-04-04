@@ -375,7 +375,7 @@ tap.test(
   }
 );
 
-tap.only("11 - bug #6 - jinja/liquid blocks, spaced", (t) => {
+tap.test("11 - bug #6 - jinja/liquid blocks, spaced", (t) => {
   const input = `<head>
 <style>
 @font-face {
