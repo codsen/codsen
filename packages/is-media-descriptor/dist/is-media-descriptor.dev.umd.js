@@ -349,10 +349,6 @@ function loop(str, opts, res) {
                 });
             });
         }
-        // catch opening bracket
-        if (str[i] === "(") {
-            bracketOpeningIndexes.push(i);
-        }
         // catch the ending of a whitespace chunk
         if (str[i] && str[i].trim().length && whitespaceStartsAt !== null) {
             if (str[whitespaceStartsAt - 1] === "(" || str[i] === ")") {
@@ -414,7 +410,11 @@ function loop(str, opts, res) {
         // to simplify calculations and to shake up the type complaceancy,
         // str[i] can be undefined now (on the last traversal cycle)!
         if (chunkStartsAt !== null &&
-            (!str[i] || !str[i].trim().length) &&
+            (!str[i] ||
+                !str[i].trim().length ||
+                // imagine screen and(min-width: 100px)
+                //                   ^
+                str[i] === "(") &&
             !bracketOpeningIndexes.length) {
             // extract the value:
             const chunk = str.slice(chunkStartsAt, i);
@@ -446,6 +446,14 @@ function loop(str, opts, res) {
                                 ],
                             ],
                         },
+                    });
+                }
+                else if (str[i].trim()) {
+                    res.push({
+                        idxFrom: chunkStartsAt + opts.offset,
+                        idxTo: i + opts.offset,
+                        message: `Space after "and" missing.`,
+                        fix: { ranges: [[i + opts.offset, i + opts.offset, " "]] },
                     });
                 }
                 nextCanBeAnd = false;
@@ -590,6 +598,10 @@ function loop(str, opts, res) {
         //
         //
         //
+        // catch opening bracket
+        if (str[i] === "(") {
+            bracketOpeningIndexes.push(i);
+        }
         // LOGGING
     }
 }

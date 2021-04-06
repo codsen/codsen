@@ -1527,3 +1527,31 @@ tap.test(`55 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, (t) => {
   t.equal(applyFixes(str, res, offset), str, "55.02");
   t.end();
 });
+
+// 08. space missing
+// -----------------------------------------------------------------------------
+
+tap.test(`56 - space after "and" missing`, (t) => {
+  const str = `screen and(min-width: 100px)`;
+  const fixed = `screen and (min-width: 100px)`;
+  writeSample({
+    id: "08.01",
+    str,
+    // fixed
+  });
+  const res = isMediaD(str);
+  t.strictSame(
+    res,
+    [
+      {
+        idxFrom: 7,
+        idxTo: 10,
+        message: `Space after "and" missing.`,
+        fix: { ranges: [[10, 10, " "]] },
+      },
+    ],
+    "56.01"
+  );
+  t.equal(applyFixes(str, res), fixed, "56.02");
+  t.end();
+});

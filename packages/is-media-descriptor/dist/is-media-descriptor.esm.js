@@ -50,9 +50,6 @@ function loop(str, opts, res) {
         });
       });
     }
-    if (str[i] === "(") {
-      bracketOpeningIndexes.push(i);
-    }
     if (str[i] && str[i].trim().length && whitespaceStartsAt !== null) {
       if (str[whitespaceStartsAt - 1] === "(" || str[i] === ")") {
         res.push({
@@ -90,7 +87,8 @@ function loop(str, opts, res) {
     if (str[i] && !str[i].trim().length && whitespaceStartsAt === null) {
       whitespaceStartsAt = i;
     }
-    if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length) && !bracketOpeningIndexes.length) {
+    if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length ||
+    str[i] === "(") && !bracketOpeningIndexes.length) {
       const chunk = str.slice(chunkStartsAt, i);
       gatheredChunksArr.push(chunk.toLowerCase());
       if (nextCanBeAnd && (!(nextCanBeMediaType || nextCanBeMediaCondition) || chunk === "and")) {
@@ -108,6 +106,15 @@ function loop(str, opts, res) {
             message: `Dangling "${chunk}".`,
             fix: {
               ranges: [[str.slice(0, chunkStartsAt).trim().length + opts.offset, i + opts.offset]]
+            }
+          });
+        } else if (str[i].trim()) {
+          res.push({
+            idxFrom: chunkStartsAt + opts.offset,
+            idxTo: i + opts.offset,
+            message: `Space after "and" missing.`,
+            fix: {
+              ranges: [[i + opts.offset, i + opts.offset, " "]]
             }
           });
         }
@@ -193,6 +200,9 @@ function loop(str, opts, res) {
     if (chunkStartsAt === null && str[i] && str[i].trim().length && str[i] !== ")") {
       if (str[i] === "(") ;
       chunkStartsAt = i;
+    }
+    if (str[i] === "(") {
+      bracketOpeningIndexes.push(i);
     }
   }
 }
