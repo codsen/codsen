@@ -817,7 +817,7 @@ tap.test(
 );
 
 tap.test(
-  `30 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
+  `30 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - empty pair`,
   (t) => {
     const str = `screen and ()`;
     writeSample({
