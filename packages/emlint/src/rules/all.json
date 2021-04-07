@@ -3,6 +3,7 @@
   "attribute-enforce-img-alt",
   "attribute-malformed",
   "attribute-on-closing-tag",
+  "attribute-required",
   "attribute-validate-abbr",
   "attribute-validate-accept",
   "attribute-validate-accept-charset",

@@ -71,7 +71,7 @@ var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate
 
 var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-malformed", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-between-slash-and-bracket", "tag-table", "tag-void-frontal-slash", "tag-void-slash"];
 
-var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag"];
+var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag", "attribute-required"];
 
 var allCSSRules = ["css-rule-malformed", "css-trailing-semi"];
 
@@ -3319,6 +3319,30 @@ const attributeDuplicate = context => {
             }
           });
         }
+      }
+    }
+  };
+};
+
+const attributeRequired = (context, opts) => {
+  return {
+    tag(node) {
+      if (opts && Object.keys(opts).includes(node.tagName) && opts[node.tagName] && typeof opts[node.tagName] === "object") {
+        Object.keys(opts[node.tagName])
+        .filter(attr => {
+          return opts[node.tagName][attr];
+        })
+        .forEach(attr => {
+          if (!node.attribs || !node.attribs.some(attrObj => attrObj.attribName === attr)) {
+            context.report({
+              ruleId: "attribute-required",
+              message: `Attribute "${attr}" is missing.`,
+              idxFrom: node.start,
+              idxTo: node.end,
+              fix: null
+            });
+          }
+        });
       }
     }
   };
@@ -9280,6 +9304,7 @@ defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 defineLazyProp(builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
 defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
+defineLazyProp(builtInRules, "attribute-required", () => attributeRequired);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 defineLazyProp(builtInRules, "attribute-on-closing-tag", () => attributeOnClosingTag);
 defineLazyProp(builtInRules, "attribute-enforce-img-alt", () => attributeEnforceImgAlt);

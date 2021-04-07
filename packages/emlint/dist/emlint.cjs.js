@@ -106,7 +106,7 @@ var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate
 
 var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-malformed", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-between-slash-and-bracket", "tag-table", "tag-void-frontal-slash", "tag-void-slash"];
 
-var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag"];
+var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag", "attribute-required"];
 
 var allCSSRules = ["css-rule-malformed", "css-trailing-semi"];
 
@@ -3274,6 +3274,32 @@ var attributeDuplicate = function attributeDuplicate(context) {
             }
           });
         }
+      }
+    }
+  };
+};
+
+var attributeRequired = function attributeRequired(context, opts) {
+  return {
+    tag: function tag(node) {
+      if (opts && Object.keys(opts).includes(node.tagName) && opts[node.tagName] && _typeof__default['default'](opts[node.tagName]) === "object") {
+        Object.keys(opts[node.tagName])
+        .filter(function (attr) {
+          return opts[node.tagName][attr];
+        })
+        .forEach(function (attr) {
+          if (!node.attribs || !node.attribs.some(function (attrObj) {
+            return attrObj.attribName === attr;
+          })) {
+            context.report({
+              ruleId: "attribute-required",
+              message: "Attribute \"".concat(attr, "\" is missing."),
+              idxFrom: node.start,
+              idxTo: node.end,
+              fix: null
+            });
+          }
+        });
       }
     }
   };
@@ -9511,6 +9537,9 @@ defineLazyProp__default['default'](builtInRules, "tag-bad-self-closing", functio
 });
 defineLazyProp__default['default'](builtInRules, "attribute-duplicate", function () {
   return attributeDuplicate;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-required", function () {
+  return attributeRequired;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-malformed", function () {
   return attributeMalformed;
