@@ -3520,32 +3520,6 @@ var attributeOnClosingTag = function attributeOnClosingTag(context) {
   };
 };
 
-function attributeEnforceImgAlt(context) {
-  return {
-    tag: function tag(node) {
-      if (
-      node.type === "tag" && node.tagName === "img" && (!node.attribs.length || !node.attribs.some(function (attrib) {
-        return !attrib.attribName || attrib.attribName.toLowerCase() === "alt";
-      }))) {
-        var startPos = node.attribs.length ? node.attribs[~-node.attribs.length].attribEnds : node.tagNameEndsAt;
-        var endPos = startPos;
-        if (context.str[startPos + 1] && !context.str[startPos].trim() && !context.str[startPos + 1].trim() && stringLeftRight.right(context.str, startPos)) {
-          endPos = stringLeftRight.right(context.str, startPos) - 1;
-        }
-        context.report({
-          ruleId: "attribute-enforce-img-alt",
-          message: "Add an alt attribute.",
-          idxFrom: node.start,
-          idxTo: node.end,
-          fix: {
-            ranges: [[startPos, endPos, ' alt=""']]
-          }
-        });
-      }
-    }
-  };
-}
-
 function attributeValidateAbbr(context) {
   return {
     attribute: function attribute(node) {
@@ -9546,9 +9520,6 @@ defineLazyProp__default['default'](builtInRules, "attribute-malformed", function
 });
 defineLazyProp__default['default'](builtInRules, "attribute-on-closing-tag", function () {
   return attributeOnClosingTag;
-});
-defineLazyProp__default['default'](builtInRules, "attribute-enforce-img-alt", function () {
-  return attributeEnforceImgAlt;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-validate-abbr", function () {
   return attributeValidateAbbr;

@@ -3551,30 +3551,6 @@ const attributeOnClosingTag = context => {
   };
 };
 
-function attributeEnforceImgAlt(context) {
-  return {
-    tag(node) {
-      if (
-      node.type === "tag" && node.tagName === "img" && (!node.attribs.length || !node.attribs.some(attrib => !attrib.attribName || attrib.attribName.toLowerCase() === "alt"))) {
-        const startPos = node.attribs.length ? node.attribs[~-node.attribs.length].attribEnds : node.tagNameEndsAt;
-        let endPos = startPos;
-        if (context.str[startPos + 1] && !context.str[startPos].trim() && !context.str[startPos + 1].trim() && right(context.str, startPos)) {
-          endPos = right(context.str, startPos) - 1;
-        }
-        context.report({
-          ruleId: "attribute-enforce-img-alt",
-          message: `Add an alt attribute.`,
-          idxFrom: node.start,
-          idxTo: node.end,
-          fix: {
-            ranges: [[startPos, endPos, ' alt=""']]
-          }
-        });
-      }
-    }
-  };
-}
-
 function attributeValidateAbbr(context) {
   return {
     attribute(node) {
@@ -9307,7 +9283,6 @@ defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
 defineLazyProp(builtInRules, "attribute-required", () => attributeRequired);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 defineLazyProp(builtInRules, "attribute-on-closing-tag", () => attributeOnClosingTag);
-defineLazyProp(builtInRules, "attribute-enforce-img-alt", () => attributeEnforceImgAlt);
 defineLazyProp(builtInRules, "attribute-validate-abbr", () => attributeValidateAbbr);
 defineLazyProp(builtInRules, "attribute-validate-accept-charset", () => attributeValidateAcceptCharset);
 defineLazyProp(builtInRules, "attribute-validate-accept", () => attributeValidateAccept);
