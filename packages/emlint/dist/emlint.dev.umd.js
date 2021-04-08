@@ -16724,8 +16724,8 @@ var allTagRules = [
 ];
 
 var allAttribRules = [
+	"attribute-align-mismatch",
 	"attribute-duplicate",
-	"attribute-enforce-img-alt",
 	"attribute-malformed",
 	"attribute-on-closing-tag",
 	"attribute-required"
@@ -20726,6 +20726,47 @@ function tagBadSelfClosing(context) {
         },
     };
 }
+
+const attributeAlignMismatch = (context) => {
+    let temp1 = "";
+    let temp2 = {};
+    return {
+        tag(node) {
+            if (node.tagName === "td" &&
+                !node.closing &&
+                Array.isArray(node.attribs) &&
+                node.attribs.some((attrib) => {
+                    if (attrib.attribName === "align") {
+                        // make a note
+                        temp1 = attrib.attribValueRaw;
+                        return true;
+                    }
+                    return false;
+                }) &&
+                Array.isArray(node.children) &&
+                node.children.some((childNode) => childNode.type === "tag" &&
+                    childNode.tagName === "table" &&
+                    !childNode.closing &&
+                    Array.isArray(childNode.attribs) &&
+                    childNode.attribs.some((attrib) => {
+                        if (attrib.attribName === "align" &&
+                            attrib.attribValueRaw !== temp1) {
+                            temp2 = attrib;
+                            return true;
+                        }
+                        return false;
+                    }))) {
+                context.report({
+                    ruleId: "attribute-align-mismatch",
+                    message: `Does not match parent td's "align".`,
+                    idxFrom: temp2.attribStarts,
+                    idxTo: temp2.attribEnds,
+                    fix: null,
+                });
+            }
+        },
+    };
+};
 
 /**
  * @name ranges-sort
@@ -41769,6 +41810,7 @@ defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
 defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 defineLazyProp(builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
+defineLazyProp(builtInRules, "attribute-align-mismatch", () => attributeAlignMismatch);
 defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
 defineLazyProp(builtInRules, "attribute-required", () => attributeRequired);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);

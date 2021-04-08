@@ -278,6 +278,8 @@ import tagBadSelfClosing from "./rules/tag/tag-bad-self-closing";
 // ATTRIBUTE rules
 // -----------------------------------------------------------------------------
 
+import attributeAlignMismatch from "./rules/attribute/attribute-align-mismatch";
+
 import attributeDuplicate from "./rules/attribute/attribute-duplicate";
 
 import attributeRequired from "./rules/attribute/attribute-required";
@@ -1186,6 +1188,11 @@ defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
 defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 defineLazyProp(builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
+defineLazyProp(
+  builtInRules,
+  "attribute-align-mismatch",
+  () => attributeAlignMismatch
+);
 defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
 defineLazyProp(builtInRules, "attribute-required", () => attributeRequired);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
@@ -1970,7 +1977,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1973 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1980 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

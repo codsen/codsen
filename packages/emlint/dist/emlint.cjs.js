@@ -106,7 +106,7 @@ var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate
 
 var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-malformed", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-between-slash-and-bracket", "tag-table", "tag-void-frontal-slash", "tag-void-slash"];
 
-var allAttribRules = ["attribute-duplicate", "attribute-enforce-img-alt", "attribute-malformed", "attribute-on-closing-tag", "attribute-required"];
+var allAttribRules = ["attribute-align-mismatch", "attribute-duplicate", "attribute-malformed", "attribute-on-closing-tag", "attribute-required"];
 
 var allCSSRules = ["css-rule-malformed", "css-trailing-semi"];
 
@@ -3183,6 +3183,38 @@ function tagBadSelfClosing(context) {
     }
   };
 }
+
+var attributeAlignMismatch = function attributeAlignMismatch(context) {
+  var temp1 = "";
+  var temp2 = {};
+  return {
+    tag: function tag(node) {
+      if (node.tagName === "td" && !node.closing && Array.isArray(node.attribs) && node.attribs.some(function (attrib) {
+        if (attrib.attribName === "align") {
+          temp1 = attrib.attribValueRaw;
+          return true;
+        }
+        return false;
+      }) && Array.isArray(node.children) && node.children.some(function (childNode) {
+        return childNode.type === "tag" && childNode.tagName === "table" && !childNode.closing && Array.isArray(childNode.attribs) && childNode.attribs.some(function (attrib) {
+          if (attrib.attribName === "align" && attrib.attribValueRaw !== temp1) {
+            temp2 = attrib;
+            return true;
+          }
+          return false;
+        });
+      })) {
+        context.report({
+          ruleId: "attribute-align-mismatch",
+          message: "Does not match parent td's \"align\".",
+          idxFrom: temp2.attribStarts,
+          idxTo: temp2.attribEnds,
+          fix: null
+        });
+      }
+    }
+  };
+};
 
 var attributeDuplicate = function attributeDuplicate(context) {
   var attributesWhichCanBeMerged = new Set(["id", "class"]);
@@ -9508,6 +9540,9 @@ defineLazyProp__default['default'](builtInRules, "tag-bold", function () {
 });
 defineLazyProp__default['default'](builtInRules, "tag-bad-self-closing", function () {
   return tagBadSelfClosing;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-align-mismatch", function () {
+  return attributeAlignMismatch;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-duplicate", function () {
   return attributeDuplicate;
