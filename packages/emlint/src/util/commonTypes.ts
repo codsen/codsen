@@ -92,5 +92,6 @@ export {
   RuleObjType,
   CharacterEvent,
   AttributeEvent,
+  TagTokenWithChildren,
   AttribSupplementedWithParent,
 };

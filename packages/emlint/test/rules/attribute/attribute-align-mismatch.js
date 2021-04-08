@@ -131,3 +131,56 @@ tap.test(`04 - empty vs empty`, (t) => {
   t.strictSame(messages, [], "04");
   t.end();
 });
+
+tap.test(`05 - ESP`, (t) => {
+  const str = `<table>
+  <tr>
+    <td align="left">
+      {% if x %}
+      <table align="center">
+        <tr>
+          <td>
+            x
+          </td>
+        </tr>
+      </table>
+      {% else %}
+      <table align="right">
+        <tr>
+          <td>
+            x
+          </td>
+        </tr>
+      </table>
+      {% endif %}
+    </td>
+  </tr>
+</table>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-align-mismatch": 2,
+    },
+  });
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "attribute-align-mismatch",
+        idxFrom: 200,
+        idxTo: 213,
+        message: `Does not match parent td's "align".`,
+        fix: null,
+      },
+      {
+        ruleId: "attribute-align-mismatch",
+        idxFrom: 67,
+        idxTo: 81,
+        message: `Does not match parent td's "align".`,
+        fix: null,
+      },
+    ],
+    "05.01"
+  );
+  t.equal(messages.length, 2, "05.02");
+  t.end();
+});

@@ -3238,30 +3238,39 @@ function tagBadSelfClosing(context) {
 }
 
 const attributeAlignMismatch = context => {
-  let temp1 = "";
-  let temp2 = {};
   return {
     tag(node) {
-      if (node.tagName === "td" && !node.closing && Array.isArray(node.attribs) && node.attribs.some(attrib => {
-        if (attrib.attribName === "align") {
-          temp1 = attrib.attribValueRaw;
-          return true;
+      if (
+      node.tagName === "td" &&
+      !node.closing &&
+      node.attribs.length &&
+      node.children.length) {
+        let alignAttrVal;
+        for (let i = node.attribs.length; i--;) {
+          if (node.attribs[i].attribName === "align") {
+            alignAttrVal = node.attribs[i].attribValueRaw;
+            break;
+          }
         }
-        return false;
-      }) && Array.isArray(node.children) && node.children.some(childNode => childNode.type === "tag" && childNode.tagName === "table" && !childNode.closing && Array.isArray(childNode.attribs) && childNode.attribs.some(attrib => {
-        if (attrib.attribName === "align" && attrib.attribValueRaw !== temp1) {
-          temp2 = attrib;
-          return true;
+        if (typeof alignAttrVal === "string") {
+          for (let i = node.children.length; i--;) {
+            if (node.children[i].type === "tag" && node.children[i].tagName === "table" && !node.children[i].closing) {
+              if (Array.isArray(node.children[i].attribs) && node.children[i].attribs.length) {
+                node.children[i].attribs.forEach(attrib => {
+                  if (attrib.attribName === "align" && attrib.attribValueRaw !== alignAttrVal) {
+                    context.report({
+                      ruleId: "attribute-align-mismatch",
+                      message: `Does not match parent td's "align".`,
+                      idxFrom: attrib.attribStarts,
+                      idxTo: attrib.attribEnds,
+                      fix: null
+                    });
+                  }
+                });
+              }
+            }
+          }
         }
-        return false;
-      }))) {
-        context.report({
-          ruleId: "attribute-align-mismatch",
-          message: `Does not match parent td's "align".`,
-          idxFrom: temp2.attribStarts,
-          idxTo: temp2.attribEnds,
-          fix: null
-        });
       }
     }
   };
