@@ -13315,7 +13315,12 @@ function tokenizer(str, originalOpts) {
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
             if (!attrib.attribValue[~-attrib.attribValue.length].property) {
               attrib.attribValue[~-attrib.attribValue.length].end = i;
-              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+              if (attrib.attribValue[~-attrib.attribValue.length].property === null) {
+                attrib.attribValue[~-attrib.attribValue.length].property = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+                attrib.attribValue[~-attrib.attribValue.length].propertyEnds = i;
+              } else {
+                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+              }
             }
           }
           if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
@@ -16732,6 +16737,7 @@ var allAttribRules = [
 ];
 
 var allCSSRules = [
+	"css-required",
 	"css-rule-malformed",
 	"css-trailing-semi"
 ];
@@ -21305,14 +21311,18 @@ const attributeDuplicate = (context) => {
 const attributeRequired = (context, opts) => {
     return {
         tag(node) {
-            if (opts &&
-                Object.keys(opts).includes(node.tagName) &&
-                opts[node.tagName] &&
-                typeof opts[node.tagName] === "object") {
-                Object.keys(opts[node.tagName])
-                    // filter out boolean true
+            // console.log(
+            //   `022 attributeRequired(): node = ${JSON.stringify(node, null, 4)}`
+            // );
+            const normalisedOpts = opts || {};
+            if (isObj(normalisedOpts) &&
+                Object.keys(normalisedOpts).includes(node.tagName) &&
+                normalisedOpts[node.tagName] &&
+                isObj(normalisedOpts[node.tagName])) {
+                Object.keys(normalisedOpts[node.tagName])
+                    // pick boolean true
                     .filter((attr) => {
-                    return opts[node.tagName][attr];
+                    return normalisedOpts[node.tagName][attr];
                 })
                     // check is each one present
                     .forEach((attr) => {
@@ -41787,6 +41797,106 @@ const cssRuleMalformed = (context) => {
     };
 };
 
+const cssRequired = (context, opts) => {
+    return {
+        tag(node) {
+            const normalisedOpts = {};
+            // normalise the opts
+            if (opts && isObj(opts)) {
+                Object.keys(opts).forEach((tagName) => {
+                    if (isObj(opts[tagName])) {
+                        Object.keys(opts[tagName]).forEach((prop) => {
+                            if (
+                            // string or bool true or numbers except zero
+                            opts[tagName][prop] ||
+                                // include zero
+                                opts[tagName][prop] === 0) {
+                                objectPath.set(normalisedOpts, `${tagName}.${prop}`, opts[tagName][prop]);
+                            }
+                        });
+                    }
+                });
+            }
+            if (Object.keys(normalisedOpts).includes(node.tagName) &&
+                normalisedOpts[node.tagName] &&
+                isObj(normalisedOpts[node.tagName]) &&
+                Object.keys(normalisedOpts[node.tagName]).length) {
+                // quick end - style attribute is missing
+                let styleAttrib;
+                if (node.attribs.length) {
+                    for (let i = node.attribs.length; i--;) {
+                        if (node.attribs[i].attribName === "style") {
+                            styleAttrib = node.attribs[i];
+                            break;
+                        }
+                    }
+                }
+                if (isObj(styleAttrib)) {
+                    Object.keys(normalisedOpts[node.tagName])
+                        // go through each settings object
+                        .forEach((rule) => {
+                        // it depends, is it just bool true, a loose requirement, or strict,
+                        // a value being enforced, when coming as a string or a number
+                        if (["number", "string"].includes(typeof normalisedOpts[node.tagName][rule])) {
+                            let propFound = false;
+                            // check all present properties (will include text whitespace nodes!)
+                            styleAttrib.attribValue.forEach((stylePropNode) => {
+                                if (stylePropNode.property === rule) {
+                                    propFound = true;
+                                    if (stylePropNode.value !==
+                                        String(normalisedOpts[node.tagName][rule])) {
+                                        const should = stylePropNode.valueStarts
+                                            ? `Should be`
+                                            : `Missing value`;
+                                        context.report({
+                                            ruleId: "css-required",
+                                            message: `"${should} "${normalisedOpts[node.tagName][rule]}".`,
+                                            idxFrom: stylePropNode.valueStarts ||
+                                                stylePropNode.start,
+                                            idxTo: stylePropNode.valueEnds ||
+                                                stylePropNode.end,
+                                            fix: null,
+                                        });
+                                    }
+                                }
+                            });
+                            if (!propFound) {
+                                context.report({
+                                    ruleId: "css-required",
+                                    message: `"${rule}: ${normalisedOpts[node.tagName][rule]}" is missing.`,
+                                    idxFrom: styleAttrib.attribStarts,
+                                    idxTo: styleAttrib.attribEnds,
+                                    fix: null,
+                                });
+                            }
+                        }
+                        else {
+                            if (!styleAttrib.attribValue.some((ruleNode) => ruleNode.property === rule)) {
+                                context.report({
+                                    ruleId: "css-required",
+                                    message: `Property "${rule}" is missing.`,
+                                    idxFrom: styleAttrib.attribStarts,
+                                    idxTo: styleAttrib.attribEnds,
+                                    fix: null,
+                                });
+                            }
+                        }
+                    });
+                }
+                else {
+                    context.report({
+                        ruleId: "css-required",
+                        message: `Attribute "style" is missing.`,
+                        idxFrom: node.start,
+                        idxTo: node.end,
+                        fix: null,
+                    });
+                }
+            }
+        },
+    };
+};
+
 // rule: format-prettier
 // it tries to format to how Prettier would
 // -----------------------------------------------------------------------------
@@ -42192,6 +42302,7 @@ defineLazyProp(builtInRules, "email-td-sibling-padding", () => tdSiblingPadding)
 // -----------------------------------------------------------------------------
 defineLazyProp(builtInRules, "css-trailing-semi", () => trailingSemi);
 defineLazyProp(builtInRules, "css-rule-malformed", () => cssRuleMalformed);
+defineLazyProp(builtInRules, "css-required", () => cssRequired);
 // Formatting rules
 // -----------------------------------------------------------------------------
 defineLazyProp(builtInRules, "format-prettier", () => formatPrettier);

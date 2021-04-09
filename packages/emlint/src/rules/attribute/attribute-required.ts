@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { isObj } from "../../util/util";
 
 // rule: attribute-required
 // -----------------------------------------------------------------------------
@@ -9,7 +10,7 @@ interface Opts {
   };
 }
 interface AttributeRequired {
-  (context: Linter, opts: Opts): RuleObjType;
+  (context: Linter, opts?: Opts): RuleObjType;
 }
 const attributeRequired: AttributeRequired = (context, opts) => {
   return {
@@ -17,22 +18,24 @@ const attributeRequired: AttributeRequired = (context, opts) => {
       console.log(
         `███████████████████████████████████████ attributeRequired() ███████████████████████████████████████`
       );
-      console.log(
-        `021 attributeRequired(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      // console.log(
+      //   `022 attributeRequired(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
+      const normalisedOpts = opts || {};
 
       if (
-        opts &&
-        Object.keys(opts).includes(node.tagName) &&
-        opts[node.tagName] &&
-        typeof opts[node.tagName] === "object"
+        isObj(normalisedOpts) &&
+        Object.keys(normalisedOpts).includes(node.tagName) &&
+        normalisedOpts[node.tagName] &&
+        isObj(normalisedOpts[node.tagName])
       ) {
-        console.log(`030 attributeRequired(): check attrs`);
+        console.log(`033 attributeRequired(): check attrs`);
 
-        Object.keys(opts[node.tagName])
-          // filter out boolean true
+        Object.keys(normalisedOpts[node.tagName])
+          // pick boolean true
           .filter((attr) => {
-            return opts[node.tagName][attr];
+            return normalisedOpts[node.tagName][attr];
           })
           // check is each one present
           .forEach((attr) => {
@@ -41,7 +44,7 @@ const attributeRequired: AttributeRequired = (context, opts) => {
               !node.attribs.some((attrObj) => attrObj.attribName === attr)
             ) {
               console.log(
-                `044 attributeRequired(): ${`\u001b[${31}m${`${attr} missing`}\u001b[${39}m`}`
+                `047 attributeRequired(): ${`\u001b[${31}m${`${attr} missing`}\u001b[${39}m`}`
               );
               context.report({
                 ruleId: "attribute-required",

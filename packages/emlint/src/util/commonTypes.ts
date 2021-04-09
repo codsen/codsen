@@ -8,6 +8,7 @@ import {
   TextToken,
   EspToken,
   Attrib,
+  Property,
   // CommentToken,
 } from "../../../codsen-tokenizer/src/util/util";
 import {
@@ -83,6 +84,7 @@ export {
   RulesObj,
   TagEvent,
   EspEvent,
+  Property,
   AstEvent,
   Severity,
   RuleEvent,

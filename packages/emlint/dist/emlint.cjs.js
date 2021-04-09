@@ -108,7 +108,7 @@ var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", 
 
 var allAttribRules = ["attribute-align-mismatch", "attribute-duplicate", "attribute-malformed", "attribute-on-closing-tag", "attribute-required"];
 
-var allCSSRules = ["css-rule-malformed", "css-trailing-semi"];
+var allCSSRules = ["css-required", "css-rule-malformed", "css-trailing-semi"];
 
 var allBadNamedHTMLEntityRules = ["bad-html-entity-malformed-nbsp", "bad-html-entity-malformed-numeric", "bad-html-entity-multiple-encoding", "bad-html-entity-not-email-friendly", "bad-html-entity-unrecognised"];
 
@@ -3438,10 +3438,11 @@ var attributeDuplicate = function attributeDuplicate(context) {
 var attributeRequired = function attributeRequired(context, opts) {
   return {
     tag: function tag(node) {
-      if (opts && Object.keys(opts).includes(node.tagName) && opts[node.tagName] && _typeof__default['default'](opts[node.tagName]) === "object") {
-        Object.keys(opts[node.tagName])
+      var normalisedOpts = opts || {};
+      if (isObj(normalisedOpts) && Object.keys(normalisedOpts).includes(node.tagName) && normalisedOpts[node.tagName] && isObj(normalisedOpts[node.tagName])) {
+        Object.keys(normalisedOpts[node.tagName])
         .filter(function (attr) {
-          return opts[node.tagName][attr];
+          return normalisedOpts[node.tagName][attr];
         })
         .forEach(function (attr) {
           if (!node.attribs || !node.attribs.some(function (attrObj) {
@@ -9212,6 +9213,90 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
   };
 };
 
+var cssRequired = function cssRequired(context, opts) {
+  return {
+    tag: function tag(node) {
+      var normalisedOpts = {};
+      if (opts && isObj(opts)) {
+        Object.keys(opts).forEach(function (tagName) {
+          if (isObj(opts[tagName])) {
+            Object.keys(opts[tagName]).forEach(function (prop) {
+              if (
+              opts[tagName][prop] ||
+              opts[tagName][prop] === 0) {
+                op__default['default'].set(normalisedOpts, "".concat(tagName, ".").concat(prop), opts[tagName][prop]);
+              }
+            });
+          }
+        });
+      }
+      if (Object.keys(normalisedOpts).includes(node.tagName) && normalisedOpts[node.tagName] && isObj(normalisedOpts[node.tagName]) && Object.keys(normalisedOpts[node.tagName]).length) {
+        var styleAttrib;
+        if (node.attribs.length) {
+          for (var i = node.attribs.length; i--;) {
+            if (node.attribs[i].attribName === "style") {
+              styleAttrib = node.attribs[i];
+              break;
+            }
+          }
+        }
+        if (isObj(styleAttrib)) {
+          Object.keys(normalisedOpts[node.tagName])
+          .forEach(function (rule) {
+            if (["number", "string"].includes(_typeof__default['default'](normalisedOpts[node.tagName][rule]))) {
+              var propFound = false;
+              styleAttrib.attribValue.forEach(function (stylePropNode) {
+                if (stylePropNode.property === rule) {
+                  propFound = true;
+                  if (stylePropNode.value !== String(normalisedOpts[node.tagName][rule])) {
+                    var should = stylePropNode.valueStarts ? "Should be" : "Missing value";
+                    context.report({
+                      ruleId: "css-required",
+                      message: "\"".concat(should, " \"").concat(normalisedOpts[node.tagName][rule], "\"."),
+                      idxFrom: stylePropNode.valueStarts || stylePropNode.start,
+                      idxTo: stylePropNode.valueEnds || stylePropNode.end,
+                      fix: null
+                    });
+                  }
+                }
+              });
+              if (!propFound) {
+                context.report({
+                  ruleId: "css-required",
+                  message: "\"".concat(rule, ": ").concat(normalisedOpts[node.tagName][rule], "\" is missing."),
+                  idxFrom: styleAttrib.attribStarts,
+                  idxTo: styleAttrib.attribEnds,
+                  fix: null
+                });
+              }
+            } else {
+              if (!styleAttrib.attribValue.some(function (ruleNode) {
+                return ruleNode.property === rule;
+              })) {
+                context.report({
+                  ruleId: "css-required",
+                  message: "Property \"".concat(rule, "\" is missing."),
+                  idxFrom: styleAttrib.attribStarts,
+                  idxTo: styleAttrib.attribEnds,
+                  fix: null
+                });
+              }
+            }
+          });
+        } else {
+          context.report({
+            ruleId: "css-required",
+            message: "Attribute \"style\" is missing.",
+            idxFrom: node.start,
+            idxTo: node.end,
+            fix: null
+          });
+        }
+      }
+    }
+  };
+};
+
 function processCSS(token, context) {
   var nodeArr;
   if (token.properties !== undefined) {
@@ -10071,6 +10156,9 @@ defineLazyProp__default['default'](builtInRules, "css-trailing-semi", function (
 });
 defineLazyProp__default['default'](builtInRules, "css-rule-malformed", function () {
   return cssRuleMalformed;
+});
+defineLazyProp__default['default'](builtInRules, "css-required", function () {
+  return cssRequired;
 });
 defineLazyProp__default['default'](builtInRules, "format-prettier", function () {
   return formatPrettier;

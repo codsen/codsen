@@ -73,7 +73,7 @@ var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", 
 
 var allAttribRules = ["attribute-align-mismatch", "attribute-duplicate", "attribute-malformed", "attribute-on-closing-tag", "attribute-required"];
 
-var allCSSRules = ["css-rule-malformed", "css-trailing-semi"];
+var allCSSRules = ["css-required", "css-rule-malformed", "css-trailing-semi"];
 
 var allBadNamedHTMLEntityRules = ["bad-html-entity-malformed-nbsp", "bad-html-entity-malformed-numeric", "bad-html-entity-multiple-encoding", "bad-html-entity-not-email-friendly", "bad-html-entity-unrecognised"];
 
@@ -3481,10 +3481,11 @@ const attributeDuplicate = context => {
 const attributeRequired = (context, opts) => {
   return {
     tag(node) {
-      if (opts && Object.keys(opts).includes(node.tagName) && opts[node.tagName] && typeof opts[node.tagName] === "object") {
-        Object.keys(opts[node.tagName])
+      const normalisedOpts = opts || {};
+      if (isObj(normalisedOpts) && Object.keys(normalisedOpts).includes(node.tagName) && normalisedOpts[node.tagName] && isObj(normalisedOpts[node.tagName])) {
+        Object.keys(normalisedOpts[node.tagName])
         .filter(attr => {
-          return opts[node.tagName][attr];
+          return normalisedOpts[node.tagName][attr];
         })
         .forEach(attr => {
           if (!node.attribs || !node.attribs.some(attrObj => attrObj.attribName === attr)) {
@@ -9228,6 +9229,88 @@ const cssRuleMalformed = context => {
   };
 };
 
+const cssRequired = (context, opts) => {
+  return {
+    tag(node) {
+      const normalisedOpts = {};
+      if (opts && isObj(opts)) {
+        Object.keys(opts).forEach(tagName => {
+          if (isObj(opts[tagName])) {
+            Object.keys(opts[tagName]).forEach(prop => {
+              if (
+              opts[tagName][prop] ||
+              opts[tagName][prop] === 0) {
+                op.set(normalisedOpts, `${tagName}.${prop}`, opts[tagName][prop]);
+              }
+            });
+          }
+        });
+      }
+      if (Object.keys(normalisedOpts).includes(node.tagName) && normalisedOpts[node.tagName] && isObj(normalisedOpts[node.tagName]) && Object.keys(normalisedOpts[node.tagName]).length) {
+        let styleAttrib;
+        if (node.attribs.length) {
+          for (let i = node.attribs.length; i--;) {
+            if (node.attribs[i].attribName === "style") {
+              styleAttrib = node.attribs[i];
+              break;
+            }
+          }
+        }
+        if (isObj(styleAttrib)) {
+          Object.keys(normalisedOpts[node.tagName])
+          .forEach(rule => {
+            if (["number", "string"].includes(typeof normalisedOpts[node.tagName][rule])) {
+              let propFound = false;
+              styleAttrib.attribValue.forEach(stylePropNode => {
+                if (stylePropNode.property === rule) {
+                  propFound = true;
+                  if (stylePropNode.value !== String(normalisedOpts[node.tagName][rule])) {
+                    const should = stylePropNode.valueStarts ? `Should be` : `Missing value`;
+                    context.report({
+                      ruleId: "css-required",
+                      message: `"${should} "${normalisedOpts[node.tagName][rule]}".`,
+                      idxFrom: stylePropNode.valueStarts || stylePropNode.start,
+                      idxTo: stylePropNode.valueEnds || stylePropNode.end,
+                      fix: null
+                    });
+                  }
+                }
+              });
+              if (!propFound) {
+                context.report({
+                  ruleId: "css-required",
+                  message: `"${rule}: ${normalisedOpts[node.tagName][rule]}" is missing.`,
+                  idxFrom: styleAttrib.attribStarts,
+                  idxTo: styleAttrib.attribEnds,
+                  fix: null
+                });
+              }
+            } else {
+              if (!styleAttrib.attribValue.some(ruleNode => ruleNode.property === rule)) {
+                context.report({
+                  ruleId: "css-required",
+                  message: `Property "${rule}" is missing.`,
+                  idxFrom: styleAttrib.attribStarts,
+                  idxTo: styleAttrib.attribEnds,
+                  fix: null
+                });
+              }
+            }
+          });
+        } else {
+          context.report({
+            ruleId: "css-required",
+            message: `Attribute "style" is missing.`,
+            idxFrom: node.start,
+            idxTo: node.end,
+            fix: null
+          });
+        }
+      }
+    }
+  };
+};
+
 function processCSS(token, context) {
   let nodeArr;
   if (token.properties !== undefined) {
@@ -9572,6 +9655,7 @@ defineLazyProp(builtInRules, "comment-conditional-nested", () => commentConditio
 defineLazyProp(builtInRules, "email-td-sibling-padding", () => tdSiblingPadding);
 defineLazyProp(builtInRules, "css-trailing-semi", () => trailingSemi);
 defineLazyProp(builtInRules, "css-rule-malformed", () => cssRuleMalformed);
+defineLazyProp(builtInRules, "css-required", () => cssRequired);
 defineLazyProp(builtInRules, "format-prettier", () => formatPrettier);
 function get(something) {
   return builtInRules[something];

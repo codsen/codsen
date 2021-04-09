@@ -245,6 +245,7 @@
   "comment-conditional-nested",
   "comment-mismatching-pair",
   "comment-opening-malformed",
+  "css-required",
   "css-rule-malformed",
   "css-trailing-semi",
   "email-td-sibling-padding",
