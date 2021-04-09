@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-private-use-1
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0091/index.htm
 
 function badCharacterPrivateUseOne(context: Linter): RuleObjType {
+  const charCode = 145;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 145) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-private-use-1",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - PRIVATE USE ONE.",
           idxFrom: i,
           idxTo: i + 1,

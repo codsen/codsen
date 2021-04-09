@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-em-space
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/2003/index.htm
 
 function badCharacterEmSpace(context: Linter): RuleObjType {
+  const charCode = 8195;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8195) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-em-space",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - EM SPACE.",
           idxFrom: i,
           idxTo: i + 1,

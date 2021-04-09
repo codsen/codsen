@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-data-link-escape
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0010/index.htm
 
 function badCharacterDataLinkEscape(context: Linter): RuleObjType {
+  const charCode = 16;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 16) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-data-link-escape",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - DATA LINK ESCAPE.",
           idxFrom: i,
           idxTo: i + 1,

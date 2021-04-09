@@ -211,6 +211,8 @@ interface Opts$1 {
 }
 declare function splitByWhitespace(str: string, cbValues: CbValues, cbWhitespace?: CbValues, originalOpts?: Partial<Opts$1>): void;
 
+declare const badChars: Map<number, string>;
+
 interface Opts {
     caseInsensitive: boolean;
     canBeCommaSeparated: boolean;
@@ -244,6 +246,7 @@ declare const util_fontSizeRegex: typeof fontSizeRegex;
 declare const util_isoDateRegex: typeof isoDateRegex;
 declare const util_linkTypes: typeof linkTypes;
 declare const util_isLetter: typeof isLetter;
+declare const util_badChars: typeof badChars;
 declare const util_isObj: typeof isObj;
 declare namespace util {
   export {
@@ -257,6 +260,7 @@ declare namespace util {
     util_isoDateRegex as isoDateRegex,
     util_linkTypes as linkTypes,
     util_isLetter as isLetter,
+    util_badChars as badChars,
     util_isObj as isObj,
   };
 }

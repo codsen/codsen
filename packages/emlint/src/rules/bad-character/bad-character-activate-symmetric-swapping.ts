@@ -1,18 +1,20 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-activate-symmetric-swapping
 // -----------------------------------------------------------------------------
 
-// Catches raw character "INHIBIT SYMMETRIC SWAPPING":
+// Catches raw character "ACTIVATE SYMMETRIC SWAPPING":
 // https://www.fileformat.info/info/unicode/char/206b/index.htm
 
 function badCharacterActivateSymmetricSwapping(context: Linter): RuleObjType {
+  const charCode = 8299;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8299) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-activate-symmetric-swapping",
-          message: "Bad character - INHIBIT SYMMETRIC SWAPPING.",
+          ruleId: badChars.get(charCode) as string,
+          message: "Bad character - ACTIVATE SYMMETRIC SWAPPING.",
           idxFrom: i,
           idxTo: i + 1,
           fix: {

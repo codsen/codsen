@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-paragraph-separator
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/2029/index.htm
 
 function badCharacterParagraphSeparator(context: Linter): RuleObjType {
+  const charCode = 8233;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8233) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-paragraph-separator",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - PARAGRAPH SEPARATOR.",
           idxFrom: i,
           idxTo: i + 1,

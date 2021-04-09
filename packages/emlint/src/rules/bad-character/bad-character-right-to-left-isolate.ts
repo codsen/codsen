@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-right-to-left-isolate
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/2067/index.htm
 
 function badCharacterRightToLeftIsolate(context: Linter): RuleObjType {
+  const charCode = 8295;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8295) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-right-to-left-isolate",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - RIGHT-TO-LEFT ISOLATE.",
           idxFrom: i,
           idxTo: i + 1,

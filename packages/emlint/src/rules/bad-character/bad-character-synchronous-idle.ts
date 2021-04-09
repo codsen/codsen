@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-synchronous-idle
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0016/index.htm
 
 function badCharacterSynchronousIdle(context: Linter): RuleObjType {
+  const charCode = 22;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 22) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-synchronous-idle",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - SYNCHRONOUS IDLE.",
           idxFrom: i,
           idxTo: i + 1,

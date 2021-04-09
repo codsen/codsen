@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-start-of-text
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0002/index.htm
 
 function badCharacterStartOfText(context: Linter): RuleObjType {
+  const charCode = 2;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 2) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-start-of-text",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - START OF TEXT.",
           idxFrom: i,
           idxTo: i + 1,

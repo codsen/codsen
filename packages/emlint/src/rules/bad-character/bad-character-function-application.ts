@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-function-application
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/2061/index.htm
 
 function badCharacterFunctionApplication(context: Linter): RuleObjType {
+  const charCode = 8289;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8289) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-function-application",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - FUNCTION APPLICATION.",
           idxFrom: i,
           idxTo: i + 1,

@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-backspace
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0008/index.htm
 
 function badCharacterBackspace(context: Linter): RuleObjType {
+  const charCode = 8;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-backspace",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - BACKSPACE.",
           idxFrom: i,
           idxTo: i + 1,

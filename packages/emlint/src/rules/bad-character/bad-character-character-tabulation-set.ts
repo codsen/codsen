@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-character-tabulation-set
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0088/index.htm
 
 function badCharacterCharacterTabulationSet(context: Linter): RuleObjType {
+  const charCode = 136;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 136) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-character-tabulation-set",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - CHARACTER TABULATION SET.",
           idxFrom: i,
           idxTo: i + 1,

@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-narrow-no-break-space
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/202f/index.htm
 
 function badCharacterNarrowNoBreakSpace(context: Linter): RuleObjType {
+  const charCode = 8239;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8239) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-narrow-no-break-space",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - NARROW NO-BREAK SPACE.",
           idxFrom: i,
           idxTo: i + 1,

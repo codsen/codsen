@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-interlinear-annotation-terminator
 // -----------------------------------------------------------------------------
@@ -9,11 +10,12 @@ import { Linter, RuleObjType } from "../../linter";
 function badCharacterInterlinearAnnotationTerminator(
   context: Linter
 ): RuleObjType {
+  const charCode = 65531;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 65531) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-interlinear-annotation-terminator",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - INTERLINEAR ANNOTATION TERMINATOR.",
           idxFrom: i,
           idxTo: i + 1,

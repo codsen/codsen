@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-null
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0000/index.htm
 
 function badCharacterNull(context: Linter): RuleObjType {
+  const charCode = 0;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 0) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-null",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - NULL.",
           idxFrom: i,
           idxTo: i + 1,

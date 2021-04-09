@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-string-terminator
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/009c/index.htm
 
 function badCharacterStringTerminator(context: Linter): RuleObjType {
+  const charCode = 156;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 156) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-string-terminator",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - STRING TERMINATOR.",
           idxFrom: i,
           idxTo: i + 1,

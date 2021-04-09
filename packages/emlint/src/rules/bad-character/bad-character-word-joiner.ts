@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-word-joiner
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/2060/index.htm
 
 function badCharacterWordJoiner(context: Linter): RuleObjType {
+  const charCode = 8288;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8288) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-word-joiner",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - WORD JOINER.",
           idxFrom: i,
           idxTo: i + 1,

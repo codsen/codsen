@@ -10,7 +10,7 @@ import { applyFixes } from "../../../t-util/util";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-tap.test(`01 - detects two INHIBIT SYMMETRIC SWAPPING characters`, (t) => {
+tap.test(`01 - detects two ACTIVATE SYMMETRIC SWAPPING characters`, (t) => {
   const str = "\u206Bdlkgjld\u206Bj";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -28,7 +28,7 @@ tap.test(`01 - detects two INHIBIT SYMMETRIC SWAPPING characters`, (t) => {
         idxTo: 1,
         line: 1,
         column: 1, // remember columns numbers start from 1, not zero
-        message: "Bad character - INHIBIT SYMMETRIC SWAPPING.",
+        message: "Bad character - ACTIVATE SYMMETRIC SWAPPING.",
         fix: {
           ranges: [[0, 1]],
         },
@@ -40,7 +40,7 @@ tap.test(`01 - detects two INHIBIT SYMMETRIC SWAPPING characters`, (t) => {
         idxTo: 9,
         line: 1,
         column: 9, // remember columns numbers start from 1, not zero
-        message: "Bad character - INHIBIT SYMMETRIC SWAPPING.",
+        message: "Bad character - ACTIVATE SYMMETRIC SWAPPING.",
         fix: {
           ranges: [[8, 9]],
         },

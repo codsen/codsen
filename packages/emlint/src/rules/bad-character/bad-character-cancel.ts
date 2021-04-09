@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-cancel
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0018/index.htm
 
 function badCharacterCancel(context: Linter): RuleObjType {
+  const charCode = 24;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 24) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-cancel",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - CANCEL.",
           idxFrom: i,
           idxTo: i + 1,

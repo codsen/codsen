@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-ogham-space-mark
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/1680/index.htm
 
 function badCharacterOghamSpaceMark(context: Linter): RuleObjType {
+  const charCode = 5760;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 5760) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-ogham-space-mark",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - OGHAM SPACE MARK.",
           idxFrom: i,
           idxTo: i + 1,

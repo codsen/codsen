@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-left-to-right-mark
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/200e/index.htm
 
 function badCharacterLeftToRightMark(context: Linter): RuleObjType {
+  const charCode = 8206;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8206) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-left-to-right-mark",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - LEFT-TO-RIGHT MARK.",
           idxFrom: i,
           idxTo: i + 1,

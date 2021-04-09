@@ -6,12 +6,12 @@ import tap from "tap";
 import { Linter } from "../../../dist/emlint.esm";
 
 import { applyFixes } from "../../../t-util/util";
+const CHAR = `\uFFFD`;
 
 // -----------------------------------------------------------------------------
 
-// 1. basic tests
 tap.test(`01 - detects two REPLACEMENT CHARACTERS`, (t) => {
-  const str = "\uFFFDdlkgjld\uFFFDj";
+  const str = `${CHAR}dlkgjld${CHAR}j`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
@@ -48,8 +48,7 @@ tap.test(`01 - detects two REPLACEMENT CHARACTERS`, (t) => {
     ],
     "01.01"
   );
-  t.equal(applyFixes(str, messages), "dlkgjldj", "01.02");
+  t.equal(messages.length, 2, "01.02");
+  t.equal(applyFixes(str, messages), "dlkgjldj", "01.03");
   t.end();
 });
-
-// TODO - attempt to patch it up, replace with guessed character

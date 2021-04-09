@@ -5,12 +5,13 @@
 import tap from "tap";
 import { Linter } from "../../../dist/emlint.esm";
 import { applyFixes } from "../../../t-util/util";
+const CHAR = `\u0006`;
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
 tap.test(`01 - detects two ACKNOWLEDGE characters`, (t) => {
-  const str = "\u0006dlkgjld\u0006j";
+  const str = `${CHAR}dlkgjld${CHAR}j`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {

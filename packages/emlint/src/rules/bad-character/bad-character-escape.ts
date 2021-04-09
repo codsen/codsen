@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-escape
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/001b/index.htm
 
 function badCharacterEscape(context: Linter): RuleObjType {
+  const charCode = 27;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 27) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-escape",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - ESCAPE.",
           idxFrom: i,
           idxTo: i + 1,

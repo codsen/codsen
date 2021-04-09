@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-partial-line-forward
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/008b/index.htm
 
 function badCharacterPartialLineForward(context: Linter): RuleObjType {
+  const charCode = 139;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 139) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-partial-line-forward",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - PARTIAL LINE FORWARD.",
           idxFrom: i,
           idxTo: i + 1,

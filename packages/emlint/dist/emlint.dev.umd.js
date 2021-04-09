@@ -16837,6 +16837,123 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
     }
 }
 
+// this is the single, central bad character reference dictionary
+// https://exploringjs.com/impatient-js/ch_maps.html#using-maps
+const badChars = new Map([
+    [0, "bad-character-null"],
+    [1, "bad-character-start-of-heading"],
+    [2, "bad-character-start-of-text"],
+    [3, "bad-character-end-of-text"],
+    [4, "bad-character-end-of-transmission"],
+    [5, "bad-character-enquiry"],
+    [6, "bad-character-acknowledge"],
+    [7, "bad-character-bell"],
+    [8, "bad-character-backspace"],
+    [9, "bad-character-tabulation"],
+    [11, "bad-character-line-tabulation"],
+    [12, "bad-character-form-feed"],
+    [14, "bad-character-shift-out"],
+    [15, "bad-character-shift-in"],
+    [16, "bad-character-data-link-escape"],
+    [17, "bad-character-device-control-one"],
+    [18, "bad-character-device-control-two"],
+    [19, "bad-character-device-control-three"],
+    [20, "bad-character-device-control-four"],
+    [21, "bad-character-negative-acknowledge"],
+    [22, "bad-character-synchronous-idle"],
+    [23, "bad-character-end-of-transmission-block"],
+    [24, "bad-character-cancel"],
+    [25, "bad-character-end-of-medium"],
+    [26, "bad-character-substitute"],
+    [27, "bad-character-escape"],
+    [28, "bad-character-information-separator-four"],
+    [29, "bad-character-information-separator-three"],
+    [30, "bad-character-information-separator-two"],
+    [31, "bad-character-information-separator-one"],
+    [127, "bad-character-delete"],
+    [128, "bad-character-control-0080"],
+    [129, "bad-character-control-0081"],
+    [130, "bad-character-break-permitted-here"],
+    [131, "bad-character-no-break-here"],
+    [132, "bad-character-control-0084"],
+    [133, "bad-character-next-line"],
+    [134, "bad-character-start-of-selected-area"],
+    [135, "bad-character-end-of-selected-area"],
+    [136, "bad-character-character-tabulation-set"],
+    [137, "bad-character-character-tabulation-with-justification"],
+    [138, "bad-character-line-tabulation-set"],
+    [139, "bad-character-partial-line-forward"],
+    [140, "bad-character-partial-line-backward"],
+    [141, "bad-character-reverse-line-feed"],
+    [142, "bad-character-single-shift-two"],
+    [143, "bad-character-single-shift-three"],
+    [144, "bad-character-device-control-string"],
+    [145, "bad-character-private-use-1"],
+    [146, "bad-character-private-use-2"],
+    [147, "bad-character-set-transmit-state"],
+    [148, "bad-character-cancel-character"],
+    [149, "bad-character-message-waiting"],
+    [150, "bad-character-start-of-protected-area"],
+    [151, "bad-character-end-of-protected-area"],
+    [152, "bad-character-start-of-string"],
+    [153, "bad-character-control-0099"],
+    [154, "bad-character-single-character-introducer"],
+    [155, "bad-character-control-sequence-introducer"],
+    [156, "bad-character-string-terminator"],
+    [157, "bad-character-operating-system-command"],
+    [158, "bad-character-private-message"],
+    [159, "bad-character-application-program-command"],
+    [160, "bad-character-non-breaking-space"],
+    [173, "bad-character-soft-hyphen"],
+    [5760, "bad-character-ogham-space-mark"],
+    [8192, "bad-character-en-quad"],
+    [8193, "bad-character-em-quad"],
+    [8194, "bad-character-en-space"],
+    [8195, "bad-character-em-space"],
+    [8196, "bad-character-three-per-em-space"],
+    [8197, "bad-character-four-per-em-space"],
+    [8198, "bad-character-six-per-em-space"],
+    [8199, "bad-character-figure-space"],
+    [8200, "bad-character-punctuation-space"],
+    [8201, "bad-character-thin-space"],
+    [8202, "bad-character-hair-space"],
+    [8203, "bad-character-zero-width-space"],
+    [8204, "bad-character-zero-width-non-joiner"],
+    [8205, "bad-character-zero-width-joiner"],
+    [8206, "bad-character-left-to-right-mark"],
+    [8207, "bad-character-right-to-left-mark"],
+    [8232, "bad-character-line-separator"],
+    [8233, "bad-character-paragraph-separator"],
+    [8234, "bad-character-left-to-right-embedding"],
+    [8235, "bad-character-right-to-left-embedding"],
+    [8236, "bad-character-pop-directional-formatting"],
+    [8237, "bad-character-left-to-right-override"],
+    [8238, "bad-character-right-to-left-override"],
+    [8239, "bad-character-narrow-no-break-space"],
+    [8287, "bad-character-medium-mathematical-space"],
+    [8288, "bad-character-word-joiner"],
+    [8289, "bad-character-function-application"],
+    [8290, "bad-character-invisible-times"],
+    [8291, "bad-character-invisible-separator"],
+    [8292, "bad-character-invisible-plus"],
+    [8294, "bad-character-left-to-right-isolate"],
+    [8295, "bad-character-right-to-left-isolate"],
+    [8296, "bad-character-first-strong-isolate"],
+    [8297, "bad-character-pop-directional-isolate"],
+    [8298, "bad-character-inhibit-symmetric-swapping"],
+    [8299, "bad-character-activate-symmetric-swapping"],
+    [8300, "bad-character-inhibit-arabic-form-shaping"],
+    [8301, "bad-character-activate-arabic-form-shaping"],
+    [8302, "bad-character-national-digit-shapes"],
+    [8303, "bad-character-nominal-digit-shapes"],
+    [12288, "bad-character-ideographic-space"],
+    [65279, "bad-character-zero-width-no-break-space"],
+    [65529, "bad-character-interlinear-annotation-anchor"],
+    [65530, "bad-character-interlinear-annotation-separator"],
+    [65531, "bad-character-interlinear-annotation-terminator"],
+    [65533, "bad-character-replacement-character"],
+]);
+
 /**
  * @name string-process-comma-separated
  * @fileoverview Extracts chunks from possibly comma or whatever-separated string
@@ -17389,6 +17506,7 @@ fontSizeRegex: fontSizeRegex,
 isoDateRegex: isoDateRegex,
 linkTypes: linkTypes,
 isLetter: isLetter,
+badChars: badChars,
 isObj: isObj
 });
 
@@ -17397,11 +17515,12 @@ isObj: isObj
 // Catches raw character "NULL":
 // https://www.fileformat.info/info/unicode/char/0000/index.htm
 function badCharacterNull(context) {
+    const charCode = 0;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 0) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-null",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - NULL.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17419,11 +17538,12 @@ function badCharacterNull(context) {
 // Catches raw character "START OF HEADING":
 // https://www.fileformat.info/info/unicode/char/0001/index.htm
 function badCharacterStartOfHeading(context) {
+    const charCode = 1;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 1) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-start-of-heading",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - START OF HEADING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17441,11 +17561,12 @@ function badCharacterStartOfHeading(context) {
 // Catches raw character "START OF TEXT":
 // https://www.fileformat.info/info/unicode/char/0002/index.htm
 function badCharacterStartOfText(context) {
+    const charCode = 2;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 2) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-start-of-text",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - START OF TEXT.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17463,11 +17584,12 @@ function badCharacterStartOfText(context) {
 // Catches raw character "END OF TEXT":
 // https://www.fileformat.info/info/unicode/char/0003/index.htm
 function badCharacterEndOfText(context) {
+    const charCode = 3;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 3) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-end-of-text",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - END OF TEXT.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17485,11 +17607,12 @@ function badCharacterEndOfText(context) {
 // Catches raw character "END OF TRANSMISSION":
 // https://www.fileformat.info/info/unicode/char/0004/index.htm
 function badCharacterEndOfTransmission(context) {
+    const charCode = 4;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 4) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-end-of-transmission",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - END OF TRANSMISSION.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17507,11 +17630,12 @@ function badCharacterEndOfTransmission(context) {
 // Catches raw character "ENQUIRY":
 // https://www.fileformat.info/info/unicode/char/0005/index.htm
 function badCharacterEnquiry(context) {
+    const charCode = 5;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 5) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-enquiry",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - ENQUIRY.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17529,11 +17653,12 @@ function badCharacterEnquiry(context) {
 // Catches raw character "ACKNOWLEDGE":
 // https://www.fileformat.info/info/unicode/char/0006/index.htm
 function badCharacterAcknowledge(context) {
+    const charCode = 6;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 6) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-acknowledge",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - ACKNOWLEDGE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17551,11 +17676,12 @@ function badCharacterAcknowledge(context) {
 // Catches raw character "BELL":
 // https://www.fileformat.info/info/unicode/char/0007/index.htm
 function badCharacterBell(context) {
+    const charCode = 7;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 7) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-bell",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - BELL.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17573,11 +17699,12 @@ function badCharacterBell(context) {
 // Catches raw character "BACKSPACE":
 // https://www.fileformat.info/info/unicode/char/0008/index.htm
 function badCharacterBackspace(context) {
+    const charCode = 8;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-backspace",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - BACKSPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17590,7 +17717,6 @@ function badCharacterBackspace(context) {
     };
 }
 
-// rule: bad-character-tabulation
 const badCharacterTabulation = (context, ...originalOpts) => {
     // indentation tabs might be OK, check config.
     // tabs between text not OK.
@@ -17604,13 +17730,14 @@ const badCharacterTabulation = (context, ...originalOpts) => {
         originalOpts[0].toLowerCase() === "indentationisfine") {
         mode = "indentationIsFine";
     }
+    const charCode = 9;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 9) {
+            if (chr.charCodeAt(0) === charCode) {
                 if (mode === "never") {
                     // simple - there can't be any TABs, so raise it straight away
                     context.report({
-                        ruleId: "bad-character-tabulation",
+                        ruleId: badChars.get(charCode),
                         message: "Bad character - TABULATION.",
                         idxFrom: i,
                         idxTo: i + 1,
@@ -17628,7 +17755,7 @@ const badCharacterTabulation = (context, ...originalOpts) => {
                     if (charTopOnBreaksIdx !== null &&
                         context.str[charTopOnBreaksIdx].trim().length) {
                         context.report({
-                            ruleId: "bad-character-tabulation",
+                            ruleId: badChars.get(charCode),
                             message: "Bad character - TABULATION.",
                             idxFrom: i,
                             idxTo: i + 1,
@@ -17648,11 +17775,12 @@ const badCharacterTabulation = (context, ...originalOpts) => {
 // Catches raw character "LINE TABULATION":
 // https://www.fileformat.info/info/unicode/char/000b/index.htm
 function badCharacterLineTabulation(context) {
+    const charCode = 11;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 11) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-line-tabulation",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - LINE TABULATION.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17670,11 +17798,12 @@ function badCharacterLineTabulation(context) {
 // Catches raw character "FORM FEED":
 // https://www.fileformat.info/info/unicode/char/000c/index.htm
 function badCharacterFormFeed(context) {
+    const charCode = 12;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 12) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-form-feed",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - FORM FEED.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17692,11 +17821,12 @@ function badCharacterFormFeed(context) {
 // Catches raw character "SHIFT OUT":
 // https://www.fileformat.info/info/unicode/char/000e/index.htm
 function badCharacterShiftOut(context) {
+    const charCode = 14;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 14) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-shift-out",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SHIFT OUT.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17714,11 +17844,12 @@ function badCharacterShiftOut(context) {
 // Catches raw character "SHIFT IN":
 // https://www.fileformat.info/info/unicode/char/000f/index.htm
 function badCharacterShiftIn(context) {
+    const charCode = 15;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 15) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-shift-in",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SHIFT IN.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17736,11 +17867,12 @@ function badCharacterShiftIn(context) {
 // Catches raw character "DATA LINK ESCAPE":
 // https://www.fileformat.info/info/unicode/char/0010/index.htm
 function badCharacterDataLinkEscape(context) {
+    const charCode = 16;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 16) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-data-link-escape",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - DATA LINK ESCAPE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17758,11 +17890,12 @@ function badCharacterDataLinkEscape(context) {
 // Catches raw character "DEVICE CONTROL ONE":
 // https://www.fileformat.info/info/unicode/char/0011/index.htm
 function badCharacterDeviceControlOne(context) {
+    const charCode = 17;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 17) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-device-control-one",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - DEVICE CONTROL ONE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17780,11 +17913,12 @@ function badCharacterDeviceControlOne(context) {
 // Catches raw character "DEVICE CONTROL TWO":
 // https://www.fileformat.info/info/unicode/char/0012/index.htm
 function badCharacterDeviceControlTwo(context) {
+    const charCode = 18;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 18) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-device-control-two",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - DEVICE CONTROL TWO.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17802,11 +17936,12 @@ function badCharacterDeviceControlTwo(context) {
 // Catches raw character "DEVICE CONTROL THREE":
 // https://www.fileformat.info/info/unicode/char/0013/index.htm
 function badCharacterDeviceControlThree(context) {
+    const charCode = 19;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 19) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-device-control-three",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - DEVICE CONTROL THREE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17824,11 +17959,12 @@ function badCharacterDeviceControlThree(context) {
 // Catches raw character "DEVICE CONTROL FOUR":
 // https://www.fileformat.info/info/unicode/char/0014/index.htm
 function badCharacterDeviceControlFour(context) {
+    const charCode = 20;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 20) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-device-control-four",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - DEVICE CONTROL FOUR.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17846,11 +17982,12 @@ function badCharacterDeviceControlFour(context) {
 // Catches raw character "NEGATIVE ACKNOWLEDGE":
 // https://www.fileformat.info/info/unicode/char/0015/index.htm
 function badCharacterNegativeAcknowledge(context) {
+    const charCode = 21;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 21) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-negative-acknowledge",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - NEGATIVE ACKNOWLEDGE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17868,11 +18005,12 @@ function badCharacterNegativeAcknowledge(context) {
 // Catches raw character "SYNCHRONOUS IDLE":
 // https://www.fileformat.info/info/unicode/char/0016/index.htm
 function badCharacterSynchronousIdle(context) {
+    const charCode = 22;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 22) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-synchronous-idle",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SYNCHRONOUS IDLE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17890,11 +18028,12 @@ function badCharacterSynchronousIdle(context) {
 // Catches raw character "END OF TRANSMISSION BLOCK":
 // https://www.fileformat.info/info/unicode/char/0017/index.htm
 function badCharacterEndOfTransmissionBlock(context) {
+    const charCode = 23;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 23) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-end-of-transmission-block",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - END OF TRANSMISSION BLOCK.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17912,11 +18051,12 @@ function badCharacterEndOfTransmissionBlock(context) {
 // Catches raw character "CANCEL":
 // https://www.fileformat.info/info/unicode/char/0018/index.htm
 function badCharacterCancel(context) {
+    const charCode = 24;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 24) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-cancel",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - CANCEL.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17934,11 +18074,12 @@ function badCharacterCancel(context) {
 // Catches raw character "END OF MEDIUM":
 // https://www.fileformat.info/info/unicode/char/0019/index.htm
 function badCharacterEndOfMedium(context) {
+    const charCode = 25;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 25) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-end-of-medium",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - END OF MEDIUM.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17956,11 +18097,12 @@ function badCharacterEndOfMedium(context) {
 // Catches raw character "SUBSTITUTE":
 // https://www.fileformat.info/info/unicode/char/001a/index.htm
 function badCharacterSubstitute(context) {
+    const charCode = 26;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 26) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-substitute",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SUBSTITUTE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -17978,11 +18120,12 @@ function badCharacterSubstitute(context) {
 // Catches raw character "ESCAPE":
 // https://www.fileformat.info/info/unicode/char/001b/index.htm
 function badCharacterEscape(context) {
+    const charCode = 27;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 27) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-escape",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - ESCAPE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18000,11 +18143,12 @@ function badCharacterEscape(context) {
 // Catches raw character "INFORMATION SEPARATOR FOUR":
 // https://www.fileformat.info/info/unicode/char/001c/index.htm
 function badCharacterInformationSeparatorFour(context) {
+    const charCode = 28;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 28) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-information-separator-four",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INFORMATION SEPARATOR FOUR.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18022,11 +18166,12 @@ function badCharacterInformationSeparatorFour(context) {
 // Catches raw character "INFORMATION SEPARATOR THREE":
 // https://www.fileformat.info/info/unicode/char/001d/index.htm
 function badCharacterInformationSeparatorThree(context) {
+    const charCode = 29;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 29) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-information-separator-three",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INFORMATION SEPARATOR THREE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18044,11 +18189,12 @@ function badCharacterInformationSeparatorThree(context) {
 // Catches raw character "INFORMATION SEPARATOR TWO":
 // https://www.fileformat.info/info/unicode/char/001e/index.htm
 function badCharacterInformationSeparatorTwo$1(context) {
+    const charCode = 30;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 30) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-information-separator-two",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INFORMATION SEPARATOR TWO.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18066,11 +18212,12 @@ function badCharacterInformationSeparatorTwo$1(context) {
 // Catches raw character "INFORMATION SEPARATOR ONE":
 // https://www.fileformat.info/info/unicode/char/001f/index.htm
 function badCharacterInformationSeparatorTwo(context) {
+    const charCode = 31;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 31) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-information-separator-one",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INFORMATION SEPARATOR ONE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18088,11 +18235,12 @@ function badCharacterInformationSeparatorTwo(context) {
 // Catches raw character "DELETE":
 // https://www.fileformat.info/info/unicode/char/007f/index.htm
 function badCharacterDelete(context) {
+    const charCode = 127;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 127) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-delete",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - DELETE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18110,11 +18258,12 @@ function badCharacterDelete(context) {
 // Catches raw character "CONTROL" (hex 80):
 // https://www.fileformat.info/info/unicode/char/0080/index.htm
 function badCharacterControl0080(context) {
+    const charCode = 128;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 128) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-control-0080",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - CONTROL.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18132,11 +18281,12 @@ function badCharacterControl0080(context) {
 // Catches raw character "CONTROL" (hex 81):
 // https://www.fileformat.info/info/unicode/char/0081/index.htm
 function badCharacterControl0081(context) {
+    const charCode = 129;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 129) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-control-0081",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - CONTROL.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18154,11 +18304,12 @@ function badCharacterControl0081(context) {
 // Catches raw character "BREAK PERMITTED HERE":
 // https://www.fileformat.info/info/unicode/char/0082/index.htm
 function badCharacterBreakPermittedHere(context) {
+    const charCode = 130;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 130) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-break-permitted-here",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - BREAK PERMITTED HERE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18176,11 +18327,12 @@ function badCharacterBreakPermittedHere(context) {
 // Catches raw character "NO BREAK HERE":
 // https://www.fileformat.info/info/unicode/char/0083/index.htm
 function badCharacterNoBreakHere(context) {
+    const charCode = 131;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 131) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-no-break-here",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - NO BREAK HERE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18198,11 +18350,12 @@ function badCharacterNoBreakHere(context) {
 // Catches raw character "CONTROL" (hex 84):
 // https://www.fileformat.info/info/unicode/char/0084/index.htm
 function badCharacterControl0084(context) {
+    const charCode = 132;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 132) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-control-0084",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - CONTROL.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18220,11 +18373,12 @@ function badCharacterControl0084(context) {
 // Catches raw character "NEXT LINE":
 // https://www.fileformat.info/info/unicode/char/0085/index.htm
 function badCharacterNextLine(context) {
+    const charCode = 133;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 133) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-next-line",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - NEXT LINE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18242,11 +18396,12 @@ function badCharacterNextLine(context) {
 // Catches raw character "START OF SELECTED AREA":
 // https://www.fileformat.info/info/unicode/char/0086/index.htm
 function badCharacterStartOfSelectedArea(context) {
+    const charCode = 134;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 134) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-start-of-selected-area",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - START OF SELECTED AREA.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18264,11 +18419,12 @@ function badCharacterStartOfSelectedArea(context) {
 // Catches raw character "END OF SELECTED AREA":
 // https://www.fileformat.info/info/unicode/char/0087/index.htm
 function badCharacterEndOfSelectedArea(context) {
+    const charCode = 135;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 135) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-end-of-selected-area",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - END OF SELECTED AREA.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18286,11 +18442,12 @@ function badCharacterEndOfSelectedArea(context) {
 // Catches raw character "CHARACTER TABULATION SET":
 // https://www.fileformat.info/info/unicode/char/0088/index.htm
 function badCharacterCharacterTabulationSet(context) {
+    const charCode = 136;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 136) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-character-tabulation-set",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - CHARACTER TABULATION SET.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18308,11 +18465,12 @@ function badCharacterCharacterTabulationSet(context) {
 // Catches raw character "CHARACTER TABULATION WITH JUSTIFICATION":
 // https://www.fileformat.info/info/unicode/char/0089/index.htm
 function badCharacterCharacterTabulationWithJustification(context) {
+    const charCode = 137;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 137) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-character-tabulation-with-justification",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - CHARACTER TABULATION WITH JUSTIFICATION.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18330,11 +18488,12 @@ function badCharacterCharacterTabulationWithJustification(context) {
 // Catches raw character "LINE TABULATION SET":
 // https://www.fileformat.info/info/unicode/char/008a/index.htm
 function badCharacterLineTabulationSet(context) {
+    const charCode = 138;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 138) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-line-tabulation-set",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - LINE TABULATION SET.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18352,11 +18511,12 @@ function badCharacterLineTabulationSet(context) {
 // Catches raw character "PARTIAL LINE FORWARD":
 // https://www.fileformat.info/info/unicode/char/008b/index.htm
 function badCharacterPartialLineForward(context) {
+    const charCode = 139;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 139) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-partial-line-forward",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - PARTIAL LINE FORWARD.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18374,11 +18534,12 @@ function badCharacterPartialLineForward(context) {
 // Catches raw character "PARTIAL LINE BACKWARD":
 // https://www.fileformat.info/info/unicode/char/008c/index.htm
 function badCharacterPartialLineBackward(context) {
+    const charCode = 140;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 140) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-partial-line-backward",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - PARTIAL LINE BACKWARD.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18396,11 +18557,12 @@ function badCharacterPartialLineBackward(context) {
 // Catches raw character "REVERSE LINE FEED":
 // https://www.fileformat.info/info/unicode/char/008d/index.htm
 function badCharacterReverseLineFeed(context) {
+    const charCode = 141;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 141) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-reverse-line-feed",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - REVERSE LINE FEED.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18418,11 +18580,12 @@ function badCharacterReverseLineFeed(context) {
 // Catches raw character "SINGLE SHIFT TWO":
 // https://www.fileformat.info/info/unicode/char/008e/index.htm
 function badCharacterSingleShiftTwo$1(context) {
+    const charCode = 142;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 142) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-single-shift-two",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SINGLE SHIFT TWO.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18440,11 +18603,12 @@ function badCharacterSingleShiftTwo$1(context) {
 // Catches raw character "SINGLE SHIFT THREE":
 // https://www.fileformat.info/info/unicode/char/008f/index.htm
 function badCharacterSingleShiftTwo(context) {
+    const charCode = 143;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 143) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-single-shift-three",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SINGLE SHIFT THREE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18462,11 +18626,12 @@ function badCharacterSingleShiftTwo(context) {
 // Catches raw character "DEVICE CONTROL STRING":
 // https://www.fileformat.info/info/unicode/char/0090/index.htm
 function badCharacterDeviceControlString(context) {
+    const charCode = 144;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 144) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-device-control-string",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - DEVICE CONTROL STRING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18484,11 +18649,12 @@ function badCharacterDeviceControlString(context) {
 // Catches raw character "PRIVATE USE ONE":
 // https://www.fileformat.info/info/unicode/char/0091/index.htm
 function badCharacterPrivateUseOne(context) {
+    const charCode = 145;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 145) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-private-use-1",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - PRIVATE USE ONE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18506,11 +18672,12 @@ function badCharacterPrivateUseOne(context) {
 // Catches raw character "PRIVATE USE TWO":
 // https://www.fileformat.info/info/unicode/char/0092/index.htm
 function badCharacterPrivateUseTwo(context) {
+    const charCode = 146;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 146) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-private-use-2",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - PRIVATE USE TWO.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18528,11 +18695,12 @@ function badCharacterPrivateUseTwo(context) {
 // Catches raw character "SET TRANSMIT STATE":
 // https://www.fileformat.info/info/unicode/char/0093/index.htm
 function badCharacterSetTransmitState(context) {
+    const charCode = 147;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 147) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-set-transmit-state",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SET TRANSMIT STATE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18550,11 +18718,12 @@ function badCharacterSetTransmitState(context) {
 // Catches raw character "CANCEL CHARACTER":
 // https://www.fileformat.info/info/unicode/char/0094/index.htm
 function badCharacterCancelCharacter(context) {
+    const charCode = 148;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 148) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-cancel-character",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - CANCEL CHARACTER.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18572,11 +18741,12 @@ function badCharacterCancelCharacter(context) {
 // Catches raw character "MESSAGE WAITING":
 // https://www.fileformat.info/info/unicode/char/0095/index.htm
 function badCharacterMessageWaiting(context) {
+    const charCode = 149;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 149) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-message-waiting",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - MESSAGE WAITING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18594,11 +18764,12 @@ function badCharacterMessageWaiting(context) {
 // Catches raw character "START OF PROTECTED AREA":
 // https://www.fileformat.info/info/unicode/char/0096/index.htm
 function badCharacterStartOfProtectedArea(context) {
+    const charCode = 150;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 150) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-start-of-protected-area",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - START OF PROTECTED AREA.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18616,11 +18787,12 @@ function badCharacterStartOfProtectedArea(context) {
 // Catches raw character "END OF PROTECTED AREA":
 // https://www.fileformat.info/info/unicode/char/0097/index.htm
 function badCharacterEndOfProtectedArea(context) {
+    const charCode = 151;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 151) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-end-of-protected-area",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - END OF PROTECTED AREA.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18638,11 +18810,12 @@ function badCharacterEndOfProtectedArea(context) {
 // Catches raw character "START OF STRING":
 // https://www.fileformat.info/info/unicode/char/0098/index.htm
 function badCharacterStartOfString(context) {
+    const charCode = 152;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 152) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-start-of-string",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - START OF STRING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18660,11 +18833,12 @@ function badCharacterStartOfString(context) {
 // Catches raw character "CONTROL" (hex 99):
 // https://www.fileformat.info/info/unicode/char/0099/index.htm
 function badCharacterControl0099(context) {
+    const charCode = 153;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 153) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-control-0099",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - CONTROL.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18682,11 +18856,12 @@ function badCharacterControl0099(context) {
 // Catches raw character "SINGLE CHARACTER INTRODUCER":
 // https://www.fileformat.info/info/unicode/char/009a/index.htm
 function badCharacterSingleCharacterIntroducer(context) {
+    const charCode = 154;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 154) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-single-character-introducer",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SINGLE CHARACTER INTRODUCER.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18704,11 +18879,12 @@ function badCharacterSingleCharacterIntroducer(context) {
 // Catches raw character "CONTROL SEQUENCE INTRODUCER":
 // https://www.fileformat.info/info/unicode/char/009b/index.htm
 function badCharacterControlSequenceIntroducer(context) {
+    const charCode = 155;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 155) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-control-sequence-introducer",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - CONTROL SEQUENCE INTRODUCER.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18726,11 +18902,12 @@ function badCharacterControlSequenceIntroducer(context) {
 // Catches raw character "STRING TERMINATOR":
 // https://www.fileformat.info/info/unicode/char/009c/index.htm
 function badCharacterStringTerminator(context) {
+    const charCode = 156;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 156) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-string-terminator",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - STRING TERMINATOR.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18748,11 +18925,12 @@ function badCharacterStringTerminator(context) {
 // Catches raw character "OPERATING SYSTEM COMMAND":
 // https://www.fileformat.info/info/unicode/char/009d/index.htm
 function badCharacterOperatingSystemCommand(context) {
+    const charCode = 157;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 157) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-operating-system-command",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - OPERATING SYSTEM COMMAND.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18770,11 +18948,12 @@ function badCharacterOperatingSystemCommand(context) {
 // Catches raw character "PRIVATE MESSAGE":
 // https://www.fileformat.info/info/unicode/char/009e/index.htm
 function badCharacterPrivateMessage(context) {
+    const charCode = 158;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 158) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-private-message",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - PRIVATE MESSAGE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18792,11 +18971,12 @@ function badCharacterPrivateMessage(context) {
 // Catches raw character "APPLICATION PROGRAM COMMAND":
 // https://www.fileformat.info/info/unicode/char/009f/index.htm
 function badCharacterApplicationProgramCommand(context) {
+    const charCode = 159;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 159) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-application-program-command",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - APPLICATION PROGRAM COMMAND.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18814,11 +18994,12 @@ function badCharacterApplicationProgramCommand(context) {
 // Catches raw character "SOFT HYPHEN":
 // https://www.fileformat.info/info/unicode/char/00ad/index.htm
 function badCharacterSoftHyphen(context) {
+    const charCode = 173;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 173) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-soft-hyphen",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SOFT HYPHEN.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18836,11 +19017,12 @@ function badCharacterSoftHyphen(context) {
 // Catches raw character "NON-BREAKING SPACE":
 // https://www.fileformat.info/info/unicode/char/00a0/index.htm
 function badCharacterNonBreakingSpace(context) {
+    const charCode = 160;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 160) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-non-breaking-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - NON-BREAKING SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18858,11 +19040,12 @@ function badCharacterNonBreakingSpace(context) {
 // Catches raw character "OGHAM SPACE MARK":
 // https://www.fileformat.info/info/unicode/char/1680/index.htm
 function badCharacterOghamSpaceMark(context) {
+    const charCode = 5760;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 5760) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-ogham-space-mark",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - OGHAM SPACE MARK.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18880,11 +19063,12 @@ function badCharacterOghamSpaceMark(context) {
 // Catches raw character "EN QUAD":
 // https://www.fileformat.info/info/unicode/char/2000/index.htm
 function badCharacterEnQuad(context) {
+    const charCode = 8192;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8192) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-en-quad",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - EN QUAD.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18902,11 +19086,12 @@ function badCharacterEnQuad(context) {
 // Catches raw character "EM QUAD":
 // https://www.fileformat.info/info/unicode/char/2001/index.htm
 function badCharacterEmQuad(context) {
+    const charCode = 8193;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8193) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-em-quad",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - EM QUAD.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18924,11 +19109,12 @@ function badCharacterEmQuad(context) {
 // Catches raw character "EN SPACE":
 // https://www.fileformat.info/info/unicode/char/2002/index.htm
 function badCharacterEnSpace(context) {
+    const charCode = 8194;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8194) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-en-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - EN SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18946,11 +19132,12 @@ function badCharacterEnSpace(context) {
 // Catches raw character "EM SPACE":
 // https://www.fileformat.info/info/unicode/char/2003/index.htm
 function badCharacterEmSpace(context) {
+    const charCode = 8195;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8195) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-em-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - EM SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18968,11 +19155,12 @@ function badCharacterEmSpace(context) {
 // Catches raw character "THREE-PER-EM SPACE":
 // https://www.fileformat.info/info/unicode/char/2004/index.htm
 function badCharacterThreePerEmSpace(context) {
+    const charCode = 8196;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8196) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-three-per-em-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - THREE-PER-EM SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -18990,11 +19178,12 @@ function badCharacterThreePerEmSpace(context) {
 // Catches raw character "FOUR-PER-EM SPACE":
 // https://www.fileformat.info/info/unicode/char/2005/index.htm
 function badCharacterFourPerEmSpace(context) {
+    const charCode = 8197;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8197) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-four-per-em-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - FOUR-PER-EM SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19012,11 +19201,12 @@ function badCharacterFourPerEmSpace(context) {
 // Catches raw character "SIX-PER-EM SPACE":
 // https://www.fileformat.info/info/unicode/char/2006/index.htm
 function badCharacterSixPerEmSpace(context) {
+    const charCode = 8198;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8198) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-six-per-em-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - SIX-PER-EM SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19034,11 +19224,12 @@ function badCharacterSixPerEmSpace(context) {
 // Catches raw character "FIGURE SPACE":
 // https://www.fileformat.info/info/unicode/char/2007/index.htm
 function badCharacterFigureSpace(context) {
+    const charCode = 8199;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8199) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-figure-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - FIGURE SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19056,11 +19247,12 @@ function badCharacterFigureSpace(context) {
 // Catches raw character "PUNCTUATION SPACE":
 // https://www.fileformat.info/info/unicode/char/2008/index.htm
 function badCharacterPunctuationSpace(context) {
+    const charCode = 8200;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8200) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-punctuation-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - PUNCTUATION SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19078,11 +19270,12 @@ function badCharacterPunctuationSpace(context) {
 // Catches raw character "THIN SPACE":
 // https://www.fileformat.info/info/unicode/char/2009/index.htm
 function badCharacterThinSpace(context) {
+    const charCode = 8201;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8201) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-thin-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - THIN SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19100,11 +19293,12 @@ function badCharacterThinSpace(context) {
 // Catches raw character "HAIR SPACE":
 // https://www.fileformat.info/info/unicode/char/200a/index.htm
 function badCharacterHairSpace(context) {
+    const charCode = 8202;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8202) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-hair-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - HAIR SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19122,11 +19316,12 @@ function badCharacterHairSpace(context) {
 // Catches raw character "ZERO WIDTH SPACE":
 // https://www.fileformat.info/info/unicode/char/200b/index.htm
 function badCharacterZeroWidthSpace(context) {
+    const charCode = 8203;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8203) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-zero-width-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - ZERO WIDTH SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19144,11 +19339,12 @@ function badCharacterZeroWidthSpace(context) {
 // Catches raw character "ZERO WIDTH NON-JOINER":
 // https://www.fileformat.info/info/unicode/char/200c/index.htm
 function badCharacterZeroWidthNonJoiner(context) {
+    const charCode = 8204;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8204) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-zero-width-non-joiner",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - ZERO WIDTH NON-JOINER.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19166,11 +19362,12 @@ function badCharacterZeroWidthNonJoiner(context) {
 // Catches raw character "ZERO WIDTH JOINER":
 // https://www.fileformat.info/info/unicode/char/200d/index.htm
 function badCharacterZeroWidthJoiner(context) {
+    const charCode = 8205;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8205) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-zero-width-joiner",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - ZERO WIDTH JOINER.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19188,11 +19385,12 @@ function badCharacterZeroWidthJoiner(context) {
 // Catches raw character "LEFT-TO-RIGHT MARK":
 // https://www.fileformat.info/info/unicode/char/200e/index.htm
 function badCharacterLeftToRightMark(context) {
+    const charCode = 8206;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8206) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-left-to-right-mark",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - LEFT-TO-RIGHT MARK.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19210,11 +19408,12 @@ function badCharacterLeftToRightMark(context) {
 // Catches raw character "RIGHT-TO-LEFT MARK":
 // https://www.fileformat.info/info/unicode/char/200f/index.htm
 function badCharacterRightToLeftMark(context) {
+    const charCode = 8207;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8207) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-right-to-left-mark",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - RIGHT-TO-LEFT MARK.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19232,11 +19431,12 @@ function badCharacterRightToLeftMark(context) {
 // Catches raw character "LEFT-TO-RIGHT EMBEDDING":
 // https://www.fileformat.info/info/unicode/char/202a/index.htm
 function badCharacterLeftToRightEmbedding(context) {
+    const charCode = 8234;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8234) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-left-to-right-embedding",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - LEFT-TO-RIGHT EMBEDDING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19254,11 +19454,12 @@ function badCharacterLeftToRightEmbedding(context) {
 // Catches raw character "RIGHT-TO-LEFT EMBEDDING":
 // https://www.fileformat.info/info/unicode/char/202b/index.htm
 function badCharacterRightToLeftEmbedding(context) {
+    const charCode = 8235;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8235) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-right-to-left-embedding",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - RIGHT-TO-LEFT EMBEDDING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19276,11 +19477,12 @@ function badCharacterRightToLeftEmbedding(context) {
 // Catches raw character "POP DIRECTIONAL FORMATTING":
 // https://www.fileformat.info/info/unicode/char/202c/index.htm
 function badCharacterPopDirectionalFormatting(context) {
+    const charCode = 8236;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8236) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-pop-directional-formatting",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - POP DIRECTIONAL FORMATTING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19298,11 +19500,12 @@ function badCharacterPopDirectionalFormatting(context) {
 // Catches raw character "LEFT-TO-RIGHT OVERRIDE":
 // https://www.fileformat.info/info/unicode/char/202d/index.htm
 function badCharacterLeftToRightOverride(context) {
+    const charCode = 8237;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8237) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-left-to-right-override",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - LEFT-TO-RIGHT OVERRIDE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19320,11 +19523,12 @@ function badCharacterLeftToRightOverride(context) {
 // Catches raw character "RIGHT-TO-LEFT OVERRIDE":
 // https://www.fileformat.info/info/unicode/char/202e/index.htm
 function badCharacterRightToLeftOverride(context) {
+    const charCode = 8238;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8238) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-right-to-left-override",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - RIGHT-TO-LEFT OVERRIDE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19342,11 +19546,12 @@ function badCharacterRightToLeftOverride(context) {
 // Catches raw character "WORD JOINER":
 // https://www.fileformat.info/info/unicode/char/2060/index.htm
 function badCharacterWordJoiner(context) {
+    const charCode = 8288;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8288) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-word-joiner",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - WORD JOINER.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19364,11 +19569,12 @@ function badCharacterWordJoiner(context) {
 // Catches raw character "FUNCTION APPLICATION":
 // https://www.fileformat.info/info/unicode/char/2061/index.htm
 function badCharacterFunctionApplication(context) {
+    const charCode = 8289;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8289) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-function-application",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - FUNCTION APPLICATION.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19386,11 +19592,12 @@ function badCharacterFunctionApplication(context) {
 // Catches raw character "INVISIBLE TIMES":
 // https://www.fileformat.info/info/unicode/char/2062/index.htm
 function badCharacterInvisibleTimes(context) {
+    const charCode = 8290;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8290) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-invisible-times",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INVISIBLE TIMES.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19408,11 +19615,12 @@ function badCharacterInvisibleTimes(context) {
 // Catches raw character "INVISIBLE SEPARATOR":
 // https://www.fileformat.info/info/unicode/char/2063/index.htm
 function badCharacterInvisibleSeparator(context) {
+    const charCode = 8291;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8291) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-invisible-separator",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INVISIBLE SEPARATOR.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19430,11 +19638,12 @@ function badCharacterInvisibleSeparator(context) {
 // Catches raw character "INVISIBLE PLUS":
 // https://www.fileformat.info/info/unicode/char/2064/index.htm
 function badCharacterInvisiblePlus(context) {
+    const charCode = 8292;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8292) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-invisible-plus",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INVISIBLE PLUS.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19452,11 +19661,12 @@ function badCharacterInvisiblePlus(context) {
 // Catches raw character "LEFT-TO-RIGHT ISOLATE":
 // https://www.fileformat.info/info/unicode/char/2066/index.htm
 function badCharacterLeftToRightIsolate(context) {
+    const charCode = 8294;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8294) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-left-to-right-isolate",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - LEFT-TO-RIGHT ISOLATE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19474,11 +19684,12 @@ function badCharacterLeftToRightIsolate(context) {
 // Catches raw character "RIGHT-TO-LEFT ISOLATE":
 // https://www.fileformat.info/info/unicode/char/2067/index.htm
 function badCharacterRightToLeftIsolate(context) {
+    const charCode = 8295;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8295) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-right-to-left-isolate",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - RIGHT-TO-LEFT ISOLATE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19496,11 +19707,12 @@ function badCharacterRightToLeftIsolate(context) {
 // Catches raw character "FIRST STRONG ISOLATE":
 // https://www.fileformat.info/info/unicode/char/2068/index.htm
 function badCharacterFirstStrongIsolate(context) {
+    const charCode = 8296;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8296) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-first-strong-isolate",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - FIRST STRONG ISOLATE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19518,11 +19730,12 @@ function badCharacterFirstStrongIsolate(context) {
 // Catches raw character "FIRST STRONG ISOLATE":
 // https://www.fileformat.info/info/unicode/char/2069/index.htm
 function badCharacterPopDirectionalIsolate(context) {
+    const charCode = 8297;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8297) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-pop-directional-isolate",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - FIRST STRONG ISOLATE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19540,11 +19753,12 @@ function badCharacterPopDirectionalIsolate(context) {
 // Catches raw character "INHIBIT SYMMETRIC SWAPPING":
 // https://www.fileformat.info/info/unicode/char/206a/index.htm
 function badCharacterInhibitSymmetricSwapping(context) {
+    const charCode = 8298;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8298) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-inhibit-symmetric-swapping",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INHIBIT SYMMETRIC SWAPPING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19559,15 +19773,16 @@ function badCharacterInhibitSymmetricSwapping(context) {
 
 // rule: bad-character-activate-symmetric-swapping
 // -----------------------------------------------------------------------------
-// Catches raw character "INHIBIT SYMMETRIC SWAPPING":
+// Catches raw character "ACTIVATE SYMMETRIC SWAPPING":
 // https://www.fileformat.info/info/unicode/char/206b/index.htm
 function badCharacterActivateSymmetricSwapping(context) {
+    const charCode = 8299;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8299) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-activate-symmetric-swapping",
-                    message: "Bad character - INHIBIT SYMMETRIC SWAPPING.",
+                    ruleId: badChars.get(charCode),
+                    message: "Bad character - ACTIVATE SYMMETRIC SWAPPING.",
                     idxFrom: i,
                     idxTo: i + 1,
                     fix: {
@@ -19584,11 +19799,12 @@ function badCharacterActivateSymmetricSwapping(context) {
 // Catches raw character "INHIBIT ARABIC FORM SHAPING":
 // https://www.fileformat.info/info/unicode/char/206c/index.htm
 function badCharacterInhibitArabicFormShaping(context) {
+    const charCode = 8300;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8300) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-inhibit-arabic-form-shaping",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INHIBIT ARABIC FORM SHAPING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19606,11 +19822,12 @@ function badCharacterInhibitArabicFormShaping(context) {
 // Catches raw character "ACTIVATE ARABIC FORM SHAPING":
 // https://www.fileformat.info/info/unicode/char/206d/index.htm
 function badCharacterActivateArabicFormShaping(context) {
+    const charCode = 8301;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8301) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-activate-arabic-form-shaping",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - ACTIVATE ARABIC FORM SHAPING.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19628,11 +19845,12 @@ function badCharacterActivateArabicFormShaping(context) {
 // Catches raw character "NATIONAL DIGIT SHAPES":
 // https://www.fileformat.info/info/unicode/char/206e/index.htm
 function badCharacterNationalDigitShapes(context) {
+    const charCode = 8302;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8302) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-national-digit-shapes",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - NATIONAL DIGIT SHAPES.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19650,11 +19868,12 @@ function badCharacterNationalDigitShapes(context) {
 // Catches raw character "NOMINAL DIGIT SHAPES":
 // https://www.fileformat.info/info/unicode/char/206f/index.htm
 function badCharacterNominalDigitShapes(context) {
+    const charCode = 8303;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8303) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-nominal-digit-shapes",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - NOMINAL DIGIT SHAPES.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19672,11 +19891,12 @@ function badCharacterNominalDigitShapes(context) {
 // Catches raw character "ZERO WIDTH NO-BREAK SPACE":
 // https://www.fileformat.info/info/unicode/char/feff/index.htm
 function badCharacterZeroWidthNoBreakSpace(context) {
+    const charCode = 65279;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 65279) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-zero-width-no-break-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - ZERO WIDTH NO-BREAK SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19694,11 +19914,12 @@ function badCharacterZeroWidthNoBreakSpace(context) {
 // Catches raw character "INTERLINEAR ANNOTATION ANCHOR":
 // https://www.fileformat.info/info/unicode/char/fff9/index.htm
 function badCharacterInterlinearAnnotationAnchor(context) {
+    const charCode = 65529;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 65529) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-interlinear-annotation-anchor",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INTERLINEAR ANNOTATION ANCHOR.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19716,11 +19937,12 @@ function badCharacterInterlinearAnnotationAnchor(context) {
 // Catches raw character "INTERLINEAR ANNOTATION SEPARATOR":
 // https://www.fileformat.info/info/unicode/char/fffa/index.htm
 function badCharacterInterlinearAnnotationSeparator(context) {
+    const charCode = 65530;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 65530) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-interlinear-annotation-separator",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INTERLINEAR ANNOTATION SEPARATOR.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19738,11 +19960,12 @@ function badCharacterInterlinearAnnotationSeparator(context) {
 // Catches raw character "INTERLINEAR ANNOTATION TERMINATOR":
 // https://www.fileformat.info/info/unicode/char/fffb/index.htm
 function badCharacterInterlinearAnnotationTerminator(context) {
+    const charCode = 65531;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 65531) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-interlinear-annotation-terminator",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - INTERLINEAR ANNOTATION TERMINATOR.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19760,11 +19983,12 @@ function badCharacterInterlinearAnnotationTerminator(context) {
 // Catches raw character "LINE SEPARATOR":
 // https://www.fileformat.info/info/unicode/char/2028/index.htm
 function badCharacterLineSeparator(context) {
+    const charCode = 8232;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8232) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-line-separator",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - LINE SEPARATOR.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19782,11 +20006,12 @@ function badCharacterLineSeparator(context) {
 // Catches raw character "PARAGRAPH SEPARATOR":
 // https://www.fileformat.info/info/unicode/char/2029/index.htm
 function badCharacterParagraphSeparator(context) {
+    const charCode = 8233;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8233) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-paragraph-separator",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - PARAGRAPH SEPARATOR.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19804,11 +20029,12 @@ function badCharacterParagraphSeparator(context) {
 // Catches raw character "NARROW NO-BREAK SPACE":
 // https://www.fileformat.info/info/unicode/char/202f/index.htm
 function badCharacterNarrowNoBreakSpace(context) {
+    const charCode = 8239;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8239) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-narrow-no-break-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - NARROW NO-BREAK SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19826,11 +20052,12 @@ function badCharacterNarrowNoBreakSpace(context) {
 // Catches raw character "MEDIUM MATHEMATICAL SPACE":
 // https://www.fileformat.info/info/unicode/char/205f/index.htm
 function badCharacterMediumMathematicalSpace(context) {
+    const charCode = 8287;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 8287) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-medium-mathematical-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - MEDIUM MATHEMATICAL SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19848,11 +20075,12 @@ function badCharacterMediumMathematicalSpace(context) {
 // Catches raw character "IDEOGRAPHIC SPACE":
 // https://www.fileformat.info/info/unicode/char/3000/index.htm
 function badCharacterIdeographicSpace(context) {
+    const charCode = 12288;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 12288) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-ideographic-space",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - IDEOGRAPHIC SPACE.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -19870,11 +20098,12 @@ function badCharacterIdeographicSpace(context) {
 // Catches raw character "REPLACEMENT CHARACTER":
 // https://www.fileformat.info/info/unicode/char/fffd/index.htm
 function badCharacterReplacementCharacter(context) {
+    const charCode = 65533;
     return {
         character({ chr, i }) {
-            if (chr.charCodeAt(0) === 65533) {
+            if (chr.charCodeAt(0) === charCode) {
                 context.report({
-                    ruleId: "bad-character-replacement-character",
+                    ruleId: badChars.get(charCode),
                     message: "Bad character - REPLACEMENT CHARACTER.",
                     idxFrom: i,
                     idxTo: i + 1,
@@ -41036,11 +41265,20 @@ function characterEncode(context, ...config) {
             // ACTION
             // traverse the value of this text node:
             for (let i = 0, len = token.value.length; i < len; i++) {
-                if ((token.value[i].charCodeAt(0) > 127 ||
-                    `<>"`.includes(token.value[i])) &&
-                    (token.value[i].charCodeAt(0) !== 160 ||
-                        !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") ||
-                        !isAnEnabledValue(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
+                const charCode = token.value[i].charCodeAt(0);
+                // We have to avoid encoding characters which bad-character-* rule
+                // would delete. Encoding would be bad, because deletion Range (like [0, 1])
+                // would get merge with replacement range (like [0, 1, "&#xFFFD;"]) and
+                // the character would just get encoded rather deleted.
+                if (
+                // it's outside ASCII
+                (charCode > 127 &&
+                    // and if so, either does not have a bad-character-* rule for it
+                    (!badChars.has(charCode) ||
+                        // or it does but it's not enabled
+                        !isAnEnabledValue(context.processedRulesConfig[badChars.get(charCode)]))) ||
+                    // or it's within ASCII, but it's a special character for HTML markup
+                    `<>"`.includes(token.value[i])) {
                     validateCharEncoding(token.value[i], i + token.start, mode, context);
                 }
             }

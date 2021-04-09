@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-control-sequence-introducer
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/009b/index.htm
 
 function badCharacterControlSequenceIntroducer(context: Linter): RuleObjType {
+  const charCode = 155;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 155) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-control-sequence-introducer",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - CONTROL SEQUENCE INTRODUCER.",
           idxFrom: i,
           idxTo: i + 1,

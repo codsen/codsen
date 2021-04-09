@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-next-line
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0085/index.htm
 
 function badCharacterNextLine(context: Linter): RuleObjType {
+  const charCode = 133;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 133) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-next-line",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - NEXT LINE.",
           idxFrom: i,
           idxTo: i + 1,

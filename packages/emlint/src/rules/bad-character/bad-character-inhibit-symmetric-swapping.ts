@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-inhibit-symmetric-swapping
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/206a/index.htm
 
 function badCharacterInhibitSymmetricSwapping(context: Linter): RuleObjType {
+  const charCode = 8298;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8298) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-inhibit-symmetric-swapping",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - INHIBIT SYMMETRIC SWAPPING.",
           idxFrom: i,
           idxTo: i + 1,

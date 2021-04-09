@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-pop-directional-formatting
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/202c/index.htm
 
 function badCharacterPopDirectionalFormatting(context: Linter): RuleObjType {
+  const charCode = 8236;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8236) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-pop-directional-formatting",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - POP DIRECTIONAL FORMATTING.",
           idxFrom: i,
           idxTo: i + 1,

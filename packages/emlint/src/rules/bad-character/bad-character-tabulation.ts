@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-tabulation
 // -----------------------------------------------------------------------------
@@ -40,13 +41,14 @@ const badCharacterTabulation: BadCharacterTabulation = (
     mode = "indentationIsFine";
   }
 
+  const charCode = 9;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 9) {
+      if (chr.charCodeAt(0) === charCode) {
         if (mode === "never") {
           // simple - there can't be any TABs, so raise it straight away
           context.report({
-            ruleId: "bad-character-tabulation",
+            ruleId: badChars.get(charCode) as string,
             message: "Bad character - TABULATION.",
             idxFrom: i,
             idxTo: i + 1,
@@ -65,7 +67,7 @@ const badCharacterTabulation: BadCharacterTabulation = (
             context.str[charTopOnBreaksIdx].trim().length
           ) {
             context.report({
-              ruleId: "bad-character-tabulation",
+              ruleId: badChars.get(charCode) as string,
               message: "Bad character - TABULATION.",
               idxFrom: i,
               idxTo: i + 1,

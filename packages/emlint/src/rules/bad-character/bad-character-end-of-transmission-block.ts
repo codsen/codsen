@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-end-of-transmission-block
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0017/index.htm
 
 function badCharacterEndOfTransmissionBlock(context: Linter): RuleObjType {
+  const charCode = 23;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 23) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-end-of-transmission-block",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - END OF TRANSMISSION BLOCK.",
           idxFrom: i,
           idxTo: i + 1,

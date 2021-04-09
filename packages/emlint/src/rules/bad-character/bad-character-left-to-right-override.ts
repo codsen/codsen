@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-left-to-right-override
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/202d/index.htm
 
 function badCharacterLeftToRightOverride(context: Linter): RuleObjType {
+  const charCode = 8237;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8237) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-left-to-right-override",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - LEFT-TO-RIGHT OVERRIDE.",
           idxFrom: i,
           idxTo: i + 1,

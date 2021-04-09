@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-left-to-right-embedding
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/202a/index.htm
 
 function badCharacterLeftToRightEmbedding(context: Linter): RuleObjType {
+  const charCode = 8234;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8234) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-left-to-right-embedding",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - LEFT-TO-RIGHT EMBEDDING.",
           idxFrom: i,
           idxTo: i + 1,

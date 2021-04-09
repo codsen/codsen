@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-set-transmit-state
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0093/index.htm
 
 function badCharacterSetTransmitState(context: Linter): RuleObjType {
+  const charCode = 147;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 147) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-set-transmit-state",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - SET TRANSMIT STATE.",
           idxFrom: i,
           idxTo: i + 1,

@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-character-tabulation-with-justification
 // -----------------------------------------------------------------------------
@@ -9,11 +10,12 @@ import { Linter, RuleObjType } from "../../linter";
 function badCharacterCharacterTabulationWithJustification(
   context: Linter
 ): RuleObjType {
+  const charCode = 137;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 137) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-character-tabulation-with-justification",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - CHARACTER TABULATION WITH JUSTIFICATION.",
           idxFrom: i,
           idxTo: i + 1,

@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-nominal-digit-shapes
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/206f/index.htm
 
 function badCharacterNominalDigitShapes(context: Linter): RuleObjType {
+  const charCode = 8303;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8303) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-nominal-digit-shapes",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - NOMINAL DIGIT SHAPES.",
           idxFrom: i,
           idxTo: i + 1,

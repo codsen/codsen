@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-zero-width-no-break-space
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/feff/index.htm
 
 function badCharacterZeroWidthNoBreakSpace(context: Linter): RuleObjType {
+  const charCode = 65279;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 65279) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-zero-width-no-break-space",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - ZERO WIDTH NO-BREAK SPACE.",
           idxFrom: i,
           idxTo: i + 1,

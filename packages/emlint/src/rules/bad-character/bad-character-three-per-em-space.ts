@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-three-per-em-space
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/2004/index.htm
 
 function badCharacterThreePerEmSpace(context: Linter): RuleObjType {
+  const charCode = 8196;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8196) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-three-per-em-space",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - THREE-PER-EM SPACE.",
           idxFrom: i,
           idxTo: i + 1,

@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-hair-space
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/200a/index.htm
 
 function badCharacterHairSpace(context: Linter): RuleObjType {
+  const charCode = 8202;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8202) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-hair-space",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - HAIR SPACE.",
           idxFrom: i,
           idxTo: i + 1,

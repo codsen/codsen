@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-interlinear-annotation-separator
 // -----------------------------------------------------------------------------
@@ -9,11 +10,12 @@ import { Linter, RuleObjType } from "../../linter";
 function badCharacterInterlinearAnnotationSeparator(
   context: Linter
 ): RuleObjType {
+  const charCode = 65530;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 65530) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-interlinear-annotation-separator",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - INTERLINEAR ANNOTATION SEPARATOR.",
           idxFrom: i,
           idxTo: i + 1,

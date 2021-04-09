@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-start-of-selected-area
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0086/index.htm
 
 function badCharacterStartOfSelectedArea(context: Linter): RuleObjType {
+  const charCode = 134;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 134) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-start-of-selected-area",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - START OF SELECTED AREA.",
           idxFrom: i,
           idxTo: i + 1,

@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-zero-width-space
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/200b/index.htm
 
 function badCharacterZeroWidthSpace(context: Linter): RuleObjType {
+  const charCode = 8203;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8203) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-zero-width-space",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - ZERO WIDTH SPACE.",
           idxFrom: i,
           idxTo: i + 1,

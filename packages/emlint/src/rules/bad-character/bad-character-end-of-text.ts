@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-end-of-text
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0003/index.htm
 
 function badCharacterEndOfText(context: Linter): RuleObjType {
+  const charCode = 3;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 3) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-end-of-text",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - END OF TEXT.",
           idxFrom: i,
           idxTo: i + 1,

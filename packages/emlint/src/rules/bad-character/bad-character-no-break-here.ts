@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-no-break-here
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/0083/index.htm
 
 function badCharacterNoBreakHere(context: Linter): RuleObjType {
+  const charCode = 131;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 131) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-no-break-here",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - NO BREAK HERE.",
           idxFrom: i,
           idxTo: i + 1,

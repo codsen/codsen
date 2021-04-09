@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-punctuation-space
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/2008/index.htm
 
 function badCharacterPunctuationSpace(context: Linter): RuleObjType {
+  const charCode = 8200;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8200) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-punctuation-space",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - PUNCTUATION SPACE.",
           idxFrom: i,
           idxTo: i + 1,

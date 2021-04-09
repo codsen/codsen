@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-information-separator-one
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/001f/index.htm
 
 function badCharacterInformationSeparatorTwo(context: Linter): RuleObjType {
+  const charCode = 31;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 31) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-information-separator-one",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - INFORMATION SEPARATOR ONE.",
           idxFrom: i,
           idxTo: i + 1,

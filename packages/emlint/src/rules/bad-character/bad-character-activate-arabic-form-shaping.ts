@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-activate-arabic-form-shaping
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/206d/index.htm
 
 function badCharacterActivateArabicFormShaping(context: Linter): RuleObjType {
+  const charCode = 8301;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 8301) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-activate-arabic-form-shaping",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - ACTIVATE ARABIC FORM SHAPING.",
           idxFrom: i,
           idxTo: i + 1,

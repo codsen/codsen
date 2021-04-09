@@ -1,4 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
+import { badChars } from "../../util/bad-character-all";
 
 // rule: bad-character-non-breaking-space
 // -----------------------------------------------------------------------------
@@ -7,11 +8,12 @@ import { Linter, RuleObjType } from "../../linter";
 // https://www.fileformat.info/info/unicode/char/00a0/index.htm
 
 function badCharacterNonBreakingSpace(context: Linter): RuleObjType {
+  const charCode = 160;
   return {
     character({ chr, i }) {
-      if (chr.charCodeAt(0) === 160) {
+      if (chr.charCodeAt(0) === charCode) {
         context.report({
-          ruleId: "bad-character-non-breaking-space",
+          ruleId: badChars.get(charCode) as string,
           message: "Bad character - NON-BREAKING SPACE.",
           idxFrom: i,
           idxTo: i + 1,
