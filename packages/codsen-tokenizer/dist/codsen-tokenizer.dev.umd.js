@@ -6270,7 +6270,16 @@ function tokenizer(str, originalOpts) {
                         // if it's not a property (of inline style), set its "end"
                         if (!attrib.attribValue[~-attrib.attribValue.length].property) {
                             attrib.attribValue[~-attrib.attribValue.length].end = i;
-                            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+                            if (attrib.attribValue[~-attrib.attribValue.length]
+                                .property === null) {
+                                // it's CSS property without a value:
+                                // <img style="display" />
+                                attrib.attribValue[~-attrib.attribValue.length].property = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+                                attrib.attribValue[~-attrib.attribValue.length].propertyEnds = i;
+                            }
+                            else {
+                                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+                            }
                         }
                     }
                     // 2. if the pair was mismatching, wipe layers' last element

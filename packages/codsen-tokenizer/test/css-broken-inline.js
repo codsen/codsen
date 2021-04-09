@@ -3002,3 +3002,66 @@ tap.test(`33 - leading semi, spaced`, (t) => {
   );
   t.end();
 });
+
+tap.test(`34 - value missing`, (t) => {
+  const gathered = [];
+  ct(`<img style="display" />`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 23,
+        value: '<img style="display" />',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "img",
+        recognised: true,
+        closing: false,
+        void: true,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 19,
+            attribValueRaw: "display",
+            attribValue: [
+              {
+                start: 12,
+                end: 19,
+                property: "display",
+                propertyStarts: 12,
+                propertyEnds: 19,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: null,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 19,
+            attribStarts: 5,
+            attribEnds: 20,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "34"
+  );
+  t.end();
+});

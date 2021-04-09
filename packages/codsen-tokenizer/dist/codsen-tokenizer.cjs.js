@@ -1667,7 +1667,12 @@ function tokenizer(str, originalOpts) {
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
             if (!attrib.attribValue[~-attrib.attribValue.length].property) {
               attrib.attribValue[~-attrib.attribValue.length].end = _i;
-              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+              if (attrib.attribValue[~-attrib.attribValue.length].property === null) {
+                attrib.attribValue[~-attrib.attribValue.length].property = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+                attrib.attribValue[~-attrib.attribValue.length].propertyEnds = _i;
+              } else {
+                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+              }
             }
           }
           if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
