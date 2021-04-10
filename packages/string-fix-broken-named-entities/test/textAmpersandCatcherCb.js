@@ -1,41 +1,44 @@
 import tap from "tap";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+// import fix from "./util/util";
+import { fixEnt, allRules } from "../dist/string-fix-broken-named-entities.esm";
 
 tap.test(`01 - text amps and a healthy named entity, default settings`, (t) => {
   const gathered = [];
-  const res = fix("Let's go to B&Q and by some&nbsp;M&M's.", {
+  const res = fixEnt("Let's go to B&Q and buy some&nbsp;M&M's.", {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
   t.strictSame(res, [], "01.01");
-  t.strictSame(gathered, [13, 34], "01.02");
+  t.strictSame(gathered, [13, 35], "01.02");
   t.end();
 });
 
 tap.test(`02 - text amps and a healthy named entity`, (t) => {
   const gathered = [];
-  const res = fix("Let's go to B&Q and by some&nbsp;M&M's.", {
+  const res = fixEnt("Let's go to B&Q and buy some&nbsp;M&M's.", {
     decode: true,
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-encoded-nbsp";
+  t.ok(allRules.includes(ruleName), "02.01");
   t.match(
     res,
     [
       {
-        ruleName: "bad-html-entity-encoded-nbsp",
+        ruleName,
       },
     ],
-    "02.01"
+    "02.02"
   );
-  t.equal(res.length, 1, "02.02");
-  t.strictSame(gathered, [13, 34], "02.03");
+  t.equal(res.length, 1, "02.03");
+  t.strictSame(gathered, [13, 35], "02.04");
   t.end();
 });
 
 tap.test(`03 - sandwitched, healthy entities`, (t) => {
   const gathered = [];
-  const res = fix("&&nbsp;&&nbsp;&", {
+  const res = fixEnt("&&nbsp;&&nbsp;&", {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
@@ -46,15 +49,17 @@ tap.test(`03 - sandwitched, healthy entities`, (t) => {
 
 tap.test(`04 - sandwitched, broken entities`, (t) => {
   const gathered = [];
-  const res = fix("&&nsp;&&nsp;&", {
+  const res = fixEnt("&&nsp;&&nsp;&", {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-malformed-nbsp";
+  t.ok(allRules.includes(ruleName), "04.01");
   t.strictSame(
     res,
     [
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName,
         entityName: "nbsp",
         rangeFrom: 1,
         rangeTo: 6,
@@ -62,7 +67,7 @@ tap.test(`04 - sandwitched, broken entities`, (t) => {
         rangeValDecoded: "\u00A0",
       },
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName,
         entityName: "nbsp",
         rangeFrom: 7,
         rangeTo: 12,
@@ -70,23 +75,25 @@ tap.test(`04 - sandwitched, broken entities`, (t) => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "04.01"
+    "04.02"
   );
-  t.strictSame(gathered, [0, 6, 12], "04.02");
+  t.strictSame(gathered, [0, 6, 12], "04.03");
   t.end();
 });
 
 tap.test(`05`, (t) => {
   const gathered = [];
-  const res = fix("<span>&nbsp</span>", {
+  const res = fixEnt("<span>&nbsp</span>", {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-malformed-nbsp";
+  t.ok(allRules.includes(ruleName), "05.01");
   t.strictSame(
     res,
     [
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName,
         entityName: "nbsp",
         rangeFrom: 6,
         rangeTo: 11,
@@ -94,23 +101,25 @@ tap.test(`05`, (t) => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "05.01"
+    "05.02"
   );
-  t.strictSame(gathered, [], "05.02");
+  t.strictSame(gathered, [], "05.03");
   t.end();
 });
 
 tap.test(`06`, (t) => {
   const gathered = [];
-  const res = fix("<span>&&nbsp&</span>", {
+  const res = fixEnt("<span>&&nbsp&</span>", {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-malformed-nbsp";
+  t.ok(allRules.includes(ruleName), "06.01");
   t.strictSame(
     res,
     [
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName,
         entityName: "nbsp",
         rangeFrom: 7,
         rangeTo: 12,
@@ -118,15 +127,15 @@ tap.test(`06`, (t) => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "06.01"
+    "06.02"
   );
-  t.strictSame(gathered, [6, 12], "06.02");
+  t.strictSame(gathered, [6, 12], "06.03");
   t.end();
 });
 
 tap.test(`07`, (t) => {
   const gathered = [];
-  const res = fix("<span>&&nbsp;&</span>", {
+  const res = fixEnt("<span>&&nbsp;&</span>", {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
@@ -137,15 +146,17 @@ tap.test(`07`, (t) => {
 
 tap.test(`08`, (t) => {
   const gathered = [];
-  const res = fix("<span>&nbp;</span>", {
+  const res = fixEnt("<span>&nbp;</span>", {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-malformed-nbsp";
+  t.ok(allRules.includes(ruleName), "08.01");
   t.strictSame(
     res,
     [
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName,
         entityName: "nbsp",
         rangeFrom: 6,
         rangeTo: 11,
@@ -153,23 +164,25 @@ tap.test(`08`, (t) => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "08.01"
+    "08.02"
   );
-  t.strictSame(gathered, [], "08.02");
+  t.strictSame(gathered, [], "08.03");
   t.end();
 });
 
 tap.test(`09`, (t) => {
   const gathered = [];
-  const res = fix(`<span>& nbsp;</span>`, {
+  const res = fixEnt(`<span>& nbsp;</span>`, {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-malformed-nbsp";
+  t.ok(allRules.includes(ruleName), "09.01");
   t.strictSame(
     res,
     [
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName,
         entityName: "nbsp",
         rangeFrom: 6,
         rangeTo: 13,
@@ -177,23 +190,25 @@ tap.test(`09`, (t) => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "09.01"
+    "09.02"
   );
-  t.strictSame(gathered, [], "09.02");
+  t.strictSame(gathered, [], "09.03");
   t.end();
 });
 
 tap.test(`10`, (t) => {
   const gathered = [];
-  const res = fix(`<span>&& nbsp;&</span>`, {
+  const res = fixEnt(`<span>&& nbsp;&</span>`, {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-malformed-nbsp";
+  t.ok(allRules.includes(ruleName), "10.01");
   t.strictSame(
     res,
     [
       {
-        ruleName: "bad-html-entity-malformed-nbsp",
+        ruleName,
         entityName: "nbsp",
         rangeFrom: 7,
         rangeTo: 14,
@@ -201,23 +216,25 @@ tap.test(`10`, (t) => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "10.01"
+    "10.02"
   );
-  t.strictSame(gathered, [6, 14], "10.02");
+  t.strictSame(gathered, [6, 14], "10.03");
   t.end();
 });
 
 tap.todo(`11 - hex with missing semi`, (t) => {
   const gathered = [];
-  const res = fix(`<span>&&#xA310&</span>`, {
+  const res = fixEnt(`<span>&&#xA310&</span>`, {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-unrecognised";
+  t.ok(allRules.includes(ruleName), "11.01");
   t.strictSame(
     res,
     [
       {
-        ruleName: "bad-html-entity",
+        ruleName,
         entityName: "nbsp",
         rangeFrom: 7,
         rangeTo: 14,
@@ -225,23 +242,25 @@ tap.todo(`11 - hex with missing semi`, (t) => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "11.01"
+    "11.02"
   );
-  t.strictSame(gathered, [6, 14], "11.02");
+  t.strictSame(gathered, [6, 14], "11.03");
   t.end();
 });
 
 tap.todo(`12`, (t) => {
   const gathered = [];
-  const res = fix(`<span>&#xA310</span>`, {
+  const res = fixEnt(`<span>&#xA310</span>`, {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-unrecognised";
+  t.ok(allRules.includes(ruleName), "12.01");
   t.strictSame(
     res,
     [
       {
-        ruleName: "bad-html-entity",
+        ruleName: "bad-html-entity-unrecognised",
         entityName: "nbsp",
         rangeFrom: 6,
         rangeTo: 13,
@@ -249,23 +268,25 @@ tap.todo(`12`, (t) => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "12.01"
+    "12.02"
   );
-  t.strictSame(gathered, [], "12.02");
+  t.strictSame(gathered, [], "12.03");
   t.end();
 });
 
 tap.todo(`13`, (t) => {
   const gathered = [];
-  const res = fix(`abc &#xA3 def`, {
+  const res = fixEnt(`abc &#xA3 def`, {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
+  const ruleName = "bad-html-entity-unrecognised";
+  t.ok(allRules.includes(ruleName), "13.01");
   t.strictSame(
     res,
     [
       {
-        ruleName: "bad-html-entity",
+        ruleName: "bad-html-entity-unrecognised",
         entityName: "nbsp",
         rangeFrom: 6,
         rangeTo: 13,
@@ -273,8 +294,8 @@ tap.todo(`13`, (t) => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "13.01"
+    "13.02"
   );
-  t.strictSame(gathered, [], "13.02");
+  t.strictSame(gathered, [], "13.03");
   t.end();
 });

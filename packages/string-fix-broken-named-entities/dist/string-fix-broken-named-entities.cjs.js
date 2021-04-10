@@ -12,9 +12,9 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
-var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var _typeof = require('@babel/runtime/helpers/typeof');
+var _toConsumableArray = require('@babel/runtime/helpers/toConsumableArray');
 var leven = require('leven');
 var allNamedHtmlEntities = require('all-named-html-entities');
 var stringLeftRight = require('string-left-right');
@@ -22,9 +22,9 @@ var stringLeftRight = require('string-left-right');
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
-var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
+var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var leven__default = /*#__PURE__*/_interopDefaultLegacy(leven);
 
 function isObj(something) {
@@ -132,6 +132,11 @@ function removeGappedFromMixedCases(str, temp1) {
 var version$1 = "5.2.4";
 
 var version = version$1;
+var allRules = _toConsumableArray__default['default'](allNamedHtmlEntities.allNamedEntitiesSetOnly).map(function (ruleName) {
+  return "bad-html-entity-malformed-".concat(ruleName);
+}).concat(_toConsumableArray__default['default'](allNamedHtmlEntities.allNamedEntitiesSetOnly).map(function (ruleName) {
+  return "bad-html-entity-encoded-".concat(ruleName);
+})).concat(["bad-html-entity-unrecognised", "bad-html-entity-multiple-encoding", "bad-html-entity-encoded-numeric", "bad-html-entity-malformed-numeric", "bad-html-entity-other"]);
 function fixEnt(str, originalOpts) {
   if (typeof str !== "string") {
     throw new Error("string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n".concat(JSON.stringify(str, null, 4), " (").concat(_typeof__default['default'](str), "-type)"));
@@ -440,6 +445,7 @@ function fixEnt(str, originalOpts) {
                   leven__default['default'](curr, potentialEntity) === 2 && potentialEntity.length > 3
                 );
               })) && temp.length)) {
+                /* istanbul ignore else */
                 if (temp.length === 1) {
                   var _temp4 = temp;
                   var _temp5 = _slicedToArray__default['default'](_temp4, 1);
@@ -612,5 +618,6 @@ function fixEnt(str, originalOpts) {
   return res;
 }
 
+exports.allRules = allRules;
 exports.fixEnt = fixEnt;
 exports.version = version;

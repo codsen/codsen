@@ -9796,6 +9796,16 @@ function removeGappedFromMixedCases(str, temp1) {
 var version$1 = "5.2.4";
 
 const version = version$1;
+const allRules = [...allNamedEntitiesSetOnly]
+    .map((ruleName) => `bad-html-entity-malformed-${ruleName}`)
+    .concat([...allNamedEntitiesSetOnly].map((ruleName) => `bad-html-entity-encoded-${ruleName}`))
+    .concat([
+    "bad-html-entity-unrecognised",
+    "bad-html-entity-multiple-encoding",
+    "bad-html-entity-encoded-numeric",
+    "bad-html-entity-malformed-numeric",
+    "bad-html-entity-other",
+]);
 function fixEnt(str, originalOpts) {
     //
     //
@@ -9997,7 +10007,7 @@ function fixEnt(str, originalOpts) {
                     // catching MISSING semicolons here.
                     // The only way around this is to match all entities that start here
                     // and pick the one with the biggest character length.
-                    // TODO - set up case insensitive matching here:
+                    // TODO - set up the case-insensitive matching here:
                     /* istanbul ignore else */
                     if (Object.prototype.hasOwnProperty.call(entStartsWith, str[firstChar]) &&
                         Object.prototype.hasOwnProperty.call(entStartsWith[str[firstChar]], str[secondChar])) {
@@ -10268,7 +10278,7 @@ function fixEnt(str, originalOpts) {
                                     if (
                                     // if it's a dubious entity
                                     Object.keys(uncertain).includes(potentialEntityOnlyNonWhitespaceChars) &&
-                                        // and there's space after ampersand
+                                        // and there's a space after ampersand
                                         !str[rangeFrom + 1].trim().length) {
                                         letterSeqStartAt = null;
                                         continue;
@@ -10349,6 +10359,7 @@ function fixEnt(str, originalOpts) {
                                         potentialEntity.length > 3)) &&
                                         temp.length))) {
                                 // now the problem: what if there were multiple entities matched?
+                                /* istanbul ignore else */
                                 if (temp.length === 1) {
                                     [tempEnt] = temp;
                                     rangesArr2.push({
@@ -10632,6 +10643,7 @@ function fixEnt(str, originalOpts) {
     return res;
 }
 
+exports.allRules = allRules;
 exports.fixEnt = fixEnt;
 exports.version = version;
 

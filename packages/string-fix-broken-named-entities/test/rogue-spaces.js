@@ -1,6 +1,6 @@
 import tap from "tap";
 import { decode, uncertain, allNamedEntities } from "all-named-html-entities";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util";
 
 // -----------------------------------------------------------------------------
 // programmatic tests
@@ -37,7 +37,7 @@ tap.test(
           //   );
           // }
           t.strictSame(
-            fix(entityWithSpaceInserted, {
+            fix(t, entityWithSpaceInserted, {
               cb: (obj) => obj,
             }),
             [
@@ -72,11 +72,11 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.strictSame(fix(inp1, { cb: (obj) => obj }), outp1, "02.01");
+    t.strictSame(fix(t, inp1, { cb: (obj) => obj }), outp1, "02.01");
 
     const gathered = [];
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -105,11 +105,11 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "03.01");
+    t.strictSame(fix(t, inp5, { cb: (obj) => obj }), outp5, "03.01");
 
     const gathered = [];
     t.strictSame(
-      fix(inp5, {
+      fix(t, inp5, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -137,11 +137,11 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "04.01");
+    t.strictSame(fix(t, inp5, { cb: (obj) => obj }), outp5, "04.01");
 
     const gathered = [];
     t.strictSame(
-      fix(inp5, {
+      fix(t, inp5, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);

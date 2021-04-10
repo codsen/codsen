@@ -3,6 +3,7 @@ declare type Ranges = Range[] | null;
 
 declare const version: string;
 
+declare const allRules: string[];
 interface cbObj {
     rangeFrom: number;
     rangeTo: number;
@@ -20,4 +21,4 @@ interface Opts {
 }
 declare function fixEnt(str: string, originalOpts?: Partial<Opts>): Ranges;
 
-export { fixEnt, version };
+export { allRules, fixEnt, version };

@@ -1,6 +1,6 @@
 import tap from "tap";
 import { decode, allNamedEntities } from "all-named-html-entities";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util";
 
 // -----------------------------------------------------------------------------
 // programmatic tests
@@ -18,7 +18,7 @@ tap.test(
         // healthy entity but decode requested:
         //
         t.strictSame(
-          fix(`&${singleEntity};`, {
+          fix(t, `&${singleEntity};`, {
             decode: true,
             cb: (obj) => obj,
           }),
@@ -44,7 +44,7 @@ tap.test(
   (t) => {
     const gathered = [];
     t.strictSame(
-      fix(`&EmptyVerySmallSquare;`, {
+      fix(t, `&EmptyVerySmallSquare;`, {
         decode: true,
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {

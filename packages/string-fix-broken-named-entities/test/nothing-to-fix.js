@@ -1,5 +1,5 @@
 import tap from "tap";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util";
 
 // -----------------------------------------------------------------------------
 // 03. nothing to fix
@@ -8,19 +8,19 @@ import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
 tap.test(
   `01 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - false positives`,
   (t) => {
-    t.strictSame(fix("insp;"), [], "01.01");
-    t.strictSame(fix("an insp;"), [], "01.02");
-    t.strictSame(fix("an inspp;"), [], "01.03");
+    t.strictSame(fix(t, "insp;"), [], "01.01");
+    t.strictSame(fix(t, "an insp;"), [], "01.02");
+    t.strictSame(fix(t, "an inspp;"), [], "01.03");
 
     // decode on:
-    t.strictSame(fix("insp;", { decode: true }), [], "01.04");
-    t.strictSame(fix("an insp;", { decode: true }), [], "01.05");
-    t.strictSame(fix("an inspp;", { decode: true }), [], "01.06");
+    t.strictSame(fix(t, "insp;", { decode: true }), [], "01.04");
+    t.strictSame(fix(t, "an insp;", { decode: true }), [], "01.05");
+    t.strictSame(fix(t, "an inspp;", { decode: true }), [], "01.06");
 
     const gathered = [];
 
     t.strictSame(
-      fix("insp;", {
+      fix(t, "insp;", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -29,7 +29,7 @@ tap.test(
       "01.07"
     );
     t.strictSame(
-      fix("an insp;", {
+      fix(t, "an insp;", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -38,7 +38,7 @@ tap.test(
       "01.08"
     );
     t.strictSame(
-      fix("an inspp;", {
+      fix(t, "an inspp;", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -49,7 +49,7 @@ tap.test(
 
     // decode on:
     t.strictSame(
-      fix("insp;", {
+      fix(t, "insp;", {
         decode: true,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -59,7 +59,7 @@ tap.test(
       "01.10"
     );
     t.strictSame(
-      fix("an insp;", {
+      fix(t, "an insp;", {
         decode: true,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -69,7 +69,7 @@ tap.test(
       "01.11"
     );
     t.strictSame(
-      fix("an inspp;", {
+      fix(t, "an inspp;", {
         decode: true,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -88,11 +88,11 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - no decode requested`,
   (t) => {
-    t.strictSame(fix("&nbsp;"), [], "02.01 - one, surrounded by EOL");
+    t.strictSame(fix(t, "&nbsp;"), [], "02.01 - one, surrounded by EOL");
 
     const gathered = [];
     t.strictSame(
-      fix("&nbsp;", {
+      fix(t, "&nbsp;", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -108,11 +108,11 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - no decode requested`,
   (t) => {
-    t.strictSame(fix("&nbsp; &nbsp;"), [], "03.01 - two, surrounded by EOL");
+    t.strictSame(fix(t, "&nbsp; &nbsp;"), [], "03.01 - two, surrounded by EOL");
 
     const gathered = [];
     t.strictSame(
-      fix("&nbsp; &nbsp;", {
+      fix(t, "&nbsp; &nbsp;", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -129,11 +129,11 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - no decode requested`,
   (t) => {
-    t.strictSame(fix("a&nbsp;b"), [], "04.01 - surrounded by letters");
+    t.strictSame(fix(t, "a&nbsp;b"), [], "04.01 - surrounded by letters");
 
     const gathered = [];
     t.strictSame(
-      fix("a&nbsp;b", {
+      fix(t, "a&nbsp;b", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -150,10 +150,10 @@ tap.test(
   `05 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - default callback, decode`,
   (t) => {
     // controls:
-    t.strictSame(fix("&nbsp;"), [], "05.01");
-    t.strictSame(fix("&nbsp;", { decode: false }), [], "05.02");
+    t.strictSame(fix(t, "&nbsp;"), [], "05.01");
+    t.strictSame(fix(t, "&nbsp;", { decode: false }), [], "05.02");
     t.strictSame(
-      fix("&nbsp;", {
+      fix(t, "&nbsp;", {
         decode: false,
         cb: (obj) => obj,
       }),
@@ -164,7 +164,7 @@ tap.test(
     // the main check:
     const gathered = [];
     t.strictSame(
-      fix("&nbsp;", {
+      fix(t, "&nbsp;", {
         decode: true,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -183,7 +183,7 @@ tap.test(
   (t) => {
     // same as 03.003 except has a callback to ensure correct rule name is reported
     t.strictSame(
-      fix("&nbsp;", {
+      fix(t, "&nbsp;", {
         decode: true,
         cb: (obj) => obj,
       }),
@@ -207,7 +207,7 @@ tap.test(
   `07 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - two, surrounded by EOL`,
   (t) => {
     t.strictSame(
-      fix("&nbsp; &nbsp;", { decode: true }),
+      fix(t, "&nbsp; &nbsp;", { decode: true }),
       [
         [0, 6, "\xA0"],
         [7, 13, "\xA0"],
@@ -221,11 +221,15 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - surrounded by letters`,
   (t) => {
-    t.strictSame(fix("a&nbsp;b", { decode: true }), [[1, 7, "\xA0"]], "08.01");
+    t.strictSame(
+      fix(t, "a&nbsp;b", { decode: true }),
+      [[1, 7, "\xA0"]],
+      "08.01"
+    );
 
     const gathered = [];
     t.strictSame(
-      fix("a&nbsp;b", {
+      fix(t, "a&nbsp;b", {
         decode: true,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -242,11 +246,11 @@ tap.test(
 tap.test(
   `09 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - various - decode off`,
   (t) => {
-    t.strictSame(fix("z&hairsp;y"), [], "09.01");
+    t.strictSame(fix(t, "z&hairsp;y"), [], "09.01");
 
     const gathered = [];
     t.strictSame(
-      fix("z&hairsp;y", {
+      fix(t, "z&hairsp;y", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -262,11 +266,11 @@ tap.test(
 tap.test(
   `10 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - various - decode off`,
   (t) => {
-    t.strictSame(fix("y&VeryThinSpace;z"), [], "10.01");
+    t.strictSame(fix(t, "y&VeryThinSpace;z"), [], "10.01");
 
     const gathered = [];
     t.strictSame(
-      fix("y&VeryThinSpace;z", {
+      fix(t, "y&VeryThinSpace;z", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -283,14 +287,14 @@ tap.test(
   `11 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - hairsp - decode on`,
   (t) => {
     t.strictSame(
-      fix("z&hairsp;y", { decode: true }),
+      fix(t, "z&hairsp;y", { decode: true }),
       [[1, 9, "\u200A"]],
       "11.01"
     );
 
     const gathered = [];
     t.strictSame(
-      fix("z&hairsp;y", {
+      fix(t, "z&hairsp;y", {
         decode: true,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -308,14 +312,14 @@ tap.test(
   `12 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - VeryThinSpace - decode on`,
   (t) => {
     t.strictSame(
-      fix("y&VeryThinSpace;z", { decode: true }),
+      fix(t, "y&VeryThinSpace;z", { decode: true }),
       [[1, 16, "\u200A"]],
       "12.01"
     );
 
     const gathered = [];
     t.strictSame(
-      fix("y&VeryThinSpace;z", {
+      fix(t, "y&VeryThinSpace;z", {
         decode: true,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -333,11 +337,11 @@ tap.test(
   `13 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - healthy &pound;`,
   (t) => {
     const inp1 = "&pound;";
-    t.strictSame(fix(inp1), [], "13.01");
+    t.strictSame(fix(t, inp1), [], "13.01");
 
     const gathered = [];
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -354,11 +358,11 @@ tap.test(
   `14 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - healthy &pound;`,
   (t) => {
     const inp1 = "&pound;";
-    t.strictSame(fix(inp1, { decode: true }), [[0, 7, "\xA3"]], "14.01");
+    t.strictSame(fix(t, inp1, { decode: true }), [[0, 7, "\xA3"]], "14.01");
 
     const gathered = [];
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: true,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);

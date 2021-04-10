@@ -1,5 +1,5 @@
 import tap from "tap";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util";
 
 // decode on
 
@@ -9,7 +9,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&#65;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: true,
         cb: (obj) => obj,
       }),
@@ -36,7 +36,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&#163;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: true,
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
@@ -66,7 +66,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&#99999999999999999;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: true,
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
@@ -98,7 +98,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&#65;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: false,
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
@@ -119,7 +119,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&#163;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: false,
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
@@ -140,7 +140,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&#99999999999999999;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: false,
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
@@ -170,7 +170,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&$65;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -199,7 +199,7 @@ tap.test(
     const gathered = [];
     const inp1 = "something here &#163;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         decode: false,
         textAmpersandCatcherCb: (idx) => {
@@ -210,7 +210,7 @@ tap.test(
       "08.01"
     );
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         decode: true,
       }),
@@ -226,7 +226,7 @@ tap.test(
       ],
       "08.02"
     );
-    t.strictSame(fix(inp1, { decode: true }), [[15, 21, "\xA3"]], "08.03");
+    t.strictSame(fix(t, inp1, { decode: true }), [[15, 21, "\xA3"]], "08.03");
     t.strictSame(gathered, [], "08.04");
     t.end();
   }
@@ -237,9 +237,9 @@ tap.test(
   (t) => {
     const gathered = [];
     const inp1 = "&#xA3;";
-    t.strictSame(fix(inp1, { decode: true }), [[0, 6, "\xA3"]], "09.01");
+    t.strictSame(fix(t, inp1, { decode: true }), [[0, 6, "\xA3"]], "09.01");
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: true,
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
@@ -269,7 +269,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&x#A3;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: false,
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
@@ -298,9 +298,9 @@ tap.test(
   (t) => {
     const gathered = [];
     const inp1 = "&x#A3;";
-    t.strictSame(fix(inp1, { decode: true }), [[0, 6]], "11.01");
+    t.strictSame(fix(t, inp1, { decode: true }), [[0, 6]], "11.01");
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         decode: true,
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
@@ -330,7 +330,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&x1000;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -359,7 +359,7 @@ tap.test(
     const gathered = [];
     const inp1 = "abc#x26;def";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);

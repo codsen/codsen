@@ -1,5 +1,6 @@
 import tap from "tap";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util";
+import { fixEnt, allRules } from "../dist/string-fix-broken-named-entities.esm";
 
 // -----------------------------------------------------------------------------
 // helper functions
@@ -21,7 +22,7 @@ tap.test(
     const gathered = [];
     const inp1 = "abc &x  y z; def";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -50,10 +51,10 @@ tap.test(
     const gathered = [];
     const inp1 = "abc &poumd; def";
     const outp1 = [[4, 11, "&pound;"]];
-    t.strictSame(fix(inp1), outp1, "02.01");
-    t.strictSame(fix(inp1, { cb }), outp1, "02.02");
+    t.strictSame(fix(t, inp1), outp1, "02.01");
+    t.strictSame(fix(t, inp1, { cb }), outp1, "02.02");
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -75,7 +76,7 @@ tap.test(
     const inp1 = "abc &p oumd; def";
     // const outp1 = [[4, 12, "&pound;"]];
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -104,10 +105,10 @@ tap.test(
     const gathered = [];
     const inp1 = "x &Pound; y";
     const outp1 = [[2, 9, "&pound;"]];
-    t.strictSame(fix(inp1), outp1, "04.01");
-    t.strictSame(fix(inp1, { cb }), outp1, "04.02");
+    t.strictSame(fix(t, inp1), outp1, "04.01");
+    t.strictSame(fix(t, inp1, { cb }), outp1, "04.02");
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -125,9 +126,9 @@ tap.test(
   `05 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit healthy entity should not raise any issues`,
   (t) => {
     const inp1 = "abc &pound; def";
-    t.strictSame(fix(inp1), [], "05.01");
+    t.strictSame(fix(t, inp1), [], "05.01");
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [],
@@ -143,7 +144,7 @@ tap.test(
     const gathered = [];
     const inp1 = "abc &pound; def";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -163,9 +164,9 @@ tap.test(
     const gathered = [];
     const inp1 = "a&poUnd;b";
     const outp1 = [[1, 8, "&pound;"]];
-    t.strictSame(fix(inp1), outp1, "07.01");
+    t.strictSame(fix(t, inp1), outp1, "07.01");
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -184,7 +185,7 @@ tap.test(
     const gathered = [];
     const inp1 = "abc &pozzz; def";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [
@@ -201,7 +202,7 @@ tap.test(
     );
 
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -230,7 +231,7 @@ tap.test(
     const inp1 = "&Poun;";
     const gatheredHealthy = [];
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       }),
@@ -258,7 +259,7 @@ tap.test(
     const inp1 = "&Poun;";
     const gatheredHealthy = [];
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
         textAmpersandCatcherCb: (idx) => {
@@ -288,7 +289,7 @@ tap.test(
   (t) => {
     const oneOfBrokenEntities = "a&pound ;b";
     t.strictSame(
-      fix(oneOfBrokenEntities, {
+      fix(t, oneOfBrokenEntities, {
         cb: (obj) => obj,
       }),
       [
@@ -313,7 +314,7 @@ tap.test(
     const gathered = [];
     const oneOfBrokenEntities = "a&pound ;b";
     t.strictSame(
-      fix(oneOfBrokenEntities, {
+      fix(t, oneOfBrokenEntities, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -341,7 +342,7 @@ tap.test(
   (t) => {
     const inp1 = "a&twoheadRightarrow;b";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [
@@ -366,7 +367,7 @@ tap.test(
     const gathered = [];
     const inp1 = "a&twoheadRightarrow;b";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -394,7 +395,7 @@ tap.test(
   (t) => {
     const inp1 = "x&A lpha;y";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [
@@ -419,7 +420,7 @@ tap.test(
     const gathered = [];
     const inp1 = "x&A lpha;y";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -447,7 +448,7 @@ tap.test(
   (t) => {
     const inp1 = "&ac d;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [
@@ -472,7 +473,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&ac d;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -500,7 +501,7 @@ tap.test(
   (t) => {
     const inp1 = "&Acd;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [
@@ -525,7 +526,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&Acd;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -553,7 +554,7 @@ tap.test(
   (t) => {
     const inp1 = "&Aelig;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [
@@ -578,7 +579,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&Aelig;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -606,7 +607,7 @@ tap.test(
   (t) => {
     const inp1 = "&zwjn;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [
@@ -631,7 +632,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&zwjn;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -659,14 +660,14 @@ tap.test(
   (t) => {
     const inp1 = "&xcap;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [],
       "25.01"
     );
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         decode: true,
       }),
@@ -692,7 +693,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&xcap;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -712,7 +713,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&xcap;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -741,7 +742,7 @@ tap.test(
   (t) => {
     const inp1 = "&nbsp;&nbsp;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
       }),
       [],
@@ -757,7 +758,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&nbsp;&nbsp;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (obj) => obj,
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
@@ -787,11 +788,11 @@ tap.test(
       "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;",
     ];
     inputs.forEach((input, i) =>
-      t.strictSame(fix(input), [], `"${input}" - ${i}`)
+      t.strictSame(fix(t, input), [], `"${input}" - ${i}`)
     );
     inputs.forEach((input, i) =>
       t.strictSame(
-        fix(input, {
+        fix(t, input, {
           textAmpersandCatcherCb: (idx) => {
             gathered.push(idx);
           },
@@ -810,7 +811,7 @@ tap.test(
   (t) => {
     const inp1 = "&NBSP;&NBSP;";
     t.strictSame(
-      fix(inp1),
+      fix(t, inp1),
       [
         [0, 6, "&nbsp;"],
         [6, 12, "&nbsp;"],
@@ -827,7 +828,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&NBSP;&NBSP;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -848,7 +849,7 @@ tap.test(
   (t) => {
     const inp1 = "&NBSP;&NBSP;&NBSP; a &NBSP;&NBSP;&NBSP;";
     t.strictSame(
-      fix(inp1),
+      fix(t, inp1),
       [
         [0, 6, "&nbsp;"],
         [6, 12, "&nbsp;"],
@@ -869,7 +870,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&NBSP;&NBSP;&NBSP; a &NBSP;&NBSP;&NBSP;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -894,7 +895,7 @@ tap.test(
   (t) => {
     const inp1 = "&nbsp;&nbsp;&bsp; a &nbsp;&nnbsp;&nbsp;";
     t.strictSame(
-      fix(inp1),
+      fix(t, inp1),
       [
         [12, 17, "&nbsp;"],
         [26, 33, "&nbsp;"],
@@ -911,7 +912,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&nbsp;&nbsp;&bsp; a &nbsp;&nnbsp;&nbsp;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -932,7 +933,7 @@ tap.test(
   (t) => {
     const inp1 = "&nbsp;&bsp;&nnbsp; a &nbsp;&nnbsp;&nnbsp;";
     t.strictSame(
-      fix(inp1),
+      fix(t, inp1),
       [
         [6, 11, "&nbsp;"],
         [11, 18, "&nbsp;"],
@@ -951,7 +952,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&nbsp;&bsp;&nnbsp; a &nbsp;&nnbsp;&nnbsp;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -973,7 +974,7 @@ tap.test(
   `39 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
   (t) => {
     t.strictSame(
-      fix("&ang&;ang;"),
+      fix(t, "&ang&;ang;"),
       [
         [0, 4, "&ang;"],
         [4, 10, "&ang;"],
@@ -989,7 +990,7 @@ tap.test(
   (t) => {
     const gathered = [];
     t.strictSame(
-      fix("&ang&;ang;", {
+      fix(t, "&ang&;ang;", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -1008,7 +1009,7 @@ tap.test(
 tap.test(
   `41 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`,
   (t) => {
-    t.strictSame(fix("the &;ang;100"), [[4, 10, "&ang;"]], "41");
+    t.strictSame(fix(t, "the &;ang;100"), [[4, 10, "&ang;"]], "41");
     t.end();
   }
 );
@@ -1018,7 +1019,7 @@ tap.test(
   (t) => {
     const gathered = [];
     t.strictSame(
-      fix("the &;ang;100", {
+      fix(t, "the &;ang;100", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -1034,7 +1035,7 @@ tap.test(
 tap.test(
   `43 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
   (t) => {
-    t.strictSame(fix("&Ifz;"), [[0, 5, "&Ifr;"]], "43");
+    t.strictSame(fix(t, "&Ifz;"), [[0, 5, "&Ifr;"]], "43");
     t.end();
   }
 );
@@ -1044,7 +1045,7 @@ tap.test(
   (t) => {
     const gathered = [];
     t.strictSame(
-      fix("&Ifz;", {
+      fix(t, "&Ifz;", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -1060,7 +1061,7 @@ tap.test(
 tap.test(
   `45 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
   (t) => {
-    t.strictSame(fix("&ifz;"), [[0, 5]], "45");
+    t.strictSame(fix(t, "&ifz;"), [[0, 5]], "45");
     t.end();
   }
 );
@@ -1070,7 +1071,7 @@ tap.test(
   (t) => {
     const gathered = [];
     t.strictSame(
-      fix("&ifz;", {
+      fix(t, "&ifz;", {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -1086,7 +1087,7 @@ tap.test(
 tap.test(
   `47 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
   (t) => {
-    t.strictSame(fix("&ifz;&"), [[0, 5]], "47");
+    t.strictSame(fix(t, "&ifz;&"), [[0, 5]], "47");
     t.end();
   }
 );
@@ -1095,16 +1096,25 @@ tap.test(
   `48 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`,
   (t) => {
     const gathered = [];
+    const input = "&ifz;&";
+    const result = [[0, 5]];
     t.strictSame(
-      fix("&ifz;&", {
+      fixEnt(input, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
       }),
-      [[0, 5]],
+      result,
       "48.01"
     );
-    t.strictSame(gathered, [5], "48.02");
+    t.strictSame(
+      fix(t, input, {
+        textAmpersandCatcherCb: () => {},
+      }),
+      result,
+      "48.02"
+    );
+    t.strictSame(gathered, [5], "48.03");
     t.end();
   }
 );
@@ -1113,7 +1123,7 @@ tap.test(
   `49 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an entity`,
   (t) => {
     t.strictSame(
-      fix("&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;"),
+      fix(t, "&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;"),
       [],
       "49"
     );
@@ -1125,16 +1135,26 @@ tap.test(
   `50 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an entity`,
   (t) => {
     const gathered = [];
+    const input =
+      "&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;";
+    const result = [];
     t.strictSame(
-      fix("&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;", {
+      fixEnt(input, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
       }),
-      [],
+      result,
       "50.01"
     );
-    t.strictSame(gathered, [0], "50.02");
+    t.strictSame(
+      fix(t, input, {
+        textAmpersandCatcherCb: () => {},
+      }),
+      result,
+      "50.02"
+    );
+    t.strictSame(gathered, [0], "50.03");
     t.end();
   }
 );
@@ -1144,6 +1164,7 @@ tap.test(
   (t) => {
     t.strictSame(
       fix(
+        t,
         "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
       ),
       [],
@@ -1157,19 +1178,26 @@ tap.test(
   `52 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`,
   (t) => {
     const gathered = [];
+    const input =
+      "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;";
+    const result = [];
     t.strictSame(
-      fix(
-        "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;",
-        {
-          textAmpersandCatcherCb: (idx) => {
-            gathered.push(idx);
-          },
-        }
-      ),
-      [],
+      fixEnt(input, {
+        textAmpersandCatcherCb: (idx) => {
+          gathered.push(idx);
+        },
+      }),
+      result,
       "52.01"
     );
-    t.strictSame(gathered, [0], "52.02");
+    t.strictSame(
+      fix(t, input, {
+        textAmpersandCatcherCb: () => {},
+      }),
+      result,
+      "52.02"
+    );
+    t.strictSame(gathered, [0], "52.03");
     t.end();
   }
 );
@@ -1179,6 +1207,7 @@ tap.test(
   (t) => {
     t.strictSame(
       fix(
+        t,
         "&nbsp ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
       ),
       [[0, 5, "&nbsp;"]],
@@ -1194,6 +1223,7 @@ tap.test(
     const gathered = [];
     t.strictSame(
       fix(
+        t,
         "&nbsp ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;",
         {
           textAmpersandCatcherCb: (idx) => {
@@ -1210,22 +1240,31 @@ tap.test(
 );
 
 tap.test(`55`, (t) => {
-  t.strictSame(fix("&; &; &;"), [], "55");
+  t.strictSame(fix(t, "&; &; &;"), [], "55");
   t.end();
 });
 
 tap.test(`56`, (t) => {
   const gathered = [];
+  const input = "&; &; &;";
+  const result = [];
   t.strictSame(
-    fix("&; &; &;", {
+    fixEnt(input, {
       textAmpersandCatcherCb: (idx) => {
         gathered.push(idx);
       },
     }),
-    [],
+    result,
     "56.01"
   );
-  t.strictSame(gathered, [0, 3, 6], "56.02");
+  t.strictSame(
+    fix(t, input, {
+      textAmpersandCatcherCb: () => {},
+    }),
+    result,
+    "56.02"
+  );
+  t.strictSame(gathered, [0, 3, 6], "56.03");
   t.end();
 });
 
@@ -1233,7 +1272,7 @@ tap.test(`57 - rsquo, decoding requested`, (t) => {
   const gathered = [];
   const inp1 = `&rsquo;`;
   t.strictSame(
-    fix(inp1, {
+    fix(t, inp1, {
       cb: (obj) => obj,
       textAmpersandCatcherCb: (idx) => {
         gathered.push(idx);
@@ -1260,7 +1299,7 @@ tap.test(`58 - rsqo, no decoding`, (t) => {
   const gathered = [];
   const inp1 = `&rsqo;`;
   t.strictSame(
-    fix(inp1, {
+    fix(t, inp1, {
       cb: (obj) => obj,
       textAmpersandCatcherCb: (idx) => {
         gathered.push(idx);
@@ -1284,7 +1323,7 @@ tap.test(`58 - rsqo, no decoding`, (t) => {
 
 tap.test(`59 - rsqo + decoding, no cb`, (t) => {
   const inp1 = `&rsqo;`;
-  t.strictSame(fix(inp1, {}), [[0, 6, "&rsquo;"]], "59");
+  t.strictSame(fix(t, inp1, {}), [[0, 6, "&rsquo;"]], "59");
   t.end();
 });
 
@@ -1292,7 +1331,7 @@ tap.test(`60 - rsqo + decoding, whole cb`, (t) => {
   const gathered = [];
   const inp1 = `&rsqo;`;
   t.strictSame(
-    fix(inp1, {
+    fix(t, inp1, {
       cb: (obj) => obj,
       textAmpersandCatcherCb: (idx) => {
         gathered.push(idx);
@@ -1316,6 +1355,6 @@ tap.test(`60 - rsqo + decoding, whole cb`, (t) => {
 
 tap.test(`61 - pound in first capital`, (t) => {
   const inp1 = `&Pound;`;
-  t.strictSame(fix(inp1, {}), [[0, 7, "&pound;"]], "61");
+  t.strictSame(fix(t, inp1, {}), [[0, 7, "&pound;"]], "61");
   t.end();
 });

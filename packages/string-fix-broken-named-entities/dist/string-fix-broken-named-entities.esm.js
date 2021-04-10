@@ -8,7 +8,7 @@
  */
 
 import leven from 'leven';
-import { entStartsWith, decode, uncertain, entEndsWith, maxLength, allNamedEntitiesSetOnlyCaseInsensitive, allNamedEntitiesSetOnly, brokenNamedEntities } from 'all-named-html-entities';
+import { allNamedEntitiesSetOnly, entStartsWith, decode, uncertain, entEndsWith, maxLength, allNamedEntitiesSetOnlyCaseInsensitive, brokenNamedEntities } from 'all-named-html-entities';
 import { right, rightSeq, left, leftSeq } from 'string-left-right';
 
 function isObj(something) {
@@ -104,6 +104,7 @@ function removeGappedFromMixedCases(str, temp1) {
 var version$1 = "5.2.4";
 
 const version = version$1;
+const allRules = [...allNamedEntitiesSetOnly].map(ruleName => `bad-html-entity-malformed-${ruleName}`).concat([...allNamedEntitiesSetOnly].map(ruleName => `bad-html-entity-encoded-${ruleName}`)).concat(["bad-html-entity-unrecognised", "bad-html-entity-multiple-encoding", "bad-html-entity-encoded-numeric", "bad-html-entity-malformed-numeric", "bad-html-entity-other"]);
 function fixEnt(str, originalOpts) {
   if (typeof str !== "string") {
     throw new Error(`string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n${JSON.stringify(str, null, 4)} (${typeof str}-type)`);
@@ -406,6 +407,7 @@ function fixEnt(str, originalOpts) {
               (temp = [...allNamedEntitiesSetOnly].filter(curr =>
               /* istanbul ignore next */
               leven(curr, potentialEntity) === 2 && potentialEntity.length > 3)) && temp.length)) {
+                /* istanbul ignore else */
                 if (temp.length === 1) {
                   [tempEnt] = temp;
                   rangesArr2.push({
@@ -566,4 +568,4 @@ function fixEnt(str, originalOpts) {
   return res;
 }
 
-export { fixEnt, version };
+export { allRules, fixEnt, version };

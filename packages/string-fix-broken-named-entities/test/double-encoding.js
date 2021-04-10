@@ -1,5 +1,5 @@
 import tap from "tap";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util";
 
 // -----------------------------------------------------------------------------
 // helper functions
@@ -21,7 +21,7 @@ tap.test(
     const inp1 = "&amp;";
     const gathered = [];
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -40,7 +40,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&amp; &amp; &amp;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -59,7 +59,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&amp;&amp;&amp;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -78,7 +78,7 @@ tap.test(
     const gathered = [];
     const inp1 = "abc&amp;&amp;&amp;xyz";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -97,7 +97,7 @@ tap.test(
     const gathered = [];
     const inp1 = "B&amp;Q";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -116,7 +116,7 @@ tap.test(
     const gathered = [];
     const inp1 = "text B&amp;Q text";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -135,7 +135,7 @@ tap.test(
     const gathered = [];
     const inp1 = "text&amp;nbsp;text";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -154,7 +154,7 @@ tap.test(
     const gathered = [];
     const inp1 = "text&amp;nbsp;text";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (received) => {
           t.strictSame(
             received,
@@ -192,7 +192,7 @@ tap.test(
     const gathered1 = [];
     const inp1 = "text&amp;amp;nbsp;text";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered1.push(idx);
         },
@@ -205,7 +205,7 @@ tap.test(
     const gathered2 = [];
     const inp2 = "text&   amp  ;  a  m   p   ;     a  m   p   ;    nbsp;text";
     t.strictSame(
-      fix(inp2, {
+      fix(t, inp2, {
         textAmpersandCatcherCb: (idx) => {
           gathered2.push(idx);
         },
@@ -225,7 +225,7 @@ tap.test(
     const gathered1 = [];
     const inp1 = "textamp;nbsp;text";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered1.push(idx);
         },
@@ -238,7 +238,7 @@ tap.test(
     const gathered2 = [];
     const inp2 = "text amp;nbsp;text";
     t.strictSame(
-      fix(inp2, {
+      fix(t, inp2, {
         textAmpersandCatcherCb: (idx) => {
           gathered2.push(idx);
         },
@@ -251,7 +251,7 @@ tap.test(
     const gathered3 = [];
     const inp3 = "text\tamp;nbsp;text";
     t.strictSame(
-      fix(inp3, {
+      fix(t, inp3, {
         textAmpersandCatcherCb: (idx) => {
           gathered3.push(idx);
         },
@@ -264,7 +264,7 @@ tap.test(
     const gathered4 = [];
     const inp4 = "text\namp;nbsp;text";
     t.strictSame(
-      fix(inp4, {
+      fix(t, inp4, {
         textAmpersandCatcherCb: (idx) => {
           gathered4.push(idx);
         },
@@ -284,7 +284,7 @@ tap.test(
     const gathered = [];
     const inp1 = "textamp;nbsp;text";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -303,7 +303,7 @@ tap.test(
     const gathered = [];
     const inp1 = "abc &nbs;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -322,7 +322,7 @@ tap.test(
     const gathered = [];
     const inp1 = "abc &nbs;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (received) => {
           t.strictSame(
             received,
@@ -355,9 +355,9 @@ tap.test(
   (t) => {
     const gathered = [];
     const inp1 = "abc &nbs; xyz";
-    t.strictSame(fix(inp1), [[4, 9, "&nbsp;"]], "14.01");
+    t.strictSame(fix(t, inp1), [[4, 9, "&nbsp;"]], "14.01");
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (received) => {
           t.strictSame(
             received,
@@ -390,9 +390,9 @@ tap.test(
   (t) => {
     const gathered = [];
     const inp1 = "&nbs; xyz";
-    t.strictSame(fix(inp1), [[0, 5, "&nbsp;"]], "15.01");
+    t.strictSame(fix(t, inp1), [[0, 5, "&nbsp;"]], "15.01");
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (received) => {
           t.strictSame(
             received,
@@ -426,7 +426,7 @@ tap.test(
     const gathered = [];
     const inp1 = "abc&nbs;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
@@ -445,7 +445,7 @@ tap.test(
     const gathered = [];
     const inp1 = "abc&nbs;";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (received) => {
           t.strictSame(
             received,
@@ -478,9 +478,9 @@ tap.test(
   (t) => {
     const gathered = [];
     const inp1 = "abc&nbs; xyz";
-    t.strictSame(fix(inp1), [[3, 8, "&nbsp;"]], "18.01");
+    t.strictSame(fix(t, inp1), [[3, 8, "&nbsp;"]], "18.01");
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (received) => {
           t.strictSame(
             received,
@@ -513,7 +513,7 @@ tap.test(
   (t) => {
     const gathered = [];
     const inp1 = "&nbs; xyz";
-    t.strictSame(fix(inp1), [[0, 5, "&nbsp;"]], "19.01");
+    t.strictSame(fix(t, inp1), [[0, 5, "&nbsp;"]], "19.01");
     t.strictSame(gathered, [], "19.02");
     t.end();
   }
@@ -525,7 +525,7 @@ tap.test(
     const gathered = [];
     const inp1 = "&nbs; xyz";
     t.strictSame(
-      fix(inp1, {
+      fix(t, inp1, {
         cb: (received) => {
           t.strictSame(
             received,

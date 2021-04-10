@@ -4,7 +4,8 @@ import {
   uncertain,
   allNamedEntitiesSetOnly,
 } from "all-named-html-entities";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util";
+import { fixEnt } from "../dist/string-fix-broken-named-entities.esm";
 
 const falseCases = [
   "First we went to a camp;",
@@ -49,7 +50,7 @@ tap.test(
         // ampersand missing, isolated:
         //
         t.strictSame(
-          fix(`${singleEntity};`, {
+          fix(t, `${singleEntity};`, {
             cb: (obj) => obj,
           }),
           [
@@ -73,15 +74,19 @@ tap.test(
 tap.test(`02 - ad hoc #1`, (t) => {
   const inp1 = "amp;";
   const outp1 = [[0, 4, "&amp;"]];
-  t.strictSame(fix(inp1), outp1, "02");
+  t.strictSame(fix(t, inp1), outp1, "02");
   t.end();
 });
 
 tap.test(`03 - false positive prevention`, (t) => {
   falseCases.forEach((str) => {
-    t.strictSame(fix(str), [], `03* - ${`\u001b[${33}m${str}\u001b[${39}m`}`);
+    t.strictSame(
+      fix(t, str),
+      [],
+      `03* - ${`\u001b[${33}m${str}\u001b[${39}m`}`
+    );
   });
-  t.strictSame(fix("paste & copy & paste again"), [], "03");
+  t.strictSame(fix(t, "paste & copy & paste again"), [], "03");
   t.end();
 });
 
@@ -89,16 +94,25 @@ tap.test(
   `04 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - aacute vs acute`,
   (t) => {
     const gathered = [];
+    const input = "z &aacute; y";
+    const result = [];
     t.strictSame(
-      fix("z &aacute; y", {
+      fixEnt(input, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
       }),
-      [],
+      result,
       "04.01"
     );
-    t.strictSame(gathered, [], "04.02");
+    t.strictSame(
+      fix(t, input, {
+        textAmpersandCatcherCb: () => {},
+      }),
+      result,
+      "04.02"
+    );
+    t.strictSame(gathered, [], "04.03");
     t.end();
   }
 );
@@ -107,16 +121,25 @@ tap.test(
   `05 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - aacute vs acute`,
   (t) => {
     const gathered = [];
+    const input = "z &acute; y";
+    const result = [];
     t.strictSame(
-      fix("z &acute; y", {
+      fixEnt(input, {
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
       }),
-      [],
+      result,
       "05.01"
     );
-    t.strictSame(gathered, [], "05.02");
+    t.strictSame(
+      fix(t, input, {
+        textAmpersandCatcherCb: () => {},
+      }),
+      result,
+      "05.02"
+    );
+    t.strictSame(gathered, [], "05.03");
     t.end();
   }
 );
@@ -125,7 +148,7 @@ tap.test(
   `06 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - aacute vs acute, false positive`,
   (t) => {
     t.strictSame(
-      fix("Diagnosis can be acute; it is up to a doctor to"),
+      fix(t, "Diagnosis can be acute; it is up to a doctor to"),
       [],
       "06"
     );
@@ -138,8 +161,8 @@ tap.test(
   (t) => {
     const inp1 = "rarrpl;";
     const outp1 = [[0, 7, "&rarrpl;"]];
-    t.strictSame(fix(inp1), outp1, "07.01");
-    t.strictSame(fix(inp1, { cb }), outp1, "07.02");
+    t.strictSame(fix(t, inp1), outp1, "07.01");
+    t.strictSame(fix(t, inp1, { cb }), outp1, "07.02");
     t.end();
   }
 );
@@ -147,41 +170,56 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - &block; vs. display:block`,
   (t) => {
-    const inp1 = `<img src=abc.jpg width=123 height=456 border=0 style=display:block; alt=xyz/>`;
-    t.strictSame(fix(inp1), [], "08");
+    const input = `<img src=abc.jpg width=123 height=456 border=0 style=display:block; alt=xyz/>`;
+    t.strictSame(fix(t, input), [], "08");
     t.end();
   }
 );
 
 tap.test(`09 - nbsp`, (t) => {
   const gathered = [];
-  const inp1 = "nbsp;";
-  const outp1 = [[0, 5, "&nbsp;"]];
+  const input = "nbsp;";
+  const result = [[0, 5, "&nbsp;"]];
   t.strictSame(
-    fix(inp1, {
+    fixEnt(input, {
       textAmpersandCatcherCb: (idx) => {
         gathered.push(idx);
       },
     }),
-    outp1,
+    result,
     "09.01"
   );
-  t.strictSame(gathered, [], "09.02");
+  t.strictSame(
+    fix(t, input, {
+      textAmpersandCatcherCb: () => {},
+    }),
+    result,
+    "09.02"
+  );
+  t.strictSame(gathered, [], "09.03");
   t.end();
 });
 
 tap.test(`10 - red & bull;`, (t) => {
   const gathered = [];
-  const inp1 = "red & bull;";
+  const input = "red & bull;";
+  const result = [];
   t.strictSame(
-    fix(inp1, {
+    fixEnt(input, {
       textAmpersandCatcherCb: (idx) => {
         gathered.push(idx);
       },
     }),
-    [],
+    result,
     "10.01"
   );
-  t.strictSame(gathered, [4], "10.02");
+  t.strictSame(
+    fix(t, input, {
+      textAmpersandCatcherCb: () => {},
+    }),
+    result,
+    "10.02"
+  );
+  t.strictSame(gathered, [4], "10.03");
   t.end();
 });
