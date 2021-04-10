@@ -10463,6 +10463,7 @@ function fixEnt(str, originalOpts) {
               (temp = [...allNamedEntitiesSetOnly].filter(curr =>
               /* istanbul ignore next */
               leven_1(curr, potentialEntity) === 2 && potentialEntity.length > 3)) && temp.length)) {
+                /* istanbul ignore else */
                 if (temp.length === 1) {
                   [tempEnt] = temp;
                   rangesArr2.push({

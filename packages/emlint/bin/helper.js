@@ -7,6 +7,12 @@
 const fs = require("fs");
 const path = require("path");
 const nonFileBasedTagRules = require("../src/util/nonFileBasedTagRules.json");
+const { allRules } = require("string-fix-broken-named-entities");
+
+// the rule "bad-html-entity-encoded-numeric" doesn't exist
+const preppedBrokenEntityRules = allRules.filter(
+  (v) => v !== "bad-html-entity-encoded-numeric"
+);
 
 // bake the "bad-character" rules list JSON:
 
@@ -145,6 +151,31 @@ fs.writeFileSync(
 // bake the list of all rules
 
 fs.writeFileSync(
+  path.resolve("src/rules/all-with-ent.json"),
+  JSON.stringify(
+    [
+      // dedupe just in case
+      ...new Set([
+        ...allBadCharacterRules,
+        ...allTagRules,
+        ...allMediaRules,
+        ...allAttribRules,
+        ...allAttribValidateRules,
+        ...allCharacter,
+        ...allCSS,
+        ...allFormat,
+        ...allComment,
+        ...allEmail,
+        ...allBadNamedHTMLEntityRules,
+        ...preppedBrokenEntityRules, // <---- there are around four thousand of them
+      ]),
+    ].sort(),
+    null,
+    2
+  )
+);
+
+fs.writeFileSync(
   path.resolve("src/rules/all.json"),
   JSON.stringify(
     [
@@ -161,6 +192,7 @@ fs.writeFileSync(
         ...allComment,
         ...allEmail,
         ...allBadNamedHTMLEntityRules,
+        // omitted "preppedBrokenEntityRules", so the list is around 300
       ]),
     ].sort(),
     null,
