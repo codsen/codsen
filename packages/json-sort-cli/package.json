@@ -77,21 +77,21 @@
     "lodash.isplainobject": "^4.0.6",
     "meow": "^9.0.0",
     "p-filter": "^2.1.0",
-    "p-reduce": "^2.1.0",
+    "p-reduce": "^3.0.0",
     "sort-package-json": "^1.49.0",
     "sorted-object": "^2.0.1",
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.6",
-    "core-js": "^3.10.0",
+    "core-js": "^3.10.1",
     "cross-env": "^7.0.3",
-    "eslint": "^7.23.0",
+    "eslint": "^7.24.0",
     "execa": "^5.0.0",
     "lect": "^0.16.14",
     "p-map": "^4.0.0",
     "tap": "^14.11.0",
     "tempy": "^1.0.1",
-    "tslib": "^2.1.0"
+    "tslib": "^2.2.0"
   }
 }

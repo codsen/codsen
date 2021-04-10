@@ -74,17 +74,17 @@
     "json-comb-core": "^6.8.14",
     "meow": "^9.0.0",
     "p-map": "^4.0.0",
-    "p-reduce": "^2.1.0",
+    "p-reduce": "^3.0.0",
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "core-js": "^3.10.0",
+    "core-js": "^3.10.1",
     "cross-env": "^7.0.3",
-    "eslint": "^7.23.0",
+    "eslint": "^7.24.0",
     "execa": "^5.0.0",
     "lect": "^0.16.14",
     "tap": "^14.11.0",
     "tempy": "^1.0.1",
-    "tslib": "^2.1.0"
+    "tslib": "^2.2.0"
   }
 }

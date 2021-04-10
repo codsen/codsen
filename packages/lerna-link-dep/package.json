@@ -81,12 +81,12 @@
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "core-js": "^3.10.0",
+    "core-js": "^3.10.1",
     "cross-env": "^7.0.3",
-    "eslint": "^7.23.0",
-    "lect": "^0.16.13",
+    "eslint": "^7.24.0",
+    "lect": "^0.16.14",
     "tap": "^14.11.0",
     "tempy": "^1.0.1",
-    "tslib": "^2.1.0"
+    "tslib": "^2.2.0"
   }
 }
