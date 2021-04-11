@@ -1,7 +1,7 @@
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 7.0.8
+ * @version 7.0.9
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.14
+ * @version 3.13.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}

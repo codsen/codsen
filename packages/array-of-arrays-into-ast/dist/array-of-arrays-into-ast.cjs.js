@@ -1,7 +1,7 @@
 /**
  * @name array-of-arrays-into-ast
  * @fileoverview Turns an array of arrays of data into a nested tree of plain objects
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-of-arrays-into-ast/}
@@ -22,7 +22,7 @@ var _defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_definePropert
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "2.0.14";
+var version$1 = "2.0.15";
 
 var version = version$1;
 var defaults = {

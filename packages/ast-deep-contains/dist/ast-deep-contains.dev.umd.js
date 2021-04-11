@@ -1,7 +1,7 @@
 /**
  * @name ast-deep-contains
  * @fileoverview Like t.same assert on array of objects, where element order doesn't matter.
- * @version 3.0.14
+ * @version 3.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-deep-contains/}
@@ -2215,7 +2215,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.14
+ * @version 1.3.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -2239,7 +2239,7 @@ function parent(str) {
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -2724,7 +2724,7 @@ module.exports.assert = exports.assert;
 
 var is = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
-var version$1 = "3.0.14";
+var version$1 = "3.0.15";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version = version$1;

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.10.12](https://github.com/codsen/codsen/compare/codsen-parser@0.10.11...codsen-parser@0.10.12) (2021-04-11)
-
+## 0.10.12 (2021-04-11)
 
 ### Reverts
 
-* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
-
-
-
-
+- Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
 
 ## 0.10.3 (2021-02-27)
 

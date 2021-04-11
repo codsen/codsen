@@ -1,7 +1,7 @@
 /**
  * @name ranges-is-index-within
  * @fileoverview Checks if index is within any of the given string index ranges
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-is-index-within/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version$1 = "2.0.14";
+var version$1 = "2.0.15";
 
 var version = version$1;
 var defaults = {

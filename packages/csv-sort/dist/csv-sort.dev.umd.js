@@ -1,7 +1,7 @@
 /**
  * @name csv-sort
  * @fileoverview Sorts double-entry bookkeeping CSV coming from internet banking
- * @version 5.0.14
+ * @version 5.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/csv-sort/}
@@ -305,7 +305,7 @@ var lodash_pull = pull;
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -368,7 +368,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.14
+ * @version 7.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -468,7 +468,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.0.14
+ * @version 5.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -564,7 +564,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 5.0.14
+ * @version 5.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -641,7 +641,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 5.0.14
+ * @version 5.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -1175,7 +1175,7 @@ var lodash_trim = trim;
 /**
  * @name string-remove-thousand-separators
  * @fileoverview Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
- * @version 5.0.14
+ * @version 5.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-remove-thousand-separators/}
@@ -1268,7 +1268,7 @@ function remSep(str, originalOpts) {
 /**
  * @name csv-split-easy
  * @fileoverview Splits the CSV string into array of arrays, each representing a row of columns
- * @version 5.0.14
+ * @version 5.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/csv-split-easy/}

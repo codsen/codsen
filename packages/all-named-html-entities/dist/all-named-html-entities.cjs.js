@@ -1,7 +1,7 @@
 /**
  * @name all-named-html-entities
  * @fileoverview List of all named HTML entities
- * @version 1.5.14
+ * @version 1.5.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/all-named-html-entities/}
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version$1 = "1.5.14";
+var version$1 = "1.5.15";
 
 var Aacute = "Á";
 var aacute = "á";

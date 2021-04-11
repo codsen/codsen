@@ -1,7 +1,7 @@
 /**
  * @name ranges-process-outside
  * @fileoverview Iterate string considering ranges, as if they were already applied
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-process-outside/}
@@ -23,7 +23,7 @@ var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray)
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var runes__default = /*#__PURE__*/_interopDefaultLegacy(runes);
 
-var version$1 = "4.0.14";
+var version$1 = "4.0.15";
 
 var version = version$1;
 function rProcessOutside(originalStr, originalRanges, cb) {

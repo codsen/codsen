@@ -1,7 +1,7 @@
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -1910,7 +1910,7 @@ function stubFalse() {
 module.exports = cloneDeep;
 });
 
-var version$1 = "4.0.14";
+var version$1 = "4.0.15";
 
 const version = version$1;
 const RAWNBSP = "\u00A0";

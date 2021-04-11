@@ -1,13 +1,13 @@
 /**
  * @name string-overlap-one-on-another
  * @fileoverview Lay one string on top of another, with an optional offset
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-overlap-one-on-another/}
  */
 
-var version$1 = "2.0.14";
+var version$1 = "2.0.15";
 
 const version = version$1;
 const defaults = {

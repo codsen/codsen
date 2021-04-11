@@ -1,7 +1,7 @@
 /**
  * @name detect-is-it-html-or-xhtml
  * @fileoverview Answers, is the string input string more an HTML or XHTML (or neither)
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/detect-is-it-html-or-xhtml/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.detectIsItHtmlOrXhtml = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "4.0.14";
+var version$1 = "4.0.15";
 
 const version = version$1;
 function detectIsItHTMLOrXhtml(input) {

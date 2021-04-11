@@ -1,7 +1,7 @@
 /**
  * @name test-mixer
  * @fileoverview Test helper to generate function opts object variations
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/test-mixer/}
@@ -10,7 +10,7 @@
 import { combinations } from 'object-boolean-combinations';
 import clone from 'lodash.clonedeep';
 
-var version$1 = "2.0.14";
+var version$1 = "2.0.15";
 
 const version = version$1;
 function mixer(ref = {}, defaultsObj = {}) {

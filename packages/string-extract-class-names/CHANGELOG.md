@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.0.15](https://github.com/codsen/codsen/compare/string-extract-class-names@6.0.14...string-extract-class-names@6.0.15) (2021-04-11)
-
+## 6.0.15 (2021-04-11)
 
 ### Reverts
 
-* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
-
-
-
-
+- Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
 
 ## 6.0.1 (2021-01-28)
 

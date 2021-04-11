@@ -1,7 +1,7 @@
 /**
  * @name ranges-ent-decode
  * @fileoverview Recursive HTML entity decoding for Ranges workflow
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-ent-decode/}
@@ -24,7 +24,7 @@ var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "4.0.14";
+var version$1 = "4.0.15";
 
 var version = version$1;
 function chomp(str) {

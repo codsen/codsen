@@ -1,7 +1,7 @@
 /**
  * @name string-remove-thousand-separators
  * @fileoverview Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
- * @version 5.0.14
+ * @version 5.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-remove-thousand-separators/}
@@ -23,7 +23,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var trimChars__default = /*#__PURE__*/_interopDefaultLegacy(trimChars);
 
-var version$1 = "5.0.14";
+var version$1 = "5.0.15";
 
 var version = version$1;
 function remSep(str, originalOpts) {

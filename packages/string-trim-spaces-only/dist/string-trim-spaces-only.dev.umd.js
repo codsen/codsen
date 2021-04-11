@@ -1,7 +1,7 @@
 /**
  * @name string-trim-spaces-only
  * @fileoverview Like String.trim() but you can choose granularly what to trim
- * @version 3.0.14
+ * @version 3.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-trim-spaces-only/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringTrimSpacesOnly = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "3.0.14";
+var version$1 = "3.0.15";
 
 const version = version$1;
 const defaults = {

@@ -1,7 +1,7 @@
 /**
  * @name string-uglify
  * @fileoverview Shorten sets of strings deterministically, to be git-friendly
- * @version 1.4.14
+ * @version 1.4.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-uglify/}
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version$1 = "1.4.14";
+var version$1 = "1.4.15";
 
 var version = version$1;
 function tellcp(str) {

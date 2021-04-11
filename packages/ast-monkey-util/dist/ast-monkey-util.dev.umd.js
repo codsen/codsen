@@ -1,7 +1,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.14
+ * @version 1.3.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -91,7 +91,7 @@ function parent(str) {
     return null;
 }
 
-var version$1 = "1.3.14";
+var version$1 = "1.3.15";
 
 const version = version$1;
 

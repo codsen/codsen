@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.3.15](https://github.com/codsen/codsen/compare/helga@1.3.14...helga@1.3.15) (2021-04-11)
-
+## 1.3.15 (2021-04-11)
 
 ### Reverts
 
-* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
-
-
-
-
+- Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
 
 ## 1.3.1 (2021-01-28)
 

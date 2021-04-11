@@ -1,7 +1,7 @@
 /**
  * @name array-of-arrays-into-ast
  * @fileoverview Turns an array of arrays of data into a nested tree of plain objects
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-of-arrays-into-ast/}
@@ -9,7 +9,7 @@
 
 import { mergeAdvanced } from 'object-merge-advanced';
 
-var version$1 = "2.0.14";
+var version$1 = "2.0.15";
 
 const version = version$1;
 const defaults = {

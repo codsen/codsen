@@ -1,13 +1,13 @@
 /**
  * @name string-range-expander
  * @fileoverview Expands string index ranges within whitespace boundaries until letters are met
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-range-expander/}
  */
 
-var version$1 = "2.0.14";
+var version$1 = "2.0.15";
 
 const version = version$1;
 const defaults = {

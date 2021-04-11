@@ -1,7 +1,7 @@
 /**
  * @name string-process-comma-separated
  * @fileoverview Extracts chunks from possibly comma or whatever-separated string
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-process-comma-separated/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "2.0.14";
+var version$1 = "2.0.15";
 
 var version = version$1;
 function processCommaSep(str, originalOpts) {

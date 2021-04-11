@@ -1,7 +1,7 @@
 /**
  * @name ast-get-object
  * @fileoverview Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-get-object/}
@@ -20,7 +20,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "2.0.14";
+var version$1 = "2.0.15";
 
 var version = version$1;
 function existy(x) {

@@ -1,7 +1,7 @@
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version$1 = "4.0.14";
+var version$1 = "4.0.15";
 
 var version = version$1;
 var defaults = {

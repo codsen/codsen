@@ -1,7 +1,7 @@
 /**
  * @name edit-package-json
  * @fileoverview Edit package.json without parsing, as string, to keep the formatting intact
- * @version 0.3.14
+ * @version 0.3.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/edit-package-json/}
@@ -1913,7 +1913,7 @@ module.exports = cloneDeep;
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -2271,7 +2271,7 @@ function chompLeft(str, idx, ...args) {
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -2334,7 +2334,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.14
+ * @version 7.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -2434,7 +2434,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.0.14
+ * @version 5.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -2527,7 +2527,7 @@ function rApply(str, originalRangesArr, progressFn) {
   return str;
 }
 
-var version$1 = "0.3.14";
+var version$1 = "0.3.15";
 
 const version = version$1;
 function isStr(something) {

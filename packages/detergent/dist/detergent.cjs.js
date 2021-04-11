@@ -1,7 +1,7 @@
 /**
  * @name detergent
  * @fileoverview Extracts, cleans and encodes text
- * @version 7.0.14
+ * @version 7.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/detergent/}
@@ -39,7 +39,7 @@ var ansiRegex__default = /*#__PURE__*/_interopDefaultLegacy(ansiRegex);
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 
-var version$1 = "7.0.14";
+var version$1 = "7.0.15";
 
 var defaultOpts = {
   fixBrokenEntities: true,

@@ -1,7 +1,7 @@
 /**
  * @name object-set-all-values-to
  * @fileoverview Recursively walk the input and set all found values in plain objects to something
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-set-all-values-to/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "4.0.14";
+var version$1 = "4.0.15";
 
 var version = version$1;
 function setAllValuesTo(inputOriginal, valueOriginal) {

@@ -1,7 +1,7 @@
 /**
  * @name ast-monkey
  * @fileoverview Traverse and edit AST
- * @version 7.13.14
+ * @version 7.13.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey/}
@@ -761,7 +761,7 @@ var lodash_includes = includes;
 /**
  * @name util-array-object-or-both
  * @fileoverview Validate and normalise user choice: array, object or both?
- * @version 3.0.14
+ * @version 3.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/util-array-object-or-both/}
@@ -3296,7 +3296,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.14
+ * @version 1.3.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -3320,7 +3320,7 @@ function parent(str) {
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -4461,7 +4461,7 @@ var lodash_intersection = intersection;
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.14
+ * @version 3.13.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -4896,7 +4896,7 @@ matcher.isMatch = isMatch;
 /**
  * @name check-types-mini
  * @fileoverview Validate options object
- * @version 6.0.14
+ * @version 6.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/check-types-mini/}
@@ -5067,7 +5067,7 @@ function checkTypesMini(obj, ref, originalOptions) {
 /**
  * @name ast-contains-only-empty-space
  * @fileoverview Does AST contain only empty space?
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-contains-only-empty-space/}
@@ -5095,7 +5095,7 @@ function empty(input) {
 /**
  * @name ast-compare
  * @fileoverview Compare anything: AST, objects, arrays, strings and nested thereof
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-compare/}
@@ -5232,7 +5232,7 @@ function compare(b, s, originalOpts) {
   return true;
 }
 
-var version$1 = "7.13.14";
+var version$1 = "7.13.15";
 
 const version = version$1;
 function existy(x) {

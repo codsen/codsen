@@ -1,7 +1,7 @@
 /**
  * @name ast-loose-compare
  * @fileoverview Compare anything: AST, objects, arrays and strings
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-loose-compare/}
@@ -20,7 +20,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "2.0.14";
+var version$1 = "2.0.15";
 
 var version = version$1;
 function internalCompare(bigObj, smallObj, res) {

@@ -1,7 +1,7 @@
 /**
  * @name js-row-num
  * @fileoverview Update all row numbers in all console.logs in JS code
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/js-row-num/}
@@ -21,7 +21,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "4.0.14";
+var version$1 = "4.0.15";
 
 var version = version$1;
 var BACKSLASH = "\\";

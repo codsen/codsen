@@ -1,7 +1,7 @@
 /**
  * @name string-convert-indexes
  * @fileoverview Convert between native JS string character indexes and grapheme-count-based indexes
- * @version 4.0.14
+ * @version 4.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-convert-indexes/}
@@ -1913,7 +1913,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.14
+ * @version 1.3.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -1937,7 +1937,7 @@ function parent(str) {
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.14
+ * @version 2.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -3756,7 +3756,7 @@ if (module.exports) {
 }
 });
 
-var version$1 = "4.0.14";
+var version$1 = "4.0.15";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 const version = version$1;

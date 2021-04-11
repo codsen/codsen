@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.1.0](https://github.com/codsen/codsen/compare/is-media-descriptor@3.0.14...is-media-descriptor@3.1.0) (2021-04-11)
-
+## 3.1.0 (2021-04-11)
 
 ### Features
 
-* catch missing spaces after "and" ([714731f](https://github.com/codsen/codsen/commit/714731fc2f4e6c8f9c652072fde6bcb911b9c733))
-
+- catch missing spaces after "and" ([714731f](https://github.com/codsen/codsen/commit/714731fc2f4e6c8f9c652072fde6bcb911b9c733))
 
 ### Reverts
 
-* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
-
-
-
-
+- Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
 
 ## 3.0.1 (2021-01-28)
 

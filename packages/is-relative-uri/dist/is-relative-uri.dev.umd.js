@@ -1,7 +1,7 @@
 /**
  * @name is-relative-uri
  * @fileoverview Is given string a relative URI?
- * @version 3.0.14
+ * @version 3.0.15
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-relative-uri/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.isRelativeUri = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "3.0.14";
+var version$1 = "3.0.15";
 
 const version = version$1;
 // Reference used:
