@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.6](https://github.com/codsen/codsen/compare/codsen-tokenizer@5.5.5...codsen-tokenizer@5.5.6) (2021-04-11)
+
+
+### Bug Fixes
+
+* correctly end the inline CSS style property without a value ([59b699d](https://github.com/codsen/codsen/commit/59b699dccd2466de8e9698f6f2564fcb3f1c9150))
+
+
+### Reverts
+
+* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
+
+
+
+
+
 ## 5.5.0 (2021-03-23)
 
 ### Bug Fixes

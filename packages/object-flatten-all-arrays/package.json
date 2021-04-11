@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-all-arrays",
-  "version": "5.0.14",
+  "version": "5.0.15",
   "description": "Merge and flatten any arrays found in all values within plain objects",
   "keywords": [
     "arrays",
@@ -115,7 +115,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.14",
+    "lect": "^0.16.15",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

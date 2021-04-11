@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.0.12](https://github.com/codsen/codsen/compare/object-merge-advanced@12.0.11...object-merge-advanced@12.0.12) (2021-04-11)
+
+
+### Reverts
+
+* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
+
+
+
+
+
 ## 12.0.0 (2021-02-07)
 
 ### Features

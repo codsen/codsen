@@ -1,6 +1,6 @@
 {
   "name": "ast-get-object",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "keywords": [
     "ast",
@@ -88,7 +88,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "ast-compare": "^2.0.14",
+    "ast-compare": "^2.0.15",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
@@ -121,7 +121,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.14",
+    "lect": "^0.16.15",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

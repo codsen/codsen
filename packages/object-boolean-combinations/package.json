@@ -1,6 +1,6 @@
 {
   "name": "object-boolean-combinations",
-  "version": "4.0.14",
+  "version": "4.0.15",
   "description": "Consumes a defaults object with booleans, generates all possible variations of it",
   "keywords": [
     "all",
@@ -114,7 +114,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.14",
+    "lect": "^0.16.15",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

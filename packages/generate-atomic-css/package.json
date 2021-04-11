@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css",
-  "version": "1.4.14",
+  "version": "1.4.15",
   "description": "Generate Atomic CSS",
   "keywords": [
     "api",
@@ -76,7 +76,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "string-left-right": "^4.0.14"
+    "string-left-right": "^4.0.15"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
@@ -105,7 +105,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.14",
+    "lect": "^0.16.15",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

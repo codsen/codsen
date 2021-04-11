@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.15](https://github.com/codsen/codsen/compare/line-column-mini@1.1.14...line-column-mini@1.1.15) (2021-04-11)
+
+
+### Reverts
+
+* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
+
+
+
+
+
 ## 1.1.1 (2021-01-28)
 
 ### Bug Fixes

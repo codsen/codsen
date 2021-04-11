@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.15](https://github.com/codsen/codsen/compare/ranges-regex@4.0.14...ranges-regex@4.0.15) (2021-04-11)
+
+
+### Reverts
+
+* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
+
+
+
+
+
 ## 4.0.1 (2021-01-28)
 
 ### Bug Fixes

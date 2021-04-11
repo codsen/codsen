@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.6.0](https://github.com/codsen/codsen/compare/emlint@4.5.5...emlint@4.6.0) (2021-04-11)
+
+
+### Bug Fixes
+
+* decommission `attribute-enforce-img-alt` in favor of more generic `attribute-required` ([197a4f6](https://github.com/codsen/codsen/commit/197a4f67cf57dadbea111fb4c21551bfc51482dc))
+* export the JSON of every single rule possibly reported by emlint ([e048195](https://github.com/codsen/codsen/commit/e04819552be0c560a9d250225e1e97b590cb362a))
+* improve `attribute-align-mismatch` to flag up any amount of child table nodes ([906ff9f](https://github.com/codsen/codsen/commit/906ff9f2ac54de09885408fe83f8661ea8f0b697))
+
+
+### Features
+
+* new rule, `attribute-align-mismatch` ([c785678](https://github.com/codsen/codsen/commit/c7856787f837b6b2b90b4b8402d3c25e46254ab7))
+* new rule, `attribute-required` ([6bdd17e](https://github.com/codsen/codsen/commit/6bdd17e9a3294dbb0f41f1010e9ab909a43e6352))
+* new rule, `css-required` ([5edda75](https://github.com/codsen/codsen/commit/5edda757c087a8b5b34f90771795d3dd29d1e90e))
+* prevent `character-encode` and `bad-character-*` from clashing ([19d6709](https://github.com/codsen/codsen/commit/19d6709fb361df0af8d4f483e0692d920120ed18))
+
+
+### Reverts
+
+* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
+
+
+
+
+
 ## 4.5.0 (2021-03-23)
 
 ### Bug Fixes

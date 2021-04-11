@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/codsen/codsen/compare/string-fix-broken-named-entities@5.2.4...string-fix-broken-named-entities@5.3.0) (2021-04-11)
+
+
+### Features
+
+* export the array of all possibly-reported rule names, `allRules` ([7e16a96](https://github.com/codsen/codsen/commit/7e16a966ddbb4bba625b9ce1456d8b2ba10d6f1c))
+
+
+### Reverts
+
+* Revert "chore: setup refresh" ([23cf206](https://github.com/codsen/codsen/commit/23cf206970a087ff0fa04e61f94d919f59ab3881))
+
+
+
+
+
 ## 5.2.0 (2021-03-25)
 
 ### Features
