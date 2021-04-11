@@ -40,11 +40,11 @@ var punctuationChars = ".,;!?";
 var BACKTICK = "\x60";
 var LEFTDOUBLEQUOTMARK = "\u201C";
 var RIGHTDOUBLEQUOTMARK = "\u201D";
-function isLatinLetter(char) {
-  return !!(char && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123));
+function isLatinLetter(_char4) {
+  return !!(_char4 && (_char4.charCodeAt(0) > 64 && _char4.charCodeAt(0) < 91 || _char4.charCodeAt(0) > 96 && _char4.charCodeAt(0) < 123));
 }
-function charSuitableForTagName(char) {
-  return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
+function charSuitableForTagName(_char5) {
+  return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(_char5);
 }
 function flipEspTag(str) {
   var res = "";
@@ -201,8 +201,8 @@ function matchLayerLast(wholeEspTagLump, layers) {
   }
   if (
   wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) ||
-  Array.from(wholeEspTagLump).every(function (char) {
-    return whichLayerToMatch.guessedClosingLump.includes(char);
+  Array.from(wholeEspTagLump).every(function (_char) {
+    return whichLayerToMatch.guessedClosingLump.includes(_char);
   }) ||
   whichLayerToMatch.guessedClosingLump &&
   whichLayerToMatch.guessedClosingLump.length > 2 &&
@@ -492,7 +492,7 @@ function tokenizer(str, originalOpts) {
         tagName: null,
         recognised: null,
         closing: false,
-        void: false,
+        "void": false,
         pureHTML: true,
         kind: null,
         attribs: []
@@ -963,11 +963,11 @@ function tokenizer(str, originalOpts) {
             }
             layers.length = 0;
           } else if (
-          attrib && attrib.attribValue && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && Array.from(str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i)).some(function (char, idx) {
-            return wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && (
-            veryEspChars.includes(char) ||
+          attrib && attrib.attribValue && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && Array.from(str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i)).some(function (_char, idx) {
+            return wholeEspTagLumpOnTheRight.includes(flipEspTag(_char)) && (
+            veryEspChars.includes(_char) ||
             !idx) && (disposableVar = {
-              char: char,
+              "char": _char,
               idx: idx
             });
           }) &&
@@ -977,7 +977,7 @@ function tokenizer(str, originalOpts) {
             var lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length];
             var newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
             if (!disposableVar || !disposableVar.idx) {
-              newTokenToPutInstead.head = disposableVar.char;
+              newTokenToPutInstead.head = disposableVar["char"];
               newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
               newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
               newTokenToPutInstead.tailStartsAt = _i;
@@ -1500,8 +1500,8 @@ function tokenizer(str, originalOpts) {
           } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
             var firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
             var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
-            if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (char) {
-              return firstPartOfWholeEspTagClosing.includes(char);
+            if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (_char2) {
+              return firstPartOfWholeEspTagClosing.includes(_char2);
             })) {
               token.end = _i + firstPartOfWholeEspTagClosing.length;
               token.value = str.slice(token.start, token.end);
@@ -1533,7 +1533,7 @@ function tokenizer(str, originalOpts) {
           token.kind = "xml";
         }
         if (voidTags.includes(token.tagName)) {
-          token.void = true;
+          token["void"] = true;
         }
         token.recognised = isTagNameRecognised(token.tagName);
         doNothing = _i;
@@ -1817,8 +1817,8 @@ function tokenizer(str, originalOpts) {
           !firstQuoteOnTheRightIdx ||
           str.slice(rightVal, firstQuoteOnTheRightIdx).includes("=") ||
           !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) ||
-          Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
-            return "<>=".includes(char);
+          Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (_char3) {
+            return "<>=".includes(_char3);
           })) {
             attrib.attribValueStartsAt = rightVal;
             layers.push({
@@ -1836,8 +1836,8 @@ function tokenizer(str, originalOpts) {
         str.length > nextCharIdx + 2 &&
         str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (
         !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) &&
-        !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
-          return "<>=".concat(str[_i]).includes(char);
+        !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (_char4) {
+          return "<>=".concat(str[_i]).includes(_char4);
         })) {
           layers.pop();
         } else {

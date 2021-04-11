@@ -35,8 +35,8 @@ function trimSpaces(str, originalOpts) {
     throw new Error("string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as ".concat(_typeof__default['default'](str), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
   }
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
-  function check(char) {
-    return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\xA0");
+  function check(_char) {
+    return opts.classicTrim && !_char.trim() || !opts.classicTrim && (opts.space && _char === " " || opts.cr && _char === "\r" || opts.lf && _char === "\n" || opts.tab && _char === "\t" || opts.nbsp && _char === "\xA0");
   }
   var newStart;
   var newEnd;

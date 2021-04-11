@@ -59,11 +59,11 @@ function collapse(str, originalOpts) {
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
   function push(something, extras) {
     if (typeof opts.cb === "function") {
-      var final = opts.cb(_objectSpread__default['default']({
+      var _final = opts.cb(_objectSpread__default['default']({
         suggested: something
       }, extras));
-      if (Array.isArray(final)) {
-        finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](final));
+      if (Array.isArray(_final)) {
+        finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](_final));
       }
     } else if (something) {
       finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray__default['default'](something));

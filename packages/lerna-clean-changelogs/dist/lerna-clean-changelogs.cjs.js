@@ -29,7 +29,7 @@ function cleanChangelogs(changelogContents) {
   } else if (!isStr(changelogContents)) {
     throw new Error("lerna-clean-changelogs: [THROW_ID_02] The first input argument must be a string! It was given as ".concat(Array.isArray(changelogContents) ? "array" : _typeof__default['default'](changelogContents), ", equal to:\n").concat(JSON.stringify(changelogContents, null, 4)));
   }
-  var final;
+  var _final;
   var lastLineWasEmpty = false;
   if (typeof changelogContents === "string" && changelogContents.length && (!changelogContents.includes("\n") || !changelogContents.includes("\r"))) {
     var changelogEndedWithLinebreak = isStr(changelogContents) && changelogContents.length && (changelogContents[changelogContents.length - 1] === "\n" || changelogContents[changelogContents.length - 1] === "\r");
@@ -70,11 +70,11 @@ function cleanChangelogs(changelogContents) {
         lastLineWasEmpty = false;
       }
     }
-    final = "".concat(newLinesArr.join("\n")).concat(changelogEndedWithLinebreak ? "\n" : "");
+    _final = "".concat(newLinesArr.join("\n")).concat(changelogEndedWithLinebreak ? "\n" : "");
   }
   return {
     version: version,
-    res: final || changelogContents
+    res: _final || changelogContents
   };
 }
 

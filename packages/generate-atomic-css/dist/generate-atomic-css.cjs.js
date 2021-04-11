@@ -198,8 +198,8 @@ function extractFromToSource(str) {
     }).map(function (val) {
       return val.trim();
     }).filter(function (val) {
-      return String(val).split("").every(function (char) {
-        return /\d/g.test(char);
+      return String(val).split("").every(function (_char) {
+        return /\d/g.test(_char);
       });
     });
   } else if (str.includes("|")) {
@@ -208,8 +208,8 @@ function extractFromToSource(str) {
     }).map(function (val) {
       return val.trim();
     }).filter(function (val) {
-      return String(val).split("").every(function (char) {
-        return /\d/g.test(char);
+      return String(val).split("").every(function (_char2) {
+        return /\d/g.test(_char2);
       });
     });
   }

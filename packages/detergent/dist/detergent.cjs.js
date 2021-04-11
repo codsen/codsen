@@ -73,15 +73,15 @@ var latinAndNonNonLatinRanges = [[0, 880], [887, 890], [894, 900], [906, 908], [
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 function doConvertEntities(inputString, dontEncodeNonLatin) {
   if (dontEncodeNonLatin) {
-    return Array.from(inputString).map(function (char) {
-      if (char.charCodeAt(0) < 880 || latinAndNonNonLatinRanges.some(function (rangeArr) {
-        return char.charCodeAt(0) > rangeArr[0] && char.charCodeAt(0) < rangeArr[1];
+    return Array.from(inputString).map(function (_char) {
+      if (_char.charCodeAt(0) < 880 || latinAndNonNonLatinRanges.some(function (rangeArr) {
+        return _char.charCodeAt(0) > rangeArr[0] && _char.charCodeAt(0) < rangeArr[1];
       })) {
-        return he__default['default'].encode(char, {
+        return he__default['default'].encode(_char, {
           useNamedReferences: true
         });
       }
-      return char;
+      return _char;
     }).join("");
   }
   return he__default['default'].encode(inputString, {
@@ -872,8 +872,8 @@ function det(str, inputOpts) {
                 finalIndexesToDelete.push(tag.lastClosingBracketAt, tag.lastClosingBracketAt, "/");
               }
             }
-            if (tag.slashPresent && isNum(tag.lastOpeningBracketAt) && tag.nameStarts && tag.lastOpeningBracketAt < tag.nameStarts - 1 && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (char) {
-              return !char.trim() || char === "/";
+            if (tag.slashPresent && isNum(tag.lastOpeningBracketAt) && tag.nameStarts && tag.lastOpeningBracketAt < tag.nameStarts - 1 && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (_char) {
+              return !_char.trim() || _char === "/";
             })) {
               finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
             }
@@ -917,8 +917,8 @@ function det(str, inputOpts) {
           if (isNum(tag.lastOpeningBracketAt) && isNum(tag.nameStarts) && tag.lastOpeningBracketAt + 1 < tag.nameStarts) {
             if (!str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim().length) {
               finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
-            } else if (!voidTags.includes(tag.name.toLowerCase()) && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (char) {
-              return !char.trim() || char === "/";
+            } else if (!voidTags.includes(tag.name.toLowerCase()) && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (_char2) {
+              return !_char2.trim() || _char2 === "/";
             })) {
               finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts, "/");
             }

@@ -27,8 +27,8 @@ function extract(str) {
   }
   var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`";
   var stateCurrentlyIs;
-  function isLatinLetter(char) {
-    return typeof char === "string" && !!char.length && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+  function isLatinLetter(_char) {
+    return typeof _char === "string" && !!_char.length && (_char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123);
   }
   var selectorStartsAt = null;
   var result = {

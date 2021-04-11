@@ -34,8 +34,8 @@ var trim__default = /*#__PURE__*/_interopDefaultLegacy(trim);
 var without__default = /*#__PURE__*/_interopDefaultLegacy(without);
 
 /* istanbul ignore next */
-function characterSuitableForNames(char) {
-  return /[-_A-Za-z0-9]/.test(char);
+function characterSuitableForNames(_char) {
+  return /[-_A-Za-z0-9]/.test(_char);
 }
 /* istanbul ignore next */
 function prepHopefullyAnArray(something, name) {

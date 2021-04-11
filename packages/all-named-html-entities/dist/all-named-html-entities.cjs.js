@@ -755,7 +755,7 @@ var infin = "∞";
 var infintie = "⧝";
 var inodot = "ı";
 var Int = "∬";
-var int$1 = "∫";
+var _int$1 = "∫";
 var intcal = "⊺";
 var integers$1 = "ℤ";
 var Integral = "∫";
@@ -2880,7 +2880,7 @@ var allNamedEntitiesJson = {
   infintie: infintie,
   inodot: inodot,
   Int: Int,
-  int: int$1,
+  "int": _int$1,
   intcal: intcal,
   integers: integers$1,
   Integral: Integral,
@@ -7060,7 +7060,7 @@ var imped = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var int = {
+var _int = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
@@ -7937,7 +7937,7 @@ var uncertainJson = {
     addAmpIfSemiPresent: false,
     addSemiIfAmpPresent: false
   },
-  int: int,
+  "int": _int,
   integers: integers,
   iocy: iocy,
   iogon: iogon,

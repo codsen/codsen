@@ -30,8 +30,8 @@ var leven__default = /*#__PURE__*/_interopDefaultLegacy(leven);
 function isObj(something) {
   return something && _typeof__default['default'](something) === "object" && !Array.isArray(something);
 }
-function isLatinLetterOrNumberOrHash(char) {
-  return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
+function isLatinLetterOrNumberOrHash(_char) {
+  return isStr(_char) && _char.length === 1 && (_char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123 || _char.charCodeAt(0) > 47 && _char.charCodeAt(0) < 58 || _char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) === 35);
 }
 function isNumeric(something) {
   return isStr(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
@@ -349,8 +349,8 @@ function fixEnt(str, originalOpts) {
                 opts.entityCatcherCb(whatsOnTheLeft, i + 1);
               }
             } else {
-              var potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(function (char) {
-                return char.trim().length;
+              var potentialEntityOnlyNonWhitespaceChars = Array.from(potentialEntity).filter(function (_char) {
+                return _char.trim().length;
               }).join("");
               if (potentialEntityOnlyNonWhitespaceChars.length <= allNamedHtmlEntities.maxLength && allNamedHtmlEntities.allNamedEntitiesSetOnlyCaseInsensitive.has(potentialEntityOnlyNonWhitespaceChars.toLowerCase())) {
                 if (

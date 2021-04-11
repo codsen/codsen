@@ -1009,7 +1009,7 @@ var notEmailFriendly = {
   imath: "#x131",
   imof: "#x22B7",
   imped: "#x1B5",
-  in: "#x2208",
+  "in": "#x2208",
   incare: "#x2105",
   infintie: "#x29DD",
   inodot: "#x131",

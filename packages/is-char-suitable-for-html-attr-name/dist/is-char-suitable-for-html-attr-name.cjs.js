@@ -11,11 +11,11 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function isAttrNameChar(char) {
-  return typeof char === "string" && (
-  char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 ||
-  char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 ||
-  char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
+function isAttrNameChar(_char) {
+  return typeof _char === "string" && (
+  _char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123 ||
+  _char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 ||
+  _char.charCodeAt(0) > 47 && _char.charCodeAt(0) < 58 || _char === ":" || _char === "-");
 }
 
 exports.isAttrNameChar = isAttrNameChar;

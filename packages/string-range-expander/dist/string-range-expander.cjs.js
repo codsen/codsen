@@ -37,11 +37,11 @@ var defaults = {
 };
 function expander(originalOpts) {
   var letterOrDigit = /^[0-9a-zA-Z]+$/;
-  function isWhitespace(char) {
-    if (!char || typeof char !== "string") {
+  function isWhitespace(_char) {
+    if (!_char || typeof _char !== "string") {
       return false;
     }
-    return !char.trim();
+    return !_char.trim();
   }
   function isStr(something) {
     return typeof something === "string";

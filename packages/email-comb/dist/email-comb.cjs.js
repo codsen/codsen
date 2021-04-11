@@ -50,8 +50,8 @@ function isObj(something) {
 function hasOwnProp(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
-function isLatinLetter(char) {
-  return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+function isLatinLetter(_char) {
+  return typeof _char === "string" && _char.length === 1 && (_char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123);
 }
 
 var version = version$1;
@@ -73,8 +73,8 @@ function comb(str, originalOpts) {
   });
   var currentChunksMinifiedSelectors = new rangesPush.Ranges();
   var lineBreaksToDelete = new rangesPush.Ranges();
-  function characterSuitableForNames(char) {
-    return /[-_A-Za-z0-9]/.test(char);
+  function characterSuitableForNames(_char2) {
+    return /[-_A-Za-z0-9]/.test(_char2);
   }
   function resetBodyClassOrId() {
     var initObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -601,9 +601,9 @@ function comb(str, originalOpts) {
       if (!doNothing && str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, "body", {
         i: true,
         trimBeforeMatching: true,
-        cb: function cb(char, _theRemainderOfTheString, index) {
+        cb: function cb(_char3, _theRemainderOfTheString, index) {
           if (round === 1) {
-            if (char !== undefined && (char.trim() === "" || char === ">") && typeof index === "number") {
+            if (_char3 !== undefined && (_char3.trim() === "" || _char3 === ">") && typeof index === "number") {
               if (index - _i > 5) {
                 finalIndexesToDelete.push(_i, index, "<body");
                 nonIndentationsWhitespaceLength += index - _i - 5;

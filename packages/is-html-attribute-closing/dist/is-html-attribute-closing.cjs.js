@@ -127,8 +127,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         str.slice(chunkStartsAt, i).trim();
       }
       var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() &&
-      Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
-        return isCharSuitableForHtmlAttrName.isAttrNameChar(char);
+      Array.from(str.slice(chunkStartsAt, i).trim()).every(function (_char) {
+        return isCharSuitableForHtmlAttrName.isAttrNameChar(_char);
       }) &&
       str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[rightVal]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]);
       var attrNameCharsChunkOnTheLeft = void 0;
@@ -277,8 +277,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         "/>".includes(str[rightVal]));
         var _R2 = totalQuotesCount < 3 ||
         quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
-        var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt !== undefined && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
-          return isCharSuitableForHtmlAttrName.isAttrNameChar(char);
+        var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt !== undefined && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (_char2) {
+          return isCharSuitableForHtmlAttrName.isAttrNameChar(_char2);
         }) && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
         var R32 = !rightVal && totalQuotesCount % 2 === 0;
         var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && isCharSuitableForHtmlAttrName.isAttrNameChar(str[idxOfAttrOpening - 2]);
@@ -312,8 +312,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         }
       }
       if (str[i] === "=" && stringMatchLeftRight.matchRight(str, i, ["'", "\""], {
-        cb: function cb(char) {
-          return !"/>".includes(char);
+        cb: function cb(_char3) {
+          return !"/>".includes(_char3);
         },
         trimBeforeMatching: true,
         trimCharsBeforeMatching: ["="]

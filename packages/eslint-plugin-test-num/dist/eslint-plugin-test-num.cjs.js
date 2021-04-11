@@ -206,8 +206,8 @@ var create = function create(context) {
                     var valueToInsert = ", \"".concat(newValue, "\"");
                     if (
                     wholeSourceStr.slice(startIdx, endIdx).includes("\n")) {
-                      var frontalIndentation = Array.from(wholeSourceStr.slice(startIdx, endIdx)).filter(function (char) {
-                        return !"\r\n".includes(char);
+                      var frontalIndentation = Array.from(wholeSourceStr.slice(startIdx, endIdx)).filter(function (_char) {
+                        return !"\r\n".includes(_char);
                       }).join("");
                       valueToInsert = ",\n".concat(frontalIndentation, "  \"").concat(newValue, "\"\n").concat(frontalIndentation);
                     }

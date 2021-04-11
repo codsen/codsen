@@ -28,8 +28,8 @@ var defaultOpts = {
 var BACKSLASH = "\\";
 var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
-function isNotLetter(char) {
-  return char === undefined || char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
+function isNotLetter(_char) {
+  return _char === undefined || _char.toUpperCase() === _char.toLowerCase() && !/\d/.test(_char) && _char !== "=";
 }
 
 function extraRequirements(str, idx) {
@@ -100,14 +100,14 @@ function isOpening(str) {
       qualified = true;
     }
     if (qualified && stringMatchLeftRight.matchRightIncl(str, idx, knownHtmlTags, {
-      cb: function cb(char) {
-        if (char === undefined) {
+      cb: function cb(_char) {
+        if (_char === undefined) {
           if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
             passed = true;
           }
           return true;
         }
-        return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
+        return _char.toUpperCase() === _char.toLowerCase() && !/\d/.test(_char) && _char !== "=";
       },
       i: true,
       trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]

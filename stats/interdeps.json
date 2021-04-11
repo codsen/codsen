@@ -143,7 +143,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 79735,
+        "size": 80089,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -244,7 +244,7 @@
     },
     {
         "name": "emlint",
-        "size": 316402,
+        "size": 327641,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -265,7 +265,7 @@
     },
     {
         "name": "eslint-plugin-row-num",
-        "size": 3514,
+        "size": 3515,
         "imports": [
             "js-row-num"
         ]
@@ -370,7 +370,7 @@
     },
     {
         "name": "is-media-descriptor",
-        "size": 13455,
+        "size": 13782,
         "imports": [
             "string-process-comma-separated"
         ]
@@ -671,7 +671,7 @@
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 26831,
+        "size": 27255,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
