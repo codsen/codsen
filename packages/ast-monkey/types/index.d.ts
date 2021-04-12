@@ -1,7 +1,7 @@
 export { traverse } from 'ast-monkey-traverse';
 
 declare const version: string;
-declare type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+declare type JsonValue = string | number | boolean | null | undefined | JsonObject | JsonArray;
 declare type JsonObject = {
     [Key in string]?: JsonValue;
 };

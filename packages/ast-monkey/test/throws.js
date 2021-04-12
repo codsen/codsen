@@ -57,7 +57,41 @@ tap.test("04 - drop - throws when there's no input", (t) => {
   t.end();
 });
 
-tap.test("05 - get/set - throws when opts.index is missing", (t) => {
+tap.test("05 - del - throws when there's no input", (t) => {
+  t.throws(() => {
+    del();
+  }, /THROW_ID_26/g);
+  t.throws(() => {
+    del(null, {});
+  }, /THROW_ID_26/g);
+  t.end();
+});
+
+tap.test("06 - del - throws when opts is not a plain object", (t) => {
+  t.throws(() => {
+    del({ a: "b" });
+  }, /THROW_ID_27/g);
+  t.throws(() => {
+    del({ a: "b" }, "c");
+  }, /THROW_ID_27/g);
+  t.end();
+});
+
+tap.test("07 - arrayFirstOnly - when there's no input", (t) => {
+  t.throws(() => {
+    arrayFirstOnly();
+  }, /THROW_ID_31/g);
+  t.end();
+});
+
+tap.test("08 - del - throws when opts.key and opts.val are missing", (t) => {
+  t.throws(() => {
+    del({ a: "b" }, {});
+  }, /THROW_ID_28/g);
+  t.end();
+});
+
+tap.test("09 - get/set - throws when opts.index is missing", (t) => {
   t.throws(() => {
     get(defaultInput);
   }, /THROW_ID_07/g);
@@ -74,7 +108,7 @@ tap.test("05 - get/set - throws when opts.index is missing", (t) => {
 });
 
 tap.test(
-  "06 - get/set/drop - throws when opts.index is not a natural number (both string or number)",
+  "10 - get/set/drop - throws when opts.index is not a natural number (both string or number)",
   (t) => {
     t.throws(() => {
       get(defaultInput, { index: "1.5" });
@@ -98,14 +132,14 @@ tap.test(
   }
 );
 
-tap.test("07 - set - throws when opts.key and opts.val are missing", (t) => {
+tap.test("11 - set - throws when opts.key and opts.val are missing", (t) => {
   t.throws(() => {
     set(defaultInput, { index: "3" });
   }, /THROW_ID_14/g);
   t.end();
 });
 
-tap.test("08 - find - throws when opts.key and opts.val are missing", (t) => {
+tap.test("12 - find - throws when opts.key and opts.val are missing", (t) => {
   t.throws(() => {
     find(defaultInput, { index: "3" });
   }, /THROW_ID_03/g);
@@ -115,7 +149,7 @@ tap.test("08 - find - throws when opts.key and opts.val are missing", (t) => {
   t.end();
 });
 
-tap.test("09 - del - throws when opts.key and opts.val are missing", (t) => {
+tap.test("13 - del - throws when opts.key and opts.val are missing", (t) => {
   t.throws(() => {
     del(defaultInput, { index: "3" });
   }, /THROW_ID_28/g);
@@ -125,7 +159,7 @@ tap.test("09 - del - throws when opts.key and opts.val are missing", (t) => {
   t.end();
 });
 
-tap.test("10 - drop - throws when there's no index", (t) => {
+tap.test("14 - drop - throws when there's no index", (t) => {
   t.throws(() => {
     drop(["a"], "a");
   }, /THROW_ID_20/g);

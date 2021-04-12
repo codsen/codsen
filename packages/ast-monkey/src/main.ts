@@ -6,8 +6,15 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 /* eslint no-use-before-define: 0 */
-// From "type-fest" by Sindre Sorhus:
-type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+// From "type-fest" by Sindre Sorhus, with added undefined
+type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined // non-JSON but added too
+  | JsonObject
+  | JsonArray;
 type JsonObject = { [Key in string]?: JsonValue };
 type JsonArray = Array<JsonValue>;
 
@@ -29,9 +36,6 @@ interface Finding {
 function existy(x: any): boolean {
   return x != null;
 }
-function notUndef(x: any): boolean {
-  return x !== undefined;
-}
 // function isStr(x) { return typeof x === 'string' }
 function compareIsEqual(a: any, b: any): boolean {
   if (typeof a !== typeof b) {
@@ -48,16 +52,18 @@ function isObj(something: any): boolean {
 // -----------------------------------------------------------------------------
 
 function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
-  // -----------------------------------
-  // precautions
-  if (!existy(originalInput)) {
-    throw new Error(
-      "ast-monkey/main.js/monkey(): [THROW_ID_01] Please provide an input"
-    );
-  }
+  console.log(`055 monkey() called`);
   const opts: InternalOpts = {
     ...originalOpts,
   };
+  console.log(
+    `060 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
+
   // ---------------------------------------------------------------------------
   // action
 
@@ -72,12 +78,23 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
 
   let ko = false; // key only
   let vo = false; // value only
-  if (existy(opts.key) && !notUndef(opts.val)) {
+  if (existy(opts.key) && opts.val === undefined) {
     ko = true;
   }
-  if (!existy(opts.key) && notUndef(opts.val)) {
+  if (!existy(opts.key) && opts.val !== undefined) {
     vo = true;
   }
+  console.log(
+    `088 ${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
+      ko,
+      null,
+      4
+    )}; ${`\u001b[${33}m${`valueOnly, vo`}\u001b[${39}m`} = ${JSON.stringify(
+      vo,
+      null,
+      4
+    )}`
+  );
 
   let input = originalInput;
   if (
@@ -92,14 +109,31 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
   //
   //
 
+  console.log(`112 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
   input = traverse(input, (key, val, innerObj) => {
+    console.log(`114 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
+    console.log(
+      `116 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
+        key,
+        null,
+        4
+      )}; ${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${JSON.stringify(
+        val,
+        null,
+        4
+      )}; ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
+        innerObj,
+        null,
+        4
+      )}`
+    );
     let temp: Finding;
     data.count += 1;
     data.gatherPath.length = innerObj.depth;
     data.gatherPath.push(data.count);
     if (opts.mode === "get") {
       if (data.count === opts.index) {
-        if (notUndef(val)) {
+        if (innerObj.parentType === "object") {
           data.finding = {};
           data.finding[key] = val;
         } else {
@@ -110,8 +144,8 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
       if (
         // opts.only satisfied
         (opts.only === "any" ||
-          (opts.only === "array" && val === undefined) ||
-          (opts.only === "object" && val !== undefined)) && // match
+          (opts.only === "array" && innerObj.parentType === "array") ||
+          (opts.only === "object" && innerObj.parentType !== "array")) && // match
         ((ko && compareIsEqual(key, opts.key)) ||
           (vo && compareIsEqual(val, opts.val)) ||
           (!ko &&
@@ -132,7 +166,7 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
           return NaN;
         }
       } else {
-        return val !== undefined ? val : key;
+        return innerObj.parentType === "object" ? val : key;
       }
     }
 
@@ -143,16 +177,17 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
       return NaN;
     }
     if (opts.mode === "arrayFirstOnly") {
-      if (notUndef(val) && Array.isArray(val)) {
+      if (innerObj.parentType === "object" && Array.isArray(val)) {
         return [val[0]];
       }
       if (existy(key) && Array.isArray(key)) {
         return [key[0]];
       }
-      return val !== undefined ? val : key;
+      return innerObj.parentType === "object" ? val : key;
     }
-    return val !== undefined ? val : key;
+    return innerObj.parentType === "object" ? val : key;
   });
+  console.log(`190 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
 
   // returns
   if (opts.mode === "get") {
@@ -256,7 +291,7 @@ function set(input: JsonValue, originalOpts: SetOpts): JsonValue {
       "ast-monkey/main.js/set(): [THROW_ID_13] Please provide the input"
     );
   }
-  if (!existy(originalOpts.key) && !notUndef(originalOpts.val)) {
+  if (!existy(originalOpts.key) && originalOpts.val === undefined) {
     throw new Error(
       "ast-monkey/main.js/set(): [THROW_ID_14] Please provide opts.val"
     );
@@ -274,7 +309,7 @@ function set(input: JsonValue, originalOpts: SetOpts): JsonValue {
       `ast-monkey/main.js/set(): [THROW_ID_17] opts.index must be a natural number. It was given as: ${opts.index}`
     );
   }
-  if (existy(opts.key) && !notUndef(opts.val)) {
+  if (existy(opts.key) && opts.val === undefined) {
     opts.val = opts.key;
   }
   checkTypesMini(opts, null, {
@@ -335,7 +370,7 @@ function del(input: JsonValue, originalOpts: DelOpts): JsonValue {
       "ast-monkey/main.js/del(): [THROW_ID_27] Please provide the opts object"
     );
   }
-  if (!existy(originalOpts.key) && !notUndef(originalOpts.val)) {
+  if (!existy(originalOpts.key) && originalOpts.val === undefined) {
     throw new Error(
       "ast-monkey/main.js/del(): [THROW_ID_28] Please provide opts.key or opts.val"
     );

@@ -153,7 +153,22 @@ tap.test("08 - deletes by key and value from mixed", (t) => {
   t.end();
 });
 
-tap.test("09 - sneaky-one: object keys have values as null", (t) => {
+tap.test("09 - undefined as value", (t) => {
+  const input = {
+    a: undefined,
+    b: "foo",
+  };
+  t.strictSame(
+    del(input, { key: "b" }),
+    {
+      a: undefined,
+    },
+    "09"
+  );
+  t.end();
+});
+
+tap.test("10 - sneaky-one: object keys have values as null", (t) => {
   const input = {
     a: { b: [{ c: null }] },
     c: null,
@@ -163,19 +178,46 @@ tap.test("09 - sneaky-one: object keys have values as null", (t) => {
     {
       a: { b: [{}] },
     },
-    "09.01"
+    "10.01"
   );
   t.strictSame(
     del(input, { key: "c", only: "array" }),
     input,
-    "09.02 - only array"
+    "10.02 - only array"
   );
   t.strictSame(
     del(input, { key: "c", only: "object" }),
     {
       a: { b: [{}] },
     },
-    "09.03"
+    "10.03"
+  );
+  t.end();
+});
+
+tap.test("11 - sneaky-one: object keys have values as undefined", (t) => {
+  const input = {
+    a: { b: [{ c: undefined }] },
+    c: undefined,
+  };
+  t.strictSame(
+    del(input, { key: "c" }),
+    {
+      a: { b: [{}] },
+    },
+    "11.01"
+  );
+  t.strictSame(
+    del(input, { key: "c", only: "array" }),
+    input,
+    "11.02 - only array"
+  );
+  t.strictSame(
+    del(input, { key: "c", only: "object" }),
+    {
+      a: { b: [{}] },
+    },
+    "11.03"
   );
   t.end();
 });
