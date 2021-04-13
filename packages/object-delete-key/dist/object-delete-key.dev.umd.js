@@ -5243,9 +5243,6 @@ function compare(b, s, originalOpts) {
 function existy(x) {
   return x != null;
 }
-function notUndef(x) {
-  return x !== undefined;
-}
 function compareIsEqual(a, b) {
   if (typeof a !== typeof b) {
     return false;
@@ -5259,9 +5256,6 @@ function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 function monkey(originalInput, originalOpts) {
-  if (!existy(originalInput)) {
-    throw new Error("ast-monkey/main.js/monkey(): [THROW_ID_01] Please provide an input");
-  }
   const opts = { ...originalOpts
   };
   const data = {
@@ -5272,10 +5266,10 @@ function monkey(originalInput, originalOpts) {
   const findings = [];
   let ko = false;
   let vo = false;
-  if (existy(opts.key) && !notUndef(opts.val)) {
+  if (existy(opts.key) && opts.val === undefined) {
     ko = true;
   }
-  if (!existy(opts.key) && notUndef(opts.val)) {
+  if (!existy(opts.key) && opts.val !== undefined) {
     vo = true;
   }
   let input = originalInput;
@@ -5289,7 +5283,7 @@ function monkey(originalInput, originalOpts) {
     data.gatherPath.push(data.count);
     if (opts.mode === "get") {
       if (data.count === opts.index) {
-        if (notUndef(val)) {
+        if (innerObj.parentType === "object") {
           data.finding = {};
           data.finding[key] = val;
         } else {
@@ -5298,7 +5292,7 @@ function monkey(originalInput, originalOpts) {
       }
     } else if (opts.mode === "find" || opts.mode === "del") {
       if (
-      (opts.only === "any" || opts.only === "array" && val === undefined || opts.only === "object" && val !== undefined) && (
+      (opts.only === "any" || opts.only === "array" && innerObj.parentType === "array" || opts.only === "object" && innerObj.parentType !== "array") && (
       ko && compareIsEqual(key, opts.key) || vo && compareIsEqual(val, opts.val) || !ko && !vo && compareIsEqual(key, opts.key) && compareIsEqual(val, opts.val))) {
         if (opts.mode === "find") {
           temp = {
@@ -5312,7 +5306,7 @@ function monkey(originalInput, originalOpts) {
           return NaN;
         }
       } else {
-        return val !== undefined ? val : key;
+        return innerObj.parentType === "object" ? val : key;
       }
     }
     if (opts.mode === "set" && data.count === opts.index) {
@@ -5322,15 +5316,15 @@ function monkey(originalInput, originalOpts) {
       return NaN;
     }
     if (opts.mode === "arrayFirstOnly") {
-      if (notUndef(val) && Array.isArray(val)) {
+      if (innerObj.parentType === "object" && Array.isArray(val)) {
         return [val[0]];
       }
       if (existy(key) && Array.isArray(key)) {
         return [key[0]];
       }
-      return val !== undefined ? val : key;
+      return innerObj.parentType === "object" ? val : key;
     }
-    return val !== undefined ? val : key;
+    return innerObj.parentType === "object" ? val : key;
   });
   if (opts.mode === "get") {
     return data.finding;
@@ -5418,7 +5412,7 @@ function del(input, originalOpts) {
   if (!isObj(originalOpts)) {
     throw new Error("ast-monkey/main.js/del(): [THROW_ID_27] Please provide the opts object");
   }
-  if (!existy(originalOpts.key) && !notUndef(originalOpts.val)) {
+  if (!existy(originalOpts.key) && originalOpts.val === undefined) {
     throw new Error("ast-monkey/main.js/del(): [THROW_ID_28] Please provide opts.key or opts.val");
   }
   const opts = { ...originalOpts

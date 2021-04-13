@@ -1222,3 +1222,127 @@ tap.test("39 - wildcard delete two values, plain objects", (t) => {
   t.strictSame(actual, intended, "39");
   t.end();
 });
+
+tap.test("40 - issue #8 - undefined as a value", (t) => {
+  const actual = deleteKey(
+    {
+      __typename: "sd",
+      entryPoint: "a",
+    },
+    {
+      key: "__typename",
+    }
+  );
+  const intended = {
+    entryPoint: "a",
+  };
+
+  t.strictSame(actual, intended, "40");
+  t.end();
+});
+
+tap.test("41 - issue #8 - undefined as a value, outside deletion path", (t) => {
+  t.strictSame(
+    deleteKey(
+      {
+        __typename: "sd",
+        entryPoint: undefined,
+      },
+      {
+        key: "__typename",
+        cleanup: true, // <---
+      }
+    ),
+    {
+      entryPoint: undefined,
+    },
+    "41"
+  );
+  t.end();
+});
+
+tap.test("42 - issue #8 - undefined as a value, outside deletion path", (t) => {
+  t.strictSame(
+    deleteKey(
+      {
+        __typename: "sd",
+        entryPoint: undefined,
+      },
+      {
+        key: "__typename",
+        cleanup: false, // <---
+      }
+    ),
+    {
+      entryPoint: undefined,
+    },
+    "42"
+  );
+
+  t.end();
+});
+
+tap.test("43 - issue #8 - undefined as a value, outside deletion path", (t) => {
+  const input = {
+    a: { __typename: "sd" },
+    entryPoint: undefined,
+  };
+
+  // since "entrypoint" is not in the way of deletion path, it is retained,
+  // no matter the "cleanup" setting
+  t.strictSame(
+    deleteKey(input, {
+      key: "__typename",
+      cleanup: true, // <---
+    }),
+    {
+      entryPoint: undefined,
+    },
+    "43.01"
+  );
+  t.strictSame(
+    deleteKey(input, {
+      key: "__typename",
+      cleanup: false, // <---
+    }),
+    {
+      a: {},
+      entryPoint: undefined,
+    },
+    "43.02"
+  );
+
+  t.end();
+});
+
+tap.test("44 - issue #8", (t) => {
+  const input = {
+    a: { __typename: "sd", b: undefined, c: "" },
+    entryPoint: undefined,
+  };
+
+  t.strictSame(
+    deleteKey(input, {
+      key: "__typename",
+      cleanup: true, // <---
+    }),
+    {
+      a: { b: undefined, c: "" },
+      entryPoint: undefined,
+    },
+    "44.01"
+  );
+  t.strictSame(
+    deleteKey(input, {
+      key: "__typename",
+      cleanup: false, // <---
+    }),
+    {
+      a: { b: undefined, c: "" },
+      entryPoint: undefined,
+    },
+    "44.02"
+  );
+
+  t.end();
+});
