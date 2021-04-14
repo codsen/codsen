@@ -91,7 +91,7 @@
     },
     {
         "name": "ast-monkey",
-        "size": 8100,
+        "size": 8049,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -370,7 +370,7 @@
     },
     {
         "name": "is-media-descriptor",
-        "size": 13782,
+        "size": 13780,
         "imports": [
             "string-process-comma-separated"
         ]
