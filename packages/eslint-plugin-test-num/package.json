@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-test-num",
-  "version": "1.5.15",
+  "version": "1.5.16",
   "description": "ESLint plugin to update unit test numbers automatically",
   "keywords": [
     "automatically",
@@ -85,7 +85,7 @@
     "@babel/runtime": "^7.13.10",
     "json-stringify-safe": "^5.0.1",
     "object-path": "^0.11.5",
-    "string-left-right": "^4.0.15"
+    "string-left-right": "^4.0.16"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
@@ -114,7 +114,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.15",
+    "lect": "^0.16.16",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

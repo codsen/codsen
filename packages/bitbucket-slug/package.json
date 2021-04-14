@@ -1,6 +1,6 @@
 {
   "name": "bitbucket-slug",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond.",
   "keywords": [
     "anchor",
@@ -118,7 +118,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.15",
+    "lect": "^0.16.16",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

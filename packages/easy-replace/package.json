@@ -1,6 +1,6 @@
 {
   "name": "easy-replace",
-  "version": "4.0.15",
+  "version": "4.0.16",
   "description": "Replace strings with optional lookarounds, but without regexes",
   "keywords": [
     "easy",
@@ -105,7 +105,7 @@
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
-    "lect": "^0.16.15",
+    "lect": "^0.16.16",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

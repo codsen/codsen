@@ -1,6 +1,6 @@
 {
   "name": "tap-parse-string-to-object",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
   "keywords": [
     "contents",
@@ -121,7 +121,7 @@
     "eslint": "^7.23.0",
     "eslint-plugin-node": "^11.1.0",
     "fs-extra": "^9.1.0",
-    "lect": "^0.16.15",
+    "lect": "^0.16.16",
     "rollup": "^2.44.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
