@@ -1,7 +1,7 @@
 /**
  * @name regex-jinja-specific
  * @fileoverview Regular expression for detecting Python-specific Jinja code
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-jinja-specific/}
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version$1 = "2.0.15";
+var version$1 = "2.0.16";
 
 var version = version$1;
 function isJinjaSpecific() {

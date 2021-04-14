@@ -1,7 +1,7 @@
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.0.15
+ * @version 5.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.15
+ * @version 4.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -79,7 +79,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.15
+ * @version 7.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -176,7 +176,7 @@ function rMerge(arrOfRanges, originalOpts) {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-var version$1 = "5.0.15";
+var version$1 = "5.0.16";
 
 const version = version$1;
 function rApply(str, originalRangesArr, progressFn) {

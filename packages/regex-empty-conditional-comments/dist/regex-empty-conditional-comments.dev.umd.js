@@ -1,7 +1,7 @@
 /**
  * @name regex-empty-conditional-comments
  * @fileoverview Regular expression for matching HTML empty conditional comments
- * @version 1.10.15
+ * @version 1.10.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-empty-conditional-comments/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.regexEmptyConditionalComments = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "1.10.15";
+var version$1 = "1.10.16";
 
 const version = version$1;
 function emptyCondCommentRegex() {

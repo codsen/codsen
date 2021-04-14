@@ -1,7 +1,7 @@
 /**
  * @name object-no-new-keys
  * @fileoverview Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
- * @version 3.0.15
+ * @version 3.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-no-new-keys/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "3.0.15";
+var version$1 = "3.0.16";
 
 var version = version$1;
 function isObj(something) {

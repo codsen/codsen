@@ -1,7 +1,7 @@
 /**
  * @name ast-monkey
  * @fileoverview Traverse and edit AST
- * @version 7.13.15
+ * @version 7.14.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey/}
@@ -25,7 +25,7 @@ var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumab
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "7.13.15";
+var version$1 = "7.14.0";
 
 var version = version$1;
 function existy(x) {

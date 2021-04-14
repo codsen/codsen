@@ -1,7 +1,7 @@
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 7.0.9
+ * @version 7.0.10
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -11,7 +11,7 @@
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.15
+ * @version 3.13.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.14.0](https://github.com/codsen/codsen/compare/ast-monkey@7.13.15...ast-monkey@7.14.0) (2021-04-14)
-
+## 7.14.0 (2021-04-14)
 
 ### Features
 
-* support undefined as a value within plain objects ([6cdea34](https://github.com/codsen/codsen/commit/6cdea340e6a3d398f8cd388644bbb9bb6fefb717))
-
-
-
-
+- support undefined as a value within plain objects ([6cdea34](https://github.com/codsen/codsen/commit/6cdea340e6a3d398f8cd388644bbb9bb6fefb717))
 
 ## 7.13.15 (2021-04-11)
 

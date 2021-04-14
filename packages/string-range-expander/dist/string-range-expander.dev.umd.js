@@ -1,7 +1,7 @@
 /**
  * @name string-range-expander
  * @fileoverview Expands string index ranges within whitespace boundaries until letters are met
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-range-expander/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringRangeExpander = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "2.0.15";
+var version$1 = "2.0.16";
 
 const version = version$1;
 const defaults = {

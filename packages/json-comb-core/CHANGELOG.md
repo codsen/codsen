@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.8.16](https://github.com/codsen/codsen/compare/json-comb-core@6.8.15...json-comb-core@6.8.16) (2021-04-14)
-
-**Note:** Version bump only for package json-comb-core
-
-
-
-
-
 ## 6.8.15 (2021-04-11)
 
 ### Reverts

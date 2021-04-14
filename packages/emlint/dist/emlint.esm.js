@@ -1,7 +1,7 @@
 /**
  * @name emlint
  * @fileoverview Pluggable email template code linter
- * @version 4.6.0
+ * @version 4.6.1
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/emlint/}
@@ -9907,7 +9907,7 @@ class Linter extends TypedEmitter {
   }
 }
 
-var version$1 = "4.6.0";
+var version$1 = "4.6.1";
 
 const version = version$1;
 

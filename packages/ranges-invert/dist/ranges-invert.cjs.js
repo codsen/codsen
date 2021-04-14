@@ -1,7 +1,7 @@
 /**
  * @name ranges-invert
  * @fileoverview Invert string index ranges
- * @version 4.0.15
+ * @version 4.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-invert/}
@@ -21,7 +21,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "4.0.15";
+var version$1 = "4.0.16";
 
 var version = version$1;
 function rInvert(arrOfRanges, strLen, originalOptions) {

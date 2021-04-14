@@ -1,7 +1,7 @@
 /**
  * @name codsen-tokenizer
  * @fileoverview HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * @version 5.5.6
+ * @version 5.5.7
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/codsen-tokenizer/}
@@ -252,7 +252,7 @@ function startsEsp(str, i, token, layers, withinStyle) {
   return !!res;
 }
 
-var version$1 = "5.5.6";
+var version$1 = "5.5.7";
 
 var version = version$1;
 var importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;

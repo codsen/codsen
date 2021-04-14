@@ -1,7 +1,7 @@
 /**
  * @name string-extract-sass-vars
  * @fileoverview Parse SASS variables file into a plain object of CSS key-value pairs
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-extract-sass-vars/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringExtractSassVars = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "2.0.15";
+var version$1 = "2.0.16";
 
 const version = version$1;
 // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs

@@ -1,13 +1,13 @@
 /**
  * @name ranges-is-index-within
  * @fileoverview Checks if index is within any of the given string index ranges
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-is-index-within/}
  */
 
-var version$1 = "2.0.15";
+var version$1 = "2.0.16";
 
 const version = version$1;
 const defaults = {

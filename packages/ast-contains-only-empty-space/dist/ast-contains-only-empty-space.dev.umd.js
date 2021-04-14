@@ -1,7 +1,7 @@
 /**
  * @name ast-contains-only-empty-space
  * @fileoverview Does AST contain only empty space?
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-contains-only-empty-space/}
@@ -1913,7 +1913,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.15
+ * @version 1.3.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -1937,7 +1937,7 @@ function parent(str) {
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}

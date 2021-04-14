@@ -1,7 +1,7 @@
 /**
  * @name string-character-is-astral-surrogate
  * @fileoverview Tells, is given character a part of astral character, specifically, a high and low surrogate
- * @version 1.12.15
+ * @version 1.12.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-character-is-astral-surrogate/}

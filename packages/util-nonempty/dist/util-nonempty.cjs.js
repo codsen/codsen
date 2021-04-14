@@ -1,7 +1,7 @@
 /**
  * @name util-nonempty
  * @fileoverview Is the input (plain object, array, string or whatever) not empty?
- * @version 3.0.15
+ * @version 3.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/util-nonempty/}
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var isPlainObject__default = /*#__PURE__*/_interopDefaultLegacy(isPlainObject);
 
-var version$1 = "3.0.15";
+var version$1 = "3.0.16";
 
 var version = version$1;
 function nonEmpty(input) {

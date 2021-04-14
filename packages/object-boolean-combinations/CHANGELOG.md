@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.0.16](https://github.com/codsen/codsen/compare/object-boolean-combinations@4.0.15...object-boolean-combinations@4.0.16) (2021-04-14)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-
-
-
-
 ## 4.0.15 (2021-04-11)
 
 ### Reverts

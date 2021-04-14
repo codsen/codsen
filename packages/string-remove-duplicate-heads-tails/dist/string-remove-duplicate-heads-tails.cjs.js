@@ -1,7 +1,7 @@
 /**
  * @name string-remove-duplicate-heads-tails
  * @fileoverview Detect and (recursively) remove head and tail wrappings around the input string
- * @version 5.0.15
+ * @version 5.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-remove-duplicate-heads-tails/}
@@ -26,7 +26,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version$1 = "5.0.15";
+var version$1 = "5.0.16";
 
 var version = version$1;
 var defaults = {

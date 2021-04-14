@@ -1,7 +1,7 @@
 /**
  * @name email-comb
  * @fileoverview Remove unused CSS from email templates
- * @version 5.0.15
+ * @version 5.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/email-comb/}
@@ -39,7 +39,7 @@ var pullAll__default = /*#__PURE__*/_interopDefaultLegacy(pullAll);
 var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
-var version$1 = "5.0.15";
+var version$1 = "5.0.16";
 
 var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
 var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;

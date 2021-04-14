@@ -1,7 +1,7 @@
 /**
  * @name array-of-arrays-sort-by-col
  * @fileoverview Sort array of arrays by column, rippling the sorting outwards from that column
- * @version 3.0.15
+ * @version 3.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-of-arrays-sort-by-col/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "3.0.15";
+var version$1 = "3.0.16";
 
 var version = version$1;
 function existy(x) {

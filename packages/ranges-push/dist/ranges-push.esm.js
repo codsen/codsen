@@ -1,7 +1,7 @@
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 5.0.15
+ * @version 5.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -10,7 +10,7 @@
 import { collWhitespace } from 'string-collapse-leading-whitespace';
 import { rMerge } from 'ranges-merge';
 
-var version$1 = "5.0.15";
+var version$1 = "5.0.16";
 
 const version = version$1;
 function existy(x) {

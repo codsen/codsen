@@ -1,7 +1,7 @@
 /**
  * @name easy-replace
  * @fileoverview Replace strings with optional lookarounds, but without regexes
- * @version 4.0.15
+ * @version 4.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/easy-replace/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.easyReplace = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "4.0.15";
+var version$1 = "4.0.16";
 
 const version = version$1;
 // astralAwareSearch() - searches for strings, returns the findings in an array

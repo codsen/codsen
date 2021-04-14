@@ -1,13 +1,13 @@
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.15
+ * @version 4.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
  */
 
-var version$1 = "4.0.15";
+var version$1 = "4.0.16";
 
 const version = version$1;
 const defaults = {

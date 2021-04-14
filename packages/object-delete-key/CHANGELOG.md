@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.16](https://github.com/codsen/codsen/compare/object-delete-key@2.0.15...object-delete-key@2.0.16) (2021-04-14)
-
+## 2.0.16 (2021-04-14)
 
 ### Bug Fixes
 
-* correctly treat non-JSON data structures with undefined as a value ([bf1454a](https://github.com/codsen/codsen/commit/bf1454a5cdb1b8be72b2ad78005183fed1842f5e)), closes [#8](https://github.com/codsen/codsen/issues/8)
-
-
-
-
+- correctly treat non-JSON data structures with undefined as a value ([bf1454a](https://github.com/codsen/codsen/commit/bf1454a5cdb1b8be72b2ad78005183fed1842f5e)), closes [#8](https://github.com/codsen/codsen/issues/8)
 
 ## 2.0.15 (2021-04-11)
 

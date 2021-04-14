@@ -1,7 +1,7 @@
 /**
  * @name ast-get-values-by-key
  * @fileoverview Extract values and paths from AST by keys OR set them by keys
- * @version 3.0.15
+ * @version 3.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-get-values-by-key/}
@@ -11,7 +11,7 @@ import { traverse } from 'ast-monkey-traverse';
 import matcher from 'matcher';
 import clone from 'lodash.clonedeep';
 
-var version$1 = "3.0.15";
+var version$1 = "3.0.16";
 
 const version = version$1;
 function getByKey(originalInput, whatToFind, originalReplacement) {

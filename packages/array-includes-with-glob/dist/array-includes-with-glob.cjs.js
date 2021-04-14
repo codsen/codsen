@@ -1,7 +1,7 @@
 /**
  * @name array-includes-with-glob
  * @fileoverview Like _.includes but with wildcards
- * @version 3.0.15
+ * @version 3.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-includes-with-glob/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
-var version$1 = "3.0.15";
+var version$1 = "3.0.16";
 
 var version = version$1;
 var defaults = {

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.5.16](https://github.com/codsen/codsen/compare/eslint-plugin-test-num@1.5.15...eslint-plugin-test-num@1.5.16) (2021-04-14)
-
-**Note:** Version bump only for package eslint-plugin-test-num
-
-
-
-
-
 ## 1.5.15 (2021-04-11)
 
 ### Reverts

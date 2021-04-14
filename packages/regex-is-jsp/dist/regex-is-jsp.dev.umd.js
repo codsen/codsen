@@ -1,7 +1,7 @@
 /**
  * @name regex-is-jsp
  * @fileoverview Regular expression for detecting JSP (Java Server Pages) code
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-is-jsp/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.regexIsJsp = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "2.0.15";
+var version$1 = "2.0.16";
 
 const version = version$1;
 function isJSP() {

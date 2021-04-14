@@ -1,7 +1,7 @@
 /**
  * @name ranges-iterate
  * @fileoverview Iterate a string and any changes within given string index ranges
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-iterate/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.rangesIterate = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "2.0.15";
+var version$1 = "2.0.16";
 
 const version = version$1;
 function rIterate(str, originalRanges, cb, offset = 0) {

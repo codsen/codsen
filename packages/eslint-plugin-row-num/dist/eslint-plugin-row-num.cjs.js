@@ -1,7 +1,7 @@
 /**
  * @name eslint-plugin-row-num
  * @fileoverview ESLint plugin to update row numbers on each console.log
- * @version 1.5.11
+ * @version 1.5.12
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/eslint-plugin-row-num/}

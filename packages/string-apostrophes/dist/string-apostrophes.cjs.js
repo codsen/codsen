@@ -1,7 +1,7 @@
 /**
  * @name string-apostrophes
  * @fileoverview Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * @version 1.4.15
+ * @version 1.4.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-apostrophes/}
@@ -20,7 +20,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "1.4.15";
+var version$1 = "1.4.16";
 
 var version = version$1;
 function convertOne(str, _ref) {

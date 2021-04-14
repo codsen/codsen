@@ -1,7 +1,7 @@
 /**
  * @name string-overlap-one-on-another
  * @fileoverview Lay one string on top of another, with an optional offset
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-overlap-one-on-another/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringOverlapOneOnAnother = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "2.0.15";
+var version$1 = "2.0.16";
 
 const version = version$1;
 const defaults = {

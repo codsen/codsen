@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.3.1](https://github.com/codsen/codsen/compare/string-fix-broken-named-entities@5.3.0...string-fix-broken-named-entities@5.3.1) (2021-04-14)
-
-**Note:** Version bump only for package string-fix-broken-named-entities
-
-
-
-
-
 ## 5.3.0 (2021-04-11)
 
 ### Features

@@ -1,7 +1,7 @@
 /**
  * @name string-split-by-whitespace
  * @fileoverview Split string into array by chunks of whitespace
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-split-by-whitespace/}
@@ -9,7 +9,7 @@
 
 import { isIndexWithin } from 'ranges-is-index-within';
 
-var version$1 = "2.0.15";
+var version$1 = "2.0.16";
 
 const version = version$1;
 function splitByW(str, originalOpts) {

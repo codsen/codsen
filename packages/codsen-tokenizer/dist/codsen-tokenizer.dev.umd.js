@@ -1,7 +1,7 @@
 /**
  * @name codsen-tokenizer
  * @fileoverview HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * @version 5.5.6
+ * @version 5.5.7
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/codsen-tokenizer/}
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.15
+ * @version 3.13.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -35,7 +35,7 @@ function arrayiffy(something) {
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 7.0.9
+ * @version 7.0.10
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -2113,7 +2113,7 @@ funcToString.call(Object);
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.15
+ * @version 4.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -2229,7 +2229,7 @@ function left(str, idx = 0) {
 /**
  * @name html-all-known-attributes
  * @fileoverview All HTML attributes known to the Humanity
- * @version 4.0.15
+ * @version 4.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-all-known-attributes/}
@@ -2239,7 +2239,7 @@ const allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey",
 /**
  * @name is-char-suitable-for-html-attr-name
  * @fileoverview Is given character suitable to be in an HTML attribute's name?
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-char-suitable-for-html-attr-name/}
@@ -2255,7 +2255,7 @@ function isAttrNameChar(char) {
 /**
  * @name is-html-attribute-closing
  * @fileoverview Is a character on a given index a closing of an HTML attribute?
- * @version 2.2.6
+ * @version 2.2.7
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-attribute-closing/}
@@ -3164,7 +3164,7 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead = false) {
 /**
  * @name is-html-tag-opening
  * @fileoverview Does an HTML tag start at given position?
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-tag-opening/}
@@ -3404,7 +3404,7 @@ function startsEsp(str, i, token, layers, withinStyle) {
     return !!res;
 }
 
-var version$1 = "5.5.6";
+var version$1 = "5.5.7";
 
 const version = version$1;
 const importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;

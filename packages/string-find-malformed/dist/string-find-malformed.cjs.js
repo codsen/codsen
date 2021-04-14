@@ -1,7 +1,7 @@
 /**
  * @name string-find-malformed
  * @fileoverview Search for a malformed string. Think of Levenshtein distance but in search.
- * @version 2.0.15
+ * @version 2.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-find-malformed/}
@@ -22,7 +22,7 @@ var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumab
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "2.0.15";
+var version$1 = "2.0.16";
 
 var version = version$1;
 function isObj(something) {

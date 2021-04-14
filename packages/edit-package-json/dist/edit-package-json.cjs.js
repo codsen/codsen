@@ -1,7 +1,7 @@
 /**
  * @name edit-package-json
  * @fileoverview Edit package.json without parsing, as string, to keep the formatting intact
- * @version 0.3.15
+ * @version 0.3.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/edit-package-json/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "0.3.15";
+var version$1 = "0.3.16";
 
 var version = version$1;
 function isStr(something) {

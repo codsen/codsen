@@ -1,7 +1,7 @@
 /**
  * @name all-named-html-entities
  * @fileoverview List of all named HTML entities
- * @version 1.5.15
+ * @version 1.5.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/all-named-html-entities/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.allNamedHtmlEntities = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "1.5.15";
+var version$1 = "1.5.16";
 
 var Aacute = "Á";
 var aacute = "á";

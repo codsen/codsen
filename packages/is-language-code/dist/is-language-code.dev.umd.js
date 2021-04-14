@@ -1,7 +1,7 @@
 /**
  * @name is-language-code
  * @fileoverview Is given string a language code (as per IANA)
- * @version 3.0.15
+ * @version 3.0.16
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-language-code/}
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.isLanguageCode = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "3.0.15";
+var version$1 = "3.0.16";
 
 var languageJson = [
 	"aa",
