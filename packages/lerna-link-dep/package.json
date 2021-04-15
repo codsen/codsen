@@ -83,8 +83,8 @@
   "devDependencies": {
     "core-js": "^3.10.0",
     "cross-env": "^7.0.3",
-    "eslint": "^7.23.0",
-    "lect": "^0.16.13",
+    "eslint": "^7.24.0",
+    "lect": "^0.16.16",
     "tap": "^14.11.0",
     "tempy": "^1.0.1",
     "tslib": "^2.1.0"
