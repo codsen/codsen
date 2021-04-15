@@ -3,10 +3,11 @@
 // VARS
 // -----------------------------------------------------------------------------
 
+const fs = require("fs");
 const { promisify } = require("util");
 
 // *
-const read = promisify(require("fs").readFile);
+const read = promisify(fs.readFile);
 const write = require("write-file-atomic");
 // *
 
@@ -80,6 +81,19 @@ if (cli.flags) {
       .map((n) => `${n} ${updatedPackages[n]}`)
       .join("\n");
   }
+  function major(versNum) {
+    if (typeof versNum === "string" && versNum.includes(".")) {
+      return versNum.split(".")[0];
+    }
+    return versNum;
+  }
+
+  const confLocation = "./upd.config.json";
+  let config;
+  let newConfig = {
+    noMajorBumping: [],
+  };
+  newConfig.noMajorBumping = new Set(newConfig.noMajorBumping);
 
   const online = await isOnline();
   if (!online) {
@@ -87,6 +101,17 @@ if (cli.flags) {
       `\n${messagePrefix}${`\u001b[${31}m${`Please check your internet connection.`}\u001b[${39}m`}\n`
     );
     process.exit(1);
+  }
+
+  // try to read the local config if it's present
+  try {
+    config = JSON.parse(fs.readFileSync(confLocation, "utf8"));
+    newConfig = Object.assign({}, newConfig, config);
+    newConfig.noMajorBumping = new Set(newConfig.noMajorBumping);
+  } catch (err) {
+    console.log(
+      `\n${messagePrefix}${`\u001b[${90}m${`No config found, moving on.`}\u001b[${39}m`}\n`
+    );
   }
 
   const pathsPromise = await globby([
@@ -123,15 +148,13 @@ if (cli.flags) {
     )
   );
 
-  // we work on array pathsPromise.pathsByName
-
   const allProgressPromise = PProgress.all(
     pathsPromise.pathsList.map((oneOfPaths) =>
       PProgress.fn(async (progress) => {
         // call progress() like progress(0.14);
 
         let amended = false;
-        let stringContents = pathsPromise.contentsStr[oneOfPaths];
+        let finalContents = pathsPromise.contentsStr[oneOfPaths];
         const parsedContents = pathsPromise.contentsObj[oneOfPaths];
 
         const totalDeps = (isObj(parsedContents.dependencies)
@@ -177,15 +200,23 @@ if (cli.flags) {
               return;
             }
             try {
-              await pacote.manifest(singleDepName).then((pkg) => {
-                if (pkg.version === null) {
-                  throw new Error(
-                    `${messagePrefix}${singleDepName} version from npm came as null, CLI will exit now, nothing was written.`
-                  );
-                } else {
-                  compiledDepNameVersionPairs[singleDepName] = pkg.version;
-                }
-              });
+              await pacote
+                .manifest(singleDepName, {
+                  fullMetadata: true,
+                })
+                .then((pkg) => {
+                  if (pkg.version === null) {
+                    throw new Error(
+                      `${messagePrefix}${singleDepName} version from npm came as null, CLI will exit now, nothing was written.`
+                    );
+                  } else {
+                    compiledDepNameVersionPairs[singleDepName] = pkg.version;
+
+                    if (pkg.type === "module") {
+                      newConfig.noMajorBumping.add(pkg.name);
+                    }
+                  }
+                });
             } catch (err) {
               // no response from npm
               compiledDepNameVersionPairs[singleDepName] = null;
@@ -244,8 +275,8 @@ if (cli.flags) {
                 }
               );
               parsedContents.lect.various.devDependencies = newVal;
-              stringContents = del(
-                stringContents,
+              finalContents = del(
+                finalContents,
                 `lect.various.devDependencies.${foundIdx}`
               );
             }
@@ -265,10 +296,15 @@ if (cli.flags) {
             if (
               compiledDepNameVersionPairs[singleDepName] !== null &&
               singleDepValue !==
-                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
+                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}` &&
+              // either dependency is not blacklisted (so we don't care)
+              (!newConfig.noMajorBumping.has(singleDepName) ||
+                // or it is blacklisted but the bump is within the same major semver digit
+                major(compiledDepNameVersionPairs[singleDepName]) ===
+                  major(singleDepValue))
             ) {
-              stringContents = set(
-                stringContents,
+              finalContents = set(
+                finalContents,
                 `dependencies.${singleDepName}`,
                 `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
               );
@@ -317,8 +353,8 @@ if (cli.flags) {
             Object.keys(parsedContents.dependencies).forEach((depName) => {
               if (keys.includes(depName)) {
                 // 1. delete devdep entry on JSON string
-                stringContents = del(
-                  stringContents,
+                finalContents = del(
+                  finalContents,
                   `devDependencies.${depName}`
                 );
                 // 2. delete the devdep from parsedContents.devDependencies
@@ -342,10 +378,15 @@ if (cli.flags) {
             if (
               compiledDepNameVersionPairs[singleDepName] !== null &&
               singleDepValue !==
-                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
+                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}` &&
+              // either dependency is not blacklisted (so we don't care)
+              (!newConfig.noMajorBumping.has(singleDepName) ||
+                // or it is blacklisted but the bump is within the same major semver digit
+                major(compiledDepNameVersionPairs[singleDepName]) ===
+                  major(singleDepValue))
             ) {
-              stringContents = set(
-                stringContents,
+              finalContents = set(
+                finalContents,
                 `devDependencies.${singleDepName}`,
                 `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
               );
@@ -374,12 +415,12 @@ if (cli.flags) {
           isObj(parsedContents) &&
           Object.prototype.hasOwnProperty.call(parsedContents, "gitHead")
         ) {
-          stringContents = del(stringContents, "gitHead");
+          finalContents = del(finalContents, "gitHead");
         }
 
         if (amended) {
           try {
-            await write(oneOfPaths, stringContents);
+            await write(oneOfPaths, finalContents);
           } catch (e) {
             console.error(
               `${messagePrefix}error happened when writing package.json:\n${e}`
@@ -408,4 +449,19 @@ if (cli.flags) {
   diff.pipe(process.stdout);
 
   await allProgressPromise;
+
+  // write the config back
+  if (
+    config &&
+    JSON.stringify(newConfig, null, 0) !== JSON.stringify(config, null, 0)
+  ) {
+    newConfig.noMajorBumping = [...newConfig.noMajorBumping].sort();
+    try {
+      await write(confLocation, JSON.stringify(newConfig, null, 2));
+    } catch (e) {
+      console.error(
+        `${messagePrefix}error happened when writing upd.config.json:\n${e}`
+      );
+    }
+  }
 })();

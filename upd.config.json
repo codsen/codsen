@@ -1,0 +1,9 @@
+{
+  "noMajorBumping": [
+    "colorette",
+    "define-lazy-prop",
+    "p-reduce",
+    "rollup-plugin-dts",
+    "tap"
+  ]
+}
