@@ -453,11 +453,13 @@ function tokenizer(str, originalOpts) {
         }
         pingTagCb(incomingToken);
         initToken("text", cutOffIndex);
+        attribReset();
       } else {
         pingTagCb(incomingToken);
         tokenReset();
         if (str[~-i] && !str[~-i].trim()) {
           initToken("text", stringLeftRight.left(str, i) + 1);
+          attribReset();
         }
       }
     }
@@ -566,7 +568,6 @@ function tokenizer(str, originalOpts) {
     };
   }
   function initToken(type, startVal) {
-    attribReset();
     token = getNewToken(type, startVal);
   }
   function initProperty(propertyStarts) {
@@ -583,10 +584,10 @@ function tokenizer(str, originalOpts) {
     !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) ||
     isHtmlAttributeClosing.isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
   }
-  function attrEndsAt(idx) {
+  function attrEndsAt(idx, extras) {
     return ";}/".includes(str[idx]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") ||
-    "/;'\"><".includes(str[idx]) && attrib && attrib.attribName === "style" &&
-    ifQuoteThenAttrClosingQuote(idx);
+    "/;'\"><".includes(str[idx]) && attrib && attrib.attribName === "style" && (
+    extras || ifQuoteThenAttrClosingQuote(idx));
   }
   var _loop = function _loop(_i) {
     if (!doNothing && str[_i] && opts.reportProgressFunc) {
@@ -637,6 +638,7 @@ function tokenizer(str, originalOpts) {
             tokenReset();
             if (leftVal !== null && leftVal < ~-_i) {
               initToken("text", leftVal + 1);
+              attribReset();
             }
           }
           dumpCurrentToken(token, _i);
@@ -783,6 +785,7 @@ function tokenizer(str, originalOpts) {
               token.value = str.slice(token.start, token.end);
               pingTagCb(token);
               initToken(str[y + 1] === "@" ? "at" : "rule", y + 1);
+              attribReset();
               token.left = stringLeftRight.left(str, y + 1);
               token.selectorsStart = y + 1;
               _i = y + 1;
@@ -825,6 +828,7 @@ function tokenizer(str, originalOpts) {
           tokenReset();
         }
         initToken("tag", _i);
+        attribReset();
         if (withinStyle) {
           withinStyle = false;
         }
@@ -864,6 +868,7 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, _i);
         }
         initToken("comment", _i);
+        attribReset();
         if (str[_i] === "-") {
           token.closing = true;
         } else if (stringMatchLeftRight.matchRightIncl(str, _i, ["<![endif]-->"], {
@@ -882,6 +887,7 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, _i);
         }
         initToken("comment", _i);
+        attribReset();
         token.language = "css";
         token.kind = str[_i] === "/" && str[_i + 1] === "/" ? "line" : "block";
         token.value = str.slice(_i, _i + 2);
@@ -926,7 +932,12 @@ function tokenizer(str, originalOpts) {
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
                   parentTokenToBackup.attribs = [];
                 }
-                if (attribToBackup) {
+                if (property && property.start) {
+                  if (!Array.isArray(property.value)) {
+                    property.value = [];
+                  }
+                  property.value.push(_objectSpread__default['default']({}, token));
+                } else if (attribToBackup) {
                   attrib = attribToBackup;
                   attrib.attribValue.push(_objectSpread__default['default']({}, token));
                 } else {
@@ -1003,15 +1014,21 @@ function tokenizer(str, originalOpts) {
             });
             if (token.start !== null) {
               if (token.type === "tag") {
-                if (token.tagNameStartsAt && (!token.tagName || !token.tagNameEndsAt)) {
-                  token.tagNameEndsAt = _i;
-                  token.tagName = str.slice(token.tagNameStartsAt, _i);
-                  token.recognised = isTagNameRecognised(token.tagName);
+                if (attrib && attrib.attribName === "style") {
+                  if (!property.valueStarts) {
+                    property.valueStarts = _i;
+                  }
+                } else {
+                  if (token.tagNameStartsAt && (!token.tagName || !token.tagNameEndsAt)) {
+                    token.tagNameEndsAt = _i;
+                    token.tagName = str.slice(token.tagNameStartsAt, _i);
+                    token.recognised = isTagNameRecognised(token.tagName);
+                  }
+                  if (attrib.attribStarts && !attrib.attribEnds) {
+                    attribToBackup = clone__default['default'](attrib);
+                  }
                 }
                 parentTokenToBackup = clone__default['default'](token);
-                if (attrib.attribStarts && !attrib.attribEnds) {
-                  attribToBackup = clone__default['default'](attrib);
-                }
               } else if (!attribToBackup) {
                 dumpCurrentToken(token, _i);
               } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "esp" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
@@ -1046,12 +1063,14 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, _i);
         }
         initToken(str[_i] === "@" ? "at" : "rule", _i);
+        attribReset();
         token.left = lastNonWhitespaceCharAt;
         token.nested = layers.some(function (o) {
           return o.type === "at";
         });
       } else if (!token.type) {
         initToken("text", _i);
+        attribReset();
         if (withinScript && str.indexOf("</script>", _i)) {
           doNothing = str.indexOf("</script>", _i);
         } else {
@@ -1061,7 +1080,7 @@ function tokenizer(str, originalOpts) {
     }
     var R1 = void 0;
     var R2 = void 0;
-    if (!doNothing && (property.start || str[_i] === "!")) {
+    if (!doNothing && (property.start || str[_i] === "!") && (!layers.length || layers[~-layers.length].type !== "esp")) {
       var idxRightIncl = stringLeftRight.right(str, _i - 1);
       R1 = ";<>".includes(str[idxRightIncl]) ||
       str[idxRightIncl] === "{" && str[_i - 1] !== "{" || str[idxRightIncl] === "}" && str[_i - 1] !== "}" ||
@@ -1077,6 +1096,14 @@ function tokenizer(str, originalOpts) {
         maxMismatches: 2
       });
     }
+    property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && (
+    !rightVal ||
+    R1) || property.importantStarts && !property.importantEnds;
+    !property.valueEnds || str[rightVal] !== ";";
+    !str[_i] ||
+    !str[_i].trim() ||
+    !property.valueEnds && str[_i] === ";" ||
+    attrEndsAt(_i);
     /* istanbul ignore else */
     if (!doNothing && property && (property.semi && property.semi < _i && property.semi < _i || (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && (
     !rightVal ||
@@ -1084,7 +1111,7 @@ function tokenizer(str, originalOpts) {
     !str[_i] ||
     !str[_i].trim() ||
     !property.valueEnds && str[_i] === ";" ||
-    attrEndsAt(_i)))) {
+    attrEndsAt(_i, Array.isArray(property.value) && property.value[~-property.value.length].type === "esp")))) {
       /* istanbul ignore else */
       if (property.importantStarts && !property.importantEnds) {
         property.importantEnds = stringLeftRight.left(str, _i) + 1;
@@ -1093,7 +1120,9 @@ function tokenizer(str, originalOpts) {
       /* istanbul ignore else */
       if (property.valueStarts && !property.valueEnds) {
         property.valueEnds = _i;
-        property.value = str.slice(property.valueStarts, _i);
+        if (!Array.isArray(property.value)) {
+          property.value = str.slice(property.valueStarts, _i);
+        }
       }
       /* istanbul ignore else */
       if (str[_i] === ";") {
@@ -1129,7 +1158,9 @@ function tokenizer(str, originalOpts) {
         !rightVal ||
         !"'\";".includes(str[rightVal]))) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
-          property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+          if (!Array.isArray(property.value)) {
+            property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+          }
         }
         if (str[_i] === ";") {
           property.semi = _i;
@@ -1227,7 +1258,8 @@ function tokenizer(str, originalOpts) {
       }
     }
     /* istanbul ignore else */
-    if (!doNothing && property && property.colon && !property.valueStarts && str[_i] && str[_i].trim()) {
+    if (!doNothing && property && property.colon && !property.valueStarts && (
+    !layers.length || layers[~-layers.length].type !== "esp") && str[_i] && str[_i].trim()) {
       /* istanbul ignore else */
       if (
       ";}'\"".includes(str[_i]) &&

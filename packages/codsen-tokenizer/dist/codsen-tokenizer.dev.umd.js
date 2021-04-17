@@ -3832,6 +3832,7 @@ function tokenizer(str, originalOpts) {
                 }
                 pingTagCb(incomingToken);
                 initToken("text", cutOffIndex);
+                attribReset();
             }
             else {
                 pingTagCb(incomingToken);
@@ -3839,6 +3840,7 @@ function tokenizer(str, originalOpts) {
                 // if there was whitespace after token's end:
                 if (str[~-i] && !str[~-i].trim()) {
                     initToken("text", left(str, i) + 1);
+                    attribReset();
                 }
             }
         }
@@ -3958,7 +3960,6 @@ function tokenizer(str, originalOpts) {
     }
     function initToken(type, startVal) {
         // we mutate the object on the parent scope, so no Object.assign here
-        attribReset();
         token = getNewToken(type, startVal);
     }
     function initProperty(propertyStarts) {
@@ -3985,7 +3986,7 @@ function tokenizer(str, originalOpts) {
             //
             isAttrClosing(str, (attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt), idx));
     }
-    function attrEndsAt(idx) {
+    function attrEndsAt(idx, extras) {
         // either we're within normal head css styles:
         return ((`;}/`.includes(str[idx]) &&
             (!attrib || !attrib.attribName || attrib.attribName !== "style")) ||
@@ -3994,7 +3995,7 @@ function tokenizer(str, originalOpts) {
                 attrib &&
                 attrib.attribName === "style" &&
                 // and it's a real quote, not rogue double-wrapping around the value
-                ifQuoteThenAttrClosingQuote(idx)));
+                (extras || ifQuoteThenAttrClosingQuote(idx))));
     }
     //
     //
@@ -4104,6 +4105,7 @@ function tokenizer(str, originalOpts) {
                         // if there was trailing whitespace, initiate it
                         if (leftVal !== null && leftVal < ~-i) {
                             initToken("text", leftVal + 1);
+                            attribReset();
                         }
                     }
                     dumpCurrentToken(token, i);
@@ -4399,6 +4401,7 @@ function tokenizer(str, originalOpts) {
                             token.value = str.slice(token.start, token.end);
                             pingTagCb(token);
                             initToken(str[y + 1] === "@" ? "at" : "rule", y + 1);
+                            attribReset();
                             token.left = left(str, y + 1);
                             token.selectorsStart = y + 1;
                             i = y + 1;
@@ -4502,6 +4505,7 @@ function tokenizer(str, originalOpts) {
                 // add other HTML-specific keys onto the object
                 // second arg is "start" key:
                 initToken("tag", i);
+                attribReset();
                 if (withinStyle) {
                     withinStyle = false;
                 }
@@ -4573,6 +4577,7 @@ function tokenizer(str, originalOpts) {
                 // add other HTML-specific keys onto the object
                 // second arg is "start" key:
                 initToken("comment", i);
+                attribReset();
                 // the "language" default is "html" anyway so no need to set it
                 // set "closing"
                 if (str[i] === "-") {
@@ -4605,6 +4610,7 @@ function tokenizer(str, originalOpts) {
                 // add other token-specific keys onto the object
                 // second arg is "start" key:
                 initToken("comment", i);
+                attribReset();
                 token.language = "css";
                 token.kind =
                     str[i] === "/" && str[i + 1] === "/" ? "line" : "block";
@@ -4730,10 +4736,17 @@ function tokenizer(str, originalOpts) {
                                     parentTokenToBackup.attribs = [];
                                 }
                                 // 2. push somewhere
-                                if (attribToBackup) {
-                                    // 1. restore
+                                if (property && property.start) {
+                                    // push to attribValue
+                                    if (!Array.isArray(property.value)) {
+                                        property.value = [];
+                                    }
+                                    property.value.push({ ...token });
+                                }
+                                else if (attribToBackup) {
+                                    // restore
                                     attrib = attribToBackup;
-                                    // 2. push to attribValue
+                                    // push to attribValue
                                     attrib.attribValue.push({ ...token });
                                 }
                                 else {
@@ -4890,18 +4903,29 @@ function tokenizer(str, originalOpts) {
                             // the new, ESP token is incoming!
                             // we nest ESP tokens inside "tag" type attributes
                             if (token.type === "tag") {
-                                // instead of dumping the tag token and starting a new-one,
-                                // save the parent token, then nest all ESP tags among attributes
-                                if (token.tagNameStartsAt &&
-                                    (!token.tagName || !token.tagNameEndsAt)) {
-                                    token.tagNameEndsAt = i;
-                                    token.tagName = str.slice(token.tagNameStartsAt, i);
-                                    token.recognised = isTagNameRecognised(token.tagName);
+                                // maybe it's an ESP token within an inline CSS style?
+                                // <div style="width: {{ w }}">
+                                if (attrib && attrib.attribName === "style") {
+                                    if (!property.valueStarts) {
+                                        property.valueStarts = i;
+                                    }
+                                }
+                                else {
+                                    // usual inner-tag ESP tokens
+                                    // <a b="{% if something %}">
+                                    // instead of dumping the tag token and starting a new-one,
+                                    // save the parent token, then nest all ESP tags among attributes
+                                    if (token.tagNameStartsAt &&
+                                        (!token.tagName || !token.tagNameEndsAt)) {
+                                        token.tagNameEndsAt = i;
+                                        token.tagName = str.slice(token.tagNameStartsAt, i);
+                                        token.recognised = isTagNameRecognised(token.tagName);
+                                    }
+                                    if (attrib.attribStarts && !attrib.attribEnds) {
+                                        attribToBackup = lodash_clonedeep(attrib);
+                                    }
                                 }
                                 parentTokenToBackup = lodash_clonedeep(token);
-                                if (attrib.attribStarts && !attrib.attribEnds) {
-                                    attribToBackup = lodash_clonedeep(attrib);
-                                }
                             }
                             else if (!attribToBackup) {
                                 dumpCurrentToken(token, i);
@@ -4920,6 +4944,8 @@ function tokenizer(str, originalOpts) {
                         // or if this is a new ESP token and there's nothing to nest,
                         // let's initiate it:
                         initToken("esp", i);
+                        // attribReset();
+                        // ^^^ DON'T RESET attrib - because we nest ESP tags within attrib.value
                         token.head = wholeEspTagLumpOnTheRight;
                         token.headStartsAt = i;
                         token.headEndsAt =
@@ -4994,11 +5020,13 @@ function tokenizer(str, originalOpts) {
                     dumpCurrentToken(token, i);
                 }
                 initToken(str[i] === "@" ? "at" : "rule", i);
+                attribReset();
                 token.left = lastNonWhitespaceCharAt;
                 token.nested = layers.some((o) => o.type === "at");
             }
             else if (!token.type) {
                 initToken("text", i);
+                attribReset();
                 if (withinScript && str.indexOf("</script>", i)) {
                     doNothing = str.indexOf("</script>", i);
                 }
@@ -5009,7 +5037,9 @@ function tokenizer(str, originalOpts) {
         }
         let R1;
         let R2;
-        if (!doNothing && (property.start || str[i] === "!")) {
+        if (!doNothing &&
+            (property.start || str[i] === "!") &&
+            (!layers.length || layers[~-layers.length].type !== "esp")) {
             const idxRightIncl = right(str, i - 1);
             R1 =
                 `;<>`.includes(str[idxRightIncl]) ||
@@ -5038,6 +5068,22 @@ function tokenizer(str, originalOpts) {
                 maxMismatches: 2,
             });
         }
+        (property.valueStarts &&
+            !property.valueEnds &&
+            str[rightVal] !== "!" &&
+            // either non-whitespace character doesn't exist on the right
+            (!rightVal ||
+                // or at that character !important does not start
+                R1)) ||
+            (property.importantStarts && !property.importantEnds);
+        !property.valueEnds || str[rightVal] !== ";";
+        !str[i] ||
+            // or it's a whitespace
+            !str[i].trim() ||
+            // or it's a semicolon after a value
+            (!property.valueEnds && str[i] === ";") ||
+            // or we reached the end of the attribute
+            attrEndsAt(i);
         // catch the end of a css property (with or without !important)
         // -------------------------------------------------------------------------
         /* istanbul ignore else */
@@ -5060,7 +5106,8 @@ function tokenizer(str, originalOpts) {
                         // or it's a semicolon after a value
                         (!property.valueEnds && str[i] === ";") ||
                         // or we reached the end of the attribute
-                        attrEndsAt(i))))) {
+                        attrEndsAt(i, Array.isArray(property.value) &&
+                            property.value[~-property.value.length].type === "esp"))))) {
             /* istanbul ignore else */
             if (property.importantStarts && !property.importantEnds) {
                 property.importantEnds = left(str, i) + 1;
@@ -5069,7 +5116,9 @@ function tokenizer(str, originalOpts) {
             /* istanbul ignore else */
             if (property.valueStarts && !property.valueEnds) {
                 property.valueEnds = i;
-                property.value = str.slice(property.valueStarts, i);
+                if (!Array.isArray(property.value)) {
+                    property.value = str.slice(property.valueStarts, i);
+                }
             }
             /* istanbul ignore else */
             if (str[i] === ";") {
@@ -5128,7 +5177,9 @@ function tokenizer(str, originalOpts) {
                         // or it is a quote, but there's no quote on the right
                         !`'";`.includes(str[rightVal]))) {
                     property.valueEnds = lastNonWhitespaceCharAt + 1;
-                    property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+                    if (!Array.isArray(property.value)) {
+                        property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+                    }
                 }
                 if (str[i] === ";") {
                     property.semi = i;
@@ -5313,6 +5364,10 @@ function tokenizer(str, originalOpts) {
             property &&
             property.colon &&
             !property.valueStarts &&
+            // can't be within ESP token,
+            // <div style="width: {{ w }}">
+            //                       ^
+            (!layers.length || layers[~-layers.length].type !== "esp") &&
             str[i] &&
             str[i].trim()) {
             /* istanbul ignore else */

@@ -3,21 +3,6 @@ interface Selector {
     selectorStarts: number;
     selectorEnds: number;
 }
-interface Property {
-    property: null | string;
-    propertyStarts: null | number;
-    propertyEnds: null | number;
-    colon: null | number;
-    value: string;
-    valueStarts: null | number;
-    valueEnds: null | number;
-    importantStarts: null | number;
-    importantEnds: null | number;
-    important: null | string;
-    semi: null | number;
-    start: number;
-    end: number;
-}
 declare type TokenType = "text" | "tag" | "rule" | "at" | "comment" | "esp";
 declare type TokenKind = "simplet" | "not" | "doctype" | "cdata" | "xml" | "inline";
 declare type CommentKind = "simple" | "only" | "not" | "block" | "line" | "simplet";
@@ -47,6 +32,22 @@ interface EspToken {
     tail: null | string;
     tailStartsAt: null | number;
     tailEndsAt: null | number;
+}
+declare type PropertyValueWithinArray = TextToken | EspToken;
+interface Property {
+    property: null | string;
+    propertyStarts: null | number;
+    propertyEnds: null | number;
+    colon: null | number;
+    value: string | PropertyValueWithinArray[];
+    valueStarts: null | number;
+    valueEnds: null | number;
+    importantStarts: null | number;
+    importantEnds: null | number;
+    important: null | string;
+    semi: null | number;
+    start: number;
+    end: number;
 }
 interface Attrib {
     attribName: string;

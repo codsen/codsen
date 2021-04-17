@@ -1,1 +1,3 @@
-{"total":{"lines":{"total":1000,"covered":937,"skipped":0,"pct":93.7},"statements":{"total":1029,"covered":964,"skipped":0,"pct":93.68},"functions":{"total":43,"covered":41,"skipped":0,"pct":95.35},"branches":{"total":1626,"covered":1500,"skipped":0,"pct":92.25}}}
+{"total": {"lines":{"total":1020,"covered":957,"skipped":0,"pct":93.82},"statements":{"total":1049,"covered":984,"skipped":0,"pct":93.8},"functions":{"total":43,"covered":41,"skipped":0,"pct":95.35},"branches":{"total":1663,"covered":1534,"skipped":0,"pct":92.24}}
+,"/Users/royston/Documents/__PROJECTS/____libs2/packages/codsen-tokenizer/dist/codsen-tokenizer.esm.js": {"lines":{"total":1020,"covered":957,"skipped":0,"pct":93.82},"functions":{"total":43,"covered":41,"skipped":0,"pct":95.35},"statements":{"total":1049,"covered":984,"skipped":0,"pct":93.8},"branches":{"total":1663,"covered":1534,"skipped":0,"pct":92.24}}
+}

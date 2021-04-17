@@ -421,22 +421,6 @@ interface Selector {
   selectorEnds: number;
 }
 
-interface Property {
-  property: null | string;
-  propertyStarts: null | number;
-  propertyEnds: null | number;
-  colon: null | number;
-  value: string;
-  valueStarts: null | number;
-  valueEnds: null | number;
-  importantStarts: null | number;
-  importantEnds: null | number;
-  important: null | string;
-  semi: null | number;
-  start: number; // mirrors "propertyStarts"
-  end: number; // mirrors whatever was last
-}
-
 type TokenType = "text" | "tag" | "rule" | "at" | "comment" | "esp";
 
 type TokenKind = "simplet" | "not" | "doctype" | "cdata" | "xml" | "inline";
@@ -475,6 +459,24 @@ interface EspToken {
   tail: null | string;
   tailStartsAt: null | number;
   tailEndsAt: null | number;
+}
+
+type PropertyValueWithinArray = TextToken | EspToken;
+
+interface Property {
+  property: null | string;
+  propertyStarts: null | number;
+  propertyEnds: null | number;
+  colon: null | number;
+  value: string | PropertyValueWithinArray[];
+  valueStarts: null | number;
+  valueEnds: null | number;
+  importantStarts: null | number;
+  importantEnds: null | number;
+  important: null | string;
+  semi: null | number;
+  start: number; // mirrors "propertyStarts"
+  end: number; // mirrors whatever was last
 }
 
 interface Attrib {

@@ -25,7 +25,7 @@ tap.test(`01 - no semi - no px`, (t) => {
         recognised: true,
         closing: false,
         void: false,
-        pureHTML: true,
+        pureHTML: false,
         kind: null,
         attribs: [
           {
@@ -102,7 +102,7 @@ tap.test(`02 - with semi - no px`, (t) => {
         recognised: true,
         closing: false,
         void: false,
-        pureHTML: true,
+        pureHTML: false,
         kind: null,
         attribs: [
           {
@@ -157,7 +157,7 @@ tap.test(`02 - with semi - no px`, (t) => {
   t.end();
 });
 
-tap.test(`03 - no semi - with px`, (t) => {
+tap.todo(`03 - no semi - with px`, (t) => {
   const gathered = [];
   const input = '<div style="width: {{ w }}px">';
   ct(input, {
@@ -179,7 +179,7 @@ tap.test(`03 - no semi - with px`, (t) => {
         recognised: true,
         closing: false,
         void: false,
-        pureHTML: true,
+        pureHTML: false,
         kind: null,
         attribs: [
           {
@@ -240,7 +240,7 @@ tap.test(`03 - no semi - with px`, (t) => {
   t.end();
 });
 
-tap.test(`04 - with semi - with px`, (t) => {
+tap.todo(`04 - with semi - with px`, (t) => {
   const gathered = [];
   const input = '<div style="width: {{ w }}px;">';
   ct(input, {
@@ -262,7 +262,7 @@ tap.test(`04 - with semi - with px`, (t) => {
         recognised: true,
         closing: false,
         void: false,
-        pureHTML: true,
+        pureHTML: false,
         kind: null,
         attribs: [
           {
@@ -325,3 +325,4 @@ tap.test(`04 - with semi - with px`, (t) => {
 
 // TODO: multiple ESP + string
 // TODO: !important
+// TODO: broken ESP, only closing tails, missing opening
