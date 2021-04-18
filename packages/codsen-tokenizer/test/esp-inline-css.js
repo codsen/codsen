@@ -323,6 +323,54 @@ tap.todo(`04 - with semi - with px`, (t) => {
   t.end();
 });
 
+tap.todo(`05 - sneaky, first text then ESP - no semi`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: 100{{ w }}">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "05");
+  t.end();
+});
+
+tap.todo(`06 - sneaky, first text then ESP - with semi`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: 100{{ w }};">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "06");
+  t.end();
+});
+
+tap.todo(`07 - sandwiched, first text then ESP - no semi`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: 1{{ w }}0px">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "07");
+  t.end();
+});
+
+tap.todo(`08 - sandwiched, first text then ESP - with semi`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: 1{{ w }}0px;">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "08");
+  t.end();
+});
+
 // TODO: multiple ESP + string
 // TODO: !important
 // TODO: broken ESP, only closing tails, missing opening
