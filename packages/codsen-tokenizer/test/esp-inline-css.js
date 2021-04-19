@@ -371,6 +371,30 @@ tap.todo(`08 - sandwiched, first text then ESP - with semi`, (t) => {
   t.end();
 });
 
+tap.todo(`09 - multiple, sandwiched, first text then ESP - no semi`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: 1{{ w }}0p{{ XorT }}">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "09");
+  t.end();
+});
+
+tap.todo(`10 - multiple, sandwiched, first text then ESP - with semi`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: 1{{ w }}0p{{ XorT }};">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "10");
+  t.end();
+});
+
 // TODO: multiple ESP + string
 // TODO: !important
 // TODO: broken ESP, only closing tails, missing opening
