@@ -157,7 +157,7 @@ tap.test(`02 - with semi - no px`, (t) => {
   t.end();
 });
 
-tap.todo(`03 - no semi - with px`, (t) => {
+tap.test(`03 - no semi - with px`, (t) => {
   const gathered = [];
   const input = '<div style="width: {{ w }}px">';
   ct(input, {
