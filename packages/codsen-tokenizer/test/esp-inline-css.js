@@ -80,7 +80,19 @@ tap.test(`01 - no semi - no px`, (t) => {
   t.end();
 });
 
-tap.test(`02 - with semi - no px`, (t) => {
+tap.todo(`02 - no semi - no px`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: {{ w }}!important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "02");
+  t.end();
+});
+
+tap.test(`03 - with semi - no px`, (t) => {
   const gathered = [];
   const input = '<div style="width: {{ w }};">';
   ct(input, {
@@ -152,12 +164,24 @@ tap.test(`02 - with semi - no px`, (t) => {
         ],
       },
     ],
-    "02"
+    "03"
   );
   t.end();
 });
 
-tap.test(`03 - no semi - with px`, (t) => {
+tap.todo(`04 - with semi - no px - important`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: {{ w }}!important;">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "04");
+  t.end();
+});
+
+tap.test(`05 - no semi - with px`, (t) => {
   const gathered = [];
   const input = '<div style="width: {{ w }}px">';
   ct(input, {
@@ -235,12 +259,24 @@ tap.test(`03 - no semi - with px`, (t) => {
         ],
       },
     ],
-    "03"
+    "05"
   );
   t.end();
 });
 
-tap.test(`04 - with semi - with px`, (t) => {
+tap.todo(`06 - no semi - with px - important`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: {{ w }}px !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "06");
+  t.end();
+});
+
+tap.test(`07 - with semi - with px`, (t) => {
   const gathered = [];
   const input = '<div style="width: {{ w }}px;">';
   ct(input, {
@@ -318,12 +354,36 @@ tap.test(`04 - with semi - with px`, (t) => {
         ],
       },
     ],
-    "04"
+    "07"
   );
   t.end();
 });
 
-tap.test(`05 - sneaky, first text then ESP - no semi`, (t) => {
+tap.todo(`08 - with semi - with px - tight important`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: {{ w }}px!important;">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "08");
+  t.end();
+});
+
+tap.todo(`09 - with semi - with px - spaced important`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: {{ w }}px !important;">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "09");
+  t.end();
+});
+
+tap.test(`10 - sneaky, first text then ESP - no semi`, (t) => {
   const gathered = [];
   const input = '<div style="width: 100{{ w }}">';
   ct(input, {
@@ -401,12 +461,42 @@ tap.test(`05 - sneaky, first text then ESP - no semi`, (t) => {
         ],
       },
     ],
-    "05"
+    "10"
   );
   t.end();
 });
 
-tap.test(`06 - sneaky, first text then ESP - with semi`, (t) => {
+tap.todo(
+  `11 - sneaky, first text then ESP - no semi - tight important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 100{{ w }}!important">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "11");
+    t.end();
+  }
+);
+
+tap.todo(
+  `12 - sneaky, first text then ESP - no semi - spaced important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 100{{ w }} !important">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "12");
+    t.end();
+  }
+);
+
+tap.test(`13 - sneaky, first text then ESP - with semi`, (t) => {
   const gathered = [];
   const input = '<div style="width: 100{{ w }};">';
   ct(input, {
@@ -484,12 +574,24 @@ tap.test(`06 - sneaky, first text then ESP - with semi`, (t) => {
         ],
       },
     ],
-    "06"
+    "13"
   );
   t.end();
 });
 
-tap.test(`07 - sandwiched, first text then ESP - no semi`, (t) => {
+tap.todo(`14 - sneaky, first text then ESP - with semi, important`, (t) => {
+  const gathered = [];
+  const input = '<div style="width: 100{{ w }}!important;">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "14");
+  t.end();
+});
+
+tap.test(`15 - sandwiched, first text then ESP - no semi`, (t) => {
   const gathered = [];
   const input = '<div style="width: 1{{ w }}0px">';
   ct(input, {
@@ -573,12 +675,27 @@ tap.test(`07 - sandwiched, first text then ESP - no semi`, (t) => {
         ],
       },
     ],
-    "07"
+    "15"
   );
   t.end();
 });
 
-tap.test(`08 - sandwiched, first text then ESP - with semi`, (t) => {
+tap.todo(
+  `16 - sandwiched, first text then ESP - no semi, with important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 1{{ w }}0px!important">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "16");
+    t.end();
+  }
+);
+
+tap.test(`17 - sandwiched, first text then ESP - with semi`, (t) => {
   const gathered = [];
   const input = '<div style="width: 1{{ w }}0px;">';
   ct(input, {
@@ -662,12 +779,42 @@ tap.test(`08 - sandwiched, first text then ESP - with semi`, (t) => {
         ],
       },
     ],
-    "08"
+    "17"
   );
   t.end();
 });
 
-tap.test(`09 - multiple, sandwiched, first text then ESP - no semi`, (t) => {
+tap.todo(
+  `18 - sandwiched, first text then ESP - with semi, with tight important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 1{{ w }}0px!important;">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "18");
+    t.end();
+  }
+);
+
+tap.todo(
+  `19 - sandwiched, first text then ESP - with semi, with spaced important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 1{{ w }}0px!important;">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "19");
+    t.end();
+  }
+);
+
+tap.test(`20 - multiple, sandwiched, first text then ESP - no semi`, (t) => {
   const gathered = [];
   const input = '<div style="width: 1{{ w }}0p{{ XorT }}">';
   ct(input, {
@@ -763,12 +910,57 @@ tap.test(`09 - multiple, sandwiched, first text then ESP - no semi`, (t) => {
         ],
       },
     ],
-    "09"
+    "20"
   );
   t.end();
 });
 
-tap.test(`10 - multiple, sandwiched, first text then ESP - with semi`, (t) => {
+tap.todo(
+  `21 - multiple, sandwiched, first text then ESP - no semi, tight important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 1{{ w }}0p{{ XorT }}!important">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "21");
+    t.end();
+  }
+);
+
+tap.todo(
+  `22 - multiple, sandwiched, first text then ESP - no semi, spaced important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 1{{ w }}0p{{ XorT }} !important">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "22");
+    t.end();
+  }
+);
+
+tap.todo(
+  `23 - multiple, sandwiched, first text then ESP - no semi, excessively spaced important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 1{{ w }}0p{{ XorT }}   !important">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "23");
+    t.end();
+  }
+);
+
+tap.test(`24 - multiple, sandwiched, first text then ESP - with semi`, (t) => {
   const gathered = [];
   const input = '<div style="width: 1{{ w }}0p{{ XorT }};">';
   ct(input, {
@@ -864,12 +1056,57 @@ tap.test(`10 - multiple, sandwiched, first text then ESP - with semi`, (t) => {
         ],
       },
     ],
-    "10"
+    "24"
   );
   t.end();
 });
 
-tap.test(`11 - chain`, (t) => {
+tap.todo(
+  `25 - multiple, sandwiched, first text then ESP - with semi and tight important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 1{{ w }}0p{{ XorT }}!important;">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "25");
+    t.end();
+  }
+);
+
+tap.todo(
+  `26 - multiple, sandwiched, first text then ESP - with semi and spaced important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 1{{ w }}0p{{ XorT }} !important;">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "26");
+    t.end();
+  }
+);
+
+tap.todo(
+  `27 - multiple, sandwiched, first text then ESP - with semi and excessively spaced important`,
+  (t) => {
+    const gathered = [];
+    const input = '<div style="width: 1{{ w }}0p{{ XorT }}    !important;">';
+    ct(input, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "27");
+    t.end();
+  }
+);
+
+tap.test(`28 - chain`, (t) => {
   const gathered = [];
   const input = '<div style="x: a{{ b }}c{{ d }}e;">';
   ct(input, {
@@ -971,11 +1208,45 @@ tap.test(`11 - chain`, (t) => {
         ],
       },
     ],
-    "11"
+    "28"
   );
   t.end();
 });
 
-// TODO: multiple ESP + string
-// TODO: !important
+tap.todo(`29 - chain with tight important`, (t) => {
+  const gathered = [];
+  const input = '<div style="x: a{{ b }}c{{ d }}e!important;">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "29");
+  t.end();
+});
+
+tap.todo(`30 - chain with spaced important`, (t) => {
+  const gathered = [];
+  const input = '<div style="x: a{{ b }}c{{ d }}e !important;">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "30");
+  t.end();
+});
+
+tap.todo(`31 - chain with copiously spaced important`, (t) => {
+  const gathered = [];
+  const input = '<div style="x: a{{ b }}c{{ d }}e  !important;">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "31");
+  t.end();
+});
+
 // TODO: broken ESP, only closing tails, missing opening
