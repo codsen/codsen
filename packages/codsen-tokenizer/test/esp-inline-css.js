@@ -471,7 +471,7 @@ tap.test(`06 - no semi - with px`, (t) => {
   t.end();
 });
 
-tap.todo(`07 - no semi - with px - important`, (t) => {
+tap.test(`07 - no semi - with px - important`, (t) => {
   const gathered = [];
   const input = '<div style="width: {{ w }}px !important">';
   ct(input, {
@@ -479,7 +479,78 @@ tap.todo(`07 - no semi - with px - important`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "07");
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 41,
+        value: '<div style="width: {{ w }}px !important">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 39,
+            attribValueRaw: "width: {{ w }}px !important",
+            attribValue: [
+              {
+                start: 12,
+                end: 39,
+                property: "width",
+                propertyStarts: 12,
+                propertyEnds: 17,
+                value: [
+                  {
+                    type: "esp",
+                    start: 19,
+                    end: 26,
+                    value: "{{ w }}",
+                    head: "{{",
+                    headStartsAt: 19,
+                    headEndsAt: 21,
+                    tail: "}}",
+                    tailStartsAt: 24,
+                    tailEndsAt: 26,
+                  },
+                  {
+                    type: "text",
+                    start: 26,
+                    end: 28,
+                    value: "px",
+                  },
+                ],
+                valueStarts: 19,
+                valueEnds: 28,
+                important: "!important",
+                importantStarts: 29,
+                importantEnds: 39,
+                colon: 17,
+                semi: null,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 39,
+            attribStarts: 5,
+            attribEnds: 40,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "07"
+  );
   t.end();
 });
 
@@ -649,7 +720,7 @@ tap.test(`09 - with semi - with px - tight important`, (t) => {
   t.end();
 });
 
-tap.todo(`10 - with semi - with px - spaced important`, (t) => {
+tap.test(`10 - with semi - with px - spaced important`, (t) => {
   const gathered = [];
   const input = '<div style="width: {{ w }}px !important;">';
   ct(input, {
@@ -657,7 +728,78 @@ tap.todo(`10 - with semi - with px - spaced important`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "10");
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 42,
+        value: '<div style="width: {{ w }}px !important;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 40,
+            attribValueRaw: "width: {{ w }}px !important;",
+            attribValue: [
+              {
+                start: 12,
+                end: 40,
+                property: "width",
+                propertyStarts: 12,
+                propertyEnds: 17,
+                value: [
+                  {
+                    type: "esp",
+                    start: 19,
+                    end: 26,
+                    value: "{{ w }}",
+                    head: "{{",
+                    headStartsAt: 19,
+                    headEndsAt: 21,
+                    tail: "}}",
+                    tailStartsAt: 24,
+                    tailEndsAt: 26,
+                  },
+                  {
+                    type: "text",
+                    start: 26,
+                    end: 28,
+                    value: "px",
+                  },
+                ],
+                valueStarts: 19,
+                valueEnds: 28,
+                important: "!important",
+                importantStarts: 29,
+                importantEnds: 39,
+                colon: 17,
+                semi: 39,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 40,
+            attribStarts: 5,
+            attribEnds: 41,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "10"
+  );
   t.end();
 });
 
@@ -830,7 +972,7 @@ tap.test(
   }
 );
 
-tap.todo(
+tap.test(
   `13 - sneaky, first text then ESP - no semi - spaced important`,
   (t) => {
     const gathered = [];
@@ -840,7 +982,78 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "13");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 42,
+          value: '<div style="width: 100{{ w }} !important">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 40,
+              attribValueRaw: "width: 100{{ w }} !important",
+              attribValue: [
+                {
+                  start: 12,
+                  end: 40,
+                  property: "width",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  value: [
+                    {
+                      type: "text",
+                      start: 19,
+                      end: 22,
+                      value: "100",
+                    },
+                    {
+                      type: "esp",
+                      start: 22,
+                      end: 29,
+                      value: "{{ w }}",
+                      head: "{{",
+                      headStartsAt: 22,
+                      headEndsAt: 24,
+                      tail: "}}",
+                      tailStartsAt: 27,
+                      tailEndsAt: 29,
+                    },
+                  ],
+                  valueStarts: 19,
+                  valueEnds: 29,
+                  important: "!important",
+                  importantStarts: 30,
+                  importantEnds: 40,
+                  colon: 17,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 40,
+              attribStarts: 5,
+              attribEnds: 41,
+              attribLeft: 3,
+            },
+          ],
+        },
+      ],
+      "13"
+    );
     t.end();
   }
 );
@@ -1670,7 +1883,7 @@ tap.test(
   }
 );
 
-tap.todo(
+tap.test(
   `23 - multiple, sandwiched, first text then ESP - no semi, spaced important`,
   (t) => {
     const gathered = [];
@@ -1680,12 +1893,101 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "23");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 52,
+          value: '<div style="width: 1{{ w }}0p{{ XorT }} !important">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 50,
+              attribValueRaw: "width: 1{{ w }}0p{{ XorT }} !important",
+              attribValue: [
+                {
+                  start: 12,
+                  end: 50,
+                  property: "width",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  value: [
+                    {
+                      type: "text",
+                      start: 19,
+                      end: 20,
+                      value: "1",
+                    },
+                    {
+                      type: "esp",
+                      start: 20,
+                      end: 27,
+                      value: "{{ w }}",
+                      head: "{{",
+                      headStartsAt: 20,
+                      headEndsAt: 22,
+                      tail: "}}",
+                      tailStartsAt: 25,
+                      tailEndsAt: 27,
+                    },
+                    {
+                      type: "text",
+                      start: 27,
+                      end: 29,
+                      value: "0p",
+                    },
+                    {
+                      type: "esp",
+                      start: 29,
+                      end: 39,
+                      value: "{{ XorT }}",
+                      head: "{{",
+                      headStartsAt: 29,
+                      headEndsAt: 31,
+                      tail: "}}",
+                      tailStartsAt: 37,
+                      tailEndsAt: 39,
+                    },
+                  ],
+                  valueStarts: 19,
+                  valueEnds: 39,
+                  important: "!important",
+                  importantStarts: 40,
+                  importantEnds: 50,
+                  colon: 17,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 50,
+              attribStarts: 5,
+              attribEnds: 51,
+              attribLeft: 3,
+            },
+          ],
+        },
+      ],
+      "23"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `24 - multiple, sandwiched, first text then ESP - no semi, excessively spaced important`,
   (t) => {
     const gathered = [];
@@ -1695,7 +1997,96 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "24");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 54,
+          value: '<div style="width: 1{{ w }}0p{{ XorT }}   !important">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 52,
+              attribValueRaw: "width: 1{{ w }}0p{{ XorT }}   !important",
+              attribValue: [
+                {
+                  start: 12,
+                  end: 52,
+                  property: "width",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  value: [
+                    {
+                      type: "text",
+                      start: 19,
+                      end: 20,
+                      value: "1",
+                    },
+                    {
+                      type: "esp",
+                      start: 20,
+                      end: 27,
+                      value: "{{ w }}",
+                      head: "{{",
+                      headStartsAt: 20,
+                      headEndsAt: 22,
+                      tail: "}}",
+                      tailStartsAt: 25,
+                      tailEndsAt: 27,
+                    },
+                    {
+                      type: "text",
+                      start: 27,
+                      end: 29,
+                      value: "0p",
+                    },
+                    {
+                      type: "esp",
+                      start: 29,
+                      end: 39,
+                      value: "{{ XorT }}",
+                      head: "{{",
+                      headStartsAt: 29,
+                      headEndsAt: 31,
+                      tail: "}}",
+                      tailStartsAt: 37,
+                      tailEndsAt: 39,
+                    },
+                  ],
+                  valueStarts: 19,
+                  valueEnds: 39,
+                  important: "!important",
+                  importantStarts: 42,
+                  importantEnds: 52,
+                  colon: 17,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 52,
+              attribStarts: 5,
+              attribEnds: 53,
+              attribLeft: 3,
+            },
+          ],
+        },
+      ],
+      "24"
+    );
     t.end();
   }
 );
@@ -1905,7 +2296,7 @@ tap.test(
   }
 );
 
-tap.todo(
+tap.test(
   `27 - multiple, sandwiched, first text then ESP - with semi and spaced important`,
   (t) => {
     const gathered = [];
@@ -1915,12 +2306,101 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "27");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 53,
+          value: '<div style="width: 1{{ w }}0p{{ XorT }} !important;">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 51,
+              attribValueRaw: "width: 1{{ w }}0p{{ XorT }} !important;",
+              attribValue: [
+                {
+                  start: 12,
+                  end: 51,
+                  property: "width",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  value: [
+                    {
+                      type: "text",
+                      start: 19,
+                      end: 20,
+                      value: "1",
+                    },
+                    {
+                      type: "esp",
+                      start: 20,
+                      end: 27,
+                      value: "{{ w }}",
+                      head: "{{",
+                      headStartsAt: 20,
+                      headEndsAt: 22,
+                      tail: "}}",
+                      tailStartsAt: 25,
+                      tailEndsAt: 27,
+                    },
+                    {
+                      type: "text",
+                      start: 27,
+                      end: 29,
+                      value: "0p",
+                    },
+                    {
+                      type: "esp",
+                      start: 29,
+                      end: 39,
+                      value: "{{ XorT }}",
+                      head: "{{",
+                      headStartsAt: 29,
+                      headEndsAt: 31,
+                      tail: "}}",
+                      tailStartsAt: 37,
+                      tailEndsAt: 39,
+                    },
+                  ],
+                  valueStarts: 19,
+                  valueEnds: 39,
+                  important: "!important",
+                  importantStarts: 40,
+                  importantEnds: 50,
+                  colon: 17,
+                  semi: 50,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 51,
+              attribStarts: 5,
+              attribEnds: 52,
+              attribLeft: 3,
+            },
+          ],
+        },
+      ],
+      "27"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `28 - multiple, sandwiched, first text then ESP - with semi and excessively spaced important`,
   (t) => {
     const gathered = [];
@@ -1930,7 +2410,96 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "28");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 56,
+          value: '<div style="width: 1{{ w }}0p{{ XorT }}    !important;">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: false,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 54,
+              attribValueRaw: "width: 1{{ w }}0p{{ XorT }}    !important;",
+              attribValue: [
+                {
+                  start: 12,
+                  end: 54,
+                  property: "width",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  value: [
+                    {
+                      type: "text",
+                      start: 19,
+                      end: 20,
+                      value: "1",
+                    },
+                    {
+                      type: "esp",
+                      start: 20,
+                      end: 27,
+                      value: "{{ w }}",
+                      head: "{{",
+                      headStartsAt: 20,
+                      headEndsAt: 22,
+                      tail: "}}",
+                      tailStartsAt: 25,
+                      tailEndsAt: 27,
+                    },
+                    {
+                      type: "text",
+                      start: 27,
+                      end: 29,
+                      value: "0p",
+                    },
+                    {
+                      type: "esp",
+                      start: 29,
+                      end: 39,
+                      value: "{{ XorT }}",
+                      head: "{{",
+                      headStartsAt: 29,
+                      headEndsAt: 31,
+                      tail: "}}",
+                      tailStartsAt: 37,
+                      tailEndsAt: 39,
+                    },
+                  ],
+                  valueStarts: 19,
+                  valueEnds: 39,
+                  important: "!important",
+                  importantStarts: 43,
+                  importantEnds: 53,
+                  colon: 17,
+                  semi: 53,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 54,
+              attribStarts: 5,
+              attribEnds: 55,
+              attribLeft: 3,
+            },
+          ],
+        },
+      ],
+      "28"
+    );
     t.end();
   }
 );
@@ -2149,7 +2718,7 @@ tap.test(`30 - chain with tight important`, (t) => {
   t.end();
 });
 
-tap.todo(`31 - chain with spaced important`, (t) => {
+tap.test(`31 - chain with spaced important`, (t) => {
   const gathered = [];
   const input = '<div style="x: a{{ b }}c{{ d }}e !important;">';
   ct(input, {
@@ -2157,11 +2726,106 @@ tap.todo(`31 - chain with spaced important`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "31");
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 46,
+        value: '<div style="x: a{{ b }}c{{ d }}e !important;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 44,
+            attribValueRaw: "x: a{{ b }}c{{ d }}e !important;",
+            attribValue: [
+              {
+                start: 12,
+                end: 44,
+                property: "x",
+                propertyStarts: 12,
+                propertyEnds: 13,
+                value: [
+                  {
+                    type: "text",
+                    start: 15,
+                    end: 16,
+                    value: "a",
+                  },
+                  {
+                    type: "esp",
+                    start: 16,
+                    end: 23,
+                    value: "{{ b }}",
+                    head: "{{",
+                    headStartsAt: 16,
+                    headEndsAt: 18,
+                    tail: "}}",
+                    tailStartsAt: 21,
+                    tailEndsAt: 23,
+                  },
+                  {
+                    type: "text",
+                    start: 23,
+                    end: 24,
+                    value: "c",
+                  },
+                  {
+                    type: "esp",
+                    start: 24,
+                    end: 31,
+                    value: "{{ d }}",
+                    head: "{{",
+                    headStartsAt: 24,
+                    headEndsAt: 26,
+                    tail: "}}",
+                    tailStartsAt: 29,
+                    tailEndsAt: 31,
+                  },
+                  {
+                    type: "text",
+                    start: 31,
+                    end: 32,
+                    value: "e",
+                  },
+                ],
+                valueStarts: 15,
+                valueEnds: 32,
+                important: "!important",
+                importantStarts: 33,
+                importantEnds: 43,
+                colon: 13,
+                semi: 43,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 44,
+            attribStarts: 5,
+            attribEnds: 45,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "31"
+  );
   t.end();
 });
 
-tap.todo(`32 - chain with copiously spaced important`, (t) => {
+tap.test(`32 - chain with copiously spaced important`, (t) => {
   const gathered = [];
   const input = '<div style="x: a{{ b }}c{{ d }}e  !important;">';
   ct(input, {
@@ -2169,7 +2833,199 @@ tap.todo(`32 - chain with copiously spaced important`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "32");
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 47,
+        value: '<div style="x: a{{ b }}c{{ d }}e  !important;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 45,
+            attribValueRaw: "x: a{{ b }}c{{ d }}e  !important;",
+            attribValue: [
+              {
+                start: 12,
+                end: 45,
+                property: "x",
+                propertyStarts: 12,
+                propertyEnds: 13,
+                value: [
+                  {
+                    type: "text",
+                    start: 15,
+                    end: 16,
+                    value: "a",
+                  },
+                  {
+                    type: "esp",
+                    start: 16,
+                    end: 23,
+                    value: "{{ b }}",
+                    head: "{{",
+                    headStartsAt: 16,
+                    headEndsAt: 18,
+                    tail: "}}",
+                    tailStartsAt: 21,
+                    tailEndsAt: 23,
+                  },
+                  {
+                    type: "text",
+                    start: 23,
+                    end: 24,
+                    value: "c",
+                  },
+                  {
+                    type: "esp",
+                    start: 24,
+                    end: 31,
+                    value: "{{ d }}",
+                    head: "{{",
+                    headStartsAt: 24,
+                    headEndsAt: 26,
+                    tail: "}}",
+                    tailStartsAt: 29,
+                    tailEndsAt: 31,
+                  },
+                  {
+                    type: "text",
+                    start: 31,
+                    end: 32,
+                    value: "e",
+                  },
+                ],
+                valueStarts: 15,
+                valueEnds: 32,
+                important: "!important",
+                importantStarts: 34,
+                importantEnds: 44,
+                colon: 13,
+                semi: 44,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 45,
+            attribStarts: 5,
+            attribEnds: 46,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "32"
+  );
+  t.end();
+});
+
+tap.todo(`33 - spaced chain, text-ESP`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: 10 {{ r }} !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "33");
+  t.end();
+});
+
+tap.todo(`34 - spaced chain`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: {{ t }} {{ r }} {{ b }} {{ l }}">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "34");
+  t.end();
+});
+
+tap.todo(`35 - spaced chain`, (t) => {
+  const gathered = [];
+  const input =
+    '<div style="padding: {{ t }} {{ r }} {{ b }} {{ l }} !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "35");
+  t.end();
+});
+
+tap.todo(`36 - spaced chain`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: {{ t }} 1px {{ b }} {{ l }} !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "36");
+  t.end();
+});
+
+tap.todo(`37 - spaced chain`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: {{ t }} {{ r }} {{ b }} 1px !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "37");
+  t.end();
+});
+
+tap.todo(`38 - spaced chain`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: {{ t }} {{ r }} 1px 1px !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "38");
+  t.end();
+});
+
+tap.todo(`39 - spaced chain`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: 1px {{ r }} 1px 1px !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "39");
+  t.end();
+});
+
+tap.todo(`40 - spaced chain`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: {{ t }} 1px 1px 1px !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "40");
   t.end();
 });
 
