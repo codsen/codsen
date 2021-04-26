@@ -2932,34 +2932,175 @@ tap.test(`32 - chain with copiously spaced important`, (t) => {
   t.end();
 });
 
-tap.todo(`33 - spaced chain, text-ESP`, (t) => {
+tap.test(`33 - spaced chain, text-ESP, no important`, (t) => {
   const gathered = [];
-  const input = '<div style="padding: 10 {{ r }} !important">';
+  const input = '<div style="padding: 1px {{ r }}">';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "33");
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 34,
+        value: '<div style="padding: 1px {{ r }}">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 32,
+            attribValueRaw: "padding: 1px {{ r }}",
+            attribValue: [
+              {
+                start: 12,
+                end: 32,
+                property: "padding",
+                propertyStarts: 12,
+                propertyEnds: 19,
+                value: [
+                  {
+                    type: "text",
+                    start: 21,
+                    end: 25,
+                    value: "1px ",
+                  },
+                  {
+                    type: "esp",
+                    start: 25,
+                    end: 32,
+                    value: "{{ r }}",
+                    head: "{{",
+                    headStartsAt: 25,
+                    headEndsAt: 27,
+                    tail: "}}",
+                    tailStartsAt: 30,
+                    tailEndsAt: 32,
+                  },
+                ],
+                valueStarts: 21,
+                valueEnds: 32,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 19,
+                semi: null,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 32,
+            attribStarts: 5,
+            attribEnds: 33,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "33"
+  );
   t.end();
 });
 
-tap.todo(`34 - spaced chain`, (t) => {
+tap.test(`34 - spaced chain, text-ESP, with important`, (t) => {
   const gathered = [];
-  const input = '<div style="padding: {{ t }} {{ r }} {{ b }} {{ l }}">';
+  const input = '<div style="padding: 1px {{ r }} !important">';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "34");
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 45,
+        value: '<div style="padding: 1px {{ r }} !important">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 43,
+            attribValueRaw: "padding: 1px {{ r }} !important",
+            attribValue: [
+              {
+                start: 12,
+                end: 43,
+                property: "padding",
+                propertyStarts: 12,
+                propertyEnds: 19,
+                value: [
+                  {
+                    type: "text",
+                    start: 21,
+                    end: 25,
+                    value: "1px ",
+                  },
+                  {
+                    type: "esp",
+                    start: 25,
+                    end: 32,
+                    value: "{{ r }}",
+                    head: "{{",
+                    headStartsAt: 25,
+                    headEndsAt: 27,
+                    tail: "}}",
+                    tailStartsAt: 30,
+                    tailEndsAt: 32,
+                  },
+                ],
+                valueStarts: 21,
+                valueEnds: 32,
+                important: "!important",
+                importantStarts: 33,
+                importantEnds: 43,
+                colon: 19,
+                semi: null,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 43,
+            attribStarts: 5,
+            attribEnds: 44,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "34"
+  );
   t.end();
 });
 
 tap.todo(`35 - spaced chain`, (t) => {
   const gathered = [];
-  const input =
-    '<div style="padding: {{ t }} {{ r }} {{ b }} {{ l }} !important">';
+  const input = '<div style="padding: {{ t }} {{ r }} {{ b }} {{ l }}">';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -2971,7 +3112,8 @@ tap.todo(`35 - spaced chain`, (t) => {
 
 tap.todo(`36 - spaced chain`, (t) => {
   const gathered = [];
-  const input = '<div style="padding: {{ t }} 1px {{ b }} {{ l }} !important">';
+  const input =
+    '<div style="padding: {{ t }} {{ r }} {{ b }} {{ l }} !important">';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -2983,7 +3125,7 @@ tap.todo(`36 - spaced chain`, (t) => {
 
 tap.todo(`37 - spaced chain`, (t) => {
   const gathered = [];
-  const input = '<div style="padding: {{ t }} {{ r }} {{ b }} 1px !important">';
+  const input = '<div style="padding: {{ t }} 1px {{ b }} {{ l }} !important">';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -2995,7 +3137,7 @@ tap.todo(`37 - spaced chain`, (t) => {
 
 tap.todo(`38 - spaced chain`, (t) => {
   const gathered = [];
-  const input = '<div style="padding: {{ t }} {{ r }} 1px 1px !important">';
+  const input = '<div style="padding: {{ t }} {{ r }} {{ b }} 1px !important">';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -3007,7 +3149,7 @@ tap.todo(`38 - spaced chain`, (t) => {
 
 tap.todo(`39 - spaced chain`, (t) => {
   const gathered = [];
-  const input = '<div style="padding: 1px {{ r }} 1px 1px !important">';
+  const input = '<div style="padding: {{ t }} {{ r }} 1px 1px !important">';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -3017,7 +3159,96 @@ tap.todo(`39 - spaced chain`, (t) => {
   t.end();
 });
 
-tap.todo(`40 - spaced chain`, (t) => {
+tap.test(`40 - spaced chain`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: 1px {{ r }} 1px 1px !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 53,
+        value: '<div style="padding: 1px {{ r }} 1px 1px !important">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 51,
+            attribValueRaw: "padding: 1px {{ r }} 1px 1px !important",
+            attribValue: [
+              {
+                start: 12,
+                end: 51,
+                property: "padding",
+                propertyStarts: 12,
+                propertyEnds: 19,
+                value: [
+                  {
+                    type: "text",
+                    start: 21,
+                    end: 25,
+                    value: "1px ",
+                  },
+                  {
+                    type: "esp",
+                    start: 25,
+                    end: 32,
+                    value: "{{ r }}",
+                    head: "{{",
+                    headStartsAt: 25,
+                    headEndsAt: 27,
+                    tail: "}}",
+                    tailStartsAt: 30,
+                    tailEndsAt: 32,
+                  },
+                  {
+                    type: "text",
+                    start: 33,
+                    end: 40,
+                    value: "1px 1px",
+                  },
+                ],
+                valueStarts: 21,
+                valueEnds: 40,
+                important: "!important",
+                importantStarts: 41,
+                importantEnds: 51,
+                colon: 19,
+                semi: null,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 51,
+            attribStarts: 5,
+            attribEnds: 52,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "40"
+  );
+  t.end();
+});
+
+tap.test(`41 - spaced chain`, (t) => {
   const gathered = [];
   const input = '<div style="padding: {{ t }} 1px 1px 1px !important">';
   ct(input, {
@@ -3025,7 +3256,102 @@ tap.todo(`40 - spaced chain`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "40");
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 53,
+        value: '<div style="padding: {{ t }} 1px 1px 1px !important">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 51,
+            attribValueRaw: "padding: {{ t }} 1px 1px 1px !important",
+            attribValue: [
+              {
+                start: 12,
+                end: 51,
+                property: "padding",
+                propertyStarts: 12,
+                propertyEnds: 19,
+                value: [
+                  {
+                    type: "esp",
+                    start: 21,
+                    end: 28,
+                    value: "{{ t }}",
+                    head: "{{",
+                    headStartsAt: 21,
+                    headEndsAt: 23,
+                    tail: "}}",
+                    tailStartsAt: 26,
+                    tailEndsAt: 28,
+                  },
+                  {
+                    type: "text",
+                    start: 29,
+                    end: 40,
+                    value: "1px 1px 1px",
+                  },
+                ],
+                valueStarts: 21,
+                valueEnds: 40,
+                important: "!important",
+                importantStarts: 41,
+                importantEnds: 51,
+                colon: 19,
+                semi: null,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 51,
+            attribStarts: 5,
+            attribEnds: 52,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "41"
+  );
+  t.end();
+});
+
+tap.todo(`42 - broken esp`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: {{ t }} {. r }} 1px 1px !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "42");
+  t.end();
+});
+
+tap.todo(`43 - broken esp`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding: {{ t }} r }} 1px 1px !important">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(gathered, [], "43");
   t.end();
 });
 

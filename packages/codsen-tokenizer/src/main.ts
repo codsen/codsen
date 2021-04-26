@@ -3153,8 +3153,8 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       R1 =
         `;<>`.includes(str[idxRightIncl]) ||
         // avoid Nunjucks ESP tags, {{ zzz }}
-        (str[idxRightIncl] === `{` && str[i - 1] !== `{`) ||
-        (str[idxRightIncl] === `}` && str[i - 1] !== `}`) ||
+        // (str[idxRightIncl] === `{` && str[i - 1] !== `{`) ||
+        // (str[idxRightIncl] === `}` && str[i - 1] !== `}`) ||
         // or it's a quote
         (`'"`.includes(str[idxRightIncl]) &&
           // but then it has to be a matching counterpart
