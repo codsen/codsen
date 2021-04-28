@@ -3868,7 +3868,7 @@ tap.test(`41 - spaced chain`, (t) => {
   t.end();
 });
 
-tap.todo(`42 - two tight esp tokens`, (t) => {
+tap.test(`42 - two tight esp tokens, no semi`, (t) => {
   const gathered = [];
   const input = '<div style="padding:{{ t }}{{ r }}">';
   ct(input, {
@@ -3876,11 +3876,177 @@ tap.todo(`42 - two tight esp tokens`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "42");
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 36,
+        value: '<div style="padding:{{ t }}{{ r }}">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 34,
+            attribValueRaw: "padding:{{ t }}{{ r }}",
+            attribValue: [
+              {
+                start: 12,
+                end: 34,
+                property: "padding",
+                propertyStarts: 12,
+                propertyEnds: 19,
+                value: [
+                  {
+                    type: "esp",
+                    start: 20,
+                    end: 27,
+                    value: "{{ t }}",
+                    head: "{{",
+                    headStartsAt: 20,
+                    headEndsAt: 22,
+                    tail: "}}",
+                    tailStartsAt: 25,
+                    tailEndsAt: 27,
+                  },
+                  {
+                    type: "esp",
+                    start: 27,
+                    end: 34,
+                    value: "{{ r }}",
+                    head: "{{",
+                    headStartsAt: 27,
+                    headEndsAt: 29,
+                    tail: "}}",
+                    tailStartsAt: 32,
+                    tailEndsAt: 34,
+                  },
+                ],
+                valueStarts: 20,
+                valueEnds: 34,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 19,
+                semi: null,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 34,
+            attribStarts: 5,
+            attribEnds: 35,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "42"
+  );
   t.end();
 });
 
-tap.test(`43 - two tight esp tokens`, (t) => {
+tap.test(`43 - two tight esp tokens, with semi`, (t) => {
+  const gathered = [];
+  const input = '<div style="padding:{{ t }}{{ r }};">';
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 37,
+        value: '<div style="padding:{{ t }}{{ r }};">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 35,
+            attribValueRaw: "padding:{{ t }}{{ r }}",
+            attribValue: [
+              {
+                start: 12,
+                end: 35,
+                property: "padding",
+                propertyStarts: 12,
+                propertyEnds: 19,
+                value: [
+                  {
+                    type: "esp",
+                    start: 20,
+                    end: 27,
+                    value: "{{ t }}",
+                    head: "{{",
+                    headStartsAt: 20,
+                    headEndsAt: 22,
+                    tail: "}}",
+                    tailStartsAt: 25,
+                    tailEndsAt: 27,
+                  },
+                  {
+                    type: "esp",
+                    start: 27,
+                    end: 34,
+                    value: "{{ r }}",
+                    head: "{{",
+                    headStartsAt: 27,
+                    headEndsAt: 29,
+                    tail: "}}",
+                    tailStartsAt: 32,
+                    tailEndsAt: 34,
+                  },
+                ],
+                valueStarts: 20,
+                valueEnds: 34,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 19,
+                semi: 34,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 35,
+            attribStarts: 5,
+            attribEnds: 36,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "43"
+  );
+  t.end();
+});
+
+tap.test(`44 - two tight esp tokens`, (t) => {
   const gathered = [];
   const input = '<div style="padding:{{ t }}\t{{ r }}">';
   ct(input, {
@@ -3970,12 +4136,12 @@ tap.test(`43 - two tight esp tokens`, (t) => {
         ],
       },
     ],
-    "43"
+    "44"
   );
   t.end();
 });
 
-tap.todo(`44 - broken esp`, (t) => {
+tap.todo(`45 - broken esp`, (t) => {
   const gathered = [];
   const input = '<div style="padding: {{ t }} {. r }} 1px 1px !important">';
   ct(input, {
@@ -3983,11 +4149,11 @@ tap.todo(`44 - broken esp`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "44");
+  t.match(gathered, [], "45");
   t.end();
 });
 
-tap.todo(`45 - broken esp`, (t) => {
+tap.todo(`46 - broken esp`, (t) => {
   const gathered = [];
   const input = '<div style="padding: {{ t }} r }} 1px 1px !important">';
   ct(input, {
@@ -3995,6 +4161,6 @@ tap.todo(`45 - broken esp`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "45");
+  t.match(gathered, [], "46");
   t.end();
 });
