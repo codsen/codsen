@@ -65,36 +65,7 @@ tap.test(`02 - JSP scriptlet`, (t) => {
   t.end();
 });
 
-tap.skip(`03 - deleteme`, (t) => {
-  const gathered = [];
-  const input = "${abc}";
-  ct(input, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "esp",
-        start: 0,
-        end: input.length,
-        value: input,
-        head: "${",
-        headStartsAt: 0,
-        headEndsAt: 2,
-        tail: "}",
-        tailStartsAt: input.length - 1,
-        tailEndsAt: input.length,
-      },
-    ],
-    "03"
-  );
-  t.end();
-});
-
-tap.test(`04 - JSP scriptlet`, (t) => {
+tap.test(`03 - JSP scriptlet`, (t) => {
   const gathered = [];
   const input = `<% out.println("Your IP: " + request.getRemoteAddr()); %>`;
   ct(input, {
@@ -118,12 +89,12 @@ tap.test(`04 - JSP scriptlet`, (t) => {
         tailEndsAt: 57,
       },
     ],
-    "04"
+    "03"
   );
   t.end();
 });
 
-tap.test(`05 - declarations`, (t) => {
+tap.test(`04 - declarations`, (t) => {
   [
     // spaced out:
     `<%! declaration; %>`,
@@ -164,7 +135,7 @@ tap.test(`05 - declarations`, (t) => {
   t.end();
 });
 
-tap.test(`06 - expressions`, (t) => {
+tap.test(`05 - expressions`, (t) => {
   [
     // spaced out:
     `<%= expression %>`,
@@ -201,7 +172,7 @@ tap.test(`06 - expressions`, (t) => {
   t.end();
 });
 
-tap.test(`07 - mixed`, (t) => {
+tap.test(`06 - mixed`, (t) => {
   const gathered = [];
   const input = `<p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>`;
   ct(input, {
@@ -261,12 +232,12 @@ tap.test(`07 - mixed`, (t) => {
         attribs: [],
       },
     ],
-    "07"
+    "06"
   );
   t.end();
 });
 
-tap.test(`08 - comments`, (t) => {
+tap.test(`07 - comments`, (t) => {
   [
     // spaced out:
     `<%-- This is JSP comment --%>`,
@@ -301,7 +272,7 @@ tap.test(`08 - comments`, (t) => {
   t.end();
 });
 
-tap.test(`09 - directives`, (t) => {
+tap.test(`08 - directives`, (t) => {
   [
     // spaced out:
     `<%@ directive attribute="value" %>`,
@@ -356,7 +327,7 @@ tap.test(`09 - directives`, (t) => {
   t.end();
 });
 
-tap.test(`10 - JSP actions`, (t) => {
+tap.test(`09 - JSP actions`, (t) => {
   const gathered = [];
   const input = `<jsp:action_name attribute="value"/>`;
   ct(input, {
@@ -380,14 +351,43 @@ tap.test(`10 - JSP actions`, (t) => {
         tailEndsAt: 36,
       },
     ],
+    "09"
+  );
+  t.end();
+});
+
+tap.test(`10 - use bean`, (t) => {
+  const gathered = [];
+  const input = `<jsp:useBean id = "name" class = "package.class" />`;
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "esp",
+        start: 0,
+        end: input.length,
+        value: input,
+        head: "<",
+        headStartsAt: 0,
+        headEndsAt: 1,
+        tail: "/>",
+        tailStartsAt: input.length - 2,
+        tailEndsAt: input.length,
+      },
+    ],
     "10"
   );
   t.end();
 });
 
-tap.test(`11 - use bean`, (t) => {
+tap.test(`11 - use cms`, (t) => {
   const gathered = [];
-  const input = `<jsp:useBean id = "name" class = "package.class" />`;
+  const input = `<cms:enable-ade />`;
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -414,36 +414,7 @@ tap.test(`11 - use bean`, (t) => {
   t.end();
 });
 
-tap.test(`12 - use cms`, (t) => {
-  const gathered = [];
-  const input = `<cms:enable-ade />`;
-  ct(input, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "esp",
-        start: 0,
-        end: input.length,
-        value: input,
-        head: "<",
-        headStartsAt: 0,
-        headEndsAt: 1,
-        tail: "/>",
-        tailStartsAt: input.length - 2,
-        tailEndsAt: input.length,
-      },
-    ],
-    "12"
-  );
-  t.end();
-});
-
-tap.test(`13 - standalone JSP prop`, (t) => {
+tap.test(`12 - standalone JSP prop`, (t) => {
   const gathered = [];
   const input =
     "<p>${jspProp.cardTypeName} **** **** **** ${jspProp.cardNumber}</p>";
@@ -516,12 +487,12 @@ tap.test(`13 - standalone JSP prop`, (t) => {
         attribs: [],
       },
     ],
-    "13"
+    "12"
   );
   t.end();
 });
 
-tap.test(`14 - c: without closing slash`, (t) => {
+tap.test(`13 - c: without closing slash`, (t) => {
   const gathered = [];
   const input = `<c:if test="\${!empty something}">`;
   ct(input, {
@@ -545,12 +516,12 @@ tap.test(`14 - c: without closing slash`, (t) => {
         tailEndsAt: input.length,
       },
     ],
-    "14"
+    "13"
   );
   t.end();
 });
 
-tap.test(`15 - IF-ELSE mixed with HTML`, (t) => {
+tap.test(`14 - IF-ELSE mixed with HTML`, (t) => {
   const gathered = [];
   const input = `<%! int day = 1; %>
 <html>
@@ -770,7 +741,7 @@ tap.test(`15 - IF-ELSE mixed with HTML`, (t) => {
         value: "</html>",
       },
     ],
-    "15"
+    "14"
   );
   t.end();
 });
