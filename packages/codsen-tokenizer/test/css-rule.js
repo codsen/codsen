@@ -3855,7 +3855,7 @@ tap.test(`52`, (t) => {
   t.end();
 });
 
-tap.todo(`53`, (t) => {
+tap.test(`53`, (t) => {
   const gathered = [];
   ct(`<style>.a{b:c?important;</style>`, {
     tagCb: (obj) => {
@@ -3896,11 +3896,11 @@ tap.todo(`53`, (t) => {
             property: "b",
             propertyStarts: 10,
             propertyEnds: 11,
-            value: "c",
+            value: "c?",
             valueStarts: 12,
-            valueEnds: 13,
-            important: "?important",
-            importantStarts: 13,
+            valueEnds: 14,
+            important: "important",
+            importantStarts: 14,
             importantEnds: 23,
             colon: 11,
             semi: 23,
