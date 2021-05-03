@@ -4053,7 +4053,7 @@ tap.test(`55`, (t) => {
   t.end();
 });
 
-tap.todo(`56`, (t) => {
+tap.test(`56`, (t) => {
   const gathered = [];
   ct(`<style>.a{b:c1important;`, {
     tagCb: (obj) => {
