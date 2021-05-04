@@ -4381,31 +4381,7 @@ tap.test(`60`, (t) => {
   t.end();
 });
 
-tap.todo(`61`, (t) => {
-  const gathered = [];
-  ct(`<style.a{b:c !important;}</style>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(gathered, [], "61");
-
-  t.end();
-});
-
-tap.todo(`62`, (t) => {
-  const gathered = [];
-  ct(`<style\n.a{b:c !important;}</style>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(gathered, [], "62");
-
-  t.end();
-});
-
-tap.test(`63 - one rule, no linebreaks`, (t) => {
+tap.test(`61 - one rule, no linebreaks`, (t) => {
   const gathered = [];
   ct(`<style>.a{b:c;d:e;f:g;}</style>`, {
     tagCb: (obj) => {
@@ -4480,12 +4456,12 @@ tap.test(`63 - one rule, no linebreaks`, (t) => {
         },
       ],
     },
-    "63"
+    "61"
   );
   t.end();
 });
 
-tap.test(`64 - one rule, linebreaks`, (t) => {
+tap.test(`62 - one rule, linebreaks`, (t) => {
   const gathered = [];
   ct(
     `<style>
@@ -4535,12 +4511,12 @@ tap.test(`64 - one rule, linebreaks`, (t) => {
         end: 24,
       },
     ],
-    "64"
+    "62"
   );
   t.end();
 });
 
-tap.test(`65 - two selectors`, (t) => {
+tap.test(`63 - two selectors`, (t) => {
   const gathered = [];
   ct(`<style>.a,.b{c}</style>`, {
     tagCb: (obj) => {
@@ -4582,12 +4558,12 @@ tap.test(`65 - two selectors`, (t) => {
         end: 23,
       },
     ],
-    "65"
+    "63"
   );
   t.end();
 });
 
-tap.test(`66 - one rule, no linebreaks`, (t) => {
+tap.test(`64 - one rule, no linebreaks`, (t) => {
   const gathered = [];
   ct(
     `<style>
@@ -4641,12 +4617,12 @@ tap.test(`66 - one rule, no linebreaks`, (t) => {
         end: 29,
       },
     ],
-    "66"
+    "64"
   );
   t.end();
 });
 
-tap.test(`67 - dangling comma`, (t) => {
+tap.test(`65 - dangling comma`, (t) => {
   const gathered = [];
   ct(`<style>.a,.b,{c}</style>`, {
     tagCb: (obj) => {
@@ -4688,12 +4664,12 @@ tap.test(`67 - dangling comma`, (t) => {
         end: 24,
       },
     ],
-    "67"
+    "65"
   );
   t.end();
 });
 
-tap.test(`68 - double comma`, (t) => {
+tap.test(`66 - double comma`, (t) => {
   const gathered = [];
   ct(`<style>.a,,.b{c}</style>`, {
     tagCb: (obj) => {
@@ -4735,12 +4711,12 @@ tap.test(`68 - double comma`, (t) => {
         end: 24,
       },
     ],
-    "68"
+    "66"
   );
   t.end();
 });
 
-tap.test(`69 - esp tags can't have curlies`, (t) => {
+tap.test(`67 - esp tags can't have curlies`, (t) => {
   const gathered = [];
   ct(`<style>.b%{c}</style>`, {
     tagCb: (obj) => {
@@ -4797,12 +4773,12 @@ tap.test(`69 - esp tags can't have curlies`, (t) => {
         attribs: [],
       },
     ],
-    "69"
+    "67"
   );
   t.end();
 });
 
-tap.test(`70 - root level css declarations`, (t) => {
+tap.test(`68 - root level css declarations`, (t) => {
   const gathered = [];
   ct(
     `<head>
@@ -4898,12 +4874,12 @@ tap.test(`70 - root level css declarations`, (t) => {
         ],
       },
     ],
-    "70"
+    "68"
   );
   t.end();
 });
 
-tap.test(`71 - @media`, (t) => {
+tap.test(`69 - @media`, (t) => {
   const gathered = [];
   ct(
     `<head>
@@ -5283,12 +5259,12 @@ tap.test(`71 - @media`, (t) => {
         attribs: [],
       },
     ],
-    "71"
+    "69"
   );
   t.end();
 });
 
-tap.test(`72 - parent selector ">" - 1`, (t) => {
+tap.test(`70 - parent selector ">" - 1`, (t) => {
   const gathered = [];
   ct(`<style>ab>cd#ef {display:block;}</style>`, {
     tagCb: (obj) => {
@@ -5366,12 +5342,12 @@ tap.test(`72 - parent selector ">" - 1`, (t) => {
         attribs: [],
       },
     ],
-    "72"
+    "70"
   );
   t.end();
 });
 
-tap.test(`73 - parent selector ">" - 2`, (t) => {
+tap.test(`71 - parent selector ">" - 2`, (t) => {
   const gathered = [];
   ct(`<style>\na > something#here {display:block;}`, {
     tagCb: (obj) => {
@@ -5439,12 +5415,12 @@ tap.test(`73 - parent selector ">" - 2`, (t) => {
         ],
       },
     ],
-    "73"
+    "71"
   );
   t.end();
 });
 
-tap.test(`74 unfinished code`, (t) => {
+tap.test(`72 unfinished code`, (t) => {
   const gathered = [];
   ct(`<style>sup{`, {
     tagCb: (obj) => {
@@ -5490,12 +5466,12 @@ tap.test(`74 unfinished code`, (t) => {
         properties: [],
       },
     ],
-    "74"
+    "72"
   );
   t.end();
 });
 
-tap.test(`75`, (t) => {
+tap.test(`73`, (t) => {
   const gathered = [];
   ct(`<style>.a{color:red }`, {
     tagCb: (obj) => {
@@ -5563,12 +5539,12 @@ tap.test(`75`, (t) => {
         ],
       },
     ],
-    "75"
+    "73"
   );
   t.end();
 });
 
-tap.test(`76`, (t) => {
+tap.test(`74`, (t) => {
   const gathered = [];
   ct(`<style>.a { b : c    `, {
     tagCb: (obj) => {
@@ -5642,12 +5618,12 @@ tap.test(`76`, (t) => {
         ],
       },
     ],
-    "76"
+    "74"
   );
   t.end();
 });
 
-tap.test(`77`, (t) => {
+tap.test(`75`, (t) => {
   const gathered = [];
   ct(`<style>.a { b :    `, {
     tagCb: (obj) => {
@@ -5721,12 +5697,12 @@ tap.test(`77`, (t) => {
         ],
       },
     ],
-    "77"
+    "75"
   );
   t.end();
 });
 
-tap.test(`78`, (t) => {
+tap.test(`76`, (t) => {
   const gathered = [];
   ct(`<style>.a{color: red ! float: left}`, {
     tagCb: (obj) => {
@@ -5809,12 +5785,12 @@ tap.test(`78`, (t) => {
         ],
       },
     ],
-    "78"
+    "76"
   );
   t.end();
 });
 
-tap.test(`79`, (t) => {
+tap.test(`77`, (t) => {
   const gathered = [];
   ct(`<style>.a{color: red !important float: left}</style>`, {
     tagCb: (obj) => {
@@ -5912,12 +5888,12 @@ tap.test(`79`, (t) => {
         attribs: [],
       },
     ],
-    "79"
+    "77"
   );
   t.end();
 });
 
-tap.test(`80`, (t) => {
+tap.test(`78`, (t) => {
   const gathered = [];
   ct(`<style>.a{padding:1px 2px 3px 4px !important}`, {
     tagCb: (obj) => {
@@ -5979,12 +5955,12 @@ tap.test(`80`, (t) => {
         ],
       },
     ],
-    "80"
+    "78"
   );
   t.end();
 });
 
-tap.test(`81 - no space or excl. mark`, (t) => {
+tap.test(`79 - no space or excl. mark`, (t) => {
   const gathered = [];
   ct(`<style>.a{color:1pximportant}`, {
     tagCb: (obj) => {
@@ -6046,12 +6022,12 @@ tap.test(`81 - no space or excl. mark`, (t) => {
         ],
       },
     ],
-    "81"
+    "79"
   );
   t.end();
 });
 
-tap.test(`82`, (t) => {
+tap.test(`80`, (t) => {
   const gathered = [];
   ct(`<style>.a{color: red important float: left}</style>`, {
     tagCb: (obj) => {
@@ -6149,12 +6125,12 @@ tap.test(`82`, (t) => {
         attribs: [],
       },
     ],
-    "82"
+    "80"
   );
   t.end();
 });
 
-tap.test(`83 - ESP var as a CSS rule's value`, (t) => {
+tap.test(`81 - ESP var as a CSS rule's value`, (t) => {
   const gathered = [];
   ct(
     `<style>
@@ -6262,44 +6238,7 @@ tap.test(`83 - ESP var as a CSS rule's value`, (t) => {
         attribs: [],
       },
     ],
-    "83"
+    "81"
   );
-  t.end();
-});
-
-tap.todo(`84 - standalone semi in head CSS - chopped`, (t) => {
-  const gathered = [];
-  ct(`<style>.a{b:c!important};`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.strictSame(gathered, [], "84");
-  t.end();
-});
-
-tap.todo(`85 - standalone semi in head CSS - closed`, (t) => {
-  const gathered = [];
-  ct(`<style>.red{color:red!important};</style>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.strictSame(gathered, [], "85");
-  t.end();
-});
-
-tap.todo(`86 - standalone semi in head CSS - surroundings`, (t) => {
-  const gathered = [];
-  ct(
-    `<style>.a{b:c!important};
-.b{text-align:left;}`,
-    {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    }
-  );
-  t.strictSame(gathered, [], "86");
   t.end();
 });
