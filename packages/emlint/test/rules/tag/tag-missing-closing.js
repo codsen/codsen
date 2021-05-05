@@ -317,3 +317,27 @@ tap.test(
     t.end();
   }
 );
+
+tap.todo(`13`, (t) => {
+  const str = `<br<div></div>`;
+  const fixed = `<br /><div></div>`;
+  const messages = verify(t, str, {
+    rules: {
+      all: 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "13");
+  t.end();
+});
+
+tap.todo(`14`, (t) => {
+  const str = `<br\n<div></div>`;
+  const fixed = `<br />\n<div></div>`;
+  const messages = verify(t, str, {
+    rules: {
+      all: 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "14");
+  t.end();
+});

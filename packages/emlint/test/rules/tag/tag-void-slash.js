@@ -280,3 +280,45 @@ tap.test(`13 - does not touch the whitespace`, (t) => {
   t.equal(applyFixes(str, messages), fixed, "13.03");
   t.end();
 });
+
+// combo with tag-malformed, missing closing bracket
+// -----------------------------------------------------------------------------
+
+tap.todo(`14`, (t) => {
+  const str = "<br";
+  const fixed = "<br />";
+  const messages = verify(t, str, {
+    rules: {
+      "tag-void-slash": 2,
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "14");
+  t.end();
+});
+
+tap.todo(`15`, (t) => {
+  const str = "<br ";
+  const fixed = "<br />";
+  const messages = verify(t, str, {
+    rules: {
+      "tag-void-slash": 2,
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "15");
+  t.end();
+});
+
+tap.todo(`16`, (t) => {
+  const str = "<br ";
+  const fixed = "<br />";
+  const messages = verify(t, str, {
+    rules: {
+      "tag-void-slash": 2,
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "16");
+  t.end();
+});
