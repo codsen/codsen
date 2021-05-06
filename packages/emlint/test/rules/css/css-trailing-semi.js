@@ -127,23 +127,7 @@ tap.test(`06 - one style, always, inner whitespace`, (t) => {
       "css-trailing-semi": [1, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "06.01");
-  t.match(
-    messages,
-    [
-      {
-        severity: 1,
-        ruleId: "css-trailing-semi",
-        message: "Add a semicolon.",
-        idxFrom: 10,
-        idxTo: 19,
-        fix: {
-          ranges: [[19, 19, ";"]],
-        },
-      },
-    ],
-    "06.02"
-  );
+  t.equal(applyFixes(str, messages), fixed, "06");
   t.end();
 });
 
