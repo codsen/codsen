@@ -189,3 +189,42 @@ tap.test(
     t.end();
   }
 );
+
+tap.todo(`15 - void tag`, (t) => {
+  const str = `<br`;
+  const fixed = `<br />`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "15.01");
+  t.equal(messages.length, 1, "15.02");
+  t.end();
+});
+
+tap.todo(`16`, (t) => {
+  const str = `<br\n`;
+  const fixed = `<br />\n`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "16.01");
+  t.equal(messages.length, 1, "16.02");
+  t.end();
+});
+
+tap.todo(`17 - multiple void tags without closing brackets`, (t) => {
+  const str = `<br<br<br`;
+  const fixed = `<br /><br /><br />`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "17.01");
+  t.equal(messages.length, 1, "17.02");
+  t.end();
+});
