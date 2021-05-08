@@ -4141,7 +4141,7 @@ tap.test(`44 - two tight esp tokens`, (t) => {
   t.end();
 });
 
-tap.only(`45`, (t) => {
+tap.test(`45`, (t) => {
   const gathered = [];
   const input =
     '<td style="color: red;    {% if so %}text-align: left;{% endif %}     float: left;">x</td>';
