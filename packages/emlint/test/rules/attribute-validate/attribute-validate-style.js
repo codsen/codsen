@@ -363,3 +363,19 @@ tap.test(`15 - two semis, tight`, (t) => {
   t.equal(messages.length, 1, "15.03");
   t.end();
 });
+
+// ESP tokens
+// -----------------------------------------------------------------------------
+
+tap.todo(`16 - don't add semi after ESP tokens`, (t) => {
+  const str = `<td style="color: red;
+    {% if so %}text-align: left;{% endif %}
+float: left;">x</td>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-validate-style": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "16");
+  t.end();
+});
