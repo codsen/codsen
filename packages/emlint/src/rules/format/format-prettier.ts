@@ -38,14 +38,6 @@ function processCSS(
     return;
   }
 
-  console.log(
-    `042 format-prettier/processCSS(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nodeArr`}\u001b[${39}m`} = ${JSON.stringify(
-      nodeArr,
-      null,
-      4
-    )}`
-  );
-
   // there can be text nodes within properties array!
   // a whitespace is still a text node!!!!
   (nodeArr as Property[])
@@ -67,7 +59,7 @@ function processCSS(
           context.str[property.colon + 1] !== " ")
       ) {
         console.log(
-          `070 format-prettier/processCSS(): space after colon missing`
+          `062 format-prettier/processCSS(): space after colon missing`
         );
         context.report({
           ruleId: "format-prettier",
@@ -92,7 +84,14 @@ function processCSS(
           context.str[lastEnding] !== " ")
       ) {
         console.log(
-          `095 format-prettier/processCSS(): space after !important missing`
+          `087 FIY, ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${JSON.stringify(
+            property.importantStarts,
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `094 format-prettier/processCSS(): missing space in front of !imporant`
         );
         context.report({
           ruleId: "format-prettier",
@@ -115,7 +114,7 @@ function processCSS(
     let somethingMet = false;
     for (let i = 0, len = nodeArr.length; i < len; i++) {
       console.log(
-        `118 SET ${`\u001b[${33}m${`nodeArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
+        `117 SET ${`\u001b[${33}m${`nodeArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
           nodeArr[i],
           null,
           4
@@ -136,18 +135,22 @@ function processCSS(
             // two tokens in front it's a property
             nodeArr[i - 2] &&
             nodeArr[i - 2].property !== undefined)) &&
-        // and it's text in front
+        // and it's text before it
         nodeArr[i - 1].type === "text" &&
-        nodeArr[i - 1].value !== " "
+        nodeArr[i - 1].value !== " " &&
+        // if we're dealing with ESP tokens, allow line breaks
+        (nodeArr[i].type !== "esp" ||
+          (!nodeArr[i - 1].value.includes("\n") &&
+            !nodeArr[i - 1].value.includes("\r")))
       ) {
         console.log(
-          `144 format-prettier/processCSS(): space after !important missing`
+          `147 format-prettier/processCSS(): some whitespace is wrong...`
         );
         context.report({
           ruleId: "format-prettier",
           idxFrom: nodeArr[i - 1].start,
           idxTo: nodeArr[i - 1].end,
-          message: `Put a space in front of !imporant.`,
+          message: `Should be a single space.`,
           fix: {
             ranges: [[nodeArr[i - 1].start, nodeArr[i - 1].end, " "]],
           },
@@ -167,7 +170,7 @@ function processCSS(
         // then it's an issue right away because if there was a whitespace gap,
         // it would be a text token
         console.log(
-          `170 format-prettier/processCSS(): space in front of ${nodeArr[i].start} missing`
+          `173 format-prettier/processCSS(): space in front of ${nodeArr[i].start} missing`
         );
         context.report({
           ruleId: "format-prettier",
