@@ -4295,7 +4295,160 @@ tap.test(`45`, (t) => {
   t.end();
 });
 
-tap.todo(`46 - broken esp`, (t) => {
+tap.test(`46`, (t) => {
+  const gathered = [];
+  const input = `<td style="a: b;
+    {% if x %}c: d;{% endif %}
+e: f;">x</td>`;
+  ct(input, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 55,
+        value: '<td style="a: b;\n    {% if x %}c: d;{% endif %}\ne: f;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 3,
+        tagName: "td",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 4,
+            attribNameEndsAt: 9,
+            attribOpeningQuoteAt: 10,
+            attribClosingQuoteAt: 53,
+            attribValueRaw: "a: b;\n    {% if x %}c: d;{% endif %}\ne: f;",
+            attribValue: [
+              {
+                start: 11,
+                end: 16,
+                property: "a",
+                propertyStarts: 11,
+                propertyEnds: 12,
+                value: "b",
+                valueStarts: 14,
+                valueEnds: 15,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 12,
+                semi: 15,
+              },
+              {
+                type: "text",
+                start: 16,
+                end: 21,
+                value: "\n    ",
+              },
+              {
+                type: "esp",
+                start: 21,
+                end: 31,
+                value: "{% if x %}",
+                head: "{%",
+                headStartsAt: 21,
+                headEndsAt: 23,
+                tail: "%}",
+                tailStartsAt: 29,
+                tailEndsAt: 31,
+              },
+              {
+                start: 31,
+                end: 36,
+                property: "c",
+                propertyStarts: 31,
+                propertyEnds: 32,
+                value: "d",
+                valueStarts: 34,
+                valueEnds: 35,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 32,
+                semi: 35,
+              },
+              {
+                type: "esp",
+                start: 36,
+                end: 47,
+                value: "{% endif %}",
+                head: "{%",
+                headStartsAt: 36,
+                headEndsAt: 38,
+                tail: "%}",
+                tailStartsAt: 45,
+                tailEndsAt: 47,
+              },
+              {
+                type: "text",
+                start: 47,
+                end: 48,
+                value: "\n",
+              },
+              {
+                start: 48,
+                end: 53,
+                property: "e",
+                propertyStarts: 48,
+                propertyEnds: 49,
+                value: "f",
+                valueStarts: 51,
+                valueEnds: 52,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 49,
+                semi: 52,
+              },
+            ],
+            attribValueStartsAt: 11,
+            attribValueEndsAt: 53,
+            attribStarts: 4,
+            attribEnds: 54,
+            attribLeft: 2,
+          },
+        ],
+      },
+      {
+        type: "text",
+        start: 55,
+        end: 56,
+        value: "x",
+      },
+      {
+        type: "tag",
+        start: 56,
+        end: 61,
+        value: "</td>",
+        tagNameStartsAt: 58,
+        tagNameEndsAt: 60,
+        tagName: "td",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+    ],
+    "46"
+  );
+  t.end();
+});
+
+tap.todo(`47 - broken esp`, (t) => {
   const gathered = [];
   const input = '<div style="padding: {{ t }} {. r }} 1px 1px !important">';
   ct(input, {
@@ -4373,12 +4526,12 @@ tap.todo(`46 - broken esp`, (t) => {
         ],
       },
     ],
-    "46"
+    "47"
   );
   t.end();
 });
 
-tap.todo(`47 - broken esp`, (t) => {
+tap.todo(`48 - broken esp`, (t) => {
   const gathered = [];
   const input = '<div style="padding: {{ t }} r }} 1px 1px !important">';
   ct(input, {
@@ -4386,6 +4539,6 @@ tap.todo(`47 - broken esp`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "47");
+  t.match(gathered, [], "48");
   t.end();
 });
