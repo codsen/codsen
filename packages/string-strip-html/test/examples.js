@@ -80,7 +80,7 @@ The promo is still on!
   const { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
     input
   );
-  t.is(
+  t.equal(
     result,
     `{% if data.customer.purchases[0].spendTotal < 100 %}\nYou earned a discount!\n{% else %}\nThe promo is still on!\n{% endif %}`,
     "02.01"
@@ -109,7 +109,7 @@ The promo is still on!
     ],
     "02.04"
   );
-  t.is(
+  t.equal(
     rApply(input, rInvert(allTagLocations, input.length)),
     `<div class="module-container"></div>`,
     "02.05"

@@ -4540,6 +4540,12 @@ function stripHtml(str, originalOpts) {
             spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
             spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
         }
+        // skip known ESP token pairs
+        // -------------------------------------------------------------------------
+        if (str[i] === "%" && str[i - 1] === "{" && str.includes("%}", i + 1)) {
+            i = str.indexOf("%}", i) - 1;
+            continue;
+        }
         // catch the closing bracket of dirty tags with missing opening brackets
         // -------------------------------------------------------------------------
         if (isClosingAt(i)) {

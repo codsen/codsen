@@ -279,6 +279,10 @@ function stripHtml(str, originalOpts) {
     if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < i && str[i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
       spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
     }
+    if (str[i] === "%" && str[i - 1] === "{" && str.includes("%}", i + 1)) {
+      i = str.indexOf("%}", i) - 1;
+      continue;
+    }
     if (isClosingAt(i)) {
       if ((!tag || Object.keys(tag).length < 2) && i > 1) {
         for (let y = i; y--;) {

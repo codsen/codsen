@@ -20,3 +20,22 @@ tap.test("02", (t) => {
   t.match(rApply(input, stripHtml(input).ranges), result, "02.02");
   t.end();
 });
+
+// jinja/nunjucks
+// -----------------------------------------------------------------------------
+
+tap.test("03 - templating tags - healthy nunjucks pair", (t) => {
+  const input = `<div>My variable: {% if x %}</div>`;
+  const result = "My variable: {% if x %}";
+  t.match(stripHtml(input), { result }, "03.01");
+  t.match(rApply(input, stripHtml(input).ranges), result, "03.02");
+  t.end();
+});
+
+tap.test("04 - templating tags - unclosed nunjucks", (t) => {
+  const input = `<div>My variable: {% if x</div>`;
+  const result = "My variable: {% if x";
+  t.match(stripHtml(input), { result }, "04.01");
+  t.match(rApply(input, stripHtml(input).ranges), result, "04.02");
+  t.end();
+});
