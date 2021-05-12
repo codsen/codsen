@@ -102,7 +102,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
               node.attribs[i].attribValue.length &&
               node.attribs[i].attribValue.some(
                 (obj) =>
-                  obj.value &&
+                  typeof obj.value === "string" &&
                   (obj.value.includes(`'`) || obj.value.includes(`"`))
               ))
           ) {

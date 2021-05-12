@@ -367,7 +367,7 @@ tap.test(`15 - two semis, tight`, (t) => {
 // ESP tokens
 // -----------------------------------------------------------------------------
 
-tap.todo(`16 - don't add semi after ESP tokens`, (t) => {
+tap.test(`16 - don't add semi after ESP tokens`, (t) => {
   const str = `<td style="color: red;
     {% if so %}text-align: left;{% endif %}
 float: left;">x</td>`;
@@ -377,5 +377,39 @@ float: left;">x</td>`;
     },
   });
   t.equal(applyFixes(str, messages), str, "16");
+  t.end();
+});
+
+tap.todo(`17`, (t) => {
+  const str = `<td style="color: red
+    {% if so %}text-align: left{% endif %}
+float: left">x</td>`;
+  const fixed = `<td style="color: red;
+    {% if so %}text-align: left;{% endif %}
+float: left">x</td>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-validate-style": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "17");
+  t.end();
+});
+
+tap.todo(`18`, (t) => {
+  const str = `<td style="color: red
+    {% if so %}text-align: left{% endif %}
+float: left">x</td>`;
+  const fixed = `<td style="color: red;
+    {% if so %}text-align: left;{% endif %}
+float: left;">x</td>`;
+  const messages = verify(t, str, {
+    rules: {
+      "attribute-validate-style": 2,
+      "css-trailing-semi": 2,
+      "format-prettier": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "18");
   t.end();
 });

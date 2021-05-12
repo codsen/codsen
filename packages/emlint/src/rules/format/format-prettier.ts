@@ -141,10 +141,17 @@ function processCSS(
         // if we're dealing with ESP tokens, allow line breaks
         (nodeArr[i].type !== "esp" ||
           (!nodeArr[i - 1].value.includes("\n") &&
-            !nodeArr[i - 1].value.includes("\r")))
+            !nodeArr[i - 1].value.includes("\r"))) &&
+        // there can be text token in front, then ESP before it
+        // so check two nodes behind
+        !(
+          nodeArr[i - 2].type === "esp" &&
+          (nodeArr[i - 1].value.includes("\n") ||
+            nodeArr[i - 1].value.includes("\r"))
+        )
       ) {
         console.log(
-          `147 format-prettier/processCSS(): some whitespace is wrong...`
+          `154 format-prettier/processCSS(): some whitespace is wrong...`
         );
         context.report({
           ruleId: "format-prettier",
@@ -170,7 +177,7 @@ function processCSS(
         // then it's an issue right away because if there was a whitespace gap,
         // it would be a text token
         console.log(
-          `173 format-prettier/processCSS(): space in front of ${nodeArr[i].start} missing`
+          `180 format-prettier/processCSS(): space in front of ${nodeArr[i].start} missing`
         );
         context.report({
           ruleId: "format-prettier",

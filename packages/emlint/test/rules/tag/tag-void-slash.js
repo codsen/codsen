@@ -284,12 +284,11 @@ tap.test(`13 - does not touch the whitespace`, (t) => {
 // combo with tag-malformed, missing closing bracket
 // -----------------------------------------------------------------------------
 
-tap.todo(`14`, (t) => {
+tap.only(`14`, (t) => {
   const str = "<br";
   const fixed = "<br />";
   const messages = verify(t, str, {
     rules: {
-      "tag-void-slash": 2,
       "tag-malformed": 2,
     },
   });
@@ -298,12 +297,11 @@ tap.todo(`14`, (t) => {
 });
 
 tap.todo(`15`, (t) => {
-  const str = "<br ";
+  const str = "<br";
   const fixed = "<br />";
   const messages = verify(t, str, {
     rules: {
       "tag-void-slash": 2,
-      "tag-malformed": 2,
     },
   });
   t.equal(applyFixes(str, messages), fixed, "15");
@@ -311,7 +309,7 @@ tap.todo(`15`, (t) => {
 });
 
 tap.todo(`16`, (t) => {
-  const str = "<br ";
+  const str = "<br";
   const fixed = "<br />";
   const messages = verify(t, str, {
     rules: {
@@ -320,5 +318,31 @@ tap.todo(`16`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), fixed, "16");
+  t.end();
+});
+
+tap.todo(`17`, (t) => {
+  const str = "<br ";
+  const fixed = "<br />";
+  const messages = verify(t, str, {
+    rules: {
+      "tag-void-slash": 2,
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "17");
+  t.end();
+});
+
+tap.todo(`18`, (t) => {
+  const str = "<br ";
+  const fixed = "<br />";
+  const messages = verify(t, str, {
+    rules: {
+      "tag-void-slash": 2,
+      "tag-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "18");
   t.end();
 });

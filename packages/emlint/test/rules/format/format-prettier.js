@@ -298,3 +298,16 @@ tap.test(`24 - copiously spaced out ESP clause`, (t) => {
   t.equal(applyFixes(str, messages), fixed, "24");
   t.end();
 });
+
+tap.test(`25`, (t) => {
+  const str = `<td style="color: red;
+    {% if so %}text-align: left;{% endif %}
+float: left;">x</td>`;
+  const messages = verify(t, str, {
+    rules: {
+      "format-prettier": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "25");
+  t.end();
+});

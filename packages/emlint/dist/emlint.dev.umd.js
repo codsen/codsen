@@ -12110,11 +12110,13 @@ function tokenizer(str, originalOpts) {
         }
         pingTagCb(incomingToken);
         initToken("text", cutOffIndex);
+        attribReset();
       } else {
         pingTagCb(incomingToken);
         tokenReset();
         if (str[~-i] && !str[~-i].trim()) {
           initToken("text", left(str, i) + 1);
+          attribReset();
         }
       }
     }
@@ -12222,7 +12224,6 @@ function tokenizer(str, originalOpts) {
     };
   }
   function initToken(type, startVal) {
-    attribReset();
     token = getNewToken(type, startVal);
   }
   function initProperty(propertyStarts) {
@@ -12241,10 +12242,10 @@ function tokenizer(str, originalOpts) {
     !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) ||
     isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
   }
-  function attrEndsAt(idx) {
+  function attrEndsAt(idx, extras) {
     return `;}/`.includes(str[idx]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") ||
-    `/;'"><`.includes(str[idx]) && attrib && attrib.attribName === "style" &&
-    ifQuoteThenAttrClosingQuote(idx);
+    `/;'"><`.includes(str[idx]) && attrib && attrib.attribName === "style" && (
+    extras || ifQuoteThenAttrClosingQuote(idx));
   }
   for (let i = 0; i <= len; i++) {
     if (!doNothing && str[i] && opts.reportProgressFunc) {
@@ -12293,11 +12294,12 @@ function tokenizer(str, originalOpts) {
             tokenReset();
             if (leftVal !== null && leftVal < ~-i) {
               initToken("text", leftVal + 1);
+              attribReset();
             }
           }
           dumpCurrentToken(token, i);
           const poppedToken = layers.pop();
-          token = poppedToken.token;
+          token = lodash_clonedeep(poppedToken.token);
           token.closingCurlyAt = i;
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
@@ -12439,6 +12441,7 @@ function tokenizer(str, originalOpts) {
               token.value = str.slice(token.start, token.end);
               pingTagCb(token);
               initToken(str[y + 1] === "@" ? "at" : "rule", y + 1);
+              attribReset();
               token.left = left(str, y + 1);
               token.selectorsStart = y + 1;
               i = y + 1;
@@ -12481,6 +12484,7 @@ function tokenizer(str, originalOpts) {
           tokenReset();
         }
         initToken("tag", i);
+        attribReset();
         if (withinStyle) {
           withinStyle = false;
         }
@@ -12520,6 +12524,7 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, i);
         }
         initToken("comment", i);
+        attribReset();
         if (str[i] === "-") {
           token.closing = true;
         } else if (matchRightIncl(str, i, ["<![endif]-->"], {
@@ -12538,6 +12543,7 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, i);
         }
         initToken("comment", i);
+        attribReset();
         token.language = "css";
         token.kind = str[i] === "/" && str[i + 1] === "/" ? "line" : "block";
         token.value = str.slice(i, i + 2);
@@ -12559,6 +12565,10 @@ function tokenizer(str, originalOpts) {
       startsEsp(str, i, token, layers, withinStyle) && (
       !lastLayerIs("simple") || ![`'`, `"`].includes(layers[~-layers.length].value) ||
       attrib && attrib.attribStarts && !attrib.attribEnds))) {
+        if (attrib && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+          attrib.attribValue[~-attrib.attribValue.length].end = i;
+          attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+        }
         const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
           let lengthOfClosingEspChunk;
@@ -12582,8 +12592,17 @@ function tokenizer(str, originalOpts) {
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
                   parentTokenToBackup.attribs = [];
                 }
-                if (attribToBackup) {
+                if (property && property.start) {
+                  if (!Array.isArray(property.value)) {
+                    property.value = [];
+                  }
+                  property.value.push({ ...token
+                  });
+                } else if (attribToBackup) {
                   attrib = attribToBackup;
+                  attrib.attribValue.push({ ...token
+                  });
+                } else if (attrib && attrib.attribStarts && Array.isArray(attrib.attribValue)) {
                   attrib.attribValue.push({ ...token
                   });
                 } else {
@@ -12658,14 +12677,51 @@ function tokenizer(str, originalOpts) {
             });
             if (token.start !== null) {
               if (token.type === "tag") {
-                if (token.tagNameStartsAt && (!token.tagName || !token.tagNameEndsAt)) {
-                  token.tagNameEndsAt = i;
-                  token.tagName = str.slice(token.tagNameStartsAt, i);
-                  token.recognised = isTagNameRecognised(token.tagName);
+                if (attrib && attrib.attribName === "style") {
+                  if (property.start && !property.end && property.propertyEnds && !property.valueStarts) {
+                    property.valueStarts = i;
+                  } else if (property.start) {
+                    if (!Array.isArray(property.value)) {
+                      if (property.propertyStarts && !property.propertyEnds) {
+                        property.propertyEnds = leftVal + 1;
+                        property.property = str.slice(property.propertyStarts, i);
+                      } else if (property.valueStarts && !property.valueEnds) {
+                        property.valueEnds = leftVal + 1;
+                        property.value = str.slice(property.valueStarts, property.valueEnds);
+                      }
+                      if (property.start && !property.end) {
+                        property.end = leftVal + 1;
+                      }
+                      if (attrib && Array.isArray(attrib.attribValue)) {
+                        attrib.attribValue.push(lodash_clonedeep(property));
+                        if (property.end !== i) {
+                          const newTextToken = getNewToken("text", leftVal + 1);
+                          newTextToken.end = i;
+                          newTextToken.value = str.slice(leftVal + 1, i);
+                          attrib.attribValue.push(lodash_clonedeep(newTextToken));
+                        }
+                        propertyReset();
+                      }
+                    }
+                  }
+                } else {
+                  if (token.tagNameStartsAt && (!token.tagName || !token.tagNameEndsAt)) {
+                    token.tagNameEndsAt = i;
+                    token.tagName = str.slice(token.tagNameStartsAt, i);
+                    token.recognised = isTagNameRecognised(token.tagName);
+                  }
+                  if (attrib.attribStarts && !attrib.attribEnds) {
+                    attribToBackup = lodash_clonedeep(attrib);
+                  }
                 }
                 parentTokenToBackup = lodash_clonedeep(token);
-                if (attrib.attribStarts && !attrib.attribEnds) {
-                  attribToBackup = lodash_clonedeep(attrib);
+              } else if (token.type === "text") {
+                token.end = i;
+                token.value = str.slice(token.start, i);
+                if (Array.isArray(property.value)) {
+                  property.value.push(token);
+                } else {
+                  dumpCurrentToken(token, i);
                 }
               } else if (!attribToBackup) {
                 dumpCurrentToken(token, i);
@@ -12701,10 +12757,12 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, i);
         }
         initToken(str[i] === "@" ? "at" : "rule", i);
+        attribReset();
         token.left = lastNonWhitespaceCharAt;
         token.nested = layers.some(o => o.type === "at");
       } else if (!token.type) {
         initToken("text", i);
+        attribReset();
         if (withinScript && str.indexOf("</script>", i)) {
           doNothing = str.indexOf("</script>", i);
         } else {
@@ -12714,10 +12772,9 @@ function tokenizer(str, originalOpts) {
     }
     let R1;
     let R2;
-    if (!doNothing && (property.start || str[i] === "!")) {
+    if (!doNothing && str[i] && (property.start || str[i] === "!") && (!layers.length || layers[~-layers.length].type !== "esp") && (token.type !== "text" || Array.isArray(property.value))) {
       const idxRightIncl = right(str, i - 1);
       R1 = `;<>`.includes(str[idxRightIncl]) ||
-      str[idxRightIncl] === `{` && str[i - 1] !== `{` || str[idxRightIncl] === `}` && str[i - 1] !== `}` ||
       `'"`.includes(str[idxRightIncl]) && (
       !layers ||
       !layers.length ||
@@ -12737,7 +12794,7 @@ function tokenizer(str, originalOpts) {
     !str[i] ||
     !str[i].trim() ||
     !property.valueEnds && str[i] === ";" ||
-    attrEndsAt(i)))) {
+    attrEndsAt(i, Array.isArray(property.value) && property.value[~-property.value.length].type === "esp")))) {
       /* istanbul ignore else */
       if (property.importantStarts && !property.importantEnds) {
         property.importantEnds = left(str, i) + 1;
@@ -12745,8 +12802,10 @@ function tokenizer(str, originalOpts) {
       }
       /* istanbul ignore else */
       if (property.valueStarts && !property.valueEnds) {
-        property.valueEnds = i;
-        property.value = str.slice(property.valueStarts, i);
+        property.valueEnds = left(str, i) + 1;
+        if (!Array.isArray(property.value)) {
+          property.value = str.slice(property.valueStarts, property.valueEnds);
+        }
       }
       /* istanbul ignore else */
       if (str[i] === ";") {
@@ -12757,18 +12816,39 @@ function tokenizer(str, originalOpts) {
         property.end = property.semi + 1;
         doNothing = property.end;
       }
+      /* istanbul ignore else */
       if (!property.end) {
-        property.end = i;
+        property.end = left(str, i) + 1;
+      }
+      /* istanbul ignore else */
+      if (token.type === "text" && token.start && !token.end) {
+        token.end = i;
+        token.value = str.slice(token.start, i);
+        if (Array.isArray(property.value)) {
+          property.value.push(token);
+        }
+        if (parentTokenToBackup) {
+          token = lodash_clonedeep(parentTokenToBackup);
+        }
+      }
+      let newTextToken;
+      if (property.valueEnds !== i && !property.important && !str[i - 1].trim()) {
+        newTextToken = getNewToken("text", property.valueEnds);
+        newTextToken.end = i;
+        newTextToken.value = str.slice(property.valueEnds, i);
       }
       pushProperty(property);
       propertyReset();
+      if (newTextToken) {
+        pushProperty(newTextToken);
+      }
       if (!doNothing && (!str[i] || str[i].trim()) && str[i] === ";") {
         doNothing = i;
       }
     }
     /* istanbul ignore else */
     if (!doNothing &&
-    property && property.valueStarts && !property.valueEnds) {
+    property && property.start && property.valueStarts && !property.valueEnds) {
       if (
       !str[i] ||
       R1 ||
@@ -12782,7 +12862,17 @@ function tokenizer(str, originalOpts) {
         !rightVal ||
         !`'";`.includes(str[rightVal]))) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
-          property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+          if (token.type === "text") {
+            token.end = i;
+            token.value = str.slice(token.start, i);
+            if (Array.isArray(property.value)) {
+              property.value.push(token);
+            }
+            token = lodash_clonedeep(parentTokenToBackup);
+          }
+          if (!Array.isArray(property.value)) {
+            property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+          }
         }
         if (str[i] === ";") {
           property.semi = i;
@@ -12880,7 +12970,8 @@ function tokenizer(str, originalOpts) {
       }
     }
     /* istanbul ignore else */
-    if (!doNothing && property && property.colon && !property.valueStarts && str[i] && str[i].trim()) {
+    if (!doNothing && property && property.colon && !property.valueStarts && (
+    !layers.length || layers[~-layers.length].type !== "esp") && str[i] && str[i].trim()) {
       /* istanbul ignore else */
       if (
       `;}'"`.includes(str[i]) &&
@@ -13020,7 +13111,7 @@ function tokenizer(str, originalOpts) {
       }
       doNothing = i;
     }
-    if (!doNothing &&
+    if (!doNothing && (!token || token.type !== "esp") &&
     attrib && attrib.attribName === "style" &&
     attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt &&
     !property.start &&
@@ -13254,6 +13345,7 @@ function tokenizer(str, originalOpts) {
     attrib &&
     attrib.attribValueStartsAt && !attrib.attribValueEndsAt &&
     !property.propertyStarts &&
+    token.type !== "esp" &&
     i >= attrib.attribValueStartsAt &&
     Array.isArray(attrib.attribValue) && (!attrib.attribValue.length ||
     attrib.attribValue[~-attrib.attribValue.length].end &&
@@ -13421,6 +13513,11 @@ function tokenizer(str, originalOpts) {
           end: null,
           value: null
         });
+      } else if (property && !property.importantStarts &&
+      Array.isArray(property.value) && str[i] && (
+      str[i].trim() || !R2)) {
+        parentTokenToBackup = lodash_clonedeep(token);
+        initToken("text", i);
       }
     } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && attribToBackup.attribValueStartsAt && `'"`.includes(str[i]) && str[attribToBackup.attribOpeningQuoteAt] === str[i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, i)) {
       token.end = i;
@@ -13437,6 +13534,7 @@ function tokenizer(str, originalOpts) {
       token.attribs.push(attribToBackup);
       attribToBackup = undefined;
       parentTokenToBackup = undefined;
+      attribReset();
       layers.pop();
       layers.pop();
       layers.pop();
@@ -13561,7 +13659,22 @@ function tokenizer(str, originalOpts) {
     if (!str[i] && token.start !== null) {
       token.end = i;
       token.value = str.slice(token.start, token.end);
-      if (attrib && attrib.attribName) {
+      if (token.type !== "tag") {
+        if (token.type === "esp" && parentTokenToBackup) {
+          if (attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && Array.isArray(attrib.attribValue[~-attrib.attribValue.length].value)) {
+            attrib.attribValue[~-attrib.attribValue.length].value.push(lodash_clonedeep(token));
+            if (!attrib.attribValueEndsAt) {
+              attrib.attribValueEndsAt = token.end;
+            }
+          }
+          token = lodash_clonedeep(parentTokenToBackup);
+          attribToBackup = undefined;
+          parentTokenToBackup = undefined;
+          token.attribs.push(lodash_clonedeep(attrib));
+          attribReset();
+        }
+        attribReset();
+      } else if (attrib && attrib.attribName) {
         if (!attrib.attribEnds) {
           attrib.attribEnds = i;
         }
@@ -20625,12 +20738,16 @@ function tagMalformed(context) {
             // check the closing bracket
             if (context.str[node.end - 1] !== ">") {
                 const startPos = left(context.str, node.end) + 1;
+                let extras = "";
+                if (node.void) {
+                    extras = " /";
+                }
                 context.report({
                     ruleId: "tag-malformed",
                     message: "Add a closing bracket.",
                     idxFrom: node.start,
                     idxTo: node.end,
-                    fix: { ranges: [[startPos, startPos, ">"]] },
+                    fix: { ranges: [[startPos, startPos, `${extras}>`]] },
                 });
             }
         },
@@ -21213,7 +21330,7 @@ const attributeDuplicate = (context) => {
                     else if (!attributesWhichCanBeMerged.has(node.attribs[i].attribName) ||
                         (Array.isArray(node.attribs[i].attribValue) &&
                             node.attribs[i].attribValue.length &&
-                            node.attribs[i].attribValue.some((obj) => obj.value &&
+                            node.attribs[i].attribValue.some((obj) => typeof obj.value === "string" &&
                                 (obj.value.includes(`'`) || obj.value.includes(`"`))))) {
                         context.report({
                             ruleId: "attribute-duplicate",
@@ -41982,14 +42099,23 @@ function processCSS(token, context) {
                         // two tokens in front it's a property
                         nodeArr[i - 2] &&
                         nodeArr[i - 2].property !== undefined)) &&
-                // and it's text in front
+                // and it's text before it
                 nodeArr[i - 1].type === "text" &&
-                nodeArr[i - 1].value !== " ") {
+                nodeArr[i - 1].value !== " " &&
+                // if we're dealing with ESP tokens, allow line breaks
+                (nodeArr[i].type !== "esp" ||
+                    (!nodeArr[i - 1].value.includes("\n") &&
+                        !nodeArr[i - 1].value.includes("\r"))) &&
+                // there can be text token in front, then ESP before it
+                // so check two nodes behind
+                !(nodeArr[i - 2].type === "esp" &&
+                    (nodeArr[i - 1].value.includes("\n") ||
+                        nodeArr[i - 1].value.includes("\r")))) {
                 context.report({
                     ruleId: "format-prettier",
                     idxFrom: nodeArr[i - 1].start,
                     idxTo: nodeArr[i - 1].end,
-                    message: `Put a space in front of !imporant.`,
+                    message: `Should be a single space.`,
                     fix: {
                         ranges: [[nodeArr[i - 1].start, nodeArr[i - 1].end, " "]],
                     },

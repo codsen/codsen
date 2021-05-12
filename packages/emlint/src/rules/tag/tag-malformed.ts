@@ -32,12 +32,16 @@ function tagMalformed(context: Linter): RuleObjType {
           `032 ${`\u001b[${31}m${`closing bracket missing`}\u001b[${39}m`}`
         );
         const startPos = (left(context.str, node.end) as number) + 1;
+        let extras = "";
+        if (node.void) {
+          extras = " /";
+        }
         context.report({
           ruleId: "tag-malformed",
           message: "Add a closing bracket.",
           idxFrom: node.start,
           idxTo: node.end,
-          fix: { ranges: [[startPos, startPos, ">"]] },
+          fix: { ranges: [[startPos, startPos, `${extras}>`]] },
         });
       }
     },

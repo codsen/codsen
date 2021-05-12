@@ -3067,13 +3067,17 @@ function tagMalformed(context) {
       }
       if (context.str[node.end - 1] !== ">") {
         var startPos = stringLeftRight.left(context.str, node.end) + 1;
+        var extras = "";
+        if (node["void"]) {
+          extras = " /";
+        }
         context.report({
           ruleId: "tag-malformed",
           message: "Add a closing bracket.",
           idxFrom: node.start,
           idxTo: node.end,
           fix: {
-            ranges: [[startPos, startPos, ">"]]
+            ranges: [[startPos, startPos, "".concat(extras, ">")]]
           }
         });
       }
@@ -3366,7 +3370,7 @@ var attributeDuplicate = function attributeDuplicate(context) {
           if (!attrsGatheredSoFar.has(node.attribs[i].attribName)) {
             attrsGatheredSoFar.add(node.attribs[i].attribName);
           } else if (!attributesWhichCanBeMerged.has(node.attribs[i].attribName) || Array.isArray(node.attribs[i].attribValue) && node.attribs[i].attribValue.length && node.attribs[i].attribValue.some(function (obj) {
-            return obj.value && (obj.value.includes("'") || obj.value.includes("\""));
+            return typeof obj.value === "string" && (obj.value.includes("'") || obj.value.includes("\""));
           })) {
             context.report({
               ruleId: "attribute-duplicate",
@@ -9343,12 +9347,14 @@ function processCSS(token, context) {
       !nodeArr[i].closing ||
       nodeArr[i].type === "esp" &&
       nodeArr[i - 2] && nodeArr[i - 2].property !== undefined) &&
-      nodeArr[i - 1].type === "text" && nodeArr[i - 1].value !== " ") {
+      nodeArr[i - 1].type === "text" && nodeArr[i - 1].value !== " " && (
+      nodeArr[i].type !== "esp" || !nodeArr[i - 1].value.includes("\n") && !nodeArr[i - 1].value.includes("\r")) &&
+      !(nodeArr[i - 2].type === "esp" && (nodeArr[i - 1].value.includes("\n") || nodeArr[i - 1].value.includes("\r")))) {
         context.report({
           ruleId: "format-prettier",
           idxFrom: nodeArr[i - 1].start,
           idxTo: nodeArr[i - 1].end,
-          message: "Put a space in front of !imporant.",
+          message: "Should be a single space.",
           fix: {
             ranges: [[nodeArr[i - 1].start, nodeArr[i - 1].end, " "]]
           }
