@@ -36,6 +36,7 @@ const cli = meow(
     $ upd YOURFILE.json
 
   Options:
+    -m, --module        Blaclist against bumping major any type=module packages
     -h, --help          Shows this help
     -v, --version       Shows the current installed version
 `
@@ -157,9 +158,10 @@ if (cli.flags) {
         let finalContents = pathsPromise.contentsStr[oneOfPaths];
         const parsedContents = pathsPromise.contentsObj[oneOfPaths];
 
-        const totalDeps = (isObj(parsedContents.dependencies)
-          ? Object.keys(parsedContents.dependencies)
-          : []
+        const totalDeps = (
+          isObj(parsedContents.dependencies)
+            ? Object.keys(parsedContents.dependencies)
+            : []
         ).concat(
           isObj(parsedContents.devDependencies)
             ? Object.keys(parsedContents.devDependencies)
@@ -212,7 +214,10 @@ if (cli.flags) {
                   } else {
                     compiledDepNameVersionPairs[singleDepName] = pkg.version;
 
-                    if (pkg.type === "module") {
+                    if (
+                      (cli.flags.m || cli.flags.module) &&
+                      pkg.type === "module"
+                    ) {
                       newConfig.noMajorBumping.add(pkg.name);
                     }
                   }
@@ -457,7 +462,10 @@ if (cli.flags) {
   ) {
     newConfig.noMajorBumping = [...newConfig.noMajorBumping].sort();
     try {
-      await write(confLocation, JSON.stringify(newConfig, null, 2));
+      await write(
+        confLocation,
+        `${JSON.stringify(newConfig, null, 2).trim()}\n`
+      );
     } catch (e) {
       console.error(
         `${messagePrefix}error happened when writing upd.config.json:\n${e}`
