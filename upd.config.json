@@ -1,9 +1,14 @@
 {
   "noMajorBumping": [
+    "ansi-regex",
     "colorette",
     "define-lazy-prop",
+    "log-symbols",
+    "meow",
+    "p-map",
     "p-reduce",
     "rollup-plugin-dts",
+    "sort-keys",
     "tap"
   ]
 }
