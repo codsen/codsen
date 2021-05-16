@@ -20,7 +20,8 @@ import entEndsWithJson from "./endsWith.json";
 const entEndsWith: JsonObject = entEndsWithJson;
 
 import entStartsWithCaseInsensitiveJson from "./startsWithCaseInsensitive.json";
-const entStartsWithCaseInsensitive: JsonObject = entStartsWithCaseInsensitiveJson;
+const entStartsWithCaseInsensitive: JsonObject =
+  entStartsWithCaseInsensitiveJson;
 
 import entEndsWithCaseInsensitiveJson from "./endsWithCaseInsensitive.json";
 const entEndsWithCaseInsensitive: JsonObject = entEndsWithCaseInsensitiveJson;
