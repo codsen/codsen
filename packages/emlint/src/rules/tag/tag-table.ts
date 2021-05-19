@@ -135,28 +135,34 @@ function tagTable(context: Linter): RuleObjType {
                       )}`
                     );
                     if (
-                      ((node.children[i] as TagTokenWithChildren).children[
-                        y
-                      ] as TagTokenWithChildren).type === "tag" &&
-                      ((node.children[i] as TagTokenWithChildren).children[
-                        y
-                      ] as TagTokenWithChildren).tagName === "td"
+                      (
+                        (node.children[i] as TagTokenWithChildren).children[
+                          y
+                        ] as TagTokenWithChildren
+                      ).type === "tag" &&
+                      (
+                        (node.children[i] as TagTokenWithChildren).children[
+                          y
+                        ] as TagTokenWithChildren
+                      ).tagName === "td"
                     ) {
-                      console.log(`145 ${`\u001b[${35}m${`TD`}\u001b[${39}m`}`);
+                      console.log(`149 ${`\u001b[${35}m${`TD`}\u001b[${39}m`}`);
                       if (!tdFound) {
                         tdFound = true;
                       }
 
                       if (
-                        ((node.children[i] as TagTokenWithChildren).children[
-                          y
-                        ] as TagTokenWithChildren).closing
+                        (
+                          (node.children[i] as TagTokenWithChildren).children[
+                            y
+                          ] as TagTokenWithChildren
+                        ).closing
                       ) {
-                        console.log(`155 a closing TD`);
+                        console.log(`161 a closing TD`);
                         if (!closingTdMet) {
                           closingTdMet = true;
                           console.log(
-                            `159 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`closingTdMet`}\u001b[${39}m`} = ${JSON.stringify(
+                            `165 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`closingTdMet`}\u001b[${39}m`} = ${JSON.stringify(
                               closingTdMet,
                               null,
                               4
@@ -164,17 +170,17 @@ function tagTable(context: Linter): RuleObjType {
                           );
                         } else {
                           console.log(
-                            `167 ${`\u001b[${31}m${`BAIL - closing TD without an opening - EXIT`}\u001b[${39}m`}`
+                            `173 ${`\u001b[${31}m${`BAIL - closing TD without an opening - EXIT`}\u001b[${39}m`}`
                           );
                           return;
                         }
                       } else {
-                        console.log(`172 an opening TD`);
+                        console.log(`178 an opening TD`);
 
                         if (closingTdMet) {
                           closingTdMet = false;
                           console.log(
-                            `177 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`closingTdMet`}\u001b[${39}m`} = ${JSON.stringify(
+                            `183 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`closingTdMet`}\u001b[${39}m`} = ${JSON.stringify(
                               closingTdMet,
                               null,
                               4
@@ -182,33 +188,33 @@ function tagTable(context: Linter): RuleObjType {
                           );
                         } else {
                           console.log(
-                            `185 ${`\u001b[${31}m${`BAIL - an opening TD without an closing - EXIT`}\u001b[${39}m`}`
+                            `191 ${`\u001b[${31}m${`BAIL - an opening TD without an closing - EXIT`}\u001b[${39}m`}`
                           );
                           return;
                         }
 
-                        console.log(`190 push`);
+                        console.log(`196 push`);
                         finding.tds.push(y);
                       }
                     }
                   }
                   console.log(
-                    `196 ${`\u001b[${34}m${`-`.repeat(80)}\u001b[${39}m`} fin.`
+                    `202 ${`\u001b[${34}m${`-`.repeat(80)}\u001b[${39}m`} fin.`
                   );
 
                   if (!closingTdMet) {
                     console.log(
-                      `201 ${`\u001b[${31}m${`BAIL - missing closing TD - EXIT`}\u001b[${39}m`}`
+                      `207 ${`\u001b[${31}m${`BAIL - missing closing TD - EXIT`}\u001b[${39}m`}`
                     );
                     return;
                   }
                 }
-                console.log(`206 push`);
+                console.log(`212 push`);
                 extracted.push(finding);
               }
 
               console.log(
-                `211 ${`\u001b[${36}m${`${node.children[i].value} - [${node.children[i].start}, ${node.children[i].end}]`}\u001b[${39}m`} - ending closingTrMet: ${closingTrMet}`
+                `217 ${`\u001b[${36}m${`${node.children[i].value} - [${node.children[i].start}, ${node.children[i].end}]`}\u001b[${39}m`} - ending closingTrMet: ${closingTrMet}`
               );
             } else if (
               // if <table> child is a text token
@@ -217,7 +223,7 @@ function tagTable(context: Linter): RuleObjType {
               node.children[i].value.trim()
             ) {
               console.log(
-                `220 ${`\u001b[${31}m${`rogue intra-tag characters!`}\u001b[${39}m`}`
+                `226 ${`\u001b[${31}m${`rogue intra-tag characters!`}\u001b[${39}m`}`
               );
               context.report({
                 ruleId: "tag-table",
@@ -231,11 +237,11 @@ function tagTable(context: Linter): RuleObjType {
             }
           }
           console.log(
-            `234 ${`\u001b[${36}m${`=`.repeat(80)}\u001b[${39}m`} fin.`
+            `240 ${`\u001b[${36}m${`=`.repeat(80)}\u001b[${39}m`} fin.`
           );
 
           if (!trFound) {
-            console.log(`238 ${`\u001b[${32}m${`tr missing`}\u001b[${39}m`}`);
+            console.log(`244 ${`\u001b[${32}m${`tr missing`}\u001b[${39}m`}`);
             context.report({
               ruleId: "tag-table",
               message: `Missing children <tr> tags.`,
@@ -244,7 +250,7 @@ function tagTable(context: Linter): RuleObjType {
               fix: null,
             });
           } else if (!tdFound) {
-            console.log(`247 ${`\u001b[${32}m${`td missing`}\u001b[${39}m`}`);
+            console.log(`253 ${`\u001b[${32}m${`td missing`}\u001b[${39}m`}`);
             context.report({
               ruleId: "tag-table",
               message: `Missing children <td> tags.`,
@@ -259,12 +265,12 @@ function tagTable(context: Linter): RuleObjType {
           // so the ending closingTrMet will be false, not true
           if (!closingTrMet) {
             console.log(
-              `262 ${`\u001b[${31}m${`BAIL - missing closing TR - EXIT`}\u001b[${39}m`}`
+              `268 ${`\u001b[${31}m${`BAIL - missing closing TR - EXIT`}\u001b[${39}m`}`
             );
             return;
           }
           console.log(
-            `267 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`extracted`}\u001b[${39}m`} = ${JSON.stringify(
+            `273 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`extracted`}\u001b[${39}m`} = ${JSON.stringify(
               extracted,
               null,
               4
@@ -272,7 +278,7 @@ function tagTable(context: Linter): RuleObjType {
           );
 
           if (extracted.length) {
-            console.log(`275`);
+            console.log(`281`);
             let bail = false;
             const spans = extracted.map((findingObj) =>
               findingObj.tds.reduce((acc, curr) => {
@@ -283,9 +289,11 @@ function tagTable(context: Linter): RuleObjType {
                     .attribs &&
                   (node.children[findingObj.idx] as any).children[curr].attribs
                     .length &&
-                  ((node.children[findingObj.idx] as any).children[
-                    curr
-                  ] as TagTokenWithChildren).attribs.some(
+                  (
+                    (node.children[findingObj.idx] as any).children[
+                      curr
+                    ] as TagTokenWithChildren
+                  ).attribs.some(
                     (attrib) =>
                       attrib.attribName === "colspan" &&
                       attrib.attribValue &&
@@ -299,7 +307,7 @@ function tagTable(context: Linter): RuleObjType {
                           }
                           bail = true;
                           console.log(
-                            `302 SET ${`\u001b[${31}m${`bail`}\u001b[${39}m`} = ${bail}`
+                            `310 SET ${`\u001b[${31}m${`bail`}\u001b[${39}m`} = ${bail}`
                           );
                         }
                         return false;
@@ -313,12 +321,12 @@ function tagTable(context: Linter): RuleObjType {
             );
             if (bail) {
               console.log(
-                `316 ${`\u001b[${31}m${`code is broken, bail early`}\u001b[${39}m`}`
+                `324 ${`\u001b[${31}m${`code is broken, bail early`}\u001b[${39}m`}`
               );
               return;
             }
             console.log(
-              `321 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`spans`}\u001b[${39}m`} = ${JSON.stringify(
+              `329 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`spans`}\u001b[${39}m`} = ${JSON.stringify(
                 spans,
                 null,
                 4
@@ -335,7 +343,7 @@ function tagTable(context: Linter): RuleObjType {
 
             const tdCounts = extracted.map((e) => e.tds.length);
             console.log(
-              `338 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`tdCounts`}\u001b[${39}m`} = ${JSON.stringify(
+              `346 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`tdCounts`}\u001b[${39}m`} = ${JSON.stringify(
                 tdCounts,
                 null,
                 4
@@ -348,12 +356,12 @@ function tagTable(context: Linter): RuleObjType {
             // finding out what's wrong
             if (uniqueSpans.size && uniqueSpans.size !== 1) {
               console.log(
-                `351 ${`\u001b[${31}m${`COLSPAN ISSUE!`}\u001b[${39}m`}`
+                `359 ${`\u001b[${31}m${`COLSPAN ISSUE!`}\u001b[${39}m`}`
               );
 
               const tdMaxCountPerRow = Math.max(...tdCounts);
               console.log(
-                `356 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`tdMaxCountPerRow`}\u001b[${39}m`} = ${tdMaxCountPerRow}`
+                `364 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`tdMaxCountPerRow`}\u001b[${39}m`} = ${tdMaxCountPerRow}`
               );
 
               // 1. rows where there's lesser amount of TD's and possibly colspan is missing/wrong
@@ -362,10 +370,10 @@ function tagTable(context: Linter): RuleObjType {
                 .filter((e) => e.tds.length !== tdMaxCountPerRow)
                 .forEach((e) => {
                   console.log(
-                    `365 ${`\u001b[${90}m${`~`.repeat(80)}\u001b[${39}m`}`
+                    `373 ${`\u001b[${90}m${`~`.repeat(80)}\u001b[${39}m`}`
                   );
                   console.log(
-                    `368 ${`\u001b[${33}m${`e`}\u001b[${39}m`} = ${JSON.stringify(
+                    `376 ${`\u001b[${33}m${`e`}\u001b[${39}m`} = ${JSON.stringify(
                       e,
                       null,
                       4
@@ -373,16 +381,16 @@ function tagTable(context: Linter): RuleObjType {
                   );
 
                   console.log(
-                    `376 FIY, ${`\u001b[${33}m${`e.tds.length`}\u001b[${39}m`} = ${
+                    `384 FIY, ${`\u001b[${33}m${`e.tds.length`}\u001b[${39}m`} = ${
                       e.tds.length
                     }; ${`\u001b[${33}m${`spans[e.orderNumber=${e.orderNumber}]`}\u001b[${39}m`} = ${
                       spans[e.orderNumber]
                     }`
                   );
                   if (e.tds.length === 1) {
-                    console.log(`383 one TD only`);
+                    console.log(`391 one TD only`);
                     if (e.tds.length === spans[e.orderNumber]) {
-                      console.log(`385 missing colspan`);
+                      console.log(`393 missing colspan`);
                       // position to insert the attribute is to the left of tag token's end,
                       // provided it ends with bracket!
                       const pos =
@@ -403,7 +411,7 @@ function tagTable(context: Linter): RuleObjType {
                         },
                       });
                     } else {
-                      console.log(`406 problematic colspan`);
+                      console.log(`414 problematic colspan`);
                       const attribsOfCulpridTd = (node.children[e.idx] as any)
                         .children[e.tds[0]].attribs;
                       for (
@@ -412,14 +420,14 @@ function tagTable(context: Linter): RuleObjType {
                         z++
                       ) {
                         console.log(
-                          `415 ${`\u001b[${36}m${`processing ${attribsOfCulpridTd[z].attribName}`}\u001b[${39}m`}`
+                          `423 ${`\u001b[${36}m${`processing ${attribsOfCulpridTd[z].attribName}`}\u001b[${39}m`}`
                         );
                         if (attribsOfCulpridTd[z].attribName === "colspan") {
                           console.log(
-                            `419 ${`\u001b[${32}m${`replace the colspan value`}\u001b[${39}m`}`
+                            `427 ${`\u001b[${32}m${`replace the colspan value`}\u001b[${39}m`}`
                           );
                           console.log(
-                            `422 ${`\u001b[${33}m${`attribsOfCulpridTd[z]`}\u001b[${39}m`} = ${JSON.stringify(
+                            `430 ${`\u001b[${33}m${`attribsOfCulpridTd[z]`}\u001b[${39}m`} = ${JSON.stringify(
                               attribsOfCulpridTd[z],
                               null,
                               4
@@ -441,14 +449,14 @@ function tagTable(context: Linter): RuleObjType {
                             },
                           });
                           console.log(
-                            `444 ${`\u001b[${36}m${`BREAK`}\u001b[${39}m`}`
+                            `452 ${`\u001b[${36}m${`BREAK`}\u001b[${39}m`}`
                           );
                           break;
                         }
                       }
                     }
                   } else {
-                    console.log(`451 default fallback - complain on the TR`);
+                    console.log(`459 default fallback - complain on the TR`);
                     context.report({
                       ruleId: "tag-table",
                       message: `Should contain ${tdMaxCountPerRow} td's.`,
@@ -481,7 +489,7 @@ function tagTable(context: Linter): RuleObjType {
                   spans[idx] > tdCount
                 ) {
                   console.log(
-                    `484 ${`\u001b[${31}m${`remove colspan`}\u001b[${39}m`}`
+                    `492 ${`\u001b[${31}m${`remove colspan`}\u001b[${39}m`}`
                   );
                   extracted[idx].tds.forEach((tdIdx) => {
                     // tdIdx
@@ -505,7 +513,7 @@ function tagTable(context: Linter): RuleObjType {
                           )}`
                         );
                         console.log(
-                          `508 ${`\u001b[${32}m${`remove the colspan`}\u001b[${39}m`}`
+                          `516 ${`\u001b[${32}m${`remove the colspan`}\u001b[${39}m`}`
                         );
                         context.report({
                           ruleId: "tag-table",
@@ -526,7 +534,7 @@ function tagTable(context: Linter): RuleObjType {
           }
         } else {
           console.log(
-            `529 ${`\u001b[${32}m${`no children tokens, tr missing`}\u001b[${39}m`}`
+            `537 ${`\u001b[${32}m${`no children tokens, tr missing`}\u001b[${39}m`}`
           );
           context.report({
             ruleId: "tag-table",
@@ -544,7 +552,7 @@ function tagTable(context: Linter): RuleObjType {
         node.children.some((n) => n.type === "text" && n.value.trim())
       ) {
         console.log(
-          `547 ${`\u001b[${31}m${`rogue intra-tag characters!`}\u001b[${39}m`}`
+          `555 ${`\u001b[${31}m${`rogue intra-tag characters!`}\u001b[${39}m`}`
         );
         node.children
           .filter((n) => n.type === "text" && n.value.trim())
@@ -560,9 +568,9 @@ function tagTable(context: Linter): RuleObjType {
             });
           });
       } else if (node.tagName === "td" && !node.closing) {
-        console.log(`563 td`);
+        console.log(`571 td`);
         console.log(
-          `565 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+          `573 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
             node,
             null,
             4

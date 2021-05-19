@@ -13,6 +13,25 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.emlint = {}));
 }(this, (function (exports) { 'use strict';
 
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function getAugmentedNamespace(n) {
+	if (n.__esModule) return n;
+	var a = Object.defineProperty({}, '__esModule', {value: true});
+	Object.keys(n).forEach(function (k) {
+		var d = Object.getOwnPropertyDescriptor(n, k);
+		Object.defineProperty(a, k, d.get ? d : {
+			enumerable: true,
+			get: function () {
+				return n[k];
+			}
+		});
+	});
+	return a;
+}
+
+var lib = {};
+
 var domain;
 
 // This constructor is used to store event handlers. Instantiating this is
@@ -485,31 +504,12 @@ __proto__: null,
 EventEmitter: EventEmitter
 });
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function getAugmentedNamespace(n) {
-	if (n.__esModule) return n;
-	var a = Object.defineProperty({}, '__esModule', {value: true});
-	Object.keys(n).forEach(function (k) {
-		var d = Object.getOwnPropertyDescriptor(n, k);
-		Object.defineProperty(a, k, d.get ? d : {
-			enumerable: true,
-			get: function () {
-				return n[k];
-			}
-		});
-	});
-	return a;
-}
-
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
-
 var require$$0$1 = /*@__PURE__*/getAugmentedNamespace(events);
 
-var TypedEmitter = require$$0$1.EventEmitter;
+Object.defineProperty(lib, "__esModule", { value: true });
+var TypedEmitter = lib.TypedEmitter = require$$0$1.EventEmitter;
+
+var leven$2 = {exports: {}};
 
 const array = [];
 const charCodeCache = [];
@@ -584,10 +584,11 @@ const leven = (left, right) => {
 	return result;
 };
 
-var leven_1 = leven;
+leven$2.exports = leven;
 // TODO: Remove this for the next major release
-var _default = leven;
-leven_1.default = _default;
+leven$2.exports.default = leven;
+
+var leven$1 = leven$2.exports;
 
 /**
  * @name all-named-html-entities
@@ -7933,6 +7934,7 @@ const maxLength = 31;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -8064,6 +8066,8 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
+var lodash_clonedeep = {exports: {}};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -8073,7 +8077,7 @@ var lodash_isplainobject = isPlainObject;
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -9813,7 +9817,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * @name string-left-right
@@ -10459,10 +10465,10 @@ function fixEnt(str, originalOpts) {
                 pingAmps(whatsOnTheLeft, i);
               } else if (
               potentialEntity.length < maxLength + 2 && (
-              (temp = [...allNamedEntitiesSetOnly].filter(curr => leven_1(curr, potentialEntity) === 1)) && temp.length ||
+              (temp = [...allNamedEntitiesSetOnly].filter(curr => leven$1(curr, potentialEntity) === 1)) && temp.length ||
               (temp = [...allNamedEntitiesSetOnly].filter(curr =>
               /* istanbul ignore next */
-              leven_1(curr, potentialEntity) === 2 && potentialEntity.length > 3)) && temp.length)) {
+              leven$1(curr, potentialEntity) === 2 && potentialEntity.length > 3)) && temp.length)) {
                 /* istanbul ignore else */
                 if (temp.length === 1) {
                   [tempEnt] = temp;
@@ -10703,7 +10709,7 @@ function traverse(tree1, cb1) {
     now: false
   };
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-    const tree = lodash_clonedeep(treeOriginal);
+    const tree = clone(treeOriginal);
     let res;
     const innerObj = {
       depth: -1,
@@ -10718,7 +10724,7 @@ function traverse(tree1, cb1) {
         }
         const path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         if (tree[i] !== undefined) {
-          innerObj.parent = lodash_clonedeep(tree);
+          innerObj.parent = clone(tree);
           innerObj.parentType = "array";
           innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, { ...innerObj,
@@ -10745,7 +10751,7 @@ function traverse(tree1, cb1) {
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-        innerObj.parent = lodash_clonedeep(tree);
+        innerObj.parent = clone(tree);
         innerObj.parentType = "object";
         innerObj.parentKey = parent(path);
         res = traverseInner(callback(key, tree[key], { ...innerObj,
@@ -11977,7 +11983,7 @@ function tokenizer(str, originalOpts) {
   let attrib = { ...attribDefaults
   };
   function attribReset() {
-    attrib = lodash_clonedeep(attribDefaults);
+    attrib = clone(attribDefaults);
   }
   function attribPush(tokenObj) {
     /* istanbul ignore else */
@@ -12047,7 +12053,7 @@ function tokenizer(str, originalOpts) {
     const next = [];
     for (let i = 0; i < lookaheadLength; i++) {
       if (stash[i]) {
-        next.push(lodash_clonedeep(stash[i]));
+        next.push(clone(stash[i]));
       } else {
         break;
       }
@@ -12299,7 +12305,7 @@ function tokenizer(str, originalOpts) {
           }
           dumpCurrentToken(token, i);
           const poppedToken = layers.pop();
-          token = lodash_clonedeep(poppedToken.token);
+          token = clone(poppedToken.token);
           token.closingCurlyAt = i;
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
@@ -12328,7 +12334,7 @@ function tokenizer(str, originalOpts) {
       if (attribToBackup) {
         attrib = attribToBackup;
         attrib.attribValue.push(token);
-        token = lodash_clonedeep(parentTokenToBackup);
+        token = clone(parentTokenToBackup);
         attribToBackup = undefined;
         parentTokenToBackup = undefined;
       } else {
@@ -12609,7 +12615,7 @@ function tokenizer(str, originalOpts) {
                   parentTokenToBackup.attribs.push({ ...token
                   });
                 }
-                token = lodash_clonedeep(parentTokenToBackup);
+                token = clone(parentTokenToBackup);
                 parentTokenToBackup = undefined;
                 attribToBackup = undefined;
                 layers.pop();
@@ -12693,12 +12699,12 @@ function tokenizer(str, originalOpts) {
                         property.end = leftVal + 1;
                       }
                       if (attrib && Array.isArray(attrib.attribValue)) {
-                        attrib.attribValue.push(lodash_clonedeep(property));
+                        attrib.attribValue.push(clone(property));
                         if (property.end !== i) {
                           const newTextToken = getNewToken("text", leftVal + 1);
                           newTextToken.end = i;
                           newTextToken.value = str.slice(leftVal + 1, i);
-                          attrib.attribValue.push(lodash_clonedeep(newTextToken));
+                          attrib.attribValue.push(clone(newTextToken));
                         }
                         propertyReset();
                       }
@@ -12711,10 +12717,10 @@ function tokenizer(str, originalOpts) {
                     token.recognised = isTagNameRecognised(token.tagName);
                   }
                   if (attrib.attribStarts && !attrib.attribEnds) {
-                    attribToBackup = lodash_clonedeep(attrib);
+                    attribToBackup = clone(attrib);
                   }
                 }
-                parentTokenToBackup = lodash_clonedeep(token);
+                parentTokenToBackup = clone(token);
               } else if (token.type === "text") {
                 token.end = i;
                 token.value = str.slice(token.start, i);
@@ -12828,7 +12834,7 @@ function tokenizer(str, originalOpts) {
           property.value.push(token);
         }
         if (parentTokenToBackup) {
-          token = lodash_clonedeep(parentTokenToBackup);
+          token = clone(parentTokenToBackup);
         }
       }
       let newTextToken;
@@ -12868,7 +12874,7 @@ function tokenizer(str, originalOpts) {
             if (Array.isArray(property.value)) {
               property.value.push(token);
             }
-            token = lodash_clonedeep(parentTokenToBackup);
+            token = clone(parentTokenToBackup);
           }
           if (!Array.isArray(property.value)) {
             property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
@@ -13303,7 +13309,7 @@ function tokenizer(str, originalOpts) {
       if (str[i] && !str[i].trim() && str[rightVal] === "=") ; else if (str[i] && !str[i].trim() || str[i] === ">" || str[i] === "/" && str[rightVal] === ">") {
         if (`'"`.includes(str[rightVal])) ; else {
           attrib.attribEnds = i;
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
         }
       }
@@ -13402,7 +13408,7 @@ function tokenizer(str, originalOpts) {
           }
           attrib.attribEnds = i + 1;
           if (property.propertyStarts) {
-            attrib.attribValue.push(lodash_clonedeep(property));
+            attrib.attribValue.push(clone(property));
             propertyReset();
           }
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
@@ -13423,7 +13429,7 @@ function tokenizer(str, originalOpts) {
           if (attrib.attribValue[~-attrib.attribValue.length] && !attrib.attribValue[~-attrib.attribValue.length].end) {
             attrib.attribValue[~-attrib.attribValue.length].end = i;
           }
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
         } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length ||
         attrib.attribValue[~-attrib.attribValue.length].type !== "text") && !property.propertyStarts) {
@@ -13442,7 +13448,7 @@ function tokenizer(str, originalOpts) {
           attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
         }
         attrib.attribEnds = i;
-        token.attribs.push(lodash_clonedeep(attrib));
+        token.attribs.push(clone(attrib));
         attribReset();
         layers.pop();
         if (str[i] === ">") {
@@ -13483,7 +13489,7 @@ function tokenizer(str, originalOpts) {
           if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
             layers.pop();
           }
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
           i = ~-attribClosingQuoteAt;
           continue;
@@ -13492,7 +13498,7 @@ function tokenizer(str, originalOpts) {
           attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
           attrib.attribValueStartsAt = null;
           layers.pop();
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
           continue;
         }
@@ -13516,7 +13522,7 @@ function tokenizer(str, originalOpts) {
       } else if (property && !property.importantStarts &&
       Array.isArray(property.value) && str[i] && (
       str[i].trim() || !R2)) {
-        parentTokenToBackup = lodash_clonedeep(token);
+        parentTokenToBackup = clone(token);
         initToken("text", i);
       }
     } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && attribToBackup.attribValueStartsAt && `'"`.includes(str[i]) && str[attribToBackup.attribOpeningQuoteAt] === str[i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, i)) {
@@ -13530,7 +13536,7 @@ function tokenizer(str, originalOpts) {
       attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, i);
       attribToBackup.attribClosingQuoteAt = i;
       attribToBackup.attribEnds = i + 1;
-      token = lodash_clonedeep(parentTokenToBackup);
+      token = clone(parentTokenToBackup);
       token.attribs.push(attribToBackup);
       attribToBackup = undefined;
       parentTokenToBackup = undefined;
@@ -13596,7 +13602,7 @@ function tokenizer(str, originalOpts) {
                 attrib.attribValueRaw = "";
               }
               attrib.attribEnds = i + 1;
-              token.attribs.push(lodash_clonedeep(attrib));
+              token.attribs.push(clone(attrib));
               attribReset();
             }
           }
@@ -13644,7 +13650,7 @@ function tokenizer(str, originalOpts) {
           attrib.attribEnds = i;
         }
         if (attrib) {
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
         }
       }
@@ -13662,15 +13668,15 @@ function tokenizer(str, originalOpts) {
       if (token.type !== "tag") {
         if (token.type === "esp" && parentTokenToBackup) {
           if (attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && Array.isArray(attrib.attribValue[~-attrib.attribValue.length].value)) {
-            attrib.attribValue[~-attrib.attribValue.length].value.push(lodash_clonedeep(token));
+            attrib.attribValue[~-attrib.attribValue.length].value.push(clone(token));
             if (!attrib.attribValueEndsAt) {
               attrib.attribValueEndsAt = token.end;
             }
           }
-          token = lodash_clonedeep(parentTokenToBackup);
+          token = clone(parentTokenToBackup);
           attribToBackup = undefined;
           parentTokenToBackup = undefined;
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
         }
         attribReset();
@@ -13717,7 +13723,9 @@ function tokenizer(str, originalOpts) {
   };
 }
 
-var objectPath = createCommonjsModule(function (module) {
+var objectPath = {exports: {}};
+
+(function (module) {
 (function (root, factory){
 
   /*istanbul ignore next:cant test*/
@@ -14013,7 +14021,9 @@ var objectPath = createCommonjsModule(function (module) {
   mod.withInheritedProps = factory({includeInheritedProps: true});
   return mod;
 });
-});
+}(objectPath));
+
+var op = objectPath.exports;
 
 /**
  * @name codsen-parser
@@ -14083,7 +14093,7 @@ function cparser(str, originalOpts) {
         opts.tagCb(tokenObj);
       }
       if (!tokenObj.nested) {
-        let prevToken = objectPath.get(res, path);
+        let prevToken = op.get(res, path);
         if (!isObj$1(prevToken)) {
           prevToken = null;
         }
@@ -14166,25 +14176,25 @@ function cparser(str, originalOpts) {
         const parentPath = pathUp(path);
         let parentTagsToken;
         if (parentPath && path.includes(".")) {
-          parentTagsToken = objectPath.get(res, parentPath);
+          parentTagsToken = op.get(res, parentPath);
         }
         let previousTagsToken;
         if (previousPath) {
-          previousTagsToken = objectPath.get(res, previousPath);
+          previousTagsToken = op.get(res, previousPath);
         }
         const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
         let parentsLastChildTokenValue;
         let parentsLastChildTokenPath;
         if (isObj$1(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
           parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
-          parentsLastChildTokenPath = `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`;
+          parentsLastChildTokenPath = `${previousPath}.children.${op.get(res, previousPath).children.length - 1}`;
         }
         let tokenTakenCareOf = false;
         if (tokenObj.type === "text" && isObj$1(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
           const suspiciousEndingStartsAt = (suspiciousCommentTagEndingRegExp.exec(tokenObj.value) || {}).index;
           const suspiciousEndingEndsAt = (suspiciousEndingStartsAt || 0) + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
           if (suspiciousEndingStartsAt && suspiciousEndingStartsAt > 0) {
-            objectPath.set(res, path, { ...tokenObj,
+            op.set(res, path, { ...tokenObj,
               end: tokenObj.start + suspiciousEndingStartsAt,
               value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
             });
@@ -14193,7 +14203,7 @@ function cparser(str, originalOpts) {
             }
           }
           path = pathNext(pathUp(path));
-          objectPath.set(res, path, {
+          op.set(res, path, {
             type: "comment",
             kind: "simple",
             closing: true,
@@ -14204,7 +14214,7 @@ function cparser(str, originalOpts) {
           });
           if (suspiciousEndingEndsAt < tokenObj.value.length) {
             path = pathNext(path);
-            objectPath.set(res, path, {
+            op.set(res, path, {
               type: "text",
               start: tokenObj.start + suspiciousEndingEndsAt,
               end: tokenObj.end,
@@ -14227,21 +14237,21 @@ function cparser(str, originalOpts) {
                   tokenObj.children = [];
                 }
                 path = previousPath;
-                objectPath.set(res, path, { ...tokenObj,
+                op.set(res, path, { ...tokenObj,
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: `${previousTagsToken.value}${tokenObj.value}`
                 });
                 tokenTakenCareOf = true;
               } else if (previousPath && isObj$1(previousTagsToken)) {
-                objectPath.set(res, previousPath, { ...previousTagsToken,
+                op.set(res, previousPath, { ...previousTagsToken,
                   end: malformedRange.idxFrom + previousTagsToken.start,
                   value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
                 });
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
                 }
-                objectPath.set(res, path, { ...tokenObj,
+                op.set(res, path, { ...tokenObj,
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: `${previousTagsToken.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
@@ -14262,22 +14272,22 @@ function cparser(str, originalOpts) {
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
                 }
-                objectPath.set(res, path, { ...tokenObj,
+                op.set(res, path, { ...tokenObj,
                   start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: `${parentsLastChildTokenValue.value}${tokenObj.value}`
                 });
-                objectPath.del(res, `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`);
+                op.del(res, `${previousPath}.children.${op.get(res, previousPath).children.length - 1}`);
                 tokenTakenCareOf = true;
               } else if (previousPath && isObj$1(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
-                objectPath.set(res, parentsLastChildTokenPath, { ...parentsLastChildTokenValue,
+                op.set(res, parentsLastChildTokenPath, { ...parentsLastChildTokenValue,
                   end: malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   value: parentsLastChildTokenValue.value.slice(0, malformedRange.idxFrom)
                 });
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
                 }
-                objectPath.set(res, path, { ...tokenObj,
+                op.set(res, path, { ...tokenObj,
                   start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: `${parentsLastChildTokenValue.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
@@ -14291,7 +14301,7 @@ function cparser(str, originalOpts) {
           if (tokensWithChildren.includes(tokenObj.type)) {
             tokenObj.children = [];
           }
-          objectPath.set(res, path, tokenObj);
+          op.set(res, path, tokenObj);
         }
         if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$1(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
           if (tokenObj.void) {
@@ -14338,9 +14348,11 @@ function cparser(str, originalOpts) {
   return res;
 }
 
+var he$1 = {exports: {}};
+
 /*! https://mths.be/he v1.2.0 by @mathias | MIT license */
 
-var he = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 (function(root) {
 
 	// Detect free variables `exports`.
@@ -14677,7 +14689,9 @@ var he = createCommonjsModule(function (module, exports) {
 	}
 
 }(commonjsGlobal));
-});
+}(he$1, he$1.exports));
+
+var he = he$1.exports;
 
 /**
  * @name html-entities-not-email-friendly
@@ -16591,7 +16605,9 @@ var defineLazyProp = (object, propertyName, fn) => {
 	return object;
 };
 
-var escapeStringRegexp = string => {
+var matcher$1 = {exports: {}};
+
+var escapeStringRegexp$1 = string => {
 	if (typeof string !== 'string') {
 		throw new TypeError('Expected a string');
 	}
@@ -16602,6 +16618,8 @@ var escapeStringRegexp = string => {
 		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 		.replace(/-/g, '\\x2d');
 };
+
+const escapeStringRegexp = escapeStringRegexp$1;
 
 const regexpCache = new Map();
 
@@ -16659,7 +16677,7 @@ function makeRegexp(pattern, options) {
 	return regexp;
 }
 
-var matcher = (inputs, patterns, options) => {
+matcher$1.exports = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -16691,7 +16709,7 @@ var matcher = (inputs, patterns, options) => {
 	return result;
 };
 
-var isMatch = (inputs, patterns, options) => {
+matcher$1.exports.isMatch = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -16707,7 +16725,8 @@ var isMatch = (inputs, patterns, options) => {
 		});
 	});
 };
-matcher.isMatch = isMatch;
+
+var matcher = matcher$1.exports;
 
 var allBadCharacterRules = [
 	"bad-character-acknowledge",
@@ -17242,7 +17261,7 @@ function checkForWhitespace(str, idxOffset) {
             idxFrom: gatheredRanges[0][0],
             idxTo: gatheredRanges[gatheredRanges.length - 1][1],
             message: `Remove whitespace.`,
-            fix: { ranges: lodash_clonedeep(gatheredRanges) }, // we can fix - we delete this whitespace!
+            fix: { ranges: clone(gatheredRanges) }, // we can fix - we delete this whitespace!
         });
         // reset:
         gatheredRanges.length = 0;
@@ -17250,6 +17269,8 @@ function checkForWhitespace(str, idxOffset) {
     }
     return { charStart, charEnd, errorArr, trimmedVal };
 }
+
+var lodash_isregexp = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -17260,7 +17281,7 @@ function checkForWhitespace(str, idxOffset) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_isregexp = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** `Object#toString` result references. */
 var regexpTag = '[object RegExp]';
 
@@ -17373,7 +17394,9 @@ function isObject(value) {
 var isRegExp = nodeIsRegExp ? baseUnary(nodeIsRegExp) : baseIsRegExp;
 
 module.exports = isRegExp;
-});
+}(lodash_isregexp, lodash_isregexp.exports));
+
+var isRegExp$1 = lodash_isregexp.exports;
 
 const defaults$5 = {
     caseInsensitive: false,
@@ -17391,7 +17414,7 @@ function includesWithRegex(arr, whatToMatch, originalOpts) {
     //     4
     //   )}`
     // );
-    return arr.some((val) => (lodash_isregexp(val) && whatToMatch.match(val)) ||
+    return arr.some((val) => (isRegExp$1(val) && whatToMatch.match(val)) ||
         (typeof val === "string" &&
             ((!opts.caseInsensitive && whatToMatch === val) ||
                 (opts.caseInsensitive &&
@@ -21509,7 +21532,7 @@ function attributeMalformed(context, ...config) {
                         somethingMatched = true;
                         break;
                     }
-                    else if (leven_1(oneOfAttribs, node.attribName) === 1) {
+                    else if (leven$1(oneOfAttribs, node.attribName) === 1) {
                         // <img srcc="spacer.gif" altt=""/>
                         //         ^                 ^
                         context.report({
@@ -33068,9 +33091,9 @@ const ip = options => options && options.exact ?
 ip.v4 = options => options && options.exact ? v4exact : new RegExp(`${b(options)}${v4}${b(options)}`, 'g');
 ip.v6 = options => options && options.exact ? v6exact : new RegExp(`${b(options)}${v6}${b(options)}`, 'g');
 
-var ipRegex = ip;
+var ipRegex$1 = ip;
 
-var tlds = [
+var require$$1 = [
 	"aaa",
 	"aarp",
 	"abarth",
@@ -33697,7 +33720,6 @@ var tlds = [
 	"it",
 	"itau",
 	"itv",
-	"iveco",
 	"jaguar",
 	"java",
 	"jcb",
@@ -33904,7 +33926,6 @@ var tlds = [
 	"nab",
 	"nagoya",
 	"name",
-	"nationwide",
 	"natura",
 	"navy",
 	"nba",
@@ -33964,7 +33985,6 @@ var tlds = [
 	"ong",
 	"onl",
 	"online",
-	"onyourside",
 	"ooo",
 	"open",
 	"oracle",
@@ -34197,7 +34217,6 @@ var tlds = [
 	"space",
 	"sport",
 	"spot",
-	"spreadbetting",
 	"sr",
 	"srl",
 	"ss",
@@ -34329,6 +34348,8 @@ var tlds = [
 	"vegas",
 	"ventures",
 	"verisign",
+	"vermögensberater",
+	"vermögensberatung",
 	"versicherung",
 	"vet",
 	"vg",
@@ -34396,160 +34417,6 @@ var tlds = [
 	"xfinity",
 	"xihuan",
 	"xin",
-	"कॉम",
-	"セール",
-	"佛山",
-	"ಭಾರತ",
-	"慈善",
-	"集团",
-	"在线",
-	"한국",
-	"ଭାରତ",
-	"大众汽车",
-	"点看",
-	"คอม",
-	"ভাৰত",
-	"ভারত",
-	"八卦",
-	"ישראל",
-	"موقع",
-	"বাংলা",
-	"公益",
-	"公司",
-	"香格里拉",
-	"网站",
-	"移动",
-	"我爱你",
-	"москва",
-	"қаз",
-	"католик",
-	"онлайн",
-	"сайт",
-	"联通",
-	"срб",
-	"бг",
-	"бел",
-	"קום",
-	"时尚",
-	"微博",
-	"淡马锡",
-	"ファッション",
-	"орг",
-	"नेट",
-	"ストア",
-	"アマゾン",
-	"삼성",
-	"சிங்கப்பூர்",
-	"商标",
-	"商店",
-	"商城",
-	"дети",
-	"мкд",
-	"ею",
-	"ポイント",
-	"新闻",
-	"家電",
-	"كوم",
-	"中文网",
-	"中信",
-	"中国",
-	"中國",
-	"娱乐",
-	"谷歌",
-	"భారత్",
-	"ලංකා",
-	"電訊盈科",
-	"购物",
-	"クラウド",
-	"ભારત",
-	"通販",
-	"भारतम्",
-	"भारत",
-	"भारोत",
-	"网店",
-	"संगठन",
-	"餐厅",
-	"网络",
-	"ком",
-	"укр",
-	"香港",
-	"亚马逊",
-	"诺基亚",
-	"食品",
-	"飞利浦",
-	"台湾",
-	"台灣",
-	"手机",
-	"мон",
-	"الجزائر",
-	"عمان",
-	"ارامكو",
-	"ایران",
-	"العليان",
-	"اتصالات",
-	"امارات",
-	"بازار",
-	"موريتانيا",
-	"پاکستان",
-	"الاردن",
-	"بارت",
-	"بھارت",
-	"المغرب",
-	"ابوظبي",
-	"البحرين",
-	"السعودية",
-	"ڀارت",
-	"كاثوليك",
-	"سودان",
-	"همراه",
-	"عراق",
-	"مليسيا",
-	"澳門",
-	"닷컴",
-	"政府",
-	"شبكة",
-	"بيتك",
-	"عرب",
-	"გე",
-	"机构",
-	"组织机构",
-	"健康",
-	"ไทย",
-	"سورية",
-	"招聘",
-	"рус",
-	"рф",
-	"تونس",
-	"大拿",
-	"ລາວ",
-	"みんな",
-	"グーグル",
-	"ευ",
-	"ελ",
-	"世界",
-	"書籍",
-	"ഭാരതം",
-	"ਭਾਰਤ",
-	"网址",
-	"닷넷",
-	"コム",
-	"天主教",
-	"游戏",
-	"vermögensberater",
-	"vermögensberatung",
-	"企业",
-	"信息",
-	"嘉里大酒店",
-	"嘉里",
-	"مصر",
-	"قطر",
-	"广东",
-	"இலங்கை",
-	"இந்தியா",
-	"հայ",
-	"新加坡",
-	"فلسطين",
-	"政务",
 	"xxx",
 	"xyz",
 	"yachts",
@@ -34572,8 +34439,163 @@ var tlds = [
 	"zm",
 	"zone",
 	"zuerich",
-	"zw"
+	"zw",
+	"ελ",
+	"ευ",
+	"бг",
+	"бел",
+	"дети",
+	"ею",
+	"католик",
+	"ком",
+	"мкд",
+	"мон",
+	"москва",
+	"онлайн",
+	"орг",
+	"рус",
+	"рф",
+	"сайт",
+	"срб",
+	"укр",
+	"қаз",
+	"հայ",
+	"ישראל",
+	"קום",
+	"ابوظبي",
+	"اتصالات",
+	"ارامكو",
+	"الاردن",
+	"البحرين",
+	"الجزائر",
+	"السعودية",
+	"العليان",
+	"المغرب",
+	"امارات",
+	"ایران",
+	"بارت",
+	"بازار",
+	"بيتك",
+	"بھارت",
+	"تونس",
+	"سودان",
+	"سورية",
+	"شبكة",
+	"عراق",
+	"عرب",
+	"عمان",
+	"فلسطين",
+	"قطر",
+	"كاثوليك",
+	"كوم",
+	"مصر",
+	"مليسيا",
+	"موريتانيا",
+	"موقع",
+	"همراه",
+	"پاکستان",
+	"ڀارت",
+	"कॉम",
+	"नेट",
+	"भारत",
+	"भारतम्",
+	"भारोत",
+	"संगठन",
+	"বাংলা",
+	"ভারত",
+	"ভাৰত",
+	"ਭਾਰਤ",
+	"ભારત",
+	"ଭାରତ",
+	"இந்தியா",
+	"இலங்கை",
+	"சிங்கப்பூர்",
+	"భారత్",
+	"ಭಾರತ",
+	"ഭാരതം",
+	"ලංකා",
+	"คอม",
+	"ไทย",
+	"ລາວ",
+	"გე",
+	"みんな",
+	"アマゾン",
+	"クラウド",
+	"グーグル",
+	"コム",
+	"ストア",
+	"セール",
+	"ファッション",
+	"ポイント",
+	"世界",
+	"中信",
+	"中国",
+	"中國",
+	"中文网",
+	"亚马逊",
+	"企业",
+	"佛山",
+	"信息",
+	"健康",
+	"八卦",
+	"公司",
+	"公益",
+	"台湾",
+	"台灣",
+	"商城",
+	"商店",
+	"商标",
+	"嘉里",
+	"嘉里大酒店",
+	"在线",
+	"大众汽车",
+	"大拿",
+	"天主教",
+	"娱乐",
+	"家電",
+	"广东",
+	"微博",
+	"慈善",
+	"我爱你",
+	"手机",
+	"招聘",
+	"政务",
+	"政府",
+	"新加坡",
+	"新闻",
+	"时尚",
+	"書籍",
+	"机构",
+	"淡马锡",
+	"游戏",
+	"澳門",
+	"点看",
+	"移动",
+	"组织机构",
+	"网址",
+	"网店",
+	"网站",
+	"网络",
+	"联通",
+	"诺基亚",
+	"谷歌",
+	"购物",
+	"通販",
+	"集团",
+	"電訊盈科",
+	"飞利浦",
+	"食品",
+	"餐厅",
+	"香格里拉",
+	"香港",
+	"닷넷",
+	"닷컴",
+	"삼성",
+	"한국"
 ];
+
+const ipRegex = ipRegex$1;
+const tlds = require$$1;
 
 var urlRegex = options => {
 	options = {
@@ -35740,7 +35762,7 @@ function attributeValidateChar(context) {
                     });
                 }
                 else {
-                    const { charStart, charEnd, errorArr, trimmedVal, } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
+                    const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
                     if (typeof charStart === "number" && typeof charEnd === "number") {
                         // the value must be a character, raw or escaped, from ISO10646
                         // https://www.w3.org/TR/html4/sgml/dtd.html#Character
@@ -38220,7 +38242,7 @@ function isMediaD(originalStr, originalOpts) {
     });
   } else if (str.match(lettersOnlyRegex) && !str.includes("(") && !str.includes(")")) {
     for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
-      if (leven_1(recognisedMediaTypes[i], str) === 1) {
+      if (leven$1(recognisedMediaTypes[i], str) === 1) {
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
@@ -41696,7 +41718,7 @@ function commentMismatchingPair(context) {
                     //   )}`
                     // );
                     if (current.type === "comment" && current.closing) {
-                        const previousToken = objectPath.get(node, pathPrev(innerObj.path));
+                        const previousToken = op.get(node, pathPrev(innerObj.path));
                         if (isObj(previousToken) &&
                             previousToken.type === "comment" &&
                             !previousToken.closing) {
@@ -41929,7 +41951,7 @@ const cssRequired = (context, opts) => {
                             opts[tagName][prop] ||
                                 // include zero
                                 opts[tagName][prop] === 0) {
-                                objectPath.set(normalisedOpts, `${tagName}.${prop}`, opts[tagName][prop]);
+                                op.set(normalisedOpts, `${tagName}.${prop}`, opts[tagName][prop]);
                             }
                         });
                     }
@@ -42533,12 +42555,12 @@ function normaliseRequestedRules(opts) {
             ].includes(ruleName)) {
                 // now, it depends is an exact rule name being queried or is it wildcard
                 if (Object.keys(builtInRules).includes(ruleName)) {
-                    res[ruleName] = lodash_clonedeep(opts[ruleName]);
+                    res[ruleName] = clone(opts[ruleName]);
                 }
                 else if (ruleName.includes("*")) {
                     Object.keys(builtInRules).forEach((builtInRule) => {
                         if (matcher.isMatch(builtInRule, ruleName)) {
-                            res[builtInRule] = lodash_clonedeep(opts[ruleName]);
+                            res[builtInRule] = clone(opts[ruleName]);
                         }
                     });
                 }
@@ -42570,7 +42592,7 @@ class Linter extends TypedEmitter {
         // calculate line start indexes for row/column
         // reporting later, it allows line-column-mini to cut corners
         this.strLineStartIndexes = getLineStartIndexes(str);
-        this.config = lodash_clonedeep(config);
+        this.config = clone(config);
         this.hasBeenCalledWithKeepSeparateWhenFixing = false;
         this.processedRulesConfig = {};
         const has = Object.prototype.hasOwnProperty;
@@ -42839,7 +42861,7 @@ class Linter extends TypedEmitter {
         allEventNames.forEach((eventName) => {
             this.removeAllListeners(eventName);
         });
-        return lodash_clonedeep(this.messages);
+        return clone(this.messages);
     }
     report(obj) {
         // fill in other data points:

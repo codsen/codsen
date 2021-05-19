@@ -49,15 +49,11 @@ function attributeValidateChar(context: Linter): RuleObjType {
             fix: null,
           });
         } else {
-          const {
-            charStart,
-            charEnd,
-            errorArr,
-            trimmedVal,
-          } = checkForWhitespace(
-            node.attribValueRaw,
-            node.attribValueStartsAt as number
-          );
+          const { charStart, charEnd, errorArr, trimmedVal } =
+            checkForWhitespace(
+              node.attribValueRaw,
+              node.attribValueStartsAt as number
+            );
           console.log(
             `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
               errorArr,
@@ -82,7 +78,7 @@ function attributeValidateChar(context: Linter): RuleObjType {
           }
 
           errorArr.forEach((errorObj) => {
-            console.log(`085 RAISE ERROR`);
+            console.log(`081 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-char" });
           });
         }
