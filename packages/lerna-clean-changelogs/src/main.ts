@@ -5,9 +5,10 @@ function isStr(something: string): any {
   return typeof something === "string";
 }
 
-function cleanChangelogs(
-  changelogContents: string
-): { version: string; res: string } {
+function cleanChangelogs(changelogContents: string): {
+  version: string;
+  res: string;
+} {
   // validate the first input argument:
   if (changelogContents === undefined) {
     throw new Error(
@@ -120,7 +121,7 @@ function cleanChangelogs(
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
           console.log(
-            `123 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `124 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
         }
       }
@@ -135,7 +136,7 @@ function cleanChangelogs(
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
         console.log(
-          `138 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          `139 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
         );
       }
     }
