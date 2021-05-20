@@ -67,7 +67,8 @@ function plausibleAttrStartsAtX(str: string, start: number): boolean {
     return false;
   }
   // const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
-  const regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
+  const regex =
+    /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
   return regex.test(str.slice(start));
 }
 
@@ -77,13 +78,14 @@ function guaranteedAttrStartsAtX(str: string, start: number): boolean {
     `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
   );
   if (!start || !isAttrNameChar(str[start])) {
-    console.log(`080g return false`);
+    console.log(`081g return false`);
     return false;
   }
   // either quotes match or does not match but tag closing follows
   // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-  const regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-  console.log(`086g return ${regex.test(str.slice(start))}`);
+  const regex =
+    /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+  console.log(`088g return ${regex.test(str.slice(start))}`);
   return regex.test(str.slice(start));
 }
 
@@ -96,7 +98,7 @@ function findAttrNameCharsChunkOnTheLeft(
   }
   for (let y = i; y--; ) {
     console.log(
-      `099 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
+      `101 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
         str[y],
         null,
         4
