@@ -72,7 +72,8 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
 
   // regex adapted taken from he.js v1.1.1
   // the difference is recursively encoded entity catch in front which is sensitive to semicolons
-  const entityRegex = /&(#?[^;\W]+;)+|&#([0-9]+)(;?)|&#[xX]([a-fA-F0-9]+)(;?)|&([0-9a-zA-Z]+);|&(Aacute|Agrave|Atilde|Ccedil|Eacute|Egrave|Iacute|Igrave|Ntilde|Oacute|Ograve|Oslash|Otilde|Uacute|Ugrave|Yacute|aacute|agrave|atilde|brvbar|ccedil|curren|divide|eacute|egrave|frac12|frac14|frac34|iacute|igrave|iquest|middot|ntilde|oacute|ograve|oslash|otilde|plusmn|uacute|ugrave|yacute|AElig|Acirc|Aring|Ecirc|Icirc|Ocirc|THORN|Ucirc|acirc|acute|aelig|aring|cedil|ecirc|icirc|iexcl|laquo|micro|ocirc|pound|raquo|szlig|thorn|times|ucirc|Auml|COPY|Euml|Iuml|Ouml|QUOT|Uuml|auml|cent|copy|euml|iuml|macr|nbsp|ordf|ordm|ouml|para|quot|sect|sup1|sup2|sup3|uuml|yuml|AMP|ETH|REG|amp|deg|eth|not|reg|shy|uml|yen|GT|LT|gt|lt)([=a-zA-Z0-9])?/g;
+  const entityRegex =
+    /&(#?[^;\W]+;)+|&#([0-9]+)(;?)|&#[xX]([a-fA-F0-9]+)(;?)|&([0-9a-zA-Z]+);|&(Aacute|Agrave|Atilde|Ccedil|Eacute|Egrave|Iacute|Igrave|Ntilde|Oacute|Ograve|Oslash|Otilde|Uacute|Ugrave|Yacute|aacute|agrave|atilde|brvbar|ccedil|curren|divide|eacute|egrave|frac12|frac14|frac34|iacute|igrave|iquest|middot|ntilde|oacute|ograve|oslash|otilde|plusmn|uacute|ugrave|yacute|AElig|Acirc|Aring|Ecirc|Icirc|Ocirc|THORN|Ucirc|acirc|acute|aelig|aring|cedil|ecirc|icirc|iexcl|laquo|micro|ocirc|pound|raquo|szlig|thorn|times|ucirc|Auml|COPY|Euml|Iuml|Ouml|QUOT|Uuml|auml|cent|copy|euml|iuml|macr|nbsp|ordf|ordm|ouml|para|quot|sect|sup1|sup2|sup3|uuml|yuml|AMP|ETH|REG|amp|deg|eth|not|reg|shy|uml|yen|GT|LT|gt|lt)([=a-zA-Z0-9])?/g;
 
   // final ranges array:
   const rangesArr = [];
@@ -107,7 +108,7 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
     );
     const chomped = chomp(array1[0]);
     if (chomped === "&") {
-      console.log('110 chomped === "&"');
+      console.log('111 chomped === "&"');
       rangesArr.push([
         entityRegex.lastIndex - array1[0].length,
         entityRegex.lastIndex,
@@ -116,11 +117,11 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
     } else {
       const decoded = he.decode(chomped, opts);
       console.log(
-        `119 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
+        `120 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
       );
       if (decoded !== chomped) {
         console.log(
-          `123 will push "${`\u001b[${33}m${JSON.stringify(
+          `124 will push "${`\u001b[${33}m${JSON.stringify(
             [
               entityRegex.lastIndex - array1[0].length,
               entityRegex.lastIndex,
