@@ -106,8 +106,7 @@ tap.test(
     t.strictSame(
       jVar(
         {
-          a:
-            "text %%-b-%% more text %%_c_%% and more %%-b-%% text %%_b_%% more text %%-c-%%",
+          a: "text %%-b-%% more text %%_c_%% and more %%-b-%% text %%_b_%% more text %%-c-%%",
           b: "%%_c_%%",
           c: "z",
         },
@@ -145,8 +144,7 @@ tap.test(
     t.strictSame(
       jVar(
         {
-          a:
-            "text -yyy-bbb-zzz- more text -www-c-xxx- and more -yyy-bbb-zzz- text",
+          a: "text -yyy-bbb-zzz- more text -www-c-xxx- and more -yyy-bbb-zzz- text",
           bbb: "-www-c-xxx-",
           c: "z",
         },
@@ -313,8 +311,7 @@ tap.test(
         }
       ),
       {
-        aaa:
-          "{%- if zzz_val -%}{{ zzz_val }}<br />{%- endif -%}\n{%- if yyy_val -%}{{ yyy_val }}<br />{%- endif -%}\n",
+        aaa: "{%- if zzz_val -%}{{ zzz_val }}<br />{%- endif -%}\n{%- if yyy_val -%}{{ yyy_val }}<br />{%- endif -%}\n",
         bbb: [
           "{%- if zzz_val -%}{{ zzz_val }}<br />{%- endif -%}\n",
           "{%- if yyy_val -%}{{ yyy_val }}<br />{%- endif -%}\n",

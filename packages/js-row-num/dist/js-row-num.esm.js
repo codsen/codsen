@@ -86,6 +86,9 @@ function fixRowNums(str, originalOpts) {
       digitStartsAt = i;
     }
     if (Number.isInteger(digitStartsAt) && (!isDigit(str[i]) || !str[i + 1]) && (i > digitStartsAt || !str[i + 1])) {
+      if (!opts.padStart) {
+        if (opts.overrideRowNum != null) ;
+      }
       finalIndexesToDelete.push(digitStartsAt, !isDigit(str[i]) ? i : i + 1, opts.padStart ? String(opts.overrideRowNum != null ? opts.overrideRowNum : currentRow).padStart(opts.padStart, "0") : `${opts.overrideRowNum != null ? opts.overrideRowNum : currentRow}`);
       digitStartsAt = null;
       wasLetterDetected = true;

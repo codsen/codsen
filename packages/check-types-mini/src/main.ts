@@ -180,9 +180,9 @@ function internalApi(
         (opts.schema as Obj)[oneKey] = [(opts.schema as Obj)[oneKey]];
       }
       // then turn all keys into strings and trim and lowercase them:
-      (opts.schema as Obj)[oneKey] = (opts.schema as Obj)[
-        oneKey
-      ].map((el: any) => `${el}`.toLowerCase().trim());
+      (opts.schema as Obj)[oneKey] = (opts.schema as Obj)[oneKey].map(
+        (el: any) => `${el}`.toLowerCase().trim()
+      );
     });
   } else if (opts.schema != null) {
     throw new Error(

@@ -5,9 +5,8 @@ import { stripHtml } from "../dist/string-strip-html.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - single tag pair - tight", (t) => {
-  const { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
-    "<a>zzz</a>"
-  );
+  const { result, ranges, allTagLocations, filteredTagLocations } =
+    stripHtml("<a>zzz</a>");
   t.strictSame(result, "zzz", "01.01");
   t.strictSame(
     ranges,
@@ -37,9 +36,8 @@ tap.test("01 - single tag pair - tight", (t) => {
 });
 
 tap.test("02 - single tag pair - outer whitespace", (t) => {
-  const { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
-    " <a>zzz</a> "
-  );
+  const { result, ranges, allTagLocations, filteredTagLocations } =
+    stripHtml(" <a>zzz</a> ");
   t.strictSame(result, "zzz", "02.01");
   t.strictSame(
     ranges,
@@ -69,9 +67,8 @@ tap.test("02 - single tag pair - outer whitespace", (t) => {
 });
 
 tap.test("03 - single tag pair - inner and outer whitespace", (t) => {
-  const { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
-    " <a> zzz </a> "
-  );
+  const { result, ranges, allTagLocations, filteredTagLocations } =
+    stripHtml(" <a> zzz </a> ");
   t.strictSame(result, "zzz", "03.01");
   t.strictSame(
     ranges,

@@ -5,15 +5,10 @@ import { comb } from "./util/util";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - bug #01", (t) => {
-  const {
-    allInBody,
-    allInHead,
-    result,
-    deletedFromHead,
-    deletedFromBody,
-  } = comb(
-    t,
-    `<head>
+  const { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
+    comb(
+      t,
+      `<head>
 <style type="text/css">
 @font-face {zzz}
 .unused {zzz}
@@ -22,7 +17,7 @@ tap.test("01 - bug #01", (t) => {
 <body a="z;">
 </body>
 `
-  );
+    );
 
   t.strictSame(allInBody, [], "01.01");
   t.strictSame(allInHead, [".unused"], "01.02");
@@ -387,13 +382,8 @@ tap.test("17 - bug #36", (t) => {
   const input = `<style>@media only screen {}</style>
 <style>.foo {x: y;}</style>
 <body><span class="foo">z</span>`;
-  const {
-    allInBody,
-    allInHead,
-    result,
-    deletedFromHead,
-    deletedFromBody,
-  } = comb(t, input);
+  const { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
+    comb(t, input);
 
   t.strictSame(allInBody, [".foo"], "17.01");
   t.strictSame(allInHead, [".foo"], "17.02");
@@ -410,13 +400,8 @@ tap.test("17 - bug #36", (t) => {
 
 tap.test("18 - bug #45 - id", (t) => {
   const input = `<body><div>https://x?id=z</div>`;
-  const {
-    allInBody,
-    allInHead,
-    result,
-    deletedFromHead,
-    deletedFromBody,
-  } = comb(t, input);
+  const { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
+    comb(t, input);
 
   t.strictSame(allInBody, [], "18.01");
   t.strictSame(allInHead, [], "18.02");
@@ -428,13 +413,8 @@ tap.test("18 - bug #45 - id", (t) => {
 
 tap.test("19 - bug #45 - class", (t) => {
   const input = `<body><div>https://x?class=z</div>`;
-  const {
-    allInBody,
-    allInHead,
-    result,
-    deletedFromHead,
-    deletedFromBody,
-  } = comb(t, input);
+  const { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
+    comb(t, input);
 
   t.strictSame(allInBody, [], "19.01");
   t.strictSame(allInHead, [], "19.02");

@@ -15,10 +15,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_merge = {exports: {}};
 
 /**
  * Lodash (Custom Build) <https://lodash.com/>
@@ -29,7 +26,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_merge = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -1998,7 +1995,11 @@ function stubFalse() {
 }
 
 module.exports = merge;
-});
+}(lodash_merge, lodash_merge.exports));
+
+var merge = lodash_merge.exports;
+
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -2009,7 +2010,7 @@ module.exports = merge;
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -3749,7 +3750,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -3759,6 +3762,7 @@ module.exports = cloneDeep;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -3874,7 +3878,7 @@ function isObjectLike$1(value) {
  * _.isPlainObject(Object.create(null));
  * // => true
  */
-function isPlainObject(value) {
+function isPlainObject$1(value) {
   if (!isObjectLike$1(value) ||
       objectToString$2.call(value) != objectTag || isHostObject$1(value)) {
     return false;
@@ -3888,7 +3892,7 @@ function isPlainObject(value) {
     Ctor instanceof Ctor && funcToString$1.call(Ctor) == objectCtorString);
 }
 
-var lodash_isplainobject = isPlainObject;
+var lodash_isplainobject = isPlainObject$1;
 
 /**
  * @name object-flatten-all-arrays
@@ -3908,7 +3912,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   const opts = { ...defaults,
     ...originalOpts
   };
-  const incommingObj = lodash_clonedeep(originalIncommingObj);
+  const incommingObj = clone(originalIncommingObj);
   let isFirstObj;
   let combinedObj;
   let firstObjIndex;
@@ -3921,7 +3925,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
     firstObjIndex = 0;
     for (let i = 0, len = incommingObj.length; i < len; i++) {
       if (lodash_isplainobject(incommingObj[i])) {
-        combinedObj = lodash_merge(combinedObj, incommingObj[i]);
+        combinedObj = merge(combinedObj, incommingObj[i]);
         if (isFirstObj === null) {
           isFirstObj = true;
           firstObjIndex = i;
@@ -3932,7 +3936,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
       }
     }
     if (isFirstObj !== null) {
-      incommingObj[firstObjIndex] = lodash_clonedeep(combinedObj);
+      incommingObj[firstObjIndex] = clone(combinedObj);
     }
   }
   if (lodash_isplainobject(incommingObj)) {
@@ -3959,6 +3963,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** Used as references for various `Number` constants. */
 var INFINITY$1 = 1 / 0,
     MAX_SAFE_INTEGER = 9007199254740991,
@@ -5593,6 +5598,8 @@ function noop() {
 
 var lodash_uniq = uniq;
 
+var lodash_isdate = {exports: {}};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -5602,7 +5609,7 @@ var lodash_uniq = uniq;
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_isdate = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** `Object#toString` result references. */
 var dateTag = '[object Date]';
 
@@ -5713,9 +5720,13 @@ function isObjectLike(value) {
 }
 
 module.exports = isDate;
-});
+}(lodash_isdate, lodash_isdate.exports));
 
-var escapeStringRegexp = string => {
+var isDate = lodash_isdate.exports;
+
+var matcher$1 = {exports: {}};
+
+var escapeStringRegexp$1 = string => {
 	if (typeof string !== 'string') {
 		throw new TypeError('Expected a string');
 	}
@@ -5726,6 +5737,8 @@ var escapeStringRegexp = string => {
 		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 		.replace(/-/g, '\\x2d');
 };
+
+const escapeStringRegexp = escapeStringRegexp$1;
 
 const regexpCache = new Map();
 
@@ -5783,7 +5796,7 @@ function makeRegexp(pattern, options) {
 	return regexp;
 }
 
-var matcher = (inputs, patterns, options) => {
+matcher$1.exports = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -5815,7 +5828,7 @@ var matcher = (inputs, patterns, options) => {
 	return result;
 };
 
-var isMatch = (inputs, patterns, options) => {
+matcher$1.exports.isMatch = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -5831,7 +5844,8 @@ var isMatch = (inputs, patterns, options) => {
 		});
 	});
 };
-matcher.isMatch = isMatch;
+
+var matcher = matcher$1.exports;
 
 /**
  * @name array-includes-with-glob
@@ -5917,7 +5931,7 @@ function getType(something) {
   if (something === null) {
     return "null";
   }
-  if (lodash_isdate(something)) {
+  if (isDate(something)) {
     return "date";
   }
   if (lodash_isplainobject(something)) {
@@ -5971,8 +5985,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
     return null;
   }
-  let i1 = isArr$1(input1orig) || lodash_isplainobject(input1orig) ? lodash_clonedeep(input1orig) : input1orig;
-  const i2 = isArr$1(input2orig) || lodash_isplainobject(input2orig) ? lodash_clonedeep(input2orig) : input2orig;
+  let i1 = isArr$1(input1orig) || lodash_isplainobject(input1orig) ? clone(input1orig) : input1orig;
+  const i2 = isArr$1(input2orig) || lodash_isplainobject(input2orig) ? clone(input2orig) : input2orig;
   let uniRes;
   if (opts.ignoreEverything) {
     uniRes = i1;
@@ -5986,7 +6000,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
           const currentResult = uni ? uniRes : [];
           if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
@@ -5997,7 +6011,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         if (opts.hardArrayConcat) {
           const currentResult = uni ? uniRes : i1.concat(i2);
           if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
@@ -6044,11 +6058,11 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         if (opts.dedupeStringsInArrayValues && temp.every(el => isStr$2(el))) {
           temp = lodash_uniq(temp).sort();
         }
-        i1 = lodash_clonedeep(temp);
+        i1 = clone(temp);
       } else {
         const currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -6060,7 +6074,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       if (nonEmpty(i2)) {
         const currentResult = uni ? uniRes : i2;
         if (typeof opts.cb === "function") {
-          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -6070,7 +6084,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
       const currentResult = uni ? uniRes : i1;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: currPath,
           key: infoObj.key,
           type: infoObj.type
@@ -6084,7 +6098,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         if (nonEmpty(i2)) {
           const currentResult = uni ? uniRes : i2;
           if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
@@ -6094,7 +6108,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
         const currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -6143,7 +6157,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         });
         const currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
@@ -6153,7 +6167,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
       const currentResult = uni ? uniRes : i1;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6164,7 +6178,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     if (isArr$1(i2) || lodash_isplainobject(i2) || nonEmpty(i2)) {
       const currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6174,20 +6188,20 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
     const currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
       });
     }
     return currentResult;
-  } else if (lodash_isdate(i1)) {
+  } else if (isDate(i1)) {
     if (isFinite(i1)) {
-      if (lodash_isdate(i2)) {
+      if (isDate(i2)) {
         if (isFinite(i2)) {
           const currentResult = uni ? uniRes : i1 > i2 ? i1 : i2;
           if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
               path: infoObj.path,
               key: infoObj.key,
               type: infoObj.type
@@ -6197,7 +6211,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
         const currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
@@ -6207,7 +6221,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
       const currentResult = uni ? uniRes : i2 ? i2 : i1;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6215,10 +6229,10 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
       return currentResult;
     }
-    if (lodash_isdate(i2)) {
+    if (isDate(i2)) {
       const currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6228,7 +6242,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
     const currentResult = uni ? uniRes : i2;
     if (typeof opts.cb === "function") {
-      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6240,7 +6254,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       if ((isArr$1(i2) || lodash_isplainobject(i2) || isStr$2(i2)) && nonEmpty(i2)) {
         const currentResult = uni ? uniRes : i2;
         if (typeof opts.cb === "function") {
-          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
@@ -6250,7 +6264,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
       const currentResult = uni ? uniRes : i1;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6261,7 +6275,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     if (i2 != null && !isBool(i2)) {
       const currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6271,7 +6285,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
     const currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6282,7 +6296,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     if (nonEmpty(i2)) {
       const currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6292,7 +6306,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
     const currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6304,7 +6318,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       if (opts.mergeBoolsUsingOrNotAnd) {
         const currentResult = uni ? uniRes : i1 || i2;
         if (typeof opts.cb === "function") {
-          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
@@ -6314,7 +6328,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
       const currentResult = uni ? uniRes : i1 && i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6325,7 +6339,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     if (i2 != null) {
       const currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6335,7 +6349,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
     const currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6346,7 +6360,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     if (i2 != null) {
       const currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6356,7 +6370,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
     const currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6366,7 +6380,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
   } else {
     const currentResult = uni ? uniRes : i2;
     if (typeof opts.cb === "function") {
-      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6376,7 +6390,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
   }
   const currentResult = uni ? uniRes : i1;
   if (typeof opts.cb === "function") {
-    return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+    return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
@@ -6414,6 +6428,8 @@ function arrayiffy(something) {
   return something;
 }
 
+var lodash_isequal = {exports: {}};
+
 /**
  * Lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -6423,7 +6439,7 @@ function arrayiffy(something) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_isequal = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -8263,7 +8279,9 @@ function stubFalse() {
 }
 
 module.exports = isEqual;
-});
+}(lodash_isequal, lodash_isequal.exports));
+
+var isEq = lodash_isequal.exports;
 
 /**
  * @name object-all-values-equal-to
@@ -8278,7 +8296,7 @@ function allValuesEqualTo(input, value, opts) {
     if (input.length === 0) {
       return true;
     }
-    if (opts.arraysMustNotContainPlaceholders && input.length > 0 && input.some(el => lodash_isequal(el, value))) {
+    if (opts.arraysMustNotContainPlaceholders && input.length > 0 && input.some(el => isEq(el, value))) {
       return false;
     }
     for (let i = input.length; i--;) {
@@ -8300,7 +8318,7 @@ function allValuesEqualTo(input, value, opts) {
     }
     return true;
   }
-  return lodash_isequal(input, value);
+  return isEq(input, value);
 }
 function allEq(inputOriginal, valueOriginal, originalOpts) {
   if (inputOriginal === undefined) {
@@ -8334,7 +8352,7 @@ const defaults = {
   doNotFillThesePathsIfTheyContainPlaceholders: [],
   useNullAsExplicitFalse: true
 };
-function typ(something) {
+function typ$1(something) {
   if (lodash_isplainobject(something)) {
     return "plain object";
   }
@@ -8350,7 +8368,7 @@ function existy$1(x) {
   return x != null;
 }
 function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
-  const incomplete = lodash_clonedeep(incompleteOriginal);
+  const incomplete = clone(incompleteOriginal);
   if (existy$1(incomplete) || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allEq(incomplete, opts.placeholder))) {
     if (lodash_isplainobject(schema) && lodash_isplainobject(incomplete)) {
       Object.keys(schema).forEach(key => {
@@ -8393,13 +8411,13 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
     throw new Error("object-fill-missing-keys: [THROW_ID_01] All arguments are missing!");
   }
   if (!lodash_isplainobject(originalIncompleteWrapper)) {
-    throw new Error(`object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${typ(originalIncompleteWrapper)}" and it's equal to: ${JSON.stringify(originalIncompleteWrapper, null, 4)}`);
+    throw new Error(`object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${typ$1(originalIncompleteWrapper)}" and it's equal to: ${JSON.stringify(originalIncompleteWrapper, null, 4)}`);
   }
   if (!lodash_isplainobject(originalSchemaWrapper)) {
-    throw new Error(`object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${typ(originalSchemaWrapper)}" and it's equal to: ${JSON.stringify(originalSchemaWrapper, null, 4)}`);
+    throw new Error(`object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${typ$1(originalSchemaWrapper)}" and it's equal to: ${JSON.stringify(originalSchemaWrapper, null, 4)}`);
   }
   if (originalOptsWrapper && !lodash_isplainobject(originalOptsWrapper)) {
-    throw new Error(`object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${typ(originalOptsWrapper)}" and it's equal to: ${JSON.stringify(originalOptsWrapper, null, 4)}`);
+    throw new Error(`object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${typ$1(originalOptsWrapper)}" and it's equal to: ${JSON.stringify(originalOptsWrapper, null, 4)}`);
   }
   const opts = { ...defaults,
     ...(originalOptsWrapper || {})
@@ -8415,9 +8433,9 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
     }
     return true;
   })) {
-    throw new Error(`object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${culpritsIndex}" is not a string! It's ${typ(culpritsVal)}, equal to:\n${JSON.stringify(culpritsVal, null, 4)}`);
+    throw new Error(`object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${culpritsIndex}" is not a string! It's ${typ$1(culpritsVal)}, equal to:\n${JSON.stringify(culpritsVal, null, 4)}`);
   }
-  return fillMissingKeys(lodash_clonedeep(originalIncompleteWrapper), lodash_clonedeep(originalSchemaWrapper), opts);
+  return fillMissingKeys(clone(originalIncompleteWrapper), clone(originalSchemaWrapper), opts);
 }
 
 /**
@@ -8430,11 +8448,11 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
  */
 function setAllValuesTo(inputOriginal, valueOriginal) {
   let value;
-  const input = lodash_clonedeep(inputOriginal);
+  const input = clone(inputOriginal);
   if (arguments.length < 2) {
     value = false;
   } else if (lodash_isplainobject(valueOriginal) || Array.isArray(valueOriginal)) {
-    value = lodash_clonedeep(valueOriginal);
+    value = clone(valueOriginal);
   } else {
     value = valueOriginal;
   }
@@ -8456,9 +8474,11 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
   return input;
 }
 
+var compareVersions$1 = {exports: {}};
+
 /* global define */
 
-var compareVersions = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 (function (root, factory) {
   /* istanbul ignore next */
   {
@@ -8568,7 +8588,9 @@ var compareVersions = createCommonjsModule(function (module, exports) {
 
   return compareVersions;
 }));
-});
+}(compareVersions$1));
+
+var compareVersions = compareVersions$1.exports;
 
 /**
  * @name object-no-new-keys
@@ -8649,8 +8671,10 @@ var isPlainObj = value => {
 	return prototype === null || prototype === Object.prototype;
 };
 
+const isPlainObject = isPlainObj;
+
 var sortKeys = (object, options = {}) => {
-	if (!isPlainObj(object) && !Array.isArray(object)) {
+	if (!isPlainObject(object) && !Array.isArray(object)) {
 		throw new TypeError('Expected a plain object or array');
 	}
 
@@ -8674,7 +8698,7 @@ var sortKeys = (object, options = {}) => {
 				return deepSortArray(item);
 			}
 
-			if (isPlainObj(item)) {
+			if (isPlainObject(item)) {
 				return sortKeys(item);
 			}
 
@@ -8704,7 +8728,7 @@ var sortKeys = (object, options = {}) => {
 			if (deep && Array.isArray(value)) {
 				newValue = deepSortArray(value);
 			} else {
-				newValue = deep && isPlainObj(value) ? sortKeys(value) : value;
+				newValue = deep && isPlainObject(value) ? sortKeys(value) : value;
 			}
 
 			Object.defineProperty(result, key, {
@@ -8722,6 +8746,8 @@ var sortKeys = (object, options = {}) => {
 
 	return sortKeys(object);
 };
+
+var pReduce$2 = {exports: {}};
 
 const pReduce = (iterable, reducer, initialValue) => new Promise((resolve, reject) => {
 	const iterator = iterable[Symbol.iterator]();
@@ -8746,12 +8772,15 @@ const pReduce = (iterable, reducer, initialValue) => new Promise((resolve, rejec
 	next(initialValue);
 });
 
-var pReduce_1 = pReduce;
+pReduce$2.exports = pReduce;
 // TODO: Remove this for the next major release
-var _default$2 = pReduce;
-pReduce_1.default = _default$2;
+pReduce$2.exports.default = pReduce;
 
-var typeDetect = createCommonjsModule(function (module, exports) {
+var pReduce$1 = pReduce$2.exports;
+
+var typeDetect = {exports: {}};
+
+(function (module, exports) {
 (function (global, factory) {
 	module.exports = factory() ;
 }(commonjsGlobal, (function () {
@@ -9137,9 +9166,15 @@ function typeDetect(obj) {
 return typeDetect;
 
 })));
-});
+}(typeDetect));
 
-const pMap = (iterable, mapper, options) => new Promise((resolve, reject) => {
+var typ = typeDetect.exports;
+
+var pOne$2 = {exports: {}};
+
+var pMap$2 = {exports: {}};
+
+const pMap$1 = (iterable, mapper, options) => new Promise((resolve, reject) => {
 	options = Object.assign({
 		concurrency: Infinity
 	}, options);
@@ -9206,10 +9241,11 @@ const pMap = (iterable, mapper, options) => new Promise((resolve, reject) => {
 	}
 });
 
-var pMap_1 = pMap;
+pMap$2.exports = pMap$1;
 // TODO: Remove this for the next major release
-var _default$1 = pMap;
-pMap_1.default = _default$1;
+pMap$2.exports.default = pMap$1;
+
+const pMap = pMap$2.exports;
 
 class EndError extends Error {}
 
@@ -9224,7 +9260,7 @@ const test = testFunction => async (x, i) => {
 
 const pOne = async (iterable, testFunction, options) => {
 	try {
-		await pMap_1(iterable, test(testFunction), options);
+		await pMap(iterable, test(testFunction), options);
 		return false;
 	} catch (error) {
 		if (error instanceof EndError) {
@@ -9235,9 +9271,10 @@ const pOne = async (iterable, testFunction, options) => {
 	}
 };
 
-var pOne_1 = pOne;
-var _default = pOne;
-pOne_1.default = _default;
+pOne$2.exports = pOne;
+pOne$2.exports.default = pOne;
+
+var pOne$1 = pOne$2.exports;
 
 var version$1 = "6.8.16";
 
@@ -9247,7 +9284,7 @@ function existy(x) {
     return x != null;
 }
 function isObj(something) {
-    return typeDetect(something) === "Object";
+    return typ(something) === "Object";
 }
 function isStr(something) {
     return typeof something === "string";
@@ -9326,7 +9363,7 @@ function getKeyset(arrOfPromises, originalOpts) {
     return new Promise((resolve, reject) => {
         // Map over input array of promises. If any resolve to non-plain-object,
         // final returned promise will resolve to true. Otherwise, false.
-        pOne_1(arrOfPromises, (element, index) => {
+        pOne$1(arrOfPromises, (element, index) => {
             if (!isObj(element)) {
                 culpritIndex = index;
                 culpritVal = element;
@@ -9339,7 +9376,7 @@ function getKeyset(arrOfPromises, originalOpts) {
             if (res) {
                 return reject(Error(`json-comb-core/getKeyset(): [THROW_ID_13] Oops! ${culpritIndex}th element resolved not to a plain object but to a ${typeof culpritVal}\n${JSON.stringify(culpritVal, null, 4)}`));
             }
-            return pReduce_1(arrOfPromises, // input
+            return pReduce$1(arrOfPromises, // input
             (previousValue, currentValue) => externalApi(flattenAllArrays(previousValue, {
                 flattenArraysContainingStringsToBeEmpty: true,
             }), flattenAllArrays(currentValue, {
@@ -9369,7 +9406,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
         throw new TypeError(`json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`);
     }
     let schemaObj = {};
-    const arr = lodash_clonedeep(arrOriginal);
+    const arr = clone(arrOriginal);
     const defaults = {
         placeholder: false,
     };
@@ -9413,7 +9450,7 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
             if (!isObj(schemaKeyset)) {
                 return reject(Error(`json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ${typeof schemaKeyset}, equal to: ${JSON.stringify(schemaKeyset, null, 4)}`));
             }
-            return resolve(sortAllObjectsSync(lodash_clonedeep(fillMissing(lodash_clonedeep(objResolved), lodash_clonedeep(schemaKeysetResolved), opts))));
+            return resolve(sortAllObjectsSync(clone(fillMissing(clone(objResolved), clone(schemaKeysetResolved), opts))));
         });
     });
 }
@@ -9441,7 +9478,7 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
         !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) => isStr(val))) {
         throw new Error(`json-comb-core/enforceKeyset(): [THROW_ID_45] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4)}`);
     }
-    return sortAllObjectsSync(fillMissing(lodash_clonedeep(obj), schemaKeyset, opts));
+    return sortAllObjectsSync(fillMissing(clone(obj), schemaKeyset, opts));
 }
 // -----------------------------------------------------------------------------
 // no news is good news - when keyset is ok, empty array is returned
@@ -9485,7 +9522,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
     if (!opts.comments) {
         opts.comments = "";
     }
-    const arr = lodash_clonedeep(arrOriginal);
+    const arr = clone(arrOriginal);
     // ---------------------------------------------------------------------------
     function removeLeadingDot(something) {
         return something.map((finding) => finding.charAt(0) === "." ? finding.slice(1) : finding);
@@ -9514,7 +9551,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
             // contain objects or arrays, traverse them recursively
             //
             const keys = [].concat(...Object.keys(keySet).filter((key) => isObj(keySet[key]) || isArr(keySet[key])));
-            const keysContents = keys.map((key) => typeDetect(keySet[key]));
+            const keysContents = keys.map((key) => typ(keySet[key]));
             // can't use map() because we want to prevent nulls being written.
             // hence the reduce() contraption
             const extras = keys.map((el) => [].concat(...arr1.reduce((res1, obj) => {

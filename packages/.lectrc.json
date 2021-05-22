@@ -179,7 +179,6 @@
       "@rollup/plugin-babel": "^5.2.2",
       "@rollup/plugin-commonjs": "^17.0.0",
       "@rollup/plugin-node-resolve": "^11.0.1",
-      "@rollup/plugin-replace": "^2.3.4",
       "@rollup/plugin-strip": "^2.0.0",
       "@rollup/plugin-typescript": "^8.1.0",
       "@types/node": "^13.13.4",

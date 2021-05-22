@@ -15,11 +15,6 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
-
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -1094,6 +1089,7 @@ var lodash_intersection = intersection;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /**
  * A faster alternative to `Function#apply`, this function invokes `func`
  * with the `this` binding of `thisArg` and the arguments of `args`.
@@ -1383,6 +1379,7 @@ var lodash_pull = pull;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -1514,6 +1511,8 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
+var lodash_clonedeep = {exports: {}};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -1523,7 +1522,7 @@ var lodash_isplainobject = isPlainObject;
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -3263,7 +3262,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * @name object-boolean-combinations
@@ -3294,8 +3295,8 @@ function combinations(originalIncomingObject, originalOverrideObject = {}) {
   if (originalOverrideObject && !lodash_isplainobject(originalOverrideObject)) {
     throw new Error("[THROW_ID_03] the second override object must be a true object");
   }
-  const incomingObject = lodash_clonedeep(originalIncomingObject);
-  const overrideObject = lodash_clonedeep(originalOverrideObject);
+  const incomingObject = clone(originalIncomingObject);
+  const overrideObject = clone(originalOverrideObject);
   const propertiesToMix = Object.keys(incomingObject);
   const outcomingObjectsArray = [];
   let propertiesToBeOverridden = [];
@@ -3345,8 +3346,8 @@ function mixer(ref = {}, defaultsObj = {}) {
     if (!Object.keys(defaultsObj).length) {
         return [];
     }
-    const refClone = lodash_clonedeep(ref);
-    const defaultsObjClone = lodash_clonedeep(defaultsObj);
+    const refClone = clone(ref);
+    const defaultsObjClone = clone(defaultsObj);
     const optsWithBoolValues = {};
     // 1. find out, what boolean-value keys are there in defaultsObj that
     // are missing in ref. If there are n keys, we'll generate 2^n objects.

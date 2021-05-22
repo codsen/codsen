@@ -13,7 +13,9 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.arrayIncludesWithGlob = {}));
 }(this, (function (exports) { 'use strict';
 
-var escapeStringRegexp = string => {
+var matcher$1 = {exports: {}};
+
+var escapeStringRegexp$1 = string => {
 	if (typeof string !== 'string') {
 		throw new TypeError('Expected a string');
 	}
@@ -24,6 +26,8 @@ var escapeStringRegexp = string => {
 		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 		.replace(/-/g, '\\x2d');
 };
+
+const escapeStringRegexp = escapeStringRegexp$1;
 
 const regexpCache = new Map();
 
@@ -81,7 +85,7 @@ function makeRegexp(pattern, options) {
 	return regexp;
 }
 
-var matcher = (inputs, patterns, options) => {
+matcher$1.exports = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -113,7 +117,7 @@ var matcher = (inputs, patterns, options) => {
 	return result;
 };
 
-var isMatch = (inputs, patterns, options) => {
+matcher$1.exports.isMatch = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -129,7 +133,8 @@ var isMatch = (inputs, patterns, options) => {
 		});
 	});
 };
-matcher.isMatch = isMatch;
+
+var matcher = matcher$1.exports;
 
 var version$1 = "3.0.16";
 

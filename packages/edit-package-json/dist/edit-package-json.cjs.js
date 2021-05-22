@@ -113,7 +113,7 @@ function main(_ref) {
         if (!itsTheFirstElem) {
           log("198 ".concat("\x1B[".concat(33, "m", "currentPath", "\x1B[", 39, "m"), " = ", JSON.stringify(currentPath, null, 4)));
           currentPath[currentPath.length - 1] = currentPath[currentPath.length - 1] + 1;
-          log();
+          log("207 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "currentPath[".concat(currentPath.length - 1, "]"), "\x1B[", 39, "m"), " = ", currentPath[currentPath.length - 1]));
         }
       }
       withinObjectIndexes.push(i);
@@ -181,7 +181,7 @@ function main(_ref) {
           log();
         } else if (typeof currentPath[currentPath.length - 1] === "number") {
           currentPath[currentPath.length - 1] = currentPath[currentPath.length - 1] + 1;
-          log();
+          log("432 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "currentPath[".concat(currentPath.length - 1, "]"), "\x1B[", 39, "m"), " = ", currentPath[currentPath.length - 1]));
         }
       }
     }

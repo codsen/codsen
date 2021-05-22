@@ -13,6 +13,8 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringLeftRight = {}));
 }(this, (function (exports) { 'use strict';
 
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -21,6 +23,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -152,12 +155,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -168,7 +166,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -1908,7 +1906,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 var version$1 = "4.0.16";
 
@@ -2500,7 +2500,7 @@ function chompLeft(str, idx, ...args) {
     // now, the first element within args can be opts.
     // It's a plain object so it's easy to distinguish
     if (lodash_isplainobject(args[0])) {
-        const opts = { ...defaults, ...lodash_clonedeep(args[0]) };
+        const opts = { ...defaults, ...clone(args[0]) };
         if (!opts.mode) {
             opts.mode = 0;
         }
@@ -2510,14 +2510,14 @@ function chompLeft(str, idx, ...args) {
         else if (!isNum(opts.mode)) {
             throw new Error(`string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ${opts.mode} (type ${typeof opts.mode})`);
         }
-        return chomp("left", str, idx, opts, lodash_clonedeep(args).slice(1));
+        return chomp("left", str, idx, opts, clone(args).slice(1));
     }
     if (!isStr(args[0])) {
-        return chomp("left", str, idx, defaults, lodash_clonedeep(args).slice(1));
+        return chomp("left", str, idx, defaults, clone(args).slice(1));
     }
     // ELSE
     // all arguments are values to match, first element is not options object
-    return chomp("left", str, idx, defaults, lodash_clonedeep(args));
+    return chomp("left", str, idx, defaults, clone(args));
 }
 //
 //
@@ -2563,7 +2563,7 @@ function chompRight(str, idx, ...args) {
     // now, the first element within args can be opts.
     // It's a plain object so it's easy to distinguish
     if (lodash_isplainobject(args[0])) {
-        const opts = { ...defaults, ...lodash_clonedeep(args[0]) };
+        const opts = { ...defaults, ...clone(args[0]) };
         if (!opts.mode) {
             opts.mode = 0;
         }
@@ -2573,14 +2573,14 @@ function chompRight(str, idx, ...args) {
         else if (!isNum(opts.mode)) {
             throw new Error(`string-left-right/chompRight(): [THROW_ID_02] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ${opts.mode} (type ${typeof opts.mode})`);
         }
-        return chomp("right", str, idx, opts, lodash_clonedeep(args).slice(1));
+        return chomp("right", str, idx, opts, clone(args).slice(1));
     }
     if (!isStr(args[0])) {
-        return chomp("right", str, idx, defaults, lodash_clonedeep(args).slice(1));
+        return chomp("right", str, idx, defaults, clone(args).slice(1));
     }
     // ELSE
     // all arguments are values to match, first element is not options object
-    return chomp("right", str, idx, defaults, lodash_clonedeep(args));
+    return chomp("right", str, idx, defaults, clone(args));
 }
 
 exports.chompLeft = chompLeft;

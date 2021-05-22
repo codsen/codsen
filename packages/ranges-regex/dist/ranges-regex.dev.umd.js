@@ -178,10 +178,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_isregexp = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -192,7 +189,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_isregexp = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** `Object#toString` result references. */
 var regexpTag = '[object RegExp]';
 
@@ -305,7 +302,9 @@ function isObject(value) {
 var isRegExp = nodeIsRegExp ? baseUnary(nodeIsRegExp) : baseIsRegExp;
 
 module.exports = isRegExp;
-});
+}(lodash_isregexp, lodash_isregexp.exports));
+
+var isregexp = lodash_isregexp.exports;
 
 var version$1 = "4.0.16";
 
@@ -315,7 +314,7 @@ function rRegex(regx, str, replacement) {
     if (regx === undefined) {
         throw new TypeError(`ranges-regex: [THROW_ID_01] The first input's argument must be a regex object! Currently it is missing!`);
     }
-    else if (!lodash_isregexp(regx)) {
+    else if (!isregexp(regx)) {
         throw new TypeError(`ranges-regex: [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: ${typeof regx}, equal to: ${JSON.stringify(regx, null, 4)}`);
     }
     // str validation

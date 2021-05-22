@@ -491,6 +491,8 @@ class Ranges {
   }
 }
 
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -509,12 +511,7 @@ var funcToString = funcProto.toString;
 /** Used to infer the `Object` constructor. */
 funcToString.call(Object);
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -525,7 +522,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -2265,7 +2262,7 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
 
 /**
  * @name string-left-right

@@ -15,10 +15,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -29,7 +26,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -1769,7 +1766,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -1779,6 +1778,7 @@ module.exports = cloneDeep;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -1947,7 +1947,7 @@ function traverse(tree1, cb1) {
     now: false
   };
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-    const tree = lodash_clonedeep(treeOriginal);
+    const tree = clone(treeOriginal);
     let res;
     const innerObj = {
       depth: -1,
@@ -1962,7 +1962,7 @@ function traverse(tree1, cb1) {
         }
         const path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         if (tree[i] !== undefined) {
-          innerObj.parent = lodash_clonedeep(tree);
+          innerObj.parent = clone(tree);
           innerObj.parentType = "array";
           innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, { ...innerObj,
@@ -1989,7 +1989,7 @@ function traverse(tree1, cb1) {
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-        innerObj.parent = lodash_clonedeep(tree);
+        innerObj.parent = clone(tree);
         innerObj.parentType = "object";
         innerObj.parentKey = parent(path);
         res = traverseInner(callback(key, tree[key], { ...innerObj,
@@ -2009,7 +2009,9 @@ function traverse(tree1, cb1) {
   return traverseInner(tree1, cb1, {}, stop2);
 }
 
-var escapeStringRegexp = string => {
+var matcher$1 = {exports: {}};
+
+var escapeStringRegexp$1 = string => {
 	if (typeof string !== 'string') {
 		throw new TypeError('Expected a string');
 	}
@@ -2020,6 +2022,8 @@ var escapeStringRegexp = string => {
 		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 		.replace(/-/g, '\\x2d');
 };
+
+const escapeStringRegexp = escapeStringRegexp$1;
 
 const regexpCache = new Map();
 
@@ -2077,7 +2081,7 @@ function makeRegexp(pattern, options) {
 	return regexp;
 }
 
-var matcher = (inputs, patterns, options) => {
+matcher$1.exports = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -2109,7 +2113,7 @@ var matcher = (inputs, patterns, options) => {
 	return result;
 };
 
-var isMatch = (inputs, patterns, options) => {
+matcher$1.exports.isMatch = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -2125,9 +2129,12 @@ var isMatch = (inputs, patterns, options) => {
 		});
 	});
 };
-matcher.isMatch = isMatch;
 
-var objectPath = createCommonjsModule(function (module) {
+var matcher = matcher$1.exports;
+
+var objectPath$1 = {exports: {}};
+
+(function (module) {
 (function (root, factory){
 
   /*istanbul ignore next:cant test*/
@@ -2423,7 +2430,9 @@ var objectPath = createCommonjsModule(function (module) {
   mod.withInheritedProps = factory({includeInheritedProps: true});
   return mod;
 });
-});
+}(objectPath$1));
+
+var objectPath = objectPath$1.exports;
 
 /**
  * @name arrayiffy-if-string
@@ -2973,7 +2982,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
 function getByKey(originalInput, whatToFind, originalReplacement) {
   let replacement;
   if (originalReplacement !== undefined) {
-    replacement = Array.isArray(originalReplacement) ? lodash_clonedeep(originalReplacement) : [lodash_clonedeep(originalReplacement)];
+    replacement = Array.isArray(originalReplacement) ? clone(originalReplacement) : [clone(originalReplacement)];
   }
   const findings = [];
   const amended = traverse(originalInput, (key, val, innerObj) => {

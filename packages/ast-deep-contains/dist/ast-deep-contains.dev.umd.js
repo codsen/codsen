@@ -19,12 +19,9 @@ function getDefaultExportFromCjs (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var objectPath$1 = {exports: {}};
 
-var objectPath = createCommonjsModule(function (module) {
+(function (module) {
 (function (root, factory){
 
   /*istanbul ignore next:cant test*/
@@ -320,7 +317,11 @@ var objectPath = createCommonjsModule(function (module) {
   mod.withInheritedProps = factory({includeInheritedProps: true});
   return mod;
 });
-});
+}(objectPath$1));
+
+var objectPath = objectPath$1.exports;
+
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -331,7 +332,7 @@ var objectPath = createCommonjsModule(function (module) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -2071,7 +2072,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -2081,6 +2084,7 @@ module.exports = cloneDeep;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -2249,7 +2253,7 @@ function traverse(tree1, cb1) {
     now: false
   };
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-    const tree = lodash_clonedeep(treeOriginal);
+    const tree = clone(treeOriginal);
     let res;
     const innerObj = {
       depth: -1,
@@ -2264,7 +2268,7 @@ function traverse(tree1, cb1) {
         }
         const path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         if (tree[i] !== undefined) {
-          innerObj.parent = lodash_clonedeep(tree);
+          innerObj.parent = clone(tree);
           innerObj.parentType = "array";
           innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, { ...innerObj,
@@ -2291,7 +2295,7 @@ function traverse(tree1, cb1) {
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-        innerObj.parent = lodash_clonedeep(tree);
+        innerObj.parent = clone(tree);
         innerObj.parentType = "object";
         innerObj.parentKey = parent(path);
         res = traverseInner(callback(key, tree[key], { ...innerObj,
@@ -2311,7 +2315,9 @@ function traverse(tree1, cb1) {
   return traverseInner(tree1, cb1, {}, stop2);
 }
 
-var dist = createCommonjsModule(function (module, exports) {
+var dist = {exports: {}};
+
+(function (module, exports) {
 /// <reference lib="es2018"/>
 /// <reference lib="dom"/>
 /// <reference types="node"/>
@@ -2512,7 +2518,7 @@ is.primitive = (value) => is.null_(value) || isPrimitiveTypeName(typeof value);
 is.integer = (value) => Number.isInteger(value);
 is.safeInteger = (value) => Number.isSafeInteger(value);
 is.plainObject = (value) => {
-    // From: https://github.com/sindresorhus/is-plain-obj/blob/master/index.js
+    // From: https://github.com/sindresorhus/is-plain-obj/blob/main/index.js
     if (toString.call(value) !== '[object Object]') {
         return false;
     }
@@ -2594,9 +2600,15 @@ is.any = (predicate, ...values) => {
     return predicates.some(singlePredicate => predicateOnArray(Array.prototype.some, singlePredicate, values));
 };
 is.all = (predicate, ...values) => predicateOnArray(Array.prototype.every, predicate, values);
-const assertType = (condition, description, value) => {
+const assertType = (condition, description, value, options = {}) => {
     if (!condition) {
-        throw new TypeError(`Expected value which is \`${description}\`, received value of type \`${is(value)}\`.`);
+        const { multipleValues } = options;
+        const valuesMessage = multipleValues ?
+            `received values of types ${[
+                ...new Set(value.map(singleValue => `\`${is(singleValue)}\``))
+            ].join(', ')}` :
+            `received value of type \`${is(value)}\``;
+        throw new TypeError(`Expected value which is \`${description}\`, ${valuesMessage}.`);
     }
 };
 exports.assert = {
@@ -2688,8 +2700,10 @@ exports.assert = {
     directInstanceOf: (instance, class_) => assertType(is.directInstanceOf(instance, class_), "T" /* directInstanceOf */, instance),
     inRange: (value, range) => assertType(is.inRange(value, range), "in range" /* inRange */, value),
     // Variadic functions.
-    any: (predicate, ...values) => assertType(is.any(predicate, ...values), "predicate returns truthy for any value" /* any */, values),
-    all: (predicate, ...values) => assertType(is.all(predicate, ...values), "predicate returns truthy for all values" /* all */, values)
+    any: (predicate, ...values) => {
+        return assertType(is.any(predicate, ...values), "predicate returns truthy for any value" /* any */, values, { multipleValues: true });
+    },
+    all: (predicate, ...values) => assertType(is.all(predicate, ...values), "predicate returns truthy for all values" /* all */, values, { multipleValues: true })
 };
 // Some few keywords are reserved, but we'll populate them for Node.js users
 // See https://github.com/Microsoft/TypeScript/issues/2536
@@ -2720,9 +2734,9 @@ exports.default = is;
 module.exports = is;
 module.exports.default = is;
 module.exports.assert = exports.assert;
-});
+}(dist, dist.exports));
 
-var is = /*@__PURE__*/getDefaultExportFromCjs(dist);
+var is = /*@__PURE__*/getDefaultExportFromCjs(dist.exports);
 
 var version$1 = "3.0.16";
 

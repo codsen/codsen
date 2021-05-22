@@ -595,6 +595,10 @@ function fixRowNums(str, originalOpts) {
         if (Number.isInteger(digitStartsAt) &&
             (!isDigit(str[i]) || !str[i + 1]) &&
             (i > digitStartsAt || !str[i + 1])) {
+            // replace the digits:
+            if (!opts.padStart) {
+                if (opts.overrideRowNum != null) ;
+            }
             // PS. finalIndexesToDelete is a Ranges class so we can push
             // two/three arguments and it will understand it's (range) array...
             finalIndexesToDelete.push(digitStartsAt, !isDigit(str[i]) ? i : i + 1, opts.padStart

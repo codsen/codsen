@@ -15,10 +15,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_merge = {exports: {}};
 
 /**
  * Lodash (Custom Build) <https://lodash.com/>
@@ -29,7 +26,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_merge = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -1998,7 +1995,11 @@ function stubFalse() {
 }
 
 module.exports = merge;
-});
+}(lodash_merge, lodash_merge.exports));
+
+var merge = lodash_merge.exports;
+
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -2009,7 +2010,7 @@ module.exports = merge;
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -3749,7 +3750,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -3759,6 +3762,7 @@ module.exports = cloneDeep;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -3906,7 +3910,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
         flattenArraysContainingStringsToBeEmpty: false,
     };
     const opts = { ...defaults, ...originalOpts };
-    const incommingObj = lodash_clonedeep(originalIncommingObj);
+    const incommingObj = clone(originalIncommingObj);
     let isFirstObj;
     let combinedObj;
     let firstObjIndex;
@@ -3923,7 +3927,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
         firstObjIndex = 0;
         for (let i = 0, len = incommingObj.length; i < len; i++) {
             if (lodash_isplainobject(incommingObj[i])) {
-                combinedObj = lodash_merge(combinedObj, incommingObj[i]);
+                combinedObj = merge(combinedObj, incommingObj[i]);
                 if (isFirstObj === null) {
                     isFirstObj = true;
                     firstObjIndex = i;
@@ -3935,7 +3939,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
             }
         }
         if (isFirstObj !== null) {
-            incommingObj[firstObjIndex] = lodash_clonedeep(combinedObj);
+            incommingObj[firstObjIndex] = clone(combinedObj);
         }
     }
     // 2. traverse deeper

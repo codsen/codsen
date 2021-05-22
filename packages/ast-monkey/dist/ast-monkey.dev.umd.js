@@ -13,6 +13,8 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.astMonkey = {}));
 }(this, (function (exports) { 'use strict';
 
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -21,6 +23,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
     MAX_SAFE_INTEGER$1 = 9007199254740991,
@@ -796,14 +799,9 @@ function arrObjOrBoth(str, originalOpts) {
   throw new TypeError(`${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`);
 }
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+var typeDetect$1 = {exports: {}};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
-
-var typeDetect = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 (function (global, factory) {
 	module.exports = factory() ;
 }(commonjsGlobal, (function () {
@@ -1189,7 +1187,9 @@ function typeDetect(obj) {
 return typeDetect;
 
 })));
-});
+}(typeDetect$1));
+
+var typeDetect = typeDetect$1.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -1199,6 +1199,7 @@ return typeDetect;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /**
  * A specialized version of `_.map` for arrays without support for iteratee
  * shorthands.
@@ -1403,6 +1404,8 @@ function pullAll(array, values) {
 
 var lodash_pullall = pullAll;
 
+var lodash_clonedeep = {exports: {}};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -1412,7 +1415,7 @@ var lodash_pullall = pullAll;
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -3152,7 +3155,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -3162,6 +3167,7 @@ module.exports = cloneDeep;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -3330,7 +3336,7 @@ function traverse(tree1, cb1) {
     now: false
   };
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-    const tree = lodash_clonedeep(treeOriginal);
+    const tree = clone(treeOriginal);
     let res;
     const innerObj = {
       depth: -1,
@@ -3345,7 +3351,7 @@ function traverse(tree1, cb1) {
         }
         const path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         if (tree[i] !== undefined) {
-          innerObj.parent = lodash_clonedeep(tree);
+          innerObj.parent = clone(tree);
           innerObj.parentType = "array";
           innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, { ...innerObj,
@@ -3372,7 +3378,7 @@ function traverse(tree1, cb1) {
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-        innerObj.parent = lodash_clonedeep(tree);
+        innerObj.parent = clone(tree);
         innerObj.parentType = "object";
         innerObj.parentKey = parent(path);
         res = traverseInner(callback(key, tree[key], { ...innerObj,
@@ -4477,7 +4483,9 @@ function arrayiffy(something) {
   return something;
 }
 
-var objectPath = createCommonjsModule(function (module) {
+var objectPath$1 = {exports: {}};
+
+(function (module) {
 (function (root, factory){
 
   /*istanbul ignore next:cant test*/
@@ -4773,9 +4781,13 @@ var objectPath = createCommonjsModule(function (module) {
   mod.withInheritedProps = factory({includeInheritedProps: true});
   return mod;
 });
-});
+}(objectPath$1));
 
-var escapeStringRegexp = string => {
+var objectPath = objectPath$1.exports;
+
+var matcher$1 = {exports: {}};
+
+var escapeStringRegexp$1 = string => {
 	if (typeof string !== 'string') {
 		throw new TypeError('Expected a string');
 	}
@@ -4786,6 +4798,8 @@ var escapeStringRegexp = string => {
 		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 		.replace(/-/g, '\\x2d');
 };
+
+const escapeStringRegexp = escapeStringRegexp$1;
 
 const regexpCache = new Map();
 
@@ -4843,7 +4857,7 @@ function makeRegexp(pattern, options) {
 	return regexp;
 }
 
-var matcher = (inputs, patterns, options) => {
+matcher$1.exports = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -4875,7 +4889,7 @@ var matcher = (inputs, patterns, options) => {
 	return result;
 };
 
-var isMatch = (inputs, patterns, options) => {
+matcher$1.exports.isMatch = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -4891,7 +4905,8 @@ var isMatch = (inputs, patterns, options) => {
 		});
 	});
 };
-matcher.isMatch = isMatch;
+
+var matcher = matcher$1.exports;
 
 /**
  * @name check-types-mini

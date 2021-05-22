@@ -13,6 +13,8 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.objectAllValuesEqualTo = {}));
 }(this, (function (exports) { 'use strict';
 
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -21,6 +23,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -152,12 +155,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_isequal = {exports: {}};
 
 /**
  * Lodash (Custom Build) <https://lodash.com/>
@@ -168,7 +166,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_isequal = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -2008,7 +2006,9 @@ function stubFalse() {
 }
 
 module.exports = isEqual;
-});
+}(lodash_isequal, lodash_isequal.exports));
+
+var isEq = lodash_isequal.exports;
 
 var version$1 = "2.0.16";
 
@@ -2023,7 +2023,7 @@ function allValuesEqualTo(input, value, opts) {
         }
         if (opts.arraysMustNotContainPlaceholders &&
             input.length > 0 &&
-            input.some((el) => lodash_isequal(el, value))) {
+            input.some((el) => isEq(el, value))) {
             return false;
         }
         // so at this point
@@ -2047,7 +2047,7 @@ function allValuesEqualTo(input, value, opts) {
         }
         return true;
     }
-    return lodash_isequal(input, value);
+    return isEq(input, value);
 }
 // T H E   E X P O S E D   W R A P P E R   F U N C T I O N
 // -----------------------------------------------------------------------------

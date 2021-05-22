@@ -77,9 +77,8 @@ The promo is still on!
 {% endif %}
 </div>
 `;
-  const { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
-    input
-  );
+  const { result, ranges, allTagLocations, filteredTagLocations } =
+    stripHtml(input);
   t.equal(
     result,
     `{% if data.customer.purchases[0].spendTotal < 100 %}\nYou earned a discount!\n{% else %}\nThe promo is still on!\n{% endif %}`,

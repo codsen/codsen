@@ -15,14 +15,11 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var he$1 = {exports: {}};
 
 /*! https://mths.be/he v1.2.0 by @mathias | MIT license */
 
-var he = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 (function(root) {
 
 	// Detect free variables `exports`.
@@ -359,7 +356,9 @@ var he = createCommonjsModule(function (module, exports) {
 	}
 
 }(commonjsGlobal));
-});
+}(he$1, he$1.exports));
+
+var he = he$1.exports;
 
 var version$1 = "4.0.16";
 

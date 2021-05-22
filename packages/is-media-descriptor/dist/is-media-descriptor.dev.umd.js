@@ -13,6 +13,8 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.isMediaDescriptor = {}));
 }(this, (function (exports) { 'use strict';
 
+var leven$2 = {exports: {}};
+
 const array = [];
 const charCodeCache = [];
 
@@ -86,10 +88,11 @@ const leven = (left, right) => {
 	return result;
 };
 
-var leven_1 = leven;
+leven$2.exports = leven;
 // TODO: Remove this for the next major release
-var _default = leven;
-leven_1.default = _default;
+leven$2.exports.default = leven;
+
+var leven$1 = leven$2.exports;
 
 /**
  * @name string-process-comma-separated
@@ -730,7 +733,7 @@ function isMediaD(originalStr, originalOpts) {
         //
         //
         for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
-            if (leven_1(recognisedMediaTypes[i], str) === 1) {
+            if (leven$1(recognisedMediaTypes[i], str) === 1) {
                 res.push({
                     idxFrom: nonWhitespaceStart + opts.offset,
                     idxTo: nonWhitespaceEnd + opts.offset,

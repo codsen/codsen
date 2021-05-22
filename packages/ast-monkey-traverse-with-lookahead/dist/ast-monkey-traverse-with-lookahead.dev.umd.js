@@ -15,10 +15,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -29,7 +26,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -1769,7 +1766,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -1779,6 +1778,7 @@ module.exports = cloneDeep;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -1939,7 +1939,7 @@ function traverse(tree1, cb1, lookahead = 0) {
                     break;
                 }
                 const path = `${innerObj.path}.${i}`;
-                innerObj.parent = lodash_clonedeep(tree);
+                innerObj.parent = clone(tree);
                 innerObj.parentType = "array";
                 // innerObj.path = `${innerObj.path}[${i}]`
                 callback(tree[i], undefined, { ...innerObj, path: trimFirstDot(path) }, stop);
@@ -1956,7 +1956,7 @@ function traverse(tree1, cb1, lookahead = 0) {
                 if (innerObj.depth === 0 && key != null) {
                     innerObj.topmostKey = key;
                 }
-                innerObj.parent = lodash_clonedeep(tree);
+                innerObj.parent = clone(tree);
                 innerObj.parentType = "object";
                 callback(key, tree[key], { ...innerObj, path: trimFirstDot(path) }, stop);
                 traverseInner(tree[key], callback, { ...innerObj, path: trimFirstDot(path) }, stop);
@@ -1976,7 +1976,7 @@ function traverse(tree1, cb1, lookahead = 0) {
         for (let i = 0; i < lookahead; i++) {
             // we want as many as "lookahead" from stash but there might be not enough
             if (stash[i]) {
-                currentElem[2].next.push(lodash_clonedeep([stash[i][0], stash[i][1], stash[i][2]]));
+                currentElem[2].next.push(clone([stash[i][0], stash[i][1], stash[i][2]]));
             }
             else {
                 break;

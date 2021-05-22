@@ -15,10 +15,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -29,7 +26,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -1769,7 +1766,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -1779,6 +1778,7 @@ module.exports = cloneDeep;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** Used as references for various `Number` constants. */
 var INFINITY$1 = 1 / 0,
     MAX_SAFE_INTEGER = 9007199254740991,
@@ -3421,6 +3421,7 @@ var lodash_uniq = uniq;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -3552,6 +3553,8 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
+var lodash_isdate = {exports: {}};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -3561,7 +3564,7 @@ var lodash_isplainobject = isPlainObject;
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_isdate = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** `Object#toString` result references. */
 var dateTag = '[object Date]';
 
@@ -3672,11 +3675,15 @@ function isObjectLike(value) {
 }
 
 module.exports = isDate;
-});
+}(lodash_isdate, lodash_isdate.exports));
+
+var isDate = lodash_isdate.exports;
 
 var version$1 = "12.0.13";
 
-var escapeStringRegexp = string => {
+var matcher$1 = {exports: {}};
+
+var escapeStringRegexp$1 = string => {
 	if (typeof string !== 'string') {
 		throw new TypeError('Expected a string');
 	}
@@ -3687,6 +3694,8 @@ var escapeStringRegexp = string => {
 		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 		.replace(/-/g, '\\x2d');
 };
+
+const escapeStringRegexp = escapeStringRegexp$1;
 
 const regexpCache = new Map();
 
@@ -3744,7 +3753,7 @@ function makeRegexp(pattern, options) {
 	return regexp;
 }
 
-var matcher = (inputs, patterns, options) => {
+matcher$1.exports = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -3776,7 +3785,7 @@ var matcher = (inputs, patterns, options) => {
 	return result;
 };
 
-var isMatch = (inputs, patterns, options) => {
+matcher$1.exports.isMatch = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -3792,7 +3801,8 @@ var isMatch = (inputs, patterns, options) => {
 		});
 	});
 };
-matcher.isMatch = isMatch;
+
+var matcher = matcher$1.exports;
 
 /**
  * @name array-includes-with-glob
@@ -3877,7 +3887,7 @@ function getType(something) {
     if (something === null) {
         return "null";
     }
-    if (lodash_isdate(something)) {
+    if (isDate(something)) {
         return "date";
     }
     if (lodash_isplainobject(something)) {
@@ -3952,8 +3962,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
     // clone the values to prevent accidental mutations, but only if it makes sense -
     // it applies to arrays and plain objects only (as far as we're concerned here)
-    let i1 = isArr(input1orig) || lodash_isplainobject(input1orig) ? lodash_clonedeep(input1orig) : input1orig;
-    const i2 = isArr(input2orig) || lodash_isplainobject(input2orig) ? lodash_clonedeep(input2orig) : input2orig;
+    let i1 = isArr(input1orig) || lodash_isplainobject(input1orig) ? clone(input1orig) : input1orig;
+    const i2 = isArr(input2orig) || lodash_isplainobject(input2orig) ? clone(input2orig) : input2orig;
     let uniRes;
     if (opts.ignoreEverything) {
         uniRes = i1;
@@ -3978,7 +3988,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                     (arrayContainsStr(i1) || arrayContainsStr(i2))) {
                     const currentResult = uni ? uniRes : [];
                     if (typeof opts.cb === "function") {
-                        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                             path: currPath,
                             key: infoObj.key,
                             type: infoObj.type,
@@ -3989,7 +3999,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 if (opts.hardArrayConcat) {
                     const currentResult = uni ? uniRes : i1.concat(i2);
                     if (typeof opts.cb === "function") {
-                        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                             path: currPath,
                             key: infoObj.key,
                             type: infoObj.type,
@@ -4055,13 +4065,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 if (opts.dedupeStringsInArrayValues && temp.every((el) => isStr(el))) {
                     temp = lodash_uniq(temp).sort();
                 }
-                i1 = lodash_clonedeep(temp);
+                i1 = clone(temp);
             }
             else {
                 // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
                 const currentResult = uni ? uniRes : i1;
                 if (typeof opts.cb === "function") {
-                    return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                    return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                         path: currPath,
                         key: infoObj.key,
                         type: infoObj.type,
@@ -4076,7 +4086,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 // cases 11, 13, 15, 17
                 const currentResult = uni ? uniRes : i2;
                 if (typeof opts.cb === "function") {
-                    return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                    return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                         path: currPath,
                         key: infoObj.key,
                         type: infoObj.type,
@@ -4087,7 +4097,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             // cases 12, 14, 16, 18, 19, 20
             const currentResult = uni ? uniRes : i1;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: currPath,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4105,7 +4115,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                     // case 21
                     const currentResult = uni ? uniRes : i2;
                     if (typeof opts.cb === "function") {
-                        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                             path: currPath,
                             key: infoObj.key,
                             type: infoObj.type,
@@ -4116,7 +4126,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 // case 22
                 const currentResult = uni ? uniRes : i1;
                 if (typeof opts.cb === "function") {
-                    return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                    return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                         path: currPath,
                         key: infoObj.key,
                         type: infoObj.type,
@@ -4182,7 +4192,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 });
                 const currentResult = uni ? uniRes : i1;
                 if (typeof opts.cb === "function") {
-                    return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                    return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                         path: infoObj.path,
                         key: infoObj.key,
                         type: infoObj.type,
@@ -4193,7 +4203,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             // cases 24, 25, 26, 27, 28, 29, 30
             const currentResult = uni ? uniRes : i1;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4207,7 +4217,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             // cases 31, 32, 33, 34, 35, 37
             const currentResult = uni ? uniRes : i2;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4218,7 +4228,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         // 36, 38, 39, 40
         const currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
                 type: infoObj.type,
@@ -4226,14 +4236,14 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
         return currentResult;
     }
-    else if (lodash_isdate(i1)) {
+    else if (isDate(i1)) {
         if (isFinite(i1)) {
-            if (lodash_isdate(i2)) {
+            if (isDate(i2)) {
                 if (isFinite(i2)) {
                     // compares dates
                     const currentResult = uni ? uniRes : i1 > i2 ? i1 : i2;
                     if (typeof opts.cb === "function") {
-                        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                             path: infoObj.path,
                             key: infoObj.key,
                             type: infoObj.type,
@@ -4244,7 +4254,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 // return i1 date
                 const currentResult = uni ? uniRes : i1;
                 if (typeof opts.cb === "function") {
-                    return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                    return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                         path: infoObj.path,
                         key: infoObj.key,
                         type: infoObj.type,
@@ -4255,7 +4265,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             // if i2 is truthy, return it, otherwise return date at i1
             const currentResult = uni ? uniRes : i2 ? i2 : i1;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4263,11 +4273,11 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             }
             return currentResult;
         }
-        if (lodash_isdate(i2)) {
+        if (isDate(i2)) {
             // return i2 date
             const currentResult = uni ? uniRes : i2;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4277,7 +4287,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
         const currentResult = uni ? uniRes : i2;
         if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
                 type: infoObj.type,
@@ -4292,7 +4302,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 // take care of hard merge setting cases, opts.hardMergeKeys
                 const currentResult = uni ? uniRes : i2;
                 if (typeof opts.cb === "function") {
-                    return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                    return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                         path: infoObj.path,
                         key: infoObj.key,
                         type: infoObj.type,
@@ -4303,7 +4313,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             // cases 42, 44, 46, 47, 48, 49, 50
             const currentResult = uni ? uniRes : i1;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4316,7 +4326,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             // cases 51, 52, 53, 54, 55, 56, 57
             const currentResult = uni ? uniRes : i2;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4327,7 +4337,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         // 58, 59, 60
         const currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
                 type: infoObj.type,
@@ -4340,7 +4350,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             // cases 61, 63, 65, 67
             const currentResult = uni ? uniRes : i2;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4351,7 +4361,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         // cases 62, 64, 66, 68, 69, 70
         const currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
                 type: infoObj.type,
@@ -4365,7 +4375,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             if (opts.mergeBoolsUsingOrNotAnd) {
                 const currentResult = uni ? uniRes : i1 || i2; // default - OR
                 if (typeof opts.cb === "function") {
-                    return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                    return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                         path: infoObj.path,
                         key: infoObj.key,
                         type: infoObj.type,
@@ -4375,7 +4385,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             }
             const currentResult = uni ? uniRes : i1 && i2; // alternative merge using AND
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4388,7 +4398,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             // cases 71, 72, 73, 74, 75, 76, 77
             const currentResult = uni ? uniRes : i2;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4400,7 +4410,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         // cases 79*, 80
         const currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
                 type: infoObj.type,
@@ -4414,7 +4424,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             // case 81, 82, 83, 84, 85, 86, 87, 88*
             const currentResult = uni ? uniRes : i2;
             if (typeof opts.cb === "function") {
-                return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+                return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                     path: infoObj.path,
                     key: infoObj.key,
                     type: infoObj.type,
@@ -4425,7 +4435,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         // cases 89, 90
         const currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
                 type: infoObj.type,
@@ -4436,7 +4446,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     else {
         const currentResult = uni ? uniRes : i2;
         if (typeof opts.cb === "function") {
-            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+            return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
                 type: infoObj.type,
@@ -4447,7 +4457,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     // return i1
     const currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
+        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type,

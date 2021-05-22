@@ -15,10 +15,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -29,7 +26,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -1769,7 +1766,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -1779,6 +1778,7 @@ module.exports = cloneDeep;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -1947,7 +1947,7 @@ function traverse(tree1, cb1) {
     now: false
   };
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-    const tree = lodash_clonedeep(treeOriginal);
+    const tree = clone(treeOriginal);
     let res;
     const innerObj = {
       depth: -1,
@@ -1962,7 +1962,7 @@ function traverse(tree1, cb1) {
         }
         const path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         if (tree[i] !== undefined) {
-          innerObj.parent = lodash_clonedeep(tree);
+          innerObj.parent = clone(tree);
           innerObj.parentType = "array";
           innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, { ...innerObj,
@@ -1989,7 +1989,7 @@ function traverse(tree1, cb1) {
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-        innerObj.parent = lodash_clonedeep(tree);
+        innerObj.parent = clone(tree);
         innerObj.parentType = "object";
         innerObj.parentKey = parent(path);
         res = traverseInner(callback(key, tree[key], { ...innerObj,
@@ -2009,6 +2009,8 @@ function traverse(tree1, cb1) {
   return traverseInner(tree1, cb1, {}, stop2);
 }
 
+var graphemeSplitter = {exports: {}};
+
 /*
 Breaks a Javascript string into individual user-perceived "characters" 
 called extended grapheme clusters by implementing the Unicode UAX-29 standard, version 10.0.0
@@ -2020,7 +2022,7 @@ var graphemes = splitter.splitGraphemes(string);
 
 */
 
-var graphemeSplitter = createCommonjsModule(function (module) {
+(function (module) {
 function GraphemeSplitter(){
 	var CR = 0,
 		LF = 1,
@@ -3754,7 +3756,9 @@ function GraphemeSplitter(){
 if (module.exports) {
     module.exports = GraphemeSplitter;
 }
-});
+}(graphemeSplitter));
+
+var GraphemeSplitter = graphemeSplitter.exports;
 
 var version$1 = "4.0.16";
 
@@ -3811,7 +3815,7 @@ function strConvertIndexes(mode, str, indexes) {
         return "0";
     }
     // ---------------------------------------------------------------------------
-    const splitter = new graphemeSplitter();
+    const splitter = new GraphemeSplitter();
     const graphemeStrArr = splitter.splitGraphemes(str);
     // easy - index will be the total count of all native JS index characters
     // leading up to this

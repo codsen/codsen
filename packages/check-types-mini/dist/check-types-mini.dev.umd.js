@@ -15,12 +15,9 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var typeDetect = {exports: {}};
 
-var typeDetect = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 (function (global, factory) {
 	module.exports = factory() ;
 }(commonjsGlobal, (function () {
@@ -406,7 +403,9 @@ function typeDetect(obj) {
 return typeDetect;
 
 })));
-});
+}(typeDetect));
+
+var typ = typeDetect.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -416,6 +415,7 @@ return typeDetect;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /**
  * A specialized version of `_.map` for arrays without support for iteratee
  * shorthands.
@@ -620,6 +620,8 @@ function pullAll(array, values) {
 
 var lodash_pullall = pullAll;
 
+var lodash_clonedeep = {exports: {}};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -629,7 +631,7 @@ var lodash_pullall = pullAll;
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -2369,7 +2371,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -2379,6 +2383,7 @@ module.exports = cloneDeep;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -2547,7 +2552,7 @@ function traverse(tree1, cb1) {
     now: false
   };
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-    const tree = lodash_clonedeep(treeOriginal);
+    const tree = clone(treeOriginal);
     let res;
     const innerObj = {
       depth: -1,
@@ -2562,7 +2567,7 @@ function traverse(tree1, cb1) {
         }
         const path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         if (tree[i] !== undefined) {
-          innerObj.parent = lodash_clonedeep(tree);
+          innerObj.parent = clone(tree);
           innerObj.parentType = "array";
           innerObj.parentKey = parent(path);
           res = traverseInner(callback(tree[i], undefined, { ...innerObj,
@@ -2589,7 +2594,7 @@ function traverse(tree1, cb1) {
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-        innerObj.parent = lodash_clonedeep(tree);
+        innerObj.parent = clone(tree);
         innerObj.parentType = "object";
         innerObj.parentKey = parent(path);
         res = traverseInner(callback(key, tree[key], { ...innerObj,
@@ -3694,7 +3699,9 @@ function arrayiffy(something) {
   return something;
 }
 
-var objectPath = createCommonjsModule(function (module) {
+var objectPath$1 = {exports: {}};
+
+(function (module) {
 (function (root, factory){
 
   /*istanbul ignore next:cant test*/
@@ -3990,9 +3997,13 @@ var objectPath = createCommonjsModule(function (module) {
   mod.withInheritedProps = factory({includeInheritedProps: true});
   return mod;
 });
-});
+}(objectPath$1));
 
-var escapeStringRegexp = string => {
+var objectPath = objectPath$1.exports;
+
+var matcher$1 = {exports: {}};
+
+var escapeStringRegexp$1 = string => {
 	if (typeof string !== 'string') {
 		throw new TypeError('Expected a string');
 	}
@@ -4003,6 +4014,8 @@ var escapeStringRegexp = string => {
 		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 		.replace(/-/g, '\\x2d');
 };
+
+const escapeStringRegexp = escapeStringRegexp$1;
 
 const regexpCache = new Map();
 
@@ -4060,7 +4073,7 @@ function makeRegexp(pattern, options) {
 	return regexp;
 }
 
-var matcher = (inputs, patterns, options) => {
+matcher$1.exports = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -4092,7 +4105,7 @@ var matcher = (inputs, patterns, options) => {
 	return result;
 };
 
-var isMatch = (inputs, patterns, options) => {
+matcher$1.exports.isMatch = (inputs, patterns, options) => {
 	inputs = sanitizeArray(inputs, 'inputs');
 	patterns = sanitizeArray(patterns, 'patterns');
 
@@ -4108,7 +4121,8 @@ var isMatch = (inputs, patterns, options) => {
 		});
 	});
 };
-matcher.isMatch = isMatch;
+
+var matcher = matcher$1.exports;
 
 const defaults = {
     ignoreKeys: [],
@@ -4129,7 +4143,7 @@ function internalApi(obj, ref, originalOptions) {
         return something != null; // deliberate !=
     }
     function isObj(something) {
-        return typeDetect(something) === "Object";
+        return typ(something) === "Object";
     }
     function pullAllWithGlob(originalInput, toBeRemoved) {
         if (typeof toBeRemoved === "string") {
@@ -4360,7 +4374,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
                 // in granular fashion: as just "true" or just "false".
                 if ((current !== true &&
                     current !== false &&
-                    !currentKeysSchema.includes(typeDetect(current).toLowerCase())) ||
+                    !currentKeysSchema.includes(typ(current).toLowerCase())) ||
                     ((current === true || current === false) &&
                         !currentKeysSchema.includes(String(current)) &&
                         !currentKeysSchema.includes("boolean"))) {
@@ -4371,14 +4385,14 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
                     if (Array.isArray(current) && opts.acceptArrays) {
                         // check each key:
                         for (let i = 0, len = current.length; i < len; i++) {
-                            if (!currentKeysSchema.includes(typeDetect(current[i]).toLowerCase())) {
-                                throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path}.${i}, the ${i}th element (equal to ${JSON.stringify(current[i], null, 0)}) is of a type ${typeDetect(current[i]).toLowerCase()}, but only the following are allowed by the ${opts.optsVarName}.schema: ${currentKeysSchema.join(", ")}`);
+                            if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
+                                throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path}.${i}, the ${i}th element (equal to ${JSON.stringify(current[i], null, 0)}) is of a type ${typ(current[i]).toLowerCase()}, but only the following are allowed by the ${opts.optsVarName}.schema: ${currentKeysSchema.join(", ")}`);
                             }
                         }
                     }
                     else {
                         // only then do throw...
-                        throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to ${typeDetect(current) !== "string" ? '"' : ""}${JSON.stringify(current, null, 0)}${typeDetect(current) !== "string" ? '"' : ""} (type: ${typeDetect(current).toLowerCase()}) which is not among the allowed types in schema (which is equal to ${JSON.stringify(currentKeysSchema, null, 0)})`);
+                        throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to ${typ(current) !== "string" ? '"' : ""}${JSON.stringify(current, null, 0)}${typ(current) !== "string" ? '"' : ""} (type: ${typ(current).toLowerCase()}) which is not among the allowed types in schema (which is equal to ${JSON.stringify(currentKeysSchema, null, 0)})`);
                     }
                 }
             }
@@ -4391,13 +4405,13 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
             if (opts.acceptArrays &&
                 Array.isArray(current) &&
                 !opts.acceptArraysIgnore.includes(key)) {
-                const allMatch = current.every((el) => typeDetect(el).toLowerCase() === typeDetect(ref[key]).toLowerCase());
+                const allMatch = current.every((el) => typ(el).toLowerCase() === typ(ref[key]).toLowerCase());
                 if (!allMatch) {
-                    throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to be array, but not all of its elements are ${typeDetect(ref[key]).toLowerCase()}-type`);
+                    throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to be array, but not all of its elements are ${typ(ref[key]).toLowerCase()}-type`);
                 }
             }
-            else if (typeDetect(current) !== typeDetect(compareTo)) {
-                throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to ${typeDetect(current).toLowerCase() === "string" ? "" : '"'}${JSON.stringify(current, null, 0)}${typeDetect(current).toLowerCase() === "string" ? "" : '"'} which is not ${typeDetect(compareTo).toLowerCase()} but ${typeDetect(current).toLowerCase()}`);
+            else if (typ(current) !== typ(compareTo)) {
+                throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to ${typ(current).toLowerCase() === "string" ? "" : '"'}${JSON.stringify(current, null, 0)}${typ(current).toLowerCase() === "string" ? "" : '"'} which is not ${typ(compareTo).toLowerCase()} but ${typ(current).toLowerCase()}`);
             }
         }
         else ;

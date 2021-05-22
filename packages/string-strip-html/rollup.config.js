@@ -3,7 +3,6 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
-import replace from "@rollup/plugin-replace";
 import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
 import babel from "@rollup/plugin-babel";
@@ -63,9 +62,6 @@ export default (commandLineArgs) => {
           rootMode: "upward",
           babelHelpers: "bundled",
         }),
-        replace({
-          "process.env.NODE_ENV": JSON.stringify("production"),
-        }),
         !commandLineArgs.dev &&
           strip({
             sourceMap: false,
@@ -110,9 +106,6 @@ export default (commandLineArgs) => {
           exclude: "node_modules/**",
           rootMode: "upward",
           babelHelpers: "bundled",
-        }),
-        replace({
-          "process.env.NODE_ENV": JSON.stringify("development"),
         }),
         !commandLineArgs.dev &&
           strip({

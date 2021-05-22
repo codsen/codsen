@@ -64,6 +64,8 @@ function pathUp(str) {
   return "0";
 }
 
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -72,6 +74,7 @@ function pathUp(str) {
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -203,12 +206,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -219,7 +217,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -1959,7 +1957,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * @name string-left-right
@@ -3237,7 +3237,7 @@ function tokenizer(str, originalOpts) {
   let attrib = { ...attribDefaults
   };
   function attribReset() {
-    attrib = lodash_clonedeep(attribDefaults);
+    attrib = clone(attribDefaults);
   }
   function attribPush(tokenObj) {
     /* istanbul ignore else */
@@ -3307,7 +3307,7 @@ function tokenizer(str, originalOpts) {
     const next = [];
     for (let i = 0; i < lookaheadLength; i++) {
       if (stash[i]) {
-        next.push(lodash_clonedeep(stash[i]));
+        next.push(clone(stash[i]));
       } else {
         break;
       }
@@ -3370,11 +3370,13 @@ function tokenizer(str, originalOpts) {
         }
         pingTagCb(incomingToken);
         initToken("text", cutOffIndex);
+        attribReset();
       } else {
         pingTagCb(incomingToken);
         tokenReset();
         if (str[~-i] && !str[~-i].trim()) {
           initToken("text", left(str, i) + 1);
+          attribReset();
         }
       }
     }
@@ -3482,7 +3484,6 @@ function tokenizer(str, originalOpts) {
     };
   }
   function initToken(type, startVal) {
-    attribReset();
     token = getNewToken(type, startVal);
   }
   function initProperty(propertyStarts) {
@@ -3501,10 +3502,10 @@ function tokenizer(str, originalOpts) {
     !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) ||
     isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
   }
-  function attrEndsAt(idx) {
+  function attrEndsAt(idx, extras) {
     return `;}/`.includes(str[idx]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") ||
-    `/;'"><`.includes(str[idx]) && attrib && attrib.attribName === "style" &&
-    ifQuoteThenAttrClosingQuote(idx);
+    `/;'"><`.includes(str[idx]) && attrib && attrib.attribName === "style" && (
+    extras || ifQuoteThenAttrClosingQuote(idx));
   }
   for (let i = 0; i <= len; i++) {
     if (!doNothing && str[i] && opts.reportProgressFunc) {
@@ -3553,11 +3554,12 @@ function tokenizer(str, originalOpts) {
             tokenReset();
             if (leftVal !== null && leftVal < ~-i) {
               initToken("text", leftVal + 1);
+              attribReset();
             }
           }
           dumpCurrentToken(token, i);
           const poppedToken = layers.pop();
-          token = poppedToken.token;
+          token = clone(poppedToken.token);
           token.closingCurlyAt = i;
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
@@ -3586,7 +3588,7 @@ function tokenizer(str, originalOpts) {
       if (attribToBackup) {
         attrib = attribToBackup;
         attrib.attribValue.push(token);
-        token = lodash_clonedeep(parentTokenToBackup);
+        token = clone(parentTokenToBackup);
         attribToBackup = undefined;
         parentTokenToBackup = undefined;
       } else {
@@ -3699,6 +3701,7 @@ function tokenizer(str, originalOpts) {
               token.value = str.slice(token.start, token.end);
               pingTagCb(token);
               initToken(str[y + 1] === "@" ? "at" : "rule", y + 1);
+              attribReset();
               token.left = left(str, y + 1);
               token.selectorsStart = y + 1;
               i = y + 1;
@@ -3741,6 +3744,7 @@ function tokenizer(str, originalOpts) {
           tokenReset();
         }
         initToken("tag", i);
+        attribReset();
         if (withinStyle) {
           withinStyle = false;
         }
@@ -3780,6 +3784,7 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, i);
         }
         initToken("comment", i);
+        attribReset();
         if (str[i] === "-") {
           token.closing = true;
         } else if (matchRightIncl(str, i, ["<![endif]-->"], {
@@ -3798,6 +3803,7 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, i);
         }
         initToken("comment", i);
+        attribReset();
         token.language = "css";
         token.kind = str[i] === "/" && str[i + 1] === "/" ? "line" : "block";
         token.value = str.slice(i, i + 2);
@@ -3819,6 +3825,10 @@ function tokenizer(str, originalOpts) {
       startsEsp(str, i, token, layers, withinStyle) && (
       !lastLayerIs("simple") || ![`'`, `"`].includes(layers[~-layers.length].value) ||
       attrib && attrib.attribStarts && !attrib.attribEnds))) {
+        if (attrib && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+          attrib.attribValue[~-attrib.attribValue.length].end = i;
+          attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+        }
         const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
           let lengthOfClosingEspChunk;
@@ -3842,15 +3852,24 @@ function tokenizer(str, originalOpts) {
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
                   parentTokenToBackup.attribs = [];
                 }
-                if (attribToBackup) {
+                if (property && property.start) {
+                  if (!Array.isArray(property.value)) {
+                    property.value = [];
+                  }
+                  property.value.push({ ...token
+                  });
+                } else if (attribToBackup) {
                   attrib = attribToBackup;
+                  attrib.attribValue.push({ ...token
+                  });
+                } else if (attrib && attrib.attribStarts && Array.isArray(attrib.attribValue)) {
                   attrib.attribValue.push({ ...token
                   });
                 } else {
                   parentTokenToBackup.attribs.push({ ...token
                   });
                 }
-                token = lodash_clonedeep(parentTokenToBackup);
+                token = clone(parentTokenToBackup);
                 parentTokenToBackup = undefined;
                 attribToBackup = undefined;
                 layers.pop();
@@ -3918,14 +3937,51 @@ function tokenizer(str, originalOpts) {
             });
             if (token.start !== null) {
               if (token.type === "tag") {
-                if (token.tagNameStartsAt && (!token.tagName || !token.tagNameEndsAt)) {
-                  token.tagNameEndsAt = i;
-                  token.tagName = str.slice(token.tagNameStartsAt, i);
-                  token.recognised = isTagNameRecognised(token.tagName);
+                if (attrib && attrib.attribName === "style") {
+                  if (property.start && !property.end && property.propertyEnds && !property.valueStarts) {
+                    property.valueStarts = i;
+                  } else if (property.start) {
+                    if (!Array.isArray(property.value)) {
+                      if (property.propertyStarts && !property.propertyEnds) {
+                        property.propertyEnds = leftVal + 1;
+                        property.property = str.slice(property.propertyStarts, i);
+                      } else if (property.valueStarts && !property.valueEnds) {
+                        property.valueEnds = leftVal + 1;
+                        property.value = str.slice(property.valueStarts, property.valueEnds);
+                      }
+                      if (property.start && !property.end) {
+                        property.end = leftVal + 1;
+                      }
+                      if (attrib && Array.isArray(attrib.attribValue)) {
+                        attrib.attribValue.push(clone(property));
+                        if (property.end !== i) {
+                          const newTextToken = getNewToken("text", leftVal + 1);
+                          newTextToken.end = i;
+                          newTextToken.value = str.slice(leftVal + 1, i);
+                          attrib.attribValue.push(clone(newTextToken));
+                        }
+                        propertyReset();
+                      }
+                    }
+                  }
+                } else {
+                  if (token.tagNameStartsAt && (!token.tagName || !token.tagNameEndsAt)) {
+                    token.tagNameEndsAt = i;
+                    token.tagName = str.slice(token.tagNameStartsAt, i);
+                    token.recognised = isTagNameRecognised(token.tagName);
+                  }
+                  if (attrib.attribStarts && !attrib.attribEnds) {
+                    attribToBackup = clone(attrib);
+                  }
                 }
-                parentTokenToBackup = lodash_clonedeep(token);
-                if (attrib.attribStarts && !attrib.attribEnds) {
-                  attribToBackup = lodash_clonedeep(attrib);
+                parentTokenToBackup = clone(token);
+              } else if (token.type === "text") {
+                token.end = i;
+                token.value = str.slice(token.start, i);
+                if (Array.isArray(property.value)) {
+                  property.value.push(token);
+                } else {
+                  dumpCurrentToken(token, i);
                 }
               } else if (!attribToBackup) {
                 dumpCurrentToken(token, i);
@@ -3961,10 +4017,12 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, i);
         }
         initToken(str[i] === "@" ? "at" : "rule", i);
+        attribReset();
         token.left = lastNonWhitespaceCharAt;
         token.nested = layers.some(o => o.type === "at");
       } else if (!token.type) {
         initToken("text", i);
+        attribReset();
         if (withinScript && str.indexOf("</script>", i)) {
           doNothing = str.indexOf("</script>", i);
         } else {
@@ -3974,10 +4032,9 @@ function tokenizer(str, originalOpts) {
     }
     let R1;
     let R2;
-    if (!doNothing && (property.start || str[i] === "!")) {
+    if (!doNothing && str[i] && (property.start || str[i] === "!") && (!layers.length || layers[~-layers.length].type !== "esp") && (token.type !== "text" || Array.isArray(property.value))) {
       const idxRightIncl = right(str, i - 1);
       R1 = `;<>`.includes(str[idxRightIncl]) ||
-      str[idxRightIncl] === `{` && str[i - 1] !== `{` || str[idxRightIncl] === `}` && str[i - 1] !== `}` ||
       `'"`.includes(str[idxRightIncl]) && (
       !layers ||
       !layers.length ||
@@ -3997,7 +4054,7 @@ function tokenizer(str, originalOpts) {
     !str[i] ||
     !str[i].trim() ||
     !property.valueEnds && str[i] === ";" ||
-    attrEndsAt(i)))) {
+    attrEndsAt(i, Array.isArray(property.value) && property.value[~-property.value.length].type === "esp")))) {
       /* istanbul ignore else */
       if (property.importantStarts && !property.importantEnds) {
         property.importantEnds = left(str, i) + 1;
@@ -4005,8 +4062,10 @@ function tokenizer(str, originalOpts) {
       }
       /* istanbul ignore else */
       if (property.valueStarts && !property.valueEnds) {
-        property.valueEnds = i;
-        property.value = str.slice(property.valueStarts, i);
+        property.valueEnds = left(str, i) + 1;
+        if (!Array.isArray(property.value)) {
+          property.value = str.slice(property.valueStarts, property.valueEnds);
+        }
       }
       /* istanbul ignore else */
       if (str[i] === ";") {
@@ -4017,18 +4076,39 @@ function tokenizer(str, originalOpts) {
         property.end = property.semi + 1;
         doNothing = property.end;
       }
+      /* istanbul ignore else */
       if (!property.end) {
-        property.end = i;
+        property.end = left(str, i) + 1;
+      }
+      /* istanbul ignore else */
+      if (token.type === "text" && token.start && !token.end) {
+        token.end = i;
+        token.value = str.slice(token.start, i);
+        if (Array.isArray(property.value)) {
+          property.value.push(token);
+        }
+        if (parentTokenToBackup) {
+          token = clone(parentTokenToBackup);
+        }
+      }
+      let newTextToken;
+      if (property.valueEnds !== i && !property.important && !str[i - 1].trim()) {
+        newTextToken = getNewToken("text", property.valueEnds);
+        newTextToken.end = i;
+        newTextToken.value = str.slice(property.valueEnds, i);
       }
       pushProperty(property);
       propertyReset();
+      if (newTextToken) {
+        pushProperty(newTextToken);
+      }
       if (!doNothing && (!str[i] || str[i].trim()) && str[i] === ";") {
         doNothing = i;
       }
     }
     /* istanbul ignore else */
     if (!doNothing &&
-    property && property.valueStarts && !property.valueEnds) {
+    property && property.start && property.valueStarts && !property.valueEnds) {
       if (
       !str[i] ||
       R1 ||
@@ -4042,7 +4122,17 @@ function tokenizer(str, originalOpts) {
         !rightVal ||
         !`'";`.includes(str[rightVal]))) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
-          property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+          if (token.type === "text") {
+            token.end = i;
+            token.value = str.slice(token.start, i);
+            if (Array.isArray(property.value)) {
+              property.value.push(token);
+            }
+            token = clone(parentTokenToBackup);
+          }
+          if (!Array.isArray(property.value)) {
+            property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+          }
         }
         if (str[i] === ";") {
           property.semi = i;
@@ -4140,7 +4230,8 @@ function tokenizer(str, originalOpts) {
       }
     }
     /* istanbul ignore else */
-    if (!doNothing && property && property.colon && !property.valueStarts && str[i] && str[i].trim()) {
+    if (!doNothing && property && property.colon && !property.valueStarts && (
+    !layers.length || layers[~-layers.length].type !== "esp") && str[i] && str[i].trim()) {
       /* istanbul ignore else */
       if (
       `;}'"`.includes(str[i]) &&
@@ -4280,7 +4371,7 @@ function tokenizer(str, originalOpts) {
       }
       doNothing = i;
     }
-    if (!doNothing &&
+    if (!doNothing && (!token || token.type !== "esp") &&
     attrib && attrib.attribName === "style" &&
     attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt &&
     !property.start &&
@@ -4472,7 +4563,7 @@ function tokenizer(str, originalOpts) {
       if (str[i] && !str[i].trim() && str[rightVal] === "=") ; else if (str[i] && !str[i].trim() || str[i] === ">" || str[i] === "/" && str[rightVal] === ">") {
         if (`'"`.includes(str[rightVal])) ; else {
           attrib.attribEnds = i;
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
         }
       }
@@ -4514,6 +4605,7 @@ function tokenizer(str, originalOpts) {
     attrib &&
     attrib.attribValueStartsAt && !attrib.attribValueEndsAt &&
     !property.propertyStarts &&
+    token.type !== "esp" &&
     i >= attrib.attribValueStartsAt &&
     Array.isArray(attrib.attribValue) && (!attrib.attribValue.length ||
     attrib.attribValue[~-attrib.attribValue.length].end &&
@@ -4570,7 +4662,7 @@ function tokenizer(str, originalOpts) {
           }
           attrib.attribEnds = i + 1;
           if (property.propertyStarts) {
-            attrib.attribValue.push(lodash_clonedeep(property));
+            attrib.attribValue.push(clone(property));
             propertyReset();
           }
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
@@ -4591,7 +4683,7 @@ function tokenizer(str, originalOpts) {
           if (attrib.attribValue[~-attrib.attribValue.length] && !attrib.attribValue[~-attrib.attribValue.length].end) {
             attrib.attribValue[~-attrib.attribValue.length].end = i;
           }
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
         } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length ||
         attrib.attribValue[~-attrib.attribValue.length].type !== "text") && !property.propertyStarts) {
@@ -4610,7 +4702,7 @@ function tokenizer(str, originalOpts) {
           attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
         }
         attrib.attribEnds = i;
-        token.attribs.push(lodash_clonedeep(attrib));
+        token.attribs.push(clone(attrib));
         attribReset();
         layers.pop();
         if (str[i] === ">") {
@@ -4651,7 +4743,7 @@ function tokenizer(str, originalOpts) {
           if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
             layers.pop();
           }
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
           i = ~-attribClosingQuoteAt;
           continue;
@@ -4660,7 +4752,7 @@ function tokenizer(str, originalOpts) {
           attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
           attrib.attribValueStartsAt = null;
           layers.pop();
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
           continue;
         }
@@ -4681,6 +4773,11 @@ function tokenizer(str, originalOpts) {
           end: null,
           value: null
         });
+      } else if (property && !property.importantStarts &&
+      Array.isArray(property.value) && str[i] && (
+      str[i].trim() || !R2)) {
+        parentTokenToBackup = clone(token);
+        initToken("text", i);
       }
     } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && attribToBackup.attribValueStartsAt && `'"`.includes(str[i]) && str[attribToBackup.attribOpeningQuoteAt] === str[i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, i)) {
       token.end = i;
@@ -4693,10 +4790,11 @@ function tokenizer(str, originalOpts) {
       attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, i);
       attribToBackup.attribClosingQuoteAt = i;
       attribToBackup.attribEnds = i + 1;
-      token = lodash_clonedeep(parentTokenToBackup);
+      token = clone(parentTokenToBackup);
       token.attribs.push(attribToBackup);
       attribToBackup = undefined;
       parentTokenToBackup = undefined;
+      attribReset();
       layers.pop();
       layers.pop();
       layers.pop();
@@ -4758,7 +4856,7 @@ function tokenizer(str, originalOpts) {
                 attrib.attribValueRaw = "";
               }
               attrib.attribEnds = i + 1;
-              token.attribs.push(lodash_clonedeep(attrib));
+              token.attribs.push(clone(attrib));
               attribReset();
             }
           }
@@ -4806,7 +4904,7 @@ function tokenizer(str, originalOpts) {
           attrib.attribEnds = i;
         }
         if (attrib) {
-          token.attribs.push(lodash_clonedeep(attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
         }
       }
@@ -4821,7 +4919,22 @@ function tokenizer(str, originalOpts) {
     if (!str[i] && token.start !== null) {
       token.end = i;
       token.value = str.slice(token.start, token.end);
-      if (attrib && attrib.attribName) {
+      if (token.type !== "tag") {
+        if (token.type === "esp" && parentTokenToBackup) {
+          if (attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && Array.isArray(attrib.attribValue[~-attrib.attribValue.length].value)) {
+            attrib.attribValue[~-attrib.attribValue.length].value.push(clone(token));
+            if (!attrib.attribValueEndsAt) {
+              attrib.attribValueEndsAt = token.end;
+            }
+          }
+          token = clone(parentTokenToBackup);
+          attribToBackup = undefined;
+          parentTokenToBackup = undefined;
+          token.attribs.push(clone(attrib));
+          attribReset();
+        }
+        attribReset();
+      } else if (attrib && attrib.attribName) {
         if (!attrib.attribEnds) {
           attrib.attribEnds = i;
         }
@@ -4864,7 +4977,9 @@ function tokenizer(str, originalOpts) {
   };
 }
 
-var objectPath = createCommonjsModule(function (module) {
+var objectPath = {exports: {}};
+
+(function (module) {
 (function (root, factory){
 
   /*istanbul ignore next:cant test*/
@@ -5160,7 +5275,9 @@ var objectPath = createCommonjsModule(function (module) {
   mod.withInheritedProps = factory({includeInheritedProps: true});
   return mod;
 });
-});
+}(objectPath));
+
+var op = objectPath.exports;
 
 /**
  * @name codsen-parser
@@ -5230,7 +5347,7 @@ function cparser(str, originalOpts) {
         opts.tagCb(tokenObj);
       }
       if (!tokenObj.nested) {
-        let prevToken = objectPath.get(res, path);
+        let prevToken = op.get(res, path);
         if (!isObj$1(prevToken)) {
           prevToken = null;
         }
@@ -5313,25 +5430,25 @@ function cparser(str, originalOpts) {
         const parentPath = pathUp(path);
         let parentTagsToken;
         if (parentPath && path.includes(".")) {
-          parentTagsToken = objectPath.get(res, parentPath);
+          parentTagsToken = op.get(res, parentPath);
         }
         let previousTagsToken;
         if (previousPath) {
-          previousTagsToken = objectPath.get(res, previousPath);
+          previousTagsToken = op.get(res, previousPath);
         }
         const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
         let parentsLastChildTokenValue;
         let parentsLastChildTokenPath;
         if (isObj$1(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
           parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
-          parentsLastChildTokenPath = `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`;
+          parentsLastChildTokenPath = `${previousPath}.children.${op.get(res, previousPath).children.length - 1}`;
         }
         let tokenTakenCareOf = false;
         if (tokenObj.type === "text" && isObj$1(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
           const suspiciousEndingStartsAt = (suspiciousCommentTagEndingRegExp.exec(tokenObj.value) || {}).index;
           const suspiciousEndingEndsAt = (suspiciousEndingStartsAt || 0) + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
           if (suspiciousEndingStartsAt && suspiciousEndingStartsAt > 0) {
-            objectPath.set(res, path, { ...tokenObj,
+            op.set(res, path, { ...tokenObj,
               end: tokenObj.start + suspiciousEndingStartsAt,
               value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
             });
@@ -5340,7 +5457,7 @@ function cparser(str, originalOpts) {
             }
           }
           path = pathNext(pathUp(path));
-          objectPath.set(res, path, {
+          op.set(res, path, {
             type: "comment",
             kind: "simple",
             closing: true,
@@ -5351,7 +5468,7 @@ function cparser(str, originalOpts) {
           });
           if (suspiciousEndingEndsAt < tokenObj.value.length) {
             path = pathNext(path);
-            objectPath.set(res, path, {
+            op.set(res, path, {
               type: "text",
               start: tokenObj.start + suspiciousEndingEndsAt,
               end: tokenObj.end,
@@ -5374,21 +5491,21 @@ function cparser(str, originalOpts) {
                   tokenObj.children = [];
                 }
                 path = previousPath;
-                objectPath.set(res, path, { ...tokenObj,
+                op.set(res, path, { ...tokenObj,
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: `${previousTagsToken.value}${tokenObj.value}`
                 });
                 tokenTakenCareOf = true;
               } else if (previousPath && isObj$1(previousTagsToken)) {
-                objectPath.set(res, previousPath, { ...previousTagsToken,
+                op.set(res, previousPath, { ...previousTagsToken,
                   end: malformedRange.idxFrom + previousTagsToken.start,
                   value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
                 });
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
                 }
-                objectPath.set(res, path, { ...tokenObj,
+                op.set(res, path, { ...tokenObj,
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: `${previousTagsToken.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
@@ -5409,22 +5526,22 @@ function cparser(str, originalOpts) {
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
                 }
-                objectPath.set(res, path, { ...tokenObj,
+                op.set(res, path, { ...tokenObj,
                   start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: `${parentsLastChildTokenValue.value}${tokenObj.value}`
                 });
-                objectPath.del(res, `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`);
+                op.del(res, `${previousPath}.children.${op.get(res, previousPath).children.length - 1}`);
                 tokenTakenCareOf = true;
               } else if (previousPath && isObj$1(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
-                objectPath.set(res, parentsLastChildTokenPath, { ...parentsLastChildTokenValue,
+                op.set(res, parentsLastChildTokenPath, { ...parentsLastChildTokenValue,
                   end: malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   value: parentsLastChildTokenValue.value.slice(0, malformedRange.idxFrom)
                 });
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
                 }
-                objectPath.set(res, path, { ...tokenObj,
+                op.set(res, path, { ...tokenObj,
                   start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: `${parentsLastChildTokenValue.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
@@ -5438,7 +5555,7 @@ function cparser(str, originalOpts) {
           if (tokensWithChildren.includes(tokenObj.type)) {
             tokenObj.children = [];
           }
-          objectPath.set(res, path, tokenObj);
+          op.set(res, path, tokenObj);
         }
         if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$1(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
           if (tokenObj.void) {
@@ -5992,7 +6109,7 @@ function traverse(tree1, cb1, lookahead = 0) {
           break;
         }
         const path = `${innerObj.path}.${i}`;
-        innerObj.parent = lodash_clonedeep(tree);
+        innerObj.parent = clone(tree);
         innerObj.parentType = "array";
         callback(tree[i], undefined, { ...innerObj,
           path: trimFirstDot(path)
@@ -6010,7 +6127,7 @@ function traverse(tree1, cb1, lookahead = 0) {
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-        innerObj.parent = lodash_clonedeep(tree);
+        innerObj.parent = clone(tree);
         innerObj.parentType = "object";
         callback(key, tree[key], { ...innerObj,
           path: trimFirstDot(path)
@@ -6027,7 +6144,7 @@ function traverse(tree1, cb1, lookahead = 0) {
     currentElem[2].next = [];
     for (let i = 0; i < lookahead; i++) {
       if (stash[i]) {
-        currentElem[2].next.push(lodash_clonedeep([stash[i][0], stash[i][1], stash[i][2]]));
+        currentElem[2].next.push(clone([stash[i][0], stash[i][1], stash[i][2]]));
       } else {
         break;
       }

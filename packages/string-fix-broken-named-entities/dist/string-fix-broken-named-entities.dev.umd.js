@@ -13,6 +13,10 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringFixBrokenNamedEntities = {}));
 }(this, (function (exports) { 'use strict';
 
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+var leven$2 = {exports: {}};
+
 const array = [];
 const charCodeCache = [];
 
@@ -86,10 +90,11 @@ const leven = (left, right) => {
 	return result;
 };
 
-var leven_1 = leven;
+leven$2.exports = leven;
 // TODO: Remove this for the next major release
-var _default = leven;
-leven_1.default = _default;
+leven$2.exports.default = leven;
+
+var leven$1 = leven$2.exports;
 
 /**
  * @name all-named-html-entities
@@ -7435,6 +7440,7 @@ const maxLength = 31;
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
@@ -7566,12 +7572,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -7582,7 +7583,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -9322,7 +9323,7 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
 
 /**
  * @name string-left-right
@@ -10347,7 +10348,7 @@ function fixEnt(str, originalOpts) {
                             // might be a value of an entity
                             potentialEntity.length < maxLength + 2 &&
                                 // a) either one character is different:
-                                (((temp = [...allNamedEntitiesSetOnly].filter((curr) => leven_1(curr, potentialEntity) === 1)) &&
+                                (((temp = [...allNamedEntitiesSetOnly].filter((curr) => leven$1(curr, potentialEntity) === 1)) &&
                                     temp.length) ||
                                     //
                                     // OR
@@ -10355,7 +10356,7 @@ function fixEnt(str, originalOpts) {
                                     // b) two are different but entity is at least 4 chars long:
                                     ((temp = [...allNamedEntitiesSetOnly].filter((curr) => 
                                     /* istanbul ignore next */
-                                    leven_1(curr, potentialEntity) === 2 &&
+                                    leven$1(curr, potentialEntity) === 2 &&
                                         potentialEntity.length > 3)) &&
                                         temp.length))) {
                                 // now the problem: what if there were multiple entities matched?

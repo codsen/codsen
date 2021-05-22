@@ -1117,8 +1117,7 @@ tap.test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
       }
     ),
     {
-      key1:
-        "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
+      key1: "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
     },
     "15.01 - default - BRs are detected and no additional BRs are added"
   );
@@ -1140,8 +1139,7 @@ tap.test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
       }
     ),
     {
-      key1:
-        "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
+      key1: "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
     },
     "15.02 - hardcoded default - same as #01"
   );
@@ -1163,8 +1161,7 @@ tap.test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
       }
     ),
     {
-      key1:
-        "{% if val1 %}{{ val1 }}<br />{% endif %}<br />{% if val2 %}{{ val2 }}<br />{% endif %}<br />{% if val3 %}{{ val3 }}{% endif %}",
+      key1: "{% if val1 %}{{ val1 }}<br />{% endif %}<br />{% if val2 %}{{ val2 }}<br />{% endif %}<br />{% if val3 %}{{ val3 }}{% endif %}",
     },
     "15.03 - off - will add excessive BRs"
   );
@@ -1190,8 +1187,7 @@ tap.test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", (t) => {
       }
     ),
     {
-      key1:
-        "{% if val1 %}{{ val1 }}<br />{% endif %}<br>{% if val2 %}{{ val2 }}<br />{% endif %}<br>{% if val3 %}{{ val3 }}{% endif %}",
+      key1: "{% if val1 %}{{ val1 }}<br />{% endif %}<br>{% if val2 %}{{ val2 }}<br />{% endif %}<br>{% if val3 %}{{ val3 }}{% endif %}",
     },
     "15.04 - xhtml = false"
   );
@@ -1602,8 +1598,7 @@ tap.test(
         }
       ),
       {
-        key1:
-          "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
+        key1: "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
         key2: "{{ val21.val22 }}",
       },
       "20.01 - default - double wrapping on key1 because {%...%} is not recognised"
@@ -1669,8 +1664,7 @@ tap.test(
         }
       ),
       {
-        key1:
-          "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
+        key1: "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
         key2: "{{ val21.val22 }}",
       },
       "20.04 - opts.preventWrappingIfContains contents don't match and thus string get double-wrapped"

@@ -21,6 +21,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
     MAX_SAFE_INTEGER = 9007199254740991,

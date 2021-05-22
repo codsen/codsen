@@ -72,10 +72,10 @@
     }
   },
   "dependencies": {
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "email-all-chars-within-ascii": "^3.0.16",
     "globby": "^11.0.3",
-    "inquirer": "^8.0.0",
+    "inquirer": "^8.1.0",
     "lodash.pullall": "^4.2.0",
     "minimist": "^1.2.5",
     "string-left-right": "^4.0.16",
@@ -84,9 +84,9 @@
   "devDependencies": {
     "@types/lodash.pullall": "^4.2.6",
     "@types/lodash.uniq": "^4.5.6",
-    "core-js": "^3.10.1",
+    "core-js": "^3.12.1",
     "cross-env": "^7.0.3",
-    "eslint": "^7.24.0",
+    "eslint": "^7.27.0",
     "execa": "^5.0.0",
     "lect": "^0.16.16",
     "tap": "^14.11.0",

@@ -73,9 +73,9 @@
     "plugin-error": "^1.0.1"
   },
   "devDependencies": {
-    "core-js": "^3.10.1",
+    "core-js": "^3.12.1",
     "cross-env": "^7.0.3",
-    "eslint": "^7.24.0",
+    "eslint": "^7.27.0",
     "lect": "^0.16.16",
     "map-stream": "^0.0.7",
     "tap": "^14.11.0",

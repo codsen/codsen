@@ -105,7 +105,7 @@ function main({
         if (!itsTheFirstElem) {
           log(`198 ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(currentPath, null, 4)}`);
           currentPath[currentPath.length - 1] = currentPath[currentPath.length - 1] + 1;
-          log();
+          log(`207 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${currentPath.length - 1}]`}\u001b[${39}m`} = ${currentPath[currentPath.length - 1]}`);
         }
       }
       withinObjectIndexes.push(i);
@@ -173,7 +173,7 @@ function main({
           log();
         } else if (typeof currentPath[currentPath.length - 1] === "number") {
           currentPath[currentPath.length - 1] = currentPath[currentPath.length - 1] + 1;
-          log();
+          log(`432 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${currentPath.length - 1}]`}\u001b[${39}m`} = ${currentPath[currentPath.length - 1]}`);
         }
       }
     }

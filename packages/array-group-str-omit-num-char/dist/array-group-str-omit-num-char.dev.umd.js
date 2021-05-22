@@ -1223,7 +1223,8 @@ function groupStr(originalArr, originalOpts) {
                     if (compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[i2] &&
                         digitsChunkStr !==
                             compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[i2]) {
-                        compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[i2] = false;
+                        compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[i2] =
+                            false;
                     }
                 });
                 // finally, bump the count:

@@ -336,10 +336,7 @@ function matchRight(str, position, whatToMatch, opts) {
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
+var lodash_clonedeep = {exports: {}};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -350,7 +347,7 @@ function createCommonjsModule(fn) {
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+(function (module, exports) {
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
@@ -2090,7 +2087,9 @@ function stubFalse() {
 }
 
 module.exports = cloneDeep;
-});
+}(lodash_clonedeep, lodash_clonedeep.exports));
+
+var clone = lodash_clonedeep.exports;
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -3529,7 +3528,7 @@ function tokenizer(str, originalOpts) {
     function attribReset() {
         // object-assign is basically cloning - objects are passed by reference,
         // we can't risk mutating the default object:
-        attrib = lodash_clonedeep(attribDefaults);
+        attrib = clone(attribDefaults);
     }
     function attribPush(tokenObj) {
         // 1. clean up any existing tokens first
@@ -3701,7 +3700,7 @@ function tokenizer(str, originalOpts) {
             // we want as many as "lookaheadLength" from stash but there might be
             // not enough there
             if (stash[i]) {
-                next.push(lodash_clonedeep(stash[i]));
+                next.push(clone(stash[i]));
             }
             else {
                 break;
@@ -4110,7 +4109,7 @@ function tokenizer(str, originalOpts) {
                     }
                     dumpCurrentToken(token, i);
                     const poppedToken = layers.pop();
-                    token = poppedToken.token;
+                    token = clone(poppedToken.token);
                     // then, continue on "at" rule's token...
                     token.closingCurlyAt = i;
                     token.end = i + 1;
@@ -4152,7 +4151,7 @@ function tokenizer(str, originalOpts) {
                 // 2. push current token into attrib.attribValue
                 attrib.attribValue.push(token);
                 // 3. restore real token
-                token = lodash_clonedeep(parentTokenToBackup);
+                token = clone(parentTokenToBackup);
                 // 4. reset
                 attribToBackup = undefined;
                 parentTokenToBackup = undefined;
@@ -4686,8 +4685,14 @@ function tokenizer(str, originalOpts) {
                 //
                 //
                 //
-                // ESP tags can't be entered from after CSS at-rule tokens or
-                // normal CSS rule tokens
+                // in case of inline CSS styles, check, maybe we need to end any
+                // inline CSS rule tokens
+                if (attrib &&
+                    attrib.attribValue.length &&
+                    !attrib.attribValue[~-attrib.attribValue.length].end) {
+                    attrib.attribValue[~-attrib.attribValue.length].end = i;
+                    attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+                }
                 //
                 //
                 //
@@ -4749,12 +4754,18 @@ function tokenizer(str, originalOpts) {
                                     // push to attribValue
                                     attrib.attribValue.push({ ...token });
                                 }
+                                else if (attrib &&
+                                    attrib.attribStarts &&
+                                    Array.isArray(attrib.attribValue)) {
+                                    // push to attrib value
+                                    attrib.attribValue.push({ ...token });
+                                }
                                 else {
                                     // push to attribs
                                     parentTokenToBackup.attribs.push({ ...token });
                                 }
                                 // 3. parentTokenToBackup becomes token
-                                token = lodash_clonedeep(parentTokenToBackup);
+                                token = clone(parentTokenToBackup);
                                 // 4. resets
                                 parentTokenToBackup = undefined;
                                 attribToBackup = undefined;
@@ -4873,7 +4884,8 @@ function tokenizer(str, originalOpts) {
                             newTokenToPutInstead.tailEndsAt =
                                 i + wholeEspTagLumpOnTheRight.length;
                             newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
-                            attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
+                            attrib.attribValue[~-attrib.attribValue.length] =
+                                newTokenToPutInstead;
                         }
                     }
                     else {
@@ -4906,8 +4918,77 @@ function tokenizer(str, originalOpts) {
                                 // maybe it's an ESP token within an inline CSS style?
                                 // <div style="width: {{ w }}">
                                 if (attrib && attrib.attribName === "style") {
-                                    if (!property.valueStarts) {
+                                    if (property.start &&
+                                        !property.end &&
+                                        property.propertyEnds &&
+                                        !property.valueStarts) {
                                         property.valueStarts = i;
+                                    }
+                                    else if (property.start) {
+                                        // imagine:
+                                        // <div style="width: 100{{ w }}">
+                                        //                       ^
+                                        //               we're here
+                                        // or
+                                        // <td style="a: b; {% if x %}c: d{% endif %} e: f;">x</td>
+                                        //                                ^
+                                        //                        we're here
+                                        if (!Array.isArray(property.value)) {
+                                            // terminate the property
+                                            // complete the property
+                                            if (property.propertyStarts && !property.propertyEnds) {
+                                                property.propertyEnds = leftVal + 1;
+                                                property.property = str.slice(property.propertyStarts, i);
+                                            }
+                                            else if (property.valueStarts && !property.valueEnds) {
+                                                property.valueEnds = leftVal + 1;
+                                                property.value = str.slice(property.valueStarts, property.valueEnds);
+                                            }
+                                            if (property.start && !property.end) {
+                                                property.end = leftVal + 1;
+                                            }
+                                            if (attrib && Array.isArray(attrib.attribValue)) {
+                                                attrib.attribValue.push(clone(property));
+                                                // if there was trailing whitespace, like for example:
+                                                // <td style="a: b;\n    {% if x %}c: d {% endif %}\ne: f;">
+                                                //                                     ^
+                                                //                                  here
+                                                //
+                                                // then create the missing text token to reflect this gap
+                                                if (property.end !== i) {
+                                                    const newTextToken = getNewToken("text", leftVal + 1);
+                                                    newTextToken.end = i;
+                                                    newTextToken.value = str.slice(leftVal + 1, i);
+                                                    attrib.attribValue.push(clone(newTextToken));
+                                                }
+                                                propertyReset();
+                                            }
+                                        }
+                                        // TODO - remove below
+                                        // else if (property.valueStarts) {
+                                        // const newTextToken = getNewToken(
+                                        //   "text",
+                                        //   property.valueStarts
+                                        // );
+                                        // newTextToken.end = i;
+                                        // newTextToken.value = str.slice(property.valueStarts, i);
+                                        // console.log(
+                                        //   `2922 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newTextToken`}\u001b[${39}m`} = ${JSON.stringify(
+                                        //     newTextToken,
+                                        //     null,
+                                        //     4
+                                        //   )}`
+                                        // );
+                                        //
+                                        // property.value.push(newTextToken as TextToken);
+                                        // console.log(
+                                        //   `2931 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to property, now: ${JSON.stringify(
+                                        //     property,
+                                        //     null,
+                                        //     4
+                                        //   )}`
+                                        // );
+                                        // }
                                     }
                                 }
                                 else {
@@ -4922,10 +5003,24 @@ function tokenizer(str, originalOpts) {
                                         token.recognised = isTagNameRecognised(token.tagName);
                                     }
                                     if (attrib.attribStarts && !attrib.attribEnds) {
-                                        attribToBackup = lodash_clonedeep(attrib);
+                                        attribToBackup = clone(attrib);
                                     }
                                 }
-                                parentTokenToBackup = lodash_clonedeep(token);
+                                parentTokenToBackup = clone(token);
+                            }
+                            else if (token.type === "text") {
+                                // case like:
+                                // <div style="x: a{{ b }}c{{ d }}e;">
+                                //                         ^
+                                //                  we're here
+                                token.end = i;
+                                token.value = str.slice(token.start, i);
+                                if (Array.isArray(property.value)) {
+                                    property.value.push(token);
+                                }
+                                else {
+                                    dumpCurrentToken(token, i);
+                                }
                             }
                             else if (!attribToBackup) {
                                 dumpCurrentToken(token, i);
@@ -5038,14 +5133,13 @@ function tokenizer(str, originalOpts) {
         let R1;
         let R2;
         if (!doNothing &&
+            str[i] &&
             (property.start || str[i] === "!") &&
-            (!layers.length || layers[~-layers.length].type !== "esp")) {
+            (!layers.length || layers[~-layers.length].type !== "esp") &&
+            (token.type !== "text" || Array.isArray(property.value))) {
             const idxRightIncl = right(str, i - 1);
             R1 =
                 `;<>`.includes(str[idxRightIncl]) ||
-                    // avoid Nunjucks ESP tags, {{ zzz }}
-                    (str[idxRightIncl] === `{` && str[i - 1] !== `{`) ||
-                    (str[idxRightIncl] === `}` && str[i - 1] !== `}`) ||
                     // or it's a quote
                     (`'"`.includes(str[idxRightIncl]) &&
                         // but then it has to be a matching counterpart
@@ -5068,22 +5162,6 @@ function tokenizer(str, originalOpts) {
                 maxMismatches: 2,
             });
         }
-        (property.valueStarts &&
-            !property.valueEnds &&
-            str[rightVal] !== "!" &&
-            // either non-whitespace character doesn't exist on the right
-            (!rightVal ||
-                // or at that character !important does not start
-                R1)) ||
-            (property.importantStarts && !property.importantEnds);
-        !property.valueEnds || str[rightVal] !== ";";
-        !str[i] ||
-            // or it's a whitespace
-            !str[i].trim() ||
-            // or it's a semicolon after a value
-            (!property.valueEnds && str[i] === ";") ||
-            // or we reached the end of the attribute
-            attrEndsAt(i);
         // catch the end of a css property (with or without !important)
         // -------------------------------------------------------------------------
         /* istanbul ignore else */
@@ -5115,9 +5193,9 @@ function tokenizer(str, originalOpts) {
             }
             /* istanbul ignore else */
             if (property.valueStarts && !property.valueEnds) {
-                property.valueEnds = i;
+                property.valueEnds = left(str, i) + 1;
                 if (!Array.isArray(property.value)) {
-                    property.value = str.slice(property.valueStarts, i);
+                    property.value = str.slice(property.valueStarts, property.valueEnds);
                 }
             }
             /* istanbul ignore else */
@@ -5130,11 +5208,40 @@ function tokenizer(str, originalOpts) {
                 property.end = property.semi + 1;
                 doNothing = property.end;
             }
+            /* istanbul ignore else */
             if (!property.end) {
-                property.end = i;
+                property.end = left(str, i) + 1;
+            }
+            /* istanbul ignore else */
+            if (token.type === "text" && token.start && !token.end) {
+                token.end = i;
+                token.value = str.slice(token.start, i);
+                if (Array.isArray(property.value)) {
+                    property.value.push(token);
+                }
+                // restore real token
+                if (parentTokenToBackup) {
+                    token = clone(parentTokenToBackup);
+                }
+            }
+            // we might need to extract inner whitespace as
+            // a standalone text token:
+            // <style>.a{  padding:  1px  2px  3px  4px  }
+            //                                           ^
+            //                                  we're here
+            let newTextToken;
+            if (property.valueEnds !== i &&
+                !property.important &&
+                !str[i - 1].trim()) {
+                newTextToken = getNewToken("text", property.valueEnds);
+                newTextToken.end = i;
+                newTextToken.value = str.slice(property.valueEnds, i);
             }
             pushProperty(property);
             propertyReset();
+            if (newTextToken) {
+                pushProperty(newTextToken);
+            }
             if (!doNothing && (!str[i] || str[i].trim()) && str[i] === ";") {
                 doNothing = i;
             }
@@ -5145,6 +5252,7 @@ function tokenizer(str, originalOpts) {
         if (!doNothing &&
             // token.type === "rule" &&
             property &&
+            property.start &&
             property.valueStarts &&
             !property.valueEnds) {
             if (
@@ -5177,6 +5285,19 @@ function tokenizer(str, originalOpts) {
                         // or it is a quote, but there's no quote on the right
                         !`'";`.includes(str[rightVal]))) {
                     property.valueEnds = lastNonWhitespaceCharAt + 1;
+                    // if it's a text token, end it, imagine
+                    // <div style="width: {{ w }}px">
+                    //                             ^
+                    //                          we're here
+                    if (token.type === "text") {
+                        token.end = i;
+                        token.value = str.slice(token.start, i);
+                        if (Array.isArray(property.value)) {
+                            property.value.push(token);
+                        }
+                        // restore parent token
+                        token = clone(parentTokenToBackup);
+                    }
                     if (!Array.isArray(property.value)) {
                         property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
                     }
@@ -5675,6 +5796,7 @@ function tokenizer(str, originalOpts) {
         // in case like above, "l" would not have the beginning of a property
         // triggered, hence this clause here
         if (!doNothing &&
+            (!token || token.type !== "esp") &&
             // style attribute is being processed at the moment
             attrib &&
             attrib.attribName === "style" &&
@@ -5690,12 +5812,6 @@ function tokenizer(str, originalOpts) {
             // NOTA BENE - there's same clause for inline HTML style
             // it's not some separator
             !`'"`.includes(str[i]) &&
-            // TODO - cleanup below:
-            // either it's not semi
-            // (str[i] !== ";" ||
-            //   // or it is, but the last non-whitespace char was semi, so it's a rogue semi here
-            //   // we'll put it as a standalone property, it's not a part of text token
-            //   str[lastNonWhitespaceCharAt as number] === ";") &&
             // it's not inside CSS block comment
             !lastLayerIs("block")) {
             // It's either css comment or a css property.
@@ -6093,7 +6209,7 @@ function tokenizer(str, originalOpts) {
                 else {
                     attrib.attribEnds = i;
                     // push and wipe
-                    token.attribs.push(lodash_clonedeep(attrib));
+                    token.attribs.push(clone(attrib));
                     attribReset();
                 }
             }
@@ -6177,6 +6293,8 @@ function tokenizer(str, originalOpts) {
             !attrib.attribValueEndsAt &&
             // and its property hasn't been recording
             !property.propertyStarts &&
+            // and it's not within ESP token inside inline CSS
+            token.type !== "esp" &&
             // we're inside the value
             i >= attrib.attribValueStartsAt &&
             // if attribValue array is empty, no object has been placed yet,
@@ -6316,7 +6434,7 @@ function tokenizer(str, originalOpts) {
                     }
                     attrib.attribEnds = i + 1;
                     if (property.propertyStarts) {
-                        attrib.attribValue.push(lodash_clonedeep(property));
+                        attrib.attribValue.push(clone(property));
                         propertyReset();
                     }
                     if (Array.isArray(attrib.attribValue) &&
@@ -6333,7 +6451,8 @@ function tokenizer(str, originalOpts) {
                                 attrib.attribValue[~-attrib.attribValue.length].propertyEnds = i;
                             }
                             else {
-                                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+                                attrib.attribValue[~-attrib.attribValue.length].value =
+                                    str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
                             }
                         }
                     }
@@ -6352,7 +6471,7 @@ function tokenizer(str, originalOpts) {
                         attrib.attribValue[~-attrib.attribValue.length].end = i;
                     }
                     // 4. push and wipe
-                    token.attribs.push(lodash_clonedeep(attrib));
+                    token.attribs.push(clone(attrib));
                     attribReset();
                 }
                 else if ((!Array.isArray(attrib.attribValue) ||
@@ -6391,7 +6510,7 @@ function tokenizer(str, originalOpts) {
                 }
                 attrib.attribEnds = i;
                 // 2. push and wipe
-                token.attribs.push(lodash_clonedeep(attrib));
+                token.attribs.push(clone(attrib));
                 attribReset();
                 // 3. pop layers
                 layers.pop();
@@ -6472,7 +6591,7 @@ function tokenizer(str, originalOpts) {
                         layers.pop();
                     }
                     // 3. push and wipe
-                    token.attribs.push(lodash_clonedeep(attrib));
+                    token.attribs.push(clone(attrib));
                     attribReset();
                     // 4. pull the i back to the position where the attribute ends
                     i = ~-attribClosingQuoteAt;
@@ -6496,7 +6615,7 @@ function tokenizer(str, originalOpts) {
                     // 4. pop the opening quotes layer
                     layers.pop();
                     // 5. push and wipe
-                    token.attribs.push(lodash_clonedeep(attrib));
+                    token.attribs.push(clone(attrib));
                     attribReset();
                     // 6. continue
                     continue;
@@ -6532,6 +6651,26 @@ function tokenizer(str, originalOpts) {
                     value: null,
                 });
             }
+            else if (property &&
+                !property.importantStarts &&
+                // ESP token is involved:
+                Array.isArray(property.value) &&
+                str[i] &&
+                // and !important does not follow:
+                (str[i].trim() || !R2)) {
+                // <div style="width: {{ w }}px">
+                //                           ^
+                //                    we're here
+                // also, this clause will initiate text tokens
+                // for all intra-ESP whitespace:
+                // <div style="padding: {{ t }} {{ r }} {{ b }} {{ l }}">
+                //                             ^
+                //                       like this
+                // backup the parent tag token
+                parentTokenToBackup = clone(token);
+                // initiate a text token
+                initToken("text", i);
+            }
         }
         else if (token.type === "esp" &&
             attribToBackup &&
@@ -6561,11 +6700,12 @@ function tokenizer(str, originalOpts) {
             attribToBackup.attribClosingQuoteAt = i;
             attribToBackup.attribEnds = i + 1;
             // 4. restore parent token
-            token = lodash_clonedeep(parentTokenToBackup);
+            token = clone(parentTokenToBackup);
             token.attribs.push(attribToBackup);
             // 5. reset all
             attribToBackup = undefined;
             parentTokenToBackup = undefined;
+            attribReset();
             // 6. pop the last 3 layers
             // currently layers array should be like:
             // [
@@ -6715,7 +6855,7 @@ function tokenizer(str, originalOpts) {
                             }
                             attrib.attribEnds = i + 1;
                             // push and wipe
-                            token.attribs.push(lodash_clonedeep(attrib));
+                            token.attribs.push(clone(attrib));
                             attribReset();
                         }
                     }
@@ -6821,7 +6961,7 @@ function tokenizer(str, originalOpts) {
                 }
                 if (attrib) {
                     // 2. push and wipe
-                    token.attribs.push(lodash_clonedeep(attrib));
+                    token.attribs.push(clone(attrib));
                     attribReset();
                 }
             }
@@ -6866,7 +7006,33 @@ function tokenizer(str, originalOpts) {
             token.value = str.slice(token.start, token.end);
             // if there is unfinished "attrib" object, submit it
             // as is, that's abruptly ended attribute
-            if (attrib && attrib.attribName) {
+            // insurance clauses - in case text token slips through this far
+            if (token.type !== "tag") {
+                // maybe it's a broken code case where ESP token is set
+                // as the main "token" and there's backed up real tag token?
+                if (token.type === "esp" && parentTokenToBackup) {
+                    // property by now will be already pushed to attrib,
+                    // so we check its contents directly
+                    if (attrib &&
+                        Array.isArray(attrib.attribValue) &&
+                        attrib.attribValue.length &&
+                        Array.isArray(attrib.attribValue[~-attrib.attribValue.length].value)) {
+                        // push this esp token to the last attrib value
+                        attrib.attribValue[~-attrib.attribValue.length].value.push(clone(token));
+                        // patch missing values on attrib
+                        if (!attrib.attribValueEndsAt) {
+                            attrib.attribValueEndsAt = token.end;
+                        }
+                    }
+                    token = clone(parentTokenToBackup);
+                    attribToBackup = undefined;
+                    parentTokenToBackup = undefined;
+                    token.attribs.push(clone(attrib));
+                    attribReset();
+                }
+                attribReset();
+            }
+            else if (attrib && attrib.attribName) {
                 // push and wipe
                 // patch the attr ending if it's missing
                 if (!attrib.attribEnds) {

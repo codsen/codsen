@@ -13,6 +13,8 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.rangesProcessOutside = {}));
 }(this, (function (exports) { 'use strict';
 
+var runes$2 = {exports: {}};
+
 const HIGH_SURROGATE_START = 0xd800;
 const HIGH_SURROGATE_END = 0xdbff;
 
@@ -172,9 +174,10 @@ function substring (string, start, width) {
   return chars.slice(start, endIndex).join('')
 }
 
-var runes_1 = runes;
-var substr = substring;
-runes_1.substr = substr;
+runes$2.exports = runes;
+runes$2.exports.substr = substring;
+
+var runes$1 = runes$2.exports;
 
 /**
  * @name ranges-sort
@@ -497,7 +500,7 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
     function iterator(str, arrOfArrays) {
         (arrOfArrays || []).forEach(([fromIdx, toIdx]) => {
             for (let i = fromIdx; i < toIdx; i++) {
-                const charLength = runes_1(str.slice(i))[0].length;
+                const charLength = runes$1(str.slice(i))[0].length;
                 cb(i, i + charLength, (offsetValue) => {
                     /* istanbul ignore else */
                     if (offsetValue != null) {
