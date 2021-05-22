@@ -107,7 +107,8 @@ function expander(originalOpts) {
             }
             return true;
         })) {
-            opts.ifLeftSideIncludesThisThenCropTightly = opts.ifLeftSideIncludesThisThenCropTightly.join("");
+            opts.ifLeftSideIncludesThisThenCropTightly =
+                opts.ifLeftSideIncludesThisThenCropTightly.join("");
         }
         else {
             throw new Error(`string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n${JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4)}. Now, that array contains not only string elements. For example, an element at index ${culpritsIndex} is of a type ${typeof culpritsValue} (equal to ${JSON.stringify(culpritsValue, null, 0)}).`);
