@@ -91,7 +91,7 @@
     },
     {
         "name": "ast-monkey",
-        "size": 8049,
+        "size": 8047,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -143,7 +143,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 80089,
+        "size": 85359,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -205,7 +205,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 16199,
+        "size": 16521,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -244,7 +244,7 @@
     },
     {
         "name": "emlint",
-        "size": 327641,
+        "size": 327986,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -305,7 +305,7 @@
     },
     {
         "name": "html-crush",
-        "size": 27293,
+        "size": 27295,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -382,7 +382,7 @@
     },
     {
         "name": "js-row-num",
-        "size": 6128,
+        "size": 6207,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -684,7 +684,7 @@
     },
     {
         "name": "string-match-left-right",
-        "size": 13225,
+        "size": 13226,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -738,7 +738,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 33112,
+        "size": 33247,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -780,7 +780,7 @@
     },
     {
         "name": "update-versions",
-        "size": 12926,
+        "size": 15166,
         "imports": [
             "edit-package-json"
         ]

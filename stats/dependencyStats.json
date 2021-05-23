@@ -166,7 +166,6 @@
         "@rollup/plugin-commonjs": 109,
         "@rollup/plugin-json": 98,
         "@rollup/plugin-node-resolve": 109,
-        "@rollup/plugin-replace": 109,
         "@rollup/plugin-strip": 109,
         "@rollup/plugin-typescript": 109,
         "@types/he": 2,
