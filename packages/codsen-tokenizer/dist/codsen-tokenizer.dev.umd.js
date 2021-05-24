@@ -4884,8 +4884,7 @@ function tokenizer(str, originalOpts) {
                             newTokenToPutInstead.tailEndsAt =
                                 i + wholeEspTagLumpOnTheRight.length;
                             newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
-                            attrib.attribValue[~-attrib.attribValue.length] =
-                                newTokenToPutInstead;
+                            attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
                         }
                     }
                     else {
@@ -4964,31 +4963,6 @@ function tokenizer(str, originalOpts) {
                                                 propertyReset();
                                             }
                                         }
-                                        // TODO - remove below
-                                        // else if (property.valueStarts) {
-                                        // const newTextToken = getNewToken(
-                                        //   "text",
-                                        //   property.valueStarts
-                                        // );
-                                        // newTextToken.end = i;
-                                        // newTextToken.value = str.slice(property.valueStarts, i);
-                                        // console.log(
-                                        //   `2922 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newTextToken`}\u001b[${39}m`} = ${JSON.stringify(
-                                        //     newTextToken,
-                                        //     null,
-                                        //     4
-                                        //   )}`
-                                        // );
-                                        //
-                                        // property.value.push(newTextToken as TextToken);
-                                        // console.log(
-                                        //   `2931 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to property, now: ${JSON.stringify(
-                                        //     property,
-                                        //     null,
-                                        //     4
-                                        //   )}`
-                                        // );
-                                        // }
                                     }
                                 }
                                 else {
@@ -6451,8 +6425,7 @@ function tokenizer(str, originalOpts) {
                                 attrib.attribValue[~-attrib.attribValue.length].propertyEnds = i;
                             }
                             else {
-                                attrib.attribValue[~-attrib.attribValue.length].value =
-                                    str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+                                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
                             }
                         }
                     }
