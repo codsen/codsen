@@ -1,6 +1,6 @@
 {
   "name": "ranges-invert",
-  "version": "4.0.16",
+  "version": "4.1.0",
   "description": "Invert string index ranges",
   "keywords": [
     "array",
@@ -71,8 +71,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "ranges-crop": "^4.0.16",
-    "ranges-merge": "^7.0.16"
+    "ranges-crop": "^4.1.0",
+    "ranges-merge": "^7.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
@@ -100,7 +100,7 @@
     "core-js": "^3.12.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.27.0",
-    "lect": "^0.16.16",
+    "lect": "^0.17.0",
     "rollup": "^2.49.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

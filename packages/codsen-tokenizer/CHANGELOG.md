@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 5.6.0 (2021-05-24)
+
+
+### Bug Fixes
+
+* algorithm fixes ([b20147c](https://github.com/codsen/codsen/commit/b20147c8d86c905ce595920f7fffb00ab02c8557))
+* algorithm improvements ([f313aed](https://github.com/codsen/codsen/commit/f313aed2e19cdcdfe4ee7652cea64d156e21d1cf))
+* algorithm improvements around inline CSS styles and ESP tokens ([774e925](https://github.com/codsen/codsen/commit/774e92584622e12f4bde8a60c4238b96e044c1c2))
+* backwards pattern in inline CSS style rule values, text - ESP token ([f2b6fa9](https://github.com/codsen/codsen/commit/f2b6fa92f16a8c8228fdfcb26b4075d5eabddb2a))
+* chain pattern inside the inline CSS rule value ([e83d482](https://github.com/codsen/codsen/commit/e83d482b6bcce0e2b9c424996b256e533ae1516d))
+* eSP tokens as inline style rule values - 3 tests pending ([3f4aa0c](https://github.com/codsen/codsen/commit/3f4aa0c003f9c44fd3521a8cbb16caae6449a595))
+* fix pattern ESP token + text token within inline CSS style rule values ([2396378](https://github.com/codsen/codsen/commit/23963782a965dbee34e39afd38aa87a68f764f8a))
+* fix to prevent double ESP token recorded ([1f62f98](https://github.com/codsen/codsen/commit/1f62f982b89c6625db70c5daacdeeb205f01c2b5))
+* patch text tokens only when they are really text tokens, not ESP tokens ([6a56dd4](https://github.com/codsen/codsen/commit/6a56dd45f9a378bfa22af7e1074fd32cb8201134))
+* some insurance for the future, to tackle broken ESP tokens ([7f26a75](https://github.com/codsen/codsen/commit/7f26a75204da8f056e1f7fa1dff0587272b97054))
+* space-!important ([84e624f](https://github.com/codsen/codsen/commit/84e624f1454ed151797be5cb69bc7999d31ea2cb))
+* support for !important ([9212ffe](https://github.com/codsen/codsen/commit/9212ffe391f84b9e5586d038875d9dd895079dc6))
+* tackle whitespace in front of !important ([a3f77e4](https://github.com/codsen/codsen/commit/a3f77e4be3c123a418bab20b3c6fc78e0e6fa291))
+
+
+### Features
+
+* config file based major bump blacklisting ([e15f9bb](https://github.com/codsen/codsen/commit/e15f9bba1c4fd5f847ac28b3f38fa6ee633f5dca))
+* logic improvements around inline CSS and ESP tokens ([4334454](https://github.com/codsen/codsen/commit/4334454059eef4e8b56cf396844a8e473e9f242c))
+
+
+
+
+
 ## 5.5.6 (2021-04-11)
 
 ### Bug Fixes

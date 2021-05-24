@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-util",
-  "version": "1.3.16",
+  "version": "1.4.0",
   "description": "Utility library of AST helper functions",
   "keywords": [
     "ast",
@@ -113,7 +113,7 @@
     "core-js": "^3.12.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.27.0",
-    "lect": "^0.16.16",
+    "lect": "^0.17.0",
     "lodash.isequal": "^4.5.0",
     "object-path": "^0.11.5",
     "rollup": "^2.49.0",

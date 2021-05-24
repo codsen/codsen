@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "2.0.16",
+  "version": "2.1.0",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "keywords": [
     "ast",
@@ -86,10 +86,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "ast-is-empty": "^2.0.16",
-    "ast-monkey": "^7.14.0",
+    "ast-is-empty": "^2.1.0",
+    "ast-monkey": "^7.15.0",
     "lodash.clonedeep": "^4.5.0",
-    "util-array-object-or-both": "^3.0.16"
+    "util-array-object-or-both": "^3.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
@@ -118,7 +118,7 @@
     "core-js": "^3.12.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.27.0",
-    "lect": "^0.16.16",
+    "lect": "^0.17.0",
     "posthtml-parser": "^0.9.0",
     "rollup": "^2.49.0",
     "rollup-plugin-ascii": "^0.0.3",

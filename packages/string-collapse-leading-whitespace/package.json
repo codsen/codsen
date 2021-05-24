@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-leading-whitespace",
-  "version": "5.0.16",
+  "version": "5.1.0",
   "description": "Collapse the leading and trailing whitespace of a string",
   "keywords": [
     "alt",
@@ -107,7 +107,7 @@
     "core-js": "^3.12.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.27.0",
-    "lect": "^0.16.16",
+    "lect": "^0.17.0",
     "rollup": "^2.49.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

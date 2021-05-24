@@ -1,6 +1,6 @@
 {
   "name": "email-homey",
-  "version": "2.9.2",
+  "version": "2.10.0",
   "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
   "keywords": [
     "browsersync",
@@ -84,7 +84,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^7.27.0",
     "execa": "^5.0.0",
-    "lect": "^0.16.16",
+    "lect": "^0.17.0",
     "tap": "^14.11.0",
     "tslib": "^2.2.0"
   }
