@@ -1,7 +1,7 @@
 /**
  * @name ast-monkey-traverse-with-lookahead
  * @fileoverview Utility library to traverse AST, reports upcoming values
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse-with-lookahead/}
@@ -1910,7 +1910,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version$1 = "2.0.16";
+var version$1 = "2.1.0";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version = version$1;

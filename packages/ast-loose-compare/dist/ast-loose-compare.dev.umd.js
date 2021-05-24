@@ -1,7 +1,7 @@
 /**
  * @name ast-loose-compare
  * @fileoverview Compare anything: AST, objects, arrays and strings
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-loose-compare/}
@@ -1913,7 +1913,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.16
+ * @version 1.4.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -1937,7 +1937,7 @@ function parent(str) {
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -2012,7 +2012,7 @@ function traverse(tree1, cb1) {
 /**
  * @name ast-contains-only-empty-space
  * @fileoverview Does AST contain only empty space?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-contains-only-empty-space/}
@@ -2037,7 +2037,7 @@ function empty(input) {
   return found;
 }
 
-var version$1 = "2.0.16";
+var version$1 = "2.1.0";
 
 const version = version$1;
 // we use internal function to shield the third input arg from the outside api

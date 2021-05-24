@@ -1,7 +1,7 @@
 /**
  * @name object-flatten-referencing
  * @fileoverview Flatten complex nested objects according to a reference objects
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-flatten-referencing/}
@@ -1773,7 +1773,7 @@ var clone = lodash_clonedeep.exports;
 /**
  * @name str-indexes-of-plus
  * @fileoverview Like indexOf but returns array and counts per-grapheme
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/str-indexes-of-plus/}
@@ -2216,7 +2216,7 @@ function arrayiffyString(something) {
     return something;
 }
 
-var version$1 = "5.0.16";
+var version$1 = "5.1.0";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version = version$1;

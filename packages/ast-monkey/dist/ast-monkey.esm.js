@@ -1,7 +1,7 @@
 /**
  * @name ast-monkey
  * @fileoverview Traverse and edit AST
- * @version 7.14.0
+ * @version 7.15.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey/}
@@ -13,7 +13,7 @@ import { compare } from 'ast-compare';
 import { traverse } from 'ast-monkey-traverse';
 export { traverse } from 'ast-monkey-traverse';
 
-var version$1 = "7.14.0";
+var version$1 = "7.15.0";
 
 const version = version$1;
 function existy(x) {

@@ -1,13 +1,13 @@
 /**
  * @name easy-replace
  * @fileoverview Replace strings with optional lookarounds, but without regexes
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/easy-replace/}
  */
 
-var version$1 = "4.0.16";
+var version$1 = "4.1.0";
 
 const version = version$1;
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {

@@ -1,7 +1,7 @@
 /**
  * @name regex-empty-conditional-comments
  * @fileoverview Regular expression for matching HTML empty conditional comments
- * @version 1.10.16
+ * @version 1.11.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-empty-conditional-comments/}
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version$1 = "1.10.16";
+var version$1 = "1.11.0";
 
 var version = version$1;
 function emptyCondCommentRegex() {

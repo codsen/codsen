@@ -1,7 +1,7 @@
 /**
  * @name ast-deep-contains
  * @fileoverview Like t.same assert on array of objects, where element order doesn't matter.
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-deep-contains/}
@@ -23,7 +23,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var objectPath__default = /*#__PURE__*/_interopDefaultLegacy(objectPath);
 var is__default = /*#__PURE__*/_interopDefaultLegacy(is);
 
-var version$1 = "3.0.16";
+var version$1 = "3.1.0";
 
 var version = version$1;
 function goUp(pathStr) {

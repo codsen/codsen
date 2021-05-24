@@ -1,7 +1,7 @@
 /**
  * @name codsen-parser
  * @fileoverview Parser aiming at broken or mixed code, especially HTML & CSS
- * @version 0.10.13
+ * @version 0.11.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/codsen-parser/}
@@ -13,7 +13,7 @@ import { left, right } from 'string-left-right';
 import { tokenizer } from 'codsen-tokenizer';
 import op from 'object-path';
 
-var version$1 = "0.10.13";
+var version$1 = "0.11.0";
 
 const version = version$1;
 const defaults = {

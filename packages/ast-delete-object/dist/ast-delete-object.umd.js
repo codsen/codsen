@@ -1,7 +1,7 @@
 /**
  * @name ast-delete-object
  * @fileoverview Delete all plain objects in AST if they contain a certain key/value pair
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-delete-object/}
@@ -11,7 +11,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.16
+ * @version 1.4.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -19,7 +19,7 @@
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -27,7 +27,7 @@
 /**
  * @name ast-contains-only-empty-space
  * @fileoverview Does AST contain only empty space?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-contains-only-empty-space/}
@@ -35,8 +35,8 @@
 /**
  * @name ast-compare
  * @fileoverview Compare anything: AST, objects, arrays, strings and nested thereof
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-compare/}
- */function S(t,e,r){let n,o,a,c=0;const u={hungryForWhitespace:!1,matchStrictly:!1,verboseWhenMismatches:!1,useWildcards:!1,...r};if(u.hungryForWhitespace&&u.matchStrictly&&h(t)&&b(t)&&h(e)&&!Object.keys(e).length)return!0;if((!u.hungryForWhitespace||u.hungryForWhitespace&&!b(t)&&b(e))&&h(t)&&0!==Object.keys(t).length&&h(e)&&0===Object.keys(e).length||i(t)!==i(e)&&(!u.hungryForWhitespace||u.hungryForWhitespace&&!b(t)))return!1;if("string"==typeof t&&"string"==typeof e)return!!(u.hungryForWhitespace&&b(t)&&b(e))||(u.verboseWhenMismatches?t===e||`Given string ${e} is not matched! We have ${t} on the other end.`:u.useWildcards?O.isMatch(t,e,{caseSensitive:!0}):t===e);if(Array.isArray(t)&&Array.isArray(e)){if(u.hungryForWhitespace&&b(e)&&(!u.matchStrictly||u.matchStrictly&&t.length===e.length))return!0;if(!u.hungryForWhitespace&&e.length>t.length||u.matchStrictly&&e.length!==t.length)return!!u.verboseWhenMismatches&&`The length of a given array, ${JSON.stringify(e,null,4)} is ${e.length} but the length of an array on the other end, ${JSON.stringify(t,null,4)} is ${t.length}`;if(0===e.length)return 0===t.length||!!u.verboseWhenMismatches&&`The given array has no elements, but the array on the other end, ${JSON.stringify(t,null,4)} does have some`;for(let r=0,n=e.length;r<n;r++){a=!1;for(let n=c,o=t.length;n<o;n++)if(c+=1,!0===S(t[n],e[r],u)){a=!0;break}if(!a)return!!u.verboseWhenMismatches&&`The given array ${JSON.stringify(e,null,4)} is not a subset of an array on the other end, ${JSON.stringify(t,null,4)}`}}else{if(!h(t)||!h(e))return!(!(u.hungryForWhitespace&&b(t)&&b(e))||u.matchStrictly&&(!u.matchStrictly||(s=e,h(s)?Object.keys(s).length:!Array.isArray(s)&&"string"!=typeof s||s.length)))||t===e;if(n=new Set(Object.keys(e)),o=new Set(Object.keys(t)),u.matchStrictly&&n.size!==o.size){if(!u.verboseWhenMismatches)return!1;const t=new Set([...n].filter((t=>!o.has(t)))),e=t.size?` First object has unique keys: ${JSON.stringify(t,null,4)}.`:"",r=new Set([...o].filter((t=>!n.has(t))));return`When matching strictly, we found that both objects have different amount of keys.${e}${r.size?` Second object has unique keys:\n        ${JSON.stringify(r,null,4)}.`:""}`}for(const r of n){if(!Object.prototype.hasOwnProperty.call(t,r))return!u.useWildcards||u.useWildcards&&!r.includes("*")?!!u.verboseWhenMismatches&&`The given object has key "${r}" which the other-one does not have.`:!!Object.keys(t).some((t=>O.isMatch(t,r,{caseSensitive:!0})))||!!u.verboseWhenMismatches&&`The given object has key "${r}" which the other-one does not have.`;if(null!=t[r]&&i(t[r])!==i(e[r])){if(!(b(t[r])&&b(e[r])&&u.hungryForWhitespace))return!!u.verboseWhenMismatches&&`The given key ${r} is of a different type on both objects. On the first-one, it's ${i(e[r])}, on the second-one, it's ${i(t[r])}`}else if(!0!==S(t[r],e[r],u))return!!u.verboseWhenMismatches&&`The given piece ${JSON.stringify(e[r],null,4)} and ${JSON.stringify(t[r],null,4)} don't match.`}}var s;return!0}const W={matchKeysStrictly:!1,hungryForWhitespace:!1};t.defaults=W,t.deleteObj=function(t,e,r){if(!t)throw new Error("ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!");if(!e)throw new Error("ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!");if(r&&!h(r))throw new Error("ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!");const o={...W,...r};let i,a=n(t);return S(a,e,{hungryForWhitespace:o.hungryForWhitespace,matchStrictly:o.matchKeysStrictly})?{}:(a=g(a,((t,r)=>{if(i=void 0!==r?r:t,h(i)){if(h(e)&&h(i)&&!Object.keys(e).length&&!Object.keys(i).length)return NaN;if(S(i,e,{hungryForWhitespace:o.hungryForWhitespace,matchStrictly:o.matchKeysStrictly}))return NaN}return i})),a)},t.version="2.0.16",Object.defineProperty(t,"__esModule",{value:!0})}));
+ */function S(t,e,r){let n,o,a,c=0;const u={hungryForWhitespace:!1,matchStrictly:!1,verboseWhenMismatches:!1,useWildcards:!1,...r};if(u.hungryForWhitespace&&u.matchStrictly&&h(t)&&b(t)&&h(e)&&!Object.keys(e).length)return!0;if((!u.hungryForWhitespace||u.hungryForWhitespace&&!b(t)&&b(e))&&h(t)&&0!==Object.keys(t).length&&h(e)&&0===Object.keys(e).length||i(t)!==i(e)&&(!u.hungryForWhitespace||u.hungryForWhitespace&&!b(t)))return!1;if("string"==typeof t&&"string"==typeof e)return!!(u.hungryForWhitespace&&b(t)&&b(e))||(u.verboseWhenMismatches?t===e||`Given string ${e} is not matched! We have ${t} on the other end.`:u.useWildcards?O.isMatch(t,e,{caseSensitive:!0}):t===e);if(Array.isArray(t)&&Array.isArray(e)){if(u.hungryForWhitespace&&b(e)&&(!u.matchStrictly||u.matchStrictly&&t.length===e.length))return!0;if(!u.hungryForWhitespace&&e.length>t.length||u.matchStrictly&&e.length!==t.length)return!!u.verboseWhenMismatches&&`The length of a given array, ${JSON.stringify(e,null,4)} is ${e.length} but the length of an array on the other end, ${JSON.stringify(t,null,4)} is ${t.length}`;if(0===e.length)return 0===t.length||!!u.verboseWhenMismatches&&`The given array has no elements, but the array on the other end, ${JSON.stringify(t,null,4)} does have some`;for(let r=0,n=e.length;r<n;r++){a=!1;for(let n=c,o=t.length;n<o;n++)if(c+=1,!0===S(t[n],e[r],u)){a=!0;break}if(!a)return!!u.verboseWhenMismatches&&`The given array ${JSON.stringify(e,null,4)} is not a subset of an array on the other end, ${JSON.stringify(t,null,4)}`}}else{if(!h(t)||!h(e))return!(!(u.hungryForWhitespace&&b(t)&&b(e))||u.matchStrictly&&(!u.matchStrictly||(s=e,h(s)?Object.keys(s).length:!Array.isArray(s)&&"string"!=typeof s||s.length)))||t===e;if(n=new Set(Object.keys(e)),o=new Set(Object.keys(t)),u.matchStrictly&&n.size!==o.size){if(!u.verboseWhenMismatches)return!1;const t=new Set([...n].filter((t=>!o.has(t)))),e=t.size?` First object has unique keys: ${JSON.stringify(t,null,4)}.`:"",r=new Set([...o].filter((t=>!n.has(t))));return`When matching strictly, we found that both objects have different amount of keys.${e}${r.size?` Second object has unique keys:\n        ${JSON.stringify(r,null,4)}.`:""}`}for(const r of n){if(!Object.prototype.hasOwnProperty.call(t,r))return!u.useWildcards||u.useWildcards&&!r.includes("*")?!!u.verboseWhenMismatches&&`The given object has key "${r}" which the other-one does not have.`:!!Object.keys(t).some((t=>O.isMatch(t,r,{caseSensitive:!0})))||!!u.verboseWhenMismatches&&`The given object has key "${r}" which the other-one does not have.`;if(null!=t[r]&&i(t[r])!==i(e[r])){if(!(b(t[r])&&b(e[r])&&u.hungryForWhitespace))return!!u.verboseWhenMismatches&&`The given key ${r} is of a different type on both objects. On the first-one, it's ${i(e[r])}, on the second-one, it's ${i(t[r])}`}else if(!0!==S(t[r],e[r],u))return!!u.verboseWhenMismatches&&`The given piece ${JSON.stringify(e[r],null,4)} and ${JSON.stringify(t[r],null,4)} don't match.`}}var s;return!0}const W={matchKeysStrictly:!1,hungryForWhitespace:!1};t.defaults=W,t.deleteObj=function(t,e,r){if(!t)throw new Error("ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!");if(!e)throw new Error("ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!");if(r&&!h(r))throw new Error("ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!");const o={...W,...r};let i,a=n(t);return S(a,e,{hungryForWhitespace:o.hungryForWhitespace,matchStrictly:o.matchKeysStrictly})?{}:(a=g(a,((t,r)=>{if(i=void 0!==r?r:t,h(i)){if(h(e)&&h(i)&&!Object.keys(e).length&&!Object.keys(i).length)return NaN;if(S(i,e,{hungryForWhitespace:o.hungryForWhitespace,matchStrictly:o.matchKeysStrictly}))return NaN}return i})),a)},t.version="2.1.0",Object.defineProperty(t,"__esModule",{value:!0})}));

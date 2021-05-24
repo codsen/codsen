@@ -1,7 +1,7 @@
 /**
  * @name test-mixer
  * @fileoverview Test helper to generate function opts object variations
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/test-mixer/}
@@ -3269,7 +3269,7 @@ var clone = lodash_clonedeep.exports;
 /**
  * @name object-boolean-combinations
  * @fileoverview Consumes a defaults object with booleans, generates all possible variations of it
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-boolean-combinations/}
@@ -3321,7 +3321,7 @@ function combinations(originalIncomingObject, originalOverrideObject = {}) {
   return outcomingObjectsArray;
 }
 
-var version$1 = "2.0.16";
+var version$1 = "2.1.0";
 
 const version = version$1;
 function mixer(ref = {}, defaultsObj = {}) {

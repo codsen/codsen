@@ -1,7 +1,7 @@
 /**
  * @name is-html-attribute-closing
  * @fileoverview Is a character on a given index a closing of an HTML attribute?
- * @version 2.2.7
+ * @version 2.3.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-attribute-closing/}
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * @name html-all-known-attributes
  * @fileoverview All HTML attributes known to the Humanity
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-all-known-attributes/}
@@ -26,7 +26,7 @@ const allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey",
 /**
  * @name is-char-suitable-for-html-attr-name
  * @fileoverview Is given character suitable to be in an HTML attribute's name?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-char-suitable-for-html-attr-name/}
@@ -1815,7 +1815,7 @@ module.exports = cloneDeep;
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -1931,7 +1931,7 @@ function left(str, idx = 0) {
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.16
+ * @version 3.14.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -1950,7 +1950,7 @@ function arrayiffy(something) {
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 7.0.10
+ * @version 7.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -2309,7 +2309,7 @@ function findAttrNameCharsChunkOnTheLeft(str, i) {
     }
 }
 
-var version$1 = "2.2.7";
+var version$1 = "2.3.0";
 
 const version = version$1;
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {

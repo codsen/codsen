@@ -1,7 +1,7 @@
 /**
  * @name ranges-regex
  * @fileoverview Integrate regex operations into Ranges workflow
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-regex/}
@@ -20,7 +20,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var isregexp__default = /*#__PURE__*/_interopDefaultLegacy(isregexp);
 
-var version$1 = "4.0.16";
+var version$1 = "4.1.0";
 
 var version = version$1;
 function rRegex(regx, str, replacement) {

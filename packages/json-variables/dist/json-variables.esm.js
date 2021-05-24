@@ -1,7 +1,7 @@
 /**
  * @name json-variables
  * @fileoverview Resolves custom-marked, cross-referenced paths in parsed JSON
- * @version 10.0.16
+ * @version 10.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/json-variables/}
@@ -18,7 +18,7 @@ import { rApply } from 'ranges-apply';
 import { remDup } from 'string-remove-duplicate-heads-tails';
 import { matchRightIncl, matchLeftIncl } from 'string-match-left-right';
 
-var version$1 = "10.0.16";
+var version$1 = "10.1.0";
 
 const version = version$1;
 const has = Object.prototype.hasOwnProperty;

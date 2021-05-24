@@ -1,7 +1,7 @@
 /**
  * @name object-boolean-combinations
  * @fileoverview Consumes a defaults object with booleans, generates all possible variations of it
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-boolean-combinations/}
@@ -3266,7 +3266,7 @@ module.exports = cloneDeep;
 
 var clone = lodash_clonedeep.exports;
 
-var version$1 = "4.0.16";
+var version$1 = "4.1.0";
 
 /* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
 const version = version$1;

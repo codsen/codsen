@@ -1,7 +1,7 @@
 /**
  * @name string-split-by-whitespace
  * @fileoverview Split string into array by chunks of whitespace
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-split-by-whitespace/}
@@ -11,8 +11,8 @@
 /**
  * @name ranges-is-index-within
  * @fileoverview Checks if index is within any of the given string index ranges
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-is-index-within/}
- */const n={inclusiveRangeEnds:!1,returnMatchedRangeInsteadOfTrue:!1};function i(e,i,r){const t={...n,...r};if(!Number.isInteger(e))throw new Error(`ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as ${e} (type ${typeof e})`);return!!Array.isArray(i)&&(t.returnMatchedRangeInsteadOfTrue?i.find((n=>t.inclusiveRangeEnds?e>=n[0]&&e<=n[1]:e>n[0]&&e<n[1]))||!1:i.some((n=>t.inclusiveRangeEnds?e>=n[0]&&e<=n[1]:e>n[0]&&e<n[1])))}e.splitByW=function(e,n){if(void 0===e)throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");if("string"!=typeof e)return e;if(""===e.trim())return[];const r={ignoreRanges:[],...n};if(r.ignoreRanges.length>0&&!r.ignoreRanges.every((e=>Array.isArray(e))))throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");let t=null;const s=[];for(let n=0,o=e.length;n<o;n++)null!==t||!e[n].trim()||r&&r.ignoreRanges&&r.ignoreRanges.length&&(!r.ignoreRanges.length||i(n,r.ignoreRanges.map((e=>[e[0],e[1]-1])),{inclusiveRangeEnds:!0}))||(t=n),null!==t&&(e[n].trim()?r.ignoreRanges.length&&i(n,r.ignoreRanges)?(s.push(e.slice(t,n-1)),t=null):void 0===e[n+1]&&s.push(e.slice(t,n+1)):(s.push(e.slice(t,n)),t=null));return s},e.version="2.0.16",Object.defineProperty(e,"__esModule",{value:!0})}));
+ */const n={inclusiveRangeEnds:!1,returnMatchedRangeInsteadOfTrue:!1};function i(e,i,r){const t={...n,...r};if(!Number.isInteger(e))throw new Error(`ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as ${e} (type ${typeof e})`);return!!Array.isArray(i)&&(t.returnMatchedRangeInsteadOfTrue?i.find((n=>t.inclusiveRangeEnds?e>=n[0]&&e<=n[1]:e>n[0]&&e<n[1]))||!1:i.some((n=>t.inclusiveRangeEnds?e>=n[0]&&e<=n[1]:e>n[0]&&e<n[1])))}e.splitByW=function(e,n){if(void 0===e)throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");if("string"!=typeof e)return e;if(""===e.trim())return[];const r={ignoreRanges:[],...n};if(r.ignoreRanges.length>0&&!r.ignoreRanges.every((e=>Array.isArray(e))))throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");let t=null;const s=[];for(let n=0,o=e.length;n<o;n++)null!==t||!e[n].trim()||r&&r.ignoreRanges&&r.ignoreRanges.length&&(!r.ignoreRanges.length||i(n,r.ignoreRanges.map((e=>[e[0],e[1]-1])),{inclusiveRangeEnds:!0}))||(t=n),null!==t&&(e[n].trim()?r.ignoreRanges.length&&i(n,r.ignoreRanges)?(s.push(e.slice(t,n-1)),t=null):void 0===e[n+1]&&s.push(e.slice(t,n+1)):(s.push(e.slice(t,n)),t=null));return s},e.version="2.1.0",Object.defineProperty(e,"__esModule",{value:!0})}));

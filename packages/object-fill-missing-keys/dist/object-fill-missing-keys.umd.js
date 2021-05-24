@@ -1,7 +1,7 @@
 /**
  * @name object-fill-missing-keys
  * @fileoverview Add missing keys into plain objects, according to a reference object
- * @version 8.0.16
+ * @version 8.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-fill-missing-keys/}
@@ -11,7 +11,7 @@
 /**
  * @name array-includes-with-glob
  * @fileoverview Like _.includes but with wildcards
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-includes-with-glob/}
@@ -19,7 +19,7 @@
 /**
  * @name util-nonempty
  * @fileoverview Is the input (plain object, array, string or whatever) not empty?
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/util-nonempty/}
@@ -27,7 +27,7 @@
 /**
  * @name object-merge-advanced
  * @fileoverview Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * @version 12.0.13
+ * @version 12.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-merge-advanced/}
@@ -35,7 +35,7 @@
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.16
+ * @version 3.14.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -44,8 +44,8 @@ function qt(t){return"string"==typeof t?t.length?[t]:[]:t}var Vt={exports:{}};!f
 /**
  * @name object-all-values-equal-to
  * @fileoverview Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-all-values-equal-to/}
- */function Jt(t,e,r){if(Array.isArray(t)){if(0===t.length)return!0;if(r.arraysMustNotContainPlaceholders&&t.length>0&&t.some((t=>Lt(t,e))))return!1;for(let n=t.length;n--;)if(!Jt(t[n],e,r))return!1;return!0}if(At(t)){const n=Object.keys(t);if(0===n.length)return!0;for(let o=n.length;o--;)if(!Jt(t[n[o]],e,r))return!1;return!0}return Lt(t,e)}function Gt(t,e,r){if(void 0===t)throw new Error("object-all-values-equal-to: [THROW_ID_01] The first input is undefined! Please provide the first argument.");if(void 0===e)throw new Error("object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.");if(r&&!At(r))throw new Error(`object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ${typeof r}, equal to:\n${JSON.stringify(r,null,4)}`);return Jt(t,e,{arraysMustNotContainPlaceholders:!0,...r})}const Qt={placeholder:!1,doNotFillThesePathsIfTheyContainPlaceholders:[],useNullAsExplicitFalse:!0};function Xt(t){return At(t)?"plain object":Array.isArray(t)?"array":typeof t}function Yt(t){return"string"==typeof t}function Zt(t){return null!=t}function te(t,e,r,o=""){const i=n(t);if(Zt(i)||!(o.length&&r.doNotFillThesePathsIfTheyContainPlaceholders.includes(o)&&Gt(i,r.placeholder)))if(At(e)&&At(i))Object.keys(e).forEach((t=>{const n=`${o?`${o}.`:""}${t}`;r.doNotFillThesePathsIfTheyContainPlaceholders.includes(n)&&(Zt(i[t])?Gt(i[t],r.placeholder)&&(i[t]=r.placeholder):i[t]=r.placeholder),Zt(i[t])&&r.doNotFillThesePathsIfTheyContainPlaceholders.includes(n)&&Gt(i[t],r.placeholder)||(i[t]=te(i[t],e[t],r,n))}));else{if(!Array.isArray(e)||!Array.isArray(i))return function(t,e,r){if(!arguments.length)throw new TypeError("object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing");return Ht({key:null,path:"",type:[Wt(t),Wt(e)]},t,e,r)}(e,i,{useNullAsExplicitFalse:r.useNullAsExplicitFalse});if(0===i.length)return e;if(e.length>0)for(let t=i.length;t--;){const n=(o?`${o}.`:"")+"0";(At(e[0])||Array.isArray(e[0]))&&(i[t]=te(i[t],e[0],r,n))}}return i}t.fillMissing=function(t,e,r){if(0===arguments.length)throw new Error("object-fill-missing-keys: [THROW_ID_01] All arguments are missing!");if(!At(t))throw new Error(`object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${Xt(t)}" and it's equal to: ${JSON.stringify(t,null,4)}`);if(!At(e))throw new Error(`object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${Xt(e)}" and it's equal to: ${JSON.stringify(e,null,4)}`);if(r&&!At(r))throw new Error(`object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${Xt(r)}" and it's equal to: ${JSON.stringify(r,null,4)}`);const o={...Qt,...r||{}};o.doNotFillThesePathsIfTheyContainPlaceholders=qt(o.doNotFillThesePathsIfTheyContainPlaceholders);let i=null,c=null;if(o.doNotFillThesePathsIfTheyContainPlaceholders.length>0&&!o.doNotFillThesePathsIfTheyContainPlaceholders.every(((t,e)=>!!Yt(t)||(i=t,c=e,!1))))throw new Error(`object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${c}" is not a string! It's ${Xt(i)}, equal to:\n${JSON.stringify(i,null,4)}`);return te(n(t),n(e),o)},t.version="8.0.16",Object.defineProperty(t,"__esModule",{value:!0})}));
+ */function Jt(t,e,r){if(Array.isArray(t)){if(0===t.length)return!0;if(r.arraysMustNotContainPlaceholders&&t.length>0&&t.some((t=>Lt(t,e))))return!1;for(let n=t.length;n--;)if(!Jt(t[n],e,r))return!1;return!0}if(At(t)){const n=Object.keys(t);if(0===n.length)return!0;for(let o=n.length;o--;)if(!Jt(t[n[o]],e,r))return!1;return!0}return Lt(t,e)}function Gt(t,e,r){if(void 0===t)throw new Error("object-all-values-equal-to: [THROW_ID_01] The first input is undefined! Please provide the first argument.");if(void 0===e)throw new Error("object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.");if(r&&!At(r))throw new Error(`object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ${typeof r}, equal to:\n${JSON.stringify(r,null,4)}`);return Jt(t,e,{arraysMustNotContainPlaceholders:!0,...r})}const Qt={placeholder:!1,doNotFillThesePathsIfTheyContainPlaceholders:[],useNullAsExplicitFalse:!0};function Xt(t){return At(t)?"plain object":Array.isArray(t)?"array":typeof t}function Yt(t){return"string"==typeof t}function Zt(t){return null!=t}function te(t,e,r,o=""){const i=n(t);if(Zt(i)||!(o.length&&r.doNotFillThesePathsIfTheyContainPlaceholders.includes(o)&&Gt(i,r.placeholder)))if(At(e)&&At(i))Object.keys(e).forEach((t=>{const n=`${o?`${o}.`:""}${t}`;r.doNotFillThesePathsIfTheyContainPlaceholders.includes(n)&&(Zt(i[t])?Gt(i[t],r.placeholder)&&(i[t]=r.placeholder):i[t]=r.placeholder),Zt(i[t])&&r.doNotFillThesePathsIfTheyContainPlaceholders.includes(n)&&Gt(i[t],r.placeholder)||(i[t]=te(i[t],e[t],r,n))}));else{if(!Array.isArray(e)||!Array.isArray(i))return function(t,e,r){if(!arguments.length)throw new TypeError("object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing");return Ht({key:null,path:"",type:[Wt(t),Wt(e)]},t,e,r)}(e,i,{useNullAsExplicitFalse:r.useNullAsExplicitFalse});if(0===i.length)return e;if(e.length>0)for(let t=i.length;t--;){const n=(o?`${o}.`:"")+"0";(At(e[0])||Array.isArray(e[0]))&&(i[t]=te(i[t],e[0],r,n))}}return i}t.fillMissing=function(t,e,r){if(0===arguments.length)throw new Error("object-fill-missing-keys: [THROW_ID_01] All arguments are missing!");if(!At(t))throw new Error(`object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${Xt(t)}" and it's equal to: ${JSON.stringify(t,null,4)}`);if(!At(e))throw new Error(`object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${Xt(e)}" and it's equal to: ${JSON.stringify(e,null,4)}`);if(r&&!At(r))throw new Error(`object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${Xt(r)}" and it's equal to: ${JSON.stringify(r,null,4)}`);const o={...Qt,...r||{}};o.doNotFillThesePathsIfTheyContainPlaceholders=qt(o.doNotFillThesePathsIfTheyContainPlaceholders);let i=null,c=null;if(o.doNotFillThesePathsIfTheyContainPlaceholders.length>0&&!o.doNotFillThesePathsIfTheyContainPlaceholders.every(((t,e)=>!!Yt(t)||(i=t,c=e,!1))))throw new Error(`object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${c}" is not a string! It's ${Xt(i)}, equal to:\n${JSON.stringify(i,null,4)}`);return te(n(t),n(e),o)},t.version="8.1.0",Object.defineProperty(t,"__esModule",{value:!0})}));

@@ -1,7 +1,7 @@
 /**
  * @name string-strip-html
  * @fileoverview Strips HTML tags from strings. No parser, accepts mixed sources.
- * @version 8.2.13
+ * @version 8.3.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-strip-html/}
@@ -1802,7 +1802,7 @@ var decode_1 = lib.decode = decode;
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -1865,7 +1865,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.16
+ * @version 7.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -1965,7 +1965,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -2061,7 +2061,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -2138,7 +2138,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -4033,7 +4033,7 @@ module.exports = cloneDeep;
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -4136,7 +4136,7 @@ function notWithinAttrQuotes(tag, str, i) {
         !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">"));
 }
 
-var version$1 = "8.2.13";
+var version$1 = "8.3.0";
 
 const version = version$1;
 const defaults = {

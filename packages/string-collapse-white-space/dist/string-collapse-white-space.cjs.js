@@ -1,7 +1,7 @@
 /**
  * @name string-collapse-white-space
  * @fileoverview Replace chunks of whitespace with a single spaces
- * @version 9.0.16
+ * @version 9.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-white-space/}
@@ -24,7 +24,7 @@ var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumab
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "9.0.16";
+var version$1 = "9.1.0";
 
 var version = version$1;
 var defaults = {

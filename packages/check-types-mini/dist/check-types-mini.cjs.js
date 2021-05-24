@@ -1,7 +1,7 @@
 /**
  * @name check-types-mini
  * @fileoverview Validate options object
- * @version 6.0.16
+ * @version 6.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/check-types-mini/}

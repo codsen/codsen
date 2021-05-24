@@ -1,7 +1,7 @@
 /**
  * @name generate-atomic-css
  * @fileoverview Generate Atomic CSS
- * @version 1.4.16
+ * @version 1.5.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/generate-atomic-css/}
@@ -9,7 +9,7 @@
 
 import { right, left, leftSeq, rightSeq } from 'string-left-right';
 
-var version$1 = "1.4.16";
+var version$1 = "1.5.0";
 
 function isStr(something) {
   return typeof something === "string";

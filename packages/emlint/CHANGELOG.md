@@ -3,22 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 4.7.0 (2021-05-24)
-
+## 4.7.0 (2021-05-24)
 
 ### Bug Fixes
 
-* tweak issue labels ([8d65ea3](https://github.com/codsen/codsen/commit/8d65ea3d5e0e1b234f7578a8c989137b7141e3c5))
-
+- tweak issue labels ([8d65ea3](https://github.com/codsen/codsen/commit/8d65ea3d5e0e1b234f7578a8c989137b7141e3c5))
 
 ### Features
 
-* config file based major bump blacklisting ([e15f9bb](https://github.com/codsen/codsen/commit/e15f9bba1c4fd5f847ac28b3f38fa6ee633f5dca))
-* logic improvements around inline CSS and ESP tokens ([4334454](https://github.com/codsen/codsen/commit/4334454059eef4e8b56cf396844a8e473e9f242c))
-
-
-
-
+- config file based major bump blacklisting ([e15f9bb](https://github.com/codsen/codsen/commit/e15f9bba1c4fd5f847ac28b3f38fa6ee633f5dca))
+- logic improvements around inline CSS and ESP tokens ([4334454](https://github.com/codsen/codsen/commit/4334454059eef4e8b56cf396844a8e473e9f242c))
 
 ## 4.6.0 (2021-04-11)
 

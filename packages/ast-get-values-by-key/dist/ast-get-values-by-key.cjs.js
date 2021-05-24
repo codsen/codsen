@@ -1,7 +1,7 @@
 /**
  * @name ast-get-values-by-key
  * @fileoverview Extract values and paths from AST by keys OR set them by keys
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-get-values-by-key/}
@@ -20,7 +20,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
-var version$1 = "3.0.16";
+var version$1 = "3.1.0";
 
 var version = version$1;
 function getByKey(originalInput, whatToFind, originalReplacement) {

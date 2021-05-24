@@ -1,7 +1,7 @@
 /**
  * @name ast-get-values-by-key
  * @fileoverview Extract values and paths from AST by keys OR set them by keys
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-get-values-by-key/}
@@ -11,7 +11,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.16
+ * @version 1.4.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -19,8 +19,8 @@
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
- */var h={exports:{}};const d=t=>{if("string"!=typeof t)throw new TypeError("Expected a string");return t.replace(/[|\\{}()[\]^$+*?.]/g,"\\$&").replace(/-/g,"\\x2d")},v=new Map;function _(t,e){if(!Array.isArray(t))switch(typeof t){case"string":t=[t];break;case"undefined":t=[];break;default:throw new TypeError(`Expected '${e}' to be a string or an array, but got a type of '${typeof t}'`)}return t.filter((t=>{if("string"!=typeof t){if(void 0===t)return!1;throw new TypeError(`Expected '${e}' to be an array of strings, but found a type of '${typeof t}' in the array`)}return!0}))}function b(t,e){e={caseSensitive:!1,...e};const r=t+JSON.stringify(e);if(v.has(r))return v.get(r);const n="!"===t[0];n&&(t=t.slice(1)),t=d(t).replace(/\\\*/g,"[\\s\\S]*");const o=new RegExp(`^${t}$`,e.caseSensitive?"":"i");return o.negated=n,v.set(r,o),o}h.exports=(t,e,r)=>{if(t=_(t,"inputs"),0===(e=_(e,"patterns")).length)return[];const n="!"===e[0][0];e=e.map((t=>b(t,r)));const o=[];for(const r of t){let t=n;for(const n of e)n.test(r)&&(t=!n.negated);t&&o.push(r)}return o},h.exports.isMatch=(t,e,r)=>(t=_(t,"inputs"),0!==(e=_(e,"patterns")).length&&t.some((t=>e.every((e=>{const n=b(e,r),o=n.test(t);return n.negated?!o:o})))));var g=h.exports;t.getByKey=function(t,e,r){let o;void 0!==r&&(o=Array.isArray(r)?n(r):[n(r)]);const c=[],a=function t(e,r,o,c){const a=n(e);let i;const u={depth:-1,path:"",...o};if(u.depth+=1,Array.isArray(a))for(let e=0,o=a.length;e<o&&!c.now;e++){const o=u.path?`${u.path}.${e}`:`${e}`;void 0!==a[e]?(u.parent=n(a),u.parentType="array",u.parentKey=y(o),i=t(r(a[e],void 0,{...u,path:o},c),r,{...u,path:o},c),Number.isNaN(i)&&e<a.length?(a.splice(e,1),e-=1):a[e]=i):a.splice(e,1)}else if(p(a))for(const e in a){if(c.now&&null!=e)break;const o=u.path?`${u.path}.${e}`:e;0===u.depth&&null!=e&&(u.topmostKey=e),u.parent=n(a),u.parentType="object",u.parentKey=y(o),i=t(r(e,a[e],{...u,path:o},c),r,{...u,path:o},c),Number.isNaN(i)?delete a[e]:a[e]=i}return a}(t,((t,r,n)=>{const a=void 0!==r?r:t;if(void 0!==r&&g.isMatch(t,e,{caseSensitive:!0}))if(void 0===o)c.push({val:r,path:n.path});else if(o.length)return o.shift();return a}),{},{now:!1});return void 0===o?c:a},t.version="3.0.16",Object.defineProperty(t,"__esModule",{value:!0})}));
+ */var h={exports:{}};const d=t=>{if("string"!=typeof t)throw new TypeError("Expected a string");return t.replace(/[|\\{}()[\]^$+*?.]/g,"\\$&").replace(/-/g,"\\x2d")},v=new Map;function _(t,e){if(!Array.isArray(t))switch(typeof t){case"string":t=[t];break;case"undefined":t=[];break;default:throw new TypeError(`Expected '${e}' to be a string or an array, but got a type of '${typeof t}'`)}return t.filter((t=>{if("string"!=typeof t){if(void 0===t)return!1;throw new TypeError(`Expected '${e}' to be an array of strings, but found a type of '${typeof t}' in the array`)}return!0}))}function b(t,e){e={caseSensitive:!1,...e};const r=t+JSON.stringify(e);if(v.has(r))return v.get(r);const n="!"===t[0];n&&(t=t.slice(1)),t=d(t).replace(/\\\*/g,"[\\s\\S]*");const o=new RegExp(`^${t}$`,e.caseSensitive?"":"i");return o.negated=n,v.set(r,o),o}h.exports=(t,e,r)=>{if(t=_(t,"inputs"),0===(e=_(e,"patterns")).length)return[];const n="!"===e[0][0];e=e.map((t=>b(t,r)));const o=[];for(const r of t){let t=n;for(const n of e)n.test(r)&&(t=!n.negated);t&&o.push(r)}return o},h.exports.isMatch=(t,e,r)=>(t=_(t,"inputs"),0!==(e=_(e,"patterns")).length&&t.some((t=>e.every((e=>{const n=b(e,r),o=n.test(t);return n.negated?!o:o})))));var g=h.exports;t.getByKey=function(t,e,r){let o;void 0!==r&&(o=Array.isArray(r)?n(r):[n(r)]);const c=[],a=function t(e,r,o,c){const a=n(e);let i;const u={depth:-1,path:"",...o};if(u.depth+=1,Array.isArray(a))for(let e=0,o=a.length;e<o&&!c.now;e++){const o=u.path?`${u.path}.${e}`:`${e}`;void 0!==a[e]?(u.parent=n(a),u.parentType="array",u.parentKey=y(o),i=t(r(a[e],void 0,{...u,path:o},c),r,{...u,path:o},c),Number.isNaN(i)&&e<a.length?(a.splice(e,1),e-=1):a[e]=i):a.splice(e,1)}else if(p(a))for(const e in a){if(c.now&&null!=e)break;const o=u.path?`${u.path}.${e}`:e;0===u.depth&&null!=e&&(u.topmostKey=e),u.parent=n(a),u.parentType="object",u.parentKey=y(o),i=t(r(e,a[e],{...u,path:o},c),r,{...u,path:o},c),Number.isNaN(i)?delete a[e]:a[e]=i}return a}(t,((t,r,n)=>{const a=void 0!==r?r:t;if(void 0!==r&&g.isMatch(t,e,{caseSensitive:!0}))if(void 0===o)c.push({val:r,path:n.path});else if(o.length)return o.shift();return a}),{},{now:!1});return void 0===o?c:a},t.version="3.1.0",Object.defineProperty(t,"__esModule",{value:!0})}));

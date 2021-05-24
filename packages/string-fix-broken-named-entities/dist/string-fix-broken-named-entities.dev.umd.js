@@ -1,7 +1,7 @@
 /**
  * @name string-fix-broken-named-entities
  * @fileoverview Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * @version 5.3.1
+ * @version 5.4.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-fix-broken-named-entities/}
@@ -99,7 +99,7 @@ var leven$1 = leven$2.exports;
 /**
  * @name all-named-html-entities
  * @fileoverview List of all named HTML entities
- * @version 1.5.16
+ * @version 1.6.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/all-named-html-entities/}
@@ -9328,7 +9328,7 @@ module.exports = cloneDeep;
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -9794,7 +9794,7 @@ function removeGappedFromMixedCases(str, temp1) {
     return findLongest(temp1);
 }
 
-var version$1 = "5.3.1";
+var version$1 = "5.4.0";
 
 const version = version$1;
 const allRules = [...allNamedEntitiesSetOnly]

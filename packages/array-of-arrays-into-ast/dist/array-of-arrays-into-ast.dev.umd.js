@@ -1,7 +1,7 @@
 /**
  * @name array-of-arrays-into-ast
  * @fileoverview Turns an array of arrays of data into a nested tree of plain objects
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-of-arrays-into-ast/}
@@ -3805,7 +3805,7 @@ var matcher = matcher$1.exports;
 /**
  * @name array-includes-with-glob
  * @fileoverview Like _.includes but with wildcards
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-includes-with-glob/}
@@ -3840,7 +3840,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * @name util-nonempty
  * @fileoverview Is the input (plain object, array, string or whatever) not empty?
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/util-nonempty/}
@@ -3861,7 +3861,7 @@ function nonEmpty(input) {
 /**
  * @name object-merge-advanced
  * @fileoverview Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * @version 12.0.13
+ * @version 12.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-merge-advanced/}
@@ -4364,7 +4364,7 @@ function externalApi(input1orig, input2orig, originalOpts) {
   }, input1orig, input2orig, originalOpts);
 }
 
-var version$1 = "2.0.16";
+var version$1 = "2.1.0";
 
 const version = version$1;
 const defaults = {

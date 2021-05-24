@@ -1,7 +1,7 @@
 /**
  * @name html-table-patcher
  * @fileoverview Visual helper to place templating code around table tags into correct places
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-table-patcher/}
@@ -11,7 +11,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.16
+ * @version 1.4.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -19,7 +19,7 @@
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -27,7 +27,7 @@
 /**
  * @name string-find-malformed
  * @fileoverview Search for a malformed string. Think of Levenshtein distance but in search.
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-find-malformed/}
@@ -35,7 +35,7 @@
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.16
+ * @version 3.14.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -43,7 +43,7 @@
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 7.0.10
+ * @version 7.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -52,7 +52,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name html-all-known-attributes
  * @fileoverview All HTML attributes known to the Humanity
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-all-known-attributes/}
@@ -60,7 +60,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name is-char-suitable-for-html-attr-name
  * @fileoverview Is given character suitable to be in an HTML attribute's name?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-char-suitable-for-html-attr-name/}
@@ -68,7 +68,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name is-html-attribute-closing
  * @fileoverview Is a character on a given index a closing of an HTML attribute?
- * @version 2.2.7
+ * @version 2.3.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-attribute-closing/}
@@ -76,7 +76,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name is-html-tag-opening
  * @fileoverview Does an HTML tag start at given position?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-tag-opening/}
@@ -84,7 +84,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name codsen-tokenizer
  * @fileoverview HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * @version 5.5.7
+ * @version 5.6.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/codsen-tokenizer/}
@@ -92,7 +92,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name codsen-parser
  * @fileoverview Parser aiming at broken or mixed code, especially HTML & CSS
- * @version 0.10.13
+ * @version 0.11.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/codsen-parser/}
@@ -100,7 +100,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -108,7 +108,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -116,7 +116,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.16
+ * @version 7.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -124,7 +124,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -132,7 +132,7 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -140,9 +140,9 @@ function w(t){return t&&"object"==typeof t&&!Array.isArray(t)}function _(t){retu
 /**
  * @name ast-monkey-traverse-with-lookahead
  * @fileoverview Utility library to traverse AST, reports upcoming values
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse-with-lookahead/}
  */
-function(t,e,r=0){function n(t){return"string"==typeof t&&"."===t[0]?t.slice(1):t}const i=[];function a(){const t=i.shift();t[2].next=[];for(let e=0;e<r&&i[e];e++)t[2].next.push(m([i[e][0],i[e][1],i[e][2]]));e(...t)}if(function t(e,r,i,a){if((i={...i}).depth+=1,Array.isArray(e))for(let s=0,o=e.length;s<o&&!a.now;s++){const o=`${i.path}.${s}`;i.parent=m(e),i.parentType="array",r(e[s],void 0,{...i,path:n(o)},a),t(e[s],r,{...i,path:n(o)},a)}else if(d(e))for(const s in e){if(a.now&&null!=s)break;const o=`${i.path}.${s}`;0===i.depth&&null!=s&&(i.topmostKey=s),i.parent=m(e),i.parentType="object",r(s,e[s],{...i,path:n(o)},a),t(e[s],r,{...i,path:n(o)},a)}return e}(t,(function(...t){i.push([...t]),i.length>r&&a()}),{depth:-1,path:""},{now:!1}),i.length)for(let t=0,e=i.length;t<e;t++)a()}(Vt(t),((t,e,i)=>{if(Rt(t)&&"comment"===t.type&&!n.some((t=>i.path.startsWith(t))))n.push(i.path);else if(Rt(t)&&"tag"===t.type&&"table"===t.tagName&&!n.some((t=>i.path.startsWith(t)))&&!t.closing&&t.children.some((t=>["text","esp"].includes(t.type)))){let e=1,n=!1,i={};if(t.children.some((t=>"tag"===t.type&&"tr"===t.tagName&&!t.closing&&(i=t)))){let t=0;for(let r=0,a=i.children.length;r<a;r++){const a=i.children[r];"tag"===a.type&&"td"===a.tagName?a.closing||(n=a.attribs.some((t=>"align"===t.attribName&&"center"===t.attribValueRaw||"style"===t.attribName&&/text-align:\s*center/i.test(t.attribValueRaw))),t++,t>e&&(e=t)):("text"!==a.type||a.value.replace(jt,"").trim())&&(t=0)}}t.children.filter((t=>["text","esp"].includes(t.type))).forEach((t=>{t.value.replace(jt,"").trim()&&It.push(t.start,t.end,`\n<tr>\n  <td${e>1?` colspan="${e}"`:""}${r.alwaysCenter||n?' align="center"':""}${r.cssStylesContent?` style="${r.cssStylesContent}"`:""}>\n    ${t.value.trim()}\n  </td>\n</tr>\n`)})),t.children.filter((t=>"tag"===t.type&&"tr"===t.tagName&&!t.closing)).forEach((t=>{let i=!1;for(let a=0,s=t.children.length;a<s;a++){const o=t.children[a];i&&"comment"===o.type&&o.closing?i=!1:(i||"comment"!==o.type||o.closing||(i=!0),!i&&["text","esp"].includes(o.type)&&o.value.trim()&&o.value.trim()&&It.push(o.start,o.end,a?a&&s>1&&a===s-1?`\n</tr>\n<tr>\n  <td${e>1?` colspan="${e}"`:""}${r.alwaysCenter||n?' align="center"':""}${r.cssStylesContent?` style="${r.cssStylesContent}"`:""}>\n    ${o.value.trim()}\n  </td>\n`:`\n</tr>\n<tr>\n  <td${e>1?` colspan="${e}"`:""}${r.alwaysCenter||n?' align="center"':""}${r.cssStylesContent?` style="${r.cssStylesContent}"`:""}>\n    ${o.value.trim()}\n  </td>\n</tr>\n<tr>\n`:`\n  <td${e>1?` colspan="${e}"`:""}${r.alwaysCenter||n?' align="center"':""}${r.cssStylesContent?` style="${r.cssStylesContent}"`:""}>\n    ${o.value.trim()}\n  </td>\n</tr>\n<tr>\n`))}}))}})),It.current()){const e=function(t,e,r){let n,i=0,a=0;if(0===arguments.length)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if("string"!=typeof t)throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof t}, equal to: ${JSON.stringify(t,null,4)}`);if(e&&!Array.isArray(e))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(r&&"function"!=typeof r)throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(!e||!e.filter((t=>t)).length)return t;n=Array.isArray(e)&&Number.isInteger(e[0])&&Number.isInteger(e[1])?[Array.from(e)]:Array.from(e);const s=n.length;let o=0;n.filter((t=>t)).forEach(((t,e)=>{if(r&&(i=Math.floor(o/s*10),i!==a&&(a=i,r(i))),!Array.isArray(t))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${e}th element not an array: ${JSON.stringify(t,null,4)}, which is ${typeof t}`);if(!Number.isInteger(t[0])){if(!Number.isInteger(+t[0])||+t[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${e}th element, array ${JSON.stringify(t,null,0)}. Its first element is not an integer, string index, but ${typeof t[0]}, equal to: ${JSON.stringify(t[0],null,4)}.`);n[e][0]=+n[e][0]}if(!Number.isInteger(t[1])){if(!Number.isInteger(+t[1])||+t[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${e}th element, array ${JSON.stringify(t,null,0)}. Its second element is not an integer, string index, but ${typeof t[1]}, equal to: ${JSON.stringify(t[1],null,4)}.`);n[e][1]=+n[e][1]}o+=1}));const l=Et(n,{progressFn:t=>{r&&(i=10+Math.floor(t/10),i!==a&&(a=i,r(i)))}}),u=Array.isArray(l)?l.length:0;if(u>0){const e=t.slice(l[u-1][1]);t=l.reduce(((e,n,s,o)=>(r&&(i=20+Math.floor(s/u*80),i!==a&&(a=i,r(i))),e+t.slice(0===s?0:o[s-1][1],o[s][0])+(o[s][2]||""))),""),t+=e}return t}(t,It.current());return It.wipe(),{result:e}}return{result:t}},t.version="4.0.16",Object.defineProperty(t,"__esModule",{value:!0})}));
+function(t,e,r=0){function n(t){return"string"==typeof t&&"."===t[0]?t.slice(1):t}const i=[];function a(){const t=i.shift();t[2].next=[];for(let e=0;e<r&&i[e];e++)t[2].next.push(m([i[e][0],i[e][1],i[e][2]]));e(...t)}if(function t(e,r,i,a){if((i={...i}).depth+=1,Array.isArray(e))for(let s=0,o=e.length;s<o&&!a.now;s++){const o=`${i.path}.${s}`;i.parent=m(e),i.parentType="array",r(e[s],void 0,{...i,path:n(o)},a),t(e[s],r,{...i,path:n(o)},a)}else if(d(e))for(const s in e){if(a.now&&null!=s)break;const o=`${i.path}.${s}`;0===i.depth&&null!=s&&(i.topmostKey=s),i.parent=m(e),i.parentType="object",r(s,e[s],{...i,path:n(o)},a),t(e[s],r,{...i,path:n(o)},a)}return e}(t,(function(...t){i.push([...t]),i.length>r&&a()}),{depth:-1,path:""},{now:!1}),i.length)for(let t=0,e=i.length;t<e;t++)a()}(Vt(t),((t,e,i)=>{if(Rt(t)&&"comment"===t.type&&!n.some((t=>i.path.startsWith(t))))n.push(i.path);else if(Rt(t)&&"tag"===t.type&&"table"===t.tagName&&!n.some((t=>i.path.startsWith(t)))&&!t.closing&&t.children.some((t=>["text","esp"].includes(t.type)))){let e=1,n=!1,i={};if(t.children.some((t=>"tag"===t.type&&"tr"===t.tagName&&!t.closing&&(i=t)))){let t=0;for(let r=0,a=i.children.length;r<a;r++){const a=i.children[r];"tag"===a.type&&"td"===a.tagName?a.closing||(n=a.attribs.some((t=>"align"===t.attribName&&"center"===t.attribValueRaw||"style"===t.attribName&&/text-align:\s*center/i.test(t.attribValueRaw))),t++,t>e&&(e=t)):("text"!==a.type||a.value.replace(jt,"").trim())&&(t=0)}}t.children.filter((t=>["text","esp"].includes(t.type))).forEach((t=>{t.value.replace(jt,"").trim()&&It.push(t.start,t.end,`\n<tr>\n  <td${e>1?` colspan="${e}"`:""}${r.alwaysCenter||n?' align="center"':""}${r.cssStylesContent?` style="${r.cssStylesContent}"`:""}>\n    ${t.value.trim()}\n  </td>\n</tr>\n`)})),t.children.filter((t=>"tag"===t.type&&"tr"===t.tagName&&!t.closing)).forEach((t=>{let i=!1;for(let a=0,s=t.children.length;a<s;a++){const o=t.children[a];i&&"comment"===o.type&&o.closing?i=!1:(i||"comment"!==o.type||o.closing||(i=!0),!i&&["text","esp"].includes(o.type)&&o.value.trim()&&o.value.trim()&&It.push(o.start,o.end,a?a&&s>1&&a===s-1?`\n</tr>\n<tr>\n  <td${e>1?` colspan="${e}"`:""}${r.alwaysCenter||n?' align="center"':""}${r.cssStylesContent?` style="${r.cssStylesContent}"`:""}>\n    ${o.value.trim()}\n  </td>\n`:`\n</tr>\n<tr>\n  <td${e>1?` colspan="${e}"`:""}${r.alwaysCenter||n?' align="center"':""}${r.cssStylesContent?` style="${r.cssStylesContent}"`:""}>\n    ${o.value.trim()}\n  </td>\n</tr>\n<tr>\n`:`\n  <td${e>1?` colspan="${e}"`:""}${r.alwaysCenter||n?' align="center"':""}${r.cssStylesContent?` style="${r.cssStylesContent}"`:""}>\n    ${o.value.trim()}\n  </td>\n</tr>\n<tr>\n`))}}))}})),It.current()){const e=function(t,e,r){let n,i=0,a=0;if(0===arguments.length)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if("string"!=typeof t)throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof t}, equal to: ${JSON.stringify(t,null,4)}`);if(e&&!Array.isArray(e))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(r&&"function"!=typeof r)throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(!e||!e.filter((t=>t)).length)return t;n=Array.isArray(e)&&Number.isInteger(e[0])&&Number.isInteger(e[1])?[Array.from(e)]:Array.from(e);const s=n.length;let o=0;n.filter((t=>t)).forEach(((t,e)=>{if(r&&(i=Math.floor(o/s*10),i!==a&&(a=i,r(i))),!Array.isArray(t))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${e}th element not an array: ${JSON.stringify(t,null,4)}, which is ${typeof t}`);if(!Number.isInteger(t[0])){if(!Number.isInteger(+t[0])||+t[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${e}th element, array ${JSON.stringify(t,null,0)}. Its first element is not an integer, string index, but ${typeof t[0]}, equal to: ${JSON.stringify(t[0],null,4)}.`);n[e][0]=+n[e][0]}if(!Number.isInteger(t[1])){if(!Number.isInteger(+t[1])||+t[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${e}th element, array ${JSON.stringify(t,null,0)}. Its second element is not an integer, string index, but ${typeof t[1]}, equal to: ${JSON.stringify(t[1],null,4)}.`);n[e][1]=+n[e][1]}o+=1}));const l=Et(n,{progressFn:t=>{r&&(i=10+Math.floor(t/10),i!==a&&(a=i,r(i)))}}),u=Array.isArray(l)?l.length:0;if(u>0){const e=t.slice(l[u-1][1]);t=l.reduce(((e,n,s,o)=>(r&&(i=20+Math.floor(s/u*80),i!==a&&(a=i,r(i))),e+t.slice(0===s?0:o[s-1][1],o[s][0])+(o[s][2]||""))),""),t+=e}return t}(t,It.current());return It.wipe(),{result:e}}return{result:t}},t.version="4.1.0",Object.defineProperty(t,"__esModule",{value:!0})}));

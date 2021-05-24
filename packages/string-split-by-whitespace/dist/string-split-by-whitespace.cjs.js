@@ -1,7 +1,7 @@
 /**
  * @name string-split-by-whitespace
  * @fileoverview Split string into array by chunks of whitespace
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-split-by-whitespace/}
@@ -18,7 +18,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version$1 = "2.0.16";
+var version$1 = "2.1.0";
 
 var version = version$1;
 function splitByW(str, originalOpts) {

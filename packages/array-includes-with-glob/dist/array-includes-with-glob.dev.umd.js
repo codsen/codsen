@@ -1,7 +1,7 @@
 /**
  * @name array-includes-with-glob
  * @fileoverview Like _.includes but with wildcards
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-includes-with-glob/}
@@ -136,7 +136,7 @@ matcher$1.exports.isMatch = (inputs, patterns, options) => {
 
 var matcher = matcher$1.exports;
 
-var version$1 = "3.0.16";
+var version$1 = "3.1.0";
 
 const version = version$1;
 const defaults = {

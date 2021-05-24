@@ -1,7 +1,7 @@
 /**
  * @name is-media-descriptor
  * @fileoverview Is given string a valid media descriptor (including media query)?
- * @version 3.1.1
+ * @version 3.2.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-media-descriptor/}
@@ -207,7 +207,7 @@ function loop(str, opts, res) {
   }
 }
 
-var version$1 = "3.1.1";
+var version$1 = "3.2.0";
 
 const version = version$1;
 const defaults = {

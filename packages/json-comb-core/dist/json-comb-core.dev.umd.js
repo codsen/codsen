@@ -1,7 +1,7 @@
 /**
  * @name json-comb-core
  * @fileoverview The inner core of json-comb
- * @version 6.8.16
+ * @version 6.9.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/json-comb-core/}
@@ -3897,7 +3897,7 @@ var lodash_isplainobject = isPlainObject$1;
 /**
  * @name object-flatten-all-arrays
  * @fileoverview Merge and flatten any arrays found in all values within plain objects
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-flatten-all-arrays/}
@@ -5850,7 +5850,7 @@ var matcher = matcher$1.exports;
 /**
  * @name array-includes-with-glob
  * @fileoverview Like _.includes but with wildcards
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-includes-with-glob/}
@@ -5885,7 +5885,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * @name util-nonempty
  * @fileoverview Is the input (plain object, array, string or whatever) not empty?
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/util-nonempty/}
@@ -5906,7 +5906,7 @@ function nonEmpty(input) {
 /**
  * @name object-merge-advanced
  * @fileoverview Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * @version 12.0.13
+ * @version 12.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-merge-advanced/}
@@ -6412,7 +6412,7 @@ function externalApi(input1orig, input2orig, originalOpts) {
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.16
+ * @version 3.14.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -8286,7 +8286,7 @@ var isEq = lodash_isequal.exports;
 /**
  * @name object-all-values-equal-to
  * @fileoverview Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-all-values-equal-to/}
@@ -8342,7 +8342,7 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
 /**
  * @name object-fill-missing-keys
  * @fileoverview Add missing keys into plain objects, according to a reference object
- * @version 8.0.16
+ * @version 8.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-fill-missing-keys/}
@@ -8441,7 +8441,7 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
 /**
  * @name object-set-all-values-to
  * @fileoverview Recursively walk the input and set all found values in plain objects to something
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-set-all-values-to/}
@@ -8595,7 +8595,7 @@ var compareVersions = compareVersions$1.exports;
 /**
  * @name object-no-new-keys
  * @fileoverview Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-no-new-keys/}
@@ -9276,7 +9276,7 @@ pOne$2.exports.default = pOne;
 
 var pOne$1 = pOne$2.exports;
 
-var version$1 = "6.8.16";
+var version$1 = "6.9.0";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version = version$1;

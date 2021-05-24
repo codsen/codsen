@@ -1,7 +1,7 @@
 /**
  * @name html-entities-not-email-friendly
  * @fileoverview All HTML entities which are not email template friendly
- * @version 0.4.16
+ * @version 0.5.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-entities-not-email-friendly/}

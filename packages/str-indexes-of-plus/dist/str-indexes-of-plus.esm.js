@@ -1,13 +1,13 @@
 /**
  * @name str-indexes-of-plus
  * @fileoverview Like indexOf but returns array and counts per-grapheme
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/str-indexes-of-plus/}
  */
 
-var version$1 = "3.0.16";
+var version$1 = "3.1.0";
 
 const version = version$1;
 function strIndexesOfPlus(str, searchValue, fromIndex = 0) {

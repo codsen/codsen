@@ -1,7 +1,7 @@
 /**
  * @name is-relative-uri
  * @fileoverview Is given string a relative URI?
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-relative-uri/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 
-var version$1 = "3.0.16";
+var version$1 = "3.1.0";
 
 var version = version$1;
 var BACKSLASH = "\\";

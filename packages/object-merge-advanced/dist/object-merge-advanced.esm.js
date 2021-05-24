@@ -1,7 +1,7 @@
 /**
  * @name object-merge-advanced
  * @fileoverview Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * @version 12.0.13
+ * @version 12.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-merge-advanced/}
@@ -15,7 +15,7 @@ import isDate from 'lodash.isdate';
 import { includesWithGlob } from 'array-includes-with-glob';
 import { nonEmpty } from 'util-nonempty';
 
-var version$1 = "12.0.13";
+var version$1 = "12.1.0";
 
 const version = version$1;
 function isStr(something) {

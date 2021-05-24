@@ -1,7 +1,7 @@
 /**
  * @name string-convert-indexes
  * @fileoverview Convert between native JS string character indexes and grapheme-count-based indexes
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-convert-indexes/}
@@ -10,7 +10,7 @@
 import { traverse } from 'ast-monkey-traverse';
 import GraphemeSplitter from 'grapheme-splitter';
 
-var version$1 = "4.0.16";
+var version$1 = "4.1.0";
 
 const version = version$1;
 function strConvertIndexes(mode, str, indexes) {

@@ -1,7 +1,7 @@
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -11,7 +11,7 @@ import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 import { parent } from 'ast-monkey-util';
 
-var version$1 = "2.0.16";
+var version$1 = "2.1.0";
 
 const version = version$1;
 function traverse(tree1, cb1) {

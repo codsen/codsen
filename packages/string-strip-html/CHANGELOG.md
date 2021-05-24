@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 8.3.0 (2021-05-24)
-
+## 8.3.0 (2021-05-24)
 
 ### Bug Fixes
 
-* skip jinja-nunjucks tags to run faster ([307a578](https://github.com/codsen/codsen/commit/307a5784278b94f4287cf8306f7c19f40e68ca43))
-
+- skip jinja-nunjucks tags to run faster ([307a578](https://github.com/codsen/codsen/commit/307a5784278b94f4287cf8306f7c19f40e68ca43))
 
 ### Features
 
-* config file based major bump blacklisting ([e15f9bb](https://github.com/codsen/codsen/commit/e15f9bba1c4fd5f847ac28b3f38fa6ee633f5dca))
-
-
-
-
+- config file based major bump blacklisting ([e15f9bb](https://github.com/codsen/codsen/commit/e15f9bba1c4fd5f847ac28b3f38fa6ee633f5dca))
 
 ## 8.2.12 (2021-04-11)
 

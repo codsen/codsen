@@ -1,7 +1,7 @@
 /**
  * @name object-merge-advanced
  * @fileoverview Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * @version 12.0.13
+ * @version 12.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-merge-advanced/}
@@ -3679,7 +3679,7 @@ module.exports = isDate;
 
 var isDate = lodash_isdate.exports;
 
-var version$1 = "12.0.13";
+var version$1 = "12.1.0";
 
 var matcher$1 = {exports: {}};
 
@@ -3807,7 +3807,7 @@ var matcher = matcher$1.exports;
 /**
  * @name array-includes-with-glob
  * @fileoverview Like _.includes but with wildcards
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-includes-with-glob/}
@@ -3842,7 +3842,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * @name util-nonempty
  * @fileoverview Is the input (plain object, array, string or whatever) not empty?
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/util-nonempty/}

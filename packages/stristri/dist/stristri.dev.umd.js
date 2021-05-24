@@ -1,7 +1,7 @@
 /**
  * @name stristri
  * @fileoverview Extracts or deletes HTML, CSS, text and/or templating tags from string
- * @version 3.1.8
+ * @version 3.2.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/stristri/}
@@ -16,7 +16,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.16
+ * @version 3.14.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -35,7 +35,7 @@ function arrayiffy(something) {
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 7.0.10
+ * @version 7.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -2112,7 +2112,7 @@ funcToString.call(Object);
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -2228,7 +2228,7 @@ function left(str, idx = 0) {
 /**
  * @name html-all-known-attributes
  * @fileoverview All HTML attributes known to the Humanity
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-all-known-attributes/}
@@ -2238,7 +2238,7 @@ const allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey",
 /**
  * @name is-char-suitable-for-html-attr-name
  * @fileoverview Is given character suitable to be in an HTML attribute's name?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-char-suitable-for-html-attr-name/}
@@ -2254,7 +2254,7 @@ function isAttrNameChar(char) {
 /**
  * @name is-html-attribute-closing
  * @fileoverview Is a character on a given index a closing of an HTML attribute?
- * @version 2.2.7
+ * @version 2.3.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-attribute-closing/}
@@ -2569,7 +2569,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 /**
  * @name is-html-tag-opening
  * @fileoverview Does an HTML tag start at given position?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-tag-opening/}
@@ -2675,7 +2675,7 @@ function isOpening(str, idx = 0, originalOpts) {
 /**
  * @name codsen-tokenizer
  * @fileoverview HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * @version 5.5.7
+ * @version 5.6.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/codsen-tokenizer/}
@@ -4707,7 +4707,7 @@ function tokenizer(str, originalOpts) {
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -4770,7 +4770,7 @@ function rSort(arrOfRanges, originalOptions) {
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.0.16
+ * @version 7.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -4870,7 +4870,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -4966,7 +4966,7 @@ function rApply(str, originalRangesArr, progressFn) {
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -5043,7 +5043,7 @@ function collWhitespace(str, originallineBreakLimit = 1) {
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -5185,7 +5185,7 @@ class Ranges {
 /**
  * @name string-collapse-white-space
  * @fileoverview Replace chunks of whitespace with a single spaces
- * @version 9.0.16
+ * @version 9.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-white-space/}
@@ -5442,7 +5442,7 @@ function collapse(str, originalOpts) {
 /**
  * @name regex-is-jinja-nunjucks
  * @fileoverview Regular expression for detecting Jinja or Nunjucks code
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-is-jinja-nunjucks/}
@@ -5454,7 +5454,7 @@ function isJinjaNunjucksRegex() {
 /**
  * @name regex-is-jsp
  * @fileoverview Regular expression for detecting JSP (Java Server Pages) code
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-is-jsp/}
@@ -5466,7 +5466,7 @@ function isJSP() {
 /**
  * @name regex-jinja-specific
  * @fileoverview Regular expression for detecting Python-specific Jinja code
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-jinja-specific/}
@@ -5478,7 +5478,7 @@ function isJinjaSpecific() {
 /**
  * @name detect-templating-language
  * @fileoverview Detects various templating languages present in string
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/detect-templating-language/}
@@ -5517,7 +5517,7 @@ const defaultOpts = {
     reportProgressFuncTo: 100,
 };
 
-var version$1 = "3.1.8";
+var version$1 = "3.2.0";
 
 const version = version$1;
 // return function is in single place to ensure no

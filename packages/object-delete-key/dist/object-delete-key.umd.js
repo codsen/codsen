@@ -1,7 +1,7 @@
 /**
  * @name object-delete-key
  * @fileoverview Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-delete-key/}
@@ -11,7 +11,7 @@
 /**
  * @name util-array-object-or-both
  * @fileoverview Validate and normalise user choice: array, object or both?
- * @version 3.0.16
+ * @version 3.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/util-array-object-or-both/}
@@ -19,7 +19,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.16
+ * @version 1.4.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -27,7 +27,7 @@
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -35,7 +35,7 @@
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 3.13.16
+ * @version 3.14.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -43,7 +43,7 @@
 /**
  * @name check-types-mini
  * @fileoverview Validate options object
- * @version 6.0.16
+ * @version 6.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/check-types-mini/}
@@ -51,7 +51,7 @@
 /**
  * @name ast-contains-only-empty-space
  * @fileoverview Does AST contain only empty space?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-contains-only-empty-space/}
@@ -59,7 +59,7 @@
 /**
  * @name ast-compare
  * @fileoverview Compare anything: AST, objects, arrays, strings and nested thereof
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-compare/}
@@ -67,7 +67,7 @@
 /**
  * @name ast-monkey
  * @fileoverview Traverse and edit AST
- * @version 7.14.0
+ * @version 7.15.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey/}
@@ -75,8 +75,8 @@
 /**
  * @name ast-is-empty
  * @fileoverview Find out, is nested array/object/string/AST tree is empty
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-is-empty/}
- */function st(e){let t,r,n=!0;if(Array.isArray(e)){if(0===e.length)return!0;for(t=0,r=e.length;t<r;t++){if(n=st(e[t]),null===n)return null;if(!n)return!1}}else if(Y(e)){if(0===Object.keys(e).length)return!0;for(t=0,r=Object.keys(e).length;t<r;t++){if(n=st(e[Object.keys(e)[t]]),null===n)return null;if(!n)return!1}}else{if("string"!=typeof e)return null;if(0!==e.length)return!1}return n}e.deleteKey=function(e,t){function r(e){return null!=e}if(!r(e))throw new Error("object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon.");const n={...{key:null,val:void 0,cleanup:!0,only:"any"},...t};if(n.only=M(n.only,{msg:"object-delete-key/deleteKey(): [THROW_ID_03]",optsVarName:"opts.only"}),!r(n.key)&&!r(n.val))throw new Error("object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value.");let o=B(e);if(n.cleanup){let e,t,r=nt(o,{key:n.key,val:n.val,only:n.only});for(;Array.isArray(r)&&r.length;){t=r[0].index;for(let i=1,a=r[0].path.length;i<a;i++)e=r[0].path[a-1-i],st(at(ot(o,{index:e}),{key:n.key,val:n.val,only:n.only}))&&(t=e);o=it(o,{index:t}),r=nt(o,{key:n.key,val:n.val,only:n.only})}return o}return at(o,{key:n.key,val:n.val,only:n.only})},e.version="2.0.16",Object.defineProperty(e,"__esModule",{value:!0})}));
+ */function st(e){let t,r,n=!0;if(Array.isArray(e)){if(0===e.length)return!0;for(t=0,r=e.length;t<r;t++){if(n=st(e[t]),null===n)return null;if(!n)return!1}}else if(Y(e)){if(0===Object.keys(e).length)return!0;for(t=0,r=Object.keys(e).length;t<r;t++){if(n=st(e[Object.keys(e)[t]]),null===n)return null;if(!n)return!1}}else{if("string"!=typeof e)return null;if(0!==e.length)return!1}return n}e.deleteKey=function(e,t){function r(e){return null!=e}if(!r(e))throw new Error("object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon.");const n={...{key:null,val:void 0,cleanup:!0,only:"any"},...t};if(n.only=M(n.only,{msg:"object-delete-key/deleteKey(): [THROW_ID_03]",optsVarName:"opts.only"}),!r(n.key)&&!r(n.val))throw new Error("object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value.");let o=B(e);if(n.cleanup){let e,t,r=nt(o,{key:n.key,val:n.val,only:n.only});for(;Array.isArray(r)&&r.length;){t=r[0].index;for(let i=1,a=r[0].path.length;i<a;i++)e=r[0].path[a-1-i],st(at(ot(o,{index:e}),{key:n.key,val:n.val,only:n.only}))&&(t=e);o=it(o,{index:t}),r=nt(o,{key:n.key,val:n.val,only:n.only})}return o}return at(o,{key:n.key,val:n.val,only:n.only})},e.version="2.1.0",Object.defineProperty(e,"__esModule",{value:!0})}));

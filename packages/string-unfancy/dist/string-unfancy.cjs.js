@@ -1,7 +1,7 @@
 /**
  * @name string-unfancy
  * @fileoverview Replace all n/m dashes, curly quotes with their simpler equivalents
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-unfancy/}
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 
-var version$1 = "4.0.16";
+var version$1 = "4.1.0";
 
 var version = version$1;
 function existy(x) {

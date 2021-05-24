@@ -1,7 +1,7 @@
 /**
  * @name generate-atomic-css
  * @fileoverview Generate Atomic CSS
- * @version 1.4.16
+ * @version 1.5.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/generate-atomic-css/}
@@ -1911,7 +1911,7 @@ module.exports = cloneDeep;
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 4.0.16
+ * @version 4.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -2148,7 +2148,7 @@ function rightSeq(str, idx, ...args) {
   return seq("right", str, idx, opts, args);
 }
 
-var version$1 = "1.4.16";
+var version$1 = "1.5.0";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function isStr(something) {

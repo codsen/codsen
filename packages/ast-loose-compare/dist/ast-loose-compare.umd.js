@@ -1,7 +1,7 @@
 /**
  * @name ast-loose-compare
  * @fileoverview Compare anything: AST, objects, arrays and strings
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-loose-compare/}
@@ -11,7 +11,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 1.3.16
+ * @version 1.4.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -19,7 +19,7 @@
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -27,9 +27,9 @@
 /**
  * @name ast-contains-only-empty-space
  * @fileoverview Does AST contain only empty space?
- * @version 2.0.16
+ * @version 2.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-contains-only-empty-space/}
  */
-function h(t){if("string"==typeof t)return!t.trim();if(!["object","string"].includes(typeof t)||!t)return!1;let e=!0;return t=function t(e,r,o,u){const c=n(e);let i;const a={depth:-1,path:"",...o};if(a.depth+=1,Array.isArray(c))for(let e=0,o=c.length;e<o&&!u.now;e++){const o=a.path?`${a.path}.${e}`:`${e}`;void 0!==c[e]?(a.parent=n(c),a.parentType="array",a.parentKey=y(o),i=t(r(c[e],void 0,{...a,path:o},u),r,{...a,path:o},u),Number.isNaN(i)&&e<c.length?(c.splice(e,1),e-=1):c[e]=i):c.splice(e,1)}else if(p(c))for(const e in c){if(u.now&&null!=e)break;const o=a.path?`${a.path}.${e}`:e;0===a.depth&&null!=e&&(a.topmostKey=e),a.parent=n(c),a.parentType="object",a.parentKey=y(o),i=t(r(e,c[e],{...a,path:o},u),r,{...a,path:o},u),Number.isNaN(i)?delete c[e]:c[e]=i}return c}(t,((t,r,n,o)=>{const u=void 0!==r?r:t;return"string"==typeof u&&u.trim()&&(e=!1,o.now=!0),u}),{},{now:!1}),e}function _(t,e,r){function n(t){return null!=t}let o,u;if(void 0===r){if(!n(t)||!n(e))return}else if(!n(t)||!n(e))return!1;if(r=r||!0,typeof t!=typeof e)return!(!h(t)||!h(e));if(Array.isArray(t)&&Array.isArray(e)){if(!(e.length>0))return!!(0===e.length&&0===t.length||h(e)&&h(t));for(o=0,u=e.length;o<u;o++)if(Array.isArray(e[o])||p(e[o])){if(!(r=_(t[o],e[o],r)))return!1}else if(e[o]!==t[o])return!(!h(e[o])||!h(t[o]))}else if(p(t)&&p(e)){if(!(Object.keys(e).length>0))return!!(0===Object.keys(e).length&&0===Object.keys(t).length||h(e)&&h(t));{const n=Object.keys(e);for(o=0,u=n.length;o<u;o++)if(Array.isArray(e[n[o]])||p(e[n[o]])||"string"==typeof e[n[o]]){if(!(r=_(t[n[o]],e[n[o]],r)))return!1}else if(!(e[n[o]]===t[n[o]]||h(e[n[o]])&&h(t[n[o]])))return!1}}else{if("string"!=typeof t||"string"!=typeof e)return!(!h(e)||!h(t));if(t!==e)return!(!h(e)||!h(t))}return r}t.looseCompare=function(t,e){return _(t,e)},t.version="2.0.16",Object.defineProperty(t,"__esModule",{value:!0})}));
+function h(t){if("string"==typeof t)return!t.trim();if(!["object","string"].includes(typeof t)||!t)return!1;let e=!0;return t=function t(e,r,o,u){const c=n(e);let i;const a={depth:-1,path:"",...o};if(a.depth+=1,Array.isArray(c))for(let e=0,o=c.length;e<o&&!u.now;e++){const o=a.path?`${a.path}.${e}`:`${e}`;void 0!==c[e]?(a.parent=n(c),a.parentType="array",a.parentKey=y(o),i=t(r(c[e],void 0,{...a,path:o},u),r,{...a,path:o},u),Number.isNaN(i)&&e<c.length?(c.splice(e,1),e-=1):c[e]=i):c.splice(e,1)}else if(p(c))for(const e in c){if(u.now&&null!=e)break;const o=a.path?`${a.path}.${e}`:e;0===a.depth&&null!=e&&(a.topmostKey=e),a.parent=n(c),a.parentType="object",a.parentKey=y(o),i=t(r(e,c[e],{...a,path:o},u),r,{...a,path:o},u),Number.isNaN(i)?delete c[e]:c[e]=i}return c}(t,((t,r,n,o)=>{const u=void 0!==r?r:t;return"string"==typeof u&&u.trim()&&(e=!1,o.now=!0),u}),{},{now:!1}),e}function _(t,e,r){function n(t){return null!=t}let o,u;if(void 0===r){if(!n(t)||!n(e))return}else if(!n(t)||!n(e))return!1;if(r=r||!0,typeof t!=typeof e)return!(!h(t)||!h(e));if(Array.isArray(t)&&Array.isArray(e)){if(!(e.length>0))return!!(0===e.length&&0===t.length||h(e)&&h(t));for(o=0,u=e.length;o<u;o++)if(Array.isArray(e[o])||p(e[o])){if(!(r=_(t[o],e[o],r)))return!1}else if(e[o]!==t[o])return!(!h(e[o])||!h(t[o]))}else if(p(t)&&p(e)){if(!(Object.keys(e).length>0))return!!(0===Object.keys(e).length&&0===Object.keys(t).length||h(e)&&h(t));{const n=Object.keys(e);for(o=0,u=n.length;o<u;o++)if(Array.isArray(e[n[o]])||p(e[n[o]])||"string"==typeof e[n[o]]){if(!(r=_(t[n[o]],e[n[o]],r)))return!1}else if(!(e[n[o]]===t[n[o]]||h(e[n[o]])&&h(t[n[o]])))return!1}}else{if("string"!=typeof t||"string"!=typeof e)return!(!h(e)||!h(t));if(t!==e)return!(!h(e)||!h(t))}return r}t.looseCompare=function(t,e){return _(t,e)},t.version="2.1.0",Object.defineProperty(t,"__esModule",{value:!0})}));

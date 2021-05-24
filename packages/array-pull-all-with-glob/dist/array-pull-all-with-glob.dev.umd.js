@@ -1,7 +1,7 @@
 /**
  * @name array-pull-all-with-glob
  * @fileoverview Like _.pullAll but with globs (wildcards)
- * @version 5.0.16
+ * @version 5.1.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-pull-all-with-glob/}
@@ -136,7 +136,7 @@ matcher$1.exports.isMatch = (inputs, patterns, options) => {
 
 var matcher = matcher$1.exports;
 
-var version$1 = "5.0.16";
+var version$1 = "5.1.0";
 
 const version = version$1;
 /**
