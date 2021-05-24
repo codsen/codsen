@@ -4884,7 +4884,8 @@ function tokenizer(str, originalOpts) {
                             newTokenToPutInstead.tailEndsAt =
                                 i + wholeEspTagLumpOnTheRight.length;
                             newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
-                            attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
+                            attrib.attribValue[~-attrib.attribValue.length] =
+                                newTokenToPutInstead;
                         }
                     }
                     else {
@@ -6425,7 +6426,8 @@ function tokenizer(str, originalOpts) {
                                 attrib.attribValue[~-attrib.attribValue.length].propertyEnds = i;
                             }
                             else {
-                                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+                                attrib.attribValue[~-attrib.attribValue.length].value =
+                                    str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
                             }
                         }
                     }
