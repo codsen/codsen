@@ -1,0 +1,60 @@
+import fs from "fs-extra";
+import path from "path";
+import tap from "tap";
+import execa from "execa";
+import tempy from "tempy";
+import pMap from "p-map";
+// import pack from "../package.json";
+import {
+  testFileContents,
+  // sortedTestFileContents,
+  testFilePaths,
+  sortedTabbedTestFileContents,
+  // minifiedContents,
+  // prettifiedContents,
+} from "./util/data.js";
+
+// -----------------------------------------------------------------------------
+
+tap.test("01 - sort, -t (tabs) mode", async (t) => {
+  // 1. fetch us an empty, random, temporary folder:
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  // The temp folder needs subfolders. Those have to be in place before we start
+  // writing the files:
+  fs.ensureDirSync(path.join(tempFolder, "test1"));
+  fs.ensureDirSync(path.join(tempFolder, "test1/folder1"));
+  fs.ensureDirSync(path.join(tempFolder, "test2"));
+
+  // asynchronously write all test files
+
+  const processedFileContents = pMap(
+    testFilePaths,
+    (oneOfTestFilePaths, testIndex) =>
+      fs.writeJson(
+        path.join(tempFolder, oneOfTestFilePaths),
+        testFileContents[testIndex]
+      )
+  )
+    .then(
+      () => execa("./cli.js", ["-t", tempFolder]) // all test files have been written successfully, let's process them with our CLI
+    )
+    .then(() =>
+      pMap(testFilePaths, (oneOfPaths) =>
+        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
+      )
+    )
+    .then((contentsArray) =>
+      pMap(contentsArray, (oneOfArrays) =>
+        JSON.stringify(oneOfArrays, null, "\t")
+      )
+    )
+    .then((received) =>
+      // execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
+      execa(`rm -rf ${tempFolder}`, { shell: true }).then(() => received)
+    )
+    .catch((err) => t.fail(err));
+
+  t.strictSame(await processedFileContents, sortedTabbedTestFileContents, "01");
+  t.end();
+});

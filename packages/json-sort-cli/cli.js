@@ -21,6 +21,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 function format(obj) {
+  /* istanbul ignore next */
   if (typeof obj !== "object") {
     return obj;
   }
@@ -54,7 +55,7 @@ const cli = meow(
   or, just type "jsonsort" and it will let you pick a file.
 
   Options
-    -n, --nodemodules      Don't ignore any node_modules folders and package-lock.json's
+    -n, --nodemodules      Don't ignore any node_modules folders
     -t, --tabs             Use tabs for JSON file indentation
     -i, --indentationCount How many spaces or tabs to use (default = 2 spaces or 1 tab)
     -s, --silent           Does not show the result per-file, only totals in the end
@@ -74,7 +75,7 @@ const cli = meow(
       nodemodules: {
         type: "boolean",
         alias: "n",
-        default: true,
+        default: false,
       },
       tabs: {
         type: "boolean",
@@ -137,16 +138,6 @@ const badFiles = [
   "npm-shrinkwrap.json",
 ];
 
-// console.log(
-//   `120 ${`\u001b[${33}m${`cli.flags`}\u001b[${39}m`} = ${JSON.stringify(
-//     cli.flags,
-//     null,
-//     4
-//   )}`
-// );
-
-// settle indentations type and count
-
 // 1. set defaults:
 let indentationCount = 2;
 if (cli.flags.tabs) {
@@ -154,38 +145,17 @@ if (cli.flags.tabs) {
 }
 // 2. overwrite defaults with explicitly set value:
 if (cli.flags.indentationCount) {
-  indentationCount = Number.parseInt(cli.flags.indentationCount, 10);
+  indentationCount = +cli.flags.indentationCount;
 }
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
-function stripWhitespace(str) {
-  return str.split("").reduce((acc, curr) => {
-    return `${acc}${curr.trim().length ? curr : ""}`;
-  }, "");
-}
-
 function readSortAndWriteOverFile(oneOfPaths) {
-  // console.log("\n\n\n\n==========\n\n\n\n");
-  // console.log(
-  //   `139 PROCESSING: ${`\u001b[${33}m${`oneOfPaths`}\u001b[${39}m`} = ${JSON.stringify(
-  //     oneOfPaths,
-  //     null,
-  //     4
-  //   )}`
-  // );
   return fs
     .readFile(oneOfPaths, "utf8")
     .then((filesContent) => {
       let parsedJson;
-      // console.log(
-      //   `150 ${`\u001b[${33}m${`filesContent`}\u001b[${39}m`} = ${JSON.stringify(
-      //     filesContent,
-      //     null,
-      //     4
-      //   )}`
-      // );
       try {
         // try to parse JSON
         parsedJson = JSON.parse(filesContent);
@@ -230,7 +200,6 @@ function readSortAndWriteOverFile(oneOfPaths) {
           // input after processing, then we return an array.
           // In this function, readSortAndWriteOverFile(), path came in,
           // we read it, now we return true if result differs after processing
-          // console.log(`200 returning compared:`);
 
           const stringified = JSON.stringify(
             traverse(obj, (key, val) => {
@@ -252,19 +221,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
             null,
             cli.flags.tabs ? "\t".repeat(indentationCount) : indentationCount
           );
-          // console.log(
-          //   `222 ${`\u001b[${33}m${`stringified`}\u001b[${39}m`} = ${JSON.stringify(
-          //     stringified,
-          //     null,
-          //     4
-          //   )};\n${`\u001b[${33}m${`filesContent`}\u001b[${39}m`} = ${JSON.stringify(
-          //     filesContent,
-          //     null,
-          //     4
-          //   )}`
-          // );
-
-          return stripWhitespace(stringified) !== stripWhitespace(filesContent);
+          return stringified.trimEnd() !== filesContent.trimEnd();
         }
         // ELSE,
         return fs
@@ -305,6 +262,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
       });
     })
     .catch((err) => {
+      /* istanbul ignore next */
       console.log(
         `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`
       );
@@ -314,10 +272,10 @@ function readSortAndWriteOverFile(oneOfPaths) {
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
 
-if (cli.flags.version && !cli.flags.silent) {
+if (cli.flags.version) {
   log(cli.pkg.version);
   process.exit(0);
-} else if (cli.flags.help && !cli.flags.silent) {
+} else if (cli.flags.help) {
   log(cli.help);
   process.exit(0);
 }
@@ -325,26 +283,15 @@ if (cli.flags.version && !cli.flags.silent) {
 // Step #1. set up the cli
 // -----------------------------------------------------------------------------
 
-let { input } = cli;
-// if the folder/file name follows the flag (for example "-d "templates1"),
-// that name will be put under the flag's key value, not into cli.input.
-// That's handy for certain types of CLI apps, but not this one, as in our case
-// the flags position does not matter, they don't affect the keywords that follow.
-if (cli.flags) {
-  Object.keys(cli.flags).forEach((flag) => {
-    if (typeof cli.flags[flag] === "string") {
-      input = input.concat(cli.flags[flag]);
-    }
-  });
-}
+const { input } = cli;
 
 // Step #2. query the glob and follow the pipeline
 // -----------------------------------------------------------------------------
 
 globby(input, { dot: true })
-  .then((resolvedPathsArray) => {
+  .then((paths) => {
     // flip out of the pipeline if there are no paths resolved
-    if (resolvedPathsArray.length === 0 && !cli.flags.silent) {
+    if (paths.length === 0 && !cli.flags.silent) {
       log(
         `${chalk.grey(prefix)}${chalk.red(
           "The inputs don't lead to any json files! Exiting."
@@ -352,27 +299,21 @@ globby(input, { dot: true })
       );
       process.exit(0);
     }
-    // console.log(
-    //   `331 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
-    //     resolvedPathsArray,
-    //     null,
-    //     4
-    //   )}`
-    // );
-    return resolvedPathsArray;
+    return paths;
   })
   // glob each directory, reduce'ing all results (in promise shape) until all are resolved
-  .then((resolvedPathsArray) =>
+  .then((paths) =>
     pReduce(
-      resolvedPathsArray,
+      paths,
       (concattedTotal, singleDirOrFilePath) =>
         concattedTotal.concat(
           isDirectory(singleDirOrFilePath).then((bool) =>
+            /* istanbul ignore next */
             bool
               ? globby(
                   cli.flags.nodemodules
-                    ? [singleDirOrFilePath, "!node_modules"]
-                    : singleDirOrFilePath,
+                    ? singleDirOrFilePath
+                    : [singleDirOrFilePath, "!**/node_modules/**"],
                   {
                     expandDirectories: {
                       files: [".*", "*.json"],
@@ -384,55 +325,29 @@ globby(input, { dot: true })
         ),
       []
       // then reduce again, now actually concatenating them all together
-    ).then((received) => {
-      // console.log(
-      //   `364 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
-      //     received,
-      //     null,
-      //     4
-      //   )}`
-      // );
-      return pReduce(received, (total, single) => total.concat(single), []);
-    })
+    ).then((received) =>
+      pReduce(received, (total, single) => total.concat(single), [])
+    )
   )
-  .then((res) =>
+  .then((paths) =>
+    paths.filter(
+      (oneOfPaths) =>
+        !oneOfPaths.includes("package-lock.json") &&
+        !oneOfPaths.includes("yarn.lock")
+    )
+  )
+  .then((paths) =>
     !cli.flags.nodemodules
-      ? res.filter(
-          (oneOfPaths) =>
-            !oneOfPaths.includes("node_modules") &&
-            !oneOfPaths.includes("package-lock.json")
-        )
-      : res
+      ? paths.filter((oneOfPaths) => !oneOfPaths.includes("node_modules"))
+      : paths
   )
-  .then((res) =>
+  .then((paths) =>
     cli.flags.pack
-      ? res.filter((oneOfPaths) => !oneOfPaths.includes("package.json"))
-      : res
+      ? paths.filter((oneOfPaths) => !oneOfPaths.includes("package.json"))
+      : paths
   )
-  .then((paths) => {
-    // console.log(
-    //   `389 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
-    //     paths,
-    //     null,
-    //     4
-    //   )}`
-    // );
-    const tempRez = paths.filter((singlePath) => {
-      // console.log(`---------\n396 processing: ${singlePath}`);
-      // console.log(
-      //   `${`\u001b[${33}m${`path.extname(singlePath)`}\u001b[${39}m`} = ${JSON.stringify(
-      //     path.extname(singlePath),
-      //     null,
-      //     4
-      //   )}`
-      // );
-      // console.log(
-      //   `${`\u001b[${33}m${`path.basename(singlePath)`}\u001b[${39}m`} = ${JSON.stringify(
-      //     path.basename(singlePath),
-      //     null,
-      //     4
-      //   )}`
-      // );
+  .then((paths) =>
+    paths.filter((singlePath) => {
       return (
         path.extname(singlePath) === ".json" ||
         (typeof path.basename(singlePath) === "string" &&
@@ -444,45 +359,23 @@ globby(input, { dot: true })
             path.basename(singlePath).includes(badFile)
           ))
       );
-    });
-    // console.log(
-    //   `424 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
-    //     tempRez,
-    //     null,
-    //     4
-    //   )}`
-    // );
-    return tempRez;
-  })
+    })
+  )
   // eslint-disable-next-line consistent-return
-  .then((received) => {
+  .then((paths) => {
     if (cli.flags.dry && !cli.flags.silent) {
       log(
         `${chalk.grey(prefix)}${chalk.yellow(
           "We'd try to sort the following files:"
-        )}\n${received.join("\n")}`
+        )}\n${paths.join("\n")}`
       );
     } else {
       if (cli.flags.ci) {
         // CI setting
-        // console.log(
-        //   `443 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
-        //     received,
-        //     null,
-        //     4
-        //   )}`
-        // );
-        return pFilter(received, (currentPath) =>
+        return pFilter(paths, (currentPath) =>
           readSortAndWriteOverFile(currentPath)
         ).then((received2) => {
-          // console.log(
-          //   `453 ${`\u001b[${33}m${`received2`}\u001b[${39}m`} = ${JSON.stringify(
-          //     received2,
-          //     null,
-          //     4
-          //   )}`
-          // );
-          // if any files differ, report and exit with non-zero code:
+          /* istanbul ignore else */
           if (received2.length && !cli.flags.silent) {
             log(
               `${chalk.grey(prefix)}${chalk.red(
@@ -494,7 +387,7 @@ globby(input, { dot: true })
             log(
               `${chalk.grey(prefix)}${chalk.white(
                 "All files were already sorted:"
-              )}\n${received.join("\n")}`
+              )}\n${paths.join("\n")}`
             );
             process.exit(0);
           }
@@ -502,19 +395,9 @@ globby(input, { dot: true })
       }
       // not a CI setting
       return pReduce(
-        received,
+        paths,
         (counter, currentPath) =>
           readSortAndWriteOverFile(currentPath)
-            // .then((received2) => {
-            //   // console.log(
-            //   //   `484 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
-            //   //     received,
-            //   //     null,
-            //   //     4
-            //   //   )}`
-            //   // );
-            //   return received2;
-            // })
             .then((res) =>
               res
                 ? {
@@ -527,6 +410,7 @@ globby(input, { dot: true })
                   }
             )
             .catch((err) => {
+              /* istanbul ignore next */
               if (!cli.flags.silent) {
                 log(
                   `${chalk.grey(prefix)}${chalk.red(
@@ -534,17 +418,9 @@ globby(input, { dot: true })
                   )} ${err}`
                 );
               }
-              return counter;
             }),
         { good: [], bad: [] }
       ).then((counter) => {
-        // console.log(
-        //   `516 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
-        //     counter,
-        //     null,
-        //     4
-        //   )}`
-        // );
         if (!cli.flags.silent) {
           log(
             `\n${chalk.grey(prefix)}${chalk.green(
@@ -568,6 +444,7 @@ globby(input, { dot: true })
     }
   })
   .catch((err) => {
+    /* istanbul ignore next */
     if (!cli.flags.silent) {
       log(`${chalk.grey(prefix)}${chalk.red("Oops!")} ${err}`);
     }

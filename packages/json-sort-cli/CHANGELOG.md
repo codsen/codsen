@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.20.0
+
+- added more unit tests
+- "help" and "version" flags, if present, override anything else; "version" takes priority of "help" if both are present
+
 ## 1.19.0 (2021-05-24)
 
 ### Features
