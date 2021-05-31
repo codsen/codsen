@@ -74,7 +74,7 @@ tap.test("too many directories given", async (t) => {
 tap.test("help and version flags work", async (t) => {
   t.match(
     await execa("./cli.js", ["-v"]).then((obj) => obj.stdout),
-    /\d\.\d\.\d/i,
+    /\d+\.\d+\.\d+/i,
     "05.01"
   );
   t.match(
