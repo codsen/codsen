@@ -247,7 +247,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
       source[y].charCodeAt(0);
       if (source[y] === "$" && source[y - 1] === "$" && source[y - 2] === "$") {
         const restOfStr = source.slice(y + 1);
-        let unitFound;
+        let unitFound = "";
         if (i === 0 &&
         units.some(unit => {
           if (restOfStr.startsWith(unit)) {
@@ -258,7 +258,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
           res += `${source.slice(startPoint, y - 2)}${pad ? String(i).padStart(String(to).length - String(i).length + unitFound.length + 1) : i}`;
           startPoint = y + 1 + (unitFound ? unitFound.length : 0);
         } else {
-          let unitThatFollow;
+          let unitThatFollow = "";
           units.some(unit => {
             if (source.startsWith(unit, y + 1)) {
               unitThatFollow = unit;
@@ -296,7 +296,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
         }
       }
       if (!source[y + 1]) {
-        let unitFound;
+        let unitFound = "";
         const restOfStr = source.slice(startPoint);
         if (i === 0 &&
         units.some(unit => {

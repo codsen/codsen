@@ -2504,7 +2504,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
             if (source[y] === "$" && source[y - 1] === "$" && source[y - 2] === "$") {
                 // submit all the content up until now
                 const restOfStr = source.slice(y + 1);
-                let unitFound;
+                let unitFound = "";
                 if (i === 0 &&
                     // eslint-disable-next-line consistent-return, array-callback-return
                     units.some((unit) => {
@@ -2513,20 +2513,16 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
                             return true;
                         }
                     }) &&
-                    (source[right(source, y + unitFound.length)] ===
-                        "{" ||
+                    (source[right(source, y + unitFound.length)] === "{" ||
                         !source[y + unitFound.length + 1].trim().length)) {
                     res += `${source.slice(startPoint, y - 2)}${pad
-                        ? String(i).padStart(String(to).length -
-                            String(i).length +
-                            unitFound.length +
-                            1)
+                        ? String(i).padStart(String(to).length - String(i).length + unitFound.length + 1)
                         : i}`;
                     startPoint = y + 1 + (unitFound ? unitFound.length : 0);
                 }
                 else {
                     // extract units if any follow the $$$
-                    let unitThatFollow;
+                    let unitThatFollow = "";
                     // eslint-disable-next-line consistent-return, array-callback-return
                     units.some((unit) => {
                         if (source.startsWith(unit, y + 1)) {
@@ -2555,9 +2551,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
                         }
                         res += `${source.slice(startPoint + temp, y - 2)}${pad
                             ? String(i).padStart(String(to).length +
-                                (i === 0 && unitThatFollow
-                                    ? unitThatFollow.length
-                                    : 0))
+                                (i === 0 && unitThatFollow ? unitThatFollow.length : 0))
                             : i}`;
                     }
                     else if (!source[y + 1].trim().length ||
@@ -2597,7 +2591,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
             }
             // catch the last character of a line
             if (!source[y + 1]) {
-                let unitFound;
+                let unitFound = "";
                 const restOfStr = source.slice(startPoint);
                 if (i === 0 &&
                     // eslint-disable-next-line
