@@ -916,7 +916,10 @@ function tokenizer(str, originalOpts) {
         var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
           var lengthOfClosingEspChunk;
-          var disposableVar;
+          var disposableVar = {
+            "char": "",
+            idx: 0
+          };
           if (layers.length && (
           lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
             if (token.type === "esp") {
@@ -993,7 +996,7 @@ function tokenizer(str, originalOpts) {
             token.pureHTML = false;
             var lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length];
             var newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
-            if (!disposableVar || !disposableVar.idx) {
+            if (!disposableVar.idx) {
               newTokenToPutInstead.head = disposableVar["char"];
               newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
               newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;

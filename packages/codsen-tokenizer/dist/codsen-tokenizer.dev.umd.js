@@ -4704,7 +4704,10 @@ function tokenizer(str, originalOpts) {
                 if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
                     // check the "layers" records - maybe it's a closing part of a set?
                     let lengthOfClosingEspChunk;
-                    let disposableVar;
+                    let disposableVar = {
+                        char: "",
+                        idx: 0,
+                    };
                     if (layers.length &&
                         //
                         // if layer match result is truthy, we take it, otherwise, move on
@@ -4875,7 +4878,7 @@ function tokenizer(str, originalOpts) {
                         // <a b="{ x %}">
                         // vs.
                         // <a b="something { x %}">
-                        if (!disposableVar || !disposableVar.idx) {
+                        if (!disposableVar.idx) {
                             newTokenToPutInstead.head = disposableVar.char;
                             newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
                             newTokenToPutInstead.headEndsAt =
