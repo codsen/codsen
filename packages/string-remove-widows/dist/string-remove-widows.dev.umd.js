@@ -2493,6 +2493,8 @@ class Ranges {
     this.opts = opts;
     this.ranges = [];
   }
+  ranges;
+  opts;
   add(originalFrom, originalTo, addVal) {
     if (originalFrom == null && originalTo == null) {
       return;

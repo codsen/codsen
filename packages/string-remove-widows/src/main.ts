@@ -853,7 +853,7 @@ function removeWidows(str: string, originalOpts?: Partial<Opts>): Res {
     if (doNothingUntil) {
       if (
         typeof doNothingUntil === "string" &&
-        (!doNothingUntil.length || str.startsWith(doNothingUntil, i))
+        (!(doNothingUntil as any[]).length || str.startsWith(doNothingUntil, i))
       ) {
         doNothingUntil = undefined;
       } else if (
