@@ -18,7 +18,7 @@ var lodashIncludes = require('lodash.includes');
 var uniq = require('lodash.uniq');
 var isObj = require('lodash.isplainobject');
 var isDate = require('lodash.isdate');
-var arrayIncludesWithGlob = require('array-includes-with-glob');
+var matcher = require('matcher');
 var utilNonempty = require('util-nonempty');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -30,8 +30,44 @@ var lodashIncludes__default = /*#__PURE__*/_interopDefaultLegacy(lodashIncludes)
 var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var isDate__default = /*#__PURE__*/_interopDefaultLegacy(isDate);
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
 var version$1 = "12.1.0";
+
+var defaults$1 = {
+  arrayVsArrayAllMustBeFound: "any",
+  caseSensitive: true
+};
+function includesWithGlob(originalInput, stringToFind, originalOpts) {
+  if (!originalInput.length || !stringToFind.length) {
+    return false;
+  }
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$1), originalOpts);
+  var input = typeof originalInput === "string" ? [originalInput] : Array.from(originalInput);
+  if (typeof stringToFind === "string") {
+    return input.some(function (val) {
+      return matcher__default['default'].isMatch(val, stringToFind, {
+        caseSensitive: opts.caseSensitive
+      });
+    });
+  }
+  if (opts.arrayVsArrayAllMustBeFound === "any") {
+    return stringToFind.some(function (stringToFindVal) {
+      return input.some(function (val) {
+        return matcher__default['default'].isMatch(val, stringToFindVal, {
+          caseSensitive: opts.caseSensitive
+        });
+      });
+    });
+  }
+  return stringToFind.every(function (stringToFindVal) {
+    return input.some(function (val) {
+      return matcher__default['default'].isMatch(val, stringToFindVal, {
+        caseSensitive: opts.caseSensitive
+      });
+    });
+  });
+}
 
 var version = version$1;
 function isStr(something) {
@@ -249,7 +285,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         Object.keys(i2).forEach(function (key) {
           currPath = infoObj.path && infoObj.path.length ? "".concat(infoObj.path, ".").concat(key) : "".concat(key);
           if (i1.hasOwnProperty(key)) {
-            if (arrayIncludesWithGlob.includesWithGlob(key, opts.ignoreKeys)) {
+            if (includesWithGlob(key, opts.ignoreKeys)) {
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -257,7 +293,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
               }, i1[key], i2[key], _objectSpread__default['default'](_objectSpread__default['default']({}, opts), {}, {
                 ignoreEverything: true
               }));
-            } else if (arrayIncludesWithGlob.includesWithGlob(key, opts.hardMergeKeys)) {
+            } else if (includesWithGlob(key, opts.hardMergeKeys)) {
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -265,7 +301,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
               }, i1[key], i2[key], _objectSpread__default['default'](_objectSpread__default['default']({}, opts), {}, {
                 hardMergeEverything: true
               }));
-            } else if (arrayIncludesWithGlob.includesWithGlob(key, opts.hardArrayConcatKeys)) {
+            } else if (includesWithGlob(key, opts.hardArrayConcatKeys)) {
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,

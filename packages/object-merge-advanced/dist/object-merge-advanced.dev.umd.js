@@ -3804,39 +3804,34 @@ matcher$1.exports.isMatch = (inputs, patterns, options) => {
 
 var matcher = matcher$1.exports;
 
-/**
- * @name array-includes-with-glob
- * @fileoverview Like _.includes but with wildcards
- * @version 3.1.0
- * @author Roy Revelt, Codsen Ltd
- * @license MIT
- * {@link https://codsen.com/os/array-includes-with-glob/}
- */
 const defaults$1 = {
-  arrayVsArrayAllMustBeFound: "any",
-  caseSensitive: true
+    arrayVsArrayAllMustBeFound: "any",
+    caseSensitive: true,
 };
+/**
+ * Like _.includes but with wildcards
+ */
 function includesWithGlob(originalInput, stringToFind, originalOpts) {
-  if (!originalInput.length || !stringToFind.length) {
-    return false;
-  }
-  const opts = { ...defaults$1,
-    ...originalOpts
-  };
-  const input = typeof originalInput === "string" ? [originalInput] : Array.from(originalInput);
-  if (typeof stringToFind === "string") {
-    return input.some(val => matcher.isMatch(val, stringToFind, {
-      caseSensitive: opts.caseSensitive
-    }));
-  }
-  if (opts.arrayVsArrayAllMustBeFound === "any") {
-    return stringToFind.some(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
-      caseSensitive: opts.caseSensitive
+    // maybe we can end prematurely:
+    if (!originalInput.length || !stringToFind.length) {
+        return false; // because nothing can be found in it
+    }
+    const opts = { ...defaults$1, ...originalOpts };
+    const input = typeof originalInput === "string"
+        ? [originalInput]
+        : Array.from(originalInput);
+    if (typeof stringToFind === "string") {
+        return input.some((val) => matcher.isMatch(val, stringToFind, { caseSensitive: opts.caseSensitive }));
+    }
+    // array then.
+    if (opts.arrayVsArrayAllMustBeFound === "any") {
+        return stringToFind.some((stringToFindVal) => input.some((val) => matcher.isMatch(val, stringToFindVal, {
+            caseSensitive: opts.caseSensitive,
+        })));
+    }
+    return stringToFind.every((stringToFindVal) => input.some((val) => matcher.isMatch(val, stringToFindVal, {
+        caseSensitive: opts.caseSensitive,
     })));
-  }
-  return stringToFind.every(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
-    caseSensitive: opts.caseSensitive
-  })));
 }
 
 /**

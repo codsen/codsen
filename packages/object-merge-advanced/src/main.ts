@@ -8,7 +8,7 @@ import isDate from "lodash.isdate";
 import { version as v } from "../package.json";
 const version: string = v;
 
-import { includesWithGlob } from "array-includes-with-glob";
+import { includesWithGlob } from "./includesWithGlob";
 import { nonEmpty } from "util-nonempty";
 
 // ===================================

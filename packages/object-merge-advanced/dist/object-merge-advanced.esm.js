@@ -12,10 +12,37 @@ import lodashIncludes from 'lodash.includes';
 import uniq from 'lodash.uniq';
 import isObj from 'lodash.isplainobject';
 import isDate from 'lodash.isdate';
-import { includesWithGlob } from 'array-includes-with-glob';
+import matcher from 'matcher';
 import { nonEmpty } from 'util-nonempty';
 
 var version$1 = "12.1.0";
+
+const defaults$1 = {
+  arrayVsArrayAllMustBeFound: "any",
+  caseSensitive: true
+};
+function includesWithGlob(originalInput, stringToFind, originalOpts) {
+  if (!originalInput.length || !stringToFind.length) {
+    return false;
+  }
+  const opts = { ...defaults$1,
+    ...originalOpts
+  };
+  const input = typeof originalInput === "string" ? [originalInput] : Array.from(originalInput);
+  if (typeof stringToFind === "string") {
+    return input.some(val => matcher.isMatch(val, stringToFind, {
+      caseSensitive: opts.caseSensitive
+    }));
+  }
+  if (opts.arrayVsArrayAllMustBeFound === "any") {
+    return stringToFind.some(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
+      caseSensitive: opts.caseSensitive
+    })));
+  }
+  return stringToFind.every(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
+    caseSensitive: opts.caseSensitive
+  })));
+}
 
 const version = version$1;
 function isStr(something) {
