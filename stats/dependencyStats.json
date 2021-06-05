@@ -5,7 +5,6 @@
         "all-named-html-entities": 2,
         "ansi-diff-stream": 1,
         "ansi-regex": 1,
-        "array-includes-with-glob": 1,
         "array-pull-all-with-glob": 2,
         "arrayiffy-if-string": 7,
         "ast-compare": 3,
@@ -76,7 +75,7 @@
         "lodash.without": 1,
         "log-symbols": 1,
         "log-update": 1,
-        "matcher": 10,
+        "matcher": 11,
         "meow": 10,
         "mime-db": 1,
         "minimist": 1,
@@ -248,10 +247,10 @@
             "lodash.clonedeep": 20
         },
         {
-            "update-notifier": 11
+            "matcher": 11
         },
         {
-            "matcher": 10
+            "update-notifier": 11
         },
         {
             "globby": 10

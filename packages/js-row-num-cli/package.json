@@ -82,13 +82,13 @@
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
-    "core-js": "^3.12.1",
+    "core-js": "^3.14.0",
     "cross-env": "^7.0.3",
-    "eslint": "^7.27.0",
-    "execa": "^5.0.0",
+    "eslint": "^7.28.0",
+    "execa": "^5.1.1",
     "lect": "^0.17.0",
     "tap": "^14.11.0",
     "tempy": "^1.0.1",
-    "tslib": "^2.2.0"
+    "tslib": "^2.3.0"
   }
 }

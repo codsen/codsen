@@ -9751,6 +9751,12 @@ class Linter extends TypedEmitter {
     this.hasBeenCalledWithKeepSeparateWhenFixing = false;
     this.processedRulesConfig = {};
   }
+  messages;
+  str;
+  strLineStartIndexes;
+  config;
+  hasBeenCalledWithKeepSeparateWhenFixing;
+  processedRulesConfig;
   verify(str, config) {
     this.messages = [];
     this.str = str;

@@ -29,6 +29,10 @@ function stringPingLineByLine(str, cb) {
   }
 }
 class Counter {
+  canCount;
+  doNothing;
+  thereWereFailuresInThisSuite;
+  total;
   constructor() {
     this.canCount = false;
     this.doNothing = false;

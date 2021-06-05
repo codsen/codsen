@@ -16,6 +16,7 @@ var _typeof = require('@babel/runtime/helpers/typeof');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var _classCallCheck = require('@babel/runtime/helpers/classCallCheck');
 var _createClass = require('@babel/runtime/helpers/createClass');
+var _defineProperty = require('@babel/runtime/helpers/defineProperty');
 var stringCollapseLeadingWhitespace = require('string-collapse-leading-whitespace');
 var rangesMerge = require('ranges-merge');
 
@@ -26,6 +27,7 @@ var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _classCallCheck__default = /*#__PURE__*/_interopDefaultLegacy(_classCallCheck);
 var _createClass__default = /*#__PURE__*/_interopDefaultLegacy(_createClass);
+var _defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_defineProperty);
 
 var version$1 = "5.1.0";
 
@@ -47,6 +49,8 @@ var defaults = {
 var Ranges = function () {
   function Ranges(originalOpts) {
     _classCallCheck__default['default'](this, Ranges);
+    _defineProperty__default['default'](this, "ranges", void 0);
+    _defineProperty__default['default'](this, "opts", void 0);
     var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
       if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {

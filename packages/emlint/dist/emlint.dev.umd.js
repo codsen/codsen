@@ -10167,6 +10167,7 @@ function removeGappedFromMixedCases(str, temp1) {
   }
   return findLongest(temp1);
 }
+[...allNamedEntitiesSetOnly].map(ruleName => `bad-html-entity-malformed-${ruleName}`).concat([...allNamedEntitiesSetOnly].map(ruleName => `bad-html-entity-encoded-${ruleName}`)).concat(["bad-html-entity-unrecognised", "bad-html-entity-multiple-encoding", "bad-html-entity-encoded-numeric", "bad-html-entity-malformed-numeric", "bad-html-entity-other"]);
 function fixEnt(str, originalOpts) {
   if (typeof str !== "string") {
     throw new Error(`string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n${JSON.stringify(str, null, 4)} (${typeof str}-type)`);
@@ -12578,7 +12579,10 @@ function tokenizer(str, originalOpts) {
         const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
           let lengthOfClosingEspChunk;
-          let disposableVar;
+          let disposableVar = {
+            char: "",
+            idx: 0
+          };
           if (layers.length && (
           lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
             if (token.type === "esp") {
@@ -12656,7 +12660,7 @@ function tokenizer(str, originalOpts) {
             token.pureHTML = false;
             const lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length];
             const newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
-            if (!disposableVar || !disposableVar.idx) {
+            if (!disposableVar.idx) {
               newTokenToPutInstead.head = disposableVar.char;
               newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
               newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
@@ -22329,6 +22333,14 @@ var require$$0 = {
 	source: "iana",
 	compressible: true
 },
+	"application/3gpphal+json": {
+	source: "iana",
+	compressible: true
+},
+	"application/3gpphalforms+json": {
+	source: "iana",
+	compressible: true
+},
 	"application/a2l": {
 	source: "iana"
 },
@@ -23476,6 +23488,9 @@ var require$$0 = {
 	"application/nss": {
 	source: "iana"
 },
+	"application/oauth-authz-req+jwt": {
+	source: "iana"
+},
 	"application/ocsp-request": {
 	source: "iana"
 },
@@ -23934,6 +23949,10 @@ var require$$0 = {
 	source: "iana",
 	compressible: true
 },
+	"application/sarif-external-properties+json": {
+	source: "iana",
+	compressible: true
+},
 	"application/sbe": {
 	source: "iana"
 },
@@ -24351,6 +24370,9 @@ var require$$0 = {
 	"application/vnd.3gpp-v2x-local-service-information": {
 	source: "iana"
 },
+	"application/vnd.3gpp.5gnas": {
+	source: "iana"
+},
 	"application/vnd.3gpp.access-transfer-events+xml": {
 	source: "iana",
 	compressible: true
@@ -24363,7 +24385,13 @@ var require$$0 = {
 	source: "iana",
 	compressible: true
 },
+	"application/vnd.3gpp.gtpc": {
+	source: "iana"
+},
 	"application/vnd.3gpp.interworking-data": {
+	source: "iana"
+},
+	"application/vnd.3gpp.lpp": {
 	source: "iana"
 },
 	"application/vnd.3gpp.mc-signalling-ear": {
@@ -24475,6 +24503,12 @@ var require$$0 = {
 	source: "iana",
 	compressible: true
 },
+	"application/vnd.3gpp.ngap": {
+	source: "iana"
+},
+	"application/vnd.3gpp.pfcp": {
+	source: "iana"
+},
 	"application/vnd.3gpp.pic-bw-large": {
 	source: "iana",
 	extensions: [
@@ -24492,6 +24526,9 @@ var require$$0 = {
 	extensions: [
 		"pvb"
 	]
+},
+	"application/vnd.3gpp.s1ap": {
+	source: "iana"
 },
 	"application/vnd.3gpp.sms": {
 	source: "iana"
@@ -25093,6 +25130,9 @@ var require$$0 = {
 	"application/vnd.cryptomator.encrypted": {
 	source: "iana"
 },
+	"application/vnd.cryptomator.vault": {
+	source: "iana"
+},
 	"application/vnd.ctc-posml": {
 	source: "iana",
 	extensions: [
@@ -25676,6 +25716,19 @@ var require$$0 = {
 	extensions: [
 		"fsc"
 	]
+},
+	"application/vnd.fujifilm.fb.docuworks": {
+	source: "iana"
+},
+	"application/vnd.fujifilm.fb.docuworks.binder": {
+	source: "iana"
+},
+	"application/vnd.fujifilm.fb.docuworks.container": {
+	source: "iana"
+},
+	"application/vnd.fujifilm.fb.jfi+xml": {
+	source: "iana",
+	compressible: true
 },
 	"application/vnd.fujitsu.oasys": {
 	source: "iana",
@@ -26474,7 +26527,10 @@ var require$$0 = {
 	]
 },
 	"application/vnd.mapbox-vector-tile": {
-	source: "iana"
+	source: "iana",
+	extensions: [
+		"mvt"
+	]
 },
 	"application/vnd.marlin.drm.actiontoken+xml": {
 	source: "iana",
@@ -28906,6 +28962,7 @@ var require$$0 = {
 	source: "iana"
 },
 	"application/wasm": {
+	source: "iana",
 	compressible: true,
 	extensions: [
 		"wasm"
@@ -31574,6 +31631,9 @@ var require$$0 = {
 		"x_t"
 	]
 },
+	"model/vnd.pytha.pyox": {
+	source: "iana"
+},
 	"model/vnd.rosette.annotated-data-model": {
 	source: "iana"
 },
@@ -31930,6 +31990,7 @@ var require$$0 = {
 	source: "iana"
 },
 	"text/shex": {
+	source: "iana",
 	extensions: [
 		"shex"
 	]
@@ -32311,6 +32372,7 @@ var require$$0 = {
 	source: "iana"
 },
 	"text/yaml": {
+	compressible: true,
 	extensions: [
 		"yaml",
 		"yml"
@@ -42586,6 +42648,12 @@ class Linter extends TypedEmitter {
         this.hasBeenCalledWithKeepSeparateWhenFixing = false;
         this.processedRulesConfig = {};
     }
+    messages;
+    str;
+    strLineStartIndexes; // comes from line-column-mini
+    config;
+    hasBeenCalledWithKeepSeparateWhenFixing;
+    processedRulesConfig;
     verify(str, config) {
         this.messages = [];
         this.str = str;

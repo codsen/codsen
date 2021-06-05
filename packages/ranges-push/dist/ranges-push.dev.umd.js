@@ -294,6 +294,8 @@ class Ranges {
         this.opts = opts;
         this.ranges = [];
     }
+    ranges;
+    opts;
     add(originalFrom, originalTo, addVal) {
         if (originalFrom == null && originalTo == null) {
             // absent ranges are marked as null - instead of array of arrays we can receive a null

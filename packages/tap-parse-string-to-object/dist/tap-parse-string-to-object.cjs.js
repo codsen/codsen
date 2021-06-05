@@ -17,6 +17,7 @@ var through2 = require('through2');
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var _classCallCheck = require('@babel/runtime/helpers/classCallCheck');
 var _createClass = require('@babel/runtime/helpers/createClass');
+var _defineProperty = require('@babel/runtime/helpers/defineProperty');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -26,6 +27,7 @@ var through2__default = /*#__PURE__*/_interopDefaultLegacy(through2);
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var _classCallCheck__default = /*#__PURE__*/_interopDefaultLegacy(_classCallCheck);
 var _createClass__default = /*#__PURE__*/_interopDefaultLegacy(_createClass);
+var _defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_defineProperty);
 
 function stringPingLineByLine(str, cb) {
   var start = null;
@@ -47,6 +49,10 @@ function stringPingLineByLine(str, cb) {
 var Counter = function () {
   function Counter() {
     _classCallCheck__default['default'](this, Counter);
+    _defineProperty__default['default'](this, "canCount", void 0);
+    _defineProperty__default['default'](this, "doNothing", void 0);
+    _defineProperty__default['default'](this, "thereWereFailuresInThisSuite", void 0);
+    _defineProperty__default['default'](this, "total", void 0);
     this.canCount = false;
     this.doNothing = false;
     this.thereWereFailuresInThisSuite = null;
