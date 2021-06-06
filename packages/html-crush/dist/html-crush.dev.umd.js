@@ -388,6 +388,8 @@ class Ranges {
     this.opts = opts;
     this.ranges = [];
   }
+  ranges;
+  opts;
   add(originalFrom, originalTo, addVal) {
     if (originalFrom == null && originalTo == null) {
       return;
@@ -3085,6 +3087,25 @@ function crush(str, originalOpts) {
             }
             // count characters-per-line
             cpl++;
+            // catch the sequence of two closing curly braces
+            // ███████████████████████████████████████
+            // MUST BE BEFORE doNothing is toggled off because of
+            // @media screen{div{color:{{brandWhite}}}}
+            //                                       ^
+            //                        imagine we're here
+            if (!doNothing &&
+                withinStyleTag &&
+                str[i] === "}" &&
+                str[i - 1] === "}") {
+                if (countCharactersPerLine >= opts.lineLengthLimit) {
+                    finalIndexesToDelete.push(i, i, lineEnding);
+                }
+                else {
+                    stageFrom = i;
+                    stageTo = i;
+                    stageAdd = " ";
+                }
+            }
             // turn off doNothing if marker passed
             // ███████████████████████████████████████
             if (doNothing && typeof doNothing === "number" && i >= doNothing) {
@@ -3506,6 +3527,13 @@ function crush(str, originalOpts) {
                                     finalIndexesToDelete.push(i + 1, right(str, i));
                                     countCharactersPerLine -= right(str, i) - i + 1;
                                 }
+                            }
+                            // tend double closing curlies in sequence
+                            if (withinStyleTag &&
+                                str[i] === "}" &&
+                                whitespaceStartedAt &&
+                                str[whitespaceStartedAt - 1] === "}") {
+                                whatToAdd = " ";
                             }
                             if (whatToAdd && whatToAdd.length) {
                                 countCharactersPerLine += 1;
@@ -3955,6 +3983,14 @@ function crush(str, originalOpts) {
             if (str[i] === "<" && leftTagName !== null) {
                 // reset it after use
                 leftTagName = null;
+            }
+            // catch Jinja/Nunjucks two opening curlies and jump to the closing ones if latter exists
+            // ███████████████████████████████████████
+            if (withinStyleTag &&
+                str[i] === "{" &&
+                str[i + 1] === "{" &&
+                str.indexOf("}}") !== -1) {
+                doNothing = str.indexOf("}}") + 2;
             }
             //
             //

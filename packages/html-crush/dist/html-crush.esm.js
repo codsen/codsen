@@ -128,6 +128,15 @@ function crush(str, originalOpts) {
         }
       }
       cpl++;
+      if (!doNothing && withinStyleTag && str[i] === "}" && str[i - 1] === "}") {
+        if (countCharactersPerLine >= opts.lineLengthLimit) {
+          finalIndexesToDelete.push(i, i, lineEnding);
+        } else {
+          stageFrom = i;
+          stageTo = i;
+          stageAdd = " ";
+        }
+      }
       if (doNothing && typeof doNothing === "number" && i >= doNothing) {
         doNothing = undefined;
       }
@@ -327,6 +336,9 @@ function crush(str, originalOpts) {
                   countCharactersPerLine -= right(str, i) - i + 1;
                 }
               }
+              if (withinStyleTag && str[i] === "}" && whitespaceStartedAt && str[whitespaceStartedAt - 1] === "}") {
+                whatToAdd = " ";
+              }
               if (whatToAdd && whatToAdd.length) {
                 countCharactersPerLine += 1;
               }
@@ -520,6 +532,9 @@ function crush(str, originalOpts) {
       }
       if (str[i] === "<" && leftTagName !== null) {
         leftTagName = null;
+      }
+      if (withinStyleTag && str[i] === "{" && str[i + 1] === "{" && str.indexOf("}}") !== -1) {
+        doNothing = str.indexOf("}}") + 2;
       }
     }
     if (finalIndexesToDelete.current()) {
