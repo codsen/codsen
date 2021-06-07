@@ -106,3 +106,111 @@ tap.test(`04 - already come tight, vs. Nunjucks`, (t) => {
   });
   t.end();
 });
+
+tap.test(`05 - line break falls between two curlies, #1`, (t) => {
+  t.equal(
+    crush(
+      `<style>
+	@media screen {
+		div {
+			color: white;
+		}}
+
+	.foo {
+		background: green;
+	}
+</style>`,
+      {
+        removeLineBreaks: true,
+        lineLengthLimit: 31,
+      }
+    ).result,
+    `<style>
+@media screen{div{color:white;}
+}.foo{background:green;}
+</style>`,
+    "05"
+  );
+  t.end();
+});
+
+tap.test(`06 - line break falls between two curlies, #2`, (t) => {
+  t.equal(
+    crush(
+      `<style>
+	@media screen {
+		div {
+			color: white;
+		}}
+
+	.foo {
+		background: green;
+	}
+</style>`,
+      {
+        removeLineBreaks: true,
+        lineLengthLimit: 32,
+      }
+    ).result,
+    `<style>
+@media screen{div{color:white;}
+}.foo{background:green;}
+</style>`,
+    "06"
+  );
+  t.end();
+});
+
+tap.test(`07 - line break falls between two curlies, #3`, (t) => {
+  t.equal(
+    crush(
+      `<style>
+	@media screen {
+		div {
+			color: white;
+		}}
+
+	.foo {
+		background: green;
+	}
+</style>`,
+      {
+        removeLineBreaks: true,
+        lineLengthLimit: 33,
+      }
+    ).result,
+    `<style>
+@media screen{div{color:white;} }
+.foo{background:green;}
+</style>`,
+    "07"
+  );
+  t.end();
+});
+
+tap.test(`08 - line break falls between two curlies, #4`, (t) => {
+  t.equal(
+    crush(
+      `<style>
+	@media screen {
+		div {
+			color: white;
+		}}
+
+	.foo {
+		background: green;
+	}
+</style>`,
+      {
+        removeLineBreaks: true,
+        lineLengthLimit: 34,
+      }
+    ).result,
+    `<style>
+@media screen{div{color:white;} }
+.foo{background:green;}
+</style>`,
+    "08"
+  );
+  t.end();
+});

@@ -3097,8 +3097,9 @@ function crush(str, originalOpts) {
                 withinStyleTag &&
                 str[i] === "}" &&
                 str[i - 1] === "}") {
-                if (countCharactersPerLine >= opts.lineLengthLimit) {
+                if (countCharactersPerLine + 1 >= opts.lineLengthLimit) {
                     finalIndexesToDelete.push(i, i, lineEnding);
+                    countCharactersPerLine = 0;
                 }
                 else {
                     stageFrom = i;
@@ -3677,9 +3678,6 @@ function crush(str, originalOpts) {
                                 //   );
                                 // }
                             }
-                            else {
-                                countCharactersPerLine -= lastLinebreak || 0;
-                            }
                         }
                         // 2. put this current place into stage
                         // =============================================================
@@ -3722,12 +3720,6 @@ function crush(str, originalOpts) {
                             stageFrom = null;
                             stageTo = null;
                             stageAdd = null;
-                            // if (str[i] === "\n" || str[i] === "\r") {
-                            //   countCharactersPerLine -= lastLinebreak;
-                            //   console.log(
-                            //     `1449 SET countCharactersPerLine = ${countCharactersPerLine}`
-                            //   );
-                            // }
                         }
                     }
                 }

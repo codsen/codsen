@@ -144,8 +144,9 @@ function crush(str, originalOpts) {
       }
       cpl++;
       if (!doNothing && withinStyleTag && str[i] === "}" && str[i - 1] === "}") {
-        if (countCharactersPerLine >= opts.lineLengthLimit) {
+        if (countCharactersPerLine + 1 >= opts.lineLengthLimit) {
           finalIndexesToDelete.push(i, i, lineEnding);
+          countCharactersPerLine = 0;
         } else {
           stageFrom = i;
           stageTo = i;
@@ -427,8 +428,6 @@ function crush(str, originalOpts) {
                   finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
                   lastLinebreak = null;
                 }
-              } else {
-                countCharactersPerLine -= lastLinebreak || 0;
               }
             }
             if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && stringMatchLeftRight.matchRight(str, i, opts.mindTheInlineTags, {
