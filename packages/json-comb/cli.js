@@ -53,6 +53,7 @@ const cli = meow(
       ignore: {
         type: "string",
         alias: "i",
+        isMultiple: true,
       },
       tabs: {
         type: "boolean",
