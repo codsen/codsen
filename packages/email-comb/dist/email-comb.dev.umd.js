@@ -4413,6 +4413,8 @@ class Ranges {
     this.opts = opts;
     this.ranges = [];
   }
+  ranges;
+  opts;
   add(originalFrom, originalTo, addVal) {
     if (originalFrom == null && originalTo == null) {
       return;
@@ -4636,6 +4638,16 @@ function crush(str, originalOpts) {
         }
       }
       cpl++;
+      if (!doNothing && withinStyleTag && str[i] === "}" && str[i - 1] === "}") {
+        if (countCharactersPerLine + 1 >= opts.lineLengthLimit) {
+          finalIndexesToDelete.push(i, i, lineEnding);
+          countCharactersPerLine = 0;
+        } else {
+          stageFrom = i;
+          stageTo = i;
+          stageAdd = " ";
+        }
+      }
       if (doNothing && typeof doNothing === "number" && i >= doNothing) {
         doNothing = undefined;
       }
@@ -4835,6 +4847,9 @@ function crush(str, originalOpts) {
                   countCharactersPerLine -= right(str, i) - i + 1;
                 }
               }
+              if (withinStyleTag && str[i] === "}" && whitespaceStartedAt && str[whitespaceStartedAt - 1] === "}") {
+                whatToAdd = " ";
+              }
               if (whatToAdd && whatToAdd.length) {
                 countCharactersPerLine += 1;
               }
@@ -4900,8 +4915,6 @@ function crush(str, originalOpts) {
                   finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
                   lastLinebreak = null;
                 }
-              } else {
-                countCharactersPerLine -= lastLinebreak || 0;
               }
             }
             if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
@@ -5028,6 +5041,9 @@ function crush(str, originalOpts) {
       }
       if (str[i] === "<" && leftTagName !== null) {
         leftTagName = null;
+      }
+      if (withinStyleTag && str[i] === "{" && str[i + 1] === "{" && str.indexOf("}}") !== -1) {
+        doNothing = str.indexOf("}}") + 2;
       }
     }
     if (finalIndexesToDelete.current()) {

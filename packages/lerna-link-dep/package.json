@@ -81,9 +81,9 @@
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "core-js": "^3.14.0",
+    "core-js": "^3.15.2",
     "cross-env": "^7.0.3",
-    "eslint": "^7.28.0",
+    "eslint": "^7.30.0",
     "lect": "^0.17.0",
     "tap": "^14.11.0",
     "tempy": "^1.0.1",

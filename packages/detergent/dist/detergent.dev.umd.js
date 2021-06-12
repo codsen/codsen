@@ -9799,6 +9799,7 @@ function removeGappedFromMixedCases(str, temp1) {
   }
   return findLongest(temp1);
 }
+[...allNamedEntitiesSetOnly].map(ruleName => `bad-html-entity-malformed-${ruleName}`).concat([...allNamedEntitiesSetOnly].map(ruleName => `bad-html-entity-encoded-${ruleName}`)).concat(["bad-html-entity-unrecognised", "bad-html-entity-multiple-encoding", "bad-html-entity-encoded-numeric", "bad-html-entity-malformed-numeric", "bad-html-entity-other"]);
 function fixEnt(str, originalOpts) {
   if (typeof str !== "string") {
     throw new Error(`string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n${JSON.stringify(str, null, 4)} (${typeof str}-type)`);
@@ -10853,6 +10854,8 @@ class Ranges {
     this.opts = opts;
     this.ranges = [];
   }
+  ranges;
+  opts;
   add(originalFrom, originalTo, addVal) {
     if (originalFrom == null && originalTo == null) {
       return;

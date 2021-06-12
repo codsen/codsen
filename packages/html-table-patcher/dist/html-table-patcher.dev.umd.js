@@ -3832,7 +3832,10 @@ function tokenizer(str, originalOpts) {
         const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
           let lengthOfClosingEspChunk;
-          let disposableVar;
+          let disposableVar = {
+            char: "",
+            idx: 0
+          };
           if (layers.length && (
           lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
             if (token.type === "esp") {
@@ -3910,7 +3913,7 @@ function tokenizer(str, originalOpts) {
             token.pureHTML = false;
             const lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length];
             const newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
-            if (!disposableVar || !disposableVar.idx) {
+            if (!disposableVar.idx) {
               newTokenToPutInstead.head = disposableVar.char;
               newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
               newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
@@ -5881,6 +5884,8 @@ class Ranges {
     this.opts = opts;
     this.ranges = [];
   }
+  ranges;
+  opts;
   add(originalFrom, originalTo, addVal) {
     if (originalFrom == null && originalTo == null) {
       return;
