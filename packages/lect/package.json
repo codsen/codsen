@@ -82,7 +82,7 @@
   "dependencies": {
     "array-pull-all-with-glob": "^5.1.0",
     "colorette": "^1.2.2",
-    "inquirer": "^8.1.1",
+    "inquirer": "^8.1.2",
     "lodash.camelcase": "^4.3.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0",

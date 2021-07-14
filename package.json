@@ -40,8 +40,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@typescript-eslint/parser": "^4.28.2",
-    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.3",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
     "axios": "^0.21.1",
     "benchmark": "^2.1.4",
     "commitizen": "^4.2.4",
@@ -62,7 +62,7 @@
     "lerna-dependency-graph": "^1.1.0",
     "object-path": "^0.11.5",
     "prettier": "^2.3.2",
-    "simple-git": "^2.40.0",
+    "simple-git": "^2.41.1",
     "tap-parse-string-to-object": "^2.1.0",
     "title": "^3.4.3",
     "write-file-atomic": "^3.0.3"

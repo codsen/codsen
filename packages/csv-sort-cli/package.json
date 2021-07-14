@@ -78,7 +78,7 @@
     "chalk": "^4.1.1",
     "csv-sort": "^5.1.0",
     "globby": "^11.0.4",
-    "inquirer": "^8.1.1",
+    "inquirer": "^8.1.2",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^9.0.0",
