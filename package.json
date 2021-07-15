@@ -29,7 +29,7 @@
     "pub:vers": "lerna version --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "lerna run republish",
-    "test": "FORCE_COLOR=1 lerna run ci_test --bail --concurrency 1 && npm run readme:generate",
+    "test": "FORCE_COLOR=1 lerna run ci_test && npm run readme:generate",
     "test:full": "FORCE_COLOR=1 lerna run test --bail --concurrency 1 && npm run readme:generate && npm run info",
     "test:only": "FORCE_COLOR=1 lerna run unittest --bail --concurrency 1 && npm run readme:generate && npm run info",
     "test:examples": "FORCE_COLOR=1 lerna run test:examples",
