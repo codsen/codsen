@@ -1,10 +1,13 @@
 import { readFileSync } from "fs";
 import path from "path";
 import tap from "tap";
-import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm";
-import { version } from "../package.json";
+import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm.js";
 
-const fixtures = path.join(__dirname, "fixtures");
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { version } = require("../package.json");
+
+const fixtures = path.resolve("test/fixtures");
 
 function compare(t, name) {
   const changelog = readFileSync(path.join(fixtures, `${name}.md`), "utf8");

@@ -1,6 +1,6 @@
 import tap from "tap";
-import { collapse } from "../dist/string-collapse-white-space.esm";
-import { mixer } from "./util/util";
+import { collapse } from "../dist/string-collapse-white-space.esm.js";
+import { mixer } from "./util/util.js";
 
 // opts.enforceSpacesOnly
 // -----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 import tap from "tap";
 import { Linter } from "eslint";
 import * as parser from "@typescript-eslint/parser";
-import api from "../dist/eslint-plugin-test-num.esm";
+import api from "../dist/eslint-plugin-test-num.esm.js";
 import {
   c,
   read,
@@ -9,7 +9,7 @@ import {
   // backtick,
   // dollar,
   // backslash,
-} from "./util/util";
+} from "./util/util.js";
 
 function verifyAndFix(t, str, opts) {
   // ensure that TS parser result is the same

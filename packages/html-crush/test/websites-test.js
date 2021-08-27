@@ -1,7 +1,7 @@
 import tap from "tap";
 import fetch from "node-fetch";
 import pMap from "p-map";
-import { m } from "./util/util";
+import { m } from "./util/util.js";
 
 // 08. Fetch sources of some real websites and see, a) are any non-whitespace
 // characters deleted; b) that there are no throws; c) is minified source less

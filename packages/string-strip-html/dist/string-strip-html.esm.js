@@ -358,9 +358,7 @@ function stripHtml(str, originalOpts) {
     }
     if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
       tag.nameEnds = i;
-      tag.name = str.slice(tag.nameStarts, tag.nameEnds + (
-      /* istanbul ignore next */
-      !isClosingAt(i) && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+      tag.name = str.slice(tag.nameStarts, tag.nameEnds + (!isClosingAt(i) && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
       if (
       str[tag.nameStarts - 1] !== "!" &&
       !tag.name.replace(/-/g, "").length ||
@@ -428,18 +426,18 @@ function stripHtml(str, originalOpts) {
     }
     if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] !== "/"
     ) {
-        if (tag.onlyPlausible === undefined) {
-          if ((!str[i].trim() || isOpeningAt(i)) && !tag.slashPresent) {
-            tag.onlyPlausible = true;
-          } else {
-            tag.onlyPlausible = false;
-          }
-        }
-        if (str[i].trim() && tag.nameStarts === undefined && !isOpeningAt(i) && str[i] !== "/" && !isClosingAt(i) && str[i] !== "!") {
-          tag.nameStarts = i;
-          tag.nameContainsLetters = false;
+      if (tag.onlyPlausible === undefined) {
+        if ((!str[i].trim() || isOpeningAt(i)) && !tag.slashPresent) {
+          tag.onlyPlausible = true;
+        } else {
+          tag.onlyPlausible = false;
         }
       }
+      if (str[i].trim() && tag.nameStarts === undefined && !isOpeningAt(i) && str[i] !== "/" && !isClosingAt(i) && str[i] !== "!") {
+        tag.nameStarts = i;
+        tag.nameContainsLetters = false;
+      }
+    }
     if (tag.nameStarts && !tag.quotes && str[i].toLowerCase() !== str[i].toUpperCase()) {
       tag.nameContainsLetters = true;
     }
@@ -460,16 +458,14 @@ function stripHtml(str, originalOpts) {
     }
     if (tag.lastOpeningBracketAt !== undefined) {
       if (tag.lastClosingBracketAt === undefined) {
-        if (tag.lastOpeningBracketAt < i && !isOpeningAt(i) && (
-        str[i + 1] === undefined || isOpeningAt(i + 1)) && tag.nameContainsLetters) {
+        if (tag.lastOpeningBracketAt < i && !isOpeningAt(i) && (str[i + 1] === undefined || isOpeningAt(i + 1)) && tag.nameContainsLetters) {
           tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
           /* istanbul ignore else */
           if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
             allTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
           }
           if (
-          opts.ignoreTags.includes(tag.name) ||
-          tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
+          opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
             tag = {};
             attrObj = {};
             continue;
@@ -531,9 +527,7 @@ function stripHtml(str, originalOpts) {
           });
           tag = {};
           attrObj = {};
-        } else if (!tag.onlyPlausible ||
-        tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) ||
-        tag.attributes && tag.attributes.some(attrObj2 => attrObj2.equalsAt)) {
+        } else if (!tag.onlyPlausible || tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) || tag.attributes && tag.attributes.some(attrObj2 => attrObj2.equalsAt)) {
           /* istanbul ignore else */
           if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
             filteredTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
@@ -689,10 +683,8 @@ function stripHtml(str, originalOpts) {
       chunkOfSpacesStartsAt = null;
     }
   }
-  if (str && (
-  opts.trimOnlySpaces &&
-  str[0] === " " ||
-  !opts.trimOnlySpaces &&
+  if (str && (opts.trimOnlySpaces &&
+  str[0] === " " || !opts.trimOnlySpaces &&
   !str[0].trim())) {
     for (let i = 0, len = str.length; i < len; i++) {
       if (opts.trimOnlySpaces && str[i] !== " " || !opts.trimOnlySpaces && str[i].trim()) {
@@ -703,10 +695,8 @@ function stripHtml(str, originalOpts) {
       }
     }
   }
-  if (str && (
-  opts.trimOnlySpaces &&
-  str[str.length - 1] === " " ||
-  !opts.trimOnlySpaces &&
+  if (str && (opts.trimOnlySpaces &&
+  str[str.length - 1] === " " || !opts.trimOnlySpaces &&
   !str[str.length - 1].trim())) {
     for (let i = str.length; i--;) {
       if (opts.trimOnlySpaces && str[i] !== " " || !opts.trimOnlySpaces && str[i].trim()) {

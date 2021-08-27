@@ -33,7 +33,7 @@ tap.test(
       .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
       .then((received) =>
         execa
-          // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+          // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
           .command(`rm -rf ${tempFolder}`)
           .then(() => received)
       )
@@ -70,7 +70,7 @@ tap.test(
       .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
       .then((received) =>
         execa
-          // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+          // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
           .command(`rm -rf ${tempFolder}`)
           .then(() => received)
       )
@@ -112,7 +112,7 @@ tap.test("03 - array in deeper levels sorted (upon request)", async (t) => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
         .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )

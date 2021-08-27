@@ -2,7 +2,7 @@
 
 import tap from "tap";
 import equal from "deep-equal";
-import { mergeAdvanced as m } from "../dist/object-merge-advanced.esm";
+import { mergeAdvanced as m } from "../dist/object-merge-advanced.esm.js";
 
 tap.test(
   "01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans",

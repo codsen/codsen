@@ -1,5 +1,5 @@
 import tap from "tap";
-import { bSlug as s } from "../dist/bitbucket-slug.esm";
+import { bSlug as s } from "../dist/bitbucket-slug.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

@@ -4,7 +4,7 @@ import {
   matchRightIncl,
   // matchLeft,
   matchRight,
-} from "../dist/string-match-left-right.esm";
+} from "../dist/string-match-left-right.esm.js";
 
 // 4. matchRightIncl()
 // -----------------------------------------------------------------------------

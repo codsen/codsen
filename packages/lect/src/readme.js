@@ -1,7 +1,9 @@
-const objectPath = require("object-path");
-const writeFileAtomic = require("write-file-atomic");
-const decodeContent = require("./decodeContent");
-const arrayiffy = require("./arrayiffy");
+import objectPath from "object-path";
+import writeFileAtomic from "write-file-atomic";
+import decodeContent from "./decodeContent";
+import arrayiffy from "./arrayiffy";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const webapps = require("../../../stats/webapps.json");
 
 // writes readme

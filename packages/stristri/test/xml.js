@@ -1,6 +1,6 @@
 import tap from "tap";
-// import { stri as stri2 } from "../dist/stristri.esm";
-import { stri, mixer } from "./util/util";
+// import { stri as stri2 } from "../dist/stristri.esm.js";
+import { stri, mixer } from "./util/util.js";
 
 tap.test(`01 - xml only`, (t) => {
   const input = `<xml><z></xml>

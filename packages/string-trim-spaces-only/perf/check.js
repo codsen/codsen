@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { trimSpaces } = require("..");
+import { trimSpaces } from "../dist/string-trim-spaces-only.esm.js";
 
 const testme = () => trimSpaces("   \n  a a  \n   ");
 

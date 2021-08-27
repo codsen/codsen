@@ -4,10 +4,12 @@
 // from all files list present in src/rules/bad-character/
 // -----------------------------------------------------------------------------
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const nonFileBasedTagRules = require("../src/util/nonFileBasedTagRules.json");
-const { allRules } = require("string-fix-broken-named-entities");
+import { allRules } from "string-fix-broken-named-entities";
 
 // the rule "bad-html-entity-encoded-numeric" doesn't exist
 const preppedBrokenEntityRules = allRules.filter(

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { groupStr as group } from "../dist/array-group-str-omit-num-char.esm";
+import { groupStr as group } from "../dist/array-group-str-omit-num-char.esm.js";
 
 // ==============
 // 00. Edge cases

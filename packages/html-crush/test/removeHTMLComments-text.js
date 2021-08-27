@@ -1,5 +1,5 @@
 import tap from "tap";
-import { m } from "./util/util";
+import { m } from "./util/util.js";
 
 // regular HTML comments (nothing to do with Outlook)
 // <!-- zzz -->

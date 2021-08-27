@@ -1,5 +1,5 @@
 import tap from "tap";
-// import detergent from "../dist/detergent.esm";
+// import detergent from "../dist/detergent.esm.js";
 // const det1 = detergent.det;
 import {
   det,
@@ -14,7 +14,7 @@ import {
   rightDoubleQuote,
   leftDoubleQuote,
   leftSingleQuote,
-} from "../t-util/util";
+} from "../t-util/util.js";
 
 // -----------------------------------------------------------------------------
 

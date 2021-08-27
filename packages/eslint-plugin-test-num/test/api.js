@@ -1,7 +1,7 @@
 /* eslint no-prototype-builtins: 0 */
 
 import tap from "tap";
-import api from "../dist/eslint-plugin-test-num.esm";
+import api from "../dist/eslint-plugin-test-num.esm.js";
 
 // 00. API wirings
 // -----------------------------------------------------------------------------

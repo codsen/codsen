@@ -1,5 +1,5 @@
 import tap from "tap";
-import { allEq } from "../dist/object-all-values-equal-to.esm";
+import { allEq } from "../dist/object-all-values-equal-to.esm.js";
 
 // 01. B.A.U.
 // -----------------------------------------------------------------------------

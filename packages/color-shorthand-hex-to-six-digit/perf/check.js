@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { conv } = require("..");
+import { conv } from "../dist/color-shorthand-hex-to-six-digit.esm.js";
 
 const testme = () => conv("aaaa #f0c zzzz\n\t\t\t#fc0");
 

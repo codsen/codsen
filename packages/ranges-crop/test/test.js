@@ -1,7 +1,7 @@
 import tap from "tap";
 import { rApply } from "ranges-apply";
 import clone from "lodash.clonedeep";
-import { rCrop } from "../dist/ranges-crop.esm";
+import { rCrop } from "../dist/ranges-crop.esm.js";
 
 // ==============================
 // 0. THROWS

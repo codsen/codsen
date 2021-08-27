@@ -1,5 +1,5 @@
 import tap from "tap";
-import { helga } from "../dist/helga.esm";
+import { helga } from "../dist/helga.esm.js";
 
 // 01. normal use
 // -----------------------------------------------------------------------------

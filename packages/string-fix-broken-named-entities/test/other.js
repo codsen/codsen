@@ -1,6 +1,9 @@
 import tap from "tap";
-import fix from "./util/util";
-import { fixEnt, allRules } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util.js";
+import {
+  fixEnt,
+  allRules,
+} from "../dist/string-fix-broken-named-entities.esm.js";
 
 // -----------------------------------------------------------------------------
 // helper functions

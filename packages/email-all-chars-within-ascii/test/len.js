@@ -1,5 +1,5 @@
 import tap from "tap";
-import { within } from "../dist/email-all-chars-within-ascii.esm";
+import { within } from "../dist/email-all-chars-within-ascii.esm.js";
 
 tap.test("01 - default, line length exceeded", (t) => {
   t.sameStrict(

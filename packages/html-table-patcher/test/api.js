@@ -1,5 +1,5 @@
 import tap from "tap";
-import { patcher, defaults, version } from "../dist/html-table-patcher.esm";
+import { patcher, defaults, version } from "../dist/html-table-patcher.esm.js";
 
 // checking the API bits
 // -----------------------------------------------------------------------------

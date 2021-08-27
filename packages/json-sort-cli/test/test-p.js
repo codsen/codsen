@@ -96,7 +96,7 @@ tap.test("02 - already sorted package.json", async (t) => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
         .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
@@ -119,7 +119,7 @@ tap.test("03 - empty array as package.json", async (t) => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
         .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )

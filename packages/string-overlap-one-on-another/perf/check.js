@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { overlap } = require("..");
+import { overlap } from "../dist/string-overlap-one-on-another.esm.js";
 
 const testme = () =>
   overlap("123", "b", { offset: 5, offsetFillerCharacter: "" });

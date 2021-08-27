@@ -2,13 +2,13 @@
 /* eslint no-unused-vars:0 */
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { rIterate } = require("..");
+import { rIterate } from "../dist/ranges-iterate.esm.js";
 
 let pinged = "";
 let index = 0;

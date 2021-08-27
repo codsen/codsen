@@ -106,8 +106,7 @@ function march(str, position, whatToMatchVal, originalOpts, special = false, get
         for (let y = 0; y <= patience; y++) {
           const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
           const nextCharInSource = str[getNextIdx(i)];
-          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (
-          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
             charsMatchedTotal++;
             if (whitespaceInFrontOfFirstChar()) {
               return false;
@@ -115,8 +114,7 @@ function march(str, position, whatToMatchVal, originalOpts, special = false, get
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
-          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (
-          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
             if (!charsMatchedTotal && !opts.hungry) {
               return false;
             }
@@ -203,56 +201,54 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   })) {
     throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
   }
-  if (!whatToMatch || !Array.isArray(whatToMatch) ||
-  Array.isArray(whatToMatch) && !whatToMatch.length ||
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()
+  if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()
   ) {
-      if (typeof opts.cb === "function") {
-        let firstCharOutsideIndex;
-        let startingPosition = position;
-        if (mode === "matchLeftIncl" || mode === "matchRight") {
-          startingPosition += 1;
-        }
-        if (mode[5] === "L") {
-          for (let y = startingPosition; y--;) {
-            const currentChar = str[y];
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
-              break;
-            }
-          }
-        } else if (mode.startsWith("matchRight")) {
-          for (let y = startingPosition; y < str.length; y++) {
-            const currentChar = str[y];
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
-              break;
-            }
+    if (typeof opts.cb === "function") {
+      let firstCharOutsideIndex;
+      let startingPosition = position;
+      if (mode === "matchLeftIncl" || mode === "matchRight") {
+        startingPosition += 1;
+      }
+      if (mode[5] === "L") {
+        for (let y = startingPosition; y--;) {
+          const currentChar = str[y];
+          if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            firstCharOutsideIndex = y;
+            break;
           }
         }
-        if (firstCharOutsideIndex === undefined) {
-          return false;
+      } else if (mode.startsWith("matchRight")) {
+        for (let y = startingPosition; y < str.length; y++) {
+          const currentChar = str[y];
+          if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            firstCharOutsideIndex = y;
+            break;
+          }
         }
-        const wholeCharacterOutside = str[firstCharOutsideIndex];
-        const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-        let theRemainderOfTheString = "";
-        if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
-          theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
-        }
-        if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
-        }
-        if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
-          theRemainderOfTheString = str.slice(firstCharOutsideIndex);
-        }
+      }
+      if (firstCharOutsideIndex === undefined) {
+        return false;
+      }
+      const wholeCharacterOutside = str[firstCharOutsideIndex];
+      const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+      let theRemainderOfTheString = "";
+      if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
+        theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
+      }
+      if (mode[5] === "L") {
         return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
-      let extraNote = "";
-      if (!originalOpts) {
-        extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+      if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
+        theRemainderOfTheString = str.slice(firstCharOutsideIndex);
       }
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
+      return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
     }
+    let extraNote = "";
+    if (!originalOpts) {
+      extraNote = " More so, the whole options object, the fourth input argument, is missing!";
+    }
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
+  }
   for (let i = 0, len = whatToMatch.length; i < len; i++) {
     special = typeof whatToMatch[i] === "function";
     const whatToMatchVal = whatToMatch[i];

@@ -6,11 +6,11 @@
 // -----------------------------------------------------------------------------
 
 const { log } = console;
-const fs = require("fs-extra");
-const meow = require("meow");
-const path = require("path");
-const updateNotifier = require("update-notifier");
-const execa = require("execa");
+import fs from "fs-extra";
+import meow from "meow";
+import path from "path";
+// import updateNotifier from "update-notifier";
+import execa from "execa";
 
 const messagePrefix = `\u001b[${90}m${"✨ lerna-link-dep: "}\u001b[${39}m`;
 
@@ -50,7 +50,7 @@ const cli = meow(
   }
 );
 
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
@@ -74,9 +74,9 @@ if (cli.flags.version) {
 //   )}`
 // );
 
-// console.log(`current dir:\n${__dirname}`);
+// console.log(`current dir:\n${path.resolve()}`);
 // console.log(`resolved dir:\n${path.resolve("./")}`);
-// console.log(`up from current dir:\n${path.resolve(__dirname, "../")}`);
+// console.log(`up from current dir:\n${path.resolve(path.resolve(), "../")}`);
 
 // first, check does the package folder at sibling folder level with such name exists:
 for (let i = 0, len = cli.input.length; i < len; i++) {
@@ -115,7 +115,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     } catch (e) {
       console.log(
         `${messagePrefix} ${`\u001b[${31}m${`[ERROR_02] Error! A package.json doesn't exist at:\n`}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
-          __dirname,
+          path.resolve(),
           "../",
           cli.input[i],
           "package.json"
@@ -131,7 +131,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     } catch (e) {
       console.log(
         `${messagePrefix} ${`\u001b[${31}m${`[ERROR_03] Error! A package.json doesn't exist at:\n`}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
-          __dirname,
+          path.resolve(),
           "../",
           cli.input[i],
           "package.json"
@@ -142,7 +142,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
 
     // console.log(
     //   `${messagePrefix} ${`\u001b[${32}m${`OK: package.json exists at:`}\u001b[${39}m`}\n${`\u001b[${33}m${path.resolve(
-    //     __dirname,
+    //     path.resolve(),
     //     "../",
     //     cli.input[i],
     //     "package.json"
@@ -213,7 +213,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     } catch (e1) {
       console.log(
         `${messagePrefix} ${`\u001b[${31}m${`[ERROR_06] Something went wrong trying to read package.json at path:`}\u001b[${39}m`}\n${path.resolve(
-          __dirname,
+          path.resolve(),
           "../",
           cli.input[i],
           "package.json"

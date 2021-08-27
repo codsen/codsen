@@ -3,19 +3,19 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-const start = Date.now();
-const fs = require("fs-extra");
-const chalk = require("chalk");
-const globby = require("globby");
-const meow = require("meow");
-const path = require("path");
-const updateNotifier = require("update-notifier");
-const pReduce = require("p-reduce");
-const pFilter = require("p-filter");
-const { cleanChangelogs } = require("lerna-clean-changelogs");
-const { promisify } = require("util");
-const write = require("write-file-atomic");
+import fs from "fs-extra";
+import chalk from "chalk";
+import globby from "globby";
+import meow from "meow";
+import path from "path";
+// import updateNotifier from "update-notifier";
+import pReduce from "p-reduce";
+import pFilter from "p-filter";
+import { cleanChangelogs } from "lerna-clean-changelogs";
+import { promisify } from "util";
+import write from "write-file-atomic";
 
+const start = Date.now();
 const { log } = console;
 const isArr = Array.isArray;
 function isStr(something) {
@@ -45,7 +45,7 @@ const cli = meow(
     -v, --version       Shows the current version
 `
 );
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 const signature = chalk.grey("✨ lerna-clean-changelogs-cli: ");
 
 // Step #0. take care of -v and -h flags that are left out in meow.

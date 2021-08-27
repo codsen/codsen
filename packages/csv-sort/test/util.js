@@ -2,9 +2,12 @@
 
 import { readFileSync } from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import { splitEasy } from "csv-split-easy";
 import crypto from "crypto";
-import { sort } from "../dist/csv-sort.esm";
+import { sort } from "../dist/csv-sort.esm.js";
 
 const sha256 = (x) =>
   crypto.createHash("sha256").update(x, "utf8").digest("hex");

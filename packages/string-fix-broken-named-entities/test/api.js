@@ -2,9 +2,7 @@ import tap from "tap";
 import {
   allRules as allRulesESM,
   fixEnt as fix,
-} from "../dist/string-fix-broken-named-entities.esm";
-import { allRules as allRulesCJS } from "../dist/string-fix-broken-named-entities.cjs";
-import { allRules as allRulesUMD } from "../dist/string-fix-broken-named-entities.umd";
+} from "../dist/string-fix-broken-named-entities.esm.js";
 
 tap.test(
   `01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 1st input arg is wrong`,
@@ -124,9 +122,7 @@ tap.test(`08 - all callbacks are nulls`, (t) => {
 tap.test(
   `09 - there are at least twice as many possible rules as there are entities`,
   (t) => {
-    t.ok(allRulesESM.length > 263 * 2, "09.01");
-    t.equal(allRulesCJS.length, allRulesESM.length, "09.02");
-    t.equal(allRulesUMD.length, allRulesESM.length, "09.03");
+    t.ok(allRulesESM.length > 263 * 2, "09");
     t.end();
   }
 );

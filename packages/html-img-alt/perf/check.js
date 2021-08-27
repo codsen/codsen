@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { alts } = require("..");
+import { alts } from "../dist/html-img-alt.esm.js";
 
 const testme = () => alts("zzz<img           /    >zzz");
 

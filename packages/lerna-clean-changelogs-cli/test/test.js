@@ -4,7 +4,10 @@ import tap from "tap";
 import execa from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
-import pack from "../package.json";
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const pack = require("../package.json");
 
 // Test file contents
 // -----------------------------------------------------------------------------
@@ -98,7 +101,7 @@ tap.test(
     // CLI will complain no files could be found
     t.match(stdOutContents.stdout, /no changelogs found/, "03.01");
 
-    await execa.command(`rm -rf ${path.resolve(__dirname, "../temp")}`);
+    await execa.command(`rm -rf ${path.resolve(path.resolve(), "../temp")}`);
   }
 );
 
@@ -120,15 +123,9 @@ tap.test(
     const processedFileContents = fs
       .writeFile(path.join(tempFolder, "changelog.md"), changelog1)
       .then(() =>
-        execa(
-          `cd ${tempFolder} && ${path.join(
-            __dirname,
-            "../"
-          )}/cli.js changelog.md`,
-          {
-            shell: true,
-          }
-        )
+        execa(`cd ${tempFolder} && ${path.resolve()}/cli.js changelog.md`, {
+          shell: true,
+        })
       )
       .then((execasMsg) => {
         t.match(
@@ -191,12 +188,9 @@ tap.test(
         )
       )
       .then(() =>
-        execa(
-          `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js "**"`,
-          {
-            shell: true,
-          }
-        )
+        execa(`cd ${tempFolder} && ${path.resolve()}/cli.js "**"`, {
+          shell: true,
+        })
       )
       .then((execasMsg) =>
         t.match(
@@ -205,7 +199,7 @@ tap.test(
           "02.02.01 - prints a message that all went OK"
         )
       )
-      // .then(() => execa.command(`rm -rf ${path.join(__dirname, "../temp")}`))
+      // .then(() => execa.command(`rm -rf ${path.join(path.resolve(), "../temp")}`))
       .then(() => execa.command(`rm -rf ${tempFolder}`))
       .catch((err) => t.fail(err));
   }

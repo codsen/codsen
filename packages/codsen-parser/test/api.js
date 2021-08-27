@@ -1,5 +1,5 @@
 import tap from "tap";
-import { cparser } from "../dist/codsen-parser.esm";
+import { cparser } from "../dist/codsen-parser.esm.js";
 
 tap.throws(
   "00.01 - 1st arg missing",

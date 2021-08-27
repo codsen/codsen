@@ -1,10 +1,10 @@
-const fs = require("fs").promises;
-const path = require("path");
-const writeFileAtomic = require("write-file-atomic");
+import { promises as fs } from "fs";
+import path from "path";
+import writeFileAtomic from "write-file-atomic";
 
 // writes TS configs
 
-async function tsconfig({ state }) {
+export const tsconfig = async ({ state }) => {
   // bail early if it's a CLI
   if (state.isCLI) {
     fs.unlink(path.resolve("rollup.config.js"))
@@ -48,6 +48,4 @@ async function tsconfig({ state }) {
     console.log(`lect: could not write tsconfigs - ${err}`);
     return Promise.reject(err);
   }
-}
-
-module.exports = tsconfig;
+};

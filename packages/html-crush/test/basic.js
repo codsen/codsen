@@ -1,5 +1,5 @@
 import tap from "tap";
-import { m } from "./util/util";
+import { m } from "./util/util.js";
 
 tap.test(
   `01 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - deletes trailing space`,

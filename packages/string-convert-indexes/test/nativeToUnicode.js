@@ -1,5 +1,5 @@
 import tap from "tap";
-import { nativeToUnicode } from "../dist/string-convert-indexes.esm";
+import { nativeToUnicode } from "../dist/string-convert-indexes.esm.js";
 
 // single-length characters only:
 // -----------------------------------------------------------------------------

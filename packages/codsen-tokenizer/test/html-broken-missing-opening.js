@@ -1,5 +1,5 @@
 import tap from "tap";
-import { tokenizer as ct } from "../dist/codsen-tokenizer.esm";
+import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // const BACKSLASH = "\u005C";
 
 // 01. tight, tag name follows a closing bracket

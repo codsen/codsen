@@ -1,6 +1,6 @@
 import tap from "tap";
 import { strFindHeadsTails } from "string-find-heads-tails";
-import { splitByW as split } from "../dist/string-split-by-whitespace.esm";
+import { splitByW as split } from "../dist/string-split-by-whitespace.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

@@ -1,6 +1,6 @@
 import tap from "tap";
-import { setter } from "./util/util";
-// import { set, del } from "../dist/edit-package-json.esm";
+import { setter } from "./util/util.js";
+// import { set, del } from "../dist/edit-package-json.esm.js";
 
 // -----------------------------------------------------------------------------
 // 03. set - key does not exist

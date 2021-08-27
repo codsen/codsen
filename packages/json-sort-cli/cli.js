@@ -3,19 +3,19 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-const fs = require("fs-extra");
-const chalk = require("chalk");
-const globby = require("globby");
-const meow = require("meow");
-const path = require("path");
-const updateNotifier = require("update-notifier");
-const isDirectory = require("is-d");
-const pReduce = require("p-reduce");
-const pFilter = require("p-filter");
-const sortObject = require("sorted-object");
-const { traverse } = require("ast-monkey-traverse");
-const isObj = require("lodash.isplainobject");
-const sortPackageJson = require("sort-package-json");
+import fs from "fs-extra";
+import chalk from "chalk";
+import globby from "globby";
+import meow from "meow";
+import path from "path";
+// import updateNotifier from "update-notifier";
+import isDirectory from "is-d";
+import pReduce from "p-reduce";
+import pFilter from "p-filter";
+import sortObject from "sorted-object";
+import { traverse } from "ast-monkey-traverse";
+import isObj from "lodash.isplainobject";
+import sortPackageJson from "sort-package-json";
 
 function isStr(something) {
   return typeof something === "string";
@@ -124,7 +124,7 @@ const cli = meow(
     },
   }
 );
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 
 const nonJsonFormats = ["yml", "toml", "yaml"]; // to save time
 const badFiles = [

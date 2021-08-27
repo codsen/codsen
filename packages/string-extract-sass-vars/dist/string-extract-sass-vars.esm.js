@@ -44,8 +44,8 @@ function extractVars(str, originalOpts) {
       withinQuotes = null;
     }
     else if (!withinQuotes && !withinComments && str[i - 1] !== BACKSLASH && `'"`.includes(str[i])) {
-        withinQuotes = str[i];
-      }
+      withinQuotes = str[i];
+    }
     if (withinSlashSlashComment && `\r\n`.includes(str[i])) {
       withinSlashSlashComment = false;
     }

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { m } from "./util/util";
+import { m } from "./util/util.js";
 
 // whitespace around tag brackets, inside tag
 // -----------------------------------------------------------------------------

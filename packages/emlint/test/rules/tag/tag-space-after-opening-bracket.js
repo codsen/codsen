@@ -1,6 +1,6 @@
 import tap from "tap";
 import { deepContains } from "ast-deep-contains";
-import { applyFixes, verify } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util.js";
 
 const BACKSLASH = "\u005C";
 

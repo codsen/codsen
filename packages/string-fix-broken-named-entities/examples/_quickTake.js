@@ -2,7 +2,7 @@
 
 import { strict as assert } from "assert";
 import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
-import { rApply } from "../../ranges-apply";
+import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
 
 const source = "&nsp;x&nsp;y&nsp;";
 

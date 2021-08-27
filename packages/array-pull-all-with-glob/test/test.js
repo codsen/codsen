@@ -1,5 +1,5 @@
 import tap from "tap";
-import { pull } from "../dist/array-pull-all-with-glob.esm";
+import { pull } from "../dist/array-pull-all-with-glob.esm.js";
 
 // =======
 // no glob

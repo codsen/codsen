@@ -1,5 +1,5 @@
 import tap from "tap";
-import { empty } from "../dist/ast-contains-only-empty-space.esm";
+import { empty } from "../dist/ast-contains-only-empty-space.esm.js";
 
 function dudFunction() {
   return "dud";

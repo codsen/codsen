@@ -164,16 +164,16 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
             }, i1[index], i2[index], opts));
           } else if (opts.oneToManyArrayObjectMerge && (i1.length === 1 || i2.length === 1)
           ) {
-              temp.push(i1.length === 1 ? mergeAdvanced({
-                path: currPath,
-                key: infoObj.key,
-                type: [getType(i1), getType(i2)]
-              }, i1[0], i2[index], opts) : mergeAdvanced({
-                path: currPath,
-                key: infoObj.key,
-                type: [getType(i1), getType(i2)]
-              }, i1[index], i2[0], opts));
-            } else if (opts.concatInsteadOfMerging) {
+            temp.push(i1.length === 1 ? mergeAdvanced({
+              path: currPath,
+              key: infoObj.key,
+              type: [getType(i1), getType(i2)]
+            }, i1[0], i2[index], opts) : mergeAdvanced({
+              path: currPath,
+              key: infoObj.key,
+              type: [getType(i1), getType(i2)]
+            }, i1[index], i2[0], opts));
+          } else if (opts.concatInsteadOfMerging) {
             if (index < i1.length) {
               temp.push(i1[index]);
             }

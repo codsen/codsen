@@ -1,5 +1,5 @@
 import tap from "tap";
-import { extract as e } from "../dist/string-extract-class-names.esm";
+import { extract as e } from "../dist/string-extract-class-names.esm.js";
 
 // ~!@$%^&*()+=,./';:"?><[]\{}|`# ++++ space char
 

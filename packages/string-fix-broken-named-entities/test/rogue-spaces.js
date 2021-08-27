@@ -1,6 +1,6 @@
 import tap from "tap";
 import { decode, uncertain, allNamedEntities } from "all-named-html-entities";
-import fix from "./util/util";
+import fix from "./util/util.js";
 
 // -----------------------------------------------------------------------------
 // programmatic tests

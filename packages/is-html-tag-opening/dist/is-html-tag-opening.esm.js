@@ -75,9 +75,7 @@ function isOpening(str, idx = 0, originalOpts) {
       passed = true;
     }
   } else {
-    if ((opts.skipOpeningBracket && (
-    str[idx - 1] === "<" ||
-    str[idx - 1] === "/" && str[left(str, leftSideIdx)] === "<") || (whatToTest[0] === "<" || whatToTest[0] === "/" && (!str[leftSideIdx] || str[leftSideIdx] !== "<")) && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
+    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, leftSideIdx)] === "<") || (whatToTest[0] === "<" || whatToTest[0] === "/" && (!str[leftSideIdx] || str[leftSideIdx] !== "<")) && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
       qualified = true;
     } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
       qualified = true;

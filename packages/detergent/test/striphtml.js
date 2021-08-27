@@ -1,6 +1,6 @@
 import tap from "tap";
-// import { det as det1 } from "../dist/detergent.esm";
-import { det, mixer } from "../t-util/util";
+// import { det as det1 } from "../dist/detergent.esm.js";
+import { det, mixer } from "../t-util/util.js";
 
 tap.test(
   `01 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`,

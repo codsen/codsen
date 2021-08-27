@@ -1,5 +1,5 @@
 import tap from "tap";
-import { compare } from "../dist/ast-compare.esm";
+import { compare } from "../dist/ast-compare.esm.js";
 
 tap.test("01 - plain objects", (t) => {
   t.not(

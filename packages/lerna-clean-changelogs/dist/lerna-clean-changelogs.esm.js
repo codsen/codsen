@@ -52,10 +52,10 @@ function cleanChangelogs(changelogContents) {
         }
       }
       else if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
-          newLinesArr.unshift(`- ${linesArr[i].slice(2)}`);
-        } else {
-          newLinesArr.unshift(linesArr[i]);
-        }
+        newLinesArr.unshift(`- ${linesArr[i].slice(2)}`);
+      } else {
+        newLinesArr.unshift(linesArr[i]);
+      }
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
       }

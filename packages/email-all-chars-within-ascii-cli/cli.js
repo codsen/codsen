@@ -3,18 +3,23 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-const chalk = require("chalk");
-const { within } = require("email-all-chars-within-ascii");
-const { right } = require("string-left-right");
-const fs = require("fs-extra");
-const globby = require("globby");
-const inquirer = require("inquirer");
-const path = require("path");
-const updateNotifier = require("update-notifier");
-const pullAll = require("lodash.pullall");
-const package = require("./package.json");
-const { name, version } = package;
-const argv = require("minimist")(process.argv.slice(2));
+import chalk from "chalk";
+import { within } from "email-all-chars-within-ascii";
+import { right } from "string-left-right";
+import fs from "fs-extra";
+import globby from "globby";
+import inquirer from "inquirer";
+import path from "path";
+// import updateNotifier from "update-notifier";
+import pullAll from "lodash.pullall";
+
+import { createRequire } from "module";
+const require1 = createRequire(import.meta.url);
+const package1 = require1("./package.json");
+
+const { name, version } = package1;
+import argv from "minimist";
+const argv1 = argv(process.argv.slice(2));
 
 const { log } = console;
 
@@ -34,7 +39,7 @@ const help = `
   Instructions
     Just call it in the folder where your file is located or provide a path
 `;
-updateNotifier({ pkg: package }).notify();
+// updateNotifier({ pkg: package }).notify();
 
 function offerAListOfFilesToPickFrom() {
   const ui = new inquirer.ui.BottomBar();
@@ -64,10 +69,10 @@ function offerAListOfFilesToPickFrom() {
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
 
-if (argv.v || argv.version) {
+if (argv1.v || argv1.version) {
   log(version);
   process.exit(0);
-} else if (argv.h || argv.help) {
+} else if (argv1.h || argv1.help) {
   log(help);
   process.exit(0);
 }
@@ -75,7 +80,7 @@ if (argv.v || argv.version) {
 // Step #1. gather the to-do list of files.
 // -----------------------------------------------------------------------------
 
-state.toDoList = argv._;
+state.toDoList = argv1._;
 
 // Step #2. create a promise variable and assign it to one of the promises,
 // depending on was the acceptable file passed via args or queries afterwards.
@@ -142,7 +147,7 @@ thePromise
       }
       try {
         filesContents = fs.readFileSync(requestedPath, "utf8");
-        let lineLength = argv.len || argv.l;
+        let lineLength = argv1.len || argv1.l;
         if (typeof lineLength === "boolean") {
           // in case somebody puts empty flag without a value
           lineLength = undefined;
@@ -170,7 +175,7 @@ thePromise
                   obj.line
                 )} - ${chalk.red(
                   `${obj.value} character-long line (limit ${
-                    argv.len || argv.l || 500
+                    argv1.len || argv1.l || 500
                   })`
                 )}`
               );

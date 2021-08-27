@@ -1,5 +1,5 @@
 import tap from "tap";
-import { expander as e } from "../dist/string-range-expander.esm";
+import { expander as e } from "../dist/string-range-expander.esm.js";
 
 // 00. THROWS.
 // -----------------------------------------------------------------------------

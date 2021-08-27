@@ -1,9 +1,9 @@
-const objectPath = require("object-path");
-const writeFileAtomic = require("write-file-atomic");
+import objectPath from "object-path";
+import writeFileAtomic from "write-file-atomic";
 
 // hard write all static files
 // key files.write_hard from packages/ root .lectrc.json
-async function hardWrite({ lectrc }) {
+export const hardWrite = async ({ lectrc }) => {
   const contentsToWriteHard = objectPath
     .get(lectrc, "files.write_hard")
     .filter((obj) => {
@@ -25,6 +25,4 @@ async function hardWrite({ lectrc }) {
       writeFileAtomic(oneToDoObj.name, oneToDoObj.contents)
     )
   );
-}
-
-module.exports = hardWrite;
+};

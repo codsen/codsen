@@ -1,5 +1,5 @@
 import tap from "tap";
-import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm";
+import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm.js";
 
 tap.test("01 - multiple lines - mac endings", (t) => {
   t.equal(c("  abc  \n  def  \n  ghi  "), " abc  \n  def  \n  ghi ", "01");

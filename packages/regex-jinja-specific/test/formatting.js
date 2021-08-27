@@ -1,5 +1,5 @@
 import tap from "tap";
-import { isJinjaSpecific } from "../dist/regex-jinja-specific.esm";
+import { isJinjaSpecific } from "../dist/regex-jinja-specific.esm.js";
 
 // /['"]%x?[\+0]?[.>^<]?\d+[\w%]['"]\|format\(/gi
 

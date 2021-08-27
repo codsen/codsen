@@ -2,7 +2,7 @@ import tap from "tap";
 import {
   // applyFixes,
   verify,
-} from "../../../t-util/util";
+} from "../../../t-util/util.js";
 
 // -----------------------------------------------------------------------------
 

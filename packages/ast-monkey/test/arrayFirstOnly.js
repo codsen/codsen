@@ -8,7 +8,7 @@ import {
   drop,
   del,
   arrayFirstOnly,
-} from "../dist/ast-monkey.esm";
+} from "../dist/ast-monkey.esm.js";
 
 const defaultInput = {
   a: { b: [{ c: { d: "e" } }] },

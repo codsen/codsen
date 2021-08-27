@@ -1,5 +1,5 @@
 import tap from "tap";
-import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.esm";
+import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.esm.js";
 
 const fixture = [
   // outlook-only:

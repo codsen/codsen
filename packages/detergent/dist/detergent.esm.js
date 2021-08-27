@@ -361,29 +361,29 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         } else if (charcode === 45) {
           if (str[i - 1] === " " && str[y] === " " && isNumber(str[left(str, i)]) && isNumber(str[right(str, y)])) ;
           else if ((str[i - 1] === rawNbsp || str[i - 1] === " ") && str[y] !== "$" && str[y] !== "£" && str[y] !== "€" && str[y] !== "₽" && str[y] !== "0" && str[y] !== "1" && str[y] !== "2" && str[y] !== "3" && str[y] !== "4" && str[y] !== "5" && str[y] !== "6" && str[y] !== "7" && str[y] !== "8" && str[y] !== "9" && str[y] !== "-" && str[y] !== ">" && str[y] !== " ") {
-              applicableOpts.addMissingSpaces = true;
-              if (opts.addMissingSpaces) {
-                rangesArr.push(y, y, " ");
-              }
-            } else if (str[i - 1] && str[y] && (isNumber(str[i - 1]) && isNumber(str[y]) || str[i - 1].toLowerCase() === "a" && str[y].toLowerCase() === "z")) {
-              applicableOpts.convertDashes = true;
-              if (opts.convertDashes) {
-                applicableOpts.convertEntities = true;
-                rangesArr.push(i, y, opts.convertEntities ? "&ndash;" : "\u2013");
-              }
-            } else if (str[i - 1] && str[y] && (!str[i - 1].trim() && !str[y].trim() || isLowercaseLetter(str[i - 1]) && str[y] === "'")) {
-              applicableOpts.convertDashes = true;
-              if (opts.convertDashes) {
-                applicableOpts.convertEntities = true;
-                rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
-              }
-            } else if (str[i - 1] && str[y] && isLetter(str[i - 1]) && isQuote(str[y])) {
-              applicableOpts.convertDashes = true;
-              if (opts.convertDashes) {
-                applicableOpts.convertEntities = true;
-                rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
-              }
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
             }
+          } else if (str[i - 1] && str[y] && (isNumber(str[i - 1]) && isNumber(str[y]) || str[i - 1].toLowerCase() === "a" && str[y].toLowerCase() === "z")) {
+            applicableOpts.convertDashes = true;
+            if (opts.convertDashes) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(i, y, opts.convertEntities ? "&ndash;" : "\u2013");
+            }
+          } else if (str[i - 1] && str[y] && (!str[i - 1].trim() && !str[y].trim() || isLowercaseLetter(str[i - 1]) && str[y] === "'")) {
+            applicableOpts.convertDashes = true;
+            if (opts.convertDashes) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
+            }
+          } else if (str[i - 1] && str[y] && isLetter(str[i - 1]) && isQuote(str[y])) {
+            applicableOpts.convertDashes = true;
+            if (opts.convertDashes) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
+            }
+          }
           if (str[i - 2] && str[i - 2].trim() && !str[i - 1].trim() && !["\n", "\r"].includes(str[i - 1])) {
             applicableOpts.removeWidows = true;
             if (opts.removeWidows) {
@@ -405,8 +405,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           const fourth = str[y + 3] ? str[y + 3].toLowerCase() : "";
           const nextThreeChars = first + second + third;
           if (first + second !== "js" && nextThreeChars !== "jpg" && nextThreeChars !== "png" && nextThreeChars !== "gif" && nextThreeChars !== "svg" && nextThreeChars !== "htm" && nextThreeChars !== "pdf" && nextThreeChars !== "psd" && nextThreeChars !== "tar" && nextThreeChars !== "zip" && nextThreeChars !== "rar" && nextThreeChars !== "otf" && nextThreeChars !== "ttf" && nextThreeChars !== "eot" && nextThreeChars !== "php" && nextThreeChars !== "rss" && nextThreeChars !== "asp" && nextThreeChars !== "ppt" && nextThreeChars !== "doc" && nextThreeChars !== "txt" && nextThreeChars !== "rtf" && nextThreeChars !== "git" && nextThreeChars + fourth !== "jpeg" && nextThreeChars + fourth !== "html" && nextThreeChars + fourth !== "woff" && !(!isLetter(str[i - 2]) && str[i - 1] === "p" && str[y] === "s" && str[y + 1] === "t" && !isLetter(str[y + 2]))) {
-            if (str[y] !== undefined && (
-            !state.onUrlCurrently && isUppercaseLetter(str[y]) || state.onUrlCurrently && isLetter(str[y]) && isUppercaseLetter(str[y]) && isLetter(str[y + 1]) && isLowercaseLetter(str[y + 1])) && str[y] !== " " && str[y] !== "." && str[y] !== "\n") {
+            if (str[y] !== undefined && (!state.onUrlCurrently && isUppercaseLetter(str[y]) || state.onUrlCurrently && isLetter(str[y]) && isUppercaseLetter(str[y]) && isLetter(str[y + 1]) && isLowercaseLetter(str[y + 1])) && str[y] !== " " && str[y] !== "." && str[y] !== "\n") {
               applicableOpts.addMissingSpaces = true;
               if (opts.addMissingSpaces) {
                 rangesArr.push(y, y, " ");
@@ -414,13 +413,13 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             }
             if (str[i - 1] !== undefined && str[i - 1].trim() === "" && str[y] !== "." && (str[i - 2] === undefined || str[i - 2] !== ".")
             ) {
-                for (y = i - 1; y--;) {
-                  if (str[y].trim() !== "") {
-                    rangesArr.push(y + 1, i);
-                    break;
-                  }
+              for (y = i - 1; y--;) {
+                if (str[y].trim() !== "") {
+                  rangesArr.push(y + 1, i);
+                  break;
                 }
               }
+            }
           }
         } else if (charcode === 47) ; else if (charcode === 58) {
           if (str[y - 1] && str[right(str, y - 1)] === "/" && str[right(str, right(str, y - 1))] === "/") {
@@ -822,8 +821,7 @@ function det(str, inputOpts) {
         if (opts.stripHtml && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())) {
           if (Array.isArray(opts.stripHtmlAddNewLine) && opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(tagName => tagName.startsWith("/") &&
           tag.slashPresent &&
-          tag.slashPresent < tag.nameEnds && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !(
-          tag.slashPresent &&
+          tag.slashPresent < tag.nameEnds && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !(tag.slashPresent &&
           tag.slashPresent < tag.nameEnds) && tag.name.toLowerCase() === removeTrailingSlash(tagName))) {
             applicableOpts.removeLineBreaks = true;
             if (!opts.removeLineBreaks && typeof deleteFrom === "number" && typeof deleteTo === "number") {
@@ -876,11 +874,11 @@ function det(str, inputOpts) {
             }
           }
           else if (tag.slashPresent && str[left(str, tag.lastClosingBracketAt)] === "/") {
-              finalIndexesToDelete.push(chompLeft(str, tag.lastClosingBracketAt, {
-                mode: 2
-              }, "/"), tag.lastClosingBracketAt);
-              finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.lastOpeningBracketAt + 1, "/");
-            }
+            finalIndexesToDelete.push(chompLeft(str, tag.lastClosingBracketAt, {
+              mode: 2
+            }, "/"), tag.lastClosingBracketAt);
+            finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.lastOpeningBracketAt + 1, "/");
+          }
           if (tag.name.toLowerCase() !== tag.name) {
             finalIndexesToDelete.push(tag.nameStarts, tag.nameEnds, tag.name.toLowerCase());
           }

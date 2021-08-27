@@ -5,9 +5,9 @@
 
 import { strict as assert } from "assert";
 import title from "title";
-import { rInvert } from "../../ranges-invert";
-import { rApply } from "../../ranges-apply";
-import { rRegex } from "../../ranges-regex";
+import { rInvert } from "../../ranges-invert/dist/ranges-invert.esm.js";
+import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
+import { rRegex } from "../../ranges-regex/dist/ranges-regex.esm.js";
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 function tagAwareTitle(str) {

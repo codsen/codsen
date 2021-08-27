@@ -1,5 +1,7 @@
+import fs from "fs";
 import { promisify } from "util";
-import fs, { readFile as read } from "fs-extra";
+const read = promisify(fs.readFile);
+import { ensureDirSync } from "fs-extra";
 
 import path from "path";
 import tap from "tap";
@@ -7,9 +9,15 @@ import execa from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
 import clone from "lodash.clonedeep";
-import pack from "../package.json";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const pack = require("../package.json");
 
 const write = promisify(require("write-file-atomic"));
+
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // -----------------------------------------------------------------------------
 
@@ -113,9 +121,9 @@ tap.test("01 - monorepo", async (t) => {
 
   // 1. The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
-  fs.ensureDirSync(path.join(tempFolder, "packages/lib1"));
-  fs.ensureDirSync(path.join(tempFolder, "packages/lib2"));
-  fs.ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
+  ensureDirSync(path.join(tempFolder, "packages/lib1"));
+  ensureDirSync(path.join(tempFolder, "packages/lib2"));
+  ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
 
   // 2. asynchronously write all test files
 
@@ -193,7 +201,7 @@ tap.test("02 - normal repo", async (t) => {
   const tempFolder = tempy.directory();
 
   // 1. create folders:
-  fs.ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
+  ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
 
   // asynchronously write all test files
 
@@ -259,7 +267,7 @@ tap.test(
     // it will contain commitizen on both deps and dev deps
 
     // 1. create folders:
-    fs.ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
+    ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
 
     // asynchronously write all test files
 
@@ -329,7 +337,7 @@ tap.test("05 - help output mode", async (t) => {
 tap.test("06 - no files found in the given directory", async (t) => {
   const tempFolder = tempy.directory();
   // create folder:
-  fs.ensureDirSync(path.resolve(tempFolder));
+  ensureDirSync(path.resolve(tempFolder));
 
   // call execa on that empty folder
   const stdOutContents = await execa(

@@ -1,7 +1,7 @@
 import tap from "tap";
 import { rApply } from "ranges-apply";
-import { stripHtml } from "../dist/string-strip-html.esm";
-import validateTagLocations from "./util/validateTagLocations";
+import { stripHtml } from "../dist/string-strip-html.esm.js";
+import validateTagLocations from "./util/validateTagLocations.js";
 
 // concentrating on ranges output
 // -----------------------------------------------------------------------------

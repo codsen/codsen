@@ -1,6 +1,6 @@
 import tap from "tap";
-import { deleter } from "./util/util";
-// import { set, del } from "../dist/edit-package-json.esm";
+import { deleter } from "./util/util.js";
+// import { set, del } from "../dist/edit-package-json.esm.js";
 
 // del - delete existing key
 // -----------------------------------------------------------------------------

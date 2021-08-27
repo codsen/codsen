@@ -1,6 +1,6 @@
 import tap from "tap";
-import fix from "./util/util";
-import { fixEnt } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util.js";
+import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
 
 tap.test(
   `01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`,

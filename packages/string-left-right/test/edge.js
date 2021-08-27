@@ -8,7 +8,7 @@ import {
   rightSeq,
   // chompLeft,
   // chompRight,
-} from "../dist/string-left-right.esm";
+} from "../dist/string-left-right.esm.js";
 
 // EDGE CASES (there are no throws as it's an internal library)
 // -----------------------------------------------------------------------------

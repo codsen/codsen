@@ -2,18 +2,18 @@
 
 /* eslint no-console:0 */
 
-const meow = require("meow");
-const fs = require("fs-extra");
-const globby = require("globby");
-const pReduce = require("p-reduce");
-const isDirectory = require("is-d");
-const writeFileAtomic = require("write-file-atomic");
-const { promisify } = require("util");
+import meow from "meow";
+import fs from "fs-extra";
+import globby from "globby";
+import pReduce from "p-reduce";
+import isDirectory from "is-d";
+import writeFileAtomic from "write-file-atomic";
+import { promisify } from "util";
 
 const write = promisify(writeFileAtomic);
 
-const { genAtomic, version } = require("generate-atomic-css");
-const updateNotifier = require("update-notifier");
+import { genAtomic, version } from "generate-atomic-css";
+// import updateNotifier from "update-notifier";
 
 const { log } = console;
 const messagePrefix = `\u001b[${90}m${"✨ generate-atomic-css-cli: "}\u001b[${39}m`;
@@ -35,7 +35,7 @@ const cli = meow(
     gac --version
 `
 );
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 
 function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs

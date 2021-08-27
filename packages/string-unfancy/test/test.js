@@ -1,5 +1,5 @@
 import tap from "tap";
-import { unfancy } from "../dist/string-unfancy.esm";
+import { unfancy } from "../dist/string-unfancy.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

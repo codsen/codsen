@@ -1,6 +1,6 @@
 import tap from "tap";
-import { stri as stri2 } from "../dist/stristri.esm";
-import { stri, mixer } from "./util/util";
+import { stri as stri2 } from "../dist/stristri.esm.js";
+import { stri, mixer } from "./util/util.js";
 
 tap.test(`01 - testing api directly`, (t) => {
   t.equal(stri2("<div>").result, "", "01");

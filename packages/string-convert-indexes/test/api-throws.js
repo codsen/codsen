@@ -2,7 +2,7 @@ import tap from "tap";
 import {
   nativeToUnicode,
   unicodeToNative,
-} from "../dist/string-convert-indexes.esm";
+} from "../dist/string-convert-indexes.esm.js";
 
 // THROW_ID_01 - not a string or empty string in 1st input arg
 // -----------------------------------------------------------------------------

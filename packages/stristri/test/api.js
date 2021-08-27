@@ -1,9 +1,9 @@
 import tap from "tap";
-import { stri as stri2, defaults } from "../dist/stristri.esm";
+import { stri as stri2, defaults } from "../dist/stristri.esm.js";
 import {
   // stri,
   mixer,
-} from "./util/util";
+} from "./util/util.js";
 
 const fn = () => {};
 

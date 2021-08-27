@@ -35,52 +35,12 @@ const makeExternalPredicate = (externalArr) => {
 
 export default (commandLineArgs) => {
   const finalConfig = [
-    // CommonJS
-    {
-      input: "src/main.ts",
-      output: [
-        { dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false },
-      ],
-      external: makeExternalPredicate([
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.peerDependencies || {}),
-      ]),
-      plugins: [
-        builtins(),
-        nodeResolve({
-          extensions,
-        }),
-        json(),
-        typescript({
-          tsconfig: "../../tsconfig.build.json",
-          declaration: false,
-        }),
-        babel({
-          extensions,
-          rootMode: "upward",
-          plugins: [
-            [
-              "@babel/plugin-transform-runtime",
-              { version: babelRuntimeVersion },
-            ],
-          ],
-          babelHelpers: "runtime",
-        }),
-        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
-        !commandLineArgs.dev &&
-          strip({
-            sourceMap: false,
-            include: ["src/**/*.(js|ts)"],
-            functions: ["console.*"],
-          }),
-        banner(licensePiece),
-      ],
-    },
-
     // ES
     {
       input: "src/main.ts",
-      output: [{ file: pkg.module, format: "es", indent: false }],
+      output: [
+        { file: `dist/${pkg.name}.esm.js`, format: "es", indent: false },
+      ],
       external: makeExternalPredicate([
         ...Object.keys(pkg.dependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),

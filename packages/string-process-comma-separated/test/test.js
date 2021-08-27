@@ -1,7 +1,7 @@
 /* eslint no-param-reassign:0 */
 
 import tap from "tap";
-import { processCommaSep } from "../dist/string-process-comma-separated.esm";
+import { processCommaSep } from "../dist/string-process-comma-separated.esm.js";
 
 const rawnbsp = "\u00a0";
 

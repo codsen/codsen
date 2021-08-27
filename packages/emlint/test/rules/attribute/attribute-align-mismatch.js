@@ -1,5 +1,5 @@
 import tap from "tap";
-import { verify } from "../../../t-util/util";
+import { verify } from "../../../t-util/util.js";
 
 tap.test(`01`, (t) => {
   const str = `<table>

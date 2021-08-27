@@ -1,4 +1,4 @@
-import { Linter } from "../dist/emlint.esm";
+import { Linter } from "../dist/emlint.esm.js";
 import { rApply } from "ranges-apply";
 
 function applyFixes(str, messages) {

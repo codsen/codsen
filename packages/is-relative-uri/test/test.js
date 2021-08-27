@@ -1,5 +1,5 @@
 import tap from "tap";
-import { isRel } from "../dist/is-relative-uri.esm";
+import { isRel } from "../dist/is-relative-uri.esm.js";
 
 const BACKSLASH = "\u005C";
 

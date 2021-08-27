@@ -4,7 +4,7 @@ import {
   version,
   headsAndTails,
   extractFromToSource,
-} from "../dist/generate-atomic-css.esm";
+} from "../dist/generate-atomic-css.esm.js";
 
 const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
 

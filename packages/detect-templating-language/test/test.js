@@ -1,5 +1,5 @@
 import tap from "tap";
-import { detectLang } from "../dist/detect-templating-language.esm";
+import { detectLang } from "../dist/detect-templating-language.esm.js";
 
 tap.test(`01 - throws`, (t) => {
   t.throws(() => {

@@ -1,6 +1,6 @@
 import tap from "tap";
-import { det as det1 } from "../dist/detergent.esm";
-// const { det, mixer } from "../t-util/util";
+import { det as det1 } from "../dist/detergent.esm.js";
+// const { det, mixer } from "../t-util/util.js";
 
 // ================================================
 // 01. Only real applicable rules keys are reported

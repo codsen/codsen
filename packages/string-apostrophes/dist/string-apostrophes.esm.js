@@ -49,20 +49,20 @@ function convertOne(str, {
       }
     } else if (str[to] && str[to + 1] && str[to] === "n" && str.slice(from, to) === str.slice(to + 1, to + 1 + (to - from))
     ) {
-        if (convertApostrophes && str.slice(from, to + 2) !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`) && value !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`)) {
-          rangesArr.push([from, to + 2, convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`]);
-          /* istanbul ignore next */
-          if (typeof offsetBy === "function") {
-            offsetBy(2);
-          }
-        } else if (!convertApostrophes && str.slice(from, to + 2) !== "'n'" && value !== "'n'") {
-          rangesArr.push([from, to + 2, "'n'"]);
-          /* istanbul ignore next */
-          if (typeof offsetBy === "function") {
-            offsetBy(2);
-          }
+      if (convertApostrophes && str.slice(from, to + 2) !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`) && value !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`)) {
+        rangesArr.push([from, to + 2, convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`]);
+        /* istanbul ignore next */
+        if (typeof offsetBy === "function") {
+          offsetBy(2);
         }
-      } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isDigitStr(str[to])) {
+      } else if (!convertApostrophes && str.slice(from, to + 2) !== "'n'" && value !== "'n'") {
+        rangesArr.push([from, to + 2, "'n'"]);
+        /* istanbul ignore next */
+        if (typeof offsetBy === "function") {
+          offsetBy(2);
+        }
+      }
+    } else if (str[to] && str[to].toLowerCase() === "t" && (!str[to + 1] || !str[to + 1].trim() || str[to + 1].toLowerCase() === "i") || str[to] && str[to + 2] && str[to].toLowerCase() === "t" && str[to + 1].toLowerCase() === "w" && (str[to + 2].toLowerCase() === "a" || str[to + 2].toLowerCase() === "e" || str[to + 2].toLowerCase() === "i" || str[to + 2].toLowerCase() === "o") || str[to] && str[to + 1] && str[to].toLowerCase() === "e" && str[to + 1].toLowerCase() === "m" || str[to] && str[to + 4] && str[to].toLowerCase() === "c" && str[to + 1].toLowerCase() === "a" && str[to + 2].toLowerCase() === "u" && str[to + 3].toLowerCase() === "s" && str[to + 4].toLowerCase() === "e" || str[to] && isDigitStr(str[to])) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&rsquo;" : rightSingleQuote) && value !== (convertEntities ? "&rsquo;" : rightSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
@@ -78,20 +78,20 @@ function convertOne(str, {
       } else if (str[to] === `"` &&
       str[to + 1] && !str[to + 1].trim()
       ) {
-          if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`) && value !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`)) {
-            rangesArr.push([from, to + 1, `${convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`}`]);
-            /* istanbul ignore next */
-            if (typeof offsetBy === "function") {
-              offsetBy(1);
-            }
-          } else if (!convertApostrophes && str.slice(from, to + 1) !== `'"` && value !== `'"`) {
-            rangesArr.push([from, to + 1, `'"`]);
-            /* istanbul ignore next */
-            if (typeof offsetBy === "function") {
-              offsetBy(1);
-            }
+        if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`) && value !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`)) {
+          rangesArr.push([from, to + 1, `${convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`}`]);
+          /* istanbul ignore next */
+          if (typeof offsetBy === "function") {
+            offsetBy(1);
+          }
+        } else if (!convertApostrophes && str.slice(from, to + 1) !== `'"` && value !== `'"`) {
+          rangesArr.push([from, to + 1, `'"`]);
+          /* istanbul ignore next */
+          if (typeof offsetBy === "function") {
+            offsetBy(1);
           }
         }
+      }
     } else if (from === 0 && str.slice(to).trim()) {
       if (convertApostrophes && str.slice(from, to) !== (convertEntities ? "&lsquo;" : leftSingleQuote) && value !== (convertEntities ? "&lsquo;" : leftSingleQuote)) {
         rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);

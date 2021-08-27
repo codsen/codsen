@@ -2837,12 +2837,9 @@ function tagSpaceBeforeClosingBracket(context, mode = "never") {
       if (context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$3) {
         leftmostPos = idxOnTheLeft;
       }
-      if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && node.void ||
-      mode === "always" &&
-      !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] && (
-      context.str[leftmostPos - 1].trim() ||
-      context.str[leftmostPos - 1] !== " " ||
-      context.str[leftmostPos - 2] && !context.str[leftmostPos - 2].trim())) {
+      if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && node.void || mode === "always" &&
+      !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] && (context.str[leftmostPos - 1].trim() ||
+      context.str[leftmostPos - 1] !== " " || context.str[leftmostPos - 2] && !context.str[leftmostPos - 2].trim())) {
         context.report({
           ruleId: "tag-space-before-closing-bracket",
           message: "Add a space.",
@@ -2852,8 +2849,7 @@ function tagSpaceBeforeClosingBracket(context, mode = "never") {
             ranges: [[left(context.str, leftmostPos) + 1, leftmostPos, " "]]
           }
         });
-      } else if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && !node.void ||
-      mode !== "always" &&
+      } else if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && !node.void || mode !== "always" &&
       !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] &&
       !context.str[leftmostPos - 1].trim()) {
         context.report({
@@ -2875,8 +2871,7 @@ function tagSpaceBetweenSlashAndBracket(context) {
   return {
     tag(node) {
       const idxOnTheLeft = left(context.str, node.end - 1);
-      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && (
-      context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$2) && idxOnTheLeft < node.end - 2) {
+      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && (context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$2) && idxOnTheLeft < node.end - 2) {
         const idxFrom = idxOnTheLeft + 1;
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
@@ -3221,8 +3216,7 @@ function tagVoidSlash(context, mode = "always") {
             ranges: [[leftOfSlashPos + 1, closingBracketPos]]
           }
         });
-      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && (
-      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
+      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && (!context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           if (context.str[slashPos + 1] === " ") {
             context.report({
@@ -3560,8 +3554,7 @@ function attributeMalformed(context, ...config) {
           });
         }
       }
-      if (node.attribNameEndsAt && (node.attribValueStartsAt ||
-      node.attribOpeningQuoteAt && node.attribClosingQuoteAt && node.attribClosingQuoteAt === node.attribOpeningQuoteAt + 1)) {
+      if (node.attribNameEndsAt && (node.attribValueStartsAt || node.attribOpeningQuoteAt && node.attribClosingQuoteAt && node.attribClosingQuoteAt === node.attribOpeningQuoteAt + 1)) {
         if (
         node.attribOpeningQuoteAt !== null && context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt) !== "=") {
           let message = `Malformed around equal.`;
@@ -3600,8 +3593,7 @@ function attributeMalformed(context, ...config) {
         });
         repeatedQuotesPresent = true;
       }
-      if (node.attribValueRaw && (
-      node.attribValueRaw.endsWith(`"`) || node.attribValueRaw.endsWith(`'`)) && node.attribValueEndsAt && node.attribClosingQuoteAt && context.str[node.attribValueEndsAt] === context.str[node.attribClosingQuoteAt]) {
+      if (node.attribValueRaw && (node.attribValueRaw.endsWith(`"`) || node.attribValueRaw.endsWith(`'`)) && node.attribValueEndsAt && node.attribClosingQuoteAt && context.str[node.attribValueEndsAt] === context.str[node.attribClosingQuoteAt]) {
         const message = `Delete repeated closing quotes.`;
         context.report({
           ruleId: "attribute-malformed",
@@ -4459,26 +4451,26 @@ function attributeValidateArchive(context) {
           });
         }
         else if (node.parent.tagName === "applet") {
-            validateUri(node.attribValueRaw, {
-              offset: node.attribValueStartsAt,
-              separator: "comma",
-              multipleOK: true
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-archive"
-              });
+          validateUri(node.attribValueRaw, {
+            offset: node.attribValueStartsAt,
+            separator: "comma",
+            multipleOK: true
+          }).forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-archive"
             });
-          } else if (node.parent.tagName === "object") {
-            validateUri(node.attribValueRaw, {
-              offset: node.attribValueStartsAt,
-              separator: "space",
-              multipleOK: true
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-archive"
-              });
+          });
+        } else if (node.parent.tagName === "object") {
+          validateUri(node.attribValueRaw, {
+            offset: node.attribValueStartsAt,
+            separator: "space",
+            multipleOK: true
+          }).forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-archive"
             });
-          }
+          });
+        }
       }
     }
   };
@@ -5896,52 +5888,52 @@ function attributeValidateFor(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
-            });
-          } else {
-            const {
-              charStart,
-              charEnd,
-              errorArr
-            } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            if (typeof charStart === "number" && typeof charEnd === "number") {
-              const extractedValue = node.attribValueRaw.slice(charStart, charEnd);
-              let message = `Wrong id name.`;
-              let fix = null;
-              let idxFrom = charStart + node.attribValueStartsAt;
-              let idxTo = charEnd + node.attribValueStartsAt;
-              if (Number.isInteger(charStart) && !classNameRegex.test(extractedValue)) {
-                if (Array.from(extractedValue).some(val => !val.trim().length)) {
-                  message = `Should be one value, no spaces.`;
-                } else if (extractedValue.includes("#")) {
-                  message = `Remove hash.`;
-                  const firstHashAt = node.attribValueRaw.indexOf("#");
-                  fix = {
-                    ranges: [[node.attribValueStartsAt + firstHashAt, node.attribValueStartsAt + firstHashAt + 1]]
-                  };
-                  idxFrom = node.attribValueStartsAt + firstHashAt;
-                  idxTo = node.attribValueStartsAt + firstHashAt + 1;
-                }
-                errorArr.push({
-                  ruleId: "attribute-validate-for",
-                  idxFrom,
-                  idxTo,
-                  message,
-                  fix: fix
-                });
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const {
+            charStart,
+            charEnd,
+            errorArr
+          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
+          if (typeof charStart === "number" && typeof charEnd === "number") {
+            const extractedValue = node.attribValueRaw.slice(charStart, charEnd);
+            let message = `Wrong id name.`;
+            let fix = null;
+            let idxFrom = charStart + node.attribValueStartsAt;
+            let idxTo = charEnd + node.attribValueStartsAt;
+            if (Number.isInteger(charStart) && !classNameRegex.test(extractedValue)) {
+              if (Array.from(extractedValue).some(val => !val.trim().length)) {
+                message = `Should be one value, no spaces.`;
+              } else if (extractedValue.includes("#")) {
+                message = `Remove hash.`;
+                const firstHashAt = node.attribValueRaw.indexOf("#");
+                fix = {
+                  ranges: [[node.attribValueStartsAt + firstHashAt, node.attribValueStartsAt + firstHashAt + 1]]
+                };
+                idxFrom = node.attribValueStartsAt + firstHashAt;
+                idxTo = node.attribValueStartsAt + firstHashAt + 1;
               }
-            }
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-for"
+              errorArr.push({
+                ruleId: "attribute-validate-for",
+                idxFrom,
+                idxTo,
+                message,
+                fix: fix
               });
-            });
+            }
           }
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-for"
+            });
+          });
+        }
       }
     }
   };
@@ -6020,32 +6012,32 @@ function attributeValidateHeaders(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const {
+            charStart,
+            charEnd,
+            errorArr
+          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
+          checkClassOrIdValue(context.str, {
+            typeName: "id",
+            from: node.attribValueStartsAt + charStart,
+            to: node.attribValueStartsAt + charEnd,
+            offset: 0
+          }, errorArr
+          );
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-headers"
             });
-          } else {
-            const {
-              charStart,
-              charEnd,
-              errorArr
-            } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            checkClassOrIdValue(context.str, {
-              typeName: "id",
-              from: node.attribValueStartsAt + charStart,
-              to: node.attribValueStartsAt + charEnd,
-              offset: 0
-            }, errorArr
-            );
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-headers"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -6217,32 +6209,32 @@ function attributeValidateId(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const {
+            charStart,
+            charEnd,
+            errorArr
+          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
+          checkClassOrIdValue(context.str, {
+            typeName: node.attribName,
+            from: node.attribValueStartsAt + charStart,
+            to: node.attribValueStartsAt + charEnd,
+            offset: 0
+          }, errorArr
+          );
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-id"
             });
-          } else {
-            const {
-              charStart,
-              charEnd,
-              errorArr
-            } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            checkClassOrIdValue(context.str, {
-              typeName: node.attribName,
-              from: node.attribValueStartsAt + charStart,
-              to: node.attribValueStartsAt + charEnd,
-              offset: 0
-            }, errorArr
-            );
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-id"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -6851,21 +6843,21 @@ function attributeValidateOnblur(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onblur"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onblur"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -6885,21 +6877,21 @@ function attributeValidateOnchange(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onchange"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onchange"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -6919,21 +6911,21 @@ function attributeValidateOnclick(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onclick"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onclick"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -6953,21 +6945,21 @@ function attributeValidateOndblclick(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-ondblclick"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-ondblclick"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -6987,21 +6979,21 @@ function attributeValidateOnfocus(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onfocus"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onfocus"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7021,21 +7013,21 @@ function attributeValidateOnkeydown(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onkeydown"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onkeydown"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7055,21 +7047,21 @@ function attributeValidateOnkeypress(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onkeypress"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onkeypress"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7089,21 +7081,21 @@ function attributeValidateOnkeyup(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onkeyup"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onkeyup"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7123,21 +7115,21 @@ function attributeValidateOnload(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onload"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onload"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7157,21 +7149,21 @@ function attributeValidateOnmousedown(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onmousedown"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onmousedown"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7191,21 +7183,21 @@ function attributeValidateOnmousemove(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onmousemove"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onmousemove"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7225,21 +7217,21 @@ function attributeValidateOnmouseout(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onmouseout"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onmouseout"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7259,21 +7251,21 @@ function attributeValidateOnmouseover(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onmouseover"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onmouseover"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7293,21 +7285,21 @@ function attributeValidateOnmouseup(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onmouseup"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onmouseup"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7327,21 +7319,21 @@ function attributeValidateOnreset(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onreset"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onreset"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7361,21 +7353,21 @@ function attributeValidateOnsubmit(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onsubmit"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onsubmit"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7395,21 +7387,21 @@ function attributeValidateOnselect(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onselect"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onselect"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -7429,21 +7421,21 @@ function attributeValidateOnunload(context) {
           });
         }
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-            context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
-              idxFrom: node.attribStarts,
-              idxTo: node.attribEnds,
-              message: `Missing value.`,
-              fix: null
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-onunload"
             });
-          } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-onunload"
-              });
-            });
-          }
+          });
+        }
       }
     }
   };
@@ -8476,79 +8468,79 @@ function attributeValidateType(context) {
           });
         }
         else if (["a", "link", "object", "param", "script", "style"].includes(node.parent.tagName)) {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
-              permittedValues: Object.keys(db),
-              canBeCommaSeparated: false,
-              noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-type"
-              });
+          validateString(node.attribValueRaw,
+          node.attribValueStartsAt,
+          {
+            quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
+            permittedValues: Object.keys(db),
+            canBeCommaSeparated: false,
+            noSpaceAfterComma: false
+          }).forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-type"
             });
-          } else if (node.parent.tagName === "input") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              quickPermittedValues: ["text", "password", "checkbox", "radio", "submit", "reset", "file", "hidden", "image", "button"],
-              canBeCommaSeparated: false,
-              noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-type"
-              });
+          });
+        } else if (node.parent.tagName === "input") {
+          validateString(node.attribValueRaw,
+          node.attribValueStartsAt,
+          {
+            quickPermittedValues: ["text", "password", "checkbox", "radio", "submit", "reset", "file", "hidden", "image", "button"],
+            canBeCommaSeparated: false,
+            noSpaceAfterComma: false
+          }).forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-type"
             });
-          } else if (node.parent.tagName === "li") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              quickPermittedValues: ["disc", "square", "circle", "1", "a", "A", "i", "I"],
-              canBeCommaSeparated: false,
-              noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-type"
-              });
+          });
+        } else if (node.parent.tagName === "li") {
+          validateString(node.attribValueRaw,
+          node.attribValueStartsAt,
+          {
+            quickPermittedValues: ["disc", "square", "circle", "1", "a", "A", "i", "I"],
+            canBeCommaSeparated: false,
+            noSpaceAfterComma: false
+          }).forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-type"
             });
-          } else if (node.parent.tagName === "ol") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              quickPermittedValues: ["1", "a", "A", "i", "I"],
-              canBeCommaSeparated: false,
-              noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-type"
-              });
+          });
+        } else if (node.parent.tagName === "ol") {
+          validateString(node.attribValueRaw,
+          node.attribValueStartsAt,
+          {
+            quickPermittedValues: ["1", "a", "A", "i", "I"],
+            canBeCommaSeparated: false,
+            noSpaceAfterComma: false
+          }).forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-type"
             });
-          } else if (node.parent.tagName === "ul") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              quickPermittedValues: ["disc", "square", "circle"],
-              canBeCommaSeparated: false,
-              noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-type"
-              });
+          });
+        } else if (node.parent.tagName === "ul") {
+          validateString(node.attribValueRaw,
+          node.attribValueStartsAt,
+          {
+            quickPermittedValues: ["disc", "square", "circle"],
+            canBeCommaSeparated: false,
+            noSpaceAfterComma: false
+          }).forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-type"
             });
-          } else if (node.parent.tagName === "button") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              quickPermittedValues: ["button", "submit", "reset"],
-              canBeCommaSeparated: false,
-              noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-type"
-              });
+          });
+        } else if (node.parent.tagName === "button") {
+          validateString(node.attribValueRaw,
+          node.attribValueStartsAt,
+          {
+            quickPermittedValues: ["button", "submit", "reset"],
+            canBeCommaSeparated: false,
+            noSpaceAfterComma: false
+          }).forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-type"
             });
-          }
+          });
+        }
       }
     }
   };
@@ -8624,27 +8616,27 @@ function attributeValidateValue(context) {
           });
         }
         else if (node.parent.tagName === "li") {
-            validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-              type: "integer",
-              theOnlyGoodUnits: [],
-              customGenericValueError: "Should be integer, no units.",
-              zeroOK: false,
-              customPxMessage: `Sequence number should not be in pixels.`
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-value"
-              });
+          validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+            type: "integer",
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units.",
+            zeroOK: false,
+            customPxMessage: `Sequence number should not be in pixels.`
+          }).forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-value"
             });
-          } else {
-            const {
-              errorArr
-            } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
-                ruleId: "attribute-validate-value"
-              });
+          });
+        } else {
+          const {
+            errorArr
+          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
+          errorArr.forEach(errorObj => {
+            context.report({ ...errorObj,
+              ruleId: "attribute-validate-value"
             });
-          }
+          });
+        }
       }
     }
   };
@@ -8863,8 +8855,7 @@ function characterEncode(context, ...config) {
       for (let i = 0, len = token.value.length; i < len; i++) {
         const charCode = token.value[i].charCodeAt(0);
         if (
-        charCode > 127 && (
-        !badChars.has(charCode) ||
+        charCode > 127 && (!badChars.has(charCode) ||
         !isAnEnabledValue(context.processedRulesConfig[badChars.get(charCode)])) ||
         `<>"`.includes(token.value[i])) {
           validateCharEncoding(token.value[i], i + token.start, mode, context);
@@ -9353,14 +9344,10 @@ function processCSS(token, context) {
   if (nodeArr.length > 1) {
     let somethingMet = false;
     for (let i = 0, len = nodeArr.length; i < len; i++) {
-      if (somethingMet && (
-      nodeArr[i].property !== undefined ||
-      nodeArr[i].type === "comment" &&
-      !nodeArr[i].closing ||
-      nodeArr[i].type === "esp" &&
+      if (somethingMet && (nodeArr[i].property !== undefined || nodeArr[i].type === "comment" &&
+      !nodeArr[i].closing || nodeArr[i].type === "esp" &&
       nodeArr[i - 2] && nodeArr[i - 2].property !== undefined) &&
-      nodeArr[i - 1].type === "text" && nodeArr[i - 1].value !== " " && (
-      nodeArr[i].type !== "esp" || !nodeArr[i - 1].value.includes("\n") && !nodeArr[i - 1].value.includes("\r")) &&
+      nodeArr[i - 1].type === "text" && nodeArr[i - 1].value !== " " && (nodeArr[i].type !== "esp" || !nodeArr[i - 1].value.includes("\n") && !nodeArr[i - 1].value.includes("\r")) &&
       !(nodeArr[i - 2].type === "esp" && (nodeArr[i - 1].value.includes("\n") || nodeArr[i - 1].value.includes("\r")))) {
         context.report({
           ruleId: "format-prettier",
@@ -9374,8 +9361,7 @@ function processCSS(token, context) {
       } else if (
       i &&
       !["text", "esp"].includes(nodeArr[i - 1].type) &&
-      nodeArr[i].property !== undefined && (
-      nodeArr[i].property || nodeArr[i].value || nodeArr[i].important)) {
+      nodeArr[i].property !== undefined && (nodeArr[i].property || nodeArr[i].value || nodeArr[i].important)) {
         context.report({
           ruleId: "format-prettier",
           idxFrom: nodeArr[i].start,

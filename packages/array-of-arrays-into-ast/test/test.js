@@ -1,5 +1,5 @@
 import tap from "tap";
-import { generateAst } from "../dist/array-of-arrays-into-ast.esm";
+import { generateAst } from "../dist/array-of-arrays-into-ast.esm.js";
 
 tap.test("01 - three elements", (t) => {
   t.strictSame(

@@ -1,8 +1,8 @@
 // reads src/language-subtag-registry.txt and bakes JSON files
 // -----------------------------------------------------------------------------
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
 // READ
 // -----------------------------------------------------------------------------

@@ -1,8 +1,7 @@
 /* eslint-disable no-multi-str */
 
 import tap from "tap";
-import parser from "posthtml-parser";
-import { deleteKey } from "../dist/object-delete-key.esm";
+import { deleteKey } from "../dist/object-delete-key.esm.js";
 
 // ==============================
 // One-level plain objects
@@ -740,51 +739,7 @@ tap.test("23 - wrong input args - throws", (t) => {
 // Tests on real HTML
 // ==============================
 
-tap.test("24 - deletes from real parsed HTML", (t) => {
-  const html = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>test</title>
-</head>
-<body>
-<table class="" width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td class="">
-<img src="spacer.gif">
-</td>
-</tr>
-</table>
-</body>
-</html>
-`;
-  const actual = deleteKey(parser(html), {
-    key: "class",
-    val: "",
-    cleanup: true,
-  });
-  const intended = parser(`
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>test</title>
-</head>
-<body>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td>
-<img src="spacer.gif">
-</td>
-</tr>
-</table>
-</body>
-</html>
-`);
-  t.strictSame(actual, intended, "24");
-  t.end();
-});
-
-tap.test("25 - real parsed HTML #1", (t) => {
+tap.test("24 - real parsed HTML #1", (t) => {
   const actual = deleteKey(
     [
       "<!DOCTYPE html>",
@@ -897,11 +852,11 @@ tap.test("25 - real parsed HTML #1", (t) => {
       ],
     },
   ];
-  t.strictSame(actual, intended, "25");
+  t.strictSame(actual, intended, "24");
   t.end();
 });
 
-tap.test("26 - real parsed HTML #2", (t) => {
+tap.test("25 - real parsed HTML #2", (t) => {
   const actual = deleteKey(
     [
       {
@@ -925,11 +880,11 @@ tap.test("26 - real parsed HTML #2", (t) => {
       },
     },
   ];
-  t.strictSame(actual, intended, "26");
+  t.strictSame(actual, intended, "25");
   t.end();
 });
 
-tap.test("27 - real parsed HTML #3", (t) => {
+tap.test("26 - real parsed HTML #3", (t) => {
   const actual = deleteKey(
     {
       a: {
@@ -950,11 +905,11 @@ tap.test("27 - real parsed HTML #3", (t) => {
       e: "f",
     },
   };
-  t.strictSame(actual, intended, "27");
+  t.strictSame(actual, intended, "26");
   t.end();
 });
 
-tap.test("28 - real parsed HTML #4", (t) => {
+tap.test("27 - real parsed HTML #4", (t) => {
   const actual = deleteKey(
     {
       a: {
@@ -973,7 +928,7 @@ tap.test("28 - real parsed HTML #4", (t) => {
       c: "d",
     },
   };
-  t.strictSame(actual, intended, "28");
+  t.strictSame(actual, intended, "27");
   t.end();
 });
 
@@ -981,7 +936,7 @@ tap.test("28 - real parsed HTML #4", (t) => {
 // Prove input args are not being mutated
 // ======================================
 
-tap.test("29 - does not mutate input args", (t) => {
+tap.test("28 - does not mutate input args", (t) => {
   const obj1 = {
     a: "a",
     b: "b",
@@ -997,7 +952,7 @@ tap.test("29 - does not mutate input args", (t) => {
       a: "a",
       b: "b",
     },
-    "29.01"
+    "28.01"
   ); // real deal
   t.end();
 });
@@ -1006,7 +961,7 @@ tap.test("29 - does not mutate input args", (t) => {
 // Tests on arrays
 // ===============
 
-tap.test("30 - delete a value which is empty string", (t) => {
+tap.test("29 - delete a value which is empty string", (t) => {
   const actual = deleteKey(
     {
       a: ["b", "", "c"],
@@ -1019,11 +974,11 @@ tap.test("30 - delete a value which is empty string", (t) => {
     a: ["b", "c"],
   };
 
-  t.strictSame(actual, intended, "30");
+  t.strictSame(actual, intended, "29");
   t.end();
 });
 
-tap.test("31 - delete a value which is non-empty string", (t) => {
+tap.test("30 - delete a value which is non-empty string", (t) => {
   const actual = deleteKey(
     {
       a: ["b", "", "c", "b"],
@@ -1036,12 +991,12 @@ tap.test("31 - delete a value which is non-empty string", (t) => {
     a: ["", "c"],
   };
 
-  t.strictSame(actual, intended, "31");
+  t.strictSame(actual, intended, "30");
   t.end();
 });
 
 tap.test(
-  "32 - delete a value which is non-empty string, with wildcards",
+  "31 - delete a value which is non-empty string, with wildcards",
   (t) => {
     const actual = deleteKey(
       {
@@ -1055,13 +1010,13 @@ tap.test(
       a: ["", "c"],
     };
 
-    t.strictSame(actual, intended, "32");
+    t.strictSame(actual, intended, "31");
     t.end();
   }
 );
 
 tap.test(
-  "33 - delete a value which is a non-empty string, with wildcards, only on arrays",
+  "32 - delete a value which is a non-empty string, with wildcards, only on arrays",
   (t) => {
     const actual = deleteKey(
       {
@@ -1078,7 +1033,7 @@ tap.test(
       bap: "bap",
     };
 
-    t.strictSame(actual, intended, "33");
+    t.strictSame(actual, intended, "32");
     t.end();
   }
 );
@@ -1087,7 +1042,7 @@ tap.test(
 // Globbing tests
 // ==============================
 
-tap.test("34 - wildcard deletes two keys have string values", (t) => {
+tap.test("33 - wildcard deletes two keys have string values", (t) => {
   // by key
 
   const actual = deleteKey(
@@ -1104,11 +1059,11 @@ tap.test("34 - wildcard deletes two keys have string values", (t) => {
     b: "b",
   };
 
-  t.strictSame(actual, intended, "34");
+  t.strictSame(actual, intended, "33");
   t.end();
 });
 
-tap.test("35 - wildcard deletes two keys have string values", (t) => {
+tap.test("34 - wildcard deletes two keys have string values", (t) => {
   // by value
   // ---------------------------------------------------------------------------
 
@@ -1127,14 +1082,14 @@ tap.test("35 - wildcard deletes two keys have string values", (t) => {
     b: "b",
   };
 
-  t.strictSame(actual, intended, "35");
+  t.strictSame(actual, intended, "34");
 
   // by both key and value, with wildcards, includes sneaky close positives
   // ---------------------------------------------------------------------------
   t.end();
 });
 
-tap.test("36 - wildcard deletes two keys have string values", (t) => {
+tap.test("35 - wildcard deletes two keys have string values", (t) => {
   const actual = deleteKey(
     {
       axx: "yyy x",
@@ -1154,11 +1109,11 @@ tap.test("36 - wildcard deletes two keys have string values", (t) => {
     b: "b",
   };
 
-  t.strictSame(actual, intended, "36");
+  t.strictSame(actual, intended, "35");
   t.end();
 });
 
-tap.test("37 - wildcard deletes keys with plain object values, by key", (t) => {
+tap.test("36 - wildcard deletes keys with plain object values, by key", (t) => {
   const actual = deleteKey(
     {
       apples: "a",
@@ -1173,11 +1128,11 @@ tap.test("37 - wildcard deletes keys with plain object values, by key", (t) => {
     crawls: "e",
   };
 
-  t.strictSame(actual, intended, "37");
+  t.strictSame(actual, intended, "36");
   t.end();
 });
 
-tap.test("38 - wildcard delete two values, plain objects", (t) => {
+tap.test("37 - wildcard delete two values, plain objects", (t) => {
   //
   // cleanup=false
   // ---------------------------------------------------------------------------
@@ -1197,11 +1152,11 @@ tap.test("38 - wildcard delete two values, plain objects", (t) => {
     a: { e: [{}] },
   };
 
-  t.strictSame(actual, intended, "38");
+  t.strictSame(actual, intended, "37");
   t.end();
 });
 
-tap.test("39 - wildcard delete two values, plain objects", (t) => {
+tap.test("38 - wildcard delete two values, plain objects", (t) => {
   //
   // cleanup=true
   // ---------------------------------------------------------------------------
@@ -1219,11 +1174,11 @@ tap.test("39 - wildcard delete two values, plain objects", (t) => {
   );
   const intended = {};
 
-  t.strictSame(actual, intended, "39");
+  t.strictSame(actual, intended, "38");
   t.end();
 });
 
-tap.test("40 - issue #8 - undefined as a value", (t) => {
+tap.test("39 - issue #8 - undefined as a value", (t) => {
   const actual = deleteKey(
     {
       __typename: "sd",
@@ -1237,11 +1192,11 @@ tap.test("40 - issue #8 - undefined as a value", (t) => {
     entryPoint: "a",
   };
 
-  t.strictSame(actual, intended, "40");
+  t.strictSame(actual, intended, "39");
   t.end();
 });
 
-tap.test("41 - issue #8 - undefined as a value, outside deletion path", (t) => {
+tap.test("40 - issue #8 - undefined as a value, outside deletion path", (t) => {
   t.strictSame(
     deleteKey(
       {
@@ -1256,12 +1211,12 @@ tap.test("41 - issue #8 - undefined as a value, outside deletion path", (t) => {
     {
       entryPoint: undefined,
     },
-    "41"
+    "40"
   );
   t.end();
 });
 
-tap.test("42 - issue #8 - undefined as a value, outside deletion path", (t) => {
+tap.test("41 - issue #8 - undefined as a value, outside deletion path", (t) => {
   t.strictSame(
     deleteKey(
       {
@@ -1276,13 +1231,13 @@ tap.test("42 - issue #8 - undefined as a value, outside deletion path", (t) => {
     {
       entryPoint: undefined,
     },
-    "42"
+    "41"
   );
 
   t.end();
 });
 
-tap.test("43 - issue #8 - undefined as a value, outside deletion path", (t) => {
+tap.test("42 - issue #8 - undefined as a value, outside deletion path", (t) => {
   const input = {
     a: { __typename: "sd" },
     entryPoint: undefined,
@@ -1298,7 +1253,7 @@ tap.test("43 - issue #8 - undefined as a value, outside deletion path", (t) => {
     {
       entryPoint: undefined,
     },
-    "43.01"
+    "42.01"
   );
   t.strictSame(
     deleteKey(input, {
@@ -1309,13 +1264,13 @@ tap.test("43 - issue #8 - undefined as a value, outside deletion path", (t) => {
       a: {},
       entryPoint: undefined,
     },
-    "43.02"
+    "42.02"
   );
 
   t.end();
 });
 
-tap.test("44 - issue #8", (t) => {
+tap.test("43 - issue #8", (t) => {
   const input = {
     a: { __typename: "sd", b: undefined, c: "" },
     entryPoint: undefined,
@@ -1330,7 +1285,7 @@ tap.test("44 - issue #8", (t) => {
       a: { b: undefined, c: "" },
       entryPoint: undefined,
     },
-    "44.01"
+    "43.01"
   );
   t.strictSame(
     deleteKey(input, {
@@ -1341,7 +1296,7 @@ tap.test("44 - issue #8", (t) => {
       a: { b: undefined, c: "" },
       entryPoint: undefined,
     },
-    "44.02"
+    "43.02"
   );
 
   t.end();

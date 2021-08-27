@@ -1,6 +1,6 @@
 import tap from "tap";
 import shuffle from "array-shuffle";
-import { sortByCol } from "../dist/array-of-arrays-sort-by-col.esm";
+import { sortByCol } from "../dist/array-of-arrays-sort-by-col.esm.js";
 
 function mixer(t, tested, reference, idx) {
   // backwards loop for perf:

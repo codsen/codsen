@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { isProduction4a } = require("..");
+import { isProduction4a } from "../dist/charcode-is-valid-xml-name-character.esm.js";
 
 const testme = () => isProduction4a("\uD800\uDC00");
 

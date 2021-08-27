@@ -8,7 +8,7 @@ import {
   noNewKeysSync,
   findUnusedSync,
   sortAllObjectsSync,
-} from "../dist/json-comb-core.esm";
+} from "../dist/json-comb-core.esm.js";
 
 function prepArraySync(arr) {
   const keySet = getKeysetSync(arr);

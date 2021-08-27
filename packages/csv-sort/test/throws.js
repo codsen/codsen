@@ -1,8 +1,8 @@
 /* eslint no-unused-vars:0 */
 
 import tap from "tap";
-import { sort } from "../dist/csv-sort.esm";
-import compare from "./util";
+import { sort } from "../dist/csv-sort.esm.js";
+import compare from "./util.js";
 
 // -------------------------------------------------------------------
 

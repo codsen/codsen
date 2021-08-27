@@ -1,5 +1,5 @@
 import tap from "tap";
-import { leftStopAtRawNbsp } from "../dist/string-left-right.esm";
+import { leftStopAtRawNbsp } from "../dist/string-left-right.esm.js";
 
 const RAWNBSP = "\u00A0";
 

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { collapse } from "../dist/string-collapse-white-space.esm";
+import { collapse } from "../dist/string-collapse-white-space.esm.js";
 
 // https://stackoverflow.com/a/1527820/3943954
 function getRandomInt(min, max) {

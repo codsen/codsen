@@ -1,5 +1,5 @@
 import tap from "tap";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm.js";
 
 // -----------------------------------------------------------------------------
 // helper functions

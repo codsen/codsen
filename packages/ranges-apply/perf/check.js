@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { rApply } = require("..");
+import { rApply } from "../dist/ranges-apply.esm.js";
 
 const testme = () =>
   rApply("aaa delete me bbb and me too ccc", [

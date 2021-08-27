@@ -83,28 +83,20 @@ function collapse(str, originalOpts) {
     spacesStartAt !== null &&
     str[i] !== " ") {
       const a1 =
-      spacesStartAt && whiteSpaceStartsAt ||
-      !whiteSpaceStartsAt && (!opts.trimStart || !opts.trimnbsp && (
-      str[i] === NBSP || str[spacesStartAt - 1] === NBSP));
+      spacesStartAt && whiteSpaceStartsAt || !whiteSpaceStartsAt && (!opts.trimStart || !opts.trimnbsp && (str[i] === NBSP || str[spacesStartAt - 1] === NBSP));
       const a2 =
-      str[i] || !opts.trimEnd || !opts.trimnbsp && (
-      str[i] === NBSP || str[spacesStartAt - 1] === NBSP);
+      str[i] || !opts.trimEnd || !opts.trimnbsp && (str[i] === NBSP || str[spacesStartAt - 1] === NBSP);
       const a3 =
-      !opts.enforceSpacesOnly ||
-      (!str[spacesStartAt - 1] ||
-      str[spacesStartAt - 1].trim()) && (
-      !str[i] ||
+      !opts.enforceSpacesOnly || (!str[spacesStartAt - 1] ||
+      str[spacesStartAt - 1].trim()) && (!str[i] ||
       str[i].trim());
       if (
       spacesStartAt < i - 1 && a1 && a2 && a3) {
         const startIdx = spacesStartAt;
         let endIdx = i;
         let whatToAdd = " ";
-        if (opts.trimLines && (
-        !spacesStartAt ||
-        !str[i] ||
-        str[spacesStartAt - 1] && `\r\n`.includes(str[spacesStartAt - 1]) ||
-        str[i] && `\r\n`.includes(str[i]))) {
+        if (opts.trimLines && (!spacesStartAt ||
+        !str[i] || str[spacesStartAt - 1] && `\r\n`.includes(str[spacesStartAt - 1]) || str[i] && `\r\n`.includes(str[i]))) {
           whatToAdd = null;
         }
         if (whatToAdd && str[spacesStartAt] === " ") {
@@ -136,16 +128,11 @@ function collapse(str, originalOpts) {
       whiteSpaceStartsAt = i;
     }
     if (
-    lineWhiteSpaceStartsAt !== null && (
-    `\n\r`.includes(str[i]) ||
-    !str[i] || str[i].trim() ||
-    !(opts.trimnbsp || opts.enforceSpacesOnly) &&
-    str[i] === NBSP) && (
-    lineWhiteSpaceStartsAt || !opts.trimStart || opts.enforceSpacesOnly && nbspPresent) && (
-    str[i] || !opts.trimEnd || opts.enforceSpacesOnly && nbspPresent)) {
+    lineWhiteSpaceStartsAt !== null && (`\n\r`.includes(str[i]) ||
+    !str[i] || str[i].trim() || !(opts.trimnbsp || opts.enforceSpacesOnly) &&
+    str[i] === NBSP) && (lineWhiteSpaceStartsAt || !opts.trimStart || opts.enforceSpacesOnly && nbspPresent) && (str[i] || !opts.trimEnd || opts.enforceSpacesOnly && nbspPresent)) {
       if (
-      opts.enforceSpacesOnly && (
-      i > lineWhiteSpaceStartsAt + 1 ||
+      opts.enforceSpacesOnly && (i > lineWhiteSpaceStartsAt + 1 ||
       str[lineWhiteSpaceStartsAt] !== " ")) {
         let startIdx = lineWhiteSpaceStartsAt;
         let endIdx = i;
@@ -167,9 +154,7 @@ function collapse(str, originalOpts) {
         });
       }
       if (
-      opts.trimLines && (
-      !lineWhiteSpaceStartsAt || `\r\n`.includes(str[lineWhiteSpaceStartsAt - 1]) || !str[i] || `\r\n`.includes(str[i])) && (
-      opts.trimnbsp ||
+      opts.trimLines && (!lineWhiteSpaceStartsAt || `\r\n`.includes(str[lineWhiteSpaceStartsAt - 1]) || !str[i] || `\r\n`.includes(str[i])) && (opts.trimnbsp ||
       !nbspPresent)) {
         push([lineWhiteSpaceStartsAt, i], {
           whiteSpaceStartsAt: whiteSpaceStartsAt,
@@ -182,24 +167,16 @@ function collapse(str, originalOpts) {
     if (
     lineWhiteSpaceStartsAt === null &&
     !`\r\n`.includes(str[i]) &&
-    str[i] && !str[i].trim() && (
-    opts.trimnbsp || str[i] !== NBSP || opts.enforceSpacesOnly)) {
+    str[i] && !str[i].trim() && (opts.trimnbsp || str[i] !== NBSP || opts.enforceSpacesOnly)) {
       lineWhiteSpaceStartsAt = i;
     }
     if (
-    whiteSpaceStartsAt !== null && (
-    !str[i] ||
+    whiteSpaceStartsAt !== null && (!str[i] ||
     str[i].trim())) {
       if (
-      (!whiteSpaceStartsAt && (
-      opts.trimStart ||
-      opts.trimLines &&
-      linebreaksStartAt === null) ||
-      !str[i] && (
-      opts.trimEnd ||
-      opts.trimLines &&
-      linebreaksStartAt === null)) && (
-      opts.trimnbsp ||
+      (!whiteSpaceStartsAt && (opts.trimStart || opts.trimLines &&
+      linebreaksStartAt === null) || !str[i] && (opts.trimEnd || opts.trimLines &&
+      linebreaksStartAt === null)) && (opts.trimnbsp ||
       !nbspPresent ||
       opts.enforceSpacesOnly)) {
         push([whiteSpaceStartsAt, i], {

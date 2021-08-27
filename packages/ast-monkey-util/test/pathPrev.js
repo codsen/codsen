@@ -1,5 +1,5 @@
 import tap from "tap";
-import { pathPrev } from "../dist/ast-monkey-util.esm";
+import { pathPrev } from "../dist/ast-monkey-util.esm.js";
 
 tap.test(`01`, (t) => {
   t.strictSame(pathPrev(""), null, "01");

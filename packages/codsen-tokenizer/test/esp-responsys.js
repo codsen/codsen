@@ -1,7 +1,7 @@
 /* eslint no-template-curly-in-string:0 */
 
 import tap from "tap";
-import { tokenizer as ct } from "../dist/codsen-tokenizer.esm";
+import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // Responsys-like (RPL) templating languages
 // https://docs.oracle.com/en/cloud/saas/marketing/responsys-like-user/Resources/RPL_Reference_Guide.pdf

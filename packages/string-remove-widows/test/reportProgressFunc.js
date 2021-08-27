@@ -1,5 +1,5 @@
 import tap from "tap";
-import { removeWidows } from "../dist/string-remove-widows.esm";
+import { removeWidows } from "../dist/string-remove-widows.esm.js";
 // import {
 //   rawnbsp,
 //   encodedNbspHtml,
@@ -7,7 +7,7 @@ import { removeWidows } from "../dist/string-remove-widows.esm";
 //   encodedNbspJs,
 //   rawNdash,
 //   rawMdash,
-// } from "./util";
+// } from "./util.js";
 
 // const languages = ["html`, `css`, `js"];
 // const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];

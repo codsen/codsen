@@ -1,5 +1,5 @@
 import tap from "tap";
-import fix from "./util/util";
+import fix from "./util/util.js";
 
 // -----------------------------------------------------------------------------
 // 03. nothing to fix

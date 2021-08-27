@@ -3,9 +3,9 @@
 // -----------------------------------------------------------------------------
 
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
+import { Linter } from "../../../dist/emlint.esm.js";
 
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes } from "../../../t-util/util.js";
 
 // -----------------------------------------------------------------------------
 

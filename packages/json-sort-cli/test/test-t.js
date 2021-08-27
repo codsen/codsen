@@ -50,7 +50,7 @@ tap.test("01 - sort, -t (tabs) mode", async (t) => {
       )
     )
     .then((received) =>
-      // execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
+      // execa(`rm -rf ${path.join(path.resolve(), "../temp")}`, { shell: true }).then(
       execa(`rm -rf ${tempFolder}`, { shell: true }).then(() => received)
     )
     .catch((err) => t.fail(err));

@@ -2,7 +2,7 @@
 
 import { strict as assert } from "assert";
 import { stripHtml } from "../dist/string-strip-html.esm.js";
-import { traverse } from "../../ast-monkey-traverse";
+import { traverse } from "../../ast-monkey-traverse/dist/ast-monkey-traverse.esm.js";
 
 const stripFromJsonStr = (str) => {
   return traverse(JSON.parse(str), (key, val) => {

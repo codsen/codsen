@@ -2,7 +2,7 @@
 
 import { strict as assert } from "assert";
 import { stripHtml } from "../dist/string-strip-html.esm.js";
-import { removeWidows } from "../../string-remove-widows";
+import { removeWidows } from "../../string-remove-widows/dist/string-remove-widows.esm.js";
 
 const someHtml = `The quick brown fox jumps of the lazy dog.<div class="a">`;
 

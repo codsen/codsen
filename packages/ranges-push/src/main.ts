@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { collWhitespace } from "string-collapse-leading-whitespace";
-import { rMerge } from "ranges-merge";
+import { rMerge } from "./rMerge";
 import { version as v } from "../package.json";
 const version: string = v;
 import { Range } from "../../../scripts/common";

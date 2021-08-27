@@ -1,6 +1,6 @@
 import tap from "tap";
-import { det as det1 } from "../dist/detergent.esm";
-import { det, mixer } from "../t-util/util";
+import { det as det1 } from "../dist/detergent.esm.js";
+import { det, mixer } from "../t-util/util.js";
 
 // task is to ensure HTML and XHTML-style (self-closing) br tags are
 // stripped, ignored and/or replaced with line breaks

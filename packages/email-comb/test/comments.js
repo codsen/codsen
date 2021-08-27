@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "./util/util";
+import { comb } from "./util/util.js";
 
 // HTML Comment removal
 // -----------------------------------------------------------------------------

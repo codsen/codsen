@@ -1,6 +1,6 @@
 import tap from "tap";
 import { rApply } from "ranges-apply";
-import { rRegex } from "../dist/ranges-regex.esm";
+import { rRegex } from "../dist/ranges-regex.esm.js";
 
 // ==============================
 // 0. THROWS

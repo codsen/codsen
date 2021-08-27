@@ -1,5 +1,5 @@
 import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm";
+import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 // api peculiarities
 // -----------------------------------------------------------------------------

@@ -3,26 +3,27 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-const fs = require("fs");
-const { promisify } = require("util");
+import fs from "fs";
+import { promisify } from "util";
 
 // *
 const read = promisify(fs.readFile);
-const write = require("write-file-atomic");
+import write from "write-file-atomic";
 // *
 
-const globby = require("globby");
-const pReduce = require("p-reduce");
-const PProgress = require("p-progress");
-const meow = require("meow");
-const updateNotifier = require("update-notifier");
-const isObj = require("lodash.isplainobject");
-const pacote = require("pacote");
-const objectPath = require("object-path");
-const diff = require("ansi-diff-stream")();
+import globby from "globby";
+import pReduce from "p-reduce";
+import PProgress from "p-progress";
+import meow from "meow";
+// import updateNotifier from "update-notifier";
+import isObj from "lodash.isplainobject";
+import pacote from "pacote";
+import objectPath from "object-path";
+import diff1 from "ansi-diff-stream";
+const diff = diff1();
 
-const { set, del } = require("edit-package-json");
-const isOnline = require("is-online");
+import { set, del } from "edit-package-json";
+import isOnline from "is-online";
 
 const { log } = console;
 const sparkles = "\u2728"; // https://emojipedia.org/sparkles/
@@ -41,7 +42,7 @@ const cli = meow(
     -v, --version       Shows the current installed version
 `
 );
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------

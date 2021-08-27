@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { noNewKeys } = require("..");
+import { noNewKeys } from "../dist/object-no-new-keys.esm.js";
 
 const testme = () =>
   noNewKeys(

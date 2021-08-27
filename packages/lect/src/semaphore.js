@@ -1,9 +1,9 @@
-const fs = require("fs");
-const path = require("path");
-const writeFileAtomic = require("write-file-atomic");
+import fs from "fs";
+import path from "path";
+import writeFileAtomic from "write-file-atomic";
 
 // generate ./.semaphore/semaphore.yml
-async function semaphore({ state }) {
+export const semaphore = async ({ state }) => {
   const allPackages = fs
     .readdirSync(path.resolve("../"))
     .filter(
@@ -171,6 +171,4 @@ ${allPackages
   if (state.pack.name === "all-named-html-entities") {
     writeFileAtomic(path.resolve("../../.semaphore/semaphore.yml"), content);
   }
-}
-
-module.exports = semaphore;
+};

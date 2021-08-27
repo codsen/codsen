@@ -1,6 +1,6 @@
 import tap from "tap";
 import he from "he";
-import { det as det1 } from "../dist/detergent.esm";
+import { det as det1 } from "../dist/detergent.esm.js";
 import {
   det,
   mixer,
@@ -10,7 +10,7 @@ import {
   rawhairspace,
   rawMDash,
   rawNbsp,
-} from "../t-util/util";
+} from "../t-util/util.js";
 
 // 01. opts.convertEntities
 // -----------------------------------------------------------------------------

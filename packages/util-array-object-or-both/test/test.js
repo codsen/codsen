@@ -1,5 +1,5 @@
 import tap from "tap";
-import { arrObjOrBoth } from "../dist/util-array-object-or-both.esm";
+import { arrObjOrBoth } from "../dist/util-array-object-or-both.esm.js";
 
 // ===
 // BAU

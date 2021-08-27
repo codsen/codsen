@@ -6,7 +6,7 @@ import {
   isProduction4a,
   validFirstChar,
   validSecondCharOnwards,
-} from "../dist/charcode-is-valid-xml-name-character.esm";
+} from "../dist/charcode-is-valid-xml-name-character.esm.js";
 
 // -----------------------------------------------------------------------------
 // isProduction4a

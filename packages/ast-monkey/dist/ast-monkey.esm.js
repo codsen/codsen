@@ -68,8 +68,7 @@ function monkey(originalInput, originalOpts) {
       }
     } else if (opts.mode === "find" || opts.mode === "del") {
       if (
-      (opts.only === "any" || opts.only === "array" && innerObj.parentType === "array" || opts.only === "object" && innerObj.parentType !== "array") && (
-      ko && compareIsEqual(key, opts.key) || vo && compareIsEqual(val, opts.val) || !ko && !vo && compareIsEqual(key, opts.key) && compareIsEqual(val, opts.val))) {
+      (opts.only === "any" || opts.only === "array" && innerObj.parentType === "array" || opts.only === "object" && innerObj.parentType !== "array") && (ko && compareIsEqual(key, opts.key) || vo && compareIsEqual(val, opts.val) || !ko && !vo && compareIsEqual(key, opts.key) && compareIsEqual(val, opts.val))) {
         if (opts.mode === "find") {
           temp = {
             index: data.count,

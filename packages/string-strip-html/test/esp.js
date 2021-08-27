@@ -1,6 +1,6 @@
 import tap from "tap";
 import { rApply } from "ranges-apply";
-import { stripHtml } from "../dist/string-strip-html.esm";
+import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 // embedded expressions (e.g. Rails or Phoenix templates)
 // -----------------------------------------------------------------------------

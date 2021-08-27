@@ -1,7 +1,7 @@
 /* eslint no-unused-vars:0 */
 
 import tap from "tap";
-import compare from "./util";
+import compare from "./util.js";
 
 // Simple file, concentrate on row sorting, Balance, Credit & Debit col detection
 // -------------------------------------------------------------------

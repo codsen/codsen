@@ -21,8 +21,8 @@ function stringPingLineByLine(str, cb) {
       }
     }
     else if (start === null) {
-        start = i;
-      }
+      start = i;
+    }
     if (start !== null && !str[i + 1]) {
       cb(str.slice(start, i + 1));
     }
@@ -55,20 +55,20 @@ class Counter {
       this.doNothing = false;
     }
     else if (!this.doNothing && this.canCount) {
-        if (lineStr.trim().startsWith("ok") || lineStr.trim().startsWith("not ok")) {
-          if (lineStr.trim().startsWith("ok")) {
-            this.total.assertsPassed += 1;
-          } else if (lineStr.trim().startsWith("not ok")) {
-            this.total.assertsFailed += 1;
-            if (!this.thereWereFailuresInThisSuite) {
-              this.thereWereFailuresInThisSuite = true;
-            }
+      if (lineStr.trim().startsWith("ok") || lineStr.trim().startsWith("not ok")) {
+        if (lineStr.trim().startsWith("ok")) {
+          this.total.assertsPassed += 1;
+        } else if (lineStr.trim().startsWith("not ok")) {
+          this.total.assertsFailed += 1;
+          if (!this.thereWereFailuresInThisSuite) {
+            this.thereWereFailuresInThisSuite = true;
           }
-          this.total.assertsTotal += 1;
-        } else {
-          this.canCount = false;
         }
+        this.total.assertsTotal += 1;
+      } else {
+        this.canCount = false;
       }
+    }
     if (!this.doNothing && lineStr.trim() === "{") {
       this.total.suitesTotal += 1;
       if (this.thereWereFailuresInThisSuite !== null) {

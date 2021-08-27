@@ -1,5 +1,5 @@
 import tap from "tap";
-import { isJSP } from "../dist/regex-is-jsp.esm";
+import { isJSP } from "../dist/regex-is-jsp.esm.js";
 
 tap.test("01 is not JSP", (t) => {
   t.notMatch(``, isJSP(), "01.01");

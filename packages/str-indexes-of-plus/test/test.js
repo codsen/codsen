@@ -1,5 +1,5 @@
 import tap from "tap";
-import { strIndexesOfPlus } from "../dist/str-indexes-of-plus.esm";
+import { strIndexesOfPlus } from "../dist/str-indexes-of-plus.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

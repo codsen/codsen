@@ -1,5 +1,5 @@
 import tap from "tap";
-import { processThis, tiny } from "./util";
+import { processThis, tiny } from "./util.js";
 
 // 01. type #1 - code between two TR's or TR and TABLE
 // this is an easier case than type #2.

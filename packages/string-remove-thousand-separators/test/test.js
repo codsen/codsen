@@ -1,5 +1,5 @@
 import tap from "tap";
-import { remSep as r } from "../dist/string-remove-thousand-separators.esm";
+import { remSep as r } from "../dist/string-remove-thousand-separators.esm.js";
 
 // ==============================
 // normal use cases

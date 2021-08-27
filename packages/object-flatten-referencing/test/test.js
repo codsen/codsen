@@ -4,7 +4,7 @@ import {
   flattenObject,
   flattenArr,
   arrayiffyString,
-} from "../dist/object-flatten-referencing.esm";
+} from "../dist/object-flatten-referencing.esm.js";
 
 // -----------------------------------------------------------------------------
 // 01. various throws

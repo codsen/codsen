@@ -1,5 +1,5 @@
 import tap from "tap";
-import { includesWithGlob } from "../dist/array-includes-with-glob.esm";
+import { includesWithGlob } from "../dist/array-includes-with-glob.esm.js";
 
 tap.test("01 - empty array always yields false", (t) => {
   t.doesNotThrow(() => {

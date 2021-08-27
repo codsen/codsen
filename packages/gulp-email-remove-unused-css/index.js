@@ -1,6 +1,6 @@
-const { comb } = require("email-comb");
-const PluginError = require("plugin-error");
-const { Transform } = require("stream");
+import { comb } from "email-comb";
+import PluginError from "plugin-error";
+import { Transform } from "stream";
 
 const PLUGIN_NAME = "gulp-email-remove-unused-css";
 
@@ -28,4 +28,4 @@ function geruc(options) {
   return stream;
 }
 
-module.exports = geruc;
+export default geruc;

@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { detectLang } = require("..");
+import { detectLang } from "../dist/detect-templating-language.esm.js";
 
 const testme = () =>
   detectLang(`<div>

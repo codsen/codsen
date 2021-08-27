@@ -1,5 +1,5 @@
 import tap from "tap";
-import { noNewKeys } from "../dist/object-no-new-keys.esm";
+import { noNewKeys } from "../dist/object-no-new-keys.esm.js";
 
 // ==========
 // 01. B.A.U.

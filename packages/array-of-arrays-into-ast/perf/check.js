@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { generateAst } = require("..");
+import { generateAst } from "../dist/array-of-arrays-into-ast.esm.js";
 
 const testme = () => generateAst([[5], [1, 2, 3], [1, 2]]);
 

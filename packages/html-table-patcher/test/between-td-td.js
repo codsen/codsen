@@ -1,5 +1,5 @@
 import tap from "tap";
-import { processThis, tiny } from "./util";
+import { processThis, tiny } from "./util.js";
 
 // code between TD and TD
 // -----------------------------------------------------------------------------

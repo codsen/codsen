@@ -1,6 +1,6 @@
 import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm";
-import validateallTagLocations from "./util/validateTagLocations";
+import { stripHtml } from "../dist/string-strip-html.esm.js";
+import validateallTagLocations from "./util/validateTagLocations.js";
 
 // normal use cases
 // -----------------------------------------------------------------------------

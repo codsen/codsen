@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
-const fs = require("fs");
+import path from "path";
+import fs from "fs";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 const dummyHTML = fs.readFileSync(
   path.resolve("./perf/dummy_file.html"),
@@ -13,7 +13,7 @@ const dummyHTML = fs.readFileSync(
 );
 
 // setup
-const { crush } = require("..");
+import { crush } from "../dist/html-crush.esm.js";
 
 const testme = () =>
   crush(dummyHTML, {

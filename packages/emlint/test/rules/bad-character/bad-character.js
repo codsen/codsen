@@ -1,5 +1,5 @@
 import tap from "tap";
-import { Linter, util } from "../../../dist/emlint.esm";
+import { Linter, util } from "../../../dist/emlint.esm.js";
 
 // -----------------------------------------------------------------------------
 

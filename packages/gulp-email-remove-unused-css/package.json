@@ -28,7 +28,8 @@
     "email": "roy@codsen.com",
     "url": "https://codsen.com"
   },
-  "main": "index.js",
+  "type": "module",
+  "exports": "./index.js",
   "scripts": {
     "ci_test": "npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
     "dev": "echo\"\"",
@@ -40,17 +41,19 @@
     "republish": "npm publish || :",
     "tap": "tap",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov",
+    "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov",
     "clean_cov": "../../scripts/leaveCoverageTotalOnly.js"
   },
   "tap": {
+    "check-coverage": false,
     "coverage-report": [
       "json-summary",
       "text"
     ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
+    "node-arg": [
+      "--no-warnings",
+      "--experimental-loader",
+      "@istanbuljs/esm-loader-hook"
     ],
     "timeout": 0
   },
@@ -73,14 +76,17 @@
     "plugin-error": "^1.0.1"
   },
   "devDependencies": {
+    "@istanbuljs/esm-loader-hook": "^0.1.2",
     "core-js": "^3.15.2",
     "cross-env": "^7.0.3",
     "eslint": "^7.30.0",
-    "lect": "^0.17.0",
     "map-stream": "^0.0.7",
-    "tap": "^14.11.0",
+    "tap": "^15.0.9",
     "tempy": "^1.0.1",
     "tslib": "^2.3.0",
     "vinyl-string": "^1.0.2"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }

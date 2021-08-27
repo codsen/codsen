@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
-const meow = require("meow");
-const fs = require("fs-extra");
-const globby = require("globby");
-const pReduce = require("p-reduce");
-const isDirectory = require("is-d");
-const writeFileAtomic = require("write-file-atomic");
-const { promisify } = require("util");
+import meow from "meow";
+import fs from "fs-extra";
+import globby from "globby";
+import pReduce from "p-reduce";
+import isDirectory from "is-d";
+import writeFileAtomic from "write-file-atomic";
+import { promisify } from "util";
 
 const write = promisify(writeFileAtomic);
-const { arrayiffy } = require("arrayiffy-if-string");
+import { arrayiffy } from "arrayiffy-if-string";
 
-const { fixRowNums } = require("js-row-num");
-const updateNotifier = require("update-notifier");
+import { fixRowNums } from "js-row-num";
+// import updateNotifier from "update-notifier";
 
 function existy(x) {
   return x != null;
@@ -63,7 +63,7 @@ const cli = meow(
     },
   }
 );
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 
 function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs

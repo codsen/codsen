@@ -1,12 +1,12 @@
-const fs = require("fs").promises;
-const path = require("path");
-const prettier = require("prettier");
-const writeFileAtomic = require("write-file-atomic");
-const decodeContent = require("./decodeContent");
+import { promises as fs } from "fs";
+import path from "path";
+import prettier from "prettier";
+import writeFileAtomic from "write-file-atomic";
+import decodeContent from "./decodeContent.js";
 
 // bake examples API DIY makeshift-endpoint, a JSON file
 // at ./examples/api.json
-async function examples({ state }) {
+export const examples = async ({ state }) => {
   // CLI apps don't have examples, so resolve straight away
   if (state.isCLI) {
     return Promise.resolve(null);
@@ -33,7 +33,8 @@ async function examples({ state }) {
           .replace(/"\.\.\/\.\.\/\.\.\/\.\.\//g, `"`)
           .replace(/"\.\.\/\.\.\/\.\.\//g, `"`)
           .replace(/"\.\.\/\.\.\//g, `"`)
-          .replace(/"\.\.\//g, `"`);
+          .replace(/"\.\.\//g, `"`)
+          .replace(/\/dist\/[^.]+\.esm\.js/g, "");
         let title = null;
         if (content.startsWith("//") && titleRegexp.exec(content)) {
           title = titleRegexp.exec(content)[1];
@@ -91,6 +92,4 @@ async function examples({ state }) {
       return Promise.reject(err);
     }
   }
-}
-
-module.exports = examples;
+};

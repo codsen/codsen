@@ -1,5 +1,5 @@
 import tap from "tap";
-import { getByKey } from "../dist/ast-get-values-by-key.esm";
+import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
 tap.test("01 - get with wildcards", (t) => {
   const source = {
