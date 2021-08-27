@@ -1,5 +1,5 @@
 import tap from "tap";
-import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm";
+import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm.js";
 
 // testing the second input argument, the line break limit
 // -----------------------------------------------------------------------------

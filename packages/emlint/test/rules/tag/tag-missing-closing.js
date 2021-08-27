@@ -1,5 +1,5 @@
 import tap from "tap";
-import { applyFixes, verify } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util.js";
 
 // RULE IS TRIGGERED DIRECTLY FROM PARSER!
 // IT'S SOURCE IS IN CODSEN-PARSER, NOT IN src/rules/tag/tag-missing-closing.js

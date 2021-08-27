@@ -6,7 +6,7 @@ import globby from "globby";
 import path from "path";
 import pMap from "p-map";
 import clone from "lodash.clonedeep";
-import { set } from "../dist/edit-package-json.esm";
+import { set } from "../dist/edit-package-json.esm.js";
 
 function isStr(something) {
   return typeof something === "string";

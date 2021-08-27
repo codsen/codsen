@@ -1,14 +1,15 @@
-const execa = require("execa");
-const tap = require("tap");
-const fs = require("fs");
-const path = require("path");
+import execa from "execa";
+import tap from "tap";
+import fs from "fs";
+import path from "path";
+const dirname = path.resolve();
 
 tap.test("generates the homepage with correct folders", async (t) => {
   await fs.unlink("./fixtures/index.html", () => {});
   await execa("./cli.js", ["fixtures"]);
   t.same(
-    fs.readFileSync(path.join(__dirname, "fixtures/index.html"), "utf8"),
-    fs.readFileSync(path.join(__dirname, "fixtures/reference.html"), "utf8"),
+    fs.readFileSync(path.join(dirname, "fixtures/index.html"), "utf8"),
+    fs.readFileSync(path.join(dirname, "fixtures/reference.html"), "utf8"),
     "01"
   );
   await fs.unlink("./fixtures/index.html", () => {});
@@ -19,8 +20,8 @@ tap.test("unused flags are OK", async (t) => {
   await fs.unlink("./fixtures/index.html", () => {});
   await execa("./cli.js", ["-x", "-y", "-z", "fixtures"]);
   t.same(
-    fs.readFileSync(path.join(__dirname, "fixtures/index.html"), "utf8"),
-    fs.readFileSync(path.join(__dirname, "fixtures/reference.html"), "utf8"),
+    fs.readFileSync(path.join(dirname, "fixtures/index.html"), "utf8"),
+    fs.readFileSync(path.join(dirname, "fixtures/reference.html"), "utf8"),
     "02"
   );
   await fs.unlink("./fixtures/index.html", () => {});

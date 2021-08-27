@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { groupStr } = require("..");
+import { groupStr } from "../dist/array-group-str-omit-num-char.esm.js";
 
 const testme = () => groupStr(["a1-1", "a2-2", "b3-3", "c4-4"]);
 

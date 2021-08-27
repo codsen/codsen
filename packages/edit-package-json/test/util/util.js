@@ -1,5 +1,5 @@
 import objectPath from "object-path";
-import { set, del } from "../../dist/edit-package-json.esm";
+import { set, del } from "../../dist/edit-package-json.esm.js";
 
 function setter(t, source, result, path, val, idNum, isInvalidJson = false) {
   // 01.

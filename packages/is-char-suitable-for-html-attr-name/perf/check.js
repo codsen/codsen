@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { isAttrNameChar } = require("..");
+import { isAttrNameChar } from "../dist/is-char-suitable-for-html-attr-name.esm.js";
 
 const testme = () => {
   isAttrNameChar("A");

@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { lineCol } = require("..");
+import { lineCol } from "../dist/line-column-mini.esm.js";
 
 const testme = () =>
   lineCol("zzz&amp;amp;rsquo;zzz\n“zzz”".repeat(20), 200, true);

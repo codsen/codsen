@@ -1,8 +1,10 @@
 import fs from "fs-extra";
 import tap from "tap";
 import path from "path";
+import { fileURLToPath } from "url";
 import execa from "execa";
 import tempy from "tempy";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const aPackageJson = `{
   "name": "a",

@@ -1,24 +1,15 @@
 #!/usr/bin/env node
 /* eslint no-console:0 */
 
-const fs = require("fs-extra");
-const globby = require("globby");
-const meow = require("meow");
-const path = require("path");
-const updateNotifier = require("update-notifier");
-const isDirectory = require("is-d");
-const pReduce = require("p-reduce");
-const pMap = require("p-map");
-// const objectPath = require("object-path");
-const {
-  // getKeysetSync,
-  getKeyset,
-  enforceKeyset,
-  // sortAllObjectsSync
-  // enforceKeysetSync,
-  // noNewKeysSync,
-  // findUnusedSync
-} = require("json-comb-core");
+import fs from "fs-extra";
+import globby from "globby";
+import meow from "meow";
+import path from "path";
+// import updateNotifier from "update-notifier";
+import isDirectory from "is-d";
+import pReduce from "p-reduce";
+import pMap from "p-map";
+import { getKeyset, enforceKeyset } from "json-comb-core";
 
 const messagePrefix = `\u001b[${90}m${"✨ JSON Comb: "}\u001b[${39}m`;
 const { log } = console;
@@ -70,7 +61,7 @@ const cli = meow(
     },
   }
 );
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 
 // TODO:
 // -p, --placeholder   What value to set for newly added keys

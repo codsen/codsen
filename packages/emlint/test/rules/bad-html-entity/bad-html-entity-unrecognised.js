@@ -1,5 +1,5 @@
 import tap from "tap";
-import { applyFixes, verify } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util.js";
 
 // 01. missing letters
 // -----------------------------------------------------------------------------

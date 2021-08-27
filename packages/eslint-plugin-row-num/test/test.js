@@ -2,7 +2,7 @@
 
 import tap from "tap";
 import { Linter } from "eslint";
-import api from "../dist/eslint-plugin-row-num.esm";
+import api from "../dist/eslint-plugin-row-num.esm.js";
 import * as parser from "@typescript-eslint/parser";
 
 // we need to escape to prevent accidental "fixing" of this file through

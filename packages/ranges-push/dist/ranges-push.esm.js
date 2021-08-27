@@ -8,7 +8,154 @@
  */
 
 import { collWhitespace } from 'string-collapse-leading-whitespace';
-import { rMerge } from 'ranges-merge';
+
+const defaults$2 = {
+  strictlyTwoElementsInRangeArrays: false,
+  progressFn: null
+};
+function rSort(arrOfRanges, originalOptions) {
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
+    return arrOfRanges;
+  }
+  const opts = { ...defaults$2,
+    ...originalOptions
+  };
+  let culpritsIndex;
+  let culpritsLen;
+  if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(range => range).every((rangeArr, indx) => {
+    if (rangeArr.length !== 2) {
+      culpritsIndex = indx;
+      culpritsLen = rangeArr.length;
+      return false;
+    }
+    return true;
+  })) {
+    throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) has not two but ${culpritsLen} elements!`);
+  }
+  if (!arrOfRanges.filter(range => range).every((rangeArr, indx) => {
+    if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
+      culpritsIndex = indx;
+      return false;
+    }
+    return true;
+  })) {
+    throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) does not consist of only natural numbers!`);
+  }
+  const maxPossibleIterations = arrOfRanges.filter(range => range).length ** 2;
+  let counter = 0;
+  return Array.from(arrOfRanges).filter(range => range).sort((range1, range2) => {
+    if (opts.progressFn) {
+      counter += 1;
+      opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
+    }
+    if (range1[0] === range2[0]) {
+      if (range1[1] < range2[1]) {
+        return -1;
+      }
+      if (range1[1] > range2[1]) {
+        return 1;
+      }
+      return 0;
+    }
+    if (range1[0] < range2[0]) {
+      return -1;
+    }
+    return 1;
+  });
+}
+
+const defaults$1 = {
+  mergeType: 1,
+  progressFn: null,
+  joinRangesThatTouchEdges: true
+};
+/* istanbul ignore next */
+function rMerge(arrOfRanges, originalOpts) {
+  function isObj(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  }
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
+    return null;
+  }
+  let opts;
+  if (originalOpts) {
+    if (isObj(originalOpts)) {
+      opts = { ...defaults$1,
+        ...originalOpts
+      };
+      if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
+        opts.progressFn = null;
+      } else if (opts.progressFn && typeof opts.progressFn !== "function") {
+        throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(opts.progressFn, null, 4)}`);
+      }
+      if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
+        throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+      }
+      if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
+        throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)}`);
+      }
+    } else {
+      throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
+    }
+  } else {
+    opts = { ...defaults$1
+    };
+  }
+  const filtered = arrOfRanges
+  .filter(range => range).map(subarr => [...subarr]).filter(
+  rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
+  let sortedRanges;
+  let lastPercentageDone;
+  let percentageDone;
+  if (opts.progressFn) {
+    sortedRanges = rSort(filtered, {
+      progressFn: percentage => {
+        percentageDone = Math.floor(percentage / 5);
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          opts.progressFn(percentageDone);
+        }
+      }
+    });
+  } else {
+    sortedRanges = rSort(filtered);
+  }
+  if (!sortedRanges) {
+    return null;
+  }
+  const len = sortedRanges.length - 1;
+  for (let i = len; i > 0; i--) {
+    if (opts.progressFn) {
+      percentageDone = Math.floor((1 - i / len) * 78) + 21;
+      if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        opts.progressFn(percentageDone);
+      }
+    }
+    if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
+      sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
+      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
+      if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
+        if (sortedRanges[i - 1][2] !== null) {
+          if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
+            sortedRanges[i - 1][2] = null;
+          } else if (sortedRanges[i - 1][2] != null) {
+            if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
+              sortedRanges[i - 1][2] = sortedRanges[i][2];
+            } else {
+              sortedRanges[i - 1][2] += sortedRanges[i][2];
+            }
+          } else {
+            sortedRanges[i - 1][2] = sortedRanges[i][2];
+          }
+        }
+      }
+      sortedRanges.splice(i, 1);
+      i = sortedRanges.length;
+    }
+  }
+  return sortedRanges.length ? sortedRanges : null;
+}
 
 var version$1 = "5.1.0";
 

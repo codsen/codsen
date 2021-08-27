@@ -1,5 +1,5 @@
 import tap from "tap";
-import { within } from "../dist/email-all-chars-within-ascii.esm";
+import { within } from "../dist/email-all-chars-within-ascii.esm.js";
 
 const ETX = String.fromCodePoint(3); // #003
 const CAPITALOWITHSTROKE = `\u00D8`; // #216

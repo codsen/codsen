@@ -1,5 +1,5 @@
 import tap from "tap";
-import { flattenAllArrays } from "../dist/object-flatten-all-arrays.esm";
+import { flattenAllArrays } from "../dist/object-flatten-all-arrays.esm.js";
 
 // ==========
 // Normal use

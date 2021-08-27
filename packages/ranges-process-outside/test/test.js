@@ -1,5 +1,5 @@
 import tap from "tap";
-import { rProcessOutside as p } from "../dist/ranges-process-outside.esm";
+import { rProcessOutside as p } from "../dist/ranges-process-outside.esm.js";
 
 const femaleWhiteSleuthEmoji = "\uD83D\uDD75\uD83C\uDFFC\u200D\u2640\uFE0F";
 

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { rApply } from "../dist/ranges-apply.esm";
+import { rApply } from "../dist/ranges-apply.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

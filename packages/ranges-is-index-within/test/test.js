@@ -1,5 +1,5 @@
 import tap from "tap";
-import { isIndexWithin as wthn } from "../dist/ranges-is-index-within.esm";
+import { isIndexWithin as wthn } from "../dist/ranges-is-index-within.esm.js";
 
 // ==============================
 // 01. One range

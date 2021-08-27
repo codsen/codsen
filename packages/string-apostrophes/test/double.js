@@ -1,5 +1,5 @@
 import tap from "tap";
-import { convertOne, convertAll } from "../dist/string-apostrophes.esm";
+import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
 
 const leftSingleQuote = "\u2018";
 const rightSingleQuote = "\u2019";

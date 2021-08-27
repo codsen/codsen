@@ -146,11 +146,11 @@ function main({
     }
     if (currentlyWithinArray && stringifyPath(path) === currentPath.join(".") && !replaceThisValue && str[i].trim()
     ) {
-        replaceThisValue = true;
-        log();
-        valueStartedAt = i;
-        log();
-      }
+      replaceThisValue = true;
+      log();
+      valueStartedAt = i;
+      log();
+    }
     if (typeof withinQuotesSince !== "number" && str[i] === "[" && isNotEscape(str, i - 1) && !replaceThisValue) {
       withinArrayIndexes.push(i);
       itsTheFirstElem = true;
@@ -160,9 +160,9 @@ function main({
     }
     if (currentlyWithinArray && str[i] === "," && itsTheFirstElem && !(typeof valueStartedAt === "number" && valueEndedAt === null)
     ) {
-        itsTheFirstElem = false;
-        log();
-      }
+      itsTheFirstElem = false;
+      log();
+    }
     if (!replaceThisValue && valueStartedAt === null && str[i].trim() && !badChars.includes(str[i]) && (currentlyWithinArray || !currentlyWithinArray && keyName !== null)) {
       log();
       valueStartedAt = i;
@@ -196,9 +196,9 @@ function main({
       log(`506 PUSH to path, now = ${JSON.stringify(currentPath, null, 4)}`);
       if (stringifyPath(path) === currentPath.join(".")
       ) {
-          replaceThisValue = true;
-          log();
-        }
+        replaceThisValue = true;
+        log();
+      }
     }
     if (!replaceThisValue && typeof withinQuotesSince !== "number" && str[i] === "," && currentlyWithinObject) {
       currentPath.pop();
@@ -260,46 +260,46 @@ function main({
       log();
       if (typeof withinQuotesSince !== "number" && (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === `"` && str[i] === `"` || !["[", "{", `"`].includes(str[valueStartedAt]) && str[valueStartedAt].trim() && (!str[i].trim() || badChars.includes(str[i]) && isNotEscape(str, i - 1)))
       ) {
-          log(`780 INSIDE CATCH-END CLAUSES currently ${`\u001b[${33}m${`str[valueStartedAt=${valueStartedAt}]`}\u001b[${39}m`} = ${JSON.stringify(str[valueStartedAt], null, 4)}`);
-          if (mode === "set") {
-            log();
-            let extraLineBreak = "";
-            if (str.slice(valueStartedAt, i + (str[i].trim() ? 1 : 0)).includes("\n") && str[i + (str[i].trim() ? 1 : 0)] !== "\n") {
-              extraLineBreak = "\n";
-            }
-            let endingPartsBeginning = i + (str[i].trim() ? 1 : 0);
-            if (currentlyWithinArray && ![`"`, `[`, `{`].includes(str[valueStartedAt]) && str[right(str, endingPartsBeginning - 1)] !== "]" || str[endingPartsBeginning - 1] === "," && str[valueStartedAt - 1] !== `"`) {
-              endingPartsBeginning -= 1;
-            }
-            if (currentlyWithinArray && str[valueStartedAt - 1] === `"`) {
-              valueStartedAt = valueStartedAt - 1;
-            }
-            return `${str.slice(0, valueStartedAt)}${stringifyAndEscapeValue(calculatedValueToInsert)}${extraLineBreak}${str.slice(endingPartsBeginning)}`;
+        log(`780 INSIDE CATCH-END CLAUSES currently ${`\u001b[${33}m${`str[valueStartedAt=${valueStartedAt}]`}\u001b[${39}m`} = ${JSON.stringify(str[valueStartedAt], null, 4)}`);
+        if (mode === "set") {
+          log();
+          let extraLineBreak = "";
+          if (str.slice(valueStartedAt, i + (str[i].trim() ? 1 : 0)).includes("\n") && str[i + (str[i].trim() ? 1 : 0)] !== "\n") {
+            extraLineBreak = "\n";
           }
-          if (mode === "del") {
-            log();
-            log(`851 ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${JSON.stringify(keyStartedAt, null, 4)}; val = ${(currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1}`);
-            let startingPoint = left(str, (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1);
-            if (typeof startingPoint === "number") {
-              startingPoint++;
-            }
-            log();
-            let endingPoint = i + (str[i].trim() ? 1 : 0);
-            if (typeof startingPoint === "number" && str[startingPoint - 1] === "," && ["}", "]"].includes(str[right(str, endingPoint - 1)])) {
-              startingPoint -= 1;
-              log();
-            }
-            if (str[endingPoint] === ",") {
-              endingPoint += 1;
-              log();
-            }
-            log(`883 ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${JSON.stringify(startingPoint, null, 4)}; ${`\u001b[${33}m${`endingPoint`}\u001b[${39}m`} = ${JSON.stringify(endingPoint, null, 4)};`);
-            ranges.push([startingPoint, endingPoint]);
-            log(`896 ${`\u001b[${32}m${`FINAL PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(ranges, null, 4)}`);
-            log();
-            break;
+          let endingPartsBeginning = i + (str[i].trim() ? 1 : 0);
+          if (currentlyWithinArray && ![`"`, `[`, `{`].includes(str[valueStartedAt]) && str[right(str, endingPartsBeginning - 1)] !== "]" || str[endingPartsBeginning - 1] === "," && str[valueStartedAt - 1] !== `"`) {
+            endingPartsBeginning -= 1;
           }
+          if (currentlyWithinArray && str[valueStartedAt - 1] === `"`) {
+            valueStartedAt = valueStartedAt - 1;
+          }
+          return `${str.slice(0, valueStartedAt)}${stringifyAndEscapeValue(calculatedValueToInsert)}${extraLineBreak}${str.slice(endingPartsBeginning)}`;
         }
+        if (mode === "del") {
+          log();
+          log(`851 ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${JSON.stringify(keyStartedAt, null, 4)}; val = ${(currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1}`);
+          let startingPoint = left(str, (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1);
+          if (typeof startingPoint === "number") {
+            startingPoint++;
+          }
+          log();
+          let endingPoint = i + (str[i].trim() ? 1 : 0);
+          if (typeof startingPoint === "number" && str[startingPoint - 1] === "," && ["}", "]"].includes(str[right(str, endingPoint - 1)])) {
+            startingPoint -= 1;
+            log();
+          }
+          if (str[endingPoint] === ",") {
+            endingPoint += 1;
+            log();
+          }
+          log(`883 ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${JSON.stringify(startingPoint, null, 4)}; ${`\u001b[${33}m${`endingPoint`}\u001b[${39}m`} = ${JSON.stringify(endingPoint, null, 4)};`);
+          ranges.push([startingPoint, endingPoint]);
+          log(`896 ${`\u001b[${32}m${`FINAL PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(ranges, null, 4)}`);
+          log();
+          break;
+        }
+      }
     }
     log(`${`\u001b[${withinQuotesSince ? 32 : 31}m${`withinQuotesSince${typeof withinQuotesSince === "number" ? `=${withinQuotesSince}` : ""}`}\u001b[${39}m`}; ${`\u001b[${currentlyWithinObject ? 32 : 31}m${`currentlyWithinObject`}\u001b[${39}m`}; ${`\u001b[${currentlyWithinArray ? 32 : 31}m${`currentlyWithinArray`}\u001b[${39}m`}; ${`\u001b[${replaceThisValue ? 32 : 31}m${`replaceThisValue`}\u001b[${39}m`}; ${`\u001b[${itsTheFirstElem ? 32 : 31}m${`itsTheFirstElem`}\u001b[${39}m`}; ${`\u001b[${skipUntilTheFollowingIsMet.length ? 32 : 31}m${`skipUntilTheFollowingIsMet${skipUntilTheFollowingIsMet ? `: ${JSON.stringify(skipUntilTheFollowingIsMet, null, 0)}` : ""}`}\u001b[${39}m`}`);
     log(`current path: ${JSON.stringify(currentPath.join("."), null, 0)}`);

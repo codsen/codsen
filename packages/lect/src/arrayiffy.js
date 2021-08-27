@@ -1,4 +1,4 @@
-function arrayiffy(something) {
+export const arrayiffy = (something) => {
   if (typeof something === "string") {
     if (something.length > 0) {
       return [something];
@@ -6,6 +6,4 @@ function arrayiffy(something) {
     return [];
   }
   return something;
-}
-
-module.exports = arrayiffy;
+};

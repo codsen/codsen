@@ -1,5 +1,5 @@
 import tap from "tap";
-import { fillMissing } from "../dist/object-fill-missing-keys.esm";
+import { fillMissing } from "../dist/object-fill-missing-keys.esm.js";
 
 // ==============================
 // 1. Adds missing keys

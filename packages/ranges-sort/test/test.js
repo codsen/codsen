@@ -1,5 +1,5 @@
 import tap from "tap";
-import { rSort as srt } from "../dist/ranges-sort.esm";
+import { rSort as srt } from "../dist/ranges-sort.esm.js";
 
 // ==============================
 // 0. THROWS

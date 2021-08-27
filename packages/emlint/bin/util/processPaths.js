@@ -1,12 +1,11 @@
-const { promisify } = require("util");
-const fs = require("fs");
-const path = require("path");
-
+import fs from "fs";
+import path from "path";
+import { promisify } from "util";
 const readFileAsync = promisify(fs.readFile);
-const globby = require("globby");
-const pReduce = require("p-reduce");
-const isDirectory = require("is-d");
-const { Linter } = require("../../dist/emlint.cjs.js");
+import globby from "globby";
+import pReduce from "p-reduce";
+import isDirectory from "is-d";
+import { Linter } from "../../dist/emlint.esm.js";
 
 const linter = new Linter();
 
@@ -15,7 +14,7 @@ const linter = new Linter();
 function readUpdateAndWriteOverFile(receivedPath) {
   console.log(" ");
   console.log(
-    `018 readUpdateAndWriteOverFile(): received "${`\u001b[${32}m${receivedPath}\u001b[${39}m`}"`
+    `017 readUpdateAndWriteOverFile(): received "${`\u001b[${32}m${receivedPath}\u001b[${39}m`}"`
   );
   console.log(" ");
   readFileAsync(receivedPath, { encoding: "utf8" })
@@ -28,7 +27,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
     )
     .then((contents) => {
       console.log(
-        `031 readUpdateAndWriteOverFile(): ${`\u001b[${33}m${`linting results:`}\u001b[${39}m`} ${JSON.stringify(
+        `030 readUpdateAndWriteOverFile(): ${`\u001b[${33}m${`linting results:`}\u001b[${39}m`} ${JSON.stringify(
           contents,
           null,
           4
@@ -38,7 +37,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
     })
     .catch((err) => {
       console.log(
-        `041 ERROR! ${`\u001b[${33}m${`err`}\u001b[${39}m`} = ${JSON.stringify(
+        `040 ERROR! ${`\u001b[${33}m${`err`}\u001b[${39}m`} = ${JSON.stringify(
           err,
           null,
           4
@@ -49,7 +48,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
 
 function processPaths(paths) {
   console.log(
-    `052 processPaths received: ${`\u001b[${33}m${`paths`}\u001b[${39}m`} = ${JSON.stringify(
+    `051 processPaths received: ${`\u001b[${33}m${`paths`}\u001b[${39}m`} = ${JSON.stringify(
       paths,
       null,
       4
@@ -59,7 +58,7 @@ function processPaths(paths) {
     globby(paths)
       .then((oneOfpaths) => {
         console.log(
-          `062 ${`\u001b[${33}m${`oneOfpaths`}\u001b[${39}m`} = ${JSON.stringify(
+          `061 ${`\u001b[${33}m${`oneOfpaths`}\u001b[${39}m`} = ${JSON.stringify(
             oneOfpaths,
             null,
             4
@@ -100,4 +99,4 @@ function processPaths(paths) {
   );
 }
 
-module.exports = processPaths;
+export default processPaths;

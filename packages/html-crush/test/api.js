@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush, defaults, version } from "../dist/html-crush.esm";
+import { crush, defaults, version } from "../dist/html-crush.esm.js";
 
 // THROWS
 // -----------------------------------------------------------------------------

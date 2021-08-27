@@ -1,5 +1,5 @@
 import tap from "tap";
-import { fixRowNums } from "../dist/js-row-num.esm";
+import { fixRowNums } from "../dist/js-row-num.esm.js";
 
 const BACKSLASH = `\u005C`;
 // we need to escape to prevent accidental "fixing" of this file through

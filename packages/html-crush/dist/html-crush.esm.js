@@ -172,19 +172,19 @@ function crush(str, originalOpts) {
       }
       if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[i])
       ) {
-          tagName = str.slice(tagNameStartsAt, i);
-          const idxOnTheRight = right(str, ~-i);
-          if (typeof idxOnTheRight === "number" && str[idxOnTheRight] === ">" && !str[i].trim() && right(str, i)) {
+        tagName = str.slice(tagNameStartsAt, i);
+        const idxOnTheRight = right(str, ~-i);
+        if (typeof idxOnTheRight === "number" && str[idxOnTheRight] === ">" && !str[i].trim() && right(str, i)) {
+          finalIndexesToDelete.push(i, right(str, i));
+        } else if (idxOnTheRight && str[idxOnTheRight] === "/" && str[right(str, idxOnTheRight)] === ">") {
+          if (!str[i].trim() && right(str, i)) {
             finalIndexesToDelete.push(i, right(str, i));
-          } else if (idxOnTheRight && str[idxOnTheRight] === "/" && str[right(str, idxOnTheRight)] === ">") {
-            if (!str[i].trim() && right(str, i)) {
-              finalIndexesToDelete.push(i, right(str, i));
-            }
-            if (str[idxOnTheRight + 1] !== ">" && right(str, idxOnTheRight + 1)) {
-              finalIndexesToDelete.push(idxOnTheRight + 1, right(str, idxOnTheRight + 1));
-            }
+          }
+          if (str[idxOnTheRight + 1] !== ">" && right(str, idxOnTheRight + 1)) {
+            finalIndexesToDelete.push(idxOnTheRight + 1, right(str, idxOnTheRight + 1));
           }
         }
+      }
       if (!doNothing && !withinStyleTag && !withinInlineStyle && str[~-i] === "<" && tagNameStartsAt === null) {
         if (/\w/.test(str[i])) {
           tagNameStartsAt = i;
@@ -258,8 +258,7 @@ function crush(str, originalOpts) {
             htmlCommentStartedAt = i;
           }
         } else if (
-        opts.removeHTMLComments && (
-        !withinHTMLConditional || opts.removeHTMLComments === 2)) {
+        opts.removeHTMLComments && (!withinHTMLConditional || opts.removeHTMLComments === 2)) {
           htmlCommentStartedAt = i;
         }
         if (!applicableOpts.removeHTMLComments) {

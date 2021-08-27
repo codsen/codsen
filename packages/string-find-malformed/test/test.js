@@ -1,5 +1,5 @@
 import tap from "tap";
-import { findMalformed } from "../dist/string-find-malformed.esm";
+import { findMalformed } from "../dist/string-find-malformed.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

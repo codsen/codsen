@@ -1,5 +1,5 @@
 import tap from "tap";
-import { setter } from "./util/util";
+import { setter } from "./util/util.js";
 
 // set - editing an existing key
 // -----------------------------------------------------------------------------

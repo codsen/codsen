@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "../dist/email-comb.esm";
+import { comb } from "../dist/email-comb.esm.js";
 
 // opts.reportProgressFunc
 // -----------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { isAttrClosing as is } from "../dist/is-html-attribute-closing.esm";
+import { isAttrClosing as is } from "../dist/is-html-attribute-closing.esm.js";
 // const BACKSLASH = "\u005C";
 const doubleQuotes = `\u0022`;
 

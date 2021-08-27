@@ -1,5 +1,5 @@
 import tap from "tap";
-import { isIndexWithin } from "../dist/ranges-is-index-within.esm";
+import { isIndexWithin } from "../dist/ranges-is-index-within.esm.js";
 
 tap.test("01 - 1st argument missing", (t) => {
   t.throws(() => {

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm";
+import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm.js";
 
 tap.test("01 - does nothing to trimmed strings", (t) => {
   t.equal(c("zzz"), "zzz", "01");

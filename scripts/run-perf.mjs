@@ -1,9 +1,9 @@
-const Benchmark = require("benchmark");
-const fs = require("fs");
-const path = require("path");
-const { sortAllObjectsSync } = require("../packages/json-comb-core");
+import Benchmark from "benchmark";
+import fs from "fs";
+import path from "path";
+import { sortAllObjectsSync } from "../packages/json-comb-core/dist/json-comb-core.esm.js";
 
-function runPerf(cb, callerDir) {
+export const runPerf = (cb, callerDir) => {
   const BENCH = false;
   const logThreshold = 1000;
 
@@ -139,6 +139,4 @@ function runPerf(cb, callerDir) {
     })
     // run async
     .run({ async: true });
-}
-
-module.exports = runPerf;
+};

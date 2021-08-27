@@ -63,51 +63,51 @@ function splitEasy(str, originalOpts) {
       }
     }
     else if (!ignoreCommasThatFollow && str[i] === ",") {
-        if (str[i - 1] !== '"' && !ignoreCommasThatFollow) {
+      if (str[i - 1] !== '"' && !ignoreCommasThatFollow) {
+        const newElem = str.slice(colStarts, i);
+        if (newElem.trim() !== "") {
+          thisRowContainsOnlyEmptySpace = false;
+        }
+        rowArray.push(remSep(newElem,
+        {
+          removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
+          padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
+          forceUKStyle: opts.forceUKStyle
+        }));
+      }
+      colStarts = i + 1;
+      if (lineBreakStarts) {
+        lineBreakStarts = 0;
+      }
+    }
+    else if (str[i] === "\n" || str[i] === "\r") {
+      if (!lineBreakStarts) {
+        lineBreakStarts = i;
+        if (!ignoreCommasThatFollow && str[i - 1] !== '"') {
           const newElem = str.slice(colStarts, i);
           if (newElem.trim() !== "") {
             thisRowContainsOnlyEmptySpace = false;
           }
-          rowArray.push(remSep(newElem,
-          {
+          rowArray.push(remSep(newElem, {
             removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
             padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
             forceUKStyle: opts.forceUKStyle
           }));
         }
-        colStarts = i + 1;
-        if (lineBreakStarts) {
-          lineBreakStarts = 0;
+        if (!thisRowContainsOnlyEmptySpace) {
+          resArray.push(rowArray);
+        } else {
+          rowArray.length = 0;
         }
+        thisRowContainsOnlyEmptySpace = true;
+        rowArray = [];
       }
-      else if (str[i] === "\n" || str[i] === "\r") {
-          if (!lineBreakStarts) {
-            lineBreakStarts = i;
-            if (!ignoreCommasThatFollow && str[i - 1] !== '"') {
-              const newElem = str.slice(colStarts, i);
-              if (newElem.trim() !== "") {
-                thisRowContainsOnlyEmptySpace = false;
-              }
-              rowArray.push(remSep(newElem, {
-                removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
-                padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-                forceUKStyle: opts.forceUKStyle
-              }));
-            }
-            if (!thisRowContainsOnlyEmptySpace) {
-              resArray.push(rowArray);
-            } else {
-              rowArray.length = 0;
-            }
-            thisRowContainsOnlyEmptySpace = true;
-            rowArray = [];
-          }
-          colStarts = i + 1;
-        }
-        else if (lineBreakStarts) {
-            lineBreakStarts = 0;
-            colStarts = i;
-          }
+      colStarts = i + 1;
+    }
+    else if (lineBreakStarts) {
+      lineBreakStarts = 0;
+      colStarts = i;
+    }
     if (i + 1 === len) {
       if (str[i] !== '"') {
         const newElem = str.slice(colStarts, i + 1);

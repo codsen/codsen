@@ -25,8 +25,7 @@ function prep(str, originalOpts) {
   let lastDigitAt = null;
   for (let i = 0, len = str.length; i <= len; i++) {
     if (
-    digitsChunkStartsAt !== null && typeof lastDigitAt === "number" && (
-    str[i] && str[i].trim().length &&
+    digitsChunkStartsAt !== null && typeof lastDigitAt === "number" && (str[i] && str[i].trim().length &&
     !/\d/.test(str[i]) &&
     !["."].includes(str[i]) ||
     !str[i])) {
@@ -250,4 +249,4 @@ var main = {
   }
 };
 
-export default main;
+export { main as default };

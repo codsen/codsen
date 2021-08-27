@@ -1,5 +1,5 @@
 import tap from "tap";
-import { Ranges } from "../dist/ranges-push.esm";
+import { Ranges } from "../dist/ranges-push.esm.js";
 
 const nbsp = "\xA0";
 

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { left } from "../dist/string-left-right.esm";
+import { left } from "../dist/string-left-right.esm.js";
 
 // left()
 // -----------------------------------------------------------------------------

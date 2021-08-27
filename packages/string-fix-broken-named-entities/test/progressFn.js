@@ -1,5 +1,5 @@
 import tap from "tap";
-import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
+import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm.js";
 
 tap.test(
   `01 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports progress - baseline`,

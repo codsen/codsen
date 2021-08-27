@@ -88,40 +88,40 @@ function extractConfig(str) {
       }
     }
     else if (extractedConfig.includes(CONTENTTAIL)) {
-        const contentInFront = [];
-        let stopFilteringAndPassAllLines = false;
-        extractedConfig = extractedConfig.split("\n").filter(rowStr => {
-          if (!rowStr.includes("$$$") && !stopFilteringAndPassAllLines) {
-            if (!stopFilteringAndPassAllLines) {
-              contentInFront.push(rowStr);
-            }
-            return false;
-          }
+      const contentInFront = [];
+      let stopFilteringAndPassAllLines = false;
+      extractedConfig = extractedConfig.split("\n").filter(rowStr => {
+        if (!rowStr.includes("$$$") && !stopFilteringAndPassAllLines) {
           if (!stopFilteringAndPassAllLines) {
-            stopFilteringAndPassAllLines = true;
-            return true;
+            contentInFront.push(rowStr);
           }
+          return false;
+        }
+        if (!stopFilteringAndPassAllLines) {
+          stopFilteringAndPassAllLines = true;
           return true;
-        }).join("\n");
-        let sliceTo = extractedConfig.indexOf(CONTENTTAIL);
-        if (leftSeq(extractedConfig, sliceTo, "/", "*")) {
-          sliceTo = leftSeq(extractedConfig, sliceTo, "/", "*").leftmostChar;
         }
-        extractedConfig = extractedConfig.slice(0, sliceTo).trim();
-        if (contentInFront.length) {
-          rawContentAbove = `${contentInFront.join("\n")}\n`;
-        }
-        let contentAfterStartsAt;
-        if (right(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length)) {
-          contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
-          if (str[right(str, contentAfterStartsAt)] === "*" && str[right(str, right(str, contentAfterStartsAt))] === "/") {
-            contentAfterStartsAt = right(str, right(str, contentAfterStartsAt)) + 1;
-            if (right(str, contentAfterStartsAt)) {
-              rawContentBelow = str.slice(contentAfterStartsAt);
-            }
+        return true;
+      }).join("\n");
+      let sliceTo = extractedConfig.indexOf(CONTENTTAIL);
+      if (leftSeq(extractedConfig, sliceTo, "/", "*")) {
+        sliceTo = leftSeq(extractedConfig, sliceTo, "/", "*").leftmostChar;
+      }
+      extractedConfig = extractedConfig.slice(0, sliceTo).trim();
+      if (contentInFront.length) {
+        rawContentAbove = `${contentInFront.join("\n")}\n`;
+      }
+      let contentAfterStartsAt;
+      if (right(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length)) {
+        contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
+        if (str[right(str, contentAfterStartsAt)] === "*" && str[right(str, right(str, contentAfterStartsAt))] === "/") {
+          contentAfterStartsAt = right(str, right(str, contentAfterStartsAt)) + 1;
+          if (right(str, contentAfterStartsAt)) {
+            rawContentBelow = str.slice(contentAfterStartsAt);
           }
         }
       }
+    }
   } else {
     const contentHeadsRegex = new RegExp(`(\\/\\s*\\*\\s*)*${CONTENTHEAD}(\\s*\\*\\s*\\/)*`);
     const contentTailsRegex = new RegExp(`(\\/\\s*\\*\\s*)*${CONTENTTAIL}(\\s*\\*\\s*\\/)*`);
@@ -211,8 +211,8 @@ function extractFromToSource(str, fromDefault = 0, toDefault = 500) {
         }
       }
       else if (str[i] !== "|" && str[i].trim().length) {
-          onlyDigitsAndWhitespaceBeenMet = false;
-        }
+        onlyDigitsAndWhitespaceBeenMet = false;
+      }
       if (!str[i + 1] && onlyDigitsAndWhitespaceBeenMet && lastPipeWasAt) {
         endTo = lastPipeWasAt;
       }

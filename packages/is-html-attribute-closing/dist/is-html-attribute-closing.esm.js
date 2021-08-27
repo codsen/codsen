@@ -114,9 +114,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
       }
       const E34 =
-      i === isThisClosingIdx && (
-      !isAttrNameChar(str[leftVal]) ||
-      attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) &&
+      i === isThisClosingIdx && (!isAttrNameChar(str[leftVal]) || attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) &&
       str[leftVal] !== "=";
       const E41 =
       `/>`.includes(str[rightVal]) && i === isThisClosingIdx;
@@ -125,8 +123,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       const E43 =
       lastQuoteWasMatched && i !== isThisClosingIdx;
       const E5 =
-      !(
-      i >= isThisClosingIdx &&
+      !(i >= isThisClosingIdx &&
       str[left(str, isThisClosingIdx)] === ":");
       return !!(E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5);
     }
@@ -186,15 +183,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
     }
     if (
-    `'"`.includes(str[i]) && (
-    !(quotesCount.get(`"`) % 2) || !(quotesCount.get(`'`) % 2)) &&
-    (quotesCount.get(`"`) + quotesCount.get(`'`)) % 2 && (
-    lastCapturedChunk &&
-    allHtmlAttribs.has(lastCapturedChunk) ||
-    i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())) &&
+    `'"`.includes(str[i]) && (!(quotesCount.get(`"`) % 2) || !(quotesCount.get(`'`) % 2)) &&
+    (quotesCount.get(`"`) + quotesCount.get(`'`)) % 2 && (lastCapturedChunk &&
+    allHtmlAttribs.has(lastCapturedChunk) || i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())) &&
     !(str[i + 1] === str[i] && str[i] === str[idxOfAttrOpening]) &&
-    !(
-    i > isThisClosingIdx + 1 &&
+    !(i > isThisClosingIdx + 1 &&
     str[left(str, isThisClosingIdx)] === ":") &&
     !(lastCapturedChunk && secondLastCapturedChunk && secondLastCapturedChunk.trim().endsWith(":"))) {
       const R0 = i > isThisClosingIdx;
@@ -205,15 +198,13 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       return R0 && !(R1 && R2 && R3 && R4);
     }
     if (
-    (str[i] === "=" ||
-    !str[i].length &&
+    (str[i] === "=" || !str[i].length &&
     str[rightVal] === "=") &&
     lastCapturedChunk &&
     allHtmlAttribs.has(lastCapturedChunk)) {
       const W1 = i > isThisClosingIdx;
       const W2 =
-      !(!(
-      lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx ||
+      !(!(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx ||
       guaranteedAttrStartsAtX(str, chunkStartsAt)) &&
       lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt !== undefined && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
       return W1 && W2;
@@ -241,8 +232,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
         const R11 = quotesCount.get(`matchedPairs`) < 2;
         const attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
-        const R12 = (!attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && (
-        !(i > isThisClosingIdx &&
+        const R12 = (!attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && (!(i > isThisClosingIdx &&
         quotesCount.get(`'`) &&
         quotesCount.get(`"`) &&
         quotesCount.get(`matchedPairs`) > 1) ||
@@ -254,10 +244,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         const R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && isAttrNameChar(str[idxOfAttrOpening - 2]);
         const R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", [`='`, `="`]);
         return (
-          R0 ||
-          (R11 || R12) &&
-          R2 && (
-          R31 ||
+          R0 || (R11 || R12) &&
+          R2 && (R31 ||
           R32 ||
           R33 ||
           R34)

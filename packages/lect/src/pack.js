@@ -1,12 +1,10 @@
-const objectPath = require("object-path");
-const writeFileAtomic = require("write-file-atomic");
-const sortPackageJson = require("sort-package-json");
-const pacote = require("pacote");
-// const decodeContent = require("./decodeContent");
-// const arrayiffy = require("./arrayiffy");
+import objectPath from "object-path";
+import writeFileAtomic from "write-file-atomic";
+import sortPackageJson from "sort-package-json";
+import pacote from "pacote";
 
 // writes package.json
-async function packageJson({ state, lectrc }) {
+export const packageJson = async ({ state, lectrc }) => {
   const programDevDeps = [
     "rollup",
     "@rollup",
@@ -256,6 +254,4 @@ async function packageJson({ state, lectrc }) {
     );
     return Promise.reject(err);
   }
-}
-
-module.exports = packageJson;
+};

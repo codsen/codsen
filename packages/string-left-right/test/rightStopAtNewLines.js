@@ -1,5 +1,5 @@
 import tap from "tap";
-import { rightStopAtNewLines } from "../dist/string-left-right.esm";
+import { rightStopAtNewLines } from "../dist/string-left-right.esm.js";
 
 // rightStopAtNewLines()
 // -----------------------------------------------------------------------------

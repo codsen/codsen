@@ -1,6 +1,6 @@
 import tap from "tap";
-import { isAttrClosing as is } from "../dist/is-html-attribute-closing.esm";
-import { combinations } from "./util/util";
+import { isAttrClosing as is } from "../dist/is-html-attribute-closing.esm.js";
+import { combinations } from "./util/util.js";
 // const BACKSLASH = "\u005C";
 
 // healthy code

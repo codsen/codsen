@@ -1,5 +1,5 @@
 import tap from "tap";
-import { isJinjaSpecific } from "../dist/regex-jinja-specific.esm";
+import { isJinjaSpecific } from "../dist/regex-jinja-specific.esm.js";
 
 tap.test("01 is not Jinja", (t) => {
   t.notMatch(``, isJinjaSpecific(), "01.01");

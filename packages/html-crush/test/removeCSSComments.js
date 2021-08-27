@@ -1,5 +1,5 @@
 import tap from "tap";
-import { m } from "./util/util";
+import { m } from "./util/util.js";
 
 // within head styles
 // -----------------------------------------------------------------------------

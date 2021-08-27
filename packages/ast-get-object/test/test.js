@@ -1,5 +1,5 @@
 import tap from "tap";
-import { getObj } from "../dist/ast-get-object.esm";
+import { getObj } from "../dist/ast-get-object.esm.js";
 
 // ==============================
 // GET

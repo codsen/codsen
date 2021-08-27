@@ -2,7 +2,7 @@ import tap from "tap";
 import {
   isHighSurrogate,
   isLowSurrogate,
-} from "../dist/string-character-is-astral-surrogate.esm";
+} from "../dist/string-character-is-astral-surrogate.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

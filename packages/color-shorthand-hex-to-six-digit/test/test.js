@@ -1,7 +1,7 @@
 /* eslint func-names:0 */
 
 import tap from "tap";
-import { conv } from "../dist/color-shorthand-hex-to-six-digit.esm";
+import { conv } from "../dist/color-shorthand-hex-to-six-digit.esm.js";
 
 // ==============================
 // 01. String inputs

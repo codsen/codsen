@@ -1,5 +1,5 @@
 import tap from "tap";
-import { deepContains } from "../dist/ast-deep-contains.esm";
+import { deepContains } from "../dist/ast-deep-contains.esm.js";
 
 // 01. basic functionality
 // -----------------------------------------------------------------------------

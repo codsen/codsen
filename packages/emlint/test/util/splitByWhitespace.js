@@ -1,5 +1,5 @@
 import tap from "tap";
-import { util } from "../../dist/emlint.esm";
+import { util } from "../../dist/emlint.esm.js";
 const { splitByWhitespace } = util;
 
 // 01. no config

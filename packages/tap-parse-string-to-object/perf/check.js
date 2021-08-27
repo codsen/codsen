@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { parseTap } = require("..");
+import { parseTap } from "../dist/tap-parse-string-to-object.esm.js";
 
 const testme = () =>
   parseTap(`TAP version 13

@@ -3,7 +3,7 @@
 import tap from "tap";
 import crypto from "crypto";
 import { Linter } from "eslint";
-import api from "../dist/eslint-plugin-test-num.esm";
+import api from "../dist/eslint-plugin-test-num.esm.js";
 
 import {
   c,
@@ -12,7 +12,7 @@ import {
   // backtick,
   // dollar,
   // backslash,
-} from "./util/util";
+} from "./util/util.js";
 
 const sha256 = (x) =>
   crypto.createHash("sha256").update(x, "utf8").digest("hex");

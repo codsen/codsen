@@ -1,5 +1,5 @@
 import tap from "tap";
-import { alts } from "../dist/html-img-alt.esm";
+import { alts } from "../dist/html-img-alt.esm.js";
 
 // alt attr is present, but with only one quote (double or single), one tag
 // -----------------------------------------------------------------------------

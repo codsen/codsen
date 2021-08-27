@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { collapse } = require("..");
+import { collapse } from "../dist/string-collapse-white-space.esm.js";
 
 const testme = () =>
   collapse(" a \n \n b ", {

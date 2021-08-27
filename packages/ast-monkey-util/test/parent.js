@@ -1,5 +1,5 @@
 import tap from "tap";
-import { parent } from "../dist/ast-monkey-util.esm";
+import { parent } from "../dist/ast-monkey-util.esm.js";
 
 tap.test(`01`, (t) => {
   t.strictSame(parent(""), null, "01");

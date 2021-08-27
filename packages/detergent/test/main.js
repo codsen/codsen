@@ -3,7 +3,7 @@ import {
   det as det1,
   opts as exportedOptsObj,
   version,
-} from "../dist/detergent.esm";
+} from "../dist/detergent.esm.js";
 import {
   det,
   mixer,
@@ -17,7 +17,7 @@ import {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} from "../t-util/util";
+} from "../t-util/util.js";
 
 // ==============================
 // 0. throws and API bits

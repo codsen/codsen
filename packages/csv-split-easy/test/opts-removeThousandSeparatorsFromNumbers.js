@@ -1,5 +1,5 @@
 import tap from "tap";
-import { splitEasy } from "../dist/csv-split-easy.esm";
+import { splitEasy } from "../dist/csv-split-easy.esm.js";
 
 tap.test(
   "01 - deals with (or does not) thousand separators in numbers",

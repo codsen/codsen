@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { emptyCondCommentRegex } = require("..");
+import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.esm.js";
 
 const testme = () => emptyCondCommentRegex();
 

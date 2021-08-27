@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { deleteKey } = require("..");
+import { deleteKey } from "../dist/object-delete-key.esm.js";
 
 const testme = () =>
   deleteKey(

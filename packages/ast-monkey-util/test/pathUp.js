@@ -1,5 +1,5 @@
 import tap from "tap";
-import { pathUp } from "../dist/ast-monkey-util.esm";
+import { pathUp } from "../dist/ast-monkey-util.esm.js";
 
 tap.test(`01 - ${`\u001b[${34}m${`pathUp`}\u001b[${39}m`} - empty str`, (t) => {
   t.strictSame(pathUp(""), "0", "01");

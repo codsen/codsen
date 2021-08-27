@@ -1,6 +1,6 @@
 import tap from "tap";
-import { m } from "./util/util";
-import { crush } from "../dist/html-crush.esm";
+import { m } from "./util/util.js";
+import { crush } from "../dist/html-crush.esm.js";
 
 // opts.reportProgressFunc
 // -----------------------------------------------------------------------------

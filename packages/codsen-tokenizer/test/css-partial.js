@@ -1,5 +1,5 @@
 import tap from "tap";
-import { tokenizer as ct } from "../dist/codsen-tokenizer.esm";
+import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // This programmatic test is to ensure the tokenizer doesn't
 // throw on partial input. We take a sample source code,

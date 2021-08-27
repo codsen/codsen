@@ -1,6 +1,6 @@
 import tap from "tap";
 import clone from "lodash.clonedeep";
-import { rMerge } from "../dist/ranges-merge.esm";
+import { rMerge } from "../dist/ranges-merge.esm.js";
 
 // 00. throws
 // ==========================

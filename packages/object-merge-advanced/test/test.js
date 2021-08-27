@@ -2,8 +2,8 @@
 
 import tap from "tap";
 import clone from "lodash.clonedeep";
-import { mergeAdvanced as m } from "../dist/object-merge-advanced.esm";
-import { mergeAdvanced } from "./util";
+import { mergeAdvanced as m } from "../dist/object-merge-advanced.esm.js";
+import { mergeAdvanced } from "./util.js";
 
 // There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards

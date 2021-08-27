@@ -26,6 +26,7 @@
     "email": "roy@codsen.com",
     "url": "https://codsen.com"
   },
+  "type": "module",
   "bin": {
     "jsonsort": "cli.js",
     "sortjson": "cli.js"
@@ -41,17 +42,19 @@
     "republish": "npm publish || :",
     "tap": "tap",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov",
+    "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov",
     "clean_cov": "../../scripts/leaveCoverageTotalOnly.js"
   },
   "tap": {
+    "check-coverage": false,
     "coverage-report": [
       "json-summary",
       "text"
     ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
+    "node-arg": [
+      "--no-warnings",
+      "--experimental-loader",
+      "@istanbuljs/esm-loader-hook"
     ],
     "timeout": 0
   },
@@ -83,15 +86,18 @@
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
+    "@istanbuljs/esm-loader-hook": "^0.1.2",
     "@types/lodash.isplainobject": "^4.0.6",
     "core-js": "^3.15.2",
     "cross-env": "^7.0.3",
     "eslint": "^7.30.0",
     "execa": "^5.1.1",
-    "lect": "^0.17.0",
     "p-map": "^4.0.0",
-    "tap": "^14.11.0",
+    "tap": "^15.0.9",
     "tempy": "^1.0.1",
     "tslib": "^2.3.0"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }

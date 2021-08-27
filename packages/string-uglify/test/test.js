@@ -1,5 +1,5 @@
 import tap from "tap";
-import { uglifyArr, uglifyById, version } from "../dist/string-uglify.esm";
+import { uglifyArr, uglifyById, version } from "../dist/string-uglify.esm.js";
 
 const letters = "abcdefghijklmnopqrstuvwxyz";
 function rand(from, to) {

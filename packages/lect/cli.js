@@ -1,18 +1,17 @@
 #!/usr/bin/env node
 
-const fs = require("fs").promises;
-const objectPath = require("object-path");
+import { promises as fs } from "fs";
+import objectPath from "object-path";
 
 // import tasks:
-const readme = require("./src/readme");
-const examples = require("./src/examples");
-const hardWrite = require("./src/hardWrite");
-const hardDelete = require("./src/hardDelete");
-const pack = require("./src/pack");
-const npmIgnore = require("./src/npmIgnore");
-const rollupConfig = require("./src/rollupConfig");
-const tsconfig = require("./src/tsconfig");
-// const semaphore = require("./src/semaphore");
+import readme from "./src/readme";
+import examples from "./src/examples";
+import hardWrite from "./src/hardWrite";
+import hardDelete from "./src/hardDelete";
+import pack from "./src/pack";
+import npmIgnore from "./src/npmIgnore";
+import rollupConfig from "./src/rollupConfig";
+import tsconfig from "./src/tsconfig";
 
 (async () => {
   //
@@ -75,7 +74,7 @@ const tsconfig = require("./src/tsconfig");
     })
     .catch((e) => {
       console.log(
-        `078 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${JSON.stringify(
+        `077 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${JSON.stringify(
           Object.keys(e),
           null,
           4

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { tokenizer as ct } from "../dist/codsen-tokenizer.esm";
+import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 tap.test("01 - correct", (t) => {
   const gathered = [];

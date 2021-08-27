@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { remSep } = require("..");
+import { remSep } from "../dist/string-remove-thousand-separators.esm.js";
 
 const testme = () => remSep("1,000,000,000,000,999,999.2");
 

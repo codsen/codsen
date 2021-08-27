@@ -1,4 +1,4 @@
-import { patcher } from "../dist/html-table-patcher.esm";
+import { patcher } from "../dist/html-table-patcher.esm.js";
 
 function processThis(str, opts) {
   return tiny(patcher(str, opts).result);

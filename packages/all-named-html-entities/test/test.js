@@ -12,7 +12,7 @@ import {
   minLength,
   maxLength,
   uncertain,
-} from "../dist/all-named-html-entities.esm";
+} from "../dist/all-named-html-entities.esm.js";
 
 tap.test(`01 - entStartsWith is set`, (t) => {
   t.ok(entStartsWith.A.E[0] === "AElig", "01.01");
@@ -113,16 +113,16 @@ tap.test(`13 - uncertain list is set`, (t) => {
 });
 
 tap.test(`14 - allNamedEntitiesSetOnly is exported and is a set`, (t) => {
-  t.is(typeof allNamedEntitiesSetOnly, "object", "14.01");
-  t.is(allNamedEntitiesSetOnly.size, 2125, "14.02");
+  t.equal(typeof allNamedEntitiesSetOnly, "object", "14.01");
+  t.equal(allNamedEntitiesSetOnly.size, 2125, "14.02");
   t.end();
 });
 
 tap.test(
   `15 - allNamedEntitiesSetOnlyCaseInsensitive is exported and is a set`,
   (t) => {
-    t.is(typeof allNamedEntitiesSetOnlyCaseInsensitive, "object", "15.01");
-    t.is(allNamedEntitiesSetOnlyCaseInsensitive.size, 1722, "15.02");
+    t.equal(typeof allNamedEntitiesSetOnlyCaseInsensitive, "object", "15.01");
+    t.equal(allNamedEntitiesSetOnlyCaseInsensitive.size, 1722, "15.02");
     t.end();
   }
 );

@@ -69,7 +69,7 @@ tap.test("01 - sort, -s (silent) mode", async (t) => {
     })
     .then((received) =>
       execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
         .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )

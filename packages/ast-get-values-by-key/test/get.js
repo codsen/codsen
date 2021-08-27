@@ -1,6 +1,6 @@
 import tap from "tap";
 import objectPath from "object-path";
-import { getByKey } from "../dist/ast-get-values-by-key.esm";
+import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
 tap.test("01 - just a plain object", (t) => {
   const source = {

@@ -1,6 +1,6 @@
 import tap from "tap";
-import { crush } from "../dist/html-crush.esm";
-import { m, mixer } from "./util/util";
+import { crush } from "../dist/html-crush.esm.js";
+import { m, mixer } from "./util/util.js";
 
 // https://github.com/codsen/codsen/issues/16
 // https://github.com/hteumeuleu/email-bugs/issues/92

@@ -2,8 +2,8 @@ import fs from "fs";
 import path from "path";
 
 import tap from "tap";
-import { isMediaD } from "../dist/is-media-descriptor.esm";
-import { applyFixes, writeSample } from "../t-util/util";
+import { isMediaD } from "../dist/is-media-descriptor.esm.js";
+import { applyFixes, writeSample } from "../t-util/util.js";
 
 // first, remove all files from test/samples subfolder - think of test renames
 // and tests being shuffled - this will guarantee that all sample files

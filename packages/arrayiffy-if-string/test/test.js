@@ -1,5 +1,5 @@
 import tap from "tap";
-import { arrayiffy as a } from "../dist/arrayiffy-if-string.esm";
+import { arrayiffy as a } from "../dist/arrayiffy-if-string.esm.js";
 
 // -----------------------------------------------------------------------------
 // 02. BAU

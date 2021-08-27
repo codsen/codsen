@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { isOpening } = require("..");
+import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 const testme = () => isOpening("zzz<img           /    >zzz");
 

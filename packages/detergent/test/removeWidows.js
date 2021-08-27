@@ -1,5 +1,5 @@
 import tap from "tap";
-// import { det as detergent } from "../dist/detergent.esm";
+// import { det as detergent } from "../dist/detergent.esm.js";
 import {
   det,
   mixer,
@@ -13,7 +13,7 @@ import {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} from "../t-util/util";
+} from "../t-util/util.js";
 
 // 00 - minimal cases for MVP
 // -----------------------------------------------------------------------------

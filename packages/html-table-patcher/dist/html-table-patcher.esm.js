@@ -33,8 +33,7 @@ function patcher(str, generalOpts) {
   const opts = { ...defaults,
     ...generalOpts
   };
-  if (opts.cssStylesContent && (
-  typeof opts.cssStylesContent !== "string" ||
+  if (opts.cssStylesContent && (typeof opts.cssStylesContent !== "string" ||
   !opts.cssStylesContent.trim())) {
     opts.cssStylesContent = "";
   }

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { set, del } from "../dist/edit-package-json.esm";
+import { set, del } from "../dist/edit-package-json.esm.js";
 
 // various throws
 // -----------------------------------------------------------------------------

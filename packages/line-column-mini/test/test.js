@@ -1,5 +1,5 @@
 import tap from "tap";
-import { lineCol, getLineStartIndexes } from "../dist/line-column-mini.esm";
+import { lineCol, getLineStartIndexes } from "../dist/line-column-mini.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. peculiar inputs

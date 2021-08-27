@@ -1,8 +1,8 @@
 import tap from "tap";
 import { rInvert } from "ranges-invert";
 import { rApply } from "ranges-apply";
-import { stripHtml } from "../dist/string-strip-html.esm";
-import validateTagLocations from "./util/validateTagLocations";
+import { stripHtml } from "../dist/string-strip-html.esm.js";
+import validateTagLocations from "./util/validateTagLocations.js";
 
 // 1. Remove HTML tags, give me a clean string.
 // -----------------------------------------------------------------------------

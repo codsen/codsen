@@ -1,5 +1,5 @@
 import tap from "tap";
-import { remDup as rem } from "../dist/string-remove-duplicate-heads-tails.esm";
+import { remDup as rem } from "../dist/string-remove-duplicate-heads-tails.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

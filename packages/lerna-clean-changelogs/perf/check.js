@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { cleanChangelogs } = require("..");
+import { cleanChangelogs } from "../dist/lerna-clean-changelogs.esm.js";
 
 const source = `# Change Log
 

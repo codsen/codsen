@@ -1,11 +1,11 @@
-const fs = require("fs").promises;
-const path = require("path");
-const objectPath = require("object-path");
-const camelCase = require("lodash.camelcase");
-const writeFileAtomic = require("write-file-atomic");
+import { promises as fs } from "fs";
+import path from "path";
+import objectPath from "object-path";
+import camelCase from "lodash.camelcase";
+import writeFileAtomic from "write-file-atomic";
 
 // writes rollup.config.js
-async function rollupConfig({ state }) {
+export const rollupConfig = async ({ state }) => {
   // bail early if it's a CLI
   if (state.isCLI) {
     fs.unlink(path.resolve("rollup.config.js"))
@@ -415,6 +415,4 @@ export default (commandLineArgs) => {
     console.log(`lect: could not write rollup.config.js - ${err}`);
     return Promise.reject(err);
   }
-}
-
-module.exports = rollupConfig;
+};

@@ -1,12 +1,11 @@
-const fs = require("fs").promises;
-const { constants } = require("fs");
-const path = require("path");
-const objectPath = require("object-path");
-const rimraf = require("rimraf");
+import { constants, promises as fs } from "fs";
+import path from "path";
+import objectPath from "object-path";
+import rimraf from "rimraf";
 
 // delete all requested files
 // key files.delete from packages/ root .lectrc.json
-async function hardDelete({ lectrc }) {
+export const hardDelete = async ({ lectrc }) => {
   rimraf(path.resolve(".nyc_output/"), {}, (e) => {
     if (e) {
       console.log(e);
@@ -38,6 +37,4 @@ async function hardDelete({ lectrc }) {
         .catch(() => Promise.resolve(null))
     )
   );
-}
-
-module.exports = hardDelete;
+};

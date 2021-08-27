@@ -1,5 +1,5 @@
 import tap from "tap";
-import { util } from "../../dist/codsen-tokenizer.esm";
+import { util } from "../../dist/codsen-tokenizer.esm.js";
 const { matchLayerLast } = util;
 
 // match last

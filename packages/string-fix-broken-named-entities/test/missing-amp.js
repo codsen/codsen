@@ -4,8 +4,8 @@ import {
   uncertain,
   allNamedEntitiesSetOnly,
 } from "all-named-html-entities";
-import fix from "./util/util";
-import { fixEnt } from "../dist/string-fix-broken-named-entities.esm";
+import fix from "./util/util.js";
+import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
 
 const falseCases = [
   "First we went to a camp;",

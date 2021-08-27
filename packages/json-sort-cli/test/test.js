@@ -64,7 +64,7 @@ tap.test("01 - default sort, called on the whole folder", async (t) => {
     )
     .then((received) =>
       execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
         .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
@@ -126,7 +126,7 @@ tap.test("02 - sort, there's a broken JSON among files", async (t) => {
     })
     .then((received) =>
       execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
         .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
@@ -148,7 +148,7 @@ tap.test("03 - fixes minified dotfiles in JSON format", async (t) => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
         .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
@@ -186,7 +186,7 @@ tap.test("04 - topmost level is array", async (t) => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
         .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )

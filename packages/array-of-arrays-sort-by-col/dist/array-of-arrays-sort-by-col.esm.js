@@ -54,8 +54,8 @@ function sortByCol(arr, axis = 0) {
           }
         }
         else if (existy(arr2[+axis - i])) {
-            return 1;
-          }
+          return 1;
+        }
       }
       /* istanbul ignore else */
       if (+axis + i < maxRangeToIterate) {
@@ -72,8 +72,8 @@ function sortByCol(arr, axis = 0) {
           }
         }
         else if (existy(arr2[+axis + i])) {
-            return 1;
-          }
+          return 1;
+        }
       }
     }
     return 0;

@@ -5,7 +5,7 @@ import {
   notEmailFriendlyLowercaseSetOnly,
   notEmailFriendlyMinLength,
   notEmailFriendlyMaxLength,
-} from "../dist/html-entities-not-email-friendly.esm";
+} from "../dist/html-entities-not-email-friendly.esm.js";
 
 tap.test(`01 - notEmailFriendly is set`, (t) => {
   t.ok(notEmailFriendly.Abreve === "#x102", "01");

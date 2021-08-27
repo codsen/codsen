@@ -2,7 +2,7 @@ import tap from "tap";
 import vs from "vinyl-string";
 // Lets us write in-line functions in our pipe:
 import map from "map-stream";
-import geruc from "../index";
+import geruc from "../index.js";
 
 // https://snugug.com/musings/unit-testing-gulp-tasks/
 // * @param {string} input - String contents of the "file"

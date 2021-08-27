@@ -5,18 +5,21 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-const chalk = require("chalk");
-const { sort } = require("csv-sort");
-const fs = require("fs");
-const globby = require("globby");
-const inquirer = require("inquirer");
+import chalk from "chalk";
+import { sort } from "csv-sort";
+import fs from "fs";
+import globby from "globby";
+import inquirer from "inquirer";
 
 const { log } = console;
-const meow = require("meow");
-const path = require("path");
-const updateNotifier = require("update-notifier");
-const pullAll = require("lodash.pullall");
-const uniq = require("lodash.uniq");
+import meow from "meow";
+import path from "path";
+// import updateNotifier from "update-notifier";
+import pullAll from "lodash.pullall";
+import uniq from "lodash.uniq";
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const { name } = require("./package.json");
 
 const state = {};
@@ -47,7 +50,7 @@ const cli = meow(
     },
   }
 );
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------

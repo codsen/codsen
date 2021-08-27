@@ -1,7 +1,7 @@
 import clone from "lodash.clonedeep";
 import objectPath from "object-path";
 import { mixer } from "test-mixer";
-import { det as det1, opts as defaults } from "../dist/detergent.esm";
+import { det as det1, opts as defaults } from "../dist/detergent.esm.js";
 
 const leftSingleQuote = "\u2018";
 const rightSingleQuote = "\u2019";

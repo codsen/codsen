@@ -1,8 +1,11 @@
 import tap from "tap";
 import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import { readFileSync as read, writeFileSync as write } from "fs";
 import objectPath from "object-path";
-import { set, del } from "../dist/edit-package-json.esm";
+import { set, del } from "../dist/edit-package-json.esm.js";
 
 function compare(t, testName, pathToProcess, val) {
   const isSet = arguments.length === 4;

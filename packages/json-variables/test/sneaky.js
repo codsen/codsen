@@ -1,7 +1,7 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import { jVar } from "../dist/json-variables.esm";
+import { jVar } from "../dist/json-variables.esm.js";
 
 tap.test("01 - two-level variables resolved", (t) => {
   t.strictSame(

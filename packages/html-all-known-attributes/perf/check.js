@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { allHtmlAttribs } = require("..");
+import { allHtmlAttribs } from "../dist/html-all-known-attributes.esm.js";
 
 const testme = () => allHtmlAttribs.size;
 

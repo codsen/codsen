@@ -1,5 +1,5 @@
 import tap from "tap";
-import { applyFixes, verify } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util.js";
 // import { deepContains } from "ast-deep-contains");
 
 // 1. no config - nothing happens

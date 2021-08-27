@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
-const fs = require("fs");
+import path from "path";
+import fs from "fs";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { comb } = require("..");
+import { comb } from "../dist/email-comb.esm.js";
 
 const source = fs.readFileSync(path.resolve("./perf/dummy_file.html"), "utf8");
 const testme = () =>

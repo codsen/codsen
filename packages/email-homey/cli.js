@@ -2,15 +2,15 @@
 
 /* eslint no-console:0 */
 
-const fs = require("fs");
-const meow = require("meow");
-const path = require("path");
-const chalk = require("chalk");
-const globby = require("globby");
-const uniq = require("lodash.uniq");
-const splice = require("string-splice");
-const logSymbols = require("log-symbols");
-const updateNotifier = require("update-notifier");
+import fs from "fs";
+import meow from "meow";
+import path from "path";
+import chalk from "chalk";
+import globby from "globby";
+import uniq from "lodash.uniq";
+import splice from "string-splice";
+import logSymbols from "log-symbols";
+// import updateNotifier from "update-notifier";
 
 const { log } = console;
 const state = {};
@@ -39,7 +39,7 @@ const cli = meow(
     },
   }
 );
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 
 //                       +------------------------+
 //                       |                        |

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { generateVariations, combinations } from "./util";
+import { generateVariations, combinations } from "./util.js";
 
 tap.test(`01`, (t) => {
   t.strictSame(

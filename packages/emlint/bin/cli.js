@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const meow = require("meow");
-const updateNotifier = require("update-notifier");
-const processPaths = require("./util/processPaths");
+import meow from "meow";
+// const updateNotifier = require("update-notifier");
+import processPaths from "./util/processPaths.js";
 
 const cli = meow(
   `
@@ -24,7 +24,7 @@ const cli = meow(
     },
   }
 );
-updateNotifier({ pkg: cli.pkg }).notify();
+// updateNotifier({ pkg: cli.pkg }).notify();
 
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------

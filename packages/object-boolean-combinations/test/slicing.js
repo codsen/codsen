@@ -1,5 +1,5 @@
 import tap from "tap";
-import { combinations } from "../dist/object-boolean-combinations.esm";
+import { combinations } from "../dist/object-boolean-combinations.esm.js";
 
 // ==============================
 // Overrides or slicing

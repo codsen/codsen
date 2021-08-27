@@ -1,6 +1,6 @@
 import tap from "tap";
-import { isOpening as is } from "../dist/is-html-tag-opening.esm";
-import { mixer } from "./util/util";
+import { isOpening as is } from "../dist/is-html-tag-opening.esm.js";
+import { mixer } from "./util/util.js";
 
 const BACKSLASH = "\u005C";
 

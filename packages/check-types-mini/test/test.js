@@ -1,5 +1,5 @@
 import tap from "tap";
-import { checkTypesMini } from "../dist/check-types-mini.esm";
+import { checkTypesMini } from "../dist/check-types-mini.esm.js";
 
 tap.test(`01 - when all/first args are missing`, (t) => {
   t.throws(() => {

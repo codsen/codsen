@@ -281,9 +281,7 @@ function fixEnt(str, originalOpts) {
             if (situation.probablyNumeric) {
               if (
               /* istanbul ignore next */
-              situation.probablyNumeric && situation.charTrimmed[0] === "#" && !situation.whitespaceCount && (
-              !situation.lettersCount && situation.numbersCount > 0 && !situation.othersCount ||
-              (situation.numbersCount || situation.lettersCount) && situation.charTrimmed[1] === "x" && !situation.othersCount)) {
+              situation.probablyNumeric && situation.charTrimmed[0] === "#" && !situation.whitespaceCount && (!situation.lettersCount && situation.numbersCount > 0 && !situation.othersCount || (situation.numbersCount || situation.lettersCount) && situation.charTrimmed[1] === "x" && !situation.othersCount)) {
                 const decodedEntitysValue = String.fromCharCode(parseInt(situation.charTrimmed.slice(situation.probablyNumeric === "deci" ? 1 : 2), situation.probablyNumeric === "deci" ? 10 : 16));
                 if (situation.probablyNumeric === "deci" && parseInt(situation.numbersValue, 10) > 918015) {
                   rangesArr2.push({
@@ -402,9 +400,7 @@ function fixEnt(str, originalOpts) {
                 });
                 pingAmps(whatsOnTheLeft, i);
               } else if (
-              potentialEntity.length < maxLength + 2 && (
-              (temp = [...allNamedEntitiesSetOnly].filter(curr => leven(curr, potentialEntity) === 1)) && temp.length ||
-              (temp = [...allNamedEntitiesSetOnly].filter(curr =>
+              potentialEntity.length < maxLength + 2 && ((temp = [...allNamedEntitiesSetOnly].filter(curr => leven(curr, potentialEntity) === 1)) && temp.length || (temp = [...allNamedEntitiesSetOnly].filter(curr =>
               /* istanbul ignore next */
               leven(curr, potentialEntity) === 2 && potentialEntity.length > 3)) && temp.length)) {
                 /* istanbul ignore else */

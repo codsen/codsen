@@ -1,5 +1,5 @@
 import tap from "tap";
-import { rOffset } from "../dist/ranges-offset.esm";
+import { rOffset } from "../dist/ranges-offset.esm.js";
 
 tap.test(`01 - bool`, (t) => {
   t.strictSame(rOffset(true, 0), true, "01.01");

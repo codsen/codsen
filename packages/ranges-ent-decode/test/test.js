@@ -1,5 +1,5 @@
 import tap from "tap";
-import { rEntDecode as decode } from "../dist/ranges-ent-decode.esm";
+import { rEntDecode as decode } from "../dist/ranges-ent-decode.esm.js";
 
 // ==============================
 // 00. Throws

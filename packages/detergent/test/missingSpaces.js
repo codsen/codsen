@@ -1,8 +1,8 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import { det as det1 } from "../dist/detergent.esm";
-import { det, mixer, rawNDash, rawNbsp } from "../t-util/util";
+import { det as det1 } from "../dist/detergent.esm.js";
+import { det, mixer, rawNDash, rawNbsp } from "../t-util/util.js";
 
 // -----------------------------------------------------------------------------
 

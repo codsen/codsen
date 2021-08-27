@@ -29,8 +29,7 @@ function isObj(something) {
 }
 function layerPending(layers, tokenObj) {
   return (
-    tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && Object.prototype.hasOwnProperty.call(layers[layers.length - 1], "tagName") && Object.prototype.hasOwnProperty.call(tokenObj, "tagName") && layers[layers.length - 1].tagName === tokenObj.tagName && layers[layers.length - 1].closing === false ||
-    tokenObj.type === "comment" && layers.some(layerObjToken => Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing))
+    tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && Object.prototype.hasOwnProperty.call(layers[layers.length - 1], "tagName") && Object.prototype.hasOwnProperty.call(tokenObj, "tagName") && layers[layers.length - 1].tagName === tokenObj.tagName && layers[layers.length - 1].closing === false || tokenObj.type === "comment" && layers.some(layerObjToken => Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing))
   );
 }
 function cparser(str, originalOpts) {
@@ -81,15 +80,12 @@ function cparser(str, originalOpts) {
           prevToken = null;
         }
         if (nestNext &&
-        !tokenObj.closing && (
-        !lastProcessedToken.closing ||
-        lastProcessedToken.type === "comment" &&
+        !tokenObj.closing && (!lastProcessedToken.closing || lastProcessedToken.type === "comment" &&
         lastProcessedToken.language === "html") &&
         lastProcessedToken.type !== "text" && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj)) {
           nestNext = false;
           path = `${path}.children.0`;
-        } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && (
-        !tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
+        } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && (!tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
           if (tokenObj.type === "comment" && tokenObj.closing && Array.isArray(layers) && layers.length &&
           layers.some(l => l.type === "comment" && l.kind === tokenObj.kind)) {
             for (let i = layers.length; i--;) {

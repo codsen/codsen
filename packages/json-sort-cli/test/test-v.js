@@ -3,16 +3,9 @@ import path from "path";
 import tap from "tap";
 import execa from "execa";
 import tempy from "tempy";
-// import pMap from "p-map";
-import pack from "../package.json";
-// import {
-//   testFileContents,
-//   sortedTestFileContents,
-//   testFilePaths,
-//   sortedTabbedTestFileContents,
-//   minifiedContents,
-//   prettifiedContents,
-// } from "./util/data.js";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const pack = require("../package.json");
 
 // -----------------------------------------------------------------------------
 

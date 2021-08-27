@@ -1,5 +1,5 @@
 import tap from "tap";
-import { cparser } from "../dist/codsen-parser.esm";
+import { cparser } from "../dist/codsen-parser.esm.js";
 
 // 00. no error
 // -----------------------------------------------------------------------------

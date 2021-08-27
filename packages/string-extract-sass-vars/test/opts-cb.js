@@ -1,5 +1,5 @@
 import tap from "tap";
-import { extractVars as e } from "../dist/string-extract-sass-vars.esm";
+import { extractVars as e } from "../dist/string-extract-sass-vars.esm.js";
 
 // -----------------------------------------------------------------------------
 

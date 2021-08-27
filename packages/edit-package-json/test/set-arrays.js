@@ -1,6 +1,6 @@
 import tap from "tap";
-import { setter } from "./util/util";
-// import { set, del } from "../dist/edit-package-json.esm";
+import { setter } from "./util/util.js";
+// import { set, del } from "../dist/edit-package-json.esm.js";
 
 // -----------------------------------------------------------------------------
 // 06. set - on arrays, existing path

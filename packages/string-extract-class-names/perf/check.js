@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
+import { runPerf } from "../../../scripts/run-perf.mjs";
 
 // setup
-const { extract } = require("..");
+import { extract } from "../dist/string-extract-class-names.esm.js";
 
 const testme = () =>
   extract("p#id-name:lang(it) p#id-name-other:lang(en)", true);

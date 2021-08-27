@@ -1,5 +1,5 @@
 import tap from "tap";
-import { comb } from "./util/util";
+import { comb } from "./util/util.js";
 
 // release 2.11.0 - backend variables with spaces as classes
 // -----------------------------------------------------------------------------

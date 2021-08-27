@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 // deps
-const path = require("path");
+import path from "path";
 
 const callerDir = path.resolve(".");
-const runPerf = require("../../../scripts/run-perf.js");
-const { Linter } = require("..");
+import { runPerf } from "../../../scripts/run-perf.mjs";
+import { Linter } from "../dist/emlint.esm.js";
 
 // 1. basic tests
 const str = "< a>";

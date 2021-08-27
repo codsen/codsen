@@ -1,4 +1,4 @@
-import { mergeAdvanced as m } from "../dist/object-merge-advanced.esm";
+import { mergeAdvanced as m } from "../dist/object-merge-advanced.esm.js";
 
 function mergeAdvanced(t, input1, input2, opts) {
   // 1. make sure callback overrides work
