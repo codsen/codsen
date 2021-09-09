@@ -2,7 +2,7 @@ import tap from "tap";
 import { promises as fsp } from "fs";
 import objectPath from "object-path";
 import { traverse } from "ast-monkey-traverse";
-import globby from "globby";
+import { globby } from "globby";
 import path from "path";
 import pMap from "p-map";
 import clone from "lodash.clonedeep";

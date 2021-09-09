@@ -16,6 +16,7 @@ const cli = meow(
     --version, -v  Shows the current version
 `,
   {
+    importMeta: import.meta,
     flags: {
       pad: {
         type: "number",
@@ -41,7 +42,7 @@ if (cli.flags.v) {
 // -----------------------------------------------------------------------------
 
 console.log(
-  `044 FIY, ${`\u001b[${33}m${`cli.input`}\u001b[${39}m`} = ${JSON.stringify(
+  `045 FIY, ${`\u001b[${33}m${`cli.input`}\u001b[${39}m`} = ${JSON.stringify(
     cli.input,
     null,
     4

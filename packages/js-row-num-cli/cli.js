@@ -2,7 +2,7 @@
 
 import meow from "meow";
 import fs from "fs-extra";
-import globby from "globby";
+import { globby } from "globby";
 import pReduce from "p-reduce";
 import isDirectory from "is-d";
 import writeFileAtomic from "write-file-atomic";
@@ -51,6 +51,7 @@ const cli = meow(
     jsrownum --version
 `,
   {
+    importMeta: import.meta,
     flags: {
       pad: {
         type: "number",

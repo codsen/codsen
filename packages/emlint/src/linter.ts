@@ -539,7 +539,6 @@ class Linter extends TypedEmitter<RuleObjType> {
     );
 
     this.messages.push({
-      fix: null,
       keepSeparateWhenFixing: false,
       line,
       column: col,
@@ -548,7 +547,7 @@ class Linter extends TypedEmitter<RuleObjType> {
       ...(this.hasBeenCalledWithKeepSeparateWhenFixing ? { fix: null } : {}),
     });
     console.log(
-      `551 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+      `550 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} AFTER: ${JSON.stringify(
         this.messages,
         null,
         4
@@ -569,7 +568,7 @@ class Linter extends TypedEmitter<RuleObjType> {
     }
 
     console.log(
-      `572 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ENDING this.hasBeenCalledWithKeepSeparateWhenFixing = ${
+      `571 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ENDING this.hasBeenCalledWithKeepSeparateWhenFixing = ${
         this.hasBeenCalledWithKeepSeparateWhenFixing
       }`
     );

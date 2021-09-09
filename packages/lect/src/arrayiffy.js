@@ -1,4 +1,4 @@
-export const arrayiffy = (something) => {
+function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length > 0) {
       return [something];
@@ -6,4 +6,6 @@ export const arrayiffy = (something) => {
     return [];
   }
   return something;
-};
+}
+
+export default arrayiffy;

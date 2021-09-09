@@ -4,7 +4,7 @@ import sortPackageJson from "sort-package-json";
 import pacote from "pacote";
 
 // writes package.json
-export const packageJson = async ({ state, lectrc }) => {
+async function packageJson({ state, lectrc }) {
   const programDevDeps = [
     "rollup",
     "@rollup",
@@ -137,16 +137,40 @@ export const packageJson = async ({ state, lectrc }) => {
   });
 
   // 6. set various keys
+  objectPath.set(content, "engines", {
+    node: ">=12",
+  });
+  // objectPath.set(content, "tap", {
+  //   "coverage-report": [
+  //     "json-summary",
+  //     "text"
+  //   ],
+  //   "node-arg": [
+  //     "--no-warnings",
+  //     "--experimental-loader",
+  //     "@istanbuljs/esm-loader-hook"
+  //   ],
+  //   "timeout": 0,
+  //   "check-coverage": false
+  // });
+  objectPath.set(content, "type", "module");
   if (!state.isCLI) {
-    objectPath.set(content, "main", `dist/${state.pack.name}.cjs.js`);
-    objectPath.set(content, "module", `dist/${state.pack.name}.esm.js`);
     objectPath.set(content, "types", `types/index.d.ts`);
-  }
-  if (objectPath.has(content, "browser")) {
+
     // beware, some Node-only packages don't build UMD's, like
     // "tap-parse-string-to-object" which consumes streams
-    objectPath.set(content, "browser", `dist/${state.pack.name}.umd.js`);
+    if (typeof objectPath.get(content, "exports") === "string") {
+      objectPath.set(content, "exports", `./dist/${state.pack.name}.esm.js`);
+    } else {
+      objectPath.set(content, "exports", {
+        script: `./dist/${state.pack.name}.umd.js`,
+        default: `./dist/${state.pack.name}.esm.js`,
+      });
+    }
   }
+  objectPath.del(content, "main");
+  objectPath.del(content, "module");
+  objectPath.del(content, "browser");
 
   // 7. capitalise first letter in description
   if (
@@ -254,4 +278,6 @@ export const packageJson = async ({ state, lectrc }) => {
     );
     return Promise.reject(err);
   }
-};
+}
+
+export default packageJson;

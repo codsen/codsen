@@ -7,7 +7,7 @@ import chalk from "chalk";
 import { within } from "email-all-chars-within-ascii";
 import { right } from "string-left-right";
 import fs from "fs-extra";
-import globby from "globby";
+import { globby } from "globby";
 import inquirer from "inquirer";
 import path from "path";
 // import updateNotifier from "update-notifier";

@@ -6,7 +6,7 @@ import decodeContent from "./decodeContent.js";
 
 // bake examples API DIY makeshift-endpoint, a JSON file
 // at ./examples/api.json
-export const examples = async ({ state }) => {
+async function examples({ state }) {
   // CLI apps don't have examples, so resolve straight away
   if (state.isCLI) {
     return Promise.resolve(null);
@@ -92,4 +92,6 @@ export const examples = async ({ state }) => {
       return Promise.reject(err);
     }
   }
-};
+}
+
+export default examples;

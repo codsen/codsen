@@ -3,15 +3,10 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import fs from "fs";
-import { promisify } from "util";
-
-// *
-const read = promisify(fs.readFile);
+import { promises, readFileSync } from "fs";
+const { readFile } = promises;
 import write from "write-file-atomic";
-// *
-
-import globby from "globby";
+import { globby } from "globby";
 import pReduce from "p-reduce";
 import PProgress from "p-progress";
 import meow from "meow";
@@ -40,7 +35,10 @@ const cli = meow(
     -m, --module        Blaclist against bumping major any type=module packages
     -h, --help          Shows this help
     -v, --version       Shows the current installed version
-`
+`,
+  {
+    importMeta: import.meta,
+  }
 );
 // updateNotifier({ pkg: cli.pkg }).notify();
 
@@ -107,7 +105,7 @@ if (cli.flags) {
 
   // try to read the local config if it's present
   try {
-    config = JSON.parse(fs.readFileSync(confLocation, "utf8"));
+    config = JSON.parse(readFileSync(confLocation, "utf8"));
     newConfig = Object.assign({}, newConfig, config);
     newConfig.noMajorBumping = new Set(newConfig.noMajorBumping);
   } catch (err) {
@@ -124,7 +122,7 @@ if (cli.flags) {
     pReduce(
       paths,
       (mapReceived, currentPath) =>
-        read(currentPath, "utf8")
+        readFile(currentPath, "utf8")
           .then((packContentsStr) => {
             const parsedContents = JSON.parse(packContentsStr);
             mapReceived.namesList.push(parsedContents.name);

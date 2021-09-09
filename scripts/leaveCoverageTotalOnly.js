@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
 const covPath = path.resolve("./coverage/coverage-summary.json");
 const { total } = JSON.parse(fs.readFileSync(covPath));

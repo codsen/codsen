@@ -3,7 +3,7 @@ import writeFileAtomic from "write-file-atomic";
 
 // hard write all static files
 // key files.write_hard from packages/ root .lectrc.json
-export const hardWrite = async ({ lectrc }) => {
+async function hardWrite({ lectrc }) {
   const contentsToWriteHard = objectPath
     .get(lectrc, "files.write_hard")
     .filter((obj) => {
@@ -25,4 +25,6 @@ export const hardWrite = async ({ lectrc }) => {
       writeFileAtomic(oneToDoObj.name, oneToDoObj.contents)
     )
   );
-};
+}
+
+export default hardWrite;

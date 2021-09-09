@@ -1,5 +1,8 @@
-const path = require("path");
-const camelCase = require("lodash.camelcase");
+import esbuild from "esbuild";
+import path from "path";
+import camelCase from "lodash.camelcase";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const mode = process.env.MODE;
 const name = path.basename(path.resolve("./"));
 const pkg = require(path.join(path.resolve("./"), `package.json`));
@@ -30,7 +33,7 @@ const banner = {
 
 // CJS
 if (pkg.main) {
-  require("esbuild").buildSync({
+  esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     format: "cjs",
     bundle: true,
@@ -46,7 +49,7 @@ if (pkg.main) {
 
 // ESM
 if (pkg.module) {
-  require("esbuild").buildSync({
+  esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     format: "esm",
     bundle: true,
@@ -62,7 +65,7 @@ if (pkg.module) {
 
 // dev IIFE
 if (pkg.browser) {
-  require("esbuild").buildSync({
+  esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     format: "iife",
     globalName: camelCase(name),

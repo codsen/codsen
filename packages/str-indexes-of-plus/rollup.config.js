@@ -19,10 +19,6 @@ const licensePiece = `@name ${pkg.name}
 {@link ${pkg.homepage}}`;
 
 const extensions = [".mjs", ".js", ".json", ".node", ".ts"];
-const babelRuntimeVersion = pkg.dependencies["@babel/runtime"].replace(
-  /^[^0-9]*/,
-  ""
-);
 
 const makeExternalPredicate = (externalArr) => {
   if (externalArr.length === 0) {
@@ -32,7 +28,7 @@ const makeExternalPredicate = (externalArr) => {
   return (id) => pattern.test(id);
 };
 
-export default (commandLineArgs) => {
+export default (commandLineArgs = {}) => {
   const finalConfig = [
     // UMD Production
     {
@@ -100,10 +96,7 @@ export default (commandLineArgs) => {
         babel({
           extensions,
           plugins: [
-            [
-              "@babel/plugin-transform-runtime",
-              { version: babelRuntimeVersion, useESModules: true },
-            ],
+            ["@babel/plugin-transform-runtime", { useESModules: true }],
           ],
           babelHelpers: "runtime",
         }),
@@ -125,11 +118,6 @@ export default (commandLineArgs) => {
       plugins: [json(), dts()],
     },
   ];
-
-  if (commandLineArgs.dev) {
-    // don't build minified UMD in dev, it takes too long
-    finalConfig.shift();
-  }
 
   // clean up this custom "dev" flag, otherwise Rollup will complain
   // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954

@@ -1,7 +1,7 @@
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
-import decodeContent from "./decodeContent";
-import arrayiffy from "./arrayiffy";
+import decodeContent from "./decodeContent.js";
+import arrayiffy from "./arrayiffy.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const webapps = require("../../../stats/webapps.json");
@@ -92,7 +92,7 @@ Please [visit codsen.com](https://codsen.com/os/${
 
 To report bugs or request features or assistance, [raise an issue](https://github.com/codsen/codsen/issues/new/choose) on GitHub.
 
-  `;
+`;
 
   // licence module
   const licenceExtras = objectPath.get(state.pack, "lect.licence.extras");
@@ -130,4 +130,4 @@ To report bugs or request features or assistance, [raise an issue](https://githu
   }
 }
 
-module.exports = readme;
+export default readme;

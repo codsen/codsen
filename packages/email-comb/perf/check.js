@@ -5,7 +5,7 @@ import path from "path";
 import fs from "fs";
 
 const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.mjs";
+import { runPerf } from "../../../scripts/run-perf.js";
 
 // setup
 import { comb } from "../dist/email-comb.esm.js";
