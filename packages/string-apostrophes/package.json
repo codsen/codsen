@@ -1,6 +1,6 @@
 {
   "name": "string-apostrophes",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes",
   "keywords": [
     "apostrophe",
@@ -79,7 +79,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "ranges-apply": "^5.1.0"
+    "ranges-apply": "^6.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
@@ -108,7 +108,7 @@
     "core-js": "^3.17.3",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
-    "lect": "^0.17.0",
+    "lect": "^0.18.0",
     "rollup": "^2.56.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

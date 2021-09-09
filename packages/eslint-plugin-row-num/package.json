@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-row-num",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "ESLint plugin to update row numbers on each console.log",
   "keywords": [
     "console",
@@ -80,7 +80,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "js-row-num": "^4.1.0",
+    "js-row-num": "^5.0.0",
     "json-stringify-safe": "^5.0.1"
   },
   "devDependencies": {
@@ -109,7 +109,7 @@
     "core-js": "^3.17.3",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
-    "lect": "^0.17.0",
+    "lect": "^0.18.0",
     "rollup": "^2.56.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
