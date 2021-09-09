@@ -100,7 +100,7 @@
         "ranges-crop": 2,
         "ranges-invert": 2,
         "ranges-is-index-within": 2,
-        "ranges-merge": 8,
+        "ranges-merge": 7,
         "ranges-process-outside": 1,
         "ranges-push": 13,
         "ranges-sort": 1,
@@ -161,6 +161,7 @@
         "@babel/preset-env": 109,
         "@babel/preset-typescript": 109,
         "@babel/register": 109,
+        "@istanbuljs/esm-loader-hook": 121,
         "@rollup/plugin-babel": 109,
         "@rollup/plugin-commonjs": 109,
         "@rollup/plugin-json": 98,
@@ -215,7 +216,6 @@
         "node-fetch": 1,
         "object-path": 6,
         "p-map": 4,
-        "posthtml-parser": 1,
         "ranges-apply": 6,
         "ranges-invert": 1,
         "ranges-merge": 1,
@@ -285,10 +285,10 @@
             "string-match-left-right": 10
         },
         {
-            "ranges-merge": 8
+            "arrayiffy-if-string": 7
         },
         {
-            "arrayiffy-if-string": 7
+            "ranges-merge": 7
         },
         {
             "check-types-mini": 4
