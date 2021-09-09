@@ -1,7 +1,7 @@
 /**
  * @name csv-split-easy
  * @fileoverview Splits the CSV string into array of arrays, each representing a row of columns
- * @version 5.1.0
+ * @version 6.0.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/csv-split-easy/}
@@ -9,7 +9,7 @@
 
 import { remSep } from 'string-remove-thousand-separators';
 
-var version$1 = "5.1.0";
+var version$1 = "6.0.0";
 
 const version = version$1;
 const defaults = {

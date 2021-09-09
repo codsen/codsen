@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.0.0](https://github.com/codsen/codsen/compare/detect-is-it-html-or-xhtml@4.1.0...detect-is-it-html-or-xhtml@5.0.0) (2021-09-09)
-
+## 5.0.0 (2021-09-09)
 
 ### Features
 
-* migrate to ES Modules ([8c9d95d](https://github.com/codsen/codsen/commit/8c9d95d5dea0b769c2f070397141918a4893d575))
-
+- migrate to ES Modules ([8c9d95d](https://github.com/codsen/codsen/commit/8c9d95d5dea0b769c2f070397141918a4893d575))
 
 ### BREAKING CHANGES
 
-* programs now are in ES Modules and won't work with Common JS require()
-
-
-
-
+- programs now are in ES Modules and won't work with Common JS require()
 
 ## 4.1.0 (2021-05-24)
 

@@ -3,27 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.0.0](https://github.com/codsen/codsen/compare/html-crush@4.2.0...html-crush@5.0.0) (2021-09-09)
-
+## 5.0.0 (2021-09-09)
 
 ### Bug Fixes
 
-* tweaks to the line length calculation ([4ec1fe2](https://github.com/codsen/codsen/commit/4ec1fe224f8e2c32e94c085afb8cf517cc806a8c))
-
+- tweaks to the line length calculation ([4ec1fe2](https://github.com/codsen/codsen/commit/4ec1fe224f8e2c32e94c085afb8cf517cc806a8c))
 
 ### Features
 
-* avoid two closing curlies in a sequence ([b7293b0](https://github.com/codsen/codsen/commit/b7293b0bd5e132946936d41cfa36d27e61a11522)), closes [#16](https://github.com/codsen/codsen/issues/16)
-* migrate to ES Modules ([8c9d95d](https://github.com/codsen/codsen/commit/8c9d95d5dea0b769c2f070397141918a4893d575))
-
+- avoid two closing curlies in a sequence ([b7293b0](https://github.com/codsen/codsen/commit/b7293b0bd5e132946936d41cfa36d27e61a11522)), closes [#16](https://github.com/codsen/codsen/issues/16)
+- migrate to ES Modules ([8c9d95d](https://github.com/codsen/codsen/commit/8c9d95d5dea0b769c2f070397141918a4893d575))
 
 ### BREAKING CHANGES
 
-* programs now are in ES Modules and won't work with Common JS require()
-
-
-
-
+- programs now are in ES Modules and won't work with Common JS require()
 
 ## 4.2.0 (2021-05-24)
 

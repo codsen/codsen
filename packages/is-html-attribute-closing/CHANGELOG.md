@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0](https://github.com/codsen/codsen/compare/is-html-attribute-closing@2.3.0...is-html-attribute-closing@3.0.0) (2021-09-09)
-
+## 3.0.0 (2021-09-09)
 
 ### Features
 
-* migrate to ES Modules ([8c9d95d](https://github.com/codsen/codsen/commit/8c9d95d5dea0b769c2f070397141918a4893d575))
-
+- migrate to ES Modules ([8c9d95d](https://github.com/codsen/codsen/commit/8c9d95d5dea0b769c2f070397141918a4893d575))
 
 ### BREAKING CHANGES
 
-* programs now are in ES Modules and won't work with Common JS require()
-
-
-
-
+- programs now are in ES Modules and won't work with Common JS require()
 
 ## 2.3.0 (2021-05-24)
 

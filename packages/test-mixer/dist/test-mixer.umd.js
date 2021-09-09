@@ -1,7 +1,7 @@
 /**
  * @name test-mixer
  * @fileoverview Test helper to generate function opts object variations
- * @version 2.1.0
+ * @version 3.0.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/test-mixer/}
@@ -11,8 +11,8 @@
 /**
  * @name object-boolean-combinations
  * @fileoverview Consumes a defaults object with booleans, generates all possible variations of it
- * @version 4.1.0
+ * @version 5.0.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-boolean-combinations/}
- */t.mixer=function(t={},r={}){if(t&&"object"!=typeof t)throw new Error("test-mixer: [THROW_ID_01] the first input arg is missing!");if(r&&"object"!=typeof r)throw new Error("test-mixer: [THROW_ID_02] the second input arg is missing!");let e;if("object"==typeof t&&"object"==typeof r&&Object.keys(t).some((t=>{if(!Object.keys(r).includes(t))return e=t,!0})))throw new Error(`test-mixer: [THROW_ID_03] the second input arg object should be defaults; it should be a superset of 1st input arg object. However, 1st input arg object contains key "${e}" which 2nd input arg object doesn't have.`);if(!Object.keys(r).length)return[];const n=ut(t),o=ut(r),u={};return Object.keys(r).forEach((r=>{"boolean"!=typeof o[r]||Object.keys(t).includes(r)||(u[r]=o[r])})),function(t,r={}){if(!t)throw new Error("[THROW_ID_01] missing input object");if(!nt(t))throw new Error("[THROW_ID_02] the first input object must be a true object");if(r&&!nt(r))throw new Error("[THROW_ID_03] the second override object must be a true object");const e=ut(t),n=ut(r),o=Object.keys(e),u=[];let c=[];nt(n)&&Object.keys(n).length&&(c=z(Object.keys(n),Object.keys(e)),c.forEach((t=>Q(o,t))));const i=function(t){const r=[];for(let e=0;e<1<<t;e++){const n=[];for(let r=0;r<t;r++)n.push(e&1<<r?1:0);r.push(n)}return r}(Object.keys(o).length);let a;return i.forEach(((t,r)=>{a={},o.forEach(((t,e)=>{a[t]=1===i[r][e]})),u.push(a)})),nt(n)&&Object.keys(n).length&&u.forEach((t=>c.forEach((r=>{t[r]=n[r]})))),u}(u).map((t=>({...r,...n,...t})))},t.version="2.1.0",Object.defineProperty(t,"__esModule",{value:!0})}));
+ */t.mixer=function(t={},r={}){if(t&&"object"!=typeof t)throw new Error("test-mixer: [THROW_ID_01] the first input arg is missing!");if(r&&"object"!=typeof r)throw new Error("test-mixer: [THROW_ID_02] the second input arg is missing!");let e;if("object"==typeof t&&"object"==typeof r&&Object.keys(t).some((t=>{if(!Object.keys(r).includes(t))return e=t,!0})))throw new Error(`test-mixer: [THROW_ID_03] the second input arg object should be defaults; it should be a superset of 1st input arg object. However, 1st input arg object contains key "${e}" which 2nd input arg object doesn't have.`);if(!Object.keys(r).length)return[];const n=ut(t),o=ut(r),u={};return Object.keys(r).forEach((r=>{"boolean"!=typeof o[r]||Object.keys(t).includes(r)||(u[r]=o[r])})),function(t,r={}){if(!t)throw new Error("[THROW_ID_01] missing input object");if(!nt(t))throw new Error("[THROW_ID_02] the first input object must be a true object");if(r&&!nt(r))throw new Error("[THROW_ID_03] the second override object must be a true object");const e=ut(t),n=ut(r),o=Object.keys(e),u=[];let c=[];nt(n)&&Object.keys(n).length&&(c=z(Object.keys(n),Object.keys(e)),c.forEach((t=>Q(o,t))));const i=function(t){const r=[];for(let e=0;e<1<<t;e++){const n=[];for(let r=0;r<t;r++)n.push(e&1<<r?1:0);r.push(n)}return r}(Object.keys(o).length);let a;return i.forEach(((t,r)=>{a={},o.forEach(((t,e)=>{a[t]=1===i[r][e]})),u.push(a)})),nt(n)&&Object.keys(n).length&&u.forEach((t=>c.forEach((r=>{t[r]=n[r]})))),u}(u).map((t=>({...r,...n,...t})))},t.version="3.0.0",Object.defineProperty(t,"__esModule",{value:!0})}));
