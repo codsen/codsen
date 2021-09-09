@@ -1,6 +1,6 @@
 {
   "name": "ranges-ent-decode",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "Recursive HTML entity decoding for Ranges workflow",
   "keywords": [
     "astral",
@@ -86,7 +86,7 @@
     "@babel/runtime": "^7.15.4",
     "he": "^1.2.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-merge": "^7.1.0"
+    "ranges-merge": "^8.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
@@ -116,7 +116,7 @@
     "core-js": "^3.17.3",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
-    "lect": "^0.17.0",
+    "lect": "^0.18.0",
     "rollup": "^2.56.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

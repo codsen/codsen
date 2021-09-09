@@ -1,6 +1,6 @@
 {
   "name": "string-extract-sass-vars",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Parse SASS variables file into a plain object of CSS key-value pairs",
   "keywords": [
     "css",
@@ -110,7 +110,7 @@
     "core-js": "^3.17.3",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
-    "lect": "^0.17.0",
+    "lect": "^0.18.0",
     "rollup": "^2.56.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/codsen/codsen/compare/json-sort-cli@1.19.0...json-sort-cli@2.0.0) (2021-09-09)
+
+
+### Features
+
+* correct the default "n" flag value, also reach 100% coverage ([6e323cb](https://github.com/codsen/codsen/commit/6e323cbcb67888dcc83bf1ace77c976c44173796))
+* migrate to ES Modules ([8c9d95d](https://github.com/codsen/codsen/commit/8c9d95d5dea0b769c2f070397141918a4893d575))
+
+
+### BREAKING CHANGES
+
+* programs now are in ES Modules and won't work with Common JS require()
+
+
+
+
+
 ## 1.20.0
 
 - added more unit tests
