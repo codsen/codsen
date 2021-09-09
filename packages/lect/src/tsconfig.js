@@ -4,7 +4,7 @@ import writeFileAtomic from "write-file-atomic";
 
 // writes TS configs
 
-export const tsconfig = async ({ state }) => {
+async function tsconfig({ state }) {
   // bail early if it's a CLI
   if (state.isCLI) {
     fs.unlink(path.resolve("rollup.config.js"))
@@ -48,4 +48,6 @@ export const tsconfig = async ({ state }) => {
     console.log(`lect: could not write tsconfigs - ${err}`);
     return Promise.reject(err);
   }
-};
+}
+
+export default tsconfig;

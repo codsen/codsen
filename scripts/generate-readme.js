@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
 // const lectrc = JSON.parse(fs.readFileSync("./packages/.lectrc.json"));
 const today = new Date();

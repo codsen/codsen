@@ -2,7 +2,7 @@
 /* eslint no-console:0 */
 
 import fs from "fs-extra";
-import globby from "globby";
+import { globby } from "globby";
 import meow from "meow";
 import path from "path";
 // import updateNotifier from "update-notifier";
@@ -35,6 +35,7 @@ const cli = meow(
     will expand them, which might yield different results.
 `,
   {
+    importMeta: import.meta,
     flags: {
       normalise: {
         type: "boolean",

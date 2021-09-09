@@ -4,7 +4,7 @@
 import path from "path";
 
 const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.mjs";
+import { runPerf } from "../../../scripts/run-perf.js";
 import { Linter } from "../dist/emlint.esm.js";
 
 // 1. basic tests

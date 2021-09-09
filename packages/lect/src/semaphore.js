@@ -3,7 +3,7 @@ import path from "path";
 import writeFileAtomic from "write-file-atomic";
 
 // generate ./.semaphore/semaphore.yml
-export const semaphore = async ({ state }) => {
+async function semaphore({ state }) {
   const allPackages = fs
     .readdirSync(path.resolve("../"))
     .filter(
@@ -171,4 +171,6 @@ ${allPackages
   if (state.pack.name === "all-named-html-entities") {
     writeFileAtomic(path.resolve("../../.semaphore/semaphore.yml"), content);
   }
-};
+}
+
+export default semaphore;

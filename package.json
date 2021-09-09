@@ -5,18 +5,19 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://codsen.com",
   "author": "Roy Revelt <roy@codsen.com>",
+  "type": "module",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
   "scripts": {
-    "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist --ignore-scripts",
+    "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist --ignore-scripts && node ./scripts/patchRollupBinExit.js",
     "build": "lerna run ci_test --bail --concurrency 1 && npm run seed && npm run readme:generate",
     "build:just": "lerna run build --bail --concurrency 1",
     "cm": "git-cz -n",
@@ -36,34 +37,37 @@
     "wipe": "rm package-lock.json || true && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y",
     "graph": "lerna-dependency-graph -f 'png' -o './deps-graph.png'",
     "checkPublishedSizeLimit": "node ./scripts/check100MBLimit.js",
+    "patchRollupBinExit": "node ./scripts/patchRollupBinExit.js",
     "seed": "node ./scripts/playgrounds.js"
   },
   "dependencies": {},
   "devDependencies": {
-    "@typescript-eslint/parser": "^4.28.3",
-    "@typescript-eslint/eslint-plugin": "^4.28.3",
-    "axios": "^0.21.1",
+    "@typescript-eslint/eslint-plugin": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.0",
+    "axios": "^0.21.4",
     "benchmark": "^2.1.4",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "edit-package-json": "^0.4.0",
-    "esbuild": "^0.12.15",
-    "eslint": "^7.30.0",
+    "esbuild": "^0.12.25",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-no-unsanitized": "^3.1.5",
-    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-row-num": "^1.6.0",
     "eslint-plugin-test-num": "^1.6.0",
     "esm": "^3.2.25",
     "execa": "^5.1.1",
+    "lect": "^0.17.0",
     "lerna": "^4.0.0",
     "lerna-clean-changelogs-cli": "^1.5.0",
     "lerna-dependency-graph": "^1.1.0",
-    "object-path": "^0.11.5",
+    "object-path": "^0.11.7",
     "prettier": "^2.3.2",
-    "simple-git": "^2.41.1",
+    "simple-git": "^2.45.1",
     "tap-parse-string-to-object": "^2.1.0",
     "title": "^3.4.3",
+    "typescript": "^4.4.2",
     "write-file-atomic": "^3.0.3"
   }
 }

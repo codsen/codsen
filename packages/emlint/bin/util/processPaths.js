@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { promisify } from "util";
 const readFileAsync = promisify(fs.readFile);
-import globby from "globby";
+import { globby } from "globby";
 import pReduce from "p-reduce";
 import isDirectory from "is-d";
 import { Linter } from "../../dist/emlint.esm.js";

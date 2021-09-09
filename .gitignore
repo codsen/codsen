@@ -22,3 +22,4 @@ deps-graph.png
 package-lock.json
 testStats.md
 .nyc_output
+package.json.lerna_backup

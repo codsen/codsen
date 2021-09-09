@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const { readdirSync, removeSync, copySync } = require("fs-extra");
-const path = require("path");
+import { readdirSync, removeSync, copySync } from "fs-extra";
+import path from "path";
 
 if (process.argv[2] === "--pt1") {
   //

@@ -4,7 +4,7 @@
 import path from "path";
 
 const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.mjs";
+import { runPerf } from "../../../scripts/run-perf.js";
 
 // setup
 import { unicodeToNative } from "../dist/string-convert-indexes.esm.js";

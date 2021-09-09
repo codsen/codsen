@@ -5,7 +5,7 @@
 
 import fs from "fs-extra";
 import chalk from "chalk";
-import globby from "globby";
+import { globby } from "globby";
 import meow from "meow";
 import path from "path";
 // import updateNotifier from "update-notifier";
@@ -43,7 +43,10 @@ const cli = meow(
   Options
     -h, --help          Shows this help
     -v, --version       Shows the current version
-`
+`,
+  {
+    importMeta: import.meta,
+  }
 );
 // updateNotifier({ pkg: cli.pkg }).notify();
 const signature = chalk.grey("✨ lerna-clean-changelogs-cli: ");

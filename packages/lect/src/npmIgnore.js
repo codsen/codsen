@@ -1,11 +1,11 @@
-import { statSync, promises as fs } from "fs";
+import { promises as fs, statSync } from "fs";
 import objectPath from "object-path";
 import partition from "lodash.partition";
 import { pull } from "array-pull-all-with-glob";
 import writeFileAtomic from "write-file-atomic";
 
 // writes .npmignore
-export const npmIgnore = async ({ lectrc }) => {
+async function npmIgnore({ lectrc }) {
   // insurance
   if (typeof lectrc !== "object") {
     return Promise.reject(
@@ -207,4 +207,54 @@ export const npmIgnore = async ({ lectrc }) => {
     );
     return Promise.reject(err);
   }
-};
+
+  // !!!
+  // we can't write .lectrc because there's nothing new to write -
+  // inquirer can't be triggered from within the async promises array
+  // therefore all amends to whitelists or blacklists inside .lectrc
+  // have to be done manually
+  // !!!
+
+  // set the values to be written to .lectrc.json
+  // if (foldersToAddToGlobalList.length) {
+  //   objectPath.set(
+  //     lectrc,
+  //     "npmignore.badFolders",
+  //     mergeAdvanced(
+  //       objectPath.get(lectrc, "npmignore.badFolders"),
+  //       foldersToAddToGlobalList
+  //     ).sort()
+  //   );
+  // }
+  // if (filesToAddToGlobalList.length) {
+  //   objectPath.set(
+  //     lectrc,
+  //     "npmignore.badFiles",
+  //     mergeAdvanced(
+  //       objectPath.get(lectrc, "npmignore.badFiles"),
+  //       filesToAddToGlobalList
+  //     ).sort()
+  //   );
+  // }
+
+  // // compare with the original
+  // if (!isEqual(lectrc, state.originalLectrc)) {
+  //   try {
+  //     console.log(`220 lect/npmIgnore.js`);
+  //     await writeFileAtomic(
+  //       path.resolve("../.lectrc.json"),
+  //       JSON.stringify(lectrc, null, 2)
+  //     );
+  //     console.log(`lect .lectrc.json ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
+
+  //     // don't return, there is more job to do
+  //   } catch (err) {
+  //     console.log(
+  //       `lect: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} could not write .lectrc.json - ${err}`
+  //     );
+  //     return Promise.reject(err);
+  //   }
+  // }
+}
+
+export default npmIgnore;

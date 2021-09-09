@@ -30,6 +30,7 @@ const cli = meow(
   one you're at currently.
 `,
   {
+    importMeta: import.meta,
     flags: {
       dev: {
         type: "boolean",

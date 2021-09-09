@@ -1,11 +1,11 @@
-import { constants, promises as fs } from "fs";
+import { promises as fs, constants } from "fs";
 import path from "path";
 import objectPath from "object-path";
 import rimraf from "rimraf";
 
 // delete all requested files
 // key files.delete from packages/ root .lectrc.json
-export const hardDelete = async ({ lectrc }) => {
+async function hardDelete({ lectrc }) {
   rimraf(path.resolve(".nyc_output/"), {}, (e) => {
     if (e) {
       console.log(e);
@@ -37,4 +37,6 @@ export const hardDelete = async ({ lectrc }) => {
         .catch(() => Promise.resolve(null))
     )
   );
-};
+}
+
+export default hardDelete;

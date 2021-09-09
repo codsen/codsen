@@ -5,7 +5,7 @@
 
 import fs from "fs-extra";
 import chalk from "chalk";
-import globby from "globby";
+import { globby } from "globby";
 import meow from "meow";
 import path from "path";
 // import updateNotifier from "update-notifier";
@@ -71,6 +71,7 @@ const cli = meow(
     will parse globs. If you put as system globs without quotes, your shell will expand them.
 `,
   {
+    importMeta: import.meta,
     flags: {
       nodemodules: {
         type: "boolean",

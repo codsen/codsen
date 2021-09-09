@@ -9889,7 +9889,6 @@ class Linter extends TypedEmitter {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
     this.messages.push({
-      fix: null,
       keepSeparateWhenFixing: false,
       line,
       column: col,

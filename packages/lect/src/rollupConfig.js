@@ -5,7 +5,7 @@ import camelCase from "lodash.camelcase";
 import writeFileAtomic from "write-file-atomic";
 
 // writes rollup.config.js
-export const rollupConfig = async ({ state }) => {
+async function rollupConfig({ state }) {
   // bail early if it's a CLI
   if (state.isCLI) {
     fs.unlink(path.resolve("rollup.config.js"))
@@ -27,13 +27,13 @@ export const rollupConfig = async ({ state }) => {
   }
 
   let defaultUmdBit = "";
-  if (objectPath.has(state.pack, "browser")) {
+  if (objectPath.has(state.pack, "exports.script")) {
     defaultUmdBit = `
     // UMD Production
     {
       input: "src/main.ts",
       output: {
-        file: pkg.browser,
+        file: \`dist/$\{pkg.name}.umd.js\`,
         format: "umd",
         name: "${camelCase(state.pack.name)}",
         indent: false,
@@ -106,160 +106,13 @@ export const rollupConfig = async ({ state }) => {
 `;
   }
 
-  // notice terser() is absent:
-  let defaultDevUmdBit = "";
-  if (objectPath.has(state.pack, "browser")) {
-    defaultDevUmdBit = `
-    // UMD development
-    {
-      input: "src/main.ts",
-      output: {
-        file: \`dist/\${pkg.name}.dev.umd.js\`,
-        format: "umd",
-        name: "${camelCase(state.pack.name)}",
-        indent: false,
-      },
-      plugins: [
-        ${
-          state.pack.devDependencies["rollup-plugin-node-builtins"]
-            ? "builtins(),\n        "
-            : ""
-        }nodeResolve({
-          extensions,
-        })${
-          state.pack.devDependencies["rollup-plugin-node-globals"]
-            ? ",\n        globals()"
-            : ""
-        }${
-      state.pack.devDependencies["@rollup/plugin-json"]
-        ? ",\n        json()"
-        : ""
-    }${
-      state.pack.devDependencies["rollup-plugin-node-polyfills"]
-        ? ",\n        nodePolyfills()"
-        : ""
-    },
-        typescript({
-          ${
-            state.pack.devDependencies["ts-transformer-keys"] ||
-            state.pack.dependencies["ts-transformer-keys"]
-              ? `transformers: {
-            before: [
-              {
-                type: "program",
-                factory: (program) => {
-                  return keysTransformer(program);
-                },
-              },
-            ],
-            after: [],
-          },
-              `
-              : ""
-          }tsconfig: "../../tsconfig.build.json",
-          declaration: false,
-        }),
-        commonjs(),
-        babel({
-          extensions,
-          include: resolve("src", "**", "*.ts"),
-          exclude: "node_modules/**",
-          rootMode: "upward",
-          babelHelpers: "bundled",
-        }),
-        !commandLineArgs.dev &&
-          strip({
-            sourceMap: false,
-            include: ["src/**/*.(js|ts)"],
-            functions: ["console.*"],
-          }),
-        banner(licensePiece),
-      ],
-    },
-`;
-  }
-
-  // Partial solution to put definitions into types/ folder:
-  // https://github.com/rollup/plugins/issues/61#issuecomment-597090769
-  // tldr: use "dir" and "entryFileNames" instead of usual "file"
-  let defaultCommonJSBit = "";
-  if (objectPath.has(state.pack, "main")) {
-    defaultCommonJSBit = `
-    // CommonJS
-    {
-      input: "src/main.ts",
-      output: [{ dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false }],
-      external: makeExternalPredicate([
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.peerDependencies || {}),
-      ]),
-      plugins: [
-        ${
-          state.pack.devDependencies["rollup-plugin-node-builtins"]
-            ? "builtins(),\n        "
-            : ""
-        }nodeResolve({
-          extensions,
-        })${
-          state.pack.devDependencies["rollup-plugin-node-globals"]
-            ? ",\n        globals()"
-            : ""
-        }${
-      state.pack.devDependencies["@rollup/plugin-json"]
-        ? ",\n        json()"
-        : ""
-    },
-        typescript({
-          ${
-            state.pack.devDependencies["ts-transformer-keys"] ||
-            state.pack.dependencies["ts-transformer-keys"]
-              ? `transformers: {
-            before: [
-              {
-                type: "program",
-                factory: (program) => {
-                  return keysTransformer(program);
-                },
-              },
-            ],
-            after: [],
-          },
-              `
-              : ""
-          }tsconfig: "../../tsconfig.build.json",
-          declaration: false,
-        }),
-        babel({
-          extensions,
-          rootMode: "upward",
-          plugins: [
-            [
-              "@babel/plugin-transform-runtime",
-              { version: babelRuntimeVersion },
-            ],
-          ],
-          babelHelpers: "runtime",
-        }),
-        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
-        !commandLineArgs.dev &&
-          strip({
-            sourceMap: false,
-            include: ["src/**/*.(js|ts)"],
-            functions: ["console.*"],
-          }),
-        banner(licensePiece),
-      ],
-    },
-`;
-  }
-
   let defaultESMBit = "";
-  if (objectPath.has(state.pack, "module")) {
+  if (objectPath.has(state.pack, "exports")) {
     defaultESMBit = `
     // ES
     {
       input: "src/main.ts",
-      output: [{ file: pkg.module, format: "es", indent: false }],
+      output: [{ file: \`dist/$\{pkg.name}.esm.js\`, format: "es", indent: false }],
       external: makeExternalPredicate([
         ...Object.keys(pkg.dependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),
@@ -305,7 +158,7 @@ export const rollupConfig = async ({ state }) => {
           plugins: [
             [
               "@babel/plugin-transform-runtime",
-              { version: babelRuntimeVersion, useESModules: true },
+              { useESModules: true },
             ],
           ],
           babelHelpers: "runtime",
@@ -324,7 +177,7 @@ export const rollupConfig = async ({ state }) => {
   }
 
   let defaultDefinitions = "";
-  if (objectPath.has(state.pack, "module")) {
+  if (objectPath.has(state.pack, "exports")) {
     defaultDefinitions = `
     // Type definitions
     {
@@ -378,10 +231,6 @@ const licensePiece = \`@name \${pkg.name}
 {@link \${pkg.homepage}}\`;
 
 const extensions = [".mjs", ".js", ".json", ".node", ".ts"];
-const babelRuntimeVersion = pkg.dependencies["@babel/runtime"].replace(
-  /^[^0-9]*/,
-  ""
-);
 
 const makeExternalPredicate = (externalArr) => {
   if (externalArr.length === 0) {
@@ -391,13 +240,8 @@ const makeExternalPredicate = (externalArr) => {
   return (id) => pattern.test(id);
 };
 
-export default (commandLineArgs) => {
-  const finalConfig = [${defaultUmdBit}${defaultDevUmdBit}${defaultCommonJSBit}${defaultESMBit}${defaultDefinitions}  ];
-
-  if (commandLineArgs.dev) {
-    // don't build minified UMD in dev, it takes too long
-    finalConfig.shift();
-  }
+export default (commandLineArgs = {}) => {
+  const finalConfig = [${defaultUmdBit}${defaultESMBit}${defaultDefinitions}  ];
 
   // clean up this custom "dev" flag, otherwise Rollup will complain
   // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
@@ -408,11 +252,11 @@ export default (commandLineArgs) => {
 
   try {
     await writeFileAtomic("rollup.config.js", newRollupConfig);
-    // console.log(`lect rollup.config.js ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
-    // happy path end - resolve
     return Promise.resolve(null);
   } catch (err) {
     console.log(`lect: could not write rollup.config.js - ${err}`);
     return Promise.reject(err);
   }
-};
+}
+
+export default rollupConfig;

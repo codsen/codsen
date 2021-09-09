@@ -6,7 +6,7 @@ import fs from "fs";
 import meow from "meow";
 import path from "path";
 import chalk from "chalk";
-import globby from "globby";
+import { globby } from "globby";
 import uniq from "lodash.uniq";
 import splice from "string-splice";
 import logSymbols from "log-symbols";
@@ -34,6 +34,7 @@ const cli = meow(
     Just point it towards the template root folder.
 `,
   {
+    importMeta: import.meta,
     alias: {
       l: "loud",
     },

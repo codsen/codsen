@@ -8,7 +8,7 @@
 import chalk from "chalk";
 import { sort } from "csv-sort";
 import fs from "fs";
-import globby from "globby";
+import { globby } from "globby";
 import inquirer from "inquirer";
 
 const { log } = console;
@@ -41,6 +41,7 @@ const cli = meow(
     Just call it in the root, where your csv file is located
 `,
   {
+    importMeta: import.meta,
     flags: {
       overwrite: {
         type: "boolean",
