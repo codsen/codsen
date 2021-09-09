@@ -1,7 +1,7 @@
 /**
  * @name array-group-str-omit-num-char
  * @fileoverview Groups array of strings by omitting number characters
- * @version 4.1.0
+ * @version 5.0.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-group-str-omit-num-char/}
@@ -11,7 +11,7 @@
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 4.1.0
+ * @version 5.0.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -19,7 +19,7 @@
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 7.1.0
+ * @version 8.0.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -27,8 +27,8 @@
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 5.1.0
+ * @version 6.0.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
- */const k={wildcard:"*",dedupePlease:!0};e.groupStr=function(e,t){if(!Array.isArray(e))return e;if(!e.length)return{};const r={...k,...t},n=r.dedupePlease?x(e):Array.from(e),o={};for(let e=0,t=n.length;e<t;e++){const t=n[e].match(/\d+/gm);if(t){const i=n[e].replace(/\d+/gm,r.wildcard);Object.prototype.hasOwnProperty.call(o,i)?(t.forEach(((e,t)=>{o[i].elementsWhichWeCanReplaceWithWildcards[t]&&e!==o[i].elementsWhichWeCanReplaceWithWildcards[t]&&(o[i].elementsWhichWeCanReplaceWithWildcards[t]=!1)})),o[i].count+=1):o[i]={count:1,elementsWhichWeCanReplaceWithWildcards:Array.from(t)}}else o[n[e]]={count:1}}const i={};return Object.keys(o).forEach((e=>{let t=e;if(Array.isArray(o[e].elementsWhichWeCanReplaceWithWildcards)&&o[e].elementsWhichWeCanReplaceWithWildcards.some((e=>!1!==e))){const n=[];let i=0;for(let s=0;s<o[e].elementsWhichWeCanReplaceWithWildcards.length;s++)i=t.indexOf(`${r.wildcard||""}`,i+(r.wildcard||"").length),!1!==o[e].elementsWhichWeCanReplaceWithWildcards[s]&&n.push([i,i+(r.wildcard||"").length,o[e].elementsWhichWeCanReplaceWithWildcards[s]]);t=function(e,t,r){let n,o=0,i=0;if(0===arguments.length)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if("string"!=typeof e)throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(t&&!Array.isArray(t))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof t}, equal to: ${JSON.stringify(t,null,4)}`);if(r&&"function"!=typeof r)throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(!t||!t.filter((e=>e)).length)return e;n=Array.isArray(t)&&Number.isInteger(t[0])&&Number.isInteger(t[1])?[Array.from(t)]:Array.from(t);const s=n.length;let a=0;n.filter((e=>e)).forEach(((e,t)=>{if(r&&(o=Math.floor(a/s*10),o!==i&&(i=o,r(o))),!Array.isArray(e))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${t}th element not an array: ${JSON.stringify(e,null,4)}, which is ${typeof e}`);if(!Number.isInteger(e[0])){if(!Number.isInteger(+e[0])||+e[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${t}th element, array ${JSON.stringify(e,null,0)}. Its first element is not an integer, string index, but ${typeof e[0]}, equal to: ${JSON.stringify(e[0],null,4)}.`);n[t][0]=+n[t][0]}if(!Number.isInteger(e[1])){if(!Number.isInteger(+e[1])||+e[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${t}th element, array ${JSON.stringify(e,null,0)}. Its second element is not an integer, string index, but ${typeof e[1]}, equal to: ${JSON.stringify(e[1],null,4)}.`);n[t][1]=+n[t][1]}a+=1}));const l=P(n,{progressFn:e=>{r&&(o=10+Math.floor(e/10),o!==i&&(i=o,r(o)))}}),u=Array.isArray(l)?l.length:0;if(u>0){const t=e.slice(l[u-1][1]);e=l.reduce(((t,n,s,a)=>(r&&(o=20+Math.floor(s/u*80),o!==i&&(i=o,r(o))),t+e.slice(0===s?0:a[s-1][1],a[s][0])+(a[s][2]||""))),""),e+=t}return e}(t,n)}i[t]=o[e].count})),i},e.version="4.1.0",Object.defineProperty(e,"__esModule",{value:!0})}));
+ */const k={wildcard:"*",dedupePlease:!0};e.groupStr=function(e,t){if(!Array.isArray(e))return e;if(!e.length)return{};const r={...k,...t},n=r.dedupePlease?x(e):Array.from(e),o={};for(let e=0,t=n.length;e<t;e++){const t=n[e].match(/\d+/gm);if(t){const i=n[e].replace(/\d+/gm,r.wildcard);Object.prototype.hasOwnProperty.call(o,i)?(t.forEach(((e,t)=>{o[i].elementsWhichWeCanReplaceWithWildcards[t]&&e!==o[i].elementsWhichWeCanReplaceWithWildcards[t]&&(o[i].elementsWhichWeCanReplaceWithWildcards[t]=!1)})),o[i].count+=1):o[i]={count:1,elementsWhichWeCanReplaceWithWildcards:Array.from(t)}}else o[n[e]]={count:1}}const i={};return Object.keys(o).forEach((e=>{let t=e;if(Array.isArray(o[e].elementsWhichWeCanReplaceWithWildcards)&&o[e].elementsWhichWeCanReplaceWithWildcards.some((e=>!1!==e))){const n=[];let i=0;for(let s=0;s<o[e].elementsWhichWeCanReplaceWithWildcards.length;s++)i=t.indexOf(`${r.wildcard||""}`,i+(r.wildcard||"").length),!1!==o[e].elementsWhichWeCanReplaceWithWildcards[s]&&n.push([i,i+(r.wildcard||"").length,o[e].elementsWhichWeCanReplaceWithWildcards[s]]);t=function(e,t,r){let n,o=0,i=0;if(0===arguments.length)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if("string"!=typeof e)throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(t&&!Array.isArray(t))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof t}, equal to: ${JSON.stringify(t,null,4)}`);if(r&&"function"!=typeof r)throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(!t||!t.filter((e=>e)).length)return e;n=Array.isArray(t)&&Number.isInteger(t[0])&&Number.isInteger(t[1])?[Array.from(t)]:Array.from(t);const s=n.length;let a=0;n.filter((e=>e)).forEach(((e,t)=>{if(r&&(o=Math.floor(a/s*10),o!==i&&(i=o,r(o))),!Array.isArray(e))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${t}th element not an array: ${JSON.stringify(e,null,4)}, which is ${typeof e}`);if(!Number.isInteger(e[0])){if(!Number.isInteger(+e[0])||+e[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${t}th element, array ${JSON.stringify(e,null,0)}. Its first element is not an integer, string index, but ${typeof e[0]}, equal to: ${JSON.stringify(e[0],null,4)}.`);n[t][0]=+n[t][0]}if(!Number.isInteger(e[1])){if(!Number.isInteger(+e[1])||+e[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${t}th element, array ${JSON.stringify(e,null,0)}. Its second element is not an integer, string index, but ${typeof e[1]}, equal to: ${JSON.stringify(e[1],null,4)}.`);n[t][1]=+n[t][1]}a+=1}));const l=P(n,{progressFn:e=>{r&&(o=10+Math.floor(e/10),o!==i&&(i=o,r(o)))}}),u=Array.isArray(l)?l.length:0;if(u>0){const t=e.slice(l[u-1][1]);e=l.reduce(((t,n,s,a)=>(r&&(o=20+Math.floor(s/u*80),o!==i&&(i=o,r(o))),t+e.slice(0===s?0:a[s-1][1],a[s][0])+(a[s][2]||""))),""),e+=t}return e}(t,n)}i[t]=o[e].count})),i},e.version="5.0.0",Object.defineProperty(e,"__esModule",{value:!0})}));

@@ -1,7 +1,7 @@
 /**
  * @name array-group-str-omit-num-char
  * @fileoverview Groups array of strings by omitting number characters
- * @version 4.1.0
+ * @version 5.0.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-group-str-omit-num-char/}
@@ -10,7 +10,7 @@
 import uniq from 'lodash.uniq';
 import { rApply } from 'ranges-apply';
 
-var version$1 = "4.1.0";
+var version$1 = "5.0.0";
 
 const version = version$1;
 const defaults = {

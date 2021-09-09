@@ -1,13 +1,13 @@
 /**
  * @name is-relative-uri
  * @fileoverview Is given string a relative URI?
- * @version 3.1.0
+ * @version 4.0.0
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-relative-uri/}
  */
 
-var version$1 = "3.1.0";
+var version$1 = "4.0.0";
 
 const version = version$1;
 const BACKSLASH = "\u005C";
