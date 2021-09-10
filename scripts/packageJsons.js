@@ -12,12 +12,18 @@ function getDirectories(p) {
 
 const res = getDirectories("./packages").reduce((acc, curr) => {
   try {
-    const { name, version, description } = JSON.parse(
-      fs.readFileSync(`./packages/${curr}/package.json`, "utf8")
-    );
+    const {
+      name = false,
+      version = false,
+      description = false,
+      bin = false,
+      lect = false,
+    } = JSON.parse(fs.readFileSync(`./packages/${curr}/package.json`, "utf8"));
     acc[name] = {};
     acc[name].version = version;
     acc[name].description = description;
+    acc[name].bin = bin;
+    acc[name].lect = lect;
   } catch (error) {
     console.log(
       `${`\u001b[${33}m${`error`}\u001b[${39}m`} = ${JSON.stringify(
