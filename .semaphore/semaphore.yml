@@ -50,8 +50,10 @@ blocks:
             - npm run pub:vers
             # now build again, because those bumped versions need to be written into header comment blocks:
             - npm run build:just
+            - node scripts/packageJsons.js
             - git status
             - git add packages
+            - git add stats
             - git add README.md
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             # publish to npm
