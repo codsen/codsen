@@ -30,7 +30,6 @@
     "email": "roy@codsen.com",
     "url": "https://codsen.com"
   },
-  "type": "module",
   "main": "dist/eslint-plugin-test-num.cjs.js",
   "module": "dist/eslint-plugin-test-num.esm.js",
   "types": "types/index.d.ts",
