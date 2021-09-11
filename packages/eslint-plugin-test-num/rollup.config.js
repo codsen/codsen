@@ -1,14 +1,11 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-import commonjs from "@rollup/plugin-commonjs";
-import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
 import babel from "@rollup/plugin-babel";
 import strip from "@rollup/plugin-strip";
 import dts from "rollup-plugin-dts";
 import pkg from "./package.json";
-import { resolve } from "path";
 
 const licensePiece = `@name ${pkg.name}
 @fileoverview ${pkg.description}
@@ -18,6 +15,10 @@ const licensePiece = `@name ${pkg.name}
 {@link ${pkg.homepage}}`;
 
 const extensions = [".mjs", ".js", ".json", ".node", ".ts"];
+const babelRuntimeVersion = pkg.dependencies["@babel/runtime"].replace(
+  /^[^0-9]*/,
+  ""
+);
 
 const makeExternalPredicate = (externalArr) => {
   if (externalArr.length === 0) {
@@ -27,13 +28,13 @@ const makeExternalPredicate = (externalArr) => {
   return (id) => pattern.test(id);
 };
 
-export default (commandLineArgs = {}) => {
+export default (commandLineArgs) => {
   const finalConfig = [
-    // ES
+    // CommonJS
     {
       input: "src/main.ts",
       output: [
-        { file: `dist/${pkg.name}.esm.js`, format: "es", indent: false },
+        { dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false },
       ],
       external: makeExternalPredicate([
         ...Object.keys(pkg.dependencies || {}),
@@ -49,8 +50,49 @@ export default (commandLineArgs = {}) => {
         }),
         babel({
           extensions,
+          rootMode: "upward",
           plugins: [
-            ["@babel/plugin-transform-runtime", { useESModules: true }],
+            [
+              "@babel/plugin-transform-runtime",
+              { version: babelRuntimeVersion },
+            ],
+          ],
+          babelHelpers: "runtime",
+        }),
+        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+            include: ["src/**/*.(js|ts)"],
+            functions: ["console.*"],
+          }),
+        banner(licensePiece),
+      ],
+    },
+
+    // ES
+    {
+      input: "src/main.ts",
+      output: [{ file: pkg.module, format: "es", indent: false }],
+      external: makeExternalPredicate([
+        ...Object.keys(pkg.dependencies || {}),
+        ...Object.keys(pkg.peerDependencies || {}),
+      ]),
+      plugins: [
+        nodeResolve({
+          extensions,
+        }),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
+        babel({
+          extensions,
+          plugins: [
+            [
+              "@babel/plugin-transform-runtime",
+              { version: babelRuntimeVersion, useESModules: true },
+            ],
           ],
           babelHelpers: "runtime",
         }),
