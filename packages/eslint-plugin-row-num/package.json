@@ -28,7 +28,8 @@
     "url": "https://codsen.com"
   },
   "type": "module",
-  "exports": "./dist/eslint-plugin-row-num.esm.js",
+  "main": "dist/eslint-plugin-row-num.cjs.js",
+  "module": "dist/eslint-plugin-row-num.esm.js",
   "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
@@ -118,7 +119,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "tap": "^15.0.9",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.3"
   },
   "engines": {
     "node": ">=12"
