@@ -27,7 +27,6 @@
     "email": "roy@codsen.com",
     "url": "https://codsen.com"
   },
-  "type": "module",
   "main": "dist/eslint-plugin-row-num.cjs.js",
   "module": "dist/eslint-plugin-row-num.esm.js",
   "types": "types/index.d.ts",
