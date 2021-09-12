@@ -98,7 +98,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@sindresorhus/is": "^4.0.1",
+    "@sindresorhus/is": "^4.1.0",
     "ast-monkey-traverse": "^3.0.0",
     "object-path": "^0.11.7"
   },
@@ -140,7 +140,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "tap": "^15.0.9",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.3"
   },
   "engines": {
     "node": ">=12"

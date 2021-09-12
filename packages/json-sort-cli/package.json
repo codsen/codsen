@@ -81,7 +81,7 @@
     "meow": "^10.1.1",
     "p-filter": "^3.0.0",
     "p-reduce": "^3.0.0",
-    "sort-package-json": "^1.50.0",
+    "sort-package-json": "^1.51.0",
     "sorted-object": "^2.0.1",
     "update-notifier": "^5.1.0"
   },

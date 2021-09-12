@@ -5,6 +5,7 @@ import arrayiffy from "./arrayiffy.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const webapps = require("../../../stats/webapps.json");
+const esmBump = require("../../../scripts/esmBump.json");
 
 // writes readme
 async function readme({ state, examples, lectrc }) {
@@ -13,6 +14,8 @@ async function readme({ state, examples, lectrc }) {
   const badge2 = `<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center">`;
 
   const badge3 = `<img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">`;
+
+  const esmNotice = `This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:`;
 
   let play = "";
   if (webapps[state.pack.name] && !webapps[state.pack.name].url) {
@@ -58,9 +61,17 @@ async function readme({ state, examples, lectrc }) {
 
 ## Install
 
+${esmNotice}
+
 \`\`\`bash
 npm i${state.isCLI ? " -g" : ""} ${state.pack.name}
-\`\`\`
+\`\`\`${
+    typeof esmBump === "object" && esmBump[state.pack.name]
+      ? `\n\nIf you need a legacy version which works with require, use version ${
+          esmBump[state.pack.name]
+        }`
+      : ""
+  }
 
 ${
   state.isCLI && state.pack.bin
