@@ -98,7 +98,7 @@
     "pacote": "^11.3.5",
     "prettier": "^2.4.0",
     "rimraf": "^3.0.2",
-    "sort-package-json": "^1.50.0",
+    "sort-package-json": "^1.51.0",
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {

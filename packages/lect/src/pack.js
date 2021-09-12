@@ -153,24 +153,28 @@ async function packageJson({ state, lectrc }) {
   //   "timeout": 0,
   //   "check-coverage": false
   // });
-  objectPath.set(content, "type", "module");
-  if (!state.isCLI) {
-    objectPath.set(content, "types", `types/index.d.ts`);
 
-    // beware, some Node-only packages don't build UMD's, like
-    // "tap-parse-string-to-object" which consumes streams
-    if (typeof objectPath.get(content, "exports") === "string") {
-      objectPath.set(content, "exports", `./dist/${state.pack.name}.esm.js`);
-    } else {
-      objectPath.set(content, "exports", {
-        script: `./dist/${state.pack.name}.umd.js`,
-        default: `./dist/${state.pack.name}.esm.js`,
-      });
-    }
-  }
-  objectPath.del(content, "main");
-  objectPath.del(content, "module");
-  objectPath.del(content, "browser");
+  // MIGRATION TO ESM IS DONE, TURN THE FOLLOWING OFF
+  // BECAUSE ESLINT PLUGINS CAN'T BE MIGRATED YET:
+
+  // objectPath.set(content, "type", "module");
+  // if (!state.isCLI) {
+  //   objectPath.set(content, "types", `types/index.d.ts`);
+
+  //   // beware, some Node-only packages don't build UMD's, like
+  //   // "tap-parse-string-to-object" which consumes streams
+  //   if (typeof objectPath.get(content, "exports") === "string") {
+  //     objectPath.set(content, "exports", `./dist/${state.pack.name}.esm.js`);
+  //   } else {
+  //     objectPath.set(content, "exports", {
+  //       script: `./dist/${state.pack.name}.umd.js`,
+  //       default: `./dist/${state.pack.name}.esm.js`,
+  //     });
+  //   }
+  // }
+  // objectPath.del(content, "main");
+  // objectPath.del(content, "module");
+  // objectPath.del(content, "browser");
 
   // 7. capitalise first letter in description
   if (
