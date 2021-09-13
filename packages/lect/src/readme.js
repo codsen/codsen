@@ -66,7 +66,7 @@ ${esmNotice}
 \`\`\`bash
 npm i${state.isCLI ? " -g" : ""} ${state.pack.name}
 \`\`\`${
-    typeof esmBump === "object" && esmBump[state.pack.name]
+    !state.isCLI && typeof esmBump === "object" && esmBump[state.pack.name]
       ? `\n\nIf you need a legacy version which works with require, use version ${
           esmBump[state.pack.name]
         }`
