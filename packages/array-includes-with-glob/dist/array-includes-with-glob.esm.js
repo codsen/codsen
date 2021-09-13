@@ -1,7 +1,7 @@
 /**
  * @name array-includes-with-glob
  * @fileoverview Like _.includes but with wildcards
- * @version 4.0.0
+ * @version 4.0.1
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-includes-with-glob/}
@@ -9,7 +9,7 @@
 
 import matcher from 'matcher';
 
-var version$1 = "4.0.0";
+var version$1 = "4.0.1";
 
 const version = version$1;
 const defaults = {

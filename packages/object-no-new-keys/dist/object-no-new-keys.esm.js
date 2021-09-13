@@ -1,13 +1,13 @@
 /**
  * @name object-no-new-keys
  * @fileoverview Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
- * @version 4.0.0
+ * @version 4.0.1
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-no-new-keys/}
  */
 
-var version$1 = "4.0.0";
+var version$1 = "4.0.1";
 
 const version = version$1;
 function isObj(something) {
