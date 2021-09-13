@@ -26,9 +26,13 @@
 
 ## Install
 
+This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:
+
 ```bash
 npm i is-html-attribute-closing
 ```
+
+If you need a legacy version which works with require, use version 2.3.0
 
 ## Quick Take
 
