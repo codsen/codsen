@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.5.1](https://github.com/codsen/codsen/compare/edit-package-json@0.5.0...edit-package-json@0.5.1) (2021-09-13)
-
+## 0.5.1 (2021-09-13)
 
 ### Bug Fixes
 
-* bump TS and separate ESLint plugins away from this monorepo ([2e07d42](https://github.com/codsen/codsen/commit/2e07d424222b6ffedf5fb45c83ad453627ec2904))
-
-
-
-
+- bump TS and separate ESLint plugins away from this monorepo ([2e07d42](https://github.com/codsen/codsen/commit/2e07d424222b6ffedf5fb45c83ad453627ec2904))
 
 ## 0.5.0 (2021-09-09)
 

@@ -1,7 +1,7 @@
 /**
  * @name ast-monkey-traverse-with-lookahead
  * @fileoverview Utility library to traverse AST, reports upcoming values
- * @version 3.0.0
+ * @version 3.0.1
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse-with-lookahead/}
@@ -10,7 +10,7 @@
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-var version$1 = "3.0.0";
+var version$1 = "3.0.1";
 
 const version = version$1;
 function traverse(tree1, cb1, lookahead = 0) {
