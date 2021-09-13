@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/codsen/codsen/compare/html-crush@5.0.0...html-crush@5.0.1) (2021-09-13)
+
+
+### Bug Fixes
+
+* bump TS and separate ESLint plugins away from this monorepo ([2e07d42](https://github.com/codsen/codsen/commit/2e07d424222b6ffedf5fb45c83ad453627ec2904))
+
+
+
+
+
 ## 5.0.0 (2021-09-09)
 
 ### Bug Fixes
