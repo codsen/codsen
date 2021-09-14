@@ -1,6 +1,3 @@
-// this program compiles all package package.json files into one lump
-// we pick only "version" and "description" keys
-
 import fs from "fs";
 import path from "path";
 
@@ -23,7 +20,7 @@ const res = getDirectories("./packages").reduce((acc, curr) => {
 }, {});
 
 fs.writeFile(
-  path.join("stats/packageExamples.json"),
+  path.resolve("stats/packageExamples.json"),
   JSON.stringify(res, null, 0),
   (err) => {
     if (err) {

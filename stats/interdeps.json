@@ -26,7 +26,7 @@
     },
     {
         "name": "arrayiffy-if-string",
-        "size": 467,
+        "size": 466,
         "imports": []
     },
     {
@@ -86,7 +86,7 @@
     },
     {
         "name": "ast-monkey",
-        "size": 8040,
+        "size": 8038,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -113,7 +113,7 @@
     },
     {
         "name": "charcode-is-valid-xml-name-character",
-        "size": 1445,
+        "size": 1444,
         "imports": [
             "ranges-is-index-within"
         ]
@@ -256,20 +256,6 @@
             "string-left-right",
             "string-match-left-right",
             "string-process-comma-separated"
-        ]
-    },
-    {
-        "name": "eslint-plugin-row-num",
-        "size": 3521,
-        "imports": [
-            "js-row-num"
-        ]
-    },
-    {
-        "name": "eslint-plugin-test-num",
-        "size": 11622,
-        "imports": [
-            "string-left-right"
         ]
     },
     {
@@ -584,7 +570,7 @@
     },
     {
         "name": "regex-empty-conditional-comments",
-        "size": 460,
+        "size": 458,
         "imports": []
     },
     {
@@ -616,7 +602,7 @@
     },
     {
         "name": "string-character-is-astral-surrogate",
-        "size": 1166,
+        "size": 1165,
         "imports": []
     },
     {
@@ -626,7 +612,7 @@
     },
     {
         "name": "string-collapse-white-space",
-        "size": 8201,
+        "size": 8203,
         "imports": [
             "ranges-apply",
             "ranges-push",
