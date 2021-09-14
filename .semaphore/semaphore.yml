@@ -51,6 +51,7 @@ blocks:
             # now build again, because those bumped versions need to be written into header comment blocks:
             - npm run build:just
             - node scripts/packageJsons.js
+            - node scripts/packageExamples.js
             - git status
             - git add packages
             - git add stats

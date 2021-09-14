@@ -38,6 +38,7 @@
     "graph": "lerna-dependency-graph -f 'png' -o './deps-graph.png'",
     "checkPublishedSizeLimit": "node ./scripts/check100MBLimit.js",
     "patchRollupBinExit": "node ./scripts/patchRollupBinExit.js",
+    "packageExamples": "node ./scripts/packageExamples.js",
     "seed": "node ./scripts/playgrounds.js"
   },
   "dependencies": {},
@@ -49,7 +50,7 @@
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "edit-package-json": "^0.5.0",
-    "esbuild": "^0.12.26",
+    "esbuild": "^0.12.27",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-no-unsanitized": "^3.1.5",
