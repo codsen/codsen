@@ -1,7 +1,7 @@
 /**
  * @name stristri
  * @fileoverview Extracts or deletes HTML, CSS, text and/or templating tags from string
- * @version 4.0.0
+ * @version 4.0.1
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/stristri/}
@@ -23,7 +23,7 @@ const defaultOpts = {
   reportProgressFuncTo: 100
 };
 
-var version$1 = "4.0.0";
+var version$1 = "4.0.1";
 
 const version = version$1;
 function returnHelper(result, applicableOpts, templatingLang, start) {

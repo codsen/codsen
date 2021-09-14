@@ -1,7 +1,7 @@
 /**
  * @name ast-is-empty
  * @fileoverview Find out, is nested array/object/string/AST tree is empty
- * @version 3.0.0
+ * @version 3.0.1
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-is-empty/}
@@ -9,7 +9,7 @@
 
 import isObj from 'lodash.isplainobject';
 
-var version$1 = "3.0.0";
+var version$1 = "3.0.1";
 
 const version = version$1;
 function isEmpty(input) {

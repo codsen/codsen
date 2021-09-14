@@ -1,13 +1,13 @@
 /**
  * @name string-extract-sass-vars
  * @fileoverview Parse SASS variables file into a plain object of CSS key-value pairs
- * @version 3.0.0
+ * @version 3.0.1
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-extract-sass-vars/}
  */
 
-var version$1 = "3.0.0";
+var version$1 = "3.0.1";
 
 const version = version$1;
 const BACKSLASH = "\u005C";
