@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Utility library to traverse AST",
   "keywords": [
     "ast",
@@ -95,7 +95,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "ast-monkey-util": "^2.0.1",
+    "ast-monkey-util": "^2.0.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
@@ -128,7 +128,7 @@
     "core-js": "^3.17.3",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
-    "lect": "^0.18.1",
+    "lect": "^0.18.2",
     "lodash.isequal": "^4.5.0",
     "object-path": "^0.11.7",
     "rollup": "^2.56.3",
