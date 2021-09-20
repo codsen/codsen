@@ -32,7 +32,7 @@ This package is ESM only: Node 12+ is needed to use it and it must be imported i
 npm i edit-package-json
 ```
 
-If you need a legacy version which works with require, use version 0.4.0
+If you need a legacy version which works with `require`, use version 0.4.0
 
 ## Quick Take
 
