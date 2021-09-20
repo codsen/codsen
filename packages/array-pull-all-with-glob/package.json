@@ -1,6 +1,6 @@
 {
   "name": "array-pull-all-with-glob",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "description": "Like _.pullAll but with globs (wildcards)",
   "keywords": [
     "array",
@@ -114,7 +114,7 @@
     "core-js": "^3.17.3",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
-    "lect": "^0.18.1",
+    "lect": "^0.18.2",
     "rollup": "^2.56.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

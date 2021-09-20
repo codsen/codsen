@@ -1,6 +1,6 @@
 {
   "name": "csv-split-easy",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "description": "Splits the CSV string into array of arrays, each representing a row of columns",
   "keywords": [
     "add",
@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "string-remove-thousand-separators": "^6.0.1"
+    "string-remove-thousand-separators": "^6.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
@@ -113,7 +113,7 @@
     "core-js": "^3.17.3",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
-    "lect": "^0.18.1",
+    "lect": "^0.18.2",
     "rollup": "^2.56.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
