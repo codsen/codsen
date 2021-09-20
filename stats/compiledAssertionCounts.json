@@ -4,7 +4,7 @@
         "array-group-str-omit-num-char": 20,
         "array-includes-with-glob": 31,
         "array-of-arrays-into-ast": 9,
-        "array-of-arrays-sort-by-col": 728,
+        "array-of-arrays-sort-by-col": 729,
         "array-pull-all-with-glob": 34,
         "arrayiffy-if-string": 7,
         "ast-compare": 223,
@@ -113,7 +113,7 @@
         "string-trim-spaces-only": 62,
         "string-uglify": 2508,
         "string-unfancy": 10,
-        "stristri": 3522,
+        "stristri": 3359,
         "tap-parse-string-to-object": 10,
         "test-mixer": 15,
         "update-versions": 30,
@@ -121,12 +121,12 @@
         "util-nonempty": 14
     },
     "totalPackageCount": 119,
-    "totalAssertsCount": 960620,
+    "totalAssertsCount": 960458,
     "minAssertsCount": 2,
     "minAssertsName": "html-all-known-attributes",
     "maxAssertsCount": 868496,
     "maxAssertsName": "detergent",
     "assertsCountMedian": 48,
-    "assertsCountArithmeticMean": 8072,
+    "assertsCountArithmeticMean": 8071,
     "assertsCountGeometricMean": 70
 }
