@@ -1,7 +1,7 @@
 /**
  * @name is-html-attribute-closing
  * @fileoverview Is a character on a given index a closing of an HTML attribute?
- * @version 3.0.1
+ * @version 3.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-attribute-closing/}
@@ -62,7 +62,7 @@ function findAttrNameCharsChunkOnTheLeft(str, i) {
   }
 }
 
-var version$1 = "3.0.1";
+var version$1 = "3.0.2";
 
 const version = version$1;
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {

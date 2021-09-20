@@ -1,7 +1,7 @@
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 8.0.1
+ * @version 8.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -9,7 +9,7 @@
 
 import { rSort } from 'ranges-sort';
 
-var version$1 = "8.0.1";
+var version$1 = "8.0.2";
 
 const version = version$1;
 const defaults = {

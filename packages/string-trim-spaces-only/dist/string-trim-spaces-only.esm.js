@@ -1,13 +1,13 @@
 /**
  * @name string-trim-spaces-only
  * @fileoverview Like String.trim() but you can choose granularly what to trim
- * @version 4.0.1
+ * @version 4.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-trim-spaces-only/}
  */
 
-var version$1 = "4.0.1";
+var version$1 = "4.0.2";
 
 const version = version$1;
 const defaults = {

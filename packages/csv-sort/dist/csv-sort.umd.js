@@ -1,7 +1,7 @@
 /**
  * @name csv-sort
  * @fileoverview Sorts double-entry bookkeeping CSV coming from internet banking
- * @version 6.0.1
+ * @version 6.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/csv-sort/}
@@ -11,7 +11,7 @@
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 5.0.1
+ * @version 5.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -19,7 +19,7 @@
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 8.0.1
+ * @version 8.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -27,7 +27,7 @@
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 6.0.1
+ * @version 6.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -35,7 +35,7 @@
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 6.0.1
+ * @version 6.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -44,7 +44,7 @@ function d(e,r=1){function t(e){return Array.from(e).reverse().join("")}function
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 6.0.1
+ * @version 6.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -52,7 +52,7 @@ function d(e,r=1){function t(e){return Array.from(e).reverse().join("")}function
 /**
  * @name string-remove-thousand-separators
  * @fileoverview Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
- * @version 6.0.1
+ * @version 6.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-remove-thousand-separators/}
@@ -60,7 +60,7 @@ function d(e,r=1){function t(e){return Array.from(e).reverse().join("")}function
 /**
  * @name csv-split-easy
  * @fileoverview Splits the CSV string into array of arrays, each representing a row of columns
- * @version 6.0.1
+ * @version 6.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/csv-split-easy/}

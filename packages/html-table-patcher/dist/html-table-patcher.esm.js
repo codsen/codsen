@@ -1,7 +1,7 @@
 /**
  * @name html-table-patcher
  * @fileoverview Visual helper to place templating code around table tags into correct places
- * @version 5.0.1
+ * @version 5.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-table-patcher/}
@@ -12,7 +12,7 @@ import { Ranges } from 'ranges-push';
 import { rApply } from 'ranges-apply';
 import { traverse } from 'ast-monkey-traverse-with-lookahead';
 
-var version$1 = "5.0.1";
+var version$1 = "5.0.2";
 
 const version = version$1;
 const htmlCommentRegex = /<!--([\s\S]*?)-->/g;
