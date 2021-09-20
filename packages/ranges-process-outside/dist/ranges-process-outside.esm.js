@@ -1,7 +1,7 @@
 /**
  * @name ranges-process-outside
  * @fileoverview Iterate string considering ranges, as if they were already applied
- * @version 5.0.1
+ * @version 5.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-process-outside/}
@@ -11,7 +11,7 @@ import runes from 'runes';
 import { rInvert } from 'ranges-invert';
 import { rCrop } from 'ranges-crop';
 
-var version$1 = "5.0.1";
+var version$1 = "5.0.2";
 
 const version = version$1;
 function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {

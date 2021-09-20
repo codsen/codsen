@@ -1,7 +1,7 @@
 /**
  * @name detergent
  * @fileoverview Extracts, cleans and encodes text
- * @version 8.0.1
+ * @version 8.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/detergent/}
@@ -24,7 +24,7 @@ import { allNamedEntities } from 'all-named-html-entities';
 import { expander } from 'string-range-expander';
 import { convertOne } from 'string-apostrophes';
 
-var version$1 = "8.0.1";
+var version$1 = "8.0.2";
 
 const defaultOpts = {
   fixBrokenEntities: true,

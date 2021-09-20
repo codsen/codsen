@@ -1,7 +1,7 @@
 /**
  * @name ranges-crop
  * @fileoverview Crop array of ranges when they go beyond the reference string's length
- * @version 5.0.1
+ * @version 5.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-crop/}
@@ -9,7 +9,7 @@
 
 import { rMerge } from 'ranges-merge';
 
-var version$1 = "5.0.1";
+var version$1 = "5.0.2";
 
 const version = version$1;
 function rCrop(arrOfRanges, strLen) {
