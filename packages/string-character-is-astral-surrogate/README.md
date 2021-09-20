@@ -32,7 +32,7 @@ This package is ESM only: Node 12+ is needed to use it and it must be imported i
 npm i string-character-is-astral-surrogate
 ```
 
-If you need a legacy version which works with require, use version 1.13.0
+If you need a legacy version which works with `require`, use version 1.13.0
 
 ## Quick Take
 
