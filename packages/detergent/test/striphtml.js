@@ -1,5 +1,6 @@
 import tap from "tap";
 // import { det as det1 } from "../dist/detergent.esm.js";
+// import { det as det1 } from "../dist/detergent.esm.js";
 import { det, mixer } from "../t-util/util.js";
 
 tap.test(
@@ -14,13 +15,6 @@ tap.test(
         JSON.stringify(opt, null, 4)
       );
     });
-    t.end();
-  }
-);
-
-tap.test(
-  `02 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`,
-  (t) => {
     mixer({
       stripHtml: false,
     }).forEach((opt, n) => {
@@ -35,119 +29,121 @@ tap.test(
 );
 
 tap.test(
-  `03 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - closing tag without a slash`,
+  `02 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - closing tag without a slash`,
   (t) => {
+    const input = `text <a>text<a> text`;
     mixer({
       stripHtml: true,
     }).forEach((opt, n) => {
       t.equal(
-        det(t, n, `text <a>text<a> text`, opt).res,
+        det(t, n, input, opt).res,
         "text text text",
         JSON.stringify(opt, null, 4)
       );
+    });
+    mixer({
+      stripHtml: false,
+    }).forEach((opt, n) => {
+      t.equal(det(t, n, input, opt).res, input, JSON.stringify(opt, null, 4));
     });
     t.end();
   }
 );
 
 tap.test(
-  `04 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - unrecognised tag`,
+  `03 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - unrecognised tag`,
   (t) => {
+    const input = `text <error>text<error> text`;
     mixer({
       stripHtml: true,
     }).forEach((opt, n) => {
       t.equal(
-        det(t, n, `text <error>text<error> text`, opt).res,
+        det(t, n, input, opt).res,
         "text text text",
         JSON.stringify(opt, null, 4)
       );
+    });
+    mixer({
+      stripHtml: false,
+    }).forEach((opt, n) => {
+      t.equal(det(t, n, input, opt).res, input, JSON.stringify(opt, null, 4));
     });
     t.end();
   }
 );
 
 tap.test(
-  `05 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips nonsense tags`,
+  `04 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips nonsense tags`,
   (t) => {
+    const input =
+      'text <sldkfj asdasd="lekjrtt" lgkdjfld="lndllkjfg">text<hgjkd> text';
     mixer({
       stripHtml: true,
     }).forEach((opt, n) => {
       t.equal(
-        det(
-          t,
-          n,
-          'text <sldkfj asdasd="lekjrtt" lgkdjfld="lndllkjfg">text<hgjkd> text',
-          opt
-        ).res,
+        det(t, n, input, opt).res,
         "text text text",
         JSON.stringify(opt, null, 4)
       );
+    });
+    mixer({
+      stripHtml: false,
+    }).forEach((opt, n) => {
+      t.equal(det(t, n, input, opt).res, input, JSON.stringify(opt, null, 4));
     });
     t.end();
   }
 );
 
 tap.test(
-  `06 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips legit HTML`,
+  `05 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips legit HTML`,
   (t) => {
+    const input = 'text <a href="#" style="display: block;">text</a> text';
     mixer({
       stripHtml: true,
     }).forEach((opt, n) => {
       t.equal(
-        det(t, n, 'text <a href="#" style="display: block;">text</a> text', opt)
-          .res,
+        det(t, n, input, opt).res,
         "text text text",
         JSON.stringify(opt, null, 4)
       );
     });
-    t.end();
-  }
-);
-
-tap.test(
-  `07 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips non-ignored singleton tags`,
-  (t) => {
     mixer({
-      stripHtml: true,
+      stripHtml: false,
     }).forEach((opt, n) => {
-      t.equal(det(t, n, `<hr>`, opt).res, "", JSON.stringify(opt, null, 4));
+      t.equal(det(t, n, input, opt).res, input, JSON.stringify(opt, null, 4));
     });
     t.end();
   }
 );
 
 tap.test(
-  `08 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - HTML stripping disabled`,
+  `06 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips non-ignored singleton tags`,
   (t) => {
+    const input = "<hr>";
+    mixer({
+      stripHtml: true,
+    }).forEach((opt, n) => {
+      t.equal(det(t, n, input, opt).res, "", JSON.stringify(opt, null, 4));
+    });
     mixer({
       stripHtml: false,
       useXHTML: false,
     }).forEach((opt, n) => {
-      t.equal(det(t, n, `<hr>`, opt).res, "<hr>", JSON.stringify(opt, null, 4));
+      t.equal(det(t, n, input, opt).res, input, JSON.stringify(opt, null, 4));
     });
-    t.end();
-  }
-);
-
-tap.test(
-  `09 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - HTML stripping disabled`,
-  (t) => {
     mixer({
       stripHtml: false,
       useXHTML: true,
     }).forEach((opt, n) => {
-      t.equal(
-        det(t, n, `<hr>`, opt).res,
-        "<hr/>",
-        JSON.stringify(opt, null, 4)
-      );
+      t.equal(det(t, n, input, opt).res, "<hr/>", JSON.stringify(opt, null, 4));
     });
     t.end();
   }
 );
 
 tap.test(
-  `10 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - custom ignored singleton tag`,
+  `07 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - custom ignored singleton tag`,
   (t) => {
     mixer({
       stripHtml: true,
@@ -165,7 +161,7 @@ tap.test(
 );
 
 tap.test(
-  `11 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - removes slash`,
+  `08 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - removes slash`,
   (t) => {
     mixer({
       stripHtml: true,
@@ -183,7 +179,7 @@ tap.test(
 );
 
 tap.test(
-  `12 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - adds slash`,
+  `09 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - adds slash`,
   (t) => {
     mixer({
       useXHTML: true,
@@ -201,7 +197,7 @@ tap.test(
 );
 
 tap.test(
-  `13 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - keeps slash`,
+  `10 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - keeps slash`,
   (t) => {
     mixer({
       useXHTML: true,
@@ -219,7 +215,7 @@ tap.test(
 );
 
 tap.test(
-  `14 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
+  `11 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
       stripHtml: true,
@@ -235,7 +231,7 @@ tap.test(
 );
 
 tap.test(
-  `15 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
+  `12 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
       stripHtml: false,
@@ -251,7 +247,7 @@ tap.test(
 );
 
 tap.test(
-  `16 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
+  `13 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
       stripHtml: false,
@@ -268,7 +264,7 @@ tap.test(
 );
 
 tap.test(
-  `17 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
+  `14 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - minimal case`,
   (t) => {
     mixer({
       convertEntities: true,
@@ -286,13 +282,55 @@ tap.test(
 );
 
 tap.test(
-  `18 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  `15 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
       det(t, 0, `<div>`, {
         stripHtml: false,
       }).res,
       "<div>",
+      "15"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `16 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  (t) => {
+    t.equal(
+      det(t, 0, `<a>`, {
+        stripHtml: false,
+      }).res,
+      "<a>",
+      "16"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `17 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  (t) => {
+    t.equal(
+      det(t, 0, '<a style="font-size: red;">', {
+        stripHtml: false,
+      }).res,
+      '<a style="font-size: red;">',
+      "17"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `18 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  (t) => {
+    t.equal(
+      det(t, 0, `<div>`, {
+        stripHtml: true,
+      }).res,
+      "",
       "18"
     );
     t.end();
@@ -300,13 +338,13 @@ tap.test(
 );
 
 tap.test(
-  `19 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  `19 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag, lowercase`,
   (t) => {
     t.equal(
       det(t, 0, `<a>`, {
-        stripHtml: false,
+        stripHtml: true,
       }).res,
-      "<a>",
+      "",
       "19"
     );
     t.end();
@@ -314,15 +352,19 @@ tap.test(
 );
 
 tap.test(
-  `20 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
+  `20 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag, uppercase`,
   (t) => {
-    t.equal(
-      det(t, 0, '<a style="font-size: red;">', {
-        stripHtml: false,
-      }).res,
-      '<a style="font-size: red;">',
-      "20"
-    );
+    const input = `<A>`;
+    mixer({
+      stripHtml: true,
+    }).forEach((opt, n) => {
+      t.equal(det(t, n, input, opt).res, "", JSON.stringify(opt, null, 4));
+    });
+    mixer({
+      stripHtml: false,
+    }).forEach((opt, n) => {
+      t.equal(det(t, n, input, opt).res, input, JSON.stringify(opt, null, 4));
+    });
     t.end();
   }
 );
@@ -331,7 +373,7 @@ tap.test(
   `21 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
   (t) => {
     t.equal(
-      det(t, 0, `<div>`, {
+      det(t, 0, '<a style="font-size: red;">', {
         stripHtml: true,
       }).res,
       "",
@@ -342,35 +384,7 @@ tap.test(
 );
 
 tap.test(
-  `22 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
-  (t) => {
-    t.equal(
-      det(t, 0, `<a>`, {
-        stripHtml: true,
-      }).res,
-      "",
-      "22"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `23 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`,
-  (t) => {
-    t.equal(
-      det(t, 0, '<a style="font-size: red;">', {
-        stripHtml: true,
-      }).res,
-      "",
-      "23"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `24 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
+  `22 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
       stripHtml: true,
@@ -386,7 +400,7 @@ tap.test(
 );
 
 tap.test(
-  `25 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
+  `23 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
       stripHtml: true,
@@ -402,7 +416,7 @@ tap.test(
 );
 
 tap.test(
-  `26 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
+  `24 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
       stripHtml: true,
@@ -418,7 +432,7 @@ tap.test(
 );
 
 tap.test(
-  `27 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
+  `25 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags incl. contents`,
   (t) => {
     mixer({
       stripHtml: true,
@@ -434,7 +448,7 @@ tap.test(
 );
 
 tap.test(
-  `28 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> tags with whitespace within closing tags`,
+  `26 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> tags with whitespace within closing tags`,
   (t) => {
     mixer({
       stripHtml: true,
@@ -450,7 +464,7 @@ tap.test(
 );
 
 tap.test(
-  `29 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
+  `27 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
   (t) => {
     mixer({
       removeLineBreaks: false,
@@ -468,7 +482,7 @@ tap.test(
 );
 
 tap.test(
-  `30 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
+  `28 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case`,
   (t) => {
     mixer({
       removeLineBreaks: false,
@@ -486,7 +500,7 @@ tap.test(
 );
 
 tap.test(
-  `31 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
+  `29 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -507,7 +521,7 @@ tap.test(
 );
 
 tap.test(
-  `32 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
+  `30 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -528,7 +542,7 @@ tap.test(
 );
 
 tap.test(
-  `33 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
+  `31 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -544,13 +558,13 @@ tap.test(
 );
 
 tap.test(
-  `34 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
+  `32 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
       removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
-        det(t, n, `test text is being < B >set in bold< B /> here`, opt).res,
+        det(t, n, `test text is being < b >set in bold< b /> here`, opt).res,
         "test text is being <b>set in bold</b> here",
         JSON.stringify(opt, null, 4)
       );
@@ -560,14 +574,14 @@ tap.test(
 );
 
 tap.test(
-  `35 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
+  `33 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
       removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `test text is being <B>set in bold<B/> here`, opt).res,
-        "test text is being <b>set in bold</b> here",
+        "test text is being <B>set in bold</B> here",
         JSON.stringify(opt, null, 4)
       );
     });
@@ -576,13 +590,13 @@ tap.test(
 );
 
 tap.test(
-  `36 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
+  `34 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`,
   (t) => {
     mixer({
       removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
-        det(t, n, `test text is being <B class="h">set in bold<B/> here`, opt)
+        det(t, n, `test text is being <b class="h">set in bold<b/> here`, opt)
           .res,
         `test text is being <b class="h">set in bold</b> here`,
         JSON.stringify(opt, null, 4)
@@ -593,7 +607,7 @@ tap.test(
 );
 
 tap.test(
-  `37 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
+  `35 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -609,7 +623,7 @@ tap.test(
 );
 
 tap.test(
-  `38 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
+  `36 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -626,7 +640,7 @@ tap.test(
 );
 
 tap.test(
-  `39 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
+  `37 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -634,7 +648,7 @@ tap.test(
       t.equal(
         det(t, n, `test text is being < I >set in italic<   I /> here`, opt)
           .res,
-        "test text is being <i>set in italic</i> here",
+        "test text is being <I>set in italic</I> here",
         JSON.stringify(opt, null, 4)
       );
     });
@@ -643,7 +657,7 @@ tap.test(
 );
 
 tap.test(
-  `40 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `38 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -664,7 +678,7 @@ tap.test(
 );
 
 tap.test(
-  `41 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `39 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -685,7 +699,7 @@ tap.test(
 );
 
 tap.test(
-  `42 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `40 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -694,10 +708,10 @@ tap.test(
         det(
           t,
           n,
-          'test text is being < StRoNg >set in bold<StRoNg class="wrong1" / > here',
+          'test text is being < StRoNg >set in bold<StRoNg class="z1" / > here',
           opt
         ).res,
-        `test text is being <strong>set in bold</strong class="wrong1"> here`,
+        `test text is being <StRoNg>set in bold</StRoNg class="z1"> here`,
         JSON.stringify(opt, null, 4)
       );
     });
@@ -706,7 +720,7 @@ tap.test(
 );
 
 tap.test(
-  `43 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `41 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -722,7 +736,7 @@ tap.test(
 );
 
 tap.test(
-  `44 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `42 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -743,7 +757,7 @@ tap.test(
 );
 
 tap.test(
-  `45 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
+  `43 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tags by default`,
   (t) => {
     mixer({
       removeWidows: false,
@@ -752,7 +766,7 @@ tap.test(
         det(
           t,
           n,
-          `test text is being < eM >set in emphasis<  Em  / > here`,
+          `test text is being < em >set in emphasis<  em  / > here`,
           opt
         ).res,
         "test text is being <em>set in emphasis</em> here",
@@ -763,7 +777,7 @@ tap.test(
   }
 );
 
-tap.test(`46 - widow removal is aware of surrounding html`, (t) => {
+tap.test(`44 - widow removal is aware of surrounding html`, (t) => {
   const input = `<a b c d>`;
   mixer({
     removeWidows: true,
@@ -772,12 +786,12 @@ tap.test(`46 - widow removal is aware of surrounding html`, (t) => {
     removeLineBreaks: false,
     stripHtml: false,
   }).forEach((opt, n) => {
-    t.equal(det(t, n, input, opt).res, input, "03.01");
+    t.equal(det(t, n, input, opt).res, input, "46.01");
   });
   t.end();
 });
 
-tap.test(`47 - widow removal is aware of surrounding html`, (t) => {
+tap.test(`45 - widow removal is aware of surrounding html`, (t) => {
   const input = `<a w="1" x="y" z="x">\n<!--[if (gte mso 9)|(IE)]>\n<td a="b:c;" d="e" f="g">`;
   mixer({
     removeWidows: true,
@@ -786,7 +800,30 @@ tap.test(`47 - widow removal is aware of surrounding html`, (t) => {
     removeLineBreaks: false,
     stripHtml: false,
   }).forEach((opt, n) => {
-    t.equal(det(t, n, input, opt).res, input, "03.02");
+    t.equal(det(t, n, input, opt).res, input, "47.01");
+  });
+  t.end();
+});
+
+tap.test(`46 - a JSX pattern`, (t) => {
+  const input = `<A b>c</A>
+</>< /></ >< / >`;
+  mixer({
+    stripHtml: true,
+  }).forEach((opt, n) => {
+    t.equal(det(t, n, input, opt).res, "c", "48.01");
+  });
+  mixer({
+    stripHtml: false,
+    replaceLineBreaks: false,
+    removeLineBreaks: false,
+  }).forEach((opt, n) => {
+    t.equal(
+      det(t, n, input, opt).res,
+      `<A b>c</A>
+</></></></>`,
+      "48.02"
+    );
   });
   t.end();
 });
