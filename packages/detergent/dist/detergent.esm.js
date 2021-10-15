@@ -818,11 +818,11 @@ function det(str, inputOpts) {
       if (isNum(tag.lastOpeningBracketAt) && isNum(tag.lastClosingBracketAt) && tag.lastOpeningBracketAt < tag.lastClosingBracketAt || tag.slashPresent) {
         applicableOpts.stripHtml = true;
         skipArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt ? tag.lastClosingBracketAt + 1 : str.length);
-        if (opts.stripHtml && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())) {
+        if (opts.stripHtml && (!tag.name || typeof tag.name === "string" && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase()))) {
           if (Array.isArray(opts.stripHtmlAddNewLine) && opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(tagName => tagName.startsWith("/") &&
           tag.slashPresent &&
-          tag.slashPresent < tag.nameEnds && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !(tag.slashPresent &&
-          tag.slashPresent < tag.nameEnds) && tag.name.toLowerCase() === removeTrailingSlash(tagName))) {
+          tag.slashPresent < tag.nameEnds && typeof tag.name === "string" && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !(tag.slashPresent &&
+          tag.slashPresent < tag.nameEnds) && typeof tag.name === "string" && tag.name.toLowerCase() === removeTrailingSlash(tagName))) {
             applicableOpts.removeLineBreaks = true;
             if (!opts.removeLineBreaks && typeof deleteFrom === "number" && typeof deleteTo === "number") {
               applicableOpts.replaceLineBreaks = true;
@@ -838,7 +838,7 @@ function det(str, inputOpts) {
             skipArr.push(proposedReturn);
           }
         } else {
-          if (voidTags.includes(tag.name.toLowerCase())) {
+          if (typeof tag.name === "string" && voidTags.includes(tag.name.toLowerCase())) {
             applicableOpts.useXHTML = true;
             if (str[left(str, tag.lastClosingBracketAt)] !== "/" && tag.lastClosingBracketAt) {
               if (opts.useXHTML) {
@@ -879,24 +879,21 @@ function det(str, inputOpts) {
             }, "/"), tag.lastClosingBracketAt);
             finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.lastOpeningBracketAt + 1, "/");
           }
-          if (tag.name.toLowerCase() !== tag.name) {
-            finalIndexesToDelete.push(tag.nameStarts, tag.nameEnds, tag.name.toLowerCase());
-          }
           if (`/>`.includes(str[right(str, tag.nameEnds - 1)]) && (right(str, tag.nameEnds - 1) || 0) > tag.nameEnds) {
             finalIndexesToDelete.push(tag.nameEnds, right(str, tag.nameEnds - 1));
           }
           if (isNum(tag.lastOpeningBracketAt) && isNum(tag.nameStarts) && tag.lastOpeningBracketAt + 1 < tag.nameStarts) {
             if (!str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim().length) {
               finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
-            } else if (!voidTags.includes(tag.name.toLowerCase()) && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(char => !char.trim() || char === "/")) {
+            } else if (typeof tag.name === "string" && !voidTags.includes(tag.name.toLowerCase()) && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(char => !char.trim() || char === "/")) {
               finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts, "/");
             }
           }
         }
-        if (tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt) {
+        if (typeof tag.name === "string" && tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt) {
           brClosingBracketIndexesArr.push(tag.lastClosingBracketAt);
         }
-        if (["ul", "li"].includes(tag.name.toLowerCase()) && !opts.removeLineBreaks && str[tag.lastOpeningBracketAt - 1] && !str[tag.lastOpeningBracketAt - 1].trim() && typeof tag.lastOpeningBracketAt === "number" && typeof leftStopAtNewLines(str, tag.lastOpeningBracketAt) === "number") {
+        if (typeof tag.name === "string" && ["ul", "li"].includes(tag.name.toLowerCase()) && !opts.removeLineBreaks && str[tag.lastOpeningBracketAt - 1] && !str[tag.lastOpeningBracketAt - 1].trim() && typeof tag.lastOpeningBracketAt === "number" && typeof leftStopAtNewLines(str, tag.lastOpeningBracketAt) === "number") {
           finalIndexesToDelete.push(leftStopAtNewLines(str, tag.lastOpeningBracketAt) + 1, tag.lastOpeningBracketAt);
         }
         if (str[tag.lastClosingBracketAt - 1] && !str[tag.lastClosingBracketAt - 1].trim() && typeof tag.lastClosingBracketAt === "number" && typeof left(str, tag.lastClosingBracketAt) === "number") {
@@ -937,7 +934,7 @@ function det(str, inputOpts) {
       str = widowFixes.res;
     }
   }
-  if (str !== str.replace(/\r\n|\r|\n/gm, " ")) {
+  if (str.trim() !== str.replace(/\r\n|\r|\n/gm, " ").trim()) {
     applicableOpts.removeLineBreaks = true;
     if (opts.removeLineBreaks) {
       str = str.replace(/\r\n|\r|\n/gm, " ");
