@@ -261,3 +261,9 @@ tap.test("31", (t) => {
   t.match(stripHtml(input), { result: "" }, "31");
   t.end();
 });
+
+tap.test("32", (t) => {
+  const input = `H4<bE77]7oQL`;
+  t.match(stripHtml(input), { result: "H4" }, "32");
+  t.end();
+});

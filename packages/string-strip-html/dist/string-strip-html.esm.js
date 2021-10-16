@@ -358,6 +358,7 @@ function stripHtml(str, originalOpts) {
     }
     if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
       tag.nameEnds = i;
+      /* istanbul ignore next */
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (!isClosingAt(i) && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
       if (
       str[tag.nameStarts - 1] !== "!" &&

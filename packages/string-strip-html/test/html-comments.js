@@ -380,3 +380,14 @@ tap.test("19 - range tags are overlapping - nested", (t) => {
   );
   t.end();
 });
+
+tap.test("20 - range tags are overlapping - wildcard", (t) => {
+  t.match(
+    stripHtml("<zzz>tra <script>la</script> la <yyy>la</zzz>la la</yyy> rr", {
+      stripTogetherWithTheirContents: ["*"],
+    }),
+    { result: "rr" },
+    "20"
+  );
+  t.end();
+});
