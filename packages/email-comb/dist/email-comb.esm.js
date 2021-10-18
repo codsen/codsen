@@ -226,7 +226,9 @@ function comb(str, originalOpts) {
       if (str[i] === "\n") {
         if (str[i - 1] === "\r") ;
       } else if (str[i] === "\r" && str[i + 1] !== "\n") ;
-      if (stateWithinStyleTag !== true && (styleEndedAt === null && styleStartedAt !== null && i >= styleStartedAt || styleStartedAt !== null && styleEndedAt !== null && styleStartedAt > styleEndedAt && styleStartedAt < i)) {
+      if (stateWithinStyleTag !== true && (
+      styleEndedAt === null && styleStartedAt !== null && i >= styleStartedAt ||
+      styleStartedAt !== null && styleEndedAt !== null && styleStartedAt > styleEndedAt && styleStartedAt < i)) {
         stateWithinStyleTag = true;
         stateWithinBody = false;
       } else if (stateWithinBody !== true && bodyStartedAt !== null && (styleStartedAt === null || styleStartedAt < i) && (styleEndedAt === null || styleEndedAt < i)) {
@@ -391,7 +393,9 @@ function comb(str, originalOpts) {
         lastKeptChunksCommaAt = null;
         onlyDeletedChunksFollow = false;
       }
-      if (!doNothing && !commentStartedAt && styleStartedAt && i >= styleStartedAt && (styleEndedAt === null && i >= styleStartedAt || styleEndedAt && styleStartedAt > styleEndedAt && styleStartedAt <= i) && !insideCurlyBraces) {
+      if (!doNothing && !commentStartedAt && styleStartedAt && i >= styleStartedAt && (
+      styleEndedAt === null && i >= styleStartedAt ||
+      styleEndedAt && styleStartedAt > styleEndedAt && styleStartedAt <= i) && !insideCurlyBraces) {
         if (singleSelectorStartedAt === null) {
           if (chr === "." || chr === "#") {
             singleSelectorStartedAt = i;

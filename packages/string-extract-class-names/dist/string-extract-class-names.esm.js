@@ -27,7 +27,8 @@ function extract(str) {
     ranges: []
   };
   for (let i = 0, len = str.length; i <= len; i++) {
-    if (selectorStartsAt !== null && i >= selectorStartsAt && (!str[i] ||
+    if (selectorStartsAt !== null && i >= selectorStartsAt && (
+    !str[i] ||
     !str[i].trim() ||
     badChars.includes(str[i]))) {
       if (i > selectorStartsAt + 1) {

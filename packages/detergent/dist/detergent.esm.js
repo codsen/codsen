@@ -405,7 +405,8 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           const fourth = str[y + 3] ? str[y + 3].toLowerCase() : "";
           const nextThreeChars = first + second + third;
           if (first + second !== "js" && nextThreeChars !== "jpg" && nextThreeChars !== "png" && nextThreeChars !== "gif" && nextThreeChars !== "svg" && nextThreeChars !== "htm" && nextThreeChars !== "pdf" && nextThreeChars !== "psd" && nextThreeChars !== "tar" && nextThreeChars !== "zip" && nextThreeChars !== "rar" && nextThreeChars !== "otf" && nextThreeChars !== "ttf" && nextThreeChars !== "eot" && nextThreeChars !== "php" && nextThreeChars !== "rss" && nextThreeChars !== "asp" && nextThreeChars !== "ppt" && nextThreeChars !== "doc" && nextThreeChars !== "txt" && nextThreeChars !== "rtf" && nextThreeChars !== "git" && nextThreeChars + fourth !== "jpeg" && nextThreeChars + fourth !== "html" && nextThreeChars + fourth !== "woff" && !(!isLetter(str[i - 2]) && str[i - 1] === "p" && str[y] === "s" && str[y + 1] === "t" && !isLetter(str[y + 2]))) {
-            if (str[y] !== undefined && (!state.onUrlCurrently && isUppercaseLetter(str[y]) || state.onUrlCurrently && isLetter(str[y]) && isUppercaseLetter(str[y]) && isLetter(str[y + 1]) && isLowercaseLetter(str[y + 1])) && str[y] !== " " && str[y] !== "." && str[y] !== "\n") {
+            if (str[y] !== undefined && (
+            !state.onUrlCurrently && isUppercaseLetter(str[y]) || state.onUrlCurrently && isLetter(str[y]) && isUppercaseLetter(str[y]) && isLetter(str[y + 1]) && isLowercaseLetter(str[y + 1])) && str[y] !== " " && str[y] !== "." && str[y] !== "\n") {
               applicableOpts.addMissingSpaces = true;
               if (opts.addMissingSpaces) {
                 rangesArr.push(y, y, " ");
@@ -821,7 +822,8 @@ function det(str, inputOpts) {
         if (opts.stripHtml && (!tag.name || typeof tag.name === "string" && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase()))) {
           if (Array.isArray(opts.stripHtmlAddNewLine) && opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(tagName => tagName.startsWith("/") &&
           tag.slashPresent &&
-          tag.slashPresent < tag.nameEnds && typeof tag.name === "string" && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !(tag.slashPresent &&
+          tag.slashPresent < tag.nameEnds && typeof tag.name === "string" && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !(
+          tag.slashPresent &&
           tag.slashPresent < tag.nameEnds) && typeof tag.name === "string" && tag.name.toLowerCase() === removeTrailingSlash(tagName))) {
             applicableOpts.removeLineBreaks = true;
             if (!opts.removeLineBreaks && typeof deleteFrom === "number" && typeof deleteTo === "number") {

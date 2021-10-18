@@ -106,7 +106,8 @@ function march(str, position, whatToMatchVal, originalOpts, special = false, get
         for (let y = 0; y <= patience; y++) {
           const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
           const nextCharInSource = str[getNextIdx(i)];
-          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (
+          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
             charsMatchedTotal++;
             if (whitespaceInFrontOfFirstChar()) {
               return false;
@@ -114,7 +115,8 @@ function march(str, position, whatToMatchVal, originalOpts, special = false, get
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
-          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (
+          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
             if (!charsMatchedTotal && !opts.hungry) {
               return false;
             }
@@ -201,7 +203,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   })) {
     throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
   }
-  if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()
+  if (!whatToMatch || !Array.isArray(whatToMatch) ||
+  Array.isArray(whatToMatch) && !whatToMatch.length ||
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()
   ) {
     if (typeof opts.cb === "function") {
       let firstCharOutsideIndex;

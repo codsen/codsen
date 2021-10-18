@@ -8,7 +8,10 @@
  */
 
 function isAttrNameChar(char) {
-  return typeof char === "string" && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
+  return typeof char === "string" && (
+  char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 ||
+  char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 ||
+  char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
 }
 
 export { isAttrNameChar };

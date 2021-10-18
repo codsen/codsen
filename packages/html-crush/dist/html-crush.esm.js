@@ -258,7 +258,8 @@ function crush(str, originalOpts) {
             htmlCommentStartedAt = i;
           }
         } else if (
-        opts.removeHTMLComments && (!withinHTMLConditional || opts.removeHTMLComments === 2)) {
+        opts.removeHTMLComments && (
+        !withinHTMLConditional || opts.removeHTMLComments === 2)) {
           htmlCommentStartedAt = i;
         }
         if (!applicableOpts.removeHTMLComments) {

@@ -55,21 +55,29 @@ function rightMain({
     return null;
   }
   if (
-  str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines &&
-  "\n\r".includes(str[idx + 1]) || stopAtRawNbsp &&
+  str[idx + 1] && (
+  str[idx + 1].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx + 1]) ||
+  stopAtRawNbsp &&
   str[idx + 1] === RAWNBSP)) {
     return idx + 1;
   }
   if (
-  str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines &&
-  "\n\r".includes(str[idx + 2]) || stopAtRawNbsp &&
+  str[idx + 2] && (
+  str[idx + 2].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx + 2]) ||
+  stopAtRawNbsp &&
   str[idx + 2] === RAWNBSP)) {
     return idx + 2;
   }
   for (let i = idx + 1, len = str.length; i < len; i++) {
     if (
-    str[i].trim() || stopAtNewlines &&
-    "\n\r".includes(str[i]) || stopAtRawNbsp &&
+    str[i].trim() ||
+    stopAtNewlines &&
+    "\n\r".includes(str[i]) ||
+    stopAtRawNbsp &&
     str[i] === RAWNBSP) {
       return i;
     }
@@ -116,20 +124,29 @@ function leftMain({
     return null;
   }
   if (
-  str[~-idx] && (str[~-idx].trim() || stopAtNewlines &&
-  "\n\r".includes(str[~-idx]) || stopAtRawNbsp &&
+  str[~-idx] && (
+  str[~-idx].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[~-idx]) ||
+  stopAtRawNbsp &&
   str[~-idx] === RAWNBSP)) {
     return ~-idx;
   }
   if (
-  str[idx - 2] && (str[idx - 2].trim() || stopAtNewlines &&
-  "\n\r".includes(str[idx - 2]) || stopAtRawNbsp &&
+  str[idx - 2] && (
+  str[idx - 2].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx - 2]) ||
+  stopAtRawNbsp &&
   str[idx - 2] === RAWNBSP)) {
     return idx - 2;
   }
   for (let i = idx; i--;) {
-    if (str[i] && (str[i].trim() || stopAtNewlines &&
-    "\n\r".includes(str[i]) || stopAtRawNbsp &&
+    if (str[i] && (
+    str[i].trim() ||
+    stopAtNewlines &&
+    "\n\r".includes(str[i]) ||
+    stopAtRawNbsp &&
     str[i] === RAWNBSP)) {
       return i;
     }

@@ -19,7 +19,7 @@
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 5.0.1
+ * @version 5.0.2
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}

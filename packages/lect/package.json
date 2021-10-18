@@ -40,6 +40,7 @@
   },
   "scripts": {
     "ci_test": "npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
+    "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
     "dev": "echo\"\"",
     "devunittest": "npm run dev && tap --only -R 'base'",
     "format": "npm run lect && npm run prettier && npm run lint",
@@ -49,8 +50,7 @@
     "republish": "npm publish || :",
     "tap": "tap",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov",
-    "clean_cov": "../../scripts/leaveCoverageTotalOnly.js"
+    "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov"
   },
   "tap": {
     "check-coverage": false,

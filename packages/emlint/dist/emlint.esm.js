@@ -2837,9 +2837,12 @@ function tagSpaceBeforeClosingBracket(context, mode = "never") {
       if (context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$3) {
         leftmostPos = idxOnTheLeft;
       }
-      if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && node.void || mode === "always" &&
-      !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] && (context.str[leftmostPos - 1].trim() ||
-      context.str[leftmostPos - 1] !== " " || context.str[leftmostPos - 2] && !context.str[leftmostPos - 2].trim())) {
+      if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && node.void ||
+      mode === "always" &&
+      !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] && (
+      context.str[leftmostPos - 1].trim() ||
+      context.str[leftmostPos - 1] !== " " ||
+      context.str[leftmostPos - 2] && !context.str[leftmostPos - 2].trim())) {
         context.report({
           ruleId: "tag-space-before-closing-bracket",
           message: "Add a space.",
@@ -2849,7 +2852,8 @@ function tagSpaceBeforeClosingBracket(context, mode = "never") {
             ranges: [[left(context.str, leftmostPos) + 1, leftmostPos, " "]]
           }
         });
-      } else if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && !node.void || mode !== "always" &&
+      } else if ((Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]) && !node.void ||
+      mode !== "always" &&
       !(Object.keys(context.processedRulesConfig).includes("format-prettier") && isAnEnabledValue(context.processedRulesConfig["format-prettier"]))) && context.str[leftmostPos - 1] &&
       !context.str[leftmostPos - 1].trim()) {
         context.report({
@@ -2871,7 +2875,8 @@ function tagSpaceBetweenSlashAndBracket(context) {
   return {
     tag(node) {
       const idxOnTheLeft = left(context.str, node.end - 1);
-      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && (context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$2) && idxOnTheLeft < node.end - 2) {
+      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && (
+      context.str[idxOnTheLeft] === "/" || context.str[idxOnTheLeft] === BACKSLASH$2) && idxOnTheLeft < node.end - 2) {
         const idxFrom = idxOnTheLeft + 1;
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
@@ -3216,7 +3221,8 @@ function tagVoidSlash(context, mode = "always") {
             ranges: [[leftOfSlashPos + 1, closingBracketPos]]
           }
         });
-      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && (!context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
+      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && (
+      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           if (context.str[slashPos + 1] === " ") {
             context.report({
@@ -3554,7 +3560,8 @@ function attributeMalformed(context, ...config) {
           });
         }
       }
-      if (node.attribNameEndsAt && (node.attribValueStartsAt || node.attribOpeningQuoteAt && node.attribClosingQuoteAt && node.attribClosingQuoteAt === node.attribOpeningQuoteAt + 1)) {
+      if (node.attribNameEndsAt && (node.attribValueStartsAt ||
+      node.attribOpeningQuoteAt && node.attribClosingQuoteAt && node.attribClosingQuoteAt === node.attribOpeningQuoteAt + 1)) {
         if (
         node.attribOpeningQuoteAt !== null && context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt) !== "=") {
           let message = `Malformed around equal.`;
@@ -3593,7 +3600,8 @@ function attributeMalformed(context, ...config) {
         });
         repeatedQuotesPresent = true;
       }
-      if (node.attribValueRaw && (node.attribValueRaw.endsWith(`"`) || node.attribValueRaw.endsWith(`'`)) && node.attribValueEndsAt && node.attribClosingQuoteAt && context.str[node.attribValueEndsAt] === context.str[node.attribClosingQuoteAt]) {
+      if (node.attribValueRaw && (
+      node.attribValueRaw.endsWith(`"`) || node.attribValueRaw.endsWith(`'`)) && node.attribValueEndsAt && node.attribClosingQuoteAt && context.str[node.attribValueEndsAt] === context.str[node.attribClosingQuoteAt]) {
         const message = `Delete repeated closing quotes.`;
         context.report({
           ruleId: "attribute-malformed",
@@ -8855,7 +8863,8 @@ function characterEncode(context, ...config) {
       for (let i = 0, len = token.value.length; i < len; i++) {
         const charCode = token.value[i].charCodeAt(0);
         if (
-        charCode > 127 && (!badChars.has(charCode) ||
+        charCode > 127 && (
+        !badChars.has(charCode) ||
         !isAnEnabledValue(context.processedRulesConfig[badChars.get(charCode)])) ||
         `<>"`.includes(token.value[i])) {
           validateCharEncoding(token.value[i], i + token.start, mode, context);
@@ -9344,10 +9353,14 @@ function processCSS(token, context) {
   if (nodeArr.length > 1) {
     let somethingMet = false;
     for (let i = 0, len = nodeArr.length; i < len; i++) {
-      if (somethingMet && (nodeArr[i].property !== undefined || nodeArr[i].type === "comment" &&
-      !nodeArr[i].closing || nodeArr[i].type === "esp" &&
+      if (somethingMet && (
+      nodeArr[i].property !== undefined ||
+      nodeArr[i].type === "comment" &&
+      !nodeArr[i].closing ||
+      nodeArr[i].type === "esp" &&
       nodeArr[i - 2] && nodeArr[i - 2].property !== undefined) &&
-      nodeArr[i - 1].type === "text" && nodeArr[i - 1].value !== " " && (nodeArr[i].type !== "esp" || !nodeArr[i - 1].value.includes("\n") && !nodeArr[i - 1].value.includes("\r")) &&
+      nodeArr[i - 1].type === "text" && nodeArr[i - 1].value !== " " && (
+      nodeArr[i].type !== "esp" || !nodeArr[i - 1].value.includes("\n") && !nodeArr[i - 1].value.includes("\r")) &&
       !(nodeArr[i - 2].type === "esp" && (nodeArr[i - 1].value.includes("\n") || nodeArr[i - 1].value.includes("\r")))) {
         context.report({
           ruleId: "format-prettier",
@@ -9361,7 +9374,8 @@ function processCSS(token, context) {
       } else if (
       i &&
       !["text", "esp"].includes(nodeArr[i - 1].type) &&
-      nodeArr[i].property !== undefined && (nodeArr[i].property || nodeArr[i].value || nodeArr[i].important)) {
+      nodeArr[i].property !== undefined && (
+      nodeArr[i].property || nodeArr[i].value || nodeArr[i].important)) {
         context.report({
           ruleId: "format-prettier",
           idxFrom: nodeArr[i].start,

@@ -137,7 +137,8 @@ function wrap(placementValue, opts, dontWrapTheseVars = false, breadCrumbPath, n
   if (!opts.wrapTailsWith) {
     opts.wrapTailsWith = "";
   }
-  if (isStr(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(val => matcher.isMatch(oldVarName, val)) && (!opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
+  if (isStr(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(val => matcher.isMatch(oldVarName, val)) && (
+  !opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
     return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
   }
   if (dontWrapTheseVars) {

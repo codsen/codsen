@@ -39,11 +39,13 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "esbuild": "node '../../scripts/esbuild.js'",
-    "esbuild_dev": "cross-env MODE=dev node '../../scripts/esbuild.js'",
     "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
+    "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
+    "clean_types": "../../scripts/cleanTypes.js",
     "dev": "rollup -c --dev",
     "devunittest": "npm run dev && tap --only -R 'base'",
+    "esbuild": "node '../../scripts/esbuild.js'",
+    "esbuild_dev": "cross-env MODE=dev node '../../scripts/esbuild.js'",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "../../node_modules/eslint/bin/eslint.js . --ext .js --ext .ts --fix --config \"../../.eslintrc.json\" --quiet",
@@ -51,13 +53,11 @@
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
     "republish": "npm publish || :",
     "tap": "tap",
-    "tsc": "tsc",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
-    "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run clean_cov && npm run perf",
-    "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
-    "clean_types": "../../scripts/cleanTypes.js"
+    "tsc": "tsc",
+    "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run clean_cov && npm run perf"
   },
   "tap": {
     "check-coverage": false,
