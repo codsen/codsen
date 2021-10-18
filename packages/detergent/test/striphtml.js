@@ -1,6 +1,5 @@
 import tap from "tap";
 // import { det as det1 } from "../dist/detergent.esm.js";
-// import { det as det1 } from "../dist/detergent.esm.js";
 import { det, mixer } from "../t-util/util.js";
 
 tap.test(
