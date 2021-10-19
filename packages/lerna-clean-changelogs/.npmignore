@@ -21,6 +21,7 @@ test
 
 .npmignore
 .prettierignore
+fixture_hashes.json
 rollup.config.js
 testStats.md
 tsconfig.json

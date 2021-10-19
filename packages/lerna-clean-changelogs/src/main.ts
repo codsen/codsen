@@ -5,7 +5,10 @@ function isStr(something: string): any {
   return typeof something === "string";
 }
 
-function cleanChangelogs(changelogContents: string): {
+function cleanChangelogs(
+  changelogContents: string,
+  extras = false
+): {
   version: string;
   res: string;
 } {
@@ -30,6 +33,7 @@ function cleanChangelogs(changelogContents: string): {
     changelogContents.length &&
     (!changelogContents.includes("\n") || !changelogContents.includes("\r"))
   ) {
+    /* istanbul ignore next */
     const changelogEndedWithLinebreak =
       isStr(changelogContents) &&
       changelogContents.length &&
@@ -52,29 +56,31 @@ function cleanChangelogs(changelogContents: string): {
     //   )}`
     // );
 
-    // ███
-    // 1. remove links from titles, for example, turn:
-    // ## [2.9.1](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
-    // into:
-    // ## 2.9.1 (2018-12-27)
-    linesArr.forEach((line, i) => {
-      if (line.startsWith("#")) {
-        linesArr[i] = line.replace(
-          /(#+) \[?(\d+\.\d+\.\d+)\s?\]\([^)]*\)/g,
-          "$1 $2"
-        );
-      }
-      if (i && linesArr[i].startsWith("# ")) {
-        linesArr[i] = `#${linesArr[i]}`;
-      }
-    });
-    // console.log(
-    //   `062 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
-    //     linesArr,
-    //     null,
-    //     4
-    //   )}`
-    // );
+    if (extras) {
+      // ███
+      // 1. remove links from titles, for example, turn:
+      // ## [2.9.1](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
+      // into:
+      // ## 2.9.1 (2018-12-27)
+      linesArr.forEach((line, i) => {
+        if (line.startsWith("#")) {
+          linesArr[i] = line.replace(
+            /(#+) \[?(\d+\.\d+\.\d+)\s?\]\([^)]*\)/g,
+            "$1 $2"
+          );
+        }
+        if (i && linesArr[i].startsWith("# ")) {
+          linesArr[i] = `#${linesArr[i]}`;
+        }
+      });
+      // console.log(
+      //   `062 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
+      //     linesArr,
+      //     null,
+      //     4
+      //   )}`
+      // );
+    }
 
     // ███
     // 2. remove bump-only entries, for example
@@ -95,7 +101,7 @@ function cleanChangelogs(changelogContents: string): {
       );
       if (
         linesArr[i].startsWith("**Note:** Version bump only") ||
-        linesArr[i].toLowerCase().includes("wip")
+        (extras && linesArr[i].toLowerCase().includes("wip"))
       ) {
         // delete all the blank lines above the culprit:
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
@@ -121,7 +127,7 @@ function cleanChangelogs(changelogContents: string): {
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
           console.log(
-            `124 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `130 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
         }
       }
@@ -136,11 +142,12 @@ function cleanChangelogs(changelogContents: string): {
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
         console.log(
-          `139 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          `145 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
         );
       }
     }
 
+    /* istanbul ignore next */
     final = `${newLinesArr.join("\n")}${
       changelogEndedWithLinebreak ? "\n" : ""
     }`;

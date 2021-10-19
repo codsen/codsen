@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - bbb
 
-# 2.8.0 (2018-12-22)
+## 2.8.0 (2018-12-22)
 
 ### Bug Fixes
 
@@ -23,7 +23,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - bbb
 
-# 2.7.2 (2018-12-21)
+## 2.7.2 (2018-12-21)
 
 ### Bug Fixes
 
