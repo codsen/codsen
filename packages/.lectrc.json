@@ -117,6 +117,7 @@
       ".prettierignore",
       ".travis.yml",
       "benchmark.js",
+      "fixture_hashes.json",
       "bitbucket-pipelines.yml",
       "chlu_adds_missing_diff_links.gif",
       "cli_bak.js",
