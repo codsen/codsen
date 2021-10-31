@@ -98,7 +98,7 @@ function comb(str, originalOpts) {
   let lastKeptChunksCommaAt = null;
   let onlyDeletedChunksFollow = false;
   let bodyClassOrIdCanBeDeleted;
-  let round1RangesClone;
+  let round1RangesClone = null;
   let nonIndentationsWhitespaceLength = 0;
   let commentsLength = 0;
   const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
