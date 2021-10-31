@@ -43,6 +43,7 @@ const cli = meow(
   Options
     -h, --help          Shows this help
     -v, --version       Shows the current version
+    -e, --extras        Extra cleaning (h1, diffs etc.)
 `,
   {
     importMeta: import.meta,
@@ -71,7 +72,9 @@ function readSortAndWriteOverFile(oneOfPaths) {
     .then((filesContent) => {
       let preppedContents;
       try {
-        preppedContents = cleanChangelogs(filesContent);
+        preppedContents = cleanChangelogs(filesContent, {
+          extras: !!(cli.flags.e || cli.flags.extras),
+        });
       } catch (err) {
         return null;
       }
