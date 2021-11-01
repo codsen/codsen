@@ -5,7 +5,7 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 execution_time_limit:
-  hours: 2
+  hours: 3
 blocks:
   - name: Publish the packages
     task:
