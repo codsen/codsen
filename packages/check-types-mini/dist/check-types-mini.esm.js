@@ -13,7 +13,7 @@ import { traverse } from 'ast-monkey-traverse';
 import intersection from 'lodash.intersection';
 import { arrayiffy } from 'arrayiffy-if-string';
 import objectPath from 'object-path';
-import matcher from 'matcher';
+import { isMatch } from 'matcher';
 
 const defaults = {
   ignoreKeys: [],
@@ -36,7 +36,7 @@ function internalApi(obj, ref, originalOptions) {
     if (typeof toBeRemoved === "string") {
       toBeRemoved = arrayiffy(toBeRemoved);
     }
-    return Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => matcher.isMatch(originalVal, remVal, {
+    return Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => isMatch(originalVal, remVal, {
       caseSensitive: true
     })));
   }
@@ -119,10 +119,10 @@ function internalApi(obj, ref, originalOptions) {
     if (Array.isArray(ignoredPathsArr) && ignoredPathsArr.length && ignoredPathsArr.some(path => innerObj.path.startsWith(path))) {
       return current;
     }
-    if (objKey && opts.ignoreKeys.some(oneOfKeysToIgnore => matcher.isMatch(objKey, oneOfKeysToIgnore))) {
+    if (objKey && opts.ignoreKeys.some(oneOfKeysToIgnore => isMatch(objKey, oneOfKeysToIgnore))) {
       return current;
     }
-    if (opts.ignorePaths.some(oneOfPathsToIgnore => matcher.isMatch(innerObj.path, oneOfPathsToIgnore))) {
+    if (opts.ignorePaths.some(oneOfPathsToIgnore => isMatch(innerObj.path, oneOfPathsToIgnore))) {
       return current;
     }
     const isNotAnArrayChild = !(!isObj(current) && !Array.isArray(current) && Array.isArray(innerObj.parent));

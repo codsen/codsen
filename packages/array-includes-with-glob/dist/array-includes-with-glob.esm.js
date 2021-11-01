@@ -7,7 +7,7 @@
  * {@link https://codsen.com/os/array-includes-with-glob/}
  */
 
-import matcher from 'matcher';
+import { isMatch } from 'matcher';
 
 var version$1 = "4.0.2";
 
@@ -25,16 +25,16 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
   };
   const input = typeof originalInput === "string" ? [originalInput] : Array.from(originalInput);
   if (typeof stringToFind === "string") {
-    return input.some(val => matcher.isMatch(val, stringToFind, {
+    return input.some(val => isMatch(val, stringToFind, {
       caseSensitive: opts.caseSensitive
     }));
   }
   if (opts.arrayVsArrayAllMustBeFound === "any") {
-    return stringToFind.some(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
+    return stringToFind.some(stringToFindVal => input.some(val => isMatch(val, stringToFindVal, {
       caseSensitive: opts.caseSensitive
     })));
   }
-  return stringToFind.every(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
+  return stringToFind.every(stringToFindVal => input.some(val => isMatch(val, stringToFindVal, {
     caseSensitive: opts.caseSensitive
   })));
 }

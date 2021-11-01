@@ -6,7 +6,7 @@
 
 import defineLazyProp from "define-lazy-prop";
 import clone from "lodash.clonedeep";
-import matcher from "matcher";
+import { isMatch } from "matcher";
 import allBadCharacterRules from "./rules/all-bad-character.json";
 import allTagRules from "./rules/all-tag.json";
 import allAttribRules from "./rules/all-attribute.json";
@@ -1968,7 +1968,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
           res[ruleName] = clone(opts[ruleName]);
         } else if (ruleName.includes("*")) {
           Object.keys(builtInRules).forEach((builtInRule) => {
-            if (matcher.isMatch(builtInRule, ruleName)) {
+            if (isMatch(builtInRule, ruleName)) {
               res[builtInRule] = clone(opts[ruleName]);
             }
           });

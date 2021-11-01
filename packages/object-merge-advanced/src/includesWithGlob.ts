@@ -1,4 +1,4 @@
-import matcher from "matcher";
+import { isMatch } from "matcher";
 
 // it's a copy of array-includes-with-glob 3.1.0, to prevent circular deps
 
@@ -34,14 +34,14 @@ function includesWithGlob(
 
   if (typeof stringToFind === "string") {
     return input.some((val) =>
-      matcher.isMatch(val, stringToFind, { caseSensitive: opts.caseSensitive })
+      isMatch(val, stringToFind, { caseSensitive: opts.caseSensitive })
     );
   }
   // array then.
   if (opts.arrayVsArrayAllMustBeFound === "any") {
     return stringToFind.some((stringToFindVal) =>
       input.some((val) =>
-        matcher.isMatch(val, stringToFindVal, {
+        isMatch(val, stringToFindVal, {
           caseSensitive: opts.caseSensitive,
         })
       )
@@ -49,7 +49,7 @@ function includesWithGlob(
   }
   return stringToFind.every((stringToFindVal) =>
     input.some((val) =>
-      matcher.isMatch(val, stringToFindVal, {
+      isMatch(val, stringToFindVal, {
         caseSensitive: opts.caseSensitive,
       })
     )

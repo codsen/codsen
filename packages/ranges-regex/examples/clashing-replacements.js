@@ -2,8 +2,8 @@
 
 import { strict as assert } from "assert";
 import { rRegex } from "../dist/ranges-regex.esm.js";
-import { rApply } from "../../ranges-apply";
-import { Ranges } from "../../ranges-push";
+import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
+import { Ranges } from "../../ranges-push/dist/ranges-push.esm.js";
 
 // Two tasks:
 // 1. replace numbers with asterisks (*)

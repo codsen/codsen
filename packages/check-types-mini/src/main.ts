@@ -4,7 +4,7 @@ import { traverse } from "ast-monkey-traverse";
 import intersection from "lodash.intersection";
 import { arrayiffy } from "arrayiffy-if-string";
 import objectPath from "object-path";
-import matcher from "matcher";
+import { isMatch } from "matcher";
 
 interface Obj {
   [key: string]: any;
@@ -60,7 +60,7 @@ function internalApi(
     return Array.from(originalInput).filter(
       (originalVal) =>
         !(toBeRemoved as string[]).some((remVal) =>
-          matcher.isMatch(originalVal, remVal, {
+          isMatch(originalVal, remVal, {
             caseSensitive: true,
           })
         )
@@ -382,7 +382,7 @@ function internalApi(
     if (
       objKey &&
       (opts.ignoreKeys as string[]).some((oneOfKeysToIgnore) =>
-        matcher.isMatch(objKey, oneOfKeysToIgnore)
+        isMatch(objKey, oneOfKeysToIgnore)
       )
     ) {
       console.log(
@@ -405,7 +405,7 @@ function internalApi(
     // if this path is ignored, skip it:
     if (
       (opts.ignorePaths as string[]).some((oneOfPathsToIgnore) =>
-        matcher.isMatch(innerObj.path, oneOfPathsToIgnore)
+        isMatch(innerObj.path, oneOfPathsToIgnore)
       )
     ) {
       console.log(

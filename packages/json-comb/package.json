@@ -76,18 +76,18 @@
     "is-d": "^1.0.0",
     "json-comb-core": "^7.0.2",
     "meow": "^10.1.1",
-    "p-map": "^5.1.0",
+    "p-map": "^5.2.0",
     "p-reduce": "^3.0.0",
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
     "@istanbuljs/esm-loader-hook": "^0.1.2",
-    "core-js": "^3.17.3",
+    "core-js": "^3.19.0",
     "cross-env": "^7.0.3",
-    "eslint": "^7.32.0",
+    "eslint": "^8.1.0",
     "execa": "^5.1.1",
     "lect": "^0.18.2",
-    "tap": "^15.0.9",
+    "tap": "^15.0.10",
     "tempy": "^2.0.0",
     "tslib": "^2.3.1"
   },

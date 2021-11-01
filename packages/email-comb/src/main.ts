@@ -13,7 +13,7 @@ import pullAll from "lodash.pullall";
 import { crush } from "html-crush";
 import { Ranges } from "ranges-push";
 import uniq from "lodash.uniq";
-import matcher from "matcher";
+import { matcher, isMatch } from "matcher";
 const version: string = v;
 
 interface NumValObj {
@@ -3679,7 +3679,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
             .filter(
               (arr) =>
                 !opts.whitelist.some((whitelistVal) =>
-                  matcher.isMatch(arr[0], whitelistVal)
+                  isMatch(arr[0], whitelistVal)
                 )
             )
         : null;

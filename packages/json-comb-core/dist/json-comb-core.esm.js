@@ -11,7 +11,7 @@ import { flattenAllArrays } from 'object-flatten-all-arrays';
 import { fillMissing } from 'object-fill-missing-keys';
 import { setAllValuesTo } from 'object-set-all-values-to';
 import { mergeAdvanced } from 'object-merge-advanced';
-import compareVersions from 'compare-versions';
+import semverCompare from 'semver-compare';
 import includes from 'lodash.includes';
 import { noNewKeys } from 'object-no-new-keys';
 import clone from 'lodash.clonedeep';
@@ -32,7 +32,6 @@ function isObj(something) {
 function isStr(something) {
   return typeof something === "string";
 }
-const isArr = Array.isArray;
 function toString(obj) {
   if (obj === null) {
     return "null";
@@ -71,12 +70,12 @@ function defaultCompare(x, y) {
 function compare(firstEl, secondEl) {
   const semverRegex = /^\d+\.\d+\.\d+$/g;
   if (firstEl.match(semverRegex) && secondEl.match(semverRegex)) {
-    return compareVersions(firstEl, secondEl);
+    return semverCompare(firstEl, secondEl);
   }
   return defaultCompare(firstEl, secondEl);
 }
 function sortAllObjectsSync(input) {
-  if (isObj(input) || isArr(input)) {
+  if (isObj(input) || Array.isArray(input)) {
     return sortKeys(input, {
       deep: true,
       compare
@@ -130,7 +129,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
   if (arguments.length === 0) {
     throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!");
   }
-  if (!isArr(arrOriginal)) {
+  if (!Array.isArray(arrOriginal)) {
     throw new Error(`json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ${typeof arrOriginal}`);
   }
   if (arrOriginal.length === 0) {
@@ -233,7 +232,7 @@ function noNewKeysSync(obj, schemaKeyset) {
   return noNewKeys(obj, schemaKeyset);
 }
 function findUnusedSync(arrOriginal, originalOpts) {
-  if (isArr(arrOriginal)) {
+  if (Array.isArray(arrOriginal)) {
     if (arrOriginal.length === 0) {
       return [];
     }
@@ -258,7 +257,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
     return something.map(finding => finding.charAt(0) === "." ? finding.slice(1) : finding);
   }
   function findUnusedSyncInner(arr1, opts1, res = [], path = "") {
-    if (isArr(arr1) && arr1.length === 0) {
+    if (Array.isArray(arr1) && arr1.length === 0) {
       return res;
     }
     let keySet;
@@ -268,7 +267,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
         const unusedKeys = Object.keys(keySet).filter(key => arr1.every(obj => (opts1 && obj[key] === opts1.placeholder || obj[key] === undefined) && (!opts1 || !opts1.comments || !includes(key, opts1.comments))));
         res = res.concat(unusedKeys.map(el => `${path}.${el}`));
       }
-      const keys = [].concat(...Object.keys(keySet).filter(key => isObj(keySet[key]) || isArr(keySet[key])));
+      const keys = [].concat(...Object.keys(keySet).filter(key => isObj(keySet[key]) || Array.isArray(keySet[key])));
       const keysContents = keys.map(key => typ(keySet[key]));
       const extras = keys.map(el => [].concat(...arr1.reduce((res1, obj) => {
         if (obj && existy(obj[el]) && (!opts1 || obj[el] !== opts1.placeholder)) {
@@ -289,7 +288,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
           res = findUnusedSyncInner(singleExtra, opts1, res, path + innerDot + keys[i] + appendix);
         });
       }
-    } else if (arr1.every(el => isArr(el))) {
+    } else if (arr1.every(el => Array.isArray(el))) {
       arr1.forEach((singleArray, i) => {
         res = findUnusedSyncInner(singleArray, opts1, res, `${path}[${i}]`);
       });

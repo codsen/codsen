@@ -16,7 +16,7 @@ import { cparser } from 'codsen-parser';
 import he from 'he';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import defineLazyProp from 'define-lazy-prop';
-import matcher from 'matcher';
+import { matcher, isMatch } from 'matcher';
 import { processCommaSep } from 'string-process-comma-separated';
 import { right, left, leftStopAtNewLines } from 'string-left-right';
 import isRegExp from 'lodash.isregexp';
@@ -9729,7 +9729,7 @@ function normaliseRequestedRules(opts) {
           res[ruleName] = clone(opts[ruleName]);
         } else if (ruleName.includes("*")) {
           Object.keys(builtInRules).forEach(builtInRule => {
-            if (matcher.isMatch(builtInRule, ruleName)) {
+            if (isMatch(builtInRule, ruleName)) {
               res[builtInRule] = clone(opts[ruleName]);
             }
           });

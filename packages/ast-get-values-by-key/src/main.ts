@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { traverse } from "ast-monkey-traverse";
-import matcher from "matcher";
+import { isMatch } from "matcher";
 import clone from "lodash.clonedeep";
 import { version as v } from "../package.json";
 const version: string = v;
@@ -32,7 +32,7 @@ function getByKey(
     const current = val !== undefined ? val : key;
     if (
       val !== undefined &&
-      matcher.isMatch(key, whatToFind, { caseSensitive: true })
+      isMatch(key, whatToFind, { caseSensitive: true })
     ) {
       if (replacement === undefined) {
         findings.push({

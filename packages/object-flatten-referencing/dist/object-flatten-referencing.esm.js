@@ -9,7 +9,7 @@
 
 import clone from 'lodash.clonedeep';
 import { strIndexesOfPlus } from 'str-indexes-of-plus';
-import matcher from 'matcher';
+import { isMatch } from 'matcher';
 import isObj from 'lodash.isplainobject';
 
 const defaults = {
@@ -158,7 +158,7 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true;
             if (opts.dontWrapKeys.length > 0) {
-              wrap = wrap && !opts.dontWrapKeys.some(elem => matcher.isMatch(key, elem, {
+              wrap = wrap && !opts.dontWrapKeys.some(elem => isMatch(key, elem, {
                 caseSensitive: true
               }));
             }

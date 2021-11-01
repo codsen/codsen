@@ -20,7 +20,7 @@ import pullAll from 'lodash.pullall';
 import { crush } from 'html-crush';
 import { Ranges } from 'ranges-push';
 import uniq from 'lodash.uniq';
-import matcher from 'matcher';
+import { matcher, isMatch } from 'matcher';
 
 var version$1 = "6.0.2";
 
@@ -1087,7 +1087,7 @@ function comb(str, originalOpts) {
         allClassesAndIdsWithinHeadFinalUglified = uglifyArr(allClassesAndIdsWithinHeadFinal);
       }
       countAfterCleaning = allClassesAndIdsWithinHeadFinal.length;
-      uglified = opts.uglify ? allClassesAndIdsWithinHeadFinal.map((name, id) => [name, allClassesAndIdsWithinHeadFinalUglified[id]]).filter(arr => !opts.whitelist.some(whitelistVal => matcher.isMatch(arr[0], whitelistVal))) : null;
+      uglified = opts.uglify ? allClassesAndIdsWithinHeadFinal.map((name, id) => [name, allClassesAndIdsWithinHeadFinalUglified[id]]).filter(arr => !opts.whitelist.some(whitelistVal => isMatch(arr[0], whitelistVal))) : null;
       if (finalIndexesToDelete.current()) {
         round1RangesClone = Array.from(finalIndexesToDelete.current() || []);
       } else {

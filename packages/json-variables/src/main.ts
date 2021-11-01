@@ -1,7 +1,7 @@
 /* eslint max-len:0 */
 
 import { traverse } from "ast-monkey-traverse";
-import matcher from "matcher";
+import { isMatch } from "matcher";
 import objectPath from "object-path";
 import { arrayiffy } from "arrayiffy-if-string";
 import { strFindHeadsTails } from "string-find-heads-tails";
@@ -228,7 +228,7 @@ function wrap(
     isStr(placementValue) &&
     !dontWrapTheseVars &&
     opts.wrapGlobalFlipSwitch &&
-    !opts.dontWrapVars.some((val) => matcher.isMatch(oldVarName, val)) && // considering double-wrapping prevention setting:
+    !opts.dontWrapVars.some((val) => isMatch(oldVarName, val)) && // considering double-wrapping prevention setting:
     (!opts.preventDoubleWrapping ||
       (opts.preventDoubleWrapping &&
         isStr(placementValue) &&

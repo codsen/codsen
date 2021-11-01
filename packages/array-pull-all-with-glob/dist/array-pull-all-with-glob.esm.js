@@ -7,7 +7,7 @@
  * {@link https://codsen.com/os/array-pull-all-with-glob/}
  */
 
-import matcher from 'matcher';
+import { isMatch } from 'matcher';
 
 var version$1 = "6.0.2";
 
@@ -26,7 +26,7 @@ function pull(originalInput, originalToBeRemoved, originalOpts) {
   const opts = { ...defaults,
     ...originalOpts
   };
-  const res = Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => matcher.isMatch(originalVal, remVal, {
+  const res = Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => isMatch(originalVal, remVal, {
     caseSensitive: opts.caseSensitive
   })));
   return res;

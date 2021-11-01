@@ -1,7 +1,7 @@
 import typeDetect from "type-detect";
 import { empty } from "ast-contains-only-empty-space";
 import isObj from "lodash.isplainobject";
-import matcher from "matcher";
+import { isMatch } from "matcher";
 
 /* eslint no-use-before-define: 0 */
 // From "type-fest" by Sindre Sorhus:
@@ -129,23 +129,19 @@ function compare(
     }
     console.log(
       `131 return ${
-        opts.useWildcards
-          ? matcher.isMatch(b, s, { caseSensitive: true })
-          : b === s
+        opts.useWildcards ? isMatch(b, s, { caseSensitive: true }) : b === s
       }`
     );
-    return opts.useWildcards
-      ? matcher.isMatch(b, s, { caseSensitive: true })
-      : b === s;
+    return opts.useWildcards ? isMatch(b, s, { caseSensitive: true }) : b === s;
   }
   if (Array.isArray(b) && Array.isArray(s)) {
-    console.log(`142 both arrays`);
+    console.log(`138 both arrays`);
     if (
       opts.hungryForWhitespace &&
       empty(s) &&
       (!opts.matchStrictly || (opts.matchStrictly && b.length === s.length))
     ) {
-      console.log(`148 return true`);
+      console.log(`144 return true`);
       return true;
     }
     if (
@@ -153,10 +149,10 @@ function compare(
       (opts.matchStrictly && s.length !== b.length)
     ) {
       if (!opts.verboseWhenMismatches) {
-        console.log(`156 return false`);
+        console.log(`152 return false`);
         return false;
       }
-      console.log(`159 return`);
+      console.log(`155 return`);
       return `The length of a given array, ${JSON.stringify(s, null, 4)} is ${
         s.length
       } but the length of an array on the other end, ${JSON.stringify(
@@ -167,26 +163,26 @@ function compare(
     }
     if (s.length === 0) {
       if (b.length === 0) {
-        console.log(`170 return true`);
+        console.log(`166 return true`);
         return true;
       }
       // so b is not zero-long, but s is.
       if (opts.verboseWhenMismatches) {
-        console.log(`175 return`);
+        console.log(`171 return`);
         return `The given array has no elements, but the array on the other end, ${JSON.stringify(
           b,
           null,
           4
         )} does have some`;
       }
-      console.log(`182 return false`);
+      console.log(`178 return false`);
       return false;
     }
     for (let i = 0, sLen = s.length; i < sLen; i++) {
       found = false;
       for (let j = bOffset, bLen = b.length; j < bLen; j++) {
         bOffset += 1;
-        console.log(`189 enter recursion`);
+        console.log(`185 enter recursion`);
         if (compare(b[j], s[i], opts) === true) {
           found = true;
           break;
@@ -194,10 +190,10 @@ function compare(
       }
       if (!found) {
         if (!opts.verboseWhenMismatches) {
-          console.log(`197 return false`);
+          console.log(`193 return false`);
           return false;
         }
-        console.log(`200 return`);
+        console.log(`196 return`);
         return `The given array ${JSON.stringify(
           s,
           null,
@@ -214,7 +210,7 @@ function compare(
     bKeys = new Set(Object.keys(b as AnyObject));
     if (opts.matchStrictly && sKeys.size !== bKeys.size) {
       if (!opts.verboseWhenMismatches) {
-        console.log(`217 return false`);
+        console.log(`213 return false`);
         return false;
       }
       const uniqueKeysOnS = new Set([...sKeys].filter((x) => !bKeys.has(x)));
@@ -232,40 +228,40 @@ function compare(
         ${JSON.stringify(uniqueKeysOnB, null, 4)}.`
         : "";
 
-      console.log(`235 return`);
+      console.log(`231 return`);
       return `When matching strictly, we found that both objects have different amount of keys.${sMessage}${bMessage}`;
     }
 
-    console.log(`239 ${`\u001b[${36}m${`LOOP`}\u001b[${39}m`}`);
+    console.log(`235 ${`\u001b[${36}m${`LOOP`}\u001b[${39}m`}`);
 
     // eslint-disable-next-line
     for (const sKey of sKeys) {
-      console.log(`243 ${`\u001b[${35}m${`sKey = ${sKey}`}\u001b[${39}m`}`);
+      console.log(`239 ${`\u001b[${35}m${`sKey = ${sKey}`}\u001b[${39}m`}`);
       if (!Object.prototype.hasOwnProperty.call(b, sKey)) {
-        console.log(`245 case #1.`);
+        console.log(`241 case #1.`);
         if (!opts.useWildcards || (opts.useWildcards && !sKey.includes("*"))) {
           if (!opts.verboseWhenMismatches) {
-            console.log(`248 return false`);
+            console.log(`244 return false`);
             return false;
           }
-          console.log(`251 return`);
+          console.log(`247 return`);
           return `The given object has key "${sKey}" which the other-one does not have.`;
         }
         // so wildcards are on and sKeys[i] contains a wildcard
         if (
           Object.keys(b as AnyObject).some((bKey) =>
-            matcher.isMatch(bKey, sKey, { caseSensitive: true })
+            isMatch(bKey, sKey, { caseSensitive: true })
           )
         ) {
           // so some keys do match. Return true
-          console.log(`261 return true`);
+          console.log(`257 return true`);
           return true;
         }
         if (!opts.verboseWhenMismatches) {
-          console.log(`265 return false`);
+          console.log(`261 return false`);
           return false;
         }
-        console.log(`268 return`);
+        console.log(`264 return`);
         return `The given object has key "${sKey}" which the other-one does not have.`;
       }
       if (
@@ -273,8 +269,8 @@ function compare(
         typeDetect((b as AnyObject)[sKey]) !==
           typeDetect((s as AnyObject)[sKey])
       ) {
-        console.log(`276 case #2.`);
-        console.log(`277 types mismatch`);
+        console.log(`272 case #2.`);
+        console.log(`273 types mismatch`);
         // Types mismatch. Probably falsey result, unless comparing with
         // empty/blank things. Let's check.
         // it might be blank array vs blank object:
@@ -286,10 +282,10 @@ function compare(
           )
         ) {
           if (!opts.verboseWhenMismatches) {
-            console.log(`289 return false`);
+            console.log(`285 return false`);
             return false;
           }
-          console.log(`292 return`);
+          console.log(`288 return`);
           return `The given key ${sKey} is of a different type on both objects. On the first-one, it's ${typeDetect(
             (s as AnyObject)[sKey]
           )}, on the second-one, it's ${typeDetect((b as AnyObject)[sKey])}`;
@@ -297,50 +293,50 @@ function compare(
       } else if (
         compare((b as AnyObject)[sKey], (s as AnyObject)[sKey], opts) !== true
       ) {
-        console.log(`300 case #3. - recursion returned false`);
+        console.log(`296 case #3. - recursion returned false`);
         console.log(
-          `302 ██ ${`\u001b[${33}m${`b[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
+          `298 ██ ${`\u001b[${33}m${`b[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
             (b as AnyObject)[sKey],
             null,
             4
           )}`
         );
         console.log(
-          `309 ██ ${`\u001b[${33}m${`s[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
+          `305 ██ ${`\u001b[${33}m${`s[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
             (s as AnyObject)[sKey],
             null,
             4
           )}`
         );
-        console.log(`315 so key does exist and type matches`);
+        console.log(`311 so key does exist and type matches`);
         if (!opts.verboseWhenMismatches) {
-          console.log(`317 return false`);
+          console.log(`313 return false`);
           return false;
         }
-        console.log(`320 return`);
+        console.log(`316 return`);
         return `The given piece ${JSON.stringify(
           (s as AnyObject)[sKey],
           null,
           4
         )} and ${JSON.stringify((b as AnyObject)[sKey], null, 4)} don't match.`;
       }
-      console.log(`327 end reached, case #4.`);
+      console.log(`323 end reached, case #4.`);
     }
   } else {
-    console.log(`330 else clauses`);
+    console.log(`326 else clauses`);
     if (
       opts.hungryForWhitespace &&
       empty(b) &&
       empty(s) &&
       (!opts.matchStrictly || (opts.matchStrictly && isBlank(s)))
     ) {
-      console.log(`337 return true`);
+      console.log(`333 return true`);
       return true;
     }
-    console.log(`340 return ${b === s}`);
+    console.log(`336 return ${b === s}`);
     return b === s;
   }
-  console.log(`343 return true`);
+  console.log(`339 return true`);
   return true;
 }
 

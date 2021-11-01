@@ -4,7 +4,7 @@ import { flattenAllArrays } from "object-flatten-all-arrays";
 import { fillMissing } from "object-fill-missing-keys";
 import { setAllValuesTo } from "object-set-all-values-to";
 import { mergeAdvanced } from "object-merge-advanced";
-import compareVersions from "compare-versions";
+import semverCompare from "semver-compare";
 import includes from "lodash.includes";
 import { noNewKeys } from "object-no-new-keys";
 import clone from "lodash.clonedeep";
@@ -30,7 +30,6 @@ function isObj(something: any): boolean {
 function isStr(something: any): boolean {
   return typeof something === "string";
 }
-const isArr = Array.isArray;
 
 // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
 function toString(obj: any): string {
@@ -81,13 +80,13 @@ function defaultCompare(x: any, y: any) {
 function compare(firstEl: string, secondEl: string) {
   const semverRegex = /^\d+\.\d+\.\d+$/g;
   if (firstEl.match(semverRegex) && secondEl.match(semverRegex)) {
-    return compareVersions(firstEl, secondEl);
+    return semverCompare(firstEl, secondEl);
   }
   return defaultCompare(firstEl, secondEl);
 }
 
 function sortAllObjectsSync(input: any): any {
-  if (isObj(input) || isArr(input)) {
+  if (isObj(input) || Array.isArray(input)) {
     return sortKeys(input, { deep: true, compare });
   }
   return input;
@@ -118,7 +117,7 @@ function getKeyset<ValueType>(
   };
   const opts = { ...defaults, ...originalOpts };
   console.log(
-    `121 CALLING check-types-mini:\nopts = ${JSON.stringify(
+    `120 CALLING check-types-mini:\nopts = ${JSON.stringify(
       opts,
       null,
       4
@@ -197,7 +196,7 @@ function getKeysetSync(
       "json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!"
     );
   }
-  if (!isArr(arrOriginal)) {
+  if (!Array.isArray(arrOriginal)) {
     throw new Error(
       `json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ${typeof arrOriginal}`
     );
@@ -434,7 +433,7 @@ function findUnusedSync(
   // PREPARATIONS AND TYPE CHECKS
   // ============================
 
-  if (isArr(arrOriginal)) {
+  if (Array.isArray(arrOriginal)) {
     if (arrOriginal.length === 0) {
       return [];
     }
@@ -472,7 +471,7 @@ function findUnusedSync(
     res: string[] = [],
     path = ""
   ) {
-    if (isArr(arr1) && arr1.length === 0) {
+    if (Array.isArray(arr1) && arr1.length === 0) {
       return res;
     }
     let keySet: Obj;
@@ -501,7 +500,7 @@ function findUnusedSync(
       //
       const keys: string[] = [].concat(
         ...(Object.keys(keySet) as any[]).filter(
-          (key) => isObj(keySet[key]) || isArr(keySet[key])
+          (key) => isObj(keySet[key]) || Array.isArray(keySet[key])
         )
       );
       const keysContents = keys.map((key) => typ(keySet[key]));
@@ -545,7 +544,7 @@ function findUnusedSync(
           );
         });
       }
-    } else if (arr1.every((el) => isArr(el))) {
+    } else if (arr1.every((el) => Array.isArray(el))) {
       (arr1 as any[][]).forEach((singleArray, i) => {
         res = findUnusedSyncInner(singleArray, opts1, res, `${path}[${i}]`);
       });

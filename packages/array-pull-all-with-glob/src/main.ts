@@ -1,4 +1,4 @@
-import matcher from "matcher";
+import { isMatch } from "matcher";
 import { version as v } from "../package.json";
 const version: string = v;
 
@@ -35,7 +35,7 @@ function pull(
   const res = Array.from(originalInput).filter(
     (originalVal) =>
       !toBeRemoved.some((remVal) =>
-        matcher.isMatch(originalVal, remVal, {
+        isMatch(originalVal, remVal, {
           caseSensitive: opts.caseSensitive,
         })
       )

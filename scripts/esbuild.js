@@ -31,29 +31,13 @@ const banner = {
 `,
 };
 
-// CJS
-if (pkg.main) {
-  esbuild.buildSync({
-    entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
-    format: "cjs",
-    bundle: true,
-    minify: !mode,
-    sourcemap: false,
-    target: ["node10.4"],
-    outfile: path.join(path.resolve("./"), `dist/${name}.cjs.js`),
-    pure,
-    banner,
-    external,
-  });
-}
-
 // ESM
-if (pkg.module) {
+if (typeof pkg.exports === "string" || pkg.exports.default) {
   esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     format: "esm",
     bundle: true,
-    minify: !mode,
+    minify: false,
     sourcemap: false,
     target: ["esnext"],
     outfile: path.join(path.resolve("./"), `dist/${name}.esm.js`),
@@ -64,7 +48,7 @@ if (pkg.module) {
 }
 
 // dev IIFE
-if (pkg.browser) {
+if (pkg.exports && pkg.exports.script) {
   esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     format: "iife",
@@ -73,7 +57,7 @@ if (pkg.browser) {
     minify: !mode,
     sourcemap: false,
     target: ["chrome58"],
-    outfile: path.join(path.resolve("./"), `dist/${name}.dev.umd.js`),
+    outfile: path.join(path.resolve("./"), `dist/${name}.umd.js`),
     pure,
     banner,
     // no "external" - bundle everything

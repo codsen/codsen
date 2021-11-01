@@ -10,7 +10,7 @@
 import typeDetect from 'type-detect';
 import { empty } from 'ast-contains-only-empty-space';
 import isObj from 'lodash.isplainobject';
-import matcher from 'matcher';
+import { isMatch } from 'matcher';
 
 /* istanbul ignore next */
 function isBlank(something) {
@@ -49,7 +49,7 @@ function compare(b, s, originalOpts) {
     if (opts.verboseWhenMismatches) {
       return b === s ? true : `Given string ${s} is not matched! We have ${b} on the other end.`;
     }
-    return opts.useWildcards ? matcher.isMatch(b, s, {
+    return opts.useWildcards ? isMatch(b, s, {
       caseSensitive: true
     }) : b === s;
   }
@@ -110,7 +110,7 @@ function compare(b, s, originalOpts) {
           }
           return `The given object has key "${sKey}" which the other-one does not have.`;
         }
-        if (Object.keys(b).some(bKey => matcher.isMatch(bKey, sKey, {
+        if (Object.keys(b).some(bKey => isMatch(bKey, sKey, {
           caseSensitive: true
         }))) {
           return true;

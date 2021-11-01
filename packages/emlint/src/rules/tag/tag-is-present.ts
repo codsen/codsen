@@ -1,5 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
-import matcher from "matcher";
+import { matcher } from "matcher";
 
 // rule: tag-is-present
 // -----------------------------------------------------------------------------

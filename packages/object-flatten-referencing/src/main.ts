@@ -2,7 +2,7 @@
 
 import clone from "lodash.clonedeep";
 import { strIndexesOfPlus } from "str-indexes-of-plus";
-import matcher from "matcher";
+import { isMatch } from "matcher";
 import isObj from "lodash.isplainobject";
 import {
   flattenObject,
@@ -85,7 +85,7 @@ function flattenReferencing(
               wrap =
                 wrap &&
                 !opts.dontWrapKeys.some((elem) =>
-                  matcher.isMatch(key, elem, { caseSensitive: true })
+                  isMatch(key, elem, { caseSensitive: true })
                 );
             }
             if (opts.dontWrapPaths.length > 0) {
