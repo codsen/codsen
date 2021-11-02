@@ -87,6 +87,8 @@ async function packageJson({ state, lectrc }) {
         // and it's not whitelisted via package.json key
         !lectDevDeps[devDep] &&
         !officialDevDeps.includes(devDep) &&
+        // it's not a type definition
+        !devDep.startsWith("@types") &&
         // either it's not a CLI so we don't care
         (!state.isCLI ||
           // dependency is not whitelisted
