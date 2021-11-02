@@ -27,7 +27,7 @@
     "info": "node ./scripts/generate-info.js",
     "lect": "make run-lect",
     "lerna": "lerna",
-    "pub:vers": "lerna version patch --no-commit-hooks --yes && lernacleanchangelog '**'",
+    "pub:vers": "lerna version --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "lerna run republish",
     "test": "FORCE_COLOR=1 lerna run ci_test && npm run readme:generate",
