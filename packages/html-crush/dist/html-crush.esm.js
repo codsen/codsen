@@ -1,7 +1,7 @@
 /**
  * @name html-crush
  * @fileoverview Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * @version 5.0.2
+ * @version 5.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-crush/}
@@ -13,7 +13,7 @@ import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
 import { expander } from 'string-range-expander';
 import { right, left } from 'string-left-right';
 
-var version$1 = "5.0.2";
+var version$1 = "5.0.3";
 
 const version = version$1;
 const finalIndexesToDelete = new Ranges({

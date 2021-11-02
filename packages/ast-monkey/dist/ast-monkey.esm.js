@@ -1,7 +1,7 @@
 /**
  * @name ast-monkey
  * @fileoverview Traverse and edit AST
- * @version 8.0.2
+ * @version 8.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey/}
@@ -13,7 +13,7 @@ import { compare } from 'ast-compare';
 import { traverse } from 'ast-monkey-traverse';
 export { traverse } from 'ast-monkey-traverse';
 
-var version$1 = "8.0.2";
+var version$1 = "8.0.3";
 
 const version = version$1;
 function existy(x) {

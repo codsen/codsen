@@ -1,13 +1,13 @@
 /**
  * @name regex-is-jinja-nunjucks
  * @fileoverview Regular expression for detecting Jinja or Nunjucks code
- * @version 3.0.2
+ * @version 3.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-is-jinja-nunjucks/}
  */
 
-var version$1 = "3.0.2";
+var version$1 = "3.0.3";
 
 const version = version$1;
 function isJinjaNunjucksRegex() {

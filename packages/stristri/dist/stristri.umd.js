@@ -1,7 +1,7 @@
 /**
  * @name stristri
  * @fileoverview Extracts or deletes HTML, CSS, text and/or templating tags from string
- * @version 4.0.2
+ * @version 4.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/stristri/}
@@ -11,7 +11,7 @@
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 4.0.2
+ * @version 4.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -19,7 +19,7 @@
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 8.0.2
+ * @version 8.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -28,7 +28,7 @@ function e(t){return t&&"object"==typeof t&&!Array.isArray(t)}function r(t){retu
 /**
  * @name string-left-right
  * @fileoverview Looks up the first non-whitespace character to the left/right of a given index
- * @version 5.0.2
+ * @version 5.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-left-right/}
@@ -37,7 +37,7 @@ const d=" ";function h(t,e=0){return function({str:t,idx:e=0,stopAtNewlines:r=!
 /**
  * @name html-all-known-attributes
  * @fileoverview All HTML attributes known to the Humanity
- * @version 5.0.2
+ * @version 5.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/html-all-known-attributes/}
@@ -45,7 +45,7 @@ const d=" ";function h(t,e=0){return function({str:t,idx:e=0,stopAtNewlines:r=!
 /**
  * @name is-char-suitable-for-html-attr-name
  * @fileoverview Is given character suitable to be in an HTML attribute's name?
- * @version 3.0.2
+ * @version 3.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-char-suitable-for-html-attr-name/}
@@ -53,7 +53,7 @@ const d=" ";function h(t,e=0){return function({str:t,idx:e=0,stopAtNewlines:r=!
 /**
  * @name is-html-attribute-closing
  * @fileoverview Is a character on a given index a closing of an HTML attribute?
- * @version 3.0.2
+ * @version 3.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-attribute-closing/}
@@ -61,7 +61,7 @@ const d=" ";function h(t,e=0){return function({str:t,idx:e=0,stopAtNewlines:r=!
 /**
  * @name is-html-tag-opening
  * @fileoverview Does an HTML tag start at given position?
- * @version 3.0.2
+ * @version 3.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-html-tag-opening/}
@@ -69,7 +69,7 @@ const d=" ";function h(t,e=0){return function({str:t,idx:e=0,stopAtNewlines:r=!
 /**
  * @name codsen-tokenizer
  * @fileoverview HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * @version 6.0.2
+ * @version 6.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/codsen-tokenizer/}
@@ -77,7 +77,7 @@ const d=" ";function h(t,e=0){return function({str:t,idx:e=0,stopAtNewlines:r=!
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 5.0.2
+ * @version 5.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -86,7 +86,7 @@ const at={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function it(t,e){
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 8.0.2
+ * @version 8.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -94,7 +94,7 @@ const at={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function it(t,e){
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 6.0.2
+ * @version 6.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -102,7 +102,7 @@ const at={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function it(t,e){
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 6.0.2
+ * @version 6.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -110,7 +110,7 @@ const at={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function it(t,e){
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 6.0.2
+ * @version 6.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -118,7 +118,7 @@ const at={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function it(t,e){
 /**
  * @name string-collapse-white-space
  * @fileoverview Replace chunks of whitespace with a single spaces
- * @version 10.0.2
+ * @version 10.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-white-space/}
@@ -126,7 +126,7 @@ const at={strictlyTwoElementsInRangeArrays:!1,progressFn:null};function it(t,e){
 /**
  * @name detect-templating-language
  * @fileoverview Detects various templating languages present in string
- * @version 3.0.2
+ * @version 3.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/detect-templating-language/}
@@ -135,8 +135,8 @@ function At(t){let e=null;if("string"!=typeof t)throw new TypeError(`detect-temp
 /**
  * @name regex-is-jinja-nunjucks
  * @fileoverview Regular expression for detecting Jinja or Nunjucks code
- * @version 3.0.2
+ * @version 3.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-is-jinja-nunjucks/}
- */(ut(t,a),{trimLines:!0,removeEmptyLines:!0,limitConsecutiveEmptyLinesTo:1}).result,s,At(t),r)},t.version="4.0.2",Object.defineProperty(t,"__esModule",{value:!0})}));
+ */(ut(t,a),{trimLines:!0,removeEmptyLines:!0,limitConsecutiveEmptyLinesTo:1}).result,s,At(t),r)},t.version="4.0.3",Object.defineProperty(t,"__esModule",{value:!0})}));

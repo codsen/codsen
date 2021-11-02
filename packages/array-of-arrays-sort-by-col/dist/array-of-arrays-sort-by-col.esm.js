@@ -1,13 +1,13 @@
 /**
  * @name array-of-arrays-sort-by-col
  * @fileoverview Sort array of arrays by column, rippling the sorting outwards from that column
- * @version 4.0.2
+ * @version 4.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/array-of-arrays-sort-by-col/}
  */
 
-var version$1 = "4.0.2";
+var version$1 = "4.0.3";
 
 const version = version$1;
 function existy(x) {

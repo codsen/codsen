@@ -1,7 +1,7 @@
 /**
  * @name ranges-invert
  * @fileoverview Invert string index ranges
- * @version 5.0.2
+ * @version 5.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-invert/}
@@ -10,7 +10,7 @@
 import { rMerge } from 'ranges-merge';
 import { rCrop } from 'ranges-crop';
 
-var version$1 = "5.0.2";
+var version$1 = "5.0.3";
 
 const version = version$1;
 function rInvert(arrOfRanges, strLen, originalOptions) {

@@ -1,7 +1,7 @@
 /**
  * @name object-boolean-combinations
  * @fileoverview Consumes a defaults object with booleans, generates all possible variations of it
- * @version 5.0.2
+ * @version 5.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-boolean-combinations/}
@@ -12,7 +12,7 @@ import pull from 'lodash.pull';
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
-var version$1 = "5.0.2";
+var version$1 = "5.0.3";
 
 const version = version$1;
 function combinations(originalIncomingObject, originalOverrideObject = {}) {

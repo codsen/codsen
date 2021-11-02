@@ -1,7 +1,7 @@
 /**
  * @name string-find-malformed
  * @fileoverview Search for a malformed string. Think of Levenshtein distance but in search.
- * @version 3.0.2
+ * @version 3.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-find-malformed/}
@@ -9,7 +9,7 @@
 
 import { right } from 'string-left-right';
 
-var version$1 = "3.0.2";
+var version$1 = "3.0.3";
 
 const version = version$1;
 function isObj(something) {

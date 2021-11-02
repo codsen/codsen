@@ -3,29 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.0.3](https://github.com/codsen/codsen/compare/lerna-clean-changelogs@3.0.2...lerna-clean-changelogs@3.0.3) (2021-11-02)
-
+## 3.0.3 (2021-11-02)
 
 ### Bug Fixes
 
-* bump TS and separate ESLint plugins away from this monorepo ([b1ebce1](https://github.com/codsen/codsen/commit/b1ebce1637d8c41c2d848fc24b0ba4058865bd5d))
-
+- bump TS and separate ESLint plugins away from this monorepo ([b1ebce1](https://github.com/codsen/codsen/commit/b1ebce1637d8c41c2d848fc24b0ba4058865bd5d))
 
 ### Features
 
-* introduce extras setting ([5d1520b](https://github.com/codsen/codsen/commit/5d1520ba5a6885b015cb6b41aec3fe39806e9266))
-* migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
-
+- introduce extras setting ([5d1520b](https://github.com/codsen/codsen/commit/5d1520ba5a6885b015cb6b41aec3fe39806e9266))
+- migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
 
 ### BREAKING CHANGES
 
-* previous behaviour will now require a true "extras" param to be passed, default
+- previous behaviour will now require a true "extras" param to be passed, default
 behaviour is more conservative now
-* programs now are in ES Modules and won't work with Common JS require()
-
-
-
-
+- programs now are in ES Modules and won't work with Common JS require()
 
 ## 3.0.1 (2021-09-13)
 

@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.3](https://github.com/codsen/codsen/compare/generate-atomic-css-cli@2.0.2...generate-atomic-css-cli@2.0.3) (2021-11-02)
-
+## 2.0.3 (2021-11-02)
 
 ### Features
 
-* migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
-
+- migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
 
 ### BREAKING CHANGES
 
-* programs now are in ES Modules and won't work with Common JS require()
-
-
-
-
+- programs now are in ES Modules and won't work with Common JS require()
 
 ## 2.0.0 (2021-09-09)
 

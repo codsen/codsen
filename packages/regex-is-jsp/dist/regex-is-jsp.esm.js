@@ -1,13 +1,13 @@
 /**
  * @name regex-is-jsp
  * @fileoverview Regular expression for detecting JSP (Java Server Pages) code
- * @version 3.0.2
+ * @version 3.0.3
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/regex-is-jsp/}
  */
 
-var version$1 = "3.0.2";
+var version$1 = "3.0.3";
 
 const version = version$1;
 function isJSP() {
