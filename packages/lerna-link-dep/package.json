@@ -1,6 +1,6 @@
 {
   "name": "lerna-link-dep",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Like lerna add but does just the symlinking, works on CLI bins too",
   "keywords": [
     "add",
@@ -88,7 +88,7 @@
     "core-js": "^3.19.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.1.0",
-    "lect": "^0.18.2",
+    "lect": "^0.18.3",
     "tap": "^15.0.10",
     "tempy": "^2.0.0",
     "tslib": "^2.3.1"

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.3](https://github.com/codsen/codsen/compare/detergent@8.0.2...detergent@8.0.3) (2021-11-02)
+
+
+### Bug Fixes
+
+* bump TS and separate ESLint plugins away from this monorepo ([b1ebce1](https://github.com/codsen/codsen/commit/b1ebce1637d8c41c2d848fc24b0ba4058865bd5d))
+
+
+### Features
+
+* don't lowercase the (HTML) tags, which makes D. JSX-friendly ([18e5480](https://github.com/codsen/codsen/commit/18e548000eff2790a1e447d2a3c1e85ef3cf27ef))
+* migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
+
+
+### BREAKING CHANGES
+
+* programs now are in ES Modules and won't work with Common JS require()
+
+
+
+
+
 ## 8.0.1 (2021-09-13)
 
 ### Bug Fixes

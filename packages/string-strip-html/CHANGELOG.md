@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.3](https://github.com/codsen/codsen/compare/string-strip-html@9.0.2...string-strip-html@9.0.3) (2021-11-02)
+
+
+### Bug Fixes
+
+* bump TS and separate ESLint plugins away from this monorepo ([b1ebce1](https://github.com/codsen/codsen/commit/b1ebce1637d8c41c2d848fc24b0ba4058865bd5d))
+* some housekeeping ([b600f55](https://github.com/codsen/codsen/commit/b600f557b201e9781ac0139fbc402a5e33847ad0))
+
+
+### Features
+
+* migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
+
+
+### BREAKING CHANGES
+
+* programs now are in ES Modules and won't work with Common JS require()
+
+
+
+
+
 ## 9.0.1 (2021-09-13)
 
 ### Bug Fixes

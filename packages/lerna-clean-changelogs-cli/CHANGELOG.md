@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/codsen/codsen/compare/lerna-clean-changelogs-cli@2.0.2...lerna-clean-changelogs-cli@2.0.3) (2021-11-02)
+
+
+### Features
+
+* migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
+* tap the "extras" feature in the API ([f068299](https://github.com/codsen/codsen/commit/f06829917b2697df67fa15f5fd2cd257fecb8961))
+
+
+### BREAKING CHANGES
+
+* programs now are in ES Modules and won't work with Common JS require()
+
+
+
+
+
 ## 2.0.0 (2021-09-09)
 
 ### Features
