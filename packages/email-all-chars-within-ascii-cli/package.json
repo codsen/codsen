@@ -88,7 +88,7 @@
     "@istanbuljs/esm-loader-hook": "^0.1.2",
     "@types/lodash.pullall": "^4.2.6",
     "@types/lodash.uniq": "^4.5.6",
-    "core-js": "^3.19.0",
+    "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.1.0",
     "execa": "^5.1.1",
