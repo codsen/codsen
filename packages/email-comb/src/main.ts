@@ -3775,21 +3775,6 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           4
         )}`
       );
-      console.log(
-        opts.uglify
-          ? `\n\n\n\n\n\n   ====== ${`\u001b[${36}m${`UGLIFICATION`}\u001b[${39}m`} ======
-${
-  (allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
-    return `${accum}   ${`\u001b[${33}m${
-      allClassesAndIdsWithinHeadFinalUglified[
-        allClassesAndIdsWithinHeadFinal.indexOf(val)
-      ]
-    }\u001b[${39}m`} --- ${`\u001b[${31}m${val}\u001b[${39}m`}`;
-  }),
-  "\n")
-}   ==========================\n`
-          : ""
-      );
 
       //
       //
@@ -3855,11 +3840,11 @@ ${
   finalIndexesToDelete.push(lineBreaksToDelete.current());
 
   console.log(
-    `3858 BEFORE 3RD STEP PREP ${`\u001b[${33}m${`str`}\u001b[${39}m`} = "${str}"`
+    `3843 BEFORE 3RD STEP PREP ${`\u001b[${33}m${`str`}\u001b[${39}m`} = "${str}"`
   );
 
   console.log(
-    `3862 AFTER 3ND ROUND, finalIndexesToDelete.current() = ${JSON.stringify(
+    `3847 AFTER 3ND ROUND, finalIndexesToDelete.current() = ${JSON.stringify(
       finalIndexesToDelete.current(),
       null,
       4
@@ -3875,7 +3860,7 @@ ${
     (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
       leavePercForLastStage;
   console.log(
-    `3878 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+    `3863 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
       startingPercentageDone,
       null,
       4
@@ -3894,7 +3879,7 @@ ${
     }
   }
   console.log("\n\n");
-  console.log(`3897 string after ROUND 3:\n${str}\n\n`);
+  console.log(`3882 string after ROUND 3:\n${str}\n\n`);
 
   // final fixing:
   // =============
@@ -3991,7 +3976,7 @@ ${
   }
 
   console.log(
-    `3994 ${`\u001b[${33}m${`allClassesAndIdsWithinHeadFinal`}\u001b[${39}m`} = ${JSON.stringify(
+    `3979 ${`\u001b[${33}m${`allClassesAndIdsWithinHeadFinal`}\u001b[${39}m`} = ${JSON.stringify(
       allClassesAndIdsWithinHeadFinal,
       null,
       4
