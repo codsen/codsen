@@ -32,12 +32,12 @@ const banner = {
 };
 
 // ESM
-if (typeof pkg.exports === "string" || pkg.exports.default) {
+if (pkg.exports && (typeof pkg.exports === "string" || pkg.exports.default)) {
   esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     format: "esm",
     bundle: true,
-    minify: false,
+    minify: true,
     sourcemap: false,
     target: ["esnext"],
     outfile: path.join(path.resolve("./"), `dist/${name}.esm.js`),
@@ -47,7 +47,7 @@ if (typeof pkg.exports === "string" || pkg.exports.default) {
   });
 }
 
-// dev IIFE
+// IIFE
 if (pkg.exports && pkg.exports.script) {
   esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
