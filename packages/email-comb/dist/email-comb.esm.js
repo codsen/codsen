@@ -150,6 +150,7 @@ function comb(str, originalOpts) {
     allHeads = opts.backend.map(headsAndTailsObj => headsAndTailsObj.heads);
     allTails = opts.backend.map(headsAndTailsObj => headsAndTailsObj.tails);
   }
+  const strArrToMatchAgainstChunks = opts.whitelist.filter(v => !v.startsWith("#") && !v.startsWith("."));
   const len = str.length;
   const leavePercForLastStage = 0.06;
   let ceil = 1;
@@ -465,6 +466,9 @@ function comb(str, originalOpts) {
         else if (",{".includes(chr)) {
           const sliceTo = whitespaceStartedAt || i;
           currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
+          if (round === 2 && selectorChunkCanBeDeleted && strArrToMatchAgainstChunks.length && matcher([currentChunk], strArrToMatchAgainstChunks).length) {
+            selectorChunkCanBeDeleted = false;
+          }
           if (round === 1) {
             if (whitespaceStartedAt) {
               if (chr === "," && whitespaceStartedAt < i) {

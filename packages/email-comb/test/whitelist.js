@@ -1,5 +1,6 @@
 import tap from "tap";
 import { comb } from "./util/util.js";
+import { comb as comb1 } from "../dist/email-comb.esm.js";
 
 // whitelisting
 // -----------------------------------------------------------------------------
@@ -254,5 +255,50 @@ zzz
 </body>`;
 
   t.strictSame(actual, intended, "06");
+  t.end();
+});
+
+tap.test("07 - whitelisting using non-class/id strings - baseline", (t) => {
+  const { result } = comb1(
+    `<style type="text/css">
+  [data-ogsc] .sm-text-red-500{display: none;}
+</style>
+<body class="unused">
+zzz
+</body>`,
+    {
+      whitelist: [],
+    }
+  );
+
+  const intended = `<body>
+zzz
+</body>`;
+
+  t.strictSame(result, intended, "07");
+  t.end();
+});
+
+tap.test("08 - whitelisting using non-class/id strings - whitelisting", (t) => {
+  const { result } = comb1(
+    `<style type="text/css">
+  [data-ogsc] .sm-text-red-500{display: none;}
+</style>
+<body class="unused">
+zzz
+</body>`,
+    {
+      whitelist: ["[data-ogsc]*"],
+    }
+  );
+
+  const intended = `<style type="text/css">
+  [data-ogsc] .sm-text-red-500{display: none;}
+</style>
+<body>
+zzz
+</body>`;
+
+  t.strictSame(result, intended, "08");
   t.end();
 });
