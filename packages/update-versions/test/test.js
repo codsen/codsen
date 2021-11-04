@@ -134,7 +134,7 @@ tap.test("01 - monorepo", async (t) => {
     )
   )
     .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
         shell: true,
       })
     )
@@ -212,7 +212,7 @@ tap.test("02 - normal repo", async (t) => {
     )
   )
     .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
         shell: true,
       })
     )
@@ -278,7 +278,7 @@ tap.test(
       )
     )
       .then(() =>
-        execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+        execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
           shell: true,
         })
       )
@@ -341,7 +341,7 @@ tap.test("06 - no files found in the given directory", async (t) => {
 
   // call execa on that empty folder
   const stdOutContents = await execa(
-    `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`,
+    `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`,
     { shell: true }
   );
 

@@ -8,7 +8,7 @@ const { readFile } = promises;
 import write from "write-file-atomic";
 import { globby } from "globby";
 import pReduce from "p-reduce";
-import PProgress from "p-progress";
+import pProgress, { PProgress } from "p-progress";
 import meow from "meow";
 // import updateNotifier from "update-notifier";
 import isObj from "lodash.isplainobject";
@@ -150,7 +150,7 @@ if (cli.flags) {
 
   const allProgressPromise = PProgress.all(
     pathsPromise.pathsList.map((oneOfPaths) =>
-      PProgress.fn(async (progress) => {
+      pProgress(async (progress) => {
         // call progress() like progress(0.14);
 
         let amended = false;
