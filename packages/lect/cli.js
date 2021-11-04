@@ -12,7 +12,7 @@ import pack from "./src/pack.js";
 import npmIgnore from "./src/npmIgnore.js";
 import rollupConfig from "./src/rollupConfig.js";
 import tsconfig from "./src/tsconfig.js";
-// const semaphore = require("./src/semaphore.js");
+// import semaphore from "./src/semaphore.js";
 
 // Lect gets called within each monorepo package's root.
 // Premise is that all packages are of two kinds:

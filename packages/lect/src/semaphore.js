@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
 import writeFileAtomic from "write-file-atomic";
+import chunk from "lodash.chunk";
+
+const SEMAPHORE_JOBS_LIMIT = 5;
 
 // generate ./.semaphore/semaphore.yml
 async function semaphore({ state }) {
@@ -22,15 +25,8 @@ async function semaphore({ state }) {
             "utf8"
           )
         ).private
-    );
-
-  // console.log(
-  //   `${`\u001b[${33}m${`allPackages`}\u001b[${39}m`} = ${JSON.stringify(
-  //     allPackages,
-  //     null,
-  //     4
-  //   )}`
-  // );
+    )
+    .slice(0, 11);
 
   const content = `version: v1.0
 name: CODSEN
@@ -52,14 +48,17 @@ blocks:
           commands:
             - checkout
             - nvm install node
+            - nvm use 16
             - node --version
             - npm --version
             - npm run bootstrap
             # dump freshly-bootstrapped ./packages/ into cache
             - cache store raw-packages-folder packages
             - cache store node_modules-folder node_modules
-  # "Fan-in and Fan-out"
-  - name: "Unit-test everything"
+${chunk(allPackages, SEMAPHORE_JOBS_LIMIT)
+  .map(
+    (chunkOfPackages, chunkNum) =>
+      `  - name: "Unit-test packages chunk #${chunkNum + 1}"
     task:
       prologue:
         commands:
@@ -67,7 +66,7 @@ blocks:
           - cache restore raw-packages-folder
           - cache restore node_modules-folder
       jobs:
-${allPackages
+${chunkOfPackages
   .map(
     (packagesName) => `        - name: "test ${packagesName}"
           commands:
@@ -75,6 +74,8 @@ ${allPackages
             - npm run test
             - cd ...
             - cache store ${packagesName}-cache-1 packages/${packagesName}`
+  )
+  .join("\n")}`
   )
   .join("\n")}
   - name: "Bump versions"
@@ -109,7 +110,11 @@ ${allPackages.map((p) => `          - cache restore ${p}-cache-1`).join("\n")}
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             - git push
             - cache store bumped-packages-folder packages
-  - name: "Publish to npm"
+${chunk(allPackages, SEMAPHORE_JOBS_LIMIT)
+  .map(
+    (chunkOfPackages, chunkNum) => `  - name: "Publish chunk #${
+      chunkNum + 1
+    } to npm"
     task:
       secrets:
         - name: GIT setup
@@ -125,12 +130,17 @@ ${allPackages.map((p) => `          - cache restore ${p}-cache-1`).join("\n")}
           - npm set username \${NPM_USERNAME} -g
           - npm set email \${NPM_EMAIL} -g
       jobs:
-${allPackages
+${chunkOfPackages
   .map(
     (packagesName) => `        - name: "publish ${packagesName}"
           commands:
             - cd packages/${packagesName}
-            - "npm run publish || :"`
+            # - "npm run publish || :"
+            - cat package.json | grep \\"name\\" -m1
+            - cat package.json | grep \\"version\\" -m1
+            - cd ...`
+  )
+  .join("\n")}`
   )
   .join("\n")}
   - name: "Purge JSDelivr"
