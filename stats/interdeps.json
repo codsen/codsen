@@ -223,7 +223,7 @@
     },
     {
         "name": "email-comb",
-        "size": 53459,
+        "size": 53782,
         "imports": [
             "array-pull-all-with-glob",
             "html-crush",
@@ -418,7 +418,7 @@
     },
     {
         "name": "lect",
-        "size": 2597,
+        "size": 2592,
         "imports": [
             "array-pull-all-with-glob",
             "object-merge-advanced"
@@ -759,7 +759,7 @@
     },
     {
         "name": "update-versions",
-        "size": 15138,
+        "size": 15150,
         "imports": [
             "edit-package-json"
         ]

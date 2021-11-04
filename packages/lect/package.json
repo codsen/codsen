@@ -74,6 +74,7 @@
     "various": {
       "devDependencies": [
         "@types/lodash.camelcase",
+        "@types/lodash.chunk",
         "@types/lodash.clonedeep",
         "@types/lodash.isequal",
         "@types/lodash.isplainobject",
@@ -87,11 +88,11 @@
     "colorette": "^2.0.16",
     "inquirer": "^8.2.0",
     "lodash.camelcase": "^4.3.0",
+    "lodash.chunk": "^4.2.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.partition": "^4.6.0",
-    "lodash.chunk": "^4.2.0",
     "lodash.trim": "^4.5.1",
     "matcher": "^5.0.0",
     "object-merge-advanced": "^13.0.3",
@@ -105,6 +106,7 @@
   "devDependencies": {
     "@istanbuljs/esm-loader-hook": "^0.1.2",
     "@types/lodash.camelcase": "^4.3.6",
+    "@types/lodash.chunk": "^4.2.6",
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.isplainobject": "^4.0.6",

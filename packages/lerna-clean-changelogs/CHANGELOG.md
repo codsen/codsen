@@ -17,7 +17,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - previous behaviour will now require a true "extras" param to be passed, default
-behaviour is more conservative now
+  behaviour is more conservative now
 - programs now are in ES Modules and won't work with Common JS require()
 
 ## 3.0.1 (2021-09-13)
