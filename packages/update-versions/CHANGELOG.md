@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.4](https://github.com/codsen/codsen/compare/update-versions@5.0.3...update-versions@5.0.4) (2021-11-04)
-
+## 5.0.4 (2021-11-04)
 
 ### Bug Fixes
 
-* update the API to match the updated p-progress ([8aa235c](https://github.com/codsen/codsen/commit/8aa235c8ced8daefcfdab14e380d9765f980ef8d))
-
-
-
-
+- update the API to match the updated p-progress ([8aa235c](https://github.com/codsen/codsen/commit/8aa235c8ced8daefcfdab14e380d9765f980ef8d))
 
 ## 5.0.3 (2021-11-02)
 

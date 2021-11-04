@@ -1,7 +1,7 @@
 /**
  * @name ranges-process-outside
  * @fileoverview Iterate string considering ranges, as if they were already applied
- * @version 5.0.3
+ * @version 5.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-process-outside/}
@@ -11,7 +11,7 @@
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 5.0.3
+ * @version 5.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -19,7 +19,7 @@
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 8.0.3
+ * @version 8.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -27,7 +27,7 @@
 /**
  * @name ranges-crop
  * @fileoverview Crop array of ranges when they go beyond the reference string's length
- * @version 5.0.3
+ * @version 5.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-crop/}
@@ -35,8 +35,8 @@
 /**
  * @name ranges-invert
  * @fileoverview Invert string index ranges
- * @version 5.0.3
+ * @version 5.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-invert/}
- */e.rProcessOutside=function(e,r,n,t=!1){if("string"!=typeof e)throw void 0===e?new Error("ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!"):new Error(`ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n${JSON.stringify(e,null,4)} (type ${typeof e})`);if(r&&(!Array.isArray(r)||r.length&&!Array.isArray(r[0])))throw new Error(`ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n${JSON.stringify(r,null,4)} (type ${typeof r})`);if("function"!=typeof n)throw new Error(`ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n${JSON.stringify(n,null,4)} (type ${typeof n})`);function s(e,r){(r||[]).forEach((([r,t])=>{for(let s=r;s<t;s++){const r=c(e.slice(s))[0].length;n(s,s+r,(e=>{null!=e&&(s+=e)})),r&&r>1&&(s+=r-1)}}))}if(r&&r.length){s(e,b(function(e,r,n){if(!Array.isArray(e)&&null!==e)throw new TypeError(`ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(!Number.isInteger(r)||r<0)throw new TypeError(`ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(Array.isArray(e)&&"number"==typeof e[0]&&"number"==typeof e[1])throw new TypeError(`ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(e,null,0)}!`);if(!Array.isArray(e)||!e.filter((e=>Array.isArray(e)&&e[0]!==e[1])).length||!r)return r?[[0,r]]:null;const t={strictlyTwoElementsInRangeArrays:!1,skipChecks:!1,...n};let s,o,i=0;if(!t.skipChecks&&t.strictlyTwoElementsInRangeArrays&&!e.filter((e=>e)).every(((e,r)=>2===e.length||(i=r,s=e.length,!1))))throw new TypeError(`ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${i}th range (${JSON.stringify(e[i],null,0)}) has not two but ${s} elements!`);if(!t.skipChecks&&!e.every(((e,r)=>!(!Number.isInteger(e[0])||e[0]<0||!Number.isInteger(e[1])||e[1]<0)||(i=r,!1))))throw new TypeError(`ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${i+1}th range (${JSON.stringify(e[i],null,0)}) does not consist of only natural numbers!`);return o=t.skipChecks?e.filter((e=>e[0]!==e[1])):w(e.filter((e=>e[0]!==e[1]))),b(o.reduce(((e,n,s,o)=>{const i=[];0===s&&0!==o[0][0]&&i.push([0,o[0][0]]);const a=s<o.length-1?o[s+1][0]:r;if(n[1]!==a){if(t.skipChecks&&n[1]>a)throw new TypeError(`ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [${n[1]}, ${a}] which is backwards. For investigation, whole ranges array is:\n${JSON.stringify(o,null,0)}`);i.push([n[1],a])}return e.concat(i)}),[]),r)}(r,e.length,{skipChecks:!!t}),e.length))}else s(e,[[0,e.length]])},e.version="5.0.3",Object.defineProperty(e,"__esModule",{value:!0})}));
+ */e.rProcessOutside=function(e,r,n,t=!1){if("string"!=typeof e)throw void 0===e?new Error("ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!"):new Error(`ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n${JSON.stringify(e,null,4)} (type ${typeof e})`);if(r&&(!Array.isArray(r)||r.length&&!Array.isArray(r[0])))throw new Error(`ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n${JSON.stringify(r,null,4)} (type ${typeof r})`);if("function"!=typeof n)throw new Error(`ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n${JSON.stringify(n,null,4)} (type ${typeof n})`);function s(e,r){(r||[]).forEach((([r,t])=>{for(let s=r;s<t;s++){const r=c(e.slice(s))[0].length;n(s,s+r,(e=>{null!=e&&(s+=e)})),r&&r>1&&(s+=r-1)}}))}if(r&&r.length){s(e,b(function(e,r,n){if(!Array.isArray(e)&&null!==e)throw new TypeError(`ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(!Number.isInteger(r)||r<0)throw new TypeError(`ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(Array.isArray(e)&&"number"==typeof e[0]&&"number"==typeof e[1])throw new TypeError(`ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(e,null,0)}!`);if(!Array.isArray(e)||!e.filter((e=>Array.isArray(e)&&e[0]!==e[1])).length||!r)return r?[[0,r]]:null;const t={strictlyTwoElementsInRangeArrays:!1,skipChecks:!1,...n};let s,o,i=0;if(!t.skipChecks&&t.strictlyTwoElementsInRangeArrays&&!e.filter((e=>e)).every(((e,r)=>2===e.length||(i=r,s=e.length,!1))))throw new TypeError(`ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${i}th range (${JSON.stringify(e[i],null,0)}) has not two but ${s} elements!`);if(!t.skipChecks&&!e.every(((e,r)=>!(!Number.isInteger(e[0])||e[0]<0||!Number.isInteger(e[1])||e[1]<0)||(i=r,!1))))throw new TypeError(`ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${i+1}th range (${JSON.stringify(e[i],null,0)}) does not consist of only natural numbers!`);return o=t.skipChecks?e.filter((e=>e[0]!==e[1])):w(e.filter((e=>e[0]!==e[1]))),b(o.reduce(((e,n,s,o)=>{const i=[];0===s&&0!==o[0][0]&&i.push([0,o[0][0]]);const a=s<o.length-1?o[s+1][0]:r;if(n[1]!==a){if(t.skipChecks&&n[1]>a)throw new TypeError(`ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [${n[1]}, ${a}] which is backwards. For investigation, whole ranges array is:\n${JSON.stringify(o,null,0)}`);i.push([n[1],a])}return e.concat(i)}),[]),r)}(r,e.length,{skipChecks:!!t}),e.length))}else s(e,[[0,e.length]])},e.version="5.0.4",Object.defineProperty(e,"__esModule",{value:!0})}));

@@ -1,7 +1,7 @@
 /**
  * @name charcode-is-valid-xml-name-character
  * @fileoverview Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
- * @version 2.0.3
+ * @version 2.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/charcode-is-valid-xml-name-character/}
@@ -11,7 +11,7 @@
 /**
  * @name ranges-is-index-within
  * @fileoverview Checks if index is within any of the given string index ranges
- * @version 3.0.3
+ * @version 3.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-is-index-within/}

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.6.4](https://github.com/codsen/codsen/compare/html-entities-not-email-friendly@0.6.3...html-entities-not-email-friendly@0.6.4) (2021-11-04)
-
-**Note:** Version bump only for package html-entities-not-email-friendly
-
-
-
-
-
 ## 0.6.3 (2021-11-02)
 
 ### Bug Fixes

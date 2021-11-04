@@ -1,7 +1,7 @@
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 6.0.3
+ * @version 6.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -157,7 +157,7 @@ function rMerge(arrOfRanges, originalOpts) {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-var version$1 = "6.0.3";
+var version$1 = "6.0.4";
 
 const version = version$1;
 function existy(x) {

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.0.4](https://github.com/codsen/codsen/compare/object-flatten-all-arrays@6.0.3...object-flatten-all-arrays@6.0.4) (2021-11-04)
-
-**Note:** Version bump only for package object-flatten-all-arrays
-
-
-
-
-
 ## 6.0.3 (2021-11-02)
 
 ### Bug Fixes

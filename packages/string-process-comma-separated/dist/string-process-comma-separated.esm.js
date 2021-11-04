@@ -1,13 +1,13 @@
 /**
  * @name string-process-comma-separated
  * @fileoverview Extracts chunks from possibly comma or whatever-separated string
- * @version 3.0.3
+ * @version 3.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-process-comma-separated/}
  */
 
-var version$1 = "3.0.3";
+var version$1 = "3.0.4";
 
 const version = version$1;
 function processCommaSep(str, originalOpts) {

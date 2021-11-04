@@ -1,7 +1,7 @@
 /**
  * @name ast-get-object
  * @fileoverview Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * @version 3.0.3
+ * @version 3.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-get-object/}
@@ -11,7 +11,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 2.0.3
+ * @version 2.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -19,7 +19,7 @@
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 3.0.3
+ * @version 3.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -27,7 +27,7 @@
 /**
  * @name ast-contains-only-empty-space
  * @fileoverview Does AST contain only empty space?
- * @version 3.0.3
+ * @version 3.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-contains-only-empty-space/}
@@ -36,8 +36,8 @@ function d(t){if("string"==typeof t)return!t.trim();if(!["object","string"].incl
 /**
  * @name ast-compare
  * @fileoverview Compare anything: AST, objects, arrays, strings and nested thereof
- * @version 3.0.3
+ * @version 3.0.4
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-compare/}
- */function w(t,e,r){let n,o,i,a=0;const c={hungryForWhitespace:!1,matchStrictly:!1,verboseWhenMismatches:!1,useWildcards:!1,...r};if(c.hungryForWhitespace&&c.matchStrictly&&p(t)&&d(t)&&p(e)&&!Object.keys(e).length)return!0;if((!c.hungryForWhitespace||c.hungryForWhitespace&&!d(t)&&d(e))&&p(t)&&0!==Object.keys(t).length&&p(e)&&0===Object.keys(e).length||h(t)!==h(e)&&(!c.hungryForWhitespace||c.hungryForWhitespace&&!d(t)))return!1;if("string"==typeof t&&"string"==typeof e)return!!(c.hungryForWhitespace&&d(t)&&d(e))||(c.verboseWhenMismatches?t===e||`Given string ${e} is not matched! We have ${t} on the other end.`:c.useWildcards?j(t,e,{caseSensitive:!0}):t===e);if(Array.isArray(t)&&Array.isArray(e)){if(c.hungryForWhitespace&&d(e)&&(!c.matchStrictly||c.matchStrictly&&t.length===e.length))return!0;if(!c.hungryForWhitespace&&e.length>t.length||c.matchStrictly&&e.length!==t.length)return!!c.verboseWhenMismatches&&`The length of a given array, ${JSON.stringify(e,null,4)} is ${e.length} but the length of an array on the other end, ${JSON.stringify(t,null,4)} is ${t.length}`;if(0===e.length)return 0===t.length||!!c.verboseWhenMismatches&&`The given array has no elements, but the array on the other end, ${JSON.stringify(t,null,4)} does have some`;for(let r=0,n=e.length;r<n;r++){i=!1;for(let n=a,o=t.length;n<o;n++)if(a+=1,!0===w(t[n],e[r],c)){i=!0;break}if(!i)return!!c.verboseWhenMismatches&&`The given array ${JSON.stringify(e,null,4)} is not a subset of an array on the other end, ${JSON.stringify(t,null,4)}`}}else{if(!p(t)||!p(e))return!(!(c.hungryForWhitespace&&d(t)&&d(e))||c.matchStrictly&&(!c.matchStrictly||(u=e,p(u)?Object.keys(u).length:!Array.isArray(u)&&"string"!=typeof u||u.length)))||t===e;if(n=new Set(Object.keys(e)),o=new Set(Object.keys(t)),c.matchStrictly&&n.size!==o.size){if(!c.verboseWhenMismatches)return!1;const t=new Set([...n].filter((t=>!o.has(t)))),e=t.size?` First object has unique keys: ${JSON.stringify(t,null,4)}.`:"",r=new Set([...o].filter((t=>!n.has(t))));return`When matching strictly, we found that both objects have different amount of keys.${e}${r.size?` Second object has unique keys:\n        ${JSON.stringify(r,null,4)}.`:""}`}for(const r of n){if(!Object.prototype.hasOwnProperty.call(t,r))return!c.useWildcards||c.useWildcards&&!r.includes("*")?!!c.verboseWhenMismatches&&`The given object has key "${r}" which the other-one does not have.`:!!Object.keys(t).some((t=>j(t,r,{caseSensitive:!0})))||!!c.verboseWhenMismatches&&`The given object has key "${r}" which the other-one does not have.`;if(null!=t[r]&&h(t[r])!==h(e[r])){if(!(d(t[r])&&d(e[r])&&c.hungryForWhitespace))return!!c.verboseWhenMismatches&&`The given key ${r} is of a different type on both objects. On the first-one, it's ${h(e[r])}, on the second-one, it's ${h(t[r])}`}else if(!0!==w(t[r],e[r],c))return!!c.verboseWhenMismatches&&`The given piece ${JSON.stringify(e[r],null,4)} and ${JSON.stringify(t[r],null,4)} don't match.`}}var u;return!0}function m(t){return null!=t}function O(t,e,r,o=[]){if(!m(t))throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");if(!m(e))throw new Error("ast-get-object: [THROW_ID_02] Second argument is missing!");let i=!1;m(r)&&Array.isArray(r)&&(i=!0);let a=n(t);return p(a)?w(a,e)?i?r.length>0&&(a=r[0],r.shift()):o.push(a):Object.keys(a).forEach((t=>{(Array.isArray(a[t])||p(a[t]))&&(i?a[t]=O(a[t],e,r,o):O(a[t],e,r,o))})):Array.isArray(a)&&a.forEach(((t,n)=>{(p(a[n])||Array.isArray(a[n]))&&(i?a[n]=O(a[n],e,r,o):O(a[n],e,r,o))})),!1!==(c=r)&&m(c)?a:o;var c}t.getObj=function(t,e,r){return O(t,e,r)},t.version="3.0.3",Object.defineProperty(t,"__esModule",{value:!0})}));
+ */function w(t,e,r){let n,o,i,a=0;const c={hungryForWhitespace:!1,matchStrictly:!1,verboseWhenMismatches:!1,useWildcards:!1,...r};if(c.hungryForWhitespace&&c.matchStrictly&&p(t)&&d(t)&&p(e)&&!Object.keys(e).length)return!0;if((!c.hungryForWhitespace||c.hungryForWhitespace&&!d(t)&&d(e))&&p(t)&&0!==Object.keys(t).length&&p(e)&&0===Object.keys(e).length||h(t)!==h(e)&&(!c.hungryForWhitespace||c.hungryForWhitespace&&!d(t)))return!1;if("string"==typeof t&&"string"==typeof e)return!!(c.hungryForWhitespace&&d(t)&&d(e))||(c.verboseWhenMismatches?t===e||`Given string ${e} is not matched! We have ${t} on the other end.`:c.useWildcards?j(t,e,{caseSensitive:!0}):t===e);if(Array.isArray(t)&&Array.isArray(e)){if(c.hungryForWhitespace&&d(e)&&(!c.matchStrictly||c.matchStrictly&&t.length===e.length))return!0;if(!c.hungryForWhitespace&&e.length>t.length||c.matchStrictly&&e.length!==t.length)return!!c.verboseWhenMismatches&&`The length of a given array, ${JSON.stringify(e,null,4)} is ${e.length} but the length of an array on the other end, ${JSON.stringify(t,null,4)} is ${t.length}`;if(0===e.length)return 0===t.length||!!c.verboseWhenMismatches&&`The given array has no elements, but the array on the other end, ${JSON.stringify(t,null,4)} does have some`;for(let r=0,n=e.length;r<n;r++){i=!1;for(let n=a,o=t.length;n<o;n++)if(a+=1,!0===w(t[n],e[r],c)){i=!0;break}if(!i)return!!c.verboseWhenMismatches&&`The given array ${JSON.stringify(e,null,4)} is not a subset of an array on the other end, ${JSON.stringify(t,null,4)}`}}else{if(!p(t)||!p(e))return!(!(c.hungryForWhitespace&&d(t)&&d(e))||c.matchStrictly&&(!c.matchStrictly||(u=e,p(u)?Object.keys(u).length:!Array.isArray(u)&&"string"!=typeof u||u.length)))||t===e;if(n=new Set(Object.keys(e)),o=new Set(Object.keys(t)),c.matchStrictly&&n.size!==o.size){if(!c.verboseWhenMismatches)return!1;const t=new Set([...n].filter((t=>!o.has(t)))),e=t.size?` First object has unique keys: ${JSON.stringify(t,null,4)}.`:"",r=new Set([...o].filter((t=>!n.has(t))));return`When matching strictly, we found that both objects have different amount of keys.${e}${r.size?` Second object has unique keys:\n        ${JSON.stringify(r,null,4)}.`:""}`}for(const r of n){if(!Object.prototype.hasOwnProperty.call(t,r))return!c.useWildcards||c.useWildcards&&!r.includes("*")?!!c.verboseWhenMismatches&&`The given object has key "${r}" which the other-one does not have.`:!!Object.keys(t).some((t=>j(t,r,{caseSensitive:!0})))||!!c.verboseWhenMismatches&&`The given object has key "${r}" which the other-one does not have.`;if(null!=t[r]&&h(t[r])!==h(e[r])){if(!(d(t[r])&&d(e[r])&&c.hungryForWhitespace))return!!c.verboseWhenMismatches&&`The given key ${r} is of a different type on both objects. On the first-one, it's ${h(e[r])}, on the second-one, it's ${h(t[r])}`}else if(!0!==w(t[r],e[r],c))return!!c.verboseWhenMismatches&&`The given piece ${JSON.stringify(e[r],null,4)} and ${JSON.stringify(t[r],null,4)} don't match.`}}var u;return!0}function m(t){return null!=t}function O(t,e,r,o=[]){if(!m(t))throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");if(!m(e))throw new Error("ast-get-object: [THROW_ID_02] Second argument is missing!");let i=!1;m(r)&&Array.isArray(r)&&(i=!0);let a=n(t);return p(a)?w(a,e)?i?r.length>0&&(a=r[0],r.shift()):o.push(a):Object.keys(a).forEach((t=>{(Array.isArray(a[t])||p(a[t]))&&(i?a[t]=O(a[t],e,r,o):O(a[t],e,r,o))})):Array.isArray(a)&&a.forEach(((t,n)=>{(p(a[n])||Array.isArray(a[n]))&&(i?a[n]=O(a[n],e,r,o):O(a[n],e,r,o))})),!1!==(c=r)&&m(c)?a:o;var c}t.getObj=function(t,e,r){return O(t,e,r)},t.version="3.0.4",Object.defineProperty(t,"__esModule",{value:!0})}));
