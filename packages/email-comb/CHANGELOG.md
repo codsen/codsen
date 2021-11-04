@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.1.0](https://github.com/codsen/codsen/compare/email-comb@6.0.3...email-comb@6.1.0) (2021-11-04)
+
+
+### Features
+
+* extend opts.whitelist to match against the whole chunk ([52855ad](https://github.com/codsen/codsen/commit/52855ad3a51249d9f537a523212dcc1fb0714b4d)), closes [#27](https://github.com/codsen/codsen/issues/27)
+
+
+
+
+
 ## 6.0.3 (2021-11-02)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "html-img-alt",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Adds missing alt attributes to img tags. Non-parsing.",
   "keywords": [
     "add",
@@ -86,10 +86,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.0",
-    "check-types-mini": "^7.0.3",
-    "ranges-apply": "^6.0.3",
-    "ranges-push": "^6.0.3",
-    "string-unfancy": "^5.0.3"
+    "check-types-mini": "^7.0.4",
+    "ranges-apply": "^6.0.4",
+    "ranges-push": "^6.0.4",
+    "string-unfancy": "^5.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -118,7 +118,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.1.0",
-    "lect": "^0.18.3",
+    "lect": "^0.18.4",
     "rollup": "^2.59.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

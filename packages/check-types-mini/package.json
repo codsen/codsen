@@ -1,6 +1,6 @@
 {
   "name": "check-types-mini",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "Validate options object",
   "keywords": [
     "compare",
@@ -85,8 +85,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.0",
-    "arrayiffy-if-string": "^4.0.3",
-    "ast-monkey-traverse": "^3.0.3",
+    "arrayiffy-if-string": "^4.0.4",
+    "ast-monkey-traverse": "^3.0.4",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
     "matcher": "^5.0.0",
@@ -121,7 +121,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.1.0",
-    "lect": "^0.18.3",
+    "lect": "^0.18.4",
     "rollup": "^2.59.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

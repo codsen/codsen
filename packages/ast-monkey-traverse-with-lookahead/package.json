@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse-with-lookahead",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Utility library to traverse AST, reports upcoming values",
   "keywords": [
     "ast",
@@ -127,7 +127,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.1.0",
-    "lect": "^0.18.3",
+    "lect": "^0.18.4",
     "lodash.isequal": "^4.5.0",
     "rollup": "^2.59.0",
     "rollup-plugin-ascii": "^0.0.3",

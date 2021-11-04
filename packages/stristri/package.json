@@ -1,6 +1,6 @@
 {
   "name": "stristri",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
   "keywords": [
     "code",
@@ -87,11 +87,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.0",
-    "codsen-tokenizer": "^6.0.3",
-    "detect-templating-language": "^3.0.3",
-    "ranges-apply": "^6.0.3",
-    "ranges-merge": "^8.0.3",
-    "string-collapse-white-space": "^10.0.3"
+    "codsen-tokenizer": "^6.0.4",
+    "detect-templating-language": "^3.0.4",
+    "ranges-apply": "^6.0.4",
+    "ranges-merge": "^8.0.4",
+    "string-collapse-white-space": "^10.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -120,7 +120,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.1.0",
-    "lect": "^0.18.3",
+    "lect": "^0.18.4",
     "lodash.clonedeep": "^4.5.0",
     "object-path": "^0.11.8",
     "rollup": "^2.59.0",
@@ -130,7 +130,7 @@
     "rollup-plugin-dts": "^4.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "tap": "^15.0.10",
-    "test-mixer": "^3.0.3",
+    "test-mixer": "^3.0.4",
     "tslib": "^2.3.1",
     "typescript": "^4.4.4"
   },
