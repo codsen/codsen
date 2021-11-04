@@ -3,7 +3,7 @@ name: CODSEN
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
+    os_image: ubuntu2004
 execution_time_limit:
   hours: 3
 blocks:
@@ -16,6 +16,7 @@ blocks:
       prologue:
         commands:
           - nvm install node
+          - nvm use 16
           - node --version
           - npm --version
           # Correct premissions since they are too open by default:
