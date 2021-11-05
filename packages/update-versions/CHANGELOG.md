@@ -9,16 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update the API to match the updated p-progress ([8aa235c](https://github.com/codsen/codsen/commit/8aa235c8ced8daefcfdab14e380d9765f980ef8d))
 
-## 5.0.3 (2021-11-02)
-
-### Features
-
-- migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
-
-### BREAKING CHANGES
-
-- programs now are in ES Modules and won't work with Common JS require()
-
 ## 5.0.0 (2021-09-09)
 
 ### Features

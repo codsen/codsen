@@ -7,27 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- extend opts.whitelist to match against the whole chunk ([52855ad](https://github.com/codsen/codsen/commit/52855ad3a51249d9f537a523212dcc1fb0714b4d)), closes [#27](https://github.com/codsen/codsen/issues/27)
-
-## 6.0.3 (2021-11-02)
-
-### Bug Fixes
-
-- bump TS and separate ESLint plugins away from this monorepo ([b1ebce1](https://github.com/codsen/codsen/commit/b1ebce1637d8c41c2d848fc24b0ba4058865bd5d))
-
-### Features
-
-- migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
-
-### BREAKING CHANGES
-
-- programs now are in ES Modules and won't work with Common JS require()
-
-## 6.0.1 (2021-09-13)
-
-### Bug Fixes
-
-- bump TS and separate ESLint plugins away from this monorepo ([2e07d42](https://github.com/codsen/codsen/commit/2e07d424222b6ffedf5fb45c83ad453627ec2904))
+- extend `opts.whitelist` to match against the whole chunk ([52855ad](https://github.com/codsen/codsen/commit/52855ad3a51249d9f537a523212dcc1fb0714b4d)), closes [#27](https://github.com/codsen/codsen/issues/27)
 
 ## 6.0.0 (2021-09-09)
 

@@ -3,27 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 7.0.3 (2021-11-02)
-
-### Bug Fixes
-
-- add semver-compare types ([1bdf192](https://github.com/codsen/codsen/commit/1bdf1923cc48585cc383c2e70888d86af75c2b93))
-- bump TS and separate ESLint plugins away from this monorepo ([b1ebce1](https://github.com/codsen/codsen/commit/b1ebce1637d8c41c2d848fc24b0ba4058865bd5d))
-
-### Features
-
-- migrate to ES Modules ([c579dff](https://github.com/codsen/codsen/commit/c579dff3b23205e383035ca10ddcec671e35d0fe))
-
-### BREAKING CHANGES
-
-- programs now are in ES Modules and won't work with Common JS require()
-
-## 7.0.1 (2021-09-13)
-
-### Bug Fixes
-
-- bump TS and separate ESLint plugins away from this monorepo ([2e07d42](https://github.com/codsen/codsen/commit/2e07d424222b6ffedf5fb45c83ad453627ec2904))
-
 ## 7.0.0 (2021-09-09)
 
 ### Features
