@@ -1,6 +1,10 @@
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 
+function resolve(str) {
+  return str.replace("%YEAR%", new Date().getFullYear());
+}
+
 // hard write all static files
 // key files.write_hard from packages/ root .lectrc.json
 async function hardWrite({ lectrc }) {
@@ -22,7 +26,7 @@ async function hardWrite({ lectrc }) {
 
   return Promise.all(
     contentsToWriteHard.map((oneToDoObj) =>
-      writeFileAtomic(oneToDoObj.name, oneToDoObj.contents)
+      writeFileAtomic(oneToDoObj.name, resolve(oneToDoObj.contents))
     )
   );
 }

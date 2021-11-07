@@ -29,7 +29,7 @@
 This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:
 
 ```bash
-npm i -g gulp-email-remove-unused-css
+npm i gulp-email-remove-unused-css
 ```
 
 ## Documentation
