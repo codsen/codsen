@@ -1,0 +1,82 @@
+{
+  "name": "perf-ref",
+  "version": "1.0.0",
+  "description": "A dummy program to normalise perf scores against it",
+  "keywords": [
+    "benchmark",
+    "bench",
+    "performance",
+    "perf"
+  ],
+  "homepage": "https://codsen.com/os/perf-ref/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/perf-ref"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "https://codsen.com"
+  },
+  "type": "module",
+  "exports": {
+    "script": "./dist/perf-ref.umd.js",
+    "default": "./dist/perf-ref.esm.js"
+  },
+  "types": "types/index.d.ts",
+  "scripts": {
+    "ci_test": "npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
+    "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
+    "dev": "echo\"\"",
+    "devunittest": "npm run dev && tap --only -R 'base'",
+    "format": "npm run lect && npm run prettier && npm run lint",
+    "lect": "lect",
+    "lint": "../../node_modules/eslint/bin/eslint.js . --ext .js --fix --config \"../../.eslintrc.json\" --quiet",
+    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
+    "republish": "npm publish || :",
+    "tap": "tap",
+    "test": "npm run lint && npm run unittest && npm run format",
+    "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov"
+  },
+  "tap": {
+    "check-coverage": false,
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "node-arg": [
+      "--no-warnings",
+      "--experimental-loader",
+      "@istanbuljs/esm-loader-hook"
+    ],
+    "timeout": 0
+  },
+  "lect": {
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "req": "{ perfRef, opsPerSec, version }",
+    "various": {
+      "devDependencies": []
+    }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.16.0"
+  },
+  "devDependencies": {
+    "@istanbuljs/esm-loader-hook": "^0.1.2",
+    "core-js": "^3.19.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.1.0",
+    "lect": "^0.18.4",
+    "tap": "^15.0.10",
+    "tslib": "^2.3.1"
+  },
+  "engines": {
+    "node": ">=12"
+  }
+}
