@@ -51,7 +51,7 @@ async function packageJson({ state, lectrc }) {
   // 1. set scripts
   content.scripts = objectPath.get(
     lectrc,
-    state.isCLI ? "scripts.cli" : "scripts.rollup"
+    !state.isRollup ? "scripts.cli" : "scripts.rollup"
   );
   // then append any add-ons from .lectrc.json > "scripts_extras"
   if (objectPath.get(lectrc, `scripts_extras.${state.pack.name}`)) {
@@ -90,11 +90,11 @@ async function packageJson({ state, lectrc }) {
         // it's not a type definition
         !devDep.startsWith("@types") &&
         // either it's not a CLI so we don't care
-        (!state.isCLI ||
+        (!!state.isRollup ||
           // dependency is not whitelisted
           !cliDevDeps.includes(devDep))) ||
       // if it's a CLI
-      (state.isCLI &&
+      (!state.isRollup &&
         // and it's a rogue, a program-specific devdep
         programDevDeps.some((dep) => devDep.startsWith(dep)))
     ) {
@@ -110,7 +110,7 @@ async function packageJson({ state, lectrc }) {
       !content.devDependencies[devDep] &&
       // it's not a CLI-specific
       // either it's a program so we don't care
-      (!state.isCLI ||
+      (!!state.isRollup ||
         // or it's not among known program-specific devdeps
         !programDevDeps.some((dep) => devDep.startsWith(dep)))
     ) {
@@ -160,7 +160,7 @@ async function packageJson({ state, lectrc }) {
   // BECAUSE ESLINT PLUGINS CAN'T BE MIGRATED YET:
 
   // objectPath.set(content, "type", "module");
-  // if (!state.isCLI) {
+  // if (!!state.isRollup) {
   //   objectPath.set(content, "types", `types/index.d.ts`);
 
   //   // beware, some Node-only packages don't build UMD's, like
@@ -245,7 +245,7 @@ async function packageJson({ state, lectrc }) {
   // 11. ensure "req" template uses named exports
   // doesn't apply to eslint-* plugins
   if (
-    !state.isCLI &&
+    !!state.isRollup &&
     !content.name.startsWith("eslint-") &&
     (!content ||
       !content.lect ||

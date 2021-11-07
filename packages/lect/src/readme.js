@@ -64,9 +64,9 @@ async function readme({ state, examples, lectrc }) {
 ${esmNotice}
 
 \`\`\`bash
-npm i${state.isCLI ? " -g" : ""} ${state.pack.name}
+npm i${!state.isRollup && state.isBin ? " -g" : ""} ${state.pack.name}
 \`\`\`${
-    !state.isCLI && typeof esmBump === "object" && esmBump[state.pack.name]
+    !!state.isRollup && typeof esmBump === "object" && esmBump[state.pack.name]
       ? `\n\nIf you need a legacy version which works with \`require\`, use version ${
           esmBump[state.pack.name]
         }`
@@ -74,7 +74,7 @@ npm i${state.isCLI ? " -g" : ""} ${state.pack.name}
   }
 
 ${
-  state.isCLI && state.pack.bin
+  !state.isRollup && state.pack.bin
     ? `\n\nThen, call it from the command line using ${
         state.pack.bin && Object.keys(state.pack.bin).length > 1
           ? "one of the following keywords"

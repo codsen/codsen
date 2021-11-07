@@ -7,7 +7,7 @@ import writeFileAtomic from "write-file-atomic";
 // writes rollup.config.js
 async function rollupConfig({ state }) {
   // bail early if it's a CLI
-  if (state.isCLI) {
+  if (!state.isRollup) {
     fs.unlink(path.resolve("rollup.config.js"))
       .then(() => {
         console.log(

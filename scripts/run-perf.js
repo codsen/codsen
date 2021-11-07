@@ -69,12 +69,12 @@ export const runPerf = (cb, callerDir) => {
       //                                \ | /
       //                                 \|/
       //                                  V
-      const optsPerSec = this[0].hz;
+      const opsPerSec = this[0].hz;
       // historicalData = {};
-      if (optsPerSec) {
+      if (opsPerSec) {
         if (!Object.prototype.hasOwnProperty.call(historicalData, version)) {
-          historicalData[version] = optsPerSec;
-          historicalData.lastPublished = optsPerSec;
+          historicalData[version] = opsPerSec;
+          historicalData.lastPublished = opsPerSec;
         }
         historicalData.lastRan = historicalData[version];
         fs.writeFile(
@@ -96,7 +96,7 @@ export const runPerf = (cb, callerDir) => {
 
       if (
         perc(
-          Math.abs(historicalData.lastRan - optsPerSec),
+          Math.abs(historicalData.lastRan - opsPerSec),
           historicalData.lastRan
         ) <= 2
       ) {
@@ -104,28 +104,28 @@ export const runPerf = (cb, callerDir) => {
           console.log(
             `${heads}${"⚡️"} ${`\u001b[${32}m${`current code is just as fast as before`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
               historicalData.lastRan
-            )} \u2014 now ${round(optsPerSec)} opts/sec)`}\u001b[${39}m`}`
+            )} \u2014 now ${round(opsPerSec)} ops/sec)`}\u001b[${39}m`}`
           );
         }
       } else if (!BENCH) {
         console.log(
           `${heads}${
-            historicalData.lastRan < optsPerSec ? "⚡️" : "🐌"
+            historicalData.lastRan < opsPerSec ? "⚡️" : "🐌"
           } ${`\u001b[${
-            historicalData.lastRan < optsPerSec ? 32 : 31
+            historicalData.lastRan < opsPerSec ? 32 : 31
           }m${`current code is ${
-            historicalData.lastRan < optsPerSec ? "faster" : "slower"
+            historicalData.lastRan < opsPerSec ? "faster" : "slower"
           } by ${perc(
-            Math.abs(historicalData.lastRan - optsPerSec),
+            Math.abs(historicalData.lastRan - opsPerSec),
             historicalData.lastRan
           )}%`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
             historicalData.lastRan
-          )} \u2014 now ${round(optsPerSec)} opts/sec)`}\u001b[${39}m`}`
+          )} \u2014 now ${round(opsPerSec)} ops/sec)`}\u001b[${39}m`}`
         );
       }
 
       if (BENCH) {
-        console.log(`${name},${optsPerSec}`);
+        console.log(`${name},${opsPerSec}`);
       }
 
       //                                  ^

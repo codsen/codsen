@@ -8,7 +8,7 @@ import decodeContent from "./decodeContent.js";
 // at ./examples/api.json
 async function examples({ state }) {
   // CLI apps don't have examples, so resolve straight away
-  if (state.isCLI) {
+  if (!state.isRollup) {
     return Promise.resolve(null);
   }
 

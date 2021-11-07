@@ -6,7 +6,7 @@ import writeFileAtomic from "write-file-atomic";
 
 async function tsconfig({ state }) {
   // bail early if it's a CLI
-  if (state.isCLI) {
+  if (!state.isRollup) {
     fs.unlink(path.resolve("rollup.config.js"))
       .then(() => {
         console.log(

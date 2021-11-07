@@ -26,7 +26,8 @@ import tsconfig from "./src/tsconfig.js";
 // -----------------------------------------------------------------------------
 
 const state = {
-  isCLI: false,
+  isRollup: false,
+  isBin: false,
   pack: { name: null, version: null, description: null },
   originalLectrc: {},
 };
@@ -39,7 +40,8 @@ const packageJson = JSON.parse(await fs.readFile("package.json", "utf8"));
 state.pack = packageJson;
 
 // Primary flag which distinguishes between the two types of ours
-state.isCLI = !objectPath.has(packageJson, "devDependencies.rollup");
+state.isRollup = objectPath.has(packageJson, "devDependencies.rollup");
+state.isBin = objectPath.has(packageJson, "bin");
 
 await Promise.all([examples({ state }), fs.readFile("../.lectrc.json", "utf8")])
   .then((received) => {
@@ -69,7 +71,7 @@ await Promise.all([examples({ state }), fs.readFile("../.lectrc.json", "utf8")])
   })
   .catch((e) => {
     console.log(
-      `072 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${JSON.stringify(
+      `074 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${JSON.stringify(
         Object.keys(e),
         null,
         4
