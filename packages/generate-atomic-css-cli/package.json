@@ -86,7 +86,7 @@
     "@istanbuljs/esm-loader-hook": "^0.1.2",
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
-    "eslint": "^8.1.0",
+    "eslint": "^8.2.0",
     "execa": "^5.1.1",
     "lect": "^0.18.4",
     "tap": "^15.0.10",
