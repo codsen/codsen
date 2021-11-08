@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "@babel/runtime": 107,
+        "@babel/runtime": 108,
         "@sindresorhus/is": 1,
         "all-named-html-entities": 2,
         "ansi-diff-stream": 1,
@@ -161,7 +161,7 @@
         "@babel/preset-env": 107,
         "@babel/preset-typescript": 107,
         "@babel/register": 107,
-        "@istanbuljs/esm-loader-hook": 119,
+        "@istanbuljs/esm-loader-hook": 120,
         "@rollup/plugin-babel": 107,
         "@rollup/plugin-commonjs": 107,
         "@rollup/plugin-json": 98,
@@ -202,15 +202,15 @@
         "array-shuffle": 1,
         "ast-deep-contains": 1,
         "ast-monkey-traverse": 1,
-        "core-js": 119,
-        "cross-env": 119,
+        "core-js": 120,
+        "cross-env": 120,
         "deep-equal": 1,
-        "eslint": 119,
+        "eslint": 120,
         "eslint-plugin-node": 1,
         "execa": 9,
         "fs-extra": 3,
         "globby": 1,
-        "lect": 119,
+        "lect": 120,
         "lodash.clonedeep": 6,
         "lodash.isequal": 3,
         "map-stream": 1,
@@ -228,18 +228,18 @@
         "rollup-plugin-node-builtins": 9,
         "rollup-plugin-terser": 107,
         "string-find-heads-tails": 1,
-        "tap": 119,
+        "tap": 120,
         "tempy": 12,
         "test-mixer": 4,
         "title": 1,
-        "tslib": 119,
+        "tslib": 120,
         "type-fest": 4,
         "typescript": 107,
         "vinyl-string": 1
     },
     "top10ExternalDeps": [
         {
-            "@babel/runtime": 107
+            "@babel/runtime": 108
         },
         {
             "lodash.isplainobject": 25

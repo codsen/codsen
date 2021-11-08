@@ -418,7 +418,7 @@
     },
     {
         "name": "lect",
-        "size": 2592,
+        "size": 2663,
         "imports": [
             "array-pull-all-with-glob",
             "object-merge-advanced"
