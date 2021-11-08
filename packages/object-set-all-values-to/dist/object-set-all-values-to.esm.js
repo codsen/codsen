@@ -1,7 +1,7 @@
 /**
  * @name object-set-all-values-to
  * @fileoverview Recursively walk the input and set all found values in plain objects to something
- * @version 5.0.4
+ * @version 5.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-set-all-values-to/}
@@ -10,7 +10,7 @@
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-var version$1 = "5.0.4";
+var version$1 = "5.0.5";
 
 const version = version$1;
 function setAllValuesTo(inputOriginal, valueOriginal) {

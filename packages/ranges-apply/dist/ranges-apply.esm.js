@@ -1,7 +1,7 @@
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 6.0.4
+ * @version 6.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -9,7 +9,7 @@
 
 import { rMerge } from 'ranges-merge';
 
-var version$1 = "6.0.4";
+var version$1 = "6.0.5";
 
 const version = version$1;
 function rApply(str, originalRangesArr, progressFn) {

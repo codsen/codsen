@@ -1,7 +1,7 @@
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 8.0.4
+ * @version 8.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}

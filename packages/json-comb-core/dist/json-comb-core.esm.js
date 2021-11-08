@@ -1,7 +1,7 @@
 /**
  * @name json-comb-core
  * @fileoverview The inner core of json-comb
- * @version 7.0.4
+ * @version 7.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/json-comb-core/}
@@ -20,7 +20,7 @@ import pReduce from 'p-reduce';
 import typ from 'type-detect';
 import pOne from 'p-one';
 
-var version$1 = "7.0.4";
+var version$1 = "7.0.5";
 
 const version = version$1;
 function existy(x) {

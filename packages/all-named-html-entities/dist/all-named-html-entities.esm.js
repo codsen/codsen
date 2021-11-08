@@ -1,13 +1,13 @@
 /**
  * @name all-named-html-entities
  * @fileoverview List of all named HTML entities
- * @version 2.0.4
+ * @version 2.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/all-named-html-entities/}
  */
 
-var version$1 = "2.0.4";
+var version$1 = "2.0.5";
 
 var Aacute = "Á";
 var aacute = "á";

@@ -1,7 +1,7 @@
 /**
  * @name string-remove-duplicate-heads-tails
  * @fileoverview Detect and (recursively) remove head and tail wrappings around the input string
- * @version 6.0.4
+ * @version 6.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-remove-duplicate-heads-tails/}
@@ -11,7 +11,7 @@
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 4.0.4
+ * @version 4.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}
@@ -19,7 +19,7 @@
 /**
  * @name string-match-left-right
  * @fileoverview Match substrings on the left or right of a given index, ignoring whitespace
- * @version 8.0.4
+ * @version 8.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-match-left-right/}
@@ -27,7 +27,7 @@
 /**
  * @name string-collapse-leading-whitespace
  * @fileoverview Collapse the leading and trailing whitespace of a string
- * @version 6.0.4
+ * @version 6.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-collapse-leading-whitespace/}
@@ -35,7 +35,7 @@
 /**
  * @name ranges-push
  * @fileoverview Gather string index ranges
- * @version 6.0.4
+ * @version 6.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-push/}
@@ -43,7 +43,7 @@
 /**
  * @name ranges-sort
  * @fileoverview Sort string index ranges
- * @version 5.0.4
+ * @version 5.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-sort/}
@@ -51,7 +51,7 @@
 /**
  * @name ranges-merge
  * @fileoverview Merge and sort string index ranges
- * @version 8.0.4
+ * @version 8.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-merge/}
@@ -59,7 +59,7 @@
 /**
  * @name ranges-apply
  * @fileoverview Take an array of string index ranges, delete/replace the string according to them
- * @version 6.0.4
+ * @version 6.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ranges-apply/}
@@ -67,9 +67,9 @@
 /**
  * @name string-trim-spaces-only
  * @fileoverview Like String.trim() but you can choose granularly what to trim
- * @version 4.0.4
+ * @version 4.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/string-trim-spaces-only/}
  */
-const B={classicTrim:!1,cr:!1,lf:!1,tab:!1,space:!0,nbsp:!1};function H(e,t){if("string"!=typeof e)throw new Error(`string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as ${typeof e}, equal to:\n${JSON.stringify(e,null,4)}`);const r={...B,...t};function n(e){return r.classicTrim&&!e.trim()||!r.classicTrim&&(r.space&&" "===e||r.cr&&"\r"===e||r.lf&&"\n"===e||r.tab&&"\t"===e||r.nbsp&&" "===e)}let s,i;if(e.length){if(n(e[0]))for(let t=0,r=e.length;t<r;t++){if(!n(e[t])){s=t;break}if(t===e.length-1)return{res:"",ranges:[[0,e.length]]}}if(n(e[e.length-1]))for(let t=e.length;t--;)if(!n(e[t])){i=t+1;break}return s?i?{res:e.slice(s,i),ranges:[[0,s],[i,e.length]]}:{res:e.slice(s),ranges:[[0,s]]}:i?{res:e.slice(0,i),ranges:[[i,e.length]]}:{res:e,ranges:[]}}return{res:"",ranges:[]}}e.defaults={heads:["{{"],tails:["}}"]},e.remDup=function(e,t){const r=Object.prototype.hasOwnProperty;if(void 0===e)throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_01] The input is missing!");if("string"!=typeof e)return e;if(t&&!g(t))throw new Error(`string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ${typeof t}!`);const n={...t};if(n&&r.call(n,"heads")){if(!h(n.heads).every((e=>"string"==typeof e||Array.isArray(e))))throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");"string"==typeof n.heads&&(n.heads=h(n.heads))}if(n&&r.call(n,"tails")){if(!h(n.tails).every((e=>"string"==typeof e||Array.isArray(e))))throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");"string"==typeof n.tails&&(n.tails=h(n.tails))}const s=H(e).res;if(0===s.length)return e;e=s;const i={heads:["{{"],tails:["}}"],...n};i.heads=i.heads.map((e=>e.trim())),i.tails=i.tails.map((e=>e.trim()));let o=!1,a=!1;const l=new R({limitToBeAddedWhitespace:!0}),u=new R({limitToBeAddedWhitespace:!0});let f=!0,c=!0,p="";function y(e,t){let r;if(!T(e,0,t.heads,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)}))return e;return T(e,r,t.tails,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)})?e.slice(r):e}for(;e!==y(e,i);)e=H(y(e,i)).res;function m(e,t){let r;if(!d(e,e.length-1,t.tails,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)})||!r)return e;return d(e,r,t.heads,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)})?e.slice(0,r+1):e}for(;e!==m(e,i);)e=H(m(e,i)).res;if(!(i.heads.length&&T(e,0,i.heads,{trimBeforeMatching:!0})&&i.tails.length&&d(e,e.length-1,i.tails,{trimBeforeMatching:!0})))return H(e).res;for(let t=0,r=e.length;t<r;t++)if(""===e[t].trim());else{let r;if(T(e,t,i.heads,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)})&&r){let n;c=!0,f&&(f=!0);T(e,r,i.tails,{trimBeforeMatching:!0,cb:(e,t,r)=>(n=r,!0)})&&l.push(t,n),u.current()&&o&&"tails"!==p&&l.push(u.current()),o||u.current()&&(l.push(u.current()),u.wipe()),u.push(t,r),p="heads",t=r-1;continue}if(T(e,t,i.tails,{trimBeforeMatching:!0,cb:(t,n,s)=>(r=Number.isInteger(s)?s:e.length,!0)})&&r){c=!0,f?("heads"===p&&u.wipe(),f=!1):u.push(t,r),p="tails",t=r-1;continue}f&&(f=!0),c&&!o?(o=!0,c=!1):c&&!a?(a=!0,f=!0,c=!1,"heads"===p&&u.wipe()):c&&a&&u.wipe()}return u.current()&&l.push(u.current()),l.current()?function(e,t,r){let n,s=0,i=0;if(0===arguments.length)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if("string"!=typeof e)throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(t&&!Array.isArray(t))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof t}, equal to: ${JSON.stringify(t,null,4)}`);if(r&&"function"!=typeof r)throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(!t||!t.filter((e=>e)).length)return e;n=Array.isArray(t)&&Number.isInteger(t[0])&&Number.isInteger(t[1])?[Array.from(t)]:Array.from(t);const o=n.length;let a=0;n.filter((e=>e)).forEach(((e,t)=>{if(r&&(s=Math.floor(a/o*10),s!==i&&(i=s,r(s))),!Array.isArray(e))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${t}th element not an array: ${JSON.stringify(e,null,4)}, which is ${typeof e}`);if(!Number.isInteger(e[0])){if(!Number.isInteger(+e[0])||+e[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${t}th element, array ${JSON.stringify(e,null,0)}. Its first element is not an integer, string index, but ${typeof e[0]}, equal to: ${JSON.stringify(e[0],null,4)}.`);n[t][0]=+n[t][0]}if(!Number.isInteger(e[1])){if(!Number.isInteger(+e[1])||+e[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${t}th element, array ${JSON.stringify(e,null,0)}. Its second element is not an integer, string index, but ${typeof e[1]}, equal to: ${JSON.stringify(e[1],null,4)}.`);n[t][1]=+n[t][1]}a+=1}));const l=W(n,{progressFn:e=>{r&&(s=10+Math.floor(e/10),s!==i&&(i=s,r(s)))}}),g=Array.isArray(l)?l.length:0;if(g>0){const t=e.slice(l[g-1][1]);e=l.reduce(((t,n,o,a)=>(r&&(s=20+Math.floor(o/g*80),s!==i&&(i=s,r(s))),t+e.slice(0===o?0:a[o-1][1],a[o][0])+(a[o][2]||""))),""),e+=t}return e}(e,l.current()).trim():e.trim()},e.version="6.0.4",Object.defineProperty(e,"__esModule",{value:!0})}));
+const B={classicTrim:!1,cr:!1,lf:!1,tab:!1,space:!0,nbsp:!1};function H(e,t){if("string"!=typeof e)throw new Error(`string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as ${typeof e}, equal to:\n${JSON.stringify(e,null,4)}`);const r={...B,...t};function n(e){return r.classicTrim&&!e.trim()||!r.classicTrim&&(r.space&&" "===e||r.cr&&"\r"===e||r.lf&&"\n"===e||r.tab&&"\t"===e||r.nbsp&&" "===e)}let s,i;if(e.length){if(n(e[0]))for(let t=0,r=e.length;t<r;t++){if(!n(e[t])){s=t;break}if(t===e.length-1)return{res:"",ranges:[[0,e.length]]}}if(n(e[e.length-1]))for(let t=e.length;t--;)if(!n(e[t])){i=t+1;break}return s?i?{res:e.slice(s,i),ranges:[[0,s],[i,e.length]]}:{res:e.slice(s),ranges:[[0,s]]}:i?{res:e.slice(0,i),ranges:[[i,e.length]]}:{res:e,ranges:[]}}return{res:"",ranges:[]}}e.defaults={heads:["{{"],tails:["}}"]},e.remDup=function(e,t){const r=Object.prototype.hasOwnProperty;if(void 0===e)throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_01] The input is missing!");if("string"!=typeof e)return e;if(t&&!g(t))throw new Error(`string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ${typeof t}!`);const n={...t};if(n&&r.call(n,"heads")){if(!h(n.heads).every((e=>"string"==typeof e||Array.isArray(e))))throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");"string"==typeof n.heads&&(n.heads=h(n.heads))}if(n&&r.call(n,"tails")){if(!h(n.tails).every((e=>"string"==typeof e||Array.isArray(e))))throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");"string"==typeof n.tails&&(n.tails=h(n.tails))}const s=H(e).res;if(0===s.length)return e;e=s;const i={heads:["{{"],tails:["}}"],...n};i.heads=i.heads.map((e=>e.trim())),i.tails=i.tails.map((e=>e.trim()));let o=!1,a=!1;const l=new R({limitToBeAddedWhitespace:!0}),u=new R({limitToBeAddedWhitespace:!0});let f=!0,c=!0,p="";function y(e,t){let r;if(!T(e,0,t.heads,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)}))return e;return T(e,r,t.tails,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)})?e.slice(r):e}for(;e!==y(e,i);)e=H(y(e,i)).res;function m(e,t){let r;if(!d(e,e.length-1,t.tails,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)})||!r)return e;return d(e,r,t.heads,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)})?e.slice(0,r+1):e}for(;e!==m(e,i);)e=H(m(e,i)).res;if(!(i.heads.length&&T(e,0,i.heads,{trimBeforeMatching:!0})&&i.tails.length&&d(e,e.length-1,i.tails,{trimBeforeMatching:!0})))return H(e).res;for(let t=0,r=e.length;t<r;t++)if(""===e[t].trim());else{let r;if(T(e,t,i.heads,{trimBeforeMatching:!0,cb:(e,t,n)=>(r=n,!0)})&&r){let n;c=!0,f&&(f=!0);T(e,r,i.tails,{trimBeforeMatching:!0,cb:(e,t,r)=>(n=r,!0)})&&l.push(t,n),u.current()&&o&&"tails"!==p&&l.push(u.current()),o||u.current()&&(l.push(u.current()),u.wipe()),u.push(t,r),p="heads",t=r-1;continue}if(T(e,t,i.tails,{trimBeforeMatching:!0,cb:(t,n,s)=>(r=Number.isInteger(s)?s:e.length,!0)})&&r){c=!0,f?("heads"===p&&u.wipe(),f=!1):u.push(t,r),p="tails",t=r-1;continue}f&&(f=!0),c&&!o?(o=!0,c=!1):c&&!a?(a=!0,f=!0,c=!1,"heads"===p&&u.wipe()):c&&a&&u.wipe()}return u.current()&&l.push(u.current()),l.current()?function(e,t,r){let n,s=0,i=0;if(0===arguments.length)throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");if("string"!=typeof e)throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof e}, equal to: ${JSON.stringify(e,null,4)}`);if(t&&!Array.isArray(t))throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof t}, equal to: ${JSON.stringify(t,null,4)}`);if(r&&"function"!=typeof r)throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof r}, equal to: ${JSON.stringify(r,null,4)}`);if(!t||!t.filter((e=>e)).length)return e;n=Array.isArray(t)&&Number.isInteger(t[0])&&Number.isInteger(t[1])?[Array.from(t)]:Array.from(t);const o=n.length;let a=0;n.filter((e=>e)).forEach(((e,t)=>{if(r&&(s=Math.floor(a/o*10),s!==i&&(i=s,r(s))),!Array.isArray(e))throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${t}th element not an array: ${JSON.stringify(e,null,4)}, which is ${typeof e}`);if(!Number.isInteger(e[0])){if(!Number.isInteger(+e[0])||+e[0]<0)throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${t}th element, array ${JSON.stringify(e,null,0)}. Its first element is not an integer, string index, but ${typeof e[0]}, equal to: ${JSON.stringify(e[0],null,4)}.`);n[t][0]=+n[t][0]}if(!Number.isInteger(e[1])){if(!Number.isInteger(+e[1])||+e[1]<0)throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${t}th element, array ${JSON.stringify(e,null,0)}. Its second element is not an integer, string index, but ${typeof e[1]}, equal to: ${JSON.stringify(e[1],null,4)}.`);n[t][1]=+n[t][1]}a+=1}));const l=W(n,{progressFn:e=>{r&&(s=10+Math.floor(e/10),s!==i&&(i=s,r(s)))}}),g=Array.isArray(l)?l.length:0;if(g>0){const t=e.slice(l[g-1][1]);e=l.reduce(((t,n,o,a)=>(r&&(s=20+Math.floor(o/g*80),s!==i&&(i=s,r(s))),t+e.slice(0===o?0:a[o-1][1],a[o][0])+(a[o][2]||""))),""),e+=t}return e}(e,l.current()).trim():e.trim()},e.version="6.0.5",Object.defineProperty(e,"__esModule",{value:!0})}));

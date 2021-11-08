@@ -1,7 +1,7 @@
 /**
  * @name ast-deep-contains
  * @fileoverview Like t.same assert on array of objects, where element order doesn't matter.
- * @version 4.0.4
+ * @version 4.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-deep-contains/}
@@ -11,7 +11,7 @@ import objectPath from 'object-path';
 import { traverse } from 'ast-monkey-traverse';
 import is from '@sindresorhus/is';
 
-var version$1 = "4.0.4";
+var version$1 = "4.0.5";
 
 const version = version$1;
 function goUp(pathStr) {

@@ -1,7 +1,7 @@
 /**
  * @name tap-parse-string-to-object
  * @fileoverview Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object
- * @version 3.0.4
+ * @version 3.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/tap-parse-string-to-object/}
@@ -116,7 +116,7 @@ class Counter {
   }
 }
 
-var version$1 = "3.0.4";
+var version$1 = "3.0.5";
 
 const version = version$1;
 function parseTap(something) {

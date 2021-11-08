@@ -5,7 +5,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.0.1 (2021-11-08)
 
-
 ### Bug Fixes
 
-* init ([689fb15](https://github.com/codsen/codsen/commit/689fb15ad485ea13470da8996357a2807018dd03))
+- init ([689fb15](https://github.com/codsen/codsen/commit/689fb15ad485ea13470da8996357a2807018dd03))

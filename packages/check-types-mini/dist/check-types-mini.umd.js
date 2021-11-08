@@ -1,7 +1,7 @@
 /**
  * @name check-types-mini
  * @fileoverview Validate options object
- * @version 7.0.4
+ * @version 7.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/check-types-mini/}
@@ -11,7 +11,7 @@
 /**
  * @name ast-monkey-util
  * @fileoverview Utility library of AST helper functions
- * @version 2.0.4
+ * @version 2.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-util/}
@@ -19,7 +19,7 @@
 /**
  * @name ast-monkey-traverse
  * @fileoverview Utility library to traverse AST
- * @version 3.0.4
+ * @version 3.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/ast-monkey-traverse/}
@@ -27,7 +27,7 @@
 /**
  * @name arrayiffy-if-string
  * @fileoverview Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * @version 4.0.4
+ * @version 4.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/arrayiffy-if-string/}

@@ -1,7 +1,7 @@
 /**
  * @name object-all-values-equal-to
  * @fileoverview Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * @version 3.0.4
+ * @version 3.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/object-all-values-equal-to/}
@@ -10,7 +10,7 @@
 import isObj from 'lodash.isplainobject';
 import isEq from 'lodash.isequal';
 
-var version$1 = "3.0.4";
+var version$1 = "3.0.5";
 
 const version = version$1;
 function allValuesEqualTo(input, value, opts) {

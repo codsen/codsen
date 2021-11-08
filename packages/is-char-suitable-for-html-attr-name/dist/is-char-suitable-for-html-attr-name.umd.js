@@ -1,7 +1,7 @@
 /**
  * @name is-char-suitable-for-html-attr-name
  * @fileoverview Is given character suitable to be in an HTML attribute's name?
- * @version 3.0.4
+ * @version 3.0.5
  * @author Roy Revelt, Codsen Ltd
  * @license MIT
  * {@link https://codsen.com/os/is-char-suitable-for-html-attr-name/}
