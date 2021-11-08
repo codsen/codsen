@@ -1,6 +1,6 @@
 {
   "name": "string-remove-widows",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Helps to prevent widow words in a text",
   "keywords": [
     "against",
@@ -85,10 +85,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.0",
-    "ranges-apply": "^6.0.4",
-    "ranges-push": "^6.0.4",
-    "string-left-right": "^5.0.4",
-    "string-match-left-right": "^8.0.4"
+    "ranges-apply": "^6.0.5",
+    "ranges-push": "^6.0.5",
+    "string-left-right": "^5.0.5",
+    "string-match-left-right": "^8.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -117,7 +117,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
-    "lect": "^0.18.4",
+    "lect": "^0.18.5",
     "rollup": "^2.59.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

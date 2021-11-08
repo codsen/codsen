@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.5](https://github.com/codsen/codsen/compare/is-relative-uri@4.0.4...is-relative-uri@4.0.5) (2021-11-08)
+
+**Note:** Version bump only for package is-relative-uri
+
+
+
+
+
 ## 4.0.0 (2021-09-09)
 
 ### Features

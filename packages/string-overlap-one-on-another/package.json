@@ -1,6 +1,6 @@
 {
   "name": "string-overlap-one-on-another",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Lay one string on top of another, with an optional offset",
   "keywords": [
     "add",
@@ -114,7 +114,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
-    "lect": "^0.18.4",
+    "lect": "^0.18.5",
     "rollup": "^2.59.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

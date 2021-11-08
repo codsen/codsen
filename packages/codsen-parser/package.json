@@ -1,6 +1,6 @@
 {
   "name": "codsen-parser",
-  "version": "0.12.4",
+  "version": "0.12.5",
   "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
   "keywords": [
     "ast",
@@ -77,11 +77,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.0",
-    "ast-monkey-util": "^2.0.4",
-    "codsen-tokenizer": "^6.0.4",
+    "ast-monkey-util": "^2.0.5",
+    "codsen-tokenizer": "^6.0.5",
     "object-path": "^0.11.8",
-    "string-find-malformed": "^3.0.4",
-    "string-left-right": "^5.0.4"
+    "string-find-malformed": "^3.0.5",
+    "string-left-right": "^5.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -110,7 +110,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
-    "lect": "^0.18.4",
+    "lect": "^0.18.5",
     "rollup": "^2.59.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

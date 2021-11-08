@@ -1,6 +1,6 @@
 {
   "name": "perf-ref",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A dummy program to normalise perf scores against it",
   "keywords": [
     "benchmark",
@@ -72,7 +72,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
-    "lect": "^0.18.4",
+    "lect": "^0.18.5",
     "tap": "^15.0.10",
     "tslib": "^2.3.1"
   },
