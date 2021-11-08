@@ -16,7 +16,7 @@ blocks:
       prologue:
         commands:
           - nvm install node
-          - nvm use 16
+          - nvm use 14
           - node --version
           - npm --version
           # Correct premissions since they are too open by default:
