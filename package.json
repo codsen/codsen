@@ -34,7 +34,7 @@
     "test:full": "FORCE_COLOR=1 lerna run test --bail --concurrency 1 && npm run readme:generate && npm run info",
     "test:only": "FORCE_COLOR=1 lerna run unittest --bail --concurrency 1 && npm run readme:generate && npm run info",
     "test:examples": "FORCE_COLOR=1 lerna run test:examples",
-    "wipe": "rm package-lock.json || true && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y",
+    "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && npm run bootstrap",
     "graph": "lerna-dependency-graph -f 'png' -o './deps-graph.png'",
     "checkPublishedSizeLimit": "node ./scripts/check100MBLimit.js",
     "patchRollupBinExit": "node ./scripts/patchRollupBinExit.js",
