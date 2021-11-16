@@ -140,7 +140,7 @@ async function packageJson({ state, lectrc }) {
 
   // 6. set various keys
   objectPath.set(content, "engines", {
-    node: ">=12",
+    node: "^12.20.0 || ^14.13.1 || >=16.0.0",
   });
   // objectPath.set(content, "tap", {
   //   "coverage-report": [
