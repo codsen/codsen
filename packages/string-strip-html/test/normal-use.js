@@ -8,28 +8,28 @@ import validateallTagLocations from "./util/validateTagLocations.js";
 tap.test("01 - string is whole (opening) tag - no ignore", (t) => {
   const input = `<a>`;
   const allTagLocations = [[0, 3]];
-  t.match(stripHtml(input), { result: "", allTagLocations }, "01");
+  t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "01");
   t.end();
 });
 
 tap.test("02 - string is whole (opening) tag - no ignore", (t) => {
   const input = `<a/>`;
   const allTagLocations = [[0, 4]];
-  t.match(stripHtml(input), { result: "", allTagLocations }, "02");
+  t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "02");
   t.end();
 });
 
 tap.test("03 - string is whole (opening) tag - no ignore", (t) => {
   const input = `<a />`;
   const allTagLocations = [[0, 5]];
-  t.match(stripHtml(input), { result: "", allTagLocations }, "03");
+  t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "03");
   t.end();
 });
 
 tap.test("04 - string is whole (opening) tag - ignore but wrong", (t) => {
   const input = `<a>`;
   const allTagLocations = [[0, 3]];
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       ignoreTags: ["b"],
     }),
@@ -43,7 +43,7 @@ tap.test("04 - string is whole (opening) tag - ignore but wrong", (t) => {
 tap.test("05 - string is whole (opening) tag - ignore", (t) => {
   const input = `<a>`;
   const allTagLocations = [[0, 3]];
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       ignoreTags: ["a"],
     }),
@@ -59,7 +59,7 @@ tap.test(
   (t) => {
     const input = `< a>`;
     const allTagLocations = [[0, 4]];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: allTagLocations, allTagLocations },
       "06"
@@ -74,7 +74,7 @@ tap.test(
   (t) => {
     const input = `<a >`;
     const allTagLocations = [[0, 4]];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: allTagLocations, allTagLocations },
       "07"
@@ -89,7 +89,7 @@ tap.test(
   (t) => {
     const input = `< a >`;
     const allTagLocations = [[0, 5]];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: allTagLocations, allTagLocations },
       "08"
@@ -104,7 +104,7 @@ tap.test(
   (t) => {
     const input = `<     a     >`;
     const allTagLocations = [[0, 13]];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: allTagLocations, allTagLocations },
       "09"
@@ -119,7 +119,7 @@ tap.test(
   (t) => {
     const input = ` <a>`;
     const allTagLocations = [[1, 4]];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: [[0, 4]], allTagLocations },
       "10"
@@ -134,7 +134,7 @@ tap.test(
   (t) => {
     const input = `< a> `;
     const allTagLocations = [[0, 4]];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: [[0, 5]], allTagLocations },
       "11"
@@ -149,7 +149,7 @@ tap.test(
   (t) => {
     const input = `  <a >  `;
     const allTagLocations = [[2, 6]];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: [[0, 8]], allTagLocations },
       "12"
@@ -162,7 +162,7 @@ tap.test(
 tap.test("13 - string is whole (opening) tag - raw tab in front", (t) => {
   const input = `\t< a >`;
   const allTagLocations = [[1, 6]];
-  t.match(
+  t.hasStrict(
     stripHtml(input),
     { result: "", ranges: [[0, 6]], allTagLocations },
     "13"
@@ -176,7 +176,7 @@ tap.test(
   (t) => {
     const input = `    \t   <     a     >      \n\n   `;
     const allTagLocations = [[8, 21]];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: [[0, 32]], allTagLocations },
       "14"
@@ -194,7 +194,7 @@ tap.test(
       [0, 3],
       [12, 15],
     ];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: [[0, 15]], allTagLocations },
       "15"
@@ -209,7 +209,7 @@ tap.test(
   (t) => {
     const input = `<a>         z`;
     const allTagLocations = [[0, 3]];
-    t.match(stripHtml(input), { result: "z", allTagLocations }, "16");
+    t.hasStrict(stripHtml(input), { result: "z", allTagLocations }, "16");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -223,7 +223,7 @@ tap.test(
       [3, 6],
       [10, 14],
     ];
-    t.match(stripHtml(input), { result: "text", allTagLocations }, "17");
+    t.hasStrict(stripHtml(input), { result: "text", allTagLocations }, "17");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -237,7 +237,7 @@ tap.test(
       [3, 6],
       [10, 14],
     ];
-    t.match(stripHtml(input), { result: "text", allTagLocations }, "18");
+    t.hasStrict(stripHtml(input), { result: "text", allTagLocations }, "18");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -251,7 +251,7 @@ tap.test(
       [1, 46],
       [47, 77],
     ];
-    t.match(stripHtml(input), { result: "z z z", allTagLocations }, "19");
+    t.hasStrict(stripHtml(input), { result: "z z z", allTagLocations }, "19");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -262,7 +262,7 @@ tap.test(
   (t) => {
     const input = `<custom>`;
     const allTagLocations = [[0, 8]];
-    t.match(
+    t.hasStrict(
       stripHtml(input),
       { result: "", ranges: allTagLocations, allTagLocations },
       "20"
@@ -277,7 +277,7 @@ tap.test(
   (t) => {
     const input = `<custom`;
     const allTagLocations = [[0, 7]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "21");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "21");
     // can't call validateallTagLocations() because bracket is missing
     t.end();
   }
@@ -288,7 +288,7 @@ tap.test(
   (t) => {
     const input = `<custom-tag>`;
     const allTagLocations = [[0, 12]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "22");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "22");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -299,7 +299,7 @@ tap.test(
   (t) => {
     const input = `<-tag>`;
     const allTagLocations = [[0, 6]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "23");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "23");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -312,7 +312,7 @@ tap.test("24 - string is whole (opening) tag - multiple custom", (t) => {
     [8, 16],
     [16, 24],
   ];
-  t.match(stripHtml(input), { result: "", allTagLocations }, "24");
+  t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "24");
   validateallTagLocations(t, input, allTagLocations);
   t.end();
 });
@@ -326,7 +326,7 @@ tap.test(
       [12, 24],
       [24, 36],
     ];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "25");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "25");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -341,7 +341,7 @@ tap.test(
       [6, 12],
       [12, 18],
     ];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "26");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "26");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -356,7 +356,7 @@ tap.test(
       [9, 17],
       [17, 25],
     ];
-    t.match(stripHtml(input), { result: "a b", allTagLocations }, "27");
+    t.hasStrict(stripHtml(input), { result: "a b", allTagLocations }, "27");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -371,7 +371,7 @@ tap.test(
       [13, 25],
       [25, 37],
     ];
-    t.match(stripHtml(input), { result: "a b", allTagLocations }, "28");
+    t.hasStrict(stripHtml(input), { result: "a b", allTagLocations }, "28");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -386,7 +386,7 @@ tap.test(
       [7, 13],
       [13, 19],
     ];
-    t.match(stripHtml(input), { result: "a b", allTagLocations }, "29");
+    t.hasStrict(stripHtml(input), { result: "a b", allTagLocations }, "29");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -401,7 +401,7 @@ tap.test(
       [10, 20],
       [20, 29],
     ];
-    t.match(stripHtml(input), { result: "a b", allTagLocations }, "30");
+    t.hasStrict(stripHtml(input), { result: "a b", allTagLocations }, "30");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -416,7 +416,7 @@ tap.test(
       [15, 29],
       [29, 43],
     ];
-    t.match(stripHtml(input), { result: "a b", allTagLocations }, "31");
+    t.hasStrict(stripHtml(input), { result: "a b", allTagLocations }, "31");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -431,7 +431,7 @@ tap.test(
       [9, 17],
       [17, 26],
     ];
-    t.match(stripHtml(input), { result: "a b", allTagLocations }, "32");
+    t.hasStrict(stripHtml(input), { result: "a b", allTagLocations }, "32");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -446,7 +446,7 @@ tap.test(
       [12, 22],
       [22, 31],
     ];
-    t.match(stripHtml(input), { result: "a b", allTagLocations }, "33");
+    t.hasStrict(stripHtml(input), { result: "a b", allTagLocations }, "33");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -459,7 +459,7 @@ tap.test("34 - string is whole (opening) tag - custom, line breaks", (t) => {
     [16, 30],
     [31, 45],
   ];
-  t.match(stripHtml(input), { result: "a\n\nb", allTagLocations }, "34");
+  t.hasStrict(stripHtml(input), { result: "a\n\nb", allTagLocations }, "34");
   validateallTagLocations(t, input, allTagLocations);
   t.end();
 });
@@ -471,7 +471,7 @@ tap.test("35 - string is whole (opening) tag - custom, outer tabs", (t) => {
     [11, 19],
     [19, 28],
   ];
-  t.match(stripHtml(input), { result: "a b", allTagLocations }, "35");
+  t.hasStrict(stripHtml(input), { result: "a b", allTagLocations }, "35");
   validateallTagLocations(t, input, allTagLocations);
   t.end();
 });
@@ -479,7 +479,7 @@ tap.test("35 - string is whole (opening) tag - custom, outer tabs", (t) => {
 tap.test("36 - string is whole (closing) tag - self-closing - single", (t) => {
   const input = `</a>`;
   const allTagLocations = [[0, 4]];
-  t.match(stripHtml(input), { result: "", allTagLocations }, "36");
+  t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "36");
   validateallTagLocations(t, input, allTagLocations);
   t.end();
 });
@@ -489,7 +489,7 @@ tap.test(
   (t) => {
     const input = `< /a>`;
     const allTagLocations = [[0, 5]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "37");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "37");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -500,7 +500,7 @@ tap.test(
   (t) => {
     const input = `< / a>`;
     const allTagLocations = [[0, 6]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "38");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "38");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -511,7 +511,7 @@ tap.test(
   (t) => {
     const input = `</a >`;
     const allTagLocations = [[0, 5]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "39");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "39");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -522,7 +522,7 @@ tap.test(
   (t) => {
     const input = `</ a >`;
     const allTagLocations = [[0, 6]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "40");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "40");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -533,7 +533,7 @@ tap.test(
   (t) => {
     const input = `< / a >`;
     const allTagLocations = [[0, 7]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "41");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "41");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -544,7 +544,7 @@ tap.test(
   (t) => {
     const input = `<  /   a     >`;
     const allTagLocations = [[0, 14]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "42");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "42");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -555,7 +555,7 @@ tap.test(
   (t) => {
     const input = ` </a>`;
     const allTagLocations = [[1, 5]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "43");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "43");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -566,7 +566,7 @@ tap.test(
   (t) => {
     const input = `< /a> `;
     const allTagLocations = [[0, 5]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "44");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "44");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -577,7 +577,7 @@ tap.test(
   (t) => {
     const input = `  </a >  `;
     const allTagLocations = [[2, 7]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "45");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "45");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -588,7 +588,7 @@ tap.test(
   (t) => {
     const input = `\t< /a >`;
     const allTagLocations = [[1, 7]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "46");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "46");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -599,7 +599,7 @@ tap.test(
   (t) => {
     const input = `    \t   <   /  a     >      \n\n   `;
     const allTagLocations = [[8, 22]];
-    t.match(stripHtml(input), { result: "", allTagLocations }, "47");
+    t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "47");
     validateallTagLocations(t, input, allTagLocations);
     t.end();
   }
@@ -608,7 +608,7 @@ tap.test(
 tap.test("48 - dodgy attribute", (t) => {
   const input = `< abc |>`;
   const allTagLocations = [[0, 8]];
-  t.match(stripHtml(input), { result: input, allTagLocations }, "48");
+  t.hasStrict(stripHtml(input), { result: input, allTagLocations }, "48");
   validateallTagLocations(t, input, allTagLocations);
   t.end();
 });
@@ -616,7 +616,7 @@ tap.test("48 - dodgy attribute", (t) => {
 tap.test("49 - dodgy attribute", (t) => {
   const input = `<table .>`;
   const allTagLocations = [[0, 9]];
-  t.match(stripHtml(input), { result: "", allTagLocations }, "49");
+  t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "49");
   validateallTagLocations(t, input, allTagLocations);
   t.end();
 });
@@ -625,7 +625,7 @@ tap.test("50 - dodgy attribute from astral range", (t) => {
   const dodgyChar = String.fromCharCode(64976);
   const input = `<table ${dodgyChar}>`;
   const allTagLocations = [[0, 9]];
-  t.match(stripHtml(input), { result: "", allTagLocations }, "50");
+  t.hasStrict(stripHtml(input), { result: "", allTagLocations }, "50");
   validateallTagLocations(t, input, allTagLocations);
   t.end();
 });

@@ -5,7 +5,7 @@ import { stripHtml } from "../dist/string-strip-html.esm.js";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - tag pair among defaults", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("abc<script>const x = 1;</script>xyz"),
     {
       result: "abc xyz",
@@ -22,7 +22,7 @@ tap.test("01 - tag pair among defaults", (t) => {
 });
 
 tap.test("02 - tag pair custom-defined", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("abc<script>const x = 1;</script>xyz", {
       stripTogetherWithTheirContents: ["script"],
     }),
@@ -41,7 +41,7 @@ tap.test("02 - tag pair custom-defined", (t) => {
 });
 
 tap.test("03 - tag pair's contents not deleted upon request", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("abc<script>const x = 1;</script>xyz", {
       stripTogetherWithTheirContents: ["div"],
     }),

@@ -5,7 +5,7 @@ import { stripHtml } from "../dist/string-strip-html.esm.js";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - tag locations - anchor wrapping text", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("abc<a>click me</a>def"),
     {
       result: "abc click me def",
@@ -28,7 +28,7 @@ tap.test("01 - tag locations - anchor wrapping text", (t) => {
 });
 
 tap.test("02 - tag locations - no tags were present at all", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("abc def"),
     {
       result: "abc def",
@@ -42,7 +42,7 @@ tap.test("02 - tag locations - no tags were present at all", (t) => {
 });
 
 tap.test("03 - tag locations - opts.ignoreTags", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("<a><span>z</span></a>", {
       ignoreTags: ["a"],
     }),
@@ -70,7 +70,7 @@ tap.test("03 - tag locations - opts.ignoreTags", (t) => {
 
 tap.test("04 - tag locations - opts.ignoreTags", (t) => {
   const input = "<a><span>z</span></a>";
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       ignoreTags: ["a", "span"],
     }),
@@ -92,7 +92,7 @@ tap.test("04 - tag locations - opts.ignoreTags", (t) => {
 
 tap.test("05 - tag locations - opts.onlyStripTags", (t) => {
   const input = "<a><span>z</span></a>";
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       onlyStripTags: ["span"],
     }),
@@ -120,7 +120,7 @@ tap.test("05 - tag locations - opts.onlyStripTags", (t) => {
 
 tap.test("06 - tag locations - opts.onlyStripTags", (t) => {
   const input = "<a><span>z</span></a>";
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       onlyStripTags: ["a", "span"],
     }),
@@ -150,7 +150,7 @@ tap.test("06 - tag locations - opts.onlyStripTags", (t) => {
 
 tap.test("07 - tag locations - closing bracket missing", (t) => {
   const input = `<div class="container" <div class="inner"`;
-  t.match(
+  t.hasStrict(
     stripHtml(input),
     {
       result: "",
@@ -171,7 +171,7 @@ tap.test("07 - tag locations - closing bracket missing", (t) => {
 
 tap.test("08 - tag locations - closing bracket missing", (t) => {
   const input = `<div class="container" <div class="inner"`;
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       stripTogetherWithTheirContents: "div",
     }),
@@ -191,7 +191,7 @@ tap.test("08 - tag locations - closing bracket missing", (t) => {
 
 tap.test("09 - tag locations - closing bracket missing on ignored tag", (t) => {
   const input = `<div class="container" <div class="inner"`;
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       ignoreTags: `div`,
     }),

@@ -6,7 +6,7 @@ import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 tap.test("01 - opts.cb - baseline", (t) => {
   // baseline, notice dirty whitespace:
-  t.match(
+  t.hasStrict(
     stripHtml(`<div style="display: inline !important;" >abc</ div>`),
     {
       result: "abc",
@@ -29,7 +29,7 @@ tap.test("01 - opts.cb - baseline", (t) => {
 });
 
 tap.test("02 - opts.cb - baseline 2", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("<div >abc</ div>"),
     {
       result: "abc",
@@ -62,7 +62,7 @@ tap.test("03 - opts.cb - replace hr with tralala", (t) => {
   }) => {
     rangesArr.push(deleteFrom, deleteTo, "<tralala>");
   };
-  t.match(
+  t.hasStrict(
     stripHtml("abc<hr>def", { cb }),
     {
       result: "abc<tralala>def",
@@ -90,7 +90,7 @@ tap.test("04 - opts.cb - replace div with tralala", (t) => {
       `<${tag.slashPresent ? "/" : ""}tralala>`
     );
   };
-  t.match(
+  t.hasStrict(
     stripHtml("<div >abc</ div>", { cb }),
     {
       result: "<tralala>abc</tralala>",
@@ -129,7 +129,7 @@ tap.test("05 - opts.cb - replace only hr", (t) => {
       );
     }
   };
-  t.match(
+  t.hasStrict(
     stripHtml("abc<hr>def<span>ghi</span>jkl", { cb }),
     {
       result: "abc<tralala>def<span>ghi</span>jkl",
@@ -161,7 +161,7 @@ tap.test("06 - opts.cb - readme example one", (t) => {
   }) => {
     rangesArr.push(deleteFrom, deleteTo, insert);
   };
-  t.match(
+  t.hasStrict(
     stripHtml("abc<hr>def", { cb }),
     {
       result: "abc def",
@@ -189,7 +189,7 @@ tap.test(
       rangesArr.push(deleteFrom, deleteTo, insert);
       capturedTags.push(tag.name);
     };
-    t.match(
+    t.hasStrict(
       stripHtml("abc<hr>def<br>ghi", { cb, ignoreTags: ["hr"] }),
       {
         result: "abc<hr>def ghi",

@@ -49,6 +49,6 @@ assert.equal(
 
 // leading:
 assert.equal(
-  tagAwareTitle(`<span class="xyz">abc<span> defgh ESLint`),
-  `<span class="xyz">abc<span> Defgh ESLint`
+  tagAwareTitle(`<span class="xyz">abc</span> defgh ESLint`),
+  `<span class="xyz">abc</span> Defgh ESLint`
 );

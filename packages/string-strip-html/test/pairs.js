@@ -172,12 +172,12 @@ tap.test("06 - single tag pair - astrisk", (t) => {
 });
 
 tap.test("07 - single tag pair - inner line break retained", (t) => {
-  t.match(stripHtml(" <a> zz\nz </a> "), { result: "zz\nz" }, "07");
+  t.hasStrict(stripHtml(" <a> zz\nz </a> "), { result: "zz\nz" }, "07");
   t.end();
 });
 
 tap.test("08 - multiple tag pairs - adds spaces - #1", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("rrr <a>zzz</a> something\nelse<img/>zzz<div>yyy</div>uuu"),
     { result: "rrr zzz something\nelse zzz yyy uuu" },
     "08"
@@ -186,7 +186,7 @@ tap.test("08 - multiple tag pairs - adds spaces - #1", (t) => {
 });
 
 tap.test("09 - multiple tag pairs - adds spaces - #2", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("aaaaaaa<a>bbbbbbbb"),
     { result: "aaaaaaa bbbbbbbb" },
     "09"
@@ -195,19 +195,19 @@ tap.test("09 - multiple tag pairs - adds spaces - #2", (t) => {
 });
 
 tap.test("10 - multiple tag pairs - adds spaces - #2", (t) => {
-  t.match(stripHtml("<a>bbbbbbbb"), { result: "bbbbbbbb" }, "10");
+  t.hasStrict(stripHtml("<a>bbbbbbbb"), { result: "bbbbbbbb" }, "10");
   t.end();
 });
 
 tap.test("11 - multiple tag pairs - adds spaces - #2", (t) => {
-  t.match(stripHtml("aaaaaaa<a>"), { result: "aaaaaaa" }, "11");
+  t.hasStrict(stripHtml("aaaaaaa<a>"), { result: "aaaaaaa" }, "11");
   t.end();
 });
 
 tap.test(
   "12 - deletion while being on sensitive mode - recognised tag name, pair",
   (t) => {
-    t.match(stripHtml("< div >x</div>"), { result: "x" }, "12");
+    t.hasStrict(stripHtml("< div >x</div>"), { result: "x" }, "12");
     t.end();
   }
 );
@@ -215,7 +215,7 @@ tap.test(
 tap.test(
   "13 - deletion while being on sensitive mode - recognised tag name, singleton",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("aaaaaaa< br >bbbbbbbb"),
       { result: "aaaaaaa bbbbbbbb" },
       "13"
@@ -227,7 +227,11 @@ tap.test(
 tap.test(
   "14 - deletion while being on sensitive mode - recognised tag name, pair, tight outer content",
   (t) => {
-    t.match(stripHtml("aaaaaaa< div >x</div>"), { result: "aaaaaaa x" }, "14");
+    t.hasStrict(
+      stripHtml("aaaaaaa< div >x</div>"),
+      { result: "aaaaaaa x" },
+      "14"
+    );
     t.end();
   }
 );
@@ -235,7 +239,11 @@ tap.test(
 tap.test(
   "15 - deletion while being on sensitive mode - recognised tag name, pair, spaced outer content",
   (t) => {
-    t.match(stripHtml("aaaaaaa < div >x</div>"), { result: "aaaaaaa x" }, "15");
+    t.hasStrict(
+      stripHtml("aaaaaaa < div >x</div>"),
+      { result: "aaaaaaa x" },
+      "15"
+    );
     t.end();
   }
 );
@@ -243,13 +251,17 @@ tap.test(
 tap.test(
   "16 - deletion while being on sensitive mode - recognised tag name, pair, trailing whitespace",
   (t) => {
-    t.match(stripHtml("aaaaaaa< div >x</div> "), { result: "aaaaaaa x" }, "16");
+    t.hasStrict(
+      stripHtml("aaaaaaa< div >x</div> "),
+      { result: "aaaaaaa x" },
+      "16"
+    );
     t.end();
   }
 );
 
 tap.test("17 - tags with attributes - tight inside tag", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml('aaaaaaa<div class="zzzz">x</div>bbbbbbbb'),
     { result: "aaaaaaa x bbbbbbbb" },
     "17"
@@ -258,7 +270,7 @@ tap.test("17 - tags with attributes - tight inside tag", (t) => {
 });
 
 tap.test("18 - tags with attributes - rogue spaces inside tag", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml('aaaaaaa< br class="zzzz">bbbbbbbb'),
     { result: "aaaaaaa bbbbbbbb" },
     "18"
@@ -267,7 +279,7 @@ tap.test("18 - tags with attributes - rogue spaces inside tag", (t) => {
 });
 
 tap.test("19 - tags with attributes - rogue spaces inside tag, pair", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml('aaaaaaa< div class="zzzz">x</div>'),
     { result: "aaaaaaa x" },
     "19"
@@ -276,7 +288,7 @@ tap.test("19 - tags with attributes - rogue spaces inside tag, pair", (t) => {
 });
 
 tap.test("20 - tags with attributes", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml('aaaaaaa < div class="zzzz">x</div>'),
     { result: "aaaaaaa x" },
     "20"
@@ -285,7 +297,7 @@ tap.test("20 - tags with attributes", (t) => {
 });
 
 tap.test("21 - tags with attributes", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml('aaaaaaa< div class="zzzz">x</div>'),
     { result: "aaaaaaa x" },
     "21"
@@ -294,12 +306,12 @@ tap.test("21 - tags with attributes", (t) => {
 });
 
 tap.test("22 - tags with attributes", (t) => {
-  t.match(stripHtml('< div class="zzzz">x</div>'), { result: "x" }, "22");
+  t.hasStrict(stripHtml('< div class="zzzz">x</div>'), { result: "x" }, "22");
   t.end();
 });
 
 tap.test("23 - multiple brackets repeated", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("aaaa<<<<<<div>>>>something</div>bbbbb"),
     { result: "aaaa something bbbbb" },
     "23"
@@ -308,7 +320,7 @@ tap.test("23 - multiple brackets repeated", (t) => {
 });
 
 tap.test("24 - multiple brackets repeated", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("aaaa<<<<<<div>something</div>bbbbb"),
     { result: "aaaa something bbbbb" },
     "24"
@@ -317,7 +329,7 @@ tap.test("24 - multiple brackets repeated", (t) => {
 });
 
 tap.test("25 - multiple brackets repeated", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("aaaa<<<<<<div>>>>something<<<</div>bbbbb"),
     { result: "aaaa something bbbbb" },
     "25"
@@ -326,7 +338,7 @@ tap.test("25 - multiple brackets repeated", (t) => {
 });
 
 tap.test("26 - multiple brackets repeated", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("aaaa<<<<<<div>>>>something<<<</div>>>>>>>bbbbb"),
     { result: "aaaa something bbbbb" },
     "26"
@@ -335,7 +347,7 @@ tap.test("26 - multiple brackets repeated", (t) => {
 });
 
 tap.test("27 - multiple brackets repeated", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("aaaa something<<<</div>>>>>>>bbbbb"),
     { result: "aaaa something bbbbb" },
     "27"
@@ -344,7 +356,7 @@ tap.test("27 - multiple brackets repeated", (t) => {
 });
 
 tap.test("28 - multiple brackets repeated", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("aaaa something<<<<  / div>>>>>>>bbbbb"),
     { result: "aaaa something bbbbb" },
     "28"
@@ -353,7 +365,7 @@ tap.test("28 - multiple brackets repeated", (t) => {
 });
 
 tap.test("29 - multiple brackets repeated", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("aaaa something<<<<  //// div /// >>>>>>>bbbbb"),
     { result: "aaaa something bbbbb" },
     "29"
@@ -362,7 +374,7 @@ tap.test("29 - multiple brackets repeated", (t) => {
 });
 
 tap.test("30 - multiple brackets repeated", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("aaaa< <  <   <    <     <     div>>>>something<<<</div>bbbbb"),
     { result: "aaaa something bbbbb" },
     "30"
@@ -371,7 +383,7 @@ tap.test("30 - multiple brackets repeated", (t) => {
 });
 
 tap.test("31 - checking can script slip through in any way", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("x<b>y</b>z", {
       stripTogetherWithTheirContents: ["b"],
     }),
@@ -382,7 +394,7 @@ tap.test("31 - checking can script slip through in any way", (t) => {
 });
 
 tap.test("32 - checking can script slip through in any way", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(
       'some text <script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text'
     ),
@@ -393,7 +405,7 @@ tap.test("32 - checking can script slip through in any way", (t) => {
 });
 
 tap.test("33 - checking can script slip through in any way", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(
       'some text &lt;script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text'
     ),
@@ -404,7 +416,7 @@ tap.test("33 - checking can script slip through in any way", (t) => {
 });
 
 tap.test("34 - checking can script slip through in any way", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(
       'some text &lt;script&gt;console.log("<sup>>>>>>"); alert("you\'re done!");&lt;/script&gt; more text'
     ),

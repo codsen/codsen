@@ -27,6 +27,7 @@ interface CbObj {
 }
 interface Opts {
     ignoreTags: string[];
+    ignoreTagsWithTheirContents: string[];
     onlyStripTags: string[];
     stripTogetherWithTheirContents: string[];
     skipHtmlDecoding: boolean;
@@ -41,6 +42,7 @@ interface Opts {
 }
 declare const defaults: {
     ignoreTags: never[];
+    ignoreTagsWithTheirContents: never[];
     onlyStripTags: never[];
     stripTogetherWithTheirContents: string[];
     skipHtmlDecoding: boolean;

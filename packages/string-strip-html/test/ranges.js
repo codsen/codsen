@@ -12,7 +12,7 @@ tap.test("01 - ranges - quick sanity check", (t) => {
     [51, 55],
   ];
   const input = `Some text <a class="btn btn__large" id="z">click me</a> and more text.`;
-  t.match(
+  t.hasStrict(
     stripHtml(input),
     {
       result: "Some text click me and more text.",
@@ -52,7 +52,7 @@ tap.test("02 - consistency with ranges-apply", (t) => {
   </html>`;
 
   const result = "1\n\n2\n\n3";
-  t.match(
+  t.hasStrict(
     stripHtml(input),
     {
       result,

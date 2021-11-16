@@ -7,7 +7,7 @@ import { stripHtml } from "../dist/string-strip-html.esm.js";
 tap.test(
   "01 - false positives - equations: very sneaky considering b is a legit tag name",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("Equations are: a < b and c > d"),
       { result: "Equations are: a < b and c > d" },
       "01"
@@ -17,7 +17,7 @@ tap.test(
 );
 
 tap.test("02 - false positives - inwards-pointing arrows", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Look here: ---> a <---"),
     { result: "Look here: ---> a <---" },
     "02"
@@ -26,7 +26,7 @@ tap.test("02 - false positives - inwards-pointing arrows", (t) => {
 });
 
 tap.test("03 - false positives - arrows mixed with tags", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(
       "Look here: ---> a <--- and here: ---> b <--- oh, and few tags: <div><article>\nzz</article></div>"
     ),
@@ -40,34 +40,34 @@ tap.test("03 - false positives - arrows mixed with tags", (t) => {
 });
 
 tap.test("04 - false positives - opening bracket", (t) => {
-  t.match(stripHtml("<"), { result: "<" }, "04");
+  t.hasStrict(stripHtml("<"), { result: "<" }, "04");
   t.end();
 });
 
 tap.test("05 - false positives - closing bracket", (t) => {
-  t.match(stripHtml(">"), { result: ">" }, "05");
+  t.hasStrict(stripHtml(">"), { result: ">" }, "05");
   t.end();
 });
 
 tap.test("06 - false positives - three openings", (t) => {
-  t.match(stripHtml(">>>"), { result: ">>>" }, "06");
+  t.hasStrict(stripHtml(">>>"), { result: ">>>" }, "06");
   t.end();
 });
 
 tap.test("07 - false positives - three closings", (t) => {
-  t.match(stripHtml("<<<"), { result: "<<<" }, "07");
+  t.hasStrict(stripHtml("<<<"), { result: "<<<" }, "07");
   t.end();
 });
 
 tap.test("08 - false positives - spaced three openings", (t) => {
-  t.match(stripHtml(" <<< "), { result: "<<<" }, "08");
+  t.hasStrict(stripHtml(" <<< "), { result: "<<<" }, "08");
   t.end();
 });
 
 tap.test(
   "09 - false positives - tight recognised opening tag name, missing closing",
   (t) => {
-    t.match(stripHtml("<a"), { result: "" }, "09");
+    t.hasStrict(stripHtml("<a"), { result: "" }, "09");
     t.end();
   }
 );
@@ -75,25 +75,25 @@ tap.test(
 tap.test(
   "10 - false positives - unrecognised opening tag, missing closing",
   (t) => {
-    t.match(stripHtml("<yo"), { result: "" }, "10");
+    t.hasStrict(stripHtml("<yo"), { result: "" }, "10");
     t.end();
   }
 );
 
 tap.test("11 - false positives - missing opening, recognised tag", (t) => {
-  t.match(stripHtml("a>"), { result: "a>" }, "11");
+  t.hasStrict(stripHtml("a>"), { result: "a>" }, "11");
   t.end();
 });
 
 tap.test("12 - false positives - missing opening, unrecognised tag", (t) => {
-  t.match(stripHtml("yo>"), { result: "yo>" }, "12");
+  t.hasStrict(stripHtml("yo>"), { result: "yo>" }, "12");
   t.end();
 });
 
 tap.test(
   "13 - false positives - conditionals that appear on Outlook only",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml(`<!--[if (gte mso 9)|(IE)]>
   <table width="540" align="center" cellpadding="0" cellspacing="0" border="0">
     <tr>
@@ -115,7 +115,7 @@ zzz
 tap.test(
   "14 - false positives - conditionals that are visible for Outlook only",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml(`<!--[if !mso]><!-->
   shown for everything except Outlook
   <!--<![endif]-->`),
@@ -129,7 +129,7 @@ tap.test(
 tap.test(
   "15 - false positives - conditionals that are visible for Outlook only",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml(`a<!--[if !mso]><!-->
   shown for everything except Outlook
   <!--<![endif]-->b`),
@@ -143,7 +143,7 @@ tap.test(
 tap.test(
   "16 - false positives - conditionals that are visible for Outlook only",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml(`<!--[if !mso]><!--><table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td>
@@ -159,7 +159,7 @@ tap.test(
 );
 
 tap.test("17 - false positives - consecutive tags", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(
       "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after"
     ),
@@ -173,7 +173,7 @@ tap.test(
   "18 - digit is the first character following the opening bracket, quote",
   (t) => {
     const input = `"<5 text here`;
-    t.match(stripHtml(input), { result: input }, "18");
+    t.hasStrict(stripHtml(input), { result: input }, "18");
     t.end();
   }
 );
@@ -182,7 +182,7 @@ tap.test(
   "19 - digit is the first character following the opening bracket",
   (t) => {
     const input = `<5 text here`;
-    t.match(stripHtml(input), { result: input }, "19");
+    t.hasStrict(stripHtml(input), { result: input }, "19");
     t.end();
   }
 );
@@ -191,79 +191,79 @@ tap.test(
   "20 - digit is the first character following the opening bracket",
   (t) => {
     const input = `< 5 text here`;
-    t.match(stripHtml(input), { result: input }, "20");
+    t.hasStrict(stripHtml(input), { result: input }, "20");
     t.end();
   }
 );
 
 tap.test("21 - numbers compared", (t) => {
   const input = `1 < 5 for sure`;
-  t.match(stripHtml(input), { result: input }, "21");
+  t.hasStrict(stripHtml(input), { result: input }, "21");
   t.end();
 });
 
 tap.test("22 - numbers compared, tight", (t) => {
   const input = `1 <5 for sure`;
-  t.match(stripHtml(input), { result: input }, "22");
+  t.hasStrict(stripHtml(input), { result: input }, "22");
   t.end();
 });
 
 tap.test("23 - number letter", (t) => {
   const input = `aaa 1 < 5s bbb`;
-  t.match(stripHtml(input), { result: input }, "23");
+  t.hasStrict(stripHtml(input), { result: input }, "23");
   t.end();
 });
 
 tap.test("24 - number letter, tight", (t) => {
   const input = `aaa 1 <5s bbb`;
-  t.match(stripHtml(input), { result: input }, "24");
+  t.hasStrict(stripHtml(input), { result: input }, "24");
   t.end();
 });
 
 tap.test("25 - number letter, tight around", (t) => {
   const input = `aaa 1<5s bbb`;
-  t.match(stripHtml(input), { result: input }, "25");
+  t.hasStrict(stripHtml(input), { result: input }, "25");
   t.end();
 });
 
 tap.test("26 - tag name with closing bracket in front", (t) => {
   const input = `>table`;
-  t.match(stripHtml(input), { result: input }, "26");
+  t.hasStrict(stripHtml(input), { result: input }, "26");
   t.end();
 });
 
 tap.test("27", (t) => {
   const input = `{"Operator":"<=","IsValid":true}`;
-  t.match(stripHtml(input), { result: input }, "27");
+  t.hasStrict(stripHtml(input), { result: input }, "27");
   t.end();
 });
 
 tap.test("28", (t) => {
   const input = `<a">`;
-  t.match(stripHtml(input), { result: "" }, "28");
+  t.hasStrict(stripHtml(input), { result: "" }, "28");
   t.end();
 });
 
 tap.test("29", (t) => {
   const input = `<a"">`;
-  t.match(stripHtml(input), { result: "" }, "29");
+  t.hasStrict(stripHtml(input), { result: "" }, "29");
   t.end();
 });
 
 tap.test("30", (t) => {
   const input = `<a'>`;
-  t.match(stripHtml(input), { result: "" }, "30");
+  t.hasStrict(stripHtml(input), { result: "" }, "30");
   t.end();
 });
 
 tap.test("31", (t) => {
   const input = `<a''>`;
-  t.match(stripHtml(input), { result: "" }, "31");
+  t.hasStrict(stripHtml(input), { result: "" }, "31");
   t.end();
 });
 
 tap.test("32", (t) => {
   const input = `H4<bE77]7oQL`;
-  t.match(stripHtml(input), { result: "H4" }, "32");
+  t.hasStrict(stripHtml(input), { result: "H4" }, "32");
   t.end();
 });

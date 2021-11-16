@@ -6,7 +6,7 @@ import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 tap.test("01 - CDATA - tight", (t) => {
   // surroundings are not a linebreaks
-  t.match(
+  t.hasStrict(
     stripHtml(`a<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
@@ -23,7 +23,7 @@ tap.test("01 - CDATA - tight", (t) => {
 });
 
 tap.test("02 - CDATA - normal", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(`a <![CDATA[
   The <, &, ', and " can be used,
   *and* %MyParamEntity; can be expanded.
@@ -40,7 +40,7 @@ tap.test("02 - CDATA - normal", (t) => {
 });
 
 tap.test("03 - CDATA - loose", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(`a \t\t<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
@@ -58,7 +58,7 @@ tap.test("03 - CDATA - loose", (t) => {
 
 tap.test("04 - CDATA - single linebreaks", (t) => {
   // surroundings are linebreaks
-  t.match(
+  t.hasStrict(
     stripHtml(`a\n<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
@@ -75,7 +75,7 @@ tap.test("04 - CDATA - single linebreaks", (t) => {
 });
 
 tap.test("05 - CDATA - excessive linebreaks", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(`a\n\n\n<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
@@ -92,7 +92,7 @@ tap.test("05 - CDATA - excessive linebreaks", (t) => {
 });
 
 tap.test("06 - CDATA - mixed linebreaks", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(`a\n \t\n\n<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.

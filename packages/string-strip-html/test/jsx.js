@@ -2,7 +2,7 @@ import tap from "tap";
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 tap.test("01 - a basic JSX pattern", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(`<A b>c</A>
 </>`),
     {

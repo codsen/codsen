@@ -13,8 +13,8 @@ tap.test("01 - strips XML - strips Outlook XML fix block, tight", (t) => {
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`;
   const result = "abc def";
-  t.match(stripHtml(input), { result }, "01.01");
-  t.match(rApply(input, stripHtml(input).ranges), result, "01.02");
+  t.hasStrict(stripHtml(input), { result }, "01.01");
+  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "01.02");
   t.end();
 });
 
@@ -28,8 +28,8 @@ tap.test(
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`;
     const result = "abc def";
-    t.match(stripHtml(input), { result }, "02.01");
-    t.match(rApply(input, stripHtml(input).ranges), result, "02.02");
+    t.hasStrict(stripHtml(input), { result }, "02.01");
+    t.hasStrict(rApply(input, stripHtml(input).ranges), result, "02.02");
     t.end();
   }
 );
@@ -44,8 +44,8 @@ tap.test(
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`;
     const result = "abc def";
-    t.match(stripHtml(input), { result }, "03.01");
-    t.match(rApply(input, stripHtml(input).ranges), result, "03.02");
+    t.hasStrict(stripHtml(input), { result }, "03.01");
+    t.hasStrict(rApply(input, stripHtml(input).ranges), result, "03.02");
     t.end();
   }
 );
@@ -60,8 +60,8 @@ tap.test(
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`;
     const result = "abc def";
-    t.match(stripHtml(input), { result }, "04.01");
-    t.match(rApply(input, stripHtml(input).ranges), result, "04.02");
+    t.hasStrict(stripHtml(input), { result }, "04.01");
+    t.hasStrict(rApply(input, stripHtml(input).ranges), result, "04.02");
     t.end();
   }
 );
@@ -76,8 +76,8 @@ tap.test("05 - strips XML - generous trailing space", (t) => {
 
   def`;
   const result = "abc\n\ndef";
-  t.match(stripHtml(input), { result }, "05.01");
-  t.match(rApply(input, stripHtml(input).ranges), result, "05.02");
+  t.hasStrict(stripHtml(input), { result }, "05.01");
+  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "05.02");
   t.end();
 });
 
@@ -91,8 +91,8 @@ tap.test("06 - strips XML - text-whitespace-tag", (t) => {
 
   `;
   const result = "abc";
-  t.match(stripHtml(input), { result, ranges: [[3, 159]] }, "06.01");
-  t.match(rApply(input, stripHtml(input).ranges), result, "06.02");
+  t.hasStrict(stripHtml(input), { result, ranges: [[3, 159]] }, "06.01");
+  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "06.02");
   t.end();
 });
 
@@ -106,8 +106,8 @@ tap.test("07 - strips XML - text-tabs-tag", (t) => {
 
   `;
   const result = "abc";
-  t.match(stripHtml(input), { result }, "07.01");
-  t.match(rApply(input, stripHtml(input).ranges), result, "07.02");
+  t.hasStrict(stripHtml(input), { result }, "07.01");
+  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "07.02");
   t.end();
 });
 
@@ -121,8 +121,8 @@ tap.test("08 - strips XML - tag-whitespace-text", (t) => {
 
   `;
   const result = "abc";
-  t.match(stripHtml(input), { result }, "08.01");
-  t.match(rApply(input, stripHtml(input).ranges), result, "08.02");
+  t.hasStrict(stripHtml(input), { result }, "08.01");
+  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "08.02");
   t.end();
 });
 
@@ -136,8 +136,8 @@ tap.test("09 - strips XML - tag-tabs-text", (t) => {
 
   `;
   const result = "abc";
-  t.match(stripHtml(input), { result }, "09.01");
-  t.match(rApply(input, stripHtml(input).ranges), result, "09.02");
+  t.hasStrict(stripHtml(input), { result }, "09.01");
+  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "09.02");
   t.end();
 });
 
@@ -151,8 +151,8 @@ tap.test("10 - strips XML - leading content", (t) => {
 
   `;
   const result = "abc";
-  t.match(stripHtml(input), { result }, "10.01");
-  t.match(rApply(input, stripHtml(input).ranges), result, "10.02");
+  t.hasStrict(stripHtml(input), { result }, "10.01");
+  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "10.02");
   t.end();
 });
 
@@ -166,7 +166,7 @@ tap.test("11 - strips XML - leading content", (t) => {
 
   abc`;
   const result = "abc";
-  t.match(stripHtml(input), { result }, "11.01");
-  t.match(rApply(input, stripHtml(input).ranges), result, "11.02");
+  t.hasStrict(stripHtml(input), { result }, "11.01");
+  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "11.02");
   t.end();
 });

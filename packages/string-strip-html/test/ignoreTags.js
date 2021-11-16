@@ -7,14 +7,14 @@ import { stripHtml } from "../dist/string-strip-html.esm.js";
 tap.test(
   "01 - opts.ignoreTags - empty string, whitespace string and null in the array",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("<a>", {
         ignoreTags: ["", " ", "a", "b", null],
       }),
       { result: "<a>" },
       "01.01"
     );
-    t.match(
+    t.hasStrict(
       stripHtml("zzz", {
         ignoreTags: ["", " ", "a", "b", null],
       }),
@@ -26,14 +26,14 @@ tap.test(
 );
 
 tap.test("02 - opts.ignoreTags - null inside opts.ignoreTags array", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("<a>", {
       ignoreTags: [null],
     }),
     { result: "" },
     "02.01"
   );
-  t.match(
+  t.hasStrict(
     stripHtml("zzz", {
       ignoreTags: [null],
     }),
@@ -44,14 +44,14 @@ tap.test("02 - opts.ignoreTags - null inside opts.ignoreTags array", (t) => {
 });
 
 tap.test("03 - opts.ignoreTags - empty str", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("<a>", {
       ignoreTags: [""],
     }),
     { result: "" },
     "03.01"
   );
-  t.match(
+  t.hasStrict(
     stripHtml("zzz", {
       ignoreTags: [""],
     }),
@@ -62,14 +62,14 @@ tap.test("03 - opts.ignoreTags - empty str", (t) => {
 });
 
 tap.test("04 - opts.ignoreTags - empty str", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("<a>", {
       ignoreTags: "",
     }),
     { result: "" },
     "04.01"
   );
-  t.match(
+  t.hasStrict(
     stripHtml("zz", {
       ignoreTags: "",
     }),
@@ -80,14 +80,14 @@ tap.test("04 - opts.ignoreTags - empty str", (t) => {
 });
 
 tap.test("05 - opts.ignoreTags - empty str", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("<a>", {
       ignoreTags: "a",
     }),
     { result: "<a>" },
     "05.01"
   );
-  t.match(
+  t.hasStrict(
     stripHtml("zzz", {
       ignoreTags: "a",
     }),
@@ -98,14 +98,14 @@ tap.test("05 - opts.ignoreTags - empty str", (t) => {
 });
 
 tap.test("06 - opts.ignoreTags - null among opts.ignoreTags values", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("<a>", {
       ignoreTags: [null, "a"],
     }),
     { result: "<a>" },
     "06.01"
   );
-  t.match(
+  t.hasStrict(
     stripHtml("zzz", {
       ignoreTags: [null, "a"],
     }),
@@ -118,14 +118,14 @@ tap.test("06 - opts.ignoreTags - null among opts.ignoreTags values", (t) => {
 tap.test(
   "07 - opts.ignoreTags - whitespace-only blanks inside opts.ignoreTags",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("a<a>", {
         ignoreTags: ["\t", "\n\n"],
       }),
       { result: "a" },
       "07.01"
     );
-    t.match(
+    t.hasStrict(
       stripHtml("a z", {
         ignoreTags: ["\t", "\n\n"],
       }),
@@ -137,14 +137,14 @@ tap.test(
 );
 
 tap.test("08 - opts.ignoreTags - tabs", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<a>", {
       ignoreTags: "\t",
     }),
     { result: "a" },
     "08.01"
   );
-  t.match(
+  t.hasStrict(
     stripHtml("a z", {
       ignoreTags: "\t",
     }),
@@ -157,14 +157,14 @@ tap.test("08 - opts.ignoreTags - tabs", (t) => {
 tap.test(
   "09 - opts.ignoreTags - some whitespace-only inside opts.ignoreTags",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("a<a>", {
         ignoreTags: ["\t", "\n\n", "a", " "],
       }),
       { result: "a<a>" },
       "09.01"
     );
-    t.match(
+    t.hasStrict(
       stripHtml("zzz", {
         ignoreTags: ["\t", "\n\n", "a", " "],
       }),
@@ -178,7 +178,7 @@ tap.test(
 tap.test(
   "10 - opts.ignoreTags - space before and after attribute's equal character",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("<article  whatnot  =  whatyes = >zzz< / article>"),
       { result: "zzz" },
       "10"
@@ -190,7 +190,7 @@ tap.test(
 tap.test(
   "11 - opts.ignoreTags - space before and after attribute's equal character",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml(
         "<article  whatnot  =  whatyes = >xxx< / article> yyy <article  whatnot  =  whatyes = >zzz< / article>"
       ),
@@ -202,7 +202,7 @@ tap.test(
 );
 
 tap.test("12 - opts.ignoreTags - ignores single letter tag", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Some <b>text</b> and some more <i>text</i>.", {
       ignoreTags: ["b"],
     }),
@@ -213,7 +213,7 @@ tap.test("12 - opts.ignoreTags - ignores single letter tag", (t) => {
 });
 
 tap.test("13 - opts.ignoreTags - ignores singleton tag", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Some text <hr> some more <i>text</i>.", {
       ignoreTags: ["hr"],
     }),
@@ -224,7 +224,7 @@ tap.test("13 - opts.ignoreTags - ignores singleton tag", (t) => {
 });
 
 tap.test("14 - opts.ignoreTags - ignores singleton tag, XHTML", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Some text <hr/> some more <i>text</i>.", {
       ignoreTags: ["hr"],
     }),
@@ -235,7 +235,7 @@ tap.test("14 - opts.ignoreTags - ignores singleton tag, XHTML", (t) => {
 });
 
 tap.test("15 - opts.ignoreTags - ignores singleton tag, spaced XHTML", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Some text <hr / > some more <i>text</i>.", {
       ignoreTags: ["hr"],
     }),
@@ -246,7 +246,7 @@ tap.test("15 - opts.ignoreTags - ignores singleton tag, spaced XHTML", (t) => {
 });
 
 tap.test("16 - opts.ignoreTags - ignores single zzz tag", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Some <zzz>text</zzz> and some more <i>text</i>.", {
       ignoreTags: ["zzz"],
     }),
@@ -257,7 +257,7 @@ tap.test("16 - opts.ignoreTags - ignores single zzz tag", (t) => {
 });
 
 tap.test("17 - opts.ignoreTags - ignores zzz singleton tag", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Some text <zzz> some more <i>text</i>.", {
       ignoreTags: ["zzz"],
     }),
@@ -268,7 +268,7 @@ tap.test("17 - opts.ignoreTags - ignores zzz singleton tag", (t) => {
 });
 
 tap.test("18 - opts.ignoreTags - ignores default ranged tag", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Some <script>text</script> and some more <i>text</i>.", {
       ignoreTags: ["script"],
     }),
@@ -282,7 +282,7 @@ tap.test(
   "19 - opts.ignoreTags - ignored tag unclosed, ending with EOF",
   (t) => {
     // just for kicks:
-    t.match(
+    t.hasStrict(
       stripHtml("Some <b>text</b", {
         ignoreTags: ["b"],
       }),
@@ -296,7 +296,7 @@ tap.test(
 tap.test(
   "20 - opts.ignoreTags - recognised unclosed singleton tag, HTML",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("Some text <hr", {
         ignoreTags: ["hr"],
       }),
@@ -310,7 +310,7 @@ tap.test(
 tap.test(
   "21 - opts.ignoreTags - recognised unclosed singleton tag, XHTML",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("Some text <hr/", {
         ignoreTags: ["hr"],
       }),
@@ -324,7 +324,7 @@ tap.test(
 tap.test(
   "22 - opts.ignoreTags - kept the tag and the slash, just trimmed",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("Some text <hr / ", {
         ignoreTags: ["hr"],
       }),
@@ -338,7 +338,7 @@ tap.test(
 tap.test(
   "23 - opts.ignoreTags - ignores unclosed self-closing zzz tag",
   (t) => {
-    t.match(
+    t.hasStrict(
       stripHtml("Some <zzz>text</zzz", {
         ignoreTags: ["zzz"],
       }),
@@ -350,7 +350,7 @@ tap.test(
 );
 
 tap.test("24 - opts.ignoreTags - ignores unclosed zzz singleton tag", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Some text <zzz", {
       ignoreTags: ["zzz"],
     }),
@@ -361,7 +361,7 @@ tap.test("24 - opts.ignoreTags - ignores unclosed zzz singleton tag", (t) => {
 });
 
 tap.test("25 - opts.ignoreTags - ignores default unclosed ranged tag", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("Some <script>text</script", {
       ignoreTags: ["script"],
     }),

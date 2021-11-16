@@ -5,7 +5,7 @@ import { stripHtml } from "../dist/string-strip-html.esm.js";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - punctuation after tag - simplified, question mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>?</b> c"),
     {
       result: "a? c",
@@ -20,7 +20,7 @@ tap.test("01 - punctuation after tag - simplified, question mark", (t) => {
 });
 
 tap.test("02 - punctuation after tag - simplified, question mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>?</b> c", { trimOnlySpaces: true }),
     { result: "a? c" },
     "02"
@@ -29,7 +29,7 @@ tap.test("02 - punctuation after tag - simplified, question mark", (t) => {
 });
 
 tap.test("03 - punctuation after tag - simplified, question mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>?</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
     { result: "a? c" },
     "03"
@@ -38,7 +38,7 @@ tap.test("03 - punctuation after tag - simplified, question mark", (t) => {
 });
 
 tap.test("04 - punctuation after tag - simplified, question mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>?</b> c", { stripTogetherWithTheirContents: false }),
     { result: "a? c" },
     "04"
@@ -47,7 +47,7 @@ tap.test("04 - punctuation after tag - simplified, question mark", (t) => {
 });
 
 tap.test("05 - punctuation after tag - simplified, question mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>?</b> c", { ignoreTags: ["zzz"] }),
     { result: "a? c" },
     "05"
@@ -56,7 +56,7 @@ tap.test("05 - punctuation after tag - simplified, question mark", (t) => {
 });
 
 tap.test("06 - punctuation after tag - simplified, question mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>?</b> c", { ignoreTags: null }),
     { result: "a? c" },
     "06"
@@ -65,7 +65,7 @@ tap.test("06 - punctuation after tag - simplified, question mark", (t) => {
 });
 
 tap.test("07 - punctuation after tag - simplified, exclamation mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>!</b> c"),
     {
       result: "a! c",
@@ -80,7 +80,7 @@ tap.test("07 - punctuation after tag - simplified, exclamation mark", (t) => {
 });
 
 tap.test("08 - punctuation after tag - simplified, exclamation mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>!</b> c", { trimOnlySpaces: true }),
     {
       result: "a! c",
@@ -95,7 +95,7 @@ tap.test("08 - punctuation after tag - simplified, exclamation mark", (t) => {
 });
 
 tap.test("09 - punctuation after tag - simplified, exclamation mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(" \t a<b>!</b> c \t ", { trimOnlySpaces: true }),
     {
       result: "\t a! c \t",
@@ -112,7 +112,7 @@ tap.test("09 - punctuation after tag - simplified, exclamation mark", (t) => {
 });
 
 tap.test("10 - punctuation after tag - simplified, exclamation mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>!</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
     { result: "a! c" },
     "10"
@@ -121,7 +121,7 @@ tap.test("10 - punctuation after tag - simplified, exclamation mark", (t) => {
 });
 
 tap.test("11 - punctuation after tag - simplified, exclamation mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>!</b> c", { stripTogetherWithTheirContents: false }),
     { result: "a! c" },
     "11"
@@ -130,7 +130,7 @@ tap.test("11 - punctuation after tag - simplified, exclamation mark", (t) => {
 });
 
 tap.test("12 - punctuation after tag - simplified, exclamation mark", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>!</b> c", { ignoreTags: ["zzz"] }),
     {
       result: "a! c",
@@ -145,12 +145,12 @@ tap.test("12 - punctuation after tag - simplified, exclamation mark", (t) => {
 });
 
 tap.test("13 - punctuation after tag - simplified, exclamation mark", (t) => {
-  t.match(stripHtml("a<b>!</b>c"), { result: "a! c" }, "13");
+  t.hasStrict(stripHtml("a<b>!</b>c"), { result: "a! c" }, "13");
   t.end();
 });
 
 tap.test("14 - punctuation after tag - simplified, ellipsis", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>...</b> c"),
     {
       result: "a... c",
@@ -165,7 +165,7 @@ tap.test("14 - punctuation after tag - simplified, ellipsis", (t) => {
 });
 
 tap.test("15 - punctuation after tag - simplified, ellipsis", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>...</b> c", { trimOnlySpaces: true }),
     {
       result: "a... c",
@@ -180,7 +180,7 @@ tap.test("15 - punctuation after tag - simplified, ellipsis", (t) => {
 });
 
 tap.test("16 - punctuation after tag - simplified, ellipsis", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>...</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
     {
       result: "a... c",
@@ -195,7 +195,7 @@ tap.test("16 - punctuation after tag - simplified, ellipsis", (t) => {
 });
 
 tap.test("17 - punctuation after tag - simplified, ellipsis", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>...</b> c", { stripTogetherWithTheirContents: false }),
     {
       result: "a... c",
@@ -210,7 +210,7 @@ tap.test("17 - punctuation after tag - simplified, ellipsis", (t) => {
 });
 
 tap.test("18 - punctuation after tag - simplified, ellipsis", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml("a<b>...</b> c", { ignoreTags: ["zzz"] }),
     {
       result: "a... c",
@@ -226,7 +226,7 @@ tap.test("18 - punctuation after tag - simplified, ellipsis", (t) => {
 
 tap.test("19 - punctuation after tag - real-life", (t) => {
   // control
-  t.match(
+  t.hasStrict(
     stripHtml(
       '      &nbsp;     Hi! Would you like to <a href="/">shop now</a>?      &nbsp;      '
     ),
@@ -237,7 +237,7 @@ tap.test("19 - punctuation after tag - real-life", (t) => {
 });
 
 tap.test("20 - punctuation after tag - real-life", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(
       "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      "
     ),
@@ -249,7 +249,7 @@ tap.test("20 - punctuation after tag - real-life", (t) => {
 
 tap.test("21 - punctuation after tag - real-life", (t) => {
   // opts.trimOnlySpaces
-  t.match(
+  t.hasStrict(
     stripHtml(
       '      &nbsp;     Hi! Would you like to <a href="/">shop now</a>?      &nbsp;      ',
       {
@@ -263,7 +263,7 @@ tap.test("21 - punctuation after tag - real-life", (t) => {
 });
 
 tap.test("22 - punctuation after tag - real-life", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(
       "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      ",
       { trimOnlySpaces: true }

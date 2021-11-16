@@ -54,6 +54,7 @@ var version$1 = "9.0.5";
 const version = version$1;
 const defaults = {
   ignoreTags: [],
+  ignoreTagsWithTheirContents: [],
   onlyStripTags: [],
   stripTogetherWithTheirContents: ["script", "style", "xml"],
   skipHtmlDecoding: false,
@@ -71,7 +72,8 @@ function stripHtml(str, originalOpts) {
   const definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
   const singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
   const punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\u00BB"]);
-  const rangedOpeningTags = [];
+  const rangedOpeningTagsForDeletion = [];
+  const rangedOpeningTagsForIgnoring = [];
   const allTagLocations = [];
   let filteredTagLocations = [];
   let tag = {};
@@ -92,6 +94,7 @@ function stripHtml(str, originalOpts) {
   let stringToInsertAfter = "";
   let hrefInsertionActive = false;
   let spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
+  let strip = true;
   function existy(x) {
     return x != null;
   }
@@ -100,45 +103,44 @@ function stripHtml(str, originalOpts) {
   }
   function treatRangedTags(i, opts, rangesToDelete) {
     if (Array.isArray(opts.stripTogetherWithTheirContents) && (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*"))) {
-      if (Array.isArray(rangedOpeningTags) && rangedOpeningTags.some(obj => obj.name === tag.name && obj.lastClosingBracketAt < i)) {
-        for (let y = rangedOpeningTags.length; y--;) {
-          if (rangedOpeningTags[y].name === tag.name) {
-            /* istanbul ignore else */
-            if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
-              filteredTagLocations = filteredTagLocations.filter(([from, upto]) => (from < rangedOpeningTags[y].lastOpeningBracketAt || from >= i + 1) && (upto <= rangedOpeningTags[y].lastOpeningBracketAt || upto > i + 1));
-            }
+      if (tag.slashPresent && Array.isArray(rangedOpeningTagsForDeletion) && rangedOpeningTagsForDeletion.some(obj => obj.name === tag.name)) {
+        for (let y = rangedOpeningTagsForDeletion.length; y--;) {
+          if (rangedOpeningTagsForDeletion[y].name === tag.name) {
+            filteredTagLocations = filteredTagLocations.filter(([from, upto]) => (from < rangedOpeningTagsForDeletion[y].lastOpeningBracketAt || from >= i + 1) && (upto <= rangedOpeningTagsForDeletion[y].lastOpeningBracketAt || upto > i + 1));
             let endingIdx = i + 1;
             if (tag.lastClosingBracketAt) {
               endingIdx = tag.lastClosingBracketAt + 1;
             }
-            filteredTagLocations.push([rangedOpeningTags[y].lastOpeningBracketAt, endingIdx]);
+            filteredTagLocations.push([rangedOpeningTagsForDeletion[y].lastOpeningBracketAt, endingIdx]);
             /* istanbul ignore else */
             if (punctuation.has(str[i]) && opts.cb) {
               opts.cb({
                 tag: tag,
-                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                deleteFrom: rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
                 deleteTo: i + 1,
                 insert: null,
                 rangesArr: rangesToDelete,
-                proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, null]
+                proposedReturn: [rangedOpeningTagsForDeletion[y].lastOpeningBracketAt, i, null]
               });
             } else if (opts.cb) {
               opts.cb({
                 tag: tag,
-                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                deleteFrom: rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
                 deleteTo: i,
                 insert: "",
                 rangesArr: rangesToDelete,
-                proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, ""]
+                proposedReturn: [rangedOpeningTagsForDeletion[y].lastOpeningBracketAt, i, ""]
               });
             }
-            rangedOpeningTags.splice(y, 1);
+            rangedOpeningTagsForDeletion.splice(y, 1);
             break;
           }
         }
-      } else {
-        rangedOpeningTags.push(tag);
+      } else if (!tag.slashPresent) {
+        rangedOpeningTagsForDeletion.push(tag);
       }
+    } else if (Array.isArray(opts.ignoreTagsWithTheirContents) && checkIgnoreTagsWithTheirContents(i, opts, tag)) {
+      strip = false;
     }
   }
   function calculateWhitespaceToInsert(str2,
@@ -192,6 +194,23 @@ function stripHtml(str, originalOpts) {
   }
   function isClosingAt(i) {
     return str[i] === ">" && str[i - 1] !== "%";
+  }
+  function checkIgnoreTagsWithTheirContents(i, opts, tag) {
+    if (opts.ignoreTagsWithTheirContents.includes("*")) {
+      return true;
+    }
+    const nextOpeningPos = str.indexOf(`<${tag.name}`, i);
+    const nextClosingPos = str.indexOf(`</${tag.name}`, i);
+    if (
+    !tag.slashPresent &&
+    nextClosingPos === -1 ||
+    tag.slashPresent &&
+    !rangedOpeningTagsForIgnoring.some(tagObj => tagObj.name === tag.name) ||
+    nextClosingPos > -1 && nextOpeningPos > -1 &&
+    nextOpeningPos < nextClosingPos) {
+      return false;
+    }
+    return opts.ignoreTagsWithTheirContents.includes(tag.name);
   }
   if (typeof str !== "string") {
     throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(str, null, 4)}`);
@@ -470,6 +489,7 @@ function stripHtml(str, originalOpts) {
           }
           if (
           opts.ignoreTags.includes(tag.name) ||
+          checkIgnoreTagsWithTheirContents(i, opts, tag) ||
           tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
             tag = {};
             attrObj = {};
@@ -493,10 +513,10 @@ function stripHtml(str, originalOpts) {
           if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt && filteredTagLocations[filteredTagLocations.length - 1][1] !== i + 1) {
             if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
               let lastRangedOpeningTag;
-              for (let z = rangedOpeningTags.length; z--;) {
+              for (let z = rangedOpeningTagsForDeletion.length; z--;) {
                 /* istanbul ignore else */
-                if (rangedOpeningTags[z].name === tag.name) {
-                  lastRangedOpeningTag = rangedOpeningTags[z];
+                if (rangedOpeningTagsForDeletion[z].name === tag.name) {
+                  lastRangedOpeningTag = rangedOpeningTagsForDeletion[z];
                 }
               }
               /* istanbul ignore else */
@@ -521,7 +541,27 @@ function stripHtml(str, originalOpts) {
         if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
           allTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
         }
-        if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
+        const ignoreTags = opts.ignoreTags.includes(tag.name);
+        const ignoreTagsWithTheirContents = checkIgnoreTagsWithTheirContents(i, opts, tag);
+        if (!strip || !onlyStripTagsMode && (ignoreTags || ignoreTagsWithTheirContents) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
+          if (ignoreTagsWithTheirContents) {
+            if (tag.slashPresent) {
+              for (let y = rangedOpeningTagsForIgnoring.length; y--;) {
+                if (rangedOpeningTagsForIgnoring[y].name === tag.name) {
+                  rangedOpeningTagsForIgnoring.splice(y, 1);
+                  break;
+                }
+              }
+              if (!rangedOpeningTagsForIgnoring.length) {
+                strip = true;
+              }
+            } else {
+              if (strip) {
+                strip = false;
+              }
+              rangedOpeningTagsForIgnoring.push(tag);
+            }
+          }
           opts.cb({
             tag: tag,
             deleteFrom: null,
@@ -664,7 +704,7 @@ function stripHtml(str, originalOpts) {
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = i;
         if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1 &&
-        !rangedOpeningTags.some(
+        !rangedOpeningTagsForDeletion.some(
         rangedTagObj => rangedTagObj.name === tag.name)) {
           tag.onlyPlausible = true;
           tag.name = undefined;

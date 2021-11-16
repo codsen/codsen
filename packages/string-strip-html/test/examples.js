@@ -48,7 +48,7 @@ tap.test("01 - Remove HTML tags, give me a clean string.", (t) => {
     [314, 321],
   ];
   validateTagLocations(t, input, allTagLocations);
-  t.match(
+  t.hasStrict(
     stripHtml(input),
     {
       result: "text1\n\ntext2",

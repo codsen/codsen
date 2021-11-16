@@ -91,7 +91,7 @@ tap.test("09 - wrong opts.stripTogetherWithTheirContents", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test("10 - empty input", (t) => {
-  t.match(
+  t.hasStrict(
     stripHtml(""),
     {
       result: "",
@@ -106,7 +106,7 @@ tap.test("10 - empty input", (t) => {
 
 tap.test("11 - tabs only", (t) => {
   const input = "\t\t\t";
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       trimOnlySpaces: true,
     }),
@@ -118,7 +118,7 @@ tap.test("11 - tabs only", (t) => {
     },
     "11.01"
   );
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       trimOnlySpaces: false,
     }),
@@ -135,7 +135,7 @@ tap.test("11 - tabs only", (t) => {
 
 tap.test("12 - spaces only", (t) => {
   const input = "   ";
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       trimOnlySpaces: true,
     }),
@@ -147,7 +147,7 @@ tap.test("12 - spaces only", (t) => {
     },
     "12.01"
   );
-  t.match(
+  t.hasStrict(
     stripHtml(input, {
       trimOnlySpaces: false,
     }),
