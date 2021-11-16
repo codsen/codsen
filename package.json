@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=16"
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   },
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://codsen.com",
