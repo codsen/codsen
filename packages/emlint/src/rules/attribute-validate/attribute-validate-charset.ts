@@ -23,7 +23,7 @@ function attributeValidateCharset(context: Linter): RuleObjType {
 
       if (node.attribName === "charset") {
         // validate the parent
-        if (!["a", "link", "script"].includes(node.parent.tagName)) {
+        if (!["a", "link", "script", "meta"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-charset",
             idxFrom: node.attribStarts,
