@@ -142,41 +142,6 @@ async function packageJson({ state, lectrc }) {
   objectPath.set(content, "engines", {
     node: "^12.20.0 || ^14.13.1 || >=16.0.0",
   });
-  // objectPath.set(content, "tap", {
-  //   "coverage-report": [
-  //     "json-summary",
-  //     "text"
-  //   ],
-  //   "node-arg": [
-  //     "--no-warnings",
-  //     "--experimental-loader",
-  //     "@istanbuljs/esm-loader-hook"
-  //   ],
-  //   "timeout": 0,
-  //   "check-coverage": false
-  // });
-
-  // MIGRATION TO ESM IS DONE, TURN THE FOLLOWING OFF
-  // BECAUSE ESLINT PLUGINS CAN'T BE MIGRATED YET:
-
-  // objectPath.set(content, "type", "module");
-  // if (!!state.isRollup) {
-  //   objectPath.set(content, "types", `types/index.d.ts`);
-
-  //   // beware, some Node-only packages don't build UMD's, like
-  //   // "tap-parse-string-to-object" which consumes streams
-  //   if (typeof objectPath.get(content, "exports") === "string") {
-  //     objectPath.set(content, "exports", `./dist/${state.pack.name}.esm.js`);
-  //   } else {
-  //     objectPath.set(content, "exports", {
-  //       script: `./dist/${state.pack.name}.umd.js`,
-  //       default: `./dist/${state.pack.name}.esm.js`,
-  //     });
-  //   }
-  // }
-  // objectPath.del(content, "main");
-  // objectPath.del(content, "module");
-  // objectPath.del(content, "browser");
 
   // 7. capitalise first letter in description
   if (
