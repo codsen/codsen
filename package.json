@@ -23,7 +23,7 @@
     "cm": "git-cz -n",
     "changed": "lerna changed",
     "format": "lerna run format",
-    "fresh": "npm run wipe && npm run bootstrap && npm run build",
+    "fresh": "npm run wipe && npm run build",
     "info": "node ./scripts/generate-info.js",
     "lect": "make run-lect",
     "lerna": "lerna",
