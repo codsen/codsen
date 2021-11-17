@@ -32,6 +32,7 @@ interface Opts {
     stripTogetherWithTheirContents: string[];
     skipHtmlDecoding: boolean;
     trimOnlySpaces: boolean;
+    stripRecognisedHTMLOnly: boolean;
     dumpLinkHrefsNearby: {
         enabled: boolean;
         putOnNewLine: boolean;
@@ -47,6 +48,7 @@ declare const defaults: {
     stripTogetherWithTheirContents: string[];
     skipHtmlDecoding: boolean;
     trimOnlySpaces: boolean;
+    stripRecognisedHTMLOnly: boolean;
     dumpLinkHrefsNearby: {
         enabled: boolean;
         putOnNewLine: boolean;
