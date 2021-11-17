@@ -160,7 +160,9 @@
       "index.test-d.ts",
       "init-npmignore.js",
       "runkit_example.js",
-      "util.js"
+      "util.js",
+      "perf-ref.umd.js",
+      "perf-ref.esm.js"
     ],
     "goodFolders": ["bin", "dist", "examples", "lib", "rules", "types"]
   },
