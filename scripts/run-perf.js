@@ -5,7 +5,7 @@ import { sortAllObjectsSync } from "../packages/json-comb-core/dist/json-comb-co
 import {
   perfRef,
   opsPerSec as refOpsPerSec,
-} from "../packages/perf-ref/dist/perf-ref.esm.js";
+} from "../packages/perf-ref/perf-ref.esm.js";
 
 export const runPerf = async (cb, callerDir) => {
   const logThreshold = 1000;
