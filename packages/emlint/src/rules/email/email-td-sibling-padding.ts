@@ -26,7 +26,7 @@ function tdSiblingPadding(context: Linter): RuleObjType {
             tokenObj.tagName === "td" &&
             !tokenObj.closing
         ).length > 1 &&
-        // any one of TD children tags contains a css style property "padding-*"
+        // any one of TD children tags contains a css style property "padding-*" or has the "padding" shortcut
         node.children.some(
           (tokenObj) =>
             tokenObj.type === "tag" &&
@@ -40,7 +40,7 @@ function tdSiblingPadding(context: Linter): RuleObjType {
                 (attribObj.attribValue as Property[]).some((attribValueObj) => {
                   if (
                     typeof attribValueObj.property === "string" &&
-                    attribValueObj.property.startsWith("padding-")
+                    (attribValueObj.property.startsWith("padding-") || attribValueObj.property === "padding")
                   ) {
                     start = attribValueObj.start;
                     end = attribValueObj.end;
