@@ -22,8 +22,8 @@
   },
   "type": "module",
   "exports": {
-    "script": "./dist/perf-ref.umd.js",
-    "default": "./dist/perf-ref.esm.js"
+    "script": "./perf-ref.umd.js",
+    "default": "./perf-ref.esm.js"
   },
   "types": "types/index.d.ts",
   "scripts": {
