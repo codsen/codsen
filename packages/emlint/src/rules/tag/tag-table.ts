@@ -398,7 +398,7 @@ function tagTable(context: Linter): RuleObjType {
                         1;
                       context.report({
                         ruleId: "tag-table",
-                        message: `Add a collspan.`,
+                        message: `Add a colspan.`,
                         idxFrom: (node.children[e.idx] as any).children[
                           e.tds[0]
                         ].start,
