@@ -14,7 +14,9 @@
     "**/eslint-plugin-row-num/rules/utils/**",
     "**/dist/**",
     "**/tap/**",
-    "**/types/**"
+    "**/types/**",
+    "perf-ref.umd.js",
+    "perf-ref.esm.js"
   ],
   "rules": {
     "array-callback-return": 0,
