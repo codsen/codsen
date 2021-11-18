@@ -52,17 +52,13 @@
     "republish": "npm publish || :",
     "tap": "tap",
     "pretest": "npm run build",
-    "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
+    "test": "npm run lint && npm run unittest && npm run test:examples && npm run format",
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
     "tsc": "tsc",
-    "unittest": "tap --no-only --reporter=terse && tsc -p tsconfig.json --noEmit && npm run clean_cov && npm run perf"
+    "unittest": "tap --no-only --reporter=terse && tsc -p tsconfig.json --noEmit && npm run perf"
   },
   "tap": {
     "check-coverage": false,
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
     "node-arg": [
       "--no-warnings",
       "--experimental-loader",

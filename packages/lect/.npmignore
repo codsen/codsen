@@ -12,7 +12,6 @@
 # folders:
 
 .nyc_output
-coverage
 docs
 src
 test

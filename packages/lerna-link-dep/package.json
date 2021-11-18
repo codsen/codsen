@@ -49,14 +49,10 @@
     "republish": "npm publish || :",
     "tap": "tap",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "tap --no-only --reporter=terse && npm run clean_cov"
+    "unittest": "tap --no-only --reporter=terse"
   },
   "tap": {
     "check-coverage": false,
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
     "node-arg": [
       "--no-warnings",
       "--experimental-loader",

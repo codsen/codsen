@@ -244,7 +244,7 @@
       "republish": "npm publish || :",
       "tap": "tap",
       "test": "npm run lint && npm run unittest && npm run format",
-      "unittest": "tap --no-only --reporter=terse && npm run clean_cov"
+      "unittest": "tap --no-only --reporter=terse"
     },
     "rollup": {
       "build": "rollup -c",
@@ -264,9 +264,9 @@
       "tap": "tap",
       "tsc": "tsc",
       "pretest": "npm run build",
-      "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
+      "test": "npm run lint && npm run unittest && npm run test:examples && npm run format",
       "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
-      "unittest": "tap --no-only --reporter=terse && tsc -p tsconfig.json --noEmit && npm run clean_cov && npm run perf"
+      "unittest": "tap --no-only --reporter=terse && tsc -p tsconfig.json --noEmit && npm run perf"
     }
   },
   "scripts_extras": {
