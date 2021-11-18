@@ -205,7 +205,6 @@
       "typescript": "^4.3.5"
     },
     "tap": {
-      "coverage-report": ["text", "json-summary"],
       "node-arg": [
         "--no-warnings",
         "--experimental-loader",
@@ -234,7 +233,7 @@
   },
   "scripts": {
     "cli": {
-      "ci_test": "npm run format && tap --no-only --reporter=silent && npm run clean_cov",
+      "ci_test": "npm run format && tap --no-only --reporter=silent",
       "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
       "dev": "echo\"\"",
       "devunittest": "npm run dev && tap --only -R 'base'",
@@ -253,7 +252,7 @@
       "clean_types": "../../scripts/cleanTypes.js",
       "esbuild": "node '../../scripts/esbuild.js'",
       "esbuild_dev": "cross-env MODE=dev node '../../scripts/esbuild.js'",
-      "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent && npm run clean_cov",
+      "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent",
       "dev": "rollup -c --dev",
       "devunittest": "npm run dev && tap --only -R 'base'",
       "format": "npm run lect && npm run prettier && npm run lint",

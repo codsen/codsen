@@ -31,7 +31,7 @@
   "type": "module",
   "exports": "./index.js",
   "scripts": {
-    "ci_test": "npm run format && tap --no-only --reporter=silent && npm run clean_cov",
+    "ci_test": "npm run format && tap --no-only --reporter=silent",
     "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
     "dev": "echo\"\"",
     "devunittest": "npm run dev && tap --only -R 'base'",
