@@ -22,3 +22,4 @@ testStats.md
 .nyc_output
 package.json.lerna_backup
 dist
+coverage/
