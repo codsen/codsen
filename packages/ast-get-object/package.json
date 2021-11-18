@@ -43,7 +43,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
+    "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent && npm run clean_cov",
     "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
     "clean_types": "../../scripts/cleanTypes.js",
     "dev": "rollup -c --dev",
@@ -61,7 +61,7 @@
     "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
     "tsc": "tsc",
-    "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run clean_cov && npm run perf"
+    "unittest": "tap --no-only --reporter=terse && tsc -p tsconfig.json --noEmit && npm run clean_cov && npm run perf"
   },
   "tap": {
     "check-coverage": false,
