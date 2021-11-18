@@ -234,7 +234,7 @@
   },
   "scripts": {
     "cli": {
-      "ci_test": "npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
+      "ci_test": "npm run format && tap --no-only --reporter=silent && npm run clean_cov",
       "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
       "dev": "echo\"\"",
       "devunittest": "npm run dev && tap --only -R 'base'",
@@ -245,7 +245,7 @@
       "republish": "npm publish || :",
       "tap": "tap",
       "test": "npm run lint && npm run unittest && npm run format",
-      "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov"
+      "unittest": "tap --no-only --reporter=terse && npm run clean_cov"
     },
     "rollup": {
       "build": "rollup -c",
@@ -253,7 +253,7 @@
       "clean_types": "../../scripts/cleanTypes.js",
       "esbuild": "node '../../scripts/esbuild.js'",
       "esbuild_dev": "cross-env MODE=dev node '../../scripts/esbuild.js'",
-      "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
+      "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent && npm run clean_cov",
       "dev": "rollup -c --dev",
       "devunittest": "npm run dev && tap --only -R 'base'",
       "format": "npm run lect && npm run prettier && npm run lint",
@@ -267,7 +267,7 @@
       "pretest": "npm run build",
       "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
       "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
-      "unittest": "tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run clean_cov && npm run perf"
+      "unittest": "tap --no-only --reporter=terse && tsc -p tsconfig.json --noEmit && npm run clean_cov && npm run perf"
     }
   },
   "scripts_extras": {

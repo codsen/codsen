@@ -14,7 +14,6 @@
 /runtime.js
 yarn.lock
 lerna-debug.log
-.npmrc
 *.lerna_backup
 ideas.md
 deps-graph.png
