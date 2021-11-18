@@ -153,16 +153,6 @@ async function rollupConfig({ state }) {
           }tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
-        babel({
-          extensions,
-          plugins: [
-            [
-              "@babel/plugin-transform-runtime",
-              { useESModules: true },
-            ],
-          ],
-          babelHelpers: "runtime",
-        }),
         cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
         !commandLineArgs.dev &&
           strip({
