@@ -249,9 +249,10 @@
     },
     "rollup": {
       "build": "rollup -c",
+      "build:esbuild": "node '../../scripts/esbuild.js'",
+      "build:esbuild:dev": "cross-env MODE=dev node '../../scripts/esbuild.js'",
+      "build:swc": "node '../../scripts/swc.js'",
       "clean_types": "../../scripts/cleanTypes.js",
-      "esbuild": "node '../../scripts/esbuild.js'",
-      "esbuild_dev": "cross-env MODE=dev node '../../scripts/esbuild.js'",
       "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent",
       "dev": "rollup -c --dev",
       "devunittest": "npm run dev && tap --only -R 'base'",
