@@ -33,7 +33,6 @@
     "build": "rollup -c",
     "build:esbuild": "node '../../scripts/esbuild.js'",
     "build:esbuild:dev": "cross-env MODE=dev node '../../scripts/esbuild.js'",
-    "build:swc": "node '../../scripts/swc.js'",
     "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent",
     "clean_types": "../../scripts/cleanTypes.js",
     "dev": "rollup -c --dev",
