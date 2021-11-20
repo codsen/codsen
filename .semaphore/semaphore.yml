@@ -38,21 +38,31 @@ blocks:
             - npm whoami
             - pwd
             - ls
-            - npm run fresh
-            - npm run info
-            - npm run readme:generate
+            # monorepo equivalent to "npm i":
+            - npm run bootstrap
+            # build programs in each dist/ folder:
+            - npm run build
+            # run unit tests everywhere:
+            - npm run test
+            # generate statistics files, for later use as data sources in websites:
+            - npm run build:info
+            # merge all playground scripts into one JSON lump:
+            - npm run build:playgrounds
+            # build a readme in each package's root:
+            - npm run build:readme
+            # git-add the build artifacts
             - git status
             - git add packages
             - git add stats
             - git add README.md
-            - "git add package-lock.json || echo 'no package-lock.json'"
             - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             # run lerna version with all extras:
             - npm run pub:vers
             # now build again, because those bumped versions need to be written into header comment blocks:
-            - npm run build:just
-            - node scripts/packageJsons.js
-            - node scripts/packageExamples.js
+            - npm run build
+            # assemble the lump of all package.jsons:
+            - npm run build:packageJsons
+            - npm run build:packageExamples
             - git status
             - git add packages
             - git add stats

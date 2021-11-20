@@ -35,7 +35,6 @@
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent",
-    "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
     "clean_types": "../../scripts/cleanTypes.js",
     "dev": "rollup -c --dev",
     "devunittest": "npm run dev && tap --only -R 'base'",

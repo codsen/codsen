@@ -32,6 +32,7 @@
     "withinascii": "cli.js"
   },
   "scripts": {
+    "build": "echo 'skip build step for a CLI'",
     "ci_test": "npm run format && tap --no-only --reporter=silent",
     "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
     "dev": "echo\"\"",

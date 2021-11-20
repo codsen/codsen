@@ -233,6 +233,7 @@
   },
   "scripts": {
     "cli": {
+      "build": "echo 'skip build step for a CLI'",
       "ci_test": "npm run format && tap --no-only --reporter=silent",
       "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
       "dev": "echo\"\"",
@@ -248,7 +249,6 @@
     },
     "rollup": {
       "build": "rollup -c",
-      "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
       "clean_types": "../../scripts/cleanTypes.js",
       "esbuild": "node '../../scripts/esbuild.js'",
       "esbuild_dev": "cross-env MODE=dev node '../../scripts/esbuild.js'",
