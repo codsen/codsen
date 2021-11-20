@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import tap from "tap";
-import execa from "execa";
+import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
 // import pack from "../package.json";
@@ -68,10 +68,8 @@ tap.test("01 - sort, -s (silent) mode", async (t) => {
       });
     })
     .then((received) =>
-      execa
-        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-        .command(`rm -rf ${tempFolder}`)
-        .then(() => received)
+      // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
     )
     .catch((err) => t.fail(err));
 

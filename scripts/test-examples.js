@@ -3,7 +3,7 @@
 import fs from "fs";
 import util from "util";
 import path from "path";
-import execa from "execa";
+import { execa } from "execa";
 
 // we don't want to deal with callbacks so let's promisify:
 const readdir = util.promisify(fs.readdir);

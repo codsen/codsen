@@ -77,7 +77,7 @@
     "meow": "^10.1.1",
     "p-filter": "^3.0.0",
     "p-reduce": "^3.0.0",
-    "sort-package-json": "^1.52.0",
+    "sort-package-json": "^1.53.1",
     "sorted-object": "^2.0.1",
     "update-notifier": "^5.1.0"
   },
@@ -87,10 +87,10 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
-    "execa": "^5.1.1",
+    "execa": "^6.0.0",
     "lect": "^0.18.5",
     "p-map": "^5.3.0",
-    "tap": "^15.0.10",
+    "tap": "^15.1.2",
     "tempy": "^2.0.0",
     "tslib": "^2.3.1"
   },

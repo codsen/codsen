@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import tap from "tap";
 import path from "path";
 import { fileURLToPath } from "url";
-import execa from "execa";
+import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -79,7 +79,7 @@ tap.test(
         t.match(execasMsg.stdout, /not found!/, "01.01.02");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -136,7 +136,7 @@ tap.test(
         t.match(execasMsg.stdout, /doesn't exist/, "01.02.03");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -194,7 +194,7 @@ tap.test(
         t.match(execasMsg.stdout, /doesn't exist/, "01.03.03");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -264,7 +264,7 @@ tap.test(
         t.match(execasMsg.stdout, /symlink already exists/, "01.04.02");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -329,7 +329,7 @@ tap.test(
         );
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -405,7 +405,7 @@ tap.test(
         t.match(execasMsg.stdout, /was linked/, "01.06.04");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -469,7 +469,7 @@ tap.test(
         t.match(execasMsg.stdout, /didn't have any of the keys/, "01.07.03");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -534,7 +534,7 @@ tap.test(
         t.equal(packageContents.dependencies.b, "^1.0.0", "02.01.04");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -591,7 +591,7 @@ tap.test(
         t.equal(packageContents.dependencies.c, "^2.0.0", "02.02.05");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -643,7 +643,7 @@ tap.test(
         t.equal(packageContents.devDependencies.b, "^1.0.0", "02.03.05");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );
@@ -695,7 +695,7 @@ tap.test(
         t.equal(packageContents.devDependencies.b, "^1.0.0", "02.04.05");
       })
       .then(() =>
-        execa.command(`rm -rf ${tempFolder}`, {
+        execaCommand(`rm -rf ${tempFolder}`, {
           shell: true,
         })
       );

@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import tap from "tap";
-import execa from "execa";
+import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 // import pMap from "p-map";
 // import pack from "../package.json";
@@ -49,7 +49,7 @@ tap.test(
     const file1 = fs.readFileSync(pathOfTheTestfile1, "utf8");
     const file2 = fs.readFileSync(pathOfTheTestfile2, "utf8");
 
-    await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+    await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
 
     t.strictSame(
       file1,
@@ -95,10 +95,8 @@ tap.test("02 - already sorted package.json", async (t) => {
     .then(() => execa("./cli.js", [tempFolder, "-p", "package.json"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
-      execa
-        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-        .command(`rm -rf ${tempFolder}`)
-        .then(() => received)
+      // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
     )
     .catch((err) => t.fail(err));
 
@@ -118,10 +116,8 @@ tap.test("03 - empty array as package.json", async (t) => {
     .then(() => execa("./cli.js", [tempFolder]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
-      execa
-        // .command(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-        .command(`rm -rf ${tempFolder}`)
-        .then(() => received)
+      // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
     )
     .catch((err) => t.fail(err));
 

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { perfRef } from "../dist/perf-ref.esm.js";
+import { perfRef } from "../perf-ref.esm.js";
 
 tap.test("01", (t) => {
   t.strictSame(perfRef(), "182014283915", "01");

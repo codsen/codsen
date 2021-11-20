@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import tap from "tap";
-import execa from "execa";
+import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 // import pMap from "p-map";
 // import pack from "../package.json";
@@ -29,8 +29,7 @@ tap.test("01 - only node_modules with one file, flag disabled", async (t) => {
     .then(() => execa("./cli.js", [tempFolder]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((testFile) =>
-      execa
-        .command(`rm -rf ${tempFolder}`)
+      execaCommand(`rm -rf ${tempFolder}`)
         .then(() => testFile)
         .catch((err) => t.fail(err))
     )
@@ -52,8 +51,7 @@ tap.test("02 - only node_modules with one file, flag enabled", async (t) => {
     .then(() => execa("./cli.js", [tempFolder, "-n"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((testFile) =>
-      execa
-        .command(`rm -rf ${tempFolder}`)
+      execaCommand(`rm -rf ${tempFolder}`)
         .then(() => testFile)
         .catch((err) => t.fail(err))
     )
@@ -96,7 +94,7 @@ tap.test(
       "03.02 - sorted outside node_modules"
     );
 
-    await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+    await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
     t.end();
   }
 );
@@ -135,7 +133,7 @@ tap.test(
       "04.02 - sorted outside node_modules"
     );
 
-    await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+    await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
     t.end();
   }
 );

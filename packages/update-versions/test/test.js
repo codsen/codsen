@@ -5,7 +5,7 @@ import { ensureDirSync } from "fs-extra";
 
 import path from "path";
 import tap from "tap";
-import execa from "execa";
+import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
 import clone from "lodash.clonedeep";
@@ -349,7 +349,7 @@ tap.test("06 - no files found in the given directory", async (t) => {
   t.equal(stdOutContents.exitCode, 0, "06");
 
   // delete folder:
-  await execa.command(`rm -rf ${path.join(__dirname, "../temp")}`);
+  await execaCommand(`rm -rf ${path.join(__dirname, "../temp")}`);
 
   t.end();
 });

@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import tap from "tap";
-import execa from "execa";
+import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 // import pMap from "p-map";
 // import pack from "../package.json";
@@ -31,7 +31,7 @@ tap.test("01 - indentationCount set to 3, spaces", async (t) => {
 
   t.strictSame(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "01");
 
-  await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+  await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
   t.end();
 });
 
@@ -52,7 +52,7 @@ tap.test("02 - indentationCount set to 3, tabs", async (t) => {
 
   t.strictSame(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "02");
 
-  await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+  await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
   t.end();
 });
 
@@ -73,6 +73,6 @@ tap.test("03 - indentationCount set to 3, tabs, array", async (t) => {
 
   t.strictSame(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "03");
 
-  await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+  await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
   t.end();
 });

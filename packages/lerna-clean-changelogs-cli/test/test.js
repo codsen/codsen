@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import tap from "tap";
-import execa from "execa";
+import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
 
@@ -101,7 +101,7 @@ tap.test(
     // CLI will complain no files could be found
     t.match(stdOutContents.stdout, /no changelogs found/, "03.01");
 
-    await execa.command(`rm -rf ${path.resolve(path.resolve(), "../temp")}`);
+    await execaCommand(`rm -rf ${path.resolve(path.resolve(), "../temp")}`);
   }
 );
 
@@ -136,11 +136,9 @@ tap.test(
         return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
       })
       .then((received) =>
-        execa
-          .command(`rm -rf ${tempFolder}`, {
-            shell: true,
-          })
-          .then(() => received)
+        execaCommand(`rm -rf ${tempFolder}`, {
+          shell: true,
+        }).then(() => received)
       );
 
     t.strictSame(await processedFileContents, changelog1Fixed, "04.01");
@@ -199,8 +197,8 @@ tap.test(
           "02.02.01 - prints a message that all went OK"
         )
       )
-      // .then(() => execa.command(`rm -rf ${path.join(path.resolve(), "../temp")}`))
-      .then(() => execa.command(`rm -rf ${tempFolder}`))
+      // .then(() => execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`))
+      .then(() => execaCommand(`rm -rf ${tempFolder}`))
       .catch((err) => t.fail(err));
   }
 );

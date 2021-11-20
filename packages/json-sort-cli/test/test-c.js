@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import tap from "tap";
-import execa from "execa";
+import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 // import pMap from "p-map";
 // import pack from "../package.json";
@@ -129,7 +129,7 @@ tap.test(
         t.fail("execa didn't exit with the non-zero code");
       })
       .catch((err) => err);
-    await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+    await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
 
     t.equal(output.exitCode, 9, "05.01");
     t.match(output.stdout, /Unsorted files:/, "05.02");
@@ -157,7 +157,7 @@ tap.test("06 - unsorted array within json, --ci flag", async (t) => {
   const output = await execa("./cli.js", [tempFolder, "--ci"]).catch((err) =>
     t.fail(err)
   );
-  await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+  await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
 
   t.equal(output.exitCode, 0, "06.01");
   t.match(output.stdout, /All files were already sorted/, "06.02");
@@ -183,7 +183,7 @@ tap.test("07 - sorted nested plain object, --ci flag", async (t) => {
   const output = await execa("./cli.js", [tempFolder, "--ci"]).catch((err) =>
     t.fail(err)
   );
-  await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+  await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
 
   t.equal(output.exitCode, 0, "07.01");
   t.match(output.stdout, /All files were already sorted/, "07.02");
@@ -212,7 +212,7 @@ tap.test("08 - unsorted nested plain object, --ci flag", async (t) => {
       t.fail("execa didn't exit with the non-zero code");
     })
     .catch((err) => err);
-  // await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+  // await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
 
   t.equal(output.exitCode, 9, "08.01");
   t.match(output.stdout, /Unsorted files/, "08.02");
@@ -242,7 +242,7 @@ tap.test("09 - but requested copious tabs, --ci flag", async (t) => {
       t.fail("execa didn't exit with the non-zero code");
     })
     .catch((err) => err);
-  // await execa.command(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
+  // await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
 
   t.equal(output.exitCode, 9, "09.01");
   t.match(output.stdout, /Unsorted files/, "09.02");

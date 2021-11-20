@@ -10,7 +10,7 @@ import fs from "fs-extra";
 import meow from "meow";
 import path from "path";
 // import updateNotifier from "update-notifier";
-import execa from "execa";
+import { execaSync } from "execa";
 
 const messagePrefix = `\u001b[${90}m${"✨ lerna-link-dep: "}\u001b[${39}m`;
 
@@ -228,7 +228,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     if (isNormalDep) {
       // run the query using execa:
       try {
-        execa.sync(
+        execaSync(
           `ln -s ${path.resolve("../", cli.input[i])} ${path.resolve(
             "./",
             "node_modules",
@@ -291,7 +291,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           //     requestedPackageJsonContents.bin[binName]
           //   )}\n${path.resolve("./", "node_modules", ".bin", binName)}`
           // );
-          execa.sync(
+          execaSync(
             `ln -s ${path.resolve(
               "../",
               cli.input[i],

@@ -73,7 +73,7 @@
     }
   },
   "dependencies": {
-    "execa": "^5.1.1",
+    "execa": "^6.0.0",
     "fs-extra": "^10.0.0",
     "meow": "^10.1.1",
     "package-json-editor": "^1.0.1",
@@ -85,7 +85,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
     "lect": "^0.18.5",
-    "tap": "^15.0.10",
+    "tap": "^15.1.2",
     "tempy": "^2.0.0",
     "tslib": "^2.3.1"
   },

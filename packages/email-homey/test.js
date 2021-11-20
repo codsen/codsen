@@ -1,4 +1,4 @@
-import execa from "execa";
+import { execa } from "execa";
 import tap from "tap";
 import fs from "fs";
 import path from "path";
