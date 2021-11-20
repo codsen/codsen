@@ -5,7 +5,7 @@ import { cparser } from "../dist/codsen-parser.esm.js";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - basics - two tags", (t) => {
-  t.match(
+  t.hasStrict(
     cparser("<div><div>"),
     [
       {
@@ -30,7 +30,7 @@ tap.test("01 - basics - two tags", (t) => {
 });
 
 tap.test("02 - basics - text and tag", (t) => {
-  t.match(
+  t.hasStrict(
     cparser("z<div>"),
     [
       {
@@ -52,7 +52,7 @@ tap.test("02 - basics - text and tag", (t) => {
 });
 
 tap.test("03 - basics - tag text tag", (t) => {
-  t.match(
+  t.hasStrict(
     cparser("<div>a<div>"),
     [
       {
@@ -82,7 +82,7 @@ tap.test("03 - basics - tag text tag", (t) => {
 });
 
 tap.test("04 - basics - two div pairs", (t) => {
-  t.match(
+  t.hasStrict(
     cparser("<div>a</div><div>b</div>"),
     [
       {
@@ -136,7 +136,7 @@ tap.test("04 - basics - two div pairs", (t) => {
 });
 
 tap.test("05 - basics - mixed combo", (t) => {
-  t.match(
+  t.hasStrict(
     cparser("<br>z</a>"),
     [
       {
@@ -167,7 +167,7 @@ tap.test("05 - basics - mixed combo", (t) => {
 });
 
 tap.test("06 - basics - two nested pairs", (t) => {
-  t.match(
+  t.hasStrict(
     cparser("<div>1<a>2</a>3</div>"),
     [
       {
@@ -226,7 +226,7 @@ tap.test("06 - basics - two nested pairs", (t) => {
 });
 
 tap.test("07 - basics - three nested pairs, empty", (t) => {
-  t.match(
+  t.hasStrict(
     cparser("<table><tr><td></td></tr></table>"),
     [
       {
@@ -342,7 +342,7 @@ tap.test("07 - basics - three nested pairs, empty", (t) => {
 tap.test(
   "08 - basics - single text node is not nested after closing tag",
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser(`<td>
 <table></table>
 </td>`),

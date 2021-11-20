@@ -160,7 +160,7 @@ tap.test(
   `04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - extra closing tag`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser(`<div><a>z</a></div></div>`, {
         errCb: (errObj) => gatheredErr.push(errObj),
       }),
@@ -207,7 +207,7 @@ tap.test(
       ],
       "04.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -259,7 +259,7 @@ tap.test(
       ],
       "05.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -311,7 +311,7 @@ tap.test(
       ],
       "06.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -363,7 +363,7 @@ tap.test(
       ],
       "07.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {

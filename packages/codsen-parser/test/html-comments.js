@@ -7,7 +7,7 @@ import { cparser } from "../dist/codsen-parser.esm.js";
 tap.test(
   `01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser("a<!--b-->c"),
       [
         {
@@ -49,7 +49,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser("a<!--b->c"),
       [
         {
@@ -99,7 +99,7 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broken comment closing tag pair`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser(`a<!--<table><tr><td>.</td></tr></table>->c`),
       [
         {
@@ -191,7 +191,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser("x<a>y->b"),
       [
         {
@@ -223,7 +223,7 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser("<!--x<a>-->y->b"),
       [
         {
@@ -268,7 +268,7 @@ tap.test(
 tap.test(
   `06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the closing`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser(`a<!--b--!>c`),
       [
         {
@@ -311,7 +311,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(`07 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
-  t.match(
+  t.hasStrict(
     cparser(`a<!--[if gte mso 9]>x<![endif]-->z`),
     [
       {
@@ -355,7 +355,7 @@ tap.test(`07 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(`08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
-  t.match(
+  t.hasStrict(
     cparser(`a<!--[if !mso]><!-->x<!--<![endif]-->z`),
     [
       {
@@ -398,7 +398,7 @@ tap.test(`08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
 tap.test(
   `09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracket`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser(`<img/>!--<![endif]-->`),
       [
         {
@@ -423,7 +423,7 @@ tap.test(
 tap.test(
   `10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl mark`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser(`<img/><--<![endif]-->`),
       [
         {
@@ -448,7 +448,7 @@ tap.test(
 tap.test(
   `11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser(`<img/><1--<![endif]-->`),
       [
         {
@@ -473,7 +473,7 @@ tap.test(
 tap.test(
   `12 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser(`<img/><!-<![endif]-->`),
       [
         {
@@ -498,7 +498,7 @@ tap.test(
 tap.test(
   `13 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser(`<img/><1--<1--<1--<1--<![endif]-->`),
       [
         {
@@ -531,7 +531,7 @@ tap.test(
 tap.test(
   `14 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   (t) => {
-    t.match(
+    t.hasStrict(
       cparser(`<img/><1--<1--<1--<1--zzzz<![endif]-->`),
       [
         {
@@ -830,7 +830,7 @@ tap.test(
 // various
 
 tap.test(`19 - a test from html-table-patcher`, (t) => {
-  t.match(
+  t.hasStrict(
     cparser(`<table><!--a--><tr><!--b<table>c<tr>d-->`),
     [
       {
@@ -924,7 +924,7 @@ tap.test(`19 - a test from html-table-patcher`, (t) => {
 });
 
 tap.test(`20 - a test from html-table-patcher`, (t) => {
-  t.match(
+  t.hasStrict(
     cparser(`<table>1<tr><td>
 <table>x</table>
 </td></tr></table>`),

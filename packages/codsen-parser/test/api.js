@@ -70,7 +70,7 @@ tap.test("01 - opts.tagCb", (t) => {
     },
   });
 
-  t.match(
+  t.hasStrict(
     gathered,
     [
       {
@@ -102,7 +102,7 @@ tap.test("02 - opts.charCb", (t) => {
     },
   });
 
-  t.match(
+  t.hasStrict(
     gathered,
     [
       {

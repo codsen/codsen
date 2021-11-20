@@ -47,7 +47,7 @@ tap.test(
   `04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - first tag is missing closing`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser(`<table><tr><td>x</td></tr>`, {
         errCb: (errObj) => gatheredErr.push(errObj),
       }),
@@ -97,7 +97,7 @@ tap.test(
       ],
       "04.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -117,7 +117,7 @@ tap.test(
   `05 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - second tag is missing closing`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser(`<table><tr><td>x</td></table>`, {
         errCb: (errObj) => gatheredErr.push(errObj),
       }),
@@ -167,7 +167,7 @@ tap.test(
       ],
       "05.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -187,7 +187,7 @@ tap.test(
   `06 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - third tag is missing closing`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser(`<table><tr><td>x</tr></table>`, {
         errCb: (errObj) => gatheredErr.push(errObj),
       }),
@@ -237,7 +237,7 @@ tap.test(
       ],
       "06.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -255,7 +255,7 @@ tap.test(
 
 tap.test(`07 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - text + tag`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser(`z <div>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     }),
@@ -285,7 +285,7 @@ tap.test(`07 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - text + tag`, (t) => {
     ],
     "07.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -314,7 +314,7 @@ tap.test(
         errCb: (errObj) => gatheredErr.push(errObj),
       }
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -360,7 +360,7 @@ tap.test(
       }
     );
     // t.strictSame(
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -399,7 +399,7 @@ tap.test(`10 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`}`, (t) => {
     }
   );
   // t.strictSame(
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -423,7 +423,7 @@ tap.test(
   `11 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two missing with context`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser(
         `<div>
 <table>
@@ -573,7 +573,7 @@ tap.test(
       ],
       "11.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -610,7 +610,7 @@ tap.test(`12 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - left slash`, (t) => {
     errCb: (errObj) => gatheredErr.push(errObj),
   });
   // t.strictSame(
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {

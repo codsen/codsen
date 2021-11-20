@@ -8,7 +8,7 @@ tap.todo(
   `01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one tag only`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser("</a>", {
         errCb: (errObj) => {
           gatheredErr.push(errObj);
@@ -26,7 +26,7 @@ tap.todo(
       ],
       "01.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -46,7 +46,7 @@ tap.todo(
   `02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - previous token is text-type`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser("<br>z</a>", {
         errCb: (errObj) => {
           gatheredErr.push(errObj);
@@ -77,7 +77,7 @@ tap.todo(
       ],
       "02.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -97,7 +97,7 @@ tap.todo(
   `03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - previous token is tag-type`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser("<br></a>", {
         errCb: (errObj) => {
           gatheredErr.push(errObj);
@@ -123,7 +123,7 @@ tap.todo(
       ],
       "03.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -144,7 +144,7 @@ tap.todo(
 
 tap.todo(`04 - rogue tag in place of another tag - opening`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table><tr><td>x</td><a></table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -202,7 +202,7 @@ tap.todo(`04 - rogue tag in place of another tag - opening`, (t) => {
     ],
     "04.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -226,7 +226,7 @@ tap.todo(
   `05 - rogue tag in place of another tag - opening, with spaces`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser("<table> <tr> <td> x </td> <a> </table>", {
         errCb: (errObj) => {
           gatheredErr.push(errObj);
@@ -308,7 +308,7 @@ tap.todo(
       ],
       "05.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -331,7 +331,7 @@ tap.todo(
 
 tap.todo(`06 - rogue tag in place of another tag - closing`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table><tr><td>x</td></a></table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -389,7 +389,7 @@ tap.todo(`06 - rogue tag in place of another tag - closing`, (t) => {
     ],
     "06.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -413,7 +413,7 @@ tap.todo(
   `07 - rogue tag in place of another tag - closing, with spaces`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser("<table> <tr> <td> x </td> </a> </table>", {
         errCb: (errObj) => {
           gatheredErr.push(errObj);
@@ -495,7 +495,7 @@ tap.todo(
       ],
       "07.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -518,7 +518,7 @@ tap.todo(
 
 tap.todo(`08 - rogue tag in place of another tag - void`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table><tr><td>x</td><br/></table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -576,7 +576,7 @@ tap.todo(`08 - rogue tag in place of another tag - void`, (t) => {
     ],
     "08.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -599,7 +599,7 @@ tap.todo(`08 - rogue tag in place of another tag - void`, (t) => {
 
 tap.todo(`09 - rogue tag in place of another tag - void`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table><tr><td>x</td><br/></table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -657,7 +657,7 @@ tap.todo(`09 - rogue tag in place of another tag - void`, (t) => {
     ],
     "09.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -680,7 +680,7 @@ tap.todo(`09 - rogue tag in place of another tag - void`, (t) => {
 
 tap.todo(`10 - rogue tag in place of another tag - void, legit`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<div><div><div>x</div><br/></div>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -740,7 +740,7 @@ tap.todo(`10 - rogue tag in place of another tag - void, legit`, (t) => {
     ],
     "10.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -760,7 +760,7 @@ tap.todo(`10 - rogue tag in place of another tag - void, legit`, (t) => {
 
 tap.todo(`11 - rogue tag in place of another tag - text`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table><tr><td>x</td>z</table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -818,7 +818,7 @@ tap.todo(`11 - rogue tag in place of another tag - text`, (t) => {
     ],
     "11.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -840,7 +840,7 @@ tap.todo(
   `12 - rogue tag in place of another tag - opening - with whitespace`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser(
         `<table>
   <tr>
@@ -931,7 +931,7 @@ tap.todo(
       ],
       "12.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -962,7 +962,7 @@ tap.todo(
   `13 - rogue tag in place of another tag - opening - with whitespace - insurance`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser(
         // notice how anchor tag pair is complete!
         `<table>
@@ -1061,7 +1061,7 @@ tap.todo(
       ],
       "13.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -1084,7 +1084,7 @@ tap.todo(
   `14 - rogue tag in place of another tag - closing - with whitespace`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser(
         `<table>
   <tr>
@@ -1102,7 +1102,7 @@ tap.todo(
       [],
       "14.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -1127,7 +1127,7 @@ tap.todo(
   `15 - rogue tag in place of another tag - void - with whitespace`,
   (t) => {
     const gatheredErr = [];
-    t.match(
+    t.hasStrict(
       cparser(
         `<table>
 <tr>
@@ -1145,7 +1145,7 @@ tap.todo(
       [],
       "15.01"
     );
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
@@ -1166,7 +1166,7 @@ tap.todo(
 
 tap.todo(`16 - rogue tag between tags - opening`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table><tr><td>x</td><a></tr></table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -1184,7 +1184,7 @@ tap.todo(`16 - rogue tag between tags - opening`, (t) => {
     ],
     "16.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -1201,7 +1201,7 @@ tap.todo(`16 - rogue tag between tags - opening`, (t) => {
 
 tap.todo(`17 - rogue tag between tags - opening, spaced`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table> <tr> <td> x </td> <a> </tr> </table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -1219,7 +1219,7 @@ tap.todo(`17 - rogue tag between tags - opening, spaced`, (t) => {
     ],
     "17.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -1236,7 +1236,7 @@ tap.todo(`17 - rogue tag between tags - opening, spaced`, (t) => {
 
 tap.todo(`18 - rogue tag between tags - closing`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table><tr><td>x</td><a></tr></table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -1254,7 +1254,7 @@ tap.todo(`18 - rogue tag between tags - closing`, (t) => {
     ],
     "18.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -1271,7 +1271,7 @@ tap.todo(`18 - rogue tag between tags - closing`, (t) => {
 
 tap.todo(`19 - rogue tag between tags - closing, spaced`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table> <tr> <td> x </td> <a> </tr> </table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -1289,7 +1289,7 @@ tap.todo(`19 - rogue tag between tags - closing, spaced`, (t) => {
     ],
     "19.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -1306,7 +1306,7 @@ tap.todo(`19 - rogue tag between tags - closing, spaced`, (t) => {
 
 tap.todo(`20 - rogue tag between tags - void`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table><tr><td>x</td><a></tr></table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -1324,7 +1324,7 @@ tap.todo(`20 - rogue tag between tags - void`, (t) => {
     ],
     "20.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {
@@ -1341,7 +1341,7 @@ tap.todo(`20 - rogue tag between tags - void`, (t) => {
 
 tap.todo(`21 - rogue tag between tags - void, spaced`, (t) => {
   const gatheredErr = [];
-  t.match(
+  t.hasStrict(
     cparser("<table> <tr> <td> x </td> <a> </tr> </table>", {
       errCb: (errObj) => {
         gatheredErr.push(errObj);
@@ -1359,7 +1359,7 @@ tap.todo(`21 - rogue tag between tags - void, spaced`, (t) => {
     ],
     "21.01"
   );
-  t.match(
+  t.hasStrict(
     gatheredErr,
     [
       {

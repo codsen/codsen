@@ -11,7 +11,7 @@ tap.test(
     const ast = cparser("</br>", {
       errCb: (incoming) => gatheredErr.push(incoming),
     });
-    t.match(
+    t.hasStrict(
       ast,
       [
         {
@@ -35,7 +35,7 @@ tap.test(
     );
     t.is(ast.length, 1, "01.02");
 
-    t.match(
+    t.hasStrict(
       gatheredErr,
       [
         {
