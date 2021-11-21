@@ -51,7 +51,8 @@
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
     "republish": "npm publish || :",
     "tap": "tap",
-    "test": "npm run lint && npm run unittest && npm run format",
+    "test": "npm run test:ci",
+    "test:ci": "npm run lint && npm run unittest && npm run format",
     "unittest": "tap --no-only --reporter=terse"
   },
   "tap": {
@@ -84,7 +85,7 @@
     "is-online": "^9.0.1",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^5.0.0",
-    "meow": "^10.1.1",
+    "meow": "^10.1.2",
     "object-path": "^0.11.8",
     "p-map": "^5.3.0",
     "p-progress": "^0.6.0",
@@ -98,7 +99,7 @@
     "@types/lodash.isplainobject": "^4.0.6",
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
-    "eslint": "^8.2.0",
+    "eslint": "^8.3.0",
     "execa": "^6.0.0",
     "fs-extra": "^10.0.0",
     "lect": "^0.18.5",

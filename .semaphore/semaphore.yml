@@ -5,7 +5,7 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 execution_time_limit:
-  hours: 3
+  hours: 4
 blocks:
   - name: Publish the packages
     task:
@@ -42,8 +42,9 @@ blocks:
             - npm run bootstrap
             # build programs in each dist/ folder:
             - npm run build
-            # run unit tests everywhere:
-            - npm run test
+            # then, run unit tests - this command prevents "pretest" from running
+            # because its name does not match, it's not "test":
+            - npm run test:ci
             # generate statistics files, for later use as data sources in websites:
             - npm run build:info
             # merge all playground scripts into one JSON lump:

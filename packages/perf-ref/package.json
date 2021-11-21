@@ -38,7 +38,8 @@
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
     "republish": "npm publish || :",
     "tap": "tap",
-    "test": "npm run lint && npm run unittest && npm run format",
+    "test": "npm run test:ci",
+    "test:ci": "npm run lint && npm run unittest && npm run format",
     "unittest": "tap --no-only --reporter=terse"
   },
   "tap": {
@@ -68,7 +69,7 @@
     "@istanbuljs/esm-loader-hook": "^0.1.2",
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
-    "eslint": "^8.2.0",
+    "eslint": "^8.3.0",
     "lect": "^0.18.5",
     "tap": "^15.1.2",
     "tslib": "^2.3.1"
