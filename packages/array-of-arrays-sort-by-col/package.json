@@ -49,7 +49,7 @@
     "tap": "tap",
     "pretest": "npm run build",
     "test": "npm run test:ci && npm run perf",
-    "test:ci": "npm run lint && npm run unittest && npm run test:examples && npm run format",
+    "test:ci": "npm run unittest && npm run test:examples && npm run format",
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
     "tsc": "tsc",
     "unittest": "tap --no-only --reporter=terse && tsc -p tsconfig.json --noEmit"

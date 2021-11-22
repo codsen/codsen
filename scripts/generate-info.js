@@ -5,6 +5,7 @@
 import fs from "fs";
 import path from "path";
 import git from "simple-git";
+import objectPath from "object-path";
 import { sortAllObjectsSync } from "../packages/json-comb-core/dist/json-comb-core.esm.js";
 
 // READ ALL LIBS
@@ -13,6 +14,7 @@ import { sortAllObjectsSync } from "../packages/json-comb-core/dist/json-comb-co
 const allPackages = [];
 const cliPackages = [];
 const programPackages = [];
+const specialPackages = [];
 
 fs.readdirSync(path.resolve("packages"))
   .filter((d) => fs.statSync(path.join("packages", d)).isDirectory())
@@ -30,8 +32,14 @@ fs.readdirSync(path.resolve("packages"))
       if (packageJsonContents.bin) {
         cliPackages.push(packageJsonContents.name);
       }
-      if (packageJsonContents.devDependencies.rollup) {
+      if (packageJsonContents?.devDependencies?.rollup) {
         programPackages.push(packageJsonContents.name);
+      }
+      if (
+        !packageJsonContents?.devDependencies?.rollup &&
+        !packageJsonContents.bin
+      ) {
+        specialPackages.push(packageJsonContents.name);
       }
     } catch (error) {
       // nothing happens and we skip it
@@ -130,9 +138,11 @@ const packages = {
   all: allPackages,
   cli: cliPackages,
   programs: programPackages,
+  special: specialPackages,
   totalPackageCount: allPackages.length,
   cliCount: cliPackages.length,
   programsCount: programPackages.length,
+  specialCount: specialPackages.length,
 };
 
 allStats.forEach((statsObj) => {
