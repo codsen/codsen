@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "11.0.5",
+  "version": "11.0.6",
   "description": "Resolves custom-marked, cross-referenced paths in parsed JSON",
   "keywords": [
     "comb",
@@ -83,16 +83,16 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.3",
-    "arrayiffy-if-string": "^4.0.5",
-    "ast-get-values-by-key": "^4.0.5",
-    "ast-monkey-traverse": "^3.0.5",
+    "arrayiffy-if-string": "^4.0.6",
+    "ast-get-values-by-key": "^4.0.6",
+    "ast-monkey-traverse": "^3.0.6",
     "matcher": "^5.0.0",
     "object-path": "^0.11.8",
-    "ranges-apply": "^6.0.5",
-    "ranges-push": "^6.0.5",
-    "string-find-heads-tails": "^5.0.5",
-    "string-match-left-right": "^8.0.5",
-    "string-remove-duplicate-heads-tails": "^6.0.5"
+    "ranges-apply": "^6.0.6",
+    "ranges-push": "^6.0.6",
+    "string-find-heads-tails": "^5.0.6",
+    "string-match-left-right": "^8.0.6",
+    "string-remove-duplicate-heads-tails": "^6.0.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -121,7 +121,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.3.0",
-    "lect": "^0.18.5",
+    "lect": "^0.18.6",
     "rollup": "^2.60.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,6 +1,6 @@
 {
   "name": "detect-templating-language",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Detects various templating languages present in string",
   "keywords": [
     "check",
@@ -72,9 +72,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.3",
-    "regex-is-jinja-nunjucks": "^3.0.5",
-    "regex-is-jsp": "^3.0.5",
-    "regex-jinja-specific": "^3.0.5"
+    "regex-is-jinja-nunjucks": "^3.0.6",
+    "regex-is-jsp": "^3.0.6",
+    "regex-jinja-specific": "^3.0.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -103,7 +103,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.3.0",
-    "lect": "^0.18.5",
+    "lect": "^0.18.6",
     "rollup": "^2.60.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-sort-by-col",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "description": "Sort array of arrays by column, rippling the sorting outwards from that column",
   "keywords": [
     "array",
@@ -107,7 +107,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.3.0",
-    "lect": "^0.18.5",
+    "lect": "^0.18.6",
     "rollup": "^2.60.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

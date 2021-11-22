@@ -1,6 +1,6 @@
 {
   "name": "object-no-new-keys",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
   "keywords": [
     "compare",
@@ -108,7 +108,7 @@
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.3.0",
-    "lect": "^0.18.5",
+    "lect": "^0.18.6",
     "rollup": "^2.60.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
