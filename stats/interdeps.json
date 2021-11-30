@@ -550,7 +550,7 @@
     },
     {
         "name": "ranges-push",
-        "size": 14046,
+        "size": 14377,
         "imports": [
             "string-collapse-leading-whitespace",
             "string-trim-spaces-only"
