@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "Scans all characters within a string and checks are they within ASCII range",
   "keywords": [
     "7bit",
@@ -75,7 +75,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.3",
-    "check-types-mini": "^7.0.6"
+    "check-types-mini": "^7.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -104,7 +104,7 @@
     "core-js": "^3.19.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.3.0",
-    "lect": "^0.18.6",
+    "lect": "^0.18.7",
     "rollup": "^2.60.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,6 +1,6 @@
 {
   "name": "all-named-html-entities",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "List of all named HTML entities",
   "keywords": [
     "all",
@@ -106,7 +106,7 @@
     "core-js": "^3.19.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.3.0",
-    "lect": "^0.18.6",
+    "lect": "^0.18.7",
     "rollup": "^2.60.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

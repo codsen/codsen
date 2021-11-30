@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.1.1](https://github.com/codsen/codsen/compare/string-strip-html@9.0.5...string-strip-html@9.1.1) (2021-11-30)
+
+
+### Features
+
+* opts.ignoreTagsWithTheirContents ([39dad96](https://github.com/codsen/codsen/commit/39dad967940208f7ac0e88fb1faa04a019f83b75))
+* opts.stripRecognisedHTMLOnly ([50010a8](https://github.com/codsen/codsen/commit/50010a8e48fd4c66a7160da8a6400942d6eca102))
+
+
+
+
+
 ## 9.1.0 (2021-11-22)
 
 ### Features
