@@ -30,7 +30,7 @@
     "fresh": "npm run wipe && npm run build",
     "lect": "make run-lect",
     "lerna": "lerna",
-    "pub:vers": "lerna version patch --no-commit-hooks --yes && lernacleanchangelog '**'",
+    "pub:vers": "lerna version --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
     "republish": "lerna run republish",
     "test": "FORCE_COLOR=1 lerna run test --bail --concurrency 1 && npm run build:readme && npm run build:info",
     "test:ci": "FORCE_COLOR=1 lerna run test:ci --bail",
