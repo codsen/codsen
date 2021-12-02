@@ -11,7 +11,11 @@ import { sortAllObjectsSync } from "../packages/json-comb-core/dist/json-comb-co
 // READ ALL LIBS
 // =============
 
-const allPackages = [];
+const packagesOutsideMonorepo = [
+  "eslint-plugin-row-num",
+  "eslint-plugin-test-num",
+];
+const allPackages = [...packagesOutsideMonorepo];
 const cliPackages = [];
 const programPackages = [];
 const specialPackages = [];
@@ -64,6 +68,9 @@ const dependencyStats = { dependencies: {}, devDependencies: {} };
 
 for (let i = 0, len = allPackages.length; i < len; i++) {
   const name = allPackages[i];
+  if (packagesOutsideMonorepo.includes(name)) {
+    continue;
+  }
 
   // console.log(
   //   `077 ======== processing ${`\u001b[${35}m${name}\u001b[${39}m`} ========`
@@ -135,14 +142,16 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
 }
 
 const packages = {
-  all: allPackages,
-  cli: cliPackages,
-  programs: programPackages,
-  special: specialPackages,
+  all: allPackages.sort(),
+  cli: cliPackages.sort(),
+  programs: programPackages.sort(),
+  special: specialPackages.sort(),
+  packagesOutsideMonorepo: packagesOutsideMonorepo.sort(),
   totalPackageCount: allPackages.length,
   cliCount: cliPackages.length,
   programsCount: programPackages.length,
   specialCount: specialPackages.length,
+  packagesOutsideMonorepoCount: packagesOutsideMonorepo.length,
 };
 
 allStats.forEach((statsObj) => {

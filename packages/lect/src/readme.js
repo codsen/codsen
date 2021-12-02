@@ -4,8 +4,9 @@ import decodeContent from "./decodeContent.js";
 import arrayiffy from "./arrayiffy.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
+
 const webapps = require("../../../stats/webapps.json");
-const esmBump = require("../../../scripts/esmBump.json");
+const esmBump = require("../../../stats/esmBump.json");
 
 // writes readme
 async function readme({ state, examples, lectrc }) {

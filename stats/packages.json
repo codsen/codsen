@@ -38,6 +38,8 @@
         "email-comb",
         "email-homey",
         "emlint",
+        "eslint-plugin-row-num",
+        "eslint-plugin-test-num",
         "generate-atomic-css",
         "generate-atomic-css-cli",
         "gulp-email-remove-unused-css",
@@ -248,8 +250,13 @@
         "gulp-email-remove-unused-css",
         "perf-ref"
     ],
-    "totalPackageCount": 120,
+    "packagesOutsideMonorepo": [
+        "eslint-plugin-row-num",
+        "eslint-plugin-test-num"
+    ],
+    "totalPackageCount": 122,
     "cliCount": 12,
     "programsCount": 107,
-    "specialCount": 2
+    "specialCount": 2,
+    "packagesOutsideMonorepoCount": 2
 }

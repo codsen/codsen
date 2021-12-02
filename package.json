@@ -20,7 +20,7 @@
     "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist --ignore-scripts",
     "build": "lerna run build --bail --concurrency 1",
     "build:info": "node ./scripts/generate-info.js",
-    "build:playgrounds": "node ./scripts/playgrounds.js",
+    "build:playgrounds": "node ./scripts/fetch-webapps-json.js",
     "build:packageExamples": "node ./scripts/packageExamples.js",
     "build:packageJsons": "node scripts/packageJsons.js",
     "build:readme": "node ./scripts/generate-readme.js",
