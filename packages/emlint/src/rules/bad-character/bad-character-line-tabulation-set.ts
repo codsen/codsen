@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/008a/index.htm
 
 function badCharacterLineTabulationSet(context: Linter): RuleObjType {
-  const charCode = 138;
+  let charCode = 138;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

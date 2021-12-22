@@ -2,23 +2,29 @@
 // https://www.fileformat.info/info/unicode/char/008c/index.htm
 // -----------------------------------------------------------------------------
 
-import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
+
+import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-tap.test(`01 - detects two PARTIAL LINE BACKWARD characters`, (t) => {
-  const str = "\u008Cdlkgjld\u008Cj";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+test(`01 - detects two PARTIAL LINE BACKWARD characters`, () => {
+  let str = "\u008Cdlkgjld\u008Cj";
+  let linter = new Linter();
+  let messages = linter.verify(str, {
     rules: {
       "bad-character-partial-line-backward": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -48,6 +54,7 @@ tap.test(`01 - detects two PARTIAL LINE BACKWARD characters`, (t) => {
     ],
     "01.01"
   );
-  t.equal(applyFixes(str, messages), "dlkgjldj", "01.02");
-  t.end();
+  equal(applyFixes(str, messages), "dlkgjldj", "01.02");
 });
+
+test.run();

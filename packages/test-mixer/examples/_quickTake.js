@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { mixer } from "../dist/test-mixer.esm.js";
 
 // check all possible combinations of all boolean opts:

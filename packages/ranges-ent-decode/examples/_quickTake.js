@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { rEntDecode } from "../dist/ranges-ent-decode.esm.js";
 
 // see codsen.com/ranges/

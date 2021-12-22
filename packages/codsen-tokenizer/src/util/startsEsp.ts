@@ -1,4 +1,5 @@
 import { right } from "string-left-right";
+
 import {
   Token,
   Layer,
@@ -22,7 +23,7 @@ function startsEsp(
   layers: Layer[],
   withinStyle: boolean
 ): boolean {
-  const res =
+  let res =
     // 1. two consecutive esp characters - Liquid, Mailchimp etc.
     // {{ or |* and so on
     (espChars.includes(str[i]) &&
@@ -120,7 +121,7 @@ function startsEsp(
       (layers[layers.length - 1] as LayerEsp).openingLump[2] === "-" &&
       (layers[layers.length - 1] as LayerEsp).openingLump[3] === "-");
 
-  console.log(`123 startsEsp(): RETURNS ${!!res}`);
+  console.log(`124 startsEsp(): RETURNS ${!!res}`);
   return !!res;
 }
 

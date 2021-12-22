@@ -1,5 +1,6 @@
-import { Linter, RuleObjType } from "../../linter";
 import { isMediaD } from "is-media-descriptor";
+
+import { Linter, RuleObjType } from "../../linter";
 import checkForWhitespace from "../../util/checkForWhitespace";
 
 // rule: attribute-validate-media
@@ -13,7 +14,7 @@ function attributeValidateMedia(context: Linter): RuleObjType {
       );
 
       console.log(
-        `016 attributeValidateMedia(): node = ${JSON.stringify(node, null, 4)}`
+        `017 attributeValidateMedia(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "media") {
@@ -31,7 +32,7 @@ function attributeValidateMedia(context: Linter): RuleObjType {
         // beware, the charStart and charEnd are not offset, their "zero" is
         // start of an attribute's value, so if you use them, you need to
         // offset to the true index, you must add "(node.attribValueStartsAt as number)" value
-        const { charStart, charEnd, errorArr } = checkForWhitespace(
+        let { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValueRaw,
           node.attribValueStartsAt as number
         );
@@ -64,7 +65,7 @@ function attributeValidateMedia(context: Linter): RuleObjType {
             )
           )
           .forEach((errorObj) => {
-            console.log(`067 RAISE ERROR`);
+            console.log(`068 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-media" });
           });
       }

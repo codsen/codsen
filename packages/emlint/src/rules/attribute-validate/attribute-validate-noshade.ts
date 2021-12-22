@@ -29,7 +29,7 @@ function attributeValidateNoshade(
         )}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "noshade") {
         // validate the parent

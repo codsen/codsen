@@ -1,6 +1,7 @@
 import { mixer } from "test-mixer";
 import clone from "lodash.clonedeep";
 import objectPath from "object-path";
+
 import { stri as striApi, defaults } from "../../dist/stristri.esm.js";
 
 function mixerToExport(ref) {
@@ -10,22 +11,22 @@ function mixerToExport(ref) {
 // t is passed node-tap test instance
 // n is index number of a test - we need to run the resource-heavy
 // test calculations only for the n === 0
-function stri(t, n, src, opts) {
+function stri(assert, n, src, opts) {
   // If toggling any of the options makes a difference,
   // that option must be reported as "applicable". And on the opposite.
-  const resolvedOpts = { ...defaults, ...opts };
+  let resolvedOpts = { ...defaults, ...opts };
   Object.keys(resolvedOpts).forEach((key) => {
     // only perform the check if "resolvedOpts" has the key's
     // value as boolean-type
     if (typeof resolvedOpts[key] === "boolean") {
-      const obj1 = clone(resolvedOpts);
+      let obj1 = clone(resolvedOpts);
       objectPath.set(obj1, key, true);
 
-      const obj2 = clone(resolvedOpts);
+      let obj2 = clone(resolvedOpts);
       objectPath.set(obj2, key, false);
 
       if (striApi(src, obj1).result !== striApi(src, obj2).result) {
-        t.ok(
+        assert.ok(
           striApi(src, resolvedOpts).applicableOpts[key],
           `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields different results on different opts.${key}:
   "${`\u001b[${33}m${JSON.stringify(
@@ -47,7 +48,7 @@ function stri(t, n, src, opts) {
           )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`
         );
       } else {
-        t.notOk(
+        assert.not.ok(
           striApi(src, resolvedOpts).applicableOpts[key],
           `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields same results on different opts.${key}:
   "${`\u001b[${33}m${JSON.stringify(

@@ -1,196 +1,201 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
+// eslint-disable-next-line no-unused-vars
+import { crush, defaults, version } from "../dist/html-crush.esm.js";
 import { m } from "./util/util.js";
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - deletes trailing space`,
-  (t) => {
-    t.match(
-      m(t, " <a> \n <b> ", {
-        removeLineBreaks: true,
-      }),
-      {
-        result: "<a> <b>",
-        applicableOpts: {
-          removeHTMLComments: false,
-          removeCSSComments: false,
-        },
-      },
-      "01.01"
-    );
-    t.match(
-      m(t, " <a>\n<b> ", {
-        removeLineBreaks: true,
-      }),
-      {
-        result: "<a> <b>",
-        applicableOpts: {
-          removeHTMLComments: false,
-          removeCSSComments: false,
-        },
-      },
-      "01.02"
-    );
-    t.match(
-      m(t, " <section> \n <article> ", {
-        removeLineBreaks: true,
-      }),
-      {
-        result: "<section><article>",
-        applicableOpts: {
-          removeHTMLComments: false,
-          removeCSSComments: false,
-        },
-      },
-      "01.03"
-    );
+test(`01 - full`, () => {
+  let { result, applicableOpts, ranges } = m(equal, " <a> \n <b> ", {
+    removeLineBreaks: true,
+  });
 
-    t.end();
-  }
-);
+  equal(result, "<a> <b>");
+  equal(ranges, [
+    [0, 1],
+    [4, 7, " "],
+    [10, 11],
+  ]);
+  equal(applicableOpts, {
+    removeHTMLComments: false,
+    removeCSSComments: false,
+  });
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - retains trailing linebreak`,
-  (t) => {
-    t.match(
-      m(t, " <a> \n <b> \n", {
-        removeLineBreaks: true,
-      }),
-      {
-        result: "<a> <b>\n",
-        applicableOpts: {
-          removeHTMLComments: false,
-          removeCSSComments: false,
-        },
+test(`01 - deletes trailing space`, () => {
+  compare(
+    ok,
+    m(equal, " <a> \n <b> ", {
+      removeLineBreaks: true,
+    }),
+    {
+      result: "<a> <b>",
+      applicableOpts: {
+        removeHTMLComments: false,
+        removeCSSComments: false,
       },
-      "02"
-    );
-
-    t.end();
-  }
-);
-
-tap.test(
-  `03 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - trailing line break`,
-  (t) => {
-    t.match(
-      m(t, " a \n b \n", {
-        removeLineBreaks: true,
-      }),
-      {
-        result: "a b\n",
-        applicableOpts: {
-          removeHTMLComments: false,
-          removeCSSComments: false,
-        },
+    },
+    "01.01"
+  );
+  compare(
+    ok,
+    m(equal, " <a>\n<b> ", {
+      removeLineBreaks: true,
+    }),
+    {
+      result: "<a> <b>",
+      applicableOpts: {
+        removeHTMLComments: false,
+        removeCSSComments: false,
       },
-      "03"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `04 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - multiple line breaks`,
-  (t) => {
-    t.match(
-      m(t, " a \n b\n\n\nc ", {
-        removeLineBreaks: true,
-      }),
-      {
-        result: "a b c",
-        applicableOpts: {
-          removeHTMLComments: false,
-          removeCSSComments: false,
-        },
+    },
+    "01.02"
+  );
+  compare(
+    ok,
+    m(equal, " <section> \n <article> ", {
+      removeLineBreaks: true,
+    }),
+    {
+      result: "<section><article>",
+      applicableOpts: {
+        removeHTMLComments: false,
+        removeCSSComments: false,
       },
-      "04"
-    );
-    t.end();
-  }
-);
+    },
+    "01.03"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - ends with character`,
-  (t) => {
-    t.match(
-      m(t, " a \n b\n\n\nc", {
-        removeLineBreaks: true,
-      }),
-      {
-        result: "a b c",
-        applicableOpts: {
-          removeHTMLComments: false,
-          removeCSSComments: false,
-        },
+test(`02 - retains trailing linebreak`, () => {
+  compare(
+    ok,
+    m(equal, " <a> \n <b> \n", {
+      removeLineBreaks: true,
+    }),
+    {
+      result: "<a> <b>\n",
+      applicableOpts: {
+        removeHTMLComments: false,
+        removeCSSComments: false,
       },
-      "05"
-    );
-    t.end();
-  }
-);
+    },
+    "02"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags, end with character`,
-  (t) => {
-    t.match(
-      m(t, " <x> \n <y>\n\n\n<z>", {
-        removeLineBreaks: true,
-      }),
-      {
-        result: "<x><y><z>",
-        applicableOpts: {
-          removeHTMLComments: false,
-          removeCSSComments: false,
-        },
+test(`03 - trailing line break`, () => {
+  compare(
+    ok,
+    m(equal, " a \n b \n", {
+      removeLineBreaks: true,
+    }),
+    {
+      result: "a b\n",
+      applicableOpts: {
+        removeHTMLComments: false,
+        removeCSSComments: false,
       },
-      "06.01"
-    );
-    t.match(
-      m(t, " <a> \n <b>\n\n\n<i>\n\n\n<c>", {
-        removeLineBreaks: true,
-      }),
-      {
-        result: "<a> <b> <i><c>",
-        applicableOpts: {
-          removeHTMLComments: false,
-          removeCSSComments: false,
-        },
-      },
-      "06.02"
-    );
-    t.end();
-  }
-);
+    },
+    "03"
+  );
+});
 
-tap.test(
-  `07 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - comments`,
-  (t) => {
-    const src = `<!--<![endif]-->`;
-    t.match(
-      m(t, src, {
-        removeLineBreaks: true,
-      }),
-      {
-        result: src,
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
+test(`04 - multiple line breaks`, () => {
+  compare(
+    ok,
+    m(equal, " a \n b\n\n\nc ", {
+      removeLineBreaks: true,
+    }),
+    {
+      result: "a b c",
+      applicableOpts: {
+        removeHTMLComments: false,
+        removeCSSComments: false,
       },
-      "07"
-    );
-    t.end();
-  }
-);
+    },
+    "04"
+  );
+});
 
-tap.test(`08 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - CRLF`, (t) => {
-  const src = `<table>\r\n<tr>`;
-  t.match(
-    m(t, src, {
+test(`05 - ends with character`, () => {
+  compare(
+    ok,
+    m(equal, " a \n b\n\n\nc", {
+      removeLineBreaks: true,
+    }),
+    {
+      result: "a b c",
+      applicableOpts: {
+        removeHTMLComments: false,
+        removeCSSComments: false,
+      },
+    },
+    "05"
+  );
+});
+
+test(`06 - tags, end with character`, () => {
+  compare(
+    ok,
+    m(equal, " <x> \n <y>\n\n\n<z>", {
+      removeLineBreaks: true,
+    }),
+    {
+      result: "<x><y><z>",
+      applicableOpts: {
+        removeHTMLComments: false,
+        removeCSSComments: false,
+      },
+    },
+    "06.01"
+  );
+  compare(
+    ok,
+    m(equal, " <a> \n <b>\n\n\n<i>\n\n\n<c>", {
+      removeLineBreaks: true,
+    }),
+    {
+      result: "<a> <b> <i><c>",
+      applicableOpts: {
+        removeHTMLComments: false,
+        removeCSSComments: false,
+      },
+    },
+    "06.02"
+  );
+});
+
+test(`07 - comments`, () => {
+  let src = `<!--<![endif]-->`;
+  compare(
+    ok,
+    m(equal, src, {
+      removeLineBreaks: true,
+    }),
+    {
+      result: src,
+      applicableOpts: {
+        removeHTMLComments: true,
+        removeCSSComments: false,
+      },
+    },
+    "07"
+  );
+});
+
+test(`08 - CRLF`, () => {
+  let src = `<table>\r\n<tr>`;
+  compare(
+    ok,
+    m(equal, src, {
       removeLineBreaks: true,
     }).result,
     `<table><tr>`,
     "08"
   );
-  t.end();
 });
+
+test.run();

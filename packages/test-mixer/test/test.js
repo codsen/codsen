@@ -1,8 +1,11 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { mixer } from "../dist/test-mixer.esm.js";
 
-tap.test("01", (t) => {
-  t.strictSame(
+test("01", () => {
+  equal(
     mixer(
       {
         foo: true,
@@ -24,7 +27,7 @@ tap.test("01", (t) => {
     ],
     "01.01"
   );
-  t.strictSame(
+  equal(
     mixer(
       {
         foo: true,
@@ -47,7 +50,7 @@ tap.test("01", (t) => {
     ],
     "01.02"
   );
-  t.strictSame(
+  equal(
     mixer(
       {
         foo: true,
@@ -70,11 +73,10 @@ tap.test("01", (t) => {
     ],
     "01.03"
   );
-  t.end();
 });
 
-tap.test("02", (t) => {
-  t.strictSame(
+test("02", () => {
+  equal(
     mixer(
       {},
       {
@@ -94,7 +96,7 @@ tap.test("02", (t) => {
     ],
     "02.01"
   );
-  t.strictSame(
+  equal(
     mixer(
       {},
       {
@@ -115,11 +117,10 @@ tap.test("02", (t) => {
     ],
     "02.02"
   );
-  t.end();
 });
 
-tap.test("03 - request all variations by passing undefined as 1st arg", (t) => {
-  t.strictSame(
+test("03 - request all variations by passing undefined as 1st arg", () => {
+  equal(
     mixer(undefined, {
       foo: true,
       bar: "z",
@@ -136,7 +137,7 @@ tap.test("03 - request all variations by passing undefined as 1st arg", (t) => {
     ],
     "03.01"
   );
-  t.strictSame(
+  equal(
     mixer(
       undefined,
       {
@@ -157,17 +158,16 @@ tap.test("03 - request all variations by passing undefined as 1st arg", (t) => {
     ],
     "03.02"
   );
-  t.end();
 });
 
-tap.test("04 - ensure values are cloned, not referenced", (t) => {
-  const obj = {
+test("04 - ensure values are cloned, not referenced", () => {
+  let obj = {
     foo: true,
     bar: false,
     baz: { x: "y" },
   };
   // first calculate the combinations
-  const result = mixer(
+  let result = mixer(
     {
       foo: true,
     },
@@ -177,7 +177,7 @@ tap.test("04 - ensure values are cloned, not referenced", (t) => {
   // values will change! If it was cloned, values won't change.
   obj.baz = null;
 
-  t.strictSame(
+  equal(
     result,
     [
       {
@@ -193,11 +193,10 @@ tap.test("04 - ensure values are cloned, not referenced", (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - ensure values are cloned, not referenced", (t) => {
-  t.strictSame(
+test("05 - ensure values are cloned, not referenced", () => {
+  equal(
     mixer(
       {
         stripHtml: true,
@@ -237,11 +236,10 @@ tap.test("05 - ensure values are cloned, not referenced", (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
-tap.test("06", (t) => {
-  t.strictSame(
+test("06", () => {
+  equal(
     mixer(
       {
         foo: true,
@@ -266,11 +264,10 @@ tap.test("06", (t) => {
     ],
     "06"
   );
-  t.end();
 });
 
-tap.test("07", (t) => {
-  t.strictSame(
+test("07", () => {
+  equal(
     mixer(
       {
         foo: true,
@@ -300,5 +297,6 @@ tap.test("07", (t) => {
     ],
     "07"
   );
-  t.end();
 });
+
+test.run();

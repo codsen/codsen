@@ -1,60 +1,57 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // missing closing bracket on a <style> tag
 // -----------------------------------------------------------------------------
 
-tap.todo(`01`, (t) => {
-  const gathered = [];
+test.skip(`01`, () => {
+  let gathered = [];
   ct(`<style.a{b:c !important;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "01");
-
-  t.end();
+  match(gathered, [], "01.01");
 });
 
-tap.todo(`02`, (t) => {
-  const gathered = [];
+test.skip(`02`, () => {
+  let gathered = [];
   ct(`<style.a.a\n.a{b:c !important;}</style.a>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(gathered, [], "02");
-
-  t.end();
+  match(gathered, [], "02.01");
 });
 
 // misplaced semi
 // -----------------------------------------------------------------------------
 
-tap.todo(`03 - standalone semi in head CSS - chopped`, (t) => {
-  const gathered = [];
+test.skip(`03 - standalone semi in head CSS - chopped`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c!important};`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "03");
-  t.end();
+  equal(gathered, [], "03.01");
 });
 
-tap.todo(`04 - standalone semi in head CSS - closed`, (t) => {
-  const gathered = [];
+test.skip(`04 - standalone semi in head CSS - closed`, () => {
+  let gathered = [];
   ct(`<style.a.a.a.a.a>.red{color:red!important};</style.a.a.a.a.a.a.a>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "04");
-  t.end();
+  equal(gathered, [], "04.01");
 });
 
-tap.todo(`05 - standalone semi in head CSS - surroundings`, (t) => {
-  const gathered = [];
+test.skip(`05 - standalone semi in head CSS - surroundings`, () => {
+  let gathered = [];
   ct(
     `<style>.a{b:c!important};
 .b{text-align:left;}`,
@@ -64,6 +61,7 @@ tap.todo(`05 - standalone semi in head CSS - surroundings`, (t) => {
       },
     }
   );
-  t.strictSame(gathered, [], "05");
-  t.end();
+  equal(gathered, [], "05.01");
 });
+
+test.run();

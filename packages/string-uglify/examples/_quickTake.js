@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { uglifyById, uglifyArr, version } from "../dist/string-uglify.esm.js";
 
 // notice we put dots and hashes for classes and id's but algorithm will work

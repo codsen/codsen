@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { rApply } from "../dist/ranges-apply.esm.js";
 
 const oldString = `The quick brown fox jumps over the lazy dog.`;

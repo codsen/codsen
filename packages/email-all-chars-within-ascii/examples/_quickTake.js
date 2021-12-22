@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { within } from "../dist/email-all-chars-within-ascii.esm.js";
 
 // enforces all characters to be within ASCII:

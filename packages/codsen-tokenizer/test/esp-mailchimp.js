@@ -1,6 +1,9 @@
 /* eslint no-template-curly-in-string:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // Mailchimp templating language
@@ -12,14 +15,14 @@ const RIGHTDOUBLEQUOTMARK = `\u201D`;
 
 // mc:edit
 
-tap.test(`01 - colon in attr name is not an issue`, (t) => {
-  const gathered = [];
+test(`01 - colon in attr name is not an issue`, () => {
+  let gathered = [];
   ct(`<div mc:edit="right_content">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -63,20 +66,19 @@ tap.test(`01 - colon in attr name is not an issue`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
 // various
 
 // <div mc:repeatable=.product.>
-tap.test(`02 - fancy quotes pasted from MC documentation website`, (t) => {
-  const gathered = [];
+test(`02 - fancy quotes pasted from MC documentation website`, () => {
+  let gathered = [];
   ct(`<div mc:repeatable=${LEFTDOUBLEQUOTMARK}product${RIGHTDOUBLEQUOTMARK}>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -120,5 +122,6 @@ tap.test(`02 - fancy quotes pasted from MC documentation website`, (t) => {
     ],
     "02"
   );
-  t.end();
 });
+
+test.run();

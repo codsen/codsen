@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 2.1.0
 
 ```js
 import { strict as assert } from "assert";
+
 import { allEq } from "object-all-values-equal-to";
 
 // are all values equal to null:
@@ -74,7 +75,7 @@ assert.equal(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/object-all-values-equal-to/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/object-all-values-equal-to/) for a full description of the API.
 
 ## Contributing
 
@@ -86,4 +87,6 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

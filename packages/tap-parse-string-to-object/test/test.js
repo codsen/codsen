@@ -1,31 +1,32 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import tempy from "tempy";
 import fs from "fs-extra";
 import path from "path";
+
 import { parseTap as parse } from "../dist/tap-parse-string-to-object.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-tap.test("01 - wrong/missing input = throw", (t) => {
-  t.throws(() => {
+test("01 - wrong/missing input = throw", () => {
+  throws(() => {
     parse();
   }, /THROW_ID_01/g);
-  t.throws(() => {
+  throws(() => {
     parse(1);
   }, /THROW_ID_01/g);
-  t.throws(() => {
+  throws(() => {
     parse(null);
   }, /THROW_ID_01/g);
-  t.throws(() => {
+  throws(() => {
     parse(undefined);
   }, /THROW_ID_01/g);
-  t.throws(() => {
+  throws(() => {
     parse(true);
   }, /THROW_ID_01/g);
-
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
@@ -53,8 +54,8 @@ tap.test("01 - wrong/missing input = throw", (t) => {
 //                            |
 //                            |
 
-tap.test("02 - case 01 - arrayiffy-if-string - all pass", (t) => {
-  const input = `TAP version 13
+test("02 - case 01 - arrayiffy-if-string - all pass", () => {
+  let input = `TAP version 13
   ok 1 - test/test.js # time=22.582ms { # Subtest: 01.01 - string input
   ok 1 - 01.01.01
   ok 2 - 01.01.02
@@ -86,7 +87,7 @@ tap.test("02 - case 01 - arrayiffy-if-string - all pass", (t) => {
   # time=1816.082ms
 `;
 
-  t.strictSame(
+  equal(
     parse(input),
     {
       ok: true,
@@ -99,7 +100,6 @@ tap.test("02 - case 01 - arrayiffy-if-string - all pass", (t) => {
     },
     "02"
   );
-  t.end();
 });
 
 //                            |
@@ -123,8 +123,8 @@ tap.test("02 - case 01 - arrayiffy-if-string - all pass", (t) => {
 //                            |
 //                            |
 
-tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
-  const input = `TAP version 13
+test("03 - case 01 - arrayiffy-if-string - none pass", () => {
+  let input = `TAP version 13
   not ok 1 - test/test.js # time=229.587ms
     ---
     env: {}
@@ -165,10 +165,10 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |
-              tap.test("01.01 - string input", t => {
-                t.strictSame(a("aaa"), ["aaa"], "01.01.01");
+              test("01.01 - string input", t => {
+                equal(a("aaa"), ["aaa"], "01.01.01");
               ----^
-                t.strictSame(a(""), [], "01.01.02");
+                equal(a(""), [], "01.01.02");
                 t.end();
             ...
 
@@ -192,8 +192,8 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.strictSame(a("aaa"), ["aaa"], "01.01.01");
-                t.strictSame(a(""), [], "01.01.02");
+                equal(a("aaa"), ["aaa"], "01.01.01");
+                equal(a(""), [], "01.01.02");
               ----^
                 t.end();
               });
@@ -224,11 +224,11 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |
-              tap.test("01.02 - non-string input", t => {
-                t.strictSame(a(1), 1, "01.02.01");
+              test("01.02 - non-string input", t => {
+                equal(a(1), 1, "01.02.01");
               ----^
-                t.strictSame(a(null), null, "01.02.02");
-                t.strictSame(a(undefined), undefined, "01.02.03");
+                equal(a(null), null, "01.02.02");
+                equal(a(undefined), undefined, "01.02.03");
             ...
 
           not ok 2 - 01.02.02
@@ -251,11 +251,11 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.strictSame(a(1), 1, "01.02.01");
-                t.strictSame(a(null), null, "01.02.02");
+                equal(a(1), 1, "01.02.01");
+                equal(a(null), null, "01.02.02");
               ----^
-                t.strictSame(a(undefined), undefined, "01.02.03");
-                t.strictSame(a(), undefined, "01.02.04");
+                equal(a(undefined), undefined, "01.02.03");
+                equal(a(), undefined, "01.02.04");
             ...
 
           not ok 3 - 01.02.03
@@ -278,11 +278,11 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.strictSame(a(null), null, "01.02.02");
-                t.strictSame(a(undefined), undefined, "01.02.03");
+                equal(a(null), null, "01.02.02");
+                equal(a(undefined), undefined, "01.02.03");
               ----^
-                t.strictSame(a(), undefined, "01.02.04");
-                t.strictSame(a(true), true, "01.02.05");
+                equal(a(), undefined, "01.02.04");
+                equal(a(true), true, "01.02.05");
             ...
 
           not ok 4 - 01.02.04
@@ -305,10 +305,10 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.strictSame(a(undefined), undefined, "01.02.03");
-                t.strictSame(a(), undefined, "01.02.04");
+                equal(a(undefined), undefined, "01.02.03");
+                equal(a(), undefined, "01.02.04");
               ----^
-                t.strictSame(a(true), true, "01.02.05");
+                equal(a(true), true, "01.02.05");
                 t.end();
             ...
 
@@ -332,8 +332,8 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.strictSame(a(), undefined, "01.02.04");
-                t.strictSame(a(true), true, "01.02.05");
+                equal(a(), undefined, "01.02.04");
+                equal(a(true), true, "01.02.05");
               ----^
                 t.end();
               });
@@ -388,8 +388,8 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |
-              tap.test("UMD build works fine", t => {
-                t.strictSame(a1(source), res);
+              test("UMD build works fine", t => {
+                equal(a1(source), res);
               ----^
                 t.end();
               });
@@ -409,7 +409,7 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
   # time=2198.062ms
 `;
 
-  t.strictSame(
+  equal(
     parse(input),
     {
       ok: true,
@@ -422,7 +422,6 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
     },
     "03"
   );
-  t.end();
 });
 
 //                            |
@@ -446,8 +445,8 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 //                            |
 //                            |
 
-tap.test("04 - ranges-merge", (t) => {
-  const input = `TAP version 13
+test("04 - ranges-merge", () => {
+  let input = `TAP version 13
   ok 1 - test/test.js # time=203.828ms {
       # Subtest: 00.00 - does not throw when the first arg is wrong
           ok 1 - 00.01.01
@@ -638,7 +637,7 @@ tap.test("04 - ranges-merge", (t) => {
   # time=1658.26ms
 `;
 
-  t.strictSame(
+  equal(
     parse(input),
     {
       ok: true,
@@ -651,7 +650,6 @@ tap.test("04 - ranges-merge", (t) => {
     },
     "04"
   );
-  t.end();
 });
 
 //                            |
@@ -675,8 +673,8 @@ tap.test("04 - ranges-merge", (t) => {
 //                            |
 //                            |
 
-tap.test("05 - object-set-all-values-to", (t) => {
-  const input = `TAP version 13
+test("05 - object-set-all-values-to", () => {
+  let input = `TAP version 13
   # Subtest: test/test.js
       # Subtest: 01.01 - input simple plain object, default
           ok 1 - 01.01
@@ -792,7 +790,7 @@ tap.test("05 - object-set-all-values-to", (t) => {
   # time=2910.83ms
 `;
 
-  t.strictSame(
+  equal(
     parse(input),
     {
       ok: true,
@@ -805,7 +803,6 @@ tap.test("05 - object-set-all-values-to", (t) => {
     },
     "05"
   );
-  t.end();
 });
 
 //                            |
@@ -833,15 +830,13 @@ tap.test("05 - object-set-all-values-to", (t) => {
 // 03. stream was given
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `06 - ${`\u001b[${33}m${`streams`}\u001b[${39}m`} - stream is given`,
-  async (t) => {
-    const tempFolder = tempy.directory();
-    // const tempFolder = "temp";
-    fs.ensureDirSync(path.resolve(tempFolder));
+test(`06 - ${`\u001b[${33}m${`streams`}\u001b[${39}m`} - stream is given`, async () => {
+  let tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
 
-    // 1. define file's contents
-    const filesContent = `TAP version 13
+  // 1. define file's contents
+  let filesContent = `TAP version 13
 ok 1 - test/test.js # time=22.582ms { # Subtest: 01.01 - string input
 ok 1 - 01.01.01
 ok 2 - 01.01.02
@@ -873,33 +868,33 @@ ok 1 - UMD build works fine # time=10.033ms
 # time=1816.082ms
 `;
 
-    // 2. write the test file to a temp folder
-    fs.writeFileSync(path.join(tempFolder, "sampleTestStats.md"), filesContent);
+  // 2. write the test file to a temp folder
+  fs.writeFileSync(path.join(tempFolder, "sampleTestStats.md"), filesContent);
 
-    // 3. now read it again, but as a stream
-    // we'll use fs.createReadStream()
-    // const contentsAsStream = fs.createReadStream(
-    //   path.join(tempFolder, "afile.md"),
-    //   { encoding: "utf8", autoClose: true }
-    // );
+  // 3. now read it again, but as a stream
+  // we'll use fs.createReadStream()
+  // const contentsAsStream = fs.createReadStream(
+  //   path.join(tempFolder, "afile.md"),
+  //   { encoding: "utf8", autoClose: true }
+  // );
 
-    const contentsAsStream = fs.createReadStream(
-      path.join(tempFolder, "sampleTestStats.md")
-    );
+  let contentsAsStream = fs.createReadStream(
+    path.join(tempFolder, "sampleTestStats.md")
+  );
 
-    t.strictSame(
-      await parse(contentsAsStream),
-      {
-        ok: true,
-        assertsTotal: 8,
-        assertsPassed: 8,
-        assertsFailed: 0,
-        suitesTotal: 2,
-        suitesPassed: 2,
-        suitesFailed: 0,
-      },
-      "06"
-    );
-    t.end();
-  }
-);
+  equal(
+    await parse(contentsAsStream),
+    {
+      ok: true,
+      assertsTotal: 8,
+      assertsPassed: 8,
+      assertsFailed: 0,
+      suitesTotal: 2,
+      suitesPassed: 2,
+      suitesFailed: 0,
+    },
+    "06"
+  );
+});
+
+test.run();

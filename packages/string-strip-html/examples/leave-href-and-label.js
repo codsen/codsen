@@ -1,6 +1,7 @@
 // Retain href and link label
 
 import { strict as assert } from "assert";
+
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 const someHtml = `<a href="https://twitter.com/loretparisi">twitter:loretparisi&nbsp;&oslash;</a>`;

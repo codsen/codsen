@@ -1,45 +1,45 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { isJinjaNunjucksRegex } from "../dist/regex-is-jinja-nunjucks.esm.js";
 
-tap.test("is not nunjucks or jinja", (t) => {
-  t.notMatch(``, isJinjaNunjucksRegex(), "01.01");
-  t.notMatch(`\n`, isJinjaNunjucksRegex(), "01.02");
-  t.notMatch(`abc`, isJinjaNunjucksRegex(), "01.03");
-  t.notMatch(`<html><div></html>`, isJinjaNunjucksRegex(), "01.04");
-  t.end();
+test("is not nunjucks or jinja", () => {
+  not.match(``, isJinjaNunjucksRegex(), "01.01");
+  not.match(`\n`, isJinjaNunjucksRegex(), "01.02");
+  not.match(`abc`, isJinjaNunjucksRegex(), "01.03");
+  not.match(`<html><div></html>`, isJinjaNunjucksRegex(), "01.04");
 });
 
-tap.test("variables", (t) => {
-  t.match(`{{count}}`, isJinjaNunjucksRegex(), "02.01");
-  t.match(`{{count }}`, isJinjaNunjucksRegex(), "02.02");
-  t.match(`{{ count}}`, isJinjaNunjucksRegex(), "02.03");
-  t.match(`{{ count }}`, isJinjaNunjucksRegex(), "02.04");
-  t.match(`{{ count | length }}`, isJinjaNunjucksRegex(), "02.05");
-  t.match(`<div>{{ count }}</div>`, isJinjaNunjucksRegex(), "02.06");
+test("variables", () => {
+  match(`{{count}}`, isJinjaNunjucksRegex(), "02.01");
+  match(`{{count }}`, isJinjaNunjucksRegex(), "02.02");
+  match(`{{ count}}`, isJinjaNunjucksRegex(), "02.03");
+  match(`{{ count }}`, isJinjaNunjucksRegex(), "02.04");
+  match(`{{ count | length }}`, isJinjaNunjucksRegex(), "02.05");
+  match(`<div>{{ count }}</div>`, isJinjaNunjucksRegex(), "02.06");
 
-  t.match(`{{ foo.bar }}`, isJinjaNunjucksRegex(), "02.07");
-  t.match(`{{ foo["bar"] }}`, isJinjaNunjucksRegex(), "02.08");
+  match(`{{ foo.bar }}`, isJinjaNunjucksRegex(), "02.07");
+  match(`{{ foo["bar"] }}`, isJinjaNunjucksRegex(), "02.08");
 
-  t.match(`{{ foo | title }}`, isJinjaNunjucksRegex(), "02.09");
-  t.match(`{{ foo | join(",") }}`, isJinjaNunjucksRegex(), "02.10");
-  t.match(
+  match(`{{ foo | title }}`, isJinjaNunjucksRegex(), "02.09");
+  match(`{{ foo | join(",") }}`, isJinjaNunjucksRegex(), "02.10");
+  match(
     `{{ foo | replace("foo", "bar") | capitalize }}`,
     isJinjaNunjucksRegex(),
     "02.11"
   );
-  t.end();
 });
 
-tap.test("logic", (t) => {
-  t.match(`abc {% if something %}`, isJinjaNunjucksRegex(), "03.01");
-  t.match(`abc {%- if something %}`, isJinjaNunjucksRegex(), "03.02");
-  t.match(`abc {% if something -%}`, isJinjaNunjucksRegex(), "03.03");
-  t.match(`abc {%- if something -%}`, isJinjaNunjucksRegex(), "03.04");
-  t.end();
+test("logic", () => {
+  match(`abc {% if something %}`, isJinjaNunjucksRegex(), "03.01");
+  match(`abc {%- if something %}`, isJinjaNunjucksRegex(), "03.02");
+  match(`abc {% if something -%}`, isJinjaNunjucksRegex(), "03.03");
+  match(`abc {%- if something -%}`, isJinjaNunjucksRegex(), "03.04");
 });
 
-tap.test("nunjucks with template inheritance", (t) => {
-  t.match(
+test("nunjucks with template inheritance", () => {
+  match(
     `{% block header %}
 This is the default content
 {% endblock %}
@@ -57,5 +57,6 @@ This is the default content
     isJinjaNunjucksRegex(),
     "04"
   );
-  t.end();
 });
+
+test.run();

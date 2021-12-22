@@ -1,3 +1,5 @@
+import { notEmailFriendly } from "html-entities-not-email-friendly";
+
 import { Linter, RuleObjType } from "../../linter";
 
 // rule: bad-named-html-entity-not-email-friendly
@@ -5,8 +7,6 @@ import { Linter, RuleObjType } from "../../linter";
 
 // it controls, should we or should we not put the slashes on void tags,
 // such as img. Is it <img...> or is it <img.../>?
-
-import { notEmailFriendly } from "html-entities-not-email-friendly";
 
 function htmlEntitiesNotEmailFriendly(context: Linter): RuleObjType {
   return {

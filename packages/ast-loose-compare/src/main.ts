@@ -1,13 +1,15 @@
 import { empty } from "ast-contains-only-empty-space";
 import isObj from "lodash.isplainobject";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 /* eslint no-use-before-define: 0 */
 // From "type-fest" by Sindre Sorhus:
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = Array<JsonValue>;
+type JsonArray = JsonValue[];
 
 interface UnknownValueObj {
   [key: string]: any;
@@ -70,7 +72,7 @@ function internalCompare(
   } else if (isObj(bigObj) && isObj(smallObj)) {
     // if both are plain objects
     if (Object.keys(smallObj as UnknownValueObj).length > 0) {
-      const keysArr = Object.keys(smallObj as UnknownValueObj);
+      let keysArr = Object.keys(smallObj as UnknownValueObj);
       for (i = 0, len = keysArr.length; i < len; i++) {
         /* istanbul ignore else */
         if (

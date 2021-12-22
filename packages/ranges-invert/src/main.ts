@@ -1,7 +1,9 @@
 import { rMerge } from "ranges-merge";
+import type { Range, Ranges } from "ranges-merge";
 import { rCrop } from "ranges-crop";
-import { Range, Ranges } from "../../../scripts/common";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Opts {
@@ -67,12 +69,12 @@ function rInvert(
 
   console.log("███████████████████████████████████████");
   // declare defaults, so we can enforce types later:
-  const defaults: Opts = {
+  let defaults: Opts = {
     strictlyTwoElementsInRangeArrays: false,
     skipChecks: false,
   };
   // fill any settings with defaults if missing:
-  const opts = { ...defaults, ...originalOptions };
+  let opts = { ...defaults, ...originalOptions };
   // arrOfRanges validation
 
   let culpritsIndex = 0;
@@ -149,14 +151,14 @@ function rInvert(
   }
 
   console.log(
-    `152 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+    `154 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
       prep,
       null,
       4
     )}`
   );
 
-  const res: Range[] = (prep as any[]).reduce((accum, currArr, i, arr) => {
+  let res: Range[] = (prep as any[]).reduce((accum, currArr, i, arr) => {
     console.log(`\u001b[${35}m${`=====================`}\u001b[${39}m`);
     console.log(
       `accum = ${accum.length ? JSON.stringify(accum, null, 0) : "[]"}`
@@ -164,21 +166,21 @@ function rInvert(
     console.log(`currArr = ${JSON.stringify(currArr, null, 0)}`);
     console.log(`i = ${i}`);
 
-    const res2 = [];
+    let res2 = [];
 
     // if the first range's first index is not zero, additionally add zero range:
     if (i === 0 && arr[0][0] !== 0) {
-      console.log(`171 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
+      console.log(`173 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
       res2.push([0, arr[0][0]]);
     }
 
     // Now, for every range, add inverted range that follows. For example,
     // if we've got [[1, 2], [4, 5]] and we're processing [1, 2], then
     // add the inverted chunk that follows it, [2, 4].
-    const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
+    let endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
       console.log(
-        `181 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
+        `183 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
       );
 
       // this can happen only when opts.skipChecks is on:

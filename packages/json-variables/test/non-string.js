@@ -1,10 +1,13 @@
 /* eslint no-template-curly-in-string: 0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { jVar } from "../dist/json-variables.esm.js";
 
-tap.test("01 - Boolean values inserted into a middle of a string", (t) => {
-  t.strictSame(
+test("01 - Boolean values inserted into a middle of a string", () => {
+  equal(
     jVar({
       a: "%%_b_%% %%_c_%% %%_d_%% %%_e_%%",
       b: "stringB",
@@ -21,7 +24,7 @@ tap.test("01 - Boolean values inserted into a middle of a string", (t) => {
     },
     "01.01 - mix of Bools and strings resolve to the value of the first encountered Bool"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%% %%_c_%% %%_d_%% %%_e_%%",
@@ -43,7 +46,7 @@ tap.test("01 - Boolean values inserted into a middle of a string", (t) => {
     },
     "01.02"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%% %%_c_%% %%_d_%% %%_e_%%",
@@ -63,7 +66,7 @@ tap.test("01 - Boolean values inserted into a middle of a string", (t) => {
     },
     "01.03"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%% %%_c_%% %%_d_%% %%_e_%%",
@@ -86,57 +89,52 @@ tap.test("01 - Boolean values inserted into a middle of a string", (t) => {
     },
     "01.04"
   );
-  t.end();
 });
 
-tap.test(
-  "02 - Boolean values inserted instead of other values, in whole",
-  (t) => {
-    t.strictSame(
-      jVar({
+test("02 - Boolean values inserted instead of other values, in whole", () => {
+  equal(
+    jVar({
+      a: "%%_b_%%",
+      b: true,
+    }),
+    {
+      a: false,
+      b: true,
+    },
+    "02.01"
+  );
+  equal(
+    jVar(
+      {
         a: "%%_b_%%",
         b: true,
-      }),
+      },
+      { resolveToFalseIfAnyValuesContainBool: true }
+    ),
+    {
+      a: false,
+      b: true,
+    },
+    "02.02"
+  );
+  equal(
+    jVar(
       {
-        a: false,
+        a: "%%_b_%%",
         b: true,
       },
-      "02.01"
-    );
-    t.strictSame(
-      jVar(
-        {
-          a: "%%_b_%%",
-          b: true,
-        },
-        { resolveToFalseIfAnyValuesContainBool: true }
-      ),
-      {
-        a: false,
-        b: true,
-      },
-      "02.02"
-    );
-    t.strictSame(
-      jVar(
-        {
-          a: "%%_b_%%",
-          b: true,
-        },
-        { resolveToFalseIfAnyValuesContainBool: false }
-      ),
-      {
-        a: true,
-        b: true,
-      },
-      "02.03"
-    );
-    t.end();
-  }
-);
+      { resolveToFalseIfAnyValuesContainBool: false }
+    ),
+    {
+      a: true,
+      b: true,
+    },
+    "02.03"
+  );
+});
 
-tap.test("03 - null values inserted into a middle of a string", (t) => {
-  t.strictSame(
+test("03 - null values inserted into a middle of a string", () => {
+  equal(
     jVar({
       a: "%%_b_%% %%_c_%% %%_d_%% %%_e_%%",
       b: "stringB",
@@ -153,11 +151,10 @@ tap.test("03 - null values inserted into a middle of a string", (t) => {
     },
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - null values inserted instead of other values, in whole", (t) => {
-  t.strictSame(
+test("04 - null values inserted instead of other values, in whole", () => {
+  equal(
     jVar({
       a: "%%_b_%%",
       b: null,
@@ -168,7 +165,7 @@ tap.test("04 - null values inserted instead of other values, in whole", (t) => {
     },
     "04.01"
   );
-  t.strictSame(
+  equal(
     jVar({
       a: "  %%_b_%%  ", // <---- will "whole value is var" detection cope with whitespaces?
       b: null,
@@ -179,7 +176,7 @@ tap.test("04 - null values inserted instead of other values, in whole", (t) => {
     },
     "04.02 - spaces around a value which would resolve to null"
   );
-  t.strictSame(
+  equal(
     jVar({
       a: "%%-b-%%",
       b: null,
@@ -190,7 +187,7 @@ tap.test("04 - null values inserted instead of other values, in whole", (t) => {
     },
     "04.03 - using non-wrapping heads/tails"
   );
-  t.strictSame(
+  equal(
     jVar({
       a: "  %%-b-%%  ",
       b: null,
@@ -201,7 +198,7 @@ tap.test("04 - null values inserted instead of other values, in whole", (t) => {
     },
     "04.04 - like #3 but with extra whitespace"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -218,7 +215,7 @@ tap.test("04 - null values inserted instead of other values, in whole", (t) => {
     },
     "04.05 - doesn't wrap null"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%-b-%%", // <---- it was no-wrap markers anyway
@@ -235,5 +232,6 @@ tap.test("04 - null values inserted instead of other values, in whole", (t) => {
     },
     "04.06 - doesn't wrap null"
   );
-  t.end();
 });
+
+test.run();

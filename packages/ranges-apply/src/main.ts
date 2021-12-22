@@ -1,7 +1,10 @@
 import { rMerge } from "ranges-merge";
+import type { Range, Ranges } from "ranges-merge";
+import invariant from "tiny-invariant";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
-import { Range, Ranges } from "../../../scripts/common";
 
 function rApply(
   str: string,
@@ -43,6 +46,8 @@ function rApply(
   }
   if (
     !originalRangesArr ||
+    // insurance against array of nulls
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     !originalRangesArr.filter((range) => range).length
   ) {
     // quick ending - no ranges passed
@@ -62,10 +67,12 @@ function rApply(
   }
 
   // allocate first 10% of progress to this stage
-  const len = rangesArr.length;
+  let len = rangesArr.length;
   let counter = 0;
 
   rangesArr
+    // insurance against array of nulls
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     .filter((range) => range)
     .forEach((el, i) => {
       if (progressFn) {
@@ -125,7 +132,7 @@ function rApply(
     });
 
   // allocate another 10% of the progress indicator length to the rangesMerge step:
-  const workingRanges = rMerge(rangesArr, {
+  let workingRanges = rMerge(rangesArr, {
     progressFn: (perc) => {
       if (progressFn) {
         // since "perc" is already from zero to hundred, we just divide by 10 and
@@ -140,32 +147,30 @@ function rApply(
     },
   });
 
+  invariant(workingRanges);
+
   // allocate the rest 80% to the actual string assembly:
-  const len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
-  /* istanbul ignore else */
+  let len2 = workingRanges.length;
   if (len2 > 0) {
-    const tails = str.slice((workingRanges as any[])[len2 - 1][1]);
-    // eslint-disable-next-line no-param-reassign
-    str = (workingRanges as any[]).reduce((acc, _val, i, arr) => {
+    let tails = str.slice(workingRanges[len2 - 1][1]);
+    str = workingRanges.reduce((acc, _val, i, arr) => {
       if (progressFn) {
         // since "perc" is already from zero to hundred, we just divide by 10 and
         // get the range from zero to ten:
         percentageDone = 20 + Math.floor((i / len2) * 80);
-        /* istanbul ignore else */
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
           progressFn(percentageDone);
         }
       }
 
-      const beginning = i === 0 ? 0 : arr[i - 1][1];
-      const ending = arr[i][0];
-      return acc + str.slice(beginning, ending) + (arr[i][2] || "");
+      let beginning = i === 0 ? 0 : arr[i - 1][1];
+      let ending = arr[i][0];
+      return `${acc}${str.slice(beginning, ending)}${arr[i][2] || ""}`;
     }, "");
-    // eslint-disable-next-line no-param-reassign
     str += tails;
   }
   return str;
 }
 
-export { rApply, version };
+export { rApply, version, Range, Ranges };

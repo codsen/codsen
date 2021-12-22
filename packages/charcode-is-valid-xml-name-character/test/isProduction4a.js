@@ -1,6 +1,9 @@
 /* eslint no-unused-vars:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import {
   isProduction4,
   isProduction4a,
@@ -12,22 +15,23 @@ import {
 // isProduction4a
 // -----------------------------------------------------------------------------
 
-tap.test("01 - isProduction4a()", (t) => {
-  t.equal(isProduction4a("a"), true, "01.01");
-  t.equal(isProduction4a("?"), false, "01.02");
-  t.equal(isProduction4a("-"), true, "01.03");
-  t.equal(isProduction4a("1"), true, "01.04");
-  t.equal(isProduction4a(":"), true, "01.05");
-  t.equal(isProduction4a("_"), true, "01.06");
-  t.equal(
+test("01 - isProduction4a()", () => {
+  equal(isProduction4a("a"), true, "01.01");
+  equal(isProduction4a("?"), false, "01.02");
+  equal(isProduction4a("-"), true, "01.03");
+  equal(isProduction4a("1"), true, "01.04");
+  equal(isProduction4a(":"), true, "01.05");
+  equal(isProduction4a("_"), true, "01.06");
+  equal(
     isProduction4a("\uD800\uDC00"), // #x10000
     true,
     "01.07"
   );
-  t.equal(
+  equal(
     isProduction4a("\uDB7F\uDFFF"), // #xEFFFF
     true,
     "01.08"
   );
-  t.end();
 });
+
+test.run();

@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { rIterate } from "../dist/ranges-iterate.esm.js";
 
 // Ranges in the following example "punches out" a "hole" from `a` to `g`

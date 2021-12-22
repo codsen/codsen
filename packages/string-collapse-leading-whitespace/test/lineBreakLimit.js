@@ -1,99 +1,87 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm.js";
 
 // testing the second input argument, the line break limit
 // -----------------------------------------------------------------------------
 
-tap.test("01", (t) => {
-  t.equal(c("zzz", 9), "zzz", "01");
-  t.end();
+test("01", () => {
+  equal(c("zzz", 9), "zzz", "01");
 });
 
 // erroneous, but behind the scenes it's set to 1
-tap.test("02", (t) => {
-  t.equal(c("zzz", 9.1), "zzz", "02");
-  t.end();
+test("02", () => {
+  equal(c("zzz", 9.1), "zzz", "02");
 });
 
-tap.test("03 - CRLF", (t) => {
-  t.equal(
+test("03 - CRLF", () => {
+  equal(
     c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 9),
     "\r\n\r\n\r\nzzz\r\n\r\n\r\n",
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - LF", (t) => {
-  t.equal(c("\n\n\nzzz\n\n\n", 9), "\n\n\nzzz\n\n\n", "04");
-  t.end();
+test("04 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 9), "\n\n\nzzz\n\n\n", "04");
 });
 
-tap.test("05 - CR", (t) => {
-  t.equal(c("\r\r\rzzz\r\r\r", 9), "\r\r\rzzz\r\r\r", "05");
-  t.end();
+test("05 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 9), "\r\r\rzzz\r\r\r", "05");
 });
 
-tap.test("06 - CRLF", (t) => {
-  t.equal(
+test("06 - CRLF", () => {
+  equal(
     c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 3),
     "\r\n\r\n\r\nzzz\r\n\r\n\r\n",
     "06"
   );
-  t.end();
 });
 
-tap.test("07 - CR", (t) => {
-  t.equal(c("\r\r\rzzz\r\r\r", 3), "\r\r\rzzz\r\r\r", "07");
-  t.end();
+test("07 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 3), "\r\r\rzzz\r\r\r", "07");
 });
 
-tap.test("08 - LF", (t) => {
-  t.equal(c("\n\n\nzzz\n\n\n", 3), "\n\n\nzzz\n\n\n", "08");
-  t.end();
+test("08 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 3), "\n\n\nzzz\n\n\n", "08");
 });
 
-tap.test("09 - CRLF", (t) => {
-  t.equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 2), "\r\n\r\nzzz\r\n\r\n", "09");
-  t.end();
+test("09 - CRLF", () => {
+  equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 2), "\r\n\r\nzzz\r\n\r\n", "09");
 });
 
-tap.test("10 - CR", (t) => {
-  t.equal(c("\r\r\rzzz\r\r\r", 2), "\r\rzzz\r\r", "10");
-  t.end();
+test("10 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 2), "\r\rzzz\r\r", "10");
 });
 
-tap.test("11 - LF", (t) => {
-  t.equal(c("\n\n\nzzz\n\n\n", 2), "\n\nzzz\n\n", "11");
-  t.end();
+test("11 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 2), "\n\nzzz\n\n", "11");
 });
 
-tap.test("12 - CRLF", (t) => {
-  t.equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 1), "\r\nzzz\r\n", "12");
-  t.end();
+test("12 - CRLF", () => {
+  equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 1), "\r\nzzz\r\n", "12");
 });
 
-tap.test("13 - LF", (t) => {
-  t.equal(c("\n\n\nzzz\n\n\n", 1), "\nzzz\n", "13");
-  t.end();
+test("13 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 1), "\nzzz\n", "13");
 });
 
-tap.test("14 - CR", (t) => {
-  t.equal(c("\r\r\rzzz\r\r\r", 1), "\rzzz\r", "14");
-  t.end();
+test("14 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 1), "\rzzz\r", "14");
 });
 
-tap.test("15 - CRLF", (t) => {
-  t.equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 0), "zzz", "15");
-  t.end();
+test("15 - CRLF", () => {
+  equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 0), "zzz", "15");
 });
 
-tap.test("16 - LF", (t) => {
-  t.equal(c("\n\n\nzzz\n\n\n", 0), "zzz", "16");
-  t.end();
+test("16 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 0), "zzz", "16");
 });
 
-tap.test("17 - CR", (t) => {
-  t.equal(c("\r\r\rzzz\r\r\r", 0), "zzz", "17");
-  t.end();
+test("17 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 0), "zzz", "17");
 });
+
+test.run();

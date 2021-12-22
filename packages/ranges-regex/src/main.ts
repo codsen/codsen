@@ -1,7 +1,9 @@
 import { rMerge } from "ranges-merge";
 import isregexp from "lodash.isregexp";
-import { Range, Ranges } from "../../../scripts/common";
+import type { Range, Ranges } from "ranges-merge";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 function rRegex(
@@ -53,7 +55,7 @@ function rRegex(
 
   let tempArr;
 
-  const resRange: Range[] = [];
+  let resRange: Range[] = [];
   if (
     replacement === null ||
     (typeof replacement === "string" && replacement.length)

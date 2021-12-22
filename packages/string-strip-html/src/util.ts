@@ -52,7 +52,7 @@ function xBeforeYOnTheRight(
 //                                        we're here, it's false ending
 //
 /* istanbul ignore next */
-function notWithinAttrQuotes(tag: Obj, str: string, i: number) {
+function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
   return (
     !tag ||
     !tag.quotes ||

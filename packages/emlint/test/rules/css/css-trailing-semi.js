@@ -1,46 +1,49 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 
 // 00. false positives
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - not a style, inline`, (t) => {
-  const str = `<img alt="color: red">`;
-  const messages = verify(t, str, {
+test(`01 - not a style, inline`, () => {
+  let str = `<img alt="color: red">`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "01.01");
-  t.strictSame(messages, [], "01.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
 });
 
-tap.test(`02 - not a style, head`, (t) => {
-  const str = `<span>a{color: red}`;
-  const messages = verify(t, str, {
+test(`02 - not a style, head`, () => {
+  let str = `<span>a{color: red}`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "02.01");
-  t.strictSame(messages, [], "02.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "02.01");
+  equal(messages, [], "02.02");
 });
 
 // always
 // -----------------------------------------------------------------------------
 
-tap.test(`03 - one style, always`, (t) => {
-  const str = `<style>.a{color:red}</style><body style="color:red">a</body>`;
-  const fixed = `<style>.a{color:red;}</style><body style="color:red;">a</body>`;
-  const messages = verify(t, str, {
+test(`03 - one style, always`, () => {
+  let str = `<style>.a{color:red}</style><body style="color:red">a</body>`;
+  let fixed = `<style>.a{color:red;}</style><body style="color:red;">a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "03.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "03.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -66,18 +69,18 @@ tap.test(`03 - one style, always`, (t) => {
     ],
     "03.02"
   );
-  t.end();
 });
 
-tap.test(`04 - one style, always, spaced important`, (t) => {
-  const str = `<style>.a{color: red !important}</style><body style="color: red !important">a</body>`;
-  const fixed = `<style>.a{color: red !important;}</style><body style="color: red !important;">a</body>`;
-  const messages = verify(t, str, {
+test(`04 - one style, always, spaced important`, () => {
+  let str = `<style>.a{color: red !important}</style><body style="color: red !important">a</body>`;
+  let fixed = `<style>.a{color: red !important;}</style><body style="color: red !important;">a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -103,95 +106,89 @@ tap.test(`04 - one style, always, spaced important`, (t) => {
     ],
     "04.01"
   );
-  t.equal(applyFixes(str, messages), fixed, "04.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "04.02");
 });
 
-tap.test(`05 - one style, always, tight important`, (t) => {
-  const str = `<style>.a{color:red!important}</style><body style="color:red!important">a</body>`;
-  const fixed = `<style>.a{color:red!important;}</style><body style="color:red!important;">a</body>`;
-  const messages = verify(t, str, {
+test(`05 - one style, always, tight important`, () => {
+  let str = `<style>.a{color:red!important}</style><body style="color:red!important">a</body>`;
+  let fixed = `<style>.a{color:red!important;}</style><body style="color:red!important;">a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "05");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "05");
 });
 
-tap.test(`06 - one style, always, inner whitespace`, (t) => {
-  const str = `<style>.a{color:red }</style><body>a</body>`;
-  const fixed = `<style>.a{color:red; }</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`06 - one style, always, inner whitespace`, () => {
+  let str = `<style>.a{color:red }</style><body>a</body>`;
+  let fixed = `<style>.a{color:red; }</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [1, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "06");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "06");
 });
 
-tap.test(`07 - two styles, always`, (t) => {
-  const str = `<style>.a{text-align:left; color:red}</style><body>a</body>`;
-  const fixed = `<style>.a{text-align:left; color:red;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`07 - two styles, always`, () => {
+  let str = `<style>.a{text-align:left; color:red}</style><body>a</body>`;
+  let fixed = `<style>.a{text-align:left; color:red;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "07");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "07");
 });
 
-tap.test(`08 - two styles with space, always`, (t) => {
-  const str = `<style>.a{text-align:left; color:red }</style><body>a</body>`;
-  const fixed = `<style>.a{text-align:left; color:red; }</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`08 - two styles with space, always`, () => {
+  let str = `<style>.a{text-align:left; color:red }</style><body>a</body>`;
+  let fixed = `<style>.a{text-align:left; color:red; }</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "08");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "08");
 });
 
-tap.test(`09 - two styles, default=always`, (t) => {
-  const str = `<style>.a{text-align:left; color:red\n}</style><body>a</body>`;
-  const fixed = `<style>.a{text-align:left; color:red;\n}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`09 - two styles, default=always`, () => {
+  let str = `<style>.a{text-align:left; color:red\n}</style><body>a</body>`;
+  let fixed = `<style>.a{text-align:left; color:red;\n}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "09");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "09");
 });
 
-tap.test(`10 - nothing to fix`, (t) => {
-  const str = `<style>.a{\ntext-align:left;\ncolor:red;\n}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`10 - nothing to fix`, () => {
+  let str = `<style>.a{\ntext-align:left;\ncolor:red;\n}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), str, "10.01");
-  t.strictSame(messages, [], "10.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "10.01");
+  equal(messages, [], "10.02");
 });
 
 // never
 // -----------------------------------------------------------------------------
 
-tap.test(`11 - one style, never`, (t) => {
-  const str = `<style>.a{color:red;}</style><body>a</body>`;
-  const fixed = `<style>.a{color:red}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`11 - one style, never`, () => {
+  let str = `<style>.a{color:red;}</style><body>a</body>`;
+  let fixed = `<style>.a{color:red}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "never"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "11.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "11.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -207,57 +204,54 @@ tap.test(`11 - one style, never`, (t) => {
     ],
     "11.02"
   );
-  t.end();
 });
 
-tap.test(`12 - two styles, never`, (t) => {
-  const str = `<style>.a{text-align:left;color:red;}</style><body>a</body>`;
-  const fixed = `<style>.a{text-align:left;color:red}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`12 - two styles, never`, () => {
+  let str = `<style>.a{text-align:left;color:red;}</style><body>a</body>`;
+  let fixed = `<style>.a{text-align:left;color:red}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "never"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "12");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "12");
 });
 
-tap.test(`13 - two styles, never, trailing whitespace`, (t) => {
-  const str = `<style>.a{text-align:left;color:red; }</style><body>a</body>`;
-  const fixed = `<style>.a{text-align:left;color:red }</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`13 - two styles, never, trailing whitespace`, () => {
+  let str = `<style>.a{text-align:left;color:red; }</style><body>a</body>`;
+  let fixed = `<style>.a{text-align:left;color:red }</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "never"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "13");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "13");
 });
 
 // ESP tags
 //
 // -----------------------------------------------------------------------------
 
-tap.test(`14 - wrapped with Nunjucks IF`, (t) => {
-  const str = `<td{% if foo %} style="color:red"{% endif %}>`;
-  const fixed = `<td{% if foo %} style="color:red;"{% endif %}>`;
-  const messages = verify(t, str, {
+test(`14 - wrapped with Nunjucks IF`, () => {
+  let str = `<td{% if foo %} style="color:red"{% endif %}>`;
+  let fixed = `<td{% if foo %} style="color:red;"{% endif %}>`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "14");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "14");
 });
 
-tap.test(`15`, (t) => {
-  const str = `<td{% if foo %} style="color:red"{% endif %} align="left">`;
-  const fixed = `<td{% if foo %} style="color:red;"{% endif %} align="left">`;
-  const messages = verify(t, str, {
+test(`15`, () => {
+  let str = `<td{% if foo %} style="color:red"{% endif %} align="left">`;
+  let fixed = `<td{% if foo %} style="color:red;"{% endif %} align="left">`;
+  let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "15");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "15");
 });
+
+test.run();

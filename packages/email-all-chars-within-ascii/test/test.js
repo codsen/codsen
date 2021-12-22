@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { within } from "../dist/email-all-chars-within-ascii.esm.js";
 
 const ETX = String.fromCodePoint(3); // #003
@@ -6,23 +9,20 @@ const CAPITALOWITHSTROKE = `\u00D8`; // #216
 const SMALLOWITHDIAERESIS = `\u00F6`; // #246
 const NONEXISTING = String.fromCodePoint(896); // #003
 
-tap.test("01 - empty", (t) => {
-  t.sameStrict(within(""), [], "01");
-  t.end();
+test("01 - empty", () => {
+  equal(within(""), [], "01");
 });
 
-tap.test("02 - legit set of chars", (t) => {
-  t.sameStrict(within("the quick brown fox"), [], "02");
-  t.end();
+test("02 - legit set of chars", () => {
+  equal(within("the quick brown fox"), [], "02");
 });
 
-tap.test("03 - legit, line breaks", (t) => {
-  t.sameStrict(within("the quick\rbrown\r\nfox\njumps over"), [], "03");
-  t.end();
+test("03 - legit, line breaks", () => {
+  equal(within("the quick\rbrown\r\nfox\njumps over"), [], "03");
 });
 
-tap.test("04 - illegal", (t) => {
-  t.sameStrict(
+test("04 - illegal", () => {
+  equal(
     within("Motörhead"),
     [
       {
@@ -37,11 +37,10 @@ tap.test("04 - illegal", (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - multi-line illegal", (t) => {
-  t.sameStrict(
+test("05 - multi-line illegal", () => {
+  equal(
     within(
       `My friend ${CAPITALOWITHSTROKE}rjan\nlikes Mot${SMALLOWITHDIAERESIS}rhead!`
     ),
@@ -67,11 +66,10 @@ tap.test("05 - multi-line illegal", (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - illegal low ASCII, ETX", (t) => {
-  t.sameStrict(
+test("06 - illegal low ASCII, ETX", () => {
+  equal(
     within(`a${ETX}b`),
     [
       {
@@ -86,12 +84,11 @@ tap.test("06 - illegal low ASCII, ETX", (t) => {
     ],
     "06"
   );
-  t.end();
 });
 
 // https://unicode-table.com/en/#0380
-tap.test("07 - non-existent outside ASCII, #896 or u0380", (t) => {
-  t.sameStrict(
+test("07 - non-existent outside ASCII, #896 or u0380", () => {
+  equal(
     within(`a\u0380b`),
     [
       {
@@ -106,5 +103,6 @@ tap.test("07 - non-existent outside ASCII, #896 or u0380", (t) => {
     ],
     "07"
   );
-  t.end();
 });
+
+test.run();

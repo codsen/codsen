@@ -1,52 +1,51 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { m } from "./util/util.js";
 
 // within head styles
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`,
-  (t) => {
-    const source = `<style>/* remove this */</style><body>z</body>`;
+test(`01 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`, () => {
+  let source = `<style>/* remove this */</style><body>z</body>`;
 
-    // off
-    t.match(
-      m(t, source, {
-        removeCSSComments: false,
-      }),
-      {
-        result: source,
-        applicableOpts: {
-          removeCSSComments: true,
-          removeHTMLComments: false,
-        },
-      },
-      "01.01"
-    );
-
-    // on
-    t.match(
-      m(t, source, {
+  // off
+  compare(
+    ok,
+    m(equal, source, {
+      removeCSSComments: false,
+    }),
+    {
+      result: source,
+      applicableOpts: {
         removeCSSComments: true,
-      }),
-      {
-        result: `<style></style><body>z</body>`,
-        applicableOpts: {
-          removeCSSComments: true,
-          removeHTMLComments: false,
-        },
+        removeHTMLComments: false,
       },
-      "01.02"
-    );
+    },
+    "01.01"
+  );
 
-    t.end();
-  }
-);
+  // on
+  compare(
+    ok,
+    m(equal, source, {
+      removeCSSComments: true,
+    }),
+    {
+      result: `<style></style><body>z</body>`,
+      applicableOpts: {
+        removeCSSComments: true,
+        removeHTMLComments: false,
+      },
+    },
+    "01.02"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`,
-  (t) => {
-    const source = `<style>
+test(`02 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`, () => {
+  let source = `<style>
 .a { font-size: 1px; }/* remove this */
 .b { /* remove this */
   font-size: 1px;/* remove this */
@@ -56,13 +55,14 @@ tap.test(
 </style>
 <body>z</body>`;
 
-    // off
-    t.match(
-      m(t, source, {
-        removeCSSComments: false,
-      }),
-      {
-        result: `<style>
+  // off
+  compare(
+    ok,
+    m(equal, source, {
+      removeCSSComments: false,
+    }),
+    {
+      result: `<style>
 .a { font-size: 1px; }/* remove this */
 .b { /* remove this */
 font-size: 1px;/* remove this */
@@ -71,92 +71,90 @@ margin: 3px; /* remove this */
 }/* remove this */
 </style>
 <body>z</body>`,
-        applicableOpts: {
-          removeCSSComments: true,
-          removeHTMLComments: false,
-        },
-      },
-      "02.01"
-    );
-
-    // on - removeLineBreaks=off
-    t.match(
-      m(t, source, {
-        removeLineBreaks: false,
+      applicableOpts: {
         removeCSSComments: true,
-      }),
-      {
-        result: `<style>
+        removeHTMLComments: false,
+      },
+    },
+    "02.01"
+  );
+
+  // on - removeLineBreaks=off
+  compare(
+    ok,
+    m(equal, source, {
+      removeLineBreaks: false,
+      removeCSSComments: true,
+    }),
+    {
+      result: `<style>
 .a { font-size: 1px; }.b {font-size: 1px;line-height: 2px;margin: 3px;}</style>
 <body>z</body>`,
-        applicableOpts: {
-          removeCSSComments: true,
-          removeHTMLComments: false,
-        },
-      },
-      "02.02"
-    );
-
-    // on - removeLineBreaks=on
-    t.match(
-      m(t, source, {
-        removeLineBreaks: true,
+      applicableOpts: {
         removeCSSComments: true,
-      }),
-      {
-        result: `<style>.a{font-size:1px;}.b{font-size:1px;line-height:2px;margin:3px;}</style>
+        removeHTMLComments: false,
+      },
+    },
+    "02.02"
+  );
+
+  // on - removeLineBreaks=on
+  compare(
+    ok,
+    m(equal, source, {
+      removeLineBreaks: true,
+      removeCSSComments: true,
+    }),
+    {
+      result: `<style>.a{font-size:1px;}.b{font-size:1px;line-height:2px;margin:3px;}</style>
 <body>z
 </body>`,
-        applicableOpts: {
-          removeCSSComments: true,
-          removeHTMLComments: false,
-        },
+      applicableOpts: {
+        removeCSSComments: true,
+        removeHTMLComments: false,
       },
-      "02.03"
-    );
-
-    t.end();
-  }
-);
+    },
+    "02.03"
+  );
+});
 
 // within HTML body, inline
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `03 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - within body`,
-  (t) => {
-    const source = `<div style="display:block;/*font-size: 1px;*/width:100px;"></div>`;
+test(`03 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - within body`, () => {
+  let source = `<div style="display:block;/*font-size: 1px;*/width:100px;"></div>`;
 
-    // off
-    t.match(
-      m(t, source, {
-        removeCSSComments: false,
-      }),
-      {
-        result: source,
-        applicableOpts: {
-          removeCSSComments: true,
-          removeHTMLComments: false,
-        },
-      },
-      "03.01"
-    );
-
-    // on
-    t.match(
-      m(t, source, {
+  // off
+  compare(
+    ok,
+    m(equal, source, {
+      removeCSSComments: false,
+    }),
+    {
+      result: source,
+      applicableOpts: {
         removeCSSComments: true,
-      }),
-      {
-        result: `<div style="display:block;width:100px;"></div>`,
-        applicableOpts: {
-          removeCSSComments: true,
-          removeHTMLComments: false,
-        },
+        removeHTMLComments: false,
       },
-      "03.02"
-    );
+    },
+    "03.01"
+  );
 
-    t.end();
-  }
-);
+  // on
+  compare(
+    ok,
+    m(equal, source, {
+      removeCSSComments: true,
+    }),
+    {
+      result: `<div style="display:block;width:100px;"></div>`,
+      applicableOpts: {
+        removeCSSComments: true,
+        removeHTMLComments: false,
+      },
+    },
+    "03.02"
+  );
+});
+
+test.run();

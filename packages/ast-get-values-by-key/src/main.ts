@@ -3,7 +3,9 @@
 import { traverse } from "ast-monkey-traverse";
 import { isMatch } from "matcher";
 import clone from "lodash.clonedeep";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Findings {
@@ -27,9 +29,9 @@ function getByKey(
       : [clone(originalReplacement)];
   }
 
-  const findings: Findings[] = [];
-  const amended = traverse(originalInput, (key, val, innerObj) => {
-    const current = val !== undefined ? val : key;
+  let findings: Findings[] = [];
+  let amended = traverse(originalInput, (key, val, innerObj) => {
+    let current = val !== undefined ? val : key;
     if (
       val !== undefined &&
       isMatch(key, whatToFind, { caseSensitive: true })

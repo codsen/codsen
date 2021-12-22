@@ -1,94 +1,81 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm.js";
 
 const rawNbsp = "\u00A0";
 
-tap.test("01 - nbsp - left side - blank", (t) => {
-  t.equal(c(`${rawNbsp}zzz`), `${rawNbsp}zzz`, "01");
-  t.end();
+test("01 - nbsp - left side - blank", () => {
+  equal(c(`${rawNbsp}zzz`), `${rawNbsp}zzz`, "01");
 });
 
-tap.test("02 - nbsp - left side - space + nbsp", (t) => {
-  t.equal(c(` ${rawNbsp}zzz`), `${rawNbsp}zzz`, "02");
-  t.end();
+test("02 - nbsp - left side - space + nbsp", () => {
+  equal(c(` ${rawNbsp}zzz`), `${rawNbsp}zzz`, "02");
 });
 
-tap.test("03 - nbsp - left side - two spaces", (t) => {
-  t.equal(c(`  ${rawNbsp}zzz`), `${rawNbsp}zzz`, "03");
-  t.end();
+test("03 - nbsp - left side - two spaces", () => {
+  equal(c(`  ${rawNbsp}zzz`), `${rawNbsp}zzz`, "03");
 });
 
-tap.test("04 - nbsp - left side - nbsp + space", (t) => {
-  t.equal(c(`${rawNbsp} zzz`), `${rawNbsp} zzz`, "04");
-  t.end();
+test("04 - nbsp - left side - nbsp + space", () => {
+  equal(c(`${rawNbsp} zzz`), `${rawNbsp} zzz`, "04");
 });
 
-tap.test("05 - nbsp - left side - nbsp + two spaces", (t) => {
-  t.equal(c(`${rawNbsp}  zzz`), `${rawNbsp} zzz`, "05");
-  t.end();
+test("05 - nbsp - left side - nbsp + two spaces", () => {
+  equal(c(`${rawNbsp}  zzz`), `${rawNbsp} zzz`, "05");
 });
 
-tap.test("06 - nbsp - left side - eol + nbsp", (t) => {
-  t.equal(c(`\n${rawNbsp}zzz`), `\n${rawNbsp}zzz`, "06");
-  t.end();
+test("06 - nbsp - left side - eol + nbsp", () => {
+  equal(c(`\n${rawNbsp}zzz`), `\n${rawNbsp}zzz`, "06");
 });
 
-tap.test("07 - nbsp - left side - nbsp + eol", (t) => {
-  t.equal(c(`${rawNbsp}\nzzz`), `${rawNbsp}\nzzz`, "07");
-  t.end();
+test("07 - nbsp - left side - nbsp + eol", () => {
+  equal(c(`${rawNbsp}\nzzz`), `${rawNbsp}\nzzz`, "07");
 });
 
-tap.test("08 - nbsp - left side - multiple eols", (t) => {
-  t.equal(c(`\n\n${rawNbsp}\nzzz`, 3), `\n\n${rawNbsp}\nzzz`, "08");
-  t.end();
+test("08 - nbsp - left side - multiple eols", () => {
+  equal(c(`\n\n${rawNbsp}\nzzz`, 3), `\n\n${rawNbsp}\nzzz`, "08");
 });
 
-tap.test("09 - nbsp - left side - multiple spaced eols", (t) => {
-  t.equal(c(`  \n \n   ${rawNbsp}\nzzz`, 3), `\n\n${rawNbsp}\nzzz`, "09");
-  t.end();
+test("09 - nbsp - left side - multiple spaced eols", () => {
+  equal(c(`  \n \n   ${rawNbsp}\nzzz`, 3), `\n\n${rawNbsp}\nzzz`, "09");
 });
 
-tap.test("10 - nbsp - right side - blank", (t) => {
-  t.equal(c(`zzz${rawNbsp}`), `zzz${rawNbsp}`, "10");
-  t.end();
+test("10 - nbsp - right side - blank", () => {
+  equal(c(`zzz${rawNbsp}`), `zzz${rawNbsp}`, "10");
 });
 
-tap.test("11 - nbsp - right side - nbsp + space", (t) => {
-  t.equal(c(`zzz${rawNbsp} `), `zzz${rawNbsp}`, "11");
-  t.end();
+test("11 - nbsp - right side - nbsp + space", () => {
+  equal(c(`zzz${rawNbsp} `), `zzz${rawNbsp}`, "11");
 });
 
-tap.test("12 - nbsp - right side - nbsp + two spaces", (t) => {
-  t.equal(c(`zzz${rawNbsp}  `), `zzz${rawNbsp}`, "12");
-  t.end();
+test("12 - nbsp - right side - nbsp + two spaces", () => {
+  equal(c(`zzz${rawNbsp}  `), `zzz${rawNbsp}`, "12");
 });
 
-tap.test("13 - nbsp - right side - space + nbsp", (t) => {
-  t.equal(c(`zzz ${rawNbsp}`), `zzz ${rawNbsp}`, "13");
-  t.end();
+test("13 - nbsp - right side - space + nbsp", () => {
+  equal(c(`zzz ${rawNbsp}`), `zzz ${rawNbsp}`, "13");
 });
 
-tap.test("14 - nbsp - right side - two spaces + nbsp", (t) => {
-  t.equal(c(`zzz  ${rawNbsp}`), `zzz ${rawNbsp}`, "14");
-  t.end();
+test("14 - nbsp - right side - two spaces + nbsp", () => {
+  equal(c(`zzz  ${rawNbsp}`), `zzz ${rawNbsp}`, "14");
 });
 
-tap.test("15 - nbsp - right side - nbsp + eol", (t) => {
-  t.equal(c(`zzz${rawNbsp}\n`), `zzz${rawNbsp}\n`, "15");
-  t.end();
+test("15 - nbsp - right side - nbsp + eol", () => {
+  equal(c(`zzz${rawNbsp}\n`), `zzz${rawNbsp}\n`, "15");
 });
 
-tap.test("16 - nbsp - right side - eol + nbsp", (t) => {
-  t.equal(c(`zzz\n${rawNbsp}`), `zzz\n${rawNbsp}`, "16");
-  t.end();
+test("16 - nbsp - right side - eol + nbsp", () => {
+  equal(c(`zzz\n${rawNbsp}`), `zzz\n${rawNbsp}`, "16");
 });
 
-tap.test("17 - nbsp - right side - mulitple eols", (t) => {
-  t.equal(c(`zzz\n${rawNbsp}\n\n`, 3), `zzz\n${rawNbsp}\n\n`, "17");
-  t.end();
+test("17 - nbsp - right side - mulitple eols", () => {
+  equal(c(`zzz\n${rawNbsp}\n\n`, 3), `zzz\n${rawNbsp}\n\n`, "17");
 });
 
-tap.test("18 - nbsp - right side - multiple spaced eols", (t) => {
-  t.equal(c(`zzz\n${rawNbsp}  \n \n   `, 3), `zzz\n${rawNbsp}\n\n`, "18");
-  t.end();
+test("18 - nbsp - right side - multiple spaced eols", () => {
+  equal(c(`zzz\n${rawNbsp}  \n \n   `, 3), `zzz\n${rawNbsp}\n\n`, "18");
 });
+
+test.run();

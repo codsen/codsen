@@ -1,10 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 
 // no false positives
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - no false positives`, (t) => {
+test(`01 - no false positives`, () => {
   [
     // whitespace
     ``,
@@ -59,53 +63,49 @@ tap.test(`01 - no false positives`, (t) => {
     `a<!-b-->c`,
     // `a<--b-->c`, // TODO
   ].forEach((str) => {
-    const messages1 = verify(t, str, {
+    let messages1 = verify(not, str, {
       rules: {
         "character-encode": 2,
       },
     });
-    t.strictSame(
-      messages1,
-      [],
-      `${JSON.stringify(str, null, 0)} - default setting`
-    );
+    equal(messages1, [], `${JSON.stringify(str, null, 0)} - default setting`);
 
-    // const messages2 = verify(t, str, {
+    // const messages2 = verify(not, str, {
     //   rules: {
     //     "character-encode": [2, "named"],
     //   },
     // });
-    // t.strictSame(
+    // equal(
     //   messages2,
     //   [],
     //   `${JSON.stringify(str, null, 0)} - named setting`
     // );
 
-    // const messages3 = verify(t, str, {
+    // const messages3 = verify(not, str, {
     //   rules: {
     //     "character-encode": [2, "numeric"],
     //   },
     // });
-    // t.strictSame(
+    // equal(
     //   messages3,
     //   [],
     //   `${JSON.stringify(str, null, 0)} - numeric setting`
     // );
   });
-  t.end();
 });
 
 // basic tests, no config
 // -----------------------------------------------------------------------------
 
-tap.test(`02 - unencoded characters`, (t) => {
-  const str = "£100";
-  const messages = verify(t, str, {
+test(`02 - unencoded characters`, () => {
+  let str = "£100";
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -122,29 +122,28 @@ tap.test(`02 - unencoded characters`, (t) => {
     ],
     "02.01"
   );
-  t.equal(applyFixes(str, messages), "&pound;100", "02.02");
-  t.end();
+  equal(applyFixes(str, messages), "&pound;100", "02.02");
 });
 
-tap.test(`03 - unencoded characters`, (t) => {
-  const str = "£100";
-  const messages = verify(t, str, {
+test(`03 - unencoded characters`, () => {
+  let str = "£100";
+  let messages = verify(not, str, {
     rules: {
       all: 1,
     },
   });
-  t.equal(applyFixes(str, messages), "&pound;100", "03");
-  t.end();
+  equal(applyFixes(str, messages), "&pound;100", "03");
 });
 
-tap.test(`04 - named`, (t) => {
-  const str = "£100";
-  const messages = verify(t, str, {
+test(`04 - named`, () => {
+  let str = "£100";
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "named"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -161,18 +160,18 @@ tap.test(`04 - named`, (t) => {
     ],
     "04.01"
   );
-  t.equal(applyFixes(str, messages), "&pound;100", "04.02");
-  t.end();
+  equal(applyFixes(str, messages), "&pound;100", "04.02");
 });
 
-tap.test(`05 - numeric`, (t) => {
-  const str = "£100";
-  const messages = verify(t, str, {
+test(`05 - numeric`, () => {
+  let str = "£100";
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "numeric"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -189,18 +188,18 @@ tap.test(`05 - numeric`, (t) => {
     ],
     "05.01"
   );
-  t.equal(applyFixes(str, messages), "&#xA3;100", "05.02");
-  t.end();
+  equal(applyFixes(str, messages), "&#xA3;100", "05.02");
 });
 
-tap.test(`06 - defaults`, (t) => {
-  const str = "£100";
-  const messages = verify(t, str, {
+test(`06 - defaults`, () => {
+  let str = "£100";
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -217,18 +216,18 @@ tap.test(`06 - defaults`, (t) => {
     ],
     "06.01"
   );
-  t.equal(applyFixes(str, messages), "&pound;100", "06.02");
-  t.end();
+  equal(applyFixes(str, messages), "&pound;100", "06.02");
 });
 
-tap.test(`07 - unrecognised`, (t) => {
-  const str = "£100";
-  const messages = verify(t, str, {
+test(`07 - unrecognised`, () => {
+  let str = "£100";
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "yo"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -245,21 +244,21 @@ tap.test(`07 - unrecognised`, (t) => {
     ],
     "07.01"
   );
-  t.equal(applyFixes(str, messages), "&pound;100", "07.02");
-  t.end();
+  equal(applyFixes(str, messages), "&pound;100", "07.02");
 });
 
 // email-unfriendly entities
 // -----------------------------------------------------------------------------
 
-tap.test(`08 - email not-friendly named char`, (t) => {
-  const str = "\u0424"; // &Fcy; or Ф
-  const messages = verify(t, str, {
+test(`08 - email not-friendly named char`, () => {
+  let str = "\u0424"; // &Fcy; or Ф
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 1,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -276,18 +275,18 @@ tap.test(`08 - email not-friendly named char`, (t) => {
     ],
     "08.01"
   );
-  t.equal(applyFixes(str, messages), "&#x424;", "08.02");
-  t.end();
+  equal(applyFixes(str, messages), "&#x424;", "08.02");
 });
 
-tap.test(`09 - email not-friendly named char`, (t) => {
-  const str = "\u0424"; // &Fcy; or Ф
-  const messages = verify(t, str, {
+test(`09 - email not-friendly named char`, () => {
+  let str = "\u0424"; // &Fcy; or Ф
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "named"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -304,18 +303,18 @@ tap.test(`09 - email not-friendly named char`, (t) => {
     ],
     "09.01"
   );
-  t.equal(applyFixes(str, messages), "&#x424;", "09.02");
-  t.end();
+  equal(applyFixes(str, messages), "&#x424;", "09.02");
 });
 
-tap.test(`10 - email not-friendly named char`, (t) => {
-  const str = "\u0424"; // &Fcy; or Ф
-  const messages = verify(t, str, {
+test(`10 - email not-friendly named char`, () => {
+  let str = "\u0424"; // &Fcy; or Ф
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "numeric"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -332,21 +331,21 @@ tap.test(`10 - email not-friendly named char`, (t) => {
     ],
     "10.01"
   );
-  t.equal(applyFixes(str, messages), "&#x424;", "10.02");
-  t.end();
+  equal(applyFixes(str, messages), "&#x424;", "10.02");
 });
 
 // visible HTML-unfriendly chars
 // -----------------------------------------------------------------------------
 
-tap.test(`11 - brackets and quotes into named`, (t) => {
-  const str = `><'"&`;
-  const messages = verify(t, str, {
+test(`11 - brackets and quotes into named`, () => {
+  let str = `><'"&`;
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "named"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -396,18 +395,18 @@ tap.test(`11 - brackets and quotes into named`, (t) => {
     ],
     "11.01"
   );
-  t.equal(applyFixes(str, messages), "&gt;&lt;'&quot;&amp;", "11.02");
-  t.end();
+  equal(applyFixes(str, messages), "&gt;&lt;'&quot;&amp;", "11.02");
 });
 
-tap.test(`12 - brackets and quotes into numeric`, (t) => {
-  const str = `><'"&`;
-  const messages = verify(t, str, {
+test(`12 - brackets and quotes into numeric`, () => {
+  let str = `><'"&`;
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "numeric"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -457,160 +456,151 @@ tap.test(`12 - brackets and quotes into numeric`, (t) => {
     ],
     "12.01"
   );
-  t.equal(applyFixes(str, messages), "&#x3E;&#x3C;'&#x22;&#x26;", "12.02");
-  t.end();
+  equal(applyFixes(str, messages), "&#x3E;&#x3C;'&#x22;&#x26;", "12.02");
 });
 
-tap.test(`13`, (t) => {
-  const str = `<span>£10</span>`;
-  const fixed = `<span>&pound;10</span>`;
-  const messages = verify(t, str, {
+test(`13`, () => {
+  let str = `<span>£10</span>`;
+  let fixed = `<span>&pound;10</span>`;
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "named"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "13.01");
-  t.equal(messages.length, 1, "13.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "13.01");
+  equal(messages.length, 1, "13.02");
 });
 
-tap.test(`14`, (t) => {
-  const str = `<span>£10</span>`;
-  const fixed = `<span>&#xA3;10</span>`;
-  const messages = verify(t, str, {
+test(`14`, () => {
+  let str = `<span>£10</span>`;
+  let fixed = `<span>&#xA3;10</span>`;
+  let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "numeric"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "14.01");
-  t.equal(messages.length, 1, "14.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "14.01");
+  equal(messages.length, 1, "14.02");
 });
 
-tap.test(`15 - within HTML comments`, (t) => {
-  const str = `<!--£10 offer module starts-->`;
-  const fixed = `<!--&pound;10 offer module starts-->`;
-  const messages = verify(t, str, {
+test(`15 - within HTML comments`, () => {
+  let str = `<!--£10 offer module starts-->`;
+  let fixed = `<!--&pound;10 offer module starts-->`;
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "15.01");
-  t.equal(messages.length, 1, "15.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "15.01");
+  equal(messages.length, 1, "15.02");
 });
 
-tap.test(`16 - within not-outlook HTML comments`, (t) => {
-  const str = `<!--[if !mso]><!-->£10<!--<![endif]-->`;
-  const fixed = `<!--[if !mso]><!-->&pound;10<!--<![endif]-->`;
-  const messages = verify(t, str, {
+test(`16 - within not-outlook HTML comments`, () => {
+  let str = `<!--[if !mso]><!-->£10<!--<![endif]-->`;
+  let fixed = `<!--[if !mso]><!-->&pound;10<!--<![endif]-->`;
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "16.01");
-  t.equal(messages.length, 1, "16.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "16.01");
+  equal(messages.length, 1, "16.02");
 });
 
-tap.test(`17 - within outlook-only HTML comments`, (t) => {
-  const str = `<!--[if mso]>£10<![endif]-->`;
-  const fixed = `<!--[if mso]>&pound;10<![endif]-->`;
-  const messages = verify(t, str, {
+test(`17 - within outlook-only HTML comments`, () => {
+  let str = `<!--[if mso]>£10<![endif]-->`;
+  let fixed = `<!--[if mso]>&pound;10<![endif]-->`;
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "17.01");
-  t.equal(messages.length, 1, "17.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "17.01");
+  equal(messages.length, 1, "17.02");
 });
 
-tap.test(`18 - within CSS comments`, (t) => {
-  const str = `<style>/*£10 offer module starts*/</style><body>z</body>`;
-  const fixed = `<style>/*&pound;10 offer module starts*/</style><body>z</body>`;
-  const messages = verify(t, str, {
+test(`18 - within CSS comments`, () => {
+  let str = `<style>/*£10 offer module starts*/</style><body>z</body>`;
+  let fixed = `<style>/*&pound;10 offer module starts*/</style><body>z</body>`;
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "18.01");
-  t.equal(messages.length, 1, "18.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "18.01");
+  equal(messages.length, 1, "18.02");
 });
 
-tap.test(`19 - ampersand as text, error`, (t) => {
-  const str = `<table>
+test(`19 - ampersand as text, error`, () => {
+  let str = `<table>
   <tr>
     <td>
       M&M'S
     </td>
   </tr>
 </table>`;
-  const fixed = `<table>
+  let fixed = `<table>
   <tr>
     <td>
       M&amp;M'S
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "19.01");
-  t.equal(messages.length, 1, "19.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "19.01");
+  equal(messages.length, 1, "19.02");
 });
 
-tap.test(`20 - ampersand as text, off`, (t) => {
-  const str = `<table>
+test(`20 - ampersand as text, off`, () => {
+  let str = `<table>
   <tr>
     <td>
       M&M'S
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 0,
     },
   });
-  t.strictSame(messages, [], "20");
-  t.end();
+  equal(messages, [], "20");
 });
 
-tap.test(`21 - same but cleaned with Detergent`, (t) => {
-  const str = `<table>
+test(`21 - same but cleaned with Detergent`, () => {
+  let str = `<table>
   <tr>
     <td>
       M&amp;M&rsquo;S
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
     },
   });
-  t.strictSame(messages, [], "21");
-  t.end();
+  equal(messages, [], "21");
 });
 
 // 05. mixed rules
 // -----------------------------------------------------------------------------
 
-tap.test(`22 - broken closing comment, dash missing`, (t) => {
-  const str = "a<!--b->c";
-  const fixed = "a<!--b-->c";
-  const messages = verify(t, str, {
+test(`22 - broken closing comment, dash missing`, () => {
+  let str = "a<!--b->c";
+  let fixed = "a<!--b-->c";
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
       "comment-closing-malformed": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -626,31 +616,30 @@ tap.test(`22 - broken closing comment, dash missing`, (t) => {
     ],
     "22.01"
   );
-  t.equal(applyFixes(str, messages), fixed, "22.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "22.02");
 });
 
-tap.test(`23`, (t) => {
-  const str = `abc&amp;nbsp;def`;
-  const messages = verify(t, str, {
+test(`23`, () => {
+  let str = `abc&amp;nbsp;def`;
+  let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
     },
   });
-  t.strictSame(messages, [], "23");
-  t.end();
+  equal(messages, [], "23");
 });
 
-tap.test(`24`, (t) => {
-  const str = `abc&amp;nbsp;def`;
-  const messages = verify(t, str, {
+test(`24`, () => {
+  let str = `abc&amp;nbsp;def`;
+  let messages = verify(not, str, {
     rules: {
       "bad-html-entity-multiple-encoding": 2,
       "character-encode": 2,
     },
   });
-  t.equal(applyFixes(str, messages), "abc&nbsp;def", "24.01");
-  t.match(
+  equal(applyFixes(str, messages), "abc&nbsp;def", "24.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -666,6 +655,7 @@ tap.test(`24`, (t) => {
     ],
     "24.02"
   );
-  t.equal(messages.length, 1, "24.03");
-  t.end();
+  equal(messages.length, 1, "24.03");
 });
+
+test.run();

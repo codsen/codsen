@@ -1,11 +1,14 @@
-import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { stripHtml } from "./util/noLog.js";
 
 // tag locations
 // -----------------------------------------------------------------------------
 
-tap.test("01 - tag locations - anchor wrapping text", (t) => {
-  t.hasStrict(
+test("01 - tag locations - anchor wrapping text", () => {
+  equal(
     stripHtml("abc<a>click me</a>def"),
     {
       result: "abc click me def",
@@ -24,11 +27,10 @@ tap.test("01 - tag locations - anchor wrapping text", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - tag locations - no tags were present at all", (t) => {
-  t.hasStrict(
+test("02 - tag locations - no tags were present at all", () => {
+  equal(
     stripHtml("abc def"),
     {
       result: "abc def",
@@ -38,11 +40,10 @@ tap.test("02 - tag locations - no tags were present at all", (t) => {
     },
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - tag locations - opts.ignoreTags", (t) => {
-  t.hasStrict(
+test("03 - tag locations - opts.ignoreTags", () => {
+  equal(
     stripHtml("<a><span>z</span></a>", {
       ignoreTags: ["a"],
     }),
@@ -65,12 +66,11 @@ tap.test("03 - tag locations - opts.ignoreTags", (t) => {
     },
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - tag locations - opts.ignoreTags", (t) => {
-  const input = "<a><span>z</span></a>";
-  t.hasStrict(
+test("04 - tag locations - opts.ignoreTags", () => {
+  let input = "<a><span>z</span></a>";
+  equal(
     stripHtml(input, {
       ignoreTags: ["a", "span"],
     }),
@@ -87,12 +87,11 @@ tap.test("04 - tag locations - opts.ignoreTags", (t) => {
     },
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - tag locations - opts.onlyStripTags", (t) => {
-  const input = "<a><span>z</span></a>";
-  t.hasStrict(
+test("05 - tag locations - opts.onlyStripTags", () => {
+  let input = "<a><span>z</span></a>";
+  equal(
     stripHtml(input, {
       onlyStripTags: ["span"],
     }),
@@ -115,12 +114,11 @@ tap.test("05 - tag locations - opts.onlyStripTags", (t) => {
     },
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - tag locations - opts.onlyStripTags", (t) => {
-  const input = "<a><span>z</span></a>";
-  t.hasStrict(
+test("06 - tag locations - opts.onlyStripTags", () => {
+  let input = "<a><span>z</span></a>";
+  equal(
     stripHtml(input, {
       onlyStripTags: ["a", "span"],
     }),
@@ -145,12 +143,11 @@ tap.test("06 - tag locations - opts.onlyStripTags", (t) => {
     },
     "06"
   );
-  t.end();
 });
 
-tap.test("07 - tag locations - closing bracket missing", (t) => {
-  const input = `<div class="container" <div class="inner"`;
-  t.hasStrict(
+test("07 - tag locations - closing bracket missing", () => {
+  let input = `<div class="container" <div class="inner"`;
+  equal(
     stripHtml(input),
     {
       result: "",
@@ -166,12 +163,11 @@ tap.test("07 - tag locations - closing bracket missing", (t) => {
     },
     "07"
   );
-  t.end();
 });
 
-tap.test("08 - tag locations - closing bracket missing", (t) => {
-  const input = `<div class="container" <div class="inner"`;
-  t.hasStrict(
+test("08 - tag locations - closing bracket missing", () => {
+  let input = `<div class="container" <div class="inner"`;
+  equal(
     stripHtml(input, {
       stripTogetherWithTheirContents: "div",
     }),
@@ -186,12 +182,11 @@ tap.test("08 - tag locations - closing bracket missing", (t) => {
     },
     "08"
   );
-  t.end();
 });
 
-tap.test("09 - tag locations - closing bracket missing on ignored tag", (t) => {
-  const input = `<div class="container" <div class="inner"`;
-  t.hasStrict(
+test("09 - tag locations - closing bracket missing on ignored tag", () => {
+  let input = `<div class="container" <div class="inner"`;
+  equal(
     stripHtml(input, {
       ignoreTags: `div`,
     }),
@@ -206,5 +201,6 @@ tap.test("09 - tag locations - closing bracket missing on ignored tag", (t) => {
     },
     "09"
   );
-  t.end();
 });
+
+test.run();

@@ -146,8 +146,8 @@ function extractConfig(
       );
       if (rightSeq(extractedConfig, sliceFrom - 1, "*", "/")) {
         sliceFrom =
-          (rightSeq(extractedConfig, sliceFrom - 1, "*", "/") as Obj)
-            .rightmostChar + 1;
+          ((rightSeq(extractedConfig, sliceFrom - 1, "*", "/") as Obj)
+            .rightmostChar as number) + 1;
       }
       let sliceTo = null;
 
@@ -230,7 +230,7 @@ function extractConfig(
     else if (extractedConfig.includes(CONTENTTAIL)) {
       console.log(`231 CONTENTTAIL present`);
 
-      const contentInFront: string[] = [];
+      let contentInFront: string[] = [];
       let stopFilteringAndPassAllLines = false;
       extractedConfig = extractedConfig
         .split("\n")
@@ -305,19 +305,19 @@ function extractConfig(
   } else {
     console.log(`306 config calc - case #5`);
 
-    const contentHeadsRegex = new RegExp(
+    let contentHeadsRegex = new RegExp(
       `(\\/\\s*\\*\\s*)*${CONTENTHEAD}(\\s*\\*\\s*\\/)*`
     );
-    const contentTailsRegex = new RegExp(
+    let contentTailsRegex = new RegExp(
       `(\\/\\s*\\*\\s*)*${CONTENTTAIL}(\\s*\\*\\s*\\/)*`
     );
     let stopFiltering = false;
-    const gatheredLinesAboveTopmostConfigLine: string[] = [];
-    const gatheredLinesBelowLastConfigLine: string[] = [];
+    let gatheredLinesAboveTopmostConfigLine: string[] = [];
+    let gatheredLinesBelowLastConfigLine: string[] = [];
 
     // remove all lines above the first line which contains $$$
 
-    const configLines: string[] = str.split("\n").filter((rowStr) => {
+    let configLines: string[] = str.split("\n").filter((rowStr) => {
       if (stopFiltering) {
         return true;
       }
@@ -366,12 +366,15 @@ function extractConfig(
   return [extractedConfig, rawContentAbove, rawContentBelow];
 }
 
-function trimBlankLinesFromLinesArray(lineArr: string[], trim = true) {
+function trimBlankLinesFromLinesArray(
+  lineArr: string[],
+  trim = true
+): string[] {
   // killswitch is activated, do nothing
   if (!trim) {
     return lineArr;
   }
-  const copyArr = Array.from(lineArr);
+  let copyArr = Array.from(lineArr);
   if (copyArr.length && isStr(copyArr[0]) && !copyArr[0].trim().length) {
     do {
       copyArr.shift();
@@ -385,7 +388,6 @@ function trimBlankLinesFromLinesArray(lineArr: string[], trim = true) {
     do {
       copyArr.pop();
     } while (
-      copyArr &&
       copyArr[copyArr.length - 1] &&
       !copyArr[copyArr.length - 1].trim().length
     );
@@ -411,7 +413,7 @@ function extractFromToSource(
     str.lastIndexOf("}") > 0 &&
     str.slice(str.lastIndexOf("}") + 1).includes("|")
   ) {
-    console.log(`414 util: closing curlie detected`);
+    console.log(`416 util: closing curlie detected`);
     tempArr = str
       .slice(str.lastIndexOf("}") + 1)
       .split("|")
@@ -423,7 +425,7 @@ function extractFromToSource(
           .every((char) => /\d/g.test(char))
       );
   } else if (str.includes("|")) {
-    console.log(`426 util: else case with pipes`);
+    console.log(`428 util: else case with pipes`);
     tempArr = str
       .split("|")
       .filter((val) => val.trim().length)
@@ -436,7 +438,7 @@ function extractFromToSource(
   }
 
   console.log(
-    `439 util: ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
+    `441 util: ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
       tempArr,
       null,
       4
@@ -451,7 +453,7 @@ function extractFromToSource(
     }
   }
 
-  console.log(`454 from=${from}; to=${to}`);
+  console.log(`456 from=${from}; to=${to}`);
 
   // extract the source string - it's everything from zero to first pipe
   // that follows the last closing curly brace
@@ -461,13 +463,13 @@ function extractFromToSource(
   ) {
     source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
     if (source.trim().startsWith("|")) {
-      console.log(`464 util: crop leading pipe`);
+      console.log(`466 util: crop leading pipe`);
       while (source.trim().startsWith("|")) {
         source = source.trim().slice(1);
       }
     }
   } else {
-    console.log(`470 ${`\u001b[${36}m${`loop`}\u001b[${39}m`}`);
+    console.log(`472 ${`\u001b[${36}m${`loop`}\u001b[${39}m`}`);
     let lastPipeWasAt = null;
     let firstNonPipeNonWhitespaceCharMet = false;
     let startFrom = 0;
@@ -478,7 +480,7 @@ function extractFromToSource(
 
     for (let i = 0, len = str.length; i < len; i++) {
       console.log(
-        `481 ${`\u001b[${36}m${`------ ${`str[${i}] = ${`\u001b[${35}m${
+        `483 ${`\u001b[${36}m${`------ ${`str[${i}] = ${`\u001b[${35}m${
           str[i]
         }\u001b[${39}m`}`} ------`}\u001b[${39}m`}`
       );
@@ -490,55 +492,55 @@ function extractFromToSource(
 
         if (onlyDigitsAndWhitespaceBeenMet === null && str[i].trim().length) {
           onlyDigitsAndWhitespaceBeenMet = true;
-          console.log(`493 SET onlyDigitsAndWhitespaceBeenMet = true`);
+          console.log(`495 SET onlyDigitsAndWhitespaceBeenMet = true`);
         }
       }
       // if not digit...
       else if (str[i] !== "|" && str[i].trim().length) {
         onlyDigitsAndWhitespaceBeenMet = false;
-        console.log(`499 SET onlyDigitsAndWhitespaceBeenMet = false`);
+        console.log(`501 SET onlyDigitsAndWhitespaceBeenMet = false`);
       }
 
       // catch the last character
       if (!str[i + 1] && onlyDigitsAndWhitespaceBeenMet && lastPipeWasAt) {
         endTo = lastPipeWasAt;
         console.log(
-          `506 SET ${`\u001b[${33}m${`endTo`}\u001b[${39}m`} = ${endTo}`
+          `508 SET ${`\u001b[${33}m${`endTo`}\u001b[${39}m`} = ${endTo}`
         );
       }
 
       // catch pipe
       if (str[i] === "|") {
-        console.log(`512 ${`\u001b[${33}m${`pipe caught`}\u001b[${39}m`}`);
+        console.log(`514 ${`\u001b[${33}m${`pipe caught`}\u001b[${39}m`}`);
         if (onlyDigitsAndWhitespaceBeenMet && lastPipeWasAt) {
           endTo = lastPipeWasAt;
           console.log(
-            `516 set endTo = ${endTo}; ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+            `518 set endTo = ${endTo}; ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
           );
           break;
         }
 
         lastPipeWasAt = i;
-        console.log(`522 SET lastPipeWasAt = ${lastPipeWasAt}`);
+        console.log(`524 SET lastPipeWasAt = ${lastPipeWasAt}`);
 
         // reset:
         onlyDigitsAndWhitespaceBeenMet = null;
-        console.log(`526 SET onlyDigitsAndWhitespaceBeenMet = null`);
+        console.log(`528 SET onlyDigitsAndWhitespaceBeenMet = null`);
       } else if (!firstNonPipeNonWhitespaceCharMet && str[i].trim().length) {
         firstNonPipeNonWhitespaceCharMet = true;
         if (lastPipeWasAt !== null) {
           startFrom = lastPipeWasAt + 1;
           console.log(
-            `532 SET ${`\u001b[${33}m${`startFrom`}\u001b[${39}m`} = ${startFrom}`
+            `534 SET ${`\u001b[${33}m${`startFrom`}\u001b[${39}m`} = ${startFrom}`
           );
         }
         console.log(
-          `536 SET ${`\u001b[${33}m${`firstNonPipeNonWhitespaceCharMet`}\u001b[${39}m`} = ${firstNonPipeNonWhitespaceCharMet};`
+          `538 SET ${`\u001b[${33}m${`firstNonPipeNonWhitespaceCharMet`}\u001b[${39}m`} = ${firstNonPipeNonWhitespaceCharMet};`
         );
       }
 
       console.log(
-        `541 ${`\u001b[${90}m${` ENDING
+        `543 ${`\u001b[${90}m${` ENDING
 startFrom = ${startFrom}
 endTo = ${endTo}
 onlyDigitsAndWhitespaceBeenMet = ${onlyDigitsAndWhitespaceBeenMet}
@@ -546,10 +548,10 @@ lastPipeWasAt = ${lastPipeWasAt}
 `}\u001b[${39}m`}`
       );
     }
-    console.log(`549 startFrom = ${startFrom}; endTo = ${endTo}`);
+    console.log(`551 startFrom = ${startFrom}; endTo = ${endTo}`);
     source = str.slice(startFrom, endTo).trimEnd();
     console.log(
-      `552 FINAL ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${source}`
+      `554 FINAL ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${source}`
     );
   }
 
@@ -563,7 +565,7 @@ function prepLine(
   subsetTo: number,
   generatedCount: Obj,
   pad: boolean
-) {
+): string {
   //
   //
   //
@@ -575,9 +577,9 @@ function prepLine(
   let currentPercentageDone;
   let lastPercentage = 0;
   console.log(`\n\n\n\n\n`);
-  console.log(`578 util: ${`\u001b[${36}m${`===========`}\u001b[${39}m`}`);
+  console.log(`580 util: ${`\u001b[${36}m${`===========`}\u001b[${39}m`}`);
   console.log(
-    `580 util: prepLine(): str: "${`\u001b[${35}m${str}\u001b[${39}m`}";\n${`\u001b[${35}m${`generatedCount`}\u001b[${39}m`} = ${JSON.stringify(
+    `582 util: prepLine(): str: "${`\u001b[${35}m${str}\u001b[${39}m`}";\n${`\u001b[${35}m${`generatedCount`}\u001b[${39}m`} = ${JSON.stringify(
       generatedCount,
       null,
       0
@@ -587,10 +589,10 @@ function prepLine(
   // we need to extract the "from" and to "values"
   // the separator is vertical pipe, which is a legit CSS selector
 
-  const [from, to, source] = extractFromToSource(str, 0, 500);
+  let [from, to, source] = extractFromToSource(str, 0, 500);
 
   console.log(
-    `593 ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}\n${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}\n${`\u001b[${33}m${`source`}\u001b[${39}m`} = "${source}"\n`
+    `595 ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}\n${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}\n${`\u001b[${33}m${`source`}\u001b[${39}m`} = "${source}"\n`
   );
 
   //
@@ -601,7 +603,7 @@ function prepLine(
   //
   //
 
-  const subsetRange = subsetTo - subsetFrom;
+  let subsetRange = subsetTo - subsetFrom;
   let res = "";
 
   // traverse
@@ -609,12 +611,12 @@ function prepLine(
     let debtPaddingLen = 0;
     console.log("\n");
     console.log(
-      `612 ███████████████████████████████████████ row i=${i} ███████████████████████████████████████\n`
+      `614 ███████████████████████████████████████ row i=${i} ███████████████████████████████████████\n`
     );
     // if (pad) {
     let startPoint = 0;
     for (let y = 0, len = source.length; y < len; y++) {
-      const charcode = source[y].charCodeAt(0);
+      let charcode = source[y].charCodeAt(0);
       console.log(
         `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`source[ ${y} ] = ${
           source[y].trim().length
@@ -627,17 +629,17 @@ function prepLine(
       // -----------------------------------------------------------------------
       if (source[y] === "$" && source[y - 1] === "$" && source[y - 2] === "$") {
         console.log(
-          `630 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
+          `632 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
             startPoint,
             null,
             4
           )}`
         );
-        console.log(`636 $$$ caught`);
+        console.log(`638 $$$ caught`);
         // submit all the content up until now
-        const restOfStr = source.slice(y + 1);
+        let restOfStr = source.slice(y + 1);
         console.log(
-          `640 ${`\u001b[${33}m${`restOfStr`}\u001b[${39}m`} = ${JSON.stringify(
+          `642 ${`\u001b[${33}m${`restOfStr`}\u001b[${39}m`} = ${JSON.stringify(
             restOfStr,
             null,
             4
@@ -645,7 +647,7 @@ function prepLine(
         );
         let unitFound = "";
 
-        console.log(`648`);
+        console.log(`650`);
         if (
           i === 0 &&
           // eslint-disable-next-line consistent-return, array-callback-return
@@ -658,9 +660,9 @@ function prepLine(
           (source[right(source, y + unitFound.length) as number] === "{" ||
             !source[y + unitFound.length + 1].trim().length)
         ) {
-          console.log(`661 push: "${source.slice(startPoint, y - 2)}"`);
+          console.log(`663 push: "${source.slice(startPoint, y - 2)}"`);
           console.log(
-            `663 push also: "${
+            `665 push also: "${
               pad
                 ? String(i).padStart(
                     String(to).length - String(i).length + unitFound.length + 1
@@ -675,22 +677,22 @@ function prepLine(
                 )
               : i
           }`;
-          console.log(`678 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`);
+          console.log(`680 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`);
           startPoint = y + 1 + (unitFound ? unitFound.length : 0);
         } else {
           // extract units if any follow the $$$
           let unitThatFollow = "";
-          console.log(`683`);
+          console.log(`685`);
           // eslint-disable-next-line consistent-return, array-callback-return
           units.some((unit) => {
             if (source.startsWith(unit, y + 1)) {
               unitThatFollow = unit;
-              console.log(`688 return true`);
+              console.log(`690 return true`);
               return true;
             }
           });
           console.log(
-            `693 extracted ${`\u001b[${33}m${`unitThatFollow`}\u001b[${39}m`} = ${JSON.stringify(
+            `695 extracted ${`\u001b[${33}m${`unitThatFollow`}\u001b[${39}m`} = ${JSON.stringify(
               unitThatFollow,
               null,
               4
@@ -709,13 +711,13 @@ function prepLine(
           ) {
             // if left-side padding can be possible:
             console.log(
-              `712 source.slice(startPoint, y - 2) = "${source.slice(
+              `714 source.slice(startPoint, y - 2) = "${source.slice(
                 startPoint,
                 y - 2
               )}"`
             );
             console.log(
-              `718 push ${`${source.slice(startPoint, y - 2)}${
+              `720 push ${`${source.slice(startPoint, y - 2)}${
                 pad
                   ? String(i).padStart(
                       String(to).length +
@@ -746,19 +748,19 @@ function prepLine(
                 : i
             }`;
             console.log(
-              `749 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+              `751 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
             );
           } else if (
             !source[y + 1].trim().length ||
             source[right(source, y) as number] === "{"
           ) {
             console.log(
-              `756 push ${`${source.slice(startPoint, y - 2)}${
+              `758 push ${`${source.slice(startPoint, y - 2)}${
                 pad
                   ? String(i).padEnd(
                       String(to).length +
                         (i === 0 && unitThatFollow
-                          ? (unitThatFollow as any).length
+                          ? +(unitThatFollow as any).length
                           : 0)
                     )
                   : i
@@ -770,19 +772,19 @@ function prepLine(
                 ? String(i).padEnd(
                     String(to).length +
                       (i === 0 && unitThatFollow
-                        ? (unitThatFollow as any).length
+                        ? +(unitThatFollow as any).length
                         : 0)
                   )
                 : i
             }`;
             console.log(
-              `779 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+              `781 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
             );
           } else {
-            console.log(`782 push ${`${source.slice(startPoint, y - 2)}${i}`}`);
+            console.log(`784 push ${`${source.slice(startPoint, y - 2)}${i}`}`);
             res += `${source.slice(startPoint, y - 2)}${i}`;
             console.log(
-              `785 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+              `787 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
             );
 
             // also, make a note of padding which we'll need to do later,
@@ -796,7 +798,7 @@ function prepLine(
             if (pad) {
               debtPaddingLen = String(to).length - String(i).length;
               console.log(
-                `799 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`debtPaddingLen`}\u001b[${39}m`} = ${JSON.stringify(
+                `801 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`debtPaddingLen`}\u001b[${39}m`} = ${JSON.stringify(
                   debtPaddingLen,
                   null,
                   4
@@ -811,31 +813,31 @@ function prepLine(
       // catch opening curlie
       // -----------------------------------------------------------------------
       if (source[y] === "{" && pad) {
-        console.log(`814 opening curlie caught`);
+        console.log(`816 opening curlie caught`);
         if (debtPaddingLen) {
           res += `${source.slice(startPoint, y)}${` `.repeat(debtPaddingLen)}`;
           startPoint = y;
           debtPaddingLen = 0;
           console.log(
-            `820 SET startPoint = ${startPoint}; debtPaddingLen = ${debtPaddingLen}`
+            `822 SET startPoint = ${startPoint}; debtPaddingLen = ${debtPaddingLen}`
           );
         }
       }
 
       // catch the last character of a line
       if (!source[y + 1]) {
-        console.log(`827 last character on a line!`);
+        console.log(`829 last character on a line!`);
         console.log(
-          `829 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
+          `831 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
             startPoint,
             null,
             4
           )}`
         );
         let unitFound = "";
-        const restOfStr = source.slice(startPoint);
+        let restOfStr = source.slice(startPoint);
         console.log(
-          `838 restOfStr = "${restOfStr}" --- we'll check, does it start with any elements from units`
+          `840 restOfStr = "${restOfStr}" --- we'll check, does it start with any elements from units`
         );
         if (
           i === 0 &&
@@ -848,19 +850,19 @@ function prepLine(
           })
         ) {
           console.log(
-            `851 push "${source.slice(startPoint + unitFound.length)}"`
+            `853 push "${source.slice(startPoint + unitFound.length)}"`
           );
           res += `${source.slice(startPoint + unitFound.length)}`;
-          console.log(`854 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`);
+          console.log(`856 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`);
         } else {
-          console.log(`856 last char - submit "${source.slice(startPoint)}"`);
+          console.log(`858 last char - submit "${source.slice(startPoint)}"`);
           res += `${source.slice(startPoint)}`;
-          console.log(`858 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`);
+          console.log(`860 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`);
         }
         // add line break
         res += `${i !== to ? "\n" : ""}`;
         console.log(
-          `863 add line break ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+          `865 add line break ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
         );
       }
     }
@@ -881,7 +883,7 @@ function prepLine(
   return res;
 }
 
-function bump(str: string, thingToBump: Obj) {
+function bump(str: string, thingToBump: Obj): string {
   if (/\.\w/g.test(str)) {
     // eslint-disable-next-line no-param-reassign
     thingToBump.count += 1;
@@ -897,7 +899,7 @@ function prepConfig(
   trim = true,
   generatedCount: Obj,
   pad: boolean
-) {
+): string {
   // all rows will report the progress from progressFrom to progressTo.
   // For example, defaults 0 to 100.
   // If there are for example 5 rows, each row will iterate through

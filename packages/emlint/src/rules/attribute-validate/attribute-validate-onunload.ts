@@ -43,7 +43,7 @@ function attributeValidateOnunload(context: Linter): RuleObjType {
           });
         } else {
           // validate the script value
-          const errorArr = validateScript(
+          let errorArr = validateScript(
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );

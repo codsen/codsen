@@ -1,218 +1,202 @@
-import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { stripHtml } from "./util/noLog.js";
 
 // opts.onlyStripTags
 // -----------------------------------------------------------------------------
 
-tap.test("01 - opts.onlyStripTags - base cases", (t) => {
-  t.hasStrict(
+test("01 - opts.onlyStripTags - base cases", () => {
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`
-    ),
-    { result: "Let's watch RT news this evening" },
+    ).result,
+    "Let's watch RT news this evening",
     "01.01 - control, default behaviour"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
       {
         onlyStripTags: "z",
       }
-    ),
-    {
-      result: `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
-    },
+    ).result,
+    `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
     "01.02 - non-existent tag option - leaves all tags"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
       {
         onlyStripTags: null,
       }
-    ),
-    { result: "Let's watch RT news this evening" },
+    ).result,
+    "Let's watch RT news this evening",
     "01.03 - falsey option"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
       {
         onlyStripTags: [],
       }
-    ),
-    { result: "Let's watch RT news this evening" },
+    ).result,
+    "Let's watch RT news this evening",
     "01.04 - no tags mentioned, will strip all"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
       {
         onlyStripTags: [""],
       }
-    ),
-    { result: `Let's watch RT news this evening` },
+    ).result,
+    `Let's watch RT news this evening`,
     "01.05 - empty strings will be removed and will become default, blank setting"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
       {
         onlyStripTags: ["\t", "\n"],
       }
-    ),
-    { result: `Let's watch RT news this evening` },
+    ).result,
+    `Let's watch RT news this evening`,
     "01.06 - same, whitespace entries will be removed, setting will become default - strip all"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`
-    ),
-    { result: `Let's watch RT news this evening` },
+    ).result,
+    `Let's watch RT news this evening`,
     "01.07 - control, default behaviour"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
       {
         onlyStripTags: "a",
       }
-    ),
-    { result: `Let's watch <b>RT news</b> this evening` },
+    ).result,
+    `Let's watch <b>RT news</b> this evening`,
     "01.08 - only strip anchor tags"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
       {
         onlyStripTags: ["a"],
       }
-    ),
-    { result: `Let's watch <b>RT news</b> this evening` },
+    ).result,
+    `Let's watch <b>RT news</b> this evening`,
     "01.09 - only strip anchor tags"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening`,
       {
         onlyStripTags: "b",
       }
-    ),
-    {
-      result: `Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening`,
-    }, // TODO - detect and skip adding the space here
+    ).result,
+    `Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening`,
     "01.10 - only strip anchor tags"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
       {
         onlyStripTags: ["b"],
       }
-    ),
-    {
-      result: `Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening`,
-    }, // TODO - detect and skip adding the space here
+    ).result,
+    `Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening`,
     "01.11 - only strip anchor tags"
   );
-  t.end();
 });
 
-tap.test("02 - opts.onlyStripTags + opts.ignoreTags combo", (t) => {
-  t.hasStrict(
+test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
+  equal(
     stripHtml(
       `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`
-    ),
-    { result: "Let's watch RT news this evening" },
+    ).result,
+    "Let's watch RT news this evening",
     "02.01 - control, default behaviour"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`,
       {
         onlyStripTags: "a",
       }
-    ),
-    { result: `<div>Let's watch <b>RT news</b> this evening</div>` },
+    ).result,
+    `<div>Let's watch <b>RT news</b> this evening</div>`,
     "02.02"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`,
       {
         ignoreTags: "a",
       }
-    ),
-    {
-      result: `Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening`,
-    }, // TODO - detect and skip adding the space here
+    ).result,
+    `Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening`,
     "02.03"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`,
       {
         onlyStripTags: "a",
         ignoreTags: "a",
       }
-    ),
-    {
-      result: `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`,
-    },
+    ).result,
+    `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`,
     "02.04 - both entries cancel each one out"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`,
       {
         onlyStripTags: ["a", "b"],
         ignoreTags: "a",
       }
-    ),
-    {
-      result: `<div>Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening</div>`,
-    }, // TODO - detect and skip adding the space here
+    ).result,
+    `<div>Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening</div>`,
     "02.05 - both entries cancel each one out"
   );
-  t.hasStrict(
+  equal(
     stripHtml(
       `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`,
       {
         onlyStripTags: ["a"],
         ignoreTags: ["a", "b"],
       }
-    ),
-    {
-      result: `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`,
-    },
+    ).result,
+    `<div>Let's watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>`,
     "02.06 - both entries cancel each one out"
   );
-  t.end();
 });
 
-tap.test("03 - opts.onlyStripTags - multiline text - defaults", (t) => {
-  t.hasStrict(
+test("03 - opts.onlyStripTags - multiline text - defaults", () => {
+  equal(
     stripHtml(
       `Abc
 
 <b>mn</b>
 
 def`
-    ),
-    {
-      result: `Abc
+    ).result,
+    `Abc
 
 mn
 
 def`,
-    },
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - opts.onlyStripTags - multiline text - option on", (t) => {
-  t.hasStrict(
+test("04 - opts.onlyStripTags - multiline text - option on", () => {
+  equal(
     stripHtml(
       `Abc
 
@@ -246,9 +230,8 @@ def`,
           "b",
         ],
       }
-    ),
-    {
-      result: `Abc
+    ).result,
+    `Abc
 
 mn
 op
@@ -257,8 +240,8 @@ st
 uv
 
 def`,
-    },
     "04"
   );
-  t.end();
 });
+
+test.run();

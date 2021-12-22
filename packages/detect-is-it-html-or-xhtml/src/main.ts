@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 // ===================================
@@ -21,17 +22,17 @@ function detectIsItHTMLOrXhtml(input: string): Output {
     );
   }
 
-  const metaTag = /<\s*!\s*doctype[^>]*>/im;
-  const imgTag = /<\s*img[^>]*>/gi;
-  const brTag = /<\s*br[^>]*>/gi;
-  const hrTag = /<\s*hr[^>]*>/gi;
-  const closingSlash = /\/\s*>/g;
-  const extractedMetaTag = input.match(metaTag);
+  let metaTag = /<\s*!\s*doctype[^>]*>/im;
+  let imgTag = /<\s*img[^>]*>/gi;
+  let brTag = /<\s*br[^>]*>/gi;
+  let hrTag = /<\s*hr[^>]*>/gi;
+  let closingSlash = /\/\s*>/g;
+  let extractedMetaTag = input.match(metaTag);
 
   if (extractedMetaTag) {
     // detect by doctype meta tag
-    const xhtmlRegex = /xhtml/gi;
-    const svgRegex = /svg/gi;
+    let xhtmlRegex = /xhtml/gi;
+    let svgRegex = /svg/gi;
     if (
       extractedMetaTag[0].match(xhtmlRegex) ||
       extractedMetaTag[0].match(svgRegex)
@@ -42,12 +43,12 @@ function detectIsItHTMLOrXhtml(input: string): Output {
   }
 
   // ELSE - detect by scanning single tags
-  const allImageTagsArr = input.match(imgTag) || [];
-  const allBRTagsArr = input.match(brTag) || [];
-  const allHRTagsArr = input.match(hrTag) || [];
+  let allImageTagsArr = input.match(imgTag) || [];
+  let allBRTagsArr = input.match(brTag) || [];
+  let allHRTagsArr = input.match(hrTag) || [];
 
   // join all found tags
-  const allConcernedTagsArr = allImageTagsArr
+  let allConcernedTagsArr = allImageTagsArr
     .concat(allBRTagsArr)
     .concat(allHRTagsArr);
 

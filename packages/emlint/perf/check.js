@@ -3,9 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { Linter } from "../dist/emlint.esm.js";
+
+const callerDir = path.resolve(".");
 
 // 1. basic tests
 const str = "< a>";

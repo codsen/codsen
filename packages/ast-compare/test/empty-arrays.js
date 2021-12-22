@@ -1,73 +1,58 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { compare } from "../dist/ast-compare.esm.js";
 
 // matching empty arrays
 // -----------------------------------------------------------------------------
 
-tap.test("01 - matching empty arrays - blank vs. normal - defaults", (t) => {
-  t.strictSame(compare({ a: "1", b: "2", c: 3 }, {}), false, "01");
-  t.end();
+test("01 - matching empty arrays - blank vs. normal - defaults", () => {
+  equal(compare({ a: "1", b: "2", c: 3 }, {}), false, "01");
 });
 
-tap.test("02 - matching empty arrays - blank vs. empty - defaults", (t) => {
-  t.strictSame(compare({ a: "\n\n", b: "\t", c: "   " }, {}), false, "02");
-  t.end();
+test("02 - matching empty arrays - blank vs. empty - defaults", () => {
+  equal(compare({ a: "\n\n", b: "\t", c: "   " }, {}), false, "02");
 });
 
-tap.test(
-  "03 - matching empty arrays - blank vs. normal - opts.hungryForWhitespace",
-  (t) => {
-    t.strictSame(
-      compare({ a: "1", b: "2", c: 3 }, {}, { hungryForWhitespace: true }),
-      false,
-      "03"
-    );
-    t.end();
-  }
-);
+test("03 - matching empty arrays - blank vs. normal - opts.hungryForWhitespace", () => {
+  equal(
+    compare({ a: "1", b: "2", c: 3 }, {}, { hungryForWhitespace: true }),
+    false,
+    "03"
+  );
+});
 
-tap.test(
-  "04 - matching empty arrays - blank vs. empty - opts.hungryForWhitespace",
-  (t) => {
-    t.strictSame(
-      compare(
-        { a: "\n\n", b: "\t", c: "   " },
-        {},
-        { hungryForWhitespace: true }
-      ),
-      true,
-      "04"
-    );
-    t.end();
-  }
-);
+test("04 - matching empty arrays - blank vs. empty - opts.hungryForWhitespace", () => {
+  equal(
+    compare(
+      { a: "\n\n", b: "\t", c: "   " },
+      {},
+      { hungryForWhitespace: true }
+    ),
+    true,
+    "04"
+  );
+});
 
-tap.test(
-  "05 - matching empty arrays - blank vs. normal - opts.matchStrictly",
-  (t) => {
-    t.strictSame(
-      compare({ a: "1", b: "2", c: 3 }, {}, { matchStrictly: true }),
-      false,
-      "05"
-    );
-    t.end();
-  }
-);
+test("05 - matching empty arrays - blank vs. normal - opts.matchStrictly", () => {
+  equal(
+    compare({ a: "1", b: "2", c: 3 }, {}, { matchStrictly: true }),
+    false,
+    "05"
+  );
+});
 
-tap.test(
-  "06 - matching empty arrays - blank vs. empty - opts.matchStrictly",
-  (t) => {
-    t.strictSame(
-      compare({ a: "\n\n", b: "\t", c: "   " }, {}, { matchStrictly: true }),
-      false,
-      "06"
-    );
-    t.end();
-  }
-);
+test("06 - matching empty arrays - blank vs. empty - opts.matchStrictly", () => {
+  equal(
+    compare({ a: "\n\n", b: "\t", c: "   " }, {}, { matchStrictly: true }),
+    false,
+    "06"
+  );
+});
 
-tap.test("07 - matching empty arrays - blank vs. normal - both opts", (t) => {
-  t.strictSame(
+test("07 - matching empty arrays - blank vs. normal - both opts", () => {
+  equal(
     compare(
       { a: "1", b: "2", c: 3 },
       {},
@@ -76,11 +61,10 @@ tap.test("07 - matching empty arrays - blank vs. normal - both opts", (t) => {
     false,
     "07"
   );
-  t.end();
 });
 
-tap.test("08 - matching empty arrays - blank vs. empty - both opts", (t) => {
-  t.strictSame(
+test("08 - matching empty arrays - blank vs. empty - both opts", () => {
+  equal(
     compare(
       { a: "\n\n", b: "\t", c: "   " },
       {},
@@ -89,75 +73,62 @@ tap.test("08 - matching empty arrays - blank vs. empty - both opts", (t) => {
     true,
     "08"
   );
-  t.end();
 });
 
-tap.test(
-  "09 - matching empty arrays - blank vs. empty - both opts, arr values",
-  (t) => {
-    t.strictSame(
-      compare(
-        { a: [], b: [], c: [] },
-        {},
-        { hungryForWhitespace: true, matchStrictly: true }
-      ),
-      true,
-      "09"
-    );
-    t.end();
-  }
-);
+test("09 - matching empty arrays - blank vs. empty - both opts, arr values", () => {
+  equal(
+    compare(
+      { a: [], b: [], c: [] },
+      {},
+      { hungryForWhitespace: true, matchStrictly: true }
+    ),
+    true,
+    "09"
+  );
+});
 
-tap.test(
-  "10 - matching empty arrays - blank vs. empty - both opts, arr values",
-  (t) => {
-    t.strictSame(
-      compare([" "], "", { hungryForWhitespace: true, matchStrictly: true }),
-      true,
-      "10"
-    );
-    t.end();
-  }
-);
+test("10 - matching empty arrays - blank vs. empty - both opts, arr values", () => {
+  equal(
+    compare([" "], "", { hungryForWhitespace: true, matchStrictly: true }),
+    true,
+    "10"
+  );
+});
 
-tap.test("11 - array vs string", (t) => {
-  t.strictSame(
+test("11 - array vs string", () => {
+  equal(
     compare([" "], "", { hungryForWhitespace: true, matchStrictly: true }),
     true,
     "11"
   );
-  t.end();
 });
 
-tap.test("12 - array vs null", (t) => {
-  t.strictSame(
+test("12 - array vs null", () => {
+  equal(
     compare([" "], [null], { hungryForWhitespace: true, matchStrictly: true }),
     true,
     "12"
   );
-  t.end();
 });
 
-tap.test("13 - array vs bool", (t) => {
-  t.strictSame(
+test("13 - array vs bool", () => {
+  equal(
     compare([" "], true, { hungryForWhitespace: true, matchStrictly: true }),
     false,
     "13"
   );
-  t.end();
 });
 
-tap.test("14", (t) => {
-  t.strictSame(
+test("14", () => {
+  equal(
     compare(false, true, { hungryForWhitespace: true, matchStrictly: true }),
     false,
     "14"
   );
-  t.end();
 });
 
-tap.test("15", (t) => {
-  t.strictSame(
+test("15", () => {
+  equal(
     compare([false], [true], {
       hungryForWhitespace: true,
       matchStrictly: true,
@@ -165,5 +136,6 @@ tap.test("15", (t) => {
     true,
     "15"
   );
-  t.end();
 });
+
+test.run();

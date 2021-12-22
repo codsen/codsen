@@ -1,6 +1,7 @@
 // Nothing was found
 
 import { strict as assert } from "assert";
+
 import { rRegex } from "../dist/ranges-regex.esm.js";
 
 assert.equal(rRegex(/abc/g, "xyz"), null);

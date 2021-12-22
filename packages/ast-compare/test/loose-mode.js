@@ -1,11 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { compare } from "../dist/ast-compare.esm.js";
 
 // loose mode
 // -----------------------------------------------------------------------------
 
-tap.test("01 - hungryForWhitespace, empty strings within arrays", (t) => {
-  t.strictSame(
+test("01 - hungryForWhitespace, empty strings within arrays", () => {
+  equal(
     compare(
       {
         type: "rule",
@@ -19,7 +22,7 @@ tap.test("01 - hungryForWhitespace, empty strings within arrays", (t) => {
     false,
     "01.01"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         type: "rule",
@@ -36,7 +39,7 @@ tap.test("01 - hungryForWhitespace, empty strings within arrays", (t) => {
     true,
     "01.02"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         type: "rule",
@@ -50,7 +53,7 @@ tap.test("01 - hungryForWhitespace, empty strings within arrays", (t) => {
     false,
     "01.03"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         type: "rule",
@@ -67,5 +70,6 @@ tap.test("01 - hungryForWhitespace, empty strings within arrays", (t) => {
     true,
     "01.04"
   );
-  t.end();
 });
+
+test.run();

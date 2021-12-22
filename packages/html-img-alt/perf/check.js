@@ -3,11 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { alts } from "../dist/html-img-alt.esm.js";
+
+const callerDir = path.resolve(".");
 
 const testme = () => alts("zzz<img           /    >zzz");
 

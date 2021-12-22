@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/206b/index.htm
 
 function badCharacterActivateSymmetricSwapping(context: Linter): RuleObjType {
-  const charCode = 8299;
+  let charCode = 8299;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

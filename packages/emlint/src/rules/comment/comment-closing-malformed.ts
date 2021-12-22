@@ -17,7 +17,7 @@ function commentClosingMalformed(context: Linter): RuleObjType {
 
       if (node.closing) {
         // run the tag's value past the validator function
-        const errorArr = validateCommentClosing(node) || [];
+        let errorArr = validateCommentClosing(node) || [];
         console.log(
           `022 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );

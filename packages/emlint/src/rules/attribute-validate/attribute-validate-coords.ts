@@ -53,7 +53,7 @@ function attributeValidateCoords(context: Linter): RuleObjType {
             });
           } else {
             // extract "shape" attr's value
-            const shapeAttr = node.parent.attribs.filter(
+            let shapeAttr = node.parent.attribs.filter(
               (attrObj) => attrObj.attribName === "shape"
             )[0];
             console.log(
@@ -76,7 +76,7 @@ function attributeValidateCoords(context: Linter): RuleObjType {
               enforceCount = "even";
             }
 
-            const errorArr = validateDigitAndUnit(
+            let errorArr = validateDigitAndUnit(
               node.attribValueRaw,
               node.attribValueStartsAt as number,
               {

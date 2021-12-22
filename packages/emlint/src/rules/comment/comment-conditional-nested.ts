@@ -1,9 +1,10 @@
+import { traverse } from "ast-monkey-traverse";
+
 import { Linter, RuleObjType } from "../../linter";
 
 // rule: comment-conditional-nested
 // -----------------------------------------------------------------------------
 
-import { traverse } from "ast-monkey-traverse";
 // import { pathPrev } from "ast-monkey-util";
 import { isObj } from "../../util/util";
 // import op from "object-path";
@@ -16,14 +17,14 @@ function commentConditionalNested(context: Linter): RuleObjType {
         `███████████████████████████████████████ commentConditionalNested() ███████████████████████████████████████`
       );
       console.log(
-        `019 commentConditionalNested(): node = ${JSON.stringify(
+        `020 commentConditionalNested(): node = ${JSON.stringify(
           node,
           null,
           4
         )}`
       );
 
-      const pathsWithOpeningComments: string[] = [];
+      let pathsWithOpeningComments: string[] = [];
       console.log(
         `${`\u001b[${90}m${`----------------------------------------`}\u001b[${39}m`}`
       );
@@ -34,12 +35,12 @@ function commentConditionalNested(context: Linter): RuleObjType {
         node,
         // (key, val, innerObj, stop) => {
         (key, val, innerObj) => {
-          const current = val !== undefined ? val : key;
+          let current = val !== undefined ? val : key;
           if (isObj(current)) {
             // monkey will traverse every key, every string within.
             // We need to pick the objects of a type we need: "comment"
             console.log(
-              `042 ██ ${`\u001b[${35}m${`commentConditionalNested()/traverse():`}\u001b[${39}m`} PING ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+              `043 ██ ${`\u001b[${35}m${`commentConditionalNested()/traverse():`}\u001b[${39}m`} PING ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
                 current,
                 null,
                 4
@@ -48,7 +49,7 @@ function commentConditionalNested(context: Linter): RuleObjType {
 
             if (current.type === "comment") {
               console.log(
-                `051 FIY ${`\u001b[${33}m${`current token is opening`}\u001b[${39}m`}: ${JSON.stringify(
+                `052 FIY ${`\u001b[${33}m${`current token is opening`}\u001b[${39}m`}: ${JSON.stringify(
                   current,
                   null,
                   4
@@ -63,7 +64,7 @@ function commentConditionalNested(context: Linter): RuleObjType {
                 )
               ) {
                 console.log(
-                  `066 ${`\u001b[${31}m${`ERROR: comment inside comment!`}\u001b[${39}m`}`
+                  `067 ${`\u001b[${31}m${`ERROR: comment inside comment!`}\u001b[${39}m`}`
                 );
                 context.report({
                   ruleId: "comment-conditional-nested",

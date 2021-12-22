@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 7.1.0
 
 ```js
 import { strict as assert } from "assert";
+
 import { det, opts, version } from "detergent";
 
 // on default setting, widow removal and encoding are enabled:
@@ -46,7 +47,7 @@ assert.equal(det("clean this text £").res, "clean this text&nbsp;&pound;");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/detergent/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/detergent/) for a full description of the API.
 
 ## Contributing
 
@@ -58,6 +59,8 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.json, licenced under CC0-1.0
 
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

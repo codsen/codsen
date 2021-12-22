@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { isLangCode } from "../dist/is-language-code.esm.js";
 
 // https://datahub.io/core/language-codes
@@ -762,9 +765,10 @@ const datahubLangCodes = [
   "zu-ZA",
 ];
 
-tap.test(`${`\u001b[${32}m${`datahub language codes`}\u001b[${39}m`}`, (t) => {
+test(`${`\u001b[${32}m${`datahub language codes`}\u001b[${39}m`}`, () => {
   datahubLangCodes.forEach((codeStr) => {
-    t.ok(isLangCode(codeStr), codeStr);
+    ok(isLangCode(codeStr), codeStr);
   });
-  t.end();
 });
+
+test.run();

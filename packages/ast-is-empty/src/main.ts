@@ -1,7 +1,9 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import isObj from "lodash.isplainobject";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 /**

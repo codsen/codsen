@@ -1,5 +1,6 @@
-import { Linter } from "../dist/emlint.esm.js";
 import { rApply } from "ranges-apply";
+
+import { Linter } from "../dist/emlint.esm.js";
 
 function applyFixes(str, messages) {
   if (!Array.isArray(messages) || !messages.length) {
@@ -19,19 +20,17 @@ function applyFixes(str, messages) {
   );
 }
 
-function verify(t, str, opts) {
-  const linter = new Linter();
-  if (!t.runOnly) {
-    // 1. ensure given string does not throw on "all"
-    // setting - this is an automated check, a supplement
-    t.doesNotThrow(() => {
-      linter.verify(str, {
-        rules: {
-          all: 2,
-        },
-      });
+function verify(not, str, opts) {
+  let linter = new Linter();
+  // 1. ensure given string does not throw on "all"
+  // setting - this is an automated check, a supplement
+  not.throws(() => {
+    linter.verify(str, {
+      rules: {
+        all: 2,
+      },
     });
-  }
+  });
 
   return linter.verify(str, opts);
 }

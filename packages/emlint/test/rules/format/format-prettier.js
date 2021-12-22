@@ -1,313 +1,293 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { applyFixes, verify } from "../../../t-util/util.js";
 // import { deepContains } from "ast-deep-contains";
 
 // missing space after a colon
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - head CSS, missing space`, (t) => {
-  const str = `<style>.a{color:red;}</style><body>a</body>`;
-  const fixed = `<style>.a{color: red;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`01 - head CSS, missing space`, () => {
+  let str = `<style>.a{color:red;}</style><body>a</body>`;
+  let fixed = `<style>.a{color: red;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "01");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "01");
 });
 
-tap.test(`02 - inline CSS, missing space`, (t) => {
-  const str = `<td style="color:red;">x</td>`;
-  const fixed = `<td style="color: red;">x</td>`;
-  const messages = verify(t, str, {
+test(`02 - inline CSS, missing space`, () => {
+  let str = `<td style="color:red;">x</td>`;
+  let fixed = `<td style="color: red;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "02");
 });
 
-tap.test(`03 - head CSS, tab as space`, (t) => {
-  const str = `<style>.a{color:\tred;}</style><body>a</body>`;
-  const fixed = `<style>.a{color: red;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`03 - head CSS, tab as space`, () => {
+  let str = `<style>.a{color:\tred;}</style><body>a</body>`;
+  let fixed = `<style>.a{color: red;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "03");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "03");
 });
 
-tap.test(`04 - inline CSS, tab as space`, (t) => {
-  const str = `<td style="color:\tred;">x</td>`;
-  const fixed = `<td style="color: red;">x</td>`;
-  const messages = verify(t, str, {
+test(`04 - inline CSS, tab as space`, () => {
+  let str = `<td style="color:\tred;">x</td>`;
+  let fixed = `<td style="color: red;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "04");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "04");
 });
 
-tap.test(`05 - head CSS, two spaces`, (t) => {
-  const str = `<style>.a{color:  red;}</style><body>a</body>`;
-  const fixed = `<style>.a{color: red;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`05 - head CSS, two spaces`, () => {
+  let str = `<style>.a{color:  red;}</style><body>a</body>`;
+  let fixed = `<style>.a{color: red;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "05");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "05");
 });
 
-tap.test(`06 - inline CSS, two spaces`, (t) => {
-  const str = `<td style="color:  red;">x</td>`;
-  const fixed = `<td style="color: red;">x</td>`;
-  const messages = verify(t, str, {
+test(`06 - inline CSS, two spaces`, () => {
+  let str = `<td style="color:  red;">x</td>`;
+  let fixed = `<td style="color: red;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "06");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "06");
 });
 
 // missing space in after an !important
 // -----------------------------------------------------------------------------
 
-tap.test(`07 - head CSS, missing space`, (t) => {
-  const str = `<style>.a{color: red!important;}</style><body>a</body>`;
-  const fixed = `<style>.a{color: red !important;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`07 - head CSS, missing space`, () => {
+  let str = `<style>.a{color: red!important;}</style><body>a</body>`;
+  let fixed = `<style>.a{color: red !important;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "07");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "07");
 });
 
-tap.test(`08 - inline CSS, missing space`, (t) => {
-  const str = `<td style="color: red!important;">x</td>`;
-  const fixed = `<td style="color: red !important;">x</td>`;
-  const messages = verify(t, str, {
+test(`08 - inline CSS, missing space`, () => {
+  let str = `<td style="color: red!important;">x</td>`;
+  let fixed = `<td style="color: red !important;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "08");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "08");
 });
 
-tap.test(`09 - head CSS, tab as space`, (t) => {
-  const str = `<style>.a{color: red\t!important;}</style><body>a</body>`;
-  const fixed = `<style>.a{color: red !important;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`09 - head CSS, tab as space`, () => {
+  let str = `<style>.a{color: red\t!important;}</style><body>a</body>`;
+  let fixed = `<style>.a{color: red !important;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "09");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "09");
 });
 
-tap.test(`10 - inline CSS, tab as space`, (t) => {
-  const str = `<td style="color: red\t!important;">x</td>`;
-  const fixed = `<td style="color: red !important;">x</td>`;
-  const messages = verify(t, str, {
+test(`10 - inline CSS, tab as space`, () => {
+  let str = `<td style="color: red\t!important;">x</td>`;
+  let fixed = `<td style="color: red !important;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "10");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "10");
 });
 
-tap.test(`11 - head CSS, two spaces`, (t) => {
-  const str = `<style>.a{color: red  !important;}</style><body>a</body>`;
-  const fixed = `<style>.a{color: red !important;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`11 - head CSS, two spaces`, () => {
+  let str = `<style>.a{color: red  !important;}</style><body>a</body>`;
+  let fixed = `<style>.a{color: red !important;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "11");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "11");
 });
 
-tap.test(`12 - inline CSS, two spaces`, (t) => {
-  const str = `<td style="color: red  !important;">x</td>`;
-  const fixed = `<td style="color: red !important;">x</td>`;
-  const messages = verify(t, str, {
+test(`12 - inline CSS, two spaces`, () => {
+  let str = `<td style="color: red  !important;">x</td>`;
+  let fixed = `<td style="color: red !important;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "12");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "12");
 });
 
-tap.test(`13 - combo, HTML`, (t) => {
-  const str = `<td style="color:\nred\r\t!important;">x</td>`;
-  const fixed = `<td style="color: red !important;">x</td>`;
-  const messages = verify(t, str, {
+test(`13 - combo, HTML`, () => {
+  let str = `<td style="color:\nred\r\t!important;">x</td>`;
+  let fixed = `<td style="color: red !important;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "13");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "13");
 });
 
-tap.test(`14 - combo, Nunj`, (t) => {
-  const str = `<td{% if foo %} style="color:red!important; text-align:\r\nleft;"{% endif %} align="left"></td>`;
-  const fixed = `<td{% if foo %} style="color: red !important; text-align: left;"{% endif %} align="left"></td>`;
-  const messages = verify(t, str, {
+test(`14 - combo, Nunj`, () => {
+  let str = `<td{% if foo %} style="color:red!important; text-align:\r\nleft;"{% endif %} align="left"></td>`;
+  let fixed = `<td{% if foo %} style="color: red !important; text-align: left;"{% endif %} align="left"></td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "14");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "14");
 });
 
 // missing space after semi
 // -----------------------------------------------------------------------------
 
-tap.test(`15 - head CSS, missing`, (t) => {
-  const str = `<style>.a{color: red;text-align: left;float: left;}</style><body>a</body>`;
-  const fixed = `<style>.a{color: red; text-align: left; float: left;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`15 - head CSS, missing`, () => {
+  let str = `<style>.a{color: red;text-align: left;float: left;}</style><body>a</body>`;
+  let fixed = `<style>.a{color: red; text-align: left; float: left;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "15");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "15");
 });
 
-tap.test(`16 - inline CSS, missing`, (t) => {
-  const str = `<td style="color: red;text-align: left;float: left;">x</td>`;
-  const fixed = `<td style="color: red; text-align: left; float: left;">x</td>`;
-  const messages = verify(t, str, {
+test(`16 - inline CSS, missing`, () => {
+  let str = `<td style="color: red;text-align: left;float: left;">x</td>`;
+  let fixed = `<td style="color: red; text-align: left; float: left;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "16");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "16");
 });
 
-tap.test(`17 - head CSS, tab as a space`, (t) => {
-  const str = `<style>.a{color: red;\ttext-align: left;\tfloat: left;}</style><body>a</body>`;
-  const fixed = `<style>.a{color: red; text-align: left; float: left;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`17 - head CSS, tab as a space`, () => {
+  let str = `<style>.a{color: red;\ttext-align: left;\tfloat: left;}</style><body>a</body>`;
+  let fixed = `<style>.a{color: red; text-align: left; float: left;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "17");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "17");
 });
 
-tap.test(`18 - inline CSS, tab as a space`, (t) => {
-  const str = `<td style="color: red;\ttext-align: left;\tfloat: left;">x</td>`;
-  const fixed = `<td style="color: red; text-align: left; float: left;">x</td>`;
-  const messages = verify(t, str, {
+test(`18 - inline CSS, tab as a space`, () => {
+  let str = `<td style="color: red;\ttext-align: left;\tfloat: left;">x</td>`;
+  let fixed = `<td style="color: red; text-align: left; float: left;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "18");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "18");
 });
 
-tap.test(`19 - head CSS, copious whitespace`, (t) => {
-  const str = `<style>.a{color: red;\r\n \t text-align: left;\t \t \t  float: left;}</style><body>a</body>`;
-  const fixed = `<style>.a{color: red; text-align: left; float: left;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`19 - head CSS, copious whitespace`, () => {
+  let str = `<style>.a{color: red;\r\n \t text-align: left;\t \t \t  float: left;}</style><body>a</body>`;
+  let fixed = `<style>.a{color: red; text-align: left; float: left;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "19");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "19");
 });
 
-tap.test(`20 - inline CSS, copious whitespace`, (t) => {
-  const str = `<td style="color: red;\r\n \t text-align: left; \t float: left;">x</td>`;
-  const fixed = `<td style="color: red; text-align: left; float: left;">x</td>`;
-  const messages = verify(t, str, {
+test(`20 - inline CSS, copious whitespace`, () => {
+  let str = `<td style="color: red;\r\n \t text-align: left; \t float: left;">x</td>`;
+  let fixed = `<td style="color: red; text-align: left; float: left;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "20");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "20");
 });
 
-tap.test(`21 - comment as the first entry, excessive gap`, (t) => {
-  const str = `<td style="/*color: red;*/  text-align: left; float: left;">x</td>`;
-  const fixed = `<td style="/*color: red;*/ text-align: left; float: left;">x</td>`;
-  const messages = verify(t, str, {
+test(`21 - comment as the first entry, excessive gap`, () => {
+  let str = `<td style="/*color: red;*/  text-align: left; float: left;">x</td>`;
+  let fixed = `<td style="/*color: red;*/ text-align: left; float: left;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "21");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "21");
 });
 
-tap.test(`22 - comment as the first entry, tight`, (t) => {
-  const str = `<td style="/*color: red;*/text-align: left; float: left;">x</td>`;
-  const fixed = `<td style="/*color: red;*/ text-align: left; float: left;">x</td>`;
-  const messages = verify(t, str, {
+test(`22 - comment as the first entry, tight`, () => {
+  let str = `<td style="/*color: red;*/text-align: left; float: left;">x</td>`;
+  let fixed = `<td style="/*color: red;*/ text-align: left; float: left;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "22");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "22");
 });
 
-tap.test(`23 - comment as the first entry, tight`, (t) => {
-  const str = `<td style="color: red;    /*text-align: left;*/     float: left;">x</td>`;
-  const fixed = `<td style="color: red; /*text-align: left;*/ float: left;">x</td>`;
-  const messages = verify(t, str, {
+test(`23 - comment as the first entry, tight`, () => {
+  let str = `<td style="color: red;    /*text-align: left;*/     float: left;">x</td>`;
+  let fixed = `<td style="color: red; /*text-align: left;*/ float: left;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "23");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "23");
 });
 
-tap.test(`24 - copiously spaced out ESP clause`, (t) => {
-  const str = `<td style="color: red;    {% if so %}text-align: left;{% endif %}     float: left;">x</td>`;
-  const fixed = `<td style="color: red; {% if so %}text-align: left;{% endif %} float: left;">x</td>`;
-  const messages = verify(t, str, {
+test(`24 - copiously spaced out ESP clause`, () => {
+  let str = `<td style="color: red;    {% if so %}text-align: left;{% endif %}     float: left;">x</td>`;
+  let fixed = `<td style="color: red; {% if so %}text-align: left;{% endif %} float: left;">x</td>`;
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "24");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "24");
 });
 
-tap.test(`25`, (t) => {
-  const str = `<td style="color: red;
+test(`25`, () => {
+  let str = `<td style="color: red;
     {% if so %}text-align: left;{% endif %}
 float: left;">x</td>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "25");
-  t.end();
+  equal(applyFixes(str, messages), str, "25");
 });
+
+test.run();

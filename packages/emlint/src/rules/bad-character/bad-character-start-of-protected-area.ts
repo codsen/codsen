@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/0096/index.htm
 
 function badCharacterStartOfProtectedArea(context: Linter): RuleObjType {
-  const charCode = 150;
+  let charCode = 150;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

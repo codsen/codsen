@@ -1,5 +1,6 @@
-import { Linter, RuleObjType } from "../../linter";
 import db from "mime-db";
+
+import { Linter, RuleObjType } from "../../linter";
 import { validateString, wholeExtensionRegex } from "../../util/util";
 
 // rule: attribute-validate-accept
@@ -12,7 +13,7 @@ function attributeValidateAccept(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateAccept() ███████████████████████████████████████`
       );
       console.log(
-        `015 attributeValidateAccept(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateAccept(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "accept") {
@@ -28,7 +29,7 @@ function attributeValidateAccept(context: Linter): RuleObjType {
         }
 
         // check in two parts, first, a quick try, match the most common values only
-        const errorArr = validateString(
+        let errorArr = validateString(
           node.attribValueRaw, // value
           node.attribValueStartsAt as number, // offset
           {
@@ -61,7 +62,7 @@ function attributeValidateAccept(context: Linter): RuleObjType {
         // https://www.npmjs.com/package/mime-db
 
         errorArr.forEach((errorObj) => {
-          console.log(`064 RAISE ERROR`);
+          console.log(`065 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-accept" });
         });
       }

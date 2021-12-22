@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 // The Callback Use
 
 import { strict as assert } from "assert";
+
 import {
   matchLeftIncl,
   matchRightIncl,

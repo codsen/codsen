@@ -1,6 +1,8 @@
 import fs from "fs-extra";
 import path from "path";
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 // import pMap from "p-map";
@@ -16,124 +18,123 @@ import tempy from "tempy";
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - only node_modules with one file, flag disabled", async (t) => {
-  const tempFolder = tempy.directory();
+test("01 - only node_modules with one file, flag disabled", async () => {
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
-  const pathOfTheTestfile = path.join(tempFolder, "/node_modules/sortme.json");
-  const originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
+  let pathOfTheTestfile = path.join(tempFolder, "/node_modules/sortme.json");
+  let originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
 
-  const processedFilesContents = fs
+  let processedFilesContents = fs
     .writeFile(pathOfTheTestfile, originalContents)
     .then(() => execa("./cli.js", [tempFolder]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((testFile) =>
       execaCommand(`rm -rf ${tempFolder}`)
         .then(() => testFile)
-        .catch((err) => t.fail(err))
+        .catch((err) => {
+          throw new Error(err);
+        })
     )
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-  t.strictSame(await processedFilesContents, originalContents, "01");
-  t.end();
+  equal(await processedFilesContents, originalContents, "01");
 });
 
-tap.test("02 - only node_modules with one file, flag enabled", async (t) => {
-  const tempFolder = tempy.directory();
+test("02 - only node_modules with one file, flag enabled", async () => {
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
-  const pathOfTheTestfile = path.join(tempFolder, "/node_modules/sortme.json");
+  let pathOfTheTestfile = path.join(tempFolder, "/node_modules/sortme.json");
 
-  const processedFilesContents = fs
+  let processedFilesContents = fs
     .writeFile(pathOfTheTestfile, `{\n  "z": 1,\n  "a": 2\n}\n`)
     .then(() => execa("./cli.js", [tempFolder, "-n"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((testFile) =>
       execaCommand(`rm -rf ${tempFolder}`)
         .then(() => testFile)
-        .catch((err) => t.fail(err))
+        .catch((err) => {
+          throw new Error(err);
+        })
     )
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-  t.strictSame(
-    await processedFilesContents,
-    `{\n  "a": 2,\n  "z": 1\n}\n`,
-    "02"
-  );
-  t.end();
+  equal(await processedFilesContents, `{\n  "a": 2,\n  "z": 1\n}\n`, "02");
 });
 
-tap.test(
-  "03 - files inside and outside node_modules, flag enabled",
-  async (t) => {
-    const originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
-    const sortedContents = `{\n  "a": 2,\n  "z": 1\n}\n`;
+test("03 - files inside and outside node_modules, flag enabled", async () => {
+  let originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
+  let sortedContents = `{\n  "a": 2,\n  "z": 1\n}\n`;
 
-    const tempFolder = tempy.directory();
-    // const tempFolder = "temp";
-    fs.ensureDirSync(path.resolve(tempFolder));
-    fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
-    const pathOfTestFile1 = path.join(tempFolder, "/node_modules/sortme.json");
-    const pathOfTestFile2 = path.join(tempFolder, "sortme.json");
+  let tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
+  let pathOfTestFile1 = path.join(tempFolder, "/node_modules/sortme.json");
+  let pathOfTestFile2 = path.join(tempFolder, "sortme.json");
 
-    fs.writeFileSync(pathOfTestFile1, originalContents);
-    fs.writeFileSync(pathOfTestFile2, originalContents);
+  fs.writeFileSync(pathOfTestFile1, originalContents);
+  fs.writeFileSync(pathOfTestFile2, originalContents);
 
-    await execa("./cli.js", [tempFolder, "-n"]).catch((err) => t.fail(err));
+  await execa("./cli.js", [tempFolder, "-n"]).catch((err) => {
+    throw new Error(err);
+  });
 
-    t.strictSame(
-      fs.readFileSync(pathOfTestFile1, "utf8"),
-      sortedContents,
-      "03.01 - sorted within node_modules"
-    );
-    t.strictSame(
-      fs.readFileSync(pathOfTestFile2, "utf8"),
-      sortedContents,
-      "03.02 - sorted outside node_modules"
-    );
+  equal(
+    fs.readFileSync(pathOfTestFile1, "utf8"),
+    sortedContents,
+    "03.01 - sorted within node_modules"
+  );
+  equal(
+    fs.readFileSync(pathOfTestFile2, "utf8"),
+    sortedContents,
+    "03.02 - sorted outside node_modules"
+  );
 
-    await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
-    t.end();
-  }
-);
+  await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
+    throw new Error(err);
+  });
+});
 
-tap.test(
-  "04 - files inside and outside node_modules, flag disabled",
-  async (t) => {
-    const originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
-    const sortedContents = `{\n  "a": 2,\n  "z": 1\n}\n`;
+test("04 - files inside and outside node_modules, flag disabled", async () => {
+  let originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
+  let sortedContents = `{\n  "a": 2,\n  "z": 1\n}\n`;
 
-    const tempFolder = tempy.directory();
-    // const tempFolder = "temp";
-    fs.ensureDirSync(path.resolve(tempFolder));
-    fs.ensureDirSync(
-      path.resolve(path.join(tempFolder, "/node_modules/dir1/"))
-    );
-    const pathOfTestFile1 = path.join(
-      tempFolder,
-      "/node_modules/dir1/sortme.json"
-    );
-    const pathOfTestFile2 = path.join(tempFolder, "sortme.json");
+  let tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/dir1/")));
+  let pathOfTestFile1 = path.join(tempFolder, "/node_modules/dir1/sortme.json");
+  let pathOfTestFile2 = path.join(tempFolder, "sortme.json");
 
-    fs.writeFileSync(pathOfTestFile1, originalContents);
-    fs.writeFileSync(pathOfTestFile2, originalContents);
+  fs.writeFileSync(pathOfTestFile1, originalContents);
+  fs.writeFileSync(pathOfTestFile2, originalContents);
 
-    await execa("./cli.js", [tempFolder]).catch((err) => t.fail(err));
+  await execa("./cli.js", [tempFolder]).catch((err) => {
+    throw new Error(err);
+  });
 
-    t.strictSame(
-      fs.readFileSync(pathOfTestFile1, "utf8"),
-      originalContents,
-      "04.01 - not sorted within node_modules"
-    );
-    t.strictSame(
-      fs.readFileSync(pathOfTestFile2, "utf8"),
-      sortedContents,
-      "04.02 - sorted outside node_modules"
-    );
+  equal(
+    fs.readFileSync(pathOfTestFile1, "utf8"),
+    originalContents,
+    "04.01 - not sorted within node_modules"
+  );
+  equal(
+    fs.readFileSync(pathOfTestFile2, "utf8"),
+    sortedContents,
+    "04.02 - sorted outside node_modules"
+  );
 
-    await execaCommand(`rm -rf ${tempFolder}`).catch((err) => t.fail(err));
-    t.end();
-  }
-);
+  await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
+    throw new Error(err);
+  });
+});
+
+test.run();

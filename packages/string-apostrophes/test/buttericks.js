@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { convertAll } from "../dist/string-apostrophes.esm.js";
 
 const leftSingleQuote = "\u2018";
@@ -12,68 +15,54 @@ const rightSingleQuote = "\u2019";
 // https://practicaltypography.com/apostrophes.html
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - 'n' - on`,
-  (t) => {
-    t.strictSame(
-      convertAll(`In the '60s, rock 'n' roll`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }),
-      {
-        result: `In the ${rightSingleQuote}60s, rock ${rightSingleQuote}n${rightSingleQuote} roll`,
-        ranges: [
-          [7, 8, `${rightSingleQuote}`],
-          [18, 21, `${rightSingleQuote}n${rightSingleQuote}`],
-        ],
-      },
-      `01`
-    );
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - 'n' - on`, () => {
+  equal(
+    convertAll(`In the '60s, rock 'n' roll`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }),
+    {
+      result: `In the ${rightSingleQuote}60s, rock ${rightSingleQuote}n${rightSingleQuote} roll`,
+      ranges: [
+        [7, 8, `${rightSingleQuote}`],
+        [18, 21, `${rightSingleQuote}n${rightSingleQuote}`],
+      ],
+    },
+    `01`
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - 'n' - off`,
-  (t) => {
-    t.strictSame(
-      convertAll(`In the '60s, rock 'n' roll`, {
-        convertApostrophes: 0,
-        convertEntities: 0,
-      }).result,
-      `In the '60s, rock 'n' roll`,
-      `02`
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - 'n' - off`, () => {
+  equal(
+    convertAll(`In the '60s, rock 'n' roll`, {
+      convertApostrophes: 0,
+      convertEntities: 0,
+    }).result,
+    `In the '60s, rock 'n' roll`,
+    `02`
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - Hawai${leftSingleQuote}i - sets okina #1`,
-  (t) => {
-    t.strictSame(
-      convertAll(`Hawai'i`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `Hawai${leftSingleQuote}i`,
-      `03`
-    );
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - Hawai${leftSingleQuote}i - sets okina #1`, () => {
+  equal(
+    convertAll(`Hawai'i`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `Hawai${leftSingleQuote}i`,
+    `03`
+  );
+});
 
-tap.test(
-  `04 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - O${leftSingleQuote}ahu - sets okina #2`,
-  (t) => {
-    t.strictSame(
-      convertAll(`O'ahu`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `O${leftSingleQuote}ahu`,
-      `04`
-    );
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - O${leftSingleQuote}ahu - sets okina #2`, () => {
+  equal(
+    convertAll(`O'ahu`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `O${leftSingleQuote}ahu`,
+    `04`
+  );
+});
+
+test.run();

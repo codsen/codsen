@@ -1,14 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { processThis, tiny } from "./util.js";
 
 // code between TD and TD
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - between two TD's`,
-  (t) => {
-    t.strictSame(
-      processThis(`<table>
+test(`01 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - between two TD's`, () => {
+  equal(
+    processThis(`<table>
   <tr>
     <td>
       aaa
@@ -19,7 +20,7 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      tiny(`<table>
+    tiny(`<table>
   <tr>
     <td>
       aaa
@@ -36,17 +37,13 @@ tap.test(
     </td>
   </tr>
 </table>`),
-      "01 - str before tr - 1 col"
-    );
-    t.end();
-  }
-);
+    "01 - str before tr - 1 col"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - 3 places`,
-  (t) => {
-    t.is(
-      processThis(`<table>
+test(`02 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - 3 places`, () => {
+  is(
+    processThis(`<table>
 <tr>
   x
   <td>
@@ -59,7 +56,7 @@ tap.test(
   z
 </tr>
 </table>`),
-      tiny(`<table>
+    tiny(`<table>
 <tr>
   <td>
     x
@@ -86,8 +83,8 @@ tap.test(
   </td>
 </tr>
 </table>`),
-      "02"
-    );
-    t.end();
-  }
-);
+    "02"
+  );
+});
+
+test.run();

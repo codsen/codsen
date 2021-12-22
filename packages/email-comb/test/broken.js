@@ -1,12 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 
 // broken code
 // -----------------------------------------------------------------------------
 
-tap.test("01 - missing closing TD, TR, TABLE will not throw", (t) => {
-  const actual = comb(
-    t,
+test("01 - missing closing TD, TR, TABLE will not throw", () => {
+  let actual = comb(
     `
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
@@ -15,22 +17,18 @@ tap.test("01 - missing closing TD, TR, TABLE will not throw", (t) => {
 `
   ).result;
 
-  const intended = `<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  let intended = `<table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
   <td>
     some text
 `;
 
-  t.strictSame(actual, intended, "01 - does nothing as head has no styles");
-  t.end();
+  equal(actual, intended, "01 - does nothing as head has no styles");
 });
 
-tap.test(
-  "02 - doesn't remove any other empty attributes besides class/id (mini)",
-  (t) => {
-    const actual = comb(
-      t,
-      `<html>
+test("02 - doesn't remove any other empty attributes besides class/id (mini)", () => {
+  let actual = comb(
+    `<html>
 <body>
 <tr whatnot="">
 <td class="">
@@ -38,9 +36,9 @@ tap.test(
 </body>
 </html>
 `
-    ).result;
+  ).result;
 
-    const intended = `<html>
+  let intended = `<html>
 <body>
 <tr whatnot="">
 <td>
@@ -49,17 +47,12 @@ tap.test(
 </html>
 `;
 
-    t.strictSame(actual, intended, "02");
-    t.end();
-  }
-);
+  equal(actual, intended, "02");
+});
 
-tap.test(
-  "03 - doesn't remove any other empty attributes besides class/id",
-  (t) => {
-    const actual = comb(
-      t,
-      `<html>
+test("03 - doesn't remove any other empty attributes besides class/id", () => {
+  let actual = comb(
+    `<html>
 <body>
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr whatnot="">
@@ -71,9 +64,9 @@ tap.test(
 </body>
 </html>
 `
-    ).result;
+  ).result;
 
-    const intended = `<html>
+  let intended = `<html>
 <body>
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr whatnot="">
@@ -86,17 +79,12 @@ tap.test(
 </html>
 `;
 
-    t.strictSame(actual, intended, "03");
-    t.end();
-  }
-);
+  equal(actual, intended, "03");
+});
 
-tap.test(
-  "04 - removes classes and id's from HTML even if it's heavily messed up",
-  (t) => {
-    const actual = comb(
-      t,
-      `
+test("04 - removes classes and id's from HTML even if it's heavily messed up", () => {
+  let actual = comb(
+    `
 <title>Dummy HTML</title>
 <style type="text/css">
   .real-class-1:active, #head-only-id1[whatnot], whatever[lang|en]{width:100% !important;}
@@ -116,9 +104,9 @@ tap.test(
   </tr>
 </table>
 </body>`
-    ).result;
+  ).result;
 
-    const intended = `<title>Dummy HTML</title>
+  let intended = `<title>Dummy HTML</title>
 <style type="text/css">
   .real-class-1:active, whatever[lang|en]{width:100% !important;}
   #real-id-1:hover{width:100% !important;}
@@ -137,17 +125,15 @@ tap.test(
 </table>
 </body>`;
 
-    t.strictSame(
-      actual,
-      intended,
-      "04 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
-    );
-    t.end();
-  }
-);
+  equal(
+    actual,
+    intended,
+    "04 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
+  );
+});
 
-tap.test("05 - missing last @media curlie", (t) => {
-  const source = `<head>
+test("05 - missing last @media curlie", () => {
+  let source = `<head>
 <style type="text/css">
 @namespace url(z);
 @media (max-width: 600px) {
@@ -159,7 +145,7 @@ tap.test("05 - missing last @media curlie", (t) => {
 </body>
 `;
 
-  const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
 @namespace url(z);
 </style>
@@ -168,13 +154,11 @@ tap.test("05 - missing last @media curlie", (t) => {
 </body>
 `;
 
-  t.equal(comb(t, source).result, intended, "05");
-  t.end();
+  equal(comb(source).result, intended, "05");
 });
 
-tap.test("06 - dirty code - blank class attribute name", (t) => {
-  const actual1 = comb(
-    t,
+test("06 - dirty code - blank class attribute name", () => {
+  let actual1 = comb(
     `<head>
 <style>@media screen and (min-width:1px){.unused {color: red;}}</style>
 </head>
@@ -182,19 +166,17 @@ tap.test("06 - dirty code - blank class attribute name", (t) => {
 zzz
 </body>`
   ).result;
-  const intended1 = `<head>
+  let intended1 = `<head>
 </head>
 <body>
 zzz
 </body>`;
 
-  t.equal(actual1, intended1, "06");
-  t.end();
+  equal(actual1, intended1, "06");
 });
 
-tap.test("07 - dirty code - space between class and =", (t) => {
-  const actual = comb(
-    t,
+test("07 - dirty code - space between class and =", () => {
+  let actual = comb(
     `<head>
 <style>
   .aa, .bb { w:1; }
@@ -204,7 +186,7 @@ tap.test("07 - dirty code - space between class and =", (t) => {
 `
   ).result;
 
-  const intended = `<head>
+  let intended = `<head>
 <style>
   .bb { w:1; }
 </style>
@@ -212,13 +194,12 @@ tap.test("07 - dirty code - space between class and =", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "07");
-  t.end();
+  equal(actual, intended, "07");
 });
 
-tap.todo("08 - dirty code - blank class attribute name", (t) => {
-  const actual1 = comb(
-    t,
+// TODO
+test.skip("01 - dirty code - blank class attribute name", () => {
+  let actual1 = comb(
     `<head>
 <style>
   .aa, .bb { w:1; }
@@ -227,7 +208,7 @@ tap.todo("08 - dirty code - blank class attribute name", (t) => {
 </body>
 `
   ).result;
-  const intended1 = `<head>
+  let intended1 = `<head>
 <style>
   .bb { w:1; }
 </style>
@@ -235,8 +216,7 @@ tap.todo("08 - dirty code - blank class attribute name", (t) => {
 </body>
 `;
 
-  const actual2 = comb(
-    t,
+  let actual2 = comb(
     `<head>
 <style>
   .aa, .bb { w:1; }
@@ -245,7 +225,7 @@ tap.todo("08 - dirty code - blank class attribute name", (t) => {
 </body>
 `
   ).result;
-  const intended2 = `<head>
+  let intended2 = `<head>
 <style>
   .bb { w:1; }
 </style>
@@ -253,7 +233,8 @@ tap.todo("08 - dirty code - blank class attribute name", (t) => {
 </body>
 `;
 
-  t.equal(actual1, intended1, "08.01");
-  t.equal(actual2, intended2, "08.02");
-  t.end();
+  equal(actual1, intended1, "01.01");
+  equal(actual2, intended2, "01.02");
 });
+
+test.run();

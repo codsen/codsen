@@ -1,5 +1,7 @@
 import { mergeAdvanced } from "object-merge-advanced";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface UnknownValueObj {
@@ -42,7 +44,7 @@ function generateAst(
     return {};
   }
 
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
   let res = {};
 

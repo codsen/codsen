@@ -1,10 +1,13 @@
 /* eslint no-template-curly-in-string: 0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { jVar } from "../dist/json-variables.esm.js";
 
-tap.test("01 - two variables in an object's key", (t) => {
-  t.strictSame(
+test("01 - two variables in an object's key", () => {
+  equal(
     jVar({
       a: "some text %%_var1_%% more text %%_var2_%%",
       b: "something",
@@ -19,11 +22,10 @@ tap.test("01 - two variables in an object's key", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - two variables with paths in an object's key", (t) => {
-  t.strictSame(
+test("02 - two variables with paths in an object's key", () => {
+  equal(
     jVar({
       a: "some text %%_var1.key1.0_%% more text %%_var2.key2.key3.1_%%",
       b: "something",
@@ -38,11 +40,10 @@ tap.test("02 - two variables with paths in an object's key", (t) => {
     },
     "02 - defaults + querying object contents"
   );
-  t.end();
 });
 
-tap.test("03 - two variables, with wrapping", (t) => {
-  t.strictSame(
+test("03 - two variables, with wrapping", () => {
+  equal(
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
@@ -63,11 +64,10 @@ tap.test("03 - two variables, with wrapping", (t) => {
     },
     "03 - custom wrappers"
   );
-  t.end();
 });
 
-tap.test("04 - variables with paths being wrapped", (t) => {
-  t.strictSame(
+test("04 - variables with paths being wrapped", () => {
+  equal(
     jVar(
       {
         a: "some text %%_var1.key1_%% more text %%_var2.key2_%%",
@@ -88,11 +88,10 @@ tap.test("04 - variables with paths being wrapped", (t) => {
     },
     "04 - custom wrappers + multi-level"
   );
-  t.end();
 });
 
-tap.test("05 - custom heads and tails", (t) => {
-  t.strictSame(
+test("05 - custom heads and tails", () => {
+  equal(
     jVar(
       {
         a: "some text {var1} more text {var2}",
@@ -113,11 +112,10 @@ tap.test("05 - custom heads and tails", (t) => {
     },
     "05 - custom heads/tails"
   );
-  t.end();
 });
 
-tap.test("06 - custom heads and tails being wrapped", (t) => {
-  t.strictSame(
+test("06 - custom heads and tails being wrapped", () => {
+  equal(
     jVar(
       {
         a: "some text {var1.key1} more text {var2.key2}",
@@ -138,11 +136,10 @@ tap.test("06 - custom heads and tails being wrapped", (t) => {
     },
     "06 - custom heads/tails + multi-level"
   );
-  t.end();
 });
 
-tap.test("07 - whitespace within custom heads and tails", (t) => {
-  t.strictSame(
+test("07 - whitespace within custom heads and tails", () => {
+  equal(
     jVar(
       {
         a: "some text {  var1  } more text {  var2  }",
@@ -163,39 +160,34 @@ tap.test("07 - whitespace within custom heads and tails", (t) => {
     },
     "07 - custom heads/tails, some whitespace inside of them"
   );
-  t.end();
 });
 
-tap.test(
-  "08 - whitespace within variables containing paths and custom heads/tails",
-  (t) => {
-    t.strictSame(
-      jVar(
-        {
-          a: "some text {  var1.key1  } more text {  var2.key2  }",
-          b: "something",
-          var1: { key1: "value1" },
-          var2: { key2: "value2" },
-        },
-        {
-          heads: "{",
-          tails: "}",
-        }
-      ),
+test("08 - whitespace within variables containing paths and custom heads/tails", () => {
+  equal(
+    jVar(
       {
-        a: "some text value1 more text value2",
+        a: "some text {  var1.key1  } more text {  var2.key2  }",
         b: "something",
         var1: { key1: "value1" },
         var2: { key2: "value2" },
       },
-      "08 - custom heads/tails, some whitespace inside of them + multi-level"
-    );
-    t.end();
-  }
-);
+      {
+        heads: "{",
+        tails: "}",
+      }
+    ),
+    {
+      a: "some text value1 more text value2",
+      b: "something",
+      var1: { key1: "value1" },
+      var2: { key2: "value2" },
+    },
+    "08 - custom heads/tails, some whitespace inside of them + multi-level"
+  );
+});
 
-tap.test("09 - some values are equal to heads or tails", (t) => {
-  t.strictSame(
+test("09 - some values are equal to heads or tails", () => {
+  equal(
     jVar({
       a: "some text %%_var1_%% more text %%_var2_%%",
       b: "something",
@@ -216,11 +208,10 @@ tap.test("09 - some values are equal to heads or tails", (t) => {
     },
     "09 - some keys have heads/tails exactly - defaults"
   );
-  t.end();
 });
 
-tap.test("10 - opts.noSingleMarkers - off", (t) => {
-  t.strictSame(
+test("10 - opts.noSingleMarkers - off", () => {
+  equal(
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
@@ -246,11 +237,10 @@ tap.test("10 - opts.noSingleMarkers - off", (t) => {
     },
     "10 - some keys have heads/tails exactly - hardcoded defaults"
   );
-  t.end();
 });
 
-tap.test("11 - opts.noSingleMarkers - on", (t) => {
-  t.throws(() => {
+test("11 - opts.noSingleMarkers - on", () => {
+  throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
@@ -266,11 +256,10 @@ tap.test("11 - opts.noSingleMarkers - on", (t) => {
       }
     );
   }, /THROW_ID_16/);
-  t.end();
 });
 
-tap.test("12 - opts.noSingleMarkers - off - more throw tests", (t) => {
-  t.throws(() => {
+test("12 - opts.noSingleMarkers - off - more throw tests", () => {
+  throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
@@ -284,30 +273,13 @@ tap.test("12 - opts.noSingleMarkers - off - more throw tests", (t) => {
       }
     );
   }, /THROW_ID_16/);
-  t.end();
 });
 
-tap.test(
-  "13 - custom heads/tails, values equal to them are present in data",
-  (t) => {
-    t.strictSame(
-      jVar(
-        {
-          a: "some text {var1} more text {var2}",
-          b: "something",
-          var1: "value1",
-          var2: "value2",
-          c: "{",
-          d: "}",
-          e: "}",
-        },
-        {
-          heads: "{",
-          tails: "}",
-        }
-      ),
+test("13 - custom heads/tails, values equal to them are present in data", () => {
+  equal(
+    jVar(
       {
-        a: "some text value1 more text value2",
+        a: "some text {var1} more text {var2}",
         b: "something",
         var1: "value1",
         var2: "value2",
@@ -315,14 +287,26 @@ tap.test(
         d: "}",
         e: "}",
       },
-      "13 - some keys have heads/tails only - custom heads/tails, defaults"
-    );
-    t.end();
-  }
-);
+      {
+        heads: "{",
+        tails: "}",
+      }
+    ),
+    {
+      a: "some text value1 more text value2",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+      c: "{",
+      d: "}",
+      e: "}",
+    },
+    "13 - some keys have heads/tails only - custom heads/tails, defaults"
+  );
+});
 
-tap.test("14 - custom heads/tails - noSingleMarkers = false", (t) => {
-  t.strictSame(
+test("14 - custom heads/tails - noSingleMarkers = false", () => {
+  equal(
     jVar(
       {
         a: "some text {var1} more text {var2}",
@@ -350,11 +334,10 @@ tap.test("14 - custom heads/tails - noSingleMarkers = false", (t) => {
     },
     "14 - some keys have heads/tails only - custom heads/tails, hardcoded defaults"
   );
-  t.end();
 });
 
-tap.test("15 - value in an array", (t) => {
-  t.strictSame(
+test("15 - value in an array", () => {
+  equal(
     jVar({
       z: {
         a: ["some text %%_var1_%% more text %%_var2_%%"],
@@ -373,11 +356,10 @@ tap.test("15 - value in an array", (t) => {
     },
     "15"
   );
-  t.end();
 });
 
-tap.test("16 - data stores #1", (t) => {
-  t.strictSame(
+test("16 - data stores #1", () => {
+  equal(
     jVar({
       a: "some text %%_var1_%% more text %%_var3_%%.",
       b: "something",
@@ -396,7 +378,7 @@ tap.test("16 - data stores #1", (t) => {
     },
     "16.01"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var3_%%.",
@@ -418,7 +400,7 @@ tap.test("16 - data stores #1", (t) => {
     },
     "16.02"
   );
-  t.strictSame(
+  equal(
     jVar({
       a: "some text %%_var1.key1_%% more text %%_var3.key3_%%.",
       b: "something",
@@ -437,7 +419,7 @@ tap.test("16 - data stores #1", (t) => {
     },
     "16.03 - data stash and multi-level, all default"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "some text %%_var1.key1_%% more text %%_var3.key3_%%.",
@@ -459,11 +441,10 @@ tap.test("16 - data stores #1", (t) => {
     },
     "16.04 - data stash and multi-level, default markers, custom wrap"
   );
-  t.end();
 });
 
-tap.test("17 - top-level key and data stash clash", (t) => {
-  t.strictSame(
+test("17 - top-level key and data stash clash", () => {
+  equal(
     jVar({
       a: "some text %%_var1_%% more text %%_var3_%%.",
       b: "something",
@@ -484,7 +465,7 @@ tap.test("17 - top-level key and data stash clash", (t) => {
     },
     "17.01 - default, no wrap"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var3_%%.",
@@ -508,7 +489,7 @@ tap.test("17 - top-level key and data stash clash", (t) => {
     },
     "17.02 - wrap"
   );
-  t.strictSame(
+  equal(
     jVar({
       a: "some text %%_var1.key1_%% more text %%_var3.key3_%%.",
       b: "something",
@@ -529,7 +510,7 @@ tap.test("17 - top-level key and data stash clash", (t) => {
     },
     "17.03 - root key would take precedence, but it's of a wrong format and therefore algorithm chooses data storage instead (which is correct type)"
   );
-  t.strictSame(
+  equal(
     jVar({
       a: "some text %%_var1_%% more text %%_var3.key3_%%.",
       b: "something",
@@ -550,11 +531,10 @@ tap.test("17 - top-level key and data stash clash", (t) => {
     },
     "17.04 - mix, one var resolved from root, another from data store"
   );
-  t.end();
 });
 
-tap.test("18 - emoji in values", (t) => {
-  t.strictSame(
+test("18 - emoji in values", () => {
+  equal(
     jVar({
       a: "some🦄 text %%_var1_%% more text %%_var2_%%.",
       b: "something",
@@ -573,11 +553,10 @@ tap.test("18 - emoji in values", (t) => {
     },
     "18"
   );
-  t.end();
 });
 
-tap.test("19 - emoji in keys", (t) => {
-  t.strictSame(
+test("19 - emoji in keys", () => {
+  equal(
     jVar({
       a: "some🦄 text %%_var🐴_%% more text %%_var2_%%.",
       b: "something",
@@ -596,11 +575,10 @@ tap.test("19 - emoji in keys", (t) => {
     },
     "19"
   );
-  t.end();
 });
 
-tap.test("20 - emoji in variable keys", (t) => {
-  t.strictSame(
+test("20 - emoji in variable keys", () => {
+  equal(
     jVar({
       a: "some🦄 text %%_var🐴_%% more text %%_var2_%%.",
       b: "something",
@@ -619,11 +597,10 @@ tap.test("20 - emoji in variable keys", (t) => {
     },
     "20"
   );
-  t.end();
 });
 
-tap.test("21 - empty strings in the input AST", (t) => {
-  t.strictSame(
+test("21 - empty strings in the input AST", () => {
+  equal(
     jVar({
       a: "some text %%_var1_%% more text %%_var2_%%",
       b: "something",
@@ -640,11 +617,10 @@ tap.test("21 - empty strings in the input AST", (t) => {
     },
     "21 - defaults"
   );
-  t.end();
 });
 
-tap.test("22 - fetching variables from parent node's level", (t) => {
-  t.strictSame(
+test("22 - fetching variables from parent node's level", () => {
+  equal(
     jVar({
       a: {
         b: {
@@ -669,11 +645,10 @@ tap.test("22 - fetching variables from parent node's level", (t) => {
     },
     "22 - defaults"
   );
-  t.end();
 });
 
-tap.test("23 - fetching variables from two levels above", (t) => {
-  const input = {
+test("23 - fetching variables from two levels above", () => {
+  let input = {
     a: {
       b: {
         c: {
@@ -684,7 +659,7 @@ tap.test("23 - fetching variables from two levels above", (t) => {
       var2: "yyy",
     },
   };
-  t.strictSame(
+  equal(
     jVar(input),
     {
       a: {
@@ -700,7 +675,7 @@ tap.test("23 - fetching variables from two levels above", (t) => {
     "23.01 - defaults"
   );
   // mutation didn't happen:
-  t.strictSame(
+  equal(
     input,
     {
       a: {
@@ -715,11 +690,10 @@ tap.test("23 - fetching variables from two levels above", (t) => {
     },
     "23.02"
   );
-  t.end();
 });
 
-tap.test("24 - fetching variables from root, three levels above", (t) => {
-  const input = {
+test("24 - fetching variables from root, three levels above", () => {
+  let input = {
     a: {
       b: {
         c: {
@@ -730,7 +704,7 @@ tap.test("24 - fetching variables from root, three levels above", (t) => {
     var1: { z: "zzz" },
     var2: "yyy",
   };
-  t.strictSame(
+  equal(
     jVar(input),
     {
       a: {
@@ -746,7 +720,7 @@ tap.test("24 - fetching variables from root, three levels above", (t) => {
     "24.01 - defaults"
   );
   // input argument was not mutated:
-  t.strictSame(
+  equal(
     input,
     {
       a: {
@@ -761,11 +735,10 @@ tap.test("24 - fetching variables from root, three levels above", (t) => {
     },
     "24.02"
   );
-  t.end();
 });
 
-tap.test("25 - fetching variables from parent node's level data store", (t) => {
-  t.strictSame(
+test("25 - fetching variables from parent node's level data store", () => {
+  equal(
     jVar({
       a: {
         b: {
@@ -794,11 +767,10 @@ tap.test("25 - fetching variables from parent node's level data store", (t) => {
     },
     "25 - defaults"
   );
-  t.end();
 });
 
-tap.test("26 - fetching variables from data store two levels above", (t) => {
-  t.strictSame(
+test("26 - fetching variables from data store two levels above", () => {
+  equal(
     jVar({
       a: {
         b: {
@@ -827,11 +799,10 @@ tap.test("26 - fetching variables from data store two levels above", (t) => {
     },
     "26 - defaults"
   );
-  t.end();
 });
 
-tap.test("27 - fetching variables from data store as high as the root", (t) => {
-  t.strictSame(
+test("27 - fetching variables from data store as high as the root", () => {
+  equal(
     jVar({
       a: {
         b: {
@@ -860,13 +831,12 @@ tap.test("27 - fetching variables from data store as high as the root", (t) => {
     },
     "27 - defaults"
   );
-  t.end();
 });
 
 // in the unit test below, there are two "eee"s to check can we really use
 // parent keys in the path to make keys unique
-tap.test("28 - three level references", (t) => {
-  t.strictSame(
+test("28 - three level references", () => {
+  equal(
     jVar({
       aaa: {
         bbb: {
@@ -903,11 +873,10 @@ tap.test("28 - three level references", (t) => {
     },
     "28"
   );
-  t.end();
 });
 
-tap.test("29 - resolves to a string", (t) => {
-  t.strictSame(
+test("29 - resolves to a string", () => {
+  equal(
     jVar({
       a: "%%_b_%%",
       b: 1,
@@ -919,7 +888,7 @@ tap.test("29 - resolves to a string", (t) => {
     "29.01"
   );
 
-  t.strictSame(
+  equal(
     jVar({
       a: "%%_b_%%",
       a_data: {
@@ -934,5 +903,6 @@ tap.test("29 - resolves to a string", (t) => {
     },
     "29.02"
   );
-  t.end();
 });
+
+test.run();

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { flattenAllArrays } from "object-flatten-all-arrays";
@@ -12,7 +13,9 @@ import sortKeys from "sort-keys";
 import pReduce from "p-reduce";
 import typ from "type-detect";
 import pOne from "p-one";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 // -----------------------------------------------------------------------------
@@ -64,8 +67,8 @@ function defaultCompare(x: any, y: any) {
   if (y === undefined) {
     return -1;
   }
-  const xString = toString(x);
-  const yString = toString(y);
+  let xString = toString(x);
+  let yString = toString(y);
   if (xString < yString) {
     return -1;
   }
@@ -78,7 +81,7 @@ function defaultCompare(x: any, y: any) {
 // compareFunction
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#Parameters
 function compare(firstEl: string, secondEl: string) {
-  const semverRegex = /^\d+\.\d+\.\d+$/g;
+  let semverRegex = /^\d+\.\d+\.\d+$/g;
   if (firstEl.match(semverRegex) && secondEl.match(semverRegex)) {
     return semverCompare(firstEl, secondEl);
   }
@@ -112,12 +115,12 @@ function getKeyset<ValueType>(
       )}`
     );
   }
-  const defaults = {
+  let defaults = {
     placeholder: false,
   };
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
   console.log(
-    `120 CALLING check-types-mini:\nopts = ${JSON.stringify(
+    `123 CALLING check-types-mini:\nopts = ${JSON.stringify(
       opts,
       null,
       4
@@ -153,7 +156,7 @@ function getKeyset<ValueType>(
       // truthy option means previous check detected a promise within
       // "arrOfPromises" which doesn't resolve to a plain object
       if (res) {
-        return reject(
+        reject(
           Error(
             `json-comb-core/getKeyset(): [THROW_ID_13] Oops! ${culpritIndex}th element resolved not to a plain object but to a ${typeof culpritVal}\n${JSON.stringify(
               culpritVal,
@@ -162,6 +165,7 @@ function getKeyset<ValueType>(
             )}`
           )
         );
+        return;
       }
       return pReduce(
         arrOfPromises, // input
@@ -217,13 +221,13 @@ function getKeysetSync(
   }
 
   let schemaObj = {};
-  const arr = clone(arrOriginal);
-  const defaults = {
+  let arr = clone(arrOriginal);
+  let defaults = {
     placeholder: false,
   };
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
 
-  const fOpts = {
+  let fOpts = {
     flattenArraysContainingStringsToBeEmpty: true,
   };
 
@@ -272,12 +276,12 @@ function enforceKeyset(
       "json-comb-core/enforceKeyset(): [THROW_ID_32] Second arg missing!"
     );
   }
-  const defaults = {
+  let defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     placeholder: false,
     useNullAsExplicitFalse: true,
   };
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
   if (
     opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
     !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
@@ -296,7 +300,7 @@ function enforceKeyset(
     Promise.all([obj, schemaKeyset]).then(
       ([objResolved, schemaKeysetResolved]) => {
         if (!isObj(obj)) {
-          return reject(
+          reject(
             Error(
               `json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
                 obj,
@@ -305,9 +309,10 @@ function enforceKeyset(
               )}`
             )
           );
+          return;
         }
         if (!isObj(schemaKeyset)) {
-          return reject(
+          reject(
             Error(
               `json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
                 schemaKeyset,
@@ -316,8 +321,9 @@ function enforceKeyset(
               )}`
             )
           );
+          return;
         }
-        return resolve(
+        resolve(
           sortAllObjectsSync(
             clone(
               fillMissing(clone(objResolved), clone(schemaKeysetResolved), opts)
@@ -364,12 +370,12 @@ function enforceKeysetSync(
       )}`
     );
   }
-  const defaults = {
+  let defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     placeholder: false,
     useNullAsExplicitFalse: true,
   };
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
   if (
     opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
     !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
@@ -447,15 +453,15 @@ function findUnusedSync(
       `json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ${typeof originalOpts}`
     );
   }
-  const defaults = {
+  let defaults = {
     placeholder: false,
     comments: "__comment__",
   };
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
   if (!opts.comments) {
     opts.comments = "";
   }
-  const arr = clone(arrOriginal);
+  let arr = clone(arrOriginal);
 
   // ---------------------------------------------------------------------------
 
@@ -482,7 +488,7 @@ function findUnusedSync(
       // iterate all objects within given arr1ay, find unused keys
       //
       if (arr1.length > 1) {
-        const unusedKeys = Object.keys(keySet).filter((key) =>
+        let unusedKeys = Object.keys(keySet).filter((key) =>
           arr1.every(
             (obj) =>
               ((opts1 && obj[key] === opts1.placeholder) ||
@@ -498,16 +504,16 @@ function findUnusedSync(
       // no matter how many objects are there within our array, if any values
       // contain objects or arrays, traverse them recursively
       //
-      const keys: string[] = [].concat(
+      let keys: string[] = [].concat(
         ...(Object.keys(keySet) as any[]).filter(
           (key) => isObj(keySet[key]) || Array.isArray(keySet[key])
         )
       );
-      const keysContents = keys.map((key) => typ(keySet[key]));
+      let keysContents = keys.map((key) => typ(keySet[key]));
 
       // can't use map() because we want to prevent nulls being written.
       // hence the reduce() contraption
-      const extras = keys.map((el) =>
+      let extras = keys.map((el) =>
         [].concat(
           ...(arr1 as any[]).reduce((res1, obj) => {
             if (

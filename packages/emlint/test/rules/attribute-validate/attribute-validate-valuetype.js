@@ -1,318 +1,246 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valuetype, error level 0`,
-  (t) => {
-    const str = `<param>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 0,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "01.01");
-    t.strictSame(messages, [], "01.02");
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valuetype, error level 0`, () => {
+  let str = `<param>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 0,
+    },
+  });
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
+});
 
-tap.test(
-  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valuetype, error level 1`,
-  (t) => {
-    const str = `<param>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 1,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "02.01");
-    t.strictSame(messages, [], "02.02");
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valuetype, error level 1`, () => {
+  let str = `<param>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 1,
+    },
+  });
+  equal(applyFixes(str, messages), str, "02.01");
+  equal(messages, [], "02.02");
+});
 
-tap.test(
-  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valuetype, error level 2`,
-  (t) => {
-    const str = `<param>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "03.01");
-    t.strictSame(messages, [], "03.02");
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valuetype, error level 2`, () => {
+  let str = `<param>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "03.01");
+  equal(messages, [], "03.02");
+});
 
-tap.test(
-  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, param`,
-  (t) => {
-    const str = `<param valuetype="data">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "04.01");
-    t.strictSame(messages, [], "04.02");
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, param`, () => {
+  let str = `<param valuetype="data">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "04.01");
+  equal(messages, [], "04.02");
+});
 
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  (t) => {
-    const str = `<param valuetype=' data'>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
+test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
+  let str = `<param valuetype=' data'>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<param valuetype='data'>`, "05.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-valuetype",
+      idxFrom: 18,
+      idxTo: 19,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [[18, 19]],
       },
-    });
-    t.equal(applyFixes(str, messages), `<param valuetype='data'>`, "05.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-valuetype",
-          idxFrom: 18,
-          idxTo: 19,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[18, 19]],
-          },
-        },
-      ],
-      "05.02"
-    );
-    t.is(messages.length, 1, "05.03");
-    t.end();
-  }
-);
+    },
+  ]);
 
-tap.test(
-  `06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  (t) => {
-    const str = `<param valuetype='data '>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), `<param valuetype='data'>`, "06.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-valuetype",
-          idxFrom: 22,
-          idxTo: 23,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[22, 23]],
-          },
-        },
-      ],
-      "06.02"
-    );
-    t.end();
-  }
-);
+  is(messages.length, 1, "05.03");
+});
 
-tap.test(
-  `07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
-  (t) => {
-    const str = `<param valuetype='  data  \t'>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
+test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
+  let str = `<param valuetype='data '>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<param valuetype='data'>`, "06.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-valuetype",
+      idxFrom: 22,
+      idxTo: 23,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [[22, 23]],
       },
-    });
-    t.equal(applyFixes(str, messages), `<param valuetype='data'>`, "07.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-valuetype",
-          idxFrom: 18,
-          idxTo: 27,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [
-              [18, 20],
-              [24, 27],
-            ],
-          },
-        },
-      ],
-      "07.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
 
-tap.test(
-  `08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  (t) => {
-    const str = `<param valuetype="  \t">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
+test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = `<param valuetype='  data  \t'>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<param valuetype='data'>`, "07.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-valuetype",
+      idxFrom: 18,
+      idxTo: 27,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [
+          [18, 20],
+          [24, 27],
+        ],
       },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "08.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-valuetype",
-          idxFrom: 18,
-          idxTo: 21,
-          message: `Missing value.`,
-          fix: null,
-        },
-      ],
-      "08.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
+
+test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = `<param valuetype="  \t">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "08.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-valuetype",
+      idxFrom: 18,
+      idxTo: 21,
+      message: `Missing value.`,
+      fix: null,
+    },
+  ]);
+});
 
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  (t) => {
-    const str = `<div valuetype="data">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "09.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-valuetype",
-          idxFrom: 5,
-          idxTo: 21,
-          fix: null,
-        },
-      ],
-      "09.02"
-    );
-    t.end();
-  }
-);
+test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
+  let str = `<div valuetype="data">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "09.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-valuetype",
+      idxFrom: 5,
+      idxTo: 21,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  (t) => {
-    const str = `<zzz valuetype="data">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "10.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-valuetype",
-          idxFrom: 5,
-          idxTo: 21,
-          fix: null,
-        },
-      ],
-      "10.02"
-    );
-    t.end();
-  }
-);
+test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = `<zzz valuetype="data">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "10.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-valuetype",
+      idxFrom: 5,
+      idxTo: 21,
+      fix: null,
+    },
+  ]);
+});
 
 // 04. wrong value
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `11 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out-of-whack value`,
-  (t) => {
-    const str = `<param valuetype="tralala">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "11.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-valuetype",
-          idxFrom: 18,
-          idxTo: 25,
-          message: `Should be "data|ref|object".`,
-          fix: null,
-        },
-      ],
-      "11.02"
-    );
-    t.end();
-  }
-);
+test(`11 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out-of-whack value`, () => {
+  let str = `<param valuetype="tralala">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "11.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-valuetype",
+      idxFrom: 18,
+      idxTo: 25,
+      message: `Should be "data|ref|object".`,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `12 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case`,
-  (t) => {
-    const str = `<param valuetype="DATA">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-valuetype": 2,
+test(`12 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case`, () => {
+  let str = `<param valuetype="DATA">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-valuetype": 2,
+    },
+  });
+  // can fix:
+  equal(applyFixes(str, messages), `<param valuetype="data">`, "12.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-valuetype",
+      idxFrom: 18,
+      idxTo: 22,
+      message: `Should be lowercase.`,
+      fix: {
+        ranges: [[18, 22, "data"]],
       },
-    });
-    // can fix:
-    t.equal(applyFixes(str, messages), `<param valuetype="data">`, "12.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-valuetype",
-          idxFrom: 18,
-          idxTo: 22,
-          message: `Should be lowercase.`,
-          fix: {
-            ranges: [[18, 22, "data"]],
-          },
-        },
-      ],
-      "12.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
+
+test.run();

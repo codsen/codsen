@@ -2,7 +2,9 @@
 
 import isObj from "lodash.isplainobject";
 import isEq from "lodash.isequal";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Opts {
@@ -33,7 +35,7 @@ function allValuesEqualTo(input: any, value: any, opts: Opts): boolean {
     return true;
   }
   if (isObj(input)) {
-    const keys = Object.keys(input);
+    let keys = Object.keys(input);
     if (keys.length === 0) {
       return true;
     }
@@ -79,10 +81,10 @@ function allEq(
   }
 
   // prep opts
-  const defaults: Opts = {
+  let defaults: Opts = {
     arraysMustNotContainPlaceholders: true,
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
   // and finally,
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);

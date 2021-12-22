@@ -10,7 +10,7 @@ import { badChars } from "../../util/bad-character-all";
 function badCharacterCharacterTabulationWithJustification(
   context: Linter
 ): RuleObjType {
-  const charCode = 137;
+  let charCode = 137;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

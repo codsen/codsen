@@ -1,6 +1,7 @@
 // Replacing values
 
 import { strict as assert } from "assert";
+
 import { rRegex } from "../dist/ranges-regex.esm.js";
 import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
 

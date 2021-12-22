@@ -1,6 +1,7 @@
 // Supports legacy bracket notation emails used to use
 
 import { strict as assert } from "assert";
+
 import { extract } from "../dist/string-extract-class-names.esm.js";
 
 // Yahoo has changed many years ago so email template

@@ -10,7 +10,7 @@
 // Quotes could be checked here but are not at the moment, here currently
 // we deal with ESP tokens only
 
-import { Layer } from "./util";
+import { Layer, LayerEsp } from "./util";
 
 // RETURNS: undefined or integer, length of a matched ESP lump.
 function matchLayerLast(
@@ -21,7 +21,7 @@ function matchLayerLast(
   if (!layers.length) {
     return;
   }
-  const whichLayerToMatch = matchFirstInstead
+  let whichLayerToMatch = matchFirstInstead
     ? layers[0]
     : layers[layers.length - 1];
 
@@ -46,7 +46,7 @@ function matchLayerLast(
     // match every character from the last "layers" complex-type entry must be
     // present in the extracted lump
     Array.from(wholeEspTagLump).every((char) =>
-      whichLayerToMatch.guessedClosingLump.includes(char)
+      (whichLayerToMatch as LayerEsp).guessedClosingLump.includes(char)
     ) ||
     // consider ruby heads, <%# and tails -%>
     (whichLayerToMatch.guessedClosingLump &&

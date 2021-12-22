@@ -1,7 +1,9 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { Linter } from "../dist/emlint.esm.js";
+
 const linter = new Linter();
 
 // Correct "not" type Outlook conditional would be:

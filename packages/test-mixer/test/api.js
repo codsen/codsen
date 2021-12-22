@@ -1,15 +1,17 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { mixer } from "../dist/test-mixer.esm.js";
 
-tap.test("01", (t) => {
-  t.throws(() => {
+test("01", () => {
+  throws(() => {
     mixer("z");
   }, /THROW_ID_01/g);
-  t.end();
 });
 
-tap.test("02", (t) => {
-  t.throws(() => {
+test("02", () => {
+  throws(() => {
     mixer(
       {
         foo: true,
@@ -17,11 +19,10 @@ tap.test("02", (t) => {
       "z"
     );
   }, /THROW_ID_02/g);
-  t.end();
 });
 
-tap.test("03", (t) => {
-  t.throws(() => {
+test("03", () => {
+  throws(() => {
     mixer(
       {
         foo: true,
@@ -32,10 +33,10 @@ tap.test("03", (t) => {
       }
     );
   }, /THROW_ID_03/g);
-  t.end();
 });
 
-tap.test("04", (t) => {
-  t.strictSame(mixer({}, {}), [], "04");
-  t.end();
+test("04", () => {
+  equal(mixer({}, {}), [], "04");
 });
+
+test.run();

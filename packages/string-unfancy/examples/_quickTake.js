@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { unfancy } from "../dist/string-unfancy.esm.js";
 
 // U+2019

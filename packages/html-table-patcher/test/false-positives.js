@@ -1,13 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { processThis, tiny } from "./util.js";
 
 // false positives
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - tight comments`,
-  (t) => {
-    const str = `<!--zzz--><table><!--zzz-->
+test(`01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - tight comments`, () => {
+  let str = `<!--zzz--><table><!--zzz-->
   <tr><!--zzz-->
     <td><!--zzz-->
       aaa<!--zzz-->
@@ -17,15 +18,11 @@ tap.test(
     </td><!--zzz-->
   </tr><!--zzz-->
   </table><!--zzz-->`;
-    t.strictSame(processThis(str), tiny(str), "01");
-    t.end();
-  }
-);
+  equal(processThis(str), tiny(str), "01");
+});
 
-tap.test(
-  `02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`,
-  (t) => {
-    const str = `<!--zzz\nyyy--><table><!--zzz\nyyy-->
+test(`02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`, () => {
+  let str = `<!--zzz\nyyy--><table><!--zzz\nyyy-->
   <tr><!--zzz\nyyy-->
     <td><!--zzz\nyyy-->
       aaa<!--zzz\nyyy-->
@@ -35,15 +32,11 @@ tap.test(
     </td><!--zzz\nyyy-->
   </tr><!--zzz\nyyy-->
   </table><!--zzz\nyyy-->`;
-    t.strictSame(processThis(str), tiny(str), "02");
-    t.end();
-  }
-);
+  equal(processThis(str), tiny(str), "02");
+});
 
-tap.test(
-  `03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`,
-  (t) => {
-    const str = `<!--111
+test(`03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`, () => {
+  let str = `<!--111
 222--><table><!--333
 444-->
 <tr><!--555<table>666<tr>777-->
@@ -56,7 +49,7 @@ tap.test(
 </tr><!--lll<tr></tr><tr></tr><table>mmm</table>nnn-->
 </table><!--ooo
 ppp-->`;
-    t.strictSame(processThis(str), tiny(str), "03");
-    t.end();
-  }
-);
+  equal(processThis(str), tiny(str), "03");
+});
+
+test.run();

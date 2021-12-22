@@ -7,6 +7,7 @@
 import defineLazyProp from "define-lazy-prop";
 import clone from "lodash.clonedeep";
 import { isMatch } from "matcher";
+
 import allBadCharacterRules from "./rules/all-bad-character.json";
 import allTagRules from "./rules/all-tag.json";
 import allAttribRules from "./rules/all-attribute.json";
@@ -20,513 +21,273 @@ import { RulesObj } from "./util/commonTypes";
 // -----------------------------------------------------------------------------
 
 import badCharacterNull from "./rules/bad-character/bad-character-null";
-
 import badCharacterStartOfHeading from "./rules/bad-character/bad-character-start-of-heading";
-
 import badCharacterStartOfText from "./rules/bad-character/bad-character-start-of-text";
-
 import badCharacterEndOfText from "./rules/bad-character/bad-character-end-of-text";
-
 import badCharacterEndOfTransmission from "./rules/bad-character/bad-character-end-of-transmission";
-
 import badCharacterEnquiry from "./rules/bad-character/bad-character-enquiry";
-
 import badCharacterAcknowledge from "./rules/bad-character/bad-character-acknowledge";
-
 import badCharacterBell from "./rules/bad-character/bad-character-bell";
-
 import badCharacterBackspace from "./rules/bad-character/bad-character-backspace";
-
 import badCharacterTabulation from "./rules/bad-character/bad-character-tabulation";
-
 import badCharacterLineTabulation from "./rules/bad-character/bad-character-line-tabulation";
-
 import badCharacterFormFeed from "./rules/bad-character/bad-character-form-feed";
-
 import badCharacterShiftOut from "./rules/bad-character/bad-character-shift-out";
-
 import badCharacterShiftIn from "./rules/bad-character/bad-character-shift-in";
-
 import badCharacterDataLinkEscape from "./rules/bad-character/bad-character-data-link-escape";
-
 import badCharacterDeviceControlOne from "./rules/bad-character/bad-character-device-control-one";
-
 import badCharacterDeviceControlTwo from "./rules/bad-character/bad-character-device-control-two";
-
 import badCharacterDeviceControlThree from "./rules/bad-character/bad-character-device-control-three";
-
 import badCharacterDeviceControlFour from "./rules/bad-character/bad-character-device-control-four";
-
 import badCharacterNegativeAcknowledge from "./rules/bad-character/bad-character-negative-acknowledge";
-
 import badCharacterSynchronousIdle from "./rules/bad-character/bad-character-synchronous-idle";
-
 import badCharacterEndOfTransmissionBlock from "./rules/bad-character/bad-character-end-of-transmission-block";
-
 import badCharacterCancel from "./rules/bad-character/bad-character-cancel";
-
 import badCharacterEndOfMedium from "./rules/bad-character/bad-character-end-of-medium";
-
 import badCharacterSubstitute from "./rules/bad-character/bad-character-substitute";
-
 import badCharacterEscape from "./rules/bad-character/bad-character-escape";
-
 import badCharacterInformationSeparatorFour from "./rules/bad-character/bad-character-information-separator-four";
-
 import badCharacterInformationSeparatorThree from "./rules/bad-character/bad-character-information-separator-three";
-
 import badCharacterInformationSeparatorTwo from "./rules/bad-character/bad-character-information-separator-two";
-
 import badCharacterInformationSeparatorOne from "./rules/bad-character/bad-character-information-separator-one";
-
 import badCharacterDelete from "./rules/bad-character/bad-character-delete";
-
 import badCharacterControl0080 from "./rules/bad-character/bad-character-control-0080";
-
 import badCharacterControl0081 from "./rules/bad-character/bad-character-control-0081";
-
 import badCharacterBreakPermittedHere from "./rules/bad-character/bad-character-break-permitted-here";
-
 import badCharacterNoBreakHere from "./rules/bad-character/bad-character-no-break-here";
-
 import badCharacterControl0084 from "./rules/bad-character/bad-character-control-0084";
-
 import badCharacterNextLine from "./rules/bad-character/bad-character-next-line";
-
 import badCharacterStartOfSelectedArea from "./rules/bad-character/bad-character-start-of-selected-area";
-
 import badCharacterEndOfSelectedArea from "./rules/bad-character/bad-character-end-of-selected-area";
-
 import badCharacterCharacterTabulationSet from "./rules/bad-character/bad-character-character-tabulation-set";
-
 import badCharacterCharacterTabulationWithJustification from "./rules/bad-character/bad-character-character-tabulation-with-justification";
-
 import badCharacterLineTabulationSet from "./rules/bad-character/bad-character-line-tabulation-set";
-
 import badCharacterPartialLineForward from "./rules/bad-character/bad-character-partial-line-forward";
-
 import badCharacterPartialLineBackward from "./rules/bad-character/bad-character-partial-line-backward";
-
 import badCharacterReverseLineFeed from "./rules/bad-character/bad-character-reverse-line-feed";
-
 import badCharacterSingleShiftTwo from "./rules/bad-character/bad-character-single-shift-two";
-
 import badCharacterSingleShiftThree from "./rules/bad-character/bad-character-single-shift-three";
-
 import badCharacterDeviceControlString from "./rules/bad-character/bad-character-device-control-string";
-
 import badCharacterPrivateUseOne from "./rules/bad-character/bad-character-private-use-1";
-
 import badCharacterPrivateUseTwo from "./rules/bad-character/bad-character-private-use-2";
-
 import badCharacterSetTransmitState from "./rules/bad-character/bad-character-set-transmit-state";
-
 import badCharacterCancelCharacter from "./rules/bad-character/bad-character-cancel-character";
-
 import badCharacterMessageWaiting from "./rules/bad-character/bad-character-message-waiting";
-
 import badCharacterStartOfProtectedArea from "./rules/bad-character/bad-character-start-of-protected-area";
-
 import badCharacterEndOfProtectedArea from "./rules/bad-character/bad-character-end-of-protected-area";
-
 import badCharacterStartOfString from "./rules/bad-character/bad-character-start-of-string";
-
 import badCharacterControl0099 from "./rules/bad-character/bad-character-control-0099";
-
 import badCharacterSingleCharacterIntroducer from "./rules/bad-character/bad-character-single-character-introducer";
-
 import badCharacterControlSequenceIntroducer from "./rules/bad-character/bad-character-control-sequence-introducer";
-
 import badCharacterStringTerminator from "./rules/bad-character/bad-character-string-terminator";
-
 import badCharacterOperatingSystemCommand from "./rules/bad-character/bad-character-operating-system-command";
-
 import badCharacterPrivateMessage from "./rules/bad-character/bad-character-private-message";
-
 import badCharacterApplicationProgramCommand from "./rules/bad-character/bad-character-application-program-command";
-
 import badCharacterSoftHyphen from "./rules/bad-character/bad-character-soft-hyphen";
 
 // space characters:
 // https://www.fileformat.info/info/unicode/category/Zs/list.htm
 
 import badCharacterNonBreakingSpace from "./rules/bad-character/bad-character-non-breaking-space";
-
 import badCharacterOghamSpaceMark from "./rules/bad-character/bad-character-ogham-space-mark";
-
 import badCharacterEnQuad from "./rules/bad-character/bad-character-en-quad";
-
 import badCharacterEmQuad from "./rules/bad-character/bad-character-em-quad";
-
 import badCharacterEnSpace from "./rules/bad-character/bad-character-en-space";
-
 import badCharacterEmSpace from "./rules/bad-character/bad-character-em-space";
-
 import badCharacterThreePerEmSpace from "./rules/bad-character/bad-character-three-per-em-space";
-
 import badCharacterFourPerEmSpace from "./rules/bad-character/bad-character-four-per-em-space";
-
 import badCharacterSixPerEmSpace from "./rules/bad-character/bad-character-six-per-em-space";
-
 import badCharacterFigureSpace from "./rules/bad-character/bad-character-figure-space";
-
 import badCharacterPunctuationSpace from "./rules/bad-character/bad-character-punctuation-space";
-
 import badCharacterThinSpace from "./rules/bad-character/bad-character-thin-space";
-
 import badCharacterHairSpace from "./rules/bad-character/bad-character-hair-space";
-
 import badCharacterZeroWidthSpace from "./rules/bad-character/bad-character-zero-width-space";
-
 import badCharacterZeroWidthNonJoiner from "./rules/bad-character/bad-character-zero-width-non-joiner";
-
 import badCharacterZeroWidthJoiner from "./rules/bad-character/bad-character-zero-width-joiner";
-
 import badCharacterLeftToRightMark from "./rules/bad-character/bad-character-left-to-right-mark";
-
 import badCharacterRightToLeftMark from "./rules/bad-character/bad-character-right-to-left-mark";
-
 import badCharacterLeftToRightEmbedding from "./rules/bad-character/bad-character-left-to-right-embedding";
-
 import badCharacterRightToLeftEmbedding from "./rules/bad-character/bad-character-right-to-left-embedding";
-
 import badCharacterPopDirectionalFormatting from "./rules/bad-character/bad-character-pop-directional-formatting";
-
 import badCharacterLeftToRightOverride from "./rules/bad-character/bad-character-left-to-right-override";
-
 import badCharacterRightToLeftOverride from "./rules/bad-character/bad-character-right-to-left-override";
 
 //
 
 import badCharacterWordJoiner from "./rules/bad-character/bad-character-word-joiner";
-
 import badCharacterFunctionApplication from "./rules/bad-character/bad-character-function-application";
-
 import badCharacterInvisibleTimes from "./rules/bad-character/bad-character-invisible-times";
-
 import badCharacterInvisibleSeparator from "./rules/bad-character/bad-character-invisible-separator";
-
 import badCharacterInvisiblePlus from "./rules/bad-character/bad-character-invisible-plus";
-
 import badCharacterLeftToRightIsolate from "./rules/bad-character/bad-character-left-to-right-isolate";
-
 import badCharacterRightToLeftIsolate from "./rules/bad-character/bad-character-right-to-left-isolate";
-
 import badCharacterFirstStrongIsolate from "./rules/bad-character/bad-character-first-strong-isolate";
-
 import badCharacterPopDirectionalIsolate from "./rules/bad-character/bad-character-pop-directional-isolate";
-
 import badCharacterInhibitSymmetricSwapping from "./rules/bad-character/bad-character-inhibit-symmetric-swapping";
-
 import badCharacterActivateSymmetricSwapping from "./rules/bad-character/bad-character-activate-symmetric-swapping";
-
 import badCharacterInhibitArabicFormShaping from "./rules/bad-character/bad-character-inhibit-arabic-form-shaping";
-
 import badCharacterActivateArabicFormShaping from "./rules/bad-character/bad-character-activate-arabic-form-shaping";
-
 import badCharacterNationalDigitShapes from "./rules/bad-character/bad-character-national-digit-shapes";
-
 import badCharacterNominalDigitShapes from "./rules/bad-character/bad-character-nominal-digit-shapes";
-
 import badCharacterZeroWidthNoBreakSpace from "./rules/bad-character/bad-character-zero-width-no-break-space";
-
 import badCharacterInterlinearAnnotationAnchor from "./rules/bad-character/bad-character-interlinear-annotation-anchor";
-
 import badCharacterInterlinearAnnotationSeparator from "./rules/bad-character/bad-character-interlinear-annotation-separator";
-
 import badCharacterInterlinearAnnotationTerminator from "./rules/bad-character/bad-character-interlinear-annotation-terminator";
-
 import badCharacterLineSeparator from "./rules/bad-character/bad-character-line-separator";
-
 import badCharacterParagraphSeparator from "./rules/bad-character/bad-character-paragraph-separator";
 
 //
 
 import badCharacterNarrowNoBreakSpace from "./rules/bad-character/bad-character-narrow-no-break-space";
-
 import badCharacterMediumMathematicalSpace from "./rules/bad-character/bad-character-medium-mathematical-space";
-
 import badCharacterIdeographicSpace from "./rules/bad-character/bad-character-ideographic-space";
-
 import badCharacterReplacementCharacter from "./rules/bad-character/bad-character-replacement-character";
 
 // TAG-LEVEL rules
 // -----------------------------------------------------------------------------
 
 import tagSpaceAfterOpeningBracket from "./rules/tag/tag-space-after-opening-bracket";
-
 import tagSpaceBeforeClosingBracket from "./rules/tag/tag-space-before-closing-bracket";
-
 import tagSpaceBetweenSlashAndBracket from "./rules/tag/tag-space-between-slash-and-bracket";
-
 import tagTable from "./rules/tag/tag-table";
-
 import tagMalformed from "./rules/tag/tag-malformed";
-
 import tagClosingBackslash from "./rules/tag/tag-closing-backslash";
-
 import tagVoidSlash from "./rules/tag/tag-void-slash";
-
 import tagNameCase from "./rules/tag/tag-name-case";
-
 import tagIsPresent from "./rules/tag/tag-is-present";
-
 import tagBold from "./rules/tag/tag-bold";
-
 import tagBadSelfClosing from "./rules/tag/tag-bad-self-closing";
 
 // ATTRIBUTE rules
 // -----------------------------------------------------------------------------
 
 import attributeAlignMismatch from "./rules/attribute/attribute-align-mismatch";
-
 import attributeDuplicate from "./rules/attribute/attribute-duplicate";
-
 import attributeRequired from "./rules/attribute/attribute-required";
-
 import attributeMalformed from "./rules/attribute/attribute-malformed";
-
 import attributeOnClosingTag from "./rules/attribute/attribute-on-closing-tag";
 
 // ATTRIBUTE-VALIDATE- rules
 // -----------------------------------------------------------------------------
 
 import attributeValidateAbbr from "./rules/attribute-validate/attribute-validate-abbr";
-
 import attributeValidateAcceptCharset from "./rules/attribute-validate/attribute-validate-accept-charset";
-
 import attributeValidateAccept from "./rules/attribute-validate/attribute-validate-accept";
-
 import attributeValidateAccesskey from "./rules/attribute-validate/attribute-validate-accesskey";
-
 import attributeValidateAction from "./rules/attribute-validate/attribute-validate-action";
-
 import attributeValidateAlign from "./rules/attribute-validate/attribute-validate-align";
-
 import attributeValidateAlink from "./rules/attribute-validate/attribute-validate-alink";
-
 import attributeValidateAlt from "./rules/attribute-validate/attribute-validate-alt";
-
 import attributeValidateArchive from "./rules/attribute-validate/attribute-validate-archive";
-
 import attributeValidateAxis from "./rules/attribute-validate/attribute-validate-axis";
-
 import attributeValidateBackground from "./rules/attribute-validate/attribute-validate-background";
-
 import attributeValidateBgcolor from "./rules/attribute-validate/attribute-validate-bgcolor";
-
 import attributeValidateBorder from "./rules/attribute-validate/attribute-validate-border";
-
 import attributeValidateCellpadding from "./rules/attribute-validate/attribute-validate-cellpadding";
-
 import attributeValidateCellspacing from "./rules/attribute-validate/attribute-validate-cellspacing";
-
 import attributeValidateChar from "./rules/attribute-validate/attribute-validate-char";
-
 import attributeValidateCharoff from "./rules/attribute-validate/attribute-validate-charoff";
-
 import attributeValidateCharset from "./rules/attribute-validate/attribute-validate-charset";
-
 import attributeValidateChecked from "./rules/attribute-validate/attribute-validate-checked";
-
 import attributeValidateCite from "./rules/attribute-validate/attribute-validate-cite";
-
 import attributeValidateClass from "./rules/attribute-validate/attribute-validate-class";
-
 import attributeValidateClassid from "./rules/attribute-validate/attribute-validate-classid";
-
 import attributeValidateClear from "./rules/attribute-validate/attribute-validate-clear";
-
 import attributeValidateCode from "./rules/attribute-validate/attribute-validate-code";
-
 import attributeValidateCodebase from "./rules/attribute-validate/attribute-validate-codebase";
-
 import attributeValidateCodetype from "./rules/attribute-validate/attribute-validate-codetype";
-
 import attributeValidateColor from "./rules/attribute-validate/attribute-validate-color";
-
 import attributeValidateCols from "./rules/attribute-validate/attribute-validate-cols";
-
 import attributeValidateColspan from "./rules/attribute-validate/attribute-validate-colspan";
-
 import attributeValidateCompact from "./rules/attribute-validate/attribute-validate-compact";
-
 import attributeValidateContent from "./rules/attribute-validate/attribute-validate-content";
-
 import attributeValidateCoords from "./rules/attribute-validate/attribute-validate-coords";
-
 import attributeValidateData from "./rules/attribute-validate/attribute-validate-data";
-
 import attributeValidateDatetime from "./rules/attribute-validate/attribute-validate-datetime";
-
 import attributeValidateDeclare from "./rules/attribute-validate/attribute-validate-declare";
-
 import attributeValidateDefer from "./rules/attribute-validate/attribute-validate-defer";
-
 import attributeValidateDir from "./rules/attribute-validate/attribute-validate-dir";
-
 import attributeValidateDisabled from "./rules/attribute-validate/attribute-validate-disabled";
-
 import attributeValidateEnctype from "./rules/attribute-validate/attribute-validate-enctype";
-
 import attributeValidateFace from "./rules/attribute-validate/attribute-validate-face";
-
 import attributeValidateFor from "./rules/attribute-validate/attribute-validate-for";
-
 import attributeValidateFrame from "./rules/attribute-validate/attribute-validate-frame";
-
 import attributeValidateFrameborder from "./rules/attribute-validate/attribute-validate-frameborder";
-
 import attributeValidateHeaders from "./rules/attribute-validate/attribute-validate-headers";
-
 import attributeValidateHeight from "./rules/attribute-validate/attribute-validate-height";
-
 import attributeValidateHref from "./rules/attribute-validate/attribute-validate-href";
-
 import attributeValidateHreflang from "./rules/attribute-validate/attribute-validate-hreflang";
-
 import attributeValidateHspace from "./rules/attribute-validate/attribute-validate-hspace";
-
 import attributeValidateHttpequiv from "./rules/attribute-validate/attribute-validate-http-equiv";
-
 import attributeValidateId from "./rules/attribute-validate/attribute-validate-id";
-
 import attributeValidateIsmap from "./rules/attribute-validate/attribute-validate-ismap";
-
 import attributeValidateLabel from "./rules/attribute-validate/attribute-validate-label";
-
 import attributeValidateLang from "./rules/attribute-validate/attribute-validate-lang";
-
 import attributeValidateLanguage from "./rules/attribute-validate/attribute-validate-language";
-
 import attributeValidateLink from "./rules/attribute-validate/attribute-validate-link";
-
 import attributeValidateLongdesc from "./rules/attribute-validate/attribute-validate-longdesc";
-
 import attributeValidateMarginheight from "./rules/attribute-validate/attribute-validate-marginheight";
-
 import attributeValidateMarginwidth from "./rules/attribute-validate/attribute-validate-marginwidth";
-
 import attributeValidateMaxlength from "./rules/attribute-validate/attribute-validate-maxlength";
-
 import attributeValidateMedia from "./rules/attribute-validate/attribute-validate-media";
-
 import attributeValidateMethod from "./rules/attribute-validate/attribute-validate-method";
-
 import attributeValidateMultiple from "./rules/attribute-validate/attribute-validate-multiple";
-
 import attributeValidateName from "./rules/attribute-validate/attribute-validate-name";
-
 import attributeValidateNohref from "./rules/attribute-validate/attribute-validate-nohref";
-
 import attributeValidateNoresize from "./rules/attribute-validate/attribute-validate-noresize";
-
 import attributeValidateNoshade from "./rules/attribute-validate/attribute-validate-noshade";
-
 import attributeValidateNowrap from "./rules/attribute-validate/attribute-validate-nowrap";
-
 import attributeValidateObject from "./rules/attribute-validate/attribute-validate-object";
-
 import attributeValidateOnblur from "./rules/attribute-validate/attribute-validate-onblur";
-
 import attributeValidateOnchange from "./rules/attribute-validate/attribute-validate-onchange";
-
 import attributeValidateOnclick from "./rules/attribute-validate/attribute-validate-onclick";
-
 import attributeValidateOndblclick from "./rules/attribute-validate/attribute-validate-ondblclick";
-
 import attributeValidateOnfocus from "./rules/attribute-validate/attribute-validate-onfocus";
-
 import attributeValidateOnkeydown from "./rules/attribute-validate/attribute-validate-onkeydown";
-
 import attributeValidateOnkeypress from "./rules/attribute-validate/attribute-validate-onkeypress";
-
 import attributeValidateOnkeyup from "./rules/attribute-validate/attribute-validate-onkeyup";
-
 import attributeValidateOnload from "./rules/attribute-validate/attribute-validate-onload";
-
 import attributeValidateOnmousedown from "./rules/attribute-validate/attribute-validate-onmousedown";
-
 import attributeValidateOnmousemove from "./rules/attribute-validate/attribute-validate-onmousemove";
-
 import attributeValidateOnmouseout from "./rules/attribute-validate/attribute-validate-onmouseout";
-
 import attributeValidateOnmouseover from "./rules/attribute-validate/attribute-validate-onmouseover";
-
 import attributeValidateOnmouseup from "./rules/attribute-validate/attribute-validate-onmouseup";
-
 import attributeValidateOnreset from "./rules/attribute-validate/attribute-validate-onreset";
-
 import attributeValidateOnsubmit from "./rules/attribute-validate/attribute-validate-onsubmit";
-
 import attributeValidateOnselect from "./rules/attribute-validate/attribute-validate-onselect";
-
 import attributeValidateOnunload from "./rules/attribute-validate/attribute-validate-onunload";
-
 import attributeValidateProfile from "./rules/attribute-validate/attribute-validate-profile";
-
 import attributeValidatePrompt from "./rules/attribute-validate/attribute-validate-prompt";
-
 import attributeValidateReadonly from "./rules/attribute-validate/attribute-validate-readonly";
-
 import attributeValidateRel from "./rules/attribute-validate/attribute-validate-rel";
-
 import attributeValidateRev from "./rules/attribute-validate/attribute-validate-rev";
-
 import attributeValidateRows from "./rules/attribute-validate/attribute-validate-rows";
-
 import attributeValidateRowspan from "./rules/attribute-validate/attribute-validate-rowspan";
-
 import attributeValidateRules from "./rules/attribute-validate/attribute-validate-rules";
-
 import attributeValidateScheme from "./rules/attribute-validate/attribute-validate-scheme";
-
 import attributeValidateScope from "./rules/attribute-validate/attribute-validate-scope";
-
 import attributeValidateScrolling from "./rules/attribute-validate/attribute-validate-scrolling";
-
 import attributeValidateSelected from "./rules/attribute-validate/attribute-validate-selected";
-
 import attributeValidateShape from "./rules/attribute-validate/attribute-validate-shape";
-
 import attributeValidateSize from "./rules/attribute-validate/attribute-validate-size";
-
 import attributeValidateSpan from "./rules/attribute-validate/attribute-validate-span";
-
 import attributeValidateSrc from "./rules/attribute-validate/attribute-validate-src";
-
 import attributeValidateStandby from "./rules/attribute-validate/attribute-validate-standby";
-
 import attributeValidateStart from "./rules/attribute-validate/attribute-validate-start";
-
 import attributeValidateStyle from "./rules/attribute-validate/attribute-validate-style";
-
 import attributeValidateSummary from "./rules/attribute-validate/attribute-validate-summary";
-
 import attributeValidateTabindex from "./rules/attribute-validate/attribute-validate-tabindex";
-
 import attributeValidateTarget from "./rules/attribute-validate/attribute-validate-target";
-
 import attributeValidateText from "./rules/attribute-validate/attribute-validate-text";
-
 import attributeValidateTitle from "./rules/attribute-validate/attribute-validate-title";
-
 import attributeValidateType from "./rules/attribute-validate/attribute-validate-type";
-
 import attributeValidateUsemap from "./rules/attribute-validate/attribute-validate-usemap";
-
 import attributeValidateValign from "./rules/attribute-validate/attribute-validate-valign";
-
 import attributeValidateValue from "./rules/attribute-validate/attribute-validate-value";
-
 import attributeValidateValuetype from "./rules/attribute-validate/attribute-validate-valuetype";
-
 import attributeValidateVersion from "./rules/attribute-validate/attribute-validate-version";
-
 import attributeValidateVlink from "./rules/attribute-validate/attribute-validate-vlink";
-
 import attributeValidateVspace from "./rules/attribute-validate/attribute-validate-vspace";
-
 import attributeValidateWidth from "./rules/attribute-validate/attribute-validate-width";
 
 // BAD-HTML-ENTITY rules
@@ -566,11 +327,8 @@ import mediaMalformed from "./rules/media/media-malformed";
 //
 
 import commentClosingMalformed from "./rules/comment/comment-closing-malformed";
-
 import commentOpeningMalformed from "./rules/comment/comment-opening-malformed";
-
 import commentMismatchingPair from "./rules/comment/comment-mismatching-pair";
-
 import commentConditionalNested from "./rules/comment/comment-conditional-nested";
 
 // EMAIL rules
@@ -1866,7 +1624,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   //     4
   //   )}`
   // );
-  const res: RulesObj = {};
+  let res: RulesObj = {};
   // first, if there are known group rules such as "bad-character", set
   // them as a foundation:
   if (Object.keys(opts).includes("all") && isAnEnabledValue(opts.all)) {
@@ -1979,7 +1737,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1982 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1740 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

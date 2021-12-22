@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { cparser } from "../dist/codsen-parser.esm.js";
 
 assert.deepEqual(cparser("<br>z</a>"), [

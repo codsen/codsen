@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { deleteKey } from "../dist/object-delete-key.esm.js";
 
 // deleting key 'c', with value 'd'

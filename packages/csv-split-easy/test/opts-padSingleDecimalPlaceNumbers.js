@@ -1,8 +1,11 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { splitEasy } from "../dist/csv-split-easy.esm.js";
 
-tap.test("01 - to pad or not to pad", (t) => {
-  t.strictSame(
+test("01 - to pad or not to pad", () => {
+  equal(
     splitEasy(
       'Product Name,Main Price,Discounted Price\n\rPencil HB,"2.2","2.1"\nPencil 2H,"2.32","2.3"'
     ),
@@ -13,7 +16,7 @@ tap.test("01 - to pad or not to pad", (t) => {
     ],
     "01.01 - default behaviour, padds"
   );
-  t.strictSame(
+  equal(
     splitEasy(
       'Product Name,Main Price,Discounted Price\n\rPencil HB,"2.2","2.1"\nPencil 2H,"2.32","2.3"',
       {
@@ -27,5 +30,6 @@ tap.test("01 - to pad or not to pad", (t) => {
     ],
     "01.02 - padding off"
   );
-  t.end();
 });
+
+test.run();

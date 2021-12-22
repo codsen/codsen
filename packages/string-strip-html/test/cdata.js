@@ -1,12 +1,15 @@
-import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { stripHtml } from "./util/noLog.js";
 
 // CDATA
 // -----------------------------------------------------------------------------
 
-tap.test("01 - CDATA - tight", (t) => {
+test("01 - CDATA - tight", () => {
   // surroundings are not a linebreaks
-  t.hasStrict(
+  equal(
     stripHtml(`a<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
@@ -19,11 +22,10 @@ tap.test("01 - CDATA - tight", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - CDATA - normal", (t) => {
-  t.hasStrict(
+test("02 - CDATA - normal", () => {
+  equal(
     stripHtml(`a <![CDATA[
   The <, &, ', and " can be used,
   *and* %MyParamEntity; can be expanded.
@@ -36,11 +38,10 @@ tap.test("02 - CDATA - normal", (t) => {
     },
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - CDATA - loose", (t) => {
-  t.hasStrict(
+test("03 - CDATA - loose", () => {
+  equal(
     stripHtml(`a \t\t<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
@@ -53,12 +54,11 @@ tap.test("03 - CDATA - loose", (t) => {
     },
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - CDATA - single linebreaks", (t) => {
+test("04 - CDATA - single linebreaks", () => {
   // surroundings are linebreaks
-  t.hasStrict(
+  equal(
     stripHtml(`a\n<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
@@ -71,11 +71,10 @@ tap.test("04 - CDATA - single linebreaks", (t) => {
     },
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - CDATA - excessive linebreaks", (t) => {
-  t.hasStrict(
+test("05 - CDATA - excessive linebreaks", () => {
+  equal(
     stripHtml(`a\n\n\n<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
@@ -88,11 +87,10 @@ tap.test("05 - CDATA - excessive linebreaks", (t) => {
     },
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - CDATA - mixed linebreaks", (t) => {
-  t.hasStrict(
+test("06 - CDATA - mixed linebreaks", () => {
+  equal(
     stripHtml(`a\n \t\n\n<![CDATA[
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
@@ -105,5 +103,6 @@ tap.test("06 - CDATA - mixed linebreaks", (t) => {
     },
     "06"
   );
-  t.end();
 });
+
+test.run();

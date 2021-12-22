@@ -4,6 +4,7 @@ import clone from "lodash.clonedeep";
 import { strIndexesOfPlus } from "str-indexes-of-plus";
 import { isMatch } from "matcher";
 import isObj from "lodash.isplainobject";
+
 import {
   flattenObject,
   flattenArr,
@@ -13,6 +14,7 @@ import {
   Opts,
 } from "./util";
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 function existy(x: any): boolean {
@@ -43,7 +45,7 @@ function flattenReferencing(
     );
   }
 
-  const originalOpts: Opts = { ...defaults, ...opts1 };
+  let originalOpts: Opts = { ...defaults, ...opts1 };
 
   originalOpts.dontWrapKeys = arrayiffyString(originalOpts.dontWrapKeys);
   originalOpts.preventWrappingIfContains = arrayiffyString(
@@ -63,11 +65,11 @@ function flattenReferencing(
     wrap = true,
     joinArraysUsingBrs = true,
     currentRoot = ""
-  ) {
+  ): string {
     // console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
     // console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
     let input = clone(originalInput);
-    const reference = clone(originalReference);
+    let reference = clone(originalReference);
 
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false;
@@ -75,7 +77,7 @@ function flattenReferencing(
 
     if (isObj(input)) {
       Object.keys(input).forEach((key) => {
-        const currentPath =
+        let currentPath =
           currentRoot + (currentRoot.length === 0 ? key : `.${key}`);
         // console.log(`* currentPath = ${JSON.stringify(currentPath, null, 4)}\n\n`)
         if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
@@ -266,17 +268,16 @@ function flattenReferencing(
             (opts.wrapTailsWith === "" ||
               !strIndexesOfPlus(input, opts.wrapTailsWith.trim()).length))
         ) {
-          input =
-            (wrap ? opts.wrapHeadsWith : "") +
-            input +
-            (wrap ? opts.wrapTailsWith : "");
+          input = `${wrap ? opts.wrapHeadsWith : ""}${input}${
+            wrap ? opts.wrapTailsWith : ""
+          }`;
         }
       }
     }
     return input;
   }
 
-  return ofr(originalInput1, originalReference1, originalOpts as Opts);
+  return ofr(originalInput1, originalReference1, originalOpts);
 }
 
 export {

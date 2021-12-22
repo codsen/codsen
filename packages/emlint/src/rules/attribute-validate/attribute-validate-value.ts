@@ -55,7 +55,7 @@ function attributeValidateValue(context: Linter): RuleObjType {
           });
         } else {
           // all others - value is CDATA
-          const { errorArr } = checkForWhitespace(
+          let { errorArr } = checkForWhitespace(
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );

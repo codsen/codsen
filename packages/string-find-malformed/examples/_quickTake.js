@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { findMalformed } from "../dist/string-find-malformed.esm.js";
 
 // Below, we look for dodgy cases of `<!--`

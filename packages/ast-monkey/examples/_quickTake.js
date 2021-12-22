@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { find } from "../dist/ast-monkey.esm.js";
 
 assert.deepEqual(

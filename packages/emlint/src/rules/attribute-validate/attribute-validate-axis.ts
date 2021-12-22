@@ -38,7 +38,7 @@ function attributeValidateAxis(context: Linter): RuleObjType {
           });
         } else {
           // only check for rogue whitespace - value can be any CDATA
-          const { errorArr } = checkForWhitespace(
+          let { errorArr } = checkForWhitespace(
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );

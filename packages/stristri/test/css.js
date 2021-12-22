@@ -1,21 +1,27 @@
-import tap from "tap";
+import { test } from "uvu";
+import * as assert from "uvu/assert";
+
 // import { stri as stri2 } from "../dist/stristri.esm.js";
 import { stri, mixer } from "./util/util.js";
 
-tap.test(`01 - css rule`, (t) => {
-  const input = `<style>.red{color:red;}</style>`;
+test(`01 - css rule`, () => {
+  let input = `<style>.red{color:red;}</style>`;
   mixer({
     html: true,
     css: true,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, input, opt).result, ``, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, input, opt).result,
+      ``,
+      JSON.stringify(opt, null, 4)
+    );
   });
   mixer({
     html: true,
     css: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, input, opt).result,
+    assert.equal(
+      stri(assert, n, input, opt).result,
       `.red{color:red;}`,
       JSON.stringify(opt, null, 4)
     );
@@ -24,8 +30,8 @@ tap.test(`01 - css rule`, (t) => {
     html: false,
     css: true,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, input, opt).result,
+    assert.equal(
+      stri(assert, n, input, opt).result,
       `<style> </style>`,
       JSON.stringify(opt, null, 4)
     );
@@ -34,25 +40,32 @@ tap.test(`01 - css rule`, (t) => {
     html: false,
     css: false,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, input, opt).result, input, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, input, opt).result,
+      input,
+      JSON.stringify(opt, null, 4)
+    );
   });
-  t.end();
 });
 
-tap.test(`02 - at rule`, (t) => {
-  const input = `<style>@media a {.b{c}}</style>`;
+test(`02 - at rule`, () => {
+  let input = `<style>@media a {.b{c}}</style>`;
   mixer({
     html: true,
     css: true,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, input, opt).result, ``, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, input, opt).result,
+      ``,
+      JSON.stringify(opt, null, 4)
+    );
   });
   mixer({
     html: true,
     css: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, input, opt).result,
+    assert.equal(
+      stri(assert, n, input, opt).result,
       `@media a {.b{c}}`,
       JSON.stringify(opt, null, 4)
     );
@@ -61,8 +74,8 @@ tap.test(`02 - at rule`, (t) => {
     html: false,
     css: true,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, input, opt).result,
+    assert.equal(
+      stri(assert, n, input, opt).result,
       `<style> </style>`,
       JSON.stringify(opt, null, 4)
     );
@@ -71,25 +84,32 @@ tap.test(`02 - at rule`, (t) => {
     html: false,
     css: false,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, input, opt).result, input, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, input, opt).result,
+      input,
+      JSON.stringify(opt, null, 4)
+    );
   });
-  t.end();
 });
 
-tap.test(`03 - css comment`, (t) => {
-  const input = `<style>/* tralala */</style>`;
+test(`03 - css comment`, () => {
+  let input = `<style>/* tralala */</style>`;
   mixer({
     html: true,
     css: true,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, input, opt).result, ``, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, input, opt).result,
+      ``,
+      JSON.stringify(opt, null, 4)
+    );
   });
   mixer({
     html: true,
     css: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, input, opt).result,
+    assert.equal(
+      stri(assert, n, input, opt).result,
       `/* tralala */`,
       JSON.stringify(opt, null, 4)
     );
@@ -98,8 +118,8 @@ tap.test(`03 - css comment`, (t) => {
     html: false,
     css: true,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, input, opt).result,
+    assert.equal(
+      stri(assert, n, input, opt).result,
       `<style> </style>`,
       JSON.stringify(opt, null, 4)
     );
@@ -108,13 +128,16 @@ tap.test(`03 - css comment`, (t) => {
     html: false,
     css: false,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, input, opt).result, input, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, input, opt).result,
+      input,
+      JSON.stringify(opt, null, 4)
+    );
   });
-  t.end();
 });
 
-tap.test(`04 - css comment`, (t) => {
-  const input = `<style>
+test(`04 - css comment`, () => {
+  let input = `<style>
   @media a {.b{c}}
   /* tralala */
 </style>`;
@@ -122,14 +145,18 @@ tap.test(`04 - css comment`, (t) => {
     html: true,
     css: true,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, input, opt).result, ``, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, input, opt).result,
+      ``,
+      JSON.stringify(opt, null, 4)
+    );
   });
   mixer({
     html: true,
     css: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, input, opt).result,
+    assert.equal(
+      stri(assert, n, input, opt).result,
       `@media a {.b{c}}
 /* tralala */`,
       JSON.stringify(opt, null, 4)
@@ -139,8 +166,8 @@ tap.test(`04 - css comment`, (t) => {
     html: false,
     css: true,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, input, opt).result,
+    assert.equal(
+      stri(assert, n, input, opt).result,
       `<style>
 
 </style>`,
@@ -151,8 +178,8 @@ tap.test(`04 - css comment`, (t) => {
     html: false,
     css: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, input, opt).result,
+    assert.equal(
+      stri(assert, n, input, opt).result,
       `<style>
 @media a {.b{c}}
 /* tralala */
@@ -160,5 +187,6 @@ tap.test(`04 - css comment`, (t) => {
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
+
+test.run();

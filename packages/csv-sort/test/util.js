@@ -3,20 +3,22 @@
 import { readFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 import { splitEasy } from "csv-split-easy";
 import crypto from "crypto";
+
 import { sort } from "../dist/csv-sort.esm.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const sha256 = (x) =>
   crypto.createHash("sha256").update(x, "utf8").digest("hex");
 
 const fixtures = path.join(__dirname, "fixtures");
 
-function compare(t, name, throws) {
+function compare(equal, name, throws) {
   // first, ensure fixtures are not mangled
-  const hashes = {
+  let hashes = {
     "all-round-simples-trim":
       "8456d5c30077697469ba20be4575d3b782c7e7b53a8eb802fc5f42e12fb84ad0",
     "offset-column":
@@ -51,12 +53,12 @@ function compare(t, name, throws) {
   };
   // every incoming file must have a hash or test will fail:
   if (!hashes[name]) {
-    t.fail(`csv-sort: the hash for ${name} is missing!`);
+    throw new Error(`csv-sort: the hash for ${name} is missing!`);
   }
   // check the hash
-  const testSource = readFileSync(path.join(fixtures, `${name}.csv`), "utf8");
+  let testSource = readFileSync(path.join(fixtures, `${name}.csv`), "utf8");
 
-  t.is(
+  equal(
     sha256(testSource),
     hashes[name],
     `inputs were mangled for fixture "${name}"`
@@ -64,16 +66,16 @@ function compare(t, name, throws) {
 
   // then get onto real bizness
   if (throws) {
-    return t.throws(() => {
+    return throws(() => {
       sort(testSource, "utf8");
     });
   }
-  const actual = sort(testSource, "utf8").res;
-  const expected = readFileSync(
+  let actual = sort(testSource, "utf8").res;
+  let expected = readFileSync(
     path.join(fixtures, `${name}.expected.csv`),
     "utf8"
   );
-  return t.strictSame(actual, splitEasy(expected));
+  return equal(actual, splitEasy(expected));
 }
 
 export default compare;

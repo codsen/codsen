@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // searchFor + only outsides
 // ==============================
 
-tap.test("01 - both outsides only, emoji, found", (t) => {
-  t.equal(
+test("01 - both outsides only, emoji, found", () => {
+  equal(
     er(
       "🦄 🐴 🦄",
       {
@@ -23,7 +26,7 @@ tap.test("01 - both outsides only, emoji, found", (t) => {
     "🦄 z 🦄",
     "test 5.1.1"
   );
-  t.equal(
+  equal(
     er(
       "🦄 🐴 🦄",
       {
@@ -40,11 +43,10 @@ tap.test("01 - both outsides only, emoji, found", (t) => {
     "🦄 z 🦄",
     "test 5.1.2"
   );
-  t.end();
 });
 
-tap.test("02 - both outsides only, emoji, not found", (t) => {
-  t.equal(
+test("02 - both outsides only, emoji, not found", () => {
+  equal(
     er(
       "a 🐴 a",
       {
@@ -61,11 +63,10 @@ tap.test("02 - both outsides only, emoji, not found", (t) => {
     "a 🐴 a",
     "test 5.2"
   );
-  t.end();
 });
 
-tap.test("03 - both outsides, emoji, not found", (t) => {
-  t.equal(
+test("03 - both outsides, emoji, not found", () => {
+  equal(
     er(
       "🦄 🐴 a",
       {
@@ -82,11 +83,10 @@ tap.test("03 - both outsides, emoji, not found", (t) => {
     "🦄 🐴 a",
     "test 5.3"
   );
-  t.end();
 });
 
-tap.test("04 - both outsides, emoji, not found #1", (t) => {
-  t.equal(
+test("04 - both outsides, emoji, not found #1", () => {
+  equal(
     er(
       "a 🐴 a🦄",
       {
@@ -103,11 +103,10 @@ tap.test("04 - both outsides, emoji, not found #1", (t) => {
     "a 🐴 a🦄",
     "test 5.4"
   );
-  t.end();
 });
 
-tap.test("05 - both outsides, emoji, not found #2", (t) => {
-  t.equal(
+test("05 - both outsides, emoji, not found #2", () => {
+  equal(
     er(
       "kgldfj lkfjkl jfk \ng \t;lgkh a 🐴 a🦄 slkgj fhjf jkghljk",
       {
@@ -124,11 +123,10 @@ tap.test("05 - both outsides, emoji, not found #2", (t) => {
     "kgldfj lkfjkl jfk \ng \t;lgkh a 🐴 a🦄 slkgj fhjf jkghljk",
     "test 5.5"
   );
-  t.end();
 });
 
-tap.test("06 - line break as rightOutside, found", (t) => {
-  t.equal(
+test("06 - line break as rightOutside, found", () => {
+  equal(
     er(
       "aaab\n",
       {
@@ -145,11 +143,10 @@ tap.test("06 - line break as rightOutside, found", (t) => {
     "aaac\n",
     "test 5.6"
   );
-  t.end();
 });
 
-tap.test("07 - line breaks as both outsides", (t) => {
-  t.equal(
+test("07 - line breaks as both outsides", () => {
+  equal(
     er(
       "aaa\nb\n",
       {
@@ -166,11 +163,10 @@ tap.test("07 - line breaks as both outsides", (t) => {
     "aaa\nc\n",
     "test 5.7"
   );
-  t.end();
 });
 
-tap.test("08 - \\n as outsides, replacement = undefined", (t) => {
-  t.equal(
+test("08 - \\n as outsides, replacement = undefined", () => {
+  equal(
     er(
       "aaa\nb\n",
       {
@@ -187,11 +183,10 @@ tap.test("08 - \\n as outsides, replacement = undefined", (t) => {
     "aaa\n\n",
     "test 5.8"
   );
-  t.end();
 });
 
-tap.test("09 - line breaks as outsides, replacement = Bool", (t) => {
-  t.equal(
+test("09 - line breaks as outsides, replacement = Bool", () => {
+  equal(
     er(
       "aaa\nb\n",
       {
@@ -208,11 +203,10 @@ tap.test("09 - line breaks as outsides, replacement = Bool", (t) => {
     "aaa\n\n",
     "test 5.9"
   );
-  t.end();
 });
 
-tap.test("10 - line breaks as outsides, replacement = null", (t) => {
-  t.equal(
+test("10 - line breaks as outsides, replacement = null", () => {
+  equal(
     er(
       "aaa\nb\n",
       {
@@ -229,53 +223,46 @@ tap.test("10 - line breaks as outsides, replacement = null", (t) => {
     "aaa\n\n",
     "test 5.10"
   );
-  t.end();
 });
 
-tap.test(
-  "11 - left outside requirement not satisfied for replacement to happen",
-  (t) => {
-    t.equal(
-      er("aaaBBBccc", {
-        leftOutsideNot: "",
-        leftOutside: "x",
-        leftMaybe: "",
-        searchFor: "bbb",
-        rightMaybe: "",
-        rightOutside: "z",
-        rightOutsideNot: "",
-        i: {
-          searchFor: true,
-          leftOutside: true,
-        },
-      }),
-      "aaaBBBccc",
-      "test 5.11 - did not replace because of o.leftOutside"
-    );
-    t.end();
-  }
-);
+test("11 - left outside requirement not satisfied for replacement to happen", () => {
+  equal(
+    er("aaaBBBccc", {
+      leftOutsideNot: "",
+      leftOutside: "x",
+      leftMaybe: "",
+      searchFor: "bbb",
+      rightMaybe: "",
+      rightOutside: "z",
+      rightOutsideNot: "",
+      i: {
+        searchFor: true,
+        leftOutside: true,
+      },
+    }),
+    "aaaBBBccc",
+    "test 5.11 - did not replace because of o.leftOutside"
+  );
+});
 
-tap.test(
-  "12 - right outside requirement not satisfied for replacement to happen",
-  (t) => {
-    t.equal(
-      er("aaaBBBccc", {
-        leftOutsideNot: "",
-        leftOutside: "x",
-        leftMaybe: "",
-        searchFor: "bbb",
-        rightMaybe: "",
-        rightOutside: "z",
-        rightOutsideNot: "",
-        i: {
-          searchFor: true,
-          rightOutside: true,
-        },
-      }),
-      "aaaBBBccc",
-      "test 5.12 - did not replace because of o.rightOutside"
-    );
-    t.end();
-  }
-);
+test("12 - right outside requirement not satisfied for replacement to happen", () => {
+  equal(
+    er("aaaBBBccc", {
+      leftOutsideNot: "",
+      leftOutside: "x",
+      leftMaybe: "",
+      searchFor: "bbb",
+      rightMaybe: "",
+      rightOutside: "z",
+      rightOutsideNot: "",
+      i: {
+        searchFor: true,
+        rightOutside: true,
+      },
+    }),
+    "aaaBBBccc",
+    "test 5.12 - did not replace because of o.rightOutside"
+  );
+});
+
+test.run();

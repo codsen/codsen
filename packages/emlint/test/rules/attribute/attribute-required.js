@@ -1,4 +1,8 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import {
   // applyFixes,
   verify,
@@ -6,42 +10,39 @@ import {
 
 // -----------------------------------------------------------------------------
 
-tap.test(`01`, (t) => {
-  const str = `<table>`;
-  const messages = verify(t, str, {
+test(`01`, () => {
+  let str = `<table>`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-required": 2,
     },
   });
-  t.strictSame(messages, [], "01");
-  t.end();
+  equal(messages, [], "01");
 });
 
-tap.test(`02`, (t) => {
-  const str = `<table>`;
-  const messages = verify(t, str, {
+test(`02`, () => {
+  let str = `<table>`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-required": [2],
     },
   });
-  t.strictSame(messages, [], "02");
-  t.end();
+  equal(messages, [], "02");
 });
 
-tap.test(`03`, (t) => {
-  const str = `<table>`;
-  const messages = verify(t, str, {
+test(`03`, () => {
+  let str = `<table>`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-required": [2, {}],
     },
   });
-  t.strictSame(messages, [], "03");
-  t.end();
+  equal(messages, [], "03");
 });
 
-tap.test(`04`, (t) => {
-  const str = `<table>`;
-  const messages = verify(t, str, {
+test(`04`, () => {
+  let str = `<table>`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-required": [
         2,
@@ -51,13 +52,12 @@ tap.test(`04`, (t) => {
       ],
     },
   });
-  t.strictSame(messages, [], "04");
-  t.end();
+  equal(messages, [], "04");
 });
 
-tap.test(`05`, (t) => {
-  const str = `<table>`;
-  const messages = verify(t, str, {
+test(`05`, () => {
+  let str = `<table>`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-required": [
         2,
@@ -67,13 +67,12 @@ tap.test(`05`, (t) => {
       ],
     },
   });
-  t.strictSame(messages, [], "05");
-  t.end();
+  equal(messages, [], "05");
 });
 
-tap.test(`06`, (t) => {
-  const str = `<table>`;
-  const messages = verify(t, str, {
+test(`06`, () => {
+  let str = `<table>`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-required": [
         2,
@@ -85,13 +84,12 @@ tap.test(`06`, (t) => {
       ],
     },
   });
-  t.strictSame(messages, [], "06");
-  t.end();
+  equal(messages, [], "06");
 });
 
-tap.test(`07`, (t) => {
-  const str = `<table>`;
-  const messages = verify(t, str, {
+test(`07`, () => {
+  let str = `<table>`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-required": [
         2,
@@ -103,15 +101,14 @@ tap.test(`07`, (t) => {
       ],
     },
   });
-  t.strictSame(messages, [], "07");
-  t.end();
+  equal(messages, [], "07");
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`08`, (t) => {
-  const str = `<table>`;
-  const messages = verify(t, str, {
+test(`08`, () => {
+  let str = `<table>`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-required": [
         2,
@@ -123,7 +120,8 @@ tap.test(`08`, (t) => {
       ],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -137,6 +135,7 @@ tap.test(`08`, (t) => {
     ],
     "08.01"
   );
-  t.equal(messages.length, 1, "08.02");
-  t.end();
+  equal(messages.length, 1, "08.02");
 });
+
+test.run();

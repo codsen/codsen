@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/202b/index.htm
 
 function badCharacterRightToLeftEmbedding(context: Linter): RuleObjType {
-  const charCode = 8235;
+  let charCode = 8235;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

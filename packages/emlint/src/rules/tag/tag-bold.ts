@@ -21,13 +21,7 @@ function tagBold(context: Linter, suggested = "strong"): RuleObjType {
           idxFrom: node.start,
           idxTo: node.end, // second elem. from last range
           fix: {
-            ranges: [
-              [
-                node.tagNameStartsAt as number,
-                node.tagNameEndsAt as number,
-                suggested,
-              ],
-            ],
+            ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]],
           },
         });
       }

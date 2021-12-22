@@ -159,4 +159,4 @@ declare const util: {
     matchLayerLast: typeof matchLayerLast;
 };
 
-export { defaults, tokenizer, util, version };
+export { AtToken, CharCb, CommentToken, EspToken, RuleToken, TagToken, TextToken, defaults, tokenizer, util, version };

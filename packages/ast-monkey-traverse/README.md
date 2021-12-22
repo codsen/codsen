@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 2.1.0
 
 ```js
 import { strict as assert } from "assert";
+
 import { traverse } from "ast-monkey-traverse";
 
 const paths = [];
@@ -61,7 +62,7 @@ const source = {
 traverse(source, (key, val, innerObj) => {
   // if currently an object is traversed, you get both "key" and "val"
   // if it's array, only "key" is present, "val" is undefined
-  const current = val !== undefined ? val : key;
+  let current = val !== undefined ? val : key;
   if (
     // it's object (not array)
     val !== undefined &&
@@ -80,7 +81,7 @@ assert.deepEqual(paths, ["a.foo", "a.foo.bar.0.foo", "a.foo.d.e.foo"]);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/ast-monkey-traverse/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/ast-monkey-traverse/) for a full description of the API.
 
 ## Contributing
 
@@ -92,4 +93,6 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

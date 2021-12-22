@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 function isStr(something: string): any {
@@ -34,7 +35,7 @@ function cleanChangelogs(
     (!changelogContents.includes("\n") || !changelogContents.includes("\r"))
   ) {
     /* istanbul ignore next */
-    const changelogEndedWithLinebreak =
+    let changelogEndedWithLinebreak =
       isStr(changelogContents) &&
       changelogContents.length &&
       (changelogContents[changelogContents.length - 1] === "\n" ||
@@ -47,7 +48,7 @@ function cleanChangelogs(
         /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
         "$1commit/"
       );
-    const linesArr = changelogContents.split(/\r?\n/);
+    let linesArr = changelogContents.split(/\r?\n/);
     // console.log(
     //   `${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
     //     linesArr,
@@ -90,7 +91,7 @@ function cleanChangelogs(
     //
     // and also remove anything containing "WIP" (case-insensitive)
 
-    const newLinesArr = [];
+    let newLinesArr = [];
     for (let i = linesArr.length; i--; ) {
       console.log(
         `----------------${`\u001b[${36}m${i}\u001b[${39}m`}\n${`\u001b[${33}m${`linesArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
@@ -127,7 +128,7 @@ function cleanChangelogs(
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
           console.log(
-            `130 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `131 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
         }
       }
@@ -142,7 +143,7 @@ function cleanChangelogs(
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
         console.log(
-          `145 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          `146 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
         );
       }
     }

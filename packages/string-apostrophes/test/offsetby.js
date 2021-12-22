@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { convertOne } from "../dist/string-apostrophes.esm.js";
 
 const leftSingleQuote = "\u2018";
@@ -15,32 +18,30 @@ const leftSingleQuote = "\u2018";
 
 // offsetBy increments the index of external iterator
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`offset`}\u001b[${39}m`} - let's skip single quotes`,
-  (t) => {
-    const str = `Rock ${leftSingleQuote}n${leftSingleQuote} roll`;
-    const gathered = [];
-    const res = convertOne(str, {
-      from: 5,
-      to: 6,
-      convertApostrophes: 0,
-      convertEntities: 0,
-      // offset will be called once when it enters first quote of 'n'
-      offsetBy: (idx) => {
-        // 2 will be passed, meaning "skip by two indexes"
-        gathered.push(idx);
-      },
-    });
+test(`01 - ${`\u001b[${33}m${`offset`}\u001b[${39}m`} - let's skip single quotes`, () => {
+  let str = `Rock ${leftSingleQuote}n${leftSingleQuote} roll`;
+  let gathered = [];
+  let res = convertOne(str, {
+    from: 5,
+    to: 6,
+    convertApostrophes: 0,
+    convertEntities: 0,
+    // offset will be called once when it enters first quote of 'n'
+    offsetBy: (idx) => {
+      // 2 will be passed, meaning "skip by two indexes"
+      gathered.push(idx);
+    },
+  });
 
-    // console.log(
-    //   `036 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-    //     gathered,
-    //     null,
-    //     4
-    //   )}`
-    // );
-    t.strictSame(res, [[5, 8, `'n'`]], "01.01");
-    t.strictSame(gathered, [2], "01.02");
-    t.end();
-  }
-);
+  // console.log(
+  //   `036 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
+  //     gathered,
+  //     null,
+  //     4
+  //   )}`
+  // );
+  equal(res, [[5, 8, `'n'`]], "01.01");
+  equal(gathered, [2], "01.02");
+});
+
+test.run();

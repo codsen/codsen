@@ -1,12 +1,8 @@
-function isNumeric(str: string): boolean {
-  // if (typeof str === "number") {
-  //   return true;
-  // }
-  // if (!String(str).trim()) {
-  if (!str.trim()) {
-    return false;
-  }
-  return Number(str) === Number(str);
+function isNumeric(str: any): boolean {
+  if (typeof str === "number" && !isNaN(str)) return true;
+  str = (str || "").toString().trim();
+  if (!str) return false;
+  return !isNaN(+str);
 }
 
 const currencySigns = [
@@ -148,12 +144,6 @@ const currencySigns = [
 ];
 
 function findType(something: string): string {
-  /* istanbul ignore next */
-  if (typeof something !== "string") {
-    throw new Error(
-      `csv-sort/util/findType(): input must be string! Currently it's: ${typeof something}`
-    );
-  }
   if (isNumeric(something)) {
     return "numeric";
   }
@@ -173,4 +163,4 @@ function findType(something: string): string {
   return "text";
 }
 
-export default findType;
+export { findType, isNumeric };

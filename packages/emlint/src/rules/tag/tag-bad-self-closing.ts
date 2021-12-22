@@ -1,5 +1,6 @@
-import { Linter, RuleObjType } from "../../linter";
 import { left } from "string-left-right";
+
+import { Linter, RuleObjType } from "../../linter";
 
 // rule: tag-bad-self-closing
 // -----------------------------------------------------------------------------
@@ -13,7 +14,7 @@ function tagBadSelfClosing(context: Linter): RuleObjType {
         `███████████████████████████████████████ tagBadSelfClosing() ███████████████████████████████████████`
       );
       console.log(
-        `016 tagBadSelfClosing(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+        `017 tagBadSelfClosing(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
           node,
           null,
           4
@@ -26,26 +27,26 @@ function tagBadSelfClosing(context: Linter): RuleObjType {
         node.value[left(node.value, node.value.length - 1) as number] === "/"
       ) {
         console.log(
-          `029 tagBadSelfClosing(): ${`\u001b[${31}m${`BAD SELF-CLOSING SLASH!`}\u001b[${39}m`}`
+          `030 tagBadSelfClosing(): ${`\u001b[${31}m${`BAD SELF-CLOSING SLASH!`}\u001b[${39}m`}`
         );
-        const idxFrom =
+        let idxFrom =
           node.start +
           (left(
             node.value,
             left(node.value, node.value.length - 1) as number
           ) as number) +
           1;
-        const idxTo = node.start + node.value.length - 1;
+        let idxTo = node.start + node.value.length - 1;
 
         console.log(
-          `041 tagBadSelfClosing(): ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+          `042 tagBadSelfClosing(): ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
             idxFrom,
             null,
             4
           )}`
         );
         console.log(
-          `048 tagBadSelfClosing(): ${`\u001b[${33}m${`idxTo`}\u001b[${39}m`} = ${JSON.stringify(
+          `049 tagBadSelfClosing(): ${`\u001b[${33}m${`idxTo`}\u001b[${39}m`} = ${JSON.stringify(
             idxTo,
             null,
             4

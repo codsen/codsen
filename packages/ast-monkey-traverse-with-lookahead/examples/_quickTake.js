@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { traverse } from "../dist/ast-monkey-traverse-with-lookahead.esm.js";
 
 const input = [

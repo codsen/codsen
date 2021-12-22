@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/000f/index.htm
 
 function badCharacterShiftIn(context: Linter): RuleObjType {
-  const charCode = 15;
+  let charCode = 15;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

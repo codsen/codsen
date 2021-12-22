@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // outsideNot's
 // ==============================
 
-tap.test("01 - rightOutsideNot satisfied thus not replaced", (t) => {
-  t.equal(
+test("01 - rightOutsideNot satisfied thus not replaced", () => {
+  equal(
     er(
       "🐴a",
       {
@@ -23,7 +26,7 @@ tap.test("01 - rightOutsideNot satisfied thus not replaced", (t) => {
     "🐴a",
     "test 12.1.1"
   );
-  t.equal(
+  equal(
     er(
       "🐴a",
       {
@@ -40,11 +43,10 @@ tap.test("01 - rightOutsideNot satisfied thus not replaced", (t) => {
     "🐴a",
     "test 12.1.2"
   );
-  t.end();
 });
 
-tap.test("02 - outsideNot left satisfied thus not replaced", (t) => {
-  t.equal(
+test("02 - outsideNot left satisfied thus not replaced", () => {
+  equal(
     er(
       "a🐴",
       {
@@ -61,7 +63,7 @@ tap.test("02 - outsideNot left satisfied thus not replaced", (t) => {
     "a🐴",
     "test 12.2.1"
   );
-  t.equal(
+  equal(
     er(
       "a🐴",
       {
@@ -78,11 +80,10 @@ tap.test("02 - outsideNot left satisfied thus not replaced", (t) => {
     "a🐴",
     "test 12.2.2"
   );
-  t.end();
 });
 
-tap.test("03 - outsideNot's satisfied thus not replaced", (t) => {
-  t.equal(
+test("03 - outsideNot's satisfied thus not replaced", () => {
+  equal(
     er(
       "a🐴a",
       {
@@ -99,11 +100,10 @@ tap.test("03 - outsideNot's satisfied thus not replaced", (t) => {
     "a🐴a",
     "test 12.3"
   );
-  t.end();
 });
 
-tap.test("04 - outsideNot's not satisfied, with 1 maybe replaced", (t) => {
-  t.equal(
+test("04 - outsideNot's not satisfied, with 1 maybe replaced", () => {
+  equal(
     er(
       "zb🐴y",
       {
@@ -120,11 +120,10 @@ tap.test("04 - outsideNot's not satisfied, with 1 maybe replaced", (t) => {
     "z🦄y",
     "test 12.4"
   );
-  t.end();
 });
 
-tap.test("05 - leftOutsideNot blocked positive leftMaybe", (t) => {
-  t.equal(
+test("05 - leftOutsideNot blocked positive leftMaybe", () => {
+  equal(
     er(
       "zb🐴y",
       {
@@ -141,11 +140,10 @@ tap.test("05 - leftOutsideNot blocked positive leftMaybe", (t) => {
     "zb🐴y",
     "test 12.5"
   );
-  t.end();
 });
 
-tap.test("06 - rightOutsideNot blocked both L-R maybes", (t) => {
-  t.equal(
+test("06 - rightOutsideNot blocked both L-R maybes", () => {
+  equal(
     er(
       "zb🐴cy",
       {
@@ -162,11 +160,10 @@ tap.test("06 - rightOutsideNot blocked both L-R maybes", (t) => {
     "zb🐴cy",
     "test 12.6"
   );
-  t.end();
 });
 
-tap.test("07 - rightOutsideNot last char goes outside", (t) => {
-  t.equal(
+test("07 - rightOutsideNot last char goes outside", () => {
+  equal(
     er(
       "cccccccca",
       {
@@ -183,11 +180,10 @@ tap.test("07 - rightOutsideNot last char goes outside", (t) => {
     "ccccccccb",
     "test 12.7"
   );
-  t.end();
 });
 
-tap.test("08 - right maybe is last char, outsideNot satisfied", (t) => {
-  t.equal(
+test("08 - right maybe is last char, outsideNot satisfied", () => {
+  equal(
     er(
       "cccccccca",
       {
@@ -204,11 +200,10 @@ tap.test("08 - right maybe is last char, outsideNot satisfied", (t) => {
     "cccccccc",
     "test 12.8"
   );
-  t.end();
 });
 
-tap.test("09 - real life scenario, missing semicol on nbsp #1", (t) => {
-  t.equal(
+test("09 - real life scenario, missing semicol on nbsp #1", () => {
+  equal(
     er(
       "&nbsp; &nbsp &nbsp",
       {
@@ -225,11 +220,10 @@ tap.test("09 - real life scenario, missing semicol on nbsp #1", (t) => {
     "&nbsp; &nbsp; &nbsp;",
     "test 12.9"
   );
-  t.end();
 });
 
-tap.test("10 - real life scenario, missing semicol on nbsp #2", (t) => {
-  t.equal(
+test("10 - real life scenario, missing semicol on nbsp #2", () => {
+  equal(
     er(
       "&nbsp;&nbsp&nbsp",
       {
@@ -246,11 +240,10 @@ tap.test("10 - real life scenario, missing semicol on nbsp #2", (t) => {
     "&nbsp;&nbsp;&nbsp;",
     "test 12.10"
   );
-  t.end();
 });
 
-tap.test("11 - real life scenario, missing ampersand, text", (t) => {
-  t.equal(
+test("11 - real life scenario, missing ampersand, text", () => {
+  equal(
     er(
       "tralalalanbsp;nbsp;&nbsp;",
       {
@@ -267,11 +260,10 @@ tap.test("11 - real life scenario, missing ampersand, text", (t) => {
     "tralalala&nbsp;&nbsp;&nbsp;",
     "test 12.11"
   );
-  t.end();
 });
 
-tap.test("12 - as before but with emoji instead", (t) => {
-  t.equal(
+test("12 - as before but with emoji instead", () => {
+  equal(
     er(
       "🍺🍺👌🍺",
       {
@@ -288,11 +280,10 @@ tap.test("12 - as before but with emoji instead", (t) => {
     "🍻🍻👌🍺",
     "test 12.12"
   );
-  t.end();
 });
 
-tap.test("13 - rightOutsideNot with L-R maybes", (t) => {
-  t.equal(
+test("13 - rightOutsideNot with L-R maybes", () => {
+  equal(
     er(
       "zb🐴cy",
       {
@@ -309,11 +300,10 @@ tap.test("13 - rightOutsideNot with L-R maybes", (t) => {
     "zxy",
     "test 12.13"
   );
-  t.end();
 });
 
-tap.test("14 - all of 'em #1", (t) => {
-  t.equal(
+test("14 - all of 'em #1", () => {
+  equal(
     er(
       "zb🐴cy",
       {
@@ -330,11 +320,10 @@ tap.test("14 - all of 'em #1", (t) => {
     "zxy",
     "test 12.14"
   );
-  t.end();
 });
 
-tap.test("15 - all of 'em #2", (t) => {
-  t.equal(
+test("15 - all of 'em #2", () => {
+  equal(
     er(
       "zb🐴cy",
       {
@@ -351,5 +340,6 @@ tap.test("15 - all of 'em #2", (t) => {
     "zxy",
     "test 12.14"
   );
-  t.end();
 });
+
+test.run();

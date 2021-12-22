@@ -1,18 +1,21 @@
 /* eslint no-template-curly-in-string:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // Embedded Ruby (ERB) templates
 
-tap.test(`01 - expression, no trim`, (t) => {
-  const gathered = [];
+test(`01 - expression, no trim`, () => {
+  let gathered = [];
   ct(`a<%= expression1 %>b<%= expression2 %>c`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -60,17 +63,16 @@ tap.test(`01 - expression, no trim`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
-tap.test(`02 - expression, trim`, (t) => {
-  const gathered = [];
+test(`02 - expression, trim`, () => {
+  let gathered = [];
   ct(`a<%= expression1 -%>b<%= expression2 -%>c`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -118,17 +120,16 @@ tap.test(`02 - expression, trim`, (t) => {
     ],
     "02"
   );
-  t.end();
 });
 
-tap.test(`03 - code, no trim`, (t) => {
-  const gathered = [];
+test(`03 - code, no trim`, () => {
+  let gathered = [];
   ct(`a<% code1 %>b<% code2 %>c`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -176,17 +177,16 @@ tap.test(`03 - code, no trim`, (t) => {
     ],
     "03"
   );
-  t.end();
 });
 
-tap.test(`04 - code, trim`, (t) => {
-  const gathered = [];
+test(`04 - code, trim`, () => {
+  let gathered = [];
   ct(`a<% code1 -%>b<% code2 -%>c`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -234,17 +234,16 @@ tap.test(`04 - code, trim`, (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test(`05 - comment, no trim`, (t) => {
-  const gathered = [];
+test(`05 - comment, no trim`, () => {
+  let gathered = [];
   ct(`a<%# comment1 %>b<%# comment2 %>c`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -292,17 +291,16 @@ tap.test(`05 - comment, no trim`, (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
-tap.test(`06 - comment, trim`, (t) => {
-  const gathered = [];
+test(`06 - comment, trim`, () => {
+  let gathered = [];
   ct(`a<%# comment1 -%>b<%# comment2 -%>c`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -350,17 +348,16 @@ tap.test(`06 - comment, trim`, (t) => {
     ],
     "06"
   );
-  t.end();
 });
 
-tap.test(`07 - various`, (t) => {
-  const gathered = [];
+test(`07 - various`, () => {
+  let gathered = [];
   ct(`<% if @a_b -%>a<%# c-d e -%>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -396,17 +393,16 @@ tap.test(`07 - various`, (t) => {
     ],
     "07"
   );
-  t.end();
 });
 
-tap.test(`08`, (t) => {
-  const gathered = [];
+test(`08`, () => {
+  let gathered = [];
   ct(`a<% if @keys_enable -%>b`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -436,11 +432,10 @@ tap.test(`08`, (t) => {
     ],
     "08"
   );
-  t.end();
 });
 
-tap.test(`09`, (t) => {
-  const gathered = [];
+test(`09`, () => {
+  let gathered = [];
   ct(
     `<% if @keys_enable -%>
 <%# Expression-printing tag -%>
@@ -454,7 +449,7 @@ trustedkey <%= @keys_trusted.join(' ') %>
       },
     }
   );
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -562,19 +557,18 @@ trustedkey <%= @keys_trusted.join(' ') %>
     ],
     "09"
   );
-  t.end();
 });
 
 // ERB within HTML attributes
 
-tap.test(`10 - two expressions as attr values`, (t) => {
-  const gathered = [];
+test(`10 - two expressions as attr values`, () => {
+  let gathered = [];
   ct(`<a href="https://abc?p1=<%= @p1 %>&p2=<%= @p2 %>">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -648,5 +642,6 @@ tap.test(`10 - two expressions as attr values`, (t) => {
     ],
     "10"
   );
-  t.end();
 });
+
+test.run();

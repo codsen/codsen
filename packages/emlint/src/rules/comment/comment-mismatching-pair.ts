@@ -1,5 +1,3 @@
-import { Linter, RuleObjType } from "../../linter";
-
 // rule: comment-mismatching-pair
 // -----------------------------------------------------------------------------
 
@@ -7,6 +5,8 @@ import { traverse } from "ast-monkey-traverse";
 // import { pathNext, pathPrev, pathUp } from "ast-monkey-util";
 import { pathPrev } from "ast-monkey-util";
 import op from "object-path";
+
+import { Linter, RuleObjType } from "../../linter";
 import { isObj } from "../../util/util";
 
 function commentMismatchingPair(context: Linter): RuleObjType {
@@ -23,7 +23,7 @@ function commentMismatchingPair(context: Linter): RuleObjType {
         node,
         // (key, val, innerObj, stop) => {
         (key, val, innerObj) => {
-          const current = val !== undefined ? val : key;
+          let current = val !== undefined ? val : key;
           if (isObj(current)) {
             // monkey will traverse every key, every string within.
             // We need to pick the objects of a type we need: "comment"
@@ -44,7 +44,7 @@ function commentMismatchingPair(context: Linter): RuleObjType {
                 )}`
               );
 
-              const previousToken = op.get(
+              let previousToken = op.get(
                 node,
                 pathPrev(innerObj.path) as string
               );

@@ -22,11 +22,11 @@ function validateVoid(
   // prepare the opts
   //
 
-  const defaults: Opts = {
+  let defaults: Opts = {
     xhtml: false,
     enforceSiblingAttributes: null,
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
   //
   // further validation only applicable to input tags:

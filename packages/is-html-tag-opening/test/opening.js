@@ -1,11 +1,14 @@
-import tap from "tap";
-import { isOpening as is } from "../dist/is-html-tag-opening.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 import { mixer } from "./util/util.js";
 
 // opening tag
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - recognised opening tag`, (t) => {
+test(`01 - recognised opening tag`, () => {
   [
     // opening
     `<a>`,
@@ -66,24 +69,23 @@ tap.test(`01 - recognised opening tag`, (t) => {
     mixer({
       skipOpeningBracket: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 1, opt),
+      not.ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
     mixer({
       skipOpeningBracket: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, 1, opt),
+      ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
   });
-  t.end();
 });
 
-tap.test(`02 - recognised closing tag`, (t) => {
+test(`02 - recognised closing tag`, () => {
   [
     `</a>`,
     `</a >`,
@@ -158,14 +160,14 @@ tap.test(`02 - recognised closing tag`, (t) => {
     `</img alt='z">`,
   ].forEach((str) => {
     mixer().forEach((opt) => {
-      t.true(
-        is(str, undefined, opt),
+      ok(
+        isOpening(str, undefined, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
       );
     });
     mixer().forEach((opt) => {
-      t.true(
-        is(str, 0, opt),
+      ok(
+        isOpening(str, 0, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
       );
     });
@@ -173,16 +175,16 @@ tap.test(`02 - recognised closing tag`, (t) => {
     mixer({
       skipOpeningBracket: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 1, opt),
+      not.ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
     mixer({
       skipOpeningBracket: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, 1, opt),
+      ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
@@ -190,24 +192,23 @@ tap.test(`02 - recognised closing tag`, (t) => {
     mixer({
       skipOpeningBracket: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 2, opt),
+      not.ok(
+        isOpening(str, 2, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
       );
     });
     mixer({
       skipOpeningBracket: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, 2, opt),
+      ok(
+        isOpening(str, 2, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
       );
     });
   });
-  t.end();
 });
 
-tap.test(`03 - unrecognised opening tag`, (t) => {
+test(`03 - unrecognised opening tag`, () => {
   [
     `<x>`,
     `<xy>`,
@@ -259,32 +260,32 @@ tap.test(`03 - unrecognised opening tag`, (t) => {
     mixer({
       allowCustomTagNames: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, undefined, opt),
+      ok(
+        isOpening(str, undefined, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
       );
     });
     mixer({
       allowCustomTagNames: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, undefined, opt),
+      not.ok(
+        isOpening(str, undefined, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
       );
     });
     mixer({
       allowCustomTagNames: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, 0, opt),
+      ok(
+        isOpening(str, 0, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
       );
     });
     mixer({
       allowCustomTagNames: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 0, opt),
+      not.ok(
+        isOpening(str, 0, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
       );
     });
@@ -292,16 +293,16 @@ tap.test(`03 - unrecognised opening tag`, (t) => {
     mixer({
       skipOpeningBracket: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 1, opt),
+      not.ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
     mixer({
       allowCustomTagNames: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 1, opt),
+      not.ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
@@ -309,16 +310,15 @@ tap.test(`03 - unrecognised opening tag`, (t) => {
       allowCustomTagNames: true,
       skipOpeningBracket: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, 1, opt),
+      ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
   });
-  t.end();
 });
 
-tap.test(`04 - unrecognised closing tag`, (t) => {
+test(`04 - unrecognised closing tag`, () => {
   [
     `</x>`,
     `</xy>`,
@@ -370,16 +370,16 @@ tap.test(`04 - unrecognised closing tag`, (t) => {
     mixer({
       allowCustomTagNames: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, undefined, opt),
+      ok(
+        isOpening(str, undefined, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
       );
     });
     mixer({
       allowCustomTagNames: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, 0, opt),
+      ok(
+        isOpening(str, 0, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
       );
     });
@@ -387,16 +387,16 @@ tap.test(`04 - unrecognised closing tag`, (t) => {
     mixer({
       skipOpeningBracket: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 1, opt),
+      not.ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
     mixer({
       allowCustomTagNames: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 1, opt),
+      not.ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
@@ -404,8 +404,8 @@ tap.test(`04 - unrecognised closing tag`, (t) => {
       allowCustomTagNames: true,
       skipOpeningBracket: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, 1, opt),
+      ok(
+        isOpening(str, 1, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
       );
     });
@@ -413,16 +413,16 @@ tap.test(`04 - unrecognised closing tag`, (t) => {
     mixer({
       skipOpeningBracket: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 2, opt),
+      not.ok(
+        isOpening(str, 2, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
       );
     });
     mixer({
       allowCustomTagNames: false,
     }).forEach((opt) => {
-      t.false(
-        is(str, 2, opt),
+      not.ok(
+        isOpening(str, 2, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
       );
     });
@@ -430,56 +430,53 @@ tap.test(`04 - unrecognised closing tag`, (t) => {
       allowCustomTagNames: true,
       skipOpeningBracket: true,
     }).forEach((opt) => {
-      t.true(
-        is(str, 2, opt),
+      ok(
+        isOpening(str, 2, opt),
         `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
       );
     });
   });
-  t.end();
 });
 
-tap.test(`05`, (t) => {
-  const str = `<html dir="ltr">`;
+test(`05`, () => {
+  let str = `<html dir="ltr">`;
   mixer().forEach((opt) => {
-    t.true(is(str, 0, opt), opt);
+    ok(isOpening(str, 0, opt), opt);
   });
   mixer().forEach((opt) => {
-    t.false(is(str, 6, opt), opt);
+    not.ok(isOpening(str, 6, opt), opt);
   });
-  t.end();
 });
 
-tap.test(`06`, (t) => {
-  const str = `<img alt="click here >">`;
+test(`06`, () => {
+  let str = `<img alt="click here >">`;
   mixer().forEach((opt) => {
-    t.true(is(str, 0, opt), opt);
+    ok(isOpening(str, 0, opt), opt);
   });
   mixer().forEach((opt) => {
-    t.false(is(str, 5, opt), opt);
-  });
-
-  const str2 = str + str;
-  mixer().forEach((opt) => {
-    t.true(is(str2, str.length + 0, opt), opt);
-  });
-  mixer().forEach((opt) => {
-    t.false(is(str2, str.length + 5, opt), opt);
+    not.ok(isOpening(str, 5, opt), opt);
   });
 
-  t.end();
+  let str2 = str + str;
+  mixer().forEach((opt) => {
+    ok(isOpening(str2, str.length + 0, opt), opt);
+  });
+  mixer().forEach((opt) => {
+    not.ok(isOpening(str2, str.length + 5, opt), opt);
+  });
 });
 
-tap.test(`07`, (t) => {
-  const str = `<img alt="< click here">`;
+test(`07`, () => {
+  let str = `<img alt="< click here">`;
   mixer().forEach((opt) => {
-    t.true(is(str, 0, opt), opt);
+    ok(isOpening(str, 0, opt), opt);
   });
   mixer().forEach((opt) => {
-    t.false(is(str, 5, opt), opt);
+    not.ok(isOpening(str, 5, opt), opt);
   });
   mixer().forEach((opt) => {
-    t.false(is(str, 10, opt), opt);
+    not.ok(isOpening(str, 10, opt), opt);
   });
-  t.end();
 });
+
+test.run();

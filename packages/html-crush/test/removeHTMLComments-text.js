@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { m } from "./util/util.js";
 
 // regular HTML comments (nothing to do with Outlook)
@@ -16,73 +19,49 @@ import { m } from "./util/util.js";
 //
 //
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only - 0`,
-  (t) => {
-    const source = `<!-- remove this -->`;
+test(`01 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only - 0`, () => {
+  let source = `<!-- remove this -->`;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 0, // <---
+  });
 
-    // off
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 0,
-      }),
-      {
-        result: source,
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "01"
-    );
-    t.end();
-  }
-);
+  equal(result, source);
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, null);
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only - 1`,
-  (t) => {
-    const source = `<!-- remove this -->`;
-    // 1 - only text comments
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 1,
-      }),
-      {
-        result: "",
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "02"
-    );
-    t.end();
-  }
-);
+// removeHTMLComments=1 - only text comments
+test(`02 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only - 1`, () => {
+  let source = `<!-- remove this -->`;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 1, // <---
+  });
 
-tap.test(
-  `03 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only - 2`,
-  (t) => {
-    const source = `<!-- remove this -->`;
-    // 2 - includes outlook conditional comments
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 2,
-      }),
-      {
-        result: "",
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "03"
-    );
+  equal(result, "");
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [[0, 20]]);
+});
 
-    t.end();
-  }
-);
+// removeHTMLComments=2 - includes outlook conditional comments
+test(`03 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only - 2`, () => {
+  let source = `<!-- remove this -->`;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 2, // <---
+  });
+
+  equal(result, "");
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [[0, 20]]);
+});
 
 //
 //
@@ -94,72 +73,53 @@ tap.test(
 //
 //
 
-tap.test(
-  `04 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace - 0`,
-  (t) => {
-    const source = `  <!-- remove this -->  `;
-    // off
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 0,
-      }),
-      {
-        result: source.trim(t),
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "04"
-    );
-    t.end();
-  }
-);
+// removeHTMLComments=0 - off
+test(`04 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace - 0`, () => {
+  let source = `  <!-- remove this -->  `;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 0, // <---
+  });
 
-tap.test(
-  `05 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace - 1`,
-  (t) => {
-    const source = `  <!-- remove this -->  `;
-    // 1 - only text comments
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 1,
-      }),
-      {
-        result: "",
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "05"
-    );
-    t.end();
-  }
-);
+  equal(result, source.trim());
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [
+    [0, 2],
+    [22, 24],
+  ]);
+});
 
-tap.test(
-  `06 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace - 2`,
-  (t) => {
-    const source = `  <!-- remove this -->  `;
-    // 2 - includes outlook conditional comments
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 2,
-      }),
-      {
-        result: "",
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "06"
-    );
+// removeHTMLComments=1 - only text comments
+test(`05 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace - 1`, () => {
+  let source = `  <!-- remove this -->  `;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 1, // <---
+  });
 
-    t.end();
-  }
-);
+  equal(result, "");
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [[0, 24]]);
+});
+
+// removeHTMLComments=2 - includes outlook conditional comments
+test(`06 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace - 2`, () => {
+  let source = `  <!-- remove this -->  `;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 2, // <---
+  });
+
+  equal(result, "");
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [[0, 24]]);
+});
 
 //
 //
@@ -171,72 +131,50 @@ tap.test(
 //
 //
 
-tap.test(
-  `07 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 0`,
-  (t) => {
-    const source = `<!--<span>-->`;
-    // 0 - off
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 0,
-      }),
-      {
-        result: source,
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "07"
-    );
-    t.end();
-  }
-);
+// removeHTMLComments=0 - off
+test(`07 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 0`, () => {
+  let source = `<!--<span>-->`;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 0, // <---
+  });
 
-tap.test(
-  `08 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 1`,
-  (t) => {
-    const source = `<!--<span>-->`;
-    // 1 - only text comments
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 1,
-      }),
-      {
-        result: "",
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "08"
-    );
-    t.end();
-  }
-);
+  equal(result, source);
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, null);
+});
 
-tap.test(
-  `09 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 2`,
-  (t) => {
-    const source = `<!--<span>-->`;
-    // 2 - includes outlook conditional comments
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 2,
-      }),
-      {
-        result: "",
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "09"
-    );
+// removeHTMLComments=1 - only text comments
+test(`08 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 1`, () => {
+  let source = `<!--<span>-->`;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 1, // <---
+  });
 
-    t.end();
-  }
-);
+  equal(result, "");
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [[0, 13]]);
+});
+
+// removeHTMLComments=2 - includes outlook conditional comments
+test(`09 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 2`, () => {
+  let source = `<!--<span>-->`;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 2, // <---
+  });
+
+  equal(result, "");
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [[0, 13]]);
+});
 
 //
 //
@@ -248,82 +186,68 @@ tap.test(
 //
 //
 
-tap.test(
-  `10 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight - 0`,
-  (t) => {
-    const source = `<div><!-- remove this --></div>`;
-    // 0 - off
-    t.match(
-      m(t, source, {
-        removeLineBreaks: true,
-        removeHTMLComments: 0,
-        lineLengthLimit: 2,
-      }),
-      {
-        result: `<div>
+// removeHTMLComments=0 - off
+test(`10 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight - 0`, () => {
+  let source = `<div><!-- remove this --></div>`;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeLineBreaks: true,
+    removeHTMLComments: 0,
+    lineLengthLimit: 2,
+  });
+
+  equal(
+    result,
+    `<div>
 <!--
 remove
 this
 -->
-</div>`,
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "10"
-    );
-    t.end();
-  }
-);
+</div>`
+  );
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [
+    [5, 5, "\n"],
+    [9, 10, "\n"],
+    [16, 17, "\n"],
+    [21, 22, "\n"],
+    [25, 25, "\n"],
+  ]);
+});
 
-tap.test(
-  `11 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight - 1`,
-  (t) => {
-    const source = `<div><!-- remove this --></div>`;
-    // 1 - only text comments
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 1,
-        lineLengthLimit: 2,
-      }),
-      {
-        result: `<div>
-</div>`,
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "11"
-    );
-    t.end();
-  }
-);
+// removeHTMLComments=1 - only text comments
+test(`11 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight - 1`, () => {
+  let source = `<div><!-- remove this --></div>`;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 1,
+    lineLengthLimit: 2,
+  });
 
-tap.test(
-  `12 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight - 2`,
-  (t) => {
-    const source = `<div><!-- remove this --></div>`;
-    // 2 - includes outlook conditional comments
-    t.match(
-      m(t, source, {
-        removeHTMLComments: 2,
-        lineLengthLimit: 2,
-      }),
-      {
-        result: `<div>
-</div>`,
-        applicableOpts: {
-          removeHTMLComments: true,
-          removeCSSComments: false,
-        },
-      },
-      "12"
-    );
-    t.end();
-  }
-);
+  equal(result, `<div>\n</div>`);
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [[5, 25, "\n"]]);
+});
+
+// removeHTMLComments=2 - includes outlook conditional comments
+test(`12 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight - 2`, () => {
+  let source = `<div><!-- remove this --></div>`;
+  let { result, applicableOpts, ranges } = m(equal, source, {
+    removeHTMLComments: 2,
+    lineLengthLimit: 2,
+  });
+
+  equal(result, `<div>\n</div>`);
+  equal(applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(ranges, [[5, 25, "\n"]]);
+});
 
 //
 //
@@ -334,3 +258,5 @@ tap.test(
 //
 //
 //
+
+test.run();

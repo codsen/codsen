@@ -1,11 +1,16 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { cparser } from "../dist/codsen-parser.esm.js";
 
 // 01. basics
 // -----------------------------------------------------------------------------
 
-tap.test("01 - basics - two tags", (t) => {
-  t.hasStrict(
+test("01 - basics - two tags", () => {
+  compare(
+    ok,
     cparser("<div><div>"),
     [
       {
@@ -26,11 +31,11 @@ tap.test("01 - basics - two tags", (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - basics - text and tag", (t) => {
-  t.hasStrict(
+test("02 - basics - text and tag", () => {
+  compare(
+    ok,
     cparser("z<div>"),
     [
       {
@@ -48,11 +53,11 @@ tap.test("02 - basics - text and tag", (t) => {
     ],
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - basics - tag text tag", (t) => {
-  t.hasStrict(
+test("03 - basics - tag text tag", () => {
+  compare(
+    ok,
     cparser("<div>a<div>"),
     [
       {
@@ -78,11 +83,11 @@ tap.test("03 - basics - tag text tag", (t) => {
     ],
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - basics - two div pairs", (t) => {
-  t.hasStrict(
+test("04 - basics - two div pairs", () => {
+  compare(
+    ok,
     cparser("<div>a</div><div>b</div>"),
     [
       {
@@ -132,11 +137,11 @@ tap.test("04 - basics - two div pairs", (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - basics - mixed combo", (t) => {
-  t.hasStrict(
+test("05 - basics - mixed combo", () => {
+  compare(
+    ok,
     cparser("<br>z</a>"),
     [
       {
@@ -163,11 +168,11 @@ tap.test("05 - basics - mixed combo", (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - basics - two nested pairs", (t) => {
-  t.hasStrict(
+test("06 - basics - two nested pairs", () => {
+  compare(
+    ok,
     cparser("<div>1<a>2</a>3</div>"),
     [
       {
@@ -222,11 +227,11 @@ tap.test("06 - basics - two nested pairs", (t) => {
     ],
     "06"
   );
-  t.end();
 });
 
-tap.test("07 - basics - three nested pairs, empty", (t) => {
-  t.hasStrict(
+test("07 - basics - three nested pairs, empty", () => {
+  compare(
+    ok,
     cparser("<table><tr><td></td></tr></table>"),
     [
       {
@@ -336,97 +341,95 @@ tap.test("07 - basics - three nested pairs, empty", (t) => {
     ],
     "07"
   );
-  t.end();
 });
 
-tap.test(
-  "08 - basics - single text node is not nested after closing tag",
-  (t) => {
-    t.hasStrict(
-      cparser(`<td>
+test("08 - basics - single text node is not nested after closing tag", () => {
+  compare(
+    ok,
+    cparser(`<td>
 <table></table>
 </td>`),
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 4,
-          value: "<td>",
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 3,
-          tagName: "td",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
-          children: [
-            {
-              type: "text",
-              start: 4,
-              end: 5,
-              value: "\n",
-            },
-            {
-              type: "tag",
-              start: 5,
-              end: 12,
-              value: "<table>",
-              tagNameStartsAt: 6,
-              tagNameEndsAt: 11,
-              tagName: "table",
-              recognised: true,
-              closing: false,
-              void: false,
-              pureHTML: true,
-              kind: null,
-              attribs: [],
-              children: [],
-            },
-            {
-              type: "tag",
-              start: 12,
-              end: 20,
-              value: "</table>",
-              tagNameStartsAt: 14,
-              tagNameEndsAt: 19,
-              tagName: "table",
-              recognised: true,
-              closing: true,
-              void: false,
-              pureHTML: true,
-              kind: null,
-              attribs: [],
-              children: [],
-            },
-            {
-              type: "text",
-              start: 20,
-              end: 21,
-              value: "\n",
-            },
-          ],
-        },
-        {
-          type: "tag",
-          start: 21,
-          end: 26,
-          value: "</td>",
-          tagNameStartsAt: 23,
-          tagNameEndsAt: 25,
-          tagName: "td",
-          recognised: true,
-          closing: true,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
-          children: [],
-        },
-      ],
-      "08"
-    );
-    t.end();
-  }
-);
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 4,
+        value: "<td>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 3,
+        tagName: "td",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+        children: [
+          {
+            type: "text",
+            start: 4,
+            end: 5,
+            value: "\n",
+          },
+          {
+            type: "tag",
+            start: 5,
+            end: 12,
+            value: "<table>",
+            tagNameStartsAt: 6,
+            tagNameEndsAt: 11,
+            tagName: "table",
+            recognised: true,
+            closing: false,
+            void: false,
+            pureHTML: true,
+            kind: null,
+            attribs: [],
+            children: [],
+          },
+          {
+            type: "tag",
+            start: 12,
+            end: 20,
+            value: "</table>",
+            tagNameStartsAt: 14,
+            tagNameEndsAt: 19,
+            tagName: "table",
+            recognised: true,
+            closing: true,
+            void: false,
+            pureHTML: true,
+            kind: null,
+            attribs: [],
+            children: [],
+          },
+          {
+            type: "text",
+            start: 20,
+            end: 21,
+            value: "\n",
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 21,
+        end: 26,
+        value: "</td>",
+        tagNameStartsAt: 23,
+        tagNameEndsAt: 25,
+        tagName: "td",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+        children: [],
+      },
+    ],
+    "08"
+  );
+});
+
+test.run();

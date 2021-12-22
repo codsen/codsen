@@ -1,11 +1,16 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { cparser } from "../dist/codsen-parser.esm.js";
 
 // 01. basics
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
-  t.strictSame(
+test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, () => {
+  compare(
+    ok,
     cparser(`<style>
 .red{color: red;}
 </style>`),
@@ -95,125 +100,123 @@ tap.test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
 // 02. media
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `02 - ${`\u001b[${36}m${`media`}\u001b[${39}m`} - two selectors with empty curlies`,
-  (t) => {
-    t.strictSame(
-      cparser(`<style>
+test(`02 - ${`\u001b[${36}m${`media`}\u001b[${39}m`} - two selectors with empty curlies`, () => {
+  compare(
+    ok,
+    cparser(`<style>
 @media screen and {
 .a, .b {}
 }
 </style>`),
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 7,
-          value: "<style>",
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 6,
-          tagName: "style",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
-          children: [
-            {
-              type: "text",
-              start: 7,
-              end: 8,
-              value: "\n",
-            },
-            {
-              type: "at",
-              start: 8,
-              end: 39,
-              value: "@media screen and {\n.a, .b {}\n}",
-              left: 6,
-              nested: false,
-              openingCurlyAt: 26,
-              closingCurlyAt: 38,
-              identifier: "media",
-              identifierStartsAt: 9,
-              identifierEndsAt: 14,
-              query: "screen and",
-              queryStartsAt: 15,
-              queryEndsAt: 25,
-              rules: [
-                {
-                  type: "text",
-                  start: 27,
-                  end: 28,
-                  value: "\n",
-                },
-                {
-                  type: "rule",
-                  start: 28,
-                  end: 37,
-                  value: ".a, .b {}",
-                  left: 26,
-                  nested: true,
-                  openingCurlyAt: 35,
-                  closingCurlyAt: 36,
-                  selectorsStart: 28,
-                  selectorsEnd: 34,
-                  selectors: [
-                    {
-                      value: ".a",
-                      selectorStarts: 28,
-                      selectorEnds: 30,
-                    },
-                    {
-                      value: ".b",
-                      selectorStarts: 32,
-                      selectorEnds: 34,
-                    },
-                  ],
-                  properties: [],
-                },
-                {
-                  type: "text",
-                  start: 37,
-                  end: 38,
-                  value: "\n",
-                },
-              ],
-            },
-            {
-              type: "text",
-              start: 39,
-              end: 40,
-              value: "\n",
-            },
-          ],
-        },
-        {
-          type: "tag",
-          start: 40,
-          end: 48,
-          value: "</style>",
-          tagNameStartsAt: 42,
-          tagNameEndsAt: 47,
-          tagName: "style",
-          recognised: true,
-          closing: true,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
-          children: [],
-        },
-      ],
-      "02"
-    );
-    t.end();
-  }
-);
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+        children: [
+          {
+            type: "text",
+            start: 7,
+            end: 8,
+            value: "\n",
+          },
+          {
+            type: "at",
+            start: 8,
+            end: 39,
+            value: "@media screen and {\n.a, .b {}\n}",
+            left: 6,
+            nested: false,
+            openingCurlyAt: 26,
+            closingCurlyAt: 38,
+            identifier: "media",
+            identifierStartsAt: 9,
+            identifierEndsAt: 14,
+            query: "screen and",
+            queryStartsAt: 15,
+            queryEndsAt: 25,
+            rules: [
+              {
+                type: "text",
+                start: 27,
+                end: 28,
+                value: "\n",
+              },
+              {
+                type: "rule",
+                start: 28,
+                end: 37,
+                value: ".a, .b {}",
+                left: 26,
+                nested: true,
+                openingCurlyAt: 35,
+                closingCurlyAt: 36,
+                selectorsStart: 28,
+                selectorsEnd: 34,
+                selectors: [
+                  {
+                    value: ".a",
+                    selectorStarts: 28,
+                    selectorEnds: 30,
+                  },
+                  {
+                    value: ".b",
+                    selectorStarts: 32,
+                    selectorEnds: 34,
+                  },
+                ],
+                properties: [],
+              },
+              {
+                type: "text",
+                start: 37,
+                end: 38,
+                value: "\n",
+              },
+            ],
+          },
+          {
+            type: "text",
+            start: 39,
+            end: 40,
+            value: "\n",
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 40,
+        end: 48,
+        value: "</style>",
+        tagNameStartsAt: 42,
+        tagNameEndsAt: 47,
+        tagName: "style",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+        children: [],
+      },
+    ],
+    "02"
+  );
+});
+
+test.run();

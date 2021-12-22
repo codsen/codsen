@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { detectLang } from "../dist/detect-templating-language.esm.js";
 
 // detects Nunjucks

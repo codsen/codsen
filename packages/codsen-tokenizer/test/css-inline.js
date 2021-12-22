@@ -1,17 +1,21 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { compare } from "ast-compare";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // css comments within inline HTML styles
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - empty body inline style`, (t) => {
-  const gathered = [];
+test(`01 - empty body inline style`, () => {
+  let gathered = [];
   ct(`<div style="">z</div>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -69,17 +73,16 @@ tap.test(`01 - empty body inline style`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
-tap.test(`02 - body inline style`, (t) => {
-  const gathered = [];
+test(`02 - body inline style`, () => {
+  let gathered = [];
   ct(`<div style="color: red;">z</div>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -153,17 +156,16 @@ tap.test(`02 - body inline style`, (t) => {
     ],
     "02"
   );
-  t.end();
 });
 
-tap.test(`03 - body inline style, no semi`, (t) => {
-  const gathered = [];
+test(`03 - body inline style, no semi`, () => {
+  let gathered = [];
   ct(`<div style="float:left">z</div>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -237,17 +239,16 @@ tap.test(`03 - body inline style, no semi`, (t) => {
     ],
     "03"
   );
-  t.end();
 });
 
-tap.test(`04 - two rules`, (t) => {
-  const gathered = [];
+test(`04 - two rules`, () => {
+  let gathered = [];
   ct(`<div style="float:left;display:block;">z</div>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -336,17 +337,16 @@ tap.test(`04 - two rules`, (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test(`05 - two rules`, (t) => {
-  const gathered = [];
+test(`05 - two rules`, () => {
+  let gathered = [];
   ct(`<div style="float:left;\ndisplay:block;">z</div>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -441,19 +441,17 @@ tap.test(`05 - two rules`, (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
-tap.test(`06 - font-family with commas`, (t) => {
-  const gathered = [];
+test(`06 - font-family with commas`, () => {
+  let gathered = [];
   ct(`<td style="font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -493,8 +491,9 @@ tap.test(`06 - font-family with commas`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "06"
   );
-  t.end();
 });
+
+test.run();

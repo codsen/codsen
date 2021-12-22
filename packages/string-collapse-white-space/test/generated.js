@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 
 // https://stackoverflow.com/a/1527820/3943954
@@ -21,7 +24,7 @@ const nonWhitespaceBits = [
   ".",
 ]; // bits that each of our tests will comprise of
 function nothingToCollapseGenerator() {
-  const testLength = getRandomInt(2, 50); // how many bits to pick and glue together
+  let testLength = getRandomInt(2, 50); // how many bits to pick and glue together
   // final result array which will comprise of "x" strings
 
   // traverse backwards because direction doesn't matter, yet it's more performant
@@ -38,11 +41,12 @@ function nothingToCollapseGenerator() {
 // check a ten thousand randomly-generated strings that don't need collapsing
 // -----------------------------------------------------------------------------
 
-tap.test(`01.XX - ${`\u001b[${36}m${`GENERATED TESTS`}\u001b[${39}m`}`, (t) => {
+test(`01.XX - ${`\u001b[${36}m${`GENERATED TESTS`}\u001b[${39}m`}`, () => {
   for (let i = 10000; i--; ) {
     let temp = nothingToCollapseGenerator();
-    t.deepEqual(collapse(temp), { result: temp, ranges: null });
+    equal(collapse(temp), { result: temp, ranges: null });
     temp = undefined;
   }
-  t.end();
 });
+
+test.run();

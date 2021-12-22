@@ -1,51 +1,49 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { rOffset } from "../dist/ranges-offset.esm.js";
 
-tap.test(`01 - bool`, (t) => {
-  t.strictSame(rOffset(true, 0), true, "01.01");
-  t.strictSame(rOffset(true, 1), true, "01.02");
-  t.strictSame(rOffset(true, 10), true, "01.03");
-  t.end();
+test(`01 - bool`, () => {
+  equal(rOffset(true, 0), true, "01.01");
+  equal(rOffset(true, 1), true, "01.02");
+  equal(rOffset(true, 10), true, "01.03");
 });
 
-tap.test(`02 - null`, (t) => {
-  t.strictSame(rOffset(null, 0), null, "02.01");
-  t.strictSame(rOffset(null, 1), null, "02.02");
-  t.strictSame(rOffset(null, 10), null, "02.03");
-  t.end();
+test(`02 - null`, () => {
+  equal(rOffset(null, 0), null, "02.01");
+  equal(rOffset(null, 1), null, "02.02");
+  equal(rOffset(null, 10), null, "02.03");
 });
 
-tap.test(`03 - empty array`, (t) => {
-  t.strictSame(rOffset([], 0), [], "03.01");
-  t.strictSame(rOffset([], 1), [], "03.02");
-  t.strictSame(rOffset([], 10), [], "03.03");
-  t.end();
+test(`03 - empty array`, () => {
+  equal(rOffset([], 0), [], "03.01");
+  equal(rOffset([], 1), [], "03.02");
+  equal(rOffset([], 10), [], "03.03");
 });
 
-tap.test(`04 - one empty range array`, (t) => {
-  t.strictSame(rOffset([[]], 0), [[]], "04.01");
-  t.strictSame(rOffset([[]], 1), [[]], "04.02");
-  t.strictSame(rOffset([[]], 10), [[]], "04.03");
-  t.end();
+test(`04 - one empty range array`, () => {
+  equal(rOffset([[]], 0), [[]], "04.01");
+  equal(rOffset([[]], 1), [[]], "04.02");
+  equal(rOffset([[]], 10), [[]], "04.03");
 });
 
-tap.test(`05`, (t) => {
-  t.strictSame(rOffset([[0, 1]], 0), [[0, 1]], "05.01");
-  t.strictSame(rOffset([[0, 1]], 1), [[1, 2]], "05.02");
-  t.strictSame(rOffset([[0, 1]], 10), [[10, 11]], "05.03");
-  t.end();
+test(`05`, () => {
+  equal(rOffset([[0, 1]], 0), [[0, 1]], "05.01");
+  equal(rOffset([[0, 1]], 1), [[1, 2]], "05.02");
+  equal(rOffset([[0, 1]], 10), [[10, 11]], "05.03");
 });
 
-tap.test(`06 - missing offset value`, (t) => {
-  t.strictSame(rOffset([[0, 1]]), [[0, 1]], "06.01");
-  t.strictSame(rOffset([[1, 2]]), [[1, 2]], "06.02");
-  t.strictSame(rOffset([[10, 11]]), [[10, 11]], "06.03");
-  t.end();
+test(`06 - missing offset value`, () => {
+  equal(rOffset([[0, 1]]), [[0, 1]], "06.01");
+  equal(rOffset([[1, 2]]), [[1, 2]], "06.02");
+  equal(rOffset([[10, 11]]), [[10, 11]], "06.03");
 });
 
-tap.test(`07 - input args are not mutated`, (t) => {
-  const input = [[0, 1]];
-  t.strictSame(rOffset(input, 10), [[10, 11]], "07.01");
-  t.strictSame(input, [[0, 1]], "07.02");
-  t.end();
+test(`07 - input args are not mutated`, () => {
+  let input = [[0, 1]];
+  equal(rOffset(input, 10), [[10, 11]], "07.01");
+  equal(input, [[0, 1]], "07.02");
 });
+
+test.run();

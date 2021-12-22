@@ -1,6 +1,7 @@
 // `entStartsWithCaseInsensitive`
 
 import { strict as assert } from "assert";
+
 import { entStartsWithCaseInsensitive } from "../dist/all-named-html-entities.esm.js";
 
 // case-insensitive "entStartsWithCaseInsensitive" is useful

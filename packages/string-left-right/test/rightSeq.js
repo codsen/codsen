@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { rightSeq } from "../dist/string-left-right.esm.js";
 
 // rightSeq()
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - normal use`, (t) => {
+test(`01 - normal use`, () => {
   // starts at "c":
-  t.strictSame(
+  equal(
     rightSeq("abcdefghijklmnop", 2, "d"),
     {
       gaps: [],
@@ -15,7 +18,7 @@ tap.test(`01 - normal use`, (t) => {
     },
     "01.01"
   );
-  t.strictSame(
+  equal(
     rightSeq("abcdefghijklmnop", 2, "d", "e", "f"),
     {
       gaps: [],
@@ -24,7 +27,7 @@ tap.test(`01 - normal use`, (t) => {
     },
     "01.02"
   );
-  t.strictSame(
+  equal(
     rightSeq("a  b  c  d  e  f  g  h  i  j  k  l", 6, "d", "e", "f"),
     {
       gaps: [
@@ -37,17 +40,15 @@ tap.test(`01 - normal use`, (t) => {
     },
     "01.03"
   );
-  t.end();
 });
 
-tap.test(`02 - no findings`, (t) => {
-  t.equal(rightSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "02");
-  t.end();
+test(`02 - no findings`, () => {
+  equal(rightSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "02");
 });
 
-tap.test(`03 - absent skips to right()`, (t) => {
-  t.equal(rightSeq("abcdefghijklmnop", 0, "", ""), null, "03.01");
-  t.strictSame(
+test(`03 - absent skips to right()`, () => {
+  equal(rightSeq("abcdefghijklmnop", 0, "", ""), null, "03.01");
+  equal(
     rightSeq("abcdefghijklmnop", 0, "b", ""),
     {
       gaps: [],
@@ -56,7 +57,7 @@ tap.test(`03 - absent skips to right()`, (t) => {
     },
     "03.02"
   );
-  t.strictSame(
+  equal(
     rightSeq("abcdefghijklmnop", 0, "", "b"),
     {
       gaps: [],
@@ -65,16 +66,14 @@ tap.test(`03 - absent skips to right()`, (t) => {
     },
     "03.03"
   );
-  t.end();
 });
 
-tap.test(`04 - starting point outside of the range`, (t) => {
-  t.equal(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04");
-  t.end();
+test(`04 - starting point outside of the range`, () => {
+  equal(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04");
 });
 
-tap.test(`05 - optional - existing`, (t) => {
-  t.strictSame(
+test(`05 - optional - existing`, () => {
+  equal(
     rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f"),
     {
       gaps: [],
@@ -83,62 +82,49 @@ tap.test(`05 - optional - existing`, (t) => {
     },
     "05"
   );
-  t.end();
 });
 
-tap.test(
-  `06 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whitespace`,
-  (t) => {
-    t.strictSame(
-      rightSeq("abcefghijklmnop", 2, "d?", "e", "f"),
-      {
-        gaps: [],
-        leftmostChar: 3,
-        rightmostChar: 4,
-      },
-      "06"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whitespace`, () => {
+  equal(
+    rightSeq("abcefghijklmnop", 2, "d?", "e", "f"),
+    {
+      gaps: [],
+      leftmostChar: 3,
+      rightmostChar: 4,
+    },
+    "06"
+  );
+});
 
-tap.test(
-  `07 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with whitespace`,
-  (t) => {
-    t.strictSame(
-      rightSeq("abc  e   f   g   hijklmnop", 2, "d?", "e", "f"),
-      {
-        gaps: [
-          [3, 5],
-          [6, 9],
-        ],
-        leftmostChar: 5,
-        rightmostChar: 9,
-      },
-      "07"
-    );
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with whitespace`, () => {
+  equal(
+    rightSeq("abc  e   f   g   hijklmnop", 2, "d?", "e", "f"),
+    {
+      gaps: [
+        [3, 5],
+        [6, 9],
+      ],
+      leftmostChar: 5,
+      rightmostChar: 9,
+    },
+    "07"
+  );
+});
 
-tap.test(
-  `08 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing optional`,
-  (t) => {
-    t.strictSame(
-      rightSeq("abc  e   f   g   hijklmnop", 2, "y?", "e", "z?"),
-      {
-        gaps: [[3, 5]],
-        leftmostChar: 5,
-        rightmostChar: 5,
-      },
-      "08"
-    );
-    t.end();
-  }
-);
+test(`08 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing optional`, () => {
+  equal(
+    rightSeq("abc  e   f   g   hijklmnop", 2, "y?", "e", "z?"),
+    {
+      gaps: [[3, 5]],
+      leftmostChar: 5,
+      rightmostChar: 5,
+    },
+    "08"
+  );
+});
 
-tap.test(`09 - all optional, existing`, (t) => {
-  t.strictSame(
+test(`09 - all optional, existing`, () => {
+  equal(
     rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f?"),
     {
       gaps: [],
@@ -147,19 +133,17 @@ tap.test(`09 - all optional, existing`, (t) => {
     },
     "09"
   );
-  t.end();
 });
 
-tap.test(`10 - all optional, not existing`, (t) => {
-  t.equal(rightSeq("abcdefghijklmnop", 2, "x?"), null, "10.01");
-  t.equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?"), null, "10.02");
-  t.equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?", "z?"), null, "10.03");
-  t.end();
+test(`10 - all optional, not existing`, () => {
+  equal(rightSeq("abcdefghijklmnop", 2, "x?"), null, "10.01");
+  equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?"), null, "10.02");
+  equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?", "z?"), null, "10.03");
 });
 
-tap.test(`11 - no findings`, (t) => {
-  t.equal(rightSeq("ABCDEFGHIJKLMNOP", 0, "b", "c", "d"), null, "11.01");
-  t.strictSame(
+test(`11 - no findings`, () => {
+  equal(rightSeq("ABCDEFGHIJKLMNOP", 0, "b", "c", "d"), null, "11.01");
+  equal(
     rightSeq("ABCDEFGHIJKLMNOP", 0, { i: true }, "b", "c", "d"),
     {
       gaps: [],
@@ -168,5 +152,6 @@ tap.test(`11 - no findings`, (t) => {
     },
     "11.02"
   );
-  t.end();
 });
+
+test.run();

@@ -1,11 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { helga } from "../dist/helga.esm.js";
 
 // 01. normal use
 // -----------------------------------------------------------------------------
 
-tap.test("01 - just a single word", (t) => {
-  t.strictSame(
+test("01 - just a single word", () => {
+  equal(
     helga("abc"),
     {
       minified: "abc",
@@ -13,11 +16,10 @@ tap.test("01 - just a single word", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - converts line breaks - JSON off", (t) => {
-  t.strictSame(
+test("02 - converts line breaks - JSON off", () => {
+  equal(
     helga("abc\ndef", { targetJSON: false }),
     {
       minified: "abc\ndef",
@@ -25,12 +27,11 @@ tap.test("02 - converts line breaks - JSON off", (t) => {
     },
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - converts line breaks - JSON on", (t) => {
+test("03 - converts line breaks - JSON on", () => {
   // beautified as input:
-  t.strictSame(
+  equal(
     helga("abc\ndef", { targetJSON: true }),
     {
       minified: "abc\\ndef",
@@ -40,7 +41,7 @@ tap.test("03 - converts line breaks - JSON on", (t) => {
   );
 
   // minified as input:
-  t.strictSame(
+  equal(
     helga("abc\\ndef", { targetJSON: true }),
     {
       minified: "abc\\ndef",
@@ -48,5 +49,6 @@ tap.test("03 - converts line breaks - JSON on", (t) => {
     },
     "03.02"
   );
-  t.end();
 });
+
+test.run();

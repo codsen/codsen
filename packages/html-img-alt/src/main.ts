@@ -2,7 +2,9 @@ import { unfancy } from "string-unfancy";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { checkTypesMini } from "check-types-mini";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Opts {
@@ -54,7 +56,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
   let addSpaceInTheFutureBeforeSlashOrBracket = false;
 
   let altBegins = null;
-  const rangesArr = new Ranges();
+  let rangesArr = new Ranges();
 
   // plausibleWithinQuotesRanges - some ranges should be included only if they are
   // not within double quotes. However, there can be cases when double quotes are
@@ -62,20 +64,20 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
   // closing bracket. In this case, the condition "within double quotes" is false
   // regarding characters that follow that first unclosed double quote.
   // This is the temporary array which houses such "plausible" ranges.
-  const plausibleWithinQuotesRanges = new Ranges();
+  let plausibleWithinQuotesRanges = new Ranges();
 
   // opts
   // ================
-  const defaults = {
+  let defaults = {
     unfancyTheAltContents: true,
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
   checkTypesMini(opts, defaults, { msg: "html-img-alt/alts(): [THROW_ID_03]" });
 
   // traverse the string
   // ================
   for (let i = 0, len = str.length; i < len; i++) {
-    const charcode = str[i].charCodeAt(0);
+    let charcode = str[i].charCodeAt(0);
     console.log(
       `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
         str[i].trim() ? str[i] : JSON.stringify(str[i], null, 0)
@@ -107,7 +109,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
     // catch closing slash
     // ================
     if (withinImageTag && str[i] === "/") {
-      console.log(`110 !!! setting slashStartedAt = ${i}`);
+      console.log(`112 !!! setting slashStartedAt = ${i}`);
       slashStartedAt = i;
     }
 
@@ -116,7 +118,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
     if (withinImageTag && !withinQuotes) {
       if (`${str[i]}${str[i + 1]}${str[i + 2]}` === "alt") {
         altBegins = i;
-        console.log(`119 !!! setting altBegins = ${altBegins}`);
+        console.log(`121 !!! setting altBegins = ${altBegins}`);
       } else if (`${str[i - 3]}${str[i - 2]}${str[i - 1]}` === "alt") {
         withinAlt = true; // this flag is necessary only until we catch the first
         // double quote of the alt attribute
@@ -156,7 +158,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
         plausibleWithinQuotesRanges.current() &&
         (plausibleWithinQuotesRanges.current() as any[]).length
       ) {
-        console.log("159 wiping plausibleWithinQuotesRanges");
+        console.log("161 wiping plausibleWithinQuotesRanges");
         plausibleWithinQuotesRanges.wipe();
       }
 
@@ -175,11 +177,11 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
     // it's dependent upon (still) existing `slashStartedAt` which latter section deletes
     // ================
     if (whitespaceStarted && str[i].trim() !== "") {
-      console.log("178 whitespace ends");
+      console.log("180 whitespace ends");
       // put up excessive whitespace for deletion
 
       console.log(
-        `182 withinQuotes = ${JSON.stringify(withinQuotes, null, 4)}`
+        `184 withinQuotes = ${JSON.stringify(withinQuotes, null, 4)}`
       );
       if (
         whitespaceStarted <
@@ -196,7 +198,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
       ) {
         if (!withinQuotes) {
           console.log(
-            `199 add no.1.1 - adding whitespace to rangesArr: [${whitespaceStarted}, ${
+            `201 add no.1.1 - adding whitespace to rangesArr: [${whitespaceStarted}, ${
               i -
               1 +
               (str[i] === ">" ||
@@ -225,7 +227,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
           );
         } else {
           console.log(
-            `228 add no.1.2 - adding whitespace to plausibleWithinQuotesRanges: [${whitespaceStarted}, ${
+            `230 add no.1.2 - adding whitespace to plausibleWithinQuotesRanges: [${whitespaceStarted}, ${
               i -
               1 +
               (str[i] === ">" ||
@@ -256,7 +258,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
 
         if (str[i] === ">" || str[i] === "/") {
           // missingTrailingSpace = ' '
-          console.log("259 SETTING finalSpaceNeeded = true");
+          console.log("261 SETTING finalSpaceNeeded = true");
           addSpaceInTheFutureBeforeSlashOrBracket = true;
         }
 
@@ -268,8 +270,8 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
             str[i] !== '"' &&
             i >= thereShouldBeTheFirstDoubleQuoteHere)
         ) {
-          const missingTrailingSpace = "";
-          const location =
+          let missingTrailingSpace = "";
+          let location =
             thereShouldBeEqualCharacterHere ||
             thereShouldBeTheFirstDoubleQuoteHere;
 
@@ -277,7 +279,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
           if (thereShouldBeEqualCharacterHere) {
             thingToAdd += "=";
           }
-          console.log(`280 add no.2 - adding ="" at location:${location}`);
+          console.log(`282 add no.2 - adding ="" at location:${location}`);
           if (!withinQuotes) {
             rangesArr.add(
               location,
@@ -318,7 +320,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
         thereShouldBeTheFirstDoubleQuoteHere &&
         i >= thereShouldBeTheFirstDoubleQuoteHere
       ) {
-        console.log("321 TRUE for: i >= thereShouldBeTheFirstDoubleQuoteHere");
+        console.log("323 TRUE for: i >= thereShouldBeTheFirstDoubleQuoteHere");
         thereShouldBeTheSecondDoubleQuoteHere =
           thereShouldBeTheFirstDoubleQuoteHere;
         thereShouldBeTheFirstDoubleQuoteHere = 0;
@@ -332,23 +334,23 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
         // also, if the character after first double quote is closing slash (XHTML)
         // or closing bracket (HTML), add a missing space in front of it:
         if (str[i + 1].trim() === "/" || str[i + 1].trim() === ">") {
-          console.log(`335 Adding empty space on i + 1 = ${i + 1}`);
+          console.log(`337 Adding empty space on i + 1 = ${i + 1}`);
           addSpaceInTheFutureBeforeSlashOrBracket = true;
-          console.log("337 SETTING finalSpaceNeeded = false");
+          console.log("339 SETTING finalSpaceNeeded = false");
           finalSpaceNeeded = false;
         }
       } else if (
         thereShouldBeTheSecondDoubleQuoteHere &&
         i >= thereShouldBeTheSecondDoubleQuoteHere
       ) {
-        console.log("344 TRUE for: i >= thereShouldBeTheSecondDoubleQuoteHere");
+        console.log("346 TRUE for: i >= thereShouldBeTheSecondDoubleQuoteHere");
         // If double quotes are closed properly, wipe the plausibles
         // that practically means we don't delete the whitespace within double quotes.
         // however, rogue unclosed double quote might throw us off track, hence
         // this contraption with plausible ranges.
         // We catch plausible ranges and keep until double quote is closed.
         // If it is never closed, all those ranges are merged into rangesArr for deletion.
-        console.log("351 wiping plausibleWithinQuotesRanges");
+        console.log("353 wiping plausibleWithinQuotesRanges");
         plausibleWithinQuotesRanges.wipe();
         thereShouldBeTheSecondDoubleQuoteHere = 0;
 
@@ -356,19 +358,19 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
         // add space in front of it
         if (str[i + 1] === ">" || str[i + 1] === "/") {
           addSpaceInTheFutureBeforeSlashOrBracket = true;
-          console.log("359 SETTING finalSpaceNeeded = false");
+          console.log("361 SETTING finalSpaceNeeded = false");
           finalSpaceNeeded = false;
         }
 
         // reset altContentsStart
         console.log(
-          `365 ALT TAG CONTENTS: >>>${str.slice(altContentsStart, i)}<<< (${
+          `367 ALT TAG CONTENTS: >>>${str.slice(altContentsStart, i)}<<< (${
             str.slice(altContentsStart, i).length
           })`
         );
 
         if (altContentsStart && opts.unfancyTheAltContents) {
-          const altContents = str.slice(altContentsStart, i);
+          let altContents = str.slice(altContentsStart, i);
           if (unfancy(altContents).trim() !== altContents) {
             rangesArr.add(altContentsStart, i, unfancy(altContents).trim());
           }
@@ -380,7 +382,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
     // catch single quotes
     // ================
     if (withinImageTag && !withinQuotes && str[i] === "'") {
-      console.log("383 putting up a rogue single quote for deletion");
+      console.log("385 putting up a rogue single quote for deletion");
       rangesArr.add(i, i + 1);
       if (str[i + 1] === "/" || str[i + 1] === ">") {
         addSpaceInTheFutureBeforeSlashOrBracket = true;
@@ -391,17 +393,17 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
     // ================
     if (withinImageTag && str[i] === ">") {
       console.log(
-        `394 complete img tag: ${str.slice(imageTagStartedAt, i + 1)}`
+        `396 complete img tag: ${str.slice(imageTagStartedAt, i + 1)}`
       );
       console.log(
-        `397 thereShouldBeTheFirstDoubleQuoteHere = ${JSON.stringify(
+        `399 thereShouldBeTheFirstDoubleQuoteHere = ${JSON.stringify(
           thereShouldBeTheFirstDoubleQuoteHere,
           null,
           4
         )}`
       );
       console.log(
-        `404 thereShouldBeTheSecondDoubleQuoteHere = ${JSON.stringify(
+        `406 thereShouldBeTheSecondDoubleQuoteHere = ${JSON.stringify(
           thereShouldBeTheSecondDoubleQuoteHere,
           null,
           4
@@ -413,22 +415,22 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
 
       // add ALT attr if missing:
       if (altBegins === null) {
-        console.log("416 NO ALT ATTR!");
+        console.log("418 NO ALT ATTR!");
         console.log(
-          `418 slashStartedAt = ${JSON.stringify(slashStartedAt, null, 4)}`
+          `420 slashStartedAt = ${JSON.stringify(slashStartedAt, null, 4)}`
         );
         if (slashStartedAt) {
           // XHTML.
           console.log(
-            `423 add no.3 - adding >>>alt="" <<< at slashStartedAt=${slashStartedAt}`
+            `425 add no.3 - adding >>>alt="" <<< at slashStartedAt=${slashStartedAt}`
           );
           rangesArr.add(slashStartedAt, slashStartedAt, ' alt="" ');
         } else {
           // HTML.
-          console.log(`428 add no.4 - adding >>> alt="" <<< at i=${i}`);
+          console.log(`430 add no.4 - adding >>> alt="" <<< at i=${i}`);
           rangesArr.add(i, i, ' alt="" ');
         }
-        console.log("431 SETTING finalSpaceNeeded = false");
+        console.log("433 SETTING finalSpaceNeeded = false");
         finalSpaceNeeded = false;
         addSpaceInTheFutureBeforeSlashOrBracket = false;
       }
@@ -436,15 +438,15 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
       if (!slashStartedAt && thereShouldBeEqualCharacterHere === i) {
         // if ALT has no equal and is right before closing bracket
         // HTML
-        console.log(`439 add no.5 - adding >>>="" <<< at i=${i}`);
+        console.log(`441 add no.5 - adding >>>="" <<< at i=${i}`);
         rangesArr.add(i, i, '="" ');
-        console.log("441 SETTING finalSpaceNeeded = false");
+        console.log("443 SETTING finalSpaceNeeded = false");
         finalSpaceNeeded = false;
       } else if (slashStartedAt && thereShouldBeEqualCharacterHere === i - 1) {
         // if ALT has no equal and is right before closing bracket
         // XHTML
         rangesArr.add(i - 1, i - 1, '="" ');
-        console.log("447 SETTING finalSpaceNeeded = false");
+        console.log("449 SETTING finalSpaceNeeded = false");
         finalSpaceNeeded = false;
       }
 
@@ -454,7 +456,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
         thereShouldBeTheFirstDoubleQuoteHere <= i
       ) {
         // HTML
-        console.log(`457 add no.7 - adding >>>="" <<< at i=${i}`);
+        console.log(`459 add no.7 - adding >>>="" <<< at i=${i}`);
         rangesArr.add(i, i, '"" ');
         addSpaceInTheFutureBeforeSlashOrBracket = false;
       } else if (
@@ -471,12 +473,12 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
         thereShouldBeTheSecondDoubleQuoteHere <= i
       ) {
         console.log(
-          "474 add no.9 - adding the missing double quote before HTML closing bracket"
+          "476 add no.9 - adding the missing double quote before HTML closing bracket"
         );
         // HTML
         rangesArr.add(i, i, '"');
         console.log(
-          `479 rangesArr.current() = ${JSON.stringify(
+          `481 rangesArr.current() = ${JSON.stringify(
             rangesArr.current(),
             null,
             4
@@ -484,7 +486,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
         );
         addSpaceInTheFutureBeforeSlashOrBracket = true;
         // so if the second double quote is missing, merge in the plausible ranges, if any
-        console.log("487 merging in plausibleWithinQuotesRanges");
+        console.log("489 merging in plausibleWithinQuotesRanges");
 
         // and now the actual merging of plausible ranges:
         if (plausibleWithinQuotesRanges.current()) {
@@ -505,7 +507,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
         thereShouldBeTheSecondDoubleQuoteHere <= i
       ) {
         console.log(
-          "508 add no.10 - adding the missing double quote before XHTML closing slash"
+          "510 add no.10 - adding the missing double quote before XHTML closing slash"
         );
         // XHTML
 
@@ -515,7 +517,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
           '"'
         );
         console.log(
-          `518 UPDATED rangesArr.current(): ${JSON.stringify(
+          `520 UPDATED rangesArr.current(): ${JSON.stringify(
             rangesArr.current(),
             null,
             4
@@ -539,17 +541,17 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
       if (finalSpaceNeeded || addSpaceInTheFutureBeforeSlashOrBracket) {
         if (slashStartedAt) {
           console.log(
-            "542 add no.12.1 - FINAL - adding missing space at slashStartedAt (XHTML)"
+            "544 add no.12.1 - FINAL - adding missing space at slashStartedAt (XHTML)"
           );
           rangesArr.add(slashStartedAt, slashStartedAt, " ");
         } else {
           console.log(
-            "547 add no.12.2 - FINAL - adding missing space at i (HTML)"
+            "549 add no.12.2 - FINAL - adding missing space at i (HTML)"
           );
           rangesArr.add(i, i, " ");
         }
         console.log(
-          `552 new rangesArr: ${JSON.stringify(rangesArr.current(), null, 4)}`
+          `554 new rangesArr: ${JSON.stringify(rangesArr.current(), null, 4)}`
         );
       }
 
@@ -566,7 +568,7 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
     // REVIEW slashStartedAt, probably needs more rules to make the case more precise
     if (slashStartedAt && str[i] !== "/" && str[i].trim() !== "") {
       console.log(
-        "569 setting slashStartedAt,\naltContentsStart,\nthereShouldBeEqualCharacterHere,\nthereShouldBeTheFirstDoubleQuoteHere,\nthereShouldBeTheSecondDoubleQuoteHere\nall to zero\n"
+        "571 setting slashStartedAt,\naltContentsStart,\nthereShouldBeEqualCharacterHere,\nthereShouldBeTheFirstDoubleQuoteHere,\nthereShouldBeTheSecondDoubleQuoteHere\nall to zero\n"
       );
       slashStartedAt = 0;
       // altContentsStart = 0
@@ -608,7 +610,7 @@ ${`\u001b[${90}m${`plausibleWithinQuotesRanges.current() = ${plausibleWithinQuot
   // ================
   console.log("\n\n\n=============\n\n");
   console.log(
-    `611 FINAL rangesArr.current() = ${JSON.stringify(
+    `613 FINAL rangesArr.current() = ${JSON.stringify(
       rangesArr.current(),
       null,
       4

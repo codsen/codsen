@@ -1,5 +1,7 @@
 import { isMatch } from "matcher";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Opts {
@@ -21,18 +23,18 @@ function pull(
   if (!originalInput.length || !originalToBeRemoved.length) {
     return Array.from(originalInput);
   }
-  const toBeRemoved: string[] =
+  let toBeRemoved: string[] =
     typeof originalToBeRemoved === "string"
       ? [originalToBeRemoved]
       : Array.from(originalToBeRemoved);
 
   // opts are mirroring matcher's at the moment, can't promise that for the future
-  const defaults: Opts = {
+  let defaults: Opts = {
     caseSensitive: true,
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
-  const res = Array.from(originalInput).filter(
+  let res = Array.from(originalInput).filter(
     (originalVal) =>
       !toBeRemoved.some((remVal) =>
         isMatch(originalVal, remVal, {

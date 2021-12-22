@@ -1,3 +1,5 @@
+import { leftStopAtNewLines } from "string-left-right";
+
 import { Linter, RuleObjType } from "../../linter";
 import { badChars } from "../../util/bad-character-all";
 
@@ -6,8 +8,6 @@ import { badChars } from "../../util/bad-character-all";
 
 // Catches raw character "TABULATION" or simply "TAB":
 // https://www.fileformat.info/info/unicode/char/0009/index.htm
-
-import { leftStopAtNewLines } from "string-left-right";
 
 interface BadCharacterTabulation {
   (context: Linter, mode: string): RuleObjType;
@@ -41,7 +41,7 @@ const badCharacterTabulation: BadCharacterTabulation = (
     mode = "indentationIsFine";
   }
 
-  const charCode = 9;
+  let charCode = 9;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {
@@ -61,7 +61,7 @@ const badCharacterTabulation: BadCharacterTabulation = (
           // on the left, or LF or CR. By evaluating the trim of it, we can
           // filter out cases where it's non-whitespace character. In other
           // words, that's TAB in the middle of the line, between letter characters.
-          const charTopOnBreaksIdx = leftStopAtNewLines(context.str, i);
+          let charTopOnBreaksIdx = leftStopAtNewLines(context.str, i);
           if (
             charTopOnBreaksIdx !== null &&
             context.str[charTopOnBreaksIdx].trim().length

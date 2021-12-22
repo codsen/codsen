@@ -18,7 +18,7 @@ interface Opts {
     resolveToBoolIfAnyValuesContainBool: boolean;
     resolveToFalseIfAnyValuesContainBool: boolean;
     throwWhenNonStringInsertedInString: boolean;
-    allowUnresolved: boolean;
+    allowUnresolved: boolean | string;
 }
 declare const defaults: Opts;
 /**

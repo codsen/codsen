@@ -1,5 +1,6 @@
-import { Linter, RuleObjType } from "../../linter";
 import { left } from "string-left-right";
+
+import { Linter, RuleObjType } from "../../linter";
 // import { Attrib } from "../../util/commonTypes";
 
 // rule: tag-malformed
@@ -15,7 +16,7 @@ function tagMalformed(context: Linter): RuleObjType {
       // check the opening bracket
       if (context.str[node.start] !== "<") {
         console.log(
-          `018 ${`\u001b[${31}m${`opening bracket missing`}\u001b[${39}m`}`
+          `019 ${`\u001b[${31}m${`opening bracket missing`}\u001b[${39}m`}`
         );
         context.report({
           ruleId: "tag-malformed",
@@ -29,9 +30,9 @@ function tagMalformed(context: Linter): RuleObjType {
       // check the closing bracket
       if (context.str[node.end - 1] !== ">") {
         console.log(
-          `032 ${`\u001b[${31}m${`closing bracket missing`}\u001b[${39}m`}`
+          `033 ${`\u001b[${31}m${`closing bracket missing`}\u001b[${39}m`}`
         );
-        const startPos = (left(context.str, node.end) as number) + 1;
+        let startPos = (left(context.str, node.end) as number) + 1;
         let extras = "";
         if (node.void) {
           extras = " /";

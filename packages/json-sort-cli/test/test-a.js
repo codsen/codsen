@@ -1,6 +1,8 @@
 import fs from "fs-extra";
 import path from "path";
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 // import pMap from "p-map";
@@ -16,30 +18,30 @@ import tempy from "tempy";
 
 // -----------------------------------------------------------------------------
 
-tap.test(
-  "01 - when asked, sorts arrays which contain only strings",
-  async (t) => {
-    const tempFolder = tempy.directory();
-    // const tempFolder = "temp";
-    fs.ensureDirSync(path.resolve(tempFolder));
-    const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+test("01 - when asked, sorts arrays which contain only strings", async () => {
+  let tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
 
-    const processedFileContents = fs
-      .writeFile(
-        pathOfTheTestfile,
-        JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2)
-      )
-      .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
-      .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
-      .then((received) =>
-        // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-        execaCommand(`rm -rf ${tempFolder}`).then(() => received)
-      )
-      .catch((err) => t.fail(err));
+  let processedFileContents = fs
+    .writeFile(
+      pathOfTheTestfile,
+      JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2)
+    )
+    .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
+    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then((received) =>
+      // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+    )
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-    t.strictSame(
-      await processedFileContents,
-      `[
+  equal(
+    await processedFileContents,
+    `[
   "a",
   "A",
   "m",
@@ -47,46 +49,42 @@ tap.test(
   "z",
   "Z"
 ]\n`,
-      "01"
-    );
-    t.end();
-  }
-);
+    "01"
+  );
+});
 
-tap.test(
-  "02 - when not asked, does not sort arrays which contain only strings",
-  async (t) => {
-    const tempFolder = tempy.directory();
-    // const tempFolder = "temp";
-    fs.ensureDirSync(path.resolve(tempFolder));
-    const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
-    const sourceArr = ["Z", "A", "z", "m", "M", "a"];
-
-    const processedFileContents = fs
-      .writeFile(pathOfTheTestfile, JSON.stringify(sourceArr, null, 2))
-      .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
-      .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
-      .then((received) =>
-        // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-        execaCommand(`rm -rf ${tempFolder}`).then(() => received)
-      )
-      .catch((err) => t.fail(err));
-    t.strictSame(
-      await processedFileContents,
-      `${JSON.stringify(sourceArr, null, 2)}\n`,
-      "02"
-    );
-    t.end();
-  }
-);
-
-tap.test("03 - array in deeper levels sorted (upon request)", async (t) => {
-  const tempFolder = tempy.directory();
+test("02 - when not asked, does not sort arrays which contain only strings", async () => {
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
-  const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+  let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+  let sourceArr = ["Z", "A", "z", "m", "M", "a"];
 
-  const processedFileContents = fs
+  let processedFileContents = fs
+    .writeFile(pathOfTheTestfile, JSON.stringify(sourceArr, null, 2))
+    .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
+    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then((received) =>
+      // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+    )
+    .catch((err) => {
+      throw new Error(err);
+    });
+  equal(
+    await processedFileContents,
+    `${JSON.stringify(sourceArr, null, 2)}\n`,
+    "02"
+  );
+});
+
+test("03 - array in deeper levels sorted (upon request)", async () => {
+  let tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+
+  let processedFileContents = fs
     .writeFile(
       pathOfTheTestfile,
       JSON.stringify(
@@ -110,9 +108,11 @@ tap.test("03 - array in deeper levels sorted (upon request)", async (t) => {
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received)
     )
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-  t.strictSame(
+  equal(
     await processedFileContents,
     `{
   "a": {
@@ -130,5 +130,6 @@ tap.test("03 - array in deeper levels sorted (upon request)", async (t) => {
 }\n`,
     "03"
   );
-  t.end();
 });
+
+test.run();

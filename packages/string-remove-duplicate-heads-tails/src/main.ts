@@ -1,11 +1,13 @@
-import { version as v } from "../package.json";
-const version: string = v;
 import isObj from "lodash.isplainobject";
 import { arrayiffy } from "arrayiffy-if-string";
 import { matchLeftIncl, matchRightIncl } from "string-match-left-right";
 import { Ranges } from "ranges-push";
 import { rApply } from "ranges-apply";
 import { trimSpaces } from "string-trim-spaces-only";
+
+import { version as v } from "../package.json";
+
+const version: string = v;
 
 interface Opts {
   heads: string[];
@@ -26,7 +28,7 @@ const defaults: Opts = {
 function remDup(str: string, originalOpts?: LenientOpts): string {
   //
 
-  const has = Object.prototype.hasOwnProperty;
+  let has = Object.prototype.hasOwnProperty;
 
   // ===================== insurance =====================
 
@@ -44,7 +46,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
     );
   }
   // at this point, we can clone the originalOpts
-  const clonedOriginalOpts: Opts = { ...originalOpts } as Opts;
+  let clonedOriginalOpts: Opts = { ...originalOpts } as Opts;
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
     if (
@@ -74,17 +76,13 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   }
 
   // trim but only if it's not trimmable to zero length (in that case return intact)
-  const temp = trimSpaces(str).res;
+  let temp = trimSpaces(str).res;
   if (temp.length === 0) {
     return str;
   }
   str = temp;
 
-  const defaults: Opts = {
-    heads: ["{{"],
-    tails: ["}}"],
-  };
-  const opts: Opts = { ...defaults, ...clonedOriginalOpts };
+  let opts: Opts = { ...defaults, ...clonedOriginalOpts };
 
   // first, let's trim heads and tails' array elements:
   opts.heads = opts.heads.map((el) => el.trim());
@@ -103,7 +101,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
 
   // Real ranges array is the array that we'll process in the end, cropping pieces
   // out of the string:
-  const realRanges = new Ranges({ limitToBeAddedWhitespace: true });
+  let realRanges = new Ranges({ limitToBeAddedWhitespace: true });
 
   // Conditional ranges array depends of the conditions what follows them. If the
   // condition is satisfied, range is merged into realRanges[]; if not, it's deleted.
@@ -111,7 +109,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   // precisely after (not counting whitespace). For another example, for trailing
   // chunks, condition would be end of the string or other heads/tails that leads to
   // the end of the string:
-  const conditionalRanges = new Ranges({
+  let conditionalRanges = new Ranges({
     limitToBeAddedWhitespace: true,
   });
 
@@ -134,11 +132,11 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   //                              P A R T   I
 
   // delete leading empty head-tail clumps as in "((()))((())) a"
-  function delLeadingEmptyHeadTailChunks(str1: string, opts1: Opts) {
+  function delLeadingEmptyHeadTailChunks(str1: string, opts1: Opts): string {
     let noteDownTheIndex: number | undefined;
     // do heads, from beginning of the input string:
-    console.log("140 calling matchRightIncl()");
-    const resultOfAttemptToMatchHeads = matchRightIncl(str1, 0, opts1.heads, {
+    console.log("138 calling matchRightIncl()");
+    let resultOfAttemptToMatchHeads = matchRightIncl(str1, 0, opts1.heads, {
       trimBeforeMatching: true,
       cb: (_char, _theRemainderOfTheString, index) => {
         noteDownTheIndex = index;
@@ -150,8 +148,8 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       return str1;
     }
     // do tails now:
-    console.log("153 calling matchRightIncl()");
-    const resultOfAttemptToMatchTails = matchRightIncl(
+    console.log("151 calling matchRightIncl()");
+    let resultOfAttemptToMatchTails = matchRightIncl(
       str1,
       noteDownTheIndex as number,
       opts1.tails,
@@ -176,11 +174,11 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   }
 
   // delete trailing empty head-tail clumps as in "a ((()))((()))"
-  function delTrailingEmptyHeadTailChunks(str1: string, opts1: Opts) {
+  function delTrailingEmptyHeadTailChunks(str1: string, opts1: Opts): string {
     let noteDownTheIndex;
     // do tails now - match from the end of a string, trimming along:
-    console.log("182 calling matchLeftIncl()");
-    const resultOfAttemptToMatchTails = matchLeftIncl(
+    console.log("180 calling matchLeftIncl()");
+    let resultOfAttemptToMatchTails = matchLeftIncl(
       str1,
       str1.length - 1,
       opts1.tails,
@@ -197,8 +195,8 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       return str1;
     }
     // do heads that precede those tails:
-    console.log("200 calling matchLeftIncl()");
-    const resultOfAttemptToMatchHeads = matchLeftIncl(
+    console.log("198 calling matchLeftIncl()");
+    let resultOfAttemptToMatchHeads = matchLeftIncl(
       str1,
       noteDownTheIndex,
       opts1.heads,
@@ -224,7 +222,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
 
   //                      E A R L Y    E N D I N G
 
-  console.log("227 calling both matchRightIncl() and matchLeftIncl()");
+  console.log("225 calling both matchRightIncl() and matchLeftIncl()");
   if (
     !opts.heads.length ||
     !matchRightIncl(str, 0, opts.heads, {
@@ -309,8 +307,8 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
 
       // match heads
       let noteDownTheIndex;
-      console.log("312 calling matchRightIncl()");
-      const resultOfAttemptToMatchHeads = matchRightIncl(str, i, opts.heads, {
+      console.log("310 calling matchRightIncl()");
+      let resultOfAttemptToMatchHeads = matchRightIncl(str, i, opts.heads, {
         trimBeforeMatching: true,
         cb: (_char, _theRemainderOfTheString, index) => {
           noteDownTheIndex = index;
@@ -325,13 +323,13 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
           itsFirstTail = true;
         }
 
-        console.log(`328 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
+        console.log(`326 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
 
         // 0. Just in case, check maybe there are tails following right away,
         // in that case definitely remove both
         let tempIndexUpTo;
-        console.log("333 calling matchRightIncl()");
-        const resultOfAttemptToMatchTails = matchRightIncl(
+        console.log("331 calling matchRightIncl()");
+        let resultOfAttemptToMatchTails = matchRightIncl(
           str,
           noteDownTheIndex,
           opts.tails,
@@ -451,8 +449,8 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       }
 
       // match tails
-      console.log("454 calling matchRightIncl()");
-      const resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
+      console.log("452 calling matchRightIncl()");
+      let resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
         trimBeforeMatching: true,
         cb: (_char, _theRemainderOfTheString, index) => {
           noteDownTheIndex = Number.isInteger(index) ? index : str.length;

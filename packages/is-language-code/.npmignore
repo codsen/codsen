@@ -1,26 +1,13 @@
-# generated using codsen.com/os/lect 
-#
-#
-#       __         ______     ______     ______  
-#      /\ \       /\  ___\   /\  ___\   /\__  _\ 
-#      \ \ \____  \ \  __\   \ \ \____  \/_/\ \/ 
-#       \ \_____\  \ \_____\  \ \_____\    \ \_\ 
-#        \/_____/   \/_____/   \/_____/     \/_/ 
-#  
-#
-
 # folders:
-
-.nyc_output
+.turbo
+coverage
 perf
 reference
 src
 test
 
 # files:
-
 .npmignore
 .prettierignore
 rollup.config.js
-testStats.md
 tsconfig.json

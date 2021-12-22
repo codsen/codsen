@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
 
 const leftSingleQuote = "\u2018";
@@ -11,385 +14,291 @@ const rightDoubleQuote = "\u201D";
 // 01. single apostrophes
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test's`, {
-        from: 4,
-        convertApostrophes: 1,
-        convertEntities: 1,
-      }),
-      [[4, 5, "&rsquo;"]],
-      "01"
-    );
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`, () => {
+  equal(
+    convertOne(`test's`, {
+      from: 4,
+      convertApostrophes: 1,
+      convertEntities: 1,
+    }),
+    [[4, 5, "&rsquo;"]],
+    "01"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test's`, {
-        from: 4,
-        to: 5,
-        convertApostrophes: 1,
-        convertEntities: 1,
-      }),
-      [[4, 5, "&rsquo;"]],
-      "02"
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`, () => {
+  equal(
+    convertOne(`test's`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 1,
+      convertEntities: 1,
+    }),
+    [[4, 5, "&rsquo;"]],
+    "02"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test's`, {
-        from: 4,
-        to: 5,
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }),
-      [[4, 5, rightSingleQuote]],
-      "03"
-    );
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`, () => {
+  equal(
+    convertOne(`test's`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }),
+    [[4, 5, rightSingleQuote]],
+    "03"
+  );
+});
 
-tap.test(
-  `04 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test's`, {
-        from: 4,
-        convertApostrophes: 0,
-        convertEntities: 1,
-      }),
-      [],
-      "04"
-    );
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`, () => {
+  equal(
+    convertOne(`test's`, {
+      from: 4,
+      convertApostrophes: 0,
+      convertEntities: 1,
+    }),
+    [],
+    "04"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test's`, {
-        from: 4,
-        to: 5,
-        convertApostrophes: 0,
-        convertEntities: 1,
-      }),
-      [],
-      "05"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`, () => {
+  equal(
+    convertOne(`test's`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 0,
+      convertEntities: 1,
+    }),
+    [],
+    "05"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test's`, {
-        from: 4,
-        to: 5,
-        convertApostrophes: 0,
-        convertEntities: 0,
-      }),
-      [],
-      "06"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`, () => {
+  equal(
+    convertOne(`test's`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 0,
+      convertEntities: 0,
+    }),
+    [],
+    "06"
+  );
+});
 
-tap.test(
-  `07 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark + space`,
-  (t) => {
-    t.strictSame(
-      convertAll(`'What!' he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftSingleQuote}What!${rightSingleQuote} he said`,
-      "07"
-    );
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark + space`, () => {
+  equal(
+    convertAll(`'What!' he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftSingleQuote}What!${rightSingleQuote} he said`,
+    "07"
+  );
+});
 
-tap.test(
-  `08 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop + space`,
-  (t) => {
-    t.strictSame(
-      convertAll(`'What.' he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftSingleQuote}What.${rightSingleQuote} he said`,
-      "08"
-    );
-    t.end();
-  }
-);
+test(`08 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop + space`, () => {
+  equal(
+    convertAll(`'What.' he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftSingleQuote}What.${rightSingleQuote} he said`,
+    "08"
+  );
+});
 
-tap.test(
-  `09 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon + space`,
-  (t) => {
-    t.strictSame(
-      convertAll(`'What;' he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftSingleQuote}What;${rightSingleQuote} he said`,
-      "09"
-    );
-    t.end();
-  }
-);
+test(`09 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon + space`, () => {
+  equal(
+    convertAll(`'What;' he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftSingleQuote}What;${rightSingleQuote} he said`,
+    "09"
+  );
+});
 
-tap.test(
-  `10 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark + space`,
-  (t) => {
-    t.strictSame(
-      convertAll(`'What?' he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftSingleQuote}What?${rightSingleQuote} he said`,
-      "10"
-    );
-    t.end();
-  }
-);
+test(`10 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark + space`, () => {
+  equal(
+    convertAll(`'What?' he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftSingleQuote}What?${rightSingleQuote} he said`,
+    "10"
+  );
+});
 
-tap.test(
-  `11 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark`,
-  (t) => {
-    t.strictSame(
-      convertAll(`"'What!'" he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What!${rightSingleQuote}${rightDoubleQuote} he said`,
-      "11"
-    );
-    t.end();
-  }
-);
+test(`11 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark`, () => {
+  equal(
+    convertAll(`"'What!'" he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftDoubleQuote}${leftSingleQuote}What!${rightSingleQuote}${rightDoubleQuote} he said`,
+    "11"
+  );
+});
 
-tap.test(
-  `12 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop`,
-  (t) => {
-    t.strictSame(
-      convertAll(`"'What.'" he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What.${rightSingleQuote}${rightDoubleQuote} he said`,
-      "12"
-    );
-    t.end();
-  }
-);
+test(`12 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop`, () => {
+  equal(
+    convertAll(`"'What.'" he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftDoubleQuote}${leftSingleQuote}What.${rightSingleQuote}${rightDoubleQuote} he said`,
+    "12"
+  );
+});
 
-tap.test(
-  `13 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma`,
-  (t) => {
-    t.strictSame(
-      convertAll(`"'What,'" he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What,${rightSingleQuote}${rightDoubleQuote} he said`,
-      "13"
-    );
-    t.end();
-  }
-);
+test(`13 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma`, () => {
+  equal(
+    convertAll(`"'What,'" he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftDoubleQuote}${leftSingleQuote}What,${rightSingleQuote}${rightDoubleQuote} he said`,
+    "13"
+  );
+});
 
-tap.test(
-  `14 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon`,
-  (t) => {
-    t.strictSame(
-      convertAll(`"'What;'" he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
-      "14"
-    );
-    t.end();
-  }
-);
+test(`14 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon`, () => {
+  equal(
+    convertAll(`"'What;'" he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
+    "14"
+  );
+});
 
-tap.test(
-  `15 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark`,
-  (t) => {
-    t.strictSame(
-      convertAll(`"'What;'" he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
-      "15"
-    );
-    t.end();
-  }
-);
+test(`15 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark`, () => {
+  equal(
+    convertAll(`"'What;'" he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
+    "15"
+  );
+});
 
-tap.test(
-  `16 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma + space`,
-  (t) => {
-    t.strictSame(
-      convertAll(`'What,' he said`, {
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }).result,
-      `${leftSingleQuote}What,${rightSingleQuote} he said`,
-      "16"
-    );
-    t.end();
-  }
-);
+test(`16 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma + space`, () => {
+  equal(
+    convertAll(`'What,' he said`, {
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }).result,
+    `${leftSingleQuote}What,${rightSingleQuote} he said`,
+    "16"
+  );
+});
 
-tap.test(
-  `17 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - HTML-escaped apostrophe`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test&apos;s`, {
-        from: 4,
-        to: 10,
-        value: "'",
-        convertEntities: 0,
-      }),
-      [[4, 10, "\u2019"]],
-      "17"
-    );
-    t.end();
-  }
-);
+test(`17 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - HTML-escaped apostrophe`, () => {
+  equal(
+    convertOne(`test&apos;s`, {
+      from: 4,
+      to: 10,
+      value: "'",
+      convertEntities: 0,
+    }),
+    [[4, 10, "\u2019"]],
+    "17"
+  );
+});
 
-tap.test(
-  `18 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`,
-  (t) => {
-    t.strictSame(
-      convertOne(`'`, {
-        from: 0,
-        convertApostrophes: 1,
-        convertEntities: 1,
-      }),
-      [],
-      "18"
-    );
-    t.end();
-  }
-);
+test(`18 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`, () => {
+  equal(
+    convertOne(`'`, {
+      from: 0,
+      convertApostrophes: 1,
+      convertEntities: 1,
+    }),
+    [],
+    "18"
+  );
+});
 
-tap.test(
-  `19 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test${leftSingleQuote}s`, {
-        from: 4,
-        convertApostrophes: 1,
-        convertEntities: 1,
-      }),
-      [[4, 5, "&rsquo;"]],
-      "19"
-    );
-    t.end();
-  }
-);
+test(`19 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`, () => {
+  equal(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      convertApostrophes: 1,
+      convertEntities: 1,
+    }),
+    [[4, 5, "&rsquo;"]],
+    "19"
+  );
+});
 
-tap.test(
-  `20 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test${leftSingleQuote}s`, {
-        from: 4,
-        to: 5,
-        convertApostrophes: 1,
-        convertEntities: 1,
-      }),
-      [[4, 5, "&rsquo;"]],
-      "20"
-    );
-    t.end();
-  }
-);
+test(`20 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`, () => {
+  equal(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 1,
+      convertEntities: 1,
+    }),
+    [[4, 5, "&rsquo;"]],
+    "20"
+  );
+});
 
-tap.test(
-  `21 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test${leftSingleQuote}s`, {
-        from: 4,
-        to: 5,
-        convertApostrophes: 1,
-        convertEntities: 0,
-      }),
-      [[4, 5, rightSingleQuote]],
-      "21"
-    );
-    t.end();
-  }
-);
+test(`21 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`, () => {
+  equal(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 1,
+      convertEntities: 0,
+    }),
+    [[4, 5, rightSingleQuote]],
+    "21"
+  );
+});
 
-tap.test(
-  `22 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test${leftSingleQuote}s`, {
-        from: 4,
-        convertApostrophes: 0,
-        convertEntities: 1,
-      }),
-      [[4, 5, `'`]],
-      "22"
-    );
-    t.end();
-  }
-);
+test(`22 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`, () => {
+  equal(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      convertApostrophes: 0,
+      convertEntities: 1,
+    }),
+    [[4, 5, `'`]],
+    "22"
+  );
+});
 
-tap.test(
-  `23 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test${leftSingleQuote}s`, {
-        from: 4,
-        to: 5,
-        convertApostrophes: 0,
-        convertEntities: 1,
-      }),
-      [[4, 5, `'`]],
-      "23"
-    );
-    t.end();
-  }
-);
+test(`23 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`, () => {
+  equal(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 0,
+      convertEntities: 1,
+    }),
+    [[4, 5, `'`]],
+    "23"
+  );
+});
 
-tap.test(
-  `24 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`,
-  (t) => {
-    t.strictSame(
-      convertOne(`test${leftSingleQuote}s`, {
-        from: 4,
-        to: 5,
-        convertApostrophes: 0,
-        convertEntities: 0,
-      }),
-      [[4, 5, `'`]],
-      "24"
-    );
-    t.end();
-  }
-);
+test(`24 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`, () => {
+  equal(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 0,
+      convertEntities: 0,
+    }),
+    [[4, 5, `'`]],
+    "24"
+  );
+});
+
+test.run();

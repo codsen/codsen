@@ -1,8 +1,11 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { within } from "../dist/email-all-chars-within-ascii.esm.js";
 
-tap.test("01 - default, line length exceeded", (t) => {
-  t.sameStrict(
+test("01 - default, line length exceeded", () => {
+  equal(
     within(
       `yyy\nzzz\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
     ),
@@ -17,18 +20,17 @@ tap.test("01 - default, line length exceeded", (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - customising the length", (t) => {
-  t.sameStrict(
+test("02 - customising the length", () => {
+  equal(
     within(`abcde`, {
       lineLength: 0,
     }),
     [],
     "02.01"
   );
-  t.sameStrict(
+  equal(
     within(`abcde`, {
       lineLength: 1,
     }),
@@ -43,7 +45,7 @@ tap.test("02 - customising the length", (t) => {
     ],
     "02.02"
   );
-  t.sameStrict(
+  equal(
     within(`abcde`, {
       lineLength: 2,
     }),
@@ -58,7 +60,7 @@ tap.test("02 - customising the length", (t) => {
     ],
     "02.03"
   );
-  t.sameStrict(
+  equal(
     within(`abcde`, {
       lineLength: 3,
     }),
@@ -73,7 +75,7 @@ tap.test("02 - customising the length", (t) => {
     ],
     "02.04"
   );
-  t.sameStrict(
+  equal(
     within(`abcde`, {
       lineLength: 4,
     }),
@@ -88,32 +90,31 @@ tap.test("02 - customising the length", (t) => {
     ],
     "02.05"
   );
-  t.sameStrict(
+  equal(
     within(`abcde`, {
       lineLength: 5,
     }),
     [],
     "02.06"
   );
-  t.sameStrict(
+  equal(
     within(`abcde`, {
       lineLength: 6,
     }),
     [],
     "02.07"
   );
-  t.sameStrict(
+  equal(
     within(`abcde`, {
       lineLength: 99,
     }),
     [],
     "02.08"
   );
-  t.end();
 });
 
-tap.test("03 - multiline, wrong", (t) => {
-  t.sameStrict(
+test("03 - multiline, wrong", () => {
+  equal(
     within(`abcde\nfghij\nklmno\n`, {
       lineLength: 2,
     }),
@@ -142,5 +143,6 @@ tap.test("03 - multiline, wrong", (t) => {
     ],
     "03"
   );
-  t.end();
 });
+
+test.run();

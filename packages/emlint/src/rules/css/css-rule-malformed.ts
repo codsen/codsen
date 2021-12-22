@@ -10,11 +10,11 @@ import validateStyle from "../../../src/util/validateStyle";
 // import { right } from "string-left-right";
 // import splitByWhitespace from "../../util/splitByWhitespace";
 
-interface cssRuleMalformed {
+interface CSSRuleMalformed {
   (context: Linter): RuleObjType;
 }
 
-const cssRuleMalformed: cssRuleMalformed = (context) => {
+const cssRuleMalformed: CSSRuleMalformed = (context) => {
   return {
     rule(node) {
       console.log(

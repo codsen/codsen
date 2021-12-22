@@ -3,8 +3,10 @@
 import isStream from "isstream";
 import split2 from "split2";
 import through2 from "through2";
+
 import { stringPingLineByLine, Counter } from "./util";
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Res {
@@ -22,11 +24,11 @@ interface StreamInterface extends NodeJS.ReadWriteStream {
 }
 
 function parseTap(something: string | StreamInterface): Res | Promise<Res> {
-  console.log(`025 parseTap called!`);
+  console.log(`027 parseTap called!`);
   if (isStream(something)) {
     console.log(`stream was given`);
     return new Promise((resolve, reject) => {
-      const counter = new Counter();
+      let counter = new Counter();
 
       (something as StreamInterface).pipe(split2()).pipe(
         through2.obj((line, _encoding, next) => {
@@ -43,7 +45,7 @@ function parseTap(something: string | StreamInterface): Res | Promise<Res> {
       );
 
       (something as StreamInterface).on("end", () => {
-        return resolve(counter.getTotal());
+        resolve(counter.getTotal());
       });
 
       (something as StreamInterface).on("error", reject);
@@ -64,7 +66,7 @@ function parseTap(something: string | StreamInterface): Res | Promise<Res> {
     // in which case, synchronously traverse the string and slice and ping line by
     // line
 
-    const counter = new Counter();
+    let counter = new Counter();
     stringPingLineByLine(something, (line) => {
       counter.readLine(line);
     });

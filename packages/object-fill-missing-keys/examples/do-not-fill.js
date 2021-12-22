@@ -1,6 +1,7 @@
 // An option to not fill the paths if they contain placeholders
 
 import { strict as assert } from "assert";
+
 import { fillMissing } from "../dist/object-fill-missing-keys.esm.js";
 
 assert.deepEqual(

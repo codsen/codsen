@@ -1,11 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { collapse, cbSchema } from "../dist/string-collapse-white-space.esm.js";
 import { mixer } from "./util/util.js";
 
 // More tests on trimming, targetting algorithm's weakest spots
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
+test(`01 - trimming mixed lumps of trimmable characters`, () => {
   // "ttt   tttaaattt   ttt"
 
   /// //////////              trimLines = off
@@ -17,20 +20,18 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false, // <---
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -46,20 +47,18 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false, // <---
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -75,20 +74,18 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false, // <---
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -106,20 +103,18 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true, // <---
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -135,20 +130,18 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true, // <---
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -164,20 +157,18 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true, // <---
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -194,20 +185,18 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     // enforceSpacesOnly doesn't matter now
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -224,14 +213,14 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: true,
     // all other settings are irrelevant
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(
+              is(
                 typeof props[key],
                 "number",
                 `props: ${JSON.stringify(
@@ -241,11 +230,9 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
                 )}; opt: ${JSON.stringify(opt, null, 4)}`
               );
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -255,11 +242,10 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
       JSON.stringify(opt, null, 0)
     );
   });
-  t.end();
 });
 
-tap.test("02", (t) => {
-  t.strictSame(
+test("02", () => {
+  equal(
     collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
       trimStart: false,
       trimEnd: false,
@@ -282,10 +268,9 @@ tap.test("02", (t) => {
     `aaa`,
     "02"
   );
-  t.end();
 });
 
-tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
+test(`03 - trimming mixed lumps of trimmable characters`, () => {
   // "   ttt   aaa   ttt   "
 
   /// //////////              trimLines = off
@@ -298,20 +283,18 @@ tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t\t\t   aaa   \t\t\t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -327,20 +310,18 @@ tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t\t\t   aaa   \t\t\t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -356,20 +337,18 @@ tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t\t\t   aaa   \t\t\t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -388,20 +367,18 @@ tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t\t\t   aaa   \t\t\t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -417,20 +394,18 @@ tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t\t\t   aaa   \t\t\t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -446,20 +421,18 @@ tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t\t\t   aaa   \t\t\t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -474,20 +447,18 @@ tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
     trimStart: true,
     trimEnd: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t\t\t   aaa   \t\t\t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -503,20 +474,18 @@ tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
   mixer({
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t\t\t   aaa   \t\t\t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -526,11 +495,9 @@ tap.test(`03 - trimming mixed lumps of trimmable characters`, (t) => {
       JSON.stringify(opt, null, 0)
     );
   });
-
-  t.end();
 });
 
-tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
+test(`04 - trimming mixed lumps of trimmable characters`, () => {
   // "   t t t   aaa   t t t   "
 
   /// //////////              trimLines = off
@@ -543,20 +510,18 @@ tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t \t \t   aaa   \t \t \t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -572,20 +537,18 @@ tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t \t \t   aaa   \t \t \t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -601,20 +564,18 @@ tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t \t \t   aaa   \t \t \t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -633,20 +594,18 @@ tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t \t \t   aaa   \t \t \t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -662,20 +621,18 @@ tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t \t \t   aaa   \t \t \t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -691,20 +648,18 @@ tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t \t \t   aaa   \t \t \t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -719,20 +674,18 @@ tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
     trimStart: true,
     trimEnd: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t \t \t   aaa   \t \t \t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -748,20 +701,18 @@ tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
   mixer({
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`   \t \t \t   aaa   \t \t \t   `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -771,275 +722,267 @@ tap.test(`04 - trimming mixed lumps of trimmable characters`, (t) => {
       JSON.stringify(opt, null, 0)
     );
   });
-
-  t.end();
 });
 
-tap.test(
-  `05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((eol) => {
-      /// //////////              trimLines = off
+test(`05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false`, () => {
+  ["\r\n", "\r", "\n"].forEach((eol) => {
+    /// //////////              trimLines = off
 
-      // enforceSpacesOnly=off
+    // enforceSpacesOnly=off
 
-      mixer({
-        trimStart: false,
-        trimEnd: false,
-        trimLines: false,
-        enforceSpacesOnly: false,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
+    mixer({
+      trimStart: false,
+      trimEnd: false,
+      trimLines: false,
+      enforceSpacesOnly: false,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-      mixer({
-        trimStart: true,
-        trimEnd: false,
-        trimLines: false,
-        enforceSpacesOnly: false,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-      mixer({
-        trimStart: false,
-        trimEnd: true,
-        trimLines: false,
-        enforceSpacesOnly: false,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `\t ${eol} \t \r ${eol}aaa`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-
-      mixer({
-        trimStart: true,
-        trimEnd: true,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `aaa`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-
-      // enforceSpacesOnly=on
-
-      mixer({
-        trimStart: false,
-        trimEnd: false,
-        trimLines: false,
-        enforceSpacesOnly: true,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          ` ${eol} \r ${eol}aaa \n ${eol} ${eol} \r\n \n`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-      mixer({
-        trimStart: true,
-        trimEnd: false,
-        trimLines: false,
-        enforceSpacesOnly: true,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `aaa \n ${eol} ${eol} \r\n \n`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-      mixer({
-        trimStart: false,
-        trimEnd: true,
-        trimLines: false,
-        enforceSpacesOnly: true,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          ` ${eol} \r ${eol}aaa`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-
-      /// //////////              trimLines = on
-
-      // enforceSpacesOnly=off
-
-      mixer({
-        trimStart: false,
-        trimEnd: false,
-        trimLines: true,
-        enforceSpacesOnly: false,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `${eol}\r${eol}aaa\n${eol}${eol}\r\n\n`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-      mixer({
-        trimStart: true,
-        trimEnd: false,
-        trimLines: true,
-        enforceSpacesOnly: false,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `aaa\n${eol}${eol}\r\n\n`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-      mixer({
-        trimStart: false,
-        trimEnd: true,
-        trimLines: true,
-        enforceSpacesOnly: false,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `${eol}\r${eol}aaa`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-
-      mixer({
-        trimStart: true,
-        trimEnd: true,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `aaa`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-
-      // enforceSpacesOnly=on
-
-      mixer({
-        trimStart: false,
-        trimEnd: false,
-        trimLines: true,
-        enforceSpacesOnly: true,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `${eol}\r${eol}aaa\n${eol}${eol}\r\n\n`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-      mixer({
-        trimStart: true,
-        trimEnd: false,
-        trimLines: true,
-        enforceSpacesOnly: true,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `aaa\n${eol}${eol}\r\n\n`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
-      mixer({
-        trimStart: false,
-        trimEnd: true,
-        trimLines: true,
-        enforceSpacesOnly: true,
-        removeEmptyLines: false,
-      }).forEach((opt) => {
-        t.strictSame(
-          collapse(
-            `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-            opt
-          ).result,
-          `${eol}\r${eol}aaa`,
-          JSON.stringify(opt, null, 0)
-        );
-      });
+          opt
+        ).result,
+        `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+        JSON.stringify(opt, null, 0)
+      );
     });
-    t.end();
-  }
-);
+    mixer({
+      trimStart: true,
+      trimEnd: false,
+      trimLines: false,
+      enforceSpacesOnly: false,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      trimStart: false,
+      trimEnd: true,
+      trimLines: false,
+      enforceSpacesOnly: false,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `\t ${eol} \t \r ${eol}aaa`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
 
-tap.test(`06`, (t) => {
-  t.strictSame(collapse("      "), { result: "", ranges: [[0, 6]] }, "06");
+    mixer({
+      trimStart: true,
+      trimEnd: true,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `aaa`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+
+    // enforceSpacesOnly=on
+
+    mixer({
+      trimStart: false,
+      trimEnd: false,
+      trimLines: false,
+      enforceSpacesOnly: true,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        ` ${eol} \r ${eol}aaa \n ${eol} ${eol} \r\n \n`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      trimStart: true,
+      trimEnd: false,
+      trimLines: false,
+      enforceSpacesOnly: true,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `aaa \n ${eol} ${eol} \r\n \n`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      trimStart: false,
+      trimEnd: true,
+      trimLines: false,
+      enforceSpacesOnly: true,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        ` ${eol} \r ${eol}aaa`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+
+    /// //////////              trimLines = on
+
+    // enforceSpacesOnly=off
+
+    mixer({
+      trimStart: false,
+      trimEnd: false,
+      trimLines: true,
+      enforceSpacesOnly: false,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `${eol}\r${eol}aaa\n${eol}${eol}\r\n\n`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      trimStart: true,
+      trimEnd: false,
+      trimLines: true,
+      enforceSpacesOnly: false,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `aaa\n${eol}${eol}\r\n\n`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      trimStart: false,
+      trimEnd: true,
+      trimLines: true,
+      enforceSpacesOnly: false,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `${eol}\r${eol}aaa`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+
+    mixer({
+      trimStart: true,
+      trimEnd: true,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `aaa`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+
+    // enforceSpacesOnly=on
+
+    mixer({
+      trimStart: false,
+      trimEnd: false,
+      trimLines: true,
+      enforceSpacesOnly: true,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `${eol}\r${eol}aaa\n${eol}${eol}\r\n\n`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      trimStart: true,
+      trimEnd: false,
+      trimLines: true,
+      enforceSpacesOnly: true,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `aaa\n${eol}${eol}\r\n\n`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      trimStart: false,
+      trimEnd: true,
+      trimLines: true,
+      enforceSpacesOnly: true,
+      removeEmptyLines: false,
+    }).forEach((opt) => {
+      equal(
+        collapse(
+          `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
+          opt
+        ).result,
+        `${eol}\r${eol}aaa`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+  });
+});
+
+test(`06`, () => {
+  equal(collapse("      "), { result: "", ranges: [[0, 6]] }, "06");
   mixer({
     trimStart: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`      `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1052,20 +995,18 @@ tap.test(`06`, (t) => {
   mixer({
     trimEnd: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`      `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1078,20 +1019,18 @@ tap.test(`06`, (t) => {
   mixer({
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`      `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1106,20 +1045,18 @@ tap.test(`06`, (t) => {
     trimEnd: false,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`      `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1129,28 +1066,25 @@ tap.test(`06`, (t) => {
       JSON.stringify(opt, null, 0)
     );
   });
-  t.end();
 });
 
-tap.test(`07`, (t) => {
+test(`07`, () => {
   // "ttt   ttt"
   mixer({
     trimStart: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1163,20 +1097,18 @@ tap.test(`07`, (t) => {
   mixer({
     trimEnd: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1189,20 +1121,18 @@ tap.test(`07`, (t) => {
   mixer({
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1218,20 +1148,18 @@ tap.test(`07`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1247,20 +1175,18 @@ tap.test(`07`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t   \t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1270,28 +1196,25 @@ tap.test(`07`, (t) => {
       JSON.stringify(opt, null, 0)
     );
   });
-  t.end();
 });
 
-tap.test(`08`, (t) => {
+test(`08`, () => {
   // "ttt"
   mixer({
     trimStart: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1304,20 +1227,18 @@ tap.test(`08`, (t) => {
   mixer({
     trimEnd: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1330,20 +1251,18 @@ tap.test(`08`, (t) => {
   mixer({
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1359,20 +1278,18 @@ tap.test(`08`, (t) => {
     trimLines: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1388,20 +1305,18 @@ tap.test(`08`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\t\t\t`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1411,41 +1326,36 @@ tap.test(`08`, (t) => {
       JSON.stringify(opt, null, 0)
     );
   });
-  t.end();
 });
 
-tap.test(`09`, (t) => {
+test(`09`, () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     // removeEmptyLines=off
     mixer({
       trimStart: true,
       removeEmptyLines: false,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            t.strictSame(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema);
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             return props.suggested;
@@ -1459,31 +1369,27 @@ tap.test(`09`, (t) => {
       trimEnd: true,
       removeEmptyLines: false,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            t.strictSame(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema);
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             return props.suggested;
@@ -1498,31 +1404,27 @@ tap.test(`09`, (t) => {
       trimEnd: false,
       removeEmptyLines: false,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            t.strictSame(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema);
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             return props.suggested;
@@ -1540,31 +1442,27 @@ tap.test(`09`, (t) => {
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 0, // default
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            t.strictSame(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema);
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             return props.suggested;
@@ -1580,31 +1478,27 @@ tap.test(`09`, (t) => {
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: true,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            t.strictSame(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema);
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             return props.suggested;
@@ -1620,31 +1514,27 @@ tap.test(`09`, (t) => {
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 2,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            t.strictSame(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema);
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             return props.suggested;
@@ -1660,31 +1550,27 @@ tap.test(`09`, (t) => {
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 3,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            t.strictSame(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema);
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             return props.suggested;
@@ -1700,31 +1586,27 @@ tap.test(`09`, (t) => {
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 99,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            t.strictSame(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema);
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-                t.is(typeof props[key], "number");
+                is(typeof props[key], "number");
               } else if (key === "suggested") {
-                t.true(
-                  Array.isArray(props.suggested) || props.suggested === null
-                );
+                ok(Array.isArray(props.suggested) || props.suggested === null);
               } else {
-                t.is(typeof props[key], "string");
+                is(typeof props[key], "string");
               }
             });
             return props.suggested;
@@ -1735,11 +1617,10 @@ tap.test(`09`, (t) => {
       );
     });
   });
-  t.end();
 });
 
-tap.test(`10`, (t) => {
-  t.strictSame(
+test(`10`, () => {
+  equal(
     collapse(`\r\n\r\n\r\n\r\n\r\n\n\n\n\n\n\n`, {
       trimStart: false,
       trimEnd: false,
@@ -1749,7 +1630,7 @@ tap.test(`10`, (t) => {
     `\r\n\r\n`,
     "10.01"
   );
-  t.strictSame(
+  equal(
     collapse(`\r\n\r\n\r\n\r\n\r\n\n\n\n\n\n\n`, {
       trimStart: false,
       trimEnd: false,
@@ -1759,30 +1640,27 @@ tap.test(`10`, (t) => {
     `\r\n\r\n\r\n`,
     "10.02"
   );
-  t.end();
 });
 
-tap.test(`11 - trim involving non-breaking spaces`, (t) => {
+test(`11 - trim involving non-breaking spaces`, () => {
   // ".   a   ."
   mixer({
     trimStart: true,
     trimEnd: true,
     trimnbsp: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\xa0   a   \xa0`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1796,20 +1674,18 @@ tap.test(`11 - trim involving non-breaking spaces`, (t) => {
     trimLines: true,
     trimnbsp: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\xa0   a   \xa0`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1824,20 +1700,18 @@ tap.test(`11 - trim involving non-breaking spaces`, (t) => {
     trimnbsp: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\xa0   a   \xa0`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1855,20 +1729,18 @@ tap.test(`11 - trim involving non-breaking spaces`, (t) => {
     trimLines: false, // <---
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\xa0   a   \xa0`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1885,20 +1757,18 @@ tap.test(`11 - trim involving non-breaking spaces`, (t) => {
     trimLines: true, // <---
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`\xa0   a   \xa0`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -1908,11 +1778,10 @@ tap.test(`11 - trim involving non-breaking spaces`, (t) => {
       JSON.stringify(opt, null, 0)
     );
   });
-  t.end();
 });
 
-tap.test("12", (t) => {
-  t.strictSame(
+test("12", () => {
+  equal(
     collapse(`\xa0   a   \xa0`, {
       trimStart: true,
       trimEnd: false,
@@ -1925,12 +1794,11 @@ tap.test("12", (t) => {
     `a `,
     "12"
   );
-  t.end();
 });
 
-tap.test("13", (t) => {
+test("13", () => {
   // ".   a   ."
-  t.strictSame(
+  equal(
     collapse(`\xa0   a   \xa0`, {
       trimStart: false,
       trimEnd: false,
@@ -1943,12 +1811,11 @@ tap.test("13", (t) => {
     `a`,
     "13"
   );
-  t.end();
 });
 
-tap.test("14", (t) => {
+test("14", () => {
   // ".   a   ."
-  t.strictSame(
+  equal(
     collapse(`\xa0   a   \xa0`, {
       trimStart: true,
       trimEnd: false,
@@ -1961,12 +1828,11 @@ tap.test("14", (t) => {
     `a `,
     "14"
   );
-  t.end();
 });
 
-tap.test("15", (t) => {
+test("15", () => {
   // ".   a   ."
-  t.strictSame(
+  equal(
     collapse(`\xa0   a   \xa0`, {
       trimStart: false,
       trimEnd: true,
@@ -1979,12 +1845,11 @@ tap.test("15", (t) => {
     ` a`,
     "15"
   );
-  t.end();
 });
 
-tap.test("16", (t) => {
+test("16", () => {
   // ".   a   ."
-  t.strictSame(
+  equal(
     collapse(`\xa0a\xa0`, {
       trimStart: true,
       trimEnd: true,
@@ -1997,12 +1862,11 @@ tap.test("16", (t) => {
     `a`,
     "16"
   );
-  t.end();
 });
 
-tap.test("17", (t) => {
+test("17", () => {
   // "   .a.   "
-  t.strictSame(
+  equal(
     collapse(`   \xa0a\xa0   `, {
       trimStart: true,
       trimEnd: true,
@@ -2015,11 +1879,10 @@ tap.test("17", (t) => {
     `a`,
     "17"
   );
-  t.end();
 });
 
-tap.test("18", (t) => {
-  t.strictSame(
+test("18", () => {
+  equal(
     collapse(`\xa0   a   \xa0`, {
       trimStart: false,
       trimEnd: false,
@@ -2032,12 +1895,11 @@ tap.test("18", (t) => {
     `a`,
     "18"
   );
-  t.end();
 });
 
-tap.test("19", (t) => {
+test("19", () => {
   // "   .a.   "
-  t.strictSame(
+  equal(
     collapse(`   \xa0a\xa0   `, {
       trimStart: false,
       trimEnd: false,
@@ -2050,11 +1912,10 @@ tap.test("19", (t) => {
     `a`,
     "19"
   );
-  t.end();
 });
 
-tap.test("20", (t) => {
-  t.strictSame(
+test("20", () => {
+  equal(
     collapse(`\xa0\na\n\xa0`, {
       trimStart: false,
       trimEnd: false,
@@ -2067,7 +1928,7 @@ tap.test("20", (t) => {
     ` \na\n `,
     "20.01"
   );
-  t.strictSame(
+  equal(
     collapse(`\t\na\n\t`, {
       trimStart: false,
       trimEnd: false,
@@ -2080,11 +1941,10 @@ tap.test("20", (t) => {
     ` \na\n `,
     "20.02"
   );
-  t.end();
 });
 
-tap.test("21", (t) => {
-  t.strictSame(
+test("21", () => {
+  equal(
     collapse(`\xa0\t\xa0a\xa0\t\xa0b\xa0\t\xa0`, {
       trimStart: false,
       trimEnd: false,
@@ -2095,12 +1955,11 @@ tap.test("21", (t) => {
     ` a b `,
     "21"
   );
-  t.end();
 });
 
-tap.test(`22 - trim involving non-breaking spaces`, (t) => {
+test(`22 - trim involving non-breaking spaces`, () => {
   // ".   .   a   .   ."
-  t.strictSame(
+  equal(
     collapse(`\xa0   \xa0   a   \xa0   \xa0`),
     {
       result: `\xa0 \xa0 a \xa0 \xa0`,
@@ -2113,12 +1972,11 @@ tap.test(`22 - trim involving non-breaking spaces`, (t) => {
     },
     "22"
   );
-  t.end();
 });
 
-tap.test(`23 - trim involving non-breaking spaces`, (t) => {
+test(`23 - trim involving non-breaking spaces`, () => {
   // ".   .   a   .   ."
-  t.strictSame(
+  equal(
     collapse(`\xa0   \xa0   a   \xa0   \xa0`, { trimnbsp: true }),
     {
       result: `a`,
@@ -2129,12 +1987,11 @@ tap.test(`23 - trim involving non-breaking spaces`, (t) => {
     },
     "23"
   );
-  t.end();
 });
 
-tap.test(`24 - trim involving non-breaking spaces`, (t) => {
+test(`24 - trim involving non-breaking spaces`, () => {
   // "    .     a     .      "
-  t.strictSame(
+  equal(
     collapse(`    \xa0     a     \xa0      `),
     {
       result: `\xa0 a \xa0`,
@@ -2147,11 +2004,10 @@ tap.test(`24 - trim involving non-breaking spaces`, (t) => {
     },
     "24"
   );
-  t.end();
 });
 
-tap.test(`25 - trim involving non-breaking spaces`, (t) => {
-  t.strictSame(
+test(`25 - trim involving non-breaking spaces`, () => {
+  equal(
     collapse(` \xa0 `, {
       trimStart: false,
       trimEnd: false,
@@ -2159,30 +2015,27 @@ tap.test(`25 - trim involving non-breaking spaces`, (t) => {
     ` \xa0 `,
     "25"
   );
-  t.end();
 });
 
-tap.test(`26 - trim involving non-breaking spaces`, (t) => {
+test(`26 - trim involving non-breaking spaces`, () => {
   mixer({
     trimStart: false,
     trimEnd: false,
     trimLines: false,
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`  \xa0  `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -2198,20 +2051,18 @@ tap.test(`26 - trim involving non-breaking spaces`, (t) => {
     trimLines: false,
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`  \xa0  `, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -2221,25 +2072,22 @@ tap.test(`26 - trim involving non-breaking spaces`, (t) => {
       JSON.stringify(opt, null, 0)
     );
   });
-  t.end();
 });
 
-tap.test(`27 - bracket`, (t) => {
+test(`27 - bracket`, () => {
   mixer().forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a > b`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -2249,25 +2097,22 @@ tap.test(`27 - bracket`, (t) => {
       "26"
     );
   });
-  t.end();
 });
 
-tap.test(`28 - bracket`, (t) => {
+test(`28 - bracket`, () => {
   mixer().forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`<span>zzz</span> abc def ghij klm`, {
         ...opt,
         cb: ({ ...props }) => {
-          t.strictSame(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema);
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
-              t.is(typeof props[key], "number");
+              is(typeof props[key], "number");
             } else if (key === "suggested") {
-              t.true(
-                Array.isArray(props.suggested) || props.suggested === null
-              );
+              ok(Array.isArray(props.suggested) || props.suggested === null);
             } else {
-              t.is(typeof props[key], "string");
+              is(typeof props[key], "string");
             }
           });
           return props.suggested;
@@ -2277,5 +2122,6 @@ tap.test(`28 - bracket`, (t) => {
       "27.01"
     );
   });
-  t.end();
 });
+
+test.run();

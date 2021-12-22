@@ -1,21 +1,24 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { arrayiffy as a } from "../dist/arrayiffy-if-string.esm.js";
 
 // -----------------------------------------------------------------------------
 // 02. BAU
 // -----------------------------------------------------------------------------
 
-tap.test("01 - string input", (t) => {
-  t.strictSame(a("aaa"), ["aaa"], "01.01");
-  t.strictSame(a(""), [], "01.02");
-  t.end();
+test("01 - string input", () => {
+  equal(a("aaa"), ["aaa"], "01.01");
+  equal(a(""), [], "01.02");
 });
 
-tap.test("02 - non-string input", (t) => {
-  t.strictSame(a(1), 1, "02.01");
-  t.strictSame(a(null), null, "02.02");
-  t.strictSame(a(undefined), undefined, "02.03");
-  t.strictSame(a(), undefined, "02.04");
-  t.strictSame(a(true), true, "02.05");
-  t.end();
+test("02 - non-string input", () => {
+  equal(a(1), 1, "02.01");
+  equal(a(null), null, "02.02");
+  equal(a(undefined), undefined, "02.03");
+  equal(a(), undefined, "02.04");
+  equal(a(true), true, "02.05");
 });
+
+test.run();

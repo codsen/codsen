@@ -1,32 +1,26 @@
-/* eslint no-use-before-define: 0 */
+/* eslint no-use-before-define: 0, no-unused-vars: 0 */
 // From "type-fest" by Sindre Sorhus:
+import { version as v } from "../package.json";
+import allNamedEntitiesJson from "./allNamedEntities.json";
+import brokenNamedEntitiesJson from "./brokenNamedEntities.json";
+import entStartsWithJson from "./startsWith.json";
+import entEndsWithJson from "./endsWith.json";
+import entStartsWithCaseInsensitiveJson from "./startsWithCaseInsensitive.json";
+import entEndsWithCaseInsensitiveJson from "./endsWithCaseInsensitive.json";
+import uncertainJson from "./uncertain.json";
+
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = Array<JsonValue>;
-
-import { version as v } from "../package.json";
+type JsonArray = JsonValue[];
 const version: string = v;
-
-import allNamedEntitiesJson from "./allNamedEntities.json";
 const allNamedEntities: JsonObject = allNamedEntitiesJson;
-
-import brokenNamedEntitiesJson from "./brokenNamedEntities.json";
 const brokenNamedEntities: JsonObject = brokenNamedEntitiesJson;
-
-import entStartsWithJson from "./startsWith.json";
 const entStartsWith: JsonObject = entStartsWithJson;
-
-import entEndsWithJson from "./endsWith.json";
 const entEndsWith: JsonObject = entEndsWithJson;
-
-import entStartsWithCaseInsensitiveJson from "./startsWithCaseInsensitive.json";
 const entStartsWithCaseInsensitive: JsonObject =
   entStartsWithCaseInsensitiveJson;
-
-import entEndsWithCaseInsensitiveJson from "./endsWithCaseInsensitive.json";
 const entEndsWithCaseInsensitive: JsonObject = entEndsWithCaseInsensitiveJson;
 
-import uncertainJson from "./uncertain.json";
 const uncertain: JsonObject = uncertainJson;
 
 interface UnknownValueObj {
@@ -3973,7 +3967,7 @@ function decode(ent: string): string | null {
       `all-named-html-entities/decode(): [THROW_ID_01] Input must be an HTML entity with leading ampersand and trailing semicolon, but "${ent}" was given`
     );
   }
-  const val = ent.slice(1, ent.length - 1);
+  let val = ent.slice(1, ent.length - 1);
   return (allNamedEntities as UnknownValueObj)[val]
     ? (allNamedEntities as UnknownValueObj)[val]
     : null;

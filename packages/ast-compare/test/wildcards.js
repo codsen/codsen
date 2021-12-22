@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { compare } from "../dist/ast-compare.esm.js";
 
 // (input, objToDelete, strictOrNot)
@@ -6,13 +9,13 @@ import { compare } from "../dist/ast-compare.esm.js";
 // wildcard matching
 // -----------------------------------------------------------------------------
 
-tap.test("01 - wildcards against values within object", (t) => {
-  t.strictSame(
+test("01 - wildcards against values within object", () => {
+  equal(
     compare({ a: "1", b: "2a", c: "3" }, { a: "1", b: "2*" }),
     false,
     "01.01 - default"
   );
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "2a", c: "3" },
       { a: "1", b: "2*" },
@@ -21,7 +24,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     false,
     "01.02 - hardcoded default"
   );
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "2a", c: "3" },
       { a: "1", b: "2*" },
@@ -30,7 +33,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     true,
     "01.03 - wildcards enabled"
   );
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "za", c: "3" },
       { a: "1", b: "z*" },
@@ -39,7 +42,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     true,
     "01.04 - with letters and wildcards"
   );
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "Za", c: "3" },
       { a: "1", b: "z*" },
@@ -48,7 +51,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     false,
     "01.05 - won't match because it's now case-sensitive in wildcards too"
   );
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "Za", c: "3" },
       { a: "1", b: "Z*" },
@@ -58,7 +61,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     "01.06 - won't match because it's now case-sensitive in wildcards too"
   );
 
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "2*" },
       { a: "1", b: "2a", c: "3" },
@@ -67,7 +70,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     false,
     "01.07 - weird"
   );
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "2*" },
       { a: "1", b: "2a", c: "3" },
@@ -76,16 +79,15 @@ tap.test("01 - wildcards against values within object", (t) => {
     false,
     "01.08 - weird, false anyway"
   );
-  t.end();
 });
 
-tap.test("02 - wildcards against keys within object", (t) => {
-  t.strictSame(
+test("02 - wildcards against keys within object", () => {
+  equal(
     compare({ az: "1", bz: "2a", cz: "3" }, { "a*": "1", "b*": "2*" }),
     false,
     "02.01 - default"
   );
-  t.strictSame(
+  equal(
     compare(
       { az: "1", bz: "2a", cz: "3" },
       { "a*": "1", "b*": "2a" },
@@ -94,12 +96,12 @@ tap.test("02 - wildcards against keys within object", (t) => {
     true,
     "02.02 - wildcards on"
   );
-  t.strictSame(
+  equal(
     compare({ az: "1", bz: "2a", cz: "3" }, { "x*": "1", "b*": "2*" }),
     false,
     "02.03 - won't find, despite wildcards, which are turned off"
   );
-  t.strictSame(
+  equal(
     compare(
       { az: "1", bz: "2a", cz: "3" },
       { "x*": "1", "b*": "2a" },
@@ -108,11 +110,10 @@ tap.test("02 - wildcards against keys within object", (t) => {
     false,
     "02.04 - won't find, despite wildcards, which are turned on"
   );
-  t.end();
 });
 
-tap.test("03 - wildcards in deeper levels", (t) => {
-  t.strictSame(
+test("03 - wildcards in deeper levels", () => {
+  equal(
     compare(
       {
         a: [
@@ -133,7 +134,7 @@ tap.test("03 - wildcards in deeper levels", (t) => {
     false,
     "03.01 - default (control), wildcards are turned off"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: [
@@ -154,11 +155,10 @@ tap.test("03 - wildcards in deeper levels", (t) => {
     true,
     "03.02 - default (control), wildcards are turned off"
   );
-  t.end();
 });
 
-tap.test("04 - wildcards in deeper levels within arrays", (t) => {
-  t.strictSame(
+test("04 - wildcards in deeper levels within arrays", () => {
+  equal(
     compare(
       {
         a: [
@@ -182,7 +182,7 @@ tap.test("04 - wildcards in deeper levels within arrays", (t) => {
     false,
     "04.01"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: [
@@ -206,7 +206,7 @@ tap.test("04 - wildcards in deeper levels within arrays", (t) => {
     true,
     "04.02"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: [
@@ -230,7 +230,7 @@ tap.test("04 - wildcards in deeper levels within arrays", (t) => {
     false,
     "04.03"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: [
@@ -254,7 +254,7 @@ tap.test("04 - wildcards in deeper levels within arrays", (t) => {
     false,
     "04.04"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: [
@@ -278,5 +278,6 @@ tap.test("04 - wildcards in deeper levels within arrays", (t) => {
     true,
     "04.05"
   );
-  t.end();
 });
+
+test.run();

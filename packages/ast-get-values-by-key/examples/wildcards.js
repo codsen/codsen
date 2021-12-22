@@ -1,6 +1,7 @@
 // Using wildcards (`matcher` api)
 
 import { strict as assert } from "assert";
+
 import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
 const source = {

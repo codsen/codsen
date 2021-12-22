@@ -7,7 +7,7 @@
 function parent(str: string): null | string {
   // input must have at least one dot:
   if (str.includes(".")) {
-    const lastDotAt = str.lastIndexOf(".");
+    let lastDotAt = str.lastIndexOf(".");
     if (!str.slice(0, lastDotAt).includes(".")) {
       return str.slice(0, lastDotAt);
     }

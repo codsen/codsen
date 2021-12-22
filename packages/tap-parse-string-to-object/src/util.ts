@@ -1,5 +1,5 @@
 // pings each line to the callback cb()
-function stringPingLineByLine(str: string, cb: (str: string) => void): void {
+function stringPingLineByLine(str: string, cb: (str2: string) => void): void {
   // console.log(
   //   `004 ${`\u001b[${33}m${`█`}\u001b[${39}m`} stringPingLineByLine() called!`
   // );
@@ -180,7 +180,7 @@ class Counter {
     }
 
     // "# Subtest" opens the gates
-    const magicKeyw = "# Subtest";
+    let magicKeyw = "# Subtest";
     if (!this.doNothing && !this.canCount && lineStr.includes(magicKeyw)) {
       this.canCount = true;
       console.log(

@@ -45,7 +45,7 @@ function characterEncode(context: Linter, ...config: Config[]): RuleObjType {
 
       // traverse the value of this text node:
       for (let i = 0, len = token.value.length; i < len; i++) {
-        const charCode = token.value[i].charCodeAt(0);
+        let charCode = token.value[i].charCodeAt(0);
         // We have to avoid encoding characters which bad-character-* rule
         // would delete. Encoding would be bad, because deletion Range (like [0, 1])
         // would get merge with replacement range (like [0, 1, "&#xFFFD;"]) and

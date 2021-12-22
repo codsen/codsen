@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/0008/index.htm
 
 function badCharacterBackspace(context: Linter): RuleObjType {
-  const charCode = 8;
+  let charCode = 8;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

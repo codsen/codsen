@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // searchFor + maybes + outsides
 // ==============================
 
-tap.test("01 - maybes and outsides, emoji - full set", (t) => {
-  t.equal(
+test("01 - maybes and outsides, emoji - full set", () => {
+  equal(
     er(
       "a🦄🐴💘b",
       {
@@ -23,11 +26,10 @@ tap.test("01 - maybes and outsides, emoji - full set", (t) => {
     "a🌟b",
     "test 6.1"
   );
-  t.end();
 });
 
-tap.test("02 - maybes + outsides - 1 of maybes not found #1", (t) => {
-  t.equal(
+test("02 - maybes + outsides - 1 of maybes not found #1", () => {
+  equal(
     er(
       "a🦄🐴b",
       {
@@ -44,11 +46,10 @@ tap.test("02 - maybes + outsides - 1 of maybes not found #1", (t) => {
     "a🌟b",
     "test 6.2"
   );
-  t.end();
 });
 
-tap.test("03 - maybes + outsides - 1 of maybes not found #2", (t) => {
-  t.equal(
+test("03 - maybes + outsides - 1 of maybes not found #2", () => {
+  equal(
     er(
       "a🐴💘b",
       {
@@ -65,11 +66,10 @@ tap.test("03 - maybes + outsides - 1 of maybes not found #2", (t) => {
     "a🌟b",
     "test 6.3"
   );
-  t.end();
 });
 
-tap.test("04 - maybes and outsides, emoji - neither of maybes", (t) => {
-  t.equal(
+test("04 - maybes and outsides, emoji - neither of maybes", () => {
+  equal(
     er(
       "a🐴b",
       {
@@ -86,11 +86,10 @@ tap.test("04 - maybes and outsides, emoji - neither of maybes", (t) => {
     "a🌟b",
     "test 6.4"
   );
-  t.end();
 });
 
-tap.test("05 - multiple findings with maybes and outsides", (t) => {
-  t.equal(
+test("05 - multiple findings with maybes and outsides", () => {
+  equal(
     er(
       "a🦄🐴💘b a🦄🐴💘b a🦄🐴💘b",
       {
@@ -107,11 +106,10 @@ tap.test("05 - multiple findings with maybes and outsides", (t) => {
     "a🌟b a🌟b a🌟b",
     "test 6.5"
   );
-  t.end();
 });
 
-tap.test("06 - multiple findings with maybes and not-outsides", (t) => {
-  t.equal(
+test("06 - multiple findings with maybes and not-outsides", () => {
+  equal(
     er(
       "z🦄🐴💘b a🦄🐴💘z a🦄🐴💘b z🦄🐴💘z",
       {
@@ -128,11 +126,10 @@ tap.test("06 - multiple findings with maybes and not-outsides", (t) => {
     "z🦄🐴💘b a🦄🐴💘z a🦄🐴💘b z🌟z",
     "test 6.6"
   );
-  t.end();
 });
 
-tap.test("07 - maybes and outsides, arrays", (t) => {
-  t.equal(
+test("07 - maybes and outsides, arrays", () => {
+  equal(
     er(
       "a🦄🐴💘b a💘🐴🦄b a🦄🐴🦄b a💘🐴💘b",
       {
@@ -149,5 +146,6 @@ tap.test("07 - maybes and outsides, arrays", (t) => {
     "a🌟b a🌟b a🌟b a🌟b",
     "test 6.7"
   );
-  t.end();
 });
+
+test.run();

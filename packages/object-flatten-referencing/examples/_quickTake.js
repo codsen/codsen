@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { flattenReferencing } from "../dist/object-flatten-referencing.esm.js";
 
 assert.deepEqual(

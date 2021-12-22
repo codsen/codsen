@@ -1,53 +1,55 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { alts } from "../dist/html-img-alt.esm.js";
 
 // throws
 // -----------------------------------------------------------------------------
 
-tap.test("01 - throws if encounters img tag within img tag", (t) => {
-  t.throws(() => {
+test("01 - throws if encounters img tag within img tag", () => {
+  throws(() => {
     alts('zzz<img alt="  <img />zzz');
   }, /THROW_ID_02/g);
-  t.end();
 });
 
-tap.test("02 - throws if input is not string", (t) => {
-  t.throws(() => {
+test("02 - throws if input is not string", () => {
+  throws(() => {
     alts(null);
   }, /THROW_ID_01/g);
-  t.throws(() => {
+  throws(() => {
     alts();
   }, /THROW_ID_01/g);
-  t.throws(() => {
+  throws(() => {
     alts(undefined);
   }, /THROW_ID_01/g);
-  t.throws(() => {
+  throws(() => {
     alts(111);
   }, /THROW_ID_01/g);
-  t.throws(() => {
+  throws(() => {
     alts(true);
   }, /THROW_ID_01/g);
-  t.end();
 });
 
-tap.test("03 - throws if opts is not a plain object", (t) => {
-  t.throws(() => {
+test("03 - throws if opts is not a plain object", () => {
+  throws(() => {
     alts("zzz", ["aaa"]);
   }, /THROW_ID_02/g);
-  t.doesNotThrow(() => {
+  not.throws(() => {
     alts("zzz", null); // it can be falsey, - we'll interpret as hardcoded choice of NO opts.
   }, "03.02");
-  t.doesNotThrow(() => {
+  not.throws(() => {
     alts("zzz", undefined); // it can be falsey, - we'll interpret as hardcoded choice of NO opts.
   }, "03.03");
-  t.throws(() => {
+  throws(() => {
     alts("zzz", 1);
   }, /THROW_ID_02/g);
-  t.doesNotThrow(() => {
+  not.throws(() => {
     alts("zzz", {});
   }, "03.05");
-  t.throws(() => {
+  throws(() => {
     alts("zzz", { zzz: "yyy" }); // rogue keys - throws. WTF?
   }, /THROW_ID_03/g);
-  t.end();
 });
+
+test.run();

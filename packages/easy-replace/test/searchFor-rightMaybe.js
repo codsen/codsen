@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // searchFor + rightMaybe
 // ==============================
 
-tap.test("01 - right maybe found", (t) => {
-  t.equal(
+test("01 - right maybe found", () => {
+  equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -23,7 +26,7 @@ tap.test("01 - right maybe found", (t) => {
     "a🦄bc",
     "test 3.1.1"
   );
-  t.equal(
+  equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -40,11 +43,10 @@ tap.test("01 - right maybe found", (t) => {
     "a🦄bc",
     "test 3.1.2"
   );
-  t.end();
 });
 
-tap.test("02 - two replacements with one rightmaybe, nearby", (t) => {
-  t.equal(
+test("02 - two replacements with one rightmaybe, nearby", () => {
+  equal(
     er(
       "ab🐴🦄🐴c",
       {
@@ -61,7 +63,7 @@ tap.test("02 - two replacements with one rightmaybe, nearby", (t) => {
     "abddc",
     "test 3.2.1"
   );
-  t.equal(
+  equal(
     er(
       "ab🐴🦄🐴c",
       {
@@ -78,11 +80,10 @@ tap.test("02 - two replacements with one rightmaybe, nearby", (t) => {
     "abddc",
     "test 3.2.2"
   );
-  t.end();
 });
 
-tap.test("03 - two consecutive right maybes", (t) => {
-  t.equal(
+test("03 - two consecutive right maybes", () => {
+  equal(
     er(
       "ab🦄🐴🦄🐴c",
       {
@@ -99,7 +100,7 @@ tap.test("03 - two consecutive right maybes", (t) => {
     "abddc",
     "test 3.3.1"
   );
-  t.equal(
+  equal(
     er(
       "ab🦄🐴🦄🐴c",
       {
@@ -116,11 +117,10 @@ tap.test("03 - two consecutive right maybes", (t) => {
     "abddc",
     "test 3.3.2"
   );
-  t.end();
 });
 
-tap.test("04 - futile right maybe", (t) => {
-  t.equal(
+test("04 - futile right maybe", () => {
+  equal(
     er(
       "'🐴",
       {
@@ -137,7 +137,7 @@ tap.test("04 - futile right maybe", (t) => {
     "'d",
     "test 3.4.1"
   );
-  t.equal(
+  equal(
     er(
       "'🐴",
       {
@@ -154,11 +154,10 @@ tap.test("04 - futile right maybe", (t) => {
     "'d",
     "test 3.4.2"
   );
-  t.end();
 });
 
-tap.test("05 - \\n as search string plus right maybe", (t) => {
-  t.equal(
+test("05 - \\n as search string plus right maybe", () => {
+  equal(
     er(
       "\na\n\n",
       {
@@ -175,7 +174,7 @@ tap.test("05 - \\n as search string plus right maybe", (t) => {
     "aaa",
     "test 3.5.1"
   );
-  t.equal(
+  equal(
     er(
       "\na\n\n",
       {
@@ -192,11 +191,10 @@ tap.test("05 - \\n as search string plus right maybe", (t) => {
     "aaa",
     "test 3.5.2"
   );
-  t.end();
 });
 
-tap.test("06 - \\n as both searchFor and right maybe, replaced", (t) => {
-  t.equal(
+test("06 - \\n as both searchFor and right maybe, replaced", () => {
+  equal(
     er(
       "\n\n\n",
       {
@@ -213,7 +211,7 @@ tap.test("06 - \\n as both searchFor and right maybe, replaced", (t) => {
     "aa",
     "test 3.6.1"
   );
-  t.equal(
+  equal(
     er(
       "\n\n\n",
       {
@@ -230,11 +228,10 @@ tap.test("06 - \\n as both searchFor and right maybe, replaced", (t) => {
     "aa",
     "test 3.6.2"
   );
-  t.end();
 });
 
-tap.test("07 - rightMaybe with line breaks", (t) => {
-  t.equal(
+test("07 - rightMaybe with line breaks", () => {
+  equal(
     er(
       "a\n\na",
       {
@@ -251,7 +248,7 @@ tap.test("07 - rightMaybe with line breaks", (t) => {
     "b",
     "test 3.7.1"
   );
-  t.equal(
+  equal(
     er(
       "a\n\na",
       {
@@ -268,11 +265,10 @@ tap.test("07 - rightMaybe with line breaks", (t) => {
     "b",
     "test 3.7.2"
   );
-  t.end();
 });
 
-tap.test("08 - specific case of semi infinite loop with maybe", (t) => {
-  t.equal(
+test("08 - specific case of semi infinite loop with maybe", () => {
+  equal(
     er(
       "aaaaab",
       {
@@ -289,7 +285,7 @@ tap.test("08 - specific case of semi infinite loop with maybe", (t) => {
     "aaaaa",
     "test 3.8.1"
   );
-  t.equal(
+  equal(
     er(
       "aaaaab",
       {
@@ -306,11 +302,10 @@ tap.test("08 - specific case of semi infinite loop with maybe", (t) => {
     "aaaaa",
     "test 3.8.2"
   );
-  t.end();
 });
 
-tap.test("09 - three right maybes (some found)", (t) => {
-  t.equal(
+test("09 - three right maybes (some found)", () => {
+  equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -327,11 +322,10 @@ tap.test("09 - three right maybes (some found)", (t) => {
     "a🦄bc",
     "test 3.9"
   );
-  t.end();
 });
 
-tap.test("10 - three right maybes (searchFor not found)", (t) => {
-  t.equal(
+test("10 - three right maybes (searchFor not found)", () => {
+  equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -348,11 +342,10 @@ tap.test("10 - three right maybes (searchFor not found)", (t) => {
     "a🦄🐴🦄c",
     "test 3.10"
   );
-  t.end();
 });
 
-tap.test("11 - three right maybes (maybes not found)", (t) => {
-  t.equal(
+test("11 - three right maybes (maybes not found)", () => {
+  equal(
     er(
       "🍺🦄🐴🦄c",
       {
@@ -369,11 +362,10 @@ tap.test("11 - three right maybes (maybes not found)", (t) => {
     "1🦄🐴🦄c",
     "test 3.11"
   );
-  t.end();
 });
 
-tap.test("12 - three right maybes (multiple hungry finds)", (t) => {
-  t.equal(
+test("12 - three right maybes (multiple hungry finds)", () => {
+  equal(
     er(
       "🐴 ",
       {
@@ -390,11 +382,10 @@ tap.test("12 - three right maybes (multiple hungry finds)", (t) => {
     "b ",
     "test 3.12.1"
   );
-  t.end();
 });
 
-tap.test("13 - three right maybes (multiple hungry finds)", (t) => {
-  t.equal(
+test("13 - three right maybes (multiple hungry finds)", () => {
+  equal(
     er(
       "a🦄🐴🦄🍺c",
       {
@@ -411,11 +402,10 @@ tap.test("13 - three right maybes (multiple hungry finds)", (t) => {
     "a🦄b🍺c",
     "test 3.13"
   );
-  t.end();
 });
 
-tap.test("14 - three right maybes (multiple hungry finds)", (t) => {
-  t.equal(
+test("14 - three right maybes (multiple hungry finds)", () => {
+  equal(
     er(
       "a🦄🐴🍺🦄c",
       {
@@ -432,11 +422,10 @@ tap.test("14 - three right maybes (multiple hungry finds)", (t) => {
     "a🦄b🦄c",
     "test 3.14"
   );
-  t.end();
 });
 
-tap.test("15 - three right maybes (multiple hungry finds)", (t) => {
-  t.equal(
+test("15 - three right maybes (multiple hungry finds)", () => {
+  equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -453,11 +442,10 @@ tap.test("15 - three right maybes (multiple hungry finds)", (t) => {
     "a🦄bc",
     "test 3.15"
   );
-  t.end();
 });
 
-tap.test("16 - three right maybes (multiple hungry finds)", (t) => {
-  t.equal(
+test("16 - three right maybes (multiple hungry finds)", () => {
+  equal(
     er(
       "a🦄🐴🦄🍺c a🦄🐴🍺🦄c a🦄🐴🦄c 🐴",
       {
@@ -474,11 +462,10 @@ tap.test("16 - three right maybes (multiple hungry finds)", (t) => {
     "a🦄b🍺c a🦄b🦄c a🦄bc b",
     "test 3.16"
   );
-  t.end();
 });
 
-tap.test("17 - three right maybes (multiple hungry finds)", (t) => {
-  t.equal(
+test("17 - three right maybes (multiple hungry finds)", () => {
+  equal(
     er(
       "🦄y🦄 🦄y🦄 🦄y🦄 y",
       {
@@ -495,11 +482,10 @@ tap.test("17 - three right maybes (multiple hungry finds)", (t) => {
     "🦄b 🦄b 🦄b b",
     "test 3.17"
   );
-  t.end();
 });
 
-tap.test("18 - three right maybes (multiple hungry finds)", (t) => {
-  t.equal(
+test("18 - three right maybes (multiple hungry finds)", () => {
+  equal(
     er(
       "🦄y🦄 🦄y🦄 🦄y🦄 y",
       {
@@ -516,14 +502,13 @@ tap.test("18 - three right maybes (multiple hungry finds)", (t) => {
     "🦄b 🦄b 🦄b b",
     "test 3.18"
   );
-  t.end();
 });
 // if leftMaybe is simply merged and not iterated, and is queried to exist
 // explicitly as string on the right side of the searchFor, it will not be
 // found if the order of array is wrong, yet characters are all the same.
 
-tap.test("19 - sneaky array conversion situation", (t) => {
-  t.equal(
+test("19 - sneaky array conversion situation", () => {
+  equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -540,7 +525,7 @@ tap.test("19 - sneaky array conversion situation", (t) => {
     "a🦄bc",
     "test 3.19-1"
   );
-  t.equal(
+  equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -557,11 +542,10 @@ tap.test("19 - sneaky array conversion situation", (t) => {
     "a🦄bc",
     "test 3.19-2"
   );
-  t.end();
 });
 
-tap.test("20 - normal words, few of them, rightMaybe as array", (t) => {
-  t.equal(
+test("20 - normal words, few of them, rightMaybe as array", () => {
+  equal(
     er(
       "this protection is promoting the proper propaganda",
       {
@@ -578,11 +562,10 @@ tap.test("20 - normal words, few of them, rightMaybe as array", (t) => {
     "this test is testing the tester test",
     "test 3.20"
   );
-  t.end();
 });
 
-tap.test("21 - rightMaybe is array, but with only 1 null value", (t) => {
-  t.equal(
+test("21 - rightMaybe is array, but with only 1 null value", () => {
+  equal(
     er(
       "some text",
       {
@@ -599,11 +582,10 @@ tap.test("21 - rightMaybe is array, but with only 1 null value", (t) => {
     "some text",
     "test 3.21"
   );
-  t.end();
 });
 
-tap.test("22 - rightMaybe is couple integers in an array", (t) => {
-  t.equal(
+test("22 - rightMaybe is couple integers in an array", () => {
+  equal(
     er(
       "1234",
       {
@@ -620,11 +602,10 @@ tap.test("22 - rightMaybe is couple integers in an array", (t) => {
     "194",
     "test 3.22"
   );
-  t.end();
 });
 
-tap.test("23 - sneaky case of overlapping rightMaybes", (t) => {
-  t.equal(
+test("23 - sneaky case of overlapping rightMaybes", () => {
+  equal(
     er(
       "this is a word to be searched for",
       {
@@ -641,11 +622,10 @@ tap.test("23 - sneaky case of overlapping rightMaybes", (t) => {
     "this is a x searched for",
     "test 3.23"
   );
-  t.end();
 });
 
-tap.test("24 - case-insensitive flag", (t) => {
-  t.equal(
+test("24 - case-insensitive flag", () => {
+  equal(
     er(
       "aaaC",
       {
@@ -665,5 +645,6 @@ tap.test("24 - case-insensitive flag", (t) => {
     "xC",
     "test 3.24"
   );
-  t.end();
 });
+
+test.run();

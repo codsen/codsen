@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 
 const paths = [];
@@ -24,7 +25,7 @@ const source = {
 traverse(source, (key, val, innerObj) => {
   // if currently an object is traversed, you get both "key" and "val"
   // if it's array, only "key" is present, "val" is undefined
-  const current = val !== undefined ? val : key;
+  let current = val !== undefined ? val : key;
   if (
     // it's object (not array)
     val !== undefined &&

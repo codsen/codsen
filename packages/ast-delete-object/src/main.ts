@@ -4,7 +4,9 @@ import clone from "lodash.clonedeep";
 import { compare } from "ast-compare";
 import { traverse } from "ast-monkey-traverse";
 import isObj from "lodash.isplainobject";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface UnknownValueObj {
@@ -45,7 +47,7 @@ function deleteObj(
     );
   }
 
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
 
   let input = clone(originalInput);
   let current;

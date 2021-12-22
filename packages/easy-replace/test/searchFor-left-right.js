@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // searchFor + both left and right
 // ==============================
 
-tap.test("01 - left and right maybes as emoji", (t) => {
-  t.equal(
+test("01 - left and right maybes as emoji", () => {
+  equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -23,7 +26,7 @@ tap.test("01 - left and right maybes as emoji", (t) => {
     "aza",
     "test 4.1.1"
   );
-  t.equal(
+  equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -40,11 +43,10 @@ tap.test("01 - left and right maybes as emoji", (t) => {
     "aza",
     "test 4.1.2"
   );
-  t.end();
 });
 
-tap.test("02 - left and right maybes as text", (t) => {
-  t.equal(
+test("02 - left and right maybes as text", () => {
+  equal(
     er(
       "abc abc abc",
       {
@@ -61,7 +63,7 @@ tap.test("02 - left and right maybes as text", (t) => {
     "z z z",
     "test 4.2.1"
   );
-  t.equal(
+  equal(
     er(
       "abc abc abc",
       {
@@ -78,11 +80,10 @@ tap.test("02 - left and right maybes as text", (t) => {
     "z z z",
     "test 4.2.2"
   );
-  t.end();
 });
 
-tap.test("03 - left+right maybes, middle & end of word #1", (t) => {
-  t.equal(
+test("03 - left+right maybes, middle & end of word #1", () => {
+  equal(
     er(
       "zzzabc zzzzabczzz abczzzz",
       {
@@ -99,11 +100,10 @@ tap.test("03 - left+right maybes, middle & end of word #1", (t) => {
     "zzzz zzzzzzzz zzzzz",
     "test 4.3"
   );
-  t.end();
 });
 
-tap.test("04 - left+right maybes, middle & end of word #2", (t) => {
-  t.equal(
+test("04 - left+right maybes, middle & end of word #2", () => {
+  equal(
     er(
       "zzz🦄🐴🦄 zzzz🦄🐴🦄zzz 🦄🐴🦄zzzz",
       {
@@ -120,11 +120,10 @@ tap.test("04 - left+right maybes, middle & end of word #2", (t) => {
     "zzzz zzzzzzzz zzzzz",
     "test 4.4"
   );
-  t.end();
 });
 
-tap.test("05 - normal words", (t) => {
-  t.equal(
+test("05 - normal words", () => {
+  equal(
     er(
       "aaa some test text testing for somebody",
       {
@@ -141,5 +140,6 @@ tap.test("05 - normal words", (t) => {
     "aaa check check check for somebody",
     "test 4.5"
   );
-  t.end();
 });
+
+test.run();

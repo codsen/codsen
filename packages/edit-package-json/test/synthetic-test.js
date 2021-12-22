@@ -1,4 +1,6 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { promises as fsp } from "fs";
 import objectPath from "object-path";
 import { traverse } from "ast-monkey-traverse";
@@ -6,6 +8,7 @@ import { globby } from "globby";
 import path from "path";
 import pMap from "p-map";
 import clone from "lodash.clonedeep";
+
 import { set } from "../dist/edit-package-json.esm.js";
 
 function isStr(something) {
@@ -26,19 +29,18 @@ globby([
   )
   .then((objectsArr) => {
     // console.log(objectsArr.length);
-    tap.test("validate the incoming parsed package.json count", (t) => {
-      t.ok(
+    test("validate the incoming parsed package.json count", () => {
+      ok(
         objectsArr.length,
         `${objectsArr.length} package.json objects are parsed and fed here`
       );
-      t.end();
     });
     for (let idx = 0, len = objectsArr.length; idx < len; idx++) {
-      const obj = objectsArr[idx];
+      let obj = objectsArr[idx];
       // console.log(`processing: ${idx}/${wholeArr.length}`);
       traverse(obj, (key, val, innerObj) => {
         // console.log(`path ${innerObj.path}`);
-        const current = val !== undefined ? val : key;
+        let current = val !== undefined ? val : key;
         // 1. test SET
         // ensure that if we set this path to something using set() result
         // is the same as to object-path.set()
@@ -46,17 +48,16 @@ globby([
         let calculated;
         let editedRefObj;
 
-        const amended = set(JSON.stringify(obj, null, 4), innerObj.path, "x");
+        let amended = set(JSON.stringify(obj, null, 4), innerObj.path, "x");
         try {
           calculated = JSON.parse(amended);
         } catch (e) {
-          tap.test(`failure in set()`, (t) => {
-            t.fail(
+          test(`failure in set()`, () => {
+            not.ok(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
               } - failure: ${e} - amended:\n${amended}`
             );
-            t.end();
           });
         }
 
@@ -64,32 +65,27 @@ globby([
           editedRefObj = clone(obj);
           objectPath.set(editedRefObj, innerObj.path, "x");
         } catch (e) {
-          tap.test(`failure in objectPath.set():`, (t) => {
-            t.fail(
+          test(`failure in objectPath.set():`, () => {
+            not.ok(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
               } - failure: ${e}`
             );
-            t.end();
           });
         }
 
         if (!(isStr(key) && key.includes("."))) {
           // only run the test if key's name doesn't include a dot.
           // Object-path won't work while this program will but still we can't compare.
-          tap.test(
-            `${idx} - ${innerObj.path} - our set() is identical to object-path.set()`,
-            (t) => {
-              t.strictSame(
-                calculated,
-                editedRefObj,
-                `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
-                  innerObj.path
-                }`
-              );
-              t.end();
-            }
-          );
+          test(`${idx} - ${innerObj.path} - our set() is identical to object-path.set()`, () => {
+            equal(
+              calculated,
+              editedRefObj,
+              `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
+                innerObj.path
+              }`
+            );
+          });
         }
         // 2. test DEL
         return current;
@@ -99,3 +95,5 @@ globby([
   .catch((e) => {
     console.log(`something wrong happened: ${e}`);
   });
+
+test.run();

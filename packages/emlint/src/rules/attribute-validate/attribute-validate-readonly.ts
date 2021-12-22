@@ -29,7 +29,7 @@ function attributeValidateReadonly(
         )}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "readonly") {
         // validate the parent

@@ -1,7 +1,9 @@
 import { isIndexWithin } from "ranges-is-index-within";
+
 import { version as v } from "../package.json";
+import { Range } from "../../../ops/typedefs/common";
+
 const version: string = v;
-import { Range } from "../../../scripts/common";
 
 interface Opts {
   ignoreRanges: Range[];
@@ -20,10 +22,10 @@ function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
   if (str.trim() === "") {
     return [];
   }
-  const defaults = {
+  let defaults = {
     ignoreRanges: [],
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
   if (
     opts.ignoreRanges.length > 0 &&
     !opts.ignoreRanges.every((arr) => Array.isArray(arr))
@@ -35,7 +37,7 @@ function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
 
   // if reached this far, traverse and slice accordingly
   let nonWhitespaceSubStringStartsAt = null;
-  const res = [];
+  let res = [];
   for (let i = 0, len = str.length; i < len; i++) {
     // catch the first non-whitespace character
     if (
@@ -47,7 +49,7 @@ function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
         (opts.ignoreRanges.length &&
           !isIndexWithin(
             i,
-            (opts.ignoreRanges as Range[]).map((arr) => [arr[0], arr[1] - 1]),
+            opts.ignoreRanges.map((arr) => [arr[0], arr[1] - 1]),
             {
               inclusiveRangeEnds: true,
             }

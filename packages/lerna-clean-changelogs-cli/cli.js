@@ -227,7 +227,7 @@ thePromise.then((received) => {
 
     // -------------------------------------------------------------------------
     let errorredMsg = ""; // message regarding files that errorred out
-    const badSupplement =
+    let badSupplement =
       !(counter.good && counter.good.length) &&
       !(counter.ignored && counter.ignored.length)
         ? "All "

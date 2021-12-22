@@ -1,38 +1,36 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { rApply } from "ranges-apply";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+
+import { stripHtml } from "./util/noLog.js";
 import validateTagLocations from "./util/validateTagLocations.js";
 
 // concentrating on ranges output
 // -----------------------------------------------------------------------------
 
-tap.test("01 - ranges - quick sanity check", (t) => {
-  const allTagLocations = [
+test("01 - ranges - quick sanity check", () => {
+  let intendedAllTagLocations = [
     [10, 43],
     [51, 55],
   ];
-  const input = `Some text <a class="btn btn__large" id="z">click me</a> and more text.`;
-  t.hasStrict(
-    stripHtml(input),
-    {
-      result: "Some text click me and more text.",
-      ranges: [
-        [9, 43, " "],
-        [51, 56, " "],
-      ],
-      allTagLocations,
-    },
-    "01"
-  );
-  validateTagLocations(t, input, allTagLocations);
-  t.end();
+  let input = `Some text <a class="btn btn__large" id="z">click me</a> and more text.`;
+
+  let { result, ranges, allTagLocations } = stripHtml(input);
+  equal(result, "Some text click me and more text.");
+  equal(ranges, [
+    [9, 43, " "],
+    [51, 56, " "],
+  ]);
+  equal(allTagLocations, intendedAllTagLocations);
+  validateTagLocations(is, input, intendedAllTagLocations);
 });
 
 // ensure consistency with ranges-apply
 // -----------------------------------------------------------------------------
 
-tap.test("02 - consistency with ranges-apply", (t) => {
-  const input = `<!DOCTYPE html>
+test("02 - consistency with ranges-apply", () => {
+  let input = `<!DOCTYPE html>
   <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -51,28 +49,40 @@ tap.test("02 - consistency with ranges-apply", (t) => {
   </body>
   </html>`;
 
-  const result = "1\n\n2\n\n3";
-  t.hasStrict(
-    stripHtml(input),
-    {
-      result,
-      ranges: [
-        [0, 136],
-        [137, 165, "\n\n"],
-        [166, 194, "\n\n"],
-        [195, 226],
-      ],
-      allTagLocations: [[0, 15]],
-    },
-    `02.01`
-  );
+  let intendedResult = "1\n\n2\n\n3";
 
-  t.strictSame(rApply(input, stripHtml(input).ranges), result, `02.02`);
-  t.end();
+  let { result, ranges, allTagLocations } = stripHtml(input);
+  equal(result, intendedResult);
+  equal(ranges, [
+    [0, 136],
+    [137, 165, "\n\n"],
+    [166, 194, "\n\n"],
+    [195, 226],
+  ]);
+  equal(allTagLocations, [
+    [0, 15],
+    [18, 44],
+    [47, 53],
+    [58, 80],
+    [85, 92],
+    [92, 100],
+    [103, 110],
+    [113, 119],
+    [124, 129],
+    [142, 148],
+    [153, 158],
+    [171, 177],
+    [182, 187],
+    [200, 206],
+    [209, 216],
+    [219, 226],
+  ]);
+
+  equal(rApply(input, stripHtml(input).ranges), result, `02.02`);
 });
 
-tap.test("03 - consistency with ranges-apply", (t) => {
-  const inputs = [
+test("03 - consistency with ranges-apply", () => {
+  let inputs = [
     ``,
     `   `,
     `<a>`,
@@ -163,7 +173,7 @@ tap.test("03 - consistency with ranges-apply", (t) => {
   ];
 
   inputs.forEach((input, idx) => {
-    t.strictSame(
+    equal(
       stripHtml(input, { trimOnlySpaces: false }).result,
       rApply(
         input,
@@ -173,7 +183,7 @@ tap.test("03 - consistency with ranges-apply", (t) => {
       ),
       `${idx} - ${input}`
     );
-    t.strictSame(
+    equal(
       stripHtml(input, { trimOnlySpaces: true }).result,
       rApply(
         input,
@@ -184,5 +194,6 @@ tap.test("03 - consistency with ranges-apply", (t) => {
       `${idx} - ${input}`
     );
   });
-  t.end();
 });
+
+test.run();

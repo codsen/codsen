@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Res {
@@ -44,7 +45,7 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
   }
 
   // set the options
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
   // -----------------------------------------------------------------------------
 
@@ -55,7 +56,7 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
   let currLine = 1;
 
   // what to return
-  const res: Res[] = [];
+  let res: Res[] = [];
 
   for (let i = 0, len = str.length; i <= len; i++) {
     //
@@ -70,11 +71,11 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
       (!str[i] || str[i] === "\r" || str[i] === "\n") &&
       column > opts.lineLength
     ) {
-      console.log(`073 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+      console.log(`074 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
       res.push({
         type: "line length",
         line: currLine,
-        column: column,
+        column,
         positionIdx: i,
         value: column,
       });
@@ -104,7 +105,7 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
 
     console.log(
       `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
-        str[i] && str[i].trim() ? str[i] : JSON.stringify(str[i], null, 4)
+        str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
       }; column = ${column}; line = ${currLine}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
     );
 
@@ -120,7 +121,7 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
     // the rest, below decimal point #32 are not allowed
     // Naturally, above #126 is not allowed. This concerns #127, DEL too!
     if (str[i]) {
-      const currCodePoint = str[i].codePointAt(0);
+      let currCodePoint = str[i].codePointAt(0);
       if (
         currCodePoint === undefined ||
         currCodePoint > 126 ||
@@ -129,7 +130,7 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
         currCodePoint === 12 ||
         (currCodePoint > 13 && currCodePoint < 32)
       ) {
-        console.log(`132 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+        console.log(`133 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         res.push({
           type: "character",
           line: currLine,
@@ -152,7 +153,7 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
   }
 
   console.log(
-    `155 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `156 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

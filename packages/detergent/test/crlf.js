@@ -1,4 +1,8 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 // import { det as det1 } from "../dist/detergent.esm.js";
 import {
   det,
@@ -15,328 +19,239 @@ import {
   // leftSingleQuote
 } from "../t-util/util.js";
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement with BR - LF`,
-  (t) => {
-    t.equal(
-      det(t, 0, `aaa\n\nbbb\n\nccc`).res,
-      "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
-      "01"
-    );
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement with BR - LF`, () => {
+  equal(
+    det(ok, not, 0, `aaa\n\nbbb\n\nccc`).res,
+    "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
+    "01"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement with BR - CRLF`,
-  (t) => {
-    t.equal(
-      det(t, 0, `aaa\r\n\r\nbbb\r\n\r\nccc`).res,
-      "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
-      "02 - CRLF"
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement with BR - CRLF`, () => {
+  equal(
+    det(ok, not, 0, `aaa\r\n\r\nbbb\r\n\r\nccc`).res,
+    "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
+    "02 - CRLF"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a<br>b`, {
+test(`03 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, () => {
+  equal(
+    det(ok, not, 0, `a<br>b`, {
+      useXHTML: true,
+    }).res,
+    "a<br/>b",
+    "03"
+  );
+});
+
+test(`04 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, () => {
+  equal(
+    det(ok, not, 0, `a<br>b`, {
+      useXHTML: false,
+    }).res,
+    "a<br>b",
+    "04"
+  );
+});
+
+test(`05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, () => {
+  compare(
+    ok,
+    det(ok, not, 0, `a<br/>b`, {
+      useXHTML: true,
+    }),
+    {
+      res: "a<br/>b",
+      applicableOpts: {
+        fixBrokenEntities: false,
+        removeWidows: false,
+        convertEntities: false,
+        convertDashes: false,
+        convertApostrophes: false,
+        replaceLineBreaks: false,
+        removeLineBreaks: false,
         useXHTML: true,
-      }).res,
-      "a<br/>b",
-      "03"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `04 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a<br>b`, {
-        useXHTML: false,
-      }).res,
-      "a<br>b",
-      "04"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
-  (t) => {
-    t.match(
-      det(t, 0, `a<br/>b`, {
-        useXHTML: true,
-      }),
-      {
-        res: "a<br/>b",
-        applicableOpts: {
-          fixBrokenEntities: false,
-          removeWidows: false,
-          convertEntities: false,
-          convertDashes: false,
-          convertApostrophes: false,
-          replaceLineBreaks: false,
-          removeLineBreaks: false,
-          useXHTML: true,
-          dontEncodeNonLatin: false,
-          addMissingSpaces: false,
-          convertDotsToEllipsis: false,
-          stripHtml: true,
-          eol: false,
-        },
+        dontEncodeNonLatin: false,
+        addMissingSpaces: false,
+        convertDotsToEllipsis: false,
+        stripHtml: true,
+        eol: false,
       },
-      "05"
-    );
-    t.end();
-  }
-);
+    },
+    "05"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a<br/>b`, {
-        useXHTML: false,
-      }).res,
-      "a<br>b",
-      "06"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, () => {
+  equal(
+    det(ok, not, 0, `a<br/>b`, {
+      useXHTML: false,
+    }).res,
+    "a<br>b",
+    "06"
+  );
+});
 
-tap.test(
-  `07 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`,
-  (t) => {
-    t.equal(
-      det(t, 0, `abc<br >def<br>ghi<br/>jkl<br />mno`, {
-        useXHTML: true,
-        replaceLineBreaks: false,
-      }).res,
-      "abc<br/>def<br/>ghi<br/>jkl<br/>mno",
-      "07"
-    );
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, () => {
+  equal(
+    det(ok, not, 0, `abc<br >def<br>ghi<br/>jkl<br />mno`, {
+      useXHTML: true,
+      replaceLineBreaks: false,
+    }).res,
+    "abc<br/>def<br/>ghi<br/>jkl<br/>mno",
+    "07"
+  );
+});
 
-tap.test(
-  `08 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with HTML BR`,
-  (t) => {
-    t.equal(
-      det(t, 0, `abc<br >def<br>ghi<br/>jkl<br />mno`, {
-        useXHTML: false,
-        replaceLineBreaks: false,
-      }).res,
-      "abc<br>def<br>ghi<br>jkl<br>mno",
-      "08"
-    );
-    t.end();
-  }
-);
+test(`08 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with HTML BR`, () => {
+  equal(
+    det(ok, not, 0, `abc<br >def<br>ghi<br/>jkl<br />mno`, {
+      useXHTML: false,
+      replaceLineBreaks: false,
+    }).res,
+    "abc<br>def<br>ghi<br>jkl<br>mno",
+    "08"
+  );
+});
 
-tap.test(
-  `09 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`,
-  (t) => {
-    t.equal(det(t, 0, `<br />`).res, `<br/>`, "09");
-    t.end();
-  }
-);
+test(`09 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, () => {
+  equal(det(ok, not, 0, `<br />`).res, `<br/>`, "09");
+});
 
-tap.test(
-  `10 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`,
-  (t) => {
-    t.equal(det(t, 0, `< br>`).res, `<br/>`, "10");
-    t.end();
-  }
-);
+test(`10 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, () => {
+  equal(det(ok, not, 0, `< br>`).res, `<br/>`, "10");
+});
 
-tap.test(
-  `11 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`,
-  (t) => {
-    t.equal(det(t, 0, `<br class="z"/>`).res, `<br class="z"/>`, "11");
-    t.end();
-  }
-);
+test(`11 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, () => {
+  equal(det(ok, not, 0, `<br class="z"/>`).res, `<br class="z"/>`, "11");
+});
 
-tap.test(
-  `12 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`,
-  (t) => {
-    t.equal(
-      det(t, 0, `aaa<br />< br>bbb< br ><br>ccc< br >< br>ddd`).res,
-      "aaa<br/><br/>bbb<br/><br/>ccc<br/><br/>ddd",
-      "12"
-    );
-    t.end();
-  }
-);
+test(`12 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, () => {
+  equal(
+    det(ok, not, 0, `aaa<br />< br>bbb< br ><br>ccc< br >< br>ddd`).res,
+    "aaa<br/><br/>bbb<br/><br/>ccc<br/><br/>ddd",
+    "12"
+  );
+});
 
-tap.test(
-  `13 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a</br>b`, {
-        useXHTML: false,
-      }).res,
-      "a<br>b",
-      "13"
-    );
-    t.end();
-  }
-);
+test(`13 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, () => {
+  equal(
+    det(ok, not, 0, `a</br>b`, {
+      useXHTML: false,
+    }).res,
+    "a<br>b",
+    "13"
+  );
+});
 
-tap.test(
-  `14 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a</br>b`, {
-        useXHTML: true,
-      }).res,
-      "a<br/>b",
-      "14"
-    );
-    t.end();
-  }
-);
+test(`14 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, () => {
+  equal(
+    det(ok, not, 0, `a</br>b`, {
+      useXHTML: true,
+    }).res,
+    "a<br/>b",
+    "14"
+  );
+});
 
-tap.test(
-  `15 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #2`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a< / / br>b`, {
-        useXHTML: false,
-        replaceLineBreaks: false,
-      }).res,
-      "a<br>b",
-      "15"
-    );
-    t.end();
-  }
-);
+test(`15 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #2`, () => {
+  equal(
+    det(ok, not, 0, `a< / / br>b`, {
+      useXHTML: false,
+      replaceLineBreaks: false,
+    }).res,
+    "a<br>b",
+    "15"
+  );
+});
 
-tap.test(
-  `16 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #3`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a< / / br style="something" / />b`, {
-        useXHTML: false,
-        replaceLineBreaks: false,
-      }).res,
-      `a<br style="something">b`,
-      "16"
-    );
-    t.end();
-  }
-);
+test(`16 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #3`, () => {
+  equal(
+    det(ok, not, 0, `a< / / br style="something" / />b`, {
+      useXHTML: false,
+      replaceLineBreaks: false,
+    }).res,
+    `a<br style="something">b`,
+    "16"
+  );
+});
 
-tap.test(
-  `17 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #4`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a< / / br style="something" / />b`, {
-        useXHTML: true,
-        replaceLineBreaks: false,
-      }).res,
-      `a<br style="something"/>b`,
-      "17"
-    );
-    t.end();
-  }
-);
+test(`17 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #4`, () => {
+  equal(
+    det(ok, not, 0, `a< / / br style="something" / />b`, {
+      useXHTML: true,
+      replaceLineBreaks: false,
+    }).res,
+    `a<br style="something"/>b`,
+    "17"
+  );
+});
 
-tap.test(
-  `18 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a</br class="display: none;">b`, {
-        useXHTML: false,
-        replaceLineBreaks: false,
-      }).res,
-      `a<br class="display: none;">b`,
-      "18"
-    );
-    t.end();
-  }
-);
+test(`18 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, () => {
+  equal(
+    det(ok, not, 0, `a</br class="display: none;">b`, {
+      useXHTML: false,
+      replaceLineBreaks: false,
+    }).res,
+    `a<br class="display: none;">b`,
+    "18"
+  );
+});
 
-tap.test(
-  `19 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a</br class="display: none;">b`, {
-        useXHTML: true,
-        replaceLineBreaks: false,
-      }).res,
-      `a<br class="display: none;"/>b`,
-      "19"
-    );
-    t.end();
-  }
-);
+test(`19 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, () => {
+  equal(
+    det(ok, not, 0, `a</br class="display: none;">b`, {
+      useXHTML: true,
+      replaceLineBreaks: false,
+    }).res,
+    `a<br class="display: none;"/>b`,
+    "19"
+  );
+});
 
-tap.test(
-  `20 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a<br class="display: none;"/>b`, {
-        useXHTML: false,
-        replaceLineBreaks: false,
-      }).res,
-      `a<br class="display: none;">b`,
-      "20"
-    );
-    t.end();
-  }
-);
+test(`20 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, () => {
+  equal(
+    det(ok, not, 0, `a<br class="display: none;"/>b`, {
+      useXHTML: false,
+      replaceLineBreaks: false,
+    }).res,
+    `a<br class="display: none;">b`,
+    "20"
+  );
+});
 
-tap.test(
-  `21 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a<br class="display: none;"/>b`, {
-        useXHTML: true,
-        replaceLineBreaks: false,
-      }).res,
-      `a<br class="display: none;"/>b`,
-      "21"
-    );
-    t.end();
-  }
-);
+test(`21 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, () => {
+  equal(
+    det(ok, not, 0, `a<br class="display: none;"/>b`, {
+      useXHTML: true,
+      replaceLineBreaks: false,
+    }).res,
+    `a<br class="display: none;"/>b`,
+    "21"
+  );
+});
 
-tap.test(
-  `22 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a<br class="display: none;">b`, {
-        useXHTML: false,
-        replaceLineBreaks: false,
-      }).res,
-      `a<br class="display: none;">b`,
-      "22"
-    );
-    t.end();
-  }
-);
+test(`22 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`, () => {
+  equal(
+    det(ok, not, 0, `a<br class="display: none;">b`, {
+      useXHTML: false,
+      replaceLineBreaks: false,
+    }).res,
+    `a<br class="display: none;">b`,
+    "22"
+  );
+});
 
-tap.test(
-  `23 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`,
-  (t) => {
-    t.equal(
-      det(t, 0, `a<br class="display: none;">b`, {
-        useXHTML: true,
-        replaceLineBreaks: false,
-      }).res,
-      `a<br class="display: none;"/>b`,
-      "23"
-    );
-    t.end();
-  }
-);
+test(`23 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`, () => {
+  equal(
+    det(ok, not, 0, `a<br class="display: none;">b`, {
+      useXHTML: true,
+      replaceLineBreaks: false,
+    }).res,
+    `a<br class="display: none;"/>b`,
+    "23"
+  );
+});
+
+test.run();

@@ -1,6 +1,7 @@
 // Leave only HTML
 
 import { strict as assert } from "assert";
+
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 const someHtml = `<!DOCTYPE html>

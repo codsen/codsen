@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/202e/index.htm
 
 function badCharacterRightToLeftOverride(context: Linter): RuleObjType {
-  const charCode = 8238;
+  let charCode = 8238;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

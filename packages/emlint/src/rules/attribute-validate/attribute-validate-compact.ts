@@ -30,7 +30,7 @@ function attributeValidateCompact(
         )}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "compact") {
         // validate the parent

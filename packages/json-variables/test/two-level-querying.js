@@ -1,10 +1,13 @@
 /* eslint no-template-curly-in-string: 0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { jVar } from "../dist/json-variables.esm.js";
 
-tap.test("01 - two-level querying, normal keys in the root", (t) => {
-  t.strictSame(
+test("01 - two-level querying, normal keys in the root", () => {
+  equal(
     jVar({
       a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
       b: "something",
@@ -39,42 +42,13 @@ tap.test("01 - two-level querying, normal keys in the root", (t) => {
     },
     "01 - running on default notation"
   );
-  t.end();
 });
 
-tap.test(
-  "02 - two-level querying, normal keys in the root + wrapping & opts",
-  (t) => {
-    t.strictSame(
-      jVar(
-        {
-          a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
-          b: "something",
-          var1: {
-            key1: "value1",
-            key2: "value2",
-            key3: "value3",
-            key4: "value4",
-          },
-          var2: {
-            key5: "value5",
-            key6: "value6",
-            key7: "value7",
-            key8: "value8",
-          },
-        },
-        {
-          lookForDataContainers: true,
-          dataContainerIdentifierTails: "_data",
-          wrapHeadsWith: "{",
-          wrapTailsWith: "}",
-          dontWrapVars: ["*zzz", "var1.*", "*key6"],
-          preventDoubleWrapping: true,
-          wrapGlobalFlipSwitch: true,
-        }
-      ),
+test("02 - two-level querying, normal keys in the root + wrapping & opts", () => {
+  equal(
+    jVar(
       {
-        a: "some text value3 more text value6",
+        a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
         b: "something",
         var1: {
           key1: "value1",
@@ -89,39 +63,39 @@ tap.test(
           key8: "value8",
         },
       },
-      "02.01 - didn't wrap either, first level caught"
-    );
-
-    t.strictSame(
-      jVar(
-        {
-          a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
-          b: "something",
-          var1: {
-            key1: "value1",
-            key2: "value2",
-            key3: "value3",
-            key4: "value4",
-          },
-          var2: {
-            key5: "value5",
-            key6: "value6",
-            key7: "value7",
-            key8: "value8",
-          },
-        },
-        {
-          lookForDataContainers: true,
-          dataContainerIdentifierTails: "_data",
-          wrapHeadsWith: "{",
-          wrapTailsWith: "}",
-          dontWrapVars: ["*zzz", "*3", "*9"],
-          preventDoubleWrapping: true,
-          wrapGlobalFlipSwitch: true,
-        }
-      ),
       {
-        a: "some text value3 more text {value6}",
+        lookForDataContainers: true,
+        dataContainerIdentifierTails: "_data",
+        wrapHeadsWith: "{",
+        wrapTailsWith: "}",
+        dontWrapVars: ["*zzz", "var1.*", "*key6"],
+        preventDoubleWrapping: true,
+        wrapGlobalFlipSwitch: true,
+      }
+    ),
+    {
+      a: "some text value3 more text value6",
+      b: "something",
+      var1: {
+        key1: "value1",
+        key2: "value2",
+        key3: "value3",
+        key4: "value4",
+      },
+      var2: {
+        key5: "value5",
+        key6: "value6",
+        key7: "value7",
+        key8: "value8",
+      },
+    },
+    "02.01 - didn't wrap either, first level caught"
+  );
+
+  equal(
+    jVar(
+      {
+        a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
         b: "something",
         var1: {
           key1: "value1",
@@ -136,37 +110,39 @@ tap.test(
           key8: "value8",
         },
       },
-      "02.02 - didn't wrap one, second level caught"
-    );
-
-    t.strictSame(
-      jVar(
-        {
-          a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
-          b: "something",
-          var1: {
-            key1: "value1",
-            key2: "value2",
-            key3: "value3",
-            key4: "value4",
-          },
-          var2: {
-            key5: "value5",
-            key6: "value6",
-            key7: "value7",
-            key8: "value8",
-          },
-        },
-        {
-          lookForDataContainers: true,
-          dataContainerIdentifierTails: "_data",
-          dontWrapVars: ["*zzz", "key3", "key6"],
-          preventDoubleWrapping: true,
-          wrapGlobalFlipSwitch: true,
-        }
-      ),
       {
-        a: "some text value3 more text value6",
+        lookForDataContainers: true,
+        dataContainerIdentifierTails: "_data",
+        wrapHeadsWith: "{",
+        wrapTailsWith: "}",
+        dontWrapVars: ["*zzz", "*3", "*9"],
+        preventDoubleWrapping: true,
+        wrapGlobalFlipSwitch: true,
+      }
+    ),
+    {
+      a: "some text value3 more text {value6}",
+      b: "something",
+      var1: {
+        key1: "value1",
+        key2: "value2",
+        key3: "value3",
+        key4: "value4",
+      },
+      var2: {
+        key5: "value5",
+        key6: "value6",
+        key7: "value7",
+        key8: "value8",
+      },
+    },
+    "02.02 - didn't wrap one, second level caught"
+  );
+
+  equal(
+    jVar(
+      {
+        a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
         b: "something",
         var1: {
           key1: "value1",
@@ -181,39 +157,37 @@ tap.test(
           key8: "value8",
         },
       },
-      "02.03 - didn't wrap either, second levels caught"
-    );
-
-    t.strictSame(
-      jVar(
-        {
-          a: "some text %%-var1.key3-%% more text %%-var2.key6-%%",
-          b: "something",
-          var1: {
-            key1: "value1",
-            key2: "value2",
-            key3: "value3",
-            key4: "value4",
-          },
-          var2: {
-            key5: "value5",
-            key6: "value6",
-            key7: "value7",
-            key8: "value8",
-          },
-        },
-        {
-          lookForDataContainers: true,
-          dataContainerIdentifierTails: "_data",
-          wrapHeadsWith: "whatever,",
-          wrapTailsWith: "it won't be used anyway",
-          dontWrapVars: ["*zzz", "*3", "*9"],
-          preventDoubleWrapping: true,
-          wrapGlobalFlipSwitch: true,
-        }
-      ),
       {
-        a: "some text value3 more text value6",
+        lookForDataContainers: true,
+        dataContainerIdentifierTails: "_data",
+        dontWrapVars: ["*zzz", "key3", "key6"],
+        preventDoubleWrapping: true,
+        wrapGlobalFlipSwitch: true,
+      }
+    ),
+    {
+      a: "some text value3 more text value6",
+      b: "something",
+      var1: {
+        key1: "value1",
+        key2: "value2",
+        key3: "value3",
+        key4: "value4",
+      },
+      var2: {
+        key5: "value5",
+        key6: "value6",
+        key7: "value7",
+        key8: "value8",
+      },
+    },
+    "02.03 - didn't wrap either, second levels caught"
+  );
+
+  equal(
+    jVar(
+      {
+        a: "some text %%-var1.key3-%% more text %%-var2.key6-%%",
         b: "something",
         var1: {
           key1: "value1",
@@ -228,39 +202,39 @@ tap.test(
           key8: "value8",
         },
       },
-      "02.04 - didn't wrap either because of %%- the non-wrapping notation."
-    );
-
-    t.strictSame(
-      jVar(
-        {
-          a: "some text %%-var1.key3-%% more text %%-var2.key6-%%",
-          b: "something",
-          var1: {
-            key1: "value1",
-            key2: "value2",
-            key3: "value3",
-            key4: "value4",
-          },
-          var2: {
-            key5: "value5",
-            key6: "value6",
-            key7: "value7",
-            key8: "value8",
-          },
-        },
-        {
-          lookForDataContainers: true,
-          dataContainerIdentifierTails: "_data",
-          wrapHeadsWith: "whatever,",
-          wrapTailsWith: "it won't be used anyway",
-          dontWrapVars: [],
-          preventDoubleWrapping: true,
-          wrapGlobalFlipSwitch: true,
-        }
-      ),
       {
-        a: "some text value3 more text value6",
+        lookForDataContainers: true,
+        dataContainerIdentifierTails: "_data",
+        wrapHeadsWith: "whatever,",
+        wrapTailsWith: "it won't be used anyway",
+        dontWrapVars: ["*zzz", "*3", "*9"],
+        preventDoubleWrapping: true,
+        wrapGlobalFlipSwitch: true,
+      }
+    ),
+    {
+      a: "some text value3 more text value6",
+      b: "something",
+      var1: {
+        key1: "value1",
+        key2: "value2",
+        key3: "value3",
+        key4: "value4",
+      },
+      var2: {
+        key5: "value5",
+        key6: "value6",
+        key7: "value7",
+        key8: "value8",
+      },
+    },
+    "02.04 - didn't wrap either because of %%- the non-wrapping notation."
+  );
+
+  equal(
+    jVar(
+      {
+        a: "some text %%-var1.key3-%% more text %%-var2.key6-%%",
         b: "something",
         var1: {
           key1: "value1",
@@ -275,14 +249,38 @@ tap.test(
           key8: "value8",
         },
       },
-      "02.05"
-    );
-    t.end();
-  }
-);
+      {
+        lookForDataContainers: true,
+        dataContainerIdentifierTails: "_data",
+        wrapHeadsWith: "whatever,",
+        wrapTailsWith: "it won't be used anyway",
+        dontWrapVars: [],
+        preventDoubleWrapping: true,
+        wrapGlobalFlipSwitch: true,
+      }
+    ),
+    {
+      a: "some text value3 more text value6",
+      b: "something",
+      var1: {
+        key1: "value1",
+        key2: "value2",
+        key3: "value3",
+        key4: "value4",
+      },
+      var2: {
+        key5: "value5",
+        key6: "value6",
+        key7: "value7",
+        key8: "value8",
+      },
+    },
+    "02.05"
+  );
+});
 
-tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
-  t.throws(() => {
+test("03 - opts.throwWhenNonStringInsertedInString", () => {
+  throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
@@ -296,7 +294,7 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
     );
   }, /THROW_ID_23/);
 
-  t.doesNotThrow(() => {
+  not.throws(() => {
     jVar({
       a: "some text %%_var1_%% more text %%_var2_%%",
       b: "something",
@@ -307,7 +305,7 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
 
   // then, also, pin the whole-value-variables
 
-  t.strictSame(
+  equal(
     jVar({
       a: "%%-var1-%%",
       var1: null,
@@ -323,7 +321,7 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
     "03.03 - no path, values are variables in whole"
   );
 
-  t.strictSame(
+  equal(
     jVar({
       a: "%%_var1.key1_%%",
       var1: { key1: null },
@@ -339,7 +337,7 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
     "03.04 - control"
   );
 
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_var1.key1_%%",
@@ -357,11 +355,10 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
     },
     "03.05 - opts"
   );
-  t.end();
 });
 
-tap.test("04 - multi-level + from array + root data store + ignores", (t) => {
-  t.strictSame(
+test("04 - multi-level + from array + root data store + ignores", () => {
+  equal(
     jVar(
       {
         title: [
@@ -396,5 +393,6 @@ tap.test("04 - multi-level + from array + root data store + ignores", (t) => {
     },
     "04 - two ignores in an array, data store, multi-level"
   );
-  t.end();
 });
+
+test.run();

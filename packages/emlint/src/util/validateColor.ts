@@ -34,17 +34,17 @@ function validateColor(
   idxOffset: number,
   originalOpts: Partial<Opts>
 ): ErrorObj[] {
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
   // we get trimmed string start and end positions, also an encountered errors array
-  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+  let { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
 
   // now that we know where non-whitespace chars are, evaluate them
   if (typeof charStart === "number" && typeof charEnd === "number") {
     // we need to extract the trimmed attribute's value
     // either it will be "str" (no inner whitespace) or
     // str.slice(charStart, charEnd) (whitespace found previously)
-    const attrVal = errorArr.length ? str.slice(charStart, charEnd) : str;
+    let attrVal = errorArr.length ? str.slice(charStart, charEnd) : str;
 
     if (
       attrVal.length > 1 &&

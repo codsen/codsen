@@ -1,6 +1,8 @@
 import { rApply } from "ranges-apply";
-import { Range, Ranges } from "../../../scripts/common";
+import type { Range, Ranges } from "ranges-apply";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Inputs {
@@ -39,14 +41,14 @@ function convertOne(
   // consts
   // ======
 
-  const rangesArr: Range[] = [];
-  const leftSingleQuote = "\u2018";
-  const rightSingleQuote = "\u2019";
-  const leftDoubleQuote = "\u201C";
-  const rightDoubleQuote = "\u201D";
-  const singlePrime = "\u2032";
-  const doublePrime = "\u2033";
-  const punctuationChars = [".", ",", ";", "!", "?"];
+  let rangesArr: Range[] = [];
+  let leftSingleQuote = "\u2018";
+  let rightSingleQuote = "\u2019";
+  let leftDoubleQuote = "\u201C";
+  let rightDoubleQuote = "\u201D";
+  let singlePrime = "\u2032";
+  let doublePrime = "\u2033";
+  let punctuationChars = [".", ",", ";", "!", "?"];
   // const rawNDash = "\u2013";
   // const rawMDash = "\u2014";
 
@@ -70,10 +72,10 @@ function convertOne(
   }
 
   console.log(
-    `073 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
+    `075 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
   );
 
-  console.log("076 settings: ");
+  console.log("078 settings: ");
   console.log(
     `${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(str, null, 4)}`
   );
@@ -123,7 +125,7 @@ function convertOne(
     (to === from + 1 &&
       [`'`, leftSingleQuote, rightSingleQuote, singlePrime].includes(str[from]))
   ) {
-    console.log(`126 single quote/apos clauses`);
+    console.log(`128 single quote/apos clauses`);
     // IF SINGLE QUOTE OR APOSTROPHE, the '
     // OR LEFT/RIGHT SINGLE QUOTES OR SINGLE PRIME
     if (
@@ -132,7 +134,7 @@ function convertOne(
       isDigitStr(str[from - 1]) &&
       !isLetter(str[to as number])
     ) {
-      console.log(`135 prime cases`);
+      console.log(`137 prime cases`);
       if (
         convertApostrophes &&
         str.slice(from, to) !== (convertEntities ? "&prime;" : singlePrime) &&
@@ -144,7 +146,7 @@ function convertOne(
           convertEntities ? "&prime;" : singlePrime,
         ]);
         console.log(
-          `147 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} prime symbol [${from}, ${to}, ${
+          `149 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} prime symbol [${from}, ${to}, ${
             convertEntities ? "&prime;" : "\u2032"
           }]`
         );
@@ -155,7 +157,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `'`]);
         console.log(
-          `158 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
+          `160 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
         );
       }
     } else if (
@@ -168,7 +170,7 @@ function convertOne(
           (to as number) + 1 + ((to as number) - from)
         ) // ensure quotes/apostrophes match
     ) {
-      console.log(`171 rock 'n' roll case`);
+      console.log(`173 rock 'n' roll case`);
       // specifically take care of 'n' as in "rock ’n’ roll"
       if (
         convertApostrophes &&
@@ -189,7 +191,7 @@ function convertOne(
             : `${rightSingleQuote}n${rightSingleQuote}`,
         ]);
         console.log(
-          `192 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
+          `194 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
             (to as number) + 2
           }, ${
             convertEntities
@@ -208,7 +210,7 @@ function convertOne(
       ) {
         rangesArr.push([from, (to as number) + 2, "'n'"]);
         console.log(
-          `211 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
+          `213 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
             (to as number) + 2
           }, "'n'"]`
         );
@@ -218,7 +220,7 @@ function convertOne(
         }
       }
 
-      console.log(`221 end reached`);
+      console.log(`223 end reached`);
     } else if (
       (str[to as number] &&
         str[to as number].toLowerCase() === "t" &&
@@ -246,7 +248,7 @@ function convertOne(
         str[(to as number) + 4].toLowerCase() === "e") ||
       (str[to as number] && isDigitStr(str[to as number]))
     ) {
-      console.log(`249 'tis, 'twas, 'twere clauses`);
+      console.log(`251 'tis, 'twas, 'twere clauses`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -260,7 +262,7 @@ function convertOne(
           convertEntities ? "&rsquo;" : rightSingleQuote,
         ]);
         console.log(
-          `263 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `265 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&rsquo;" : rightSingleQuote
           }]`
         );
@@ -271,7 +273,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, "'"]);
         console.log(
-          `274 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "'"]`
+          `276 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "'"]`
         );
       }
     } else if (
@@ -281,7 +283,7 @@ function convertOne(
     ) {
       // if there's punctuation on the left and something on the right:
       console.log(
-        `284 there's punctuation on the left and something on the right`
+        `286 there's punctuation on the left and something on the right`
       );
       if (!str[to as number].trim()) {
         if (
@@ -296,7 +298,7 @@ function convertOne(
             convertEntities ? "&rsquo;" : rightSingleQuote,
           ]);
           console.log(
-            `299 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+            `301 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
               convertEntities ? "&rsquo;" : rightSingleQuote
             }]`
           );
@@ -307,7 +309,7 @@ function convertOne(
         ) {
           rangesArr.push([from, to as number, "'"]);
           console.log(
-            `310 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "'"]`
+            `312 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "'"]`
           );
         }
       } else if (
@@ -336,7 +338,7 @@ function convertOne(
             }`,
           ]);
           console.log(
-            `339 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
+            `341 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
               (to as number) + 1
             }, ${
               convertEntities
@@ -355,7 +357,7 @@ function convertOne(
         ) {
           rangesArr.push([from, (to as number) + 1, `'"`]);
           console.log(
-            `358 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, '" ]`
+            `360 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, '" ]`
           );
           /* istanbul ignore next */
           if (typeof offsetBy === "function") {
@@ -365,7 +367,7 @@ function convertOne(
       }
     } else if (from === 0 && str.slice(to).trim()) {
       // if it's the beginning of a string
-      console.log(`368 the beginning of a string clauses`);
+      console.log(`370 the beginning of a string clauses`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -378,7 +380,7 @@ function convertOne(
           convertEntities ? "&lsquo;" : leftSingleQuote,
         ]);
         console.log(
-          `381 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `383 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&lsquo;" : leftSingleQuote
           }]`
         );
@@ -389,11 +391,11 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `'`]);
         console.log(
-          `392 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ']`
+          `394 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ']`
         );
       }
     } else if (!str[to as number] && str.slice(0, from).trim()) {
-      console.log(`396 ending of a string clauses`);
+      console.log(`398 ending of a string clauses`);
       //
       if (
         convertApostrophes &&
@@ -408,7 +410,7 @@ function convertOne(
           convertEntities ? "&rsquo;" : rightSingleQuote,
         ]);
         console.log(
-          `411 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `413 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&rsquo;" : rightSingleQuote
           }]`
         );
@@ -419,7 +421,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `'`]);
         console.log(
-          `422 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
+          `424 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
         );
       }
     } else if (
@@ -430,9 +432,9 @@ function convertOne(
     ) {
       // equivalent of /(\w)'(\w)/g
       // single quote surrounded with alphanumeric characters
-      console.log(`433 single quote surrounded with alphanumeric characters`);
+      console.log(`435 single quote surrounded with alphanumeric characters`);
       if (convertApostrophes) {
-        console.log(`435`);
+        console.log(`437`);
         // exception for a few Hawaiian words:
         if (
           ((str[to as number] &&
@@ -453,14 +455,14 @@ function convertOne(
             (convertEntities ? "&lsquo;" : leftSingleQuote) &&
           value !== (convertEntities ? "&lsquo;" : leftSingleQuote)
         ) {
-          console.log(`456 Hawaiian exceptions`);
+          console.log(`458 Hawaiian exceptions`);
           rangesArr.push([
             from,
             to as number,
             convertEntities ? "&lsquo;" : leftSingleQuote,
           ]);
           console.log(
-            `463 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+            `465 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
               convertEntities ? "&lsquo;" : leftSingleQuote
             }]`
           );
@@ -475,17 +477,17 @@ function convertOne(
             convertEntities ? "&rsquo;" : rightSingleQuote,
           ]);
           console.log(
-            `478 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+            `480 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
               convertEntities ? "&rsquo;" : rightSingleQuote
             }]`
           );
         }
       } else if (str.slice(from, to) !== "'" && value !== "'") {
         // not convertApostrophes - remove anything that's not apostrophe
-        console.log(`485 remove fancy`);
+        console.log(`487 remove fancy`);
         rangesArr.push([from, to as number, `'`]);
         console.log(
-          `488 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "'"]`
+          `490 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "'"]`
         );
       }
     } else if (
@@ -494,7 +496,7 @@ function convertOne(
     ) {
       // equivalent of /'\b/g
       // alphanumeric follows
-      console.log(`497 alphanumeric follows`);
+      console.log(`499 alphanumeric follows`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -507,7 +509,7 @@ function convertOne(
           convertEntities ? "&lsquo;" : leftSingleQuote,
         ]);
         console.log(
-          `510 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `512 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&lsquo;" : leftSingleQuote
           }]`
         );
@@ -518,13 +520,13 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `'`]);
         console.log(
-          `521 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
+          `523 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
         );
       }
     } else if (isLetter(str[from - 1]) || isDigitStr(str[from - 1])) {
       // equivalent of /'\b/g
       // alphanumeric precedes
-      console.log(`527 alphanumeric precedes`);
+      console.log(`529 alphanumeric precedes`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -537,7 +539,7 @@ function convertOne(
           convertEntities ? "&rsquo;" : rightSingleQuote,
         ]);
         console.log(
-          `540 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `542 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&rsquo;" : rightSingleQuote
           }]`
         );
@@ -548,12 +550,12 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `'`]);
         console.log(
-          `551 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
+          `553 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
         );
       }
     } else if (str[from - 1] && !str[from - 1].trim()) {
       // whitespace in front
-      console.log(`556 whitespace in front clauses`);
+      console.log(`558 whitespace in front clauses`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -566,7 +568,7 @@ function convertOne(
           convertEntities ? "&lsquo;" : leftSingleQuote,
         ]);
         console.log(
-          `569 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `571 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&lsquo;" : leftSingleQuote
           }]`
         );
@@ -577,12 +579,12 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `'`]);
         console.log(
-          `580 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
+          `582 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
         );
       }
     } else if (str[to as number] && !str[to as number].trim()) {
       // whitespace after
-      console.log(`585 whitespace after clauses`);
+      console.log(`587 whitespace after clauses`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -595,7 +597,7 @@ function convertOne(
           convertEntities ? "&rsquo;" : rightSingleQuote,
         ]);
         console.log(
-          `598 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `600 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&rsquo;" : rightSingleQuote
           }]`
         );
@@ -606,11 +608,11 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `'`]);
         console.log(
-          `609 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
+          `611 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
         );
       }
     }
-    console.log(`613 fin`);
+    console.log(`615 fin`);
   } else if (
     [`"`, leftDoubleQuote, rightDoubleQuote, doublePrime].includes(
       value as string
@@ -620,7 +622,7 @@ function convertOne(
   ) {
     // IF DOUBLE QUOTE (") OR OTHER TYPES OF DOUBLE QUOTES
     console.log(
-      `623 ${`\u001b[${35}m${`██`}\u001b[${39}m`} double quote/apos clauses`
+      `625 ${`\u001b[${35}m${`██`}\u001b[${39}m`} double quote/apos clauses`
     );
 
     if (
@@ -635,7 +637,7 @@ function convertOne(
       str[to as number] !== leftDoubleQuote
     ) {
       // 0.
-      console.log(`638 primes clauses`);
+      console.log(`640 primes clauses`);
       if (
         convertApostrophes &&
         str.slice(from, to) !== (convertEntities ? "&Prime;" : doublePrime) &&
@@ -648,7 +650,7 @@ function convertOne(
           convertEntities ? "&Prime;" : doublePrime,
         ]);
         console.log(
-          `651 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} double prime symbol [${from}, ${to}, ${
+          `653 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} double prime symbol [${from}, ${to}, ${
             convertEntities ? "&Prime;" : doublePrime
           }]`
         );
@@ -659,7 +661,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `"`]);
         console.log(
-          `662 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
+          `664 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
         );
       }
     } else if (
@@ -669,7 +671,7 @@ function convertOne(
     ) {
       // 1.
       console.log(
-        `672 there's punctuation on the left and space/quote on the right`
+        `674 there's punctuation on the left and space/quote on the right`
       );
       if (!str[to as number].trim()) {
         if (
@@ -684,7 +686,7 @@ function convertOne(
             convertEntities ? "&rdquo;" : rightDoubleQuote,
           ]);
           console.log(
-            `687 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+            `689 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
               convertEntities ? "&rdquo;" : rightDoubleQuote
             }]`
           );
@@ -695,7 +697,7 @@ function convertOne(
         ) {
           rangesArr.push([from, to as number, `"`]);
           console.log(
-            `698 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
+            `700 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
           );
         }
       } else if (
@@ -715,7 +717,7 @@ function convertOne(
               : `${rightDoubleQuote}${rightSingleQuote}`)
         ) {
           console.log(
-            `718 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
+            `720 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
               (to as number) + 1
             }, ${
               convertEntities
@@ -741,7 +743,7 @@ function convertOne(
         ) {
           rangesArr.push([from, (to as number) + 1, `"'`]);
           console.log(
-            `744 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
+            `746 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
               (to as number) + 1
             }, "']`
           );
@@ -753,7 +755,7 @@ function convertOne(
       }
     } else if (from === 0 && str[to as number] && str.slice(to).trim()) {
       // 2.
-      console.log(`756 it's the beginning of a string`);
+      console.log(`758 it's the beginning of a string`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -766,7 +768,7 @@ function convertOne(
           convertEntities ? "&ldquo;" : leftDoubleQuote,
         ]);
         console.log(
-          `769 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `771 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&ldquo;" : leftDoubleQuote
           }]`
         );
@@ -777,12 +779,12 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `"`]);
         console.log(
-          `780 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
+          `782 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
         );
       }
     } else if (!str[to as number] && str.slice(0, from).trim()) {
       // 3.
-      console.log(`785 it's the end of a string`);
+      console.log(`787 it's the end of a string`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -790,7 +792,7 @@ function convertOne(
         value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)
       ) {
         console.log(
-          `793 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `795 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&rdquo;" : rightDoubleQuote
           }]`
         );
@@ -806,7 +808,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `"`]);
         console.log(
-          `809 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
+          `811 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
         );
       }
     } else if (
@@ -815,7 +817,7 @@ function convertOne(
     ) {
       // equivalent of /"\b/g
       // 4.
-      console.log(`818 alphanumeric follows`);
+      console.log(`820 alphanumeric follows`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -823,7 +825,7 @@ function convertOne(
         value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)
       ) {
         console.log(
-          `826 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `828 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&ldquo;" : leftDoubleQuote
           }]`
         );
@@ -839,7 +841,7 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `"`]);
         console.log(
-          `842 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
+          `844 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
         );
       }
     } else if (
@@ -848,7 +850,7 @@ function convertOne(
     ) {
       // equivalent of /"\b/g
       // 5.
-      console.log(`851 alphanumeric precedes`);
+      console.log(`853 alphanumeric precedes`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -856,7 +858,7 @@ function convertOne(
         value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)
       ) {
         console.log(
-          `859 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `861 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&rdquo;" : rightDoubleQuote
           }]`
         );
@@ -872,12 +874,12 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `"`]);
         console.log(
-          `875 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
+          `877 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
         );
       }
     } else if (str[from - 1] && !str[from - 1].trim()) {
       // 6.
-      console.log(`880 whitespace in front`);
+      console.log(`882 whitespace in front`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -885,7 +887,7 @@ function convertOne(
         value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)
       ) {
         console.log(
-          `888 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `890 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&ldquo;" : leftDoubleQuote
           }]`
         );
@@ -901,12 +903,12 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `"`]);
         console.log(
-          `904 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
+          `906 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
         );
       }
     } else if (str[to as number] && !str[to as number].trim()) {
       // 7.
-      console.log(`909 whitespace follows`);
+      console.log(`911 whitespace follows`);
       if (
         convertApostrophes &&
         str.slice(from, to) !==
@@ -914,7 +916,7 @@ function convertOne(
         value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)
       ) {
         console.log(
-          `917 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+          `919 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
             convertEntities ? "&rdquo;" : rightDoubleQuote
           }]`
         );
@@ -930,14 +932,14 @@ function convertOne(
       ) {
         rangesArr.push([from, to as number, `"`]);
         console.log(
-          `933 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
+          `935 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, "]`
         );
       }
     }
   }
 
   console.log(
-    `940 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
+    `942 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
   );
 
   return rangesArr;
@@ -952,14 +954,14 @@ function convertAll(
 ): { result: string; ranges: Ranges } {
   let ranges: Range[] = [];
 
-  const preppedOpts = {
+  let preppedOpts = {
     convertApostrophes: true,
     convertEntities: false,
     ...opts,
   };
 
   console.log(
-    `962 CALCULATED ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+    `964 CALCULATED ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
       preppedOpts,
       null,
       4
@@ -981,17 +983,17 @@ function convertAll(
     // multiple times
     preppedOpts.from = i;
     preppedOpts.offsetBy = (idx) => {
-      console.log(`984 ██ BUMP i from ${i} to ${i + idx}`);
+      console.log(`986 ██ BUMP i from ${i} to ${i + idx}`);
       i += idx;
     };
     console.log(
-      `988 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `990 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         preppedOpts,
         null,
         4
       )}`
     );
-    const res = convertOne(str, preppedOpts as Inputs);
+    let res = convertOne(str, preppedOpts as Inputs);
     if (Array.isArray(res) && res.length) {
       ranges = ranges.concat(res);
     }
@@ -999,7 +1001,7 @@ function convertAll(
   console.log(`${`\u001b[${36}m${`=`.repeat(100)}\u001b[${39}m`}`);
 
   console.log(
-    `1002 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} FINAL ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+    `1004 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} FINAL ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
       ranges,
       null,
       4
@@ -1007,7 +1009,7 @@ function convertAll(
   );
 
   console.log(
-    `1010 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
+    `1012 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
   );
   console.log(" ");
   return {

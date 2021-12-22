@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/008b/index.htm
 
 function badCharacterPartialLineForward(context: Linter): RuleObjType {
-  const charCode = 139;
+  let charCode = 139;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

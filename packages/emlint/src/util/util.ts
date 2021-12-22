@@ -1,8 +1,6 @@
 import { RulesObj, Severity } from "./commonTypes";
 import splitByWhitespace from "./splitByWhitespace";
 import { badChars } from "./bad-character-all";
-
-// validation functions
 import validateString from "./validateString";
 
 const wholeExtensionRegex = /^\.\w+$/g;
@@ -104,19 +102,19 @@ function isObj(something: unknown): boolean {
 function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity {
   if (!ruleId) {
     console.log(
-      `107 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} return 0 - ruleId is falsy`
+      `105 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} return 0 - ruleId is falsy`
     );
     return 0;
   }
   console.log(
-    `112 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`rules`}\u001b[${39}m`} = ${JSON.stringify(
+    `110 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`rules`}\u001b[${39}m`} = ${JSON.stringify(
       rules,
       null,
       4
     )}`
   );
   console.log(
-    `119 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
+    `117 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
       ruleId,
       null,
       4
@@ -124,7 +122,7 @@ function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity {
   );
 
   if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, ruleId)) {
-    console.log(`127 RETURN ${rules[ruleId]}`);
+    console.log(`125 RETURN ${rules[ruleId]}`);
     return rules[ruleId] as any;
   }
   if (
@@ -134,7 +132,7 @@ function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity {
     return rules[ruleId.split("-")[0]] as any;
   }
   if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, "all")) {
-    console.log(`137 RETURN ${rules.all}`);
+    console.log(`135 RETURN ${rules.all}`);
     return rules.all as any;
   }
 

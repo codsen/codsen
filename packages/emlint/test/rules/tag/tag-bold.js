@@ -1,31 +1,35 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 // import { deepContains } from "ast-deep-contains");
 
 // 01. no config
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
-  const str = "<bold>z</bold>";
-  const messages = verify(t, str, {
+test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, () => {
+  let str = "<bold>z</bold>";
+  let messages = verify(not, str, {
     rules: {
       "tag-bold": 0,
     },
   });
-  t.equal(applyFixes(str, messages), str, "01.01");
-  t.strictSame(messages, [], "01.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
 });
 
-tap.test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
-  const str = "<bold>z</bold>";
-  const messages = verify(t, str, {
+test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, () => {
+  let str = "<bold>z</bold>";
+  let messages = verify(not, str, {
     rules: {
       "tag-bold": 1,
     },
   });
-  t.equal(applyFixes(str, messages), "<strong>z</strong>", "02.01");
-  t.match(
+  equal(applyFixes(str, messages), "<strong>z</strong>", "02.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -51,18 +55,18 @@ tap.test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
     ],
     "02.02"
   );
-  t.end();
 });
 
-tap.test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
-  const str = "<bold>z</bold>";
-  const messages = verify(t, str, {
+test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, () => {
+  let str = "<bold>z</bold>";
+  let messages = verify(not, str, {
     rules: {
       "tag-bold": 2,
     },
   });
-  t.equal(applyFixes(str, messages), "<strong>z</strong>", "03.01");
-  t.match(
+  equal(applyFixes(str, messages), "<strong>z</strong>", "03.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -88,128 +92,120 @@ tap.test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
     ],
     "03.02"
   );
-  t.end();
 });
 
 // 02. config
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`,
-  (t) => {
-    const str = "<bold>z</bold>";
-    const messages = verify(t, str, {
-      rules: {
-        "tag-bold": [2],
+test(`04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`, () => {
+  let str = "<bold>z</bold>";
+  let messages = verify(not, str, {
+    rules: {
+      "tag-bold": [2],
+    },
+  });
+  equal(applyFixes(str, messages), "<strong>z</strong>", "04.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "tag-bold",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 6,
+        message: `Tag "bold" does not exist in HTML.`,
+        fix: {
+          ranges: [[1, 5, "strong"]],
+        },
       },
-    });
-    t.equal(applyFixes(str, messages), "<strong>z</strong>", "04.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-bold",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 6,
-          message: `Tag "bold" does not exist in HTML.`,
-          fix: {
-            ranges: [[1, 5, "strong"]],
-          },
+      {
+        ruleId: "tag-bold",
+        severity: 2,
+        idxFrom: 7,
+        idxTo: 14,
+        message: `Tag "bold" does not exist in HTML.`,
+        fix: {
+          ranges: [[9, 13, "strong"]],
         },
-        {
-          ruleId: "tag-bold",
-          severity: 2,
-          idxFrom: 7,
-          idxTo: 14,
-          message: `Tag "bold" does not exist in HTML.`,
-          fix: {
-            ranges: [[9, 13, "strong"]],
-          },
-        },
-      ],
-      "04.02"
-    );
-    t.end();
-  }
-);
+      },
+    ],
+    "04.02"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`,
-  (t) => {
-    const str = "<bold>z</bold>";
-    const messages = verify(t, str, {
-      rules: {
-        "tag-bold": [2, "strong"],
+test(`05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`, () => {
+  let str = "<bold>z</bold>";
+  let messages = verify(not, str, {
+    rules: {
+      "tag-bold": [2, "strong"],
+    },
+  });
+  equal(applyFixes(str, messages), "<strong>z</strong>", "05.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "tag-bold",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 6,
+        message: `Tag "bold" does not exist in HTML.`,
+        fix: {
+          ranges: [[1, 5, "strong"]],
+        },
       },
-    });
-    t.equal(applyFixes(str, messages), "<strong>z</strong>", "05.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-bold",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 6,
-          message: `Tag "bold" does not exist in HTML.`,
-          fix: {
-            ranges: [[1, 5, "strong"]],
-          },
+      {
+        ruleId: "tag-bold",
+        severity: 2,
+        idxFrom: 7,
+        idxTo: 14,
+        message: `Tag "bold" does not exist in HTML.`,
+        fix: {
+          ranges: [[9, 13, "strong"]],
         },
-        {
-          ruleId: "tag-bold",
-          severity: 2,
-          idxFrom: 7,
-          idxTo: 14,
-          message: `Tag "bold" does not exist in HTML.`,
-          fix: {
-            ranges: [[9, 13, "strong"]],
-          },
-        },
-      ],
-      "05.02"
-    );
-    t.end();
-  }
-);
+      },
+    ],
+    "05.02"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`,
-  (t) => {
-    const str = "<bold>z</bold>";
-    const messages = verify(t, str, {
-      rules: {
-        "tag-bold": [2, "b"],
+test(`06 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`, () => {
+  let str = "<bold>z</bold>";
+  let messages = verify(not, str, {
+    rules: {
+      "tag-bold": [2, "b"],
+    },
+  });
+  equal(applyFixes(str, messages), "<b>z</b>", "06.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "tag-bold",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 6,
+        message: `Tag "bold" does not exist in HTML.`,
+        fix: {
+          ranges: [[1, 5, "b"]],
+        },
       },
-    });
-    t.equal(applyFixes(str, messages), "<b>z</b>", "06.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-bold",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 6,
-          message: `Tag "bold" does not exist in HTML.`,
-          fix: {
-            ranges: [[1, 5, "b"]],
-          },
+      {
+        ruleId: "tag-bold",
+        severity: 2,
+        idxFrom: 7,
+        idxTo: 14,
+        message: `Tag "bold" does not exist in HTML.`,
+        fix: {
+          ranges: [[9, 13, "b"]],
         },
-        {
-          ruleId: "tag-bold",
-          severity: 2,
-          idxFrom: 7,
-          idxTo: 14,
-          message: `Tag "bold" does not exist in HTML.`,
-          fix: {
-            ranges: [[9, 13, "b"]],
-          },
-        },
-      ],
-      "06.02"
-    );
-    t.end();
-  }
-);
+      },
+    ],
+    "06.02"
+  );
+});
+
+test.run();

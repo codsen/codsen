@@ -1,317 +1,304 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { cparser } from "../dist/codsen-parser.esm.js";
 
 // 01. simple HTML comments
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
-  (t) => {
-    t.hasStrict(
-      cparser("a<!--b-->c"),
-      [
-        {
-          type: "text",
-          start: 0,
-          end: 1,
-        },
-        {
-          type: "comment",
-          kind: "simple",
-          start: 1,
-          end: 5,
-          children: [
-            {
-              type: "text",
-              start: 5,
-              end: 6,
-            },
-          ],
-        },
-        {
-          type: "comment",
-          kind: "simple",
-          start: 6,
-          end: 9,
-        },
-        {
-          type: "text",
-          start: 9,
-          end: 10,
-        },
-      ],
-      "01"
-    );
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`, () => {
+  compare(
+    ok,
+    cparser("a<!--b-->c"),
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+      },
+      {
+        type: "comment",
+        kind: "simple",
+        start: 1,
+        end: 5,
+        children: [
+          {
+            type: "text",
+            start: 5,
+            end: 6,
+          },
+        ],
+      },
+      {
+        type: "comment",
+        kind: "simple",
+        start: 6,
+        end: 9,
+      },
+      {
+        type: "text",
+        start: 9,
+        end: 10,
+      },
+    ],
+    "01"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
-  (t) => {
-    t.hasStrict(
-      cparser("a<!--b->c"),
-      [
-        {
-          type: "text",
-          start: 0,
-          end: 1,
-          value: "a",
-        },
-        {
-          type: "comment",
-          kind: "simple",
-          start: 1,
-          end: 5,
-          value: "<!--",
-          closing: false,
-          children: [
-            {
-              type: "text",
-              start: 5,
-              end: 6,
-              value: "b",
-            },
-          ],
-        },
-        {
-          type: "comment",
-          kind: "simple",
-          start: 6,
-          end: 8,
-          value: "->",
-          closing: true,
-          children: [],
-        },
-        {
-          type: "text",
-          start: 8,
-          end: 9,
-          value: "c",
-        },
-      ],
-      "02"
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`, () => {
+  compare(
+    ok,
+    cparser("a<!--b->c"),
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+        value: "a",
+      },
+      {
+        type: "comment",
+        kind: "simple",
+        start: 1,
+        end: 5,
+        value: "<!--",
+        closing: false,
+        children: [
+          {
+            type: "text",
+            start: 5,
+            end: 6,
+            value: "b",
+          },
+        ],
+      },
+      {
+        type: "comment",
+        kind: "simple",
+        start: 6,
+        end: 8,
+        value: "->",
+        closing: true,
+        children: [],
+      },
+      {
+        type: "text",
+        start: 8,
+        end: 9,
+        value: "c",
+      },
+    ],
+    "02"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broken comment closing tag pair`,
-  (t) => {
-    t.hasStrict(
-      cparser(`a<!--<table><tr><td>.</td></tr></table>->c`),
-      [
-        {
-          type: "text",
-          start: 0,
-          end: 1,
-          value: "a",
-        },
-        {
-          type: "comment",
-          start: 1,
-          end: 5,
-          value: "<!--",
-          children: [
-            {
-              children: [
-                {
-                  children: [
-                    {
-                      children: [
-                        {
-                          type: "text",
-                          start: 20,
-                          end: 21,
-                          value: ".",
-                        },
-                      ],
-                      type: "tag",
-                      start: 16,
-                      end: 20,
-                      value: "<td>",
-                    },
-                    {
-                      children: [],
-                      type: "tag",
-                      start: 21,
-                      end: 26,
-                      value: "</td>",
-                    },
-                  ],
-                  type: "tag",
-                  start: 12,
-                  end: 16,
-                  value: "<tr>",
-                },
-                {
-                  children: [],
-                  type: "tag",
-                  start: 26,
-                  end: 31,
-                  value: "</tr>",
-                },
-              ],
-              type: "tag",
-              start: 5,
-              end: 12,
-              value: "<table>",
-            },
-            {
-              children: [],
-              type: "tag",
-              start: 31,
-              end: 39,
-              value: "</table>",
-            },
-          ],
-        },
-        {
-          type: "comment",
-          start: 39,
-          end: 41,
-          value: "->",
-          kind: "simple",
-          closing: true,
-        },
-        {
-          type: "text",
-          start: 41,
-          end: 42,
-          value: "c",
-        },
-      ],
-      "03"
-    );
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broken comment closing tag pair`, () => {
+  compare(
+    ok,
+    cparser(`a<!--<table><tr><td>.</td></tr></table>->c`),
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+        value: "a",
+      },
+      {
+        type: "comment",
+        start: 1,
+        end: 5,
+        value: "<!--",
+        children: [
+          {
+            children: [
+              {
+                children: [
+                  {
+                    children: [
+                      {
+                        type: "text",
+                        start: 20,
+                        end: 21,
+                        value: ".",
+                      },
+                    ],
+                    type: "tag",
+                    start: 16,
+                    end: 20,
+                    value: "<td>",
+                  },
+                  {
+                    children: [],
+                    type: "tag",
+                    start: 21,
+                    end: 26,
+                    value: "</td>",
+                  },
+                ],
+                type: "tag",
+                start: 12,
+                end: 16,
+                value: "<tr>",
+              },
+              {
+                children: [],
+                type: "tag",
+                start: 26,
+                end: 31,
+                value: "</tr>",
+              },
+            ],
+            type: "tag",
+            start: 5,
+            end: 12,
+            value: "<table>",
+          },
+          {
+            children: [],
+            type: "tag",
+            start: 31,
+            end: 39,
+            value: "</table>",
+          },
+        ],
+      },
+      {
+        type: "comment",
+        start: 39,
+        end: 41,
+        value: "->",
+        kind: "simple",
+        closing: true,
+      },
+      {
+        type: "text",
+        start: 41,
+        end: 42,
+        value: "c",
+      },
+    ],
+    "03"
+  );
+});
 
-tap.test(
-  `04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`,
-  (t) => {
-    t.hasStrict(
-      cparser("x<a>y->b"),
-      [
-        {
-          type: "text",
-          start: 0,
-          end: 1,
-        },
-        {
-          children: [
-            {
-              type: "text", // <--------- !!!!
-              start: 4,
-              end: 8,
-              value: "y->b",
-            },
-          ],
-          type: "tag",
-          start: 1,
-          end: 4,
-          value: "<a>",
-        },
-      ],
-      "04"
-    );
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`, () => {
+  compare(
+    ok,
+    cparser("x<a>y->b"),
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+      },
+      {
+        children: [
+          {
+            type: "text", // <--------- !!!!
+            start: 4,
+            end: 8,
+            value: "y->b",
+          },
+        ],
+        type: "tag",
+        start: 1,
+        end: 4,
+        value: "<a>",
+      },
+    ],
+    "04"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`,
-  (t) => {
-    t.hasStrict(
-      cparser("<!--x<a>-->y->b"),
-      [
-        {
-          type: "comment",
-          start: 0,
-          end: 4,
-          value: "<!--",
-          children: [
-            {
-              type: "text",
-              start: 4,
-              end: 5,
-              value: "x",
-            },
-            {
-              type: "tag",
-              start: 5,
-              end: 8,
-              value: "<a>",
-            },
-          ],
-        },
-        {
-          type: "comment",
-          start: 8,
-          end: 11,
-          value: "-->",
-        },
-        {
-          type: "text", // <--------- !!!!
-          start: 11,
-          end: 15,
-          value: "y->b",
-        },
-      ],
-      "05"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`, () => {
+  compare(
+    ok,
+    cparser("<!--x<a>-->y->b"),
+    [
+      {
+        type: "comment",
+        start: 0,
+        end: 4,
+        value: "<!--",
+        children: [
+          {
+            type: "text",
+            start: 4,
+            end: 5,
+            value: "x",
+          },
+          {
+            type: "tag",
+            start: 5,
+            end: 8,
+            value: "<a>",
+          },
+        ],
+      },
+      {
+        type: "comment",
+        start: 8,
+        end: 11,
+        value: "-->",
+      },
+      {
+        type: "text", // <--------- !!!!
+        start: 11,
+        end: 15,
+        value: "y->b",
+      },
+    ],
+    "05"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the closing`,
-  (t) => {
-    t.hasStrict(
-      cparser(`a<!--b--!>c`),
-      [
-        {
-          type: "text",
-          start: 0,
-          end: 1,
-        },
-        {
-          type: "comment",
-          kind: "simple",
-          start: 1,
-          end: 5,
-          children: [
-            {
-              type: "text",
-              start: 5,
-              end: 6,
-            },
-          ],
-        },
-        {
-          type: "comment",
-          kind: "simple",
-          start: 6,
-          end: 10,
-        },
-        {
-          type: "text",
-          start: 10,
-          end: 11,
-        },
-      ],
-      "06"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the closing`, () => {
+  compare(
+    ok,
+    cparser(`a<!--b--!>c`),
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+      },
+      {
+        type: "comment",
+        kind: "simple",
+        start: 1,
+        end: 5,
+        children: [
+          {
+            type: "text",
+            start: 5,
+            end: 6,
+          },
+        ],
+      },
+      {
+        type: "comment",
+        kind: "simple",
+        start: 6,
+        end: 10,
+      },
+      {
+        type: "text",
+        start: 10,
+        end: 11,
+      },
+    ],
+    "06"
+  );
+});
 
 // 02. conditional "only" type comments
 // -----------------------------------------------------------------------------
 
-tap.test(`07 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
-  t.hasStrict(
+test(`07 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, () => {
+  compare(
+    ok,
     cparser(`a<!--[if gte mso 9]>x<![endif]-->z`),
     [
       {
@@ -348,14 +335,14 @@ tap.test(`07 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, (t) => {
     ],
     "07"
   );
-  t.end();
 });
 
 // 03. conditional "not" type comments
 // -----------------------------------------------------------------------------
 
-tap.test(`08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
-  t.hasStrict(
+test(`08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, () => {
+  compare(
+    ok,
     cparser(`a<!--[if !mso]><!-->x<!--<![endif]-->z`),
     [
       {
@@ -392,337 +379,313 @@ tap.test(`08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, (t) => {
     ],
     "08"
   );
-  t.end();
 });
 
-tap.test(
-  `09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracket`,
-  (t) => {
-    t.hasStrict(
-      cparser(`<img/>!--<![endif]-->`),
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 6,
-        },
-        {
-          type: "comment",
-          start: 6,
-          end: 21,
-          kind: "not",
-          closing: true,
-        },
-      ],
-      "09"
-    );
-    t.end();
-  }
-);
+test(`09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracket`, () => {
+  compare(
+    ok,
+    cparser(`<img/>!--<![endif]-->`),
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 6,
+      },
+      {
+        type: "comment",
+        start: 6,
+        end: 21,
+        kind: "not",
+        closing: true,
+      },
+    ],
+    "09"
+  );
+});
 
-tap.test(
-  `10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl mark`,
-  (t) => {
-    t.hasStrict(
-      cparser(`<img/><--<![endif]-->`),
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 6,
-        },
-        {
-          type: "comment",
-          start: 6,
-          end: 21,
-          kind: "not",
-          closing: true,
-        },
-      ],
-      "10"
-    );
-    t.end();
-  }
-);
+test(`10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl mark`, () => {
+  compare(
+    ok,
+    cparser(`<img/><--<![endif]-->`),
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 6,
+      },
+      {
+        type: "comment",
+        start: 6,
+        end: 21,
+        kind: "not",
+        closing: true,
+      },
+    ],
+    "10"
+  );
+});
 
-tap.test(
-  `11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`,
-  (t) => {
-    t.hasStrict(
-      cparser(`<img/><1--<![endif]-->`),
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 6,
-        },
-        {
-          type: "comment",
-          start: 6,
-          end: 22,
-          kind: "not",
-          closing: true,
-        },
-      ],
-      "11"
-    );
-    t.end();
-  }
-);
+test(`11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`, () => {
+  compare(
+    ok,
+    cparser(`<img/><1--<![endif]-->`),
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 6,
+      },
+      {
+        type: "comment",
+        start: 6,
+        end: 22,
+        kind: "not",
+        closing: true,
+      },
+    ],
+    "11"
+  );
+});
 
-tap.test(
-  `12 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
-  (t) => {
-    t.hasStrict(
-      cparser(`<img/><!-<![endif]-->`),
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 6,
-        },
-        {
-          type: "comment",
-          start: 6,
-          end: 21,
-          kind: "not",
-          closing: true,
-        },
-      ],
-      "12"
-    );
-    t.end();
-  }
-);
+test(`12 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`, () => {
+  compare(
+    ok,
+    cparser(`<img/><!-<![endif]-->`),
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 6,
+      },
+      {
+        type: "comment",
+        start: 6,
+        end: 21,
+        kind: "not",
+        closing: true,
+      },
+    ],
+    "12"
+  );
+});
 
-tap.test(
-  `13 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
-  (t) => {
-    t.hasStrict(
-      cparser(`<img/><1--<1--<1--<1--<![endif]-->`),
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 6,
-          value: "<img/>",
-        },
-        {
-          type: "text",
-          start: 6,
-          end: 18,
-          value: "<1--<1--<1--",
-        },
-        {
-          type: "comment",
-          start: 18,
-          end: 34,
-          value: `<1--<![endif]-->`,
-          kind: "not",
-          closing: true,
-        },
-      ],
-      "13"
-    );
-    t.end();
-  }
-);
+test(`13 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`, () => {
+  compare(
+    ok,
+    cparser(`<img/><1--<1--<1--<1--<![endif]-->`),
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 6,
+        value: "<img/>",
+      },
+      {
+        type: "text",
+        start: 6,
+        end: 18,
+        value: "<1--<1--<1--",
+      },
+      {
+        type: "comment",
+        start: 18,
+        end: 34,
+        value: `<1--<![endif]-->`,
+        kind: "not",
+        closing: true,
+      },
+    ],
+    "13"
+  );
+});
 
-tap.test(
-  `14 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
-  (t) => {
-    t.hasStrict(
-      cparser(`<img/><1--<1--<1--<1--zzzz<![endif]-->`),
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 6,
-        },
-        {
-          type: "text",
-          start: 6,
-          end: 26,
-        },
-        {
-          type: "comment",
-          start: 26,
-          end: 38,
-          kind: "only",
-          closing: true,
-        },
-      ],
-      "14"
-    );
-    t.end();
-  }
-);
+test(`14 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`, () => {
+  compare(
+    ok,
+    cparser(`<img/><1--<1--<1--<1--zzzz<![endif]-->`),
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 6,
+      },
+      {
+        type: "text",
+        start: 6,
+        end: 26,
+      },
+      {
+        type: "comment",
+        start: 26,
+        end: 38,
+        kind: "only",
+        closing: true,
+      },
+    ],
+    "14"
+  );
+});
 
-tap.test(
-  `15 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
-  (t) => {
-    // below, two tokens,
-    // "<img src="gif"/>"
-    // and
-    // "!--"
-    // would sit inside opening comment, inside its children[] value array
-    t.strictSame(
-      cparser(`<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`),
-      [
-        {
-          type: "comment",
-          start: 0,
-          end: 19,
-          value: "<!--[if !mso]><!-->",
-          kind: "not",
-          language: "html",
-          closing: false,
-          children: [
-            {
-              type: "tag",
-              start: 19,
-              end: 35,
-              value: '<img src="gif"/>',
-              tagNameStartsAt: 20,
-              tagNameEndsAt: 23,
-              tagName: "img",
-              recognised: true,
-              closing: false,
-              void: true,
-              pureHTML: true,
-              kind: "inline",
-              attribs: [
-                {
-                  attribName: "src",
-                  attribNameRecognised: true,
-                  attribNameStartsAt: 24,
-                  attribNameEndsAt: 27,
-                  attribOpeningQuoteAt: 28,
-                  attribClosingQuoteAt: 32,
-                  attribValueRaw: "gif",
-                  attribValue: [
-                    {
-                      type: "text",
-                      start: 29,
-                      end: 32,
-                      value: "gif",
-                    },
-                  ],
-                  attribValueStartsAt: 29,
-                  attribValueEndsAt: 32,
-                  attribStarts: 24,
-                  attribEnds: 33,
-                  attribLeft: 22,
-                },
-              ],
-              children: [],
-            },
-          ],
-        },
-        {
-          type: "comment",
-          start: 35,
-          end: 50,
-          value: "!--<![endif]-->",
-          kind: "not",
-          language: "html",
-          closing: true,
-          children: [],
-        },
-      ],
-      "15"
-    );
-    t.end();
-  }
-);
+test(`15 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`, () => {
+  // below, two tokens,
+  // "<img src="gif"/>"
+  // and
+  // "!--"
+  // would sit inside opening comment, inside its children[] value array
+  compare(
+    ok,
+    cparser(`<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`),
+    [
+      {
+        type: "comment",
+        start: 0,
+        end: 19,
+        value: "<!--[if !mso]><!-->",
+        kind: "not",
+        language: "html",
+        closing: false,
+        children: [
+          {
+            type: "tag",
+            start: 19,
+            end: 35,
+            value: '<img src="gif"/>',
+            tagNameStartsAt: 20,
+            tagNameEndsAt: 23,
+            tagName: "img",
+            recognised: true,
+            closing: false,
+            void: true,
+            pureHTML: true,
+            kind: "inline",
+            attribs: [
+              {
+                attribName: "src",
+                attribNameRecognised: true,
+                attribNameStartsAt: 24,
+                attribNameEndsAt: 27,
+                attribOpeningQuoteAt: 28,
+                attribClosingQuoteAt: 32,
+                attribValueRaw: "gif",
+                attribValue: [
+                  {
+                    type: "text",
+                    start: 29,
+                    end: 32,
+                    value: "gif",
+                  },
+                ],
+                attribValueStartsAt: 29,
+                attribValueEndsAt: 32,
+                attribStarts: 24,
+                attribEnds: 33,
+                attribLeft: 22,
+              },
+            ],
+            children: [],
+          },
+        ],
+      },
+      {
+        type: "comment",
+        start: 35,
+        end: 50,
+        value: "!--<![endif]-->",
+        kind: "not",
+        language: "html",
+        closing: true,
+        children: [],
+      },
+    ],
+    "15"
+  );
+});
 
-tap.test(
-  `16 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
-  (t) => {
-    // below, two tokens,
-    // "<img src="gif"/>"
-    // and
-    // "!--"
-    // would sit inside opening comment, inside its children[] value array
-    t.strictSame(
-      cparser(`<!--[if !mso]><!--><img src="gif"/>zzz!--<![endif]-->`),
-      [
-        {
-          type: "comment",
-          start: 0,
-          end: 19,
-          value: "<!--[if !mso]><!-->",
-          kind: "not",
-          language: "html",
-          closing: false,
-          children: [
-            {
-              type: "tag",
-              start: 19,
-              end: 35,
-              value: '<img src="gif"/>',
-              tagNameStartsAt: 20,
-              tagNameEndsAt: 23,
-              tagName: "img",
-              recognised: true,
-              closing: false,
-              void: true,
-              pureHTML: true,
-              kind: "inline",
-              attribs: [
-                {
-                  attribName: "src",
-                  attribNameRecognised: true,
-                  attribNameStartsAt: 24,
-                  attribNameEndsAt: 27,
-                  attribOpeningQuoteAt: 28,
-                  attribClosingQuoteAt: 32,
-                  attribValueRaw: "gif",
-                  attribValue: [
-                    {
-                      type: "text",
-                      start: 29,
-                      end: 32,
-                      value: "gif",
-                    },
-                  ],
-                  attribValueStartsAt: 29,
-                  attribValueEndsAt: 32,
-                  attribStarts: 24,
-                  attribEnds: 33,
-                  attribLeft: 22,
-                },
-              ],
-              children: [],
-            },
-            {
-              type: "text",
-              start: 35,
-              end: 38,
-              value: "zzz",
-            },
-          ],
-        },
-        {
-          type: "comment",
-          start: 38,
-          end: 53,
-          value: "!--<![endif]-->",
-          kind: "not",
-          language: "html",
-          closing: true,
-          children: [],
-        },
-      ],
-      "16"
-    );
-    t.end();
-  }
-);
+test(`16 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`, () => {
+  // below, two tokens,
+  // "<img src="gif"/>"
+  // and
+  // "!--"
+  // would sit inside opening comment, inside its children[] value array
+  compare(
+    ok,
+    cparser(`<!--[if !mso]><!--><img src="gif"/>zzz!--<![endif]-->`),
+    [
+      {
+        type: "comment",
+        start: 0,
+        end: 19,
+        value: "<!--[if !mso]><!-->",
+        kind: "not",
+        language: "html",
+        closing: false,
+        children: [
+          {
+            type: "tag",
+            start: 19,
+            end: 35,
+            value: '<img src="gif"/>',
+            tagNameStartsAt: 20,
+            tagNameEndsAt: 23,
+            tagName: "img",
+            recognised: true,
+            closing: false,
+            void: true,
+            pureHTML: true,
+            kind: "inline",
+            attribs: [
+              {
+                attribName: "src",
+                attribNameRecognised: true,
+                attribNameStartsAt: 24,
+                attribNameEndsAt: 27,
+                attribOpeningQuoteAt: 28,
+                attribClosingQuoteAt: 32,
+                attribValueRaw: "gif",
+                attribValue: [
+                  {
+                    type: "text",
+                    start: 29,
+                    end: 32,
+                    value: "gif",
+                  },
+                ],
+                attribValueStartsAt: 29,
+                attribValueEndsAt: 32,
+                attribStarts: 24,
+                attribEnds: 33,
+                attribLeft: 22,
+              },
+            ],
+            children: [],
+          },
+          {
+            type: "text",
+            start: 35,
+            end: 38,
+            value: "zzz",
+          },
+        ],
+      },
+      {
+        type: "comment",
+        start: 38,
+        end: 53,
+        value: "!--<![endif]-->",
+        kind: "not",
+        language: "html",
+        closing: true,
+        children: [],
+      },
+    ],
+    "16"
+  );
+});
 
-tap.test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
+test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, () => {
   // clauses are triggered but nothing's found from characters: <, ! and -
-  t.strictSame(
+  compare(
+    ok,
     cparser(`<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->`),
     [
       {
@@ -794,43 +757,40 @@ tap.test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
     ],
     "17"
   );
-  t.end();
 });
 
-tap.test(
-  `18 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`,
-  (t) => {
-    // clauses are triggered but nothing's found from characters: <, ! and -
-    t.strictSame(
-      cparser(`zzz<<![endif]-->`),
-      [
-        {
-          type: "text",
-          start: 0,
-          end: 4,
-          value: "zzz<",
-        },
-        {
-          type: "comment",
-          start: 4,
-          end: 16,
-          value: "<![endif]-->",
-          kind: "only",
-          closing: true,
-          children: [],
-          language: "html",
-        },
-      ],
-      "18"
-    );
-    t.end();
-  }
-);
+test(`18 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`, () => {
+  // clauses are triggered but nothing's found from characters: <, ! and -
+  compare(
+    ok,
+    cparser(`zzz<<![endif]-->`),
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 4,
+        value: "zzz<",
+      },
+      {
+        type: "comment",
+        start: 4,
+        end: 16,
+        value: "<![endif]-->",
+        kind: "only",
+        closing: true,
+        children: [],
+        language: "html",
+      },
+    ],
+    "18"
+  );
+});
 
 // various
 
-tap.test(`19 - a test from html-table-patcher`, (t) => {
-  t.hasStrict(
+test(`19 - a test from html-table-patcher`, () => {
+  compare(
+    ok,
     cparser(`<table><!--a--><tr><!--b<table>c<tr>d-->`),
     [
       {
@@ -920,11 +880,11 @@ tap.test(`19 - a test from html-table-patcher`, (t) => {
     ],
     "19"
   );
-  t.end();
 });
 
-tap.test(`20 - a test from html-table-patcher`, (t) => {
-  t.hasStrict(
+test(`20 - a test from html-table-patcher`, () => {
+  compare(
+    ok,
     cparser(`<table>1<tr><td>
 <table>x</table>
 </td></tr></table>`),
@@ -1012,5 +972,6 @@ tap.test(`20 - a test from html-table-patcher`, (t) => {
     ],
     "20"
   );
-  t.end();
 });
+
+test.run();

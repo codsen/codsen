@@ -7,7 +7,7 @@ import { isMatch } from "matcher";
 // From "type-fest" by Sindre Sorhus:
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = Array<JsonValue>;
+type JsonArray = JsonValue[];
 
 interface AnyObject {
   [key: string]: any;
@@ -16,7 +16,7 @@ interface AnyObject {
 // -----------------------------------------------------------------------------
 
 /* istanbul ignore next */
-function isBlank(something: any) {
+function isBlank(something: any): boolean {
   if (isObj(something)) {
     return !Object.keys(something).length;
   }
@@ -55,13 +55,13 @@ function compare(
   let bOffset = 0;
 
   // prep opts
-  const defaults: Opts = {
+  let defaults: Opts = {
     hungryForWhitespace: false,
     matchStrictly: false,
     verboseWhenMismatches: false,
     useWildcards: false,
   };
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
   console.log(
     `066 compare(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
@@ -213,8 +213,8 @@ function compare(
         console.log(`213 return false`);
         return false;
       }
-      const uniqueKeysOnS = new Set([...sKeys].filter((x) => !bKeys.has(x)));
-      const sMessage = uniqueKeysOnS.size
+      let uniqueKeysOnS = new Set([...sKeys].filter((x) => !bKeys.has(x)));
+      let sMessage = uniqueKeysOnS.size
         ? ` First object has unique keys: ${JSON.stringify(
             uniqueKeysOnS,
             null,
@@ -222,8 +222,8 @@ function compare(
           )}.`
         : "";
 
-      const uniqueKeysOnB = new Set([...bKeys].filter((x) => !sKeys.has(x)));
-      const bMessage = uniqueKeysOnB.size
+      let uniqueKeysOnB = new Set([...bKeys].filter((x) => !sKeys.has(x)));
+      let bMessage = uniqueKeysOnB.size
         ? ` Second object has unique keys:
         ${JSON.stringify(uniqueKeysOnB, null, 4)}.`
         : "";

@@ -1,5 +1,6 @@
-import { Linter, RuleObjType } from "../../linter";
 import { isLangCode } from "is-language-code";
+
+import { Linter, RuleObjType } from "../../linter";
 import checkForWhitespace from "../../util/checkForWhitespace";
 
 // rule: attribute-validate-hreflang
@@ -13,7 +14,7 @@ function attributeValidateHreflang(context: Linter): RuleObjType {
       );
 
       console.log(
-        `016 attributeValidateHreflang(): node = ${JSON.stringify(
+        `017 attributeValidateHreflang(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -35,7 +36,7 @@ function attributeValidateHreflang(context: Linter): RuleObjType {
         // beware, the charStart and charEnd are not offset, their "zero" is
         // start of an attribute's value, so if you use them, you need to
         // offset to the true index, you must add "(node.attribValueStartsAt as number)" value
-        const { charStart, charEnd, errorArr } = checkForWhitespace(
+        let { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValueRaw,
           node.attribValueStartsAt as number
         );
@@ -58,11 +59,11 @@ function attributeValidateHreflang(context: Linter): RuleObjType {
           )}`
         );
         // validate using "ietf-language-tag-regex" from npm:
-        const { message } = isLangCode(
+        let { message } = isLangCode(
           node.attribValueRaw.slice(charStart as number, charEnd as number)
         );
         console.log(
-          `065 attributeValidateHreflang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
+          `066 attributeValidateHreflang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
             message,
             null,
             4
@@ -79,7 +80,7 @@ function attributeValidateHreflang(context: Linter): RuleObjType {
         }
 
         errorArr.forEach((errorObj) => {
-          console.log(`082 RAISE ERROR`);
+          console.log(`083 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-hreflang",

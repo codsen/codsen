@@ -3,11 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { mergeAdvanced } from "../dist/object-merge-advanced.esm.js";
+
+const callerDir = path.resolve(".");
 
 const testme = () =>
   mergeAdvanced(

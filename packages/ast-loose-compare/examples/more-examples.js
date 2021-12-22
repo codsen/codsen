@@ -1,6 +1,7 @@
 // More Examples
 
 import { strict as assert } from "assert";
+
 import { looseCompare } from "../dist/ast-loose-compare.esm.js";
 
 assert.equal(

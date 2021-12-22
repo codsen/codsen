@@ -1,18 +1,21 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // considering JS code...
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - an obvious nunjucks, but within a script`, (t) => {
-  const gathered = [];
+test(`01 - an obvious nunjucks, but within a script`, () => {
+  let gathered = [];
   ct(`<script>{{</script>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
 
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -54,11 +57,10 @@ tap.test(`01 - an obvious nunjucks, but within a script`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
-tap.test(`02`, (t) => {
-  const gathered = [];
+test(`02`, () => {
+  let gathered = [];
   ct(
     `<html>real text<script>!function(e){function z{}};return"></script></body></html>`,
     {
@@ -68,7 +70,7 @@ tap.test(`02`, (t) => {
     }
   );
 
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -161,18 +163,17 @@ tap.test(`02`, (t) => {
     ],
     "02"
   );
-  t.end();
 });
 
-tap.test(`03 - tag within script`, (t) => {
-  const gathered = [];
+test(`03 - tag within script`, () => {
+  let gathered = [];
   ct(`<html><script>console.log("<html>")</script></html>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
 
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -244,5 +245,6 @@ tap.test(`03 - tag within script`, (t) => {
     ],
     "03"
   );
-  t.end();
 });
+
+test.run();

@@ -1,36 +1,31 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { pathPrev } from "../dist/ast-monkey-util.esm.js";
 
-tap.test(`01`, (t) => {
-  t.strictSame(pathPrev(""), null, "01");
-  t.end();
+test(`01`, () => {
+  equal(pathPrev(""), null, "01");
 });
 
-tap.test(`02`, (t) => {
-  t.strictSame(pathPrev("0"), null, "02");
-  t.end();
+test(`02`, () => {
+  equal(pathPrev("0"), null, "02");
 });
 
-tap.test(`03`, (t) => {
-  t.strictSame(pathPrev("1"), "0", "03");
-  t.end();
+test(`03`, () => {
+  equal(pathPrev("1"), "0", "03");
 });
 
-tap.test(`04`, (t) => {
-  t.strictSame(pathPrev("1.z"), null, "04");
-  t.end();
+test(`04`, () => {
+  equal(pathPrev("1.z"), null, "04");
 });
 
-tap.test(`05`, (t) => {
-  t.strictSame(pathPrev("9.children.33"), "9.children.32", "05");
-  t.end();
+test(`05`, () => {
+  equal(pathPrev("9.children.33"), "9.children.32", "05");
 });
 
-tap.test(`06`, (t) => {
-  t.strictSame(
-    pathPrev("9.children.1.children.2"),
-    "9.children.1.children.1",
-    "06"
-  );
-  t.end();
+test(`06`, () => {
+  equal(pathPrev("9.children.1.children.2"), "9.children.1.children.1", "06");
 });
+
+test.run();

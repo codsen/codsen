@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { setter } from "./util/util.js";
 // import { set, del } from "../dist/edit-package-json.esm.js";
 
@@ -18,84 +21,66 @@ const testObj = `{
   }
 }`;
 
-tap.test(
-  `01 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using unicode key - value is number`,
-  (t) => {
-    const source = `{
+test(`01 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using unicode key - value is number`, () => {
+  let source = `{
   "15\u00f8C": {
     "3\u0111": 1
   }
 }`;
-    const result = `{
+  let result = `{
   "15\u00f8C": {
     "3\u0111": 2
   }
 }`;
-    setter(t, source, result, "15\u00f8C.3\u0111", 2, "04.01");
-    t.end();
-  }
-);
+  setter(equal, source, result, "15\u00f8C.3\u0111", 2, "04.01");
+});
 
-tap.test(
-  `02 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using unicode key - value is string`,
-  (t) => {
-    const source = `{
+test(`02 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using unicode key - value is string`, () => {
+  let source = `{
   "15\u00f8C": {
     "3\u0111": "1"
   }
 }`;
-    const result = `{
+  let result = `{
   "15\u00f8C": {
     "3\u0111": "2"
   }
 }`;
-    setter(t, source, result, "15\u00f8C.3\u0111", "2", "04.02");
-    t.end();
-  }
-);
+  setter(equal, source, result, "15\u00f8C.3\u0111", "2", "04.02");
+});
 
-tap.test(
-  `03 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using dot in key`,
-  (t) => {
-    const source = `{
+test(`03 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set the value using dot in key`, () => {
+  let source = `{
   "a.b": {
     "looks.like": 1
   }
 }`;
-    const result = `{
+  let result = `{
   "a.b": {
     "looks.like": 2
   }
 }`;
-    setter(t, source, result, ["a.b", "looks.like"], 2, "04.03");
-    t.end();
-  }
-);
+  setter(equal, source, result, ["a.b", "looks.like"], 2, "04.03");
+});
 
-tap.test(
-  `04 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`,
-  (t) => {
-    const input = `{
+test(`04 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`, () => {
+  let input = `{
   "b": {
     "d": ["a"]
   },
   "j": {"k": "l"}
 }`;
-    const result = `{
+  let result = `{
   "b": {
     "d": ["a"]
   },
   "j": {"k":"x"}
 }`;
-    setter(t, input, result, "j", { k: "x" }, "04.04");
-    t.end();
-  }
-);
+  setter(equal, input, result, "j", { k: "x" }, "04.04");
+});
 
-tap.test(
-  `05 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`,
-  (t) => {
-    const input = `{
+test(`05 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`, () => {
+  let input = `{
   "a": "b",
   "b": {
     "c": [],
@@ -105,7 +90,7 @@ tap.test(
   },
   "j": {"k": "l"}
 }`;
-    const result = `{
+  let result = `{
   "a": "b",
   "b": {
     "c": [],
@@ -115,15 +100,11 @@ tap.test(
   },
   "j": {"k":"x"}
 }`;
-    setter(t, input, result, "j", { k: "x" }, "04.05");
-    t.end();
-  }
-);
+  setter(equal, input, result, "j", { k: "x" }, "04.05");
+});
 
-tap.test(
-  `06 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`,
-  (t) => {
-    const input = `{
+test(`06 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`, () => {
+  let input = `{
   "a": "b",
   "b": {
     "c": [],
@@ -133,7 +114,7 @@ tap.test(
   },
   "j": {"k": "l"}
 }`;
-    const result = `{
+  let result = `{
   "a": "b",
   "b": {
     "c": [],
@@ -143,17 +124,13 @@ tap.test(
   },
   "j": {"k":"x"}
 }`;
-    // path is array:
-    setter(t, input, result, ["j"], { k: "x" }, "04.06");
-    t.end();
-  }
-);
+  // path is array:
+  setter(equal, input, result, ["j"], { k: "x" }, "04.06");
+});
 
 // TODO
-tap.test(
-  `07 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`,
-  (t) => {
-    const source = `{
+test(`07 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, () => {
+  let source = `{
   "a": "b",
   "b": {
     "d": ["a", "b"],
@@ -161,7 +138,7 @@ tap.test(
     "f": "i"
   }
 }`;
-    const result = `{
+  let result = `{
   "a": "b",
   "b": {
     "d": ["x", "b"],
@@ -169,16 +146,12 @@ tap.test(
     "f": "i"
   }
 }`;
-    // path is array:
-    setter(t, source, result, "b.d.0", `x`, "04.07");
-    t.end();
-  }
-);
+  // path is array:
+  setter(equal, source, result, "b.d.0", `x`, "04.07");
+});
 
-tap.test(
-  `08 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`,
-  (t) => {
-    const result = `{
+test(`08 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, () => {
+  let result = `{
   "a": "b",
   "b": {
     "c": [],
@@ -187,24 +160,16 @@ tap.test(
     "f": "i"
   }
 }`;
-    setter(t, testObj, result, "b.d.0", `x`, "04.08");
-    t.end();
-  }
-);
+  setter(equal, testObj, result, "b.d.0", `x`, "04.08");
+});
 
-tap.test(
-  `09 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`,
-  (t) => {
-    // crop of test "should set value using number path", obj.b.d
-    setter(t, `["a", "b"]`, `["x", "b"]`, 0, `x`, "04.09");
-    t.end();
-  }
-);
+test(`09 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, () => {
+  // crop of test "should set value using number path", obj.b.d
+  setter(equal, `["a", "b"]`, `["x", "b"]`, 0, `x`, "04.09");
+});
 
-tap.test(
-  `10 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
-  (t) => {
-    const result = `{
+test(`10 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, () => {
+  let result = `{
   "a": "b",
   "b": {
     "c": "o",
@@ -213,15 +178,11 @@ tap.test(
     "f": "i"
   }
 }`;
-    setter(t, testObj, result, "b.c", `o`, "04.10");
-    t.end();
-  }
-);
+  setter(equal, testObj, result, "b.c", `o`, "04.10");
+});
 
-tap.test(
-  `11 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
-  (t) => {
-    const result = `{
+test(`11 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, () => {
+  let result = `{
   "a": "b",
   "b": {
     "c": "o",
@@ -230,16 +191,12 @@ tap.test(
     "f": "i"
   }
 }`;
-    // quotes around "o" missing:
-    setter(t, testObj, result, "b.c", `o`, "04.11");
-    t.end();
-  }
-);
+  // quotes around "o" missing:
+  setter(equal, testObj, result, "b.c", `o`, "04.11");
+});
 
-tap.test(
-  `12 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
-  (t) => {
-    const result = `{
+test(`12 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, () => {
+  let result = `{
   "a": "b",
   "b": {
     "c": "o",
@@ -248,15 +205,11 @@ tap.test(
     "f": "i"
   }
 }`;
-    setter(t, testObj, result, ["b", "c"], `o`, "04.12");
-    t.end();
-  }
-);
+  setter(equal, testObj, result, ["b", "c"], `o`, "04.12");
+});
 
-tap.test(
-  `13 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`,
-  (t) => {
-    const result = `{
+test(`13 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, () => {
+  let result = `{
   "a": "b",
   "b": {
     "c": "o",
@@ -265,16 +218,12 @@ tap.test(
     "f": "i"
   }
 }`;
-    // quotes around "o" missing:
-    setter(t, testObj, result, ["b", "c"], `o`, "04.13");
-    t.end();
-  }
-);
+  // quotes around "o" missing:
+  setter(equal, testObj, result, ["b", "c"], `o`, "04.13");
+});
 
-tap.test(
-  `14 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`,
-  (t) => {
-    const result = `{
+test(`14 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`, () => {
+  let result = `{
   "a": "b",
   "b": {
     "c": [],
@@ -283,18 +232,14 @@ tap.test(
     "f": "i"
   }
 }`;
-    // TODO: creates new keys
-    // setter(t, testObj, result, "b.e.1.g", "f", "04.14");
+  // TODO: creates new keys
+  // setter(equal, testObj, result, "b.e.1.g", "f", "04.14");
 
-    setter(t, testObj, result, "b.e.1.f", null, "04.14");
-    t.end();
-  }
-);
+  setter(equal, testObj, result, "b.e.1.f", null, "04.14");
+});
 
-tap.test(
-  `15 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`,
-  (t) => {
-    const result = `{
+test(`15 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`, () => {
+  let result = `{
   "a": "b",
   "b": {
     "c": [],
@@ -303,92 +248,72 @@ tap.test(
     "f": "i"
   }
 }`;
-    // TODO: creates new keys
-    // setter(t, testObj, result, "b.e.1.g", "f", "04.15");
+  // TODO: creates new keys
+  // setter(equal, testObj, result, "b.e.1.g", "f", "04.15");
 
-    setter(t, testObj, result, ["b", "e", 1, "f"], null, "04.15");
-    t.end();
-  }
-);
+  setter(equal, testObj, result, ["b", "e", 1, "f"], null, "04.15");
+});
 
-tap.test(
-  `16 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 1`,
-  (t) => {
-    const source = `{
+test(`16 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 1`, () => {
+  let source = `{
   "a": [{}, { "b": "c" }]
 }`;
-    const result = `{
+  let result = `{
   "a": [{}, { "b": null }]
 }`;
-    setter(t, source, result, "a.1.b", null, "04.16");
-    t.end();
-  }
-);
+  setter(equal, source, result, "a.1.b", null, "04.16");
+});
 
-tap.test(
-  `17 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 2`,
-  (t) => {
-    const source = `{
+test(`17 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 2`, () => {
+  let source = `{
   "a": [{ "b": "c" }]
 }`;
-    const result = `{
+  let result = `{
   "a": [{ "b": null }]
 }`;
-    setter(t, source, result, "a.0.b", null, "04.17");
-    t.end();
-  }
-);
+  setter(equal, source, result, "a.0.b", null, "04.17");
+});
 
-tap.test(
-  `18 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - square bracket as value`,
-  (t) => {
-    const source = `{
+test(`18 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - square bracket as value`, () => {
+  let source = `{
   "a": "[",
   "k": {
     "lm": "1",
     "no": "2"
   }
 }`;
-    const result = `{
+  let result = `{
   "a": "[",
   "k": {
     "lm": "1",
     "no": "9"
   }
 }`;
-    setter(t, source, result, "k.no", "9", "04.18");
-    t.end();
-  }
-);
+  setter(equal, source, result, "k.no", "9", "04.18");
+});
 
-tap.test(
-  `19 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`,
-  (t) => {
-    const source = `{
+test(`19 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`, () => {
+  let source = `{
   "a": "{",
   "k": {
     "lm": "1",
     "no": "2"
   }
 }`;
-    const result = `{
+  let result = `{
   "a": "{",
   "k": {
     "lm": "1",
     "no": "9"
   }
 }`;
-    setter(t, source, result, "k.no", "9", "04.19");
-    t.end();
-  }
-);
+  setter(equal, source, result, "k.no", "9", "04.19");
+});
 
-tap.test(
-  `20 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`,
-  (t) => {
-    const source = `{"a": {},"gh": {"mn": "1","yz": "-"}}`;
-    const result = `{"a": {},"gh": {"mn": "1","yz": "x"}}`;
-    setter(t, source, result, "gh.yz", "x", "04.20");
-    t.end();
-  }
-);
+test(`20 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`, () => {
+  let source = `{"a": {},"gh": {"mn": "1","yz": "-"}}`;
+  let result = `{"a": {},"gh": {"mn": "1","yz": "x"}}`;
+  setter(equal, source, result, "gh.yz", "x", "04.20");
+});
+
+test.run();

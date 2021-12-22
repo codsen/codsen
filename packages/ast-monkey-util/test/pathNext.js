@@ -1,31 +1,27 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { pathNext } from "../dist/ast-monkey-util.esm.js";
 
-tap.test(`01`, (t) => {
-  t.strictSame(pathNext("0"), "1", "01");
-  t.end();
+test(`01`, () => {
+  equal(pathNext("0"), "1", "01");
 });
 
-tap.test(`02`, (t) => {
-  t.strictSame(pathNext("1"), "2", "02");
-  t.end();
+test(`02`, () => {
+  equal(pathNext("1"), "2", "02");
 });
 
-tap.test(`03`, (t) => {
-  t.strictSame(pathNext("1.z"), "1.z", "03");
-  t.end();
+test(`03`, () => {
+  equal(pathNext("1.z"), "1.z", "03");
 });
 
-tap.test(`04`, (t) => {
-  t.strictSame(pathNext("9.children.3"), "9.children.4", "04");
-  t.end();
+test(`04`, () => {
+  equal(pathNext("9.children.3"), "9.children.4", "04");
 });
 
-tap.test(`05`, (t) => {
-  t.strictSame(
-    pathNext("9.children.1.children.0"),
-    "9.children.1.children.1",
-    "05"
-  );
-  t.end();
+test(`05`, () => {
+  equal(pathNext("9.children.1.children.0"), "9.children.1.children.1", "05");
 });
+
+test.run();

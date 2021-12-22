@@ -1,12 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 
 // release 2.11.0 - backend variables with spaces as classes
 // -----------------------------------------------------------------------------
 
-tap.test("01 - nunjucks variable as a class name", (t) => {
-  const actual = comb(
-    t,
+test("01 - nunjucks variable as a class name", () => {
+  let actual = comb(
     `<!doctype html>
 <html>
 <head>
@@ -23,7 +25,7 @@ color:  black;
 `
   ).result;
 
-  const intended = `<!doctype html>
+  let intended = `<!doctype html>
 <html>
 <head>
 </head>
@@ -34,17 +36,11 @@ color:  black;
 </html>
 `;
 
-  t.strictSame(
-    actual,
-    intended,
-    "01 - default behaviour - lib will extract var1"
-  );
-  t.end();
+  equal(actual, intended, "01 - default behaviour - lib will extract var1");
 });
 
-tap.test("02 - nunjucks variable as a class name", (t) => {
-  const actual = comb(
-    t,
+test("02 - nunjucks variable as a class name", () => {
+  let actual = comb(
     `<!doctype html>
 <html>
 <head>
@@ -61,7 +57,7 @@ color: black;
 `
   ).result;
 
-  const intended = `<!doctype html>
+  let intended = `<!doctype html>
 <html>
 <head>
 <style>
@@ -76,17 +72,15 @@ color: black;
 </html>
 `;
 
-  t.strictSame(
+  equal(
     actual,
     intended,
     "02 - default behaviour - curlies are not legal characters to be used as class names"
   );
-  t.end();
 });
 
-tap.test("03 - nunjucks variable as a class name (simplified version)", (t) => {
-  const actual = comb(
-    t,
+test("03 - nunjucks variable as a class name (simplified version)", () => {
+  let actual = comb(
     `<style>
 .aa {bb: cc;}
 </style></head>
@@ -108,23 +102,21 @@ tap.test("03 - nunjucks variable as a class name (simplified version)", (t) => {
     }
   ).result;
 
-  const intended = `</head>
+  let intended = `</head>
 <body id="{% ee %}">
 <br id="{{ ff }}">
 </body>
 `;
 
-  t.strictSame(
+  equal(
     actual,
     intended,
     "03 - we taught it how heads and tails look so it skips them now"
   );
-  t.end();
 });
 
-tap.test("04 - nunjucks variable as a class name (full version)", (t) => {
-  const actual = comb(
-    t,
+test("04 - nunjucks variable as a class name (full version)", () => {
+  let actual = comb(
     `<!doctype html>
 <html>
 <head>
@@ -153,7 +145,7 @@ color:  black;
     }
   ).result;
 
-  const intended = `<!doctype html>
+  let intended = `<!doctype html>
 <html>
 <head>
 </head>
@@ -164,61 +156,52 @@ color:  black;
 </html>
 `;
 
-  t.strictSame(
+  equal(
     actual,
     intended,
     "04 - we taught it how heads and tails look so it skips them now"
   );
-  t.end();
 });
 
-tap.test(
-  "05 - nunjucks variables mixed with classes and id's (minimal version)",
-  (t) => {
-    const actual = comb(
-      t,
-      `<style>
+test("05 - nunjucks variables mixed with classes and id's (minimal version)", () => {
+  let actual = comb(
+    `<style>
 #aa {bb: cc;}
 </style></head>
 <body id="  {{ zz }}   aa {{ yy }} dd{{xx}}">
 </body>
 `,
-      {
-        backend: [
-          {
-            heads: "{{",
-            tails: "}}",
-          },
-          {
-            heads: "{%",
-            tails: "%}",
-          },
-        ],
-      }
-    ).result;
+    {
+      backend: [
+        {
+          heads: "{{",
+          tails: "}}",
+        },
+        {
+          heads: "{%",
+          tails: "%}",
+        },
+      ],
+    }
+  ).result;
 
-    const intended = `<style>
+  let intended = `<style>
 #aa {bb: cc;}
 </style></head>
 <body id="{{ zz }} aa {{ yy }} {{xx}}">
 </body>
 `;
 
-    t.strictSame(
-      actual,
-      intended,
-      "05 - we taught it how heads and tails look so it skips them now"
-    );
-    t.end();
-  }
-);
+  equal(
+    actual,
+    intended,
+    "05 - we taught it how heads and tails look so it skips them now"
+  );
+});
 
-tap.test(
-  "06 - nunjucks variables mixed with classes and id's (full version)",
-  (t) => {
-    const actual = comb(
-      t,
-      `<!DOCTYPE html>
+test("06 - nunjucks variables mixed with classes and id's (full version)", () => {
+  let actual = comb(
+    `<!DOCTYPE html>
 <html lang="en">
 <head>
 <style type="text/css">
@@ -243,17 +226,17 @@ tap.test(
 </body>
 </html>
 `,
-      {
-        backend: [
-          {
-            heads: "{{",
-            tails: "}}",
-          },
-        ],
-      }
-    ).result;
+    {
+      backend: [
+        {
+          heads: "{{",
+          tails: "}}",
+        },
+      ],
+    }
+  ).result;
 
-    const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <style type="text/css">
@@ -279,14 +262,11 @@ tap.test(
 </html>
 `;
 
-    t.strictSame(actual, intended, "06");
-    t.end();
-  }
-);
+  equal(actual, intended, "06");
+});
 
-tap.test("07 - esp tag at the end of ignored class", (t) => {
-  const actual = comb(
-    t,
+test("07 - esp tag at the end of ignored class", () => {
+  let actual = comb(
     `<body>
 <table class="module-zzz-{{ loop.index }}">
 `,
@@ -312,17 +292,15 @@ tap.test("07 - esp tag at the end of ignored class", (t) => {
     }
   ).result;
 
-  const intended = `<body>
+  let intended = `<body>
 <table class="module-zzz-{{ loop.index }}">
 `;
 
-  t.strictSame(actual, intended, "07");
-  t.end();
+  equal(actual, intended, "07");
 });
 
-tap.test("08 - esp tag at the end of ignored class", (t) => {
-  const actual = comb(
-    t,
+test("08 - esp tag at the end of ignored class", () => {
+  let actual = comb(
     `<body>
 <table class="module-zzz-{{ loop.index }}">
 `,
@@ -340,16 +318,15 @@ tap.test("08 - esp tag at the end of ignored class", (t) => {
     }
   ).result;
 
-  const intended = `<body>
+  let intended = `<body>
 <table class="module-zzz-{{ loop.index }}">
 `;
 
-  t.strictSame(actual, intended, "08");
-  t.end();
+  equal(actual, intended, "08");
 });
 
-tap.test("09 - bug #6 - esp in head css within @font-face", (t) => {
-  const input = `<head>
+test("09 - bug #6 - esp in head css within @font-face", () => {
+  let input = `<head>
 <style>
 @font-face {
   font-family: 'SomeFont';
@@ -361,16 +338,13 @@ tap.test("09 - bug #6 - esp in head css within @font-face", (t) => {
 </style>
 </head>
 <body>yo</body>`;
-  const actual = comb(t, input).result;
+  let actual = comb(input).result;
 
-  t.strictSame(actual, input, "09");
-  t.end();
+  equal(actual, input, "09");
 });
 
-tap.test(
-  "10 - bug #6 - unlikely case, Jinja curlies end right at real closing-ones (unlikely scenario)",
-  (t) => {
-    const input = `<head>
+test("10 - bug #6 - unlikely case, Jinja curlies end right at real closing-ones (unlikely scenario)", () => {
+  let input = `<head>
 <style>
 @font-face {
   font-family: 'SomeFont';
@@ -380,15 +354,13 @@ tap.test(
 </style>
 </head>
 <body>yo</body>`;
-    const actual = comb(t, input).result;
+  let actual = comb(input).result;
 
-    t.strictSame(actual, input, "10");
-    t.end();
-  }
-);
+  equal(actual, input, "10");
+});
 
-tap.test("11 - bug #6 - jinja/liquid blocks, spaced", (t) => {
-  const input = `<head>
+test("11 - bug #6 - jinja/liquid blocks, spaced", () => {
+  let input = `<head>
 <style>
 @font-face {
   font-family: 'SomeFont';
@@ -406,16 +378,13 @@ tap.test("11 - bug #6 - jinja/liquid blocks, spaced", (t) => {
 </style>
 </head>
 <body>yo</body>`;
-  const actual = comb(t, input).result;
+  let actual = comb(input).result;
 
-  t.strictSame(actual, input, "11");
-  t.end();
+  equal(actual, input, "11");
 });
 
-tap.test(
-  "12 - bug #6 - jinja/liquid blocks, tight (unlikely, but possible in theory)",
-  (t) => {
-    const input = `<head>
+test("12 - bug #6 - jinja/liquid blocks, tight (unlikely, but possible in theory)", () => {
+  let input = `<head>
 <style>
 @font-face {
   font-family: 'SomeFont';
@@ -425,9 +394,9 @@ tap.test(
 </style>
 </head>
 <body>yo</body>`;
-    const actual = comb(t, input).result;
+  let actual = comb(input).result;
 
-    t.strictSame(actual, input, "12");
-    t.end();
-  }
-);
+  equal(actual, input, "12");
+});
+
+test.run();

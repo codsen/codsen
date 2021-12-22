@@ -1,11 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 
 // at rules
 // -----------------------------------------------------------------------------
 
-tap.test("01 - mvp", (t) => {
-  const source = `<head>
+test("01 - mvp", () => {
+  let source = `<head>
 <style type="text/css">
 @namespace url(z);
 @media (max-width: 600px) {
@@ -17,7 +20,7 @@ tap.test("01 - mvp", (t) => {
 </body>
 `;
 
-  const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
 @namespace url(z);
 </style>
@@ -26,12 +29,11 @@ tap.test("01 - mvp", (t) => {
 </body>
 `;
 
-  t.equal(comb(t, source).result, intended, "01");
-  t.end();
+  equal(comb(source).result, intended, "01");
 });
 
-tap.test("02 - @charset", (t) => {
-  const source = `<head>
+test("02 - @charset", () => {
+  let source = `<head>
 @charset "utf-8";
 <style type="text/css">@media (max-width: 600px) {
   @supports (display: grid) {
@@ -49,24 +51,20 @@ tap.test("02 - @charset", (t) => {
 </body>
 `;
 
-  const intended = `<head>
+  let intended = `<head>
 @charset "utf-8";
 </head>
 <body><a>z</a>
 </body>
 `;
 
-  t.equal(comb(t, source).result, intended, "02");
-  t.end();
+  equal(comb(source).result, intended, "02");
 });
 
 // original GitHub issue #3
-tap.test(
-  "03 - removes media query together with the whole style tag #1",
-  (t) => {
-    const actual = comb(
-      t,
-      `<!doctype html>
+test("03 - removes media query together with the whole style tag #1", () => {
+  let actual = comb(
+    `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -83,9 +81,9 @@ tap.test(
 </body>
 </html>
 `
-    ).result;
+  ).result;
 
-    const intended = `<!doctype html>
+  let intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -97,17 +95,12 @@ tap.test(
 </html>
 `;
 
-    t.strictSame(actual, intended, "03");
-    t.end();
-  }
-);
+  equal(actual, intended, "03");
+});
 
-tap.test(
-  "04 - removes media query together with the whole style tag #2",
-  (t) => {
-    const actual = comb(
-      t,
-      `<!doctype html>
+test("04 - removes media query together with the whole style tag #2", () => {
+  let actual = comb(
+    `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -125,9 +118,9 @@ zzz
 </body>
 </html>
 `
-    ).result;
+  ).result;
 
-    const intended = `<!doctype html>
+  let intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -146,17 +139,12 @@ zzz
 </html>
 `;
 
-    t.strictSame(actual, intended, "04");
-    t.end();
-  }
-);
+  equal(actual, intended, "04");
+});
 
-tap.test(
-  "05 - removes three media queries together with the style tags",
-  (t) => {
-    const actual = comb(
-      t,
-      `<!doctype html>
+test("05 - removes three media queries together with the style tags", () => {
+  let actual = comb(
+    `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -188,9 +176,9 @@ tap.test(
 </body>
 </html>
 `
-    ).result;
+  ).result;
 
-    const intended = `<!doctype html>
+  let intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -202,14 +190,11 @@ tap.test(
 </html>
 `;
 
-    t.strictSame(actual, intended, "05");
-    t.end();
-  }
-);
+  equal(actual, intended, "05");
+});
 
-tap.test("06 - empty media queries removed", (t) => {
-  const actual = comb(
-    t,
+test("06 - empty media queries removed", () => {
+  let actual = comb(
     `
 <!DOCTYPE html>
 <head>
@@ -248,7 +233,7 @@ tap.test("06 - empty media queries removed", (t) => {
 `
   ).result;
 
-  const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <head>
 <title>zzzz</title>
 </head>
@@ -264,13 +249,11 @@ tap.test("06 - empty media queries removed", (t) => {
 </html>
 `;
 
-  t.strictSame(actual, intended, "06");
-  t.end();
+  equal(actual, intended, "06");
 });
 
-tap.test("07 - multiple levels of media queries cleaned", (t) => {
-  const actual = comb(
-    t,
+test("07 - multiple levels of media queries cleaned", () => {
+  let actual = comb(
     `
 <!DOCTYPE html>
 <head>
@@ -308,7 +291,7 @@ tap.test("07 - multiple levels of media queries cleaned", (t) => {
 `
   ).result;
 
-  const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <head>
 <style type="text/css">
   @media (max-width: 600px) {
@@ -334,16 +317,12 @@ tap.test("07 - multiple levels of media queries cleaned", (t) => {
 </html>
 `;
 
-  t.strictSame(actual, intended, "07");
-  t.end();
+  equal(actual, intended, "07");
 });
 
-tap.test(
-  "08 - multiple levels of media queries cleaned + @supports wrap",
-  (t) => {
-    const actual = comb(
-      t,
-      `
+test("08 - multiple levels of media queries cleaned + @supports wrap", () => {
+  let actual = comb(
+    `
 <!DOCTYPE html>
 <head>
 <style type="text/css">
@@ -381,9 +360,9 @@ tap.test(
 </body>
 </html>
 `
-    ).result;
+  ).result;
 
-    const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <head>
 <style type="text/css">
   @charset "utf-8";
@@ -412,14 +391,11 @@ tap.test(
 </html>
 `;
 
-    t.strictSame(actual, intended, "08");
-    t.end();
-  }
-);
+  equal(actual, intended, "08");
+});
 
-tap.test("09 - @charset #1", (t) => {
-  const actual = comb(
-    t,
+test("09 - @charset #1", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -450,7 +426,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   @charset "utf-8";
@@ -464,13 +440,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "09");
-  t.end();
+  equal(actual, intended, "09");
 });
 
-tap.test("10 - @charset #2", (t) => {
-  const actual = comb(
-    t,
+test("10 - @charset #2", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -495,7 +469,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   @charset "utf-8";
@@ -508,13 +482,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "10");
-  t.end();
+  equal(actual, intended, "10");
 });
 
-tap.test("11 - @charset #3", (t) => {
-  const actual = comb(
-    t,
+test("11 - @charset #3", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -540,7 +512,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   #outlook a {padding: 0;}
@@ -554,13 +526,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "11");
-  t.end();
+  equal(actual, intended, "11");
 });
 
-tap.test("12 - @charset #4", (t) => {
-  const actual = comb(
-    t,
+test("12 - @charset #4", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -589,7 +559,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   #outlook a {padding: 0;}
@@ -602,13 +572,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "12");
-  t.end();
+  equal(actual, intended, "12");
 });
 
-tap.test("13 - @charset #5", (t) => {
-  const actual = comb(
-    t,
+test("13 - @charset #5", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -636,7 +604,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   @charset "utf-8";
@@ -648,13 +616,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "13");
-  t.end();
+  equal(actual, intended, "13");
 });
 
-tap.test("14 - at-rule is followed by whitespace and another at-rule", (t) => {
-  const actual = comb(
-    t,
+test("14 - at-rule is followed by whitespace and another at-rule", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -685,7 +651,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   #outlook a {padding: 0;}
@@ -697,13 +663,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "14");
-  t.end();
+  equal(actual, intended, "14");
 });
 
-tap.test("15 - at-rule is followed by whitespace and another at-rule", (t) => {
-  const actual = comb(
-    t,
+test("15 - at-rule is followed by whitespace and another at-rule", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -734,7 +698,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   #outlook a {padding: 0;}
@@ -746,13 +710,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "15");
-  t.end();
+  equal(actual, intended, "15");
 });
 
-tap.test("16 - at-rule followed by closing </style>", (t) => {
-  const actual = comb(
-    t,
+test("16 - at-rule followed by closing </style>", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -781,7 +743,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   #outlook a {padding: 0;}
@@ -793,13 +755,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "16");
-  t.end();
+  equal(actual, intended, "16");
 });
 
-tap.test("17 - at-rule followed by semicolon without contents", (t) => {
-  const actual = comb(
-    t,
+test("17 - at-rule followed by semicolon without contents", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -830,7 +790,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   #outlook a {padding: 0;}
@@ -842,13 +802,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "17");
-  t.end();
+  equal(actual, intended, "17");
 });
 
-tap.test("18 - at-rule with single quotes", (t) => {
-  const actual = comb(
-    t,
+test("18 - at-rule with single quotes", () => {
+  let actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
@@ -879,7 +837,7 @@ zzz
     }
   ).result;
 
-  const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   @namespace 'XML-namespace-URL';
@@ -892,12 +850,11 @@ zzz
 </html>
 `;
 
-  t.strictSame(actual, intended, "18");
-  t.end();
+  equal(actual, intended, "18");
 });
 
-tap.test("19 - copes with @font-face within media query", (t) => {
-  const source = `
+test("19 - copes with @font-face within media query", () => {
+  let source = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -941,7 +898,7 @@ tap.test("19 - copes with @font-face within media query", (t) => {
 </html>
 `;
 
-  const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -983,12 +940,11 @@ tap.test("19 - copes with @font-face within media query", (t) => {
 </body>
 </html>
 `;
-  t.strictSame(comb(t, source).result, intended, "19");
-  t.end();
+  equal(comb(source).result, intended, "19");
 });
 
-tap.test("20 - copes with @font-face not within media query", (t) => {
-  const source = `
+test("20 - copes with @font-face not within media query", () => {
+  let source = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1015,7 +971,7 @@ tap.test("20 - copes with @font-face not within media query", (t) => {
 </html>
 `;
 
-  const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1040,12 +996,11 @@ tap.test("20 - copes with @font-face not within media query", (t) => {
 </body>
 </html>
 `;
-  t.strictSame(comb(t, source).result, intended, "20");
-  t.end();
+  equal(comb(source).result, intended, "20");
 });
 
-tap.test("21 - retains media queries", (t) => {
-  const source = `<head>
+test("21 - retains media queries", () => {
+  let source = `<head>
 <style>
 .zz{a:1;}
 @media screen and (max-width: 600px){.bb .cc{max-width:100%;}
@@ -1055,7 +1010,7 @@ tap.test("21 - retains media queries", (t) => {
 <body><a class="zz bb cc">z</a>
 </body>
 `;
-  const uglified = `<head>
+  let uglified = `<head>
 <style>
 .z{a:1;}
 @media screen and (max-width: 600px){.b .c{max-width:100%;}
@@ -1067,8 +1022,8 @@ tap.test("21 - retains media queries", (t) => {
 `;
 
   // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains set
-  t.equal(
-    comb(t, source, {
+  equal(
+    comb(source, {
       uglify: false,
       removeHTMLComments: false,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
@@ -1076,8 +1031,8 @@ tap.test("21 - retains media queries", (t) => {
     source,
     "21.01"
   );
-  t.equal(
-    comb(t, source, {
+  equal(
+    comb(source, {
       uglify: false,
       removeHTMLComments: true,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
@@ -1085,8 +1040,8 @@ tap.test("21 - retains media queries", (t) => {
     source,
     "21.02"
   );
-  t.equal(
-    comb(t, source, {
+  equal(
+    comb(source, {
       uglify: true,
       removeHTMLComments: false,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
@@ -1094,8 +1049,8 @@ tap.test("21 - retains media queries", (t) => {
     uglified,
     "21.03"
   );
-  t.equal(
-    comb(t, source, {
+  equal(
+    comb(source, {
       uglify: true,
       uglified: true,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
@@ -1105,8 +1060,8 @@ tap.test("21 - retains media queries", (t) => {
   );
 
   // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains empty
-  t.equal(
-    comb(t, source, {
+  equal(
+    comb(source, {
       uglify: false,
       removeHTMLComments: false,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
@@ -1114,8 +1069,8 @@ tap.test("21 - retains media queries", (t) => {
     source,
     "21.05"
   );
-  t.equal(
-    comb(t, source, {
+  equal(
+    comb(source, {
       uglify: false,
       removeHTMLComments: true,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
@@ -1123,8 +1078,8 @@ tap.test("21 - retains media queries", (t) => {
     source,
     "21.06"
   );
-  t.equal(
-    comb(t, source, {
+  equal(
+    comb(source, {
       uglify: true,
       removeHTMLComments: false,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
@@ -1132,8 +1087,8 @@ tap.test("21 - retains media queries", (t) => {
     uglified,
     "21.07"
   );
-  t.equal(
-    comb(t, source, {
+  equal(
+    comb(source, {
       uglify: true,
       removeHTMLComments: true,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
@@ -1141,12 +1096,10 @@ tap.test("21 - retains media queries", (t) => {
     uglified,
     "21.08"
   );
-  t.end();
 });
 
-tap.test("22 - does not touch @font-face", (t) => {
-  const actual = comb(
-    t,
+test("22 - does not touch @font-face", () => {
+  let actual = comb(
     `
 <!DOCTYPE html>
 <head>
@@ -1191,7 +1144,7 @@ tap.test("22 - does not touch @font-face", (t) => {
 `
   ).result;
 
-  const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <head>
 <style type="text/css">
   @font-face {
@@ -1215,16 +1168,12 @@ tap.test("22 - does not touch @font-face", (t) => {
 </html>
 `;
 
-  t.strictSame(actual, intended, "22");
-  t.end();
+  equal(actual, intended, "22");
 });
 
-tap.test(
-  "23 - does not touch @import with query strings containing commas",
-  (t) => {
-    const actual = comb(
-      t,
-      `
+test("23 - does not touch @import with query strings containing commas", () => {
+  let actual = comb(
+    `
 <!DOCTYPE html>
 <head>
 <title>zzzz</title>
@@ -1243,9 +1192,9 @@ tap.test(
 </body>
 </html>
 `
-    ).result;
+  ).result;
 
-    const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <head>
 <title>zzzz</title>
 <style type="text/css">
@@ -1264,17 +1213,12 @@ tap.test(
 </html>
 `;
 
-    t.strictSame(actual, intended, "23");
-    t.end();
-  }
-);
+  equal(actual, intended, "23");
+});
 
-tap.test(
-  "24 - @media contains classes to remove, @import present in the vicinity",
-  (t) => {
-    const actual = comb(
-      t,
-      `<html lang="en">
+test("24 - @media contains classes to remove, @import present in the vicinity", () => {
+  let actual = comb(
+    `<html lang="en">
 <head>
 <style type="text/css">
 
@@ -1292,19 +1236,19 @@ zzz
 </body>
 </html>
 `,
-      {
-        whitelist: [
-          "#outlook",
-          ".ExternalClass",
-          ".module-*",
-          ".Mso*",
-          ".ReadMsgBody",
-          ".yshortcuts",
-        ],
-      }
-    ).result;
+    {
+      whitelist: [
+        "#outlook",
+        ".ExternalClass",
+        ".module-*",
+        ".Mso*",
+        ".ReadMsgBody",
+        ".yshortcuts",
+      ],
+    }
+  ).result;
 
-    const intended = `<html lang="en">
+  let intended = `<html lang="en">
 <head>
 <style type="text/css">
   @import url('https://fonts.googleapis.com/css?family=Meriweather|Open+Sans');
@@ -1317,14 +1261,11 @@ zzz
 </html>
 `;
 
-    t.strictSame(actual, intended, "24");
-    t.end();
-  }
-);
+  equal(actual, intended, "24");
+});
 
-tap.test("25 - media query with asterisk", (t) => {
-  const actual = comb(
-    t,
+test("25 - media query with asterisk", () => {
+  let actual = comb(
     `<!doctype html>
 <html>
 <head>
@@ -1345,7 +1286,7 @@ tap.test("25 - media query with asterisk", (t) => {
 `
   ).result;
 
-  const intended = `<!doctype html>
+  let intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1357,13 +1298,11 @@ tap.test("25 - media query with asterisk", (t) => {
 </html>
 `;
 
-  t.strictSame(actual, intended, "25");
-  t.end();
+  equal(actual, intended, "25");
 });
 
-tap.test("26 - complex media query #1", (t) => {
-  const actual = comb(
-    t,
+test("26 - complex media query #1", () => {
+  let actual = comb(
     `<!doctype html>
 <html>
 <head>
@@ -1384,7 +1323,7 @@ tap.test("26 - complex media query #1", (t) => {
 `
   ).result;
 
-  const intended = `<!doctype html>
+  let intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1396,13 +1335,11 @@ tap.test("26 - complex media query #1", (t) => {
 </html>
 `;
 
-  t.strictSame(actual, intended, "26");
-  t.end();
+  equal(actual, intended, "26");
 });
 
-tap.test("27 - complex media query #2", (t) => {
-  const actual = comb(
-    t,
+test("27 - complex media query #2", () => {
+  let actual = comb(
     `<!doctype html>
 <html>
 <head>
@@ -1423,7 +1360,7 @@ tap.test("27 - complex media query #2", (t) => {
 `
   ).result;
 
-  const intended = `<!doctype html>
+  let intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1435,6 +1372,7 @@ tap.test("27 - complex media query #2", (t) => {
 </html>
 `;
 
-  t.strictSame(actual, intended, "27");
-  t.end();
+  equal(actual, intended, "27");
 });
+
+test.run();

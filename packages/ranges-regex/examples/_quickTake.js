@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { rRegex } from "../dist/ranges-regex.esm.js";
 
 const oldString = `The quick brown fox jumps over the lazy dog.`;

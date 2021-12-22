@@ -1,21 +1,23 @@
 import fs from "fs";
 import { promisify } from "util";
-const read = promisify(fs.readFile);
 import { ensureDirSync } from "fs-extra";
-
 import path from "path";
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
 import clone from "lodash.clonedeep";
 import { createRequire } from "module";
+import { fileURLToPath } from "url";
+
+const read = promisify(fs.readFile);
 const require = createRequire(import.meta.url);
 const pack = require("../package.json");
 
 const write = promisify(require("write-file-atomic"));
 
-import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -115,9 +117,9 @@ const test2FileContents = [packTest12Lib3, rootPack];
 // Unit tests
 // -----------------------------------------------------------------------------
 
-tap.test("01 - monorepo", async (t) => {
+test("01 - monorepo", async () => {
   // const tempFolder = "temp";
-  const tempFolder = tempy.directory();
+  let tempFolder = tempy.directory();
 
   // 1. The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
@@ -144,7 +146,7 @@ tap.test("01 - monorepo", async (t) => {
         received.stdout &&
         received.stdout.includes("FetchError")
       ) {
-        t.fail("Internet is down");
+        not.ok("Internet is down");
       }
     })
     .then(() =>
@@ -159,46 +161,46 @@ tap.test("01 - monorepo", async (t) => {
     // )
     .then((receivedContents) => {
       // array comes in, but each JSON inside in unparsed and in string format:
-      const contents = receivedContents.map((arr) => JSON.parse(arr));
+      let contents = receivedContents.map((arr) => JSON.parse(arr));
 
       // lib1:
-      t.match(contents[0].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
-      t.match(contents[0].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      t.match(contents[0].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
-      t.match(contents[0].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
+      match(contents[0].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
+      match(contents[0].devDependencies.husky, /\^\d+\.\d+\.\d+/);
+      match(contents[0].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
+      match(contents[0].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
       // lib2:
-      t.match(contents[1].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
-      t.match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      t.match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
-      t.match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
+      match(contents[1].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
+      match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
+      match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
+      match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
 
       // workspace: should be retained
-      t.match(
+      match(
         contents[1].devDependencies["cz-conventional-changelog"],
         /workspace:\^\d+\.\d+\.\d+/
       );
 
       // lib3 in node_modules should be intact:
-      t.equal(contents[2].dependencies["check-types-mini"], "*");
-      t.equal(contents[2].devDependencies.husky, "latest");
-      t.equal(contents[2].devDependencies.commitizen, "*");
-      t.equal(contents[2].devDependencies.prettier, "1.16.1");
+      equal(contents[2].dependencies["check-types-mini"], "*");
+      equal(contents[2].devDependencies.husky, "latest");
+      equal(contents[2].devDependencies.commitizen, "*");
+      equal(contents[2].devDependencies.prettier, "1.16.1");
 
       // root package.json:
       // at the time of writing this, latest Detergent is 4.0.4. We set original
       // version in root as ^1.0.0, so check is, is the second digit greater than
       // or equal to 4.
-      t.ok(
+      ok(
         Number.parseInt(contents[3].dependencies.detergent.slice(1, 2), 10) >= 4
       );
     })
-    .catch((err) => t.fail(err));
-
-  t.end();
+    .catch((err) => {
+      throw new Error(err);
+    });
 });
 
-tap.test("02 - normal repo", async (t) => {
-  const tempFolder = tempy.directory();
+test("02 - normal repo", async () => {
+  let tempFolder = tempy.directory();
 
   // 1. create folders:
   ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
@@ -222,7 +224,7 @@ tap.test("02 - normal repo", async (t) => {
         received.stdout &&
         received.stdout.includes("FetchError")
       ) {
-        t.fail("Internet is down");
+        not.ok("Internet is down");
       }
     })
     .then(() =>
@@ -237,119 +239,113 @@ tap.test("02 - normal repo", async (t) => {
     )
     .then((incomingContents) => {
       // array comes in, but each JSON inside in unparsed and in string format:
-      const contents = incomingContents.map((arr) => JSON.parse(arr));
+      let contents = incomingContents.map((arr) => JSON.parse(arr));
 
       // node_modules/lib3/package.json:
-      t.equal(contents[0].dependencies["check-types-mini"], "*");
-      t.equal(contents[0].devDependencies.husky, "latest");
-      t.equal(contents[0].devDependencies.commitizen, "*");
-      t.equal(contents[0].devDependencies.prettier, "1.16.1");
+      equal(contents[0].dependencies["check-types-mini"], "*");
+      equal(contents[0].devDependencies.husky, "latest");
+      equal(contents[0].devDependencies.commitizen, "*");
+      equal(contents[0].devDependencies.prettier, "1.16.1");
 
       // root package.json:
-      t.match(contents[1].dependencies.detergent, /\^\d+\.\d+\.\d+/);
-      t.match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      t.match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
-      t.match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
+      match(contents[1].dependencies.detergent, /\^\d+\.\d+\.\d+/);
+      match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
+      match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
+      match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
     })
-    .catch((err) => t.fail(err));
-
-  t.end();
+    .catch((err) => {
+      throw new Error(err);
+    });
 });
 
-tap.test(
-  "03 - deletes deps from devdeps if they are among normal deps",
-  async (t) => {
-    const tempFolder = tempy.directory();
+test("03 - deletes deps from devdeps if they are among normal deps", async () => {
+  let tempFolder = tempy.directory();
 
-    // 0. We need to add redundant deps onto normal deps key in package.json:
-    const tweakedContents = clone(test2FileContents);
-    tweakedContents[1].dependencies.commitizen = "*";
-    // it will contain commitizen on both deps and dev deps
+  // 0. We need to add redundant deps onto normal deps key in package.json:
+  let tweakedContents = clone(test2FileContents);
+  tweakedContents[1].dependencies.commitizen = "*";
+  // it will contain commitizen on both deps and dev deps
 
-    // 1. create folders:
-    ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
+  // 1. create folders:
+  ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
 
-    // asynchronously write all test files
+  // asynchronously write all test files
 
-    await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
-      write(
-        path.join(tempFolder, oneOfTestFilePaths),
-        JSON.stringify(tweakedContents[testIndex], null, 2)
+  await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
+    write(
+      path.join(tempFolder, oneOfTestFilePaths),
+      JSON.stringify(tweakedContents[testIndex], null, 2)
+    )
+  )
+    .then(() =>
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
+        shell: true,
+      })
+    )
+    .then((received) => {
+      if (
+        received &&
+        received.stdout &&
+        received.stdout.includes("FetchError")
+      ) {
+        not.ok("Internet is down");
+      }
+    })
+    .then(() =>
+      pMap(test2FilePaths, (oneOfPaths) =>
+        read(path.join(tempFolder, oneOfPaths), "utf8")
       )
     )
-      .then(() =>
-        execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
-          shell: true,
-        })
-      )
-      .then((received) => {
-        if (
-          received &&
-          received.stdout &&
-          received.stdout.includes("FetchError")
-        ) {
-          t.fail("Internet is down");
-        }
-      })
-      .then(() =>
-        pMap(test2FilePaths, (oneOfPaths) =>
-          read(path.join(tempFolder, oneOfPaths), "utf8")
-        )
-      )
-      .then((received) =>
-        execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
-          shell: true,
-        }).then(() => received)
-      )
-      .then((incomingContents) => {
-        // array comes in, but each JSON inside in unparsed and in string format:
-        const contents = incomingContents.map((arr) => JSON.parse(arr));
-        // root package.json devdeps should not contain the commitizen:
-        t.ok(!Object.keys(contents[1].devDependencies).includes("commitizen"));
-      })
-      .catch((err) => t.fail(err));
-
-    t.end();
-  }
-);
-
-tap.test("04 - version output mode", async (t) => {
-  const reportedVersion1 = await execa("./cli.js", ["-v"]);
-  t.equal(reportedVersion1.stdout, pack.version, "04.01");
-
-  const reportedVersion2 = await execa("./cli.js", ["--version"]);
-  t.equal(reportedVersion2.stdout, pack.version, "04.02");
-  t.end();
+    .then((received) =>
+      execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
+        shell: true,
+      }).then(() => received)
+    )
+    .then((incomingContents) => {
+      // array comes in, but each JSON inside in unparsed and in string format:
+      let contents = incomingContents.map((arr) => JSON.parse(arr));
+      // root package.json devdeps should not contain the commitizen:
+      ok(!Object.keys(contents[1].devDependencies).includes("commitizen"));
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
 });
 
-tap.test("05 - help output mode", async (t) => {
-  const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.match(reportedVersion1.stdout, /Usage/, "05.01");
-  t.match(reportedVersion1.stdout, /Options/, "05.02");
+test("04 - version output mode", async () => {
+  let reportedVersion1 = await execa("./cli.js", ["-v"]);
+  equal(reportedVersion1.stdout, pack.version, "04.01");
 
-  const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.match(reportedVersion2.stdout, /Usage/, "05.03");
-  t.match(reportedVersion2.stdout, /Options/, "05.04");
-
-  t.end();
+  let reportedVersion2 = await execa("./cli.js", ["--version"]);
+  equal(reportedVersion2.stdout, pack.version, "04.02");
 });
 
-tap.test("06 - no files found in the given directory", async (t) => {
-  const tempFolder = tempy.directory();
+test("05 - help output mode", async () => {
+  let reportedVersion1 = await execa("./cli.js", ["-h"]);
+  match(reportedVersion1.stdout, /Usage/, "05.01");
+  match(reportedVersion1.stdout, /Options/, "05.02");
+
+  let reportedVersion2 = await execa("./cli.js", ["--help"]);
+  match(reportedVersion2.stdout, /Usage/, "05.03");
+  match(reportedVersion2.stdout, /Options/, "05.04");
+});
+
+test("06 - no files found in the given directory", async () => {
+  let tempFolder = tempy.directory();
   // create folder:
   ensureDirSync(path.resolve(tempFolder));
 
   // call execa on that empty folder
-  const stdOutContents = await execa(
+  let stdOutContents = await execa(
     `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`,
     { shell: true }
   );
 
   // CLI should exit with a non-error code zero:
-  t.equal(stdOutContents.exitCode, 0, "06");
+  equal(stdOutContents.exitCode, 0, "06");
 
   // delete folder:
   await execaCommand(`rm -rf ${path.join(__dirname, "../temp")}`);
-
-  t.end();
 });
+
+test.run();

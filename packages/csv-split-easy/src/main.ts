@@ -1,8 +1,10 @@
 /* eslint no-param-reassign:0 */
 
-import { version as v } from "../package.json";
-const version: string = v;
 import { remSep } from "string-remove-thousand-separators";
+
+import { version as v } from "../package.json";
+
+const version: string = v;
 
 interface Opts {
   removeThousandSeparatorsFromNumbers: boolean;
@@ -22,7 +24,7 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
   let colStarts = 0;
   let lineBreakStarts = 0;
   let rowArray = [];
-  const resArray = [];
+  let resArray = [];
   let ignoreCommasThatFollow = false;
   let thisRowContainsOnlyEmptySpace = true; // we need at least one non-empty element to
   // flip it to `false` on each line
@@ -38,7 +40,7 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
   }
 
   // prep opts
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
   if (typeof str !== "string") {
     throw new TypeError(
@@ -75,14 +77,14 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
         // 1. turn off the flag:
         ignoreCommasThatFollow = false;
         // 2. dump the value that ends here:
-        const newElem = str.slice(colStarts, i);
+        let newElem = str.slice(colStarts, i);
         // if the element contains only empty space,
         if (newElem.trim() !== "") {
           thisRowContainsOnlyEmptySpace = false;
         }
         // if the element contains the double quote escape character,
         // chances are it doesn't need to have seperators removed
-        const processedElem = /""/.test(newElem)
+        let processedElem = /""/.test(newElem)
           ? newElem.replace(/""/g, '"')
           : remSep(newElem, {
               removeThousandSeparatorsFromNumbers:
@@ -105,7 +107,7 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
       if (str[i - 1] !== '"' && !ignoreCommasThatFollow) {
         // dump the previous value into array if the character before it, the double
         // quote, hasn't dumped the value already:
-        const newElem = str.slice(colStarts, i);
+        let newElem = str.slice(colStarts, i);
         // if the element contains only empty space,
         if (newElem.trim() !== "") {
           thisRowContainsOnlyEmptySpace = false;
@@ -140,7 +142,7 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
         lineBreakStarts = i;
         // 2. dump the value into rowArray only if closing double quote hasn't dumped already:
         if (!ignoreCommasThatFollow && str[i - 1] !== '"') {
-          const newElem = str.slice(colStarts, i);
+          let newElem = str.slice(colStarts, i);
           // if the element contains only empty space,
           if (newElem.trim() !== "") {
             thisRowContainsOnlyEmptySpace = false;
@@ -185,7 +187,7 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
       // dump the value into rowArray, but only if the current character is
       // not a double quote, because it will have dumped already:
       if (str[i] !== '"') {
-        const newElem = str.slice(colStarts, i + 1);
+        let newElem = str.slice(colStarts, i + 1);
         // if the element contains only empty space,
         if (newElem.trim()) {
           thisRowContainsOnlyEmptySpace = false;

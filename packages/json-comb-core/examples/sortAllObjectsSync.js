@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 // Synchronous `getKeysetSync()`
 
 import { strict as assert } from "assert";
+
 import {
   getKeysetSync,
   getKeyset,

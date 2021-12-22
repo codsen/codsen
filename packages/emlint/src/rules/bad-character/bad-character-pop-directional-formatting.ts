@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/202c/index.htm
 
 function badCharacterPopDirectionalFormatting(context: Linter): RuleObjType {
-  const charCode = 8236;
+  let charCode = 8236;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

@@ -1,5 +1,6 @@
 import { mixer } from "test-mixer";
 import { rApply } from "ranges-apply";
+
 import { crush as crushESM, defaults } from "../../dist/html-crush.esm.js";
 
 // sugar-coat the mixer to avoid putting "defaults" everywhere
@@ -7,10 +8,10 @@ function mixerToExport(ref) {
   return mixer(ref, defaults);
 }
 
-function m(t, str, opts) {
+function m(equal, str, opts) {
   // check, do ranges really render into the result string
-  const res = crushESM(str, opts);
-  t.equal(
+  let res = crushESM(str, opts);
+  equal(
     res.result,
     rApply(str, res.ranges),
     `ranges don't render into result string!\n\ninput string:\n${JSON.stringify(
@@ -24,7 +25,7 @@ function m(t, str, opts) {
     )}\n\noutput ranges:\n${JSON.stringify(res.ranges, null, 4)}`
   );
   if (Array.isArray(res.ranges) && !res.ranges.length) {
-    t.fail("empty ranges should be null, not empty array!");
+    throw new Error("empty ranges should be null, not empty array!");
   }
   return res;
 }

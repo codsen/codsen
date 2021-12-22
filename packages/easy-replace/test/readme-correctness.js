@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // double-check the README's corectness
 // ==============================
 
-tap.test("01 - readme example #1", (t) => {
-  t.equal(
+test("01 - readme example #1", () => {
+  equal(
     er(
       "a x c x d",
       {
@@ -23,11 +26,10 @@ tap.test("01 - readme example #1", (t) => {
     "a 🦄 c 🦄 d",
     "test 13.1"
   );
-  t.end();
 });
 
-tap.test("02 - readme example #2", (t) => {
-  t.equal(
+test("02 - readme example #2", () => {
+  equal(
     er(
       "🐴i🦄 🐴i i🦄 i",
       {
@@ -44,11 +46,10 @@ tap.test("02 - readme example #2", (t) => {
     "x x x x",
     "test 13.2"
   );
-  t.end();
 });
 
-tap.test("03 - readme example #3", (t) => {
-  t.equal(
+test("03 - readme example #3", () => {
+  equal(
     er(
       "a🦄c x🦄x",
       {
@@ -65,11 +66,10 @@ tap.test("03 - readme example #3", (t) => {
     "a🦄c x🐴x",
     "test 13.3"
   );
-  t.end();
 });
 
-tap.test("04 - readme example #4", (t) => {
-  t.equal(
+test("04 - readme example #4", () => {
+  equal(
     er(
       "zzzzz  zzzzzz zzzzzz",
       {
@@ -86,11 +86,10 @@ tap.test("04 - readme example #4", (t) => {
     "zzzzz zzzzzz zzzzzz",
     "test 13.4"
   );
-  t.end();
 });
 
-tap.test("05 - readme example #5", (t) => {
-  t.equal(
+test("05 - readme example #5", () => {
+  equal(
     er(
       "<br /><br/><br />",
       {
@@ -107,11 +106,10 @@ tap.test("05 - readme example #5", (t) => {
     "<br /><br /><br />",
     "test 13.5"
   );
-  t.end();
 });
 
-tap.test("06 - readme example #6", (t) => {
-  t.equal(
+test("06 - readme example #6", () => {
+  equal(
     er(
       "&nbsp; nbsp &nbsp nbsp;",
       {
@@ -128,5 +126,6 @@ tap.test("06 - readme example #6", (t) => {
     "&nbsp; &nbsp; &nbsp; &nbsp;",
     "test 13.6"
   );
-  t.end();
 });
+
+test.run();

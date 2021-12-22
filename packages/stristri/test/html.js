@@ -1,48 +1,56 @@
-import tap from "tap";
+import { test } from "uvu";
+import * as assert from "uvu/assert";
+
 import { stri as stri2 } from "../dist/stristri.esm.js";
 import { stri, mixer } from "./util/util.js";
 
-tap.test(`01 - testing api directly`, (t) => {
-  t.equal(stri2("<div>").result, "", "01");
-  t.end();
+test(`01 - testing api directly`, () => {
+  assert.equal(stri2("<div>").result, "", "01");
 });
 
 // HTML only
 // -----------------------------------------------------------------------------
 
-tap.test(`02 - basic`, (t) => {
-  const source = `<html><div>`;
+test(`02 - basic`, () => {
+  let source = `<html><div>`;
   mixer({
     html: true,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, source, opt).result, ``, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, source, opt).result,
+      ``,
+      JSON.stringify(opt, null, 4)
+    );
   });
   mixer({
     html: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, source, opt).result,
+    assert.equal(
+      stri(assert, n, source, opt).result,
       `<html><div>`,
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`03 - basic`, (t) => {
-  const source = `abc<!--tralala-->def`;
+test(`03 - basic`, () => {
+  let source = `abc<!--tralala-->def`;
   mixer({
     html: true,
     text: true,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, source, opt).result, ``, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, source, opt).result,
+      ``,
+      JSON.stringify(opt, null, 4)
+    );
   });
   mixer({
     html: true,
     text: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, source, opt).result,
+    assert.equal(
+      stri(assert, n, source, opt).result,
       `abc def`,
       JSON.stringify(opt, null, 4)
     );
@@ -51,8 +59,8 @@ tap.test(`03 - basic`, (t) => {
     html: false,
     text: true,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, source, opt).result,
+    assert.equal(
+      stri(assert, n, source, opt).result,
       `<!--tralala-->`,
       JSON.stringify(opt, null, 4)
     );
@@ -61,34 +69,37 @@ tap.test(`03 - basic`, (t) => {
     html: false,
     text: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, source, opt).result,
+    assert.equal(
+      stri(assert, n, source, opt).result,
       source,
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
 // mixed
 // -----------------------------------------------------------------------------
 
-tap.test(`04 - ensure no accidental text concat`, (t) => {
-  const source = `abc<html><div>def`;
+test(`04 - ensure no accidental text concat`, () => {
+  let source = `abc<html><div>def`;
 
   mixer({
     html: true,
     text: true,
   }).forEach((opt, n) => {
-    t.equal(stri(t, n, source, opt).result, ``, JSON.stringify(opt, null, 4));
+    assert.equal(
+      stri(assert, n, source, opt).result,
+      ``,
+      JSON.stringify(opt, null, 4)
+    );
   });
 
   mixer({
     html: true,
     text: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, source, opt).result,
+    assert.equal(
+      stri(assert, n, source, opt).result,
       `abc def`,
       JSON.stringify(opt, null, 4)
     );
@@ -98,8 +109,8 @@ tap.test(`04 - ensure no accidental text concat`, (t) => {
     html: false,
     text: true,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, source, opt).result,
+    assert.equal(
+      stri(assert, n, source, opt).result,
       `<html><div>`,
       JSON.stringify(opt, null, 4)
     );
@@ -109,19 +120,20 @@ tap.test(`04 - ensure no accidental text concat`, (t) => {
     html: false,
     text: false,
   }).forEach((opt, n) => {
-    t.equal(
-      stri(t, n, source, opt).result,
+    assert.equal(
+      stri(assert, n, source, opt).result,
       source,
       JSON.stringify(opt, null, 4)
     );
   });
-
-  t.end();
 });
 
-tap.test(`05`, (t) => {
-  t.match(
-    stri2(`<div>Script says hello world and sky and sea</div>`),
+test(`05`, () => {
+  let { result, applicableOpts, templatingLang } = stri2(
+    `<div>Script says hello world and sky and sea</div>`
+  );
+  assert.equal(
+    { result, applicableOpts, templatingLang },
     {
       result: `Script says hello world and sky and sea`,
       applicableOpts: {
@@ -129,6 +141,7 @@ tap.test(`05`, (t) => {
         css: false,
         text: true,
         templatingTags: false,
+        js: false,
       },
       templatingLang: {
         name: null,
@@ -136,5 +149,6 @@ tap.test(`05`, (t) => {
     },
     "05"
   );
-  t.end();
 });
+
+test.run();

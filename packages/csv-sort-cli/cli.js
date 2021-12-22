@@ -10,15 +10,15 @@ import { sort } from "csv-sort";
 import fs from "fs";
 import { globby } from "globby";
 import inquirer from "inquirer";
-
-const { log } = console;
 import meow from "meow";
 import path from "path";
 // import updateNotifier from "update-notifier";
 import pullAll from "lodash.pullall";
 import uniq from "lodash.uniq";
-
 import { createRequire } from "module";
+
+const { log } = console;
+
 const require = createRequire(import.meta.url);
 const { name } = require("./package.json");
 
@@ -67,7 +67,7 @@ function hasOwnProperty(obj, prop) {
 function offerAListOfCSVsToPickFrom(stateObj) {
   // this means, it was called without any arguments.
   // that's fine
-  const allCSVsHere = globby.sync("./*.csv");
+  let allCSVsHere = globby.sync("./*.csv");
   if (allCSVsHere.length === 0) {
     // log(chalk.red(`\ncsv-sort-cli: Alas, computer couldn't find any CSV files
     // in this folder and bailed on us!`))
@@ -78,7 +78,7 @@ function offerAListOfCSVsToPickFrom(stateObj) {
     );
   }
   ui.log.write(chalk.grey("To quit, press CTRL+C"));
-  const questions = [
+  let questions = [
     {
       type: "list",
       name: "file",
@@ -155,7 +155,7 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
 ) {
   // ---------------------------------  2  -------------------------------------
   // basically achieving: (!fs.existsSync)
-  const erroneous = pullAll(
+  let erroneous = pullAll(
     state.toDoList.map((onePath) => path.resolve(onePath)),
     state.toDoList.map((onePath) => path.resolve(onePath)).filter(fs.existsSync)
   ).map((singlePath) => path.basename(singlePath)); // then filtering file names-only
@@ -205,7 +205,7 @@ thePromise
       fs.readFile(requestedCSVsPath, "utf8", (csvError, csvData) => {
         if (csvData) {
           try {
-            const cleaned = sort(csvData);
+            let cleaned = sort(csvData);
             if (receivedState.overwrite) {
               // overwrite
               fs.writeFile(

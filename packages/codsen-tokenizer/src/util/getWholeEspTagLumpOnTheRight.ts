@@ -1,6 +1,5 @@
-import { espChars, leftyChars, rightyChars } from "./util";
+import { espChars, leftyChars, rightyChars, Layer, LayerEsp } from "./util";
 import getLastEspLayerObjIdx from "./getLastEspLayerObjIdx";
-import { Layer, LayerEsp } from "./util";
 
 function getWholeEspTagLumpOnTheRight(
   str: string,
@@ -8,18 +7,18 @@ function getWholeEspTagLumpOnTheRight(
   layers: Layer[]
 ): string {
   let wholeEspTagLumpOnTheRight = str[i];
-  const len = str.length;
+  let len = str.length;
 
   // getLastEspLayerObj()
-  const lastEspLayerObj = layers[getLastEspLayerObjIdx(layers) as number];
+  let lastEspLayerObj = layers[getLastEspLayerObjIdx(layers) as number];
 
   console.log(
-    `017 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
+    `016 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
   );
 
   for (let y = i + 1; y < len; y++) {
     console.log(
-      `022 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
+      `021 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
     );
 
     // if righty character is on the left and now it's lefty,
@@ -36,7 +35,7 @@ function getWholeEspTagLumpOnTheRight(
     // we slice off where righty starts
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       console.log(
-        `039 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+        `038 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
       );
       break;
     }
@@ -62,7 +61,7 @@ function getWholeEspTagLumpOnTheRight(
       str[y] === "("
     ) {
       console.log(
-        `065 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+        `064 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
       );
       break;
     }
@@ -93,7 +92,7 @@ function getWholeEspTagLumpOnTheRight(
     ) {
       wholeEspTagLumpOnTheRight += str[y];
     } else {
-      console.log(`096 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+      console.log(`095 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
       break;
     }
   }
@@ -174,7 +173,7 @@ function getWholeEspTagLumpOnTheRight(
     }
   }
 
-  console.log(`177 getWholeEspTagLumpOnTheRight(): final return`);
+  console.log(`176 getWholeEspTagLumpOnTheRight(): final return`);
 
   return wholeEspTagLumpOnTheRight;
 }

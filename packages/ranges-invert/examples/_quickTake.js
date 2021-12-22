@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { rInvert } from "../dist/ranges-invert.esm.js";
 
 assert.deepEqual(

@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 2.1.0
 
 ```js
 import { strict as assert } from "assert";
+
 import { traverse } from "ast-monkey-traverse-with-lookahead";
 
 const input = [
@@ -268,7 +269,7 @@ assert.deepEqual(gathered, [
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/ast-monkey-traverse-with-lookahead/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/ast-monkey-traverse-with-lookahead/) for a full description of the API.
 
 ## Contributing
 
@@ -280,4 +281,6 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/0001/index.htm
 
 function badCharacterStartOfHeading(context: Linter): RuleObjType {
-  const charCode = 1;
+  let charCode = 1;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

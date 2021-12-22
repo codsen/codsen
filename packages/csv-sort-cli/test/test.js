@@ -1,11 +1,15 @@
 import fs from "fs-extra";
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
+import tempy from "tempy";
 import { fileURLToPath } from "url";
+
+import { spawn } from "../../../ops/helpers/spawn.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-import { execa } from "execa";
-import tempy from "tempy";
 
 //                                  *
 //                                  *
@@ -21,25 +25,17 @@ import tempy from "tempy";
 //                                  *
 //                                  *
 
-tap.test("01 - there are no usable files at all", async (t) => {
-  const tempFolder = tempy.directory();
+test("01 - there are no usable files at all", async () => {
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
 
-  t.rejects(async () => {
-    await fs.writeFile(path.join(tempFolder, "file.md"), "zzz");
-    return execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js`, {
-      shell: true,
-    });
-  }, "01.01");
-
-  // confirm that the existing file is intact:
-  t.strictSame(
-    await fs.readFile(path.join(tempFolder, "file.md"), "utf8"),
-    "zzz",
-    "01.02"
-  );
-
-  t.end();
+  await fs.writeFile(path.join(tempFolder, "file.md"), "zzz");
+  try {
+    spawn(tempFolder, __dirname);
+    not.ok("01");
+  } catch (error) {
+    ok("01");
+  }
 });
 
 //                                  *
@@ -56,8 +52,8 @@ tap.test("01 - there are no usable files at all", async (t) => {
 //                                  *
 //                                  *
 
-tap.test("02 - sorts a file", async (t) => {
-  const originalCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance,
+test("02 - sorts a file", async () => {
+  let originalCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Client #1 payment,,1000,1940
 123456,Bought carpet,30,,950
 123456,Bought table,10,,940
@@ -65,7 +61,7 @@ tap.test("02 - sorts a file", async (t) => {
 123456,Bought chairs,20,,980
 `;
 
-  const intendedCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance
+  let intendedCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance
 123456,Client #1 payment,,1000,1940
 123456,Bought table,10,,940
 123456,Bought carpet,30,,950
@@ -76,35 +72,30 @@ tap.test("02 - sorts a file", async (t) => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  const tempFolder = tempy.directory();
-  // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  let tempFolder = tempy.directory();
+  // let tempFolder = "temp";
+  // fs.ensureDirSync(path.resolve(tempFolder));
 
   // 2. write CSV, process it and read the new file
-  const newlyGeneratedCsvFile = fs
-    .writeFile(path.join(tempFolder, "testfile.csv"), originalCSV)
-    .then(() =>
-      execa(
-        `cd ${tempFolder} && ${path.join(
-          __dirname,
-          "../"
-        )}/cli.js testfile.csv`,
-        { shell: true }
-      )
-    )
-    .then(() => fs.readFile(path.join(tempFolder, "testfile-1.csv"), "utf8"))
-    .catch((err) => t.fail(err));
+  fs.writeFileSync(path.join(tempFolder, "testfile.csv"), originalCSV);
+  spawn(tempFolder, __dirname, "testfile.csv");
 
-  t.strictSame(await newlyGeneratedCsvFile, intendedCSV, "02.01");
+  // execaCommandSync(
+  //   `cd ${tempFolder} && ${path.join(__dirname, "../cli.js")} testfile.csv`,
+  //   { shell: true }
+  // );
+  let generatedCSVFile = fs.readFileSync(
+    path.join(tempFolder, "testfile-1.csv"),
+    "utf8"
+  );
+  equal(generatedCSVFile, intendedCSV, "01.01");
 
   // 3. check, is original file intact
-  const originalCsvFile = fs.readFile(
+  let originalCsvFile = fs.readFileSync(
     path.join(tempFolder, "testfile.csv"),
     "utf8"
   );
-  t.strictSame(await originalCsvFile, originalCSV, "02.02");
-
-  t.end();
+  equal(originalCsvFile, originalCSV, "01.02");
 });
 
 //                                  *
@@ -120,3 +111,5 @@ tap.test("02 - sorts a file", async (t) => {
 //                                  *
 //                                  *
 //                                  *
+
+test.run();

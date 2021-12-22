@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { isJinjaSpecific } from "../dist/regex-jinja-specific.esm.js";
 
 assert.equal(

@@ -3,15 +3,14 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { deepContains } from "../dist/ast-deep-contains.esm.js";
 
+const callerDir = path.resolve(".");
+
 const testme = () => {
-  const gathered = [];
-  const errors = [];
+  let gathered = [];
+  let errors = [];
   deepContains(
     { a: "1", b: "2" },
     { a: "1", b: "2", c: "3" },

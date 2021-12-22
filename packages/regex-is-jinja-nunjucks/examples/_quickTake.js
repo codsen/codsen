@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { isJinjaNunjucksRegex } from "../dist/regex-is-jinja-nunjucks.esm.js";
 
 // detects Jinja/Nunjucks code

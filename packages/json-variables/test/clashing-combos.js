@@ -1,136 +1,117 @@
 /* eslint no-template-curly-in-string: 0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { jVar } from "../dist/json-variables.esm.js";
 
-tap.test(
-  "01 - surrounding underscores - sneaky similarity with wrong side brackets #1",
-  (t) => {
-    t.strictSame(
-      jVar({
-        a: "joined with an underscores: %%_var1_%%_%%_var2_%%",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      }),
-      {
-        a: "joined with an underscores: value1_value2",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      },
-      "01"
-    );
-    t.end();
-  }
-);
+test("01 - surrounding underscores - sneaky similarity with wrong side brackets #1", () => {
+  equal(
+    jVar({
+      a: "joined with an underscores: %%_var1_%%_%%_var2_%%",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    }),
+    {
+      a: "joined with an underscores: value1_value2",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    },
+    "01"
+  );
+});
 
-tap.test(
-  "02 - surrounding underscores - sneaky similarity with wrong side brackets #2",
-  (t) => {
-    t.strictSame(
-      jVar({
-        a: "joined with an dashes: %%-var1-%%-%%-var2-%%",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      }),
-      {
-        a: "joined with an dashes: value1-value2",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      },
-      "02"
-    );
-    t.end();
-  }
-);
+test("02 - surrounding underscores - sneaky similarity with wrong side brackets #2", () => {
+  equal(
+    jVar({
+      a: "joined with an dashes: %%-var1-%%-%%-var2-%%",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    }),
+    {
+      a: "joined with an dashes: value1-value2",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    },
+    "02"
+  );
+});
 
-tap.test(
-  "03 - surrounding underscores - sneaky similarity with wrong side brackets #3",
-  (t) => {
-    t.strictSame(
-      jVar({
-        a: "zzz_%%-var1-%%_%%-var2-%%_yyy",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      }),
-      {
-        a: "zzz_value1_value2_yyy",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      },
-      "03"
-    );
-    t.end();
-  }
-);
+test("03 - surrounding underscores - sneaky similarity with wrong side brackets #3", () => {
+  equal(
+    jVar({
+      a: "zzz_%%-var1-%%_%%-var2-%%_yyy",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    }),
+    {
+      a: "zzz_value1_value2_yyy",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    },
+    "03"
+  );
+});
 
-tap.test(
-  "04 - surrounding underscores - sneaky similarity with wrong side brackets #4",
-  (t) => {
-    t.strictSame(
-      jVar({
-        a: "zzz_%%-var1-%%_%%-var2-%%",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      }),
-      {
-        a: "zzz_value1_value2",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      },
-      "04"
-    );
-    t.end();
-  }
-);
+test("04 - surrounding underscores - sneaky similarity with wrong side brackets #4", () => {
+  equal(
+    jVar({
+      a: "zzz_%%-var1-%%_%%-var2-%%",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    }),
+    {
+      a: "zzz_value1_value2",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    },
+    "04"
+  );
+});
 
-tap.test(
-  "05 - surrounding dashes - sneaky similarity with wrong side brackets #1",
-  (t) => {
-    t.strictSame(
-      jVar({
-        a: "zzz-%%_var1_%%-%%_var2_%%-yyy",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      }),
-      {
-        a: "zzz-value1-value2-yyy",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      },
-      "05"
-    );
-    t.end();
-  }
-);
+test("05 - surrounding dashes - sneaky similarity with wrong side brackets #1", () => {
+  equal(
+    jVar({
+      a: "zzz-%%_var1_%%-%%_var2_%%-yyy",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    }),
+    {
+      a: "zzz-value1-value2-yyy",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    },
+    "05"
+  );
+});
 
-tap.test(
-  "06 - surrounding dashes - sneaky similarity with wrong side brackets #2",
-  (t) => {
-    t.strictSame(
-      jVar({
-        a: "zzz-%%_var1_%%-%%_var2_%%",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      }),
-      {
-        a: "zzz-value1-value2",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-      },
-      "06"
-    );
-    t.end();
-  }
-);
+test("06 - surrounding dashes - sneaky similarity with wrong side brackets #2", () => {
+  equal(
+    jVar({
+      a: "zzz-%%_var1_%%-%%_var2_%%",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    }),
+    {
+      a: "zzz-value1-value2",
+      b: "something",
+      var1: "value1",
+      var2: "value2",
+    },
+    "06"
+  );
+});
+
+test.run();

@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 assert.equal(

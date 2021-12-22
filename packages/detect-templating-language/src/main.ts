@@ -1,7 +1,9 @@
 import { isJinjaNunjucksRegex } from "regex-is-jinja-nunjucks";
 import { isJSP } from "regex-is-jsp";
 import { isJinjaSpecific } from "regex-jinja-specific";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 type Output = "Nunjucks" | "Jinja" | "JSP" | null;

@@ -2,23 +2,30 @@
 // https://www.fileformat.info/info/unicode/char/fffd/index.htm
 // -----------------------------------------------------------------------------
 
-import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
+
+import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
+
 const CHAR = `\uFFFD`;
 
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - detects two REPLACEMENT CHARACTERS`, (t) => {
-  const str = `${CHAR}dlkgjld${CHAR}j`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+test(`01 - detects two REPLACEMENT CHARACTERS`, () => {
+  let str = `${CHAR}dlkgjld${CHAR}j`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
     rules: {
       "bad-character-replacement-character": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -48,7 +55,8 @@ tap.test(`01 - detects two REPLACEMENT CHARACTERS`, (t) => {
     ],
     "01.01"
   );
-  t.equal(messages.length, 2, "01.02");
-  t.equal(applyFixes(str, messages), "dlkgjldj", "01.03");
-  t.end();
+  equal(messages.length, 2, "01.02");
+  equal(applyFixes(str, messages), "dlkgjldj", "01.03");
 });
+
+test.run();

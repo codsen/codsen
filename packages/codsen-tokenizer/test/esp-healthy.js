@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // ESP stands for Email Service Provider
@@ -9,14 +12,14 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // ESP tag + something, no overlap
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - only an ESP tag`, (t) => {
-  const gathered = [];
+test(`01 - only an ESP tag`, () => {
+  let gathered = [];
   ct(`{% zz %}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -34,17 +37,16 @@ tap.test(`01 - only an ESP tag`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
-tap.test(`02 - text and ESP tag`, (t) => {
-  const gathered = [];
+test(`02 - text and ESP tag`, () => {
+  let gathered = [];
   ct(`a{% zz %}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -68,17 +70,16 @@ tap.test(`02 - text and ESP tag`, (t) => {
     ],
     "02"
   );
-  t.end();
 });
 
-tap.test(`03 - text-ESP-text`, (t) => {
-  const gathered = [];
+test(`03 - text-ESP-text`, () => {
+  let gathered = [];
   ct(`ab {% if something %} cd`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -108,17 +109,16 @@ tap.test(`03 - text-ESP-text`, (t) => {
     ],
     "03"
   );
-  t.end();
 });
 
-tap.test(`04 - tag-ESP-tag`, (t) => {
-  const gathered = [];
+test(`04 - tag-ESP-tag`, () => {
+  let gathered = [];
   ct(`<a>{% if something %}<b>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -166,18 +166,17 @@ tap.test(`04 - tag-ESP-tag`, (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
 // heuristically detecting tails and again new heads
-tap.test(`05 - two Nunjucks tags, same pattern set of two, tight`, (t) => {
-  const gathered = [];
+test(`05 - two Nunjucks tags, same pattern set of two, tight`, () => {
+  let gathered = [];
   ct(`{%- a -%}{%- b -%}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -207,18 +206,17 @@ tap.test(`05 - two Nunjucks tags, same pattern set of two, tight`, (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
 // heuristically detecting tails and again new heads, this time slightly different
-tap.test(`06 - two nunjucks tags, different pattern set of two, tight`, (t) => {
-  const gathered = [];
+test(`06 - two nunjucks tags, different pattern set of two, tight`, () => {
+  let gathered = [];
   ct(`{%- if count > 1 -%}{% if count > 1 %}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -248,18 +246,17 @@ tap.test(`06 - two nunjucks tags, different pattern set of two, tight`, (t) => {
     ],
     "06"
   );
-  t.end();
 });
 
 // heuristically detecting tails and again new heads
-tap.test(`07 - different set, *|zzz|*`, (t) => {
-  const gathered = [];
+test(`07 - different set, *|zzz|*`, () => {
+  let gathered = [];
   ct(`*|zzz|**|yyy|*`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -289,17 +286,16 @@ tap.test(`07 - different set, *|zzz|*`, (t) => {
     ],
     "07"
   );
-  t.end();
 });
 
-tap.test(`08 - two nunjucks tags in vicinity, minimal`, (t) => {
-  const gathered = [];
+test(`08 - two nunjucks tags in vicinity, minimal`, () => {
+  let gathered = [];
   ct(`{{ abc }}{% endif %}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -329,17 +325,16 @@ tap.test(`08 - two nunjucks tags in vicinity, minimal`, (t) => {
     ],
     "08"
   );
-  t.end();
 });
 
-tap.test(`09 - two nunjucks tags in vicinity, realistic`, (t) => {
-  const gathered = [];
+test(`09 - two nunjucks tags in vicinity, realistic`, () => {
+  let gathered = [];
   ct(`{% if xyz %}Abc&nbsp;{{ def }}{% else %}Abc {{ def }}{% endif %}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -417,10 +412,9 @@ tap.test(`09 - two nunjucks tags in vicinity, realistic`, (t) => {
     ],
     "09"
   );
-  t.end();
 });
 
-tap.test(`10 - nunjucks, brackets`, (t) => {
+test(`10 - nunjucks, brackets`, () => {
   [
     `{%- if ((a | length) > 0) -%}`,
     `{%- if ((a | length) < 0) -%}`,
@@ -433,13 +427,13 @@ tap.test(`10 - nunjucks, brackets`, (t) => {
     `{%- if (((abc.klm and ((abc.def| length) < 5)) or ((not abc.klm) and ((abc.def| length) < 5))) and ((abc.def[0] and abc.def[0].pqr and abc.def[0].stuv and (abc.def[0].stuv == 1)) or (abc.def[1] and abc.def[1].pqr and abc.def[1].stuv and (abc.def[1].stuv == 1)))) -%}`,
     `{%- if (((abc.klm and ((abc.def| length) > 5)) or ((not abc.klm) and ((abc.def| length) > 5))) and ((abc.def[0] and abc.def[0].pqr and abc.def[0].stuv and (abc.def[0].stuv == 1)) or (abc.def[1] and abc.def[1].pqr and abc.def[1].stuv and (abc.def[1].stuv == 1)))) -%}`,
   ].forEach((input) => {
-    const gathered = [];
+    let gathered = [];
     ct(input, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.strictSame(
+    equal(
       gathered,
       [
         {
@@ -458,7 +452,6 @@ tap.test(`10 - nunjucks, brackets`, (t) => {
       "10"
     );
   });
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
@@ -469,3 +462,5 @@ tap.test(`10 - nunjucks, brackets`, (t) => {
 // <c:forEach ... > (no slash)
 // <jsp:useBean ... />
 // <c:set ... />
+
+test.run();

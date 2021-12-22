@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import {
   // matchLeftIncl,
   matchRightIncl,
@@ -9,106 +12,70 @@ import {
 // 13. Ad-hoc
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
-  (t) => {
-    t.equal(matchRight('<a class="something"> text', 19, ">"), ">", "01");
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+  equal(matchRight('<a class="something"> text', 19, ">"), ">", "01");
+});
 
-tap.test(
-  `02 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
-  (t) => {
-    t.equal(
-      matchRight('<a class="something"> text', 19, ">", {
-        cb: (char) => typeof char === "string" && char.trim() === "",
-      }),
-      ">",
-      "02"
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+  equal(
+    matchRight('<a class="something"> text', 19, ">", {
+      cb: (char) => typeof char === "string" && char.trim() === "",
+    }),
+    ">",
+    "02"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
-  (t) => {
-    t.equal(
-      matchRightIncl('<a class="something"> text', 20, "> t"),
-      "> t",
-      "03"
-    );
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+  equal(matchRightIncl('<a class="something"> text', 20, "> t"), "> t", "03");
+});
 
-tap.test(
-  `04 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
-  (t) => {
-    t.equal(matchRight('<a class="something"> text', 19, "> t"), "> t", "04");
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+  equal(matchRight('<a class="something"> text', 19, "> t"), "> t", "04");
+});
 
-tap.test(
-  `05 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
-  (t) => {
-    t.equal(
-      matchRight("ab      cdef", 1, "cde", { trimBeforeMatching: true }),
-      "cde",
-      "05"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+  equal(
+    matchRight("ab      cdef", 1, "cde", { trimBeforeMatching: true }),
+    "cde",
+    "05"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
-  (t) => {
-    t.equal(
-      matchRight('<a class="something"> text', 19, ">", {
-        cb: (char) => char === " ",
-      }),
-      ">",
-      "06"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+  equal(
+    matchRight('<a class="something"> text', 19, ">", {
+      cb: (char) => char === " ",
+    }),
+    ">",
+    "06"
+  );
+});
 
-tap.test(
-  `07 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
-  (t) => {
-    t.equal(
-      matchRight("ab      cdef", 1, "cde", {
-        cb: (char) => char === "f",
-        trimBeforeMatching: true,
-      }),
-      "cde",
-      "07"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `08 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
-  (t) => {
-    matchRight("ab      cdef", 1, "cd", {
+test(`07 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+  equal(
+    matchRight("ab      cdef", 1, "cde", {
+      cb: (char) => char === "f",
       trimBeforeMatching: true,
-      cb: (char, theRemainderOfTheString, index) => {
-        t.equal(char, "e");
-        t.equal(theRemainderOfTheString, "ef");
-        t.equal(index, 10);
-      },
-    });
-    t.end();
-  }
-);
+    }),
+    "cde",
+    "07"
+  );
+});
 
-tap.test(`09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, (t) => {
-  t.equal(
+test(`08 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+  matchRight("ab      cdef", 1, "cd", {
+    trimBeforeMatching: true,
+    cb: (char, theRemainderOfTheString, index) => {
+      equal(char, "e");
+      equal(theRemainderOfTheString, "ef");
+      equal(index, 10);
+    },
+  });
+});
+
+test(`09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, () => {
+  equal(
     matchRight("a<!DOCTYPE html>b", 1, ["!--", "doctype", "xml", "cdata"], {
       i: true,
       trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
@@ -116,11 +83,10 @@ tap.test(`09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, (t) => {
     "doctype",
     "09"
   );
-  t.end();
 });
 
-tap.test(`10`, (t) => {
-  t.equal(
+test(`10`, () => {
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -129,7 +95,7 @@ tap.test(`10`, (t) => {
     false,
     "10.01"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -139,7 +105,7 @@ tap.test(`10`, (t) => {
     "10.02"
   );
 
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -148,7 +114,7 @@ tap.test(`10`, (t) => {
     false,
     "10.03"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -157,11 +123,10 @@ tap.test(`10`, (t) => {
     false,
     "10.04"
   );
-  t.end();
 });
 
-tap.test(`11`, (t) => {
-  t.equal(
+test(`11`, () => {
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -170,7 +135,7 @@ tap.test(`11`, (t) => {
     false,
     "11.01"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -180,7 +145,7 @@ tap.test(`11`, (t) => {
     "11.02"
   );
 
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -189,7 +154,7 @@ tap.test(`11`, (t) => {
     false,
     "11.03"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -199,7 +164,7 @@ tap.test(`11`, (t) => {
     "11.04"
   );
 
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -208,7 +173,7 @@ tap.test(`11`, (t) => {
     false,
     "11.05"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -217,11 +182,10 @@ tap.test(`11`, (t) => {
     false,
     "11.06"
   );
-  t.end();
 });
 
-tap.test(`12`, (t) => {
-  t.equal(
+test(`12`, () => {
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -230,7 +194,7 @@ tap.test(`12`, (t) => {
     false,
     "12.01"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -240,7 +204,7 @@ tap.test(`12`, (t) => {
     "12.02"
   );
 
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -249,7 +213,7 @@ tap.test(`12`, (t) => {
     "!important",
     "12.03"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -259,7 +223,7 @@ tap.test(`12`, (t) => {
     "12.04"
   );
 
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -268,7 +232,7 @@ tap.test(`12`, (t) => {
     "!important",
     "12.05"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -277,11 +241,10 @@ tap.test(`12`, (t) => {
     "!important",
     "12.06"
   );
-  t.end();
 });
 
-tap.test(`13`, (t) => {
-  t.equal(
+test(`13`, () => {
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -290,7 +253,7 @@ tap.test(`13`, (t) => {
     false,
     "13.01"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -300,7 +263,7 @@ tap.test(`13`, (t) => {
     "13.02"
   );
 
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -309,7 +272,7 @@ tap.test(`13`, (t) => {
     "!important",
     "13.03"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -319,7 +282,7 @@ tap.test(`13`, (t) => {
     "13.04"
   );
 
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -328,7 +291,7 @@ tap.test(`13`, (t) => {
     "!important",
     "13.05"
   );
-  t.equal(
+  equal(
     matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -337,11 +300,10 @@ tap.test(`13`, (t) => {
     "!important",
     "13.06"
   );
-  t.end();
 });
 
-tap.test(`14`, (t) => {
-  t.equal(
+test(`14`, () => {
+  equal(
     matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -350,7 +312,7 @@ tap.test(`14`, (t) => {
     false,
     "14.01"
   );
-  t.equal(
+  equal(
     matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -359,7 +321,7 @@ tap.test(`14`, (t) => {
     "!important",
     "14.02"
   );
-  t.equal(
+  equal(
     matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -368,7 +330,7 @@ tap.test(`14`, (t) => {
     false,
     "14.03"
   );
-  t.equal(
+  equal(
     matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -378,7 +340,7 @@ tap.test(`14`, (t) => {
     "14.04"
   );
 
-  t.equal(
+  equal(
     matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
       i: false,
       trimBeforeMatching: true,
@@ -387,7 +349,7 @@ tap.test(`14`, (t) => {
     false,
     "14.05"
   );
-  t.equal(
+  equal(
     matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
       i: false,
       trimBeforeMatching: true,
@@ -396,7 +358,7 @@ tap.test(`14`, (t) => {
     false,
     "14.06"
   );
-  t.equal(
+  equal(
     matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
       i: false,
       trimBeforeMatching: false,
@@ -405,7 +367,7 @@ tap.test(`14`, (t) => {
     false,
     "14.07"
   );
-  t.equal(
+  equal(
     matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
       i: false,
       trimBeforeMatching: false,
@@ -414,11 +376,10 @@ tap.test(`14`, (t) => {
     false,
     "14.08"
   );
-  t.end();
 });
 
-tap.test(`15`, (t) => {
-  t.equal(
+test(`15`, () => {
+  equal(
     matchRightIncl(`abc important}`, 2, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -427,7 +388,7 @@ tap.test(`15`, (t) => {
     false,
     "15.01"
   );
-  t.equal(
+  equal(
     matchRightIncl(`abc important}`, 2, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -436,7 +397,7 @@ tap.test(`15`, (t) => {
     false,
     "15.02"
   );
-  t.equal(
+  equal(
     matchRightIncl(`abc important}`, 2, ["!important"], {
       i: true,
       trimBeforeMatching: true,
@@ -446,7 +407,7 @@ tap.test(`15`, (t) => {
     "15.03"
   );
 
-  t.equal(
+  equal(
     matchRightIncl(`abc important}`, 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -455,7 +416,7 @@ tap.test(`15`, (t) => {
     false,
     "15.04"
   );
-  t.equal(
+  equal(
     matchRightIncl(`abc important}`, 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -464,7 +425,7 @@ tap.test(`15`, (t) => {
     false,
     "15.05"
   );
-  t.equal(
+  equal(
     matchRightIncl(`abc important}`, 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -473,11 +434,10 @@ tap.test(`15`, (t) => {
     false,
     "15.06"
   );
-  t.end();
 });
 
-tap.test(`16 - tight`, (t) => {
-  t.equal(
+test(`16 - tight`, () => {
+  equal(
     matchRight(`1px!important}`, 0, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -486,7 +446,7 @@ tap.test(`16 - tight`, (t) => {
     false,
     "16.01"
   );
-  t.equal(
+  equal(
     matchRight(`1px!important}`, 1, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -495,7 +455,7 @@ tap.test(`16 - tight`, (t) => {
     false,
     "16.02"
   );
-  t.equal(
+  equal(
     matchRight(`1px!important}`, 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -504,11 +464,10 @@ tap.test(`16 - tight`, (t) => {
     "!important",
     "16.03"
   );
-  t.end();
 });
 
-tap.test(`17 - tight`, (t) => {
-  t.equal(
+test(`17 - tight`, () => {
+  equal(
     matchRight(`1pximportant}`, 0, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -517,7 +476,7 @@ tap.test(`17 - tight`, (t) => {
     false,
     "17.01"
   );
-  t.equal(
+  equal(
     matchRight(`1pximportant}`, 1, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -526,7 +485,7 @@ tap.test(`17 - tight`, (t) => {
     false,
     "17.02"
   );
-  t.equal(
+  equal(
     matchRight(`1pximportant}`, 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -535,11 +494,10 @@ tap.test(`17 - tight`, (t) => {
     "!important",
     "17.03"
   );
-  t.end();
 });
 
-tap.test(`18 - tight`, (t) => {
-  t.equal(
+test(`18 - tight`, () => {
+  equal(
     matchRightIncl(`1pximportant}`, 0, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -548,7 +506,7 @@ tap.test(`18 - tight`, (t) => {
     false,
     "18.01"
   );
-  t.equal(
+  equal(
     matchRightIncl(`1pximportant}`, 1, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -557,7 +515,7 @@ tap.test(`18 - tight`, (t) => {
     false,
     "18.02"
   );
-  t.equal(
+  equal(
     matchRightIncl(`1pximportant}`, 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -566,7 +524,7 @@ tap.test(`18 - tight`, (t) => {
     false,
     "18.03"
   );
-  t.equal(
+  equal(
     matchRightIncl(`1pximportant}`, 3, ["!important"], {
       i: true,
       trimBeforeMatching: false,
@@ -575,5 +533,6 @@ tap.test(`18 - tight`, (t) => {
     "!important",
     "18.04"
   );
-  t.end();
 });
+
+test.run();

@@ -1,100 +1,91 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { alts } from "../dist/html-img-alt.esm.js";
 
 // weird code cases, all broken (X)HTML
 // -----------------------------------------------------------------------------
 
-tap.test(
-  "01 - testing escape latch for missing second double quote cases",
-  (t) => {
-    // it kicks in when encounters equals sign after the first double quote
-    // until we add function to recognise the attributes within IMG tags,
-    // escape latch will kick in and prevent all action when second double quote is missing
-    t.strictSame(
-      alts('zzz<img alt="  class="" />zzz'),
-      'zzz<img alt="  class="" />zzz',
-      "01"
-    );
-    t.end();
-  }
-);
-
-tap.test("02 - testing seriously messed up code", (t) => {
+test("01 - testing escape latch for missing second double quote cases", () => {
   // it kicks in when encounters equals sign after the first double quote
   // until we add function to recognise the attributes within IMG tags,
   // escape latch will kick in and prevent all action when second double quote is missing
-  t.strictSame(
-    alts("zzz<img >>>>>>>>>>zzz"),
-    'zzz<img alt="" >>>>>>>>>>zzz',
-    "02.01"
+  equal(
+    alts('zzz<img alt="  class="" />zzz'),
+    'zzz<img alt="  class="" />zzz',
+    "01"
   );
-  t.strictSame(alts("zzz<<img >>zzz"), 'zzz<<img alt="" >>zzz', "02.02");
-  t.strictSame(
+});
+
+test("02 - testing seriously messed up code", () => {
+  // it kicks in when encounters equals sign after the first double quote
+  // until we add function to recognise the attributes within IMG tags,
+  // escape latch will kick in and prevent all action when second double quote is missing
+  equal(alts("zzz<img >>>>>>>>>>zzz"), 'zzz<img alt="" >>>>>>>>>>zzz', "02.01");
+  equal(alts("zzz<<img >>zzz"), 'zzz<<img alt="" >>zzz', "02.02");
+  equal(
     alts("zzz<><><<>><<<>>>><img >>zzz"),
     'zzz<><><<>><<<>>>><img alt="" >>zzz',
     "02.03"
   );
-  t.end();
 });
 
-tap.test("03 - other attributes don't have equal and value", (t) => {
-  t.strictSame(
+test("03 - other attributes don't have equal and value", () => {
+  equal(
     alts('<img something alt="" >'),
     '<img something alt="" >',
     "03.01 - img tag only, with alt"
   );
-  t.strictSame(
+  equal(
     alts("<img something>"),
     '<img something alt="" >',
     "03.02 - img tag only, no alt"
   );
-  t.strictSame(
+  equal(
     alts("<img something >"),
     '<img something alt="" >',
     "03.03 - img tag only, no alt"
   );
   // XHTML counterparts:
-  t.strictSame(
+  equal(
     alts('<img something alt="" />'),
     '<img something alt="" />',
     "03.04 - img tag only, with alt"
   );
-  t.strictSame(
+  equal(
     alts("<img something/>"),
     '<img something alt="" />',
     "03.05 - img tag only, no alt, tight"
   );
-  t.strictSame(
+  equal(
     alts("<img something />"),
     '<img something alt="" />',
     "03.06 - img tag only, no alt"
   );
-  t.strictSame(
+  equal(
     alts('<img something alt="" /     >'),
     '<img something alt="" />',
     "03.07 - img tag only, with alt, excessive white space"
   );
-  t.strictSame(
+  equal(
     alts("<img something/     >"),
     '<img something alt="" />',
     "03.08 - img tag only, no alt, excessive white space"
   );
-  t.strictSame(
+  equal(
     alts("<img something /     >"),
     '<img something alt="" />',
     "03.09 - img tag only, no alt, excessive white space"
   );
-  t.end();
 });
 
-tap.test(
-  "04 - specific place in the algorithm, protection against rogue slashes",
-  (t) => {
-    t.strictSame(
-      alts('<img alt="/ class="" />'),
-      '<img alt="/ class="" />',
-      "04 - should do nothing."
-    );
-    t.end();
-  }
-);
+test("04 - specific place in the algorithm, protection against rogue slashes", () => {
+  equal(
+    alts('<img alt="/ class="" />'),
+    '<img alt="/ class="" />',
+    "04 - should do nothing."
+  );
+});
+
+test.run();

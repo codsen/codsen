@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { sort } from "../dist/csv-sort.esm.js";
 
 // Sorts double-entry bookkeeping CSV's - bank statements for example

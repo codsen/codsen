@@ -17,12 +17,12 @@ function splitByWhitespace(
   //   `003 splitByWhitespace(): ${`\u001b[${36}m${`traverse and extract`}\u001b[${39}m`}`
   // );
 
-  const defaults: Opts = {
+  let defaults: Opts = {
     offset: 0,
     from: 0,
     to: str.length,
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
   let nameStartsAt = null;
   let whitespaceStartsAt = null;

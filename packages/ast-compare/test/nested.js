@@ -1,50 +1,46 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { compare } from "../dist/ast-compare.esm.js";
 
 // nested
 // -----------------------------------------------------------------------------
 
-tap.test("01 - simple nested plain objects", (t) => {
-  t.strictSame(
+test("01 - simple nested plain objects", () => {
+  equal(
     compare({ a: { d: "4" }, b: "2", c: "3" }, { a: { d: "4" }, b: "2" }),
     true,
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - simple nested plain objects + array wrapper", (t) => {
-  t.strictSame(
+test("02 - simple nested plain objects + array wrapper", () => {
+  equal(
     compare({ a: [{ d: "4" }], b: "2", c: "3" }, { a: [{ d: "4" }], b: "2" }),
     true,
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - simple nested plain objects, won't find", (t) => {
-  t.strictSame(
+test("03 - simple nested plain objects, won't find", () => {
+  equal(
     compare({ a: { d: "4" }, b: "2" }, { a: { d: "4" }, b: "2", c: "3" }),
     false,
     "03"
   );
-  t.end();
 });
 
-tap.test(
-  "04 - simple nested plain objects + array wrapper, won't find",
-  (t) => {
-    t.strictSame(
-      compare({ a: [{ d: "4" }], b: "2" }, { a: [{ d: "4" }], b: "2", c: "3" }),
-      false,
-      "04"
-    );
-    t.end();
-  }
-);
+test("04 - simple nested plain objects + array wrapper, won't find", () => {
+  equal(
+    compare({ a: [{ d: "4" }], b: "2" }, { a: [{ d: "4" }], b: "2", c: "3" }),
+    false,
+    "04"
+  );
+});
 
-tap.test("05 - obj, multiple nested levels, bigObj has more", (t) => {
-  t.strictSame(
+test("05 - obj, multiple nested levels, bigObj has more", () => {
+  equal(
     compare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
       { a: { b: { c: { d: [{ e: "1" }] } } } }
@@ -52,11 +48,10 @@ tap.test("05 - obj, multiple nested levels, bigObj has more", (t) => {
     true,
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - obj, multiple nested levels, equal", (t) => {
-  t.strictSame(
+test("06 - obj, multiple nested levels, equal", () => {
+  equal(
     compare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
@@ -64,11 +59,10 @@ tap.test("06 - obj, multiple nested levels, equal", (t) => {
     true,
     "06"
   );
-  t.end();
 });
 
-tap.test("07 - obj, multiple nested levels, smallObj has more", (t) => {
-  t.strictSame(
+test("07 - obj, multiple nested levels, smallObj has more", () => {
+  equal(
     compare(
       { a: { b: { c: { d: [{ e: "1" }] } } } },
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
@@ -76,16 +70,14 @@ tap.test("07 - obj, multiple nested levels, smallObj has more", (t) => {
     false,
     "07"
   );
-  t.end();
 });
 
-tap.test("08 - obj, deeper level doesn't match", (t) => {
-  t.strictSame(compare({ a: { b: "c" } }, { a: { b: "d" } }), false, "08");
-  t.end();
+test("08 - obj, deeper level doesn't match", () => {
+  equal(compare({ a: { b: "c" } }, { a: { b: "d" } }), false, "08");
 });
 
-tap.test("09 - empty string and empty nested object - defaults", (t) => {
-  t.strictSame(
+test("09 - empty string and empty nested object - defaults", () => {
+  equal(
     compare("", {
       key2: [],
       key3: [""],
@@ -93,32 +85,27 @@ tap.test("09 - empty string and empty nested object - defaults", (t) => {
     false,
     "09"
   );
-  t.end();
 });
 
-tap.test(
-  "10 - empty string and empty nested object - hungryForWhitespace",
-  (t) => {
-    t.strictSame(
-      compare(
-        "",
-        {
-          key2: [],
-          key3: [""],
-        },
-        {
-          hungryForWhitespace: true,
-        }
-      ),
-      true,
-      "10"
-    );
-    t.end();
-  }
-);
+test("10 - empty string and empty nested object - hungryForWhitespace", () => {
+  equal(
+    compare(
+      "",
+      {
+        key2: [],
+        key3: [""],
+      },
+      {
+        hungryForWhitespace: true,
+      }
+    ),
+    true,
+    "10"
+  );
+});
 
-tap.test("11 - empty string and empty nested object - matchStrictly", (t) => {
-  t.strictSame(
+test("11 - empty string and empty nested object - matchStrictly", () => {
+  equal(
     compare(
       "",
       {
@@ -132,52 +119,43 @@ tap.test("11 - empty string and empty nested object - matchStrictly", (t) => {
     false,
     "11"
   );
-  t.end();
 });
 
-tap.test(
-  "12 - empty string and empty nested object - hungryForWhitespace + matchStrictly",
-  (t) => {
-    t.strictSame(
-      compare(
-        "",
-        {
-          key2: [],
-          key3: [""],
-        },
-        {
-          hungryForWhitespace: true,
-          matchStrictly: true,
-        }
-      ),
-      false,
-      "12"
-    );
-    t.end();
-  }
-);
+test("12 - empty string and empty nested object - hungryForWhitespace + matchStrictly", () => {
+  equal(
+    compare(
+      "",
+      {
+        key2: [],
+        key3: [""],
+      },
+      {
+        hungryForWhitespace: true,
+        matchStrictly: true,
+      }
+    ),
+    false,
+    "12"
+  );
+});
 
-tap.test(
-  "13 - empty string and empty nested object - hungryForWhitespace + matchStrictly",
-  (t) => {
-    t.strictSame(
-      compare(
-        "",
-        {},
-        {
-          hungryForWhitespace: true,
-          matchStrictly: true,
-        }
-      ),
-      true,
-      "13"
-    );
-    t.end();
-  }
-);
+test("13 - empty string and empty nested object - hungryForWhitespace + matchStrictly", () => {
+  equal(
+    compare(
+      "",
+      {},
+      {
+        hungryForWhitespace: true,
+        matchStrictly: true,
+      }
+    ),
+    true,
+    "13"
+  );
+});
 
-tap.test("14 - multiple keys", (t) => {
-  t.strictSame(
+test("14 - multiple keys", () => {
+  equal(
     compare(
       {
         key2: "\n\n \t \n \n    ",
@@ -192,11 +170,10 @@ tap.test("14 - multiple keys", (t) => {
     false,
     "14"
   );
-  t.end();
 });
 
-tap.test("15 - multiple keys", (t) => {
-  t.strictSame(
+test("15 - multiple keys", () => {
+  equal(
     compare(
       {
         key2: "\n\n \t \n \n    ",
@@ -214,5 +191,6 @@ tap.test("15 - multiple keys", (t) => {
     false,
     "15"
   );
-  t.end();
 });
+
+test.run();

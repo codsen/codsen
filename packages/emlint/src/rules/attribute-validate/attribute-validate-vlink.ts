@@ -40,7 +40,7 @@ function attributeValidateVlink(context: Linter): RuleObjType {
           console.log(
             `041 attributeValidateVlink(): value exists so let's validate it`
           );
-          const errorArr = validateColor(
+          let errorArr = validateColor(
             node.attribValueRaw,
             node.attribValueStartsAt as number,
             {

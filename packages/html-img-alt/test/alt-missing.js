@@ -1,64 +1,58 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { alts } from "../dist/html-img-alt.esm.js";
 
 // alt attr is missing
 // -----------------------------------------------------------------------------
 
-tap.test("01 - missing alt", (t) => {
-  t.strictSame(alts("zzz<img>zzz"), 'zzz<img alt="" >zzz', "01 - html - tight");
-  t.end();
+test("01 - missing alt", () => {
+  equal(alts("zzz<img>zzz"), 'zzz<img alt="" >zzz', "01 - html - tight");
 });
 
-tap.test("02 - missing alt", (t) => {
-  t.strictSame(
+test("02 - missing alt", () => {
+  equal(
     alts("zzz<img >zzz"),
     'zzz<img alt="" >zzz',
     "02 - html - trailing space"
   );
-  t.end();
 });
 
-tap.test("03 - missing alt", (t) => {
-  t.strictSame(
+test("03 - missing alt", () => {
+  equal(
     alts("zzz<img      >zzz"),
     'zzz<img alt="" >zzz',
     "03 - html - excessive trailing space"
   );
-  t.end();
 });
 
-tap.test("04 - missing alt", (t) => {
-  t.strictSame(
-    alts("zzz<img/>zzz"),
-    'zzz<img alt="" />zzz',
-    "04 - xhtml - tight"
-  );
-  t.end();
+test("04 - missing alt", () => {
+  equal(alts("zzz<img/>zzz"), 'zzz<img alt="" />zzz', "04 - xhtml - tight");
 });
 
-tap.test("05 - missing alt", (t) => {
-  t.strictSame(
+test("05 - missing alt", () => {
+  equal(
     alts("zzz<img />zzz"),
     'zzz<img alt="" />zzz',
     "05 - xhtml - one space before slash"
   );
-  t.end();
 });
 
-tap.test("06 - missing alt", (t) => {
-  t.strictSame(
+test("06 - missing alt", () => {
+  equal(
     alts("zzz<img           />zzz"),
     'zzz<img alt="" />zzz',
     "06 - xhtml - many spaces before slash"
   );
-  t.end();
 });
 
-tap.test("07 - missing alt", (t) => {
-  t.strictSame(
+test("07 - missing alt", () => {
+  equal(
     alts("zzz<img           /    >zzz"),
     'zzz<img alt="" />zzz',
     "07 - xhtml - many spaces on both sides"
   );
-  t.end();
 });
+
+test.run();

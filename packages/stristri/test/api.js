@@ -1,4 +1,6 @@
-import tap from "tap";
+import { test } from "uvu";
+import * as assert from "uvu/assert";
+
 import { stri as stri2, defaults } from "../dist/stristri.esm.js";
 import {
   // stri,
@@ -10,84 +12,76 @@ const fn = () => {};
 // throws
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - the first input arg is wrong`, (t) => {
-  t.throws(() => {
+test(`01 - the first input arg is wrong`, () => {
+  assert.throws(() => {
     stri2();
   }, /THROW_ID_01/gm);
-  t.end();
 });
 
-tap.test(`02 - the first input arg is wrong`, (t) => {
-  t.throws(() => {
+test(`02 - the first input arg is wrong`, () => {
+  assert.throws(() => {
     stri2(true);
   }, /THROW_ID_01/gm);
-  t.end();
 });
 
-tap.test(`03 - the first input arg is wrong`, (t) => {
-  t.throws(() => {
+test(`03 - the first input arg is wrong`, () => {
+  assert.throws(() => {
     stri2(fn);
   }, /THROW_ID_01/gm);
-  t.end();
 });
 
-tap.test(`04 - the second input arg is wrong`, (t) => {
-  t.throws(() => {
+test(`04 - the second input arg is wrong`, () => {
+  assert.throws(() => {
     stri2("", true);
   }, /THROW_ID_02/gm);
-  t.end();
 });
 
-tap.test(`05 - the second input arg is wrong`, (t) => {
-  t.throws(() => {
+test(`05 - the second input arg is wrong`, () => {
+  assert.throws(() => {
     stri2("", fn);
   }, /THROW_ID_02/gm);
-  t.end();
 });
 
 // edge cases
 // -----------------------------------------------------------------------------
 
-tap.test(`06 - testing api directly`, (t) => {
-  const res = stri2("");
-  t.match(
-    res,
+test(`06 - testing api directly`, () => {
+  let { result, applicableOpts, templatingLang, log } = stri2("");
+  assert.equal(
+    { result, applicableOpts, templatingLang },
     {
-      log: {},
       result: "",
-      ranges: null,
       applicableOpts: {
         html: false,
         css: false,
         text: false,
         templatingTags: false,
+        js: false,
       },
       templatingLang: { name: null },
     },
     "06.01"
   );
   // exact duration is unpredictable, so we check for truthiness only
-  t.ok(res.log.timeTakenInMilliseconds, "06.02");
-  t.end();
+  assert.ok(log.timeTakenInMilliseconds, "06.02");
 });
 
-tap.test(`07`, (t) => {
-  t.equal(stri2(" ").result, "", "07");
-  t.end();
+test(`07`, () => {
+  assert.equal(stri2(" ").result, "", "07");
 });
 
-tap.test(`08`, (t) => {
-  t.equal(stri2("\n\n\n").result, "", "08");
-  t.end();
+test(`08`, () => {
+  assert.equal(stri2("\n\n\n").result, "", "08");
 });
 
-tap.test(`09 - ensure mixer is generating variations`, (t) => {
-  t.equal(
+test(`09 - ensure mixer is generating variations`, () => {
+  assert.equal(
     mixer({}, defaults).length,
     2 **
       Object.keys(defaults).filter((key) => typeof defaults[key] === "boolean")
         .length,
     "09"
   );
-  t.end();
 });
+
+test.run();

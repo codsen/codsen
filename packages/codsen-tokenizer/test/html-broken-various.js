@@ -1,4 +1,8 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 const BACKSLASH = "\u005C";
@@ -6,91 +10,82 @@ const BACKSLASH = "\u005C";
 // 01. rule tag-space-after-opening-bracket
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`,
-  (t) => {
-    const gathered = [];
-    ct(`a < b class="">`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+test(`01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`, () => {
+  let gathered = [];
+  ct(`a < b class="">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  compare(
+    ok,
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 2,
       },
-    });
-    t.match(
-      gathered,
-      [
-        {
-          type: "text",
-          start: 0,
-          end: 2,
-        },
-        {
-          type: "tag",
-          start: 2,
-          end: 15,
-        },
-      ],
-      "01"
-    );
-    t.end();
-  }
-);
+      {
+        type: "tag",
+        start: 2,
+        end: 15,
+      },
+    ],
+    "01"
+  );
+});
 
 // 02. rule tag-closing-left-slash
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
-  (t) => {
-    const gathered = [];
-    ct(`<br${BACKSLASH}>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+test(`02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, () => {
+  let gathered = [];
+  ct(`<br${BACKSLASH}>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  compare(
+    ok,
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 5,
       },
-    });
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 5,
-        },
-      ],
-      "02"
-    );
-    t.end();
-  }
-);
+    ],
+    "02"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
-  (t) => {
-    const gathered = [];
-    ct(`<${BACKSLASH}br${BACKSLASH}>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+test(`03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, () => {
+  let gathered = [];
+  ct(`<${BACKSLASH}br${BACKSLASH}>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  compare(
+    ok,
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 6,
       },
-    });
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 6,
-        },
-      ],
-      "03"
-    );
-    t.end();
-  }
-);
+    ],
+    "03"
+  );
+});
 
 // 03. Various
 // -----------------------------------------------------------------------------
 
-tap.test(`04 - xml`, (t) => {
-  const gathered = [];
+test(`04 - xml`, () => {
+  let gathered = [];
   ct(
     `a<!--[if]><z>
 <AAAch>>
@@ -101,7 +96,7 @@ tap.test(`04 - xml`, (t) => {
       },
     }
   );
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -143,17 +138,17 @@ tap.test(`04 - xml`, (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test(`05 - abrupty ended code`, (t) => {
-  const gathered = [];
+test(`05 - abrupty ended code`, () => {
+  let gathered = [];
   ct(`<body id="l" style`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -212,17 +207,17 @@ tap.test(`05 - abrupty ended code`, (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
-tap.test(`06 - abrupty ended code`, (t) => {
-  const gathered = [];
+test(`06 - abrupty ended code`, () => {
+  let gathered = [];
   ct(`<body id="l" style="`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -281,5 +276,6 @@ tap.test(`06 - abrupty ended code`, (t) => {
     ],
     "06"
   );
-  t.end();
 });
+
+test.run();

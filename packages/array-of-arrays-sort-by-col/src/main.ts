@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 // FUNCTIONS - INTERNAL
@@ -8,8 +9,12 @@ function existy(x: any): boolean {
   return x != null;
 }
 
-function logArray(arr: any[], highlightIdx: number, colour?: number | string) {
-  const rez = arr
+function logArray(
+  arr: any[],
+  highlightIdx: number,
+  colour?: number | string
+): string {
+  return arr
     .map((el, i) => {
       let res = String(el);
       while (res.length < 8) {
@@ -21,7 +26,6 @@ function logArray(arr: any[], highlightIdx: number, colour?: number | string) {
       return res;
     })
     .join("");
-  return rez;
 }
 
 // function logArrayOfArrays(arr, highlightIdx) {
@@ -60,7 +64,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
     );
   }
 
-  const maxLength = Math.max(...arr.map((arr2) => arr2.length));
+  let maxLength = Math.max(...arr.map((arr2) => arr2.length));
   if (!maxLength) {
     return arr;
   }
@@ -71,7 +75,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
     );
   }
 
-  const resToBeReturned = Array.from(arr).sort((arr1, arr2) => {
+  let resToBeReturned = Array.from(arr).sort((arr1, arr2) => {
     console.log(`===========================================`);
     console.log(logArray(arr1, +axis));
     console.log(`${logArray(arr2, +axis)}\n`);
@@ -88,7 +92,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
           arr1[+axis] > arr2[+axis])
       ) {
         console.log(
-          `091 return 1 - \u001b[${32}m${`${
+          `095 return 1 - \u001b[${32}m${`${
             arr2[+axis]
           } goes first, SWAP`}\u001b[${39}m`
         );
@@ -102,7 +106,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
           arr1[+axis] < arr2[+axis])
       ) {
         console.log(
-          `105 return -1 - \u001b[${32}m${`${
+          `109 return -1 - \u001b[${32}m${`${
             arr1[+axis]
           } goes first, ALL STAYS AS IS`}\u001b[${39}m`
         );
@@ -113,8 +117,8 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
     // column, comparing first what's outside on the left-side, then right, then
     // left outside of it, then right outside of it, then left outside of it...
 
-    const maxRangeToIterate = Math.max(arr1.length, arr2.length);
-    const maxRipplesLength = Math.max(+axis, maxRangeToIterate - +axis - 1);
+    let maxRangeToIterate = Math.max(arr1.length, arr2.length);
+    let maxRipplesLength = Math.max(+axis, maxRangeToIterate - +axis - 1);
 
     // console.log(
     //   `\u001b[${35}m${`maxRipplesLength: ${maxRipplesLength}`}\u001b[${39}m`
@@ -136,7 +140,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
           if (existy(arr2[+axis - i])) {
             if (arr1[+axis - i] < arr2[+axis - i]) {
               console.log(
-                `139 return -1 - \u001b[${32}m${`${
+                `143 return -1 - \u001b[${32}m${`${
                   arr1[+axis - 1]
                 } goes first, ALL STAYS AS IS`}\u001b[${39}m`
               );
@@ -144,7 +148,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
             }
             if (arr1[+axis - i] > arr2[+axis - i]) {
               console.log(
-                `147 return 1 - \u001b[${32}m${`${
+                `151 return 1 - \u001b[${32}m${`${
                   arr2[+axis - 1]
                 } goes first, SWAP`}\u001b[${39}m`
               );
@@ -152,7 +156,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
             }
           } else {
             console.log(
-              `155 return -1 - \u001b[${32}m${`${
+              `159 return -1 - \u001b[${32}m${`${
                 arr1[+axis - 1]
               } goes first, ALL STAYS AS IS`}\u001b[${39}m`
             );
@@ -163,7 +167,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
         // it's enough for arr2 not to be null or undefined and it goes on top:
         else if (existy(arr2[+axis - i])) {
           console.log(
-            `166 return 1 - \u001b[${32}m${`${
+            `170 return 1 - \u001b[${32}m${`${
               arr2[+axis - 1]
             } goes first, SWAP`}\u001b[${39}m`
           );
@@ -181,7 +185,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
           if (existy(arr2[+axis + i])) {
             if (arr1[+axis + i] < arr2[+axis + i]) {
               console.log(
-                `184 return -1 - \u001b[${32}m${`${
+                `188 return -1 - \u001b[${32}m${`${
                   arr1[+axis + 1]
                 } goes first, ALL STAYS AS IS`}\u001b[${39}m`
               );
@@ -189,7 +193,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
             }
             if (arr1[+axis + i] > arr2[+axis + i]) {
               console.log(
-                `192 return 1 - \u001b[${32}m${`${
+                `196 return 1 - \u001b[${32}m${`${
                   arr2[+axis + 1]
                 } goes first, SWAP`}\u001b[${39}m`
               );
@@ -197,7 +201,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
             }
           } else {
             console.log(
-              `200 return -1 - \u001b[${32}m${`${
+              `204 return -1 - \u001b[${32}m${`${
                 arr1[+axis + 1]
               } goes first, ALL STAYS AS IS`}\u001b[${39}m`
             );
@@ -208,7 +212,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
         // it's enough for arr2 not to be null or undefined and it goes on top:
         else if (existy(arr2[+axis + i])) {
           console.log(
-            `211 return 1 - \u001b[${32}m${`${
+            `215 return 1 - \u001b[${32}m${`${
               arr2[+axis + 1]
             } goes first, SWAP`}\u001b[${39}m`
           );
@@ -218,7 +222,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
     }
 
     // 3. if by now any of returns hasn't happened yet, these two rows are equal
-    console.log(`221 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
+    console.log(`225 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
     return 0;
   });
 

@@ -5,12 +5,13 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-const { log } = console;
 import fs from "fs-extra";
 import meow from "meow";
 import path from "path";
 // import updateNotifier from "update-notifier";
 import { execaSync } from "execa";
+
+const { log } = console;
 
 const messagePrefix = `\u001b[${90}m${"✨ lerna-link-dep: "}\u001b[${39}m`;
 
@@ -258,7 +259,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
       // if CLI dependency
 
       for (let y = 0, len2 = isCLI.length; y < len2; y++) {
-        const binName = isCLI[y];
+        let binName = isCLI[y];
         console.log(
           `${messagePrefix} processing ${`\u001b[${33}m${binName}\u001b[${39}m`} bin entry of a ${`\u001b[${35}m${
             cli.input[i]

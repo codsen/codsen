@@ -18,7 +18,7 @@ function processNode(
   token: RuleToken | AttribSupplementedWithParent,
   context: Linter,
   mode: Mode
-) {
+): void {
   console.log(`022 css-trailing-semi/processNode() called`);
   // first let's set the properties array container, it might come
   // from different places, depending is it head CSS styles or inline HTML styles
@@ -51,8 +51,8 @@ function processNode(
   // also there can be other types of nodes, comments or ESP tags if
   // it's inline HTML style attribute
 
-  const properties: Property[] = (nodeArr as any).filter(
-    (property: any) => (property as any).property !== undefined
+  let properties: Property[] = nodeArr.filter(
+    (property: any) => property.property !== undefined
   );
   console.log(
     `058 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`properties`}\u001b[${39}m`} = ${JSON.stringify(
@@ -62,7 +62,7 @@ function processNode(
     )}`
   );
 
-  const property: Property = properties[~-properties.length];
+  let property: Property = properties[~-properties.length];
   if (
     mode !== "never" &&
     properties &&
@@ -73,9 +73,9 @@ function processNode(
     console.log(
       `074 ${`\u001b[${31}m${`caught a property without a semicolon`}\u001b[${39}m`}`
     );
-    const idxFrom = property.start;
-    const idxTo = property.end;
-    const positionToInsert = (property.importantEnds ||
+    let idxFrom = property.start;
+    let idxTo = property.end;
+    let positionToInsert = (property.importantEnds ||
       property.valueEnds ||
       property.propertyEnds) as number;
 
@@ -95,9 +95,9 @@ function processNode(
     property.semi !== null &&
     property.valueEnds
   ) {
-    const idxFrom = property.start;
-    const idxTo = property.end;
-    const positionToRemove = property.semi;
+    let idxFrom = property.start;
+    let idxTo = property.end;
+    let positionToRemove = property.semi;
     context.report({
       ruleId: "css-trailing-semi",
       idxFrom,

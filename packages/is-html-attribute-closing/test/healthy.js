@@ -1,103 +1,101 @@
-import tap from "tap";
-import { isAttrClosing as is } from "../dist/is-html-attribute-closing.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js";
 import { combinations } from "./util/util.js";
 // const BACKSLASH = "\u005C";
 
 // healthy code
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - one tag, one attr, double quotes`, (t) => {
+test(`01 - one tag, one attr, double quotes`, () => {
   combinations(`<a href="zzz">`).forEach((str) => {
-    t.true(is(str, 8, 12), "01");
+    ok(isCl(str, 8, 12), "01");
   });
-  t.end();
 });
 
-tap.test(`02 - one tag, few attrs, double quotes`, (t) => {
+test(`02 - one tag, few attrs, double quotes`, () => {
   combinations(`<a href="zzz" target="_blank" style="color: black;">`).forEach(
     (str) => {
       // 1. starting at the opening of "href":
-      t.false(is(str, 8, 8), "02.01");
-      t.true(is(str, 8, 12), "02.02"); // <--
-      t.false(is(str, 8, 21), "02.03");
-      t.false(is(str, 8, 28), "02.04");
-      t.false(is(str, 8, 36), "02.05");
-      t.false(is(str, 8, 50), "02.06");
+      not.ok(isCl(str, 8, 8), "02.01");
+      ok(isCl(str, 8, 12), "02.02"); // <--
+      not.ok(isCl(str, 8, 21), "02.03");
+      not.ok(isCl(str, 8, 28), "02.04");
+      not.ok(isCl(str, 8, 36), "02.05");
+      not.ok(isCl(str, 8, 50), "02.06");
 
       // 2. starting at the opening of "target":
-      t.false(is(str, 21, 8), "02.07");
-      t.false(is(str, 21, 12), "02.08");
-      t.false(is(str, 21, 21), "02.09");
-      t.true(is(str, 21, 28), "02.10"); // <--
-      t.false(is(str, 21, 36), "02.11");
-      t.false(is(str, 21, 50), "02.12");
+      not.ok(isCl(str, 21, 8), "02.07");
+      not.ok(isCl(str, 21, 12), "02.08");
+      not.ok(isCl(str, 21, 21), "02.09");
+      ok(isCl(str, 21, 28), "02.10"); // <--
+      not.ok(isCl(str, 21, 36), "02.11");
+      not.ok(isCl(str, 21, 50), "02.12");
 
       // 3. starting at the opening of "style":
-      t.false(is(str, 36, 8), "02.13");
-      t.false(is(str, 36, 12), "02.14");
-      t.false(is(str, 36, 21), "02.15");
-      t.false(is(str, 36, 28), "02.16");
-      t.false(is(str, 36, 36), "02.17");
-      t.true(is(str, 36, 50), "02.18"); // <--
+      not.ok(isCl(str, 36, 8), "02.13");
+      not.ok(isCl(str, 36, 12), "02.14");
+      not.ok(isCl(str, 36, 21), "02.15");
+      not.ok(isCl(str, 36, 28), "02.16");
+      not.ok(isCl(str, 36, 36), "02.17");
+      ok(isCl(str, 36, 50), "02.18"); // <--
     }
   );
 
   // fin.
-  t.end();
 });
 
-tap.test(`03 - repeated singles inside doubles`, (t) => {
+test(`03 - repeated singles inside doubles`, () => {
   [
     `<img src="spacer.gif" alt="'''''" width="1" height="1" border="0" style="display:block;"/>`,
     `<img src="spacer.gif" alt='"""""' width="1" height="1" border="0" style="display:block;"/>`,
   ].forEach((str) => {
     // 0. warmup
-    t.true(is(str, 9, 20), "03.01");
+    ok(isCl(str, 9, 20), "03.01");
 
     // 1. the bizness
-    t.false(is(str, 26, 9), "03.02");
-    t.false(is(str, 26, 20), "03.03");
-    t.false(is(str, 26, 26), "03.04");
-    t.false(is(str, 26, 27), "03.05");
-    t.false(is(str, 26, 28), "03.06");
-    t.false(is(str, 26, 29), "03.07");
-    t.false(is(str, 26, 30), "03.08");
-    t.false(is(str, 26, 31), "03.09");
-    t.true(is(str, 26, 32), "03.10"); // <--
-    t.false(is(str, 26, 40), "03.11");
+    not.ok(isCl(str, 26, 9), "03.02");
+    not.ok(isCl(str, 26, 20), "03.03");
+    not.ok(isCl(str, 26, 26), "03.04");
+    not.ok(isCl(str, 26, 27), "03.05");
+    not.ok(isCl(str, 26, 28), "03.06");
+    not.ok(isCl(str, 26, 29), "03.07");
+    not.ok(isCl(str, 26, 30), "03.08");
+    not.ok(isCl(str, 26, 31), "03.09");
+    ok(isCl(str, 26, 32), "03.10"); // <--
+    not.ok(isCl(str, 26, 40), "03.11");
   });
 
   // fin.
-  t.end();
 });
 
-tap.test(`04`, (t) => {
+test(`04`, () => {
   combinations(`<body alink="">`).forEach((str) => {
-    t.true(is(str, 12, 13), "06");
+    ok(isCl(str, 12, 13), "06");
   });
-  t.end();
 });
 
-tap.test(`05 - links with redirects hardcoded`, (t) => {
+test(`05 - links with redirects hardcoded`, () => {
   combinations(`<a
  href="http://a.b.c/d/EDF/HIJ/KLM/NOP/q?r=https://www.codsen.com/st/uv-wx-yz-123.html&b=456" style="color:#000; text-decoration:none;" target="_blank">x</a>
 >`).forEach((str) => {
-    t.true(is(str, 9, 94), "07.01");
-    t.false(is(str, 9, 102), "07.02");
-    t.false(is(str, 9, 136), "07.03");
-    t.false(is(str, 9, 145), "07.04");
-    t.false(is(str, 9, 152), "07.05");
+    ok(isCl(str, 9, 94), "07.01");
+    not.ok(isCl(str, 9, 102), "07.02");
+    not.ok(isCl(str, 9, 136), "07.03");
+    not.ok(isCl(str, 9, 145), "07.04");
+    not.ok(isCl(str, 9, 152), "07.05");
 
-    t.true(is(str, 102, 136), "07.06");
-    t.false(is(str, 102, 145), "07.07");
-    t.false(is(str, 102, 152), "07.08");
+    ok(isCl(str, 102, 136), "07.06");
+    not.ok(isCl(str, 102, 145), "07.07");
+    not.ok(isCl(str, 102, 152), "07.08");
 
-    t.true(is(str, 145, 152), "07.09");
+    ok(isCl(str, 145, 152), "07.09");
   });
-  t.end();
 });
 
-tap.test(`06 - url attribs within src`, (t) => {
+test(`06 - url attribs within src`, () => {
   [
     `<img src="https://z.com/r.png?a=" />`,
     `<img src="https://z.com/r.png?a=b" />`,
@@ -109,110 +107,100 @@ tap.test(`06 - url attribs within src`, (t) => {
   ]
     .reduce((acc, curr) => acc.concat(combinations(curr)), [])
     .forEach((str) => {
-      t.true(is(str, 9, str.length - 4), "07");
+      ok(isCl(str, 9, str.length - 4), "07");
     });
-  t.end();
 });
 
-tap.test(`07 - no equal char in mailto`, (t) => {
+test(`07 - no equal char in mailto`, () => {
   combinations(
     `<a href="mailto:frank@wwdcdemo.example.com">John Frank</a>`
   ).forEach((str) => {
-    t.true(is(str, 8, 42), "09");
+    ok(isCl(str, 8, 42), "09");
   });
-  t.end();
 });
 
-tap.test(`08 - href with mailto and equal`, (t) => {
+test(`08 - href with mailto and equal`, () => {
   combinations(
     `<a href="mailto:foo@example.com?cc=bar@example.com&subject=Greetings%20from%20Cupertino!&body=Wish%20you%20were%20here!">John Frank</a>`
   ).forEach((str) => {
-    t.true(is(str, 8, 119), "10");
+    ok(isCl(str, 8, 119), "10");
   });
-  t.end();
 });
 
-tap.test(`09`, (t) => {
+test(`09`, () => {
   combinations(`<img src="codsen.com/my-image.png?query=" />`).forEach(
     (str) => {
-      t.true(is(str, 9, 40));
+      ok(isCl(str, 9, 40));
     }
   );
-  t.end();
 });
 
-tap.test(`10`, (t) => {
+test(`10`, () => {
   combinations(`<a href="codsen.com/my-image.png?query=">`).forEach((str) => {
-    t.true(is(str, 8, 39));
+    ok(isCl(str, 8, 39));
   });
-  t.end();
 });
 
-tap.test(`11`, (t) => {
+test(`11`, () => {
   combinations(`<a zz="codsen.com/my-image.png?query=">`).forEach((str) => {
-    t.true(is(str, 6, 37));
+    ok(isCl(str, 6, 37));
   });
-  t.end();
 });
 
-tap.test(`12`, (t) => {
+test(`12`, () => {
   combinations(`<a zz="codsen.com/my-image.png?a=1&b=">`).forEach((str) => {
-    t.true(is(str, 6, 37));
+    ok(isCl(str, 6, 37));
   });
-  t.end();
 });
 
-tap.test(`13`, (t) => {
+test(`13`, () => {
   combinations(`<a zz="codsen.com/my-image.png?a=1&b=2">`).forEach((str) => {
-    t.true(is(str, 6, 38));
+    ok(isCl(str, 6, 38));
   });
-  t.end();
 });
 
-tap.test(`14 - text quotes`, (t) => {
+test(`14 - text quotes`, () => {
   combinations(`abc "d" efg`).forEach((str) => {
-    t.false(is(str, 4, 6), "10");
+    not.ok(isCl(str, 4, 6), "10");
   });
-  t.end();
 });
 
-tap.test(`15 - quote pairs inside font-family`, (t) => {
+test(`15 - quote pairs inside font-family`, () => {
   combinations(
     `<td style="font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;">`
   ).forEach((str, idx) => {
-    t.false(is(str, 10, 23), `15.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 31), `15.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 34), `15.03.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 39), `15.04.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.true(is(str, 10, 52), `15.05.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 23), `15.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 31), `15.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 34), `15.03.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 39), `15.04.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    ok(isCl(str, 10, 52), `15.05.${`${idx}`.padStart(2, "0")} - "${str}"`);
   });
-  t.end();
 });
 
-tap.test(`16`, (t) => {
+test(`16`, () => {
   combinations(
     `<td style="font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;">\nzzz\n</td>`
   ).forEach((str, idx) => {
-    t.false(is(str, 10, 23), `16.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 31), `16.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 34), `16.03.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 39), `16.04.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.true(is(str, 10, 52), `16.05.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 23), `16.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 31), `16.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 34), `16.03.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 39), `16.04.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    ok(isCl(str, 10, 52), `16.05.${`${idx}`.padStart(2, "0")} - "${str}"`);
   });
-  t.end();
 });
 
-tap.test(`17`, (t) => {
+test(`17`, () => {
   combinations(
     `<td style="font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;" align="left"></td>`
   ).forEach((str, idx) => {
-    t.false(is(str, 10, 23), `17.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 31), `17.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 34), `17.03.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 39), `17.04.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.true(is(str, 10, 52), `17.05.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 60), `17.06.${`${idx}`.padStart(2, "0")} - "${str}"`);
-    t.false(is(str, 10, 65), `17.07.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 23), `17.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 31), `17.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 34), `17.03.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 39), `17.04.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    ok(isCl(str, 10, 52), `17.05.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 60), `17.06.${`${idx}`.padStart(2, "0")} - "${str}"`);
+    not.ok(isCl(str, 10, 65), `17.07.${`${idx}`.padStart(2, "0")} - "${str}"`);
   });
-  t.end();
 });
+
+test.run();

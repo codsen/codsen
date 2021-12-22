@@ -33,9 +33,9 @@ function attributeValidateAlt(context: Linter): RuleObjType {
           node.attribValueEndsAt !== null
         ) {
           // only check for rogue whitespace - value can be any CDATA
-          const { errorArr } = checkForWhitespace(
+          let { errorArr } = checkForWhitespace(
             node.attribValueRaw,
-            node.attribValueStartsAt as number
+            node.attribValueStartsAt
           );
           console.log(
             `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(

@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { collWhitespace } from "../dist/string-collapse-leading-whitespace.esm.js";
 
 // if leading/trailing whitespace doesn't contain \n, collapse to a single space

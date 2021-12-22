@@ -3,11 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.esm.js";
+
+const callerDir = path.resolve(".");
 
 const testme = () => emptyCondCommentRegex();
 

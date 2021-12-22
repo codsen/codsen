@@ -1,11 +1,14 @@
 import fs from "fs-extra";
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
 import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 import { execa } from "execa";
 import tempy from "tempy";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //                                  *
 //                                  *
@@ -21,9 +24,9 @@ import tempy from "tempy";
 //                                  *
 //                                  *
 
-tap.test("01 - there are no usable files at all", async (t) => {
-  const tempFolder = tempy.directory();
-  const processedFileContents = fs
+test("01 - there are no usable files at all", async () => {
+  let tempFolder = tempy.directory();
+  let processedFileContents = fs
     .writeFile(path.join(tempFolder, "index.html"), "zzz")
     .then(() =>
       execa(
@@ -38,10 +41,11 @@ tap.test("01 - there are no usable files at all", async (t) => {
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
   // confirm that the existing file is intact:
-  t.equal(await processedFileContents, "zzz", "01");
-  t.end();
+  equal(await processedFileContents, "zzz", "01");
 });
 
 //                                  *
@@ -58,8 +62,8 @@ tap.test("01 - there are no usable files at all", async (t) => {
 //                                  *
 //                                  *
 
-tap.test("02 - index.html in the root", async (t) => {
-  const originalFile = `111
+test("02 - index.html in the root", async () => {
+  let originalFile = `111
 222
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 .pt$$$ { padding-top: $$$px !important; } | 0 | 3 |
@@ -71,7 +75,7 @@ test 02
 444
 `;
 
-  const intendedFile = `111
+  let intendedFile = `111
 222
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 .pt$$$ { padding-top: $$$px !important; } | 0 | 3 |
@@ -90,12 +94,12 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  const tempFolder = tempy.directory();
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
   // console.log(`tempFolder = ${tempFolder}`);
 
   // 2. asynchronously write all test files
-  const processedFileContents = fs
+  let processedFileContents = fs
     .writeFile(path.join(tempFolder, "index.html"), originalFile)
     .then(() =>
       execa(
@@ -110,11 +114,12 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
   // 3. compare:
-  t.equal(await processedFileContents, intendedFile, "02");
-  t.end();
+  equal(await processedFileContents, intendedFile, "02");
 });
 
 //                                  *
@@ -131,10 +136,8 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 //                                  *
 //                                  *
 
-tap.test(
-  "03 - two files processed by calling glob with wildcard",
-  async (t) => {
-    const file1 = `111
+test("03 - two files processed by calling glob with wildcard", async () => {
+  let file1 = `111
 222
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 .pt$$$ { padding-top: $$$px !important; } | 0 | 3 |
@@ -144,7 +147,7 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 333
 444
 `;
-    const file2 = `111
+  let file2 = `111
 222
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 .mt$$$ { margin-top: $$$px !important; } | 0 | 3 |
@@ -155,46 +158,41 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 444
 `;
 
-    // 1. fetch us an empty, random, temporary folder:
+  // 1. fetch us an empty, random, temporary folder:
 
-    // Re-route the test files into `temp/` folder instead for easier access when
-    // troubleshooting. Just comment out one of two:
-    const tempFolder = tempy.directory();
-    // const tempFolder = "temp";
+  // Re-route the test files into `temp/` folder instead for easier access when
+  // troubleshooting. Just comment out one of two:
+  let tempFolder = tempy.directory();
+  // const tempFolder = "temp";
 
-    // 2. asynchronously write all test files
-    const file1contents = await fs
-      .writeFile(path.join(tempFolder, "file1.html"), file1)
-      .then(
-        () => fs.writeFile(path.join(tempFolder, "file2.html"), file2) // <---- we write second file here
+  // 2. asynchronously write all test files
+  let file1contents = await fs
+    .writeFile(path.join(tempFolder, "file1.html"), file1)
+    .then(
+      () => fs.writeFile(path.join(tempFolder, "file2.html"), file2) // <---- we write second file here
+    )
+    .then(() =>
+      execa(
+        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} "*.html"`,
+        {
+          shell: true,
+        }
       )
-      .then(() =>
-        execa(
-          `cd ${tempFolder} && ${path.join(
-            __dirname,
-            "../",
-            "cli.js"
-          )} "*.html"`,
-          {
-            shell: true,
-          }
-        )
-      )
-      .then(() => fs.readFile(path.join(tempFolder, "file1.html"), "utf8"))
-      .catch((err) => t.fail(err));
+    )
+    .then(() => fs.readFile(path.join(tempFolder, "file1.html"), "utf8"))
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-    const file2contents = await fs.readFile(
-      path.join(tempFolder, "file2.html"),
-      "utf8"
-    );
+  let file2contents = await fs.readFile(
+    path.join(tempFolder, "file2.html"),
+    "utf8"
+  );
 
-    // 3. compare:
-    t.match(file1contents, /\.pt3 { padding-top: 3px !important; }/g, "03.01");
-    t.match(file2contents, /\.mt3 { margin-top: 3px !important; }/g, "03.02"); // both updated
-
-    t.end();
-  }
-);
+  // 3. compare:
+  match(file1contents, /\.pt3 { padding-top: 3px !important; }/g, "03.01");
+  match(file2contents, /\.mt3 { margin-top: 3px !important; }/g, "03.02"); // both updated
+});
 
 //                                  *
 //                                  *
@@ -209,3 +207,5 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 //                                  *
 //                                  *
 //                                  *
+
+test.run();

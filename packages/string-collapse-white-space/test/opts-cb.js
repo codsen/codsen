@@ -1,20 +1,18 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 
 // opts.cb
 // -----------------------------------------------------------------------------
 
-tap.test(`01`, (t) => {
-  t.strictSame(
-    collapse("a > b  c"),
-    { result: "a > b c", ranges: [[5, 6]] },
-    "01"
-  );
-  t.end();
+test(`01`, () => {
+  equal(collapse("a > b  c"), { result: "a > b c", ranges: [[5, 6]] }, "01");
 });
 
-tap.test(`02`, (t) => {
-  t.strictSame(
+test(`02`, () => {
+  equal(
     collapse(`a > b  c`, {
       cb: ({ suggested, whiteSpaceStartsAt, whiteSpaceEndsAt, str }) => {
         // console.log("---------");
@@ -60,5 +58,6 @@ tap.test(`02`, (t) => {
     },
     "02"
   );
-  t.end();
 });
+
+test.run();

@@ -25,14 +25,14 @@ function format(obj) {
   if (typeof obj !== "object") {
     return obj;
   }
-  const sortOrder = sortPackageJson.sortOrder
+  let sortOrder = sortPackageJson.sortOrder
     // 1. delete tap and lect fields
     .filter((field) => !["lect", "tap"].includes(field));
 
   // 2. then, insert both after resolutions, first tap then lect
   // console.log(sortOrder);
 
-  const idxOfResolutions = sortOrder.indexOf("resolutions");
+  let idxOfResolutions = sortOrder.indexOf("resolutions");
   // console.log(idxOfResolutions);
   // => 63
 
@@ -202,9 +202,9 @@ function readSortAndWriteOverFile(oneOfPaths) {
           // In this function, readSortAndWriteOverFile(), path came in,
           // we read it, now we return true if result differs after processing
 
-          const stringified = JSON.stringify(
+          let stringified = JSON.stringify(
             traverse(obj, (key, val) => {
-              const current = val !== undefined ? val : key;
+              let current = val !== undefined ? val : key;
               if (isObj(current)) {
                 return sortObject(current);
               }
@@ -229,7 +229,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
           .writeJson(
             oneOfPaths,
             traverse(obj, (key, val) => {
-              const current = val !== undefined ? val : key;
+              let current = val !== undefined ? val : key;
               if (isObj(current)) {
                 return sortObject(current);
               }

@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { lineCol, getLineStartIndexes } from "../dist/line-column-mini.esm.js";
 
 // index 14 is letter "k" on the fourth line:

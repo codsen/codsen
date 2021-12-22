@@ -3,11 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
+
+const callerDir = path.resolve(".");
 
 const testme = () => fixEnt("&&NbSpzzz&&NbSpzzz\ny &isindot; z\n&nsp;\n&pound");
 

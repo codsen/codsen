@@ -1,386 +1,292 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level 0`,
-  (t) => {
-    const str = `<td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 0,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "01.01");
-    t.strictSame(messages, [], "01.02");
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level 0`, () => {
+  let str = `<td>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 0,
+    },
+  });
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
+});
 
-tap.test(
-  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level 1`,
-  (t) => {
-    const str = `<td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 1,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "02.01");
-    t.strictSame(messages, [], "02.02");
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level 1`, () => {
+  let str = `<td>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 1,
+    },
+  });
+  equal(applyFixes(str, messages), str, "02.01");
+  equal(messages, [], "02.02");
+});
 
-tap.test(
-  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level 2`,
-  (t) => {
-    const str = `<td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "03.01");
-    t.strictSame(messages, [], "03.02");
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level 2`, () => {
+  let str = `<td>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "03.01");
+  equal(messages, [], "03.02");
+});
 
-tap.test(
-  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  (t) => {
-    const str = `<td align="char" char="." charoff="2">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "04.01");
-    t.strictSame(messages, [], "04.02");
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = `<td align="char" char="." charoff="2">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "04.01");
+  equal(messages, [], "04.02");
+});
 
-tap.test(
-  `05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  (t) => {
-    const str = `<td align="char" char="," charoff="-2">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "05.01");
-    t.strictSame(messages, [], "05.02");
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = `<td align="char" char="," charoff="-2">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "05.01");
+  equal(messages, [], "05.02");
+});
 
-tap.test(
-  `06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  (t) => {
-    const str = `<td align="char" char="," charoff="-99">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "06.01");
-    t.strictSame(messages, [], "06.02");
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = `<td align="char" char="," charoff="-99">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "06.01");
+  equal(messages, [], "06.02");
+});
 
-tap.test(
-  `07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  (t) => {
-    const str = `<td align="char" char="," charoff="99">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "07.01");
-    t.strictSame(messages, [], "07.02");
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = `<td align="char" char="," charoff="99">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "07.01");
+  equal(messages, [], "07.02");
+});
 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  (t) => {
-    const str = `<div char="." charoff="2">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "08.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-charoff",
-          idxFrom: 14,
-          idxTo: 25,
-          fix: null,
-        },
-      ],
-      "08.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  (t) => {
-    const str = `<zzz char="." charoff="2" yyy>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "09.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-charoff",
-          idxFrom: 14,
-          idxTo: 25,
-          fix: null,
-        },
-      ],
-      "09.02"
-    );
-    t.end();
-  }
-);
-
-// 03. wrong value
-// -----------------------------------------------------------------------------
-
-tap.test(
-  `10 - ${`\u001b[${35}m${`a wrong value`}\u001b[${39}m`} - not integer but str`,
-  (t) => {
-    const str = `z <td char="." charoff="abc" yyy>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "10.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-charoff",
-          idxFrom: 24,
-          idxTo: 27,
-          message: `Should be integer, no units.`,
-          fix: null,
-        },
-      ],
-      "10.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `11 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, encoded`,
-  (t) => {
-    const str = `z <td char="." charoff=" &#x3A;">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    t.equal(
-      applyFixes(str, messages),
-      `z <td char="." charoff="&#x3A;">`,
-      "11.01"
-    );
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-charoff",
-          idxFrom: 24,
-          idxTo: 25,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[24, 25]],
-          },
-        },
-      ],
-      "11.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `12 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - an empty value`,
-  (t) => {
-    const str = `z <td char="." charoff="">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "12.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-charoff",
-          idxFrom: 15,
-          idxTo: 25,
-          message: `Missing value.`,
-          fix: null,
-        },
-      ],
-      "12.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `13 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - a rational number`,
-  (t) => {
-    const str = `z <td char="." charoff="2.1">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "13.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-charoff",
-          idxFrom: 25,
-          idxTo: 27,
-          message: `Should be integer, no units.`,
-          fix: null,
-        },
-      ],
-      "13.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(`14 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - dot`, (t) => {
-  const str = `z <td char="." charoff=".">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
+  let str = `<div char="." charoff="2">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
     rules: {
       "attribute-validate-charoff": 2,
     },
   });
   // can't fix:
-  t.equal(applyFixes(str, messages), str, "14.01");
-  t.match(
-    messages,
-    [
-      {
-        ruleId: "attribute-validate-charoff",
-        idxFrom: 24,
-        idxTo: 25,
-        message: `Should be integer, no units.`,
-        fix: null,
-      },
-    ],
-    "14.02"
-  );
-  t.end();
+  equal(applyFixes(str, messages), str, "08.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-charoff",
+      idxFrom: 14,
+      idxTo: 25,
+      fix: null,
+    },
+  ]);
 });
 
-tap.test(
-  `15 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - double minus`,
-  (t) => {
-    const str = `<td align="char" char="," charoff="--2">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
+test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = `<zzz char="." charoff="2" yyy>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "09.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-charoff",
+      idxFrom: 14,
+      idxTo: 25,
+      fix: null,
+    },
+  ]);
+});
+
+// 03. wrong value
+// -----------------------------------------------------------------------------
+
+test(`10 - ${`\u001b[${35}m${`a wrong value`}\u001b[${39}m`} - not integer but str`, () => {
+  let str = `z <td char="." charoff="abc" yyy>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "10.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-charoff",
+      idxFrom: 24,
+      idxTo: 27,
+      message: `Should be integer, no units.`,
+      fix: null,
+    },
+  ]);
+});
+
+test(`11 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, encoded`, () => {
+  let str = `z <td char="." charoff=" &#x3A;">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `z <td char="." charoff="&#x3A;">`, "11.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-charoff",
+      idxFrom: 24,
+      idxTo: 25,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [[24, 25]],
       },
-    });
-    t.equal(applyFixes(str, messages), str, "15.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-charoff",
-          idxFrom: 36,
-          idxTo: 38,
-          message: `Repeated minus.`,
-          fix: null,
-        },
-      ],
-      "15.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
+
+test(`12 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - an empty value`, () => {
+  let str = `z <td char="." charoff="">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "12.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-charoff",
+      idxFrom: 15,
+      idxTo: 25,
+      message: `Missing value.`,
+      fix: null,
+    },
+  ]);
+});
+
+test(`13 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - a rational number`, () => {
+  let str = `z <td char="." charoff="2.1">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "13.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-charoff",
+      idxFrom: 25,
+      idxTo: 27,
+      message: `Should be integer, no units.`,
+      fix: null,
+    },
+  ]);
+});
+
+test(`14 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - dot`, () => {
+  let str = `z <td char="." charoff=".">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "14.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-charoff",
+      idxFrom: 24,
+      idxTo: 25,
+      message: `Should be integer, no units.`,
+      fix: null,
+    },
+  ]);
+});
+
+test(`15 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - double minus`, () => {
+  let str = `<td align="char" char="," charoff="--2">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "15.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-charoff",
+      idxFrom: 36,
+      idxTo: 38,
+      message: `Repeated minus.`,
+      fix: null,
+    },
+  ]);
+});
 
 // 04. parent tag must have "char" attribute
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `16 - ${`\u001b[${34}m${`char on parent`}\u001b[${39}m`} - sibling attr char is missing`,
-  (t) => {
-    const str = `<td align="char" charoff="2">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-charoff": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "16.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-charoff",
-          idxFrom: 0,
-          idxTo: 29,
-          message: `Attribute "char" missing.`,
-          fix: null,
-        },
-      ],
-      "16.02"
-    );
-    t.end();
-  }
-);
+test(`16 - ${`\u001b[${34}m${`char on parent`}\u001b[${39}m`} - sibling attr char is missing`, () => {
+  let str = `<td align="char" charoff="2">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charoff": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "16.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-charoff",
+      idxFrom: 0,
+      idxTo: 29,
+      message: `Attribute "char" missing.`,
+      fix: null,
+    },
+  ]);
+});
+
+test.run();

@@ -1,14 +1,19 @@
 import { readFileSync, writeFileSync } from "fs";
 import path from "path";
-import tap from "tap";
-import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import crypto from "crypto";
+import { createRequire } from "module";
+
+import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm.js";
+
 const sha256 = (x) =>
   crypto.createHash("sha256").update(x, "utf8").digest("hex");
 
-import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const readHashes = require("./fixture_hashes.json");
+
 const hashes = { ...readHashes };
 
 // Normally, hashes file would be filled, so we don't touch it.
@@ -18,24 +23,24 @@ const hashes = { ...readHashes };
 const hashesPresent = !!Object.keys(hashes).length;
 const fixtures = path.resolve("test/fixtures");
 
-function compare(t, name) {
-  const changelog = readFileSync(path.join(fixtures, `${name}.md`), "utf8");
-  const noExtrasFileName = `${name}.expected.md`;
-  const withExtrasFileName = `${name}.extras.md`;
+function compare(name) {
+  let changelog = readFileSync(path.join(fixtures, `${name}.md`), "utf8");
+  let noExtrasFileName = `${name}.expected.md`;
+  let withExtrasFileName = `${name}.extras.md`;
 
-  const noExtras = readFileSync(path.join(fixtures, noExtrasFileName), "utf8");
-  const withExtras = readFileSync(
+  let noExtras = readFileSync(path.join(fixtures, noExtrasFileName), "utf8");
+  let withExtras = readFileSync(
     path.join(fixtures, withExtrasFileName),
     "utf8"
   );
   if (hashesPresent) {
     // check, are the fixtures intact
-    t.equal(
+    equal(
       sha256(noExtras),
       hashes[noExtrasFileName],
       `${`\u001b[${31}m${`the fixture ${noExtrasFileName} was mangled!!!`}\u001b[${39}m`}`
     );
-    t.equal(
+    equal(
       sha256(withExtras),
       hashes[withExtrasFileName],
       `${`\u001b[${31}m${`the fixture ${withExtrasFileName} was mangled!!!`}\u001b[${39}m`}`
@@ -45,44 +50,36 @@ function compare(t, name) {
     hashes[noExtrasFileName] = sha256(noExtras);
     hashes[withExtrasFileName] = sha256(withExtras);
   }
-  t.equal(
+  equal(
     c(changelog).res,
     noExtras,
     `no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
   );
-  t.equal(
+  equal(
     c(changelog, true).res,
     withExtras,
     `with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
   );
 }
 
-tap.test(`01 - deletes bump-only entries together with their headings`, (t) => {
-  compare(t, "01_deletes_bump-only");
-  t.end();
+test(`01 - deletes bump-only entries together with their headings`, () => {
+  compare("01_deletes_bump-only");
 });
 
-tap.test(`02 - turns h1 headings within body into h2`, (t) => {
-  compare(t, "02_remove_h1_tags_in_body");
-  t.end();
+test(`02 - turns h1 headings within body into h2`, () => {
+  compare("02_remove_h1_tags_in_body");
 });
 
-tap.test(
-  `03 - cleans whitespace and replaces bullet dashes with asterisks`,
-  (t) => {
-    compare(t, "03_whitespace");
-    t.end();
-  }
-);
-
-tap.test(`04 - removes WIP entries`, (t) => {
-  compare(t, "04_wip");
-  t.end();
+test(`03 - cleans whitespace and replaces bullet dashes with asterisks`, () => {
+  compare("03_whitespace");
 });
 
-tap.test(`05 - fixes plural in sourcehut links`, (t) => {
-  compare(t, "05_sourcehut");
-  t.end();
+test(`04 - removes WIP entries`, () => {
+  compare("04_wip");
+});
+
+test(`05 - fixes plural in sourcehut links`, () => {
+  compare("05_sourcehut");
 });
 
 if (!hashesPresent) {
@@ -92,3 +89,5 @@ if (!hashesPresent) {
   );
   console.log(`wrote new hashes`);
 }
+
+test.run();

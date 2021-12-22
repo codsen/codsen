@@ -1,20 +1,30 @@
-import tap from "tap";
-import { applyFixes, verify } from "../../../t-util/util.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { deepContains } from "ast-deep-contains";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
+import { applyFixes, verify } from "../../../t-util/util.js";
+
+// substitute for tap t.fail - here is a function which just throws
+function fail(s) {
+  throw new Error(s);
+}
 
 // missing semi on a non-last rule
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - 1/2`, (t) => {
-  const str = `<style>.a{color:red\ntext-align:left;}</style><body>a</body>`;
-  const fixed = `<style>.a{color:red;\ntext-align:left;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`01 - 1/2`, () => {
+  let str = `<style>.a{color:red\ntext-align:left;}</style><body>a</body>`;
+  let fixed = `<style>.a{color:red;\ntext-align:left;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "01.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "01.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -30,18 +40,17 @@ tap.test(`01 - 1/2`, (t) => {
     ],
     "01.02"
   );
-  t.end();
 });
 
-tap.test(`02 - 1/3, 2/3`, (t) => {
-  const str = `<style>.a{color:red\n\ntext-align:left\n\nfloat:right}</style><body>a</body>`;
-  const fixed = `<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`02 - 1/3, 2/3`, () => {
+  let str = `<style>.a{color:red\n\ntext-align:left\n\nfloat:right}</style><body>a</body>`;
+  let fixed = `<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "02.01");
+  equal(applyFixes(str, messages), fixed, "02.01");
   deepContains(
     messages,
     [
@@ -66,23 +75,23 @@ tap.test(`02 - 1/3, 2/3`, (t) => {
         },
       },
     ],
-    t.is,
-    t.fail
+    equal,
+    fail
   );
-  t.equal(messages.length, 2, "02.02");
-  t.end();
+  equal(messages.length, 2, "02.02");
 });
 
-tap.test(`03 - 1/3, 2/3`, (t) => {
-  const str = `<style>.a{color:red;\n\ntext-align:left\n\nfloat:right}</style><body>a</body>`;
-  const fixed = `<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`03 - 1/3, 2/3`, () => {
+  let str = `<style>.a{color:red;\n\ntext-align:left\n\nfloat:right}</style><body>a</body>`;
+  let fixed = `<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "03.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "03.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -98,24 +107,24 @@ tap.test(`03 - 1/3, 2/3`, (t) => {
     ],
     "03.02"
   );
-  t.equal(messages.length, 1, "03.03");
-  t.end();
+  equal(messages.length, 1, "03.03");
 });
 
 // semi only
 // -----------------------------------------------------------------------------
 
-tap.test(`04 - one semi, tight`, (t) => {
-  const str = `<style>.a{;}</style><body>a</body>`;
-  const fixed = `<style>.a{}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`04 - one semi, tight`, () => {
+  let str = `<style>.a{;}</style><body>a</body>`;
+  let fixed = `<style>.a{}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       // "css-rule-malformed": 2,
       all: 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "04.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "04.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -131,20 +140,20 @@ tap.test(`04 - one semi, tight`, (t) => {
     ],
     "04.02"
   );
-  t.end();
 });
 
-tap.test(`05 - two semis, tight`, (t) => {
-  const str = `<style>.a{;;}</style><body>a</body>`;
-  const fixed = `<style>.a{}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`05 - two semis, tight`, () => {
+  let str = `<style>.a{;;}</style><body>a</body>`;
+  let fixed = `<style>.a{}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       // "css-rule-malformed": 2,
       all: 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "05.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "05.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -170,21 +179,21 @@ tap.test(`05 - two semis, tight`, (t) => {
     ],
     "05.02"
   );
-  t.end();
 });
 
 // value missing
 // -----------------------------------------------------------------------------
 
-tap.test(`06 - nothing after semi`, (t) => {
-  const str = `<style>.a{color:}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`06 - nothing after semi`, () => {
+  let str = `<style>.a{color:}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "06.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "06.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -198,18 +207,18 @@ tap.test(`06 - nothing after semi`, (t) => {
     ],
     "06.02"
   );
-  t.end();
 });
 
-tap.test(`07 - value and semi missing, followed by correct rule`, (t) => {
-  const str = `<style>.a{ color \n\ntext-align:left;}</style><body>a</body>`;
-  const messages = verify(t, str, {
+test(`07 - value and semi missing, followed by correct rule`, () => {
+  let str = `<style>.a{ color \n\ntext-align:left;}</style><body>a</body>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "07.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "07.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -223,19 +232,18 @@ tap.test(`07 - value and semi missing, followed by correct rule`, (t) => {
     ],
     "07.02"
   );
-  t.end();
 });
 
-tap.test(`08`, (t) => {
-  const str = `<style>.a{color: red !important float: left}</style>`;
-  const fixed = `<style>.a{color: red !important; float: left;}</style>`;
-  const messages = verify(t, str, {
+test(`08`, () => {
+  let str = `<style>.a{color: red !important float: left}</style>`;
+  let fixed = `<style>.a{color: red !important; float: left;}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
       "css-trailing-semi": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "08");
+  equal(applyFixes(str, messages), fixed, "08");
   deepContains(
     messages,
     [
@@ -260,25 +268,25 @@ tap.test(`08`, (t) => {
         },
       },
     ],
-    t.is,
-    t.fail
+    equal,
+    fail
   );
-  t.end();
 });
 
 // rogue semi in front of important
 // -----------------------------------------------------------------------------
 
-tap.test(`09`, (t) => {
-  const str = `<style>.a{color:red; !important;}</style>`;
-  const fixed = `<style>.a{color:red !important;}</style>`;
-  const messages = verify(t, str, {
+test(`09`, () => {
+  let str = `<style>.a{color:red; !important;}</style>`;
+  let fixed = `<style>.a{color:red !important;}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "09.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "09.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -294,18 +302,17 @@ tap.test(`09`, (t) => {
     ],
     "09.02"
   );
-  t.end();
 });
 
-tap.test(`10 - impotant [sic]`, (t) => {
-  const str = `<style>.a{color:red;!impotant;}</style>`;
-  const fixed = `<style>.a{color:red !important;}</style>`;
-  const messages = verify(t, str, {
+test(`10 - impotant [sic]`, () => {
+  let str = `<style>.a{color:red;!impotant;}</style>`;
+  let fixed = `<style>.a{color:red !important;}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "10");
+  equal(applyFixes(str, messages), fixed, "10");
   deepContains(
     messages,
     [
@@ -330,141 +337,132 @@ tap.test(`10 - impotant [sic]`, (t) => {
         },
       },
     ],
-    t.is,
-    t.fail
+    equal,
+    fail
   );
-  t.end();
 });
 
 // mis-spelled !important
 // -----------------------------------------------------------------------------
 
-tap.test(`11 - impotant [sic] - with space in front`, (t) => {
-  const str = `<style>.a{color:red !impotant;}</style>`;
-  const fixed = `<style>.a{color:red !important;}</style>`;
-  const messages = verify(t, str, {
+test(`11 - impotant [sic] - with space in front`, () => {
+  let str = `<style>.a{color:red !impotant;}</style>`;
+  let fixed = `<style>.a{color:red !important;}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "11");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "11");
 });
 
-tap.test(`12 - impotant [sic] - without space in front`, (t) => {
-  const str = `<style>.a{color:red!impotant}</style>`;
-  const fixed = `<style>.a{color:red!important}</style>`;
-  const messages = verify(t, str, {
+test(`12 - impotant [sic] - without space in front`, () => {
+  let str = `<style>.a{color:red!impotant}</style>`;
+  let fixed = `<style>.a{color:red!important}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "12");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "12");
 });
 
-tap.test(`13 - important without excl mark`, (t) => {
-  const str = `<style>.a{color:red important}</style>`;
-  const fixed = `<style>.a{color:red !important}</style>`;
-  const messages = verify(t, str, {
+test(`13 - important without excl mark`, () => {
+  let str = `<style>.a{color:red important}</style>`;
+  let fixed = `<style>.a{color:red !important}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "13");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "13");
 });
 
-tap.test(`14 - important with number one instead of excl mark`, (t) => {
-  const str = `<style>.a{color:red 1important}</style>`;
-  const fixed = `<style>.a{color:red !important}</style>`;
-  const messages = verify(t, str, {
+test(`14 - important with number one instead of excl mark`, () => {
+  let str = `<style>.a{color:red 1important}</style>`;
+  let fixed = `<style>.a{color:red !important}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "14");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "14");
 });
 
 // whitespace in front of colon/semi
 // -----------------------------------------------------------------------------
 
-tap.test(`15 - space after colon/semi`, (t) => {
-  const str = `<style>.a{ color : red ; }</style>`;
-  const fixed = `<style>.a{ color: red; }</style>`;
-  const messages = verify(t, str, {
+test(`15 - space after colon/semi`, () => {
+  let str = `<style>.a{ color : red ; }</style>`;
+  let fixed = `<style>.a{ color: red; }</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "15");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "15");
 });
 
-tap.test(`16 - no space after colon/semi`, (t) => {
-  const str = `<style>.a{color :red ;}</style>`;
-  const fixed = `<style>.a{color:red;}</style>`;
-  const messages = verify(t, str, {
+test(`16 - no space after colon/semi`, () => {
+  let str = `<style>.a{color :red ;}</style>`;
+  let fixed = `<style>.a{color:red;}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "16");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "16");
 });
 
-tap.test(`17`, (t) => {
-  const str = `<style>.a{color : red;}</style>`;
-  const fixed = `<style>.a{color: red;}</style>`;
-  const messages = verify(t, str, {
+test(`17`, () => {
+  let str = `<style>.a{color : red;}</style>`;
+  let fixed = `<style>.a{color: red;}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "17");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "17");
 });
 
-tap.test(`18`, (t) => {
-  const str = `<style>.a{color : red ; text-align : left ;}</style>`;
-  const fixed = `<style>.a{color: red; text-align: left;}</style>`;
-  const messages = verify(t, str, {
+test(`18`, () => {
+  let str = `<style>.a{color : red ; text-align : left ;}</style>`;
+  let fixed = `<style>.a{color: red; text-align: left;}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "18");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "18");
 });
 
 // some other character is in place of a colon
 // -----------------------------------------------------------------------------
 
-tap.test(`19`, (t) => {
-  const str = `<style>.a{color/red;}</style>`;
-  const fixed = `<style>.a{color:red;}</style>`;
-  const messages = verify(t, str, {
+test(`19`, () => {
+  let str = `<style>.a{color/red;}</style>`;
+  let fixed = `<style>.a{color:red;}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "19");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "19");
 });
 
 // repeated semi after a property
 // -----------------------------------------------------------------------------
 
-tap.test(`20`, (t) => {
-  const str = `<style>.a{color: red;;}</style>`;
-  const fixed = `<style>.a{color: red;}</style>`;
-  const messages = verify(t, str, {
+test(`20`, () => {
+  let str = `<style>.a{color: red;;}</style>`;
+  let fixed = `<style>.a{color: red;}</style>`;
+  let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -480,6 +478,7 @@ tap.test(`20`, (t) => {
     ],
     "20.01"
   );
-  t.equal(applyFixes(str, messages), fixed, "20.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "20.02");
 });
+
+test.run();

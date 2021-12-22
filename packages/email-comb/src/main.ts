@@ -1,12 +1,12 @@
+/* eslint-disable no-labels */
 import { matchRightIncl, matchRight, matchLeft } from "string-match-left-right";
 import { emptyCondCommentRegex } from "regex-empty-conditional-comments";
 import { extract } from "string-extract-class-names";
 import { pull } from "array-pull-all-with-glob";
 import { left, right } from "string-left-right";
-import { version as v } from "../package.json";
 import intersection from "lodash.intersection";
 import { expander } from "string-range-expander";
-import { Range } from "../../../scripts/common";
+import type { Range } from "../../../ops/typedefs/common";
 import { uglifyArr } from "string-uglify";
 import { rApply } from "ranges-apply";
 import pullAll from "lodash.pullall";
@@ -14,12 +14,8 @@ import { crush } from "html-crush";
 import { Ranges } from "ranges-push";
 import uniq from "lodash.uniq";
 import { matcher, isMatch } from "matcher";
-const version: string = v;
 
-interface NumValObj {
-  [key: string]: number;
-}
-
+import { version as v } from "../package.json";
 import {
   Obj,
   isObj,
@@ -29,6 +25,12 @@ import {
   regexEmptyMediaQuery,
   regexEmptyUnclosedMediaQuery,
 } from "./util";
+
+const version: string = v;
+
+interface NumValObj {
+  [key: string]: number;
+}
 
 interface HeadsAndTailsObj {
   heads: string;
@@ -87,10 +89,10 @@ const defaults: Opts = {
  * Remove unused CSS from email templates
  */
 function comb(str: string, originalOpts?: Partial<Opts>): Res {
-  const start = Date.now();
-  const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
-  const currentChunksMinifiedSelectors = new Ranges();
-  const lineBreaksToDelete = new Ranges();
+  let start = Date.now();
+  let finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
+  let currentChunksMinifiedSelectors = new Ranges();
+  let lineBreaksToDelete = new Ranges();
 
   // PS. badChars is also used
   function characterSuitableForNames(char: string): boolean {
@@ -117,9 +119,9 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
   let styleEndedAt;
 
   let styleAttributeStartedAt;
-  const headSelectorsArr = [];
-  const bodyClassesArr = [];
-  const bodyIdsArr = [];
+  let headSelectorsArr = [];
+  let bodyClassesArr = [];
+  let bodyIdsArr = [];
   // const selectorsRemovedDuringRoundOne = [];
 
   let commentStartedAt: number | null;
@@ -128,7 +130,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
   let bodyClass: BodyClassOrId;
   let bodyId: BodyClassOrId;
 
-  const headSelectorsCount: NumValObj = {};
+  let headSelectorsCount: NumValObj = {};
 
   // for each single character traversed on any FOR loop, we increment this counter:
   let totalCounter = 0;
@@ -245,18 +247,18 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
   let commentsLength = 0;
 
   // same as used in string-extract-class-names
-  const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
+  let badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
 
   // Rules which might wrap the media queries, for example:
   // @supports (display: grid) {...
   // We need to process their contents only (and disregard their curlies).
-  const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
+  let atRulesWhichMightWrapStyles = ["media", "supports", "document"];
 
   // One-liners like:
   // "@charset "utf-8";"
   // and one-liners with URL's:
   // @import url("https://codsen.com/style.css");
-  const atRulesWhichNeedToBeIgnored = [
+  let atRulesWhichNeedToBeIgnored = [
     "font-feature-values",
     "counter-style",
     "namespace",
@@ -268,7 +270,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
     "page",
   ];
 
-  const atRuleBreakCharacters = ["{", "(", "<", '"', "'", "@", ";"];
+  let atRuleBreakCharacters = ["{", "(", "<", '"', "'", "@", ";"];
 
   // insurance
   if (typeof str !== "string") {
@@ -286,7 +288,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       )}`
     );
   }
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
   // arrayiffy if string:
   if (typeof opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains === "string") {
     opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [
@@ -393,13 +395,13 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
   //              |
   //            chunk
   //
-  const strArrToMatchAgainstChunks: string[] = opts.whitelist.filter(
-    (v) => !v.startsWith("#") && !v.startsWith(".")
+  let strArrToMatchAgainstChunks: string[] = opts.whitelist.filter(
+    (c) => !c.startsWith("#") && !c.startsWith(".")
   );
 
-  const len = str.length;
+  let len = str.length;
 
-  const leavePercForLastStage = 0.06; // in range of [0, 1]
+  let leavePercForLastStage = 0.06; // in range of [0, 1]
 
   let ceil = 1;
 
@@ -416,7 +418,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         2
     );
     console.log(
-      `419 ${`\u001b[${33}m${`ceil`}\u001b[${39}m`} = ${JSON.stringify(
+      `421 ${`\u001b[${33}m${`ceil`}\u001b[${39}m`} = ${JSON.stringify(
         ceil,
         null,
         4
@@ -459,7 +461,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
   // ---------------------------------------------------------------------------
 
   // Calculate the prevailing line ending sign: is it \r, \n or \r\n?
-  const endingsCount = {
+  let endingsCount = {
     n: 0,
     r: 0,
     rn: 0,
@@ -643,7 +645,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         }
       }
 
-      const chr = str[i];
+      let chr = str[i];
 
       // count line endings:
       if (str[i] === "\n") {
@@ -661,7 +663,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       }
 
       if (
-        stateWithinStyleTag !== true &&
+        !stateWithinStyleTag &&
         // a) either it's the first style tag and currently we haven't traversed
         // it's closing yet:
         ((styleEndedAt === null &&
@@ -674,16 +676,16 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             styleStartedAt > styleEndedAt &&
             styleStartedAt < i))
       ) {
-        console.log(`677 activate "stateWithinStyleTag" state`);
+        console.log(`679 activate "stateWithinStyleTag" state`);
         console.log(
-          `679 ${`\u001b[${33}m${`styleStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `681 ${`\u001b[${33}m${`styleStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
             styleStartedAt,
             null,
             4
           )}`
         );
         console.log(
-          `686 ${`\u001b[${33}m${`styleEndedAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `688 ${`\u001b[${33}m${`styleEndedAt`}\u001b[${39}m`} = ${JSON.stringify(
             styleEndedAt,
             null,
             4
@@ -695,13 +697,13 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         stateWithinStyleTag = true;
         stateWithinBody = false;
       } else if (
-        stateWithinBody !== true &&
+        !stateWithinBody &&
         bodyStartedAt !== null &&
         (styleStartedAt === null || styleStartedAt < i) &&
         (styleEndedAt === null || styleEndedAt < i)
       ) {
         console.log(
-          `704 activate "stateWithinBody" state (stateWithinBody was previously ${stateWithinBody})`
+          `706 activate "stateWithinBody" state (stateWithinBody was previously ${stateWithinBody})`
         );
         stateWithinBody = true;
         stateWithinStyleTag = false;
@@ -736,7 +738,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         // traverse until the same is met again, ignore any curlies within.
 
         if (!currentlyWithinQuotes) {
-          const leftSideIdx = left(str, i);
+          let leftSideIdx = left(str, i);
           if (
             typeof leftSideIdx === "number" &&
             ((stateWithinStyleTag &&
@@ -747,7 +749,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             currentlyWithinQuotes = str[i];
             console.log(
-              `750 SET ${`\u001b[${33}m${`currentlyWithinQuotes`}\u001b[${39}m`} = ${currentlyWithinQuotes}`
+              `752 SET ${`\u001b[${33}m${`currentlyWithinQuotes`}\u001b[${39}m`} = ${currentlyWithinQuotes}`
             );
           }
         } else if (
@@ -759,12 +761,12 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             str[right(str, right(str, i) as number) as number] === `'`)
         ) {
           i = right(str, right(str, i)) as number;
-          console.log(`762 BUMP i=${right(str, right(str, i))}, step outer`);
+          console.log(`764 BUMP i=${right(str, right(str, i))}, step outer`);
           continue;
         } else if (currentlyWithinQuotes === str[i]) {
           currentlyWithinQuotes = null;
           console.log(
-            `767 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinQuotes`}\u001b[${39}m`} = null`
+            `769 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinQuotes`}\u001b[${39}m`} = null`
           );
         }
 
@@ -776,7 +778,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             styleAttributeStartedAt = null;
             console.log(
-              `779 ${`\u001b[${31}m${`██`}\u001b[${39}m`} SET ${`\u001b[${33}m${`styleAttributeStartedAt`}\u001b[${39}m`} = null`
+              `781 ${`\u001b[${31}m${`██`}\u001b[${39}m`} SET ${`\u001b[${33}m${`styleAttributeStartedAt`}\u001b[${39}m`} = null`
             );
           }
         }
@@ -796,8 +798,8 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           );
           doNothing = false;
           // just turn it off and move on.
-        } else if (matchRightIncl(str, i, doNothingUntil)) {
-          console.log(`800 doNothingUntil="${doNothingUntil}" MATCHED`);
+        } else if (doNothingUntil && matchRightIncl(str, i, doNothingUntil)) {
+          console.log(`802 doNothingUntil="${doNothingUntil}" MATCHED`);
           // Normally doNothingUntil is a single character.
           // However, when matching back-end characters, it can be multiple chars.
           // That's why above we can't compare with '===' and need the
@@ -809,15 +811,15 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
             // logging:
             console.log(
-              `812 CSS comment-block ends, let's tackle the doNothing`
+              `814 CSS comment-block ends, let's tackle the doNothing`
             );
 
             if (round === 1 && opts.removeCSSComments) {
-              const lineBreakPresentOnTheLeft = matchLeft(
-                str,
-                commentStartedAt,
-                ["\r\n", "\n", "\r"]
-              );
+              let lineBreakPresentOnTheLeft = matchLeft(str, commentStartedAt, [
+                "\r\n",
+                "\n",
+                "\r",
+              ]);
               console.log(
                 `${`\u001b[${33}m${`lineBreakPresentOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
                   lineBreakPresentOnTheLeft,
@@ -832,17 +834,18 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               ) {
                 startingIndex -= lineBreakPresentOnTheLeft.length;
                 console.log(
-                  `835 NEW \u001b[${33}m${`startingIndex`}\u001b[${39}m = ${startingIndex}`
+                  `837 NEW \u001b[${33}m${`startingIndex`}\u001b[${39}m = ${startingIndex}`
                 );
               }
               if (
                 str[startingIndex - 1] &&
                 characterSuitableForNames(str[startingIndex - 1]) &&
+                // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                 str[i + doNothingUntil.length] &&
                 characterSuitableForNames(str[i + doNothingUntil.length])
               ) {
                 console.log(
-                  `845 PUSH [${startingIndex}, ${
+                  `848 PUSH [${startingIndex}, ${
                     i + doNothingUntil.length
                   }, ";"]`
                 );
@@ -854,7 +857,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                 commentsLength += i + doNothingUntil.length - startingIndex;
               } else {
                 console.log(
-                  `857 PUSH [${startingIndex}, ${i + doNothingUntil.length}]`
+                  `860 PUSH [${startingIndex}, ${i + doNothingUntil.length}]`
                 );
                 finalIndexesToDelete.push(
                   startingIndex,
@@ -865,7 +868,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             }
             commentStartedAt = null;
             console.log(
-              `868 SET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = ${commentStartedAt}`
+              `871 SET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = ${commentStartedAt}`
             );
           }
 
@@ -873,16 +876,16 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
           // offset the index:
           i = i + doNothingUntil.length - 1;
-          console.log(`876 AFTER OFFSET, THE NEW i IS NOW: ${i}`);
+          console.log(`879 AFTER OFFSET, THE NEW i IS NOW: ${i}`);
 
           // Switch off the mode
           doNothingUntil = null;
           console.log(
-            `881 SET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
+            `884 SET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
           );
           doNothing = false;
           console.log(
-            `885 SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = ${doNothing}, then step out`
+            `888 SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = ${doNothing}, then step out`
           );
           continue;
         }
@@ -901,31 +904,31 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       ) {
         checkingInsideCurlyBraces = true;
         console.log(
-          `904 SET ${`\u001b[${33}m${`checkingInsideCurlyBraces`}\u001b[${39}m`} = ${checkingInsideCurlyBraces}`
+          `907 SET ${`\u001b[${33}m${`checkingInsideCurlyBraces`}\u001b[${39}m`} = ${checkingInsideCurlyBraces}`
         );
 
-        console.log(`907 \u001b[${36}m${`\n * style tag begins`}\u001b[${39}m`);
+        console.log(`910 \u001b[${36}m${`\n * style tag begins`}\u001b[${39}m`);
         if (!stateWithinStyleTag) {
           stateWithinStyleTag = true;
-          console.log(`910 SET stateWithinStyleTag = ${stateWithinStyleTag}`);
+          console.log(`913 SET stateWithinStyleTag = ${stateWithinStyleTag}`);
         }
 
         console.log(
-          `914 \u001b[${36}m${`\n marching forward until ">":`}\u001b[${39}m`
+          `917 \u001b[${36}m${`\n marching forward until ">":`}\u001b[${39}m`
         );
         for (let y = i; y < len; y++) {
           totalCounter += 1;
           console.log(
-            `919 \u001b[${36}m${`str[i=${y}]=${str[y]}`}\u001b[${39}m`
+            `922 \u001b[${36}m${`str[i=${y}]=${str[y]}`}\u001b[${39}m`
           );
           if (str[y] === ">") {
             console.log(
-              `923 \u001b[${36}m${` > found, stopping`}\u001b[${39}m`
+              `926 \u001b[${36}m${` > found, stopping`}\u001b[${39}m`
             );
             styleStartedAt = y + 1;
             ruleChunkStartedAt = y + 1;
             console.log(
-              `928 SET ${`\u001b[${33}m${`styleStartedAt`}\u001b[${39}m`} = ${styleStartedAt}; SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt} THEN BREAK`
+              `931 SET ${`\u001b[${33}m${`styleStartedAt`}\u001b[${39}m`} = ${styleStartedAt}; SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt} THEN BREAK`
             );
             // We can offset the main index ("jump" to an already-traversed closing
             // closing bracket character of <style.....> tag because this tag
@@ -935,7 +938,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             // Offset the index because we traversed it already:
             // i = y;
             console.log(
-              `938 \u001b[${36}m${`stopped marching forward`}\u001b[${39}m`
+              `941 \u001b[${36}m${`stopped marching forward`}\u001b[${39}m`
             );
             break;
             // continue stepouter;
@@ -962,10 +965,10 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
         styleEndedAt = i - 1;
         console.log(
-          `965 SET ${`\u001b[${33}m${`checkingInsideCurlyBraces`}\u001b[${39}m`} = ${checkingInsideCurlyBraces}`
+          `968 SET ${`\u001b[${33}m${`checkingInsideCurlyBraces`}\u001b[${39}m`} = ${checkingInsideCurlyBraces}`
         );
         console.log(
-          `968 SET ${`\u001b[${33}m${`styleEndedAt`}\u001b[${39}m`} = ${styleEndedAt}`
+          `971 SET ${`\u001b[${33}m${`styleEndedAt`}\u001b[${39}m`} = ${styleEndedAt}`
         );
 
         // we don't need the chunk end tracking marker any more
@@ -974,7 +977,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
         if (stateWithinStyleTag) {
           stateWithinStyleTag = false;
-          console.log(`977 SET stateWithinStyleTag = ${stateWithinStyleTag}`);
+          console.log(`980 SET stateWithinStyleTag = ${stateWithinStyleTag}`);
         }
       }
 
@@ -990,13 +993,13 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         // 1. mark the beginning
         commentStartedAt = i;
         console.log(
-          `993 SET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = ${i}`
+          `996 SET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = ${i}`
         );
 
         // 2. activate doNothing:
         doNothing = true;
         console.log(
-          `999 SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = true`
+          `1002 SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = true`
         );
         doNothingUntil = "*/";
 
@@ -1007,18 +1010,18 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
       // pinpoint "@"
       if (!doNothing && stateWithinStyleTag && str[i] === "@") {
-        console.log(`1010 (i=${i})`);
+        console.log(`1013 (i=${i})`);
         // since we are going to march forward, rest the whitespaceStartedAt
         // marker since it might not get reset otherwise
         if (whitespaceStartedAt) {
           whitespaceStartedAt = null;
         }
 
-        const matchedAtTagsName =
+        let matchedAtTagsName =
           matchRight(str, i, atRulesWhichMightWrapStyles) ||
           matchRight(str, i, atRulesWhichNeedToBeIgnored);
         if (typeof matchedAtTagsName === "string") {
-          console.log(`1021 @${matchedAtTagsName} detected`);
+          console.log(`1024 @${matchedAtTagsName} detected`);
           let temp;
 
           // rare case when semicolon follows the at-tag - in that
@@ -1035,7 +1038,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                 },
               }))
           ) {
-            console.log(`1038 BLANK AT-RULE DETECTED`);
+            console.log(`1041 BLANK AT-RULE DETECTED`);
             finalIndexesToDelete.push(
               i,
               temp || i + matchedAtTagsName.length + 2
@@ -1049,13 +1052,13 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           let secondaryStopper;
           console.log("\n");
           console.log(
-            `1052 \u001b[${36}m${`march forward`}\u001b[${39}m:\n-----`
+            `1055 \u001b[${36}m${`march forward`}\u001b[${39}m:\n-----`
           );
 
           for (let z = i + 1; z < len; z++) {
             totalCounter += 1;
             console.log(
-              `1058 \u001b[${36}m${`str[${z}] = ${str[z]}`}\u001b[${39}m; ${`\u001b[${33}m${`secondaryStopper`}\u001b[${39}m`} = ${secondaryStopper}`
+              `1061 \u001b[${36}m${`str[${z}] = ${str[z]}`}\u001b[${39}m; ${`\u001b[${33}m${`secondaryStopper`}\u001b[${39}m`} = ${secondaryStopper}`
             );
 
             // ------------------------------------------------------------------
@@ -1072,28 +1075,28 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             if (str[z] === "{" && str[z + 1] === "{") {
               espTails = "}}";
               console.log(
-                `1075 ${`\u001b[${33}m${`espTails`}\u001b[${39}m`} = ${espTails}`
+                `1078 ${`\u001b[${33}m${`espTails`}\u001b[${39}m`} = ${espTails}`
               );
             }
             if (str[z] === "{" && str[z + 1] === "%") {
               espTails = "%}";
               console.log(
-                `1081 ${`\u001b[${33}m${`espTails`}\u001b[${39}m`} = ${espTails}`
+                `1084 ${`\u001b[${33}m${`espTails`}\u001b[${39}m`} = ${espTails}`
               );
             }
             if (espTails && str.includes(espTails, z + 1)) {
               console.log(
-                `1086 ${`\u001b[${32}m${`ESP Nunjucks/Jinja heads detected`}\u001b[${39}m`}`
+                `1089 ${`\u001b[${32}m${`ESP Nunjucks/Jinja heads detected`}\u001b[${39}m`}`
               );
               z = str.indexOf(espTails, z + 1) + espTails.length - 1;
               console.log(
-                `1090 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} z = ${z}; then ${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`
+                `1093 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} z = ${z}; then ${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`
               );
               continue;
             } else if (espTails) {
               // if tails are not present, wipe them, for perf reasons
               console.log(
-                `1096 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`espTails`}\u001b[${39}m`}`
+                `1099 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`espTails`}\u001b[${39}m`}`
               );
               espTails = "";
             }
@@ -1101,7 +1104,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             // catch the ending of a secondary stopper
             if (secondaryStopper && str[z] === secondaryStopper) {
               console.log(
-                `1104 \u001b[${36}m${`atRulesWhichNeedToBeIgnored = ${JSON.stringify(
+                `1107 \u001b[${36}m${`atRulesWhichNeedToBeIgnored = ${JSON.stringify(
                   atRulesWhichNeedToBeIgnored,
                   null,
                   0
@@ -1119,11 +1122,11 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               ) {
                 i = z;
                 console.log(
-                  `1122 ! SET \u001b[${31}m${`i = ${i}`}\u001b[${39}m - THEN, STEP OUT`
+                  `1125 ! SET \u001b[${31}m${`i = ${i}`}\u001b[${39}m - THEN, STEP OUT`
                 );
                 ruleChunkStartedAt = z + 1;
                 console.log(
-                  `1126 SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt}`
+                  `1129 SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt}`
                 );
                 continue stepouter;
               } else {
@@ -1140,17 +1143,17 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             if (str[z] === '"' && !secondaryStopper) {
               secondaryStopper = '"';
               console.log(
-                `1143 SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`
+                `1146 SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`
               );
             } else if (str[z] === "'" && !secondaryStopper) {
               secondaryStopper = "'";
               console.log(
-                `1148 SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`
+                `1151 SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`
               );
             } else if (str[z] === "(" && !secondaryStopper) {
               secondaryStopper = ")";
               console.log(
-                `1153 SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`
+                `1156 SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`
               );
             } else if (
               atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName) &&
@@ -1159,7 +1162,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             ) {
               secondaryStopper = "}";
               console.log(
-                `1162 SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`
+                `1165 SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`
               );
             }
 
@@ -1173,7 +1176,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // completely before anything else is considered.
 
               console.log(
-                `1176 AT-RULE BREAK CHAR: index=${z}, value="${str[z]}"`
+                `1179 AT-RULE BREAK CHAR: index=${z}, value="${str[z]}"`
               );
 
               // bail out clauses
@@ -1185,7 +1188,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                 insideCurlyBraces = false;
                 ruleChunkStartedAt = z + 1;
                 console.log(
-                  `1188 SET ${`\u001b[${33}m${`insideCurlyBraces`}\u001b[${39}m`} = false; ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt}; THEN STEP OUT`
+                  `1191 SET ${`\u001b[${33}m${`insideCurlyBraces`}\u001b[${39}m`} = false; ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt}; THEN STEP OUT`
                 );
                 i = z;
                 continue stepouter;
@@ -1200,7 +1203,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                   pushRangeFrom = i;
                   pushRangeTo = z + (str[z] === ";" ? 1 : 0);
                   console.log(
-                    `1203 BROKEN AT-RULE DETECTED, pushing [${pushRangeFrom}, ${pushRangeTo}] = "${str.slice(
+                    `1206 BROKEN AT-RULE DETECTED, pushing [${pushRangeFrom}, ${pushRangeTo}] = "${str.slice(
                       pushRangeFrom,
                       pushRangeTo
                     )}" THEN STEP OUT`
@@ -1209,16 +1212,16 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                 }
               }
               console.log(
-                `1212 ${`\u001b[${33}m${`pushRangeTo`}\u001b[${39}m`} = ${pushRangeTo}; ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`
+                `1215 ${`\u001b[${33}m${`pushRangeTo`}\u001b[${39}m`} = ${pushRangeTo}; ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`
               );
-              const iOffset = pushRangeTo
+              let iOffset = pushRangeTo
                 ? pushRangeTo - 1
                 : z - 1 + (str[z] === "{" ? 1 : 0);
               console.log(
-                `1218 ${`\u001b[${33}m${`iOffset`}\u001b[${39}m`} = ${iOffset}`
+                `1221 ${`\u001b[${33}m${`iOffset`}\u001b[${39}m`} = ${iOffset}`
               );
               console.log(
-                `1221 ! SET \u001b[${31}m${`i = ${iOffset}; ruleChunkStartedAt = ${
+                `1224 ! SET \u001b[${31}m${`i = ${iOffset}; ruleChunkStartedAt = ${
                   iOffset + 1
                 };`}\u001b[${39}m - THEN, STEP OUT.`
               );
@@ -1242,14 +1245,14 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         !curliesDepth
       ) {
         console.log(
-          `1245 ${`\u001b[${32}m${`██`}\u001b[${39}m`} pinpointing closing curly braces`
+          `1248 ${`\u001b[${32}m${`██`}\u001b[${39}m`} pinpointing closing curly braces`
         );
 
         // submit whole chunk for deletion if applicable:
         if (round === 2 && headWholeLineCanBeDeleted && ruleChunkStartedAt) {
           finalIndexesToDelete.push(ruleChunkStartedAt, i + 1);
           console.log(
-            `1252 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${ruleChunkStartedAt}, ${
+            `1255 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${ruleChunkStartedAt}, ${
               i + 1
             }]; finalIndexesToDelete now = ${JSON.stringify(
               finalIndexesToDelete,
@@ -1261,18 +1264,18 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
         insideCurlyBraces = false;
         console.log(
-          `1264 SET ${`\u001b[${33}m${`insideCurlyBraces`}\u001b[${39}m`} = false`
+          `1267 SET ${`\u001b[${33}m${`insideCurlyBraces`}\u001b[${39}m`} = false`
         );
 
         console.log(
-          `1268 FIY, \u001b[${31}m${`headWholeLineCanBeDeleted = ${headWholeLineCanBeDeleted}`}\u001b[${39}m; \u001b[${31}m${`lastKeptChunksCommaAt = ${lastKeptChunksCommaAt}`}\u001b[${39}m; \u001b[${31}m${`onlyDeletedChunksFollow = ${onlyDeletedChunksFollow}`}\u001b[${39}m
+          `1271 FIY, \u001b[${31}m${`headWholeLineCanBeDeleted = ${headWholeLineCanBeDeleted}`}\u001b[${39}m; \u001b[${31}m${`lastKeptChunksCommaAt = ${lastKeptChunksCommaAt}`}\u001b[${39}m; \u001b[${31}m${`onlyDeletedChunksFollow = ${onlyDeletedChunksFollow}`}\u001b[${39}m
             `
         );
 
         if (ruleChunkStartedAt) {
           ruleChunkStartedAt = i + 1;
           console.log(
-            `1275 SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt}`
+            `1278 SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt}`
           );
         }
 
@@ -1285,7 +1288,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         onlyDeletedChunksFollow = false;
 
         console.log(
-          `1288 RESET: ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`headWholeLineCanBeDeleted`}\u001b[${39}m`} = true;
+          `1291 RESET: ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`headWholeLineCanBeDeleted`}\u001b[${39}m`} = true;
           ${`\u001b[${33}m${`selectorChunkCanBeDeleted`}\u001b[${39}m`} = false;
           ${`\u001b[${33}m${`lastKeptChunksCommaAt`}\u001b[${39}m`} = null;
           ${`\u001b[${33}m${`onlyDeletedChunksFollow`}\u001b[${39}m`} = false;`
@@ -1318,7 +1321,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         !insideCurlyBraces
       ) {
         console.log(
-          `1321 catching the beginning/ending of CSS selectors in head`
+          `1324 catching the beginning/ending of CSS selectors in head`
         );
         // TODO: skip all false-positive characters within quotes, like curlies
 
@@ -1331,17 +1334,17 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (chr === "." || chr === "#") {
             singleSelectorStartedAt = i;
             console.log(
-              `1334 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}`
+              `1337 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}`
             );
           } else if (matchLeft(str, i, "[class=")) {
             console.log(
-              `1338 ${`\u001b[${33}m${`██`}\u001b[${39}m`} [class= detected`
+              `1341 ${`\u001b[${33}m${`██`}\u001b[${39}m`} [class= detected`
             );
             if (isLatinLetter(chr)) {
               singleSelectorStartedAt = i;
               singleSelectorType = ".";
               console.log(
-                `1344 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`
+                `1347 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`
               );
             } else if (
               `"'`.includes(chr) &&
@@ -1350,18 +1353,18 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               singleSelectorStartedAt = right(str, i);
               singleSelectorType = ".";
               console.log(
-                `1353 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`
+                `1356 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`
               );
             }
           } else if (matchLeft(str, i, "[id=")) {
             console.log(
-              `1358 ${`\u001b[${33}m${`██`}\u001b[${39}m`} [id= detected`
+              `1361 ${`\u001b[${33}m${`██`}\u001b[${39}m`} [id= detected`
             );
             if (isLatinLetter(chr)) {
               singleSelectorStartedAt = i;
               singleSelectorType = "#";
               console.log(
-                `1364 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`
+                `1367 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`
               );
             } else if (
               `"'`.includes(chr) &&
@@ -1370,17 +1373,17 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               singleSelectorStartedAt = right(str, i);
               singleSelectorType = "#";
               console.log(
-                `1373 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`
+                `1376 SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`
               );
             }
           } else if (chr.trim()) {
             // logging:
-            console.log("1378 ██");
+            console.log("1381 ██");
             if (chr === "}") {
               ruleChunkStartedAt = i + 1;
               currentChunk = null;
               console.log(
-                `1383 SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${
+                `1386 SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${
                   i + 1
                 }; ${`\u001b[${33}m${`currentChunk`}\u001b[${39}m`} = null;`
               );
@@ -1388,7 +1391,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // catch comment blocks, probably Outlook conditional comments
               // like <!--[if mso]>
               console.log(
-                `1391 \u001b[${36}m${`conditional comment detected, traverse forward`}\u001b[${39}m`
+                `1394 \u001b[${36}m${`conditional comment detected, traverse forward`}\u001b[${39}m`
               );
               for (let y = i; y < len; y++) {
                 totalCounter += 1;
@@ -1419,7 +1422,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             singleSelectorType = undefined;
           }
           console.log(
-            `1422 CARVED OUT A SINGLE SELECTOR'S NAME: "\u001b[${32}m${singleSelector}\u001b[${39}m"`
+            `1425 CARVED OUT A SINGLE SELECTOR'S NAME: "\u001b[${32}m${singleSelector}\u001b[${39}m"`
           );
 
           if (
@@ -1429,18 +1432,18 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             selectorChunkCanBeDeleted = true;
             console.log(
-              `1432 SET selectorChunkCanBeDeleted = true - ${`\u001b[${31}m${`CHUNK CAN BE DELETED`}\u001b[${39}m`}`
+              `1435 SET selectorChunkCanBeDeleted = true - ${`\u001b[${31}m${`CHUNK CAN BE DELETED`}\u001b[${39}m`}`
             );
             onlyDeletedChunksFollow = true;
             console.log(
-              `1436 SET ${`\u001b[${33}m${`onlyDeletedChunksFollow`}\u001b[${39}m`} = true`
+              `1439 SET ${`\u001b[${33}m${`onlyDeletedChunksFollow`}\u001b[${39}m`} = true`
             );
           } else if (round === 2 && !selectorChunkCanBeDeleted) {
             console.log(
-              `1440 ${`\u001b[${32}m${`BTW, THIS CHUNK MIGHT BE RETAINED`}\u001b[${39}m`}`
+              `1443 ${`\u001b[${32}m${`BTW, THIS CHUNK MIGHT BE RETAINED`}\u001b[${39}m`}`
             );
             console.log(
-              `1443 ${`\u001b[${33}m${`opts.whitelist`}\u001b[${39}m`} = ${JSON.stringify(
+              `1446 ${`\u001b[${33}m${`opts.whitelist`}\u001b[${39}m`} = ${JSON.stringify(
                 opts.whitelist,
                 null,
                 4
@@ -1454,7 +1457,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                 !matcher([singleSelector], opts.whitelist).length)
             ) {
               console.log(
-                `1457 ${`\u001b[${31}m${`PUSH [${singleSelectorStartedAt}, ${i}, ${
+                `1460 ${`\u001b[${31}m${`PUSH [${singleSelectorStartedAt}, ${i}, ${
                   allClassesAndIdsWithinHeadFinalUglified[
                     allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)
                   ]
@@ -1474,7 +1477,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               lastKeptChunksCommaAt = i;
               onlyDeletedChunksFollow = false;
               console.log(
-                `1477 SET ${`\u001b[${33}m${`lastKeptChunksCommaAt`}\u001b[${39}m`} = ${lastKeptChunksCommaAt}; ${`\u001b[${33}m${`onlyDeletedChunksFollow`}\u001b[${39}m`} = ${onlyDeletedChunksFollow};`
+                `1480 SET ${`\u001b[${33}m${`lastKeptChunksCommaAt`}\u001b[${39}m`} = ${lastKeptChunksCommaAt}; ${`\u001b[${33}m${`onlyDeletedChunksFollow`}\u001b[${39}m`} = ${onlyDeletedChunksFollow};`
               );
             } else {
               // IF it's whitespace, traverse forward, look for comma
@@ -1484,11 +1487,11 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (chr === "." || chr === "#") {
             singleSelectorStartedAt = i;
             console.log(
-              `1487 ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}`
+              `1490 ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}`
             );
           } else {
             singleSelectorStartedAt = null;
-            console.log(`1491 WIPE singleSelectorStartedAt = null`);
+            console.log(`1494 WIPE singleSelectorStartedAt = null`);
           }
         }
 
@@ -1497,7 +1500,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         // catch the selectorChunks (for example, #head-only-id-2.real-class-1[lang|en]):
         // only opening curly brace or comma stops the recording.
         if (selectorChunkStartedAt === null) {
-          console.log(`1500 catching the start of a chunk`);
+          console.log(`1503 catching the start of a chunk`);
           // catch the start of a chunk
           // if (chr === "." || chr === "#") {
           if (
@@ -1509,22 +1512,22 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             // reset the deletion flag:
             selectorChunkCanBeDeleted = false;
             console.log(
-              `1512 ${`\u001b[${33}m${`selectorChunkCanBeDeleted`}\u001b[${39}m`} = ${selectorChunkCanBeDeleted}`
+              `1515 ${`\u001b[${33}m${`selectorChunkCanBeDeleted`}\u001b[${39}m`} = ${selectorChunkCanBeDeleted}`
             );
 
             // set the chunk's starting marker:
             selectorChunkStartedAt = i;
             console.log(
-              `1518 ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} = ${selectorChunkStartedAt}`
+              `1521 ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} = ${selectorChunkStartedAt}`
             );
           }
         }
         // catch the ending of a chunk
         else if (",{".includes(chr)) {
-          const sliceTo = whitespaceStartedAt || i;
+          let sliceTo = whitespaceStartedAt || i;
           currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
           console.log(
-            `1527 ${`\u001b[${33}m${`currentChunk`}\u001b[${39}m`} = ${JSON.stringify(
+            `1530 ${`\u001b[${33}m${`currentChunk`}\u001b[${39}m`} = ${JSON.stringify(
               currentChunk,
               null,
               0
@@ -1541,10 +1544,10 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             selectorChunkCanBeDeleted = false;
             console.log(
-              `1544 ${`\u001b[${31}m${`██ CHUNK MATCHED ONE OF opts.whitelist RAW STRINGS AND WON'T BE DELETED`}\u001b[${39}m`}`
+              `1547 ${`\u001b[${31}m${`██ CHUNK MATCHED ONE OF opts.whitelist RAW STRINGS AND WON'T BE DELETED`}\u001b[${39}m`}`
             );
             console.log(
-              `1547 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`selectorChunkCanBeDeleted`}\u001b[${39}m`} = ${selectorChunkCanBeDeleted}`
+              `1550 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`selectorChunkCanBeDeleted`}\u001b[${39}m`} = ${selectorChunkCanBeDeleted}`
             );
           }
 
@@ -1555,13 +1558,13 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               if (chr === "," && whitespaceStartedAt < i) {
                 finalIndexesToDelete.push(whitespaceStartedAt, i);
                 console.log(
-                  `1558 PUSH WHITESPACE [${whitespaceStartedAt}, ${i}]`
+                  `1561 PUSH WHITESPACE [${whitespaceStartedAt}, ${i}]`
                 );
                 nonIndentationsWhitespaceLength += i - whitespaceStartedAt;
               } else if (chr === "{" && whitespaceStartedAt < i - 1) {
                 finalIndexesToDelete.push(whitespaceStartedAt, i - 1);
                 console.log(
-                  `1564 PUSH WHITESPACE [${whitespaceStartedAt}, ${i - 1}]`
+                  `1567 PUSH WHITESPACE [${whitespaceStartedAt}, ${i - 1}]`
                 );
                 nonIndentationsWhitespaceLength += i - 1 - whitespaceStartedAt;
               }
@@ -1569,7 +1572,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
             headSelectorsArr.push(currentChunk);
             console.log(
-              `1572 PUSH CHUNK "${`\u001b[${32}m${currentChunk}\u001b[${39}m`}" to headSelectorsArr which is now = ${JSON.stringify(
+              `1575 PUSH CHUNK "${`\u001b[${32}m${currentChunk}\u001b[${39}m`}" to headSelectorsArr which is now = ${JSON.stringify(
                 headSelectorsArr,
                 null,
                 0
@@ -1581,7 +1584,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             let fromIndex = selectorChunkStartedAt;
             let toIndex = i;
             console.log(
-              `1584 STARTING ${`\u001b[${33}m${`fromIndex`}\u001b[${39}m`} = ${fromIndex}`
+              `1587 STARTING ${`\u001b[${33}m${`fromIndex`}\u001b[${39}m`} = ${fromIndex}`
             );
             let tempFindingIndex = 0;
             if (
@@ -1598,7 +1601,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               //
               // 1. expand the left side to include comma, if such is present
               console.log(
-                `1601 \u001b[${36}m${`traverse backwards`}\u001b[${39}m`
+                `1604 \u001b[${36}m${`traverse backwards`}\u001b[${39}m`
               );
               for (let y = selectorChunkStartedAt; y--; ) {
                 totalCounter += 1;
@@ -1611,7 +1614,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                 }
               }
               console.log(
-                `1614 SET ${`\u001b[${33}m${`fromIndex`}\u001b[${39}m`} = ${JSON.stringify(
+                `1617 SET ${`\u001b[${33}m${`fromIndex`}\u001b[${39}m`} = ${JSON.stringify(
                   fromIndex,
                   null,
                   4
@@ -1647,13 +1650,13 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // side of opening curly.
             }
             console.log(
-              `1650 ENDING ${`\u001b[${33}m${`fromIndex`}\u001b[${39}m`} = ${fromIndex}`
+              `1653 ENDING ${`\u001b[${33}m${`fromIndex`}\u001b[${39}m`} = ${fromIndex}`
             );
             console.log(
-              `1653 ENDING ${`\u001b[${33}m${`toIndex`}\u001b[${39}m`} = ${toIndex}`
+              `1656 ENDING ${`\u001b[${33}m${`toIndex`}\u001b[${39}m`} = ${toIndex}`
             );
 
-            const resToPush = expander({
+            let resToPush = expander({
               str,
               from: fromIndex,
               to: toIndex,
@@ -1662,7 +1665,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               extendToOneSide: "right",
             });
             console.log(
-              `1665 ${`\u001b[${33}m${`resToPush`}\u001b[${39}m`} = ${JSON.stringify(
+              `1668 ${`\u001b[${33}m${`resToPush`}\u001b[${39}m`} = ${JSON.stringify(
                 resToPush,
                 null,
                 4
@@ -1671,7 +1674,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
             (finalIndexesToDelete as any).push(...resToPush);
             console.log(
-              `1674 PUSH CHUNK ${JSON.stringify(resToPush, null, 0)}`
+              `1677 PUSH CHUNK ${JSON.stringify(resToPush, null, 0)}`
             );
 
             // wipe any gathered selectors to be uglified
@@ -1685,7 +1688,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             if (headWholeLineCanBeDeleted) {
               headWholeLineCanBeDeleted = false;
               console.log(
-                `1688 ${`\u001b[${32}m${`BTW, WHOLE LINE CAN'T BE DELETED NOW`}\u001b[${39}m`}`
+                `1691 ${`\u001b[${32}m${`BTW, WHOLE LINE CAN'T BE DELETED NOW`}\u001b[${39}m`}`
               );
             }
 
@@ -1698,7 +1701,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             // 3. tend uglification
             if (opts.uglify) {
               console.log(
-                `1701 ${`\u001b[${31}m${`MERGE WITH FINAL INDEXES`}\u001b[${39}m`} - ${JSON.stringify(
+                `1704 ${`\u001b[${31}m${`MERGE WITH FINAL INDEXES`}\u001b[${39}m`} - ${JSON.stringify(
                   currentChunksMinifiedSelectors.current(),
                   null,
                   0
@@ -1715,14 +1718,14 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (chr !== "{") {
             selectorChunkStartedAt = null;
             console.log(
-              `1718 WIPE ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} = null`
+              `1721 WIPE ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} = null`
             );
           } else if (round === 2) {
             // the last chunk was reached so let's evaluate, can we delete
             // the whole "row":
 
             console.log(
-              `1725 ██ ${`\u001b[${33}m${`headWholeLineCanBeDeleted`}\u001b[${39}m`} = ${headWholeLineCanBeDeleted}`
+              `1728 ██ ${`\u001b[${33}m${`headWholeLineCanBeDeleted`}\u001b[${39}m`} = ${headWholeLineCanBeDeleted}`
             );
 
             // Cater the case when there was used class/id, comma, then at
@@ -1745,14 +1748,14 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
               finalIndexesToDelete.push(lastKeptChunksCommaAt, deleteUpTo);
               console.log(
-                `1748 PUSH COMMA [${lastKeptChunksCommaAt}, ${deleteUpTo}]`
+                `1751 PUSH COMMA [${lastKeptChunksCommaAt}, ${deleteUpTo}]`
               );
 
               // reset:
               lastKeptChunksCommaAt = null;
               onlyDeletedChunksFollow = false;
               console.log(
-                `1755 RESET: lastKeptChunksCommaAt = null; onlyDeletedChunksFollow = false;`
+                `1758 RESET: lastKeptChunksCommaAt = null; onlyDeletedChunksFollow = false;`
               );
             }
           }
@@ -1763,7 +1766,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         // reset the "selectorSinceLinebreakDetected"
         selectorSinceLinebreakDetected = false;
         console.log(
-          `1766 RESET ${`\u001b[${33}m${`selectorSinceLinebreakDetected`}\u001b[${39}m`} = false`
+          `1769 RESET ${`\u001b[${33}m${`selectorSinceLinebreakDetected`}\u001b[${39}m`} = false`
         );
       }
 
@@ -1799,11 +1802,11 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               ) {
                 if (index - i > 5) {
                   console.log(
-                    `1802 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${i}, ${index}, "<body"]`
+                    `1805 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${i}, ${index}, "<body"]`
                   );
                   finalIndexesToDelete.push(i, index, "<body");
                   // remove the whitespace between < and body
-                  nonIndentationsWhitespaceLength += (index as number) - i - 5;
+                  nonIndentationsWhitespaceLength += index - i - 5;
                 } else {
                   // do nothing
                   return true;
@@ -1819,14 +1822,14 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       ) {
         // Find the ending of the body tag:
         console.log(
-          `1822 \u001b[${36}m${`march forward to find the ending of the opening body tag:`}\u001b[${39}m`
+          `1825 \u001b[${36}m${`march forward to find the ending of the opening body tag:`}\u001b[${39}m`
         );
         for (let y = i; y < len; y++) {
           totalCounter += 1;
           if (str[y] === ">") {
             bodyStartedAt = y + 1;
             console.log(
-              `1829 SET ${`\u001b[${33}m${`bodyStartedAt`}\u001b[${39}m`} = ${bodyStartedAt}, then BREAK`
+              `1832 SET ${`\u001b[${33}m${`bodyStartedAt`}\u001b[${39}m`} = ${bodyStartedAt}, then BREAK`
             );
             // we can't offset the index because there might be unused classes
             // or id's on the body tag itself.
@@ -1834,7 +1837,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           }
         }
         console.log(
-          `1837 \u001b[${36}m${`stop marching forward`}\u001b[${39}m`
+          `1840 \u001b[${36}m${`stop marching forward`}\u001b[${39}m`
         );
       }
 
@@ -1856,7 +1859,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         if (`"'`.includes(str[i + 6])) {
           styleAttributeStartedAt = i + 7;
           console.log(
-            `1859 ${`\u001b[${33}m${`styleAttributeStartedAt`}\u001b[${39}m`} = ${styleAttributeStartedAt}`
+            `1862 ${`\u001b[${33}m${`styleAttributeStartedAt`}\u001b[${39}m`} = ${styleAttributeStartedAt}`
           );
         }
       }
@@ -1880,23 +1883,23 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       ) {
         // TODO: record which double quote it was exactly, single or double
 
-        console.log("1883");
+        console.log("1886");
         let valuesStart;
         let quoteless = false;
 
         if (str[i + 5] === "=") {
           if (str[i + 6] === '"' || str[i + 6] === "'") {
             valuesStart = i + 7;
-            console.log(`1890 SET valuesStart = ${valuesStart}`);
+            console.log(`1893 SET valuesStart = ${valuesStart}`);
           } else if (characterSuitableForNames(str[i + 6])) {
             valuesStart = i + 6;
-            console.log(`1893 SET valuesStart = ${valuesStart}`);
+            console.log(`1896 SET valuesStart = ${valuesStart}`);
             quoteless = true;
           } else if (
             str[i + 6] &&
             (!str[i + 6].trim() || "/>".includes(str[i + 6]))
           ) {
-            const calculatedRange = expander({
+            let calculatedRange = expander({
               str,
               from: i,
               to: i + 6,
@@ -1904,7 +1907,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               wipeAllWhitespaceOnLeft: true,
             });
             console.log(
-              `1907 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+              `1910 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
             );
             (finalIndexesToDelete as any).push(...calculatedRange);
           }
@@ -1917,7 +1920,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               if (str[y] === "=") {
                 // 1-1. remove this gap:
                 if (y > i + 5 && round === 1) {
-                  console.log(`1920 PUSH [${i + 5}, ${y}]`);
+                  console.log(`1923 PUSH [${i + 5}, ${y}]`);
                   finalIndexesToDelete.push(i + 5, y);
                 }
 
@@ -1931,7 +1934,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                     totalCounter += 1;
                     if (str[z].trim()) {
                       if (z > y + 1 && round === 1) {
-                        console.log(`1934 PUSH [${y + 1}, ${z}]`);
+                        console.log(`1937 PUSH [${y + 1}, ${z}]`);
                         finalIndexesToDelete.push(y + 1, z);
                       }
 
@@ -1966,7 +1969,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         }
 
         console.log(
-          `1969 ${`\u001b[${33}m${`valuesStart`}\u001b[${39}m`} = ${valuesStart}`
+          `1972 ${`\u001b[${33}m${`valuesStart`}\u001b[${39}m`} = ${valuesStart}`
         );
 
         if (valuesStart) {
@@ -1977,7 +1980,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             nameStart: i,
           });
           console.log(
-            `1980 SET ${`\u001b[${33}m${`bodyClass`}\u001b[${39}m`} = ${JSON.stringify(
+            `1983 SET ${`\u001b[${33}m${`bodyClass`}\u001b[${39}m`} = ${JSON.stringify(
               bodyClass,
               null,
               4
@@ -1988,13 +1991,13 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (round === 1) {
             bodyItsTheFirstClassOrId = true;
             console.log(
-              `1991 SET ${`\u001b[${33}m${`bodyItsTheFirstClassOrId`}\u001b[${39}m`} = true`
+              `1994 SET ${`\u001b[${33}m${`bodyItsTheFirstClassOrId`}\u001b[${39}m`} = true`
             );
           } else if (round === 2) {
             // 2. reset the we-can-delete-whole-class/id marker:
             bodyClassOrIdCanBeDeleted = true;
             console.log(
-              `1997 SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = true`
+              `2000 SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = true`
             );
           }
         }
@@ -2014,23 +2017,23 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         // it's a whitespace character
         !str[i - 1].trim()
       ) {
-        console.log("2017");
+        console.log("2020");
         let valuesStart;
         let quoteless = false;
 
         if (str[i + 2] === "=") {
           if (str[i + 3] === '"' || str[i + 3] === "'") {
             valuesStart = i + 4;
-            console.log(`2024 SET valuesStart = ${valuesStart}`);
+            console.log(`2027 SET valuesStart = ${valuesStart}`);
           } else if (characterSuitableForNames(str[i + 3])) {
             valuesStart = i + 3;
-            console.log(`2027 SET valuesStart = ${valuesStart}`);
+            console.log(`2030 SET valuesStart = ${valuesStart}`);
             quoteless = true;
           } else if (
             str[i + 3] &&
             (!str[i + 3].trim() || "/>".includes(str[i + 3]))
           ) {
-            const calculatedRange = expander({
+            let calculatedRange = expander({
               str,
               from: i,
               to: i + 3,
@@ -2038,7 +2041,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               wipeAllWhitespaceOnLeft: true,
             });
             console.log(
-              `2041 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+              `2044 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
             );
             (finalIndexesToDelete as any).push(...calculatedRange);
           }
@@ -2051,7 +2054,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               if (str[y] === "=") {
                 // 1-1. remove this gap:
                 if (y > i + 2 && round === 1) {
-                  console.log(`2054 PUSH [${i + 2}, ${y}]`);
+                  console.log(`2057 PUSH [${i + 2}, ${y}]`);
                   finalIndexesToDelete.push(i + 2, y);
                 }
 
@@ -2065,7 +2068,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                     totalCounter += 1;
                     if (str[z].trim()) {
                       if (z > y + 1 && round === 1) {
-                        console.log(`2068 PUSH [${y + 1}, ${z}]`);
+                        console.log(`2071 PUSH [${y + 1}, ${z}]`);
                         finalIndexesToDelete.push(y + 1, z);
                       }
 
@@ -2100,7 +2103,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         }
 
         console.log(
-          `2103 ${`\u001b[${33}m${`valuesStart`}\u001b[${39}m`} = ${valuesStart}`
+          `2106 ${`\u001b[${33}m${`valuesStart`}\u001b[${39}m`} = ${valuesStart}`
         );
 
         if (valuesStart) {
@@ -2111,7 +2114,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             nameStart: i,
           });
           console.log(
-            `2114 SET ${`\u001b[${33}m${`bodyId`}\u001b[${39}m`} = ${JSON.stringify(
+            `2117 SET ${`\u001b[${33}m${`bodyId`}\u001b[${39}m`} = ${JSON.stringify(
               bodyId,
               null,
               4
@@ -2122,13 +2125,13 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (round === 1) {
             bodyItsTheFirstClassOrId = true;
             console.log(
-              `2125 SET ${`\u001b[${33}m${`bodyItsTheFirstClassOrId`}\u001b[${39}m`} = true`
+              `2128 SET ${`\u001b[${33}m${`bodyItsTheFirstClassOrId`}\u001b[${39}m`} = true`
             );
           } else if (round === 2) {
             // 2. reset the we-can-delete-whole-class/id marker:
             bodyClassOrIdCanBeDeleted = true;
             console.log(
-              `2131 SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = true`
+              `2134 SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = true`
             );
           }
         }
@@ -2139,21 +2142,21 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       if (
         !doNothing &&
         bodyClass.valuesStart !== null &&
-        i >= (bodyClass.valuesStart as number) &&
+        i >= bodyClass.valuesStart &&
         bodyClass.valueStart === null
       ) {
         if (allHeads && matchRightIncl(str, i, allHeads)) {
           // 1. activate do-nothing flag
           doNothing = true;
           console.log(
-            `2149 SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = true`
+            `2152 SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = true`
           );
 
           // 2. mark this class as not to be removed (as a whole)
           bodyClassOrIdCanBeDeleted = false;
 
           if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
-            const calculatedRange = expander({
+            let calculatedRange = expander({
               str,
               from: whitespaceStartedAt,
               to: i,
@@ -2162,42 +2165,42 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             });
             (finalIndexesToDelete as any).push(...calculatedRange);
             console.log(
-              `2165 PUSH ${JSON.stringify(calculatedRange, null, 4)}`
+              `2168 PUSH ${JSON.stringify(calculatedRange, null, 4)}`
             );
             whitespaceStartedAt = null;
             console.log(
-              `2169 SET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = null`
+              `2172 SET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = null`
             );
           } else if (whitespaceStartedAt) {
             whitespaceStartedAt = null;
           }
 
           // 3. set doNothingUntil to corresponding tails
-          const matchedHeads = matchRightIncl(str, i, allHeads);
+          let matchedHeads = matchRightIncl(str, i, allHeads);
           console.log(
-            `2178 ${`\u001b[${33}m${`matchedHeads`}\u001b[${39}m`} = ${matchedHeads}`
+            `2181 ${`\u001b[${33}m${`matchedHeads`}\u001b[${39}m`} = ${matchedHeads}`
           );
-          const findings = opts.backend.find(
+          let findings = opts.backend.find(
             (headsTailsObj) => headsTailsObj.heads === matchedHeads
           );
           console.log(
-            `2184 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
+            `2187 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
               findings,
               null,
               4
             )}`
           );
-          if (findings && findings.tails) {
+          if (findings?.tails) {
             doNothingUntil = findings.tails;
             console.log(
-              `2193 SET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
+              `2196 SET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
             );
           }
         } else if (characterSuitableForNames(chr)) {
           // 1. mark the class' starting index
           bodyClass.valueStart = i;
           console.log(
-            `2200 SET ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = ${
+            `2203 SET ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = ${
               bodyClass.valueStart
             }`
           );
@@ -2214,7 +2217,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // 1. submit the whitespace characters in the range for deletion:
               finalIndexesToDelete.push(bodyClass.valuesStart, i);
               console.log(
-                `2217 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} LEADING WHITESPACE [${
+                `2220 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} LEADING WHITESPACE [${
                   bodyClass.valuesStart
                 }, ${i}]`
               );
@@ -2223,7 +2226,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // further classes/id's:
               bodyItsTheFirstClassOrId = false;
               console.log(
-                `2226 SET ${`\u001b[${33}m${`bodyItsTheFirstClassOrId`}\u001b[${39}m`} = false`
+                `2229 SET ${`\u001b[${33}m${`bodyItsTheFirstClassOrId`}\u001b[${39}m`} = false`
               );
             } else if (
               whitespaceStartedAt !== null &&
@@ -2232,7 +2235,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // maybe there's whitespace between classes?
               finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
               console.log(
-                `2235 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                `2238 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                   whitespaceStartedAt + 1
                 }, ${i}]`
               );
@@ -2257,40 +2260,40 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         if (allHeads && matchRightIncl(str, i, allHeads)) {
           bodyClass.valueStart = null;
           console.log(
-            `2260 SET ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = null`
+            `2263 SET ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = null`
           );
 
           bodyClass = resetBodyClassOrId();
-          console.log(`2264 RESET bodyClass`);
+          console.log(`2267 RESET bodyClass`);
 
-          const matchedHeads = matchRightIncl(str, i, allHeads);
+          let matchedHeads = matchRightIncl(str, i, allHeads);
           console.log(
-            `2268 ${`\u001b[${33}m${`matchedHeads`}\u001b[${39}m`} = ${matchedHeads}`
+            `2271 ${`\u001b[${33}m${`matchedHeads`}\u001b[${39}m`} = ${matchedHeads}`
           );
-          const findings = opts.backend.find(
+          let findings = opts.backend.find(
             (headsTailsObj) => headsTailsObj.heads === matchedHeads
           );
           console.log(
-            `2274 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
+            `2277 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
               findings,
               null,
               4
             )}`
           );
-          if (findings && findings.tails) {
+          if (findings?.tails) {
             doNothingUntil = findings.tails;
             console.log(
-              `2283 SET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
+              `2286 SET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
             );
           }
         } else {
           // normal operations can continue
-          const carvedClass = `${str.slice(bodyClass.valueStart, i)}`;
+          let carvedClass = `${str.slice(bodyClass.valueStart, i)}`;
           console.log(
-            `2290 CARVED OUT BODY CLASS "${`\u001b[${32}m${carvedClass}\u001b[${39}m`}"`
+            `2293 CARVED OUT BODY CLASS "${`\u001b[${32}m${carvedClass}\u001b[${39}m`}"`
           );
           console.log(
-            `2293 ██ ${`\u001b[${33}m${`allTails`}\u001b[${39}m`} = ${JSON.stringify(
+            `2296 ██ ${`\u001b[${33}m${`allTails`}\u001b[${39}m`} = ${JSON.stringify(
               allTails,
               null,
               4
@@ -2307,7 +2310,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (round === 1) {
             bodyClassesArr.push(`.${carvedClass}`);
             console.log(
-              `2310 \u001b[${35}m${`PUSH`}\u001b[${39}m slice ".${carvedClass}" to bodyClassesArr which becomes:\n${JSON.stringify(
+              `2313 \u001b[${35}m${`PUSH`}\u001b[${39}m slice ".${carvedClass}" to bodyClassesArr which becomes:\n${JSON.stringify(
                 bodyClassesArr,
                 null,
                 0
@@ -2321,17 +2324,17 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             // submit this class for deletion
             console.log(
-              `2324 ${`\u001b[${33}m${`carvedClass`}\u001b[${39}m`} = ${carvedClass}`
+              `2327 ${`\u001b[${33}m${`carvedClass`}\u001b[${39}m`} = ${carvedClass}`
             );
             console.log(
-              `2327 before expanding, ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = ${JSON.stringify(
+              `2330 before expanding, ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = ${JSON.stringify(
                 bodyClass.valueStart,
                 null,
                 0
               )}`
             );
 
-            const expandedRange = expander({
+            let expandedRange = expander({
               str,
               from: bodyClass.valueStart,
               to: i,
@@ -2358,7 +2361,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
             (finalIndexesToDelete as any).push(...expandedRange, whatToInsert);
             console.log(
-              `2361 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+              `2364 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
                 [expandedRange[0], expandedRange[1], whatToInsert],
                 null,
                 0
@@ -2368,7 +2371,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             // 1. turn off the bodyClassOrIdCanBeDeleted
             bodyClassOrIdCanBeDeleted = false;
             console.log(
-              `2371 SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = false`
+              `2374 SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = false`
             );
 
             // 2. uglify?
@@ -2381,7 +2384,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               )
             ) {
               console.log(
-                `2384 ${`\u001b[${31}m${`PUSH [${bodyClass.valueStart}, ${i},
+                `2387 ${`\u001b[${31}m${`PUSH [${bodyClass.valueStart}, ${i},
                   ${
                     allClassesAndIdsWithinHeadFinalUglified[
                       allClassesAndIdsWithinHeadFinal.indexOf(`.${carvedClass}`)
@@ -2400,7 +2403,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
           bodyClass.valueStart = null;
           console.log(
-            `2403 SET ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = null`
+            `2406 SET ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = null`
           );
         }
       }
@@ -2415,15 +2418,15 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         (!characterSuitableForNames(chr) ||
           (allTails && matchRightIncl(str, i, allTails)))
       ) {
-        console.log("2418");
-        const carvedId = str.slice(bodyId.valueStart, i);
+        console.log("2421");
+        let carvedId = str.slice(bodyId.valueStart, i);
         console.log(
-          `2421 CARVED OUT BODY ID "${`\u001b[${32}m${carvedId}\u001b[${39}m`}"`
+          `2424 CARVED OUT BODY ID "${`\u001b[${32}m${carvedId}\u001b[${39}m`}"`
         );
         if (round === 1) {
           bodyIdsArr.push(`#${carvedId}`);
           console.log(
-            `2426 \u001b[${35}m${`PUSH`}\u001b[${39}m slice "${`#${carvedId}`}" to bodyIdsArr which is now:\n${JSON.stringify(
+            `2429 \u001b[${35}m${`PUSH`}\u001b[${39}m slice "${`#${carvedId}`}" to bodyIdsArr which is now:\n${JSON.stringify(
               bodyIdsArr,
               null,
               4
@@ -2437,17 +2440,17 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         ) {
           // submit this id for deletion
           console.log(
-            `2440 ${`\u001b[${33}m${`carvedId`}\u001b[${39}m`} = ${carvedId}`
+            `2443 ${`\u001b[${33}m${`carvedId`}\u001b[${39}m`} = ${carvedId}`
           );
           console.log(
-            `2443 before expanding, ${`\u001b[${33}m${`bodyId.valueStart`}\u001b[${39}m`} = ${JSON.stringify(
+            `2446 before expanding, ${`\u001b[${33}m${`bodyId.valueStart`}\u001b[${39}m`} = ${JSON.stringify(
               bodyId.valueStart,
               null,
               4
             )}`
           );
 
-          const expandedRange = expander({
+          let expandedRange = expander({
             str,
             from: bodyId.valueStart,
             to: i,
@@ -2467,12 +2470,12 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                 matchRightIncl(str, expandedRange[1], allHeads || [])))
           ) {
             expandedRange[0] += 1;
-            console.log(`2470 REDUCE expandedRange[0] by one`);
+            console.log(`2473 REDUCE expandedRange[0] by one`);
           }
 
           (finalIndexesToDelete as any).push(...expandedRange);
           console.log(
-            `2475 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+            `2478 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
               expandedRange,
               null,
               0
@@ -2482,20 +2485,20 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           // 1. turn off the bodyClassOrIdCanBeDeleted
           bodyClassOrIdCanBeDeleted = false;
           console.log(
-            `2485 SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = false`
+            `2488 SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = false`
           );
           console.log(
-            `2488 ${`\u001b[${33}m${`carvedId`}\u001b[${39}m`} = ${JSON.stringify(
+            `2491 ${`\u001b[${33}m${`carvedId`}\u001b[${39}m`} = ${JSON.stringify(
               carvedId,
               null,
               4
             )}`
           );
           console.log(
-            `2495 opts.whitelist = ${JSON.stringify(opts.whitelist, null, 4)}`
+            `2498 opts.whitelist = ${JSON.stringify(opts.whitelist, null, 4)}`
           );
           console.log(
-            `2498 matcher([#${carvedId}], opts.whitelist) = ${matcher(
+            `2501 matcher([#${carvedId}], opts.whitelist) = ${matcher(
               [`#${carvedId}`],
               opts.whitelist
             )}`
@@ -2511,7 +2514,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             )
           ) {
             console.log(
-              `2514 ${`\u001b[${31}m${`PUSH [${bodyId.valueStart}, ${i},
+              `2517 ${`\u001b[${31}m${`PUSH [${bodyId.valueStart}, ${i},
                 ${
                   allClassesAndIdsWithinHeadFinalUglified[
                     allClassesAndIdsWithinHeadFinal.indexOf(`#${carvedId}`)
@@ -2530,7 +2533,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
         bodyId.valueStart = null;
         console.log(
-          `2533 SET ${`\u001b[${33}m${`bodyId.valueStart`}\u001b[${39}m`} = null`
+          `2536 SET ${`\u001b[${33}m${`bodyId.valueStart`}\u001b[${39}m`} = null`
         );
       }
 
@@ -2544,12 +2547,12 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           (bodyClass.quoteless && !characterSuitableForNames(str[i]))) &&
         i >= bodyClass.valuesStart
       ) {
-        console.log("2547");
+        console.log("2550");
         if (i === bodyClass.valuesStart) {
-          console.log(`2549 EMPTY CLASS DETECTED!`);
+          console.log(`2552 EMPTY CLASS DETECTED!`);
           if (round === 1) {
             console.log(
-              `2552 PUSH ${JSON.stringify(
+              `2555 PUSH ${JSON.stringify(
                 expander({
                   str,
                   from: bodyClass.nameStart as number,
@@ -2579,11 +2582,11 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             // 1. submit the range of whole class/id for deletion
             // finalIndexesToDelete.push(bodyClass.valuesStart - 7, i + 1);
             console.log(
-              `2582 ${`\u001b[${33}m${`initial range`}\u001b[${39}m`}: [${
+              `2585 ${`\u001b[${33}m${`initial range`}\u001b[${39}m`}: [${
                 bodyClass.valuesStart - 7
               }, ${`'"`.includes(str[i]) ? i + 1 : i}]`
             );
-            const expandedRange = expander({
+            let expandedRange = expander({
               str,
               from: bodyClass.valuesStart - 7,
               to: `'"`.includes(str[i]) ? i + 1 : i,
@@ -2591,7 +2594,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               wipeAllWhitespaceOnLeft: true,
             });
             console.log(
-              `2594 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`expandedRange`}\u001b[${39}m`}: ${JSON.stringify(
+              `2597 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`expandedRange`}\u001b[${39}m`}: ${JSON.stringify(
                 expandedRange,
                 null,
                 4
@@ -2612,7 +2615,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             ) {
               whatToInsert = " ";
               console.log(
-                `2615 SET whatToInsert = " " because str[expandedRange[0] - 1] = str[${
+                `2618 SET whatToInsert = " " because str[expandedRange[0] - 1] = str[${
                   expandedRange[0] - 1
                 }] = ${
                   str[expandedRange[0] - 1]
@@ -2624,7 +2627,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
 
             (finalIndexesToDelete as any).push(...expandedRange, whatToInsert);
             console.log(
-              `2627 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+              `2630 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
                 [expandedRange[0], expandedRange[1], whatToInsert],
                 null,
                 4
@@ -2636,14 +2639,14 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (whitespaceStartedAt !== null) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
             console.log(
-              `2639 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} TRAILING WHITESPACE [${whitespaceStartedAt}, ${i}]`
+              `2642 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} TRAILING WHITESPACE [${whitespaceStartedAt}, ${i}]`
             );
           }
         }
 
         // 2. reset the marker
         bodyClass = resetBodyClassOrId();
-        console.log(`2646 RESET ${`\u001b[${33}m${`bodyClass`}\u001b[${39}m`}`);
+        console.log(`2649 RESET ${`\u001b[${33}m${`bodyClass`}\u001b[${39}m`}`);
       }
 
       // body: stop the id attribute's recording if closing single/double quote encountered
@@ -2656,12 +2659,12 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           (bodyId.quoteless && !characterSuitableForNames(str[i]))) &&
         i >= bodyId.valuesStart
       ) {
-        console.log("2659");
+        console.log("2662");
         if (i === bodyId.valuesStart) {
-          console.log(`2661 EMPTY ID DETECTED!`);
+          console.log(`2664 EMPTY ID DETECTED!`);
           if (round === 1) {
             console.log(
-              `2664 [bodyId.nameStart=${bodyId.nameStart}, i+1=${i + 1}] => [${
+              `2667 [bodyId.nameStart=${bodyId.nameStart}, i+1=${i + 1}] => [${
                 expander({
                   str,
                   from: bodyId.nameStart as number,
@@ -2680,7 +2683,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               }]`
             );
             console.log(
-              `2683 PUSH ${JSON.stringify(
+              `2686 PUSH ${JSON.stringify(
                 expander({
                   str,
                   from: bodyId.nameStart as number,
@@ -2710,7 +2713,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (round === 2 && bodyClassOrIdCanBeDeleted) {
             // 1. submit the range of whole class/id for deletion
 
-            const expandedRange = expander({
+            let expandedRange = expander({
               str,
               from: bodyId.valuesStart - 4,
               to: i + 1,
@@ -2731,12 +2734,12 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               //   (allTails && matchRightIncl(str, expandedRange[1], allTails)))
             ) {
               whatToInsert = " ";
-              console.log(`2734 SET whatToInsert = " "`);
+              console.log(`2737 SET whatToInsert = " "`);
             }
 
             (finalIndexesToDelete as any).push(...expandedRange, whatToInsert);
             console.log(
-              `2739 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+              `2742 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
                 [expandedRange[0], expandedRange[1], whatToInsert],
                 null,
                 4
@@ -2748,14 +2751,14 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (whitespaceStartedAt !== null) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
             console.log(
-              `2751 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} TRAILING WHITESPACE [${whitespaceStartedAt}, ${i}]`
+              `2754 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} TRAILING WHITESPACE [${whitespaceStartedAt}, ${i}]`
             );
           }
         }
 
         // reset the marker in either case
         bodyId = resetBodyClassOrId();
-        console.log(`2758 RESET ${`\u001b[${33}m${`bodyId`}\u001b[${39}m`}`);
+        console.log(`2761 RESET ${`\u001b[${33}m${`bodyId`}\u001b[${39}m`}`);
       }
 
       // body: catch the first letter within each id attribute
@@ -2770,14 +2773,14 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           // 1. activate do-nothing flag
           doNothing = true;
           console.log(
-            `2773 SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = true`
+            `2776 SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = true`
           );
 
           // 2. mark this id as not to be removed (as a whole)
           bodyClassOrIdCanBeDeleted = false;
 
           if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
-            const calculatedRange = expander({
+            let calculatedRange = expander({
               str,
               from: whitespaceStartedAt,
               to: i,
@@ -2786,42 +2789,42 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             });
             (finalIndexesToDelete as any).push(...calculatedRange);
             console.log(
-              `2789 PUSH ${JSON.stringify(calculatedRange, null, 4)}`
+              `2792 PUSH ${JSON.stringify(calculatedRange, null, 4)}`
             );
             whitespaceStartedAt = null;
             console.log(
-              `2793 SET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = null`
+              `2796 SET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = null`
             );
           } else if (whitespaceStartedAt) {
             whitespaceStartedAt = null;
           }
 
           // 3. set doNothingUntil to corresponding tails
-          const matchedHeads = matchRightIncl(str, i, allHeads);
+          let matchedHeads = matchRightIncl(str, i, allHeads);
           console.log(
-            `2802 ${`\u001b[${33}m${`matchedHeads`}\u001b[${39}m`} = ${matchedHeads}`
+            `2805 ${`\u001b[${33}m${`matchedHeads`}\u001b[${39}m`} = ${matchedHeads}`
           );
-          const findings = opts.backend.find(
+          let findings = opts.backend.find(
             (headsTailsObj) => headsTailsObj.heads === matchedHeads
           );
           console.log(
-            `2808 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
+            `2811 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
               findings,
               null,
               4
             )}`
           );
-          if (findings && findings.tails) {
+          if (findings?.tails) {
             doNothingUntil = findings.tails;
             console.log(
-              `2817 SET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
+              `2820 SET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
             );
           }
         } else if (characterSuitableForNames(chr)) {
           // 1. mark the id's starting index
           bodyId.valueStart = i;
           console.log(
-            `2824 SET ${`\u001b[${33}m${`bodyId.valueStart`}\u001b[${39}m`} = ${
+            `2827 SET ${`\u001b[${33}m${`bodyId.valueStart`}\u001b[${39}m`} = ${
               bodyId.valueStart
             }`
           );
@@ -2838,7 +2841,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // 1. submit the whitespace characters in the range for deletion:
               finalIndexesToDelete.push(bodyId.valuesStart, i);
               console.log(
-                `2841 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                `2844 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                   bodyId.valuesStart
                 }, ${i}]`
               );
@@ -2847,7 +2850,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // further classes/id's:
               bodyItsTheFirstClassOrId = false;
               console.log(
-                `2850 SET ${`\u001b[${33}m${`bodyItsTheFirstClassOrId`}\u001b[${39}m`} = false`
+                `2853 SET ${`\u001b[${33}m${`bodyItsTheFirstClassOrId`}\u001b[${39}m`} = false`
               );
             } else if (
               whitespaceStartedAt !== null &&
@@ -2856,7 +2859,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // maybe there's whitespace between classes?
               finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
               console.log(
-                `2859 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                `2862 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                   whitespaceStartedAt + 1
                 }, ${i}]`
               );
@@ -2881,7 +2884,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         ) {
           console.log(`I.`);
           console.log(
-            `2884 ${`\u001b[${33}m${`str.slice(commentStartedAt, i)`}\u001b[${39}m`} = ${JSON.stringify(
+            `2887 ${`\u001b[${33}m${`str.slice(commentStartedAt, i)`}\u001b[${39}m`} = ${JSON.stringify(
               str.slice(commentStartedAt, i),
               null,
               4
@@ -2905,12 +2908,12 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             canDelete = false;
             console.log(
-              `2908 SET ${`\u001b[${33}m${`canDelete`}\u001b[${39}m`} = ${canDelete}`
+              `2911 SET ${`\u001b[${33}m${`canDelete`}\u001b[${39}m`} = ${canDelete}`
             );
           }
           usedOnce = true;
           console.log(
-            `2913 SET \u001b[${33}m${`usedOnce`}\u001b[${39}m = ${usedOnce}`
+            `2916 SET \u001b[${33}m${`usedOnce`}\u001b[${39}m = ${usedOnce}`
           );
         }
 
@@ -2919,7 +2922,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         if (commentStartedAt !== null && str[i] === ">") {
           console.log(`II.`);
           console.log(
-            `2922 BTW, ${`\u001b[${33}m${`canDelete`}\u001b[${39}m`} = ${JSON.stringify(
+            `2925 BTW, ${`\u001b[${33}m${`canDelete`}\u001b[${39}m`} = ${JSON.stringify(
               canDelete,
               null,
               4
@@ -2929,7 +2932,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           if (!bogusHTMLComment && str[i - 1] === "-" && str[i - 2] === "-") {
             // not bogus
 
-            const calculatedRange = expander({
+            let calculatedRange = expander({
               str,
               from: commentStartedAt,
               to: i + 1,
@@ -2940,7 +2943,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               // Instead of finalIndexesToDelete.push(i, y + 3); use expander()
               // so that we manage the whitespace outwards properly:
               console.log(
-                `2943 PUSH COMMENT ${JSON.stringify(calculatedRange, null, 0)}`
+                `2946 PUSH COMMENT ${JSON.stringify(calculatedRange, null, 0)}`
               );
               (finalIndexesToDelete as any).push(...calculatedRange);
             }
@@ -2950,10 +2953,10 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             commentStartedAt = null;
             bogusHTMLComment = undefined;
             console.log(
-              `2953 RESET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`bogusHTMLComment`}\u001b[${39}m`} = undefined`
+              `2956 RESET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`bogusHTMLComment`}\u001b[${39}m`} = undefined`
             );
           } else if (bogusHTMLComment) {
-            const calculatedRange = expander({
+            let calculatedRange = expander({
               str,
               from: commentStartedAt,
               to: i + 1,
@@ -2962,7 +2965,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             });
             if (opts.removeHTMLComments && canDelete) {
               console.log(
-                `2965 PUSH BOGUS COMMENT ${JSON.stringify(
+                `2968 PUSH BOGUS COMMENT ${JSON.stringify(
                   calculatedRange,
                   null,
                   0
@@ -2976,7 +2979,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             commentStartedAt = null;
             bogusHTMLComment = undefined;
             console.log(
-              `2979 RESET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`bogusHTMLComment`}\u001b[${39}m`} = undefined`
+              `2982 RESET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`bogusHTMLComment`}\u001b[${39}m`} = undefined`
             );
           }
         }
@@ -2999,9 +3002,9 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
                 allTails.length &&
                 !allTails.includes("<!")))
           ) {
-            console.log(`3002 III. catch HTML comments clauses`);
+            console.log(`3005 III. catch HTML comments clauses`);
             console.log(
-              `3004 ${`\u001b[${33}m${`commentNearlyStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `3007 ${`\u001b[${33}m${`commentNearlyStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
                 commentNearlyStartedAt,
                 null,
                 4
@@ -3035,14 +3038,14 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               usedOnce = false;
               canDelete = true;
               console.log(
-                `3038 SET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = ${commentStartedAt}; ${`\u001b[${33}m${`usedOnce`}\u001b[${39}m`} = ${usedOnce}; ${`\u001b[${33}m${`canDelete`}\u001b[${39}m`} = ${canDelete};`
+                `3041 SET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = ${commentStartedAt}; ${`\u001b[${33}m${`usedOnce`}\u001b[${39}m`} = ${usedOnce}; ${`\u001b[${33}m${`canDelete`}\u001b[${39}m`} = ${canDelete};`
               );
             }
 
             // 3.2. detect, is it healthy or bogus comment (bogusHTMLComment = true/false)
             bogusHTMLComment = !(str[i + 2] === "-" && str[i + 3] === "-");
             console.log(
-              `3045 SET ${`\u001b[${33}m${`bogusHTMLComment`}\u001b[${39}m`} = ${bogusHTMLComment}`
+              `3048 SET ${`\u001b[${33}m${`bogusHTMLComment`}\u001b[${39}m`} = ${bogusHTMLComment}`
             );
           }
 
@@ -3081,7 +3084,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       // ================
       if (chr === "}" && curliesDepth) {
         curliesDepth -= 1;
-        console.log(`3084 REDUCE curliesDepth now = ${curliesDepth}`);
+        console.log(`3087 REDUCE curliesDepth now = ${curliesDepth}`);
       }
 
       // pinpoint opening curly braces (in head styles), but not @media's.
@@ -3091,7 +3094,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           // 1. flip the flag
           insideCurlyBraces = true;
           console.log(
-            `3094 SET ${`\u001b[${33}m${`insideCurlyBraces`}\u001b[${39}m`} = true`
+            `3097 SET ${`\u001b[${33}m${`insideCurlyBraces`}\u001b[${39}m`} = true`
           );
 
           // 2. if the whitespace was in front and it contained line breaks, wipe
@@ -3103,12 +3106,12 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
             console.log(
-              `3106 PUSH LEADING WHITESPACE [${whitespaceStartedAt}, ${i}]`
+              `3109 PUSH LEADING WHITESPACE [${whitespaceStartedAt}, ${i}]`
             );
           }
         } else {
           curliesDepth += 1;
-          console.log(`3111 BUMP curliesDepth now = ${curliesDepth}`);
+          console.log(`3114 BUMP curliesDepth now = ${curliesDepth}`);
         }
       }
 
@@ -3141,9 +3144,9 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       ) {
         // offset index, essentially "jumping over" what was submitted for deletion in round 1
         console.log("\n");
-        const temp = round1RangesClone.shift();
+        let temp = round1RangesClone.shift();
         console.log(
-          `3146 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+          `3149 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
             temp,
             null,
             0
@@ -3151,7 +3154,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         );
         if (temp && temp[1] - 1 > i) {
           console.log(
-            `3154 \u001b[${31}m${`██ OFFSET MAIN INDEX FROM ${i} TO ${
+            `3157 \u001b[${31}m${`██ OFFSET MAIN INDEX FROM ${i} TO ${
               temp[1] - 1
             }`}\u001b[${39}m, then step out`
           );
@@ -3183,7 +3186,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
         // 1. reset the marker
         commentNearlyStartedAt = null;
         console.log(
-          `3186 ${`\u001b[${33}m${`commentNearlyStartedAt`}\u001b[${39}m`} = null`
+          `3189 ${`\u001b[${33}m${`commentNearlyStartedAt`}\u001b[${39}m`} = null`
         );
 
         // 2. check, is there empty comment block on the right which sometimes
@@ -3211,7 +3214,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           })
         ) {
           console.log(
-            `3214 I ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+            `3217 I ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
               temp,
               null,
               4
@@ -3231,7 +3234,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             })
           ) {
             console.log(
-              `3234 II. ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+              `3237 II. ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
                 temp,
                 null,
                 4
@@ -3247,7 +3250,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             i = temp - 1;
           }
           console.log(
-            `3250 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
+            `3253 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
               i,
               null,
               4
@@ -3264,35 +3267,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       if (round === 9) {
         if (stateWithinBody) {
           console.log(
-            `3267 ${
-              bodyClass.valueStart
-                ? `\n* ${`\u001b[${90}m${`bodyClass.valueStart`}\u001b[${39}m`} = ${
-                    bodyClass.valueStart
-                  }`
-                : ""
-            }${
-              bodyId.valueStart
-                ? `\n* ${`\u001b[${90}m${`bodyId.valueStart`}\u001b[${39}m`} = ${
-                    bodyId.valueStart
-                  }`
-                : ""
-            }${
-              bodyClass.valuesStart
-                ? `\n* ${`\u001b[${90}m${`bodyClass`}\u001b[${39}m`} = ${JSON.stringify(
-                    bodyClass,
-                    null,
-                    0
-                  )}`
-                : ""
-            }${
-              bodyId.valuesStart
-                ? `\n* ${`\u001b[${90}m${`bodyId`}\u001b[${39}m`} = ${JSON.stringify(
-                    bodyId,
-                    null,
-                    0
-                  )}`
-                : ""
-            }`
+            `3270 bodyClass.valueStart=${bodyClass.valueStart}\nbodyId.valueStart=${bodyId.valueStart}\nbodyClass.valuesStart=${bodyClass.valuesStart}${bodyId.valuesStart}`
           );
           // logging:
           // console.log(
@@ -3310,7 +3285,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           //   )}`
           // );
           console.log(
-            `3313 ${`\u001b[${33}m${`bodyItsTheFirstClassOrId`}\u001b[${39}m`} = ${bodyItsTheFirstClassOrId}; \u001b[${34}m${`headWholeLineCanBeDeleted = ${headWholeLineCanBeDeleted}`}\u001b[${39}m`
+            `3288 bodyItsTheFirstClassOrId=${bodyItsTheFirstClassOrId}\nheadWholeLineCanBeDeleted=${headWholeLineCanBeDeleted}`
           );
         } else if (stateWithinStyleTag) {
           // it's still within head:
@@ -3378,23 +3353,23 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
 
       allClassesAndIdsWithinBody = uniq(bodyClassesArr.concat(bodyIdsArr));
 
-      console.log(`3381 \u001b[${35}m${`\nAFTER STEP 1:`}\u001b[${39}m`);
+      console.log(`3356 \u001b[${35}m${`\nAFTER STEP 1:`}\u001b[${39}m`);
       console.log(
-        `3383 headSelectorsArr = ${JSON.stringify(headSelectorsArr, null, 4)}`
+        `3358 headSelectorsArr = ${JSON.stringify(headSelectorsArr, null, 4)}`
       );
       console.log(
-        `3386 bodyClassesArr = ${JSON.stringify(bodyClassesArr, null, 4)}`
+        `3361 bodyClassesArr = ${JSON.stringify(bodyClassesArr, null, 4)}`
       );
-      console.log(`3388 bodyIdsArr = ${JSON.stringify(bodyIdsArr, null, 4)}`);
+      console.log(`3363 bodyIdsArr = ${JSON.stringify(bodyIdsArr, null, 4)}`);
       console.log(
-        `3390 allClassesAndIdsWithinBody = ${JSON.stringify(
+        `3365 allClassesAndIdsWithinBody = ${JSON.stringify(
           allClassesAndIdsWithinBody,
           null,
           4
         )}`
       );
       console.log(
-        `3397 \nopts.whitelist = ${JSON.stringify(opts.whitelist, null, 4)}`
+        `3372 \nopts.whitelist = ${JSON.stringify(opts.whitelist, null, 4)}`
       );
 
       // extract all classes or id's from `headSelectorsArr` and get count of each.
@@ -3407,7 +3382,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       // starting point is the selectors, removed from head during first stage.
 
       console.log(
-        `3410 \n\n███████████████████████████████████████\n\n${`\u001b[${32}m${`starting headSelectorsCount`}\u001b[${39}m`} = ${JSON.stringify(
+        `3385 \n\n███████████████████████████████████████\n\n${`\u001b[${32}m${`starting headSelectorsCount`}\u001b[${39}m`} = ${JSON.stringify(
           headSelectorsCount,
           null,
           4
@@ -3466,7 +3441,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       // potentially sandwitched lumps from head. Let's see what's left afterwards.
       // ================
 
-      const preppedHeadSelectorsArr = Array.from(headSelectorsArr);
+      let preppedHeadSelectorsArr = Array.from(headSelectorsArr);
       let deletedFromHeadArr = [];
       console.log(
         `\u001b[${36}m${`3330 LOOP preppedHeadSelectorsArr = ${JSON.stringify(
@@ -3479,7 +3454,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         totalCounter += 1;
         console.log(`\u001b[${36}m${`------------`}\u001b[${39}m`);
         console.log(
-          `3482 ${`\u001b[${36}m${`██`}\u001b[${39}m`} preppedHeadSelectorsArr[${y}] = ${JSON.stringify(
+          `3457 ${`\u001b[${36}m${`██`}\u001b[${39}m`} preppedHeadSelectorsArr[${y}] = ${JSON.stringify(
             preppedHeadSelectorsArr[y],
             null,
             4
@@ -3496,7 +3471,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           !temp.every((el) => allClassesAndIdsWithinBody.includes(el))
         ) {
           console.log(
-            `3499 PUSH to deletedFromHeadArr[] [${JSON.stringify(
+            `3474 PUSH to deletedFromHeadArr[] [${JSON.stringify(
               extract(preppedHeadSelectorsArr[y]),
               null,
               4
@@ -3504,7 +3479,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           );
           deletedFromHeadArr.push(...extract(preppedHeadSelectorsArr[y]).res);
           console.log(
-            `3507 deletedFromHeadArr becomes = ${JSON.stringify(
+            `3482 deletedFromHeadArr becomes = ${JSON.stringify(
               deletedFromHeadArr,
               null,
               4
@@ -3520,13 +3495,13 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       deletedFromHeadArr = uniq(pull(deletedFromHeadArr, opts.whitelist));
 
       let preppedAllClassesAndIdsWithinHead: string[];
-      if (preppedHeadSelectorsArr && preppedHeadSelectorsArr.length) {
+      if (preppedHeadSelectorsArr?.length) {
         preppedAllClassesAndIdsWithinHead = preppedHeadSelectorsArr.reduce(
           (acc, curr) => acc.concat(extract(curr).res as any),
           []
         );
         console.log(
-          `3529 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedAllClassesAndIdsWithinHead`}\u001b[${39}m`} = ${JSON.stringify(
+          `3504 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedAllClassesAndIdsWithinHead`}\u001b[${39}m`} = ${JSON.stringify(
             preppedAllClassesAndIdsWithinHead,
             null,
             4
@@ -3551,7 +3526,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         opts.whitelist
       );
       console.log(
-        `3554 OLD ${`\u001b[${32}m${`headCssToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+        `3529 OLD ${`\u001b[${32}m${`headCssToDelete`}\u001b[${39}m`} = ${JSON.stringify(
           headCssToDelete,
           null,
           4
@@ -3568,7 +3543,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         )
       );
       console.log(
-        `3571 ${`\u001b[${32}m${`bodyCssToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+        `3546 ${`\u001b[${32}m${`bodyCssToDelete`}\u001b[${39}m`} = ${JSON.stringify(
           bodyCssToDelete,
           null,
           4
@@ -3583,7 +3558,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         )
       );
       console.log(
-        `3586 NEW ${`\u001b[${32}m${`headCssToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+        `3561 NEW ${`\u001b[${32}m${`headCssToDelete`}\u001b[${39}m`} = ${JSON.stringify(
           headCssToDelete,
           null,
           4
@@ -3594,7 +3569,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         .filter((s) => s.startsWith("."))
         .map((s) => s.slice(1));
       console.log(
-        `3597 bodyClassesToDelete = ${JSON.stringify(
+        `3572 bodyClassesToDelete = ${JSON.stringify(
           bodyClassesToDelete,
           null,
           4
@@ -3604,7 +3579,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         .filter((s) => s.startsWith("#"))
         .map((s) => s.slice(1));
       console.log(
-        `3607 ${`\u001b[${33}m${`bodyIdsToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+        `3582 ${`\u001b[${33}m${`bodyIdsToDelete`}\u001b[${39}m`} = ${JSON.stringify(
           bodyIdsToDelete,
           null,
           4
@@ -3612,7 +3587,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       );
 
       console.log(
-        `3615 CURENT RANGES AFTER STEP 1: ${JSON.stringify(
+        `3590 CURENT RANGES AFTER STEP 1: ${JSON.stringify(
           finalIndexesToDelete.current(),
           null,
           4
@@ -3623,7 +3598,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         headSelectorsCountClone
       ).filter((singleSelector) => headSelectorsCountClone[singleSelector] < 1);
       console.log(
-        `3626 ${`\u001b[${33}m${`allClassesAndIdsThatWereCompletelyDeletedFromHead`}\u001b[${39}m`} = ${JSON.stringify(
+        `3601 ${`\u001b[${33}m${`allClassesAndIdsThatWereCompletelyDeletedFromHead`}\u001b[${39}m`} = ${JSON.stringify(
           allClassesAndIdsThatWereCompletelyDeletedFromHead,
           null,
           4
@@ -3644,19 +3619,19 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         )
       ); // remove dots from them
       console.log(
-        `3647 ${`\u001b[${33}m${`bodyClassesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+        `3622 ${`\u001b[${33}m${`bodyClassesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
           bodyClassesToDelete,
           null,
           4
         )}`
       );
 
-      const allClassesAndIdsWithinBodyThatWereWhitelisted = matcher(
+      let allClassesAndIdsWithinBodyThatWereWhitelisted = matcher(
         allClassesAndIdsWithinBody,
         opts.whitelist
       );
       console.log(
-        `3659 ${`\u001b[${31}m${`██ ██ ██`}\u001b[${39}m`} ${`\u001b[${33}m${`allClassesAndIdsWithinBodyThatWereWhitelisted`}\u001b[${39}m`} = ${JSON.stringify(
+        `3634 ${`\u001b[${31}m${`██ ██ ██`}\u001b[${39}m`} ${`\u001b[${33}m${`allClassesAndIdsWithinBodyThatWereWhitelisted`}\u001b[${39}m`} = ${JSON.stringify(
           allClassesAndIdsWithinBodyThatWereWhitelisted,
           null,
           4
@@ -3672,7 +3647,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         )
       );
       console.log(
-        `3675 ${`\u001b[${90}m${`bodyCssToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+        `3650 ${`\u001b[${90}m${`bodyCssToDelete`}\u001b[${39}m`} = ${JSON.stringify(
           bodyCssToDelete,
           null,
           4
@@ -3717,7 +3692,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         : null;
 
       console.log(
-        `3720 AFTER STEP 1, ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} =
+        `3695 AFTER STEP 1, ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} =
           ███████████████████████████████████████
           ███████████████████████████████████████
           ███████████████████V███████████████████
@@ -3728,7 +3703,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           `
       );
       console.log(
-        `3731 ${`\u001b[${33}m${`uglified`}\u001b[${39}m`} = ${JSON.stringify(
+        `3706 ${`\u001b[${33}m${`uglified`}\u001b[${39}m`} = ${JSON.stringify(
           uglified,
           null,
           4
@@ -3769,7 +3744,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       //
 
       console.log(
-        `3772: allClassesAndIdsWithinHeadFinal = ${JSON.stringify(
+        `3747: allClassesAndIdsWithinHeadFinal = ${JSON.stringify(
           allClassesAndIdsWithinHeadFinal,
           null,
           4
@@ -3840,11 +3815,11 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
   finalIndexesToDelete.push(lineBreaksToDelete.current());
 
   console.log(
-    `3843 BEFORE 3RD STEP PREP ${`\u001b[${33}m${`str`}\u001b[${39}m`} = "${str}"`
+    `3818 BEFORE 3RD STEP PREP ${`\u001b[${33}m${`str`}\u001b[${39}m`} = "${str}"`
   );
 
   console.log(
-    `3847 AFTER 3ND ROUND, finalIndexesToDelete.current() = ${JSON.stringify(
+    `3822 AFTER 3ND ROUND, finalIndexesToDelete.current() = ${JSON.stringify(
       finalIndexesToDelete.current(),
       null,
       4
@@ -3855,12 +3830,12 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
     finalIndexesToDelete.wipe();
   }
 
-  const startingPercentageDone =
+  let startingPercentageDone =
     opts.reportProgressFuncTo -
     (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
       leavePercForLastStage;
   console.log(
-    `3863 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+    `3838 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
       startingPercentageDone,
       null,
       4
@@ -3879,7 +3854,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
     }
   }
   console.log("\n\n");
-  console.log(`3882 string after ROUND 3:\n${str}\n\n`);
+  console.log(`3857 string after ROUND 3:\n${str}\n\n`);
 
   // final fixing:
   // =============
@@ -3976,7 +3951,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
   }
 
   console.log(
-    `3979 ${`\u001b[${33}m${`allClassesAndIdsWithinHeadFinal`}\u001b[${39}m`} = ${JSON.stringify(
+    `3954 ${`\u001b[${33}m${`allClassesAndIdsWithinHeadFinal`}\u001b[${39}m`} = ${JSON.stringify(
       allClassesAndIdsWithinHeadFinal,
       null,
       4

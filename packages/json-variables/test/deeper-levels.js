@@ -1,10 +1,13 @@
 /* eslint no-template-curly-in-string: 0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { jVar } from "../dist/json-variables.esm.js";
 
-tap.test("01 - variables resolve being in deeper levels", (t) => {
-  t.strictSame(
+test("01 - variables resolve being in deeper levels", () => {
+  equal(
     jVar({
       a: [
         {
@@ -25,39 +28,34 @@ tap.test("01 - variables resolve being in deeper levels", (t) => {
     },
     "01 - defaults"
   );
-  t.end();
 });
 
-tap.test(
-  "02 - deeper level variables not found, bubble up and are found",
-  (t) => {
-    t.strictSame(
-      jVar({
-        a: [
-          {
-            b: "zzz %%_c_%% yyy",
-            z: "d1",
-          },
-        ],
-        c: "d2",
-      }),
-      {
-        a: [
-          {
-            b: "zzz d2 yyy",
-            z: "d1",
-          },
-        ],
-        c: "d2",
-      },
-      "02 - defaults"
-    );
-    t.end();
-  }
-);
+test("02 - deeper level variables not found, bubble up and are found", () => {
+  equal(
+    jVar({
+      a: [
+        {
+          b: "zzz %%_c_%% yyy",
+          z: "d1",
+        },
+      ],
+      c: "d2",
+    }),
+    {
+      a: [
+        {
+          b: "zzz d2 yyy",
+          z: "d1",
+        },
+      ],
+      c: "d2",
+    },
+    "02 - defaults"
+  );
+});
 
-tap.test("03 - third level resolves at its level", (t) => {
-  t.strictSame(
+test("03 - third level resolves at its level", () => {
+  equal(
     jVar({
       a: [
         {
@@ -86,11 +84,10 @@ tap.test("03 - third level resolves at its level", (t) => {
     },
     "03 - defaults"
   );
-  t.end();
 });
 
-tap.test("04 - third level falls back to root", (t) => {
-  t.strictSame(
+test("04 - third level falls back to root", () => {
+  equal(
     jVar({
       a: [
         {
@@ -119,11 +116,10 @@ tap.test("04 - third level falls back to root", (t) => {
     },
     "04 - defaults"
   );
-  t.end();
 });
 
-tap.test("05 - third level uses data container key", (t) => {
-  t.strictSame(
+test("05 - third level uses data container key", () => {
+  equal(
     jVar({
       a: [
         {
@@ -160,132 +156,125 @@ tap.test("05 - third level uses data container key", (t) => {
     },
     "05 - defaults"
   );
-  t.end();
 });
 
-tap.test(
-  "06 - third level uses data container key, but there's nothing there so falls back to root (successfully)",
-  (t) => {
-    t.strictSame(
-      jVar({
-        a: [
-          {
-            b: [
-              {
-                c: "zzz %%_d_%% yyy",
-                c_data: {
-                  x: "x1",
-                  y: "y1",
-                },
+test("06 - third level uses data container key, but there's nothing there so falls back to root (successfully)", () => {
+  equal(
+    jVar({
+      a: [
+        {
+          b: [
+            {
+              c: "zzz %%_d_%% yyy",
+              c_data: {
+                x: "x1",
+                y: "y1",
               },
-            ],
-          },
-        ],
-        d: "e2",
-      }),
-      {
-        a: [
-          {
-            b: [
-              {
-                c: "zzz e2 yyy",
-                c_data: {
-                  x: "x1",
-                  y: "y1",
-                },
+            },
+          ],
+        },
+      ],
+      d: "e2",
+    }),
+    {
+      a: [
+        {
+          b: [
+            {
+              c: "zzz e2 yyy",
+              c_data: {
+                x: "x1",
+                y: "y1",
               },
-            ],
-          },
-        ],
-        d: "e2",
-      },
-      "06 - defaults"
-    );
-    t.end();
-  }
-);
+            },
+          ],
+        },
+      ],
+      d: "e2",
+    },
+    "06 - defaults"
+  );
+});
 
-tap.test(
-  "07 - third level uses data container key, but there's nothing there so falls back to root data container (successfully)",
-  (t) => {
-    t.strictSame(
-      jVar({
-        a: [
-          {
-            b: [
-              {
-                c: "zzz %%_d_%% yyy",
-                c_data: {
-                  x: "x1",
-                  y: "y1",
-                },
+test("07 - third level uses data container key, but there's nothing there so falls back to root data container (successfully)", () => {
+  equal(
+    jVar({
+      a: [
+        {
+          b: [
+            {
+              c: "zzz %%_d_%% yyy",
+              c_data: {
+                x: "x1",
+                y: "y1",
               },
-            ],
-          },
-        ],
-        a_data: {
-          d: "e2",
+            },
+          ],
         },
-      }),
-      {
-        a: [
-          {
-            b: [
-              {
-                c: "zzz e2 yyy",
-                c_data: {
-                  x: "x1",
-                  y: "y1",
-                },
-              },
-            ],
-          },
-        ],
-        a_data: {
-          d: "e2",
-        },
+      ],
+      a_data: {
+        d: "e2",
       },
-      "07.01 - defaults - root has normal container, a_data, named by topmost parent key"
-    );
-    t.strictSame(
-      jVar({
-        a: [
-          {
-            b: [
-              {
-                c: "zzz %%_d_%% yyy",
-                c_data: {
-                  x: "x1",
-                  y: "y1",
-                },
+    }),
+    {
+      a: [
+        {
+          b: [
+            {
+              c: "zzz e2 yyy",
+              c_data: {
+                x: "x1",
+                y: "y1",
               },
-            ],
-          },
-        ],
-        c_data: {
-          d: "e2",
+            },
+          ],
         },
-      }),
-      {
-        a: [
-          {
-            b: [
-              {
-                c: "zzz e2 yyy",
-                c_data: {
-                  x: "x1",
-                  y: "y1",
-                },
-              },
-            ],
-          },
-        ],
-        c_data: {
-          d: "e2",
-        },
+      ],
+      a_data: {
+        d: "e2",
       },
-      "07.02 - root has container, named how deepest data contaienr should be named"
-    );
-    t.end();
-  }
-);
+    },
+    "07.01 - defaults - root has normal container, a_data, named by topmost parent key"
+  );
+  equal(
+    jVar({
+      a: [
+        {
+          b: [
+            {
+              c: "zzz %%_d_%% yyy",
+              c_data: {
+                x: "x1",
+                y: "y1",
+              },
+            },
+          ],
+        },
+      ],
+      c_data: {
+        d: "e2",
+      },
+    }),
+    {
+      a: [
+        {
+          b: [
+            {
+              c: "zzz e2 yyy",
+              c_data: {
+                x: "x1",
+                y: "y1",
+              },
+            },
+          ],
+        },
+      ],
+      c_data: {
+        d: "e2",
+      },
+    },
+    "07.02 - root has container, named how deepest data contaienr should be named"
+  );
+});
+
+test.run();

@@ -1,119 +1,116 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 
 // 01. basic
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - don't raise on void tags`,
-  (t) => {
-    const str = "</br>";
-    const fixed = "<br>";
-    const messages = verify(t, str, {
-      rules: {
-        "tag-void-frontal-slash": 2,
+test(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - don't raise on void tags`, () => {
+  let str = "</br>";
+  let fixed = "<br>";
+  let messages = verify(not, str, {
+    rules: {
+      "tag-void-frontal-slash": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "01.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "tag-void-frontal-slash",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 5,
+        message: `Remove frontal slash.`,
+        fix: { ranges: [[1, 2]] },
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "01.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-void-frontal-slash",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 5,
-          message: `Remove frontal slash.`,
-          fix: { ranges: [[1, 2]] },
-        },
-      ],
-      "01.02"
-    );
-    t.is(messages.length, 1, "01.03");
-    t.end();
-  }
-);
+    ],
+    "01.02"
+  );
+  is(messages.length, 1, "01.03");
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 1`,
-  (t) => {
-    const str = "</br>";
-    const fixed = "<br/>";
-    const messages = verify(t, str, {
-      rules: {
-        tag: 1,
+test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 1`, () => {
+  let str = "</br>";
+  let fixed = "<br/>";
+  let messages = verify(not, str, {
+    rules: {
+      tag: 1,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "02.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        severity: 1,
+        message: "Remove frontal slash.",
+        fix: {
+          ranges: [[1, 2]],
+        },
+        ruleId: "tag-void-frontal-slash",
+        idxFrom: 0,
+        idxTo: 5,
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "02.01");
-    t.match(
-      messages,
-      [
-        {
-          severity: 1,
-          message: "Remove frontal slash.",
-          fix: {
-            ranges: [[1, 2]],
-          },
-          ruleId: "tag-void-frontal-slash",
-          idxFrom: 0,
-          idxTo: 5,
+      {
+        severity: 1,
+        ruleId: "tag-void-slash",
+        message: "Missing slash.",
+        idxFrom: 0,
+        idxTo: 5,
+        fix: {
+          ranges: [[4, 5, "/>"]],
         },
-        {
-          severity: 1,
-          ruleId: "tag-void-slash",
-          message: "Missing slash.",
-          idxFrom: 0,
-          idxTo: 5,
-          fix: {
-            ranges: [[4, 5, "/>"]],
-          },
-        },
-      ],
-      "02.02"
-    );
-    t.equal(messages.length, 2, "02.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "02.02"
+  );
+  equal(messages.length, 2, "02.03");
+});
 
-tap.test(
-  `03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 2`,
-  (t) => {
-    const str = "</br>";
-    const fixed = "<br/>";
-    const messages = verify(t, str, {
-      rules: {
-        tag: 2,
+test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 2`, () => {
+  let str = "</br>";
+  let fixed = "<br/>";
+  let messages = verify(not, str, {
+    rules: {
+      tag: 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "03.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        severity: 2,
+        message: "Remove frontal slash.",
+        fix: {
+          ranges: [[1, 2]],
+        },
+        ruleId: "tag-void-frontal-slash",
+        idxFrom: 0,
+        idxTo: 5,
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "03.01");
-    t.match(
-      messages,
-      [
-        {
-          severity: 2,
-          message: "Remove frontal slash.",
-          fix: {
-            ranges: [[1, 2]],
-          },
-          ruleId: "tag-void-frontal-slash",
-          idxFrom: 0,
-          idxTo: 5,
+      {
+        severity: 2,
+        ruleId: "tag-void-slash",
+        message: "Missing slash.",
+        idxFrom: 0,
+        idxTo: 5,
+        fix: {
+          ranges: [[4, 5, "/>"]],
         },
-        {
-          severity: 2,
-          ruleId: "tag-void-slash",
-          message: "Missing slash.",
-          idxFrom: 0,
-          idxTo: 5,
-          fix: {
-            ranges: [[4, 5, "/>"]],
-          },
-        },
-      ],
-      "03.02"
-    );
-    t.equal(messages.length, 2, "03.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "03.02"
+  );
+  equal(messages.length, 2, "03.03");
+});
+
+test.run();

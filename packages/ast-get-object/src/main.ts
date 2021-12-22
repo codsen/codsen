@@ -3,7 +3,9 @@
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
 import { compare } from "ast-compare";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface UnknownValueObj {
@@ -28,7 +30,7 @@ function internalApi(
   keyValPair: UnknownValueObj,
   replacementContentsArr?: UnknownValueObj[],
   result: any[] = []
-) {
+): any {
   if (!existy(originalAst)) {
     throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");
   }
@@ -110,7 +112,7 @@ function getObj(
   originalAst: any,
   keyValPair: UnknownValueObj,
   replacementContentsArr?: UnknownValueObj[]
-) {
+): any {
   return internalApi(originalAst, keyValPair, replacementContentsArr);
 }
 

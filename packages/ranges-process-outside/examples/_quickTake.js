@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { rProcessOutside } from "../dist/ranges-process-outside.esm.js";
 
 const gathered = [];

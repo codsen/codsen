@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/001b/index.htm
 
 function badCharacterEscape(context: Linter): RuleObjType {
-  const charCode = 27;
+  let charCode = 27;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

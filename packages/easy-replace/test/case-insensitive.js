@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // case-insensitive opts flag
 // ==============================
 
-tap.test("01 - case-insensitive flag works", (t) => {
-  t.equal(
+test("01 - case-insensitive flag works", () => {
+  equal(
     er(
       "zzz abbb zzz",
       {
@@ -23,7 +26,7 @@ tap.test("01 - case-insensitive flag works", (t) => {
     "zzz yyy zzz",
     "test 15.1.1 - all ok, flag off"
   );
-  t.equal(
+  equal(
     er(
       "zzz aBBB zzz",
       {
@@ -40,7 +43,7 @@ tap.test("01 - case-insensitive flag works", (t) => {
     "zzz aBBB zzz",
     "test 15.1.2 - case mismatch, nothing replaced because flag's off"
   );
-  t.equal(
+  equal(
     er(
       "zzz aBBB zzz",
       {
@@ -60,7 +63,7 @@ tap.test("01 - case-insensitive flag works", (t) => {
     "zzz yyy zzz",
     "test 15.1.3 - case mismatch, but flag allows it, so replace happens"
   );
-  t.equal(
+  equal(
     er(
       "zzz aBBB zzz bbB zzz aBbBc zzz",
       {
@@ -80,11 +83,10 @@ tap.test("01 - case-insensitive flag works", (t) => {
     "zzz yyy zzz yyy zzz yyy zzz",
     "test 15.1.4 - case-insensitive flag, multiple replacements"
   );
-  t.end();
 });
 
-tap.test("test 15.2 - case-insensitive leftMaybe", (t) => {
-  t.equal(
+test("test 15.2 - case-insensitive leftMaybe", () => {
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -101,7 +103,7 @@ tap.test("test 15.2 - case-insensitive leftMaybe", (t) => {
     "zzz Ayyy zzz",
     "test 15.2.1 - flag off - testing leftMaybe only"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -121,7 +123,7 @@ tap.test("test 15.2 - case-insensitive leftMaybe", (t) => {
     "zzz yyy zzz",
     "test 15.2.2 - flag on - testing leftMaybe only"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -141,7 +143,7 @@ tap.test("test 15.2 - case-insensitive leftMaybe", (t) => {
     "zzz Abbb zzz",
     "test 15.2.3 - flag on - testing searchFor + leftMaybe"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -162,11 +164,10 @@ tap.test("test 15.2 - case-insensitive leftMaybe", (t) => {
     "zzz yyy zzz",
     "test 15.2.4 - flag on - testing searchFor + leftMaybe"
   );
-  t.end();
 });
 
-tap.test("test 15.3 - case-insensitive rightMaybe", (t) => {
-  t.equal(
+test("test 15.3 - case-insensitive rightMaybe", () => {
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -183,7 +184,7 @@ tap.test("test 15.3 - case-insensitive rightMaybe", (t) => {
     "zzz yyyC zzz",
     "test 15.3.1 - flag off - testing rightMaybe only"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -203,7 +204,7 @@ tap.test("test 15.3 - case-insensitive rightMaybe", (t) => {
     "zzz yyy zzz",
     "test 15.3.2 - flag on - testing rightMaybe only"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -223,7 +224,7 @@ tap.test("test 15.3 - case-insensitive rightMaybe", (t) => {
     "zzz bbbC zzz",
     "test 15.3.3 - flag on - testing searchFor + rightMaybe"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -244,11 +245,10 @@ tap.test("test 15.3 - case-insensitive rightMaybe", (t) => {
     "zzz yyy zzz",
     "test 15.3.4 - flag on - testing searchFor + rightMaybe"
   );
-  t.end();
 });
 
-tap.test("test 15.4 - case-insensitive leftOutside", (t) => {
-  t.equal(
+test("test 15.4 - case-insensitive leftOutside", () => {
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -265,7 +265,7 @@ tap.test("test 15.4 - case-insensitive leftOutside", (t) => {
     "zzz Abbb zzz",
     "test 15.4.1 - flag off - testing leftOutside only"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -285,7 +285,7 @@ tap.test("test 15.4 - case-insensitive leftOutside", (t) => {
     "zzz Ayyy zzz",
     "test 15.4.2 - flag on - testing leftOutside only"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -305,7 +305,7 @@ tap.test("test 15.4 - case-insensitive leftOutside", (t) => {
     "zzz Abbb zzz",
     "test 15.4.3 - flag on - testing searchFor + leftOutside"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -326,11 +326,10 @@ tap.test("test 15.4 - case-insensitive leftOutside", (t) => {
     "zzz Ayyy zzz",
     "test 15.4.4 - flag on - testing searchFor + leftOutside"
   );
-  t.end();
 });
 
-tap.test("test 15.5 - case-insensitive rightOutside", (t) => {
-  t.equal(
+test("test 15.5 - case-insensitive rightOutside", () => {
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -347,7 +346,7 @@ tap.test("test 15.5 - case-insensitive rightOutside", (t) => {
     "zzz bbbC zzz",
     "test 15.5.1 - flag off - testing rightOutside only"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -367,7 +366,7 @@ tap.test("test 15.5 - case-insensitive rightOutside", (t) => {
     "zzz yyyC zzz",
     "test 15.5.2 - flag on - testing rightOutside only"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -387,7 +386,7 @@ tap.test("test 15.5 - case-insensitive rightOutside", (t) => {
     "zzz bbbC zzz",
     "test 15.5.3 - flag on - testing searchFor + rightOutside"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -408,11 +407,10 @@ tap.test("test 15.5 - case-insensitive rightOutside", (t) => {
     "zzz yyyC zzz",
     "test 15.5.4 - flag on - testing searchFor + rightOutside"
   );
-  t.end();
 });
 
-tap.test("test 15.6 - case-insensitive leftOutsideNot", (t) => {
-  t.equal(
+test("test 15.6 - case-insensitive leftOutsideNot", () => {
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -429,7 +427,7 @@ tap.test("test 15.6 - case-insensitive leftOutsideNot", (t) => {
     "zzz Ayyy zzz",
     "test 15.6.1 - flag off - testing leftOutsideNot only"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -449,7 +447,7 @@ tap.test("test 15.6 - case-insensitive leftOutsideNot", (t) => {
     "zzz Abbb zzz",
     "test 15.6.2 - flag on - testing leftOutsideNot only"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -469,7 +467,7 @@ tap.test("test 15.6 - case-insensitive leftOutsideNot", (t) => {
     "zzz Abbb zzz",
     "test 15.6.3 - flag on - testing searchFor + leftOutsideNot"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -490,7 +488,7 @@ tap.test("test 15.6 - case-insensitive leftOutsideNot", (t) => {
     "zzz Abbb zzz",
     "test 15.6.4 - flag on - testing searchFor + leftOutsideNot"
   );
-  t.equal(
+  equal(
     er(
       "zzz Abbb zzz",
       {
@@ -511,11 +509,10 @@ tap.test("test 15.6 - case-insensitive leftOutsideNot", (t) => {
     "zzz Ayyy zzz",
     "test 15.6.5 - flag on - testing searchFor + leftOutsideNot"
   );
-  t.end();
 });
 
-tap.test("test 15.7 - case-insensitive rightOutsideNot", (t) => {
-  t.equal(
+test("test 15.7 - case-insensitive rightOutsideNot", () => {
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -532,7 +529,7 @@ tap.test("test 15.7 - case-insensitive rightOutsideNot", (t) => {
     "zzz yyyC zzz",
     "test 15.7.1 - flag off - testing rightOutsideNot only"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -552,7 +549,7 @@ tap.test("test 15.7 - case-insensitive rightOutsideNot", (t) => {
     "zzz bbbC zzz",
     "test 15.7.2 - flag on - testing rightOutsideNot only"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -572,7 +569,7 @@ tap.test("test 15.7 - case-insensitive rightOutsideNot", (t) => {
     "zzz bbbC zzz",
     "test 15.7.3 - flag on - testing searchFor + rightOutsideNot"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -593,7 +590,7 @@ tap.test("test 15.7 - case-insensitive rightOutsideNot", (t) => {
     "zzz bbbC zzz",
     "test 15.7.4 - flag on - testing searchFor + rightOutsideNot"
   );
-  t.equal(
+  equal(
     er(
       "zzz bbbC zzz",
       {
@@ -614,5 +611,6 @@ tap.test("test 15.7 - case-insensitive rightOutsideNot", (t) => {
     "zzz yyyC zzz",
     "test 15.7.5 - flag on - testing searchFor + rightOutsideNot"
   );
-  t.end();
 });
+
+test.run();

@@ -14,7 +14,7 @@ function applyFixes(str, messages, offset = 0) {
         // ranges will come as they will be served to
         // the outside consumers - with indexes offset
         // (offset number added) - so we need to subtract
-        const minusOffset = curr.fix.ranges.map(([from, to, toAdd]) => [
+        let minusOffset = curr.fix.ranges.map(([from, to, toAdd]) => [
           from - offset,
           to - offset,
           toAdd,
@@ -30,39 +30,39 @@ function applyFixes(str, messages, offset = 0) {
 // -----------------------------------------------------------------------------
 
 function writeSample(settingsObj) {
-  const linkSample = (query, id) => `<!DOCTYPE html>
+  let linkSample = (query, id) => `<!DOCTYPE html>
 <html>
 <head>
-	<title>${id} link bad</title>
-	<link rel="stylesheet" href="_red.css">
-	<link media="${query}" rel="stylesheet" href="_green.css">
+  <title>${id} link bad</title>
+  <link rel="stylesheet" href="_red.css">
+  <link media="${query}" rel="stylesheet" href="_green.css">
 </head>
 <body>
-	<div class="container">
-		if media queries work, background will be green
-	</div>
+  <div class="container">
+    if media queries work, background will be green
+  </div>
 </body>
 </html>`;
 
-  const mediaSample = (query, id) => `<!DOCTYPE html>
+  let mediaSample = (query, id) => `<!DOCTYPE html>
 <html>
 <head>
-	<title>${id} media bad</title>
-	<style type="text/css">
-		.container {
-			background-color: red;
-		}
-		@media ${query} {
-			.container {
-				background-color: green;
-			}
-		}
-	</style>
+  <title>${id} media bad</title>
+  <style type="text/css">
+    .container {
+      background-color: red;
+    }
+    @media ${query} {
+      .container {
+        background-color: green;
+      }
+    }
+  </style>
 </head>
 <body>
-	<div class="container">
-		if media queries work, background will be green
-	</div>
+  <div class="container">
+    if media queries work, background will be green
+  </div>
 </body>
 </html>`;
 

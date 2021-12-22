@@ -1,6 +1,9 @@
 /* eslint no-unused-vars:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import {
   find,
   get,
@@ -17,103 +20,96 @@ const defaultInput = {
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - gets from a simple object #1", (t) => {
-  const input = {
+test("01 - gets from a simple object #1", () => {
+  let input = {
     a: {
       b: "c",
     },
   };
-  const index = 1;
-  const actual = get(input, { index });
-  const intended = {
+  let index = 1;
+  let actual = get(input, { index });
+  let intended = {
     a: { b: "c" },
   };
-  t.strictSame(actual, intended, "01");
-  t.end();
+  equal(actual, intended, "01");
 });
 
-tap.test("02 - gets from a simple object #2", (t) => {
-  const input = {
+test("02 - gets from a simple object #2", () => {
+  let input = {
     a: {
       b: "c",
     },
   };
-  const index = 2;
-  const actual = get(input, { index });
-  const intended = {
+  let index = 2;
+  let actual = get(input, { index });
+  let intended = {
     b: "c",
   };
-  t.strictSame(actual, intended, "02");
-  t.end();
+  equal(actual, intended, "02");
 });
 
-tap.test("03 - gets from a simple object #3", (t) => {
-  const input = {
+test("03 - gets from a simple object #3", () => {
+  let input = {
     a: {
       b: ["c"],
     },
   };
-  const index = 3;
-  const actual = get(input, { index });
-  const intended = "c";
-  t.strictSame(actual, intended, "03");
-  t.end();
+  let index = 3;
+  let actual = get(input, { index });
+  let intended = "c";
+  equal(actual, intended, "03");
 });
 
-tap.test("04 - does not get", (t) => {
-  const input = {
+test("04 - does not get", () => {
+  let input = {
     a: {
       b: ["c"],
     },
   };
-  const index = 4;
-  const actual = get(input, { index });
-  const intended = null;
-  t.strictSame(actual, intended, "04");
-  t.end();
+  let index = 4;
+  let actual = get(input, { index });
+  let intended = null;
+  equal(actual, intended, "04");
 });
 
-tap.test("05 - gets from a simple array", (t) => {
-  const input = ["a", [["b"], "c"]];
-  const index = 4;
-  const actual = get(input, { index });
-  const intended = "b";
-  t.strictSame(actual, intended, "05");
-  t.end();
+test("05 - gets from a simple array", () => {
+  let input = ["a", [["b"], "c"]];
+  let index = 4;
+  let actual = get(input, { index });
+  let intended = "b";
+  equal(actual, intended, "05");
 });
 
-tap.test("06 - gets from mixed nested things, index string", (t) => {
-  const input = {
+test("06 - gets from mixed nested things, index string", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = "7";
-  const actual = get(input, { index });
-  const intended = {
+  let index = "7";
+  let actual = get(input, { index });
+  let intended = {
     g: ["h"],
   };
 
-  t.strictSame(actual, intended, "06");
-  t.end();
+  equal(actual, intended, "06");
 });
 
-tap.test("07 - gets from a simple object, index is string", (t) => {
-  const input = {
+test("07 - gets from a simple object, index is string", () => {
+  let input = {
     a: {
       b: "c",
     },
   };
-  const index = "2";
-  const actual = get(input, { index });
-  const intended = {
+  let index = "2";
+  let actual = get(input, { index });
+  let intended = {
     b: "c",
   };
-  t.strictSame(actual, intended, "07");
-  t.end();
+  equal(actual, intended, "07");
 });
 
-tap.test("08 - index is real number as string - throws", (t) => {
-  t.throws(() => {
+test("08 - index is real number as string - throws", () => {
+  throws(() => {
     get(
       {
         a: {
@@ -125,5 +121,6 @@ tap.test("08 - index is real number as string - throws", (t) => {
       }
     );
   }, /THROW_ID_11/g);
-  t.end();
 });
+
+test.run();

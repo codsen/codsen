@@ -30,7 +30,7 @@ function attributeValidateSelected(
         )}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "selected") {
         // validate the parent

@@ -16,7 +16,7 @@ function validateScript(
 
   // we get trimmed string start and end positions, also an encountered errors array
   // const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
-  const { errorArr } = checkForWhitespace(str, idxOffset);
+  let { errorArr } = checkForWhitespace(str, idxOffset);
 
   // now that we know where non-whitespace chars are, we can evaluate them
 

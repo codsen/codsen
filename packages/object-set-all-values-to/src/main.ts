@@ -2,7 +2,9 @@
 
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Obj {
@@ -11,7 +13,7 @@ interface Obj {
 
 function setAllValuesTo(inputOriginal: Obj, valueOriginal?: any): Obj {
   let value: any;
-  const input = clone(inputOriginal);
+  let input = clone(inputOriginal);
 
   if (arguments.length < 2) {
     value = false;

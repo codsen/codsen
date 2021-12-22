@@ -23,7 +23,7 @@ function attributeValidateIsmap(context: Linter, mode?: "xhtml"): RuleObjType {
         `023 attributeValidateIsmap(): node = ${JSON.stringify(node, null, 4)}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "ismap") {
         // validate the parent

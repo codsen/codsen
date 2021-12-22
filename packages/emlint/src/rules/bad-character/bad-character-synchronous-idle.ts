@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/0016/index.htm
 
 function badCharacterSynchronousIdle(context: Linter): RuleObjType {
-  const charCode = 22;
+  let charCode = 22;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

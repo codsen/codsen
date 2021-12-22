@@ -1,11 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { allEq } from "../dist/object-all-values-equal-to.esm.js";
 
 // 01. B.A.U.
 // -----------------------------------------------------------------------------
 
-tap.test("01 - nested objects", (t) => {
-  t.strictSame(
+test("01 - nested objects", () => {
+  equal(
     allEq(
       {
         a: false,
@@ -23,7 +26,7 @@ tap.test("01 - nested objects", (t) => {
     true,
     "01.01"
   );
-  t.strictSame(
+  equal(
     allEq(
       {
         a: false,
@@ -41,11 +44,10 @@ tap.test("01 - nested objects", (t) => {
     false,
     "01.02"
   );
-  t.end();
 });
 
-tap.test("02 - nested array", (t) => {
-  t.strictSame(
+test("02 - nested array", () => {
+  equal(
     allEq(
       [
         {
@@ -60,7 +62,7 @@ tap.test("02 - nested array", (t) => {
     true,
     "02.01"
   );
-  t.strictSame(
+  equal(
     allEq(
       [
         {
@@ -76,47 +78,44 @@ tap.test("02 - nested array", (t) => {
     false,
     "02.02"
   );
-  t.strictSame(allEq(["a"], false), false, "02.03");
-  t.strictSame(allEq([[]], false), true, "02.04");
-  t.end();
+  equal(allEq(["a"], false), false, "02.03");
+  equal(allEq([[]], false), true, "02.04");
 });
 
-tap.test("03 - nulls", (t) => {
-  t.strictSame(allEq([null], null), false, "03.01");
-  t.strictSame(
+test("03 - nulls", () => {
+  equal(allEq([null], null), false, "03.01");
+  equal(
     allEq([null], null, { arraysMustNotContainPlaceholders: false }),
     true,
     "03.02"
   );
-  t.end();
 });
 
-tap.test("04 - empty obj/arr", (t) => {
-  t.strictSame(allEq([], false), true, "04.01");
-  t.strictSame(allEq({}, false), true, "04.02");
-  t.strictSame(
+test("04 - empty obj/arr", () => {
+  equal(allEq([], false), true, "04.01");
+  equal(allEq({}, false), true, "04.02");
+  equal(
     allEq(null, false),
     false,
     "04.03 - only valid for empty container-like types, array and plain object"
   );
-  t.end();
 });
 
 // 02. Throws
 // -----------------------------------------------------------------------------
 
-tap.test("05 - various throws", (t) => {
-  t.throws(() => {
+test("05 - various throws", () => {
+  throws(() => {
     allEq();
   }, /THROW_ID_01/); // first arg missing - will throw
 
-  t.throws(() => {
+  throws(() => {
     allEq(1);
   }, /THROW_ID_02/); // second arg missing
 
-  t.throws(() => {
+  throws(() => {
     allEq(["a"], false, "zzz");
   }, /THROW_ID_03/); // third arg is not a plain obj
-
-  t.end();
 });
+
+test.run();

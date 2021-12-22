@@ -2,7 +2,9 @@ import { arrObjOrBoth } from "util-array-object-or-both";
 import { checkTypesMini } from "check-types-mini";
 import { compare } from "ast-compare";
 import { traverse } from "ast-monkey-traverse";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 /* eslint no-use-before-define: 0 */
@@ -16,7 +18,7 @@ type JsonValue =
   | JsonObject
   | JsonArray;
 type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = Array<JsonValue>;
+type JsonArray = JsonValue[];
 
 // -----------------------------------------------------------------------------
 
@@ -51,13 +53,14 @@ function isObj(something: any): boolean {
 
 // -----------------------------------------------------------------------------
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
-  console.log(`055 monkey() called`);
-  const opts: InternalOpts = {
+  console.log(`058 monkey() called`);
+  let opts: InternalOpts = {
     ...originalOpts,
   };
   console.log(
-    `060 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `063 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -72,9 +75,9 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
     gatherPath: number[];
     finding: any;
   }
-  const data: Data = { count: 0, gatherPath: [], finding: null };
+  let data: Data = { count: 0, gatherPath: [], finding: null };
 
-  const findings: Finding[] = [];
+  let findings: Finding[] = [];
 
   let ko = false; // key only
   let vo = false; // value only
@@ -85,7 +88,7 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
     vo = true;
   }
   console.log(
-    `088 ${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
+    `091 ${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
       ko,
       null,
       4
@@ -109,11 +112,11 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
   //
   //
 
-  console.log(`112 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
+  console.log(`115 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
   input = traverse(input, (key, val, innerObj) => {
-    console.log(`114 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
+    console.log(`117 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
     console.log(
-      `116 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
+      `119 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
         key,
         null,
         4
@@ -187,7 +190,7 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
     }
     return innerObj.parentType === "object" ? val : key;
   });
-  console.log(`190 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
+  console.log(`193 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
 
   // returns
   if (opts.mode === "get") {
@@ -221,7 +224,7 @@ function find(input: JsonValue, originalOpts: FindOpts): Finding[] {
       "ast-monkey/main.js/find(): [THROW_ID_03] Please provide opts.key or opts.val"
     );
   }
-  const opts = { ...originalOpts };
+  let opts = { ...originalOpts };
   checkTypesMini(opts, null, {
     schema: {
       key: ["null", "string"],
@@ -261,7 +264,7 @@ function get(input: JsonValue, originalOpts: GetOpts): GetOpts {
       "ast-monkey/main.js/get(): [THROW_ID_08] Please provide opts.index"
     );
   }
-  const opts = { ...originalOpts };
+  let opts = { ...originalOpts };
   if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
     opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
@@ -301,7 +304,7 @@ function set(input: JsonValue, originalOpts: SetOpts): JsonValue {
       "ast-monkey/main.js/set(): [THROW_ID_15] Please provide opts.index"
     );
   }
-  const opts = { ...originalOpts };
+  let opts = { ...originalOpts };
   if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
     opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
@@ -343,7 +346,7 @@ function drop(input: JsonValue, originalOpts: DropOpts): JsonValue {
       "ast-monkey/main.js/drop(): [THROW_ID_21] Please provide opts.index"
     );
   }
-  const opts = { ...originalOpts };
+  let opts = { ...originalOpts };
   if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
     opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
@@ -375,7 +378,7 @@ function del(input: JsonValue, originalOpts: DelOpts): JsonValue {
       "ast-monkey/main.js/del(): [THROW_ID_28] Please provide opts.key or opts.val"
     );
   }
-  const opts = { ...originalOpts };
+  let opts = { ...originalOpts };
   checkTypesMini(opts, null, {
     schema: {
       key: [null, "string"],

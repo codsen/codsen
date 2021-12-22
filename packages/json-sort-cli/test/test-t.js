@@ -1,9 +1,12 @@
 import fs from "fs-extra";
 import path from "path";
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa } from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
+
 // import pack from "../package.json";
 import {
   testFileContents,
@@ -16,9 +19,9 @@ import {
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - sort, -t (tabs) mode", async (t) => {
+test("01 - sort, -t (tabs) mode", async () => {
   // 1. fetch us an empty, random, temporary folder:
-  const tempFolder = tempy.directory();
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
@@ -28,7 +31,7 @@ tap.test("01 - sort, -t (tabs) mode", async (t) => {
 
   // asynchronously write all test files
 
-  const processedFileContents = pMap(
+  let processedFileContents = pMap(
     testFilePaths,
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
@@ -53,8 +56,11 @@ tap.test("01 - sort, -t (tabs) mode", async (t) => {
       // execa(`rm -rf ${path.join(path.resolve(), "../temp")}`, { shell: true }).then(
       execa(`rm -rf ${tempFolder}`, { shell: true }).then(() => received)
     )
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-  t.strictSame(await processedFileContents, sortedTabbedTestFileContents, "01");
-  t.end();
+  equal(await processedFileContents, sortedTabbedTestFileContents, "01");
 });
+
+test.run();

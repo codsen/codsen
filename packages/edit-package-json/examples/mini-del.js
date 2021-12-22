@@ -1,6 +1,7 @@
 // Minimal example, `del()`
 
 import { strict as assert } from "assert";
+
 import { del } from "../dist/edit-package-json.esm.js";
 
 // edit JSON as string

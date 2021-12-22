@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { det as det1 } from "../dist/detergent.esm.js";
 import { det, mixer } from "../t-util/util.js";
 
@@ -6,9 +9,9 @@ import { det, mixer } from "../t-util/util.js";
 // stripped, ignored and/or replaced with line breaks
 // correctly, across all combinations of possible settings
 
-tap.test(`01`, (t) => {
+test(`01`, () => {
   // replaceLineBreaks=false
-  t.equal(
+  equal(
     det1(`abc<br>def`, {
       stripHtml: true,
       replaceLineBreaks: false,
@@ -18,7 +21,7 @@ tap.test(`01`, (t) => {
     "abc\ndef",
     "01.01"
   );
-  t.equal(
+  equal(
     det1(`abc<br>def`, {
       stripHtml: true,
       replaceLineBreaks: false,
@@ -31,7 +34,7 @@ tap.test(`01`, (t) => {
 
   // replaceLineBreaks=true
   // useXHTML=true,
-  t.equal(
+  equal(
     det1(`abc<br>def`, {
       stripHtml: true,
       replaceLineBreaks: true,
@@ -44,7 +47,7 @@ tap.test(`01`, (t) => {
   );
   // replaceLineBreaks=true
   // useXHTML=true,
-  t.equal(
+  equal(
     det1(`abc<br>def`, {
       stripHtml: true,
       replaceLineBreaks: true,
@@ -56,7 +59,7 @@ tap.test(`01`, (t) => {
     "01.04"
   );
 
-  t.equal(
+  equal(
     det1(`abc<br>def`, {
       stripHtml: true,
       stripHtmlButIgnoreTags: [],
@@ -65,10 +68,9 @@ tap.test(`01`, (t) => {
     "abc def",
     "01.05"
   );
-  t.end();
 });
 
-tap.test(`02`, (t) => {
+test(`02`, () => {
   mixer({
     stripHtml: true,
     removeLineBreaks: false,
@@ -76,8 +78,8 @@ tap.test(`02`, (t) => {
     stripHtmlButIgnoreTags: [],
     stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `abc<br>def`, opt).res,
+    equal(
+      det(ok, not, n, `abc<br>def`, opt).res,
       `abc\ndef`,
       JSON.stringify(opt, null, 4)
     );
@@ -90,8 +92,8 @@ tap.test(`02`, (t) => {
     stripHtmlButIgnoreTags: [],
     stripHtmlAddNewLine: ["br"],
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `abc<br>def`, opt).res,
+    equal(
+      det(ok, not, n, `abc<br>def`, opt).res,
       `abc<br>\ndef`,
       JSON.stringify(opt, null, 4)
     );
@@ -104,8 +106,8 @@ tap.test(`02`, (t) => {
     stripHtmlButIgnoreTags: [],
     stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `abc<br>def`, opt).res,
+    equal(
+      det(ok, not, n, `abc<br>def`, opt).res,
       `abc<br/>\ndef`,
       JSON.stringify(opt, null, 4)
     );
@@ -118,8 +120,8 @@ tap.test(`02`, (t) => {
     stripHtmlButIgnoreTags: [],
     stripHtmlAddNewLine: [], // <---
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `abc<br>def`, opt).res,
+    equal(
+      det(ok, not, n, `abc<br>def`, opt).res,
       `abc def`,
       JSON.stringify(opt, null, 4)
     );
@@ -129,8 +131,8 @@ tap.test(`02`, (t) => {
     stripHtml: false,
     useXHTML: false,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `abc<br>def`, opt).res,
+    equal(
+      det(ok, not, n, `abc<br>def`, opt).res,
       `abc<br>def`,
       JSON.stringify(opt, null, 4)
     );
@@ -139,17 +141,16 @@ tap.test(`02`, (t) => {
     stripHtml: false,
     useXHTML: true,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `abc<br>def`, opt).res,
+    equal(
+      det(ok, not, n, `abc<br>def`, opt).res,
       `abc<br/>def`,
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`03`, (t) => {
-  t.equal(
+test(`03`, () => {
+  equal(
     det1(`abc<br/>def`, {
       stripHtml: true,
       replaceLineBreaks: false,
@@ -159,10 +160,9 @@ tap.test(`03`, (t) => {
     "abc\ndef",
     "03"
   );
-  t.end();
 });
 
-tap.test(`04`, (t) => {
+test(`04`, () => {
   mixer({
     stripHtml: true,
     removeLineBreaks: false,
@@ -170,8 +170,8 @@ tap.test(`04`, (t) => {
     stripHtmlButIgnoreTags: [],
     stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `abc<br/>def`, opt).res,
+    equal(
+      det(ok, not, n, `abc<br/>def`, opt).res,
       `abc\ndef`,
       JSON.stringify(opt, null, 4)
     );
@@ -183,8 +183,8 @@ tap.test(`04`, (t) => {
     stripHtmlButIgnoreTags: [],
     stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `abc<br/>def`, opt).res,
+    equal(
+      det(ok, not, n, `abc<br/>def`, opt).res,
       `abc def`,
       JSON.stringify(opt, null, 4)
     );
@@ -195,11 +195,12 @@ tap.test(`04`, (t) => {
     stripHtmlButIgnoreTags: [],
     stripHtmlAddNewLine: [], // <---
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `abc<br/>def`, opt).res,
+    equal(
+      det(ok, not, n, `abc<br/>def`, opt).res,
       `abc def`,
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
+
+test.run();

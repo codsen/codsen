@@ -3,11 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { rApply } from "../dist/ranges-apply.esm.js";
+
+const callerDir = path.resolve(".");
 
 const testme = () =>
   rApply("aaa delete me bbb and me too ccc", [

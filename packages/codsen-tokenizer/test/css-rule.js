@@ -1,19 +1,22 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { compare } from "ast-compare";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // css rules
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - one rule, no linebreaks`, (t) => {
-  const gathered = [];
+test(`01 - one rule, no linebreaks`, () => {
+  let gathered = [];
   ct(`<style>.a-b{c}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -80,22 +83,20 @@ tap.test(`01 - one rule, no linebreaks`, (t) => {
         kind: null,
         attribs: [],
       },
-    ],
+    ]),
     "01"
   );
-  t.end();
 });
 
-tap.test(`02 - one rule, no linebreaks`, (t) => {
-  const gathered = [];
+test(`02 - one rule, no linebreaks`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
-    gathered[1],
-    {
+  ok(
+    compare(gathered[1], {
       type: "rule",
       start: 7,
       end: 15,
@@ -130,22 +131,20 @@ tap.test(`02 - one rule, no linebreaks`, (t) => {
           end: 14,
         },
       ],
-    },
+    }),
     "02"
   );
-  t.end();
 });
 
-tap.test(`03 - one rule, no linebreaks`, (t) => {
-  const gathered = [];
+test(`03 - one rule, no linebreaks`, () => {
+  let gathered = [];
   ct(`<style>.a { b : c ; }</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -224,22 +223,20 @@ tap.test(`03 - one rule, no linebreaks`, (t) => {
         kind: null,
         attribs: [],
       },
-    ],
+    ]),
     "03"
   );
-  t.end();
 });
 
-tap.test(`04 - one rule, value from multiple chunks`, (t) => {
-  const gathered = [];
+test(`04 - one rule, value from multiple chunks`, () => {
+  let gathered = [];
   ct(`<style>.a{  padding:  1px  2px  3px  4px  }`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -303,22 +300,20 @@ tap.test(`04 - one rule, value from multiple chunks`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "04"
   );
-  t.end();
 });
 
-tap.test(`05 - one rule, value from multiple chunks, important`, (t) => {
-  const gathered = [];
+test(`05 - one rule, value from multiple chunks, important`, () => {
+  let gathered = [];
   ct(`<style>.a{  padding:  1px  2px  3px  4px  !important  }`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -382,22 +377,20 @@ tap.test(`05 - one rule, value from multiple chunks, important`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "05"
   );
-  t.end();
 });
 
-tap.test(`06 - one rule, no linebreaks`, (t) => {
-  const gathered = [];
+test(`06 - one rule, no linebreaks`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c!important;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -449,22 +442,20 @@ tap.test(`06 - one rule, no linebreaks`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "06"
   );
-  t.end();
 });
 
-tap.test(`07`, (t) => {
-  const gathered = [];
+test(`07`, () => {
+  let gathered = [];
   ct(`<style>.a{color: red !important ;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -516,22 +507,20 @@ tap.test(`07`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "07"
   );
-  t.end();
 });
 
-tap.test(`08`, (t) => {
-  const gathered1 = [];
+test(`08`, () => {
+  let gathered1 = [];
   ct(`<style>.a{!`, {
     tagCb: (obj) => {
       gathered1.push(obj);
     },
   });
-  t.match(
-    gathered1,
-    [
+  ok(
+    compare(gathered1, [
       {
         type: "tag",
         start: 0,
@@ -574,21 +563,20 @@ tap.test(`08`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "08.01"
   );
 
   // ---
 
-  const gathered2 = [];
+  let gathered2 = [];
   ct(`<style>.a{!}</style>`, {
     tagCb: (obj) => {
       gathered2.push(obj);
     },
   });
-  t.match(
-    gathered2,
-    [
+  ok(
+    compare(gathered2, [
       {
         type: "tag",
         start: 0,
@@ -637,23 +625,20 @@ tap.test(`08`, (t) => {
         end: 20,
         value: "</style>",
       },
-    ],
+    ]),
     "08.02"
   );
-
-  t.end();
 });
 
-tap.test(`09`, (t) => {
-  const gathered1 = [];
+test(`09`, () => {
+  let gathered1 = [];
   ct(`<style>.a{! `, {
     tagCb: (obj) => {
       gathered1.push(obj);
     },
   });
-  t.match(
-    gathered1,
-    [
+  ok(
+    compare(gathered1, [
       {
         type: "tag",
         start: 0,
@@ -702,21 +687,20 @@ tap.test(`09`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "09.01"
   );
 
   // ---
 
-  const gathered2 = [];
+  let gathered2 = [];
   ct(`<style>.a{! }</style>`, {
     tagCb: (obj) => {
       gathered2.push(obj);
     },
   });
-  t.match(
-    gathered2,
-    [
+  ok(
+    compare(gathered2, [
       {
         type: "tag",
         start: 0,
@@ -771,21 +755,20 @@ tap.test(`09`, (t) => {
         end: 21,
         value: "</style>",
       },
-    ],
+    ]),
     "09.02"
   );
 
   // ---
 
-  const gathered3 = [];
+  let gathered3 = [];
   ct(`<style>.a{! </style>`, {
     tagCb: (obj) => {
       gathered3.push(obj);
     },
   });
-  t.match(
-    gathered3,
-    [
+  ok(
+    compare(gathered3, [
       {
         type: "tag",
         start: 0,
@@ -846,23 +829,20 @@ tap.test(`09`, (t) => {
         end: 20,
         value: "</style>",
       },
-    ],
+    ]),
     "09.03"
   );
-
-  t.end();
 });
 
-tap.test(`10`, (t) => {
-  const gathered = [];
+test(`10`, () => {
+  let gathered = [];
   ct(`<style>.a{b!`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -905,23 +885,20 @@ tap.test(`10`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "10"
   );
-
-  t.end();
 });
 
-tap.test(`11`, (t) => {
-  const gathered = [];
+test(`11`, () => {
+  let gathered = [];
   ct(`<style>.a{b!}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -970,23 +947,20 @@ tap.test(`11`, (t) => {
         end: 21,
         value: "</style>",
       },
-    ],
+    ]),
     "11"
   );
-
-  t.end();
 });
 
-tap.test(`12`, (t) => {
-  const gathered = [];
+test(`12`, () => {
+  let gathered = [];
   ct(`<style>.a{b!</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1044,23 +1018,20 @@ tap.test(`12`, (t) => {
         kind: null,
         attribs: [],
       },
-    ],
+    ]),
     "12"
   );
-
-  t.end();
 });
 
-tap.test(`13 - exclamation mark after colon`, (t) => {
-  const gathered1 = [];
+test(`13 - exclamation mark after colon`, () => {
+  let gathered1 = [];
   ct(`<style>.a{b:!`, {
     tagCb: (obj) => {
       gathered1.push(obj);
     },
   });
-  t.match(
-    gathered1,
-    [
+  ok(
+    compare(gathered1, [
       {
         type: "tag",
         start: 0,
@@ -1103,23 +1074,20 @@ tap.test(`13 - exclamation mark after colon`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "13"
   );
-
-  t.end();
 });
 
-tap.test(`14`, (t) => {
-  const gathered = [];
+test(`14`, () => {
+  let gathered = [];
   ct(`<style>.a{b:!}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1177,23 +1145,20 @@ tap.test(`14`, (t) => {
         kind: null,
         attribs: [],
       },
-    ],
+    ]),
     "14"
   );
-
-  t.end();
 });
 
-tap.test(`15`, (t) => {
-  const gathered = [];
+test(`15`, () => {
+  let gathered = [];
   ct(`<style>.a{b:;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1242,23 +1207,20 @@ tap.test(`15`, (t) => {
         end: 22,
         value: "</style>",
       },
-    ],
+    ]),
     "15"
   );
-
-  t.end();
 });
 
-tap.test(`16`, (t) => {
-  const gathered = [];
+test(`16`, () => {
+  let gathered = [];
   ct(`<style>.a{b:!;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1307,23 +1269,20 @@ tap.test(`16`, (t) => {
         end: 23,
         value: "</style>",
       },
-    ],
+    ]),
     "16"
   );
-
-  t.end();
 });
 
-tap.test(`17`, (t) => {
-  const gathered = [];
+test(`17`, () => {
+  let gathered = [];
   ct(`<style>.a{b:!</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1372,23 +1331,20 @@ tap.test(`17`, (t) => {
         end: 21,
         value: "</style>",
       },
-    ],
+    ]),
     "17"
   );
-
-  t.end();
 });
 
-tap.test(`18`, (t) => {
-  const gathered = [];
+test(`18`, () => {
+  let gathered = [];
   ct(`<style>.a{b: !`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1431,23 +1387,20 @@ tap.test(`18`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "18"
   );
-
-  t.end();
 });
 
-tap.test(`19`, (t) => {
-  const gathered = [];
+test(`19`, () => {
+  let gathered = [];
   ct(`<style>.a{b: !}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1496,23 +1449,20 @@ tap.test(`19`, (t) => {
         end: 23,
         value: "</style>",
       },
-    ],
+    ]),
     "19"
   );
-
-  t.end();
 });
 
-tap.test(`20`, (t) => {
-  const gathered3 = [];
+test(`20`, () => {
+  let gathered3 = [];
   ct(`<style>.a{b: !</style>`, {
     tagCb: (obj) => {
       gathered3.push(obj);
     },
   });
-  t.match(
-    gathered3,
-    [
+  ok(
+    compare(gathered3, [
       {
         type: "tag",
         start: 0,
@@ -1561,23 +1511,20 @@ tap.test(`20`, (t) => {
         end: 22,
         value: "</style>",
       },
-    ],
+    ]),
     "20"
   );
-
-  t.end();
 });
 
-tap.test(`21`, (t) => {
-  const gathered = [];
+test(`21`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c !`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1620,23 +1567,20 @@ tap.test(`21`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "21"
   );
-
-  t.end();
 });
 
-tap.test(`22`, (t) => {
-  const gathered = [];
+test(`22`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c !}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1685,23 +1629,20 @@ tap.test(`22`, (t) => {
         end: 24,
         value: "</style>",
       },
-    ],
+    ]),
     "22"
   );
-
-  t.end();
 });
 
-tap.test(`23`, (t) => {
-  const gathered = [];
+test(`23`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c !</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1750,23 +1691,20 @@ tap.test(`23`, (t) => {
         end: 23,
         value: "</style>",
       },
-    ],
+    ]),
     "23"
   );
-
-  t.end();
 });
 
-tap.test(`24`, (t) => {
-  const gathered = [];
+test(`24`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! !`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1839,23 +1777,20 @@ tap.test(`24`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "24"
   );
-
-  t.end();
 });
 
-tap.test(`25`, (t) => {
-  const gathered = [];
+test(`25`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! !}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1925,23 +1860,20 @@ tap.test(`25`, (t) => {
         end: 26,
         value: "</style>",
       },
-    ],
+    ]),
     "25"
   );
-
-  t.end();
 });
 
-tap.test(`26`, (t) => {
-  const gathered = [];
+test(`26`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! !</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2029,23 +1961,20 @@ tap.test(`26`, (t) => {
         kind: null,
         attribs: [],
       },
-    ],
+    ]),
     "26"
   );
-
-  t.end();
 });
 
-tap.test(`27`, (t) => {
-  const gathered = [];
+test(`27`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c!`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2088,23 +2017,20 @@ tap.test(`27`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "27"
   );
-
-  t.end();
 });
 
-tap.test(`28`, (t) => {
-  const gathered = [];
+test(`28`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c!}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2162,23 +2088,20 @@ tap.test(`28`, (t) => {
         kind: null,
         attribs: [],
       },
-    ],
+    ]),
     "28"
   );
-
-  t.end();
 });
 
-tap.test(`29`, (t) => {
-  const gathered = [];
+test(`29`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c!</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2227,23 +2150,20 @@ tap.test(`29`, (t) => {
         end: 22,
         value: "</style>",
       },
-    ],
+    ]),
     "29"
   );
-
-  t.end();
 });
 
-tap.test(`30`, (t) => {
-  const gathered = [];
+test(`30`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c!!</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2292,23 +2212,20 @@ tap.test(`30`, (t) => {
         end: 23,
         value: "</style>",
       },
-    ],
+    ]),
     "30"
   );
-
-  t.end();
 });
 
-tap.test(`31`, (t) => {
-  const gathered = [];
+test(`31`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c! !</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2378,23 +2295,20 @@ tap.test(`31`, (t) => {
         end: 24,
         value: "</style>",
       },
-    ],
+    ]),
     "31"
   );
-
-  t.end();
 });
 
-tap.test(`32`, (t) => {
-  const gathered = [];
+test(`32`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c!;</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2443,23 +2357,20 @@ tap.test(`32`, (t) => {
         end: 23,
         value: "</style>",
       },
-    ],
+    ]),
     "32"
   );
-
-  t.end();
 });
 
-tap.test(`33`, (t) => {
-  const gathered = [];
+test(`33`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c!;`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2502,23 +2413,20 @@ tap.test(`33`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "33"
   );
-
-  t.end();
 });
 
-tap.test(`34`, (t) => {
-  const gathered = [];
+test(`34`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c !;</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2567,23 +2475,20 @@ tap.test(`34`, (t) => {
         end: 24,
         value: "</style>",
       },
-    ],
+    ]),
     "34"
   );
-
-  t.end();
 });
 
-tap.test(`35`, (t) => {
-  const gathered = [];
+test(`35`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c !;`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2626,23 +2531,20 @@ tap.test(`35`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "35"
   );
-
-  t.end();
 });
 
-tap.test(`36`, (t) => {
-  const gathered = [];
+test(`36`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ;</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2691,23 +2593,20 @@ tap.test(`36`, (t) => {
         end: 25,
         value: "</style>",
       },
-    ],
+    ]),
     "36"
   );
-
-  t.end();
 });
 
-tap.test(`37`, (t) => {
-  const gathered = [];
+test(`37`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ;`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2750,23 +2649,20 @@ tap.test(`37`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "37"
   );
-
-  t.end();
 });
 
-tap.test(`38`, (t) => {
-  const gathered = [];
+test(`38`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ; </style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2827,23 +2723,20 @@ tap.test(`38`, (t) => {
         end: 26,
         value: "</style>",
       },
-    ],
+    ]),
     "38"
   );
-
-  t.end();
 });
 
-tap.test(`39`, (t) => {
-  const gathered = [];
+test(`39`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ; `, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2892,23 +2785,20 @@ tap.test(`39`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "39"
   );
-
-  t.end();
 });
 
-tap.test(`40`, (t) => {
-  const gathered = [];
+test(`40`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ;;</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2972,23 +2862,20 @@ tap.test(`40`, (t) => {
         end: 26,
         value: "</style>",
       },
-    ],
+    ]),
     "40"
   );
-
-  t.end();
 });
 
-tap.test(`41`, (t) => {
-  const gathered = [];
+test(`41`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ;;`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3046,23 +2933,20 @@ tap.test(`41`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "41"
   );
-
-  t.end();
 });
 
-tap.test(`42`, (t) => {
-  const gathered = [];
+test(`42`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ;; </style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3132,23 +3016,20 @@ tap.test(`42`, (t) => {
         end: 27,
         value: "</style>",
       },
-    ],
+    ]),
     "42"
   );
-
-  t.end();
 });
 
-tap.test(`43`, (t) => {
-  const gathered = [];
+test(`43`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ;; `, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3221,23 +3102,20 @@ tap.test(`43`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "43"
   );
-
-  t.end();
 });
 
-tap.test(`44`, (t) => {
-  const gathered = [];
+test(`44`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ; ; </style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3313,23 +3191,20 @@ tap.test(`44`, (t) => {
         end: 28,
         value: "</style>",
       },
-    ],
+    ]),
     "44"
   );
-
-  t.end();
 });
 
-tap.test(`45`, (t) => {
-  const gathered = [];
+test(`45`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ! ; ; `, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3408,23 +3283,20 @@ tap.test(`45`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "45"
   );
-
-  t.end();
 });
 
-tap.test(`46`, (t) => {
-  const gathered = [];
+test(`46`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c z`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3467,23 +3339,20 @@ tap.test(`46`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "46"
   );
-
-  t.end();
 });
 
-tap.test(`47`, (t) => {
-  const gathered = [];
+test(`47`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c z</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3532,23 +3401,20 @@ tap.test(`47`, (t) => {
         end: 23,
         value: "</style>",
       },
-    ],
+    ]),
     "47"
   );
-
-  t.end();
 });
 
-tap.test(`48`, (t) => {
-  const gathered = [];
+test(`48`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c?`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3591,23 +3457,20 @@ tap.test(`48`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "48"
   );
-
-  t.end();
 });
 
-tap.test(`49`, (t) => {
-  const gathered = [];
+test(`49`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c?</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3656,23 +3519,20 @@ tap.test(`49`, (t) => {
         end: 22,
         value: "</style>",
       },
-    ],
+    ]),
     "49"
   );
-
-  t.end();
 });
 
-tap.test(`50`, (t) => {
-  const gathered = [];
+test(`50`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ?`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3715,23 +3575,20 @@ tap.test(`50`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "50"
   );
-
-  t.end();
 });
 
-tap.test(`51`, (t) => {
-  const gathered = [];
+test(`51`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ?</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3780,23 +3637,20 @@ tap.test(`51`, (t) => {
         end: 23,
         value: "</style>",
       },
-    ],
+    ]),
     "51"
   );
-
-  t.end();
 });
 
-tap.test(`52`, (t) => {
-  const gathered = [];
+test(`52`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c?important;`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3848,23 +3702,20 @@ tap.test(`52`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "52"
   );
-
-  t.end();
 });
 
-tap.test(`53`, (t) => {
-  const gathered = [];
+test(`53`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c?important;</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3913,23 +3764,20 @@ tap.test(`53`, (t) => {
         end: 32,
         value: "</style>",
       },
-    ],
+    ]),
     "53"
   );
-
-  t.end();
 });
 
-tap.test(`54`, (t) => {
-  const gathered = [];
+test(`54`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ?important;`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -3981,23 +3829,20 @@ tap.test(`54`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "54"
   );
-
-  t.end();
 });
 
-tap.test(`55`, (t) => {
-  const gathered = [];
+test(`55`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c ?important;</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4046,23 +3891,20 @@ tap.test(`55`, (t) => {
         end: 33,
         value: "</style>",
       },
-    ],
+    ]),
     "55"
   );
-
-  t.end();
 });
 
-tap.test(`56`, (t) => {
-  const gathered = [];
+test(`56`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c1important;`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4114,94 +3956,85 @@ tap.test(`56`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "56"
   );
-
-  t.end();
 });
 
-tap.test(
-  `57 - if the whole value is numeric one's, don't extend the important`,
-  (t) => {
-    const gathered = [];
-    ct(`<style>.a{b:11important;`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+test(`57 - if the whole value is numeric one's, don't extend the important`, () => {
+  let gathered = [];
+  ct(`<style>.a{b:11important;`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  ok(
+    compare(gathered, [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
       },
-    });
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 7,
-          value: "<style>",
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 6,
-          tagName: "style",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
-        },
-        {
-          type: "rule",
-          start: 7,
-          end: 24,
-          value: ".a{b:11important;",
-          left: 6,
-          nested: false,
-          openingCurlyAt: 9,
-          closingCurlyAt: null,
-          selectorsStart: 7,
-          selectorsEnd: 9,
-          selectors: [
-            {
-              value: ".a",
-              selectorStarts: 7,
-              selectorEnds: 9,
-            },
-          ],
-          properties: [
-            {
-              start: 10,
-              end: 24,
-              property: "b",
-              propertyStarts: 10,
-              propertyEnds: 11,
-              value: "11",
-              valueStarts: 12,
-              valueEnds: 14,
-              important: "important",
-              importantStarts: 14,
-              importantEnds: 23,
-              colon: 11,
-              semi: 23,
-            },
-          ],
-        },
-      ],
-      "57"
-    );
+      {
+        type: "rule",
+        start: 7,
+        end: 24,
+        value: ".a{b:11important;",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: null,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 24,
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            value: "11",
+            valueStarts: 12,
+            valueEnds: 14,
+            important: "important",
+            importantStarts: 14,
+            importantEnds: 23,
+            colon: 11,
+            semi: 23,
+          },
+        ],
+      },
+    ]),
+    "57"
+  );
+});
 
-    t.end();
-  }
-);
-
-tap.test(`58`, (t) => {
-  const gathered = [];
+test(`58`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c1important;</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4250,23 +4083,20 @@ tap.test(`58`, (t) => {
         end: 32,
         value: "</style>",
       },
-    ],
+    ]),
     "58"
   );
-
-  t.end();
 });
 
-tap.test(`59`, (t) => {
-  const gathered = [];
+test(`59`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c 1important;`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4309,23 +4139,20 @@ tap.test(`59`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "59"
   );
-
-  t.end();
 });
 
-tap.test(`60`, (t) => {
-  const gathered = [];
+test(`60`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c 1important;</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4374,21 +4201,19 @@ tap.test(`60`, (t) => {
         end: 33,
         value: "</style>",
       },
-    ],
+    ]),
     "60"
   );
-
-  t.end();
 });
 
-tap.test(`61 - one rule, no linebreaks`, (t) => {
-  const gathered = [];
+test(`61 - one rule, no linebreaks`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c;d:e;f:g;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -4458,11 +4283,10 @@ tap.test(`61 - one rule, no linebreaks`, (t) => {
     },
     "61"
   );
-  t.end();
 });
 
-tap.test(`62 - one rule, linebreaks`, (t) => {
-  const gathered = [];
+test(`62 - one rule, linebreaks`, () => {
+  let gathered = [];
   ct(
     `<style>
 .a-b{c}
@@ -4473,9 +4297,8 @@ tap.test(`62 - one rule, linebreaks`, (t) => {
       },
     }
   );
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4510,22 +4333,20 @@ tap.test(`62 - one rule, linebreaks`, (t) => {
         start: 16,
         end: 24,
       },
-    ],
+    ]),
     "62"
   );
-  t.end();
 });
 
-tap.test(`63 - two selectors`, (t) => {
-  const gathered = [];
+test(`63 - two selectors`, () => {
+  let gathered = [];
   ct(`<style>.a,.b{c}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4557,14 +4378,13 @@ tap.test(`63 - two selectors`, (t) => {
         start: 15,
         end: 23,
       },
-    ],
+    ]),
     "63"
   );
-  t.end();
 });
 
-tap.test(`64 - one rule, no linebreaks`, (t) => {
-  const gathered = [];
+test(`64 - one rule, no linebreaks`, () => {
+  let gathered = [];
   ct(
     `<style>
 
@@ -4577,9 +4397,8 @@ tap.test(`64 - one rule, no linebreaks`, (t) => {
       },
     }
   );
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4616,22 +4435,20 @@ tap.test(`64 - one rule, no linebreaks`, (t) => {
         start: 21,
         end: 29,
       },
-    ],
+    ]),
     "64"
   );
-  t.end();
 });
 
-tap.test(`65 - dangling comma`, (t) => {
-  const gathered = [];
+test(`65 - dangling comma`, () => {
+  let gathered = [];
   ct(`<style>.a,.b,{c}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4663,22 +4480,20 @@ tap.test(`65 - dangling comma`, (t) => {
         start: 16,
         end: 24,
       },
-    ],
+    ]),
     "65"
   );
-  t.end();
 });
 
-tap.test(`66 - double comma`, (t) => {
-  const gathered = [];
+test(`66 - double comma`, () => {
+  let gathered = [];
   ct(`<style>.a,,.b{c}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4710,22 +4525,20 @@ tap.test(`66 - double comma`, (t) => {
         start: 16,
         end: 24,
       },
-    ],
+    ]),
     "66"
   );
-  t.end();
 });
 
-tap.test(`67 - esp tags can't have curlies`, (t) => {
-  const gathered = [];
+test(`67 - esp tags can't have curlies`, () => {
+  let gathered = [];
   ct(`<style>.b%{c}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -4772,14 +4585,13 @@ tap.test(`67 - esp tags can't have curlies`, (t) => {
         kind: null,
         attribs: [],
       },
-    ],
+    ]),
     "67"
   );
-  t.end();
 });
 
-tap.test(`68 - root level css declarations`, (t) => {
-  const gathered = [];
+test(`68 - root level css declarations`, () => {
+  let gathered = [];
   ct(
     `<head>
 <style type="text/css">
@@ -4798,7 +4610,7 @@ tap.test(`68 - root level css declarations`, (t) => {
     }
   );
 
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -4876,11 +4688,10 @@ tap.test(`68 - root level css declarations`, (t) => {
     ],
     "68"
   );
-  t.end();
 });
 
-tap.test(`69 - @media`, (t) => {
-  const gathered = [];
+test(`69 - @media`, () => {
+  let gathered = [];
   ct(
     `<head>
 <style type="text/css">
@@ -4899,7 +4710,7 @@ tap.test(`69 - @media`, (t) => {
     }
   );
 
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5261,18 +5072,17 @@ tap.test(`69 - @media`, (t) => {
     ],
     "69"
   );
-  t.end();
 });
 
-tap.test(`70 - parent selector ">" - 1`, (t) => {
-  const gathered = [];
+test(`70 - parent selector ">" - 1`, () => {
+  let gathered = [];
   ct(`<style>ab>cd#ef {display:block;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
 
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5344,17 +5154,16 @@ tap.test(`70 - parent selector ">" - 1`, (t) => {
     ],
     "70"
   );
-  t.end();
 });
 
-tap.test(`71 - parent selector ">" - 2`, (t) => {
-  const gathered = [];
+test(`71 - parent selector ">" - 2`, () => {
+  let gathered = [];
   ct(`<style>\na > something#here {display:block;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5417,17 +5226,16 @@ tap.test(`71 - parent selector ">" - 2`, (t) => {
     ],
     "71"
   );
-  t.end();
 });
 
-tap.test(`72 unfinished code`, (t) => {
-  const gathered = [];
+test(`72 unfinished code`, () => {
+  let gathered = [];
   ct(`<style>sup{`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5468,17 +5276,16 @@ tap.test(`72 unfinished code`, (t) => {
     ],
     "72"
   );
-  t.end();
 });
 
-tap.test(`73`, (t) => {
-  const gathered = [];
+test(`73`, () => {
+  let gathered = [];
   ct(`<style>.a{color:red }`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5541,17 +5348,16 @@ tap.test(`73`, (t) => {
     ],
     "73"
   );
-  t.end();
 });
 
-tap.test(`74`, (t) => {
-  const gathered = [];
+test(`74`, () => {
+  let gathered = [];
   ct(`<style>.a { b : c    `, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5620,17 +5426,16 @@ tap.test(`74`, (t) => {
     ],
     "74"
   );
-  t.end();
 });
 
-tap.test(`75`, (t) => {
-  const gathered = [];
+test(`75`, () => {
+  let gathered = [];
   ct(`<style>.a { b :    `, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5699,17 +5504,16 @@ tap.test(`75`, (t) => {
     ],
     "75"
   );
-  t.end();
 });
 
-tap.test(`76`, (t) => {
-  const gathered = [];
+test(`76`, () => {
+  let gathered = [];
   ct(`<style>.a{color: red ! float: left}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5787,17 +5591,16 @@ tap.test(`76`, (t) => {
     ],
     "76"
   );
-  t.end();
 });
 
-tap.test(`77`, (t) => {
-  const gathered = [];
+test(`77`, () => {
+  let gathered = [];
   ct(`<style>.a{color: red !important float: left}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5890,17 +5693,16 @@ tap.test(`77`, (t) => {
     ],
     "77"
   );
-  t.end();
 });
 
-tap.test(`78`, (t) => {
-  const gathered = [];
+test(`78`, () => {
+  let gathered = [];
   ct(`<style>.a{padding:1px 2px 3px 4px !important}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -5957,17 +5759,16 @@ tap.test(`78`, (t) => {
     ],
     "78"
   );
-  t.end();
 });
 
-tap.test(`79 - no space or excl. mark`, (t) => {
-  const gathered = [];
+test(`79 - no space or excl. mark`, () => {
+  let gathered = [];
   ct(`<style>.a{color:1pximportant}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -6024,17 +5825,16 @@ tap.test(`79 - no space or excl. mark`, (t) => {
     ],
     "79"
   );
-  t.end();
 });
 
-tap.test(`80`, (t) => {
-  const gathered = [];
+test(`80`, () => {
+  let gathered = [];
   ct(`<style>.a{color: red important float: left}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -6127,11 +5927,10 @@ tap.test(`80`, (t) => {
     ],
     "80"
   );
-  t.end();
 });
 
-tap.test(`81 - ESP var as a CSS rule's value`, (t) => {
-  const gathered = [];
+test(`81 - ESP var as a CSS rule's value`, () => {
+  let gathered = [];
   ct(
     `<style>
 .yyy {
@@ -6144,7 +5943,7 @@ tap.test(`81 - ESP var as a CSS rule's value`, (t) => {
       },
     }
   );
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -6240,5 +6039,6 @@ tap.test(`81 - ESP var as a CSS rule's value`, (t) => {
     ],
     "81"
   );
-  t.end();
 });
+
+test.run();

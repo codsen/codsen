@@ -1,6 +1,9 @@
 /* eslint no-unused-vars:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import {
   find,
   get,
@@ -17,81 +20,75 @@ const defaultInput = {
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - drops in mixed things #1 - index string", (t) => {
-  const input = {
+test("01 - drops in mixed things #1 - index string", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = "8";
-  const actual = drop(input, { index });
-  const intended = {
+  let index = "8";
+  let actual = drop(input, { index });
+  let intended = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: [] },
   };
 
-  t.strictSame(actual, intended, "01");
-  t.end();
+  equal(actual, intended, "01");
 });
 
-tap.test("02 - drops in mixed things #2 - index number", (t) => {
-  const input = {
+test("02 - drops in mixed things #2 - index number", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = 7;
-  const actual = drop(input, { index });
-  const intended = {
+  let index = 7;
+  let actual = drop(input, { index });
+  let intended = {
     a: { b: [{ c: { d: "e" } }] },
     f: {},
   };
 
-  t.strictSame(actual, intended, "02");
-  t.end();
+  equal(actual, intended, "02");
 });
 
-tap.test("03 - does not drop - zero", (t) => {
-  const input = {
+test("03 - does not drop - zero", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = "0";
-  const actual = drop(input, { index });
-  const intended = {
+  let index = "0";
+  let actual = drop(input, { index });
+  let intended = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
 
-  t.strictSame(actual, intended, "03");
-  t.end();
+  equal(actual, intended, "03");
 });
 
-tap.test("04 - does not drop - 99", (t) => {
-  const input = {
+test("04 - does not drop - 99", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = "99";
-  const actual = drop(input, { index });
-  const intended = {
+  let index = "99";
+  let actual = drop(input, { index });
+  let intended = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
 
-  t.strictSame(actual, intended, "04");
-  t.end();
+  equal(actual, intended, "04");
 });
 
-tap.test(
-  "05 - drops in mixed things #3 - index is not a natural number",
-  (t) => {
-    const input = {
-      a: { b: [{ c: { d: "e" } }] },
-      f: { g: ["h"] },
-    };
-    const index = "6.1";
-    t.throws(() => {
-      drop(input, { index });
-    }, /THROW_ID_23/g);
-    t.end();
-  }
-);
+test("05 - drops in mixed things #3 - index is not a natural number", () => {
+  let input = {
+    a: { b: [{ c: { d: "e" } }] },
+    f: { g: ["h"] },
+  };
+  let index = "6.1";
+  throws(() => {
+    drop(input, { index });
+  }, /THROW_ID_23/g);
+});
+
+test.run();

@@ -1,8 +1,9 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 function collWhitespace(str: string, originallineBreakLimit = 1): string {
-  const rawNbsp = "\u00A0";
+  let rawNbsp = "\u00A0";
   // helpers
 
   function reverse(s: string): string {
@@ -10,7 +11,11 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
   }
 
   // replaces the leading/trailing whitespace chunks with final strings
-  function prep(whitespaceChunk: string, limit: number, trailing: boolean) {
+  function prep(
+    whitespaceChunk: string,
+    limit: number,
+    trailing: boolean
+  ): string {
     console.log(` `);
     console.log(` `);
     console.log(` `);
@@ -18,7 +23,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
       `${`\u001b[${34}m${`============== prep() ==============`}\u001b[${39}m`}`
     );
     console.log(
-      `021 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: incoming whitespaceChunk=${JSON.stringify(
+      `026 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: incoming whitespaceChunk=${JSON.stringify(
         whitespaceChunk,
         null,
         4
@@ -31,12 +36,12 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
     // for this reason, we set first and second linebreak according to direction,
     // the "trailing" boolean:
 
-    const firstBreakChar = trailing ? "\n" : "\r";
-    const secondBreakChar = trailing ? "\r" : "\n";
+    let firstBreakChar = trailing ? "\n" : "\r";
+    let secondBreakChar = trailing ? "\r" : "\n";
 
     if (!whitespaceChunk) {
       console.log(
-        `039 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: RETURN ${JSON.stringify(
+        `044 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: RETURN ${JSON.stringify(
           whitespaceChunk,
           null,
           4
@@ -52,7 +57,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
     // let beginning = true;
     for (let i = 0, len = whitespaceChunk.length; i < len; i++) {
       console.log(
-        `055 ${`\u001b[${36}m${`===============`}\u001b[${39}m`} whitespaceChunk[${`\u001b[${33}m${i}\u001b[${39}m`}] = ${
+        `060 ${`\u001b[${36}m${`===============`}\u001b[${39}m`} whitespaceChunk[${`\u001b[${33}m${i}\u001b[${39}m`}] = ${
           whitespaceChunk[i] === rawNbsp
             ? "nbsp"
             : JSON.stringify(whitespaceChunk[i], null, 0)
@@ -68,7 +73,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
       }
 
       console.log(
-        `071 FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
+        `076 FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
           crlfCount,
           null,
           4
@@ -84,7 +89,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
         if (whitespaceChunk[i] === rawNbsp) {
           res += whitespaceChunk[i];
           console.log(
-            `087 PUSH ${JSON.stringify(
+            `092 PUSH ${JSON.stringify(
               whitespaceChunk[i],
               null,
               4
@@ -93,7 +98,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
         } else if (whitespaceChunk[i] === firstBreakChar) {
           if (crlfCount <= limit) {
             console.log(
-              `096 FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
+              `101 FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
                 crlfCount,
                 null,
                 4
@@ -106,7 +111,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
 
             res += whitespaceChunk[i];
             console.log(
-              `109 PUSH ${JSON.stringify(
+              `114 PUSH ${JSON.stringify(
                 whitespaceChunk[i],
                 null,
                 4
@@ -116,7 +121,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
             if (whitespaceChunk[i + 1] === secondBreakChar) {
               res += whitespaceChunk[i + 1];
               console.log(
-                `119 PUSH ${JSON.stringify(
+                `124 PUSH ${JSON.stringify(
                   whitespaceChunk[i + 1],
                   null,
                   4
@@ -124,7 +129,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
               );
 
               i++;
-              console.log(`127 BUMP i = ${i}`);
+              console.log(`132 BUMP i = ${i}`);
             }
           }
         } else if (
@@ -135,7 +140,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
         ) {
           res += whitespaceChunk[i];
           console.log(
-            `138 PUSH ${JSON.stringify(
+            `143 PUSH ${JSON.stringify(
               whitespaceChunk[i],
               null,
               4
@@ -147,12 +152,12 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
         if (!whitespaceChunk[i + 1] && !crlfCount) {
           res += " ";
           console.log(
-            `150 PUSH " ", now res = ${JSON.stringify(res, null, 4)}`
+            `155 PUSH " ", now res = ${JSON.stringify(res, null, 4)}`
           );
         }
       }
       console.log(
-        `155 ${`\u001b[${90}m${`██ whspCount = ${whspCount}; res = ${JSON.stringify(
+        `160 ${`\u001b[${90}m${`██ whspCount = ${whspCount}; res = ${JSON.stringify(
           res,
           null,
           0
@@ -160,7 +165,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
       );
     }
     console.log(
-      `163 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+      `168 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
         4
@@ -180,7 +185,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
       lineBreakLimit = +originallineBreakLimit;
     }
     console.log(
-      `183 ${`\u001b[${33}m${`lineBreakLimit`}\u001b[${39}m`} = ${JSON.stringify(
+      `188 ${`\u001b[${33}m${`lineBreakLimit`}\u001b[${39}m`} = ${JSON.stringify(
         lineBreakLimit,
         null,
         4
@@ -194,7 +199,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
     if (!str.trim()) {
       frontPart = str;
     } else if (!str[0].trim()) {
-      console.log(`197 the first char is whitespace`);
+      console.log(`202 the first char is whitespace`);
       for (let i = 0, len = str.length; i < len; i++) {
         if (str[i].trim()) {
           frontPart = str.slice(0, i);
@@ -204,7 +209,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
     }
     console.log(".");
     console.log(
-      `207 ${`\u001b[${35}m${`██ frontPart`}\u001b[${39}m`} = ${JSON.stringify(
+      `212 ${`\u001b[${35}m${`██ frontPart`}\u001b[${39}m`} = ${JSON.stringify(
         frontPart,
         null,
         4
@@ -217,7 +222,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
       str.trim() &&
       (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)
     ) {
-      console.log(`220 the last char is whitespace`);
+      console.log(`225 the last char is whitespace`);
       for (let i = str.length; i--; ) {
         // console.log(
         //   `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
@@ -234,7 +239,7 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
     }
     console.log(".");
     console.log(
-      `237 ${`\u001b[${35}m${`██ endPart`}\u001b[${39}m`} = ${JSON.stringify(
+      `242 ${`\u001b[${35}m${`██ endPart`}\u001b[${39}m`} = ${JSON.stringify(
         endPart,
         null,
         4
@@ -244,12 +249,12 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
 
     // -------------------------------------------------------------------------
 
-    console.log(`247 end reached`);
+    console.log(`252 end reached`);
     return `${prep(frontPart, lineBreakLimit, false)}${str.trim()}${reverse(
       prep(reverse(endPart), lineBreakLimit, true)
     )}`;
   }
-  console.log(`252 just return whatever was given`);
+  console.log(`257 just return whatever was given`);
   return str;
 }
 

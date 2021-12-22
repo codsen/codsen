@@ -1,11 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 // import { deepContains } from "ast-deep-contains");
 
 // bails early if structure is messed up
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - bails early`, (t) => {
+test(`01 - bails early`, () => {
   [
     //
     `<table>`,
@@ -131,21 +135,20 @@ tap.test(`01 - bails early`, (t) => {
     <tr><td><td><td></td></tr>
     </table>`,
   ].forEach((str) => {
-    const messages = verify(t, str, {
+    let messages = verify(not, str, {
       rules: {
         "tag-table": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, `01.01 - ${str}`);
+    equal(applyFixes(str, messages), str, `01.01 - ${str}`);
   });
-  t.end();
 });
 
-tap.test(`02 - bails when invalid colspan is encountered`, (t) => {
+test(`02 - bails when invalid colspan is encountered`, () => {
   // bails because of "z"
-  t.strictSame(
+  equal(
     verify(
-      t,
+      not,
       `<table>
   <tr>
     <td colspan="z">2</td>
@@ -165,9 +168,9 @@ tap.test(`02 - bails when invalid colspan is encountered`, (t) => {
     "02.01"
   );
   // otherwise reports an error
-  t.strictSame(
+  equal(
     verify(
-      t,
+      not,
       `<table>
   <tr>
     <td colspan="5">2</td>
@@ -186,14 +189,13 @@ tap.test(`02 - bails when invalid colspan is encountered`, (t) => {
     1,
     "02.02"
   );
-  t.end();
 });
 
 // colspan issues
 // -----------------------------------------------------------------------------
 
-tap.test(`03 - off`, (t) => {
-  const str = `<table>
+test(`03 - off`, () => {
+  let str = `<table>
   <tr>
     <td>
       only one td
@@ -208,18 +210,17 @@ tap.test(`03 - off`, (t) => {
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 0,
     },
   });
-  t.equal(applyFixes(str, messages), str, "03.01");
-  t.strictSame(messages, [], "03.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "03.01");
+  equal(messages, [], "03.02");
 });
 
-tap.test(`04 - one col, two cols`, (t) => {
-  const str = `<table>
+test(`04 - one col, two cols`, () => {
+  let str = `<table>
   <tr>
     <td>
       only one td
@@ -234,7 +235,7 @@ tap.test(`04 - one col, two cols`, (t) => {
     </td>
   </tr>
 </table>`;
-  const fixed = `<table>
+  let fixed = `<table>
   <tr>
     <td colspan="2">
       only one td
@@ -249,13 +250,14 @@ tap.test(`04 - one col, two cols`, (t) => {
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 1,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "04.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "04.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -271,12 +273,11 @@ tap.test(`04 - one col, two cols`, (t) => {
     ],
     "04.02"
   );
-  t.equal(messages.length, 1, "04.03");
-  t.end();
+  equal(messages.length, 1, "04.03");
 });
 
-tap.test(`05 - two cols, three cols`, (t) => {
-  const str = `<table>
+test(`05 - two cols, three cols`, () => {
+  let str = `<table>
   <tr>
     <td>1</td>
     <td>2</td>
@@ -287,14 +288,15 @@ tap.test(`05 - two cols, three cols`, (t) => {
     <td>3</td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
   // can't fix
-  t.equal(applyFixes(str, messages), str, "05.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "05.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -307,12 +309,11 @@ tap.test(`05 - two cols, three cols`, (t) => {
     ],
     "05.02"
   );
-  t.equal(messages.length, 1, "05.03");
-  t.end();
+  equal(messages.length, 1, "05.03");
 });
 
-tap.test(`06 - 4-2-3`, (t) => {
-  const str = `<table>
+test(`06 - 4-2-3`, () => {
+  let str = `<table>
   <tr>
     <td>1</td>
     <td>2</td>
@@ -329,14 +330,15 @@ tap.test(`06 - 4-2-3`, (t) => {
     <td>3</td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
   // can't fix
-  t.equal(applyFixes(str, messages), str, "06.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "06.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -356,12 +358,11 @@ tap.test(`06 - 4-2-3`, (t) => {
     ],
     "06.02"
   );
-  t.equal(messages.length, 2, "06.03");
-  t.end();
+  equal(messages.length, 2, "06.03");
 });
 
-tap.test(`07 - 4-2-1-3 - suggests a fix to one of them`, (t) => {
-  const str = `<table>
+test(`07 - 4-2-1-3 - suggests a fix to one of them`, () => {
+  let str = `<table>
   <tr>
     <td>1</td>
     <td>2</td>
@@ -381,7 +382,7 @@ tap.test(`07 - 4-2-1-3 - suggests a fix to one of them`, (t) => {
     <td>3</td>
   </tr>
 </table>`;
-  const fixed = `<table>
+  let fixed = `<table>
   <tr>
     <td>1</td>
     <td>2</td>
@@ -401,13 +402,14 @@ tap.test(`07 - 4-2-1-3 - suggests a fix to one of them`, (t) => {
     <td>3</td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "07.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "07.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -436,15 +438,14 @@ tap.test(`07 - 4-2-1-3 - suggests a fix to one of them`, (t) => {
     ],
     "07.02"
   );
-  t.equal(messages.length, 3, "07.03");
-  t.end();
+  equal(messages.length, 3, "07.03");
 });
 
 // colspan in play
 // -----------------------------------------------------------------------------
 
-tap.test(`08 - fixed a colspan value`, (t) => {
-  const str = `<table>
+test(`08 - fixed a colspan value`, () => {
+  let str = `<table>
   <tr>
     <td align="left" colspan="2" class="x">1</td>
   </tr>
@@ -458,7 +459,7 @@ tap.test(`08 - fixed a colspan value`, (t) => {
     <td>3</td>
   </tr>
 </table>`;
-  const fixed = `<table>
+  let fixed = `<table>
   <tr>
     <td align="left" colspan="3" class="x">1</td>
   </tr>
@@ -472,13 +473,14 @@ tap.test(`08 - fixed a colspan value`, (t) => {
     <td>3</td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "08.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "08.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -500,12 +502,11 @@ tap.test(`08 - fixed a colspan value`, (t) => {
     ],
     "08.02"
   );
-  t.equal(messages.length, 2, "08.03");
-  t.end();
+  equal(messages.length, 2, "08.03");
 });
 
-tap.test(`09 - removed a colspan value`, (t) => {
-  const str = `<table>
+test(`09 - removed a colspan value`, () => {
+  let str = `<table>
   <tr>
     <td align="left" colspan="2" class="x">1</td>
     <td>2</td>
@@ -515,7 +516,7 @@ tap.test(`09 - removed a colspan value`, (t) => {
     <td>2</td>
   </tr>
 </table>`;
-  const fixed = `<table>
+  let fixed = `<table>
   <tr>
     <td align="left" class="x">1</td>
     <td>2</td>
@@ -525,13 +526,14 @@ tap.test(`09 - removed a colspan value`, (t) => {
     <td>2</td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "09.01");
-  t.match(
+  equal(applyFixes(str, messages), fixed, "09.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -546,22 +548,22 @@ tap.test(`09 - removed a colspan value`, (t) => {
     ],
     "09.02"
   );
-  t.equal(messages.length, 1, "09.03");
-  t.end();
+  equal(messages.length, 1, "09.03");
 });
 
 // intra tag text tokens
 // -----------------------------------------------------------------------------
 
-tap.test(`10 - text token between table and tr`, (t) => {
-  const str = `<table>.<tr><td>x</td></tr></table>`;
-  const messages = verify(t, str, {
+test(`10 - text token between table and tr`, () => {
+  let str = `<table>.<tr><td>x</td></tr></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "10.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "10.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -574,19 +576,19 @@ tap.test(`10 - text token between table and tr`, (t) => {
     ],
     "10.02"
   );
-  t.equal(messages.length, 1, "10.03");
-  t.end();
+  equal(messages.length, 1, "10.03");
 });
 
-tap.test(`11 - text token between table and tr`, (t) => {
-  const str = `<table>\ntralala\n<tr><td>x</td></tr></table>`;
-  const messages = verify(t, str, {
+test(`11 - text token between table and tr`, () => {
+  let str = `<table>\ntralala\n<tr><td>x</td></tr></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "11.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "11.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -599,19 +601,19 @@ tap.test(`11 - text token between table and tr`, (t) => {
     ],
     "11.02"
   );
-  t.equal(messages.length, 1, "11.03");
-  t.end();
+  equal(messages.length, 1, "11.03");
 });
 
-tap.test(`12 - text token between tr and td`, (t) => {
-  const str = `<table><tr>.<td>x</td></tr></table>`;
-  const messages = verify(t, str, {
+test(`12 - text token between tr and td`, () => {
+  let str = `<table><tr>.<td>x</td></tr></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "12.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "12.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -624,19 +626,19 @@ tap.test(`12 - text token between tr and td`, (t) => {
     ],
     "12.02"
   );
-  t.equal(messages.length, 1, "12.03");
-  t.end();
+  equal(messages.length, 1, "12.03");
 });
 
-tap.test(`13 - text token between tr and td`, (t) => {
-  const str = `<table><tr>\ntralala\n<td>x</td></tr></table>`;
-  const messages = verify(t, str, {
+test(`13 - text token between tr and td`, () => {
+  let str = `<table><tr>\ntralala\n<td>x</td></tr></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "13.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "13.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -649,19 +651,19 @@ tap.test(`13 - text token between tr and td`, (t) => {
     ],
     "13.02"
   );
-  t.equal(messages.length, 1, "13.03");
-  t.end();
+  equal(messages.length, 1, "13.03");
 });
 
-tap.test(`14 - text token between /td and /tr`, (t) => {
-  const str = `<table><tr><td>x</td>.</tr></table>`;
-  const messages = verify(t, str, {
+test(`14 - text token between /td and /tr`, () => {
+  let str = `<table><tr><td>x</td>.</tr></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "14.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "14.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -674,19 +676,19 @@ tap.test(`14 - text token between /td and /tr`, (t) => {
     ],
     "14.02"
   );
-  t.equal(messages.length, 1, "14.03");
-  t.end();
+  equal(messages.length, 1, "14.03");
 });
 
-tap.test(`15 - text token between /td and /tr`, (t) => {
-  const str = `<table><tr><td>x</td>\ntralala\n</tr></table>`;
-  const messages = verify(t, str, {
+test(`15 - text token between /td and /tr`, () => {
+  let str = `<table><tr><td>x</td>\ntralala\n</tr></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "15.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "15.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -699,19 +701,19 @@ tap.test(`15 - text token between /td and /tr`, (t) => {
     ],
     "15.02"
   );
-  t.equal(messages.length, 1, "15.03");
-  t.end();
+  equal(messages.length, 1, "15.03");
 });
 
-tap.test(`16 - text token between tr and td`, (t) => {
-  const str = `<table><tr><td>x</td></tr>.</table>`;
-  const messages = verify(t, str, {
+test(`16 - text token between tr and td`, () => {
+  let str = `<table><tr><td>x</td></tr>.</table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "16.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "16.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -724,19 +726,19 @@ tap.test(`16 - text token between tr and td`, (t) => {
     ],
     "16.02"
   );
-  t.equal(messages.length, 1, "16.03");
-  t.end();
+  equal(messages.length, 1, "16.03");
 });
 
-tap.test(`17 - text token between tr and td`, (t) => {
-  const str = `<table><tr><td>x</td></tr>\ntralala\n</table>`;
-  const messages = verify(t, str, {
+test(`17 - text token between tr and td`, () => {
+  let str = `<table><tr><td>x</td></tr>\ntralala\n</table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "17.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "17.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -749,22 +751,22 @@ tap.test(`17 - text token between tr and td`, (t) => {
     ],
     "17.02"
   );
-  t.equal(messages.length, 1, "17.03");
-  t.end();
+  equal(messages.length, 1, "17.03");
 });
 
 // table tag without tr
 // -----------------------------------------------------------------------------
 
-tap.test(`18 - table without tr`, (t) => {
-  const str = `<table></table>`;
-  const messages = verify(t, str, {
+test(`18 - table without tr`, () => {
+  let str = `<table></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "18.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "18.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -777,19 +779,19 @@ tap.test(`18 - table without tr`, (t) => {
     ],
     "18.02"
   );
-  t.equal(messages.length, 1, "18.03");
-  t.end();
+  equal(messages.length, 1, "18.03");
 });
 
-tap.test(`19 - table without tr`, (t) => {
-  const str = `<table>\n\n\n`;
-  const messages = verify(t, str, {
+test(`19 - table without tr`, () => {
+  let str = `<table>\n\n\n`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "19.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "19.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -802,19 +804,19 @@ tap.test(`19 - table without tr`, (t) => {
     ],
     "19.02"
   );
-  t.equal(messages.length, 1, "19.03");
-  t.end();
+  equal(messages.length, 1, "19.03");
 });
 
-tap.test(`20 - table without td`, (t) => {
-  const str = `<table><tr></tr></table>`;
-  const messages = verify(t, str, {
+test(`20 - table without td`, () => {
+  let str = `<table><tr></tr></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "20.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "20.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -827,19 +829,19 @@ tap.test(`20 - table without td`, (t) => {
     ],
     "20.02"
   );
-  t.equal(messages.length, 1, "20.03");
-  t.end();
+  equal(messages.length, 1, "20.03");
 });
 
-tap.test(`21 - table without td`, (t) => {
-  const str = `<table><tr>\n\n\n`;
-  const messages = verify(t, str, {
+test(`21 - table without td`, () => {
+  let str = `<table><tr>\n\n\n`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "21.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "21.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -852,34 +854,33 @@ tap.test(`21 - table without td`, (t) => {
     ],
     "21.02"
   );
-  t.equal(messages.length, 1, "21.03");
-  t.end();
+  equal(messages.length, 1, "21.03");
 });
 
 // empty td tag
 // ------------------------------------------------------------------------------
 
-tap.test(`22 - td is not empty`, (t) => {
-  const str = `<table><tr><td>.</td></tr></table>`;
-  const messages = verify(t, str, {
+test(`22 - td is not empty`, () => {
+  let str = `<table><tr><td>.</td></tr></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "22.01");
-  t.strictSame(messages, [], "22.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "22.01");
+  equal(messages, [], "22.02");
 });
 
-tap.test(`23 - empty td`, (t) => {
-  const str = `<table><tr><td></td></tr></table>`;
-  const messages = verify(t, str, {
+test(`23 - empty td`, () => {
+  let str = `<table><tr><td></td></tr></table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "23.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "23.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -892,19 +893,19 @@ tap.test(`23 - empty td`, (t) => {
     ],
     "23.02"
   );
-  t.equal(messages.length, 1, "23.03");
-  t.end();
+  equal(messages.length, 1, "23.03");
 });
 
-tap.test(`24 - empty td`, (t) => {
-  const str = `<table>\n<tr>\n<td>\n</td>\n</tr>\n</table>`;
-  const messages = verify(t, str, {
+test(`24 - empty td`, () => {
+  let str = `<table>\n<tr>\n<td>\n</td>\n</tr>\n</table>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "24.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "24.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -917,6 +918,7 @@ tap.test(`24 - empty td`, (t) => {
     ],
     "24.02"
   );
-  t.equal(messages.length, 1, "24.03");
-  t.end();
+  equal(messages.length, 1, "24.03");
 });
+
+test.run();

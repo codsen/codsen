@@ -1,5 +1,8 @@
-import tap from "tap";
-import { isAttrClosing as is } from "../dist/is-html-attribute-closing.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js";
 // const BACKSLASH = "\u005C";
 
 //
@@ -42,36 +45,30 @@ import { isAttrClosing as is } from "../dist/is-html-attribute-closing.esm.js";
 //
 // both double
 const str11 = `<div style="float:"left"">z</div>`;
-tap.test(`01`, (t) => {
-  t.false(is(str11, 11, 18), "01");
-  t.end();
+test(`01`, () => {
+  not.ok(isCl(str11, 11, 18), "01");
 });
 
-tap.test(`02`, (t) => {
-  t.false(is(str11, 11, 23), "02");
-  t.end();
+test(`02`, () => {
+  not.ok(isCl(str11, 11, 23), "02");
 });
 
-tap.test(`03`, (t) => {
-  t.true(is(str11, 11, 24), "03");
-  t.end();
+test(`03`, () => {
+  ok(isCl(str11, 11, 24), "03");
 });
 
 // both single
 const str12 = `<div style='float:'left''>z</div>`;
-tap.test(`04`, (t) => {
-  t.false(is(str12, 11, 18), "04");
-  t.end();
+test(`04`, () => {
+  not.ok(isCl(str12, 11, 18), "04");
 });
 
-tap.test(`05`, (t) => {
-  t.false(is(str12, 11, 23), "05");
-  t.end();
+test(`05`, () => {
+  not.ok(isCl(str12, 11, 23), "05");
 });
 
-tap.test(`06`, (t) => {
-  t.true(is(str12, 11, 24), "06");
-  t.end();
+test(`06`, () => {
+  ok(isCl(str12, 11, 24), "06");
 });
 
 //
@@ -87,36 +84,30 @@ tap.test(`06`, (t) => {
 //
 // double wrapping single
 const str13 = `<div style="float:'left'">z</div>`;
-tap.test(`07`, (t) => {
-  t.false(is(str13, 11, 18), "07");
-  t.end();
+test(`07`, () => {
+  not.ok(isCl(str13, 11, 18), "07");
 });
 
-tap.test(`08`, (t) => {
-  t.false(is(str13, 11, 23), "08");
-  t.end();
+test(`08`, () => {
+  not.ok(isCl(str13, 11, 23), "08");
 });
 
-tap.test(`09`, (t) => {
-  t.true(is(str13, 11, 24), "09");
-  t.end();
+test(`09`, () => {
+  ok(isCl(str13, 11, 24), "09");
 });
 
 // single wrapping double
 const str14 = `<div style='float:"left"'>z</div>`;
-tap.test(`10`, (t) => {
-  t.false(is(str14, 11, 18), "10");
-  t.end();
+test(`10`, () => {
+  not.ok(isCl(str14, 11, 18), "10");
 });
 
-tap.test(`11`, (t) => {
-  t.false(is(str14, 11, 23), "11");
-  t.end();
+test(`11`, () => {
+  not.ok(isCl(str14, 11, 23), "11");
 });
 
-tap.test(`12`, (t) => {
-  t.true(is(str14, 11, 24), "12");
-  t.end();
+test(`12`, () => {
+  ok(isCl(str14, 11, 24), "12");
 });
 
 //
@@ -132,36 +123,30 @@ tap.test(`12`, (t) => {
 //
 // double wrapping D-S
 const str15 = `<div style="float:"left'">z</div>`;
-tap.test(`13`, (t) => {
-  t.false(is(str15, 11, 18), "13");
-  t.end();
+test(`13`, () => {
+  not.ok(isCl(str15, 11, 18), "13");
 });
 
-tap.test(`14`, (t) => {
-  t.false(is(str15, 11, 23), "14");
-  t.end();
+test(`14`, () => {
+  not.ok(isCl(str15, 11, 23), "14");
 });
 
-tap.test(`15`, (t) => {
-  t.true(is(str15, 11, 24), "15");
-  t.end();
+test(`15`, () => {
+  ok(isCl(str15, 11, 24), "15");
 });
 
 // double wrapping S-D
 const str16 = `<div style="float:'left"">z</div>`;
-tap.test(`16`, (t) => {
-  t.false(is(str16, 11, 18), "16");
-  t.end();
+test(`16`, () => {
+  not.ok(isCl(str16, 11, 18), "16");
 });
 
-tap.test(`17`, (t) => {
-  t.false(is(str16, 11, 23), "17");
-  t.end();
+test(`17`, () => {
+  not.ok(isCl(str16, 11, 23), "17");
 });
 
-tap.test(`18`, (t) => {
-  t.true(is(str16, 11, 24), "18");
-  t.end();
+test(`18`, () => {
+  ok(isCl(str16, 11, 24), "18");
 });
 
 //
@@ -207,110 +192,90 @@ tap.test(`18`, (t) => {
 
 // both double
 const str21 = `<div style="float:"left"" align="left">z</div>`;
-tap.test(`19`, (t) => {
-  t.false(is(str21, 11, 18), "19");
-  t.end();
+test(`19`, () => {
+  not.ok(isCl(str21, 11, 18), "19");
 });
 
-tap.test(`20`, (t) => {
-  t.false(is(str21, 11, 23), "20");
-  t.end();
+test(`20`, () => {
+  not.ok(isCl(str21, 11, 23), "20");
 });
 
-tap.test(`21`, (t) => {
-  t.true(is(str21, 11, 24), "21");
-  t.end();
+test(`21`, () => {
+  ok(isCl(str21, 11, 24), "21");
 });
 
-tap.test(`22`, (t) => {
-  t.false(is(str21, 11, 32), "22");
-  t.end();
+test(`22`, () => {
+  not.ok(isCl(str21, 11, 32), "22");
 });
 
-tap.test(`23`, (t) => {
-  t.false(is(str21, 11, 37), "23");
-  t.end();
+test(`23`, () => {
+  not.ok(isCl(str21, 11, 37), "23");
 });
 
 // both single
 const str22 = `<div style='float:'left'' align="left">z</div>`;
-tap.test(`24`, (t) => {
-  t.false(is(str22, 11, 18), "24");
-  t.end();
+test(`24`, () => {
+  not.ok(isCl(str22, 11, 18), "24");
 });
 
-tap.test(`25`, (t) => {
-  t.false(is(str22, 11, 23), "25");
-  t.end();
+test(`25`, () => {
+  not.ok(isCl(str22, 11, 23), "25");
 });
 
-tap.test(`26`, (t) => {
-  t.true(is(str22, 11, 24), "26");
-  t.end();
+test(`26`, () => {
+  ok(isCl(str22, 11, 24), "26");
 });
 
-tap.test(`27`, (t) => {
-  t.false(is(str22, 11, 32), "27");
-  t.end();
+test(`27`, () => {
+  not.ok(isCl(str22, 11, 32), "27");
 });
 
-tap.test(`28`, (t) => {
-  t.false(is(str22, 11, 37), "28");
-  t.end();
+test(`28`, () => {
+  not.ok(isCl(str22, 11, 37), "28");
 });
 
 // double wrapping single
 const str23 = `<div style="float:'left'" align="left">z</div>`;
-tap.test(`29`, (t) => {
-  t.false(is(str23, 11, 18), "29");
-  t.end();
+test(`29`, () => {
+  not.ok(isCl(str23, 11, 18), "29");
 });
 
-tap.test(`30`, (t) => {
-  t.false(is(str23, 11, 23), "30");
-  t.end();
+test(`30`, () => {
+  not.ok(isCl(str23, 11, 23), "30");
 });
 
-tap.test(`31`, (t) => {
-  t.true(is(str23, 11, 24), "31");
-  t.end();
+test(`31`, () => {
+  ok(isCl(str23, 11, 24), "31");
 });
 
-tap.test(`32`, (t) => {
-  t.false(is(str23, 11, 32), "32");
-  t.end();
+test(`32`, () => {
+  not.ok(isCl(str23, 11, 32), "32");
 });
 
-tap.test(`33`, (t) => {
-  t.false(is(str23, 11, 37), "33");
-  t.end();
+test(`33`, () => {
+  not.ok(isCl(str23, 11, 37), "33");
 });
 
 // single wrapping double
 const str24 = `<div style='float:"left"' align="left">z</div>`;
-tap.test(`34`, (t) => {
-  t.false(is(str24, 11, 18), "34");
-  t.end();
+test(`34`, () => {
+  not.ok(isCl(str24, 11, 18), "34");
 });
 
-tap.test(`35`, (t) => {
-  t.false(is(str24, 11, 23), "35");
-  t.end();
+test(`35`, () => {
+  not.ok(isCl(str24, 11, 23), "35");
 });
 
-tap.test(`36`, (t) => {
-  t.true(is(str24, 11, 24), "36");
-  t.end();
+test(`36`, () => {
+  ok(isCl(str24, 11, 24), "36");
 });
 
-tap.test(`37`, (t) => {
-  t.false(is(str24, 11, 32), "37");
-  t.end();
+test(`37`, () => {
+  not.ok(isCl(str24, 11, 32), "37");
 });
 
-tap.test(`38`, (t) => {
-  t.false(is(str24, 11, 37), "38");
-  t.end();
+test(`38`, () => {
+  not.ok(isCl(str24, 11, 37), "38");
 });
 
 //
@@ -356,110 +321,90 @@ tap.test(`38`, (t) => {
 
 // both double
 const str31 = `<div style="float:"left"" align="left'>z</div>`;
-tap.test(`39`, (t) => {
-  t.false(is(str31, 11, 18), "39");
-  t.end();
+test(`39`, () => {
+  not.ok(isCl(str31, 11, 18), "39");
 });
 
-tap.test(`40`, (t) => {
-  t.false(is(str31, 11, 23), "40");
-  t.end();
+test(`40`, () => {
+  not.ok(isCl(str31, 11, 23), "40");
 });
 
-tap.test(`41`, (t) => {
-  t.true(is(str31, 11, 24), "41");
-  t.end();
+test(`41`, () => {
+  ok(isCl(str31, 11, 24), "41");
 });
 
-tap.test(`42`, (t) => {
-  t.false(is(str31, 11, 32), "42");
-  t.end();
+test(`42`, () => {
+  not.ok(isCl(str31, 11, 32), "42");
 });
 
-tap.test(`43`, (t) => {
-  t.false(is(str31, 11, 37), "43");
-  t.end();
+test(`43`, () => {
+  not.ok(isCl(str31, 11, 37), "43");
 });
 
 // both single
 const str32 = `<div style='float:'left'' align="left'>z</div>`;
-tap.test(`44`, (t) => {
-  t.false(is(str32, 11, 18), "44");
-  t.end();
+test(`44`, () => {
+  not.ok(isCl(str32, 11, 18), "44");
 });
 
-tap.test(`45`, (t) => {
-  t.false(is(str32, 11, 23), "45");
-  t.end();
+test(`45`, () => {
+  not.ok(isCl(str32, 11, 23), "45");
 });
 
-tap.test(`46`, (t) => {
-  t.true(is(str32, 11, 24), "46");
-  t.end();
+test(`46`, () => {
+  ok(isCl(str32, 11, 24), "46");
 });
 
-tap.test(`47`, (t) => {
-  t.false(is(str32, 11, 32), "47");
-  t.end();
+test(`47`, () => {
+  not.ok(isCl(str32, 11, 32), "47");
 });
 
-tap.test(`48`, (t) => {
-  t.false(is(str32, 11, 37), "48");
-  t.end();
+test(`48`, () => {
+  not.ok(isCl(str32, 11, 37), "48");
 });
 
 // double wrapping single
 const str33 = `<div style="float:'left'" align="left'>z</div>`;
-tap.test(`49`, (t) => {
-  t.false(is(str33, 11, 18), "49");
-  t.end();
+test(`49`, () => {
+  not.ok(isCl(str33, 11, 18), "49");
 });
 
-tap.test(`50`, (t) => {
-  t.false(is(str33, 11, 23), "50");
-  t.end();
+test(`50`, () => {
+  not.ok(isCl(str33, 11, 23), "50");
 });
 
-tap.test(`51`, (t) => {
-  t.true(is(str33, 11, 24), "51");
-  t.end();
+test(`51`, () => {
+  ok(isCl(str33, 11, 24), "51");
 });
 
-tap.test(`52`, (t) => {
-  t.false(is(str33, 11, 32), "52");
-  t.end();
+test(`52`, () => {
+  not.ok(isCl(str33, 11, 32), "52");
 });
 
-tap.test(`53`, (t) => {
-  t.false(is(str33, 11, 37), "53");
-  t.end();
+test(`53`, () => {
+  not.ok(isCl(str33, 11, 37), "53");
 });
 
 // single wrapping double
 const str34 = `<div style='float:"left"' align="left'>z</div>`;
-tap.test(`54`, (t) => {
-  t.false(is(str34, 11, 18), "54");
-  t.end();
+test(`54`, () => {
+  not.ok(isCl(str34, 11, 18), "54");
 });
 
-tap.test(`55`, (t) => {
-  t.false(is(str34, 11, 23), "55");
-  t.end();
+test(`55`, () => {
+  not.ok(isCl(str34, 11, 23), "55");
 });
 
-tap.test(`56`, (t) => {
-  t.true(is(str34, 11, 24), "56");
-  t.end();
+test(`56`, () => {
+  ok(isCl(str34, 11, 24), "56");
 });
 
-tap.test(`57`, (t) => {
-  t.false(is(str34, 11, 32), "57");
-  t.end();
+test(`57`, () => {
+  not.ok(isCl(str34, 11, 32), "57");
 });
 
-tap.test(`58`, (t) => {
-  t.false(is(str34, 11, 37), "58");
-  t.end();
+test(`58`, () => {
+  not.ok(isCl(str34, 11, 37), "58");
 });
 
 //
@@ -505,110 +450,90 @@ tap.test(`58`, (t) => {
 
 // both double
 const str41 = `<div style="float:"left"" align='left">z</div>`;
-tap.test(`59`, (t) => {
-  t.false(is(str41, 11, 18), "59");
-  t.end();
+test(`59`, () => {
+  not.ok(isCl(str41, 11, 18), "59");
 });
 
-tap.test(`60`, (t) => {
-  t.false(is(str41, 11, 23), "60");
-  t.end();
+test(`60`, () => {
+  not.ok(isCl(str41, 11, 23), "60");
 });
 
-tap.test(`61`, (t) => {
-  t.true(is(str41, 11, 24), "61");
-  t.end();
+test(`61`, () => {
+  ok(isCl(str41, 11, 24), "61");
 });
 
-tap.test(`62`, (t) => {
-  t.false(is(str41, 11, 32), "62");
-  t.end();
+test(`62`, () => {
+  not.ok(isCl(str41, 11, 32), "62");
 });
 
-tap.test(`63`, (t) => {
-  t.false(is(str41, 11, 37), "63");
-  t.end();
+test(`63`, () => {
+  not.ok(isCl(str41, 11, 37), "63");
 });
 
 // both single
 const str42 = `<div style='float:'left'' align='left">z</div>`;
-tap.test(`64`, (t) => {
-  t.false(is(str42, 11, 18), "64");
-  t.end();
+test(`64`, () => {
+  not.ok(isCl(str42, 11, 18), "64");
 });
 
-tap.test(`65`, (t) => {
-  t.false(is(str42, 11, 23), "65");
-  t.end();
+test(`65`, () => {
+  not.ok(isCl(str42, 11, 23), "65");
 });
 
-tap.test(`66`, (t) => {
-  t.true(is(str42, 11, 24), "66");
-  t.end();
+test(`66`, () => {
+  ok(isCl(str42, 11, 24), "66");
 });
 
-tap.test(`67`, (t) => {
-  t.false(is(str42, 11, 32), "67");
-  t.end();
+test(`67`, () => {
+  not.ok(isCl(str42, 11, 32), "67");
 });
 
-tap.test(`68`, (t) => {
-  t.false(is(str42, 11, 37), "68");
-  t.end();
+test(`68`, () => {
+  not.ok(isCl(str42, 11, 37), "68");
 });
 
 // double wrapping single
 const str43 = `<div style="float:'left'" align='left">z</div>`;
-tap.test(`69`, (t) => {
-  t.false(is(str43, 11, 18), "69");
-  t.end();
+test(`69`, () => {
+  not.ok(isCl(str43, 11, 18), "69");
 });
 
-tap.test(`70`, (t) => {
-  t.false(is(str43, 11, 23), "70");
-  t.end();
+test(`70`, () => {
+  not.ok(isCl(str43, 11, 23), "70");
 });
 
-tap.test(`71`, (t) => {
-  t.true(is(str43, 11, 24), "71");
-  t.end();
+test(`71`, () => {
+  ok(isCl(str43, 11, 24), "71");
 });
 
-tap.test(`72`, (t) => {
-  t.false(is(str43, 11, 32), "72");
-  t.end();
+test(`72`, () => {
+  not.ok(isCl(str43, 11, 32), "72");
 });
 
-tap.test(`73`, (t) => {
-  t.false(is(str43, 11, 37), "73");
-  t.end();
+test(`73`, () => {
+  not.ok(isCl(str43, 11, 37), "73");
 });
 
 // single wrapping double
 const str44 = `<div style='float:"left"' align='left">z</div>`;
-tap.test(`74`, (t) => {
-  t.false(is(str44, 11, 18), "74");
-  t.end();
+test(`74`, () => {
+  not.ok(isCl(str44, 11, 18), "74");
 });
 
-tap.test(`75`, (t) => {
-  t.false(is(str44, 11, 23), "75");
-  t.end();
+test(`75`, () => {
+  not.ok(isCl(str44, 11, 23), "75");
 });
 
-tap.test(`76`, (t) => {
-  t.true(is(str44, 11, 24), "76");
-  t.end();
+test(`76`, () => {
+  ok(isCl(str44, 11, 24), "76");
 });
 
-tap.test(`77`, (t) => {
-  t.false(is(str44, 11, 32), "77");
-  t.end();
+test(`77`, () => {
+  not.ok(isCl(str44, 11, 32), "77");
 });
 
-tap.test(`78`, (t) => {
-  t.false(is(str44, 11, 37), "78");
-  t.end();
+test(`78`, () => {
+  not.ok(isCl(str44, 11, 37), "78");
 });
 
 //
@@ -654,110 +579,90 @@ tap.test(`78`, (t) => {
 
 // both double
 const str51 = `<div style="float:"left"" align='left'>z</div>`;
-tap.test(`79`, (t) => {
-  t.false(is(str51, 11, 18), "79");
-  t.end();
+test(`79`, () => {
+  not.ok(isCl(str51, 11, 18), "79");
 });
 
-tap.test(`80`, (t) => {
-  t.false(is(str51, 11, 23), "80");
-  t.end();
+test(`80`, () => {
+  not.ok(isCl(str51, 11, 23), "80");
 });
 
-tap.test(`81`, (t) => {
-  t.true(is(str51, 11, 24), "81");
-  t.end();
+test(`81`, () => {
+  ok(isCl(str51, 11, 24), "81");
 });
 
-tap.test(`82`, (t) => {
-  t.false(is(str51, 11, 32), "82");
-  t.end();
+test(`82`, () => {
+  not.ok(isCl(str51, 11, 32), "82");
 });
 
-tap.test(`83`, (t) => {
-  t.false(is(str51, 11, 37), "83");
-  t.end();
+test(`83`, () => {
+  not.ok(isCl(str51, 11, 37), "83");
 });
 
 // both single
 const str52 = `<div style='float:'left'' align='left'>z</div>`;
-tap.test(`84`, (t) => {
-  t.false(is(str52, 11, 18), "84");
-  t.end();
+test(`84`, () => {
+  not.ok(isCl(str52, 11, 18), "84");
 });
 
-tap.test(`85`, (t) => {
-  t.false(is(str52, 11, 23), "85");
-  t.end();
+test(`85`, () => {
+  not.ok(isCl(str52, 11, 23), "85");
 });
 
-tap.test(`86`, (t) => {
-  t.true(is(str52, 11, 24), "86");
-  t.end();
+test(`86`, () => {
+  ok(isCl(str52, 11, 24), "86");
 });
 
-tap.test(`87`, (t) => {
-  t.false(is(str52, 11, 32), "87");
-  t.end();
+test(`87`, () => {
+  not.ok(isCl(str52, 11, 32), "87");
 });
 
-tap.test(`88`, (t) => {
-  t.false(is(str52, 11, 37), "88");
-  t.end();
+test(`88`, () => {
+  not.ok(isCl(str52, 11, 37), "88");
 });
 
 // double wrapping single
 const str53 = `<div style="float:'left'" align='left'>z</div>`;
-tap.test(`89`, (t) => {
-  t.false(is(str53, 11, 18), "89");
-  t.end();
+test(`89`, () => {
+  not.ok(isCl(str53, 11, 18), "89");
 });
 
-tap.test(`90`, (t) => {
-  t.false(is(str53, 11, 23), "90");
-  t.end();
+test(`90`, () => {
+  not.ok(isCl(str53, 11, 23), "90");
 });
 
-tap.test(`91`, (t) => {
-  t.true(is(str53, 11, 24), "91");
-  t.end();
+test(`91`, () => {
+  ok(isCl(str53, 11, 24), "91");
 });
 
-tap.test(`92`, (t) => {
-  t.false(is(str53, 11, 32), "92");
-  t.end();
+test(`92`, () => {
+  not.ok(isCl(str53, 11, 32), "92");
 });
 
-tap.test(`93`, (t) => {
-  t.false(is(str53, 11, 37), "93");
-  t.end();
+test(`93`, () => {
+  not.ok(isCl(str53, 11, 37), "93");
 });
 
 // single wrapping double
 const str54 = `<div style='float:"left"' align='left'>z</div>`;
-tap.test(`94`, (t) => {
-  t.false(is(str54, 11, 18), "94");
-  t.end();
+test(`94`, () => {
+  not.ok(isCl(str54, 11, 18), "94");
 });
 
-tap.test(`95`, (t) => {
-  t.false(is(str54, 11, 23), "95");
-  t.end();
+test(`95`, () => {
+  not.ok(isCl(str54, 11, 23), "95");
 });
 
-tap.test(`96`, (t) => {
-  t.true(is(str54, 11, 24), "96");
-  t.end();
+test(`96`, () => {
+  ok(isCl(str54, 11, 24), "96");
 });
 
-tap.test(`97`, (t) => {
-  t.false(is(str54, 11, 32), "97");
-  t.end();
+test(`97`, () => {
+  not.ok(isCl(str54, 11, 32), "97");
 });
 
-tap.test(`98`, (t) => {
-  t.false(is(str54, 11, 37), "98");
-  t.end();
+test(`98`, () => {
+  not.ok(isCl(str54, 11, 37), "98");
 });
 
 //
@@ -788,9 +693,10 @@ tap.test(`98`, (t) => {
 //
 
 const str6 = `<span width="'100'">`;
-tap.test(`99`, (t) => {
-  t.false(is(str6, 12, 13), "99.01");
-  t.false(is(str6, 12, 17), "99.02");
-  t.true(is(str6, 12, 18), "99.03");
-  t.end();
+test(`99`, () => {
+  not.ok(isCl(str6, 12, 13), "99.01");
+  not.ok(isCl(str6, 12, 17), "99.02");
+  ok(isCl(str6, 12, 18), "99.03");
 });
+
+test.run();

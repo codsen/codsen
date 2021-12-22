@@ -1,4 +1,5 @@
 import { mixer } from "test-mixer";
+
 import { defaults } from "../../dist/string-collapse-white-space.esm.js";
 
 function mixerToExport(ref) {

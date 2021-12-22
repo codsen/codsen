@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 2.1.0
 
 ```js
 import { strict as assert } from "assert";
+
 import { cleanChangelogs } from "lerna-clean-changelogs";
 
 // are all values equal to null:
@@ -49,15 +50,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.9.2 (2018-12-27)
 
-
-
-
-
-
-
 **Note:** Version bump only for package ranges-apply
-
-
 
 ## [2.9.1](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
 
@@ -98,7 +91,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/lerna-clean-changelogs/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/lerna-clean-changelogs/) for a full description of the API.
 
 ## Contributing
 
@@ -110,4 +103,6 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

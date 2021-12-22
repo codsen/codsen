@@ -1,47 +1,46 @@
-import tap from "tap";
-import { isOpening as is } from "../dist/is-html-tag-opening.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 // API
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, (t) => {
-  t.throws(() => {
-    is();
+test(`01 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+  throws(() => {
+    isOpening();
   }, /THROW_ID_01/);
-  t.end();
 });
 
-tap.test(`02 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, (t) => {
-  t.throws(() => {
-    is(true);
+test(`02 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+  throws(() => {
+    isOpening(true);
   }, /THROW_ID_01/);
-  t.end();
 });
 
-tap.test(`03 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, (t) => {
-  t.throws(() => {
-    is({ a: 1 });
+test(`03 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+  throws(() => {
+    isOpening({ a: 1 });
   }, /THROW_ID_01/);
-  t.end();
 });
 
-tap.test(`04 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, (t) => {
-  t.throws(() => {
-    is("z", true);
+test(`04 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+  throws(() => {
+    isOpening("z", true);
   }, /THROW_ID_02/);
-  t.end();
 });
 
-tap.test(`05 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, (t) => {
-  t.throws(() => {
-    is("z", false);
+test(`05 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+  throws(() => {
+    isOpening("z", false);
   }, /THROW_ID_02/);
-  t.end();
 });
 
-tap.test(`06 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, (t) => {
-  t.throws(() => {
-    is("z", null);
+test(`06 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+  throws(() => {
+    isOpening("z", null);
   }, /THROW_ID_02/);
-  t.end();
 });
+
+test.run();

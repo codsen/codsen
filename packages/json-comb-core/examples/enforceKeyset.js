@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 // Asynchronous `enforceKeyset()`
 
 import { strict as assert } from "assert";
+
 import {
   getKeysetSync,
   getKeyset,
@@ -16,7 +18,7 @@ import {
 // Let's use an async IIFE to trigger the action and let us use await:
 (async () => {
   // let's create three plain objects, each somewhat overlapping with others:
-  const obj1 = {
+  let obj1 = {
     b: [
       {
         c: "ccc",
@@ -25,15 +27,15 @@ import {
     ],
     a: "aaa",
   };
-  const obj2 = {
+  let obj2 = {
     a: "ccc",
     e: "eee",
   };
-  const obj3 = {
+  let obj3 = {
     a: "zzz",
   };
   // calculate the schema:
-  const schema = await getKeyset([obj1, obj2, obj3]);
+  let schema = await getKeyset([obj1, obj2, obj3]);
 
   assert.deepEqual(schema, {
     a: false,

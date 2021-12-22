@@ -1,4 +1,8 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 
 const BACKSLASH = "\u005C";
@@ -6,40 +10,39 @@ const BACKSLASH = "\u005C";
 // API precautions
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - no bracket - early exit`, (t) => {
-  const str = "</a ";
-  const messages = verify(t, str, {
+test(`01 - no bracket - early exit`, () => {
+  let str = "</a ";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.strictSame(messages, [], "01");
-  t.end();
+  equal(messages, [], "01");
 });
 
-tap.test(`02 - no bracket - early exit`, (t) => {
-  const str = "</a <div>";
-  const messages = verify(t, str, {
+test(`02 - no bracket - early exit`, () => {
+  let str = "</a <div>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.strictSame(messages, [], "02");
-  t.end();
+  equal(messages, [], "02");
 });
 
 // NEVER
 // -----------------------------------------------------------------------------
 
-tap.test(`03 - a single tag, no slash`, (t) => {
-  const str = "<a >";
-  const fixed = "<a>";
-  const messages = verify(t, str, {
+test(`03 - a single tag, no slash`, () => {
+  let str = "<a >";
+  let fixed = "<a>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -55,20 +58,20 @@ tap.test(`03 - a single tag, no slash`, (t) => {
     ],
     "03.01"
   );
-  t.equal(messages.length, 1, "03.02");
-  t.equal(applyFixes(str, messages), fixed, "03.03");
-  t.end();
+  equal(messages.length, 1, "03.02");
+  equal(applyFixes(str, messages), fixed, "03.03");
 });
 
-tap.test(`04 - a single tag, with slash`, (t) => {
-  const str = "<br />";
-  const fixed = "<br/>";
-  const messages = verify(t, str, {
+test(`04 - a single tag, with slash`, () => {
+  let str = "<br />";
+  let fixed = "<br/>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -84,337 +87,312 @@ tap.test(`04 - a single tag, with slash`, (t) => {
     ],
     "04.01"
   );
-  t.equal(messages.length, 1, "04.02");
-  t.equal(applyFixes(str, messages), fixed, "04.03");
-  t.end();
+  equal(messages.length, 1, "04.02");
+  equal(applyFixes(str, messages), fixed, "04.03");
 });
 
-tap.test(`05 - a single closing tag, innter tabs`, (t) => {
-  const str = "\n</a\t\t>";
-  const fixed = "\n</a>";
-  const messages = verify(t, str, {
+test(`05 - a single closing tag, innter tabs`, () => {
+  let str = "\n</a\t\t>";
+  let fixed = "\n</a>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.equal(messages.length, 1, "05.01");
-  t.equal(applyFixes(str, messages), fixed, "05.02");
-  t.end();
+  equal(messages.length, 1, "05.01");
+  equal(applyFixes(str, messages), fixed, "05.02");
 });
 
-tap.test(`06 - highly unlikely`, (t) => {
-  const str = "\n</a\t\t/>";
-  const fixed = "\n</a/>";
-  const messages = verify(t, str, {
+test(`06 - highly unlikely`, () => {
+  let str = "\n</a\t\t/>";
+  let fixed = "\n</a/>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.equal(messages.length, 1, "06.01");
-  t.equal(applyFixes(str, messages), fixed, "06.02");
-  t.end();
+  equal(messages.length, 1, "06.01");
+  equal(applyFixes(str, messages), fixed, "06.02");
 });
 
-tap.test(`07 - closing tag, attribute, innter tabs`, (t) => {
-  const str = `\n</a class="z"\t\t>`;
-  const fixed = `\n</a class="z">`;
-  const messages = verify(t, str, {
+test(`07 - closing tag, attribute, innter tabs`, () => {
+  let str = `\n</a class="z"\t\t>`;
+  let fixed = `\n</a class="z">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.equal(messages.length, 1, "07.01");
-  t.equal(applyFixes(str, messages), fixed, "07.02");
-  t.end();
+  equal(messages.length, 1, "07.01");
+  equal(applyFixes(str, messages), fixed, "07.02");
 });
 
-tap.test(`08 - highly unikely too`, (t) => {
-  const str = `\n</a class="z"\t\t/>`;
-  const fixed = `\n</a class="z"/>`;
-  const messages = verify(t, str, {
+test(`08 - highly unikely too`, () => {
+  let str = `\n</a class="z"\t\t/>`;
+  let fixed = `\n</a class="z"/>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.equal(messages.length, 1, "08.01");
-  t.equal(applyFixes(str, messages), fixed, "08.02");
-  t.end();
+  equal(messages.length, 1, "08.01");
+  equal(applyFixes(str, messages), fixed, "08.02");
 });
 
-tap.test(`09 - a space, never`, (t) => {
-  const str = `<div class="zz yy" >`;
-  const fixed = `<div class="zz yy">`;
-  const messages = verify(t, str, {
+test(`09 - a space, never`, () => {
+  let str = `<div class="zz yy" >`;
+  let fixed = `<div class="zz yy">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(messages.length, 1, "09.01");
-  t.equal(applyFixes(str, messages), fixed, "09.02");
-  t.end();
+  equal(messages.length, 1, "09.01");
+  equal(applyFixes(str, messages), fixed, "09.02");
 });
 
-tap.test(`10 - a space, never, slash, non-void tag`, (t) => {
-  const str = `<div class="zz yy" />`;
-  const fixed = `<div class="zz yy"/>`;
-  const messages = verify(t, str, {
+test(`10 - a space, never, slash, non-void tag`, () => {
+  let str = `<div class="zz yy" />`;
+  let fixed = `<div class="zz yy"/>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(messages.length, 1, "10.01");
-  t.equal(applyFixes(str, messages), fixed, "10.02");
-  t.end();
+  equal(messages.length, 1, "10.01");
+  equal(applyFixes(str, messages), fixed, "10.02");
 });
 
-tap.test(`11 - a space, never`, (t) => {
-  const str = `<br class="zz yy" />`;
-  const fixed = `<br class="zz yy"/>`;
-  const messages = verify(t, str, {
+test(`11 - a space, never`, () => {
+  let str = `<br class="zz yy" />`;
+  let fixed = `<br class="zz yy"/>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(messages.length, 1, "11.01");
-  t.equal(applyFixes(str, messages), fixed, "11.02");
-  t.end();
+  equal(messages.length, 1, "11.01");
+  equal(applyFixes(str, messages), fixed, "11.02");
 });
 
-tap.test(`12 - void tag, tight, never, no slash`, (t) => {
-  const str = `<br>`;
-  const messages = verify(t, str, {
+test(`12 - void tag, tight, never, no slash`, () => {
+  let str = `<br>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.strictSame(messages, [], "12");
-  t.end();
+  equal(messages, [], "12");
 });
 
-tap.test(`13 - void tag, tight, never, slash`, (t) => {
-  const str = `<br/>`;
-  const messages = verify(t, str, {
+test(`13 - void tag, tight, never, slash`, () => {
+  let str = `<br/>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.strictSame(messages, [], "13");
-  t.end();
+  equal(messages, [], "13");
 });
 
-tap.test(`14 - void tag, space, never, no slash`, (t) => {
-  const str = `<br >`;
-  const fixed = `<br>`;
-  const messages = verify(t, str, {
+test(`14 - void tag, space, never, no slash`, () => {
+  let str = `<br >`;
+  let fixed = `<br>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(messages.length, 1, "14.01");
-  t.equal(applyFixes(str, messages), fixed, "14.02");
-  t.end();
+  equal(messages.length, 1, "14.01");
+  equal(applyFixes(str, messages), fixed, "14.02");
 });
 
-tap.test(`15 - void tag, space, never, slash`, (t) => {
-  const str = `<br />`;
-  const fixed = `<br/>`;
-  const messages = verify(t, str, {
+test(`15 - void tag, space, never, slash`, () => {
+  let str = `<br />`;
+  let fixed = `<br/>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(messages.length, 1, "15.01");
-  t.equal(applyFixes(str, messages), fixed, "15.02");
-  t.end();
+  equal(messages.length, 1, "15.01");
+  equal(applyFixes(str, messages), fixed, "15.02");
 });
 
-tap.test(`16 - void tag, tab, never, no slash`, (t) => {
-  const str = `<br\t>`;
-  const fixed = `<br>`;
-  const messages = verify(t, str, {
+test(`16 - void tag, tab, never, no slash`, () => {
+  let str = `<br\t>`;
+  let fixed = `<br>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(messages.length, 1, "16.01");
-  t.equal(applyFixes(str, messages), fixed, "16.02");
-  t.end();
+  equal(messages.length, 1, "16.01");
+  equal(applyFixes(str, messages), fixed, "16.02");
 });
 
-tap.test(`17 - void tag, tab, never, slash`, (t) => {
-  const str = `<br\t/>`;
-  const fixed = `<br/>`;
-  const messages = verify(t, str, {
+test(`17 - void tag, tab, never, slash`, () => {
+  let str = `<br\t/>`;
+  let fixed = `<br/>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(messages.length, 1, "17.01");
-  t.equal(applyFixes(str, messages), fixed, "17.02");
-  t.end();
+  equal(messages.length, 1, "17.01");
+  equal(applyFixes(str, messages), fixed, "17.02");
 });
 
-tap.test(`18 - void tag, format-prettier, tight, never, no slash`, (t) => {
-  const str = `<br>`;
-  const fixed = `<br >`;
-  const messages = verify(t, str, {
+test(`18 - void tag, format-prettier, tight, never, no slash`, () => {
+  let str = `<br>`;
+  let fixed = `<br >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2, // prettier overrides other rules, including one above
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "18");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "18");
 });
 
-tap.test(`19 - void tag, format-prettier, tight, never, slash`, (t) => {
-  const str = `<br/>`;
-  const fixed = `<br />`;
-  const messages = verify(t, str, {
+test(`19 - void tag, format-prettier, tight, never, slash`, () => {
+  let str = `<br/>`;
+  let fixed = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2, // prettier overrides other rules, including one above
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "19");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "19");
 });
 
-tap.test(`20 - void tag, format-prettier, space, never, no slash`, (t) => {
-  const str = `<br >`;
-  const messages = verify(t, str, {
+test(`20 - void tag, format-prettier, space, never, no slash`, () => {
+  let str = `<br >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2,
     },
   });
-  t.strictSame(messages, [], "20");
-  t.end();
+  equal(messages, [], "20");
 });
 
-tap.test(`21 - void tag, all rules, space, no slash`, (t) => {
-  const str = `<br >`;
-  const fixed = `<br />`;
-  const messages = verify(t, str, {
+test(`21 - void tag, all rules, space, no slash`, () => {
+  let str = `<br >`;
+  let fixed = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       all: 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "21");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "21");
 });
 
-tap.test(`22 - void tag, format-prettier, space, never, slash`, (t) => {
-  const str = `<br />`;
-  const messages = verify(t, str, {
+test(`22 - void tag, format-prettier, space, never, slash`, () => {
+  let str = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2,
     },
   });
-  t.strictSame(messages, [], "22");
-  t.end();
+  equal(messages, [], "22");
 });
 
-tap.test(`23 - void tag, all rules, space, never, slash`, (t) => {
-  const str = `<br />`;
-  const messages = verify(t, str, {
+test(`23 - void tag, all rules, space, never, slash`, () => {
+  let str = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       all: 2,
     },
   });
-  t.strictSame(messages, [], "23");
-  t.end();
+  equal(messages, [], "23");
 });
 
-tap.test(`24 - void tag, format-prettier, tab, never, no slash`, (t) => {
-  const str = `<br\t>`;
-  const fixed = `<br >`;
-  const messages = verify(t, str, {
+test(`24 - void tag, format-prettier, tab, never, no slash`, () => {
+  let str = `<br\t>`;
+  let fixed = `<br >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2,
     },
   });
-  t.equal(messages.length, 1, "24.01");
-  t.equal(applyFixes(str, messages), fixed, "24.02");
-  t.end();
+  equal(messages.length, 1, "24.01");
+  equal(applyFixes(str, messages), fixed, "24.02");
 });
 
-tap.test(`25 - void tag, format-prettier, tab, never, slash`, (t) => {
-  const str = `<br\t/>`;
-  const fixed = `<br />`;
-  const messages = verify(t, str, {
+test(`25 - void tag, format-prettier, tab, never, slash`, () => {
+  let str = `<br\t/>`;
+  let fixed = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2,
     },
   });
-  t.equal(messages.length, 1, "25.01");
-  t.equal(applyFixes(str, messages), fixed, "25.02");
-  t.end();
+  equal(messages.length, 1, "25.01");
+  equal(applyFixes(str, messages), fixed, "25.02");
 });
 
-tap.test(`26 - non-void, tight tab, no slash, never`, (t) => {
-  const str = `<div class="zz yy"\t>`;
-  const fixed = `<div class="zz yy">`;
-  const messages = verify(t, str, {
+test(`26 - non-void, tight tab, no slash, never`, () => {
+  let str = `<div class="zz yy"\t>`;
+  let fixed = `<div class="zz yy">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(messages.length, 1, "26.01");
-  t.equal(applyFixes(str, messages), fixed, "26.02");
-  t.end();
+  equal(messages.length, 1, "26.01");
+  equal(applyFixes(str, messages), fixed, "26.02");
 });
 
-tap.test(`27 - non-void, tight tab, slash, never`, (t) => {
-  const str = `<div class="zz yy"\t/>`;
-  const fixed = `<div class="zz yy"/>`;
-  const messages = verify(t, str, {
+test(`27 - non-void, tight tab, slash, never`, () => {
+  let str = `<div class="zz yy"\t/>`;
+  let fixed = `<div class="zz yy"/>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(messages.length, 1, "27.01");
-  t.equal(applyFixes(str, messages), fixed, "27.02");
-  t.end();
+  equal(messages.length, 1, "27.01");
+  equal(applyFixes(str, messages), fixed, "27.02");
 });
 
 // ALWAYS
 // -----------------------------------------------------------------------------
 
-tap.test(`28 - non-void, a space, always, no slash`, (t) => {
-  const str = `<div class="zz yy" >`;
-  const messages = verify(t, str, {
+test(`28 - non-void, a space, always, no slash`, () => {
+  let str = `<div class="zz yy" >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.strictSame(messages, [], "28");
-  t.end();
+  equal(messages, [], "28");
 });
 
-tap.test(`29 - non-void, a space, always, slash`, (t) => {
-  const str = `<div class="zz yy" />`;
-  const messages = verify(t, str, {
+test(`29 - non-void, a space, always, slash`, () => {
+  let str = `<div class="zz yy" />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.strictSame(messages, [], "29");
-  t.end();
+  equal(messages, [], "29");
 });
 
-tap.test(`30 - non-void, no space, always, no slash`, (t) => {
-  const str = `<div class="zz yy">`;
-  const fixed = `<div class="zz yy" >`;
-  const messages = verify(t, str, {
+test(`30 - non-void, no space, always, no slash`, () => {
+  let str = `<div class="zz yy">`;
+  let fixed = `<div class="zz yy" >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -430,20 +408,20 @@ tap.test(`30 - non-void, no space, always, no slash`, (t) => {
     ],
     "30.01"
   );
-  t.equal(messages.length, 1, "30.02");
-  t.equal(applyFixes(str, messages), fixed, "30.03");
-  t.end();
+  equal(messages.length, 1, "30.02");
+  equal(applyFixes(str, messages), fixed, "30.03");
 });
 
-tap.test(`31 - non-void, no space, always, slash`, (t) => {
-  const str = `<div class="zz yy"/>`;
-  const fixed = `<div class="zz yy" />`;
-  const messages = verify(t, str, {
+test(`31 - non-void, no space, always, slash`, () => {
+  let str = `<div class="zz yy"/>`;
+  let fixed = `<div class="zz yy" />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -459,381 +437,353 @@ tap.test(`31 - non-void, no space, always, slash`, (t) => {
     ],
     "31.01"
   );
-  t.equal(messages.length, 1, "31.02");
-  t.equal(applyFixes(str, messages), fixed, "31.03");
-  t.end();
+  equal(messages.length, 1, "31.02");
+  equal(applyFixes(str, messages), fixed, "31.03");
 });
 
-tap.test(`32 - non-void, tab tight, no slash, always`, (t) => {
-  const str = `<div class="zz yy"\t>`;
-  const fixed = `<div class="zz yy" >`;
-  const messages = verify(t, str, {
+test(`32 - non-void, tab tight, no slash, always`, () => {
+  let str = `<div class="zz yy"\t>`;
+  let fixed = `<div class="zz yy" >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(messages.length, 1, "32.01");
-  t.equal(applyFixes(str, messages), fixed, "32.02");
-  t.end();
+  equal(messages.length, 1, "32.01");
+  equal(applyFixes(str, messages), fixed, "32.02");
 });
 
-tap.test(`33 - non-void, tab tight, slash, always`, (t) => {
-  const str = `<div class="zz yy"\t/>`;
-  const fixed = `<div class="zz yy" />`;
-  const messages = verify(t, str, {
+test(`33 - non-void, tab tight, slash, always`, () => {
+  let str = `<div class="zz yy"\t/>`;
+  let fixed = `<div class="zz yy" />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(messages.length, 1, "33.01");
-  t.equal(applyFixes(str, messages), fixed, "33.02");
-  t.end();
+  equal(messages.length, 1, "33.01");
+  equal(applyFixes(str, messages), fixed, "33.02");
 });
 
-tap.test(`34 - non-void, space-tab, no slash, always`, (t) => {
-  const str = `<div class="zz yy" \t>`;
-  const fixed = `<div class="zz yy" >`;
-  const messages = verify(t, str, {
+test(`34 - non-void, space-tab, no slash, always`, () => {
+  let str = `<div class="zz yy" \t>`;
+  let fixed = `<div class="zz yy" >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(messages.length, 1, "34.01");
-  t.equal(applyFixes(str, messages), fixed, "34.02");
-  t.end();
+  equal(messages.length, 1, "34.01");
+  equal(applyFixes(str, messages), fixed, "34.02");
 });
 
-tap.test(`35 - non-void, space-tab, slash, always`, (t) => {
-  const str = `<div class="zz yy" \t/>`;
-  const fixed = `<div class="zz yy" />`;
-  const messages = verify(t, str, {
+test(`35 - non-void, space-tab, slash, always`, () => {
+  let str = `<div class="zz yy" \t/>`;
+  let fixed = `<div class="zz yy" />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(messages.length, 1, "35.01");
-  t.equal(applyFixes(str, messages), fixed, "35.02");
-  t.end();
+  equal(messages.length, 1, "35.01");
+  equal(applyFixes(str, messages), fixed, "35.02");
 });
 
-tap.test(`36 - non-void, tab-space, no slash, always`, (t) => {
-  const str = `<div class="zz yy"\t >`;
-  const fixed = `<div class="zz yy" >`;
-  const messages = verify(t, str, {
+test(`36 - non-void, tab-space, no slash, always`, () => {
+  let str = `<div class="zz yy"\t >`;
+  let fixed = `<div class="zz yy" >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(messages.length, 1, "36.01");
-  t.equal(applyFixes(str, messages), fixed, "36.02");
-  t.end();
+  equal(messages.length, 1, "36.01");
+  equal(applyFixes(str, messages), fixed, "36.02");
 });
 
-tap.test(`37 - non-void, tab-space, slash, always`, (t) => {
-  const str = `<div class="zz yy"\t />`;
-  const fixed = `<div class="zz yy" />`;
-  const messages = verify(t, str, {
+test(`37 - non-void, tab-space, slash, always`, () => {
+  let str = `<div class="zz yy"\t />`;
+  let fixed = `<div class="zz yy" />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(messages.length, 1, "37.01");
-  t.equal(applyFixes(str, messages), fixed, "37.02");
-  t.end();
+  equal(messages.length, 1, "37.01");
+  equal(applyFixes(str, messages), fixed, "37.02");
 });
 
 //
 
-tap.test(`38 - pair, on a default, prettier`, (t) => {
-  const str = `<a >z</a >`;
-  const fixed = `<a>z</a>`;
-  const messages = verify(t, str, {
+test(`38 - pair, on a default, prettier`, () => {
+  let str = `<a >z</a >`;
+  let fixed = `<a>z</a>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "38");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "38");
 });
 
-tap.test(`39 - pair, on a default, prettier`, (t) => {
-  const str = `<a >z</a >`;
-  const fixed = `<a>z</a>`;
-  const messages = verify(t, str, {
+test(`39 - pair, on a default, prettier`, () => {
+  let str = `<a >z</a >`;
+  let fixed = `<a>z</a>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "39");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "39");
 });
 
-tap.test(`40 - pair, never, prettier`, (t) => {
-  const str = `<a >z</a >`;
-  const fixed = `<a>z</a>`;
-  const messages = verify(t, str, {
+test(`40 - pair, never, prettier`, () => {
+  let str = `<a >z</a >`;
+  let fixed = `<a>z</a>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "40");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "40");
 });
 
-tap.test(`41 - pair, never, prettier`, (t) => {
-  const str = `<a >z</a >`;
-  const fixed = `<a>z</a>`;
-  const messages = verify(t, str, {
+test(`41 - pair, never, prettier`, () => {
+  let str = `<a >z</a >`;
+  let fixed = `<a>z</a>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "41");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "41");
 });
 
-tap.test(`42 - pair, always, prettier`, (t) => {
-  const str = `<a >z</a >`;
-  const fixed = `<a>z</a>`;
-  const messages = verify(t, str, {
+test(`42 - pair, always, prettier`, () => {
+  let str = `<a >z</a >`;
+  let fixed = `<a>z</a>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "42");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "42");
 });
 
-tap.test(`43 - pair, always, prettier`, (t) => {
-  const str = `<a >z</a >`;
-  const fixed = `<a>z</a>`;
-  const messages = verify(t, str, {
+test(`43 - pair, always, prettier`, () => {
+  let str = `<a >z</a >`;
+  let fixed = `<a>z</a>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "43");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "43");
 });
 
 //
 
-tap.test(`44 - void tag, tight, always, no slash`, (t) => {
-  const str = `<br>`;
-  const fixed = `<br >`;
-  const messages = verify(t, str, {
+test(`44 - void tag, tight, always, no slash`, () => {
+  let str = `<br>`;
+  let fixed = `<br >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(messages.length, 1, "44.01");
-  t.equal(applyFixes(str, messages), fixed, "44.02");
-  t.end();
+  equal(messages.length, 1, "44.01");
+  equal(applyFixes(str, messages), fixed, "44.02");
 });
 
-tap.test(`45 - void tag, space, always, no slash`, (t) => {
-  const str = `<br >`;
-  const messages = verify(t, str, {
+test(`45 - void tag, space, always, no slash`, () => {
+  let str = `<br >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.strictSame(messages, [], "45");
-  t.end();
+  equal(messages, [], "45");
 });
 
-tap.test(`46 - void tag, tab, always, no slash`, (t) => {
-  const str = `<br\t>`;
-  const fixed = `<br >`;
-  const messages = verify(t, str, {
+test(`46 - void tag, tab, always, no slash`, () => {
+  let str = `<br\t>`;
+  let fixed = `<br >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(messages.length, 1, "46.01");
-  t.equal(applyFixes(str, messages), fixed, "46.02");
-  t.end();
+  equal(messages.length, 1, "46.01");
+  equal(applyFixes(str, messages), fixed, "46.02");
 });
 
-tap.test(`47 - void tag, format-prettier, tight, always, no slash`, (t) => {
-  const str = `<br>`;
-  const fixed = `<br >`;
-  const messages = verify(t, str, {
+test(`47 - void tag, format-prettier, tight, always, no slash`, () => {
+  let str = `<br>`;
+  let fixed = `<br >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(messages.length, 1, "47.01");
-  t.equal(applyFixes(str, messages), fixed, "47.02");
-  t.end();
+  equal(messages.length, 1, "47.01");
+  equal(applyFixes(str, messages), fixed, "47.02");
 });
 
-tap.test(`48 - tab, format-prettier, no slash, always`, (t) => {
-  const str = `<div class="zz yy"\t>`;
-  const fixed = `<div class="zz yy">`;
-  const messages = verify(t, str, {
+test(`48 - tab, format-prettier, no slash, always`, () => {
+  let str = `<div class="zz yy"\t>`;
+  let fixed = `<div class="zz yy">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "48");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "48");
 });
 
-tap.test(`49 - tab, format-prettier, no slash, always`, (t) => {
-  const str = `<div class="zz yy" \t>`;
-  const fixed = `<div class="zz yy">`;
-  const messages = verify(t, str, {
+test(`49 - tab, format-prettier, no slash, always`, () => {
+  let str = `<div class="zz yy" \t>`;
+  let fixed = `<div class="zz yy">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "49");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "49");
 });
 
-tap.test(`50 - tab, format-prettier, no slash, always`, (t) => {
-  const str = `<div class="zz yy"\t >`;
-  const fixed = `<div class="zz yy">`;
-  const messages = verify(t, str, {
+test(`50 - tab, format-prettier, no slash, always`, () => {
+  let str = `<div class="zz yy"\t >`;
+  let fixed = `<div class="zz yy">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "50");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "50");
 });
 
-tap.test(`51 - tab, format-prettier, no slash, never`, (t) => {
-  const str = `<div class="zz yy"\t>`;
-  const fixed = `<div class="zz yy">`;
-  const messages = verify(t, str, {
+test(`51 - tab, format-prettier, no slash, never`, () => {
+  let str = `<div class="zz yy"\t>`;
+  let fixed = `<div class="zz yy">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "51");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "51");
 });
 
-tap.test(`52 - void tag, format-prettier, space, always, no slash`, (t) => {
-  const str = `<br >`;
-  const messages = verify(t, str, {
+test(`52 - void tag, format-prettier, space, always, no slash`, () => {
+  let str = `<br >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.strictSame(messages, [], "52");
-  t.end();
+  equal(messages, [], "52");
 });
 
-tap.test(`53 - void tag, format-prettier, tab, always, no slash`, (t) => {
-  const str = `<br\t>`;
-  const fixed = `<br >`;
-  const messages = verify(t, str, {
+test(`53 - void tag, format-prettier, tab, always, no slash`, () => {
+  let str = `<br\t>`;
+  let fixed = `<br >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "53");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "53");
 });
 
-tap.test(`54 - void tag, tight, always, slash`, (t) => {
-  const str = `<br/>`;
-  const fixed = `<br />`;
-  const messages = verify(t, str, {
+test(`54 - void tag, tight, always, slash`, () => {
+  let str = `<br/>`;
+  let fixed = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "54");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "54");
 });
 
-tap.test(`55 - void tag, space, always, slash`, (t) => {
-  const str = `<br />`;
-  const messages = verify(t, str, {
+test(`55 - void tag, space, always, slash`, () => {
+  let str = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.strictSame(messages, [], "55");
-  t.end();
+  equal(messages, [], "55");
 });
 
-tap.test(`56 - void tag, tab, always, slash`, (t) => {
-  const str = `<br\t/>`;
-  const fixed = `<br />`;
-  const messages = verify(t, str, {
+test(`56 - void tag, tab, always, slash`, () => {
+  let str = `<br\t/>`;
+  let fixed = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "56");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "56");
 });
 
-tap.test(`57 - void tag, format-prettier, tight, always, slash`, (t) => {
-  const str = `<br/>`;
-  const fixed = `<br />`;
-  const messages = verify(t, str, {
+test(`57 - void tag, format-prettier, tight, always, slash`, () => {
+  let str = `<br/>`;
+  let fixed = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "57");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "57");
 });
 
-tap.test(`58 - void tag, format-prettier, space, always, slash`, (t) => {
-  const str = `<br />`;
-  const messages = verify(t, str, {
+test(`58 - void tag, format-prettier, space, always, slash`, () => {
+  let str = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.strictSame(messages, [], "58");
-  t.end();
+  equal(messages, [], "58");
 });
 
-tap.test(`59 - void tag, format-prettier, tab, always, slash`, (t) => {
-  const str = `<br\t/>`;
-  const fixed = `<br />`;
-  const messages = verify(t, str, {
+test(`59 - void tag, format-prettier, tab, always, slash`, () => {
+  let str = `<br\t/>`;
+  let fixed = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "59");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "59");
 });
 
 // XML
 // -----------------------------------------------------------------------------
 
-tap.test(`60 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
-  const str = `<?xml version="1.0" encoding="UTF-8"?   >`;
-  const messages = verify(t, str, {
+test(`60 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, () => {
+  let str = `<?xml version="1.0" encoding="UTF-8"?   >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -849,24 +799,24 @@ tap.test(`60 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
     ],
     "60.01"
   );
-  t.equal(messages.length, 1, "60.02");
-  t.equal(
+  equal(messages.length, 1, "60.02");
+  equal(
     applyFixes(str, messages),
     `<?xml version="1.0" encoding="UTF-8"?>`,
     "60.03"
   );
-  t.end();
 });
 
-tap.test(`61 - prettier overrides setting always`, (t) => {
-  const str = `<?xml version="1.0" encoding="UTF-8"?   >`;
-  const messages = verify(t, str, {
+test(`61 - prettier overrides setting always`, () => {
+  let str = `<?xml version="1.0" encoding="UTF-8"?   >`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -882,13 +832,12 @@ tap.test(`61 - prettier overrides setting always`, (t) => {
     ],
     "61.01"
   );
-  t.equal(messages.length, 1, "61.02");
-  t.equal(
+  equal(messages.length, 1, "61.02");
+  equal(
     applyFixes(str, messages),
     `<?xml version="1.0" encoding="UTF-8"?>`,
     "61.03"
   );
-  t.end();
 });
 
 // doesn't raise errors
@@ -896,174 +845,163 @@ tap.test(`61 - prettier overrides setting always`, (t) => {
 
 //
 
-tap.test(`62 - default`, (t) => {
-  const str = "<br\t\t/\t\t>";
-  const fixed = "<br/\t\t>";
-  const messages = verify(t, str, {
+test(`62 - default`, () => {
+  let str = "<br\t\t/\t\t>";
+  let fixed = "<br/\t\t>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "62");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "62");
 });
 
-tap.test(`63 - never`, (t) => {
-  const str = "<br\t\t/\t\t>";
-  const fixed = "<br/\t\t>";
-  const messages = verify(t, str, {
+test(`63 - never`, () => {
+  let str = "<br\t\t/\t\t>";
+  let fixed = "<br/\t\t>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "63");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "63");
 });
 
-tap.test(`64 - always`, (t) => {
-  const str = "<br\t\t/\t\t>";
-  const fixed = "<br /\t\t>";
-  const messages = verify(t, str, {
+test(`64 - always`, () => {
+  let str = "<br\t\t/\t\t>";
+  let fixed = "<br /\t\t>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "64");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "64");
 });
 
-tap.test(`65 - default, prettier`, (t) => {
-  const str = "<br\t\t/\t\t>";
-  const fixed = "<br /\t\t>";
-  const messages = verify(t, str, {
+test(`65 - default, prettier`, () => {
+  let str = "<br\t\t/\t\t>";
+  let fixed = "<br /\t\t>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "65");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "65");
 });
 
-tap.test(`66 - never, prettier`, (t) => {
-  const str = "<br\t\t/\t\t>";
-  const fixed = "<br /\t\t>";
-  const messages = verify(t, str, {
+test(`66 - never, prettier`, () => {
+  let str = "<br\t\t/\t\t>";
+  let fixed = "<br /\t\t>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "66");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "66");
 });
 
-tap.test(`67 - always, prettier`, (t) => {
-  const str = "<br\t\t/\t\t>";
-  const fixed = "<br /\t\t>";
-  const messages = verify(t, str, {
+test(`67 - always, prettier`, () => {
+  let str = "<br\t\t/\t\t>";
+  let fixed = "<br /\t\t>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "67");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "67");
 });
 
 //
 
-tap.test(`68 - default`, (t) => {
-  const str = `<br\t\t${BACKSLASH}\t\t>`;
-  const fixed = `<br${BACKSLASH}\t\t>`;
-  const messages = verify(t, str, {
+test(`68 - default`, () => {
+  let str = `<br\t\t${BACKSLASH}\t\t>`;
+  let fixed = `<br${BACKSLASH}\t\t>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "68");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "68");
 });
 
-tap.test(`69 - always`, (t) => {
-  const str = `<br\t\t${BACKSLASH}\t\t>`;
-  const fixed = `<br ${BACKSLASH}\t\t>`;
-  const messages = verify(t, str, {
+test(`69 - always`, () => {
+  let str = `<br\t\t${BACKSLASH}\t\t>`;
+  let fixed = `<br ${BACKSLASH}\t\t>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "69");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "69");
 });
 
-tap.test(`70 - never`, (t) => {
-  const str = `<br\t\t${BACKSLASH}\t\t>`;
-  const fixed = `<br${BACKSLASH}\t\t>`;
-  const messages = verify(t, str, {
+test(`70 - never`, () => {
+  let str = `<br\t\t${BACKSLASH}\t\t>`;
+  let fixed = `<br${BACKSLASH}\t\t>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "70");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "70");
 });
 
-tap.test(`71 - default, prettier`, (t) => {
-  const str = `<br\t\t${BACKSLASH}\t\t>`;
-  const fixed = `<br ${BACKSLASH}\t\t>`;
-  const messages = verify(t, str, {
+test(`71 - default, prettier`, () => {
+  let str = `<br\t\t${BACKSLASH}\t\t>`;
+  let fixed = `<br ${BACKSLASH}\t\t>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "71");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "71");
 });
 
-tap.test(`72 - always, prettier`, (t) => {
-  const str = `<br\t\t${BACKSLASH}\t\t>`;
-  const fixed = `<br ${BACKSLASH}\t\t>`;
-  const messages = verify(t, str, {
+test(`72 - always, prettier`, () => {
+  let str = `<br\t\t${BACKSLASH}\t\t>`;
+  let fixed = `<br ${BACKSLASH}\t\t>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "always"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "72");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "72");
 });
 
-tap.test(`73 - never, prettier`, (t) => {
-  const str = `<br\t\t${BACKSLASH}\t\t>`;
-  const fixed = `<br ${BACKSLASH}\t\t>`;
-  const messages = verify(t, str, {
+test(`73 - never, prettier`, () => {
+  let str = `<br\t\t${BACKSLASH}\t\t>`;
+  let fixed = `<br ${BACKSLASH}\t\t>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-before-closing-bracket": [2, "never"],
       "format-prettier": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "73");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "73");
 });
 
-tap.test(`74 - messed up code, fixed on all`, (t) => {
-  const str = `<br\t\t${BACKSLASH}\t\t>`;
-  const fixed1 = `<br  /  >`;
-  const fixed2 = `<br />`;
-  const messages1 = verify(t, str, {
+test(`74 - messed up code, fixed on all`, () => {
+  let str = `<br\t\t${BACKSLASH}\t\t>`;
+  let fixed1 = `<br  /  >`;
+  let fixed2 = `<br />`;
+  let messages1 = verify(not, str, {
     rules: {
       all: 2,
     },
   });
-  t.equal(applyFixes(str, messages1), fixed1, "74.01");
+  equal(applyFixes(str, messages1), fixed1, "74.01");
   // second round:
-  const messages2 = verify(t, fixed1, {
+  let messages2 = verify(not, fixed1, {
     rules: {
       all: 2,
     },
   });
-  t.equal(applyFixes(fixed1, messages2), fixed2, "74.02");
-  t.end();
+  equal(applyFixes(fixed1, messages2), fixed2, "74.02");
 });
+
+test.run();

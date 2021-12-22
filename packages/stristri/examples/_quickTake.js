@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { stri } from "../dist/stristri.esm.js";
 
 // strips both HTML and Nunjucks, leaves text only:

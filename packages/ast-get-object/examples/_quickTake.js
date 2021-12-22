@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { getObj } from "../dist/ast-get-object.esm.js";
 
 // get - two input arguments

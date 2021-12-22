@@ -1,171 +1,164 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { compare } from "ast-compare";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // block
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - comment-only`,
-  (t) => {
-    const gathered = [];
-    ct(`<style>/* comment */</style>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - comment-only`, () => {
+  let gathered = [];
+  ct(`<style>/* comment */</style>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  ok(
+    compare(gathered, [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        tagName: "style",
       },
-    });
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 7,
-          tagName: "style",
-        },
-        {
-          type: "comment",
-          start: 7,
-          end: 9,
-          value: "/*",
-          closing: false,
-          kind: "block",
-          language: "css",
-        },
-        {
-          type: "text",
-          start: 9,
-          end: 18,
-          value: " comment ",
-        },
-        {
-          type: "comment",
-          start: 18,
-          end: 20,
-          value: "*/",
-          closing: true,
-          kind: "block",
-          language: "css",
-        },
-        {
-          type: "tag",
-          start: 20,
-          end: 28,
-          tagName: "style",
-        },
-      ],
-      "01"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two comments`,
-  (t) => {
-    const gathered = [];
-    ct(`<style>/* comment 1 *//* comment 2 */</style>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+      {
+        type: "comment",
+        start: 7,
+        end: 9,
+        value: "/*",
+        closing: false,
+        kind: "block",
+        language: "css",
       },
-    });
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 7,
-          value: "<style>",
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 6,
-          tagName: "style",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
-        },
-        {
-          type: "comment",
-          start: 7,
-          end: 9,
-          value: "/*",
-          closing: false,
-          kind: "block",
-          language: "css",
-        },
-        {
-          type: "text",
-          start: 9,
-          end: 20,
-          value: " comment 1 ",
-        },
-        {
-          type: "comment",
-          start: 20,
-          end: 22,
-          value: "*/",
-          closing: true,
-          kind: "block",
-          language: "css",
-        },
-        {
-          type: "comment",
-          start: 22,
-          end: 24,
-          value: "/*",
-          closing: false,
-          kind: "block",
-          language: "css",
-        },
-        {
-          type: "text",
-          start: 24,
-          end: 35,
-          value: " comment 2 ",
-        },
-        {
-          type: "comment",
-          start: 35,
-          end: 37,
-          value: "*/",
-          closing: true,
-          kind: "block",
-          language: "css",
-        },
-        {
-          type: "tag",
-          start: 37,
-          end: 45,
-          value: "</style>",
-          tagNameStartsAt: 39,
-          tagNameEndsAt: 44,
-          tagName: "style",
-          recognised: true,
-          closing: true,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
-        },
-      ],
-      "02"
-    );
-    t.end();
-  }
-);
+      {
+        type: "text",
+        start: 9,
+        end: 18,
+        value: " comment ",
+      },
+      {
+        type: "comment",
+        start: 18,
+        end: 20,
+        value: "*/",
+        closing: true,
+        kind: "block",
+        language: "css",
+      },
+      {
+        type: "tag",
+        start: 20,
+        end: 28,
+        tagName: "style",
+      },
+    ]),
+    "01"
+  );
+});
 
-tap.test(`03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two rules`, (t) => {
-  const gathered = [];
+test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two comments`, () => {
+  let gathered = [];
+  ct(`<style>/* comment 1 *//* comment 2 */</style>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  ok(
+    compare(gathered, [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "comment",
+        start: 7,
+        end: 9,
+        value: "/*",
+        closing: false,
+        kind: "block",
+        language: "css",
+      },
+      {
+        type: "text",
+        start: 9,
+        end: 20,
+        value: " comment 1 ",
+      },
+      {
+        type: "comment",
+        start: 20,
+        end: 22,
+        value: "*/",
+        closing: true,
+        kind: "block",
+        language: "css",
+      },
+      {
+        type: "comment",
+        start: 22,
+        end: 24,
+        value: "/*",
+        closing: false,
+        kind: "block",
+        language: "css",
+      },
+      {
+        type: "text",
+        start: 24,
+        end: 35,
+        value: " comment 2 ",
+      },
+      {
+        type: "comment",
+        start: 35,
+        end: 37,
+        value: "*/",
+        closing: true,
+        kind: "block",
+        language: "css",
+      },
+      {
+        type: "tag",
+        start: 37,
+        end: 45,
+        value: "</style>",
+        tagNameStartsAt: 39,
+        tagNameEndsAt: 44,
+        tagName: "style",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+    ]),
+    "02"
+  );
+});
+
+test(`03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two rules`, () => {
+  let gathered = [];
   ct(`<style>a{color:red;}/* comment 1 */p{float:left;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -264,8 +257,9 @@ tap.test(`03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two rules`, (t) => {
         end: 57,
         value: "</style>",
       },
-    ],
+    ]),
     "03"
   );
-  t.end();
 });
+
+test.run();

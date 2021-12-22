@@ -1,5 +1,6 @@
 import { isOpening } from "is-html-tag-opening";
 import { matchRight } from "string-match-left-right";
+
 import { isLatinLetter, Token, Layer } from "./util";
 
 const BACKSLASH = "\u005C";
@@ -18,8 +19,7 @@ function startsTag(
   rightVal: number | null
 ): boolean {
   return !!(
-    str[i] &&
-    str[i].trim().length &&
+    str[i]?.trim().length &&
     (!layers.length || token.type === "text") &&
     (!(token as any).kind ||
       !["doctype", "xml"].includes((token as any).kind)) &&
@@ -53,7 +53,7 @@ function startsTag(
           allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
           skipOpeningBracket: true,
         }))) &&
-    (token.type !== "esp" || (token.tail && token.tail.includes(str[i])))
+    (token.type !== "esp" || token?.tail?.includes(str[i]))
   );
 }
 

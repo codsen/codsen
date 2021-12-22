@@ -1,11 +1,12 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 /* eslint no-use-before-define: 0 */
 // From "type-fest" by Sindre Sorhus:
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = Array<JsonValue>;
+type JsonArray = JsonValue[];
 
 interface Obj {
   [key: string]: any;
@@ -35,10 +36,10 @@ function noNewKeys(
       )} (type ${typeof originalOptsOuter})`
     );
   }
-  const defaults = {
+  let defaults = {
     mode: 2,
   };
-  const optsOuter = { ...defaults, ...originalOptsOuter };
+  let optsOuter = { ...defaults, ...originalOptsOuter };
   if (
     typeof optsOuter.mode === "string" &&
     ["1", "2"].includes(optsOuter.mode)

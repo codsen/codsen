@@ -1,5 +1,6 @@
 import he from "he";
 import { notEmailFriendly } from "html-entities-not-email-friendly";
+
 import { Linter } from "../linter";
 // import { ErrorObj } from "./commonTypes";
 
@@ -23,7 +24,7 @@ function validateCharEncoding(
   }
 
   console.log(
-    `026 ${`\u001b[${33}m${`encodedChr`}\u001b[${39}m`} = ${JSON.stringify(
+    `027 ${`\u001b[${33}m${`encodedChr`}\u001b[${39}m`} = ${JSON.stringify(
       encodedChr,
       null,
       4

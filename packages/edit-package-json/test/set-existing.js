@@ -1,82 +1,79 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { setter } from "./util/util.js";
 
 // set - editing an existing key
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - key in the root`, (t) => {
-  const source = `{
+test(`01 - key in the root`, () => {
+  let source = `{
   "a": "b",
   "c": "d"
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "c": "e"
 }`;
-  setter(t, source, result, "c", "e", "02.01");
-
-  t.end();
+  setter(equal, source, result, "c", "e", "02.01");
 });
 
-tap.test(`02 - key in the root`, (t) => {
-  const source = `{
+test(`02 - key in the root`, () => {
+  let source = `{
   "a": "b",
   "c": "d"
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "c": "1"
 }`;
-  setter(t, source, result, "c", "1", "02.02");
-  t.end();
+  setter(equal, source, result, "c", "1", "02.02");
 });
 
-tap.test(`03 - key in the root`, (t) => {
-  const source = `{
+test(`03 - key in the root`, () => {
+  let source = `{
   "a": "b",
   "c": "d"
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "c": 1
 }`;
-  setter(t, source, result, "c", 1, "02.03");
-  t.end();
+  setter(equal, source, result, "c", 1, "02.03");
 });
 
-tap.test(`04 - key in the root`, (t) => {
-  const source = `{
+test(`04 - key in the root`, () => {
+  let source = `{
   "a": "b",
   "c": "d"
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "c": false
 }`;
-  setter(t, source, result, "c", false, "02.04");
-  t.end();
+  setter(equal, source, result, "c", false, "02.04");
 });
 
-tap.test(`05 - second level key`, (t) => {
-  const source = `{
+test(`05 - second level key`, () => {
+  let source = `{
   "a": "b",
   "c": {
     "d": "e"
   }
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "c": {
     "d": "f"
   }
 }`;
-  setter(t, source, result, "c.d", "f", "02.05");
-  t.end();
+  setter(equal, source, result, "c.d", "f", "02.05");
 });
 
-tap.test(`06 - second level key`, (t) => {
+test(`06 - second level key`, () => {
   // notice deliberate mis-indentation after "d": "e"
-  const source = `{
+  let source = `{
   "a": "b",
   "c": {
     "d": "e"
@@ -86,7 +83,7 @@ tap.test(`06 - second level key`, (t) => {
   }
 }`;
   // notice deliberate mis-indentation after "d": "e"
-  const result = `{
+  let result = `{
   "a": "b",
   "c": {
     "d": "e"
@@ -95,90 +92,83 @@ tap.test(`06 - second level key`, (t) => {
     "g": "i"
   }
 }`;
-  setter(t, source, result, "f.g", "i", "02.06");
-  t.end();
+  setter(equal, source, result, "f.g", "i", "02.06");
 });
 
-tap.test(`07 - value is number`, (t) => {
-  const source = `{
+test(`07 - value is number`, () => {
+  let source = `{
   "a": "b",
   "c": 1
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "c": 0
 }`;
-  setter(t, source, result, "c", 0, "02.07");
-  t.end();
+  setter(equal, source, result, "c", 0, "02.07");
 });
 
-tap.test(`08 - null overwritten with null`, (t) => {
-  const source = `{
+test(`08 - null overwritten with null`, () => {
+  let source = `{
   "a": "b",
   "c": null
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "c": null
 }`;
-  setter(t, source, result, "c", null, "02.08");
-  t.end();
+  setter(equal, source, result, "c", null, "02.08");
 });
 
-tap.test(`09 - value is object and it leads to contents end`, (t) => {
-  const input = `{
+test(`09 - value is object and it leads to contents end`, () => {
+  let input = `{
   "a": "b",
   "x": {"y": "z"}
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "x": {"y":"x"}
 }`;
-  setter(t, input, result, "x", { y: "x" }, "02.09");
-  t.end();
+  setter(equal, input, result, "x", { y: "x" }, "02.09");
 });
 
-tap.test(`10 - value is a stringified object - escapes`, (t) => {
-  const input = `{
+test(`10 - value is a stringified object - escapes`, () => {
+  let input = `{
   "a": "b",
   "x": {"y": "z"}
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "x": "{ y: \\"x\\" }"
 }`;
-  setter(t, input, result, "x", `{ y: "x" }`, "02.10");
-  t.end();
+  setter(equal, input, result, "x", `{ y: "x" }`, "02.10");
 });
 
-tap.test(`11 - difficult characters 1`, (t) => {
-  const input = `{
+test(`11 - difficult characters 1`, () => {
+  let input = `{
   "a": {
     "b": "}c"
 }}`;
-  const result = `{
+  let result = `{
   "a": "x"
 }`;
-  setter(t, input, result, "a", `x`, "02.11");
-  t.end();
+  setter(equal, input, result, "a", `x`, "02.11");
 });
 
-tap.test(`12 - difficult characters 2`, (t) => {
-  const input = `{
+test(`12 - difficult characters 2`, () => {
+  let input = `{
   "a": {
     "b": "c '*.{d,e,f,g,md}' --write",
     "m": "n"
   }
 }`;
-  const result = `{
+  let result = `{
   "a": "x"
 }`;
-  setter(t, input, result, "a", `x`, "02.12");
-  t.end();
+  setter(equal, input, result, "a", `x`, "02.12");
 });
 
-tap.test(`13 - nested objects`, (t) => {
-  const input = `{
+test(`13 - nested objects`, () => {
+  let input = `{
   "a": {
     "b": {
       "c": "d"
@@ -186,18 +176,15 @@ tap.test(`13 - nested objects`, (t) => {
   }
 }
 `;
-  const result = `{
+  let result = `{
   "a": "x"
 }
 `;
-  setter(t, input, result, "a", `x`, "02.13");
-  t.end();
+  setter(equal, input, result, "a", `x`, "02.13");
 });
 
-tap.test(
-  `14 - same-named key is passed through at deeper level while iterating`,
-  (t) => {
-    const input = `{
+test(`14 - same-named key is passed through at deeper level while iterating`, () => {
+  let input = `{
   "a": {
     "z": "x"
   },
@@ -210,22 +197,18 @@ tap.test(
   }
 }
 `;
-    const result = `{
+  let result = `{
   "a": {
     "z": "x"
   },
   "z": "y"
 }
 `;
-    setter(t, input, result, "z", `y`, "02.14");
-    t.end();
-  }
-);
+  setter(equal, input, result, "z", `y`, "02.14");
+});
 
-tap.test(
-  `15 - same-named key is passed through at deeper level while iterating`,
-  (t) => {
-    const input = `{
+test(`15 - same-named key is passed through at deeper level while iterating`, () => {
+  let input = `{
   "a": {
     "z": "x",
   },
@@ -238,105 +221,98 @@ tap.test(
   }
 }
 `;
-    const result = `{
+  let result = `{
   "a": {
     "z": "x",
   },
   "z": "y"
 }
 `;
-    setter(t, input, result, "z", `y`, "02.15", "invalid JSON");
-    t.end();
-  }
-);
+  setter(equal, input, result, "z", `y`, "02.15", "invalid JSON");
+});
 
-tap.test(`16 - non-quoted value replaced with quoted`, (t) => {
-  const input = `{
+test(`16 - non-quoted value replaced with quoted`, () => {
+  let input = `{
   "a": {
     "b": false
   }
 }
 `;
-  const result = `{
+  let result = `{
   "a": {
     "b": "x"
   }
 }
 `;
-  setter(t, input, result, "a.b", `x`, "02.16");
-  t.end();
+  setter(equal, input, result, "a.b", `x`, "02.16");
 });
 
-tap.test(`17 - non-quoted value replaced with non-quoted`, (t) => {
-  const input = `{
+test(`17 - non-quoted value replaced with non-quoted`, () => {
+  let input = `{
   "a": {
     "b": false
   }
 }
 `;
-  const result = `{
+  let result = `{
   "a": {
     "b": true
   }
 }
 `;
-  setter(t, input, result, "a.b", true, "02.17");
-  t.end();
+  setter(equal, input, result, "a.b", true, "02.17");
 });
 
-tap.test(`18 - quoted value replaced with non-quoted`, (t) => {
-  const input = `{
+test(`18 - quoted value replaced with non-quoted`, () => {
+  let input = `{
   "a": {
     "b": "c"
   }
 }
 `;
-  const result = `{
+  let result = `{
   "a": {
     "b": true
   }
 }
 `;
-  setter(t, input, result, "a.b", true, "02.18");
-  t.end();
+  setter(equal, input, result, "a.b", true, "02.18");
 });
 
-tap.test(`19 - value empty obj replaced with non-quoted`, (t) => {
-  const input = `{
+test(`19 - value empty obj replaced with non-quoted`, () => {
+  let input = `{
   "a": {
     "b": {}
   }
 }
 `;
-  const result = `{
+  let result = `{
   "a": {
     "b": true
   }
 }
 `;
-  setter(t, input, result, "a.b", true, "02.19");
-  t.end();
+  setter(equal, input, result, "a.b", true, "02.19");
 });
 
-tap.test(`20 - value empty obj replaced with non-quoted`, (t) => {
-  const input = `{
+test(`20 - value empty obj replaced with non-quoted`, () => {
+  let input = `{
   "a": {
     "b": []
   }
 }
 `;
-  const result = `{
+  let result = `{
   "a": {
     "b": true
   }
 }
 `;
-  setter(t, input, result, "a.b", true, "02.20");
-  t.end();
+  setter(equal, input, result, "a.b", true, "02.20");
 });
 
-tap.test(`21 - value empty obj replaced with non-quoted`, (t) => {
-  const input = `{
+test(`21 - value empty obj replaced with non-quoted`, () => {
+  let input = `{
   "a": {
     "b": {
       "c": []
@@ -345,7 +321,7 @@ tap.test(`21 - value empty obj replaced with non-quoted`, (t) => {
   }
 }
 `;
-  const result = `{
+  let result = `{
   "a": {
     "b": {
       "c": []
@@ -354,12 +330,11 @@ tap.test(`21 - value empty obj replaced with non-quoted`, (t) => {
   }
 }
 `;
-  setter(t, input, result, "a.d", "x", "02.21");
-  t.end();
+  setter(equal, input, result, "a.d", "x", "02.21");
 });
 
-tap.test(`22 - value empty obj replaced with non-quoted`, (t) => {
-  const input = `{
+test(`22 - value empty obj replaced with non-quoted`, () => {
+  let input = `{
   "a": {
     "b": {
       "c": ["z"]
@@ -368,7 +343,7 @@ tap.test(`22 - value empty obj replaced with non-quoted`, (t) => {
   }
 }
 `;
-  const result = `{
+  let result = `{
   "a": {
     "b": {
       "c": ["z"]
@@ -377,12 +352,11 @@ tap.test(`22 - value empty obj replaced with non-quoted`, (t) => {
   }
 }
 `;
-  setter(t, input, result, "a.d", "x", "02.22");
-  t.end();
+  setter(equal, input, result, "a.d", "x", "02.22");
 });
 
-tap.test(`23 - middle element in the array`, (t) => {
-  const input = `{
+test(`23 - middle element in the array`, () => {
+  let input = `{
   "k": {
     "l": "m",
     "p": "q"
@@ -394,7 +368,7 @@ tap.test(`23 - middle element in the array`, (t) => {
   ]
 }
 `;
-  const result = `{
+  let result = `{
   "k": {
     "l": "m",
     "p": "q"
@@ -406,12 +380,11 @@ tap.test(`23 - middle element in the array`, (t) => {
   ]
 }
 `;
-  setter(t, input, result, "r.1", "x", "02.23");
-  t.end();
+  setter(equal, input, result, "r.1", "x", "02.23");
 });
 
-tap.test(`24 - the last element in the array`, (t) => {
-  const input = `{
+test(`24 - the last element in the array`, () => {
+  let input = `{
   "k": {
     "l": "m",
     "p": "q"
@@ -423,7 +396,7 @@ tap.test(`24 - the last element in the array`, (t) => {
   ]
 }
 `;
-  const result = `{
+  let result = `{
   "k": {
     "l": "m",
     "p": "q"
@@ -435,14 +408,11 @@ tap.test(`24 - the last element in the array`, (t) => {
   ]
 }
 `;
-  setter(t, input, result, "r.2", "x", "02.24");
-  t.end();
+  setter(equal, input, result, "r.2", "x", "02.24");
 });
 
-tap.test(
-  `25 - last value in array, bool replaced with a quoted string`,
-  (t) => {
-    const input = `{
+test(`25 - last value in array, bool replaced with a quoted string`, () => {
+  let input = `{
   "a": {
     "b": false,
     "c": [
@@ -451,7 +421,7 @@ tap.test(
   }
 }
 `;
-    const result = `{
+  let result = `{
   "a": {
     "b": "x",
     "c": [
@@ -460,20 +430,19 @@ tap.test(
   }
 }
 `;
-    setter(t, input, result, "a.b", "x", "02.25");
-    t.end();
-  }
-);
+  setter(equal, input, result, "a.b", "x", "02.25");
+});
 
-tap.test(`26 - key in the root`, (t) => {
-  const source = `{
+test(`26 - key in the root`, () => {
+  let source = `{
   "a": "b",
   "c": "workspace:d"
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "c": "workspace:1"
 }`;
-  setter(t, source, result, "c", "workspace:1", "02.02");
-  t.end();
+  setter(equal, source, result, "c", "workspace:1", "02.02");
 });
+
+test.run();

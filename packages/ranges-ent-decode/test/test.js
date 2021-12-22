@@ -1,65 +1,57 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { rEntDecode as decode } from "../dist/ranges-ent-decode.esm.js";
 
 // ==============================
 // 00. Throws
 // ==============================
 
-tap.test("01 - throws when first input argument is missing", (t) => {
-  t.throws(() => {
+test("01 - throws when first input argument is missing", () => {
+  throws(() => {
     decode();
   }, /THROW_ID_01/);
-  t.end();
 });
 
-tap.test("02 - throws when first input argument is not string", (t) => {
-  t.throws(() => {
+test("02 - throws when first input argument is not string", () => {
+  throws(() => {
     decode(true);
   }, /THROW_ID_01/);
-  t.end();
 });
 
-tap.test(
-  "03 - throws when second input argument is not a plain object",
-  (t) => {
-    t.throws(() => {
-      decode("zzz", "tralala");
-    }, /THROW_ID_02/);
-    t.end();
-  }
-);
+test("03 - throws when second input argument is not a plain object", () => {
+  throws(() => {
+    decode("zzz", "tralala");
+  }, /THROW_ID_02/);
+});
 
-tap.test("04 - falsey opts does not throw", (t) => {
-  t.doesNotThrow(() => {
+test("04 - falsey opts does not throw", () => {
+  not.throws(() => {
     decode("yyy", undefined);
   }, "04.01");
-  t.doesNotThrow(() => {
+  not.throws(() => {
     decode("yyy", null);
   }, "04.02");
-  t.end();
 });
 
 // ==============================
 // 01. B.A.U.
 // ==============================
 
-tap.test(
-  "05 - decodes multiple entities within a string, entities surrounded by other chars",
-  (t) => {
-    t.strictSame(
-      decode("a &pound; b &lsquo; c"),
-      [
-        [2, 9, "£"],
-        [12, 19, "‘"],
-      ],
-      "05"
-    );
-    t.end();
-  }
-);
+test("05 - decodes multiple entities within a string, entities surrounded by other chars", () => {
+  equal(
+    decode("a &pound; b &lsquo; c"),
+    [
+      [2, 9, "£"],
+      [12, 19, "‘"],
+    ],
+    "05"
+  );
+});
 
-tap.test("06 - decodes double-encoded entities", (t) => {
-  t.strictSame(
+test("06 - decodes double-encoded entities", () => {
+  equal(
     decode("a &amp;pound; b &amp;lsquo; c"),
     [
       [2, 13, "£"],
@@ -67,7 +59,7 @@ tap.test("06 - decodes double-encoded entities", (t) => {
     ],
     "06.01"
   );
-  t.strictSame(
+  equal(
     decode("a &#x26;pound; b &#x26;lsquo; c"),
     [
       [2, 14, "£"],
@@ -75,11 +67,10 @@ tap.test("06 - decodes double-encoded entities", (t) => {
     ],
     "06.02"
   );
-  t.end();
 });
 
-tap.test("07 - decodes triple-encoded entities", (t) => {
-  t.strictSame(
+test("07 - decodes triple-encoded entities", () => {
+  equal(
     decode("a &amp;amp;pound; b &amp;amp;lsquo; c"),
     [
       [2, 17, "£"],
@@ -87,7 +78,7 @@ tap.test("07 - decodes triple-encoded entities", (t) => {
     ],
     "07.01"
   );
-  t.strictSame(
+  equal(
     decode("a &#x26;#x26;pound; b &#x26;#x26;lsquo; c"),
     [
       [2, 19, "£"],
@@ -95,7 +86,7 @@ tap.test("07 - decodes triple-encoded entities", (t) => {
     ],
     "07.02"
   );
-  t.strictSame(
+  equal(
     decode("a &#x26;amp;pound; b &#x26;amp;lsquo; c"),
     [
       [2, 18, "£"],
@@ -103,11 +94,10 @@ tap.test("07 - decodes triple-encoded entities", (t) => {
     ],
     "07.03"
   );
-  t.end();
 });
 
-tap.test("08 - ampersand entity", (t) => {
-  t.strictSame(
+test("08 - ampersand entity", () => {
+  equal(
     decode("a &#x26; b &amp; c"),
     [
       [2, 8, "&"],
@@ -115,7 +105,7 @@ tap.test("08 - ampersand entity", (t) => {
     ],
     "08.01"
   );
-  t.strictSame(
+  equal(
     decode("a &#x26;amp; b &amp;#x26; c"),
     [
       [2, 12, "&"],
@@ -123,7 +113,7 @@ tap.test("08 - ampersand entity", (t) => {
     ],
     "08.02"
   );
-  t.strictSame(
+  equal(
     decode("a &#x26;amp;#x26; b &amp;#x26;amp; c"),
     [
       [2, 17, "&"],
@@ -131,16 +121,15 @@ tap.test("08 - ampersand entity", (t) => {
     ],
     "08.03"
   );
-  t.end();
 });
 
-tap.test("09 - nothing to find", (t) => {
-  t.strictSame(decode("abc"), null, "09");
-  t.end();
+test("09 - nothing to find", () => {
+  equal(decode("abc"), null, "09");
 });
 
-tap.test("10 - empty string, early ending", (t) => {
-  t.strictSame(decode(""), null, "10.01");
-  t.strictSame(decode(" "), null, "10.02");
-  t.end();
+test("10 - empty string, early ending", () => {
+  equal(decode(""), null, "10.01");
+  equal(decode(" "), null, "10.02");
 });
+
+test.run();

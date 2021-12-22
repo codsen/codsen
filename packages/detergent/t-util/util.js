@@ -1,6 +1,7 @@
 import clone from "lodash.clonedeep";
 import objectPath from "object-path";
 import { mixer } from "test-mixer";
+
 import { det as det1, opts as defaults } from "../dist/detergent.esm.js";
 
 const leftSingleQuote = "\u2018";
@@ -385,10 +386,10 @@ function mixerToExport(ref) {
 // t is passed node-tap test instance
 // n is index number of a test - we need to run the resource-heavy applicable
 // test calculations only for the n === 0
-function det(t, n, src, opts = {}) {
+function det(ok, not, n, src, opts = {}) {
   if (!n) {
-    const resolvedOpts = { ...defaults, ...opts };
-    const tempObj = {};
+    let resolvedOpts = { ...defaults, ...opts };
+    let tempObj = {};
     Object.keys(resolvedOpts).forEach((key) => {
       if (
         !["stripHtmlButIgnoreTags", "stripHtmlAddNewLine", "cb"].includes(key)
@@ -406,7 +407,7 @@ function det(t, n, src, opts = {}) {
         //
         //
         // 1. prepare opts to ask for LF ending:
-        const obj1 = clone(tempObj);
+        let obj1 = clone(tempObj);
         objectPath.set(obj1, "eol", "lf");
         // add stripHtmlButIgnoreTags and stripHtmlAddNewLine
         objectPath.set(
@@ -426,7 +427,7 @@ function det(t, n, src, opts = {}) {
 
         //
         // 2. prepare opts to ask for CR ending:
-        const obj2 = clone(tempObj);
+        let obj2 = clone(tempObj);
         objectPath.set(obj2, "eol", "cr");
         // add stripHtmlButIgnoreTags and stripHtmlAddNewLine
         objectPath.set(
@@ -446,7 +447,7 @@ function det(t, n, src, opts = {}) {
 
         //
         // 3. prepare opts to ask for CRLF ending:
-        const obj3 = clone(tempObj);
+        let obj3 = clone(tempObj);
         objectPath.set(obj3, "eol", "crlf");
         // add stripHtmlButIgnoreTags and stripHtmlAddNewLine
         objectPath.set(
@@ -471,7 +472,7 @@ function det(t, n, src, opts = {}) {
           det1(src, obj2).res !== det1(src, obj3).res ||
           det1(src, obj1).res !== det1(src, obj3).res
         ) {
-          t.ok(
+          ok(
             det1(src, resolvedOpts).applicableOpts[key],
             `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields different results on different opts.${key}:
     "${`\u001b[${33}m${JSON.stringify(
@@ -501,7 +502,7 @@ function det(t, n, src, opts = {}) {
             )}\n`
           );
         } else {
-          t.notOk(
+          not.ok(
             det1(src, resolvedOpts).applicableOpts[key],
             `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields same results on all different opts.${key} settings:
     "${`\u001b[${33}m${JSON.stringify(
@@ -535,7 +536,7 @@ function det(t, n, src, opts = {}) {
 
         // incoming object might be with digits instead of boolean values,
         // so we convert whatever value is to a boolean
-        const obj1 = clone(tempObj);
+        let obj1 = clone(tempObj);
         objectPath.set(obj1, key, true);
         // add stripHtmlButIgnoreTags and stripHtmlAddNewLine
         objectPath.set(
@@ -552,7 +553,7 @@ function det(t, n, src, opts = {}) {
             ? opts.stripHtmlAddNewLine
             : defaults.stripHtmlAddNewLine
         );
-        const settledObj1Eol = objectPath.has(opts, "eol")
+        let settledObj1Eol = objectPath.has(opts, "eol")
           ? opts.eol
           : defaults.eol;
         objectPath.set(obj1, "eol", settledObj1Eol);
@@ -564,7 +565,7 @@ function det(t, n, src, opts = {}) {
         //   )}`
         // );
 
-        const obj2 = clone(tempObj);
+        let obj2 = clone(tempObj);
         objectPath.set(obj2, key, false);
         // add stripHtmlButIgnoreTags and stripHtmlAddNewLine
         objectPath.set(
@@ -581,7 +582,7 @@ function det(t, n, src, opts = {}) {
             ? opts.stripHtmlAddNewLine
             : defaults.stripHtmlAddNewLine
         );
-        const settledObj2Eol = objectPath.has(opts, "eol")
+        let settledObj2Eol = objectPath.has(opts, "eol")
           ? opts.eol
           : defaults.eol;
         objectPath.set(obj2, "eol", settledObj2Eol);
@@ -595,7 +596,7 @@ function det(t, n, src, opts = {}) {
         // );
 
         if (det1(src, obj1).res !== det1(src, obj2).res) {
-          t.ok(
+          ok(
             det1(src, resolvedOpts).applicableOpts[key],
             `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields different results on different opts.${key}:
     "${`\u001b[${33}m${JSON.stringify(
@@ -617,7 +618,7 @@ function det(t, n, src, opts = {}) {
             )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`
           );
         } else if (key !== "stripHtml") {
-          t.notOk(
+          not.ok(
             det1(src, resolvedOpts).applicableOpts[key],
             `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields same results on different opts.${key}:
     "${`\u001b[${33}m${JSON.stringify(

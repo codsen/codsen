@@ -22,7 +22,7 @@ function attributeValidateNowrap(context: Linter, mode?: "xhtml"): RuleObjType {
         `022 attributeValidateNowrap(): node = ${JSON.stringify(node, null, 4)}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "nowrap") {
         // validate the parent

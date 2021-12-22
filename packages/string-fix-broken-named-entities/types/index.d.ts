@@ -2,7 +2,6 @@ declare type Range = [from: number, to: number] | [from: number, to: number, wha
 declare type Ranges = Range[] | null;
 
 declare const version: string;
-
 declare const allRules: string[];
 interface cbObj {
     rangeFrom: number;

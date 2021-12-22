@@ -38,7 +38,7 @@ function attributeValidateLink(context: Linter): RuleObjType {
             fix: null,
           });
         } else {
-          const errorArr = validateColor(
+          let errorArr = validateColor(
             node.attribValueRaw,
             node.attribValueStartsAt as number,
             {

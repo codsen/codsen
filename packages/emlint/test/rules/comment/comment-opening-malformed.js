@@ -1,833 +1,728 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 
 // 01. type="simple"
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, letter inside`,
-  (t) => {
-    const str = `<--z-->`;
-    const fixed = `<!--z-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "01.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 3,
-          message: `Malformed opening comment tag.`,
-          fix: {
-            ranges: [[0, 3, "<!--"]],
-          },
+test(`01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, letter inside`, () => {
+  let str = `<--z-->`;
+  let fixed = `<!--z-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "01.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 3,
+        message: `Malformed opening comment tag.`,
+        fix: {
+          ranges: [[0, 3, "<!--"]],
         },
-      ],
-      "01.02"
-    );
-    t.is(messages.length, 1, "01.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "01.02"
+  );
+  is(messages.length, 1, "01.03");
+});
 
-tap.test(
-  `02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, tag inside`,
-  (t) => {
-    const str = `<--<img class="z"/>-->`;
-    const fixed = `<!--<img class="z"/>-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 1,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "02.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 1,
-          idxFrom: 0,
-          idxTo: 3,
-          message: `Malformed opening comment tag.`,
-          fix: {
-            ranges: [[0, 3, "<!--"]],
-          },
+test(`02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, tag inside`, () => {
+  let str = `<--<img class="z"/>-->`;
+  let fixed = `<!--<img class="z"/>-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 1,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "02.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 1,
+        idxFrom: 0,
+        idxTo: 3,
+        message: `Malformed opening comment tag.`,
+        fix: {
+          ranges: [[0, 3, "<!--"]],
         },
-      ],
-      "02.02"
-    );
-    t.is(messages.length, 1, "02.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "02.02"
+  );
+  is(messages.length, 1, "02.03");
+});
 
-tap.test(
-  `03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, letter inside`,
-  (t) => {
-    const str = `.< !--z-->`;
-    const fixed = `.<!--z-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "03.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 1,
-          idxTo: 6,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[2, 3]],
-          },
+test(`03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, letter inside`, () => {
+  let str = `.< !--z-->`;
+  let fixed = `.<!--z-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "03.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 6,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges: [[2, 3]],
         },
-      ],
-      "03.02"
-    );
-    t.is(messages.length, 1, "03.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "03.02"
+  );
+  is(messages.length, 1, "03.03");
+});
 
-tap.test(
-  `04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, tag inside`,
-  (t) => {
-    const str = `< !--<img class="z"/>-->`;
-    const fixed = `<!--<img class="z"/>-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "04.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 5,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[1, 2]],
-          },
+test(`04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, tag inside`, () => {
+  let str = `< !--<img class="z"/>-->`;
+  let fixed = `<!--<img class="z"/>-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "04.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 5,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges: [[1, 2]],
         },
-      ],
-      "04.02"
-    );
-    t.is(messages.length, 1, "04.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "04.02"
+  );
+  is(messages.length, 1, "04.03");
+});
 
-tap.test(
-  `05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, letter inside`,
-  (t) => {
-    const str = `<! --z-->`;
-    const fixed = `<!--z-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "05.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 5,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[2, 3]],
-          },
+test(`05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, letter inside`, () => {
+  let str = `<! --z-->`;
+  let fixed = `<!--z-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "05.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 5,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges: [[2, 3]],
         },
-      ],
-      "05.02"
-    );
-    t.is(messages.length, 1, "05.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "05.02"
+  );
+  is(messages.length, 1, "05.03");
+});
 
-tap.test(
-  `06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, tag inside`,
-  (t) => {
-    const str = `<! --<img class="z"/>-->`;
-    const fixed = `<!--<img class="z"/>-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "06.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 5,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[2, 3]],
-          },
+test(`06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, tag inside`, () => {
+  let str = `<! --<img class="z"/>-->`;
+  let fixed = `<!--<img class="z"/>-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "06.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 5,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges: [[2, 3]],
         },
-      ],
-      "06.02"
-    );
-    t.is(messages.length, 1, "06.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "06.02"
+  );
+  is(messages.length, 1, "06.03");
+});
 
-tap.test(
-  `07 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, letter inside`,
-  (t) => {
-    const str = `<!- -z-->`;
-    const fixed = `<!--z-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "07.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 5,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[3, 4]],
-          },
+test(`07 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, letter inside`, () => {
+  let str = `<!- -z-->`;
+  let fixed = `<!--z-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "07.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 5,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges: [[3, 4]],
         },
-      ],
-      "07.02"
-    );
-    t.is(messages.length, 1, "07.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "07.02"
+  );
+  is(messages.length, 1, "07.03");
+});
 
-tap.test(
-  `08 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, tag inside`,
-  (t) => {
-    const str = `<!- -<img class="z"/>-->`;
-    const fixed = `<!--<img class="z"/>-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "08.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 5,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[3, 4]],
-          },
+test(`08 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, tag inside`, () => {
+  let str = `<!- -<img class="z"/>-->`;
+  let fixed = `<!--<img class="z"/>-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "08.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 5,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges: [[3, 4]],
         },
-      ],
-      "08.02"
-    );
-    t.is(messages.length, 1, "08.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "08.02"
+  );
+  is(messages.length, 1, "08.03");
+});
 
 // 02. type="only"
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `09 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing dash`,
-  (t) => {
-    const str = `<!-[if mso]>
+test(`09 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing dash`, () => {
+  let str = `<!-[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const fixed = `<!--[if mso]>
+  let fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "09.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 12,
-          message: `Malformed opening comment tag.`,
-          fix: {
-            ranges: [[0, 4, "<!--["]],
-          },
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "09.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 12,
+        message: `Malformed opening comment tag.`,
+        fix: {
+          ranges: [[0, 4, "<!--["]],
         },
-      ],
-      "09.02"
-    );
-    t.is(messages.length, 1, "09.03");
-    t.end();
-  }
-);
-
-tap.test(
-  `10 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - opening bracket missing`,
-  (t) => {
-    const str = `<!--if mso]>
-  <img src="z"/>
-<![endif]-->`;
-    const fixed = `<!--[if mso]>
-  <img src="z"/>
-<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "10.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 12,
-          message: `Malformed opening comment tag.`,
-          fix: {
-            ranges: [[0, 4, "<!--["]],
-          },
+    ],
+    "09.02"
+  );
+  is(messages.length, 1, "09.03");
+});
+
+test(`10 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - opening bracket missing`, () => {
+  let str = `<!--if mso]>
+  <img src="z"/>
+<![endif]-->`;
+  let fixed = `<!--[if mso]>
+  <img src="z"/>
+<![endif]-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "10.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 12,
+        message: `Malformed opening comment tag.`,
+        fix: {
+          ranges: [[0, 4, "<!--["]],
         },
-      ],
-      "10.02"
-    );
-    t.is(messages.length, 1, "10.03");
-    t.end();
-  }
-);
-
-tap.test(
-  `11 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing closing bracket`,
-  (t) => {
-    const str = `<!--[if mso>
-  <img src="z"/>
-<![endif]-->`;
-    const fixed = `<!--[if mso]>
-  <img src="z"/>
-<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "11.01");
-    t.is(messages.length, 1, "11.02");
-    t.end();
-  }
-);
+    ],
+    "10.02"
+  );
+  is(messages.length, 1, "10.03");
+});
 
-tap.test(
-  `12 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - messed up ending - swapped characters > and ]`,
-  (t) => {
-    const str = `<!--[if mso>]
+test(`11 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing closing bracket`, () => {
+  let str = `<!--[if mso>
   <img src="z"/>
 <![endif]-->`;
-    const fixed = `<!--[if mso]>
+  let fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "12.01");
-    t.is(messages.length, 1, "12.02");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "11.01");
+  is(messages.length, 1, "11.02");
+});
 
-tap.test(
-  `13 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - rounded brackets`,
-  (t) => {
-    const str = `<!--(if mso)>
+test(`12 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - messed up ending - swapped characters > and ]`, () => {
+  let str = `<!--[if mso>]
   <img src="z"/>
 <![endif]-->`;
-    const fixed = `<!--[if mso]>
+  let fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "13");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "12.01");
+  is(messages.length, 1, "12.02");
+});
 
-tap.test(
-  `14 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - curly brackets`,
-  (t) => {
-    const str = `<!--{if mso}>
+test(`13 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - rounded brackets`, () => {
+  let str = `<!--(if mso)>
   <img src="z"/>
 <![endif]-->`;
-    const fixed = `<!--[if mso]>
+  let fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "14");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "13");
+});
+
+test(`14 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - curly brackets`, () => {
+  let str = `<!--{if mso}>
+  <img src="z"/>
+<![endif]-->`;
+  let fixed = `<!--[if mso]>
+  <img src="z"/>
+<![endif]-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "14");
+});
 
 // 03. type="not"
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `15 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing square closing bracket`,
-  (t) => {
-    const str = `<!--[if !mso><!-->
+test(`15 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing square closing bracket`, () => {
+  let str = `<!--[if !mso><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
+  let fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "15.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 18,
-          message: `Malformed opening comment tag.`,
-          fix: {
-            ranges: [[12, 18, "]><!-->"]],
-          },
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "15.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 18,
+        message: `Malformed opening comment tag.`,
+        fix: {
+          ranges: [[12, 18, "]><!-->"]],
         },
-      ],
-      "15.02"
-    );
-    t.is(messages.length, 1, "15.03");
-    t.end();
-  }
-);
-
-tap.test(
-  `16 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - excessive whitespace`,
-  (t) => {
-    const str = `<!--  [if !mso]><!-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "16.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 21,
-          message: `Malformed opening comment tag.`,
-          fix: {
-            ranges: [[0, 7, "<!--["]],
-          },
+    ],
+    "15.02"
+  );
+  is(messages.length, 1, "15.03");
+});
+
+test(`16 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - excessive whitespace`, () => {
+  let str = `<!--  [if !mso]><!-->
+  <img src="gif"/>
+<!--<![endif]-->`;
+  let fixed = `<!--[if !mso]><!-->
+  <img src="gif"/>
+<!--<![endif]-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "16.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 21,
+        message: `Malformed opening comment tag.`,
+        fix: {
+          ranges: [[0, 7, "<!--["]],
         },
-      ],
-      "16.02"
-    );
-    t.is(messages.length, 1, "16.03");
-    t.end();
-  }
-);
-
-tap.test(
-  `17 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the first part`,
-  (t) => {
-    const str = `<!-[if !mso]><!-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "17.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 18,
-          message: `Malformed opening comment tag.`,
-          fix: {
-            ranges: [[0, 4, "<!--["]],
-          },
+    ],
+    "16.02"
+  );
+  is(messages.length, 1, "16.03");
+});
+
+test(`17 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the first part`, () => {
+  let str = `<!-[if !mso]><!-->
+  <img src="gif"/>
+<!--<![endif]-->`;
+  let fixed = `<!--[if !mso]><!-->
+  <img src="gif"/>
+<!--<![endif]-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "17.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 18,
+        message: `Malformed opening comment tag.`,
+        fix: {
+          ranges: [[0, 4, "<!--["]],
         },
-      ],
-      "17.02"
-    );
-    t.is(messages.length, 1, "17.03");
-    t.end();
-  }
-);
-
-tap.test(
-  `18 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the second part`,
-  (t) => {
-    const str = `<!--[if !mso]><!->
-  <img src="gif"/>
-<!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "18.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "comment-opening-malformed",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 18,
-          message: `Malformed opening comment tag.`,
-          fix: {
-            ranges: [[12, 18, "]><!-->"]],
-          },
+    ],
+    "17.02"
+  );
+  is(messages.length, 1, "17.03");
+});
+
+test(`18 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the second part`, () => {
+  let str = `<!--[if !mso]><!->
+  <img src="gif"/>
+<!--<![endif]-->`;
+  let fixed = `<!--[if !mso]><!-->
+  <img src="gif"/>
+<!--<![endif]-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "18.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "comment-opening-malformed",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 18,
+        message: `Malformed opening comment tag.`,
+        fix: {
+          ranges: [[12, 18, "]><!-->"]],
         },
-      ],
-      "18.02"
-    );
-    t.is(messages.length, 1, "18.03");
-    t.end();
-  }
-);
-
-tap.test(
-  `19 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rogue character in the second part`,
-  (t) => {
-    const str = `<!--[if !mso]><!--z>
-  <img src="gif"/>
-<!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "19.01");
-    t.is(messages.length, 1, "19.02");
-    t.end();
-  }
-);
+    ],
+    "18.02"
+  );
+  is(messages.length, 1, "18.03");
+});
 
-tap.test(
-  `20 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - whitespace between parts`,
-  (t) => {
-    const str = `<!--[if !mso]>\n\n<!-->
+test(`19 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rogue character in the second part`, () => {
+  let str = `<!--[if !mso]><!--z>
   <img src="gif"/>
 <!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
+  let fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "20.01");
-    t.is(messages.length, 1, "20.02");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "19.01");
+  is(messages.length, 1, "19.02");
+});
 
-tap.test(
-  `21 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - empty healthy outlook conditional`,
-  (t) => {
-    const str = `<!--[if !mso]><!-->
+test(`20 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - whitespace between parts`, () => {
+  let str = `<!--[if !mso]>\n\n<!-->
+  <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "21.01");
-    t.strictSame(messages, [], "21.02");
-    t.end();
-  }
-);
+  let fixed = `<!--[if !mso]><!-->
+  <img src="gif"/>
+<!--<![endif]-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "20.01");
+  is(messages.length, 1, "20.02");
+});
 
-tap.test(
-  `22 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rounded brackets`,
-  (t) => {
-    const str = `<!--(if !mso)><!-->
+test(`21 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - empty healthy outlook conditional`, () => {
+  let str = `<!--[if !mso]><!-->
+<!--<![endif]-->`;
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "21.01");
+  equal(messages, [], "21.02");
+});
+
+test(`22 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rounded brackets`, () => {
+  let str = `<!--(if !mso)><!-->
       <img src="gif"/>
       <!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
+  let fixed = `<!--[if !mso]><!-->
       <img src="gif"/>
       <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "22");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "22");
+});
 
-tap.test(
-  `23 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - curly brackets`,
-  (t) => {
-    const str = `<!--{if !mso}><!-->
+test(`23 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - curly brackets`, () => {
+  let str = `<!--{if !mso}><!-->
       <img src="gif"/>
       <!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
+  let fixed = `<!--[if !mso]><!-->
       <img src="gif"/>
       <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "23");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "23");
+});
 
-tap.test(
-  `24 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is missing excl mark`,
-  (t) => {
-    const str = `<!--[if !mso]><-->
+test(`24 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is missing excl mark`, () => {
+  let str = `<!--[if !mso]><-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
+  let fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "24.01");
-    t.is(messages.length, 1, "24.02");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "24.01");
+  is(messages.length, 1, "24.02");
+});
 
-tap.test(
-  `25 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - no brackets`,
-  (t) => {
-    const str = `<!--if !mso><!-->
+test(`25 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - no brackets`, () => {
+  let str = `<!--if !mso><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!-->
+  let fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "25");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "25");
+});
 
-tap.todo(
-  `26 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, minimal`,
-  (t) => {
-    const str = `<!--[if !mso]><!--><!-->
+test.skip(`01 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, minimal`, () => {
+  let str = `<!--[if !mso]><!--><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "26");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "01");
+});
 
-tap.todo(
-  `27 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, without space`,
-  (t) => {
-    const str = `<!--[if !mso]><!---->
+test.skip(`02 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, without space`, () => {
+  let str = `<!--[if !mso]><!---->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "27.01");
-    t.match(messages, [], "27.02");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "02.01");
+  match(messages, [], "02");
+});
 
-tap.todo(
-  `28 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space`,
-  (t) => {
-    const str = `<!--[if !mso]><!-- -->
+test.skip(`03 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space`, () => {
+  let str = `<!--[if !mso]><!-- -->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "28.01");
-    t.match(messages, [], "28.02");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "03.01");
+  match(messages, [], "03");
+});
 
-tap.todo(
-  `29 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space and tab`,
-  (t) => {
-    const str = `<!--[if !mso]><!--\t -->
+test.skip(`04 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space and tab`, () => {
+  let str = `<!--[if !mso]><!--\t -->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "29.01");
-    t.match(messages, [], "29.02");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "04.01");
+  match(messages, [], "04");
+});
 
 // 04. various cases
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `30 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`,
-  (t) => {
-    const str = `<!--[if !mso><!--><!--z-->
+test(`30 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`, () => {
+  let str = `<!--[if !mso><!--><!--z-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const fixed = `<!--[if !mso]><!--><!--z-->
+  let fixed = `<!--[if !mso]><!--><!--z-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-        "comment-conditional-nested": 2,
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+      "comment-conditional-nested": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "30.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 18,
+        message: "Malformed opening comment tag.",
+        fix: {
+          ranges: [[12, 18, "]><!-->"]],
+        },
+        ruleId: "comment-opening-malformed",
       },
-    });
-    t.equal(applyFixes(str, messages), fixed, "30.01");
-    t.match(
-      messages,
-      [
-        {
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 18,
-          message: "Malformed opening comment tag.",
-          fix: {
-            ranges: [[12, 18, "]><!-->"]],
-          },
-          ruleId: "comment-opening-malformed",
-        },
-        {
-          severity: 2,
-          ruleId: "comment-conditional-nested",
-          message: "Don't nest comments.",
-          idxFrom: 18,
-          idxTo: 22,
-          fix: null,
-        },
-        {
-          severity: 2,
-          ruleId: "comment-conditional-nested",
-          message: "Don't nest comments.",
-          idxFrom: 23,
-          idxTo: 26,
-          fix: null,
-        },
-      ],
-      "30.02"
-    );
-    t.end();
-  }
-);
+      {
+        severity: 2,
+        ruleId: "comment-conditional-nested",
+        message: "Don't nest comments.",
+        idxFrom: 18,
+        idxTo: 22,
+        fix: null,
+      },
+      {
+        severity: 2,
+        ruleId: "comment-conditional-nested",
+        message: "Don't nest comments.",
+        idxFrom: 23,
+        idxTo: 26,
+        fix: null,
+      },
+    ],
+    "30.02"
+  );
+});
 
-tap.todo(
-  `31 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - first part missing`,
-  (t) => {
-    const str = `<!-->
+test.skip(`05 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - first part missing`, () => {
+  let str = `<!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const messages = verify(t, str, {
-      rules: {
-        "comment-opening-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "31.01");
-    t.match(messages, [], "31.02");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "comment-opening-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "05.01");
+  match(messages, [], "05");
+});

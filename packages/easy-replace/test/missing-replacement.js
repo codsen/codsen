@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // missing replacement value = asking for delete mode
 // ==============================
 
-tap.test("01 - empty string as replacement = deletion mode", (t) => {
-  t.equal(
+test("01 - empty string as replacement = deletion mode", () => {
+  equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -23,11 +26,10 @@ tap.test("01 - empty string as replacement = deletion mode", (t) => {
     "aa",
     "test 10.1"
   );
-  t.end();
 });
 
-tap.test("02 - null as replacement = deletion mode", (t) => {
-  t.equal(
+test("02 - null as replacement = deletion mode", () => {
+  equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -44,11 +46,10 @@ tap.test("02 - null as replacement = deletion mode", (t) => {
     "aa",
     "test 10.2"
   );
-  t.end();
 });
 
-tap.test("03 - replacement bool, nothing left", (t) => {
-  t.equal(
+test("03 - replacement bool, nothing left", () => {
+  equal(
     er(
       "🐴",
       {
@@ -65,11 +66,10 @@ tap.test("03 - replacement bool, nothing left", (t) => {
     "",
     "test 10.3"
   );
-  t.end();
 });
 
-tap.test("04 - replacement Bool, nothing left, searchFor Integer", (t) => {
-  t.equal(
+test("04 - replacement Bool, nothing left, searchFor Integer", () => {
+  equal(
     er(
       "2",
       {
@@ -86,11 +86,10 @@ tap.test("04 - replacement Bool, nothing left, searchFor Integer", (t) => {
     "",
     "test 10.4"
   );
-  t.end();
 });
 
-tap.test("05 - nothing left, replacement undefined", (t) => {
-  t.equal(
+test("05 - nothing left, replacement undefined", () => {
+  equal(
     er(
       "fljlh fdlg ldfhgl abc aldjsdlflkjd ljfl fgklh fl",
       {
@@ -107,11 +106,10 @@ tap.test("05 - nothing left, replacement undefined", (t) => {
     "",
     "test 10.5"
   );
-  t.end();
 });
 
-tap.test("06 - nothing left - more undefined", (t) => {
-  t.equal(
+test("06 - nothing left - more undefined", () => {
+  equal(
     er(
       "zzz",
       {
@@ -128,11 +126,10 @@ tap.test("06 - nothing left - more undefined", (t) => {
     "",
     "test 10.6"
   );
-  t.end();
 });
 
-tap.test("07 - emoji, null replacement, both outsides found", (t) => {
-  t.equal(
+test("07 - emoji, null replacement, both outsides found", () => {
+  equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -149,11 +146,10 @@ tap.test("07 - emoji, null replacement, both outsides found", (t) => {
     "a🦄🦄a",
     "test 10.7"
   );
-  t.end();
 });
 
-tap.test("08 - raw integers everywhere must work too", (t) => {
-  t.equal(
+test("08 - raw integers everywhere must work too", () => {
+  equal(
     er(
       6,
       {
@@ -170,11 +166,10 @@ tap.test("08 - raw integers everywhere must work too", (t) => {
     "9",
     "test 10.8"
   );
-  t.end();
 });
 
-tap.test("09 - searchFor is an array of 1 element", (t) => {
-  t.equal(
+test("09 - searchFor is an array of 1 element", () => {
+  equal(
     er(
       "a b c",
       {
@@ -191,11 +186,10 @@ tap.test("09 - searchFor is an array of 1 element", (t) => {
     "a d c",
     "test 10.9"
   );
-  t.end();
 });
 
-tap.test("10 - searchFor is an array of few elements (no find)", (t) => {
-  t.equal(
+test("10 - searchFor is an array of few elements (no find)", () => {
+  equal(
     er(
       "a b c",
       {
@@ -212,11 +206,10 @@ tap.test("10 - searchFor is an array of few elements (no find)", (t) => {
     "a b c",
     "test 10.10"
   );
-  t.end();
 });
 
-tap.test("11 - searchFor is an array of few elements (won't work)", (t) => {
-  t.equal(
+test("11 - searchFor is an array of few elements (won't work)", () => {
+  equal(
     er(
       "a bx c",
       {
@@ -233,5 +226,6 @@ tap.test("11 - searchFor is an array of few elements (won't work)", (t) => {
     "a bx c",
     "test 10.11"
   );
-  t.end();
 });
+
+test.run();

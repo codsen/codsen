@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { checkTypesMini } from "../dist/check-types-mini.esm.js";
 
 assert.throws(() => {

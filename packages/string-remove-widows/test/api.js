@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { removeWidows, version } from "../dist/string-remove-widows.esm.js";
 import {
   rawnbsp,
@@ -17,35 +20,21 @@ import {
 // api bits
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported removeWidows() is a function`,
-  (t) => {
-    t.equal(typeof removeWidows, `function`, `01`);
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported removeWidows() is a function`, () => {
+  equal(typeof removeWidows, `function`, `01`);
+});
 
-tap.test(
-  `02 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`,
-  (t) => {
-    t.equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, `02`);
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`, () => {
+  equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, `02`);
+});
 
-tap.test(
-  `03 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - sanity check`,
-  (t) => {
-    t.equal(rawnbsp, `\u00A0`, `03.01`);
-    t.equal(encodedNbspHtml, `${encodedNbspHtml}`, `03.02`);
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - sanity check`, () => {
+  equal(rawnbsp, `\u00A0`, `03.01`);
+  equal(encodedNbspHtml, `${encodedNbspHtml}`, `03.02`);
+});
 
-tap.test(
-  `04 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - empty opts obj`,
-  (t) => {
-    t.equal(removeWidows(`aaa bbb ccc`, {}).res, `aaa bbb ccc`, "04");
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - empty opts obj`, () => {
+  equal(removeWidows(`aaa bbb ccc`, {}).res, `aaa bbb ccc`, "04");
+});
+
+test.run();

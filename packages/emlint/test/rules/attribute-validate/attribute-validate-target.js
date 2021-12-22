@@ -1,194 +1,153 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no target, error level 0`,
-  (t) => {
-    const str = `<a class="z">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-target": 0,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "01.01");
-    t.strictSame(messages, [], "01.02");
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no target, error level 0`, () => {
+  let str = `<a class="z">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-target": 0,
+    },
+  });
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
+});
 
-tap.test(
-  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no target, error level 1`,
-  (t) => {
-    const str = `<a class="z">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-target": 1,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "02.01");
-    t.strictSame(messages, [], "02.02");
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no target, error level 1`, () => {
+  let str = `<a class="z">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-target": 1,
+    },
+  });
+  equal(applyFixes(str, messages), str, "02.01");
+  equal(messages, [], "02.02");
+});
 
-tap.test(
-  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no target, error level 2`,
-  (t) => {
-    const str = `<a class="z">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-target": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "03.01");
-    t.strictSame(messages, [], "03.02");
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no target, error level 2`, () => {
+  let str = `<a class="z">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-target": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "03.01");
+  equal(messages, [], "03.02");
+});
 
-tap.test(
-  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  (t) => {
-    const str = `<a target='dynamic'>`; // <-- notice single quotes
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-target": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "04.01");
-    t.strictSame(messages, [], "04.02");
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = `<a target='dynamic'>`; // <-- notice single quotes
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-target": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "04.01");
+  equal(messages, [], "04.02");
+});
 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  (t) => {
-    const str = `<div target="something">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-target": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "05.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-target",
-          idxFrom: 5,
-          idxTo: 23,
-          fix: null,
-        },
-      ],
-      "05.02"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
+  let str = `<div target="something">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-target": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "05.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-target",
+      idxFrom: 5,
+      idxTo: 23,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  (t) => {
-    const str = `<zzz target="something" yyy>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-target": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "06.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-target",
-          idxFrom: 5,
-          idxTo: 23,
-          fix: null,
-        },
-      ],
-      "06.02"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = `<zzz target="something" yyy>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-target": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "06.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-target",
+      idxFrom: 5,
+      idxTo: 23,
+      fix: null,
+    },
+  ]);
+});
 
 // 03. whitespace
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`,
-  (t) => {
-    const str = `<a target="">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-target": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "07.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-target",
-          idxFrom: 3,
-          idxTo: 12,
-          message: `Missing value.`,
-          fix: null,
-        },
-      ],
-      "07.02"
-    );
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
+  let str = `<a target="">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-target": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "07.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-target",
+      idxFrom: 3,
+      idxTo: 12,
+      message: `Missing value.`,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`,
-  (t) => {
-    const str = `<a target=" something ">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-target": 2,
+test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`, () => {
+  let str = `<a target=" something ">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-target": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<a target="something">`, "08.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-target",
+      idxFrom: 11,
+      idxTo: 22,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [
+          [11, 12],
+          [21, 22],
+        ],
       },
-    });
-    t.equal(applyFixes(str, messages), `<a target="something">`, "08.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-target",
-          idxFrom: 11,
-          idxTo: 22,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [
-              [11, 12],
-              [21, 22],
-            ],
-          },
-        },
-      ],
-      "08.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
+
+test.run();

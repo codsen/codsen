@@ -1,43 +1,38 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import fix from "./util/util.js";
 import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
 
-tap.test(
-  `01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`,
-  (t) => {
-    const inp1 = "one pound;";
-    t.strictSame(
-      fix(t, inp1, {
-        cb: (obj) => obj,
-        decode: false,
-      }),
-      [],
-      "01"
-    );
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`, () => {
+  let inp1 = "one pound;";
+  equal(
+    fix(ok, inp1, {
+      cb: (obj) => obj,
+      decode: false,
+    }),
+    [],
+    "01"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`,
-  (t) => {
-    const inp1 = "one pound;";
-    t.strictSame(
-      fix(t, inp1, {
-        cb: (obj) => obj,
-        decode: true,
-      }),
-      [],
-      "02"
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`, () => {
+  let inp1 = "one pound;";
+  equal(
+    fix(ok, inp1, {
+      cb: (obj) => obj,
+      decode: true,
+    }),
+    [],
+    "02"
+  );
+});
 
-tap.test(`03`, (t) => {
-  const gathered = [];
-  const inp1 = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
-  t.strictSame(
+test(`03`, () => {
+  let gathered = [];
+  let inp1 = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
+  equal(
     fixEnt(inp1, {
       cb: (obj) => obj,
       decode: true,
@@ -48,8 +43,8 @@ tap.test(`03`, (t) => {
     [],
     "03.01"
   );
-  t.strictSame(
-    fix(t, inp1, {
+  equal(
+    fix(ok, inp1, {
       cb: (obj) => obj,
       decode: true,
       textAmpersandCatcherCb: () => {
@@ -59,14 +54,13 @@ tap.test(`03`, (t) => {
     [],
     "03.02"
   );
-  t.strictSame(gathered, [55], "03.03");
-  t.end();
+  equal(gathered, [55], "03.03");
 });
 
-tap.test(`04`, (t) => {
-  const gathered = [];
-  const inp1 = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
-  t.strictSame(
+test(`04`, () => {
+  let gathered = [];
+  let inp1 = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
+  equal(
     fixEnt(inp1, {
       cb: (obj) => obj,
       decode: false,
@@ -77,8 +71,8 @@ tap.test(`04`, (t) => {
     [],
     "04.01"
   );
-  t.strictSame(
-    fix(t, inp1, {
+  equal(
+    fix(ok, inp1, {
       cb: (obj) => obj,
       decode: false,
       textAmpersandCatcherCb: () => {},
@@ -86,6 +80,7 @@ tap.test(`04`, (t) => {
     [],
     "04.02"
   );
-  t.strictSame(gathered, [55], "04.03");
-  t.end();
+  equal(gathered, [55], "04.03");
 });
+
+test.run();

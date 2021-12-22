@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { isEmpty } from "../dist/ast-is-empty.esm.js";
 
 function dummyFunction() {
@@ -9,8 +12,8 @@ function dummyFunction() {
 // Tests
 // ==============================
 
-tap.test("01 - plain object - true", (t) => {
-  t.equal(
+test("01 - plain object - true", () => {
+  equal(
     isEmpty({
       a: "",
       b: "",
@@ -18,12 +21,11 @@ tap.test("01 - plain object - true", (t) => {
     true,
     "01.01"
   );
-  t.equal(isEmpty({}), true, "01.02");
-  t.end();
+  equal(isEmpty({}), true, "01.02");
 });
 
-tap.test("02 - plain object - false", (t) => {
-  t.equal(
+test("02 - plain object - false", () => {
+  equal(
     isEmpty({
       a: "",
       b: "a",
@@ -31,32 +33,27 @@ tap.test("02 - plain object - false", (t) => {
     false,
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - array - true", (t) => {
-  t.equal(isEmpty(["", ""]), true, "03.01");
-  t.equal(isEmpty([]), true, "03.02");
-  t.end();
+test("03 - array - true", () => {
+  equal(isEmpty(["", ""]), true, "03.01");
+  equal(isEmpty([]), true, "03.02");
 });
 
-tap.test("04 - array - false", (t) => {
-  t.equal(isEmpty(["", " "]), false, "04");
-  t.end();
+test("04 - array - false", () => {
+  equal(isEmpty(["", " "]), false, "04");
 });
 
-tap.test("05 - nested array - true", (t) => {
-  t.equal(isEmpty(["", [""]]), true, "05");
-  t.end();
+test("05 - nested array - true", () => {
+  equal(isEmpty(["", [""]]), true, "05");
 });
 
-tap.test("06 - nested array - false", (t) => {
-  t.equal(isEmpty(["", [" "]]), false, "06");
-  t.end();
+test("06 - nested array - false", () => {
+  equal(isEmpty(["", [" "]]), false, "06");
 });
 
-tap.test("07 - nested plain object - true", (t) => {
-  t.equal(
+test("07 - nested plain object - true", () => {
+  equal(
     isEmpty({
       a: "",
       b: { c: "" },
@@ -64,11 +61,10 @@ tap.test("07 - nested plain object - true", (t) => {
     true,
     "07"
   );
-  t.end();
 });
 
-tap.test("08 - nested plain object - true", (t) => {
-  t.equal(
+test("08 - nested plain object - true", () => {
+  equal(
     isEmpty({
       a: "",
       b: { c: "" },
@@ -76,11 +72,10 @@ tap.test("08 - nested plain object - true", (t) => {
     true,
     "08"
   );
-  t.end();
 });
 
-tap.test("09 - nested many things - true", (t) => {
-  t.equal(
+test("09 - nested many things - true", () => {
+  equal(
     isEmpty([
       {
         a: [""],
@@ -90,11 +85,10 @@ tap.test("09 - nested many things - true", (t) => {
     true,
     "09"
   );
-  t.end();
 });
 
-tap.test("10 - nested many things - true", (t) => {
-  t.equal(
+test("10 - nested many things - true", () => {
+  equal(
     isEmpty([
       {
         a: [""],
@@ -104,35 +98,31 @@ tap.test("10 - nested many things - true", (t) => {
     false,
     "10"
   );
-  t.end();
 });
 
-tap.test("11 - string - true", (t) => {
-  t.equal(isEmpty(""), true, "11");
-  t.end();
+test("11 - string - true", () => {
+  equal(isEmpty(""), true, "11");
 });
 
-tap.test("12 - string - false", (t) => {
-  t.equal(isEmpty("."), false, "12");
-  t.end();
+test("12 - string - false", () => {
+  equal(isEmpty("."), false, "12");
 });
 
 // ==============================
 // Retruns Null
 // ==============================
 
-tap.test("13 - function as input - returns null", (t) => {
-  t.equal(isEmpty(dummyFunction), null, "13");
-  t.end();
+test("13 - function as input - returns null", () => {
+  equal(isEmpty(dummyFunction), null, "13");
 });
 
-tap.test("14 - function as input - returns null", (t) => {
-  t.equal(isEmpty([dummyFunction]), null, "14.01");
-  t.equal(isEmpty({ method: dummyFunction }), null, "14.02");
-  t.end();
+test("14 - function as input - returns null", () => {
+  equal(isEmpty([dummyFunction]), null, "14.01");
+  equal(isEmpty({ method: dummyFunction }), null, "14.02");
 });
 
-tap.test("15 - null - returns null", (t) => {
-  t.equal(isEmpty(null), null, "15");
-  t.end();
+test("15 - null - returns null", () => {
+  equal(isEmpty(null), null, "15");
 });
+
+test.run();

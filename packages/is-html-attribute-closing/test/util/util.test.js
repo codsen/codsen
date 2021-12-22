@@ -1,17 +1,19 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { generateVariations, combinations } from "./util.js";
 
-tap.test(`01`, (t) => {
-  t.strictSame(
+test(`01`, () => {
+  equal(
     combinations(`<a href="zzz">`),
     [`<a href='zzz'>`, `<a href='zzz">`, `<a href="zzz'>`, `<a href="zzz">`],
     "01"
   );
-  t.end();
 });
 
-tap.test(`02`, (t) => {
-  t.strictSame(
+test(`02`, () => {
+  equal(
     generateVariations([0, 1, 2], 2),
     [
       [0, 0],
@@ -26,5 +28,4 @@ tap.test(`02`, (t) => {
     ],
     "02"
   );
-  t.end();
 });

@@ -3,7 +3,9 @@
 import r from "hex-color-regex";
 import isPlainObject from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 /**
@@ -21,7 +23,7 @@ function conv(originalInput: any): any {
     _findings: any,
     offset: number,
     string: string
-  ) {
+  ): string {
     if (
       string[offset - 1] !== "&" && // consider false positives like &#124;
       hex.length === 4 &&

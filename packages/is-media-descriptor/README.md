@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 3.2.0
 
 ```js
 import { strict as assert } from "assert";
+
 import { isMediaD } from "is-media-descriptor";
 
 assert.deepEqual(isMediaD("screeen"), [
@@ -54,7 +55,7 @@ assert.deepEqual(isMediaD("screeen"), [
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/is-media-descriptor/) for a full description of the API, examples and even a test <a href="https://codsen.com/os/is-media-descriptor/play">playground</a>.
+Please [visit codsen.com](https://codsen.com/os/is-media-descriptor/) for a full description of the API and even a test <a href="https://codsen.com/os/is-media-descriptor/play">playground</a>.
 
 ## Contributing
 
@@ -66,4 +67,6 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

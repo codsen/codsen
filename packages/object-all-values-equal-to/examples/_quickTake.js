@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { allEq } from "../dist/object-all-values-equal-to.esm.js";
 
 // are all values equal to null:

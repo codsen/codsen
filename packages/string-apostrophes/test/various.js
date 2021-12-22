@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { convertAll } from "../dist/string-apostrophes.esm.js";
 
 // const leftSingleQuote = "\u2018";
@@ -8,82 +11,64 @@ const rightDoubleQuote = "\u201D";
 // const singlePrime = "\u2032";
 // const doublePrime = "\u2033";
 
-tap.test(
-  `01 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`,
-  (t) => {
-    const input = `" " `;
-    t.strictSame(
-      convertAll(input, {
-        convertApostrophes: 0,
-        convertEntities: 0,
-      }).result,
-      input,
-      "01"
-    );
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
+  let input = `" " `;
+  equal(
+    convertAll(input, {
+      convertApostrophes: 0,
+      convertEntities: 0,
+    }).result,
+    input,
+    "01"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`,
-  (t) => {
-    const input = ` " " `;
-    t.strictSame(
-      convertAll(input, {
-        convertApostrophes: 0,
-        convertEntities: 0,
-      }).result,
-      input,
-      "02"
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
+  let input = ` " " `;
+  equal(
+    convertAll(input, {
+      convertApostrophes: 0,
+      convertEntities: 0,
+    }).result,
+    input,
+    "02"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`,
-  (t) => {
-    const input = ` " "`;
-    t.strictSame(
-      convertAll(input, {
-        convertApostrophes: 0,
-        convertEntities: 0,
-      }).result,
-      input,
-      "03"
-    );
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
+  let input = ` " "`;
+  equal(
+    convertAll(input, {
+      convertApostrophes: 0,
+      convertEntities: 0,
+    }).result,
+    input,
+    "03"
+  );
+});
 
-tap.test(
-  `04 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`,
-  (t) => {
-    const input = ` ${leftDoubleQuote}-${rightDoubleQuote} `;
-    t.strictSame(
-      convertAll(input, {
-        convertApostrophes: 0,
-        convertEntities: 0,
-      }).result,
-      ` "-" `,
-      "04"
-    );
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
+  let input = ` ${leftDoubleQuote}-${rightDoubleQuote} `;
+  equal(
+    convertAll(input, {
+      convertApostrophes: 0,
+      convertEntities: 0,
+    }).result,
+    ` "-" `,
+    "04"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - target 776`,
-  (t) => {
-    const input = ` a${rightDoubleQuote}`;
-    t.strictSame(
-      convertAll(input, {
-        convertApostrophes: 0,
-        convertEntities: 0,
-      }).result,
-      ` a"`,
-      "05"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - target 776`, () => {
+  let input = ` a${rightDoubleQuote}`;
+  equal(
+    convertAll(input, {
+      convertApostrophes: 0,
+      convertEntities: 0,
+    }).result,
+    ` a"`,
+    "05"
+  );
+});
+
+test.run();

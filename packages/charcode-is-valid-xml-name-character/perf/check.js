@@ -3,11 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { isProduction4a } from "../dist/charcode-is-valid-xml-name-character.esm.js";
+
+const callerDir = path.resolve(".");
 
 const testme = () => isProduction4a("\uD800\uDC00");
 

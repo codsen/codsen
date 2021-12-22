@@ -1,18 +1,27 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { deepContains } from "ast-deep-contains";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
+
+function fail(s) {
+  throw new Error(s);
+}
 
 const BACKSLASH = "\u005C";
 
 // 1. basic tests
-tap.test(`01 - a single tag`, (t) => {
-  const str = "< a>";
-  const messages = verify(t, str, {
+test(`01 - a single tag`, () => {
+  let str = "< a>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -28,18 +37,18 @@ tap.test(`01 - a single tag`, (t) => {
     ],
     "01.01"
   );
-  t.equal(applyFixes(str, messages), "<a>", "01.02");
-  t.end();
+  equal(applyFixes(str, messages), "<a>", "01.02");
 });
 
-tap.test(`02 - a single closing tag, space before slash`, (t) => {
-  const str = "\n<\t\t/a>";
-  const messages = verify(t, str, {
+test(`02 - a single closing tag, space before slash`, () => {
+  let str = "\n<\t\t/a>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -55,18 +64,18 @@ tap.test(`02 - a single closing tag, space before slash`, (t) => {
     ],
     "02.01"
   );
-  t.equal(applyFixes(str, messages), "\n</a>", "02.02");
-  t.end();
+  equal(applyFixes(str, messages), "\n</a>", "02.02");
 });
 
-tap.test(`03 - a single closing tag, space after slash`, (t) => {
-  const str = "\n</\t\ta>";
-  const messages = verify(t, str, {
+test(`03 - a single closing tag, space after slash`, () => {
+  let str = "\n</\t\ta>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -82,18 +91,18 @@ tap.test(`03 - a single closing tag, space after slash`, (t) => {
     ],
     "03.01"
   );
-  t.equal(applyFixes(str, messages), "\n</a>", "03.02");
-  t.end();
+  equal(applyFixes(str, messages), "\n</a>", "03.02");
 });
 
-tap.test(`04 - a single closing tag, space before and after slash`, (t) => {
-  const str = "\n<\t/\ta>";
-  const messages = verify(t, str, {
+test(`04 - a single closing tag, space before and after slash`, () => {
+  let str = "\n<\t/\ta>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -112,18 +121,18 @@ tap.test(`04 - a single closing tag, space before and after slash`, (t) => {
     ],
     "04.01"
   );
-  t.equal(applyFixes(str, messages), "\n</a>", "04.02");
-  t.end();
+  equal(applyFixes(str, messages), "\n</a>", "04.02");
 });
 
-tap.test(`05 - in front of repeated slash`, (t) => {
-  const str = "< // a>";
-  const messages = verify(t, str, {
+test(`05 - in front of repeated slash`, () => {
+  let str = "< // a>";
+  let messages = verify(not, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -142,13 +151,12 @@ tap.test(`05 - in front of repeated slash`, (t) => {
     ],
     "05.01"
   );
-  t.equal(applyFixes(str, messages), "<//a>", "05.02");
-  t.end();
+  equal(applyFixes(str, messages), "<//a>", "05.02");
 });
 
-tap.test(`06 - in front of backslash`, (t) => {
-  const str = `< ${BACKSLASH} a>`;
-  const messages = verify(t, str, {
+test(`06 - in front of backslash`, () => {
+  let str = `< ${BACKSLASH} a>`;
+  let messages = verify(not, str, {
     rules: {
       tag: 2,
     },
@@ -180,35 +188,34 @@ tap.test(`06 - in front of backslash`, (t) => {
         },
       },
     ],
-    t.is,
-    t.fail
+    equal,
+    fail
   );
-  t.equal(applyFixes(str, messages), `<a>`, "06");
-  t.end();
+  equal(applyFixes(str, messages), `<a>`, "06");
 });
 
-tap.test(`07 - should not trigger when opening brackets are missing`, (t) => {
-  const str = `<div> div class="x">`;
-  const messages = verify(t, str, {
+test(`07 - should not trigger when opening brackets are missing`, () => {
+  let str = `<div> div class="x">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
   });
-  t.strictSame(messages, [], "07");
-  t.end();
+  equal(messages, [], "07");
 });
 
 // 02. XML
 // -----------------------------------------------------------------------------
 
-tap.test(`08 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
-  const str = `< ?xml version="1.0" encoding="UTF-8"?>`;
-  const messages = verify(t, str, {
+test(`08 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, () => {
+  let str = `< ?xml version="1.0" encoding="UTF-8"?>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -224,10 +231,11 @@ tap.test(`08 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
     ],
     "08.01"
   );
-  t.equal(
+  equal(
     applyFixes(str, messages),
     `<?xml version="1.0" encoding="UTF-8"?>`,
     "08.02"
   );
-  t.end();
 });
+
+test.run();

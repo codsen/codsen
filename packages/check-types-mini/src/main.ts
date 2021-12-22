@@ -37,7 +37,7 @@ function internalApi(
   obj: Obj,
   ref: Obj | null,
   originalOptions?: Partial<Opts>
-) {
+): void {
   //
   // Functions
   // =========
@@ -53,7 +53,7 @@ function internalApi(
   function pullAllWithGlob(
     originalInput: string[],
     toBeRemoved: string | string[]
-  ) {
+  ): string[] {
     if (typeof toBeRemoved === "string") {
       toBeRemoved = arrayiffy(toBeRemoved);
     }
@@ -66,12 +66,12 @@ function internalApi(
         )
     );
   }
-  const hasKey = Object.prototype.hasOwnProperty;
+  let hasKey = Object.prototype.hasOwnProperty;
 
   // Variables
   // =========
 
-  const NAMESFORANYTYPE = [
+  let NAMESFORANYTYPE = [
     "any",
     "anything",
     "every",
@@ -89,7 +89,7 @@ function internalApi(
   // Prep our own opts
   // =================
 
-  const opts: Opts = { ...defaults, ...originalOptions };
+  let opts: Opts = { ...defaults, ...originalOptions };
 
   if (typeof opts.ignoreKeys === "string") {
     opts.ignoreKeys = [opts.ignoreKeys];
@@ -125,12 +125,12 @@ function internalApi(
     //     option2: "whatever"
     //   }
     // }
-    Object.keys(opts.schema as Obj).forEach((oneKey) => {
-      if (isObj((opts.schema as Obj)[oneKey])) {
+    Object.keys(opts.schema).forEach((oneKey) => {
+      if (isObj(opts.schema[oneKey])) {
         // 1. extract all unique AST branches leading to their tips
-        const tempObj: Obj = {};
-        traverse((opts.schema as Obj)[oneKey], (key, val, innerObj) => {
-          const current = val !== undefined ? val : key;
+        let tempObj: Obj = {};
+        traverse(opts.schema[oneKey], (key, val, innerObj) => {
+          let current = val !== undefined ? val : key;
           console.log(
             `135 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
               current,
@@ -153,7 +153,7 @@ function internalApi(
         );
 
         // 2. delete that key which leads to object:
-        delete (opts.schema as Obj)[oneKey];
+        delete opts.schema[oneKey];
 
         // 3. merge in all paths-as-keys into schema opts object:
         opts.schema = { ...opts.schema, ...tempObj };
@@ -175,13 +175,13 @@ function internalApi(
     //
 
     // 2. arrayiffy
-    Object.keys(opts.schema as Obj).forEach((oneKey) => {
-      if (!Array.isArray((opts.schema as Obj)[oneKey])) {
-        (opts.schema as Obj)[oneKey] = [(opts.schema as Obj)[oneKey]];
+    Object.keys(opts.schema).forEach((oneKey) => {
+      if (!Array.isArray(opts.schema[oneKey])) {
+        opts.schema[oneKey] = [opts.schema[oneKey]];
       }
       // then turn all keys into strings and trim and lowercase them:
-      (opts.schema as Obj)[oneKey] = (opts.schema as Obj)[oneKey].map(
-        (el: any) => `${el}`.toLowerCase().trim()
+      opts.schema[oneKey] = opts.schema[oneKey].map((el: any) =>
+        `${el}`.toLowerCase().trim()
       );
     });
   } else if (opts.schema != null) {
@@ -221,21 +221,21 @@ function internalApi(
     console.log(
       `222 so \u001b[${31}m${`opts.enforceStrictKeyset is ON`}\u001b[${39}m`
     );
-    if (existy(opts.schema) && Object.keys(opts.schema as Obj).length > 0) {
+    if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
       if (
         ref &&
         pullAllWithGlob(
           pullAll(
             Object.keys(obj),
-            Object.keys(ref).concat(Object.keys(opts.schema as Obj))
+            Object.keys(ref).concat(Object.keys(opts.schema))
           ),
-          opts.ignoreKeys as string[]
+          opts.ignoreKeys
         ).length
       ) {
         console.log("235");
-        const keys = pullAll(
+        let keys = pullAll(
           Object.keys(obj),
-          Object.keys(ref).concat(Object.keys(opts.schema as Obj))
+          Object.keys(ref).concat(Object.keys(opts.schema))
         );
         throw new TypeError(
           `${opts.msg}: ${
@@ -251,10 +251,10 @@ function internalApi(
       if (
         pullAllWithGlob(
           pullAll(Object.keys(obj), Object.keys(ref as Obj)),
-          opts.ignoreKeys as string[]
+          opts.ignoreKeys
         ).length !== 0
       ) {
-        const keys = pullAll(Object.keys(obj), Object.keys(ref as Obj));
+        let keys = pullAll(Object.keys(obj), Object.keys(ref as Obj));
         throw new TypeError(
           `${opts.msg}: The input object has key${
             keys.length > 1 ? "s" : ""
@@ -265,10 +265,10 @@ function internalApi(
       } else if (
         pullAllWithGlob(
           pullAll(Object.keys(ref as Obj), Object.keys(obj)),
-          opts.ignoreKeys as string[]
+          opts.ignoreKeys
         ).length !== 0
       ) {
-        const keys = pullAll(Object.keys(ref as Obj), Object.keys(obj));
+        let keys = pullAll(Object.keys(ref as Obj), Object.keys(obj));
         throw new TypeError(
           `${opts.msg}: The reference object has key${
             keys.length > 1 ? "s" : ""
@@ -323,7 +323,7 @@ function internalApi(
   // speaking, do their path strings start with any of the strings in aforementioned
   // paths array strings).
 
-  const ignoredPathsArr: string[] = [];
+  let ignoredPathsArr: string[] = [];
 
   console.log(`328 TRAVERSAL STARTS`);
   traverse(obj, (key, val, innerObj) => {
@@ -429,7 +429,7 @@ function internalApi(
       )}`
     );
 
-    const isNotAnArrayChild = !(
+    let isNotAnArrayChild = !(
       !isObj(current) &&
       !Array.isArray(current) &&
       Array.isArray(innerObj.parent)
@@ -556,14 +556,14 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
       // be raw null/undefined, which would be arrayified and turned into string.
       console.log(
         `558 ${`\u001b[${33}m${`objectPath.get(opts.schema, innerObj.path)`}\u001b[${39}m`} = ${JSON.stringify(
-          objectPath.get(opts.schema as Obj, innerObj.path),
+          objectPath.get(opts.schema, innerObj.path),
           null,
           4
         )}`
       );
-      const currentKeysSchema = arrayiffy(
-        (opts.schema as Obj)[innerObj.path]
-      ).map((el: any) => `${el}`.toLowerCase());
+      let currentKeysSchema = arrayiffy(opts.schema[innerObj.path]).map(
+        (el: any) => `${el}`.toLowerCase()
+      );
       console.log(
         `568 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
           currentKeysSchema,
@@ -572,7 +572,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         )}`
       );
 
-      objectPath.set(opts.schema as Obj, innerObj.path, currentKeysSchema);
+      objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
 
       // step 2. First check does our schema contain any blanket names, "any", "whatever" etc.
       if (!intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
@@ -676,7 +676,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
           4
         )}" (type ${typ(objectPath.get(ref, innerObj.path)).toLowerCase()})`
       );
-      const compareTo = objectPath.get(ref, innerObj.path);
+      let compareTo = objectPath.get(ref, innerObj.path);
 
       if (
         opts.acceptArrays &&
@@ -684,7 +684,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         !(opts.acceptArraysIgnore as string[]).includes(key)
       ) {
         console.log("686 2-1: check accept arrays");
-        const allMatch = current.every(
+        let allMatch = current.every(
           (el) => typ(el).toLowerCase() === typ((ref as Obj)[key]).toLowerCase()
         );
         if (!allMatch) {
@@ -732,7 +732,7 @@ function checkTypesMini(
   ref: Obj | null,
   originalOptions?: Partial<Opts>
 ): void {
-  return internalApi(obj, ref, originalOptions);
+  internalApi(obj, ref, originalOptions);
 }
 
 export { checkTypesMini };

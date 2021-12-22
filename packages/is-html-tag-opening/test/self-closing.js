@@ -1,149 +1,130 @@
-import tap from "tap";
-import { isOpening as is } from "../dist/is-html-tag-opening.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 // self-closing tag
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
-  (t) => {
-    const str = `<br/>`;
-    t.true(is(str), "01.01");
-    t.true(is(str, 0), "01.02");
-    t.true(
-      is(str, 0, {
-        allowCustomTagNames: true,
-      }),
-      "01.03"
-    );
+test(`01 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = `<br/>`;
+  ok(isOpening(str), "01.01");
+  ok(isOpening(str, 0), "01.02");
+  ok(
+    isOpening(str, 0, {
+      allowCustomTagNames: true,
+    }),
+    "01.03"
+  );
 
-    t.false(is(str, 1), "01.04");
-    t.true(
-      is(str, 1, {
-        skipOpeningBracket: true,
-      }),
-      "01.05"
-    );
-    t.end();
-  }
-);
+  not.ok(isOpening(str, 1), "01.04");
+  ok(
+    isOpening(str, 1, {
+      skipOpeningBracket: true,
+    }),
+    "01.05"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
-  (t) => {
-    const str = `< br/>`;
-    t.true(is(str), "02.01");
-    t.true(is(str, 0), "02.02");
-    t.true(
-      is(str, 0, {
-        allowCustomTagNames: true,
-      }),
-      "02.03"
-    );
+test(`02 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = `< br/>`;
+  ok(isOpening(str), "02.01");
+  ok(isOpening(str, 0), "02.02");
+  ok(
+    isOpening(str, 0, {
+      allowCustomTagNames: true,
+    }),
+    "02.03"
+  );
 
-    t.false(is(str, 2), "02.04");
-    t.true(
-      is(str, 2, {
-        skipOpeningBracket: true,
-      }),
-      "02.05"
-    );
-    t.end();
-  }
-);
+  not.ok(isOpening(str, 2), "02.04");
+  ok(
+    isOpening(str, 2, {
+      skipOpeningBracket: true,
+    }),
+    "02.05"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
-  (t) => {
-    const str = `<br />`;
-    t.true(is(str), "03.01");
-    t.true(is(str, 0), "03.02");
-    t.true(
-      is(str, 0, {
-        allowCustomTagNames: true,
-      }),
-      "03.03"
-    );
+test(`03 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = `<br />`;
+  ok(isOpening(str), "03.01");
+  ok(isOpening(str, 0), "03.02");
+  ok(
+    isOpening(str, 0, {
+      allowCustomTagNames: true,
+    }),
+    "03.03"
+  );
 
-    t.false(is(str, 1), "03.04");
-    t.true(
-      is(str, 1, {
-        skipOpeningBracket: true,
-      }),
-      "03.05"
-    );
-    t.end();
-  }
-);
+  not.ok(isOpening(str, 1), "03.04");
+  ok(
+    isOpening(str, 1, {
+      skipOpeningBracket: true,
+    }),
+    "03.05"
+  );
+});
 
-tap.test(
-  `04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
-  (t) => {
-    const str = `<br/ >`;
-    t.true(is(str), "04.01");
-    t.true(is(str, 0), "04.02");
-    t.true(
-      is(str, 0, {
-        allowCustomTagNames: true,
-      }),
-      "04.03"
-    );
+test(`04 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = `<br/ >`;
+  ok(isOpening(str), "04.01");
+  ok(isOpening(str, 0), "04.02");
+  ok(
+    isOpening(str, 0, {
+      allowCustomTagNames: true,
+    }),
+    "04.03"
+  );
 
-    t.false(is(str, 1), "04.04");
-    t.true(
-      is(str, 1, {
-        skipOpeningBracket: true,
-      }),
-      "04.05"
-    );
-    t.end();
-  }
-);
+  not.ok(isOpening(str, 1), "04.04");
+  ok(
+    isOpening(str, 1, {
+      skipOpeningBracket: true,
+    }),
+    "04.05"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
-  (t) => {
-    const str = `<br / >`;
-    t.true(is(str), "05.01");
-    t.true(is(str, 0), "05.02");
-    t.true(
-      is(str, 0, {
-        allowCustomTagNames: true,
-      }),
-      "05.03"
-    );
+test(`05 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = `<br / >`;
+  ok(isOpening(str), "05.01");
+  ok(isOpening(str, 0), "05.02");
+  ok(
+    isOpening(str, 0, {
+      allowCustomTagNames: true,
+    }),
+    "05.03"
+  );
 
-    t.false(is(str, 1), "05.04");
-    t.true(
-      is(str, 1, {
-        skipOpeningBracket: true,
-      }),
-      "05.05"
-    );
-    t.end();
-  }
-);
+  not.ok(isOpening(str, 1), "05.04");
+  ok(
+    isOpening(str, 1, {
+      skipOpeningBracket: true,
+    }),
+    "05.05"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
-  (t) => {
-    const str = `< br / >`;
-    t.true(is(str), "06.01");
-    t.true(is(str, 0), "06.02");
-    t.true(
-      is(str, 0, {
-        allowCustomTagNames: true,
-      }),
-      "06.03"
-    );
+test(`06 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = `< br / >`;
+  ok(isOpening(str), "06.01");
+  ok(isOpening(str, 0), "06.02");
+  ok(
+    isOpening(str, 0, {
+      allowCustomTagNames: true,
+    }),
+    "06.03"
+  );
 
-    t.false(is(str, 1), "06.04");
-    t.true(
-      is(str, 1, {
-        skipOpeningBracket: true,
-      }),
-      "06.05"
-    );
-    t.end();
-  }
-);
+  not.ok(isOpening(str, 1), "06.04");
+  ok(
+    isOpening(str, 1, {
+      skipOpeningBracket: true,
+    }),
+    "06.05"
+  );
+});
+
+test.run();

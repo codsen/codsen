@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/00ad/index.htm
 
 function badCharacterSoftHyphen(context: Linter): RuleObjType {
-  const charCode = 173;
+  let charCode = 173;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

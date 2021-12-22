@@ -4,7 +4,6 @@
 // -----------------------------------------------------------------------------
 
 import { promises, readFileSync } from "fs";
-const { readFile } = promises;
 import write from "write-file-atomic";
 import { globby } from "globby";
 import pReduce from "p-reduce";
@@ -15,10 +14,11 @@ import isObj from "lodash.isplainobject";
 import pacote from "pacote";
 import objectPath from "object-path";
 import diff1 from "ansi-diff-stream";
-const diff = diff1();
-
 import { set, del } from "edit-package-json";
 import isOnline from "is-online";
+
+const { readFile } = promises;
+const diff = diff1();
 
 const { log } = console;
 const sparkles = "\u2728"; // https://emojipedia.org/sparkles/
@@ -74,7 +74,7 @@ if (cli.flags) {
 
 (async () => {
   // we'll use the object below to distill all unique package updates
-  const updatedPackages = {};
+  let updatedPackages = {};
   function printUpdated() {
     return Object.keys(updatedPackages)
       .sort()
@@ -88,14 +88,14 @@ if (cli.flags) {
     return versNum;
   }
 
-  const confLocation = "./upd.config.json";
+  let confLocation = "./upd.config.json";
   let config;
   let newConfig = {
     noMajorBumping: [],
   };
   newConfig.noMajorBumping = new Set(newConfig.noMajorBumping);
 
-  const online = await isOnline();
+  let online = await isOnline();
   if (!online) {
     console.error(
       `\n${messagePrefix}${`\u001b[${31}m${`Please check your internet connection.`}\u001b[${39}m`}\n`
@@ -114,7 +114,7 @@ if (cli.flags) {
     );
   }
 
-  const pathsPromise = await globby([
+  let pathsPromise = await globby([
     "**/package.json",
     "!**/node_modules/**",
     "!**/test/**",
@@ -124,7 +124,7 @@ if (cli.flags) {
       (mapReceived, currentPath) =>
         readFile(currentPath, "utf8")
           .then((packContentsStr) => {
-            const parsedContents = JSON.parse(packContentsStr);
+            let parsedContents = JSON.parse(packContentsStr);
             mapReceived.namesList.push(parsedContents.name);
             mapReceived.pathsList.push(currentPath);
             mapReceived.pathsByName[parsedContents.name] = currentPath;
@@ -148,16 +148,16 @@ if (cli.flags) {
     )
   );
 
-  const allProgressPromise = PProgress.all(
+  let allProgressPromise = PProgress.all(
     pathsPromise.pathsList.map((oneOfPaths) =>
       pProgress(async (progress) => {
         // call progress() like progress(0.14);
 
         let amended = false;
         let finalContents = pathsPromise.contentsStr[oneOfPaths];
-        const parsedContents = pathsPromise.contentsObj[oneOfPaths];
+        let parsedContents = pathsPromise.contentsObj[oneOfPaths];
 
-        const totalDeps = (
+        let totalDeps = (
           isObj(parsedContents.dependencies)
             ? Object.keys(parsedContents.dependencies)
             : []
@@ -190,8 +190,8 @@ if (cli.flags) {
         // this is the first 75% of per-package progress
         // https://github.com/sindresorhus/p-progress#pprogressallpromises-options
 
-        const compiledDepNameVersionPairs = {};
-        const allProgressPromise2 = PProgress.all(
+        let compiledDepNameVersionPairs = {};
+        let allProgressPromise2 = PProgress.all(
           totalDeps.map(async (singleDepName) => {
             if (pathsPromise.namesList.includes(singleDepName)) {
               compiledDepNameVersionPairs[singleDepName] =
@@ -259,7 +259,7 @@ if (cli.flags) {
         //
 
         if (isObj(parsedContents.dependencies)) {
-          const keys = Object.keys(parsedContents.dependencies);
+          let keys = Object.keys(parsedContents.dependencies);
           for (let y = 0, len2 = keys.length; y < len2; y++) {
             // delete this dependency from lect.various.devDependencies if present
             // ---------------------
@@ -269,7 +269,7 @@ if (cli.flags) {
               parsedContents.lect.various.devDependencies.includes(keys[y])
             ) {
               let foundIdx;
-              const newVal = parsedContents.lect.various.devDependencies.filter(
+              let newVal = parsedContents.lect.various.devDependencies.filter(
                 (dep, z) => {
                   if (dep === keys[y]) {
                     foundIdx = z;
@@ -288,12 +288,12 @@ if (cli.flags) {
             // tackle the deps list:
             // ---------------------
 
-            const singleDepName = keys[y];
-            const singleDepValue = parsedContents.dependencies[keys[y]];
+            let singleDepName = keys[y];
+            let singleDepValue = parsedContents.dependencies[keys[y]];
             if (singleDepValue.startsWith("file:")) {
               continue;
             }
-            const workspacePrefix = singleDepValue.startsWith("workspace:")
+            let workspacePrefix = singleDepValue.startsWith("workspace:")
               ? "workspace:"
               : "";
 
@@ -370,12 +370,12 @@ if (cli.flags) {
             });
           }
           for (let y = 0, len2 = keys.length; y < len2; y++) {
-            const singleDepName = keys[y];
-            const singleDepValue = parsedContents.devDependencies[keys[y]];
+            let singleDepName = keys[y];
+            let singleDepValue = parsedContents.devDependencies[keys[y]];
             if (singleDepValue.startsWith("file:")) {
               continue;
             }
-            const workspacePrefix = singleDepValue.startsWith("workspace:")
+            let workspacePrefix = singleDepValue.startsWith("workspace:")
               ? "workspace:"
               : "";
 

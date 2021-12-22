@@ -32,7 +32,7 @@ function attributeValidateScrolling(context: Linter): RuleObjType {
           });
         }
 
-        const errorArr = validateString(
+        let errorArr = validateString(
           node.attribValueRaw, // value
           node.attribValueStartsAt as number, // offset
           {

@@ -1,14 +1,15 @@
 // Strip HTML from a raw JSON string
 
 import { strict as assert } from "assert";
+import { traverse } from "ast-monkey-traverse";
+
 import { stripHtml } from "../dist/string-strip-html.esm.js";
-import { traverse } from "../../ast-monkey-traverse/dist/ast-monkey-traverse.esm.js";
 
 const stripFromJsonStr = (str) => {
   return traverse(JSON.parse(str), (key, val) => {
     // if currently an object is traversed, you get both "key" and "val"
     // if it's array, only "key" is present, "val" is undefined
-    const current = val !== undefined ? val : key;
+    let current = val !== undefined ? val : key;
     if (
       // ensure it's a plain object, not array (monkey will report only "key" in
       // arrays and "val" will be undefined)

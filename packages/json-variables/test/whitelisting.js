@@ -1,10 +1,13 @@
 /* eslint no-template-curly-in-string: 0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { jVar } from "../dist/json-variables.esm.js";
 
-tap.test("01 - wrap flipswitch works", (t) => {
-  t.strictSame(
+test("01 - wrap flipswitch works", () => {
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -20,7 +23,7 @@ tap.test("01 - wrap flipswitch works", (t) => {
     },
     "01.01"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -36,11 +39,10 @@ tap.test("01 - wrap flipswitch works", (t) => {
     },
     "01.02"
   );
-  t.end();
 });
 
-tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
-  t.strictSame(
+test("02 - global wrap flipswitch and dontWrapVars combo", () => {
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -61,7 +63,7 @@ tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
     },
     "02.01"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -82,7 +84,7 @@ tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
     },
     "02.02"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -103,7 +105,7 @@ tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
     },
     "02.03"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -124,11 +126,10 @@ tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
     },
     "02.04"
   );
-  t.end();
 });
 
-tap.test("03 - opts.dontWrapVars", (t) => {
-  t.strictSame(
+test("03 - opts.dontWrapVars", () => {
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -144,7 +145,7 @@ tap.test("03 - opts.dontWrapVars", (t) => {
     },
     "03.01"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -160,7 +161,7 @@ tap.test("03 - opts.dontWrapVars", (t) => {
     },
     "03.02"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -176,7 +177,7 @@ tap.test("03 - opts.dontWrapVars", (t) => {
     },
     "03.03"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: "%%_b_%%",
@@ -192,7 +193,7 @@ tap.test("03 - opts.dontWrapVars", (t) => {
     },
     "03.04"
   );
-  t.throws(() => {
+  throws(() => {
     jVar(
       {
         a: "%%_b_%%",
@@ -202,11 +203,10 @@ tap.test("03 - opts.dontWrapVars", (t) => {
       { wrapHeadsWith: "{", wrapTailsWith: "}", dontWrapVars: [1, 2, 3] }
     );
   }, "03.05");
-  t.end();
 });
 
-tap.test("04 - opts.dontWrapVars, real key names", (t) => {
-  t.strictSame(
+test("04 - opts.dontWrapVars, real key names", () => {
+  equal(
     jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
@@ -222,7 +222,7 @@ tap.test("04 - opts.dontWrapVars, real key names", (t) => {
     },
     "04.01"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
@@ -238,7 +238,7 @@ tap.test("04 - opts.dontWrapVars, real key names", (t) => {
     },
     "04.02"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
@@ -254,11 +254,10 @@ tap.test("04 - opts.dontWrapVars, real key names", (t) => {
     },
     "04.03"
   );
-  t.end();
 });
 
-tap.test("05 - multiple dontWrapVars values", (t) => {
-  t.strictSame(
+test("05 - multiple dontWrapVars values", () => {
+  equal(
     jVar(
       {
         front_title: "%%_lower_title_%%",
@@ -278,11 +277,10 @@ tap.test("05 - multiple dontWrapVars values", (t) => {
     },
     '05 - still wraps because child variable call ("subtitle") is not excluded'
   );
-  t.end();
 });
 
-tap.test("06 - one level var querying and whitelisting", (t) => {
-  t.strictSame(
+test("06 - one level var querying and whitelisting", () => {
+  equal(
     jVar(
       {
         key: "Some text %%_otherkey_%%",
@@ -301,7 +299,7 @@ tap.test("06 - one level var querying and whitelisting", (t) => {
     },
     "06.01"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         key: "Some text %%_otherkey_%%",
@@ -320,11 +318,10 @@ tap.test("06 - one level var querying and whitelisting", (t) => {
     },
     "06.02"
   );
-  t.end();
 });
 
-tap.test("07 - opts.dontWrapVars, real key names", (t) => {
-  t.strictSame(
+test("07 - opts.dontWrapVars, real key names", () => {
+  equal(
     jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
@@ -340,7 +337,7 @@ tap.test("07 - opts.dontWrapVars, real key names", (t) => {
     },
     "07.01"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
@@ -360,7 +357,7 @@ tap.test("07 - opts.dontWrapVars, real key names", (t) => {
     },
     "07.02"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
@@ -376,5 +373,6 @@ tap.test("07 - opts.dontWrapVars, real key names", (t) => {
     },
     "07.03"
   );
-  t.end();
 });
+
+test.run();

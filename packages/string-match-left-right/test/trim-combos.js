@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import {
   // matchLeftIncl,
   // matchRightIncl,
@@ -9,100 +12,74 @@ import {
 // trim combos - whitespace+character
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
-  (t) => {
-    t.equal(
-      matchLeft("z a", 2, [() => "EOL"]),
-      false,
-      "01 - whitespace trim opts control"
-    );
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
+  equal(
+    matchLeft("z a", 2, [() => "EOL"]),
+    false,
+    "01 - whitespace trim opts control"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
-  (t) => {
-    t.equal(
-      matchLeft("z a", 2, [() => "EOL"], {
-        trimCharsBeforeMatching: ["z"],
-        trimBeforeMatching: true,
-      }),
-      "EOL",
-      "02 - whitespace trim opt on"
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
+  equal(
+    matchLeft("z a", 2, [() => "EOL"], {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true,
+    }),
+    "EOL",
+    "02 - whitespace trim opt on"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
-  (t) => {
-    t.equal(
-      matchLeft("z a", 2, ["a", () => "EOL"]),
-      false,
-      "03 - whitespace trim opts control"
-    );
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
+  equal(
+    matchLeft("z a", 2, ["a", () => "EOL"]),
+    false,
+    "03 - whitespace trim opts control"
+  );
+});
 
-tap.test(
-  `04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
-  (t) => {
-    t.equal(
-      matchLeft("z a", 2, ["a", () => "EOL"], {
-        trimCharsBeforeMatching: ["z"],
-        trimBeforeMatching: true,
-      }),
-      "EOL",
-      "04 - whitespace trim opt on"
-    );
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
+  equal(
+    matchLeft("z a", 2, ["a", () => "EOL"], {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true,
+    }),
+    "EOL",
+    "04 - whitespace trim opt on"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
-  (t) => {
-    t.equal(
-      matchLeft("z a", 2, ["z", () => "EOL"], {
-        trimBeforeMatching: true,
-      }),
-      "z",
-      "05 - whitespace trim opts control"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
+  equal(
+    matchLeft("z a", 2, ["z", () => "EOL"], {
+      trimBeforeMatching: true,
+    }),
+    "z",
+    "05 - whitespace trim opts control"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
-  (t) => {
-    t.equal(
-      matchLeft("z a", 2, ["x", () => "EOL"], {
-        trimCharsBeforeMatching: ["z"],
-        trimBeforeMatching: true,
-      }),
-      "EOL",
-      "06 - whitespace trim opt on"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
+  equal(
+    matchLeft("z a", 2, ["x", () => "EOL"], {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true,
+    }),
+    "EOL",
+    "06 - whitespace trim opt on"
+  );
+});
 
-tap.test(
-  `07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`,
-  (t) => {
-    t.equal(
-      matchLeft("yz a", 2, ["x", () => "EOL"], {
-        trimCharsBeforeMatching: ["z"],
-        trimBeforeMatching: true,
-      }),
-      false,
-      "07"
-    );
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
+  equal(
+    matchLeft("yz a", 2, ["x", () => "EOL"], {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true,
+    }),
+    false,
+    "07"
+  );
+});
+
+test.run();

@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { sortByCol } from "../dist/array-of-arrays-sort-by-col.esm.js";
 
 // sort by second column, index number 1

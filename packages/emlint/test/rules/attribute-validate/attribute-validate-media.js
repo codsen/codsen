@@ -1,208 +1,167 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error level 0`,
-  (t) => {
-    const str = `<html><style>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-media": 0,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "01.01");
-    t.strictSame(messages, [], "01.02");
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error level 0`, () => {
+  let str = `<html><style>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-media": 0,
+    },
+  });
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
+});
 
-tap.test(
-  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error level 1`,
-  (t) => {
-    const str = `<html><style>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-media": 1,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "02.01");
-    t.strictSame(messages, [], "02.02");
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error level 1`, () => {
+  let str = `<html><style>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-media": 1,
+    },
+  });
+  equal(applyFixes(str, messages), str, "02.01");
+  equal(messages, [], "02.02");
+});
 
-tap.test(
-  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error level 2`,
-  (t) => {
-    const str = `<html><style>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error level 2`, () => {
+  let str = `<html><style>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-media": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "03.01");
+  equal(messages, [], "03.02");
+});
+
+test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+  let healthyValues = [
+    "all",
+    "aural",
+    "braille",
+    "embossed",
+    "handheld",
+    "print",
+    "projection",
+    "screen",
+    "speech",
+    "tty",
+    "tv",
+  ];
+  let linter = new Linter();
+  healthyValues.forEach((healthyValue) => {
+    let str = `<style media="${healthyValue}">`;
+    let messages = linter.verify(str, {
       rules: {
         "attribute-validate-media": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "03.01");
-    t.strictSame(messages, [], "03.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  (t) => {
-    const healthyValues = [
-      "all",
-      "aural",
-      "braille",
-      "embossed",
-      "handheld",
-      "print",
-      "projection",
-      "screen",
-      "speech",
-      "tty",
-      "tv",
-    ];
-    const linter = new Linter();
-    healthyValues.forEach((healthyValue) => {
-      const str = `<style media="${healthyValue}">`;
-      const messages = linter.verify(str, {
-        rules: {
-          "attribute-validate-media": 2,
-        },
-      });
-      t.equal(applyFixes(str, messages), str);
-      t.strictSame(messages, []);
-    });
-    t.end();
-  }
-);
+    equal(applyFixes(str, messages), str);
+    equal(messages, []);
+  });
+});
 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  (t) => {
-    const str = `<div media="screen">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-media": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "05.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-media",
-          idxFrom: 5,
-          idxTo: 19,
-          fix: null,
-        },
-      ],
-      "05.02"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
+  let str = `<div media="screen">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-media": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "05.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-media",
+      idxFrom: 5,
+      idxTo: 19,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  (t) => {
-    const str = `<zzz media="screen" yyy>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-media": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "06.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-media",
-          idxFrom: 5,
-          idxTo: 19,
-          fix: null,
-        },
-      ],
-      "06.02"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = `<zzz media="screen" yyy>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-media": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "06.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-media",
+      idxFrom: 5,
+      idxTo: 19,
+      fix: null,
+    },
+  ]);
+});
 
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`,
-  (t) => {
-    const str = `<style media="screeen">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-media": 2,
+test(`07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`, () => {
+  let str = `<style media="screeen">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-media": 2,
+    },
+  });
+  // will fix:
+  equal(applyFixes(str, messages), `<style media="screen">`, "07.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-media",
+      idxFrom: 14,
+      idxTo: 21,
+      message: `Did you mean "screen"?`,
+      fix: {
+        ranges: [[14, 21, "screen"]],
       },
-    });
-    // will fix:
-    t.equal(applyFixes(str, messages), `<style media="screen">`, "07.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-media",
-          idxFrom: 14,
-          idxTo: 21,
-          message: `Did you mean "screen"?`,
-          fix: {
-            ranges: [[14, 21, "screen"]],
-          },
-        },
-      ],
-      "07.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
 
-tap.test(
-  `08 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace on legit`,
-  (t) => {
-    const str = `<style media=" screen">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-media": 2,
+test(`08 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace on legit`, () => {
+  let str = `<style media=" screen">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-media": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<style media="screen">`, "08.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-media",
+      idxFrom: 14,
+      idxTo: 15,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [[14, 15]],
       },
-    });
-    t.equal(applyFixes(str, messages), `<style media="screen">`, "08.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-media",
-          idxFrom: 14,
-          idxTo: 15,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[14, 15]],
-          },
-        },
-      ],
-      "08.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
+
+test.run();

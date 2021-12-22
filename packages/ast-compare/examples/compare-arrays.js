@@ -1,6 +1,7 @@
 // Compare Arrays
 
 import { strict as assert } from "assert";
+
 import { compare } from "../dist/ast-compare.esm.js";
 
 assert.equal(compare(["a", "b", "c"], ["a", "b"]), true);

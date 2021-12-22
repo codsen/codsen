@@ -1,6 +1,7 @@
 // Minify a chunk of CSS selector
 
 import { strict as assert } from "assert";
+
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 
 assert.equal(

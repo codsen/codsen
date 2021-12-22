@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/200a/index.htm
 
 function badCharacterHairSpace(context: Linter): RuleObjType {
-  const charCode = 8202;
+  let charCode = 8202;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

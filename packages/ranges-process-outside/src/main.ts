@@ -1,9 +1,11 @@
 import runes from "runes";
 import { rInvert } from "ranges-invert";
 import { rCrop } from "ranges-crop";
+import type { Ranges } from "ranges-crop";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
-import { Ranges } from "../../../scripts/common";
 
 type OffsetValueCb = (amountToOffset: number) => void;
 type Callback = (
@@ -61,12 +63,12 @@ function rProcessOutside(
 
   // separate the iterator because it might be called with inverted ranges or
   // with separately calculated "everything" if the ranges are empty/falsey
-  function iterator(str: string, arrOfArrays: Ranges) {
+  function iterator(str: string, arrOfArrays: Ranges): void {
     console.log(
-      `066 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
+      `068 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
     );
     console.log(
-      `069 ${`\u001b[${36}m${`loop [${JSON.stringify(
+      `071 ${`\u001b[${36}m${`loop [${JSON.stringify(
         arrOfArrays,
         null,
         0
@@ -74,38 +76,39 @@ function rProcessOutside(
     );
     (arrOfArrays || []).forEach(([fromIdx, toIdx]) => {
       console.log(
-        `077 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
+        `079 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
       );
-      console.log(`079 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
+      console.log(`081 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
       for (let i = fromIdx; i < toIdx; i++) {
-        console.log(`081 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
-        const charLength = runes(str.slice(i))[0].length;
+        console.log(`083 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
+        let charLength = runes(str.slice(i))[0].length;
 
-        console.log(`084 charLength = ${charLength}`);
+        console.log(`086 charLength = ${charLength}`);
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         cb(i, i + charLength, (offsetValue) => {
           /* istanbul ignore else */
           if (offsetValue != null) {
-            console.log(`088 offset i by "${offsetValue}" requested`);
-            console.log(`089 old i = ${i}`);
+            console.log(`091 offset i by "${offsetValue}" requested`);
+            console.log(`092 old i = ${i}`);
             i += offsetValue;
-            console.log(`091 new i = ${i}`);
+            console.log(`094 new i = ${i}`);
           }
         });
         if (charLength && charLength > 1) {
-          console.log(`095 old i = ${i}`);
+          console.log(`098 old i = ${i}`);
           i += charLength - 1;
-          console.log(`097 new i = ${i}`);
+          console.log(`100 new i = ${i}`);
         }
       }
     });
     console.log(
-      `102 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
+      `105 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
     );
   }
 
-  if (originalRanges && originalRanges.length) {
+  if (originalRanges?.length) {
     // if ranges are given, invert and run callback against each character
-    const temp = rCrop(
+    let temp = rCrop(
       rInvert(
         skipChecks ? originalRanges : originalRanges,
         originalStr.length,
@@ -116,7 +119,7 @@ function rProcessOutside(
       originalStr.length
     );
     console.log(
-      `119 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+      `122 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
         temp,
         null,
         0

@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/206f/index.htm
 
 function badCharacterNominalDigitShapes(context: Linter): RuleObjType {
-  const charCode = 8303;
+  let charCode = 8303;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

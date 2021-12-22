@@ -3,14 +3,13 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { cparser } from "../dist/codsen-parser.esm.js";
 
+const callerDir = path.resolve(".");
+
 const testme = () => {
-  const gathered = [];
+  let gathered = [];
   cparser(`<a>"something"<span>'here'</span></a>`, {
     tagCb: (obj) => {
       gathered.push(obj);

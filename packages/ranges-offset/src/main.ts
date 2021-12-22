@@ -1,6 +1,8 @@
+import type { Ranges } from "../../../ops/typedefs/common";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
-import { Ranges } from "../../../scripts/common";
 
 function rOffset(arrOfRanges: Ranges, offset = 0): Ranges {
   // empty Ranges are null!

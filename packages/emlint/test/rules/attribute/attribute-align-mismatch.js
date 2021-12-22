@@ -1,8 +1,12 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { verify } from "../../../t-util/util.js";
 
-tap.test(`01`, (t) => {
-  const str = `<table>
+test(`01`, () => {
+  let str = `<table>
   <tr>
     <td align="left">
       <table align="right">
@@ -15,12 +19,13 @@ tap.test(`01`, (t) => {
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "attribute-align-mismatch": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -33,12 +38,11 @@ tap.test(`01`, (t) => {
     ],
     "01.01"
   );
-  t.equal(messages.length, 1, "01.02");
-  t.end();
+  equal(messages.length, 1, "01.02");
 });
 
-tap.test(`02 - value vs empty`, (t) => {
-  const str = `<table>
+test(`02 - value vs empty`, () => {
+  let str = `<table>
   <tr>
     <td align="left">
       <table align="">
@@ -51,12 +55,13 @@ tap.test(`02 - value vs empty`, (t) => {
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "attribute-align-mismatch": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -69,12 +74,11 @@ tap.test(`02 - value vs empty`, (t) => {
     ],
     "02.01"
   );
-  t.equal(messages.length, 1, "02.02");
-  t.end();
+  equal(messages.length, 1, "02.02");
 });
 
-tap.test(`03 - empty vs value`, (t) => {
-  const str = `<table>
+test(`03 - empty vs value`, () => {
+  let str = `<table>
   <tr>
     <td align="">
       <table align="left">
@@ -87,12 +91,13 @@ tap.test(`03 - empty vs value`, (t) => {
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "attribute-align-mismatch": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -105,12 +110,11 @@ tap.test(`03 - empty vs value`, (t) => {
     ],
     "03.01"
   );
-  t.equal(messages.length, 1, "03.02");
-  t.end();
+  equal(messages.length, 1, "03.02");
 });
 
-tap.test(`04 - empty vs empty`, (t) => {
-  const str = `<table>
+test(`04 - empty vs empty`, () => {
+  let str = `<table>
   <tr>
     <td align="">
       <table align="">
@@ -123,17 +127,16 @@ tap.test(`04 - empty vs empty`, (t) => {
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "attribute-align-mismatch": 2,
     },
   });
-  t.strictSame(messages, [], "04");
-  t.end();
+  equal(messages, [], "04");
 });
 
-tap.test(`05 - ESP`, (t) => {
-  const str = `<table>
+test(`05 - ESP`, () => {
+  let str = `<table>
   <tr>
     <td align="left">
       {% if x %}
@@ -156,12 +159,13 @@ tap.test(`05 - ESP`, (t) => {
     </td>
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "attribute-align-mismatch": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -181,6 +185,7 @@ tap.test(`05 - ESP`, (t) => {
     ],
     "05.01"
   );
-  t.equal(messages.length, 2, "05.02");
-  t.end();
+  equal(messages.length, 2, "05.02");
 });
+
+test.run();

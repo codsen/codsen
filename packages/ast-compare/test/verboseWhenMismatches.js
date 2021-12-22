@@ -1,28 +1,31 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { compare } from "../dist/ast-compare.esm.js";
 
-tap.test("01 - plain objects", (t) => {
-  t.not(
+test("01 - plain objects", () => {
+  type(
     compare(
       { a: "1", b: "2" },
       { a: "1", b: "2", c: "3" },
       { verboseWhenMismatches: true }
     ),
-    true,
+    "string",
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - plain objects, useWildcards, key with wildcard", (t) => {
-  t.not(
+test("02 - plain objects, useWildcards, key with wildcard", () => {
+  type(
     compare(
       { a: "1", b: "2" },
       { a: "1", b: "2", "c*": "3" },
       { verboseWhenMismatches: true, useWildcards: true }
     ),
-    true,
+    "string",
     "02"
   );
-  t.end();
 });
+
+test.run();

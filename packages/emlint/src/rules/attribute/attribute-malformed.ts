@@ -1,7 +1,8 @@
-import { Linter, RuleObjType } from "../../linter";
 import { allHtmlAttribs } from "html-all-known-attributes";
 import leven from "leven";
 import { left } from "string-left-right";
+
+import { Linter, RuleObjType } from "../../linter";
 
 // rule: attribute-malformed
 // -----------------------------------------------------------------------------
@@ -12,7 +13,7 @@ type Config = "useSingleToEscapeDouble";
 
 function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
   // the following tags will be processed separately
-  const blacklist = ["doctype"];
+  let blacklist = ["doctype"];
 
   return {
     attribute(node) {
@@ -20,14 +21,14 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         `███████████████████████████████████████ attributeMalformed() ███████████████████████████████████████`
       );
       console.log(
-        `023 ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
+        `024 ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
           config,
           null,
           4
         )}`
       );
       console.log(
-        `030 attributeMalformed(): node = ${JSON.stringify(node, null, 4)}`
+        `031 attributeMalformed(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       let inTheEndUseDoubles = true;
@@ -42,7 +43,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         inTheEndUseDoubles = false;
       }
       console.log(
-        `045 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`inTheEndUseDoubles`}\u001b[${39}m`} = ${JSON.stringify(
+        `046 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`inTheEndUseDoubles`}\u001b[${39}m`} = ${JSON.stringify(
           inTheEndUseDoubles,
           null,
           4
@@ -55,7 +56,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         // exclude ESP tags etc.
         node.attribName === undefined
       ) {
-        console.log(`058 early bail, this is not an attribute token`);
+        console.log(`059 early bail, this is not an attribute token`);
         return;
       }
 
@@ -65,19 +66,19 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         !node.attribNameRecognised &&
         node.attribName &&
         !node.attribName.startsWith("xmlns:") &&
-        !blacklist.includes(node.parent.tagName as string)
+        !blacklist.includes(node.parent.tagName)
       ) {
         console.log(
-          `071 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
+          `072 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
         );
 
         let somethingMatched = false;
 
-        for (const oneOfAttribs of allHtmlAttribs.values()) {
+        for (let oneOfAttribs of allHtmlAttribs.values()) {
           if (oneOfAttribs === node.attribName.toLowerCase()) {
             // only the letter case is wrong, for example
             // <img SRC="spacer.gif" ALT=""/>
-            console.log(`080 RAISE ERROR`);
+            console.log(`081 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Should be lowercase.`,
@@ -98,7 +99,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
           } else if (leven(oneOfAttribs, node.attribName) === 1) {
             // <img srcc="spacer.gif" altt=""/>
             //         ^                 ^
-            console.log(`101 RAISE ERROR`);
+            console.log(`102 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Probably meant "${oneOfAttribs}".`,
@@ -122,7 +123,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         if (!somethingMatched) {
           // the attribute was not recognised
           console.log(
-            `125 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
+            `126 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
           );
           context.report({
             ruleId: "attribute-malformed",
@@ -143,7 +144,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
             node.attribClosingQuoteAt &&
             node.attribClosingQuoteAt === node.attribOpeningQuoteAt + 1))
       ) {
-        console.log(`146`);
+        console.log(`147`);
         if (
           // if opening quotes are present, let's use their location
           node.attribOpeningQuoteAt !== null &&
@@ -152,7 +153,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
             node.attribOpeningQuoteAt
           ) !== "="
         ) {
-          console.log(`155`);
+          console.log(`156`);
           let message = `Malformed around equal.`;
           if (
             !context.str
@@ -160,13 +161,13 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
               .includes("=")
           ) {
             console.log(
-              `163 ${`\u001b[${31}m${`EQUAL MISSING`}\u001b[${39}m`}`
+              `164 ${`\u001b[${31}m${`EQUAL MISSING`}\u001b[${39}m`}`
             );
             message = `Equal is missing.`;
           }
 
           let fromRange = node.attribNameEndsAt;
-          const toRange = node.attribOpeningQuoteAt;
+          let toRange = node.attribOpeningQuoteAt;
           let whatToAdd: undefined | string = "=";
 
           // if equals is in a correct place, don't replace it
@@ -176,7 +177,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
           }
 
           console.log(
-            `179 ${`\u001b[${31}m${`RAISE ERROR ABOUT EQUALS SIGN`}\u001b[${39}m`}`
+            `180 ${`\u001b[${31}m${`RAISE ERROR ABOUT EQUALS SIGN`}\u001b[${39}m`}`
           );
           context.report({
             ruleId: "attribute-malformed",
@@ -204,9 +205,9 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
           context.str[node.attribOpeningQuoteAt]
       ) {
         console.log(
-          `207 ${`\u001b[${31}m${`REPEATED OPENING QUOTES`}\u001b[${39}m`}`
+          `208 ${`\u001b[${31}m${`REPEATED OPENING QUOTES`}\u001b[${39}m`}`
         );
-        const message = `Delete repeated opening quotes.`;
+        let message = `Delete repeated opening quotes.`;
         context.report({
           ruleId: "attribute-malformed",
           message,
@@ -233,9 +234,9 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
           context.str[node.attribClosingQuoteAt]
       ) {
         console.log(
-          `236 ${`\u001b[${31}m${`REPEATED CLOSING QUOTES`}\u001b[${39}m`}`
+          `237 ${`\u001b[${31}m${`REPEATED CLOSING QUOTES`}\u001b[${39}m`}`
         );
-        const message = `Delete repeated closing quotes.`;
+        let message = `Delete repeated closing quotes.`;
         context.report({
           ruleId: "attribute-malformed",
           message,
@@ -257,7 +258,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
       ) {
         // does it exist?
         if (node.attribOpeningQuoteAt) {
-          console.log(`260 attributeMalformed(): wrong opening quote`);
+          console.log(`261 attributeMalformed(): wrong opening quote`);
           context.report({
             ruleId: "attribute-malformed",
             message: `Wrong opening quote.`,
@@ -274,7 +275,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
             },
           });
         } else if (node.attribValueStartsAt) {
-          console.log(`277 attributeMalformed(): missing opening quote`);
+          console.log(`278 attributeMalformed(): missing opening quote`);
           context.report({
             ruleId: "attribute-malformed",
             message: `Add an opening quote.`,
@@ -299,7 +300,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         (inTheEndUseDoubles ? `"` : `'`)
       ) {
         if (node.attribClosingQuoteAt) {
-          console.log(`302 attributeMalformed(): wrong closing quote`);
+          console.log(`303 attributeMalformed(): wrong closing quote`);
           context.report({
             ruleId: "attribute-malformed",
             message: `Wrong closing quote.`,
@@ -316,7 +317,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
             },
           });
         } else if (node.attribValueEndsAt || node.attribOpeningQuoteAt) {
-          console.log(`319 attributeMalformed(): missing closing quote`);
+          console.log(`320 attributeMalformed(): missing closing quote`);
           // if the is no value, only opening quote:
           // <img alt="/>
           // value will be null, so we use opening quote's position instead
@@ -359,7 +360,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         (node.attribLeft + 2 !== node.attribStarts ||
           context.str[node.attribStarts - 1] !== " ")
       ) {
-        console.log(`362 whitespace missing`);
+        console.log(`363 whitespace missing`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Add a space.`,
@@ -381,11 +382,11 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
           (!inTheEndUseDoubles && node.attribValueRaw.includes(`'`)))
       ) {
         console.log(
-          `384 ${`\u001b[${31}m${`unencoded quotes present within the value!`}\u001b[${39}m`}`
+          `385 ${`\u001b[${31}m${`unencoded quotes present within the value!`}\u001b[${39}m`}`
         );
         node.attribValueRaw.split("").forEach((char, idx) => {
           if (char === (inTheEndUseDoubles ? `"` : "'")) {
-            console.log(`388 whitespace missing`);
+            console.log(`389 whitespace missing`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Unencoded quote.`,

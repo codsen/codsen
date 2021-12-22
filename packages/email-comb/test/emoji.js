@@ -1,24 +1,24 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 
 // emoji
 // -----------------------------------------------------------------------------
 
-tap.test("01 - doesn't affect emoji characters within the code", (t) => {
-  const actual = comb(t, "<td>🦄</td>").result;
-  const intended = `<td>🦄</td>`;
+test("01 - doesn't affect emoji characters within the code", () => {
+  let actual = comb("<td>🦄</td>").result;
+  let intended = `<td>🦄</td>`;
 
-  t.strictSame(actual, intended, "01");
-  t.end();
+  equal(actual, intended, "01");
 });
 
-tap.test(
-  "02 - doesn't affect emoji characters within the attribute names",
-  (t) => {
-    const actual = comb(t, '<td data-emoji="🦄">emoji</td>').result;
-    const intended = `<td data-emoji="🦄">emoji</td>`;
+test("02 - doesn't affect emoji characters within the attribute names", () => {
+  let actual = comb('<td data-emoji="🦄">emoji</td>').result;
+  let intended = `<td data-emoji="🦄">emoji</td>`;
 
-    t.strictSame(actual, intended, "02");
-    t.end();
-  }
-);
+  equal(actual, intended, "02");
+});
+
+test.run();

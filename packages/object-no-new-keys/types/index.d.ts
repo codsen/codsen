@@ -3,7 +3,7 @@ declare type JsonValue = string | number | boolean | null | JsonObject | JsonArr
 declare type JsonObject = {
     [Key in string]?: JsonValue;
 };
-declare type JsonArray = Array<JsonValue>;
+declare type JsonArray = JsonValue[];
 interface Opts {
     mode: 1 | 2;
 }

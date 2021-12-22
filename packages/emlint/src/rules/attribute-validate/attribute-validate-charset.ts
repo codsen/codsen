@@ -46,7 +46,7 @@ function attributeValidateCharset(context: Linter): RuleObjType {
           // validate against the charsets list from IANA:
           // https://www.iana.org/assignments/character-sets/character-sets.xhtml
           // https://www.w3.org/TR/html4/interact/forms.html#adef-charset
-          const errorArr = validateString(
+          let errorArr = validateString(
             node.attribValueRaw,
             node.attribValueStartsAt as number,
             {

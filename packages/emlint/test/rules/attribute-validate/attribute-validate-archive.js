@@ -1,543 +1,422 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 0`,
-  (t) => {
-    [`<applet>`, `<object>`].forEach((tag) => {
-      const linter = new Linter();
-      const messages = linter.verify(tag, {
-        rules: {
-          "attribute-validate-archive": 0,
-        },
-      });
-      t.equal(applyFixes(tag, messages), tag);
-      t.strictSame(messages, []);
+test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 0`, () => {
+  [`<applet>`, `<object>`].forEach((tag) => {
+    let linter = new Linter();
+    let messages = linter.verify(tag, {
+      rules: {
+        "attribute-validate-archive": 0,
+      },
     });
-    t.end();
-  }
-);
+    equal(applyFixes(tag, messages), tag);
+    equal(messages, []);
+  });
+});
 
-tap.test(
-  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 1`,
-  (t) => {
-    [`<applet>`, `<object>`].forEach((tag) => {
-      const linter = new Linter();
-      const messages = linter.verify(tag, {
-        rules: {
-          "attribute-validate-archive": 1,
-        },
-      });
-      t.equal(applyFixes(tag, messages), tag);
-      t.strictSame(messages, []);
+test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 1`, () => {
+  [`<applet>`, `<object>`].forEach((tag) => {
+    let linter = new Linter();
+    let messages = linter.verify(tag, {
+      rules: {
+        "attribute-validate-archive": 1,
+      },
     });
-    t.end();
-  }
-);
+    equal(applyFixes(tag, messages), tag);
+    equal(messages, []);
+  });
+});
 
-tap.test(
-  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 2`,
-  (t) => {
-    [`<applet>`, `<object>`].forEach((tag) => {
-      const linter = new Linter();
-      const messages = linter.verify(tag, {
-        rules: {
-          "attribute-validate-archive": 2,
-        },
-      });
-      t.equal(applyFixes(tag, messages), tag);
-      t.strictSame(messages, []);
-    });
-    t.end();
-  }
-);
-
-tap.test(
-  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, applet`,
-  (t) => {
-    const str = `<applet class='zz' archive='https://codsen.com,https://detergent.io' id='yy aa'>`; // <-- notice single quotes
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 2`, () => {
+  [`<applet>`, `<object>`].forEach((tag) => {
+    let linter = new Linter();
+    let messages = linter.verify(tag, {
       rules: {
         "attribute-validate-archive": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "04.01");
-    t.strictSame(messages, [], "04.02");
-    t.end();
-  }
-);
+    equal(applyFixes(tag, messages), tag);
+    equal(messages, []);
+  });
+});
 
-tap.test(
-  `05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, object`,
-  (t) => {
-    const str = `<object class='zz' archive='https://codsen.com https://detergent.io' id='yy aa'>`; // <-- notice single quotes
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "05.01");
-    t.strictSame(messages, [], "05.02");
-    t.end();
-  }
-);
-
-// 02. rogue whitespace
-// -----------------------------------------------------------------------------
-
-tap.test(
-  `06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
-  (t) => {
-    const str = `<applet archive=" https://codsen.com">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    t.equal(
-      applyFixes(str, messages),
-      `<applet archive="https://codsen.com">`,
-      "06.01"
-    );
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 17,
-          idxTo: 18,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[17, 18]],
-          },
-        },
-      ],
-      "06.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
-  (t) => {
-    const str = `<applet archive="https://codsen.com ">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    t.equal(
-      applyFixes(str, messages),
-      `<applet archive="https://codsen.com">`,
-      "07.01"
-    );
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 35,
-          idxTo: 36,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[35, 36]],
-          },
-        },
-      ],
-      "07.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - 6 digit object`,
-  (t) => {
-    const str = `<applet archive="  https://codsen.com  ">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    t.equal(
-      applyFixes(str, messages),
-      `<applet archive="https://codsen.com">`,
-      "08.01"
-    );
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 17,
-          idxTo: 39,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [
-              [17, 19],
-              [37, 39],
-            ],
-          },
-        },
-      ],
-      "08.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
-  (t) => {
-    const str = `<applet archive="  \t">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "09.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 17,
-          idxTo: 20,
-          message: `Missing value.`,
-          fix: null,
-        },
-      ],
-      "09.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`,
-  (t) => {
-    const str = `<applet archive="">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "10.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 8,
-          idxTo: 18,
-          message: `Missing value.`,
-          fix: null,
-        },
-      ],
-      "10.02"
-    );
-    t.end();
-  }
-);
-
-// 03. applet tag
-// -----------------------------------------------------------------------------
-
-tap.test(`11 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - healthy`, (t) => {
-  const str = `<applet class='zz' archive='http://codsen.com,https://detergent.io' id='yy aa'>`; // <-- notice single quotes
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, applet`, () => {
+  let str = `<applet class='zz' archive='https://codsen.com,https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+  let linter = new Linter();
+  let messages = linter.verify(str, {
     rules: {
       "attribute-validate-archive": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "11.01");
-  t.strictSame(messages, [], "11.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "04.01");
+  equal(messages, [], "04.02");
 });
 
-tap.test(
-  `12 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`,
-  (t) => {
-    const str = `<applet archive="http://codsen.com,trala..">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "12.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 35,
-          idxTo: 42,
-          message: `Should be an URI.`,
-          fix: null,
-        },
-      ],
-      "12.02"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, object`, () => {
+  let str = `<object class='zz' archive='https://codsen.com https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "05.01");
+  equal(messages, [], "05.02");
+});
 
-tap.test(
-  `13 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`,
-  (t) => {
-    const str = `<applet archive="abc.,def.">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "13.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 17,
-          idxTo: 21,
-          message: `Should be an URI.`,
-          fix: null,
-        },
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 22,
-          idxTo: 26,
-          message: `Should be an URI.`,
-          fix: null,
-        },
-      ],
-      "13.02"
-    );
-    t.end();
-  }
-);
+// 02. rogue whitespace
+// -----------------------------------------------------------------------------
 
-tap.test(
-  `14 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - legit URI's but space-separated`,
-  (t) => {
-    const str = `<applet archive="https://codsen.com https://detergent.io">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
+test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
+  let str = `<applet archive=" https://codsen.com">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<applet archive="https://codsen.com">`);
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 17,
+      idxTo: 18,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [[17, 18]],
       },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "14.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 35,
-          idxTo: 36,
-          message: `Bad whitespace.`,
-          fix: null,
-        },
-      ],
-      "14.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
 
-tap.test(`15 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, (t) => {
-  const str = `<applet archive=",http://codsen.com, tralal. , ">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
+  let str = `<applet archive="https://codsen.com ">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<applet archive="https://codsen.com">`);
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 35,
+      idxTo: 36,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [[35, 36]],
+      },
+    },
+  ]);
+});
+
+test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - 6 digit object`, () => {
+  let str = `<applet archive="  https://codsen.com  ">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<applet archive="https://codsen.com">`);
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 17,
+      idxTo: 39,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [
+          [17, 19],
+          [37, 39],
+        ],
+      },
+    },
+  ]);
+});
+
+test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = `<applet archive="  \t">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "09.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 17,
+      idxTo: 20,
+      message: `Missing value.`,
+      fix: null,
+    },
+  ]);
+});
+
+test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => {
+  let str = `<applet archive="">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "10.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 8,
+      idxTo: 18,
+      message: `Missing value.`,
+      fix: null,
+    },
+  ]);
+});
+
+// 03. applet tag
+// -----------------------------------------------------------------------------
+
+test(`11 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - healthy`, () => {
+  let str = `<applet class='zz' archive='http://codsen.com,https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "11.01");
+  equal(messages, [], "11.02");
+});
+
+test(`12 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`, () => {
+  let str = `<applet archive="http://codsen.com,trala..">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "12.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 35,
+      idxTo: 42,
+      message: `Should be an URI.`,
+      fix: null,
+    },
+  ]);
+});
+
+test(`13 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`, () => {
+  let str = `<applet archive="abc.,def.">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "13.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 17,
+      idxTo: 21,
+      message: `Should be an URI.`,
+      fix: null,
+    },
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 22,
+      idxTo: 26,
+      message: `Should be an URI.`,
+      fix: null,
+    },
+  ]);
+});
+
+test(`14 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - legit URI's but space-separated`, () => {
+  let str = `<applet archive="https://codsen.com https://detergent.io">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "14.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 35,
+      idxTo: 36,
+      message: `Bad whitespace.`,
+      fix: null,
+    },
+  ]);
+});
+
+test(`15 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, () => {
+  let str = `<applet archive=",http://codsen.com, tralal. , ">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
     rules: {
       "attribute-validate-archive": 2,
     },
   });
   // can fix:
-  t.equal(
+  equal(
     applyFixes(str, messages),
-    `<applet archive="http://codsen.com,tralal.">`,
-    "15.01"
+    `<applet archive="http://codsen.com,tralal.">`
   );
-  t.match(
-    messages,
-    [
-      {
-        idxFrom: 46,
-        idxTo: 47,
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [[46, 47]],
-        },
-        ruleId: "attribute-validate-archive",
+  compare(ok, messages, [
+    {
+      idxFrom: 46,
+      idxTo: 47,
+      message: "Remove whitespace.",
+      fix: {
+        ranges: [[46, 47]],
       },
-      {
-        idxFrom: 17,
-        idxTo: 18,
-        message: "Remove separator.",
-        fix: {
-          ranges: [[17, 18]],
-        },
-        ruleId: "attribute-validate-archive",
+      ruleId: "attribute-validate-archive",
+    },
+    {
+      idxFrom: 17,
+      idxTo: 18,
+      message: "Remove separator.",
+      fix: {
+        ranges: [[17, 18]],
       },
-      {
-        idxFrom: 36,
-        idxTo: 37,
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [[36, 37]],
-        },
-        ruleId: "attribute-validate-archive",
+      ruleId: "attribute-validate-archive",
+    },
+    {
+      idxFrom: 36,
+      idxTo: 37,
+      message: "Remove whitespace.",
+      fix: {
+        ranges: [[36, 37]],
       },
-      {
-        idxFrom: 37,
-        idxTo: 44,
-        message: "Should be an URI.",
-        fix: null,
-        ruleId: "attribute-validate-archive",
+      ruleId: "attribute-validate-archive",
+    },
+    {
+      idxFrom: 37,
+      idxTo: 44,
+      message: "Should be an URI.",
+      fix: null,
+      ruleId: "attribute-validate-archive",
+    },
+    {
+      idxFrom: 44,
+      idxTo: 45,
+      message: "Remove whitespace.",
+      fix: {
+        ranges: [[44, 45]],
       },
-      {
-        idxFrom: 44,
-        idxTo: 45,
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [[44, 45]],
-        },
-        ruleId: "attribute-validate-archive",
+      ruleId: "attribute-validate-archive",
+    },
+    {
+      idxFrom: 45,
+      idxTo: 46,
+      message: "Remove separator.",
+      fix: {
+        ranges: [[45, 46]],
       },
-      {
-        idxFrom: 45,
-        idxTo: 46,
-        message: "Remove separator.",
-        fix: {
-          ranges: [[45, 46]],
-        },
-        ruleId: "attribute-validate-archive",
-      },
-    ],
-    "15.02"
-  );
-  t.end();
+      ruleId: "attribute-validate-archive",
+    },
+  ]);
 });
 
 // 04. object tag
 // -----------------------------------------------------------------------------
 
-tap.test(`16 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - healthy`, (t) => {
-  const str = `<object class='zz' archive='http://codsen.com https://detergent.io' id='yy aa'>`; // <-- notice single quotes
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+test(`16 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - healthy`, () => {
+  let str = `<object class='zz' archive='http://codsen.com https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+  let linter = new Linter();
+  let messages = linter.verify(str, {
     rules: {
       "attribute-validate-archive": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "16.01");
-  t.strictSame(messages, [], "16.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "16.01");
+  equal(messages, [], "16.02");
 });
 
-tap.test(
-  `17 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - unrecognised URI`,
-  (t) => {
-    const str = `<object archive="tralala.">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "17.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 17,
-          idxTo: 25,
-          message: `Should be an URI.`,
-          fix: null,
-        },
-      ],
-      "17.02"
-    );
-    t.end();
-  }
-);
+test(`17 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - unrecognised URI`, () => {
+  let str = `<object archive="tralala.">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "17.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 17,
+      idxTo: 25,
+      message: `Should be an URI.`,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `18 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-separated`,
-  (t) => {
-    const str = `<object archive="https://codsen.com,https://detergent.io">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "18.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 17,
-          idxTo: 56,
-          message: `URI's should be separated with a single space.`,
-          fix: null,
-        },
-      ],
-      "18.02"
-    );
-    t.end();
-  }
-);
+test(`18 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-separated`, () => {
+  let str = `<object archive="https://codsen.com,https://detergent.io">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "18.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 17,
+      idxTo: 56,
+      message: `URI's should be separated with a single space.`,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `19 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-separated`,
-  (t) => {
-    const str = `<object archive="https://codsen.com, https://detergent.io">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-archive": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "19.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-archive",
-          idxFrom: 35,
-          idxTo: 36,
-          message: `No commas.`,
-          fix: null,
-        },
-      ],
-      "19.02"
-    );
-    t.end();
-  }
-);
+test(`19 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-separated`, () => {
+  let str = `<object archive="https://codsen.com, https://detergent.io">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "19.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-archive",
+      idxFrom: 35,
+      idxTo: 36,
+      message: `No commas.`,
+      fix: null,
+    },
+  ]);
+});
+
+test.run();

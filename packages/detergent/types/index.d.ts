@@ -39,7 +39,6 @@ interface Res {
 }
 
 declare const version: string;
-
 /**
  * Extracts, cleans and encodes text
  */

@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/2001/index.htm
 
 function badCharacterEmQuad(context: Linter): RuleObjType {
-  const charCode = 8193;
+  let charCode = 8193;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

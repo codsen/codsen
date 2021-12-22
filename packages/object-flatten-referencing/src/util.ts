@@ -51,11 +51,11 @@ function isStr(something: any): boolean {
 }
 
 function flattenObject(objOrig: Obj, originalOpts?: Partial<Opts>): any[] {
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
   if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
     return [];
   }
-  const obj = clone(objOrig);
+  let obj = clone(objOrig);
   let res: any[] = [];
   if (isObj(obj)) {
     Object.keys(obj).forEach((key) => {
@@ -64,11 +64,13 @@ function flattenObject(objOrig: Obj, originalOpts?: Partial<Opts>): any[] {
       }
       if (Array.isArray(obj[key])) {
         res = res.concat(
-          obj[key].map((el: any) => key + opts.objectKeyAndValueJoinChar + el)
+          obj[key].map(
+            (el: any) => `${key}${opts.objectKeyAndValueJoinChar}${el}`
+          )
         );
       }
       if (isStr(obj[key])) {
-        res.push(key + opts.objectKeyAndValueJoinChar + obj[key]);
+        res.push(`${key}${opts.objectKeyAndValueJoinChar}${obj[key]}`);
       }
     });
   }
@@ -81,11 +83,11 @@ function flattenArr(
   wrap = false,
   joinArraysUsingBrs = false
 ): string {
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
   if (arguments.length === 0 || arrOrig.length === 0) {
     return "";
   }
-  const arr: any[] = clone(arrOrig);
+  let arr: any[] = clone(arrOrig);
   let res = "";
   if (arr.length > 0) {
     if (joinArraysUsingBrs) {
@@ -104,11 +106,9 @@ function flattenArr(
           ) {
             lineBreak = `<br${opts.xhtml ? " /" : ""}>`;
           }
-          res +=
-            lineBreak +
-            (wrap ? opts.wrapHeadsWith : "") +
-            arr[i] +
-            (wrap ? opts.wrapTailsWith : "");
+          res += `${lineBreak}${wrap ? opts.wrapHeadsWith : ""}${arr[i]}${
+            wrap ? opts.wrapTailsWith : ""
+          }`;
         } else if (Array.isArray(arr[i])) {
           if (arr[i].length > 0 && arr[i].every(isStr)) {
             let lineBreak = "";
@@ -145,14 +145,9 @@ function flattenArr(
         if (i !== arr2.length - 1) {
           trailingSpace = " ";
         }
-        return (
-          acc +
-          (i === 0 ? lineBreak : "") +
-          (wrap ? opts.wrapHeadsWith : "") +
-          val +
-          (wrap ? opts.wrapTailsWith : "") +
-          trailingSpace
-        );
+        return `${acc}${i === 0 ? lineBreak : ""}${
+          wrap ? opts.wrapHeadsWith : ""
+        }${val}${wrap ? opts.wrapTailsWith : ""}${trailingSpace}`;
       }, res);
     }
   }

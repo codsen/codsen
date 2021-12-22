@@ -12,7 +12,7 @@ function includesWithRegex(
   whatToMatch: string,
   originalOpts?: Partial<Opts>
 ): boolean {
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
   console.log(" ---------- ");
   console.log(
     `018 includesWithRegex() called to match ${JSON.stringify(

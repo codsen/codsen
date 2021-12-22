@@ -1,40 +1,43 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { combinations } from "../dist/object-boolean-combinations.esm.js";
 
 // ==============================
 // Edge cases
 // ==============================
 
-tap.test("01 - both inputs missing - throws", (t) => {
-  t.throws(
+test("01 - both inputs missing - throws", () => {
+  throws(
     () => {
       combinations();
     },
     /THROW_ID_01/,
     "01.01"
   );
-  t.throws(
+  throws(
     () => {
       combinations(undefined);
     },
     /THROW_ID_01/,
     "01.02"
   );
-  t.throws(
+  throws(
     () => {
       combinations(undefined, undefined);
     },
     /THROW_ID_01/,
     "01.03"
   );
-  t.throws(
+  throws(
     () => {
       combinations(undefined, undefined, undefined);
     },
     /THROW_ID_01/,
     "01.04"
   );
-  t.throws(
+  throws(
     () => {
       combinations(undefined, undefined, true);
     },
@@ -42,7 +45,7 @@ tap.test("01 - both inputs missing - throws", (t) => {
     "01.05"
   );
 
-  t.throws(
+  throws(
     () => {
       combinations(null);
     },
@@ -50,18 +53,17 @@ tap.test("01 - both inputs missing - throws", (t) => {
     "01.06"
   );
 
-  t.throws(
+  throws(
     () => {
       combinations(null, null);
     },
     /THROW_ID_01/,
     "01.07"
   );
-  t.end();
 });
 
-tap.test("02 - first input is not an object - throws", (t) => {
-  t.throws(
+test("02 - first input is not an object - throws", () => {
+  throws(
     () => {
       combinations("a");
     },
@@ -71,7 +73,7 @@ tap.test("02 - first input is not an object - throws", (t) => {
 
   // eslint-disable-next-line
   const fn = () => {};
-  t.throws(
+  throws(
     () => {
       combinations(fn);
     },
@@ -79,7 +81,7 @@ tap.test("02 - first input is not an object - throws", (t) => {
     "02.02"
   );
 
-  t.throws(
+  throws(
     () => {
       combinations("a", "a");
     },
@@ -87,23 +89,23 @@ tap.test("02 - first input is not an object - throws", (t) => {
     "02.03"
   );
 
-  t.throws(
+  throws(
     () => {
       combinations("a", "a", true);
     },
     /THROW_ID_02/,
     "02.04"
   );
-  t.end();
 });
 
-tap.test("03 - second input is not an object - throws", (t) => {
-  t.throws(
+test("03 - second input is not an object - throws", () => {
+  throws(
     () => {
       combinations({ a: "a" }, "a");
     },
     /THROW_ID_03/,
     "03"
   );
-  t.end();
 });
+
+test.run();

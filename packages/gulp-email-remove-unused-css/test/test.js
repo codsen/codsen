@@ -1,7 +1,10 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import vs from "vinyl-string";
 // Lets us write in-line functions in our pipe:
 import map from "map-stream";
+
 import geruc from "../index.js";
 
 // https://snugug.com/musings/unit-testing-gulp-tasks/
@@ -9,10 +12,10 @@ import geruc from "../index.js";
 // * @param {string} path  - The "path" of the "file"
 // * @param {function} func - The lazypipe that will be used to transform the input
 function fromString(input, path, func) {
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     let contents = false; // So we can grab the content later
 
-    const vFile = vs(input, { path }); // Equivalent to path: path. ES6 Object Literal Shorthand Syntax
+    let vFile = vs(input, { path }); // Equivalent to path: path. ES6 Object Literal Shorthand Syntax
 
     vFile
       .pipe(func()) // Call the function we're going to pass in
@@ -23,16 +26,16 @@ function fromString(input, path, func) {
         })
       )
       .on("error", (e) => {
-        rej(e);
+        reject(e);
       })
       .on("end", () => {
-        res(contents);
+        resolve(contents);
       });
   });
 }
 
-tap.test("removes unused CSS", async (t) => {
-  const source = `
+test("removes unused CSS", async () => {
+  let source = `
 <!DOCTYPE html>
 <head>
 <title>Dummy HTML</title>
@@ -59,7 +62,7 @@ tap.test("removes unused CSS", async (t) => {
 </html>
 `;
 
-  const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <head>
 <title>Dummy HTML</title>
 <style type="text/css">
@@ -85,9 +88,10 @@ tap.test("removes unused CSS", async (t) => {
 </html>
 `;
 
-  const contents = await fromString(source, "test/source.html", geruc).then(
+  let contents = await fromString(source, "test/source.html", geruc).then(
     (output) => output.contents.toString()
   );
-  t.equal(contents, intended, "Sass compiled as expected");
-  t.end();
+  equal(contents, intended, "Sass compiled as expected");
 });
+
+test.run();

@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // only the string to search for
 // ==============================
 
-tap.test("01 - replace letter with letter", (t) => {
-  t.equal(
+test("01 - replace letter with letter", () => {
+  equal(
     er(
       "a b c",
       {
@@ -23,7 +26,7 @@ tap.test("01 - replace letter with letter", (t) => {
     "a d c",
     "test 1.1"
   );
-  t.equal(
+  equal(
     er(
       "a b c",
       {
@@ -34,11 +37,10 @@ tap.test("01 - replace letter with letter", (t) => {
     "a d c",
     "test 1.1"
   );
-  t.end();
 });
 
-tap.test("02 - replace 1 emoji with 1 emoji", (t) => {
-  t.equal(
+test("02 - replace 1 emoji with 1 emoji", () => {
+  equal(
     er(
       "🐴 🦄 🐴",
       {
@@ -55,11 +57,10 @@ tap.test("02 - replace 1 emoji with 1 emoji", (t) => {
     "🐴 💖 🐴",
     "test 1.2"
   );
-  t.end();
 });
 
-tap.test("03 - replace 3 consecutive emoji with emoji", (t) => {
-  t.equal(
+test("03 - replace 3 consecutive emoji with emoji", () => {
+  equal(
     er(
       "a 🦄🦄🦄 a",
       {
@@ -76,11 +77,10 @@ tap.test("03 - replace 3 consecutive emoji with emoji", (t) => {
     "a 💖💖💖 a",
     "test 1.3"
   );
-  t.end();
 });
 
-tap.test("04 - gorilla emoji - in escaped JS", (t) => {
-  t.equal(
+test("04 - gorilla emoji - in escaped JS", () => {
+  equal(
     er(
       "ljghdfjkgzh\ud83e\udd8dlkgljd",
       {
@@ -97,11 +97,10 @@ tap.test("04 - gorilla emoji - in escaped JS", (t) => {
     "ljghdfjkgzh Gorilla lkgljd",
     "test 1.4 - http://unicode-table.com/en/1F98D/"
   );
-  t.end();
 });
 
-tap.test("05 - gorilla emoji - in raw", (t) => {
-  t.equal(
+test("05 - gorilla emoji - in raw", () => {
+  equal(
     er(
       "ljghdfjkgzh🦍lkgljd",
       {
@@ -118,11 +117,10 @@ tap.test("05 - gorilla emoji - in raw", (t) => {
     "ljghdfjkgzhgorillalkgljd",
     "test 1.5 - http://unicode-table.com/en/1F98D/"
   );
-  t.end();
 });
 
-tap.test("06 - won't find a letter", (t) => {
-  t.equal(
+test("06 - won't find a letter", () => {
+  equal(
     er(
       "a b c",
       {
@@ -139,11 +137,10 @@ tap.test("06 - won't find a letter", (t) => {
     "a b c",
     "test 1.6"
   );
-  t.end();
 });
 
-tap.test("07 - won't find emoji, with new lines", (t) => {
-  t.equal(
+test("07 - won't find emoji, with new lines", () => {
+  equal(
     er(
       "a\nb\nc",
       {
@@ -160,11 +157,10 @@ tap.test("07 - won't find emoji, with new lines", (t) => {
     "a\nb\nc",
     "test 1.7"
   );
-  t.end();
 });
 
-tap.test("08 - replacement with new lines", (t) => {
-  t.equal(
+test("08 - replacement with new lines", () => {
+  equal(
     er(
       "a\nb",
       {
@@ -181,11 +177,10 @@ tap.test("08 - replacement with new lines", (t) => {
     "c\nd",
     "test 1.8"
   );
-  t.end();
 });
 
-tap.test("09 - multiple letter findings", (t) => {
-  t.equal(
+test("09 - multiple letter findings", () => {
+  equal(
     er(
       "a a a a a b",
       {
@@ -202,11 +197,10 @@ tap.test("09 - multiple letter findings", (t) => {
     "c c c c c b",
     "test 1.9"
   );
-  t.end();
 });
 
-tap.test("10 - single digit of string type replaced", (t) => {
-  t.equal(
+test("10 - single digit of string type replaced", () => {
+  equal(
     er(
       "0",
       {
@@ -223,11 +217,10 @@ tap.test("10 - single digit of string type replaced", (t) => {
     "1",
     "test 1.10"
   );
-  t.end();
 });
 
-tap.test("11 - single digit of integer type replaced", (t) => {
-  t.equal(
+test("11 - single digit of integer type replaced", () => {
+  equal(
     er(
       0,
       {
@@ -244,11 +237,10 @@ tap.test("11 - single digit of integer type replaced", (t) => {
     "1",
     "test 1.11"
   );
-  t.end();
 });
 
-tap.test("12 - source and replacement are of integer type", (t) => {
-  t.equal(
+test("12 - source and replacement are of integer type", () => {
+  equal(
     er(
       0,
       {
@@ -265,11 +257,10 @@ tap.test("12 - source and replacement are of integer type", (t) => {
     "1",
     "test 1.12"
   );
-  t.end();
 });
 
-tap.test("13 - all raw integers: source, replacement and searchFor", (t) => {
-  t.equal(
+test("13 - all raw integers: source, replacement and searchFor", () => {
+  equal(
     er(
       0,
       {
@@ -286,11 +277,10 @@ tap.test("13 - all raw integers: source, replacement and searchFor", (t) => {
     "1",
     "test 1.13"
   );
-  t.end();
 });
 
-tap.test("14 - multiple consecutive letter replacements", (t) => {
-  t.equal(
+test("14 - multiple consecutive letter replacements", () => {
+  equal(
     er(
       "aaavvvvccccc",
       {
@@ -307,5 +297,6 @@ tap.test("14 - multiple consecutive letter replacements", (t) => {
     "aaabbbbccccc",
     "test 1.14"
   );
-  t.end();
 });
+
+test.run();

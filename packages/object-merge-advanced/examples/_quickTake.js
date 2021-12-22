@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { mergeAdvanced } from "../dist/object-merge-advanced.esm.js";
 
 assert.deepEqual(

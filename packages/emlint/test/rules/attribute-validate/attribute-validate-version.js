@@ -1,194 +1,153 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no version, error level 0`,
-  (t) => {
-    const str = `<html>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-version": 0,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "01.01");
-    t.strictSame(messages, [], "01.02");
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no version, error level 0`, () => {
+  let str = `<html>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-version": 0,
+    },
+  });
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
+});
 
-tap.test(
-  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no version, error level 1`,
-  (t) => {
-    const str = `<html>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-version": 1,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "02.01");
-    t.strictSame(messages, [], "02.02");
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no version, error level 1`, () => {
+  let str = `<html>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-version": 1,
+    },
+  });
+  equal(applyFixes(str, messages), str, "02.01");
+  equal(messages, [], "02.02");
+});
 
-tap.test(
-  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no version, error level 2`,
-  (t) => {
-    const str = `<html>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-version": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "03.01");
-    t.strictSame(messages, [], "03.02");
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no version, error level 2`, () => {
+  let str = `<html>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-version": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "03.01");
+  equal(messages, [], "03.02");
+});
 
-tap.test(
-  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  (t) => {
-    const str = `<html version='zz'>`; // <-- notice single quotes
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-version": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "04.01");
-    t.strictSame(messages, [], "04.02");
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = `<html version='zz'>`; // <-- notice single quotes
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-version": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "04.01");
+  equal(messages, [], "04.02");
+});
 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  (t) => {
-    const str = `<div version="something">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-version": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "05.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-version",
-          idxFrom: 5,
-          idxTo: 24,
-          fix: null,
-        },
-      ],
-      "05.02"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
+  let str = `<div version="something">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-version": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "05.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-version",
+      idxFrom: 5,
+      idxTo: 24,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  (t) => {
-    const str = `<zzz version="something">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-version": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "06.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-version",
-          idxFrom: 5,
-          idxTo: 24,
-          fix: null,
-        },
-      ],
-      "06.02"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = `<zzz version="something">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-version": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "06.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-version",
+      idxFrom: 5,
+      idxTo: 24,
+      fix: null,
+    },
+  ]);
+});
 
 // 03. whitespace
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`,
-  (t) => {
-    const str = `<html version="">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-version": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "07.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-version",
-          idxFrom: 6,
-          idxTo: 16,
-          message: `Missing value.`,
-          fix: null,
-        },
-      ],
-      "07.02"
-    );
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
+  let str = `<html version="">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-version": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "07.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-version",
+      idxFrom: 6,
+      idxTo: 16,
+      message: `Missing value.`,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`,
-  (t) => {
-    const str = `<html version=" something ">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-version": 2,
+test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`, () => {
+  let str = `<html version=" something ">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-version": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<html version="something">`, "08.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-version",
+      idxFrom: 15,
+      idxTo: 26,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [
+          [15, 16],
+          [25, 26],
+        ],
       },
-    });
-    t.equal(applyFixes(str, messages), `<html version="something">`, "08.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-version",
-          idxFrom: 15,
-          idxTo: 26,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [
-              [15, 16],
-              [25, 26],
-            ],
-          },
-        },
-      ],
-      "08.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
+
+test.run();

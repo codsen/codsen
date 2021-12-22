@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import {
   notEmailFriendly,
   notEmailFriendlySetOnly,
@@ -7,27 +10,24 @@ import {
   notEmailFriendlyMaxLength,
 } from "../dist/html-entities-not-email-friendly.esm.js";
 
-tap.test(`01 - notEmailFriendly is set`, (t) => {
-  t.ok(notEmailFriendly.Abreve === "#x102", "01");
-  t.end();
+test(`01 - notEmailFriendly is set`, () => {
+  ok(notEmailFriendly.Abreve === "#x102", "01");
 });
 
-tap.test(`02 - notEmailFriendlySetOnly is set`, (t) => {
-  t.ok(notEmailFriendlySetOnly.size > 0, "02");
-  t.end();
+test(`02 - notEmailFriendlySetOnly is set`, () => {
+  ok(notEmailFriendlySetOnly.size > 0, "02");
 });
 
-tap.test(`03 - notEmailFriendlyLowercaseSetOnly is set`, (t) => {
-  t.ok(notEmailFriendlyLowercaseSetOnly.size > 0, "03");
-  t.end();
+test(`03 - notEmailFriendlyLowercaseSetOnly is set`, () => {
+  ok(notEmailFriendlyLowercaseSetOnly.size > 0, "03");
 });
 
-tap.test(`04 - notEmailFriendlyMinLength is set`, (t) => {
-  t.ok(notEmailFriendlyMinLength > 0, "04");
-  t.end();
+test(`04 - notEmailFriendlyMinLength is set`, () => {
+  ok(notEmailFriendlyMinLength > 0, "04");
 });
 
-tap.test(`05 - notEmailFriendlyMaxLength is set`, (t) => {
-  t.ok(notEmailFriendlyMaxLength > 0, "05");
-  t.end();
+test(`05 - notEmailFriendlyMaxLength is set`, () => {
+  ok(notEmailFriendlyMaxLength > 0, "05");
 });
+
+test.run();

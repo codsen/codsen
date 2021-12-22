@@ -1,3 +1,7 @@
+declare function isNumeric(str: any): boolean;
+declare function findType(something: string): string;
+
+declare const version: string;
 interface Res {
     res: string[][];
     msgContent: null | string;
@@ -8,4 +12,4 @@ interface Res {
  */
 declare function sort(input: string): Res;
 
-export { sort };
+export { findType, isNumeric, sort, version };

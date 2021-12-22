@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { setAllValuesTo } from "../dist/object-set-all-values-to.esm.js";
 
 assert.deepEqual(

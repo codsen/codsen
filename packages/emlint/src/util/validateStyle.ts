@@ -48,8 +48,8 @@ function validateStyle(
   if (
     (nodeArr as Property[]).some((property) => property.property !== undefined)
   ) {
-    properties = (nodeArr as any).filter(
-      (property: any) => (property as any).property !== undefined
+    properties = nodeArr.filter(
+      (property: any) => property.property !== undefined
     );
   }
   console.log(
@@ -60,7 +60,7 @@ function validateStyle(
     )}`
   );
 
-  if (properties && properties.length) {
+  if (properties?.length) {
     console.log(`064 validateStyle()`);
 
     // 1. catch missing semi on all rules except last
@@ -122,7 +122,7 @@ function validateStyle(
       if (
         property.colon &&
         property.propertyEnds &&
-        (property.propertyEnds as number) < (property.colon as number)
+        property.propertyEnds < property.colon
       ) {
         console.log(
           `128 validateStyle() ${`\u001b[${31}m${`rogue gap in front of colon ${property.property}`}\u001b[${39}m`}`
@@ -133,9 +133,7 @@ function validateStyle(
           idxTo: property.end,
           message: `Gap in front of semicolon.`,
           fix: {
-            ranges: [
-              [property.propertyEnds as number, property.colon as number],
-            ],
+            ranges: [[property.propertyEnds, property.colon]],
           },
         });
       }
@@ -148,10 +146,10 @@ function validateStyle(
         property.semi &&
         ((property.importantEnds || property.valueEnds) as number) &&
         ((property.importantEnds || property.valueEnds) as number) <
-          (property.semi as number)
+          property.semi
       ) {
         console.log(
-          `154 validateStyle() ${`\u001b[${31}m${`rogue gap in front of semi ${property.property}`}\u001b[${39}m`}`
+          `152 validateStyle() ${`\u001b[${31}m${`rogue gap in front of semi ${property.property}`}\u001b[${39}m`}`
         );
         context.report({
           ruleId,
@@ -163,7 +161,7 @@ function validateStyle(
               [
                 (property.importantEnds as number) ||
                   (property.valueEnds as number),
-                property.semi as number,
+                property.semi,
               ],
             ],
           },
@@ -176,7 +174,7 @@ function validateStyle(
 
       if (property.colon && context.str[property.colon] !== ":") {
         console.log(
-          `179 validateStyle() ${`\u001b[${31}m${`mis-typed colon ${property.property}`}\u001b[${39}m`}`
+          `177 validateStyle() ${`\u001b[${31}m${`mis-typed colon ${property.property}`}\u001b[${39}m`}`
         );
         context.report({
           ruleId,
@@ -200,7 +198,7 @@ function validateStyle(
         !property.importantStarts
       ) {
         console.log(
-          `203 validateStyle() ${`\u001b[${31}m${`rogue semicolon at ${property.semi}`}\u001b[${39}m`}`
+          `201 validateStyle() ${`\u001b[${31}m${`rogue semicolon at ${property.semi}`}\u001b[${39}m`}`
         );
         context.report({
           ruleId,
@@ -217,7 +215,7 @@ function validateStyle(
       if (property.colon && property.valueStarts) {
         if (property.valueStarts > property.colon + 2) {
           console.log(
-            `220 validateStyle() ${`\u001b[${31}m${`remove whitespace after ${property.colon}`}\u001b[${39}m`}`
+            `218 validateStyle() ${`\u001b[${31}m${`remove whitespace after ${property.colon}`}\u001b[${39}m`}`
           );
           context.report({
             ruleId,
@@ -251,7 +249,7 @@ function validateStyle(
   if (nodeArr && Array.isArray(nodeArr) && nodeArr.length) {
     for (let i = 0, len = nodeArr.length; i < len; i++) {
       console.log(
-        `254 validateStyle() ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+        `252 validateStyle() ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
           nodeArr[i],
           null,
           4
@@ -272,7 +270,7 @@ function validateStyle(
         ruleId === "attribute-validate-style"
       ) {
         console.log(
-          `275 validateStyle() report [${nodeArr[i].start}, ${nodeArr[i].end}]`
+          `273 validateStyle() report [${nodeArr[i].start}, ${nodeArr[i].end}]`
         );
         // maybe whole value is whitespace?
         // <td style="  \t">
@@ -307,18 +305,18 @@ function validateStyle(
           (nodeArr[i] as Property).property === null
         ) {
           console.log(
-            `310 validateStyle() ${`\u001b[${31}m${`██`}\u001b[${39}m`} no value, no property`
+            `308 validateStyle() ${`\u001b[${31}m${`██`}\u001b[${39}m`} no value, no property`
           );
 
           let errorRaised = false;
           if (i) {
             for (let y = nodeArr.length; y--; ) {
               if (y === i) {
-                console.log(`317 validateStyle() skip thyself`);
+                console.log(`315 validateStyle() skip thyself`);
                 continue;
               }
               console.log(
-                `321 validateStyle() - property: ${JSON.stringify(
+                `319 validateStyle() - property: ${JSON.stringify(
                   nodeArr[y],
                   null,
                   4
@@ -331,26 +329,26 @@ function validateStyle(
                 !(nodeArr[i] as Property).propertyStarts &&
                 !(nodeArr[i] as Property).valueStarts &&
                 // we're traversing upon a CSS property, not a whitespace text token
-                (nodeArr[y] as any).property !== undefined
+                nodeArr[y].property !== undefined
               ) {
-                console.log(`336 validateStyle()`);
+                console.log(`334 validateStyle()`);
                 if (
                   // its semi is present
-                  (nodeArr[y] as any).semi &&
+                  nodeArr[y].semi &&
                   // and its important is missing
-                  !(nodeArr[y] as any).importantStarts
+                  !nodeArr[y].importantStarts
                 ) {
-                  console.log(`343 validateStyle()`);
+                  console.log(`341 validateStyle()`);
                   // the frontal space might be missing
-                  const fromIdx = (nodeArr[y] as any).semi;
-                  const toIdx = (nodeArr[y] as any).semi + 1;
+                  let fromIdx = nodeArr[y].semi;
+                  let toIdx = (nodeArr[y].semi as number) + 1;
                   let whatToInsert;
-                  if (context.str[(nodeArr[y] as any).semi + 1] !== " ") {
+                  if (context.str[(nodeArr[y].semi as number) + 1] !== " ") {
                     whatToInsert = " ";
                   }
 
                   console.log(
-                    `353 validateStyle() report [${fromIdx}, ${toIdx}]`
+                    `351 validateStyle() report [${fromIdx}, ${toIdx}]`
                   );
                   context.report({
                     ruleId,
@@ -364,7 +362,7 @@ function validateStyle(
 
                   errorRaised = true;
                   console.log(
-                    `367 validateStyle() ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`errorRaised`}\u001b[${39}m`} = ${JSON.stringify(
+                    `365 validateStyle() ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`errorRaised`}\u001b[${39}m`} = ${JSON.stringify(
                       errorRaised,
                       null,
                       4
@@ -373,7 +371,7 @@ function validateStyle(
                 } else {
                   // stop looping further
                   console.log(
-                    `376 validateStyle() ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+                    `374 validateStyle() ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
                   );
                   break;
                 }
@@ -391,7 +389,7 @@ function validateStyle(
             // and error hasn't been raised so far:
             !errorRaised
           ) {
-            console.log(`394 validateStyle() report missing value`);
+            console.log(`392 validateStyle() report missing value`);
             context.report({
               ruleId,
               idxFrom: nodeArr[i].start,
@@ -407,7 +405,7 @@ function validateStyle(
           (nodeArr[i] as Property).important
         ) {
           console.log(
-            `410 validateStyle() ${`\u001b[${31}m${`██`}\u001b[${39}m`} simply no value`
+            `408 validateStyle() ${`\u001b[${31}m${`██`}\u001b[${39}m`} simply no value`
           );
           context.report({
             ruleId,

@@ -1,6 +1,7 @@
 /* eslint no-use-before-define: 0 */
 
-import { Range, Ranges } from "../../../../scripts/common";
+import type { Range, Ranges } from "../../../../ops/typedefs/common";
+
 import {
   // TagToken,
   AtToken,
@@ -20,7 +21,7 @@ import {
 // From "type-fest" by Sindre Sorhus:
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = Array<JsonValue>;
+type JsonArray = JsonValue[];
 
 type Severity = 0 | 1 | 2;
 

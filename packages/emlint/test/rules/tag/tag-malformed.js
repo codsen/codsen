@@ -1,230 +1,213 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+// import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 
 // opening bracket missing
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - opening bracket missing`, (t) => {
-  const str = `<div>div class="x">`;
-  const fixed = `<div><div class="x">`;
-  const messages = verify(t, str, {
+test(`01 - opening bracket missing`, () => {
+  let str = `<div>div class="x">`;
+  let fixed = `<div><div class="x">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "01.01");
-  t.equal(messages.length, 1, "01.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "01.01");
+  equal(messages.length, 1, "01.02");
 });
 
-tap.test(`02 - tag - space - missing bracket`, (t) => {
-  const str = `<div> div class="x">`;
-  const fixed = `<div> <div class="x">`;
-  const messages = verify(t, str, {
+test(`02 - tag - space - missing bracket`, () => {
+  let str = `<div> div class="x">`;
+  let fixed = `<div> <div class="x">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "02.01");
-  t.equal(messages.length, 1, "02.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "02.01");
+  equal(messages.length, 1, "02.02");
 });
 
-tap.test(`03 - tag - line break - missing bracket`, (t) => {
-  const str = `<div>\n\ndiv class="x">`;
-  const fixed = `<div>\n\n<div class="x">`;
-  const messages = verify(t, str, {
+test(`03 - tag - line break - missing bracket`, () => {
+  let str = `<div>\n\ndiv class="x">`;
+  let fixed = `<div>\n\n<div class="x">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "03.01");
-  t.equal(messages.length, 1, "03.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "03.01");
+  equal(messages.length, 1, "03.02");
 });
 
-tap.test(`04 - two tags, tight`, (t) => {
-  const str = `<div class=""div class="x">`;
-  const fixed = `<div class=""><div class="x">`;
-  const messages = verify(t, str, {
+test(`04 - two tags, tight`, () => {
+  let str = `<div class=""div class="x">`;
+  let fixed = `<div class=""><div class="x">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "04");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "04");
 });
 
-tap.test(`05 - two tags, spaced`, (t) => {
-  const str = `<div class="" div class="x">`;
-  const fixed = `<div class=""> <div class="x">`;
-  const messages = verify(t, str, {
+test(`05 - two tags, spaced`, () => {
+  let str = `<div class="" div class="x">`;
+  let fixed = `<div class=""> <div class="x">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "05");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "05");
 });
 
-tap.test(`06 - two tags, attr`, (t) => {
-  const str = `<div class="z" div class="x">`;
-  const fixed = `<div class="z"> <div class="x">`;
-  const messages = verify(t, str, {
+test(`06 - two tags, attr`, () => {
+  let str = `<div class="z" div class="x">`;
+  let fixed = `<div class="z"> <div class="x">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "06");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "06");
 });
 
-tap.test(`07 - malformed closing tag, recognised`, (t) => {
-  const str = `<div>some text /div>`;
-  const fixed = `<div>some text </div>`;
-  const messages = verify(t, str, {
+test(`07 - malformed closing tag, recognised`, () => {
+  let str = `<div>some text /div>`;
+  let fixed = `<div>some text </div>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "07");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "07");
 });
 
-tap.test(`08 - malformed closing tag, unrecognised`, (t) => {
-  const str = `<div>some text /yo>`;
-  const fixed = `<div>some text </yo>`;
-  const messages = verify(t, str, {
+test(`08 - malformed closing tag, unrecognised`, () => {
+  let str = `<div>some text /yo>`;
+  let fixed = `<div>some text </yo>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "08");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "08");
 });
 
 // closing bracket missing
 // -----------------------------------------------------------------------------
 
-tap.test(`09 - position of a missing bracket is on EOL`, (t) => {
-  const str = `<div`;
-  const fixed = `<div>`;
-  const messages = verify(t, str, {
+test(`09 - position of a missing bracket is on EOL`, () => {
+  let str = `<div`;
+  let fixed = `<div>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "09.01");
-  t.equal(messages.length, 1, "09.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "09.01");
+  equal(messages.length, 1, "09.02");
 });
 
-tap.test(`10 - position of a missing bracket is on EOL`, (t) => {
-  const str = `<div></div`;
-  const fixed = `<div></div>`;
-  const messages = verify(t, str, {
+test(`10 - position of a missing bracket is on EOL`, () => {
+  let str = `<div></div`;
+  let fixed = `<div></div>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "10.01");
-  t.equal(messages.length, 1, "10.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "10.01");
+  equal(messages.length, 1, "10.02");
 });
 
-tap.test(`11 - attrs`, (t) => {
-  const str = `<div class="z"`;
-  const fixed = `<div class="z">`;
-  const messages = verify(t, str, {
+test(`11 - attrs`, () => {
+  let str = `<div class="z"`;
+  let fixed = `<div class="z">`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "11.01");
-  t.equal(messages.length, 1, "11.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "11.01");
+  equal(messages.length, 1, "11.02");
 });
 
-tap.test(`12 - attrs, trailing whitespace`, (t) => {
-  const str = `<div class="z"   `;
-  const fixed = `<div class="z">   `;
-  const messages = verify(t, str, {
+test(`12 - attrs, trailing whitespace`, () => {
+  let str = `<div class="z"   `;
+  let fixed = `<div class="z">   `;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "12.01");
-  t.equal(messages.length, 1, "12.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "12.01");
+  equal(messages.length, 1, "12.02");
 });
 
-tap.test(
-  `13 - position of a missing bracket is on a new opening bracket`,
-  (t) => {
-    const str = `<div></div<div>`;
-    const fixed = `<div></div><div>`;
-    const messages = verify(t, str, {
-      rules: {
-        "tag-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "13.01");
-    t.equal(messages.length, 1, "13.02");
-    t.end();
-  }
-);
-
-tap.test(
-  `14 - position of a missing bracket is on a new opening bracket`,
-  (t) => {
-    const str = `<div></div\n<div>`;
-    const fixed = `<div></div>\n<div>`;
-    const messages = verify(t, str, {
-      rules: {
-        "tag-malformed": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "14.01");
-    t.equal(messages.length, 1, "14.02");
-    t.end();
-  }
-);
-
-tap.todo(`15 - void tag`, (t) => {
-  const str = `<br`;
-  const fixed = `<br />`;
-  const messages = verify(t, str, {
+test(`13 - position of a missing bracket is on a new opening bracket`, () => {
+  let str = `<div></div<div>`;
+  let fixed = `<div></div><div>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "15.01");
-  t.equal(messages.length, 1, "15.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "13.01");
+  equal(messages.length, 1, "13.02");
 });
 
-tap.todo(`16`, (t) => {
-  const str = `<br\n`;
-  const fixed = `<br />\n`;
-  const messages = verify(t, str, {
+test(`14 - position of a missing bracket is on a new opening bracket`, () => {
+  let str = `<div></div\n<div>`;
+  let fixed = `<div></div>\n<div>`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "16.01");
-  t.equal(messages.length, 1, "16.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "14.01");
+  equal(messages.length, 1, "14.02");
 });
 
-tap.todo(`17 - multiple void tags without closing brackets`, (t) => {
-  const str = `<br<br<br`;
-  const fixed = `<br /><br /><br />`;
-  const messages = verify(t, str, {
+test.skip(`01 - void tag`, () => {
+  let str = `<br`;
+  let fixed = `<br />`;
+  let messages = verify(not, str, {
     rules: {
       "tag-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "17.01");
-  t.equal(messages.length, 1, "17.02");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "01.01");
+  equal(messages.length, 1, "01.02");
 });
+
+test.skip(`02`, () => {
+  let str = `<br\n`;
+  let fixed = `<br />\n`;
+  let messages = verify(not, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "02.01");
+  equal(messages.length, 1, "02.02");
+});
+
+test.skip(`03 - multiple void tags without closing brackets`, () => {
+  let str = `<br<br<br`;
+  let fixed = `<br /><br /><br />`;
+  let messages = verify(not, str, {
+    rules: {
+      "tag-malformed": 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "03.01");
+  equal(messages.length, 1, "03.02");
+});
+
+test.run();

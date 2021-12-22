@@ -11,12 +11,12 @@ function isSingleSpace(
   originalOpts: Partial<Opts>,
   errorArr: ErrorObj[]
 ): void {
-  const defaults = {
+  let defaults = {
     from: 0,
     to: str.length,
     offset: 0,
   };
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
 
   // whitespace starts at "from" and ends at "to"
   console.log(`022 opts.from = ${opts.from}; opts.to = ${opts.to}`);

@@ -3,14 +3,13 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { Ranges } from "../dist/ranges-push.esm.js";
 
+const callerDir = path.resolve(".");
+
 const testme = () => {
-  const ranges = new Ranges();
+  let ranges = new Ranges();
   ranges.add(6, 10);
   ranges.add(16, 20, "bbb");
   ranges.add(11, 15, "aaa");

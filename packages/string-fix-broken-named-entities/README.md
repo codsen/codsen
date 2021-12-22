@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 5.4.0
 
 ```js
 import { strict as assert } from "assert";
+
 import { fixEnt } from "string-fix-broken-named-entities";
 import { rApply } from "ranges-apply";
 
@@ -56,7 +57,7 @@ assert.equal(rApply(source, fixEnt(source)), "&nbsp;x&nbsp;y&nbsp;");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-fix-broken-named-entities/) for a full description of the API, examples and even a test <a href="https://codsen.com/os/string-fix-broken-named-entities/play">playground</a>.
+Please [visit codsen.com](https://codsen.com/os/string-fix-broken-named-entities/) for a full description of the API and even a test <a href="https://codsen.com/os/string-fix-broken-named-entities/play">playground</a>.
 
 ## Contributing
 
@@ -68,4 +69,6 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

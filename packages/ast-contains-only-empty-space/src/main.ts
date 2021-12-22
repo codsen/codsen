@@ -26,7 +26,7 @@ function empty(input: unknown): boolean {
     console.log(
       `027 -------------------------------------- path: ${innerObj.path}`
     );
-    const current = val !== undefined ? val : key;
+    let current = val !== undefined ? val : key;
     console.log(
       `${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
         current,

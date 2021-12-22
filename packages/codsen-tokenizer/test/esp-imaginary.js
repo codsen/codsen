@@ -1,23 +1,26 @@
 /* eslint no-template-curly-in-string:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { compare } from "ast-compare";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // const openingCurly = "\x7B";
 
 // Imaginary tempating languages
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - mirrorred-character heads and tails`, (t) => {
-  const gathered = [];
-  const input = `<$ yo $>`;
+test(`01 - mirrorred-character heads and tails`, () => {
+  let gathered = [];
+  let input = `<$ yo $>`;
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "esp",
         start: 0,
@@ -30,8 +33,9 @@ tap.test(`01 - mirrorred-character heads and tails`, (t) => {
         tailStartsAt: 6,
         tailEndsAt: 8,
       },
-    ],
+    ]),
     "01"
   );
-  t.end();
 });
+
+test.run();

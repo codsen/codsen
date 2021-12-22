@@ -1,14 +1,17 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { combinations } from "../dist/object-boolean-combinations.esm.js";
 
 // ==============================
 // Overrides or slicing
 // ==============================
 
-tap.test("01 - three properties two overrides", (t) => {
+test("01 - three properties two overrides", () => {
   // default, truthy/falsy numbers are output
 
-  t.strictSame(
+  equal(
     combinations({ a: false, b: false, c: false }, { a: true, b: true }),
     [
       { a: true, b: true, c: false },
@@ -16,7 +19,7 @@ tap.test("01 - three properties two overrides", (t) => {
     ],
     "01.01"
   );
-  t.strictSame(
+  equal(
     combinations({ a: false, b: false, c: false }, { a: "z", b: "y" }),
     [
       { a: "z", b: "y", c: false },
@@ -24,7 +27,7 @@ tap.test("01 - three properties two overrides", (t) => {
     ],
     "01.02 - override key values are strings"
   );
-  t.strictSame(
+  equal(
     combinations({ a: false, b: false, c: false }, { a: null, b: null }),
     [
       { a: null, b: null, c: false },
@@ -32,7 +35,7 @@ tap.test("01 - three properties two overrides", (t) => {
     ],
     "01.03 - override key values are strings"
   );
-  t.strictSame(
+  equal(
     combinations({ a: false, b: false, c: false }, { a: ["x"], b: ["y"] }),
     [
       { a: ["x"], b: ["y"], c: false },
@@ -40,11 +43,10 @@ tap.test("01 - three properties two overrides", (t) => {
     ],
     "01.04 - override key values are strings"
   );
-  t.end();
 });
 
-tap.test("02 - four properties three overrides", (t) => {
-  t.strictSame(
+test("02 - four properties three overrides", () => {
+  equal(
     combinations(
       {
         a: true,
@@ -70,14 +72,12 @@ tap.test("02 - four properties three overrides", (t) => {
     ],
     "02"
   );
-
-  t.end();
 });
 
 // edge cases:
 
-tap.test("03 - empty override object", (t) => {
-  t.strictSame(
+test("03 - empty override object", () => {
+  equal(
     combinations({ a: true, b: false, c: false }, {}),
     [
       { a: false, b: false, c: false },
@@ -91,10 +91,10 @@ tap.test("03 - empty override object", (t) => {
     ],
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - both input and override objects empty", (t) => {
-  t.strictSame(combinations({}, {}), [{}], "04");
-  t.end();
+test("04 - both input and override objects empty", () => {
+  equal(combinations({}, {}), [{}], "04");
 });
+
+test.run();

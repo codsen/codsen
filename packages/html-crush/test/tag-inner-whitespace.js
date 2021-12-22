@@ -1,161 +1,126 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { m } from "./util/util.js";
 
 // whitespace around tag brackets, inside tag
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - whitespace before closing bracket on opening tag`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<a >y`, {
-        removeLineBreaks: true,
-      }).result,
-      `x<a>y`,
-      "01.01"
-    );
-    t.strictSame(
-      m(t, `x<a > y`, {
-        removeLineBreaks: true,
-      }).result,
-      `x<a> y`,
-      "01.02"
-    );
-    t.strictSame(
-      m(t, `x<a>y`, {
-        removeLineBreaks: true,
-      }).result,
-      `x<a>y`,
-      "01.03"
-    );
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - whitespace before closing bracket on opening tag`, () => {
+  equal(
+    m(equal, `x<a >y`, {
+      removeLineBreaks: true,
+    }).result,
+    `x<a>y`,
+    "01.01"
+  );
+  equal(
+    m(equal, `x<a > y`, {
+      removeLineBreaks: true,
+    }).result,
+    `x<a> y`,
+    "01.02"
+  );
+  equal(
+    m(equal, `x<a>y`, {
+      removeLineBreaks: true,
+    }).result,
+    `x<a>y`,
+    "01.03"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - div - block level`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<div >y`, {
-        removeLineBreaks: true,
-      }).result,
-      `x<div>y`,
-      "02"
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - div - block level`, () => {
+  equal(
+    m(equal, `x<div >y`, {
+      removeLineBreaks: true,
+    }).result,
+    `x<div>y`,
+    "02"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - a - inline tag`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<a >y`, {
-        removeLineBreaks: false,
-      }).result,
-      `x<a>y`,
-      "03"
-    );
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - a - inline tag`, () => {
+  equal(
+    m(equal, `x<a >y`, {
+      removeLineBreaks: false,
+    }).result,
+    `x<a>y`,
+    "03"
+  );
+});
 
-tap.test(
-  `04 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - removeLineBreaks = off`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<div >y`, {
-        removeLineBreaks: false,
-      }).result,
-      `x<div>y`,
-      "04"
-    );
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - removeLineBreaks = off`, () => {
+  equal(
+    m(equal, `x<div >y`, {
+      removeLineBreaks: false,
+    }).result,
+    `x<div>y`,
+    "04"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, inline tag`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<a >y`, {
-        removeLineBreaks: false,
-        removeIndentations: false,
-      }).result,
-      `x<a>y`,
-      "05"
-    );
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, inline tag`, () => {
+  equal(
+    m(equal, `x<a >y`, {
+      removeLineBreaks: false,
+      removeIndentations: false,
+    }).result,
+    `x<a>y`,
+    "05"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, block level tag`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<div >y`, {
-        removeLineBreaks: false,
-        removeIndentations: false,
-      }).result,
-      `x<div>y`,
-      "06"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, block level tag`, () => {
+  equal(
+    m(equal, `x<div >y`, {
+      removeLineBreaks: false,
+      removeIndentations: false,
+    }).result,
+    `x<div>y`,
+    "06"
+  );
+});
 
-tap.test(
-  `07 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - before closing slash`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<a />y`, {
-        removeLineBreaks: true,
-      }).result,
-      `x<a/>y`,
-      "07"
-    );
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - before closing slash`, () => {
+  equal(
+    m(equal, `x<a />y`, {
+      removeLineBreaks: true,
+    }).result,
+    `x<a/>y`,
+    "07"
+  );
+});
 
-tap.test(
-  `08 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - after closing slash`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<a/ >y`, {
-        removeLineBreaks: true,
-      }).result,
-      `x<a/>y`,
-      "08"
-    );
-    t.end();
-  }
-);
+test(`08 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - after closing slash`, () => {
+  equal(
+    m(equal, `x<a/ >y`, {
+      removeLineBreaks: true,
+    }).result,
+    `x<a/>y`,
+    "08"
+  );
+});
 
-tap.test(
-  `09 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<a / >y`, {
-        removeLineBreaks: true,
-      }).result,
-      `x<a/>y`,
-      "09"
-    );
-    t.end();
-  }
-);
+test(`09 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash`, () => {
+  equal(
+    m(equal, `x<a / >y`, {
+      removeLineBreaks: true,
+    }).result,
+    `x<a/>y`,
+    "09"
+  );
+});
 
-tap.test(
-  `10 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash - non inline tag`,
-  (t) => {
-    t.strictSame(
-      m(t, `x<div / >y`, {
-        removeLineBreaks: true,
-      }).result,
-      `x<div/>y`,
-      "10"
-    );
-    t.end();
-  }
-);
+test(`10 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash - non inline tag`, () => {
+  equal(
+    m(equal, `x<div / >y`, {
+      removeLineBreaks: true,
+    }).result,
+    `x<div/>y`,
+    "10"
+  );
+});
+
+test.run();

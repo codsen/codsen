@@ -1,7 +1,9 @@
 import merge from "lodash.merge";
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Obj {
@@ -26,12 +28,12 @@ function flattenAllArrays(
   // setup
   // =====
 
-  const defaults: Opts = {
+  let defaults: Opts = {
     flattenArraysContainingStringsToBeEmpty: false,
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
-  const incommingObj = clone(originalIncommingObj);
+  let incommingObj = clone(originalIncommingObj);
   let isFirstObj;
   let combinedObj;
   let firstObjIndex;

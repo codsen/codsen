@@ -1,6 +1,7 @@
 // Non-parsing algorithm can tackle really dodgy CSS
 
 import { strict as assert } from "assert";
+
 import { extract } from "../dist/string-extract-class-names.esm.js";
 
 // probably invalid input, but works anyway:

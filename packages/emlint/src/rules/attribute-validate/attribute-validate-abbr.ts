@@ -27,7 +27,7 @@ function attributeValidateAbbr(context: Linter): RuleObjType {
         }
 
         // only check for rogue whitespace - value can be any string
-        const { errorArr } = checkForWhitespace(
+        let { errorArr } = checkForWhitespace(
           node.attribValueRaw,
           node.attribValueStartsAt as number
         );

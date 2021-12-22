@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/200d/index.htm
 
 function badCharacterZeroWidthJoiner(context: Linter): RuleObjType {
-  const charCode = 8205;
+  let charCode = 8205;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

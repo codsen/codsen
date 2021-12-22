@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { getObj } from "../dist/ast-get-object.esm.js";
 
 // ==============================
 // GET
 // ==============================
 
-tap.test("01 - get - one plain object as result", (t) => {
-  t.strictSame(
+test("01 - get - one plain object as result", () => {
+  equal(
     getObj(
       [
         {
@@ -32,11 +35,10 @@ tap.test("01 - get - one plain object as result", (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - get - two plain object as result", (t) => {
-  t.strictSame(
+test("02 - get - two plain object as result", () => {
+  equal(
     getObj(
       [
         {
@@ -68,11 +70,10 @@ tap.test("02 - get - two plain object as result", (t) => {
     ],
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - get - topmost level container is object", (t) => {
-  t.strictSame(
+test("03 - get - topmost level container is object", () => {
+  equal(
     getObj(
       {
         key1: {
@@ -114,11 +115,10 @@ tap.test("03 - get - topmost level container is object", (t) => {
     ],
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - get - search value is object", (t) => {
-  t.strictSame(
+test("04 - get - search value is object", () => {
+  equal(
     getObj(
       [
         {
@@ -144,11 +144,10 @@ tap.test("04 - get - search value is object", (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - get - search value is array", (t) => {
-  t.strictSame(
+test("05 - get - search value is array", () => {
+  equal(
     getObj(
       [
         {
@@ -174,11 +173,10 @@ tap.test("05 - get - search value is array", (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - get - search value is nested array", (t) => {
-  t.strictSame(
+test("06 - get - search value is nested array", () => {
+  equal(
     getObj(
       [
         {
@@ -204,11 +202,10 @@ tap.test("06 - get - search value is nested array", (t) => {
     ],
     "06"
   );
-  t.end();
 });
 
-tap.test("07 - get - search value is nested object", (t) => {
-  t.strictSame(
+test("07 - get - search value is nested object", () => {
+  equal(
     getObj(
       [
         {
@@ -254,11 +251,10 @@ tap.test("07 - get - search value is nested object", (t) => {
     ],
     "07"
   );
-  t.end();
 });
 
-tap.test("08 - get - numerous everything", (t) => {
-  t.strictSame(
+test("08 - get - numerous everything", () => {
+  equal(
     getObj(
       [
         [
@@ -301,11 +297,10 @@ tap.test("08 - get - numerous everything", (t) => {
     ],
     "08"
   );
-  t.end();
 });
 
-tap.test("09 - rogue 4th input arg given", (t) => {
-  t.strictSame(
+test("09 - rogue 4th input arg given", () => {
+  equal(
     getObj(
       [
         {
@@ -337,15 +332,14 @@ tap.test("09 - rogue 4th input arg given", (t) => {
     ],
     "09"
   );
-  t.end();
 });
 
 // ==============================
 // SET
 // ==============================
 
-tap.test("10 - set - one plain object", (t) => {
-  t.strictSame(
+test("10 - set - one plain object", () => {
+  equal(
     getObj(
       [
         {
@@ -382,11 +376,10 @@ tap.test("10 - set - one plain object", (t) => {
     ],
     "10"
   );
-  t.end();
 });
 
-tap.test("11 - set - two plain object", (t) => {
-  t.strictSame(
+test("11 - set - two plain object", () => {
+  equal(
     getObj(
       [
         {
@@ -433,55 +426,16 @@ tap.test("11 - set - two plain object", (t) => {
     ],
     "11"
   );
-  t.end();
 });
 
-tap.test(
-  "12 - set - topmost level object, one value deleted, one changed",
-  (t) => {
-    t.strictSame(
-      getObj(
-        {
-          key1: {
-            tag: "meta",
-            content: "UTF-8",
-            something: "else",
-          },
-          key2: {
-            tag: "title",
-            attrs: "Text of the title",
-          },
-          key3: [
-            {
-              x: "x",
-              y: "y",
-            },
-            {
-              tag: "meta",
-              content: "ISO-123",
-              something: "as well",
-            },
-          ],
-        },
-        {
-          tag: "meta",
-        },
-        [
-          {
-            tag: "meta",
-            content: "UTF-8",
-          },
-          {
-            tag: "meta",
-            content: "edited",
-            something: "as well",
-          },
-        ]
-      ),
+test("12 - set - topmost level object, one value deleted, one changed", () => {
+  equal(
+    getObj(
       {
         key1: {
           tag: "meta",
           content: "UTF-8",
+          something: "else",
         },
         key2: {
           tag: "title",
@@ -494,47 +448,57 @@ tap.test(
           },
           {
             tag: "meta",
-            content: "edited",
+            content: "ISO-123",
             something: "as well",
           },
         ],
       },
-      "12"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "13 - set - search val object, updated val from plain obj to nested arr",
-  (t) => {
-    t.strictSame(
-      getObj(
-        [
-          {
-            tag: { key: "meta" },
-            content: "UTF-8",
-            something: "else",
-          },
-          {
-            tag: "title",
-            attrs: "Text of the title",
-          },
-        ],
-        {
-          tag: { key: "meta" },
-        },
-        [
-          {
-            tag: [["edited"]],
-            content: "UTF-8",
-            something: "else",
-          },
-        ]
-      ),
+      {
+        tag: "meta",
+      },
       [
         {
-          tag: [["edited"]],
+          tag: "meta",
+          content: "UTF-8",
+        },
+        {
+          tag: "meta",
+          content: "edited",
+          something: "as well",
+        },
+      ]
+    ),
+    {
+      key1: {
+        tag: "meta",
+        content: "UTF-8",
+      },
+      key2: {
+        tag: "title",
+        attrs: "Text of the title",
+      },
+      key3: [
+        {
+          x: "x",
+          y: "y",
+        },
+        {
+          tag: "meta",
+          content: "edited",
+          something: "as well",
+        },
+      ],
+    },
+    "12"
+  );
+});
+
+test("13 - set - search val object, updated val from plain obj to nested arr", () => {
+  equal(
+    getObj(
+      [
+        {
+          tag: { key: "meta" },
           content: "UTF-8",
           something: "else",
         },
@@ -543,14 +507,34 @@ tap.test(
           attrs: "Text of the title",
         },
       ],
-      "13"
-    );
-    t.end();
-  }
-);
+      {
+        tag: { key: "meta" },
+      },
+      [
+        {
+          tag: [["edited"]],
+          content: "UTF-8",
+          something: "else",
+        },
+      ]
+    ),
+    [
+      {
+        tag: [["edited"]],
+        content: "UTF-8",
+        something: "else",
+      },
+      {
+        tag: "title",
+        attrs: "Text of the title",
+      },
+    ],
+    "13"
+  );
+});
 
-tap.test("14 - set - search value is array - updated value array", (t) => {
-  t.strictSame(
+test("14 - set - search value is array - updated value array", () => {
+  equal(
     getObj(
       [
         {
@@ -587,11 +571,10 @@ tap.test("14 - set - search value is array - updated value array", (t) => {
     ],
     "14"
   );
-  t.end();
 });
 
-tap.test("15 - set - search value is nested array - deleted finding", (t) => {
-  t.strictSame(
+test("15 - set - search value is nested array - deleted finding", () => {
+  equal(
     getObj(
       [
         {
@@ -626,11 +609,10 @@ tap.test("15 - set - search value is nested array - deleted finding", (t) => {
     ],
     "15"
   );
-  t.end();
 });
 
-tap.test("16 - set - edit skipping similar, false search result", (t) => {
-  t.strictSame(
+test("16 - set - edit skipping similar, false search result", () => {
+  equal(
     getObj(
       [
         {
@@ -697,11 +679,10 @@ tap.test("16 - set - edit skipping similar, false search result", (t) => {
     ],
     "16"
   );
-  t.end();
 });
 
-tap.test("17 - set - numerous everything, wrong order", (t) => {
-  t.strictSame(
+test("17 - set - numerous everything, wrong order", () => {
+  equal(
     getObj(
       [
         [
@@ -766,11 +747,10 @@ tap.test("17 - set - numerous everything, wrong order", (t) => {
     ],
     "17"
   );
-  t.end();
 });
 
-tap.test("18 - rogue 4th input arg", (t) => {
-  t.strictSame(
+test("18 - rogue 4th input arg", () => {
+  equal(
     getObj(
       [
         {
@@ -812,22 +792,20 @@ tap.test("18 - rogue 4th input arg", (t) => {
     ],
     "18"
   );
-  t.end();
 });
 
 // ==============================
 // EDGE CASES
 // ==============================
 
-tap.test("19 - missing inputs - throws", (t) => {
-  t.throws(() => {
+test("19 - missing inputs - throws", () => {
+  throws(() => {
     getObj();
   }, /THROW_ID_01/g);
-  t.end();
 });
 
-tap.test("20 - missing keyValPair", (t) => {
-  t.throws(() => {
+test("20 - missing keyValPair", () => {
+  throws(() => {
     getObj([
       {
         tag: "meta",
@@ -836,5 +814,6 @@ tap.test("20 - missing keyValPair", (t) => {
       },
     ]);
   }, /THROW_ID_02/g);
-  t.end();
 });
+
+test.run();

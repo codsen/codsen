@@ -1,16 +1,18 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { m } from "./util/util.js";
 
 // pre + code
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`ex-bugs`}\u001b[${39}m`} - does not mangle pre/code`,
-  (t) => {
-    t.is(
-      m(
-        t,
-        `<html>
+test(`01 - ${`\u001b[${33}m${`ex-bugs`}\u001b[${39}m`} - does not mangle pre/code`, () => {
+  is(
+    m(
+      equal,
+      `<html>
 <body>
   <pre class="language-html">
     <code class="language-html">
@@ -22,11 +24,11 @@ More content
 </body>
 </html>
       `,
-        {
-          removeLineBreaks: true,
-        }
-      ).result,
-      `<html>
+      {
+        removeLineBreaks: true,
+      }
+    ).result,
+    `<html>
 <body><pre class="language-html">
     <code class="language-html">
 Some text
@@ -36,21 +38,20 @@ More content
   </pre>
 </body>
 </html>`,
-      "01"
-    );
-    t.end();
-  }
-);
+    "01"
+  );
+});
 
-tap.test(`02`, (t) => {
-  const input = `  <a>
+test(`02`, () => {
+  let input = `  <a>
      <b>
    c </b>
    </a>
      <b>
      `;
-  t.match(
-    m(t, input, {
+  compare(
+    ok,
+    m(equal, input, {
       lineLengthLimit: 8,
       removeIndentations: true,
       removeLineBreaks: true,
@@ -70,5 +71,6 @@ c </b>
     },
     "02"
   );
-  t.end();
 });
+
+test.run();

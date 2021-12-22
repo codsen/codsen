@@ -1,4 +1,5 @@
 import { left, right } from "string-left-right";
+
 import { classNameRegex } from "./constants";
 import splitByWhitespace from "./splitByWhitespace";
 import isSingleSpace from "./isSingleSpace";
@@ -16,25 +17,25 @@ function checkClassOrIdValue(
   originalOpts: Partial<Opts>,
   errorArr: ErrorObj[]
 ): void {
-  const defaults: Opts = {
+  let defaults: Opts = {
     typeName: "class",
     from: 0,
     to: str.length,
     offset: 0,
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
   console.log(
-    `027 checkClassOrIdValue(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `028 checkClassOrIdValue(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
     )}`
   );
   console.log(
-    `034 checkClassOrIdValue(): ${`\u001b[${36}m${`traverse and extract ${opts.typeName}s`}\u001b[${39}m`}`
+    `035 checkClassOrIdValue(): ${`\u001b[${36}m${`traverse and extract ${opts.typeName}s`}\u001b[${39}m`}`
   );
 
-  const listOfUniqueNames = new Set();
+  let listOfUniqueNames = new Set();
 
   splitByWhitespace(
     //
@@ -54,12 +55,12 @@ function checkClassOrIdValue(
     //
     ([charFrom, charTo]) => {
       // value starts at "from" and ends at "to"
-      console.log(`057 charFrom = ${charFrom}; charTo = ${charTo}`);
+      console.log(`058 charFrom = ${charFrom}; charTo = ${charTo}`);
       // evaluate
-      const extractedName = str.slice(charFrom, charTo);
+      let extractedName = str.slice(charFrom, charTo);
       if (!classNameRegex.test(extractedName)) {
         console.log(
-          `062 splitByWhitespace(): PUSH ${JSON.stringify(
+          `063 splitByWhitespace(): PUSH ${JSON.stringify(
             {
               idxFrom: charFrom,
               idxTo: charTo,
@@ -84,7 +85,7 @@ function checkClassOrIdValue(
       } else {
         let deleteFrom = charFrom;
         let deleteTo = charTo;
-        const nonWhitespaceCharOnTheRight = right(str, deleteTo);
+        let nonWhitespaceCharOnTheRight = right(str, deleteTo);
         if (
           deleteTo >= opts.to ||
           !nonWhitespaceCharOnTheRight ||
@@ -113,7 +114,7 @@ function checkClassOrIdValue(
     //
     //
     //
-    ([whitespaceFrom, whitespaceTo]) =>
+    ([whitespaceFrom, whitespaceTo]) => {
       isSingleSpace(
         str,
         {
@@ -122,7 +123,8 @@ function checkClassOrIdValue(
           offset: opts.offset,
         },
         errorArr
-      ),
+      );
+    },
     //
     //
     //

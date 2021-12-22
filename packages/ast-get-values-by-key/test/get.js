@@ -1,13 +1,16 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import objectPath from "object-path";
+
 import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
-tap.test("01 - just a plain object", (t) => {
-  const source = {
+test("01 - just a plain object", () => {
+  let source = {
     tag: "html",
   };
 
-  t.strictSame(
+  equal(
     getByKey(source, "tag"),
     [
       {
@@ -19,9 +22,9 @@ tap.test("01 - just a plain object", (t) => {
   );
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.equal(objectPath.get(source, "tag"), "html", "01.02");
+  equal(objectPath.get(source, "tag"), "html", "01.02");
 
-  t.strictSame(
+  equal(
     getByKey(
       {
         Tag: "html",
@@ -31,16 +34,15 @@ tap.test("01 - just a plain object", (t) => {
     [],
     "01.03"
   );
-  t.end();
 });
 
-tap.test("02 - single plain object within array", (t) => {
-  const source = [
+test("02 - single plain object within array", () => {
+  let source = [
     {
       tag: "html",
     },
   ];
-  t.strictSame(
+  equal(
     getByKey(source, "tag"),
     [
       {
@@ -52,29 +54,27 @@ tap.test("02 - single plain object within array", (t) => {
   );
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.equal(objectPath.get(source, "0.tag"), "html", "02.02");
-  t.end();
+  equal(objectPath.get(source, "0.tag"), "html", "02.02");
 });
 
-tap.test("03 - string in array as result", (t) => {
-  const source = {
+test("03 - string in array as result", () => {
+  let source = {
     tag: ["html"],
   };
-  const res = [
+  let res = [
     {
       val: ["html"],
       path: "tag",
     },
   ];
-  t.strictSame(getByKey(source, "tag"), res, "03.01");
+  equal(getByKey(source, "tag"), res, "03.01");
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.strictSame(objectPath.get(source, "tag"), ["html"], "03.02");
-  t.end();
+  equal(objectPath.get(source, "tag"), ["html"], "03.02");
 });
 
-tap.test("04 - two strings as result", (t) => {
-  t.strictSame(
+test("04 - two strings as result", () => {
+  equal(
     getByKey(
       [
         {
@@ -103,11 +103,10 @@ tap.test("04 - two strings as result", (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - query by key, returns mixed results", (t) => {
-  t.strictSame(
+test("05 - query by key, returns mixed results", () => {
+  equal(
     getByKey(
       [
         {
@@ -141,11 +140,10 @@ tap.test("05 - query by key, returns mixed results", (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - deep tree", (t) => {
-  const source = [
+test("06 - deep tree", () => {
+  let source = [
     {
       a: {
         b: [
@@ -174,8 +172,8 @@ tap.test("06 - deep tree", (t) => {
       },
     },
   ];
-  const retrievedPath = "0.a.b.0.c.d.0.e.f.0.g.h.tag";
-  t.strictSame(
+  let retrievedPath = "0.a.b.0.c.d.0.e.f.0.g.h.tag";
+  equal(
     getByKey(source, "tag"),
     [{ val: "html", path: retrievedPath }],
     "06.01"
@@ -183,12 +181,11 @@ tap.test("06 - deep tree", (t) => {
 
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.equal(objectPath.get(source, retrievedPath), "html", "06.02");
-  t.end();
+  equal(objectPath.get(source, retrievedPath), "html", "06.02");
 });
 
-tap.test("07 - query returns an array", (t) => {
-  t.strictSame(
+test("07 - query returns an array", () => {
+  equal(
     getByKey(
       [
         {
@@ -200,11 +197,10 @@ tap.test("07 - query returns an array", (t) => {
     [{ val: ["z"], path: "0.tag" }],
     "07"
   );
-  t.end();
 });
 
-tap.test("08 - query returns a string", (t) => {
-  t.strictSame(
+test("08 - query returns a string", () => {
+  equal(
     getByKey(
       [
         {
@@ -216,11 +212,10 @@ tap.test("08 - query returns a string", (t) => {
     [{ val: "z", path: "0.tag" }],
     "08"
   );
-  t.end();
 });
 
-tap.test("09 - query returns array with two objects", (t) => {
-  const source = [
+test("09 - query returns array with two objects", () => {
+  let source = [
     {
       tag: [
         {
@@ -234,7 +229,7 @@ tap.test("09 - query returns array with two objects", (t) => {
       ],
     },
   ];
-  const retrievedValue = [
+  let retrievedValue = [
     {
       a: "a",
       b: "b",
@@ -244,7 +239,7 @@ tap.test("09 - query returns array with two objects", (t) => {
       d: "d",
     },
   ];
-  t.strictSame(
+  equal(
     getByKey(source, "tag"),
     [
       {
@@ -257,12 +252,11 @@ tap.test("09 - query returns array with two objects", (t) => {
 
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.strictSame(objectPath.get(source, "0.tag"), retrievedValue, "09.02");
-  t.end();
+  equal(objectPath.get(source, "0.tag"), retrievedValue, "09.02");
 });
 
-tap.test("10 - no results query", (t) => {
-  t.strictSame(
+test("10 - no results query", () => {
+  equal(
     getByKey(
       {
         style: "html",
@@ -272,5 +266,6 @@ tap.test("10 - no results query", (t) => {
     [],
     "10"
   );
-  t.end();
 });
+
+test.run();

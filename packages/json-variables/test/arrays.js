@@ -1,10 +1,13 @@
 /* eslint no-template-curly-in-string: 0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { jVar } from "../dist/json-variables.esm.js";
 
-tap.test("01 - arrays referencing values which are strings", (t) => {
-  t.strictSame(
+test("01 - arrays referencing values which are strings", () => {
+  equal(
     jVar({
       a: ["Some text %%_d_%% some more text %%_c_%%"],
       b: ["Some text %%_c_%%, some more text %%_d_%%"],
@@ -19,11 +22,10 @@ tap.test("01 - arrays referencing values which are strings", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - arrays referencing values which are arrays", (t) => {
-  t.strictSame(
+test("02 - arrays referencing values which are arrays", () => {
+  equal(
     jVar({
       a: ["Some text %%_b_%% some more text %%_c_%%", "%%_c_%%", "%%_d_%%"],
       b: ["zzz", "Some text %%_c_%%, some more text %%_d_%%"],
@@ -42,11 +44,10 @@ tap.test("02 - arrays referencing values which are arrays", (t) => {
     },
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - arrays, whitelisting as string", (t) => {
-  t.strictSame(
+test("03 - arrays, whitelisting as string", () => {
+  equal(
     jVar(
       {
         title: [
@@ -77,7 +78,7 @@ tap.test("03 - arrays, whitelisting as string", (t) => {
     },
     "03.01 - base - no ignores"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         title: [
@@ -108,11 +109,10 @@ tap.test("03 - arrays, whitelisting as string", (t) => {
     },
     "03.02 - string whitelist startsWith"
   );
-  t.end();
 });
 
-tap.test("04 - arrays, whitelisting as array #1", (t) => {
-  t.strictSame(
+test("04 - arrays, whitelisting as array #1", () => {
+  equal(
     jVar(
       {
         title: [
@@ -143,7 +143,7 @@ tap.test("04 - arrays, whitelisting as array #1", (t) => {
     },
     "04.01"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         title: [
@@ -174,7 +174,7 @@ tap.test("04 - arrays, whitelisting as array #1", (t) => {
     },
     "04.02 - two ignores in an array"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         title: [
@@ -205,7 +205,7 @@ tap.test("04 - arrays, whitelisting as array #1", (t) => {
     },
     "04.03 - two ignores in an array startsWith"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         title: [
@@ -236,11 +236,10 @@ tap.test("04 - arrays, whitelisting as array #1", (t) => {
     },
     "04.04 - two ignores in an array, endsWith"
   );
-  t.end();
 });
 
-tap.test("05 - arrays, whitelisting as array #2", (t) => {
-  t.strictSame(
+test("05 - arrays, whitelisting as array #2", () => {
+  equal(
     jVar(
       {
         title: [
@@ -275,7 +274,7 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
     },
     "05.01 - two ignores in an array, data store"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: {
@@ -315,7 +314,7 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
     },
     "05.02 - does not wrap SUB"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         a: {
@@ -360,7 +359,7 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
     },
     "05.03 - does not wrap SUB"
   );
-  t.strictSame(
+  equal(
     jVar(
       {
         title: [
@@ -402,7 +401,7 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
     "05.04 - wraps SUB"
   );
 
-  t.throws(() => {
+  throws(() => {
     jVar(
       {
         title: [
@@ -432,5 +431,6 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
       }
     );
   }, /THROW_ID_18/);
-  t.end();
 });
+
+test.run();

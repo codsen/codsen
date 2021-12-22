@@ -3,11 +3,11 @@ import {
   allRules,
 } from "../../dist/string-fix-broken-named-entities.esm.js";
 
-function fix(t, ...args) {
+function fix(ok, ...args) {
   // check, are all emitted rules present in "allRules"
   fixEntESM(...args).forEach((o) => {
     if (o && o.ruleName) {
-      t.ok(
+      ok(
         allRules.includes(o.ruleName),
         `${o.ruleName} is not mentioned in allRules!`
       );

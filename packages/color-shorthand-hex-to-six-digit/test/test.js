@@ -1,65 +1,65 @@
 /* eslint func-names:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { conv } from "../dist/color-shorthand-hex-to-six-digit.esm.js";
 
 // ==============================
 // 01. String inputs
 // ==============================
 
-tap.test("01 - string input - doesn't touch full hex codes", (t) => {
-  t.strictSame(
+test("01 - string input - doesn't touch full hex codes", () => {
+  equal(
     conv("aaaa #cccccc zzzz\n\t\t\t#000000."),
     "aaaa #cccccc zzzz\n\t\t\t#000000.",
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - string input - changes one shorthand, lowercase", (t) => {
-  t.strictSame(
+test("02 - string input - changes one shorthand, lowercase", () => {
+  equal(
     conv("aaaa #f0c zzzz\n\t\t\t#ffcc00"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
     "02.01"
   );
-  t.strictSame(
+  equal(
     conv("aaaa #ff00cc zzzz\n\t\t\t#fc0"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
     "02.02"
   );
-  t.strictSame(
+  equal(
     conv("aaaa #f0c zzzz\n\t\t\t#fc0"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
     "02.03"
   );
-  t.end();
 });
 
-tap.test("03 - string input - changes one shorthand, uppercase", (t) => {
-  t.strictSame(
+test("03 - string input - changes one shorthand, uppercase", () => {
+  equal(
     conv("aaaa #f0c zzzz\n\t\t\t#ffcc00"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
     "03.01"
   );
-  t.strictSame(
+  equal(
     conv("aaaa #ff00cc zzzz\n\t\t\t#fc0"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
     "03.02"
   );
-  t.strictSame(
+  equal(
     conv("aaaa #f0c zzzz\n\t\t\t#fc0"),
     "aaaa #ff00cc zzzz\n\t\t\t#ffcc00",
     "03.03"
   );
-  t.end();
 });
 
 // ==============================
 // 02. Plain object inputs
 // ==============================
 
-tap.test("04 - plain object input - simple one level object", (t) => {
-  t.strictSame(
+test("04 - plain object input - simple one level object", () => {
+  equal(
     conv({
       a: "#ffcc00",
       b: "#f0c",
@@ -72,7 +72,7 @@ tap.test("04 - plain object input - simple one level object", (t) => {
     },
     "04.01"
   );
-  t.strictSame(
+  equal(
     conv({
       a: "#fc0",
       b: "#f0c",
@@ -85,11 +85,10 @@ tap.test("04 - plain object input - simple one level object", (t) => {
     },
     "04.02"
   );
-  t.end();
 });
 
-tap.test("05 - plain object input - nested", (t) => {
-  t.strictSame(
+test("05 - plain object input - nested", () => {
+  equal(
     conv({
       a: ["#fc0"],
       b: [[["#fc0", { x: ["#f0c"] }]]],
@@ -104,89 +103,80 @@ tap.test("05 - plain object input - nested", (t) => {
     },
     "05"
   );
-  t.end();
 });
 
 // ==============================
 // 03. Array inputs
 // ==============================
 
-tap.test("06 - array input - one level, strings inside", (t) => {
-  t.strictSame(
+test("06 - array input - one level, strings inside", () => {
+  equal(
     conv(["#fc0", "#f0c", "text", ""]),
     ["#ffcc00", "#ff00cc", "text", ""],
     "06"
   );
-  t.end();
 });
 
-tap.test("07 - array input - nested objects & arrays", (t) => {
-  t.strictSame(
+test("07 - array input - nested objects & arrays", () => {
+  equal(
     conv([[[[[[{ x: ["#fc0"] }]]]]], { z: "#f0c" }, ["text"], { y: "" }]),
     [[[[[[{ x: ["#ffcc00"] }]]]]], { z: "#ff00cc" }, ["text"], { y: "" }],
     "07"
   );
-  t.end();
 });
 
 // ==================================
 // 04. Unaccepted inputs are returned
 // ==================================
 
-tap.test("08 - function as input - returned", (t) => {
-  const dummy = function () {
+test("08 - function as input - returned", () => {
+  let dummy = function () {
     return null;
   };
-  t.strictSame(conv(dummy), dummy, "08");
-  t.end();
+  equal(conv(dummy), dummy, "08");
 });
 
-tap.test("09 - null input - returned", (t) => {
-  t.strictSame(conv(null), null, "09");
-  t.end();
+test("09 - null input - returned", () => {
+  equal(conv(null), null, "09");
 });
 
-tap.test("10 - undefined input - returned", (t) => {
-  t.strictSame(conv(undefined), undefined, "10");
-  t.end();
+test("10 - undefined input - returned", () => {
+  equal(conv(undefined), undefined, "10");
 });
 
-tap.test("11 - NaN input - returned", (t) => {
-  t.strictSame(conv(NaN), NaN, "11");
-  t.end();
+test("11 - NaN input - returned", () => {
+  equal(conv(NaN), NaN, "11");
 });
 
-tap.test("12 - no input - returned undefined", (t) => {
-  t.strictSame(conv(), undefined, "12");
-  t.end();
+test("12 - no input - returned undefined", () => {
+  equal(conv(), undefined, "12");
 });
 
 // ==============================
 // 05. Enforces all hexes to be lowercase only
 // ==============================
 
-tap.test("13 - fixes mixed case three and six digit hexes", (t) => {
-  t.strictSame(
+test("13 - fixes mixed case three and six digit hexes", () => {
+  equal(
     conv("aaaa #cCccCc zzzz\n\t\t\t#ffF."),
     "aaaa #cccccc zzzz\n\t\t\t#ffffff.",
     "13"
   );
-  t.end();
 });
 
 // ==============================
 // 06. Does not mutate input args
 // ==============================
 
-tap.test("14 - does not mutate the input args", (t) => {
-  const input1 = {
+test("14 - does not mutate the input args", () => {
+  let input1 = {
     a: "aaaa #f0c zzzz\n\t\t\t#FFcc00",
     b: "aaaa #ff00CC zzzz\n\t\t\t#ffcc00",
   };
 
-  const unneededRes = conv(input1);
-  t.pass(unneededRes); // dummy to please JS Standard
-  t.strictSame(
+  let unneededRes = conv(input1);
+  ok(unneededRes); // dummy to please JS Standard
+  equal(
     input1,
     {
       a: "aaaa #f0c zzzz\n\t\t\t#FFcc00",
@@ -194,15 +184,14 @@ tap.test("14 - does not mutate the input args", (t) => {
     },
     "14.01"
   ); // real deal
-  t.end();
 });
 
 // =============================
 // 07. Deals with real HTML code
 // =============================
 
-tap.test("15 - does not remove closing slashes from XHTML, #1", (t) => {
-  t.strictSame(
+test("15 - does not remove closing slashes from XHTML, #1", () => {
+  equal(
     conv(
       '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n<head>\n  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n  <style type="text/css">\n    @media (max-width: 600px) {\n      .real-class-1#head-only-class-1[lang|en]{width:100% !important;}\n      #real-id-1.head-only-class-1:hover{display: block !important;}\n      .head-only-class-2[lang|en]{color: #CCC !important;}\n      @media (max-width: 200px) {\n        #real-id-1{background-color: #000;}\n      }\n      @media (max-width: 100px) {\n        .head-only-class-1{border: 1px solid #FfF !important;}\n      }\n    }\n  </style>\n  <title>zzzz</title>\n  <style type="text/css">\n    .real-class-1#head-only-class-1[lang|en]{color: #c0f !important;}\n    #real-id-1.head-only-class-1:hover{display: block !important;}\n    .head-only-class-3[lang|en]{background-color: #ff0 !important;}\n    div .real-class-1 a:hover {color: #00c;}\n  </style>\n</head>\n<body>\n  <table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">\n    <tr>\n      <td class="real-class-1" style="color: #ffc;">\n        <img src="spacer.gif" alt="spacer" />\n      </td>\n    </tr>\n  </table>\n</body>\n</html>\n'
     ),
@@ -210,26 +199,22 @@ tap.test("15 - does not remove closing slashes from XHTML, #1", (t) => {
     '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n<head>\n  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n  <style type="text/css">\n    @media (max-width: 600px) {\n      .real-class-1#head-only-class-1[lang|en]{width:100% !important;}\n      #real-id-1.head-only-class-1:hover{display: block !important;}\n      .head-only-class-2[lang|en]{color: #cccccc !important;}\n      @media (max-width: 200px) {\n        #real-id-1{background-color: #000000;}\n      }\n      @media (max-width: 100px) {\n        .head-only-class-1{border: 1px solid #ffffff !important;}\n      }\n    }\n  </style>\n  <title>zzzz</title>\n  <style type="text/css">\n    .real-class-1#head-only-class-1[lang|en]{color: #cc00ff !important;}\n    #real-id-1.head-only-class-1:hover{display: block !important;}\n    .head-only-class-3[lang|en]{background-color: #ffff00 !important;}\n    div .real-class-1 a:hover {color: #0000cc;}\n  </style>\n</head>\n<body>\n  <table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">\n    <tr>\n      <td class="real-class-1" style="color: #ffffcc;">\n        <img src="spacer.gif" alt="spacer" />\n      </td>\n    </tr>\n  </table>\n</body>\n</html>\n',
     "15"
   );
-  t.end();
 });
 
-tap.test("16 - does not remove closing slashes from XHTML, #2", (t) => {
-  t.strictSame(
+test("16 - does not remove closing slashes from XHTML, #2", () => {
+  equal(
     conv('<img src="spacer.gif" alt="spacer" />'),
     '<img src="spacer.gif" alt="spacer" />',
     "16"
   );
-  t.end();
 });
 
-tap.test(
-  "17 - does not mangle encoded HTML entities that look like hex codes",
-  (t) => {
-    t.strictSame(
-      conv("aaa &#124; bbb #125 ccc &#126; ddd"),
-      "aaa &#124; bbb #112255 ccc &#126; ddd",
-      "17"
-    );
-    t.end();
-  }
-);
+test("17 - does not mangle encoded HTML entities that look like hex codes", () => {
+  equal(
+    conv("aaa &#124; bbb #125 ccc &#126; ddd"),
+    "aaa &#124; bbb #112255 ccc &#126; ddd",
+    "17"
+  );
+});
+
+test.run();

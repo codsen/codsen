@@ -1,9 +1,10 @@
+import db from "mime-db";
+
 import { Linter, RuleObjType } from "../../linter";
 
 // rule: attribute-validate-codetype
 // -----------------------------------------------------------------------------
 
-import db from "mime-db";
 import { validateString } from "../../util/util";
 
 function attributeValidateCodetype(context: Linter): RuleObjType {
@@ -14,7 +15,7 @@ function attributeValidateCodetype(context: Linter): RuleObjType {
       );
 
       console.log(
-        `017 attributeValidateCodetype(): node = ${JSON.stringify(
+        `018 attributeValidateCodetype(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -34,7 +35,7 @@ function attributeValidateCodetype(context: Linter): RuleObjType {
         }
 
         // check in two parts, first, a quick try, match the most common values only
-        const errorArr = validateString(
+        let errorArr = validateString(
           node.attribValueRaw, // value
           node.attribValueStartsAt as number, // offset
           {
@@ -86,7 +87,7 @@ function attributeValidateCodetype(context: Linter): RuleObjType {
         // https://www.npmjs.com/package/mime-db
 
         errorArr.forEach((errorObj) => {
-          console.log(`089 RAISE ERROR`);
+          console.log(`090 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-codetype",

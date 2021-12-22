@@ -12,7 +12,7 @@ import {
 function processCSS(
   token: RuleToken | AttribSupplementedWithParent,
   context: Linter
-) {
+): void {
   // group all CSS processing into one function
   console.log(
     `018 format-prettier/processCSS(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
@@ -73,7 +73,7 @@ function processCSS(
       }
 
       // 2. missing space after an !important
-      const lastEnding =
+      let lastEnding =
         property.valueEnds ||
         (property.colon ? property.colon + 1 : null) ||
         property.propertyEnds;
@@ -200,11 +200,11 @@ function processCSS(
   }
 }
 
-interface formatPrettier {
+interface FormatPrettier {
   (context: Linter): RuleObjType;
 }
 
-const formatPrettier: formatPrettier = (context) => {
+const formatPrettier: FormatPrettier = (context) => {
   return {
     rule(node) {
       console.log(

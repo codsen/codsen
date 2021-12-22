@@ -1,5 +1,4 @@
-declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
-declare type Ranges = Range[] | null;
+import { Ranges } from 'ranges-merge';
 
 declare const version: string;
 declare function rRegex(regx: RegExp, str: string, replacement?: string | null | undefined): Ranges;

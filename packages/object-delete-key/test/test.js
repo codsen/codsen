@@ -1,14 +1,17 @@
 /* eslint-disable no-multi-str */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { deleteKey } from "../dist/object-delete-key.esm.js";
 
 // ==============================
 // One-level plain objects
 // ==============================
 
-tap.test("01 - delete a value which is string", (t) => {
-  const actual = deleteKey(
+test("01 - delete a value which is string", () => {
+  let actual = deleteKey(
     {
       a: "a",
       b: "b",
@@ -18,16 +21,15 @@ tap.test("01 - delete a value which is string", (t) => {
       val: "b",
     }
   );
-  const intended = {
+  let intended = {
     a: "a",
   };
 
-  t.strictSame(actual, intended, "01");
-  t.end();
+  equal(actual, intended, "01");
 });
 
-tap.test("02 - delete a value which is plain object", (t) => {
-  const actual = deleteKey(
+test("02 - delete a value which is plain object", () => {
+  let actual = deleteKey(
     {
       a: "a",
       b: { c: "d" },
@@ -37,16 +39,15 @@ tap.test("02 - delete a value which is plain object", (t) => {
       val: { c: "d" },
     }
   );
-  const intended = {
+  let intended = {
     a: "a",
   };
 
-  t.strictSame(actual, intended, "02");
-  t.end();
+  equal(actual, intended, "02");
 });
 
-tap.test("03 - delete two values, plain objects, cleanup=false", (t) => {
-  const actual = deleteKey(
+test("03 - delete two values, plain objects, cleanup=false", () => {
+  let actual = deleteKey(
     {
       a: { e: [{ b: { c: "d" } }] },
       b: { c: "d" },
@@ -57,16 +58,15 @@ tap.test("03 - delete two values, plain objects, cleanup=false", (t) => {
       cleanup: false,
     }
   );
-  const intended = {
+  let intended = {
     a: { e: [{}] },
   };
 
-  t.strictSame(actual, intended, "03");
-  t.end();
+  equal(actual, intended, "03");
 });
 
-tap.test("04 - delete two values, plain objects, cleanup=true", (t) => {
-  const actual = deleteKey(
+test("04 - delete two values, plain objects, cleanup=true", () => {
+  let actual = deleteKey(
     {
       a: { e: [{ b: { c: "d" } }] },
       b: { c: "d" },
@@ -77,14 +77,13 @@ tap.test("04 - delete two values, plain objects, cleanup=true", (t) => {
       cleanup: true,
     }
   );
-  const intended = {};
+  let intended = {};
 
-  t.strictSame(actual, intended, "04");
-  t.end();
+  equal(actual, intended, "04");
 });
 
-tap.test("05 - delete two values which are plain objects (on default)", (t) => {
-  const actual = deleteKey(
+test("05 - delete two values which are plain objects (on default)", () => {
+  let actual = deleteKey(
     {
       a: { e: [{ b: { c: "d" } }] },
       b: { c: "d" },
@@ -94,14 +93,13 @@ tap.test("05 - delete two values which are plain objects (on default)", (t) => {
       val: { c: "d" },
     }
   );
-  const intended = {};
+  let intended = {};
 
-  t.strictSame(actual, intended, "05");
-  t.end();
+  equal(actual, intended, "05");
 });
 
-tap.test("06 - delete a value which is an array", (t) => {
-  const actual = deleteKey(
+test("06 - delete a value which is an array", () => {
+  let actual = deleteKey(
     {
       a: "a",
       b: ["c", "d"],
@@ -111,16 +109,15 @@ tap.test("06 - delete a value which is an array", (t) => {
       val: ["c", "d"],
     }
   );
-  const intended = {
+  let intended = {
     a: "a",
   };
 
-  t.strictSame(actual, intended, "06");
-  t.end();
+  equal(actual, intended, "06");
 });
 
-tap.test("07 - delete two values which are arrays, cleanup=false", (t) => {
-  const actual = deleteKey(
+test("07 - delete two values which are arrays, cleanup=false", () => {
+  let actual = deleteKey(
     {
       a: { e: [{ b: ["c", "d"] }] },
       b: ["c", "d"],
@@ -131,16 +128,15 @@ tap.test("07 - delete two values which are arrays, cleanup=false", (t) => {
       cleanup: false,
     }
   );
-  const intended = {
+  let intended = {
     a: { e: [{}] },
   };
 
-  t.strictSame(actual, intended, "07");
-  t.end();
+  equal(actual, intended, "07");
 });
 
-tap.test("08 - delete two values which are arrays, cleanup=default", (t) => {
-  const actual = deleteKey(
+test("08 - delete two values which are arrays, cleanup=default", () => {
+  let actual = deleteKey(
     {
       a: { e: [{ b: ["c", "d"] }] },
       b: ["c", "d"],
@@ -150,23 +146,22 @@ tap.test("08 - delete two values which are arrays, cleanup=default", (t) => {
       val: ["c", "d"],
     }
   );
-  const intended = {};
+  let intended = {};
 
-  t.strictSame(actual, intended, "08");
-  t.end();
+  equal(actual, intended, "08");
 });
 
 // ==============================
 // Omit value to target all keys
 // ==============================
 
-tap.test("09 - simple plain object, couple instances found", (t) => {
-  const source = {
+test("09 - simple plain object, couple instances found", () => {
+  let source = {
     a: "a",
     b: "whatever",
     c: [{ b: "whatever as well" }],
   };
-  t.strictSame(
+  equal(
     deleteKey(source, {
       key: "b",
     }),
@@ -175,7 +170,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
     },
     "09.01 - no settings"
   );
-  t.strictSame(
+  equal(
     deleteKey(source, {
       key: "b",
       only: "o", // object
@@ -185,7 +180,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
     },
     "09.02 - objects only (same outcome as 2.1.1)"
   );
-  t.strictSame(
+  equal(
     deleteKey(source, {
       key: "b",
       only: "a", // array
@@ -197,7 +192,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
     },
     "09.03 - arrays only (none found)"
   );
-  t.strictSame(
+  equal(
     deleteKey(source, {
       key: "b",
       only: "any", // same behaviour as defaults
@@ -209,7 +204,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
   );
 
   // ensure no mutation happened:
-  t.strictSame(
+  equal(
     source,
     {
       a: "a",
@@ -218,11 +213,10 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
     },
     "09.05"
   );
-  t.end();
 });
 
-tap.test("10 - simple plain object, cleanup", (t) => {
-  t.strictSame(
+test("10 - simple plain object, cleanup", () => {
+  equal(
     deleteKey(
       {
         a: "a",
@@ -240,7 +234,7 @@ tap.test("10 - simple plain object, cleanup", (t) => {
     },
     '10.01 - does not touch key within object; cleanup will remove up to and including key "c"'
   );
-  t.strictSame(
+  equal(
     deleteKey(
       {
         a: "a",
@@ -258,7 +252,7 @@ tap.test("10 - simple plain object, cleanup", (t) => {
     },
     "10.02 - does not touch key within array"
   );
-  t.strictSame(
+  equal(
     deleteKey(
       {
         a: "apples",
@@ -276,7 +270,7 @@ tap.test("10 - simple plain object, cleanup", (t) => {
     },
     "10.03 - does not touch key within array"
   );
-  t.strictSame(
+  equal(
     deleteKey(
       {
         a: "apples",
@@ -296,11 +290,10 @@ tap.test("10 - simple plain object, cleanup", (t) => {
     },
     "10.04 - same as #06 but without cleanup"
   );
-  t.end();
 });
 
-tap.test("11 - nested array/plain objects, multiple instances found", (t) => {
-  t.strictSame(
+test("11 - nested array/plain objects, multiple instances found", () => {
+  equal(
     deleteKey(
       [
         {
@@ -322,7 +315,7 @@ tap.test("11 - nested array/plain objects, multiple instances found", (t) => {
     [{ a: "a" }],
     "11.01, default cleanup"
   );
-  t.strictSame(
+  equal(
     deleteKey(
       [
         {
@@ -345,7 +338,7 @@ tap.test("11 - nested array/plain objects, multiple instances found", (t) => {
     [{ a: "a" }],
     "11.02, only=object (same)"
   );
-  t.strictSame(
+  equal(
     deleteKey(
       [
         {
@@ -378,49 +371,44 @@ tap.test("11 - nested array/plain objects, multiple instances found", (t) => {
     ],
     "11.03, only=array (nothing done)"
   );
-  t.end();
 });
 
-tap.test(
-  "12 - nested array/plain objects, multiple instances found, false",
-  (t) => {
-    t.strictSame(
-      deleteKey(
-        [
-          {
-            a: "a",
-            b: "delete this key",
-            c: [{ b: "and this as well" }],
-          },
-          {
-            b: ["and this key too", "together with this"],
-            d: {
-              e: { f: { g: { b: "and this, no matter how deep-nested" } } },
-            },
-          },
-        ],
-        {
-          key: "b",
-          cleanup: false,
-        }
-      ),
+test("12 - nested array/plain objects, multiple instances found, false", () => {
+  equal(
+    deleteKey(
       [
         {
           a: "a",
-          c: [{}],
+          b: "delete this key",
+          c: [{ b: "and this as well" }],
         },
         {
-          d: { e: { f: { g: {} } } },
+          b: ["and this key too", "together with this"],
+          d: {
+            e: { f: { g: { b: "and this, no matter how deep-nested" } } },
+          },
         },
       ],
-      "12 - cleanup=false"
-    );
-    t.end();
-  }
-);
+      {
+        key: "b",
+        cleanup: false,
+      }
+    ),
+    [
+      {
+        a: "a",
+        c: [{}],
+      },
+      {
+        d: { e: { f: { g: {} } } },
+      },
+    ],
+    "12 - cleanup=false"
+  );
+});
 
-tap.test("13 - mixed array and object findings", (t) => {
-  t.strictSame(
+test("13 - mixed array and object findings", () => {
+  equal(
     deleteKey(
       [
         {
@@ -444,7 +432,7 @@ tap.test("13 - mixed array and object findings", (t) => {
     [{ a: "a" }],
     "13.01, default cleanup"
   );
-  t.strictSame(
+  equal(
     deleteKey(
       [
         {
@@ -469,7 +457,7 @@ tap.test("13 - mixed array and object findings", (t) => {
     [{ a: "a" }],
     "13.02, only=any"
   );
-  t.strictSame(
+  equal(
     deleteKey(
       [
         {
@@ -491,7 +479,7 @@ tap.test("13 - mixed array and object findings", (t) => {
     ],
     "13.03, only=object, mini case"
   );
-  t.strictSame(
+  equal(
     deleteKey(
       [
         {
@@ -526,7 +514,7 @@ tap.test("13 - mixed array and object findings", (t) => {
     ],
     "13.04, only=arrays"
   );
-  t.strictSame(
+  equal(
     deleteKey(
       [
         {
@@ -559,15 +547,14 @@ tap.test("13 - mixed array and object findings", (t) => {
     ],
     "13.05, only=object, bigger example"
   );
-  t.end();
 });
 
 // ==============================
 // Omit key to target all keys with a given value
 // ==============================
 
-tap.test("14 - targets all keys by value, cleanup=true", (t) => {
-  const actual = deleteKey(
+test("14 - targets all keys by value, cleanup=true", () => {
+  let actual = deleteKey(
     {
       a: "a",
       b: "whatever",
@@ -577,16 +564,15 @@ tap.test("14 - targets all keys by value, cleanup=true", (t) => {
       val: "whatever",
     }
   );
-  const intended = {
+  let intended = {
     a: "a",
   };
 
-  t.strictSame(actual, intended, "14");
-  t.end();
+  equal(actual, intended, "14");
 });
 
-tap.test("15 - targets all keys by value, cleanup=false", (t) => {
-  const actual = deleteKey(
+test("15 - targets all keys by value, cleanup=false", () => {
+  let actual = deleteKey(
     {
       a: "a",
       b: "whatever",
@@ -597,13 +583,12 @@ tap.test("15 - targets all keys by value, cleanup=false", (t) => {
       cleanup: false,
     }
   );
-  const intended = {
+  let intended = {
     a: "a",
     c: [{}],
   };
 
-  t.strictSame(actual, intended, "15");
-  t.end();
+  equal(actual, intended, "15");
 });
 
 // ======================================
@@ -614,37 +599,33 @@ tap.test("15 - targets all keys by value, cleanup=false", (t) => {
 // empty tag's parent will be deleted just if it does not have any non-empty values in other keys
 // in the following case, key "d" is deleted because it's dead branch.
 // But once we go "upstream" from "d" to higher, we don't touch "cousin" key "b":
-tap.test(
-  '16 - deletion limited to level where non-empty "uncles" exist',
-  (t) => {
-    const actual = deleteKey(
-      {
-        a: "a",
-        b: [[{}]],
-        c: "c",
-        d: {
-          e: "",
-        },
-      },
-      {
-        key: "e",
-        val: "",
-        cleanup: true,
-      }
-    );
-    const intended = {
+test('16 - deletion limited to level where non-empty "uncles" exist', () => {
+  let actual = deleteKey(
+    {
       a: "a",
       b: [[{}]],
       c: "c",
-    };
+      d: {
+        e: "",
+      },
+    },
+    {
+      key: "e",
+      val: "",
+      cleanup: true,
+    }
+  );
+  let intended = {
+    a: "a",
+    b: [[{}]],
+    c: "c",
+  };
 
-    t.strictSame(actual, intended, "16");
-    t.end();
-  }
-);
+  equal(actual, intended, "16");
+});
 
-tap.test("17 - deletion of empty things is limited in arrays too", (t) => {
-  const actual = deleteKey(
+test("17 - deletion of empty things is limited in arrays too", () => {
+  let actual = deleteKey(
     [
       [
         {
@@ -663,7 +644,7 @@ tap.test("17 - deletion of empty things is limited in arrays too", (t) => {
       cleanup: true,
     }
   );
-  const intended = [
+  let intended = [
     {},
     {
       b: "b",
@@ -671,44 +652,39 @@ tap.test("17 - deletion of empty things is limited in arrays too", (t) => {
     ["c"],
   ];
 
-  t.strictSame(actual, intended, "17");
-  t.end();
+  equal(actual, intended, "17");
 });
 
 // ==============================
 // Throws
 // ==============================
 
-tap.test("18 - both key and value missing - throws", (t) => {
-  t.throws(() => {
+test("18 - both key and value missing - throws", () => {
+  throws(() => {
     deleteKey({ a: "a" }, {});
   }, /THROW_ID_04/);
-  t.end();
 });
 
-tap.test("19 - nonsensical options object - throws", (t) => {
-  t.throws(() => {
+test("19 - nonsensical options object - throws", () => {
+  throws(() => {
     deleteKey({ a: "a" }, { z: "z" });
   }, /THROW_ID_04/);
-  t.end();
 });
 
-tap.test("20 - nonsensical options object - throws", (t) => {
-  t.throws(() => {
+test("20 - nonsensical options object - throws", () => {
+  throws(() => {
     deleteKey({ a: "a" }, 1);
   }, /THROW_ID_04/);
-  t.end();
 });
 
-tap.test("21 - no input args - throws", (t) => {
-  t.throws(() => {
+test("21 - no input args - throws", () => {
+  throws(() => {
     deleteKey();
   }, /THROW_ID_01/);
-  t.end();
 });
 
-tap.test("22 - wrong input args - throws", (t) => {
-  t.throws(() => {
+test("22 - wrong input args - throws", () => {
+  throws(() => {
     deleteKey(
       { a: "a" },
       {
@@ -718,11 +694,10 @@ tap.test("22 - wrong input args - throws", (t) => {
       }
     );
   }, /opts\.key/g);
-  t.end();
 });
 
-tap.test("23 - wrong input args - throws", (t) => {
-  t.throws(() => {
+test("23 - wrong input args - throws", () => {
+  throws(() => {
     deleteKey(
       { a: "a" },
       {
@@ -732,15 +707,14 @@ tap.test("23 - wrong input args - throws", (t) => {
       }
     );
   }, /opts\.key/);
-  t.end();
 });
 
 // ==============================
 // Tests on real HTML
 // ==============================
 
-tap.test("24 - real parsed HTML #1", (t) => {
-  const actual = deleteKey(
+test("24 - real parsed HTML #1", () => {
+  let actual = deleteKey(
     [
       "<!DOCTYPE html>",
       {
@@ -801,7 +775,7 @@ tap.test("24 - real parsed HTML #1", (t) => {
       val: "",
     }
   );
-  const intended = [
+  let intended = [
     "<!DOCTYPE html>",
     {
       tag: "html",
@@ -852,12 +826,11 @@ tap.test("24 - real parsed HTML #1", (t) => {
       ],
     },
   ];
-  t.strictSame(actual, intended, "24");
-  t.end();
+  equal(actual, intended, "24");
 });
 
-tap.test("25 - real parsed HTML #2", (t) => {
-  const actual = deleteKey(
+test("25 - real parsed HTML #2", () => {
+  let actual = deleteKey(
     [
       {
         tag: "table",
@@ -872,7 +845,7 @@ tap.test("25 - real parsed HTML #2", (t) => {
       val: "",
     }
   );
-  const intended = [
+  let intended = [
     {
       tag: "table",
       attrs: {
@@ -880,12 +853,11 @@ tap.test("25 - real parsed HTML #2", (t) => {
       },
     },
   ];
-  t.strictSame(actual, intended, "25");
-  t.end();
+  equal(actual, intended, "25");
 });
 
-tap.test("26 - real parsed HTML #3", (t) => {
-  const actual = deleteKey(
+test("26 - real parsed HTML #3", () => {
+  let actual = deleteKey(
     {
       a: {
         b: "",
@@ -899,18 +871,17 @@ tap.test("26 - real parsed HTML #3", (t) => {
       cleanup: false,
     }
   );
-  const intended = {
+  let intended = {
     a: {
       c: "d",
       e: "f",
     },
   };
-  t.strictSame(actual, intended, "26");
-  t.end();
+  equal(actual, intended, "26");
 });
 
-tap.test("27 - real parsed HTML #4", (t) => {
-  const actual = deleteKey(
+test("27 - real parsed HTML #4", () => {
+  let actual = deleteKey(
     {
       a: {
         b: "",
@@ -923,30 +894,29 @@ tap.test("27 - real parsed HTML #4", (t) => {
       cleanup: true,
     }
   );
-  const intended = {
+  let intended = {
     a: {
       c: "d",
     },
   };
-  t.strictSame(actual, intended, "27");
-  t.end();
+  equal(actual, intended, "27");
 });
 
 // ======================================
 // Prove input args are not being mutated
 // ======================================
 
-tap.test("28 - does not mutate input args", (t) => {
-  const obj1 = {
+test("28 - does not mutate input args", () => {
+  let obj1 = {
     a: "a",
     b: "b",
   };
-  const unneededRes = deleteKey(obj1, {
+  let unneededRes = deleteKey(obj1, {
     key: "b",
     val: "b",
   });
-  t.pass(unneededRes); // dummy to prevent JS Standard swearing
-  t.strictSame(
+  ok(unneededRes); // dummy to prevent JS Standard swearing
+  equal(
     obj1,
     {
       a: "a",
@@ -954,15 +924,14 @@ tap.test("28 - does not mutate input args", (t) => {
     },
     "28.01"
   ); // real deal
-  t.end();
 });
 
 // ===============
 // Tests on arrays
 // ===============
 
-tap.test("29 - delete a value which is empty string", (t) => {
-  const actual = deleteKey(
+test("29 - delete a value which is empty string", () => {
+  let actual = deleteKey(
     {
       a: ["b", "", "c"],
     },
@@ -970,16 +939,15 @@ tap.test("29 - delete a value which is empty string", (t) => {
       key: "",
     }
   );
-  const intended = {
+  let intended = {
     a: ["b", "c"],
   };
 
-  t.strictSame(actual, intended, "29");
-  t.end();
+  equal(actual, intended, "29");
 });
 
-tap.test("30 - delete a value which is non-empty string", (t) => {
-  const actual = deleteKey(
+test("30 - delete a value which is non-empty string", () => {
+  let actual = deleteKey(
     {
       a: ["b", "", "c", "b"],
     },
@@ -987,65 +955,56 @@ tap.test("30 - delete a value which is non-empty string", (t) => {
       key: "b",
     }
   );
-  const intended = {
+  let intended = {
     a: ["", "c"],
   };
 
-  t.strictSame(actual, intended, "30");
-  t.end();
+  equal(actual, intended, "30");
 });
 
-tap.test(
-  "31 - delete a value which is non-empty string, with wildcards",
-  (t) => {
-    const actual = deleteKey(
-      {
-        a: ["beep", "", "c", "boop"],
-      },
-      {
-        key: "b*p",
-      }
-    );
-    const intended = {
-      a: ["", "c"],
-    };
+test("31 - delete a value which is non-empty string, with wildcards", () => {
+  let actual = deleteKey(
+    {
+      a: ["beep", "", "c", "boop"],
+    },
+    {
+      key: "b*p",
+    }
+  );
+  let intended = {
+    a: ["", "c"],
+  };
 
-    t.strictSame(actual, intended, "31");
-    t.end();
-  }
-);
+  equal(actual, intended, "31");
+});
 
-tap.test(
-  "32 - delete a value which is a non-empty string, with wildcards, only on arrays",
-  (t) => {
-    const actual = deleteKey(
-      {
-        a: ["beep", "", "c", "boop"],
-        bap: "bap",
-      },
-      {
-        key: "b*p",
-        only: "array",
-      }
-    );
-    const intended = {
-      a: ["", "c"],
+test("32 - delete a value which is a non-empty string, with wildcards, only on arrays", () => {
+  let actual = deleteKey(
+    {
+      a: ["beep", "", "c", "boop"],
       bap: "bap",
-    };
+    },
+    {
+      key: "b*p",
+      only: "array",
+    }
+  );
+  let intended = {
+    a: ["", "c"],
+    bap: "bap",
+  };
 
-    t.strictSame(actual, intended, "32");
-    t.end();
-  }
-);
+  equal(actual, intended, "32");
+});
 
 // ==============================
 // Globbing tests
 // ==============================
 
-tap.test("33 - wildcard deletes two keys have string values", (t) => {
+test("33 - wildcard deletes two keys have string values", () => {
   // by key
 
-  const actual = deleteKey(
+  let actual = deleteKey(
     {
       axx: "xxxx",
       ayy: "yyyy",
@@ -1055,19 +1014,18 @@ tap.test("33 - wildcard deletes two keys have string values", (t) => {
       key: "a*",
     }
   );
-  const intended = {
+  let intended = {
     b: "b",
   };
 
-  t.strictSame(actual, intended, "33");
-  t.end();
+  equal(actual, intended, "33");
 });
 
-tap.test("34 - wildcard deletes two keys have string values", (t) => {
+test("34 - wildcard deletes two keys have string values", () => {
   // by value
   // ---------------------------------------------------------------------------
 
-  const actual = deleteKey(
+  let actual = deleteKey(
     {
       axx: "xxxx",
       ayy: "yyyy",
@@ -1077,20 +1035,19 @@ tap.test("34 - wildcard deletes two keys have string values", (t) => {
       key: "*xx",
     }
   );
-  const intended = {
+  let intended = {
     ayy: "yyyy",
     b: "b",
   };
 
-  t.strictSame(actual, intended, "34");
+  equal(actual, intended, "34");
 
   // by both key and value, with wildcards, includes sneaky close positives
   // ---------------------------------------------------------------------------
-  t.end();
 });
 
-tap.test("35 - wildcard deletes two keys have string values", (t) => {
-  const actual = deleteKey(
+test("35 - wildcard deletes two keys have string values", () => {
+  let actual = deleteKey(
     {
       axx: "yyy x",
       notmatching_key: "yyy x",
@@ -1103,18 +1060,17 @@ tap.test("35 - wildcard deletes two keys have string values", (t) => {
       val: "*x",
     }
   );
-  const intended = {
+  let intended = {
     notmatching_key: "yyy x",
     azz: "not matching value",
     b: "b",
   };
 
-  t.strictSame(actual, intended, "35");
-  t.end();
+  equal(actual, intended, "35");
 });
 
-tap.test("36 - wildcard deletes keys with plain object values, by key", (t) => {
-  const actual = deleteKey(
+test("36 - wildcard deletes keys with plain object values, by key", () => {
+  let actual = deleteKey(
     {
       apples: "a",
       brambles: { c: "d" },
@@ -1124,20 +1080,19 @@ tap.test("36 - wildcard deletes keys with plain object values, by key", (t) => {
       key: "*les",
     }
   );
-  const intended = {
+  let intended = {
     crawls: "e",
   };
 
-  t.strictSame(actual, intended, "36");
-  t.end();
+  equal(actual, intended, "36");
 });
 
-tap.test("37 - wildcard delete two values, plain objects", (t) => {
+test("37 - wildcard delete two values, plain objects", () => {
   //
   // cleanup=false
   // ---------------------------------------------------------------------------
 
-  const actual = deleteKey(
+  let actual = deleteKey(
     {
       a: { e: [{ brunch: { c: "d" } }] },
       brother: { c: "d" },
@@ -1148,20 +1103,19 @@ tap.test("37 - wildcard delete two values, plain objects", (t) => {
       cleanup: false,
     }
   );
-  const intended = {
+  let intended = {
     a: { e: [{}] },
   };
 
-  t.strictSame(actual, intended, "37");
-  t.end();
+  equal(actual, intended, "37");
 });
 
-tap.test("38 - wildcard delete two values, plain objects", (t) => {
+test("38 - wildcard delete two values, plain objects", () => {
   //
   // cleanup=true
   // ---------------------------------------------------------------------------
 
-  const actual = deleteKey(
+  let actual = deleteKey(
     {
       a: { e: [{ brunch: { c: "d" } }] },
       brother: { c: "d" },
@@ -1172,14 +1126,13 @@ tap.test("38 - wildcard delete two values, plain objects", (t) => {
       cleanup: true,
     }
   );
-  const intended = {};
+  let intended = {};
 
-  t.strictSame(actual, intended, "38");
-  t.end();
+  equal(actual, intended, "38");
 });
 
-tap.test("39 - issue #8 - undefined as a value", (t) => {
-  const actual = deleteKey(
+test("39 - issue #8 - undefined as a value", () => {
+  let actual = deleteKey(
     {
       __typename: "sd",
       entryPoint: "a",
@@ -1188,16 +1141,15 @@ tap.test("39 - issue #8 - undefined as a value", (t) => {
       key: "__typename",
     }
   );
-  const intended = {
+  let intended = {
     entryPoint: "a",
   };
 
-  t.strictSame(actual, intended, "39");
-  t.end();
+  equal(actual, intended, "39");
 });
 
-tap.test("40 - issue #8 - undefined as a value, outside deletion path", (t) => {
-  t.strictSame(
+test("40 - issue #8 - undefined as a value, outside deletion path", () => {
+  equal(
     deleteKey(
       {
         __typename: "sd",
@@ -1213,11 +1165,10 @@ tap.test("40 - issue #8 - undefined as a value, outside deletion path", (t) => {
     },
     "40"
   );
-  t.end();
 });
 
-tap.test("41 - issue #8 - undefined as a value, outside deletion path", (t) => {
-  t.strictSame(
+test("41 - issue #8 - undefined as a value, outside deletion path", () => {
+  equal(
     deleteKey(
       {
         __typename: "sd",
@@ -1233,19 +1184,17 @@ tap.test("41 - issue #8 - undefined as a value, outside deletion path", (t) => {
     },
     "41"
   );
-
-  t.end();
 });
 
-tap.test("42 - issue #8 - undefined as a value, outside deletion path", (t) => {
-  const input = {
+test("42 - issue #8 - undefined as a value, outside deletion path", () => {
+  let input = {
     a: { __typename: "sd" },
     entryPoint: undefined,
   };
 
   // since "entrypoint" is not in the way of deletion path, it is retained,
   // no matter the "cleanup" setting
-  t.strictSame(
+  equal(
     deleteKey(input, {
       key: "__typename",
       cleanup: true, // <---
@@ -1255,7 +1204,7 @@ tap.test("42 - issue #8 - undefined as a value, outside deletion path", (t) => {
     },
     "42.01"
   );
-  t.strictSame(
+  equal(
     deleteKey(input, {
       key: "__typename",
       cleanup: false, // <---
@@ -1266,17 +1215,15 @@ tap.test("42 - issue #8 - undefined as a value, outside deletion path", (t) => {
     },
     "42.02"
   );
-
-  t.end();
 });
 
-tap.test("43 - issue #8", (t) => {
-  const input = {
+test("43 - issue #8", () => {
+  let input = {
     a: { __typename: "sd", b: undefined, c: "" },
     entryPoint: undefined,
   };
 
-  t.strictSame(
+  equal(
     deleteKey(input, {
       key: "__typename",
       cleanup: true, // <---
@@ -1287,7 +1234,7 @@ tap.test("43 - issue #8", (t) => {
     },
     "43.01"
   );
-  t.strictSame(
+  equal(
     deleteKey(input, {
       key: "__typename",
       cleanup: false, // <---
@@ -1298,6 +1245,6 @@ tap.test("43 - issue #8", (t) => {
     },
     "43.02"
   );
-
-  t.end();
 });
+
+test.run();

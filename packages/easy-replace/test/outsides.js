@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // outsides
 // ==============================
 
-tap.test("01 - left and right outsides as arrays (majority found)", (t) => {
-  t.equal(
+test("01 - left and right outsides as arrays (majority found)", () => {
+  equal(
     er(
       "🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴",
       {
@@ -23,11 +26,10 @@ tap.test("01 - left and right outsides as arrays (majority found)", (t) => {
     "🐴 a🦄c💘a a💘c🦄a a💘c💘a a🦄c🦄a 🐴",
     "test 11.1"
   );
-  t.end();
 });
 
-tap.test("02 - left and right outsides as arrays (one found)", (t) => {
-  t.equal(
+test("02 - left and right outsides as arrays (one found)", () => {
+  equal(
     er(
       "🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴",
       {
@@ -44,11 +46,10 @@ tap.test("02 - left and right outsides as arrays (one found)", (t) => {
     "🐴 a🦄c💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴",
     "test 11.2"
   );
-  t.end();
 });
 
-tap.test("03 - outsides as arrays, beyond found maybes", (t) => {
-  t.equal(
+test("03 - outsides as arrays, beyond found maybes", () => {
+  equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
       {
@@ -65,11 +66,10 @@ tap.test("03 - outsides as arrays, beyond found maybes", (t) => {
     "🦄🐴 aca aca aca aca 🐴🦄",
     "test 11.3"
   );
-  t.end();
 });
 
-tap.test("04 - outsides as arrays blocking maybes", (t) => {
-  t.equal(
+test("04 - outsides as arrays blocking maybes", () => {
+  equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
       {
@@ -86,11 +86,10 @@ tap.test("04 - outsides as arrays blocking maybes", (t) => {
     "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
     "test 11.4"
   );
-  t.end();
 });
 
-tap.test("05 - maybes matching outsides, blocking them", (t) => {
-  t.equal(
+test("05 - maybes matching outsides, blocking them", () => {
+  equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
       {
@@ -107,11 +106,10 @@ tap.test("05 - maybes matching outsides, blocking them", (t) => {
     "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
     "test 11.5"
   );
-  t.end();
 });
 
-tap.test("06 - maybes matching outsides, blocking them", (t) => {
-  t.equal(
+test("06 - maybes matching outsides, blocking them", () => {
+  equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
       {
@@ -128,11 +126,10 @@ tap.test("06 - maybes matching outsides, blocking them", (t) => {
     "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
     "test 11.6"
   );
-  t.end();
 });
 
-tap.test("07 - maybes matching outsides, found", (t) => {
-  t.equal(
+test("07 - maybes matching outsides, found", () => {
+  equal(
     er(
       "🦄🐴🦄 a💘🦄🐴💘🦄a a🦄💘🐴🦄💘a a💘💘🐴💘💘a a🦄🦄🐴🦄🦄a 🦄🐴🦄",
       {
@@ -149,11 +146,10 @@ tap.test("07 - maybes matching outsides, found", (t) => {
     "🦄🐴🦄 a💘c🦄a a🦄c💘a a💘c💘a a🦄c🦄a 🦄🐴🦄",
     "test 11.6"
   );
-  t.end();
 });
 
-tap.test("08 - maybes matching outsides, mismatching", (t) => {
-  t.equal(
+test("08 - maybes matching outsides, mismatching", () => {
+  equal(
     er(
       "🍺🐴🍺 a💘🍺🐴🌟🦄a a🦄🌟🐴🍺💘a a💘🌟🐴🌟💘a a🦄🍺🐴🍺🦄a 🌟🐴🌟",
       {
@@ -170,11 +166,10 @@ tap.test("08 - maybes matching outsides, mismatching", (t) => {
     "🍺🐴🍺 a💘c🦄a a🦄c💘a a💘c💘a a🦄c🦄a 🌟🐴🌟",
     "test 11.6"
   );
-  t.end();
 });
 
-tap.test("09 - rightOutside & with case-insensitive flag", (t) => {
-  t.equal(
+test("09 - rightOutside & with case-insensitive flag", () => {
+  equal(
     er(
       "aaaBBBccc aaazzzCCC aaaCCC",
       {
@@ -191,7 +186,7 @@ tap.test("09 - rightOutside & with case-insensitive flag", (t) => {
     "aaaBBBccc aaazzzCCC aaaCCC",
     "test 11.7.1 - nothing matches, without flag"
   );
-  t.equal(
+  equal(
     er(
       "aaaBBBccc aaazzzCCC aaaCCC",
       {
@@ -211,7 +206,7 @@ tap.test("09 - rightOutside & with case-insensitive flag", (t) => {
     "aaaBBBccc aaazzzCCC aaaCCC",
     "test 11.7.2 - nothing matches, with flag"
   );
-  t.equal(
+  equal(
     er(
       "aaaBBBccc aaazzzCCC aaaCCC",
       {
@@ -231,5 +226,6 @@ tap.test("09 - rightOutside & with case-insensitive flag", (t) => {
     "aaaBBBccc aaazzzCCC !CCC",
     "test 11.7.3 - one match, with flag"
   );
-  t.end();
 });
+
+test.run();

@@ -1,6 +1,12 @@
 import { version as v } from "../package.json";
+
+type Range =
+  | [from: number, to: number]
+  | [from: number, to: number, whatToInsert: string | null | undefined];
+
+type Ranges = Range[] | null;
+
 const version: string = v;
-import { Ranges } from "../../../scripts/common";
 
 //
 //                              /\___/\
@@ -32,7 +38,7 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   }
 
   // fill any settings with defaults if missing:
-  const opts = { ...defaults, ...originalOptions };
+  let opts = { ...defaults, ...originalOptions };
 
   // arrOfRanges validation
   let culpritsIndex: any;
@@ -41,9 +47,9 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   if (
     opts.strictlyTwoElementsInRangeArrays &&
     !arrOfRanges
-      .filter((range) => range)
+      // theoretically, there can be holes in the given array!
       .every((rangeArr, indx) => {
-        if (rangeArr.length !== 2) {
+        if (!Array.isArray(rangeArr) || rangeArr.length !== 2) {
           culpritsIndex = indx;
           culpritsLen = rangeArr.length;
           return false;
@@ -62,20 +68,19 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
 
   // validate are range indexes natural numbers:
   if (
-    !arrOfRanges
-      .filter((range) => range)
-      .every((rangeArr, indx) => {
-        if (
-          !Number.isInteger(rangeArr[0]) ||
-          rangeArr[0] < 0 ||
-          !Number.isInteger(rangeArr[1]) ||
-          rangeArr[1] < 0
-        ) {
-          culpritsIndex = indx;
-          return false;
-        }
-        return true;
-      })
+    !arrOfRanges.every((rangeArr, indx) => {
+      if (
+        !Array.isArray(rangeArr) ||
+        !Number.isInteger(rangeArr[0]) ||
+        rangeArr[0] < 0 ||
+        !Number.isInteger(rangeArr[1]) ||
+        rangeArr[1] < 0
+      ) {
+        culpritsIndex = indx;
+        return false;
+      }
+      return true;
+    })
   ) {
     throw new TypeError(
       `ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
@@ -87,31 +92,29 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   }
 
   // let's assume worst case scenario is N x N.
-  const maxPossibleIterations =
-    arrOfRanges.filter((range) => range).length ** 2;
+  let maxPossibleIterations = arrOfRanges.length ** 2;
   let counter = 0;
 
-  return Array.from(arrOfRanges)
-    .filter((range) => range)
-    .sort((range1, range2) => {
-      if (opts.progressFn) {
-        counter += 1;
-        opts.progressFn(Math.floor((counter * 100) / maxPossibleIterations));
-      }
-      if (range1[0] === range2[0]) {
-        if (range1[1] < range2[1]) {
-          return -1;
-        }
-        if (range1[1] > range2[1]) {
-          return 1;
-        }
-        return 0;
-      }
-      if (range1[0] < range2[0]) {
+  // return a deep clone
+  return Array.from(arrOfRanges).sort((range1, range2) => {
+    if (opts.progressFn) {
+      counter += 1;
+      opts.progressFn(Math.floor((counter * 100) / maxPossibleIterations));
+    }
+    if (range1[0] === range2[0]) {
+      if (range1[1] < range2[1]) {
         return -1;
       }
-      return 1;
-    });
+      if (range1[1] > range2[1]) {
+        return 1;
+      }
+      return 0;
+    }
+    if (range1[0] < range2[0]) {
+      return -1;
+    }
+    return 1;
+  });
 }
 
-export { rSort, defaults, version };
+export { rSort, defaults, version, Range, Ranges };

@@ -1,211 +1,162 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
 // 01. validation
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accept-charset, error level 0`,
-  (t) => {
-    const str = `<div><form>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-accept-charset": 0,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "01.01");
-    t.strictSame(messages, [], "01.02");
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accept-charset, error level 0`, () => {
+  let str = `<div><form>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-accept-charset": 0,
+    },
+  });
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
+});
 
-tap.test(
-  `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accept-charset, error level 1`,
-  (t) => {
-    const str = `<div><form>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-accept-charset": 1,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "02.01");
-    t.strictSame(messages, [], "02.02");
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accept-charset, error level 1`, () => {
+  let str = `<div><form>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-accept-charset": 1,
+    },
+  });
+  equal(applyFixes(str, messages), str, "02.01");
+  equal(messages, [], "02.02");
+});
 
-tap.test(
-  `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accept-charset, error level 2`,
-  (t) => {
-    const str = `<div><form>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-accept-charset": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "03.01");
-    t.strictSame(messages, [], "03.02");
-    t.end();
-  }
-);
+test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no accept-charset, error level 2`, () => {
+  let str = `<div><form>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-accept-charset": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "03.01");
+  equal(messages, [], "03.02");
+});
 
-tap.test(
-  `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  (t) => {
-    const str = `<form accept-charset='utf-8'>`; // <-- notice single quotes
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-accept-charset": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "04.01");
-    t.strictSame(messages, [], "04.02");
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = `<form accept-charset='utf-8'>`; // <-- notice single quotes
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-accept-charset": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "04.01");
+  equal(messages, [], "04.02");
+});
 
-tap.test(
-  `05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two attrs`,
-  (t) => {
-    const str = `<form accept-charset="utf-7,utf-8">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-accept-charset": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "05.01");
-    t.strictSame(messages, [], "05.02");
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two attrs`, () => {
+  let str = `<form accept-charset="utf-7,utf-8">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-accept-charset": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "05.01");
+  equal(messages, [], "05.02");
+});
 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  (t) => {
-    const str = `<div accept-charset='utf-8'>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-accept-charset": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "06.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-accept-charset",
-          idxFrom: 5,
-          idxTo: 27,
-          fix: null,
-        },
-      ],
-      "06.02"
-    );
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
+  let str = `<div accept-charset='utf-8'>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-accept-charset": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "06.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-accept-charset",
+      idxFrom: 5,
+      idxTo: 27,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
-  (t) => {
-    const str = `<zzz accept-charset="utf-8" yyy>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-accept-charset": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "07.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-accept-charset",
-          idxFrom: 5,
-          idxTo: 27,
-          fix: null,
-        },
-      ],
-      "07.02"
-    );
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = `<zzz accept-charset="utf-8" yyy>`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-accept-charset": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "07.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-accept-charset",
+      idxFrom: 5,
+      idxTo: 27,
+      fix: null,
+    },
+  ]);
+});
 
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
-  (t) => {
-    const str = `<form accept-charset="utf-z">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-accept-charset": 2,
-      },
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str, "08.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-accept-charset",
-          idxFrom: 22,
-          idxTo: 27,
-          message: `Unrecognised value: "utf-z".`,
-          fix: null,
-        },
-      ],
-      "08.02"
-    );
-    t.end();
-  }
-);
+test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
+  let str = `<form accept-charset="utf-z">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-accept-charset": 2,
+    },
+  });
+  // can't fix:
+  equal(applyFixes(str, messages), str, "08.01");
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-accept-charset",
+      idxFrom: 22,
+      idxTo: 27,
+      message: `Unrecognised value: "utf-z".`,
+      fix: null,
+    },
+  ]);
+});
 
-tap.test(
-  `09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - space after comma`,
-  (t) => {
-    const str = `<form accept-charset="utf-7, utf-8">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-accept-charset": 2,
+test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - space after comma`, () => {
+  let str = `<form accept-charset="utf-7, utf-8">`;
+  let linter = new Linter();
+  let messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-accept-charset": 2,
+    },
+  });
+  equal(applyFixes(str, messages), `<form accept-charset="utf-7,utf-8">`);
+  compare(ok, messages, [
+    {
+      ruleId: "attribute-validate-accept-charset",
+      idxFrom: 28,
+      idxTo: 29,
+      message: `Remove whitespace.`,
+      fix: {
+        ranges: [[28, 29]],
       },
-    });
-    t.equal(
-      applyFixes(str, messages),
-      `<form accept-charset="utf-7,utf-8">`,
-      "09.01"
-    );
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-accept-charset",
-          idxFrom: 28,
-          idxTo: 29,
-          message: `Remove whitespace.`,
-          fix: {
-            ranges: [[28, 29]],
-          },
-        },
-      ],
-      "09.02"
-    );
-    t.end();
-  }
-);
+    },
+  ]);
+});
+
+test.run();

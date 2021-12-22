@@ -33,7 +33,7 @@ function attributeValidateSize(context: Linter): RuleObjType {
             fix: null,
           });
         } else {
-          const { charStart, charEnd, errorArr } = checkForWhitespace(
+          let { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
@@ -66,7 +66,7 @@ function attributeValidateSize(context: Linter): RuleObjType {
           if (typeof charStart === "number" && typeof charEnd === "number") {
             // the attribute's value is not empty
 
-            const extractedVal = node.attribValueRaw.slice(charStart, charEnd);
+            let extractedVal = node.attribValueRaw.slice(charStart, charEnd);
             console.log(
               `071 attributeValidateSize(): ${`\u001b[${33}m${`extractedVal`}\u001b[${39}m`} = ${JSON.stringify(
                 extractedVal,
@@ -96,7 +96,7 @@ function attributeValidateSize(context: Linter): RuleObjType {
             } else if (["font", "basefont"].includes(node.parent.tagName)) {
               console.log(`097 validate font/basefont tag's size`);
               if (!extractedVal.match(fontSizeRegex)) {
-                const errorArr2 = validateDigitAndUnit(
+                let errorArr2 = validateDigitAndUnit(
                   extractedVal,
                   (node.attribValueStartsAt as number) + charStart,
                   {

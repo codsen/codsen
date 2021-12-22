@@ -3,7 +3,9 @@ import { mergeAdvanced } from "object-merge-advanced";
 import { arrayiffy } from "arrayiffy-if-string";
 import { allEq } from "object-all-values-equal-to";
 import isObj from "lodash.isplainobject";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Obj {
@@ -47,8 +49,8 @@ function fillMissingKeys(
   schema: Obj,
   opts: Opts,
   path = ""
-) {
-  const incomplete = clone(incompleteOriginal);
+): Obj {
+  let incomplete = clone(incompleteOriginal);
   if (
     existy(incomplete) ||
     !(
@@ -61,7 +63,7 @@ function fillMissingKeys(
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach((key) => {
         // calculate the path for current key
-        const currentPath = `${path ? `${path}.` : ""}${key}`;
+        let currentPath = `${path ? `${path}.` : ""}${key}`;
 
         if (
           opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
@@ -100,7 +102,7 @@ function fillMissingKeys(
       }
       if (schema.length > 0) {
         for (let i = incomplete.length; i--; ) {
-          const currentPath = `${path ? `${path}.` : ""}0`;
+          let currentPath = `${path ? `${path}.` : ""}0`;
           if (isObj(schema[0]) || Array.isArray(schema[0])) {
             incomplete[i] = fillMissingKeys(
               incomplete[i],
@@ -167,7 +169,7 @@ function fillMissing(
   }
 
   // fill any settings with defaults if missing:
-  const opts = { ...defaults, ...(originalOptsWrapper || {}) };
+  let opts = { ...defaults, ...(originalOptsWrapper || {}) };
 
   opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(
     opts.doNotFillThesePathsIfTheyContainPlaceholders as any

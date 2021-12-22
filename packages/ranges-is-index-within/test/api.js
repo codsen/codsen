@@ -1,16 +1,19 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { isIndexWithin } from "../dist/ranges-is-index-within.esm.js";
 
-tap.test("01 - 1st argument missing", (t) => {
-  t.throws(() => {
+test("01 - 1st argument missing", () => {
+  throws(() => {
     isIndexWithin();
   }, /THROW_ID_01/);
-  t.end();
 });
 
-tap.test("02 - 1st and 2nd args swapped", (t) => {
-  t.throws(() => {
+test("02 - 1st and 2nd args swapped", () => {
+  throws(() => {
     isIndexWithin([[1, 2]], 2);
   }, /THROW_ID_01/);
-  t.end();
 });
+
+test.run();

@@ -1,230 +1,211 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { strFindHeadsTails } from "../dist/string-find-heads-tails.esm.js";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-tap.test(
-  "01 - throws when the first argument, source string, is not a string",
-  (t) => {
-    t.throws(() => {
-      strFindHeadsTails(1);
-    }, /THROW_ID_02/);
-    t.throws(() => {
-      strFindHeadsTails(1, "a", "b");
-    }, /THROW_ID_02/);
-    t.end();
-  }
-);
-
-tap.test("02 - throws when there's no input", (t) => {
-  t.throws(() => {
-    strFindHeadsTails();
+test("01 - throws when the first argument, source string, is not a string", () => {
+  throws(() => {
+    strFindHeadsTails(1);
   }, /THROW_ID_02/);
-  t.end();
+  throws(() => {
+    strFindHeadsTails(1, "a", "b");
+  }, /THROW_ID_02/);
 });
 
-tap.test(
-  "03 - throws when the second argument, heads, is not a string",
-  (t) => {
-    t.throws(() => {
-      strFindHeadsTails("a", 1, "a");
-    }, /THROW_ID_03/);
+test("02 - throws when there's no input", () => {
+  throws(() => {
+    strFindHeadsTails();
+  }, /THROW_ID_02/);
+});
 
-    t.throws(() => {
-      strFindHeadsTails("a", 1, "z");
-    }, /THROW_ID_03/);
+test("03 - throws when the second argument, heads, is not a string", () => {
+  throws(() => {
+    strFindHeadsTails("a", 1, "a");
+  }, /THROW_ID_03/);
 
-    t.throws(() => {
-      strFindHeadsTails("a", 1, "a");
-    }, /THROW_ID_03/);
+  throws(() => {
+    strFindHeadsTails("a", 1, "z");
+  }, /THROW_ID_03/);
 
-    t.throws(() => {
-      strFindHeadsTails("a", "", "z");
-    }, /THROW_ID_04/);
+  throws(() => {
+    strFindHeadsTails("a", 1, "a");
+  }, /THROW_ID_03/);
 
-    t.throws(() => {
-      strFindHeadsTails("a", [], "z");
-    }, /THROW_ID_05/);
+  throws(() => {
+    strFindHeadsTails("a", "", "z");
+  }, /THROW_ID_04/);
 
-    t.throws(() => {
-      strFindHeadsTails("a", ["z", 1, null], ["z"]);
-    }, /THROW_ID_06/);
+  throws(() => {
+    strFindHeadsTails("a", [], "z");
+  }, /THROW_ID_05/);
 
-    t.throws(() => {
-      strFindHeadsTails("a", ["z", 1, undefined], "z");
-    }, /THROW_ID_06/);
+  throws(() => {
+    strFindHeadsTails("a", ["z", 1, null], ["z"]);
+  }, /THROW_ID_06/);
 
-    t.throws(() => {
-      strFindHeadsTails("a", ["z", true], "z");
-    }, /THROW_ID_06/);
+  throws(() => {
+    strFindHeadsTails("a", ["z", 1, undefined], "z");
+  }, /THROW_ID_06/);
 
-    t.throws(() => {
-      strFindHeadsTails("a", ["b", ""], "c");
-    }, /THROW_ID_07/);
+  throws(() => {
+    strFindHeadsTails("a", ["z", true], "z");
+  }, /THROW_ID_06/);
 
-    t.end();
-  }
-);
+  throws(() => {
+    strFindHeadsTails("a", ["b", ""], "c");
+  }, /THROW_ID_07/);
+});
 
-tap.test("04 - throws when the third argument, tails, is not a string", (t) => {
-  t.throws(() => {
+test("04 - throws when the third argument, tails, is not a string", () => {
+  throws(() => {
     strFindHeadsTails("a", "a");
   }, /THROW_ID_08/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", null);
   }, /THROW_ID_08/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", 1);
   }, /THROW_ID_08/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", "");
   }, /THROW_ID_09/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", []);
   }, /THROW_ID_10/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", ["z", 1]);
   }, /THROW_ID_11/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", [null]);
   }, /THROW_ID_11/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", [true]);
   }, /THROW_ID_11/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", ["z", ""]);
   }, /THROW_ID_12/);
-
-  t.end();
 });
 
-tap.test(
-  "05 - throws when the fourth argument, opts, is of a wrong type",
-  (t) => {
-    t.throws(() => {
-      strFindHeadsTails("a", "a", "a", "a");
-    }, /THROW_ID_01/);
+test("05 - throws when the fourth argument, opts, is of a wrong type", () => {
+  throws(() => {
+    strFindHeadsTails("a", "a", "a", "a");
+  }, /THROW_ID_01/);
 
-    t.doesNotThrow(() => {
-      strFindHeadsTails("a", "a", "a", null); // falsey is OK
-    }, "05.02");
-    t.doesNotThrow(() => {
-      strFindHeadsTails("a", "a", "a", undefined); // falsey is OK
-    }, "05.03");
-    t.doesNotThrow(() => {
-      strFindHeadsTails("a", "a", "a", { fromIndex: "1" }); // OK, will be parsed
-    }, "05.04");
-    t.doesNotThrow(() => {
-      strFindHeadsTails("a", "a", "a", { fromIndex: 1 }); // canonical
-    }, "05.05");
-    t.end();
-  }
-);
+  not.throws(() => {
+    strFindHeadsTails("a", "a", "a", null); // falsey is OK
+  }, "05.02");
+  not.throws(() => {
+    strFindHeadsTails("a", "a", "a", undefined); // falsey is OK
+  }, "05.03");
+  not.throws(() => {
+    strFindHeadsTails("a", "a", "a", { fromIndex: "1" }); // OK, will be parsed
+  }, "05.04");
+  not.throws(() => {
+    strFindHeadsTails("a", "a", "a", { fromIndex: 1 }); // canonical
+  }, "05.05");
+});
 
-tap.test("06 - opts.fromIndex is not a natural number", (t) => {
+test("06 - opts.fromIndex is not a natural number", () => {
   // not a natural number
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", "a", { fromIndex: 1.5 });
   }, /THROW_ID_18/);
-  t.end();
 });
 
-tap.test("07 - opts.fromIndex is not a natural number", (t) => {
+test("07 - opts.fromIndex is not a natural number", () => {
   // not a natural number
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("a", "a", "a", { fromIndex: 1.5, source: "TEST 1.8:" });
   }, /THROW_ID_18/);
-  t.end();
 });
 
-tap.test("08 - unmatched heads and tails", (t) => {
-  t.throws(() => {
+test("08 - unmatched heads and tails", () => {
+  throws(() => {
     strFindHeadsTails("abc%%_def_%ghi", "%%_", "_%%");
   }, /THROW_ID_22/); // sneaky - tails' second percentage char is missing, hence unrecognised and throws
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abcdef", "x", "e"); // heads not found
   }, /THROW_ID_21/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abcdef", "x", ["e", "$"]); // heads not found
   }, /THROW_ID_21/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abcdef", ["_", "x"], ["e", "$"]); // heads not found
   }, /THROW_ID_21/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abcdef", ["_", "x"], ["e", "$"], {
       source: "TEST 4.2:",
     }); // heads not found
   }, /TEST 4\.2/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abcdef", "b", "x"); // tails not found
   }, /THROW_ID_22/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abcdef", "b", "x", { source: "TEST 5.2:" }); // tails not found
   }, /TEST 5\.2/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abcdef", ["&", "b"], "x"); // tails not found
   }, /THROW_ID_22/);
 
-  t.doesNotThrow(() => {
+  not.throws(() => {
     strFindHeadsTails("abcdef", "x", "z"); // both heads and tails not found - OK
   }, "08.09");
-
-  t.end();
 });
 
-tap.test("09 - both heads and tails found but wrong order", (t) => {
-  t.throws(() => {
+test("09 - both heads and tails found but wrong order", () => {
+  throws(() => {
     strFindHeadsTails("abc___def---ghi", "---", "___"); // opposite order
   }, /THROW_ID_22/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abc___def---ghi", ["***", "---"], "___"); // opposite order
   }, /THROW_ID_22/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abc___def---ghi", ["***", "---"], ["^^^", "___"]); // opposite order
   }, /THROW_ID_22/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("--a__bcdef**", ["--", "__"], ["**", "^^"]); // two consecutive heads
   }, /THROW_ID_19/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("--a__bcdef**", ["--", "__"], ["**", "^^"], {
       source: "TEST 4.3:",
     }); // two consecutive heads
   }, /TEST 4\.3/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("--a**bcdefghij^^", ["--", "__"], ["**", "^^"]); // two consecutive tails
   }, /THROW_ID_21/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("--a^^bc__defghij", ["--", "__"], ["**", "^^"]); // second heads unmatched
   }, /THROW_ID_22/);
-
-  t.end();
 });
 
-tap.test("10 - heads of one type, tails of another", (t) => {
-  t.strictSame(
+test("10 - heads of one type, tails of another", () => {
+  equal(
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
       ["%%_", "%%-"],
@@ -246,11 +227,10 @@ tap.test("10 - heads of one type, tails of another", (t) => {
     ],
     "10 - default behaviour - not strict pair matching"
   );
-  t.end();
 });
 
-tap.test("11 - heads of one type, tails of another", (t) => {
-  t.throws(() => {
+test("11 - heads of one type, tails of another", () => {
+  throws(() => {
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
       ["%%_", "%%-"],
@@ -260,11 +240,10 @@ tap.test("11 - heads of one type, tails of another", (t) => {
       }
     );
   }, /THROW_ID_20/);
-  t.end();
 });
 
-tap.test("12 - heads of one type, tails of another", (t) => {
-  t.throws(() => {
+test("12 - heads of one type, tails of another", () => {
+  throws(() => {
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
       ["%%_", "%%-"],
@@ -275,13 +254,12 @@ tap.test("12 - heads of one type, tails of another", (t) => {
       }
     );
   }, /TEST 1\.08/);
-  t.end();
 });
 
-tap.test("13 - heads of one type, tails of another", (t) => {
+test("13 - heads of one type, tails of another", () => {
   // let's just prove that it error message is not about empty opts.source but
   // still about the same index mismatch as the tests above
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
       ["%%_", "%%-"],
@@ -292,116 +270,110 @@ tap.test("13 - heads of one type, tails of another", (t) => {
       }
     );
   }, /the tails the followed it were not of the same index/);
-  t.end();
 });
 
-tap.test(
-  "14 - sequences are treated correctly by opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder",
-  (t) => {
-    t.strictSame(
-      strFindHeadsTails(
-        "some text -%%-var1-%%- more text _%%_var2_%%_ and even more -%%-var3-%%-.",
-        ["%%_", "%%-"],
-        ["_%%", "-%%"],
-        { matchHeadsAndTailsStrictlyInPairsByTheirOrder: false }
-      ),
-      [
-        {
-          headsStartAt: 11,
-          headsEndAt: 14,
-          tailsStartAt: 18,
-          tailsEndAt: 21,
-        },
-        {
-          headsStartAt: 34,
-          headsEndAt: 37,
-          tailsStartAt: 41,
-          tailsEndAt: 44,
-        },
-        {
-          headsStartAt: 61,
-          headsEndAt: 64,
-          tailsStartAt: 68,
-          tailsEndAt: 71,
-        },
-      ],
-      "14.01 - default behaviour - no strict pair matching"
-    );
-    t.strictSame(
-      strFindHeadsTails(
-        "some text -%%-var1-%%- more text _%%_var2_%%_ and even more -%%-var3-%%-.",
-        ["%%_", "%%-"],
-        ["_%%", "-%%"],
-        { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true }
-      ),
-      [
-        {
-          headsStartAt: 11,
-          headsEndAt: 14,
-          tailsStartAt: 18,
-          tailsEndAt: 21,
-        },
-        {
-          headsStartAt: 34,
-          headsEndAt: 37,
-          tailsStartAt: 41,
-          tailsEndAt: 44,
-        },
-        {
-          headsStartAt: 61,
-          headsEndAt: 64,
-          tailsStartAt: 68,
-          tailsEndAt: 71,
-        },
-      ],
-      "14.02 - strict pair matching"
-    );
-    t.strictSame(
-      strFindHeadsTails(
-        "some text _%-var1-%_ more text _%_var2_%_ and even more -%-var3-%- and -%_var4_%-.",
-        ["%_", "%-"],
-        ["_%", "-%"],
-        { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true }
-      ),
-      [
-        {
-          headsStartAt: 11,
-          headsEndAt: 13,
-          tailsStartAt: 17,
-          tailsEndAt: 19,
-        },
-        {
-          headsStartAt: 32,
-          headsEndAt: 34,
-          tailsStartAt: 38,
-          tailsEndAt: 40,
-        },
-        {
-          headsStartAt: 57,
-          headsEndAt: 59,
-          tailsStartAt: 63,
-          tailsEndAt: 65,
-        },
-        {
-          headsStartAt: 72,
-          headsEndAt: 74,
-          tailsStartAt: 78,
-          tailsEndAt: 80,
-        },
-      ],
-      "14.03 - strict pair matching"
-    );
-
-    t.end();
-  }
-);
+test("14 - sequences are treated correctly by opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder", () => {
+  equal(
+    strFindHeadsTails(
+      "some text -%%-var1-%%- more text _%%_var2_%%_ and even more -%%-var3-%%-.",
+      ["%%_", "%%-"],
+      ["_%%", "-%%"],
+      { matchHeadsAndTailsStrictlyInPairsByTheirOrder: false }
+    ),
+    [
+      {
+        headsStartAt: 11,
+        headsEndAt: 14,
+        tailsStartAt: 18,
+        tailsEndAt: 21,
+      },
+      {
+        headsStartAt: 34,
+        headsEndAt: 37,
+        tailsStartAt: 41,
+        tailsEndAt: 44,
+      },
+      {
+        headsStartAt: 61,
+        headsEndAt: 64,
+        tailsStartAt: 68,
+        tailsEndAt: 71,
+      },
+    ],
+    "14.01 - default behaviour - no strict pair matching"
+  );
+  equal(
+    strFindHeadsTails(
+      "some text -%%-var1-%%- more text _%%_var2_%%_ and even more -%%-var3-%%-.",
+      ["%%_", "%%-"],
+      ["_%%", "-%%"],
+      { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true }
+    ),
+    [
+      {
+        headsStartAt: 11,
+        headsEndAt: 14,
+        tailsStartAt: 18,
+        tailsEndAt: 21,
+      },
+      {
+        headsStartAt: 34,
+        headsEndAt: 37,
+        tailsStartAt: 41,
+        tailsEndAt: 44,
+      },
+      {
+        headsStartAt: 61,
+        headsEndAt: 64,
+        tailsStartAt: 68,
+        tailsEndAt: 71,
+      },
+    ],
+    "14.02 - strict pair matching"
+  );
+  equal(
+    strFindHeadsTails(
+      "some text _%-var1-%_ more text _%_var2_%_ and even more -%-var3-%- and -%_var4_%-.",
+      ["%_", "%-"],
+      ["_%", "-%"],
+      { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true }
+    ),
+    [
+      {
+        headsStartAt: 11,
+        headsEndAt: 13,
+        tailsStartAt: 17,
+        tailsEndAt: 19,
+      },
+      {
+        headsStartAt: 32,
+        headsEndAt: 34,
+        tailsStartAt: 38,
+        tailsEndAt: 40,
+      },
+      {
+        headsStartAt: 57,
+        headsEndAt: 59,
+        tailsStartAt: 63,
+        tailsEndAt: 65,
+      },
+      {
+        headsStartAt: 72,
+        headsEndAt: 74,
+        tailsStartAt: 78,
+        tailsEndAt: 80,
+      },
+    ],
+    "14.03 - strict pair matching"
+  );
+});
 
 // -----------------------------------------------------------------------------
 // 02. normal use, no third arg in the input
 // -----------------------------------------------------------------------------
 
-tap.test("15 - single char markers", (t) => {
-  t.strictSame(
+test("15 - single char markers", () => {
+  equal(
     strFindHeadsTails("abcdef", "b", "e"),
     [
       {
@@ -413,7 +385,7 @@ tap.test("15 - single char markers", (t) => {
     ],
     "15.01 - easies"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails("ab", "a", "b"),
     [
       {
@@ -425,11 +397,10 @@ tap.test("15 - single char markers", (t) => {
     ],
     "15.02 - tight"
   );
-  t.end();
 });
 
-tap.test("16 - multi-char markers", (t) => {
-  t.strictSame(
+test("16 - multi-char markers", () => {
+  equal(
     strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%"),
     [
       {
@@ -443,11 +414,11 @@ tap.test("16 - multi-char markers", (t) => {
   );
   // fromIndex prevented heads from being caught. Tails were caught, but
   // since opts.throwWhenSomethingWrongIsDetected is on, error is thrown.
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%", { fromIndex: 4 });
   }, /THROW_ID_21/);
 
-  t.strictSame(
+  equal(
     strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%", {
       fromIndex: 4,
       throwWhenSomethingWrongIsDetected: false,
@@ -455,7 +426,7 @@ tap.test("16 - multi-char markers", (t) => {
     [],
     "16.03 - offset meant we started beyond first heads, so no tails were accepted"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails("abczz-def--aghi", "zz-", "--a"),
     [
       {
@@ -467,7 +438,7 @@ tap.test("16 - multi-char markers", (t) => {
     ],
     "16.04"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails(
       "abc%%_def_%%ghi%%-jkl-%%",
       ["%%_", "%%-"],
@@ -489,45 +460,39 @@ tap.test("16 - multi-char markers", (t) => {
     ],
     "16.05"
   );
-  t.end();
 });
 
-tap.test(
-  '17 - sneaky "casual" underscores try to blend in with legit heads/tails',
-  (t) => {
-    t.strictSame(
-      strFindHeadsTails("aaa_%%_bbb_%%_ccc", "%%_", "_%%"),
-      [
-        {
-          headsStartAt: 4,
-          headsEndAt: 7,
-          tailsStartAt: 10,
-          tailsEndAt: 13,
-        },
-      ],
-      "17"
-    );
-    t.end();
-  }
-);
+test('17 - sneaky "casual" underscores try to blend in with legit heads/tails', () => {
+  equal(
+    strFindHeadsTails("aaa_%%_bbb_%%_ccc", "%%_", "_%%"),
+    [
+      {
+        headsStartAt: 4,
+        headsEndAt: 7,
+        tailsStartAt: 10,
+        tailsEndAt: 13,
+      },
+    ],
+    "17"
+  );
+});
 
-tap.test("18 - sneaky tails precede heads", (t) => {
-  t.throws(() => {
+test("18 - sneaky tails precede heads", () => {
+  throws(() => {
     strFindHeadsTails("aaa_%%bbb%%_ccc", "%%_", "_%%");
   }, /THROW_ID_22/);
 
-  t.strictSame(
+  equal(
     strFindHeadsTails("aaa_%%bbb%%_ccc", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: false,
     }),
     [],
     "18.02"
   );
-  t.end();
 });
 
-tap.test("19 - arrays of heads and tails", (t) => {
-  t.strictSame(
+test("19 - arrays of heads and tails", () => {
+  equal(
     strFindHeadsTails(
       "zzz_%%-zz_cmp_id-%%_%%-lnk_id-%%",
       ["%%_", "%%-"],
@@ -549,25 +514,24 @@ tap.test("19 - arrays of heads and tails", (t) => {
     ],
     "19"
   );
-  t.end();
 });
 
-tap.test("20 - input is equal to heads or tails", (t) => {
-  t.strictSame(
+test("20 - input is equal to heads or tails", () => {
+  equal(
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: false,
     }),
     [],
     "20.01"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
     }),
     [],
     "20.02"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: true,
@@ -575,7 +539,7 @@ tap.test("20 - input is equal to heads or tails", (t) => {
     [],
     "20.03"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: false,
       allowWholeValueToBeOnlyHeadsOrTails: true,
@@ -584,14 +548,14 @@ tap.test("20 - input is equal to heads or tails", (t) => {
     "20.04"
   );
   // only this settings combo will cause a throw:
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false,
     });
   }, /THROW_ID_16/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false,
@@ -599,7 +563,7 @@ tap.test("20 - input is equal to heads or tails", (t) => {
     });
   }, /TEST 1\.6/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false,
@@ -608,26 +572,24 @@ tap.test("20 - input is equal to heads or tails", (t) => {
   }, /CUSTOM/);
 
   // equal to tails
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("_%%", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false,
     });
   }, /THROW_ID_17/);
 
-  t.throws(() => {
+  throws(() => {
     strFindHeadsTails("_%%", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false,
       source: "TEST 3.2",
     });
   }, /TEST 3\.2/);
-
-  t.end();
 });
 
-tap.test("21 - more clashing with outside characters", (t) => {
-  t.strictSame(
+test("21 - more clashing with outside characters", () => {
+  equal(
     strFindHeadsTails(
       "aaa_%%-bbb-%%_%%-ccc-%%",
       ["%%_", "%%-"],
@@ -649,7 +611,7 @@ tap.test("21 - more clashing with outside characters", (t) => {
     ],
     "21.01"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails(
       "aaa_%%-bbb-%%_%%-ccc-%%",
       ["%%_", "%%-"],
@@ -674,64 +636,50 @@ tap.test("21 - more clashing with outside characters", (t) => {
     ],
     "21.02"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 03. opts.relaxedAPI
 // -----------------------------------------------------------------------------
 
-tap.test("22 - opts.relaxedAPI - input string", (t) => {
-  t.strictSame(
+test("22 - opts.relaxedAPI - input string", () => {
+  equal(
     strFindHeadsTails(undefined, "%%_", "_%%", { relaxedAPI: true }),
     [],
     "22.01"
   );
-  t.strictSame(
-    strFindHeadsTails("", "%%_", "_%%", { relaxedAPI: true }),
-    [],
-    "22.02"
-  );
-  t.strictSame(
+  equal(strFindHeadsTails("", "%%_", "_%%", { relaxedAPI: true }), [], "22.02");
+  equal(
     strFindHeadsTails(null, "%%_", "_%%", { relaxedAPI: true }),
     [],
     "22.03"
   );
-  t.end();
 });
 
-tap.test("23 - opts.relaxedAPI - heads", (t) => {
-  t.strictSame(
+test("23 - opts.relaxedAPI - heads", () => {
+  equal(
     strFindHeadsTails("aaa", undefined, "_%%", { relaxedAPI: true }),
     [],
     "23.01"
   );
-  t.strictSame(
-    strFindHeadsTails("aaa", "", "_%%", { relaxedAPI: true }),
-    [],
-    "23.02"
-  );
-  t.strictSame(
-    strFindHeadsTails("aaa", [], "_%%", { relaxedAPI: true }),
-    [],
-    "23.03"
-  );
-  t.strictSame(
+  equal(strFindHeadsTails("aaa", "", "_%%", { relaxedAPI: true }), [], "23.02");
+  equal(strFindHeadsTails("aaa", [], "_%%", { relaxedAPI: true }), [], "23.03");
+  equal(
     strFindHeadsTails("aaa", [""], "_%%", { relaxedAPI: true }),
     [],
     "23.04"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails("aaa", null, "_%%", { relaxedAPI: true }),
     [],
     "23.05"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails("aaa", [null], "_%%", { relaxedAPI: true }),
     [],
     "23.06"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails(
       "aaa %%_test_%% bbb",
       ["", "%%_", undefined, 1],
@@ -748,39 +696,31 @@ tap.test("23 - opts.relaxedAPI - heads", (t) => {
     ],
     "23.07"
   );
-  t.end();
 });
 
-tap.test("24 - opts.relaxedAPI - tails", (t) => {
-  t.strictSame(
+test("24 - opts.relaxedAPI - tails", () => {
+  equal(
     strFindHeadsTails("aaa", "%%_", undefined, { relaxedAPI: true }),
     [],
     "24.01"
   );
-  t.strictSame(
-    strFindHeadsTails("aaa", "%%_", "", { relaxedAPI: true }),
-    [],
-    "24.02"
-  );
-  t.strictSame(
-    strFindHeadsTails("aaa", "%%_", [], { relaxedAPI: true }),
-    [],
-    "24.03"
-  );
-  t.strictSame(
+  equal(strFindHeadsTails("aaa", "%%_", "", { relaxedAPI: true }), [], "24.02");
+  equal(strFindHeadsTails("aaa", "%%_", [], { relaxedAPI: true }), [], "24.03");
+  equal(
     strFindHeadsTails("aaa", "%%_", [""], { relaxedAPI: true }),
     [],
     "24.04"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails("aaa", "%%_", null, { relaxedAPI: true }),
     [],
     "24.05"
   );
-  t.strictSame(
+  equal(
     strFindHeadsTails("aaa", "%%_", [null, 1], { relaxedAPI: true }),
     [],
     "24.06"
   );
-  t.end();
 });
+
+test.run();

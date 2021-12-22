@@ -1,9 +1,12 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import objectPath from "object-path";
+
 import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
-tap.test("01 - input is plain object, replacement is string", (t) => {
-  t.strictSame(
+test("01 - input is plain object, replacement is string", () => {
+  equal(
     getByKey(
       {
         style: "html",
@@ -16,18 +19,17 @@ tap.test("01 - input is plain object, replacement is string", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - paths match object-paht paths", (t) => {
-  const source = {
+test("02 - paths match object-paht paths", () => {
+  let source = {
     tags: [
       {
         style: "html",
       },
     ],
   };
-  t.strictSame(
+  equal(
     getByKey(source, "style"),
     [
       {
@@ -38,6 +40,7 @@ tap.test("02 - paths match object-paht paths", (t) => {
     "02.01"
   );
 
-  t.is(objectPath.get(source, "tags.0.style"), "html", "02.02");
-  t.end();
+  is(objectPath.get(source, "tags.0.style"), "html", "02.02");
 });
+
+test.run();

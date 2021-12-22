@@ -1,11 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { compare } from "../dist/ast-compare.esm.js";
 
 // strings
 // -----------------------------------------------------------------------------
 
-tap.test("01 - simple strings", (t) => {
-  t.strictSame(
+test("01 - simple strings", () => {
+  equal(
     compare("aaaaa\nbbbbb", "aaaaa\nbbbbb", {
       matchStrictly: false,
       hungryForWhitespace: false,
@@ -13,7 +16,7 @@ tap.test("01 - simple strings", (t) => {
     true,
     "01.01"
   );
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
       matchStrictly: false,
       hungryForWhitespace: false,
@@ -22,7 +25,7 @@ tap.test("01 - simple strings", (t) => {
     "01.02"
   );
 
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "aaaaa\nbbbbb", {
       matchStrictly: false,
       hungryForWhitespace: true,
@@ -30,7 +33,7 @@ tap.test("01 - simple strings", (t) => {
     true,
     "01.03"
   );
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
       matchStrictly: false,
       hungryForWhitespace: true,
@@ -39,7 +42,7 @@ tap.test("01 - simple strings", (t) => {
     "01.04"
   );
 
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "aaaaa\nbbbbb", {
       matchStrictly: true,
       hungryForWhitespace: false,
@@ -47,7 +50,7 @@ tap.test("01 - simple strings", (t) => {
     true,
     "01.05"
   );
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
       matchStrictly: true,
       hungryForWhitespace: false,
@@ -56,7 +59,7 @@ tap.test("01 - simple strings", (t) => {
     "01.06"
   );
 
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "aaaaa\nbbbbb", {
       matchStrictly: true,
       hungryForWhitespace: true,
@@ -64,7 +67,7 @@ tap.test("01 - simple strings", (t) => {
     true,
     "01.07"
   );
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
       matchStrictly: true,
       hungryForWhitespace: true,
@@ -72,51 +75,44 @@ tap.test("01 - simple strings", (t) => {
     false,
     "01.08"
   );
-  t.end();
 });
 
-tap.test("02 - strings compared and fails", (t) => {
-  t.strictSame(compare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"]), false, "02.01");
-  t.not(
+test("02 - strings compared and fails", () => {
+  equal(compare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"]), false, "02.01");
+  not.equal(
     compare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"], { verboseWhenMismatches: true }),
     true,
-    "05.02.02"
+    "02"
   );
-  t.end();
 });
 
-tap.test("03 - strings in arrays compared, positive", (t) => {
-  t.strictSame(compare(["aaaaa\nbbbbb"], ["aaaaa\nbbbbb"]), true, "03");
-  t.end();
+test("03 - strings in arrays compared, positive", () => {
+  equal(compare(["aaaaa\nbbbbb"], ["aaaaa\nbbbbb"]), true, "03");
 });
 
-tap.test(
-  "04 - string against empty array or empty string within an array",
-  (t) => {
-    t.strictSame(compare(["aaaaa\nbbbbb"], []), false, "04.01");
-    t.strictSame(
-      compare(["aaaaa\nbbbbb"], [], { hungryForWhitespace: true }),
-      true,
-      "04.02"
-    );
-    t.strictSame(
-      compare(["aaaaa\nbbbbb"], ["\n\n\n"], { hungryForWhitespace: true }),
-      true,
-      "04.03"
-    );
-    t.strictSame(
-      compare(["aaaaa\nbbbbb", "\t\t\t \n\n\n", "   "], ["\n\n\n"], {
-        hungryForWhitespace: true,
-      }),
-      true,
-      "04.04"
-    );
-    t.end();
-  }
-);
+test("04 - string against empty array or empty string within an array", () => {
+  equal(compare(["aaaaa\nbbbbb"], []), false, "04.01");
+  equal(
+    compare(["aaaaa\nbbbbb"], [], { hungryForWhitespace: true }),
+    true,
+    "04.02"
+  );
+  equal(
+    compare(["aaaaa\nbbbbb"], ["\n\n\n"], { hungryForWhitespace: true }),
+    true,
+    "04.03"
+  );
+  equal(
+    compare(["aaaaa\nbbbbb", "\t\t\t \n\n\n", "   "], ["\n\n\n"], {
+      hungryForWhitespace: true,
+    }),
+    true,
+    "04.04"
+  );
+});
 
-tap.test("05 - string vs empty space", (t) => {
-  t.strictSame(
+test("05 - string vs empty space", () => {
+  equal(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
       matchStrictly: false,
       hungryForWhitespace: false,
@@ -124,7 +120,7 @@ tap.test("05 - string vs empty space", (t) => {
     false,
     "05.01"
   );
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
       matchStrictly: false,
       hungryForWhitespace: true,
@@ -132,7 +128,7 @@ tap.test("05 - string vs empty space", (t) => {
     false,
     "05.02"
   );
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
       matchStrictly: true,
       hungryForWhitespace: false,
@@ -140,7 +136,7 @@ tap.test("05 - string vs empty space", (t) => {
     false,
     "05.03"
   );
-  t.strictSame(
+  equal(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
       matchStrictly: true,
       hungryForWhitespace: true,
@@ -148,11 +144,10 @@ tap.test("05 - string vs empty space", (t) => {
     false,
     "05.04"
   );
-  t.end();
 });
 
-tap.test("06 - empty space vs different empty space", (t) => {
-  t.strictSame(
+test("06 - empty space vs different empty space", () => {
+  equal(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
       matchStrictly: false,
       hungryForWhitespace: false,
@@ -160,7 +155,7 @@ tap.test("06 - empty space vs different empty space", (t) => {
     false,
     "06.01"
   );
-  t.strictSame(
+  equal(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
       matchStrictly: false,
       hungryForWhitespace: true,
@@ -168,7 +163,7 @@ tap.test("06 - empty space vs different empty space", (t) => {
     true,
     "06.02"
   );
-  t.strictSame(
+  equal(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
       matchStrictly: true,
       hungryForWhitespace: false,
@@ -176,7 +171,7 @@ tap.test("06 - empty space vs different empty space", (t) => {
     false,
     "06.03"
   );
-  t.strictSame(
+  equal(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
       matchStrictly: true,
       hungryForWhitespace: true,
@@ -184,16 +179,15 @@ tap.test("06 - empty space vs different empty space", (t) => {
     true,
     "06.04"
   );
-  t.end();
 });
 
-tap.test("07 - two arrays, one empty", (t) => {
-  t.strictSame(
+test("07 - two arrays, one empty", () => {
+  equal(
     compare(["\t\t\t\t\t\t      \n\n\n    \t\t\t"], []),
     false,
     "07.01 - in root, defaults"
   );
-  t.strictSame(
+  equal(
     compare(
       { a: ["\t\t\t\t\t\t      \n\n\n    \t\t\t"] },
       { a: [] },
@@ -202,18 +196,17 @@ tap.test("07 - two arrays, one empty", (t) => {
     true,
     "07.02 - in root, defaults"
   );
-  t.strictSame(
+  equal(
     compare([], ["\t\t\t\t\t\t      \n\n\n    \t\t\t"], {
       hungryForWhitespace: true,
     }),
     true,
     "07.03 - in root, defaults, opposite from #2"
   );
-  t.end();
 });
 
-tap.test("08 - opts.matchStrictly", (t) => {
-  t.strictSame(
+test("08 - opts.matchStrictly", () => {
+  equal(
     compare(
       { a: "a" },
       {},
@@ -222,7 +215,7 @@ tap.test("08 - opts.matchStrictly", (t) => {
     false,
     "08.01 - key count mismatch"
   );
-  t.strictSame(
+  equal(
     typeof compare(
       {},
       { a: "a" },
@@ -231,5 +224,6 @@ tap.test("08 - opts.matchStrictly", (t) => {
     "string",
     "08.02 - key count mismatch"
   );
-  t.end();
 });
+
+test.run();

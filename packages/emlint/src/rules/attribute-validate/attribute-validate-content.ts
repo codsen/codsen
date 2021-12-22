@@ -33,7 +33,7 @@ function attributeValidateContent(context: Linter): RuleObjType {
         }
 
         // only validate the whitespace
-        const { charStart, charEnd, errorArr } = checkForWhitespace(
+        let { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValueRaw,
           node.attribValueStartsAt as number
         );

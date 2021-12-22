@@ -1,6 +1,9 @@
 /* eslint no-unused-vars:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import {
   find,
   get,
@@ -17,93 +20,88 @@ const defaultInput = {
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - sets in mixed nested things #1", (t) => {
-  const input = {
+test("01 - sets in mixed nested things #1", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = "7";
-  const val = "zzz";
-  const actual = set(input, { index, val });
-  const intended = {
+  let index = "7";
+  let val = "zzz";
+  let actual = set(input, { index, val });
+  let intended = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: "zzz" },
   };
 
-  t.strictSame(actual, intended, "01");
-  t.end();
+  equal(actual, intended, "01");
 });
 
-tap.test("02 - sets in mixed nested things #2", (t) => {
-  const input = {
+test("02 - sets in mixed nested things #2", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = "8";
-  const val = "zzz";
-  const actual = set(input, { index, val });
-  const intended = {
+  let index = "8";
+  let val = "zzz";
+  let actual = set(input, { index, val });
+  let intended = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["zzz"] },
   };
 
-  t.strictSame(actual, intended, "02");
-  t.end();
+  equal(actual, intended, "02");
 });
 
-tap.test("03 - does not set", (t) => {
-  const input = {
+test("03 - does not set", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = "99";
-  const val = "zzz";
-  const actual = set(input, { index, val });
-  const intended = {
+  let index = "99";
+  let val = "zzz";
+  let actual = set(input, { index, val });
+  let intended = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
 
-  t.strictSame(actual, intended, "03");
-  t.end();
+  equal(actual, intended, "03");
 });
 
-tap.test("04 - sets when only key given instead, index as string", (t) => {
-  const input = {
+test("04 - sets when only key given instead, index as string", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = "8";
-  const key = "zzz";
-  const actual = set(input, { index, key });
-  const intended = {
+  let index = "8";
+  let key = "zzz";
+  let actual = set(input, { index, key });
+  let intended = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["zzz"] },
   };
 
-  t.strictSame(actual, intended, "04");
-  t.end();
+  equal(actual, intended, "04");
 });
 
-tap.test("05 - sets when only key given, numeric index", (t) => {
-  const input = {
+test("05 - sets when only key given, numeric index", () => {
+  let input = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["h"] },
   };
-  const index = 8;
-  const key = "zzz";
-  const actual = set(input, { index, key });
-  const intended = {
+  let index = 8;
+  let key = "zzz";
+  let actual = set(input, { index, key });
+  let intended = {
     a: { b: [{ c: { d: "e" } }] },
     f: { g: ["zzz"] },
   };
 
-  t.strictSame(actual, intended, "05");
-  t.end();
+  equal(actual, intended, "05");
 });
 
-tap.test("06 - throws when inputs are wrong", (t) => {
-  t.throws(() => {
+test("06 - throws when inputs are wrong", () => {
+  throws(() => {
     set(
       { a: "a", b: ["c"] },
       {
@@ -111,7 +109,7 @@ tap.test("06 - throws when inputs are wrong", (t) => {
       }
     );
   }, /THROW_ID_14/g);
-  t.throws(() => {
+  throws(() => {
     set(
       { a: "a" },
       {
@@ -119,7 +117,7 @@ tap.test("06 - throws when inputs are wrong", (t) => {
       }
     );
   }, /THROW_ID_15/g);
-  t.throws(() => {
+  throws(() => {
     set(
       { a: "a" },
       {
@@ -128,7 +126,7 @@ tap.test("06 - throws when inputs are wrong", (t) => {
       }
     );
   }, /THROW_ID_17/g);
-  t.throws(() => {
+  throws(() => {
     set(
       { a: "a", b: ["c"] },
       {
@@ -137,5 +135,6 @@ tap.test("06 - throws when inputs are wrong", (t) => {
       }
     );
   }, /THROW_ID_17/g);
-  t.end();
 });
+
+test.run();

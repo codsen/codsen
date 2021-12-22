@@ -1,4 +1,5 @@
 import { TypedEmitter } from 'tiny-typed-emitter';
+import { TagToken, CommentToken as CommentToken$1, TextToken as TextToken$1, RuleToken as RuleToken$1, AtToken as AtToken$1, EspToken as EspToken$1 } from 'codsen-tokenizer';
 
 declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
 declare type Ranges = Range[] | null;
@@ -8,7 +9,6 @@ interface Selector {
     selectorStarts: number;
     selectorEnds: number;
 }
-declare type TokenKind = "simplet" | "not" | "doctype" | "cdata" | "xml" | "inline";
 declare type CommentKind = "simple" | "only" | "not" | "block" | "line" | "simplet";
 interface TextToken {
     type: "text";
@@ -82,21 +82,6 @@ interface RuleToken {
     selectors: Selector[];
     properties: (Property | TextToken)[];
 }
-interface TagToken {
-    type: "tag";
-    start: number;
-    end: number;
-    value: string;
-    tagNameStartsAt: number;
-    tagNameEndsAt: number;
-    tagName: string;
-    recognised: null | boolean;
-    closing: null | boolean;
-    void: null | boolean;
-    pureHTML: null | boolean;
-    kind: null | TokenKind;
-    attribs: Attrib[];
-}
 interface AtToken {
     type: "at";
     start: number;
@@ -130,16 +115,16 @@ interface ErrorObj {
 interface TagTokenWithChildren extends TagToken {
     children: TokenWithChildren[];
 }
-interface CommentTokenWithChildren extends CommentToken {
+interface CommentTokenWithChildren extends CommentToken$1 {
     children: TokenWithChildren[];
 }
-declare type TokenWithChildren = TextToken | TagTokenWithChildren | RuleToken | AtToken | CommentTokenWithChildren | EspToken;
+declare type TokenWithChildren = TextToken$1 | TagTokenWithChildren | RuleToken$1 | AtToken$1 | CommentTokenWithChildren | EspToken$1;
 
 declare type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 declare type JsonObject = {
     [Key in string]?: JsonValue;
 };
-declare type JsonArray = Array<JsonValue>;
+declare type JsonArray = JsonValue[];
 declare type Severity = 0 | 1 | 2;
 interface RulesObj {
     [rulesName: string]: Severity | [severity: Severity, ...opts: string[]];

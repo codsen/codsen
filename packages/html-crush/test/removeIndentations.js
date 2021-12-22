@@ -1,46 +1,39 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { m } from "./util/util.js";
 
 // opts.removeIndentations
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - collapses whitespace on removeIndentations`,
-  (t) => {
-    t.strictSame(
-      m(t, "a   b\nc    d", {
-        removeLineBreaks: false,
-        removeIndentations: true,
-      }).result,
-      "a b\nc d",
-      "01"
-    );
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - collapses whitespace on removeIndentations`, () => {
+  equal(
+    m(equal, "a   b\nc    d", {
+      removeLineBreaks: false,
+      removeIndentations: true,
+    }).result,
+    "a b\nc d",
+    "01"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - trailing whitespace on removeIndentations`,
-  (t) => {
-    t.strictSame(
-      m(t, "a   \nb    ", {
-        removeLineBreaks: false,
-        removeIndentations: true,
-      }).result,
-      "a\nb",
-      "02"
-    );
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - trailing whitespace on removeIndentations`, () => {
+  equal(
+    m(equal, "a   \nb    ", {
+      removeLineBreaks: false,
+      removeIndentations: true,
+    }).result,
+    "a\nb",
+    "02"
+  );
+});
 
-tap.test(
-  `03 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - leading whitespace`,
-  (t) => {
-    t.strictSame(
-      m(
-        t,
-        `
+test(`03 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - leading whitespace`, () => {
+  equal(
+    m(
+      equal,
+      `
 
 
 
@@ -48,17 +41,17 @@ tap.test(
 <html>
 <head>
 `,
-        {
-          removeLineBreaks: false,
-          removeIndentations: true,
-        }
-      ).result,
-      `<!DOCTYPE HTML>
+      {
+        removeLineBreaks: false,
+        removeIndentations: true,
+      }
+    ).result,
+    `<!DOCTYPE HTML>
 <html>
 <head>
 `,
-      "03"
-    );
-    t.end();
-  }
-);
+    "03"
+  );
+});
+
+test.run();

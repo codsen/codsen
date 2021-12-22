@@ -1,15 +1,18 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
-tap.test(`01 - perf investigation`, (t) => {
-  const gathered = [];
+test(`01 - perf investigation`, () => {
+  let gathered = [];
   ct(`<div>Script says hello world and sky and sea</div>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
 
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -51,5 +54,6 @@ tap.test(`01 - perf investigation`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
+
+test.run();

@@ -1,14 +1,17 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { rInvert } from "ranges-invert";
 import { rApply } from "ranges-apply";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+
+import { stripHtml } from "./util/noLog.js";
 import validateTagLocations from "./util/validateTagLocations.js";
 
 // 1. Remove HTML tags, give me a clean string.
 // -----------------------------------------------------------------------------
 
-tap.test("01 - Remove HTML tags, give me a clean string.", (t) => {
-  const input = `<!DOCTYPE html>
+test("01 - Remove HTML tags, give me a clean string.", () => {
+  let input = `<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -27,7 +30,7 @@ tap.test("01 - Remove HTML tags, give me a clean string.", (t) => {
     </div>
   </body>
 </html>`;
-  const allTagLocations = [
+  let allTagLocations = [
     [0, 15],
     [16, 42],
     [45, 51],
@@ -47,8 +50,8 @@ tap.test("01 - Remove HTML tags, give me a clean string.", (t) => {
     [306, 313],
     [314, 321],
   ];
-  validateTagLocations(t, input, allTagLocations);
-  t.hasStrict(
+  validateTagLocations(is, input, allTagLocations);
+  equal(
     stripHtml(input),
     {
       result: "text1\n\ntext2",
@@ -62,14 +65,13 @@ tap.test("01 - Remove HTML tags, give me a clean string.", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
 // 2. Leave only HTML tags.
 // -----------------------------------------------------------------------------
 
-tap.test("02 - Leave only HTML tags.", (t) => {
-  const input = `<div class="module-container">
+test("02 - Leave only HTML tags.", () => {
+  let input = `<div class="module-container">
 {% if data.customer.purchases[0].spendTotal < 100 %}
 You earned a discount!
 {% else %}
@@ -77,14 +79,14 @@ The promo is still on!
 {% endif %}
 </div>
 `;
-  const { result, ranges, allTagLocations, filteredTagLocations } =
+  let { result, ranges, allTagLocations, filteredTagLocations } =
     stripHtml(input);
-  t.equal(
+  equal(
     result,
     `{% if data.customer.purchases[0].spendTotal < 100 %}\nYou earned a discount!\n{% else %}\nThe promo is still on!\n{% endif %}`,
     "02.01"
   );
-  t.strictSame(
+  equal(
     ranges,
     [
       [0, 31],
@@ -92,7 +94,7 @@ The promo is still on!
     ],
     "02.02"
   );
-  t.strictSame(
+  equal(
     allTagLocations,
     [
       [0, 30],
@@ -100,7 +102,7 @@ The promo is still on!
     ],
     "02.03"
   );
-  t.strictSame(
+  equal(
     filteredTagLocations,
     [
       [0, 30],
@@ -108,19 +110,18 @@ The promo is still on!
     ],
     "02.04"
   );
-  t.equal(
+  equal(
     rApply(input, rInvert(allTagLocations, input.length)),
     `<div class="module-container"></div>`,
     "02.05"
   );
-  t.end();
 });
 
 // 03. Tell me String indexes of where the <tr> tags are.
 // -----------------------------------------------------------------------------
 
-tap.test("03 - Tell me String indexes of where the <tr> tags are.", (t) => {
-  const input = `<table width="100">
+test("03 - Tell me String indexes of where the <tr> tags are.", () => {
+  let input = `<table width="100">
   <tr>
     <td>
       <table width="100">
@@ -133,10 +134,10 @@ tap.test("03 - Tell me String indexes of where the <tr> tags are.", (t) => {
     </td>
   </tr>
 </table>`;
-  const { filteredTagLocations } = stripHtml(input, {
+  let { filteredTagLocations } = stripHtml(input, {
     onlyStripTags: ["tr"],
   });
-  t.strictSame(
+  equal(
     filteredTagLocations,
     [
       [22, 26],
@@ -146,15 +147,16 @@ tap.test("03 - Tell me String indexes of where the <tr> tags are.", (t) => {
     ],
     "03.01"
   );
-  const gatheredExtractedTagStrings = [];
+  let gatheredExtractedTagStrings = [];
   filteredTagLocations.forEach(([from, to]) => {
     gatheredExtractedTagStrings.push(input.slice(from, to));
   });
 
-  t.strictSame(
+  equal(
     gatheredExtractedTagStrings,
     [`<tr>`, `<tr>`, `</tr>`, `</tr>`],
     "03.02"
   );
-  t.end();
 });
+
+test.run();

@@ -45,19 +45,17 @@ function attributeValidateHeaders(context: Linter): RuleObjType {
             fix: null,
           });
         } else {
-          const { charStart, charEnd, errorArr } = checkForWhitespace(
+          let { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
           console.log(
             `053 \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charStart`}\u001b[${39}m`} = ${JSON.stringify(
-              ((node.attribValueStartsAt as number) +
-                (charStart as number)) as number,
+              (node.attribValueStartsAt as number) + (charStart as number),
               null,
               4
             )}; \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
-              ((node.attribValueStartsAt as number) +
-                (charEnd as number)) as number,
+              (node.attribValueStartsAt as number) + (charEnd as number),
               null,
               4
             )}; \n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -75,17 +73,16 @@ function attributeValidateHeaders(context: Linter): RuleObjType {
             context.str,
             {
               typeName: "id", // class|id|for
-              from: ((node.attribValueStartsAt as number) +
-                (charStart as number)) as number,
-              to: ((node.attribValueStartsAt as number) +
-                (charEnd as number)) as number,
+              from:
+                (node.attribValueStartsAt as number) + (charStart as number),
+              to: (node.attribValueStartsAt as number) + (charEnd as number),
               offset: 0,
             },
             errorArr // might be mutated, more errors pushed into
           );
 
           console.log(
-            `088 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `085 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -93,7 +90,7 @@ function attributeValidateHeaders(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`096 RAISE ERROR`);
+            console.log(`093 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-headers",

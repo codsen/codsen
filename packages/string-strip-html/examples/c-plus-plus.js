@@ -1,6 +1,7 @@
 // Ignores code tags and their contents
 
 import { strict as assert } from "assert";
+
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 const someHtml = `<code>#include <stdio.h>;</code> and <code>#include &lt;stdio.h&gt;</code>`;

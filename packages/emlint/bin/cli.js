@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import meow from "meow";
+
 // const updateNotifier = require("update-notifier");
 import processPaths from "./util/processPaths.js";
 
@@ -42,7 +43,7 @@ if (cli.flags.v) {
 // -----------------------------------------------------------------------------
 
 console.log(
-  `045 FIY, ${`\u001b[${33}m${`cli.input`}\u001b[${39}m`} = ${JSON.stringify(
+  `046 FIY, ${`\u001b[${33}m${`cli.input`}\u001b[${39}m`} = ${JSON.stringify(
     cli.input,
     null,
     4

@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "kamikillerto.vscode-colorize",
+    "stylelint.vscode-stylelint",
+    "zignd.html-css-class-completion",
+    "dbaeumer.vscode-eslint"
+  ]
+}

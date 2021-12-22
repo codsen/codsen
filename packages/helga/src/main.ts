@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Obj {
@@ -38,7 +39,7 @@ function helga(
   str: string,
   originalOpts?: Opts
 ): { minified: string; beautified: string } {
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
   // console.log(
   //   `011 using ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
@@ -49,7 +50,7 @@ function helga(
 
   // 1. beautification:
   // ---------------------------------------------------------------------------
-  const beautified = unescape(str);
+  let beautified = unescape(str);
 
   // 2. minification:
   // ---------------------------------------------------------------------------

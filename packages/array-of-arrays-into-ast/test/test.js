@@ -1,8 +1,11 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { generateAst } from "../dist/array-of-arrays-into-ast.esm.js";
 
-tap.test("01 - three elements", (t) => {
-  t.strictSame(
+test("01 - three elements", () => {
+  equal(
     generateAst([[1, 2, 3], [1, 2], [5]]),
     {
       1: [
@@ -19,7 +22,7 @@ tap.test("01 - three elements", (t) => {
     },
     "01.01"
   );
-  t.strictSame(
+  equal(
     generateAst([[5], [1, 2, 3], [1, 2]]),
     {
       1: [
@@ -36,7 +39,7 @@ tap.test("01 - three elements", (t) => {
     },
     "01.02"
   );
-  t.strictSame(
+  equal(
     generateAst([[1, 2], [5], [1, 2, 3]]),
     {
       1: [
@@ -53,7 +56,7 @@ tap.test("01 - three elements", (t) => {
     },
     "01.03"
   );
-  t.strictSame(
+  equal(
     generateAst([[1], [5], [1, 2, 3]]),
     {
       1: [
@@ -70,36 +73,34 @@ tap.test("01 - three elements", (t) => {
     },
     "01.04"
   );
-  t.end();
 });
 
-tap.test("02 - opts.dedupe", (t) => {
-  t.strictSame(
+test("02 - opts.dedupe", () => {
+  equal(
     generateAst([[1], [1], [1]]),
     {
       1: [null],
     },
     "02.01"
   );
-  t.strictSame(
+  equal(
     generateAst([[1], [1], [1]], { dedupe: false }),
     {
       1: [null, null, null],
     },
     "02.02"
   );
-  t.end();
 });
 
-tap.test("03 - throws", (t) => {
-  t.throws(() => {
+test("03 - throws", () => {
+  throws(() => {
     generateAst(true);
   }, /THROW_ID_01/g);
-  t.end();
 });
 
-tap.test("04 - empty input ends the operation quick", (t) => {
-  t.strictSame(generateAst([]), {}, "04.01");
-  t.strictSame(generateAst([], { dedupe: false }), {}, "04.02");
-  t.end();
+test("04 - empty input ends the operation quick", () => {
+  equal(generateAst([]), {}, "04.01");
+  equal(generateAst([], { dedupe: false }), {}, "04.02");
 });
+
+test.run();

@@ -1,6 +1,7 @@
 // `opts.matchKeysStrictly`
 
 import { strict as assert } from "assert";
+
 import { deleteObj } from "../dist/ast-delete-object.esm.js";
 
 const source = [

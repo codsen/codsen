@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // missing searchFor value
 // ==============================
 
-tap.test("01 - source present, missing searchFor", (t) => {
-  t.equal(
+test("01 - source present, missing searchFor", () => {
+  equal(
     er(
       "aaa",
       {
@@ -23,11 +26,10 @@ tap.test("01 - source present, missing searchFor", (t) => {
     "aaa",
     "test 9.1"
   );
-  t.end();
 });
 
-tap.test("02 - everything is missing", (t) => {
-  t.equal(
+test("02 - everything is missing", () => {
+  equal(
     er(
       "",
       {
@@ -44,31 +46,26 @@ tap.test("02 - everything is missing", (t) => {
     "",
     "test 9.2"
   );
-  t.end();
 });
 
-tap.test("03 - everything seriously missing", (t) => {
-  t.equal(er("", {}, ""), "", "test 9.3");
-  t.end();
+test("03 - everything seriously missing", () => {
+  equal(er("", {}, ""), "", "test 9.3");
 });
 
-tap.test("04 - everything extremely seriously missing", (t) => {
-  t.equal(er("", {}), "", "test 9.4");
-  t.end();
+test("04 - everything extremely seriously missing", () => {
+  equal(er("", {}), "", "test 9.4");
 });
 
-tap.test("05 - everything truly extremely seriously missing", (t) => {
-  t.equal(er(""), "", "test 9.5");
-  t.end();
+test("05 - everything truly extremely seriously missing", () => {
+  equal(er(""), "", "test 9.5");
 });
 
-tap.test("06 - everything really truly extremely seriously missing", (t) => {
-  t.equal(er(), "", "test 9.6");
-  t.end();
+test("06 - everything really truly extremely seriously missing", () => {
+  equal(er(), "", "test 9.6");
 });
 
-tap.test("07 - leftOutsideNot blocking rightOutsideNot being empty", (t) => {
-  t.equal(
+test("07 - leftOutsideNot blocking rightOutsideNot being empty", () => {
+  equal(
     er(
       "ab a",
       {
@@ -85,11 +82,10 @@ tap.test("07 - leftOutsideNot blocking rightOutsideNot being empty", (t) => {
     "ab x",
     "test 9.7"
   );
-  t.end();
 });
 
-tap.test("08 - leftOutsideNot is blank array", (t) => {
-  t.equal(
+test("08 - leftOutsideNot is blank array", () => {
+  equal(
     er(
       "ab a",
       {
@@ -106,11 +102,10 @@ tap.test("08 - leftOutsideNot is blank array", (t) => {
     "ab x",
     "test 9.8"
   );
-  t.end();
 });
 
-tap.test("09 - missing key in properties obj", (t) => {
-  t.equal(
+test("09 - missing key in properties obj", () => {
+  equal(
     er(
       "ab a",
       {
@@ -126,5 +121,6 @@ tap.test("09 - missing key in properties obj", (t) => {
     "ab x",
     "test 9.9"
   );
-  t.end();
 });
+
+test.run();

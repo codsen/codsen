@@ -1,14 +1,19 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
-tap.test(`01 - correct`, (t) => {
-  const gathered = [];
+test(`01 - correct`, () => {
+  let gathered = [];
   ct(`<![CDATA[x<y]]>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -22,17 +27,17 @@ tap.test(`01 - correct`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - messed up 1", (t) => {
-  const gathered = [];
+test("02 - messed up 1", () => {
+  let gathered = [];
   ct(`<[CDATA[x<y]]>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -46,17 +51,17 @@ tap.test("02 - messed up 1", (t) => {
     ],
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - messed up 2", (t) => {
-  const gathered = [];
+test("03 - messed up 2", () => {
+  let gathered = [];
   ct(`<!CDATA[x<y]]>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -70,17 +75,17 @@ tap.test("03 - messed up 2", (t) => {
     ],
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - messed up 3", (t) => {
-  const gathered = [];
+test("04 - messed up 3", () => {
+  let gathered = [];
   ct(`<![ CData[x<y]]>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -94,11 +99,10 @@ tap.test("04 - messed up 3", (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - with line breaks", (t) => {
-  const gathered = [];
+test("05 - with line breaks", () => {
+  let gathered = [];
   ct(
     `a\n<![CDATA[
   The <, &, ', and " can be used,
@@ -110,7 +114,8 @@ tap.test("05 - with line breaks", (t) => {
       },
     }
   );
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -134,5 +139,6 @@ tap.test("05 - with line breaks", (t) => {
     ],
     "05"
   );
-  t.end();
 });
+
+test.run();

@@ -42,7 +42,7 @@ function attributeValidateAccesskey(context: Linter): RuleObjType {
         }
 
         // only check for rogue whitespace - value can be any string
-        const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
+        let { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
           node.attribValueRaw,
           node.attribValueStartsAt as number
         );

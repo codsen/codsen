@@ -279,7 +279,7 @@ function xBeforeYOnTheRight(
   startingIdx: number,
   x: string,
   y: string
-) {
+): boolean {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -300,7 +300,7 @@ function ensureXIsNotPresentBeforeOneOfY(
   startingIdx: number,
   x: string,
   y: string[] = []
-) {
+): boolean {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (y.some((oneOfStr) => str.startsWith(oneOfStr, i))) {
       // it's escape clause, bracket or whatever was reached and yet,

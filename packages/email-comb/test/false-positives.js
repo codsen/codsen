@@ -1,13 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 
 // false positives
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - word class in text`,
-  (t) => {
-    const source = `<html>
+test(`01 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - word class in text`, () => {
+  let source = `<html>
   <head>
   </head>
   <body>
@@ -15,15 +16,11 @@ tap.test(
   </body>
 </html>
 `;
-    t.equal(comb(t, source).result, source, "01");
-    t.end();
-  }
-);
+  equal(comb(source).result, source, "01");
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - word id in text`,
-  (t) => {
-    const source = `<html>
+test(`02 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - word id in text`, () => {
+  let source = `<html>
   <head>
   </head>
   <body>
@@ -31,7 +28,7 @@ tap.test(
   </body>
 </html>
 `;
-    t.equal(comb(t, source).result, source, "02");
-    t.end();
-  }
-);
+  equal(comb(source).result, source, "02");
+});
+
+test.run();

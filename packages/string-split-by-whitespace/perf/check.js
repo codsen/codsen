@@ -3,11 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { splitByW } from "../dist/string-split-by-whitespace.esm.js";
+
+const callerDir = path.resolve(".");
 
 const testme = () =>
   splitByW("some interesting {{text}} {% and %} {{ some more }} text.", {

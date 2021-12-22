@@ -5,7 +5,7 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 execution_time_limit:
-  hours: 4
+  hours: 2
 blocks:
   - name: Publish the packages
     task:
@@ -24,6 +24,8 @@ blocks:
           # Add the key to the ssh agent:
           - ssh-add ~/.ssh/id_rsa
           - checkout
+          # install yarn
+          - npm i -g corepack
       jobs:
         - name: Publish
           commands:
@@ -38,48 +40,32 @@ blocks:
             - npm whoami
             - pwd
             - ls
-            # monorepo equivalent to "npm i":
-            - npm run bootstrap
-            # build programs in each dist/ folder:
-            - npm run build
-            # then, run unit tests - this command prevents "pretest" from running
-            # because its name does not match, it's not "test":
-            - npm run test:ci
-            # generate statistics files, for later use as data sources in websites:
-            - npm run build:info
-            # merge all playground scripts into one JSON lump:
-            - npm run build:playgrounds
+            # fetch the latest webapps' JSON file from Codsen GitHub repo
+            - yarn run ci:fetch:webapps
+            # install deps
+            - yarn
+            # "build" + "unit" + "examples" + "lint":
+            - yarn turbo run prepare
+            # generate statistics files:
+            - yarn run ci:generate:info
             # build a readme in each package's root:
-            - npm run build:readme
+            - yarn run ci:build:root-readme
             # git-add the build artifacts
             - git status
             - git add packages
-            - git add stats
+            - git add ops
             - git add README.md
             - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             # run lerna version with all extras:
-            - npm run pub:vers
+            - yarn run ci:lerna:version
             # now build again, because those bumped versions need to be written into header comment blocks:
-            - npm run build
+            - yarn run build
+            # run perf, it will save down the latest dep version in perf/historical.json
+            - yarn run perf
             # assemble the lump of all package.jsons:
-            - npm run build:packageJsons
-            - npm run build:packageExamples
             - git status
             - git add packages
             - git add stats
             - git add README.md
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
-            # publish to npm
-            - npm run republish
-            # push repo with all artifacts to git remote
-            - git push
-            # reset jsdelivr caches
-            - curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js || echo 'email-comb unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/string-strip-html/dist/string-strip-html.umd.js || echo 'string-strip-html unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/stristri/dist/stristri.umd.js || echo 'stristri unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/emlint/dist/emlint.umd.js || echo 'emlint unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/codsen-tokenizer/dist/codsen-tokenizer.umd.js || echo 'codsen-tokenizer unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/codsen-parser/dist/codsen-parser.umd.js || echo 'codsen-parser unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js || echo 'json-variables unreachable on jsdelivr'
+            - git log -5

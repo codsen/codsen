@@ -3,11 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { traverse } from "../dist/ast-monkey-traverse.esm.js";
+
+const callerDir = path.resolve(".");
 
 const input = {
   a: {
@@ -33,7 +32,7 @@ const input = {
 };
 const testme = () =>
   traverse(input, (key1, val1) => {
-    const current = val1 !== undefined ? val1 : key1;
+    let current = val1 !== undefined ? val1 : key1;
     return current;
   });
 

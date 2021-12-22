@@ -42,7 +42,7 @@ function attributeValidateFor(context: Linter): RuleObjType {
             fix: null,
           });
         } else {
-          const { charStart, charEnd, errorArr } = checkForWhitespace(
+          let { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
@@ -68,10 +68,7 @@ function attributeValidateFor(context: Linter): RuleObjType {
               `${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
             );
 
-            const extractedValue = node.attribValueRaw.slice(
-              charStart,
-              charEnd
-            );
+            let extractedValue = node.attribValueRaw.slice(charStart, charEnd);
 
             let message = `Wrong id name.`;
             let fix = null;
@@ -87,7 +84,7 @@ function attributeValidateFor(context: Linter): RuleObjType {
                 message = `Should be one value, no spaces.`;
               } else if (extractedValue.includes("#")) {
                 message = `Remove hash.`;
-                const firstHashAt = node.attribValueRaw.indexOf("#");
+                let firstHashAt = node.attribValueRaw.indexOf("#");
                 fix = {
                   ranges: [
                     [
@@ -111,7 +108,7 @@ function attributeValidateFor(context: Linter): RuleObjType {
           }
 
           console.log(
-            `114 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `111 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -119,7 +116,7 @@ function attributeValidateFor(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`122 RAISE ERROR`);
+            console.log(`119 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-for" });
           });
         }

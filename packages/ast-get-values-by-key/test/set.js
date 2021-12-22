@@ -1,8 +1,11 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
-tap.test("01 - string replaced", (t) => {
-  t.strictSame(
+test("01 - string replaced", () => {
+  equal(
     getByKey(
       {
         tag: "html",
@@ -15,11 +18,10 @@ tap.test("01 - string replaced", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - string within array replaced", (t) => {
-  t.strictSame(
+test("02 - string within array replaced", () => {
+  equal(
     getByKey(
       {
         tag: ["html"],
@@ -32,11 +34,10 @@ tap.test("02 - string within array replaced", (t) => {
     },
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - value is object and is replaced", (t) => {
-  t.strictSame(
+test("03 - value is object and is replaced", () => {
+  equal(
     getByKey(
       {
         tag: {
@@ -57,11 +58,10 @@ tap.test("03 - value is object and is replaced", (t) => {
     },
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - two objects replaced", (t) => {
-  t.strictSame(
+test("04 - two objects replaced", () => {
+  equal(
     getByKey(
       [
         {
@@ -99,11 +99,10 @@ tap.test("04 - two objects replaced", (t) => {
     ],
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - simple edit", (t) => {
-  t.strictSame(
+test("05 - simple edit", () => {
+  equal(
     getByKey(
       [
         {
@@ -142,11 +141,10 @@ tap.test("05 - simple edit", (t) => {
     ],
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - replaced to an empty string", (t) => {
-  t.strictSame(
+test("06 - replaced to an empty string", () => {
+  equal(
     getByKey(
       {
         tag: "html",
@@ -159,11 +157,10 @@ tap.test("06 - replaced to an empty string", (t) => {
     },
     "06 - empty string given as a replacement"
   );
-  t.end();
 });
 
-tap.test("07 - not enough replacement values given", (t) => {
-  t.strictSame(
+test("07 - not enough replacement values given", () => {
+  equal(
     getByKey(
       {
         meta: [
@@ -196,11 +193,10 @@ tap.test("07 - not enough replacement values given", (t) => {
     },
     "07 - still works"
   );
-  t.end();
 });
 
-tap.test("08 - no results replacement", (t) => {
-  t.strictSame(
+test("08 - no results replacement", () => {
+  equal(
     getByKey(
       {
         style: "html",
@@ -213,5 +209,6 @@ tap.test("08 - no results replacement", (t) => {
     },
     "08"
   );
-  t.end();
 });
+
+test.run();

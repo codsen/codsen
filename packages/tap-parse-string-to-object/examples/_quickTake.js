@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { parseTap } from "../dist/tap-parse-string-to-object.esm.js";
 
 // synchronous parsing (there's also async, see in examples)

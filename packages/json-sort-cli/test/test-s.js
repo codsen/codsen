@@ -1,9 +1,12 @@
 import fs from "fs-extra";
 import path from "path";
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
+
 // import pack from "../package.json";
 import {
   testFileContents,
@@ -16,12 +19,12 @@ import {
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - sort, -s (silent) mode", async (t) => {
+test("01 - sort, -s (silent) mode", async () => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  const tempFolder = tempy.directory();
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
 
   // The temp folder needs subfolders. Those have to be in place before we start
@@ -32,7 +35,7 @@ tap.test("01 - sort, -s (silent) mode", async (t) => {
 
   // 2. asynchronously write all test files
 
-  const processedFileContents = await pMap(
+  let processedFileContents = await pMap(
     testFilePaths,
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
@@ -57,8 +60,8 @@ tap.test("01 - sort, -s (silent) mode", async (t) => {
     )
     .then(() => execa("./cli.js", [tempFolder, "-s"]))
     .then(() => {
-      // t.notMatch(receivedStdOut.stdout, /OK/);
-      // t.notMatch(receivedStdOut.stdout, /sorted/);
+      // not.match(receivedStdOut.stdout, /OK/);
+      // not.match(receivedStdOut.stdout, /sorted/);
       return pMap(testFilePaths, (oneOfPaths) =>
         fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
       ).then((contentsArray) => {
@@ -71,8 +74,11 @@ tap.test("01 - sort, -s (silent) mode", async (t) => {
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received)
     )
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-  t.strictSame(processedFileContents, sortedTestFileContents, "01");
-  t.end();
+  equal(processedFileContents, sortedTestFileContents, "01");
 });
+
+test.run();

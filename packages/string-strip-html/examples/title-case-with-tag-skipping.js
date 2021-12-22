@@ -5,20 +5,21 @@
 
 import { strict as assert } from "assert";
 import title from "title";
+
 import { rInvert } from "../../ranges-invert/dist/ranges-invert.esm.js";
 import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
 import { rRegex } from "../../ranges-regex/dist/ranges-regex.esm.js";
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 function tagAwareTitle(str) {
-  const whitelist = ["eslint", "readme", "npm"];
-  const { filteredTagLocations } = stripHtml(str, {
+  let whitelist = ["eslint", "readme", "npm"];
+  let { filteredTagLocations } = stripHtml(str, {
     stripTogetherWithTheirContents: ["*"],
   });
-  const inverted = rInvert(
+  let inverted = rInvert(
     filteredTagLocations.concat(
       whitelist.reduce((acc, curr) => {
-        const rangesFindings = rRegex(new RegExp(curr, "gi"), str);
+        let rangesFindings = rRegex(new RegExp(curr, "gi"), str);
         if (rangesFindings) {
           return acc.concat(rangesFindings);
         }

@@ -1,5 +1,3 @@
 {
-  "noMajorBumping": [
-    "chalk"
-  ]
+  "noMajorBumping": []
 }

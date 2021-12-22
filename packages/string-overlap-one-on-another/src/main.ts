@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Opts {
@@ -74,12 +75,12 @@ function overlap(
 
   if (opts.offset < 0) {
     // filler character sequence - space or opts.offsetFillerCharacter:
-    const part2 =
+    let part2 =
       Math.abs(opts.offset) > str2.length
         ? opts.offsetFillerCharacter.repeat(Math.abs(opts.offset) - str2.length)
         : "";
     // the reset of str1 string protruding from underneath, if any:
-    const part3 = str1.slice(
+    let part3 = str1.slice(
       str2.length - Math.abs(opts.offset) > 0
         ? str2.length - Math.abs(opts.offset)
         : 0
@@ -88,13 +89,13 @@ function overlap(
   }
   if (opts.offset > 0) {
     // filler character sequence, if any, the space or opts.offsetFillerCharacter:
-    const par1 =
+    let par1 =
       str1.slice(0, opts.offset) +
       (opts.offset > str1.length
         ? opts.offsetFillerCharacter.repeat(Math.abs(opts.offset) - str1.length)
         : "");
     // the rest of str1 string, if applicable:
-    const part2 =
+    let part2 =
       str1.length - opts.offset - str2.length > 0
         ? str1.slice(str1.length - opts.offset - str2.length + 1)
         : "";

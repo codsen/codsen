@@ -1,41 +1,42 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { rApply } from "ranges-apply";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+
+import { stripHtml } from "./util/noLog.js";
 
 // embedded expressions (e.g. Rails or Phoenix templates)
 // -----------------------------------------------------------------------------
 
-tap.test("01 - templating tags", (t) => {
-  const input = `<div>My variable: <%= @var %></div>`;
-  const result = "My variable: <%= @var %>";
-  t.hasStrict(stripHtml(input), { result }, "01.01");
-  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "01.02");
-  t.end();
+test("01 - templating tags", () => {
+  let input = `<div>My variable: <%= @var %></div>`;
+  let intended = "My variable: <%= @var %>";
+  equal(stripHtml(input).result, intended, "01.01");
+  equal(rApply(input, stripHtml(input).ranges), intended, "01.02");
 });
 
-tap.test("02", (t) => {
-  const input = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
-  const result = "click me";
-  t.hasStrict(stripHtml(input), { result }, "02.01");
-  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "02.02");
-  t.end();
+test("02", () => {
+  let input = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
+  let intended = "click me";
+  equal(stripHtml(input).result, intended, "02.01");
+  equal(rApply(input, stripHtml(input).ranges), intended, "02.02");
 });
 
 // jinja/nunjucks
 // -----------------------------------------------------------------------------
 
-tap.test("03 - templating tags - healthy nunjucks pair", (t) => {
-  const input = `<div>My variable: {% if x %}</div>`;
-  const result = "My variable: {% if x %}";
-  t.hasStrict(stripHtml(input), { result }, "03.01");
-  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "03.02");
-  t.end();
+test("03 - templating tags - healthy nunjucks pair", () => {
+  let input = `<div>My variable: {% if x %}</div>`;
+  let intended = "My variable: {% if x %}";
+  equal(stripHtml(input).result, intended, "03.01");
+  equal(rApply(input, stripHtml(input).ranges), intended, "03.02");
 });
 
-tap.test("04 - templating tags - unclosed nunjucks", (t) => {
-  const input = `<div>My variable: {% if x</div>`;
-  const result = "My variable: {% if x";
-  t.hasStrict(stripHtml(input), { result }, "04.01");
-  t.hasStrict(rApply(input, stripHtml(input).ranges), result, "04.02");
-  t.end();
+test("04 - templating tags - unclosed nunjucks", () => {
+  let input = `<div>My variable: {% if x</div>`;
+  let intended = "My variable: {% if x";
+  equal(stripHtml(input).result, intended, "04.01");
+  equal(rApply(input, stripHtml(input).ranges), intended, "04.02");
 });
+
+test.run();

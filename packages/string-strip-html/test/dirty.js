@@ -1,33 +1,36 @@
-import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
-tap.test(
-  "01 - missing closing bracket - opening bracket acts as tag delimeter",
-  (t) => {
-    t.hasStrict(
-      stripHtml("<body>text<script>zzz</script</body>"),
-      {
-        result: "text",
-        allTagLocations: [
-          [0, 6],
-          [10, 18],
-          [21, 29],
-          [29, 36],
-        ],
-        filteredTagLocations: [
-          [0, 6],
-          [10, 29],
-          [29, 36],
-        ],
-      },
-      "01"
-    );
-    t.end();
-  }
-);
+import { stripHtml } from "./util/noLog.js";
 
-tap.test("02 - missing closing brackets", (t) => {
-  t.hasStrict(
+test("01 - missing closing bracket - opening bracket acts as tag delimeter", () => {
+  equal(
+    stripHtml("<body>text<script>zzz</script</body>"),
+    {
+      result: "text",
+      allTagLocations: [
+        [0, 6],
+        [10, 18],
+        [21, 29],
+        [29, 36],
+      ],
+      filteredTagLocations: [
+        [0, 6],
+        [10, 29],
+        [29, 36],
+      ],
+      ranges: [
+        [0, 6],
+        [10, 36],
+      ],
+    },
+    "01"
+  );
+});
+
+test("02 - missing closing brackets", () => {
+  equal(
     stripHtml(" < body > text < script > zzz <    /    script < / body >"),
     {
       result: "text",
@@ -42,14 +45,17 @@ tap.test("02 - missing closing brackets", (t) => {
         [15, 47],
         [47, 57],
       ],
+      ranges: [
+        [0, 10],
+        [14, 57],
+      ],
     },
     "02 - with more whitespace"
   );
-  t.end();
 });
 
-tap.test("03 - missing closing brackets", (t) => {
-  t.hasStrict(
+test("03 - missing closing brackets", () => {
+  equal(
     stripHtml("<body>text<script"),
     {
       result: "text",
@@ -61,14 +67,17 @@ tap.test("03 - missing closing brackets", (t) => {
         [0, 6],
         [10, 17],
       ],
+      ranges: [
+        [0, 6],
+        [10, 17],
+      ],
     },
     "03 - missing closing bracket"
   );
-  t.end();
 });
 
-tap.test("04 - missing closing brackets, leading to EOL", (t) => {
-  t.hasStrict(
+test("04 - missing closing brackets, leading to EOL", () => {
+  equal(
     stripHtml("<a>text<a"),
     {
       result: "text",
@@ -80,14 +89,17 @@ tap.test("04 - missing closing brackets, leading to EOL", (t) => {
         [0, 3],
         [7, 9],
       ],
+      ranges: [
+        [0, 3],
+        [7, 9],
+      ],
     },
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - missing closing brackets, multiple tags", (t) => {
-  t.hasStrict(
+test("05 - missing closing brackets, multiple tags", () => {
+  equal(
     stripHtml("<a>text<a<a"),
     {
       result: "text",
@@ -101,14 +113,17 @@ tap.test("05 - missing closing brackets, multiple tags", (t) => {
         [7, 9],
         [9, 11],
       ],
+      ranges: [
+        [0, 3],
+        [7, 11],
+      ],
     },
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - missing opening bracket, but recognised tag name", (t) => {
-  t.hasStrict(
+test("06 - missing opening bracket, but recognised tag name", () => {
+  equal(
     stripHtml("body>zzz</body>"),
     {
       result: "zzz",
@@ -120,286 +135,283 @@ tap.test("06 - missing opening bracket, but recognised tag name", (t) => {
         [0, 5],
         [8, 15],
       ],
+      ranges: [
+        [0, 5],
+        [8, 15],
+      ],
     },
     "06"
   );
-  t.end();
 });
 
-tap.test(
-  "07 - missing opening bracket, but recognised tag name, inner whitespace",
-  (t) => {
-    t.hasStrict(
-      stripHtml("body >zzz</body>"),
-      {
-        result: "zzz",
-        allTagLocations: [
-          [0, 6],
-          [9, 16],
-        ],
-        filteredTagLocations: [
-          [0, 6],
-          [9, 16],
-        ],
-      },
-      "07"
-    );
-    t.end();
-  }
-);
+test("07 - missing opening bracket, but recognised tag name, inner whitespace", () => {
+  equal(
+    stripHtml("body >zzz</body>"),
+    {
+      result: "zzz",
+      allTagLocations: [
+        [0, 6],
+        [9, 16],
+      ],
+      filteredTagLocations: [
+        [0, 6],
+        [9, 16],
+      ],
+      ranges: [
+        [0, 6],
+        [9, 16],
+      ],
+    },
+    "07"
+  );
+});
 
-tap.test(
-  "08 - missing opening bracket, but recognised tag name, closing slash",
-  (t) => {
-    t.hasStrict(
-      stripHtml("body/>zzz</body>"),
-      {
-        result: "zzz",
-        allTagLocations: [
-          [0, 6],
-          [9, 16],
-        ],
-        filteredTagLocations: [
-          [0, 6],
-          [9, 16],
-        ],
-      },
-      "08"
-    );
-    t.end();
-  }
-);
+test("08 - missing opening bracket, but recognised tag name, closing slash", () => {
+  equal(
+    stripHtml("body/>zzz</body>"),
+    {
+      result: "zzz",
+      allTagLocations: [
+        [0, 6],
+        [9, 16],
+      ],
+      filteredTagLocations: [
+        [0, 6],
+        [9, 16],
+      ],
+      ranges: [
+        [0, 6],
+        [9, 16],
+      ],
+    },
+    "08"
+  );
+});
 
-tap.test(
-  "09 - missing opening bracket, but recognised tag name, whitespace in front of slash",
-  (t) => {
-    t.hasStrict(
-      stripHtml("body />zzz</body>"),
-      {
-        result: "zzz",
-        allTagLocations: [
-          [0, 7],
-          [10, 17],
-        ],
-        filteredTagLocations: [
-          [0, 7],
-          [10, 17],
-        ],
-      },
-      "09"
-    );
-    t.end();
-  }
-);
+test("09 - missing opening bracket, but recognised tag name, whitespace in front of slash", () => {
+  equal(
+    stripHtml("body />zzz</body>"),
+    {
+      result: "zzz",
+      allTagLocations: [
+        [0, 7],
+        [10, 17],
+      ],
+      filteredTagLocations: [
+        [0, 7],
+        [10, 17],
+      ],
+      ranges: [
+        [0, 7],
+        [10, 17],
+      ],
+    },
+    "09"
+  );
+});
 
-tap.test(
-  "10 - missing opening bracket, but recognised tag name, rogue whitespace around slash",
-  (t) => {
-    t.hasStrict(
-      stripHtml("body / >zzz</body>"),
-      {
-        result: "zzz",
-        allTagLocations: [
-          [0, 8],
-          [11, 18],
-        ],
-        filteredTagLocations: [
-          [0, 8],
-          [11, 18],
-        ],
-      },
-      "10"
-    );
-    t.end();
-  }
-);
+test("10 - missing opening bracket, but recognised tag name, rogue whitespace around slash", () => {
+  equal(
+    stripHtml("body / >zzz</body>"),
+    {
+      result: "zzz",
+      allTagLocations: [
+        [0, 8],
+        [11, 18],
+      ],
+      filteredTagLocations: [
+        [0, 8],
+        [11, 18],
+      ],
+      ranges: [
+        [0, 8],
+        [11, 18],
+      ],
+    },
+    "10"
+  );
+});
 
-tap.test(
-  "11 - missing opening bracket, but recognised tag name, recognised article tag",
-  (t) => {
-    t.hasStrict(
-      stripHtml('<body>\narticle class="main" / >zzz</article>\n</body>'),
-      {
-        result: "zzz",
-        allTagLocations: [
-          [0, 6],
-          [6, 31],
-          [34, 44],
-          [45, 52],
-        ],
-        filteredTagLocations: [
-          [0, 6],
-          [6, 31],
-          [34, 44],
-          [45, 52],
-        ],
-      },
-      "11"
-    );
-    t.end();
-  }
-);
+test("11 - missing opening bracket, but recognised tag name, recognised article tag", () => {
+  equal(
+    stripHtml('<body>\narticle class="main" / >zzz</article>\n</body>'),
+    {
+      result: "zzz",
+      allTagLocations: [
+        [0, 6],
+        [6, 31],
+        [34, 44],
+        [45, 52],
+      ],
+      filteredTagLocations: [
+        [0, 6],
+        [6, 31],
+        [34, 44],
+        [45, 52],
+      ],
+      ranges: [
+        [0, 31],
+        [34, 52],
+      ],
+    },
+    "11"
+  );
+});
 
-tap.test(
-  "12 - missing opening bracket, but recognised tag name - at index position zero",
-  (t) => {
-    t.hasStrict(
-      stripHtml("tralala>zzz</body>"),
-      {
-        result: "tralala>zzz",
-        allTagLocations: [[11, 18]],
-        filteredTagLocations: [[11, 18]],
-      },
-      "12"
-    );
-    t.end();
-  }
-);
+test("12 - missing opening bracket, but recognised tag name - at index position zero", () => {
+  equal(
+    stripHtml("tralala>zzz</body>"),
+    {
+      result: "tralala>zzz",
+      allTagLocations: [[11, 18]],
+      filteredTagLocations: [[11, 18]],
+      ranges: [[11, 18]],
+    },
+    "12"
+  );
+});
 
-tap.test(
-  "13 - missing opening bracket, but recognised tag name - all caps, recognised",
-  (t) => {
-    t.hasStrict(
-      stripHtml("BODY>zzz</BODY>"),
-      {
-        result: "zzz",
-        allTagLocations: [
-          [0, 5],
-          [8, 15],
-        ],
-        filteredTagLocations: [
-          [0, 5],
-          [8, 15],
-        ],
-      },
-      "13"
-    );
-    t.end();
-  }
-);
+test("13 - missing opening bracket, but recognised tag name - all caps, recognised", () => {
+  equal(
+    stripHtml("BODY>zzz</BODY>"),
+    {
+      result: "zzz",
+      allTagLocations: [
+        [0, 5],
+        [8, 15],
+      ],
+      filteredTagLocations: [
+        [0, 5],
+        [8, 15],
+      ],
+      ranges: [
+        [0, 5],
+        [8, 15],
+      ],
+    },
+    "13"
+  );
+});
 
-tap.test(
-  "14 - missing opening bracket, but recognised tag name - low caps, unrecognised",
-  (t) => {
-    t.hasStrict(
-      stripHtml("tralala>zzz</BODY>"),
-      {
-        result: "tralala>zzz",
-        allTagLocations: [[11, 18]],
-        filteredTagLocations: [[11, 18]],
-      },
-      "14"
-    );
-    t.end();
-  }
-);
+test("14 - missing opening bracket, but recognised tag name - low caps, unrecognised", () => {
+  equal(
+    stripHtml("tralala>zzz</BODY>"),
+    {
+      result: "tralala>zzz",
+      allTagLocations: [[11, 18]],
+      filteredTagLocations: [[11, 18]],
+      ranges: [[11, 18]],
+    },
+    "14"
+  );
+});
 
-tap.test("15 - incomplete attribute", (t) => {
-  t.hasStrict(
+test("15 - incomplete attribute", () => {
+  equal(
     stripHtml("a<article anything=>b"),
     {
       result: "a b",
       allTagLocations: [[1, 20]],
       filteredTagLocations: [[1, 20]],
+      ranges: [[1, 20, " "]],
     },
     "15"
   );
-  t.end();
 });
 
-tap.test("16 - incomplete attribute", (t) => {
-  t.hasStrict(
+test("16 - incomplete attribute", () => {
+  equal(
     stripHtml("a<article anything= >b"),
     {
       result: "a b",
       allTagLocations: [[1, 21]],
       filteredTagLocations: [[1, 21]],
+      ranges: [[1, 21, " "]],
     },
     "16"
   );
-  t.end();
 });
 
-tap.test("17 - incomplete attribute", (t) => {
-  t.hasStrict(
+test("17 - incomplete attribute", () => {
+  equal(
     stripHtml("a<article anything=/>b"),
     {
       result: "a b",
       allTagLocations: [[1, 21]],
       filteredTagLocations: [[1, 21]],
+      ranges: [[1, 21, " "]],
     },
     "17"
   );
-  t.end();
 });
 
-tap.test("18 - incomplete attribute", (t) => {
-  t.hasStrict(
+test("18 - incomplete attribute", () => {
+  equal(
     stripHtml("a<article anything= />b"),
     {
       result: "a b",
       allTagLocations: [[1, 22]],
       filteredTagLocations: [[1, 22]],
+      ranges: [[1, 22, " "]],
     },
     "18"
   );
-  t.end();
 });
 
-tap.test("19 - incomplete attribute", (t) => {
-  t.hasStrict(
+test("19 - incomplete attribute", () => {
+  equal(
     stripHtml("a<article anything=/ >b"),
     {
       result: "a b",
       allTagLocations: [[1, 22]],
       filteredTagLocations: [[1, 22]],
+      ranges: [[1, 22, " "]],
     },
     "19"
   );
-  t.end();
 });
 
-tap.test("20 - incomplete attribute", (t) => {
-  t.hasStrict(
+test("20 - incomplete attribute", () => {
+  equal(
     stripHtml("a<article anything= / >b"),
     {
       result: "a b",
       allTagLocations: [[1, 23]],
       filteredTagLocations: [[1, 23]],
+      ranges: [[1, 23, " "]],
     },
     "20"
   );
-  t.end();
 });
 
-tap.test("21 - incomplete attribute", (t) => {
-  t.hasStrict(
+test("21 - incomplete attribute", () => {
+  equal(
     stripHtml("a<article anything= / >b"),
     {
       result: "a b",
       allTagLocations: [[1, 23]],
       filteredTagLocations: [[1, 23]],
+      ranges: [[1, 23, " "]],
     },
     "21"
   );
-  t.end();
 });
 
-tap.test("22 - incomplete attribute", (t) => {
-  t.hasStrict(
+test("22 - incomplete attribute", () => {
+  equal(
     stripHtml("a<article anything=  / >b"),
     {
       result: "a b",
       allTagLocations: [[1, 24]],
       filteredTagLocations: [[1, 24]],
+      ranges: [[1, 24, " "]],
     },
     "22"
   );
-  t.end();
 });
 
-tap.test("23 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("23 - multiple incomplete attributes", () => {
+  equal(
     stripHtml("a<article anything= whatever=>b"),
     {
       result: "a b",
@@ -409,11 +421,10 @@ tap.test("23 - multiple incomplete attributes", (t) => {
     },
     "23"
   );
-  t.end();
 });
 
-tap.test("24 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("24 - multiple incomplete attributes", () => {
+  equal(
     stripHtml("a<article anything= whatever=>b", {
       onlyStripTags: ["article"],
     }),
@@ -425,12 +436,11 @@ tap.test("24 - multiple incomplete attributes", (t) => {
     },
     "24"
   );
-  t.end();
 });
 
-tap.test("25 - multiple incomplete attributes", (t) => {
-  const input = `a<article anything= whatever=>b`;
-  t.hasStrict(
+test("25 - multiple incomplete attributes", () => {
+  let input = `a<article anything= whatever=>b`;
+  equal(
     stripHtml(input, {
       ignoreTags: ["article"],
     }),
@@ -442,128 +452,127 @@ tap.test("25 - multiple incomplete attributes", (t) => {
     },
     "25"
   );
-  t.end();
 });
 
-tap.test("26 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("26 - multiple incomplete attributes", () => {
+  equal(
     stripHtml("a<article anything= whatever=/>b"),
     {
       result: "a b",
       allTagLocations: [[1, 31]],
       filteredTagLocations: [[1, 31]],
+      ranges: [[1, 31, " "]],
     },
     "26"
   );
-  t.end();
 });
 
-tap.test("27 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("27 - multiple incomplete attributes", () => {
+  equal(
     stripHtml("a<article anything= whatever= >b"),
     {
       result: "a b",
       allTagLocations: [[1, 31]],
       filteredTagLocations: [[1, 31]],
+      ranges: [[1, 31, " "]],
     },
     "27"
   );
-  t.end();
 });
 
-tap.test("28 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("28 - multiple incomplete attributes", () => {
+  equal(
     stripHtml("a<article anything= whatever= />b"),
     {
       result: "a b",
       allTagLocations: [[1, 32]],
       filteredTagLocations: [[1, 32]],
+      ranges: [[1, 32, " "]],
     },
     "28"
   );
-  t.end();
 });
 
-tap.test("29 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("29 - multiple incomplete attributes", () => {
+  equal(
     stripHtml('a<article anything= class="zz" whatever= id="lalala">b'),
     {
       result: "a b",
       allTagLocations: [[1, 53]],
       filteredTagLocations: [[1, 53]],
+      ranges: [[1, 53, " "]],
     },
     "29 - a mix thereof"
   );
-  t.end();
 });
 
-tap.test("30 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("30 - multiple incomplete attributes", () => {
+  equal(
     stripHtml('a<article anything= class="zz" whatever= id="lalala"/>b'),
     {
       result: "a b",
       allTagLocations: [[1, 54]],
       filteredTagLocations: [[1, 54]],
+      ranges: [[1, 54, " "]],
     },
     "30 - a mix thereof"
   );
-  t.end();
 });
 
-tap.test("31 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("31 - multiple incomplete attributes", () => {
+  equal(
     stripHtml('a<article anything= class="zz" whatever= id="lalala" />b'),
     {
       result: "a b",
       allTagLocations: [[1, 55]],
       filteredTagLocations: [[1, 55]],
+      ranges: [[1, 55, " "]],
     },
     "31 - a mix thereof"
   );
-  t.end();
 });
 
-tap.test("32 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("32 - multiple incomplete attributes", () => {
+  equal(
     stripHtml('a<article anything= class="zz" whatever= id="lalala" / >b'),
     {
       result: "a b",
       allTagLocations: [[1, 56]],
       filteredTagLocations: [[1, 56]],
+      ranges: [[1, 56, " "]],
     },
     "32 - a mix thereof"
   );
-  t.end();
 });
 
-tap.test("33 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("33 - multiple incomplete attributes", () => {
+  equal(
     stripHtml('a<article anything= class="zz" whatever= id="lalala"  /  >b'),
     {
       result: "a b",
       allTagLocations: [[1, 58]],
       filteredTagLocations: [[1, 58]],
+      ranges: [[1, 58, " "]],
     },
     "33 - a mix thereof"
   );
-  t.end();
 });
 
-tap.test("34 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("34 - multiple incomplete attributes", () => {
+  equal(
     stripHtml('a <article anything= class="zz" whatever= id="lalala"  /  > b'),
     {
       result: "a b",
       allTagLocations: [[2, 59]],
       filteredTagLocations: [[2, 59]],
+      ranges: [[1, 60, " "]],
     },
     "34 - a mix thereof"
   );
-  t.end();
 });
 
-tap.test("35 - multiple incomplete attributes", (t) => {
-  t.hasStrict(
+test("35 - multiple incomplete attributes", () => {
+  equal(
     stripHtml(
       'a <article anything = class="zz" whatever = id="lalala"  /  > b'
     ),
@@ -571,794 +580,565 @@ tap.test("35 - multiple incomplete attributes", (t) => {
       result: "a b",
       allTagLocations: [[2, 61]],
       filteredTagLocations: [[2, 61]],
+      ranges: [[1, 62, " "]],
     },
     "35 - a mix thereof"
   );
-  t.end();
 });
 
-tap.test("36 - tag name, equals and end of a tag", (t) => {
+test("36 - tag name, equals and end of a tag", () => {
   // html
-  t.hasStrict(
+  equal(
     stripHtml("a<article=>b"),
     {
       result: "a b",
       allTagLocations: [[1, 11]],
       filteredTagLocations: [[1, 11]],
+      ranges: [[1, 11, " "]],
     },
     "36"
   );
-  t.end();
 });
 
-tap.test("37 - tag name, equals and end of a tag", (t) => {
-  t.hasStrict(stripHtml("a<article =>b"), { result: "a b" }, "37");
-  t.end();
+test("37 - tag name, equals and end of a tag", () => {
+  equal(stripHtml("a<article =>b").result, "a b", "37");
 });
 
-tap.test("38 - tag name, equals and end of a tag", (t) => {
-  t.hasStrict(stripHtml("a<article= >b"), { result: "a b" }, "38");
-  t.end();
+test("38 - tag name, equals and end of a tag", () => {
+  equal(stripHtml("a<article= >b").result, "a b", "38");
 });
 
-tap.test("39 - tag name, equals and end of a tag", (t) => {
-  t.hasStrict(stripHtml("a<article = >b"), { result: "a b" }, "39");
-  t.end();
+test("39 - tag name, equals and end of a tag", () => {
+  equal(stripHtml("a<article = >b").result, "a b", "39");
 });
 
-tap.test("40 - tag name, equals and end of a tag", (t) => {
+test("40 - tag name, equals and end of a tag", () => {
   // xhtml without space between the slash and closing tag
-  t.hasStrict(stripHtml("a<article=/>b"), { result: "a b" }, "40");
-  t.end();
+  equal(stripHtml("a<article=/>b").result, "a b", "40");
 });
 
-tap.test("41 - tag name, equals and end of a tag", (t) => {
-  t.hasStrict(stripHtml("a<article =/>b"), { result: "a b" }, "41");
-  t.end();
+test("41 - tag name, equals and end of a tag", () => {
+  equal(stripHtml("a<article =/>b").result, "a b", "41");
 });
 
-tap.test("42 - tag name, equals and end of a tag", (t) => {
-  t.hasStrict(stripHtml("a<article= />b"), { result: "a b" }, "42");
-  t.end();
+test("42 - tag name, equals and end of a tag", () => {
+  equal(stripHtml("a<article= />b").result, "a b", "42");
 });
 
-tap.test("43 - tag name, equals and end of a tag", (t) => {
-  t.hasStrict(stripHtml("a<article = />b"), { result: "a b" }, "43");
-  t.end();
+test("43 - tag name, equals and end of a tag", () => {
+  equal(stripHtml("a<article = />b").result, "a b", "43");
 });
 
-tap.test("44 - tag name, equals and end of a tag", (t) => {
+test("44 - tag name, equals and end of a tag", () => {
   // xhtml with space after the closing slash
-  t.hasStrict(stripHtml("a<article=/ >b"), { result: "a b" }, "44");
-  t.end();
+  equal(stripHtml("a<article=/ >b").result, "a b", "44");
 });
 
-tap.test("45 - tag name, equals and end of a tag", (t) => {
-  t.hasStrict(stripHtml("a<article =/ >b"), { result: "a b" }, "45");
-  t.end();
+test("45 - tag name, equals and end of a tag", () => {
+  equal(stripHtml("a<article =/ >b").result, "a b", "45");
 });
 
-tap.test("46 - tag name, equals and end of a tag", (t) => {
-  t.hasStrict(stripHtml("a<article= / >b"), { result: "a b" }, "46");
-  t.end();
+test("46 - tag name, equals and end of a tag", () => {
+  equal(stripHtml("a<article= / >b").result, "a b", "46");
 });
 
-tap.test("47 - tag name, equals and end of a tag", (t) => {
-  t.hasStrict(stripHtml("a<article = / >b"), { result: "a b" }, "47");
-  t.end();
+test("47 - tag name, equals and end of a tag", () => {
+  equal(stripHtml("a<article = / >b").result, "a b", "47");
 });
 
-tap.test("48 - multiple equals after attribute's name", (t) => {
+test("48 - multiple equals after attribute's name", () => {
   // 1. consecutive equals
   // normal tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<div class =="zzzz">x</div>bbbbbbbb'),
-    { result: "aaaaaaa x bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<div class =="zzzz">x</div>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
     "48"
   );
-  t.end();
 });
 
-tap.test("49 - multiple equals after attribute's name", (t) => {
+test("49 - multiple equals after attribute's name", () => {
   // ranged tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<script class =="zzzz">x</script>bbbbbbbb'),
-    { result: "aaaaaaa bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<script class =="zzzz">x</script>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
     "49"
   );
-  t.end();
 });
 
-tap.test("50 - multiple equals after attribute's name", (t) => {
+test("50 - multiple equals after attribute's name", () => {
   // 2. consecutive equals with space
   // normal tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<div class = ="zzzz">x</div>bbbbbbbb'),
-    { result: "aaaaaaa x bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<div class = ="zzzz">x</div>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
     "50"
   );
-  t.end();
 });
 
-tap.test("51 - multiple equals after attribute's name", (t) => {
+test("51 - multiple equals after attribute's name", () => {
   // ranged tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<script class = ="zzzz">x</script>bbbbbbbb'),
-    { result: "aaaaaaa bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<script class = ="zzzz">x</script>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
     "51"
   );
-  t.end();
 });
 
-tap.test("52 - multiple equals after attribute's name", (t) => {
+test("52 - multiple equals after attribute's name", () => {
   // 3. consecutive equals with more spaces in between
   // normal tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<div class = = "zzzz">x</div>bbbbbbbb'),
-    { result: "aaaaaaa x bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<div class = = "zzzz">x</div>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
     "52"
   );
-  t.end();
 });
 
-tap.test("53 - multiple equals after attribute's name", (t) => {
+test("53 - multiple equals after attribute's name", () => {
   // ranged tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<script class = = "zzzz">x</script>bbbbbbbb'),
-    { result: "aaaaaaa bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<script class = = "zzzz">x</script>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
     "53"
   );
-  t.end();
 });
 
-tap.test("54 - multiple equals after attribute's name", (t) => {
+test("54 - multiple equals after attribute's name", () => {
   // 4. consecutive equals, following attribute's name tightly
   // normal tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<div class= = "zzzz">x</div>bbbbbbbb'),
-    { result: "aaaaaaa x bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<div class= = "zzzz">x</div>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
     "54"
   );
-  t.end();
 });
 
-tap.test("55 - multiple equals after attribute's name", (t) => {
+test("55 - multiple equals after attribute's name", () => {
   // ranged tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<script class= = "zzzz">x</script>bbbbbbbb'),
-    { result: "aaaaaaa bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<script class= = "zzzz">x</script>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
     "55"
   );
-  t.end();
 });
 
-tap.test("56 - multiple equals after attribute's name", (t) => {
+test("56 - multiple equals after attribute's name", () => {
   // 5. consecutive equals, tight
   // normal tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<div class=="zzzz">x</div>bbbbbbbb'),
-    { result: "aaaaaaa x bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<div class=="zzzz">x</div>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
     "56"
   );
-  t.end();
 });
 
-tap.test("57 - multiple equals after attribute's name", (t) => {
+test("57 - multiple equals after attribute's name", () => {
   // ranged tag:
-  t.hasStrict(
-    stripHtml('aaaaaaa<script class=="zzzz">x</script>bbbbbbbb'),
-    { result: "aaaaaaa bbbbbbbb" },
+  equal(
+    stripHtml('aaaaaaa<script class=="zzzz">x</script>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
     "57"
   );
-  t.end();
 });
 
-tap.test(
-  "58 - multiple quotes in the attributes - double, opening only - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb'),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "58"
-    );
-    t.end();
-  }
-);
+test("58 - multiple quotes in the attributes - double, opening only - normal", () => {
+  equal(
+    stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
+    "58"
+  );
+});
 
-tap.test(
-  "59 - multiple quotes in the attributes - double, opening only - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb'),
-      { result: "aaaaaaa bbbbbbbb" },
-      "59"
-    );
-    t.end();
-  }
-);
+test("59 - multiple quotes in the attributes - double, opening only - ranged", () => {
+  equal(
+    stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
+    "59"
+  );
+});
 
-tap.test(
-  "60 - multiple quotes in the attributes - double, closing - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb'),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "60"
-    );
-    t.end();
-  }
-);
+test("60 - multiple quotes in the attributes - double, closing - normal", () => {
+  equal(
+    stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
+    "60"
+  );
+});
 
-tap.test(
-  "61 - multiple quotes in the attributes - double, closing - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb'),
-      { result: "aaaaaaa bbbbbbbb" },
-      "61"
-    );
-    t.end();
-  }
-);
+test("61 - multiple quotes in the attributes - double, closing - ranged", () => {
+  equal(
+    stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
+    "61"
+  );
+});
 
-tap.test(
-  "62 - multiple quotes in the attributes - double, both closing and opening - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<div class=""zzzz"">x</div>bbbbbbbb'),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "62"
-    );
-    t.end();
-  }
-);
+test("62 - multiple quotes in the attributes - double, both closing and opening - normal", () => {
+  equal(
+    stripHtml('aaaaaaa<div class=""zzzz"">x</div>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
+    "62"
+  );
+});
 
-tap.test(
-  "63 - multiple quotes in the attributes - double, both closing and opening - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<script class=""zzzz"">x</script>bbbbbbbb'),
-      { result: "aaaaaaa bbbbbbbb" },
-      "63"
-    );
-    t.end();
-  }
-);
+test("63 - multiple quotes in the attributes - double, both closing and opening - ranged", () => {
+  equal(
+    stripHtml('aaaaaaa<script class=""zzzz"">x</script>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
+    "63"
+  );
+});
 
-tap.test(
-  "64 - multiple quotes in the attributes - single, opening only - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb"),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "64"
-    );
-    t.end();
-  }
-);
+test("64 - multiple quotes in the attributes - single, opening only - normal", () => {
+  equal(
+    stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb").result,
+    "aaaaaaa x bbbbbbbb",
+    "64"
+  );
+});
 
-tap.test(
-  "65 - multiple quotes in the attributes - single, opening only - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb"),
-      { result: "aaaaaaa bbbbbbbb" },
-      "65"
-    );
-    t.end();
-  }
-);
+test("65 - multiple quotes in the attributes - single, opening only - ranged", () => {
+  equal(
+    stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb").result,
+    "aaaaaaa bbbbbbbb",
+    "65"
+  );
+});
 
-tap.test(
-  "66 - multiple quotes in the attributes - single, closing - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb"),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "66"
-    );
-    t.end();
-  }
-);
+test("66 - multiple quotes in the attributes - single, closing - normal", () => {
+  equal(
+    stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb").result,
+    "aaaaaaa x bbbbbbbb",
+    "66"
+  );
+});
 
-tap.test(
-  "67 - multiple quotes in the attributes - single, closing - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb"),
-      { result: "aaaaaaa bbbbbbbb" },
-      "67"
-    );
-    t.end();
-  }
-);
+test("67 - multiple quotes in the attributes - single, closing - ranged", () => {
+  equal(
+    stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb").result,
+    "aaaaaaa bbbbbbbb",
+    "67"
+  );
+});
 
-tap.test(
-  "68 - multiple quotes in the attributes - single, both closing and opening - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<div class=''zzzz''>x</div>bbbbbbbb"),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "68"
-    );
-    t.end();
-  }
-);
+test("68 - multiple quotes in the attributes - single, both closing and opening - normal", () => {
+  equal(
+    stripHtml("aaaaaaa<div class=''zzzz''>x</div>bbbbbbbb").result,
+    "aaaaaaa x bbbbbbbb",
+    "68"
+  );
+});
 
-tap.test(
-  "69 - multiple quotes in the attributes - single, both closing and opening - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<script class=''zzzz''>x</script>bbbbbbbb"),
-      { result: "aaaaaaa bbbbbbbb" },
-      "69"
-    );
-    t.end();
-  }
-);
+test("69 - multiple quotes in the attributes - single, both closing and opening - ranged", () => {
+  equal(
+    stripHtml("aaaaaaa<script class=''zzzz''>x</script>bbbbbbbb").result,
+    "aaaaaaa bbbbbbbb",
+    "69"
+  );
+});
 
-tap.test(
-  "70 - multiple quotes in the attributes - mix of messed up equals and repeated quotes - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<div class= ==''zzzz''>x</div>bbbbbbbb"),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "70"
-    );
-    t.end();
-  }
-);
+test("70 - multiple quotes in the attributes - mix of messed up equals and repeated quotes - normal", () => {
+  equal(
+    stripHtml("aaaaaaa<div class= ==''zzzz''>x</div>bbbbbbbb").result,
+    "aaaaaaa x bbbbbbbb",
+    "70"
+  );
+});
 
-tap.test(
-  "71 - multiple quotes in the attributes - mix of messed up equals and repeated quotes - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<script class = ==''zzzz''>x</script>bbbbbbbb"),
-      { result: "aaaaaaa bbbbbbbb" },
-      "71"
-    );
-    t.end();
-  }
-);
+test("71 - multiple quotes in the attributes - mix of messed up equals and repeated quotes - ranged", () => {
+  equal(
+    stripHtml("aaaaaaa<script class = ==''zzzz''>x</script>bbbbbbbb").result,
+    "aaaaaaa bbbbbbbb",
+    "71"
+  );
+});
 
-tap.test(
-  "72 - multiple quotes in the attributes - mismatching quotes only - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<div class=''zzzz\"\">x</div>bbbbbbbb"),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "72"
-    );
-    t.end();
-  }
-);
+test("72 - multiple quotes in the attributes - mismatching quotes only - normal", () => {
+  equal(
+    stripHtml("aaaaaaa<div class=''zzzz\"\">x</div>bbbbbbbb").result,
+    "aaaaaaa x bbbbbbbb",
+    "72"
+  );
+});
 
-tap.test(
-  "73 - multiple quotes in the attributes - mismatching quotes only - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<script class=''zzzz\"\">x</script>bbbbbbbb"),
-      { result: "aaaaaaa bbbbbbbb" },
-      "73"
-    );
-    t.end();
-  }
-);
+test("73 - multiple quotes in the attributes - mismatching quotes only - ranged", () => {
+  equal(
+    stripHtml("aaaaaaa<script class=''zzzz\"\">x</script>bbbbbbbb").result,
+    "aaaaaaa bbbbbbbb",
+    "73"
+  );
+});
 
-tap.test(
-  "74 - multiple quotes in the attributes - crazy messed up - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml(`aaaaaaa<div class= =='  'zzzz" " ">x</div>bbbbbbbb`),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "74"
-    );
-    t.end();
-  }
-);
+test("74 - multiple quotes in the attributes - crazy messed up - normal", () => {
+  equal(
+    stripHtml(`aaaaaaa<div class= =='  'zzzz" " ">x</div>bbbbbbbb`).result,
+    "aaaaaaa x bbbbbbbb",
+    "74"
+  );
+});
 
-tap.test(
-  "75 - multiple quotes in the attributes - crazy messed up - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<script class= ==\'  \'zzzz" " ">x</script>bbbbbbbb'),
-      { result: "aaaaaaa bbbbbbbb" },
-      "75"
-    );
-    t.end();
-  }
-);
+test("75 - multiple quotes in the attributes - crazy messed up - ranged", () => {
+  equal(
+    stripHtml('aaaaaaa<script class= ==\'  \'zzzz" " ">x</script>bbbbbbbb')
+      .result,
+    "aaaaaaa bbbbbbbb",
+    "75"
+  );
+});
 
-tap.test(
-  "76 - multiple quotes in the attributes - even more crazy messed up - normal",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<div class= ==\'  \'zzzz" " " /// >x</div>bbbbbbbb'),
-      { result: "aaaaaaa x bbbbbbbb" },
-      "76"
-    );
-    t.end();
-  }
-);
+test("76 - multiple quotes in the attributes - even more crazy messed up - normal", () => {
+  equal(
+    stripHtml('aaaaaaa<div class= ==\'  \'zzzz" " " /// >x</div>bbbbbbbb')
+      .result,
+    "aaaaaaa x bbbbbbbb",
+    "76"
+  );
+});
 
-tap.test(
-  "77 - multiple quotes in the attributes - even more crazy messed up - ranged",
-  (t) => {
-    t.hasStrict(
-      stripHtml(
-        'aaaaaaa<script class= ==\'  \'zzzz" " " /// >x</script>bbbbbbbb'
-      ),
-      { result: "aaaaaaa bbbbbbbb" },
-      "77"
-    );
-    t.end();
-  }
-);
+test("77 - multiple quotes in the attributes - even more crazy messed up - ranged", () => {
+  equal(
+    stripHtml('aaaaaaa<script class= ==\'  \'zzzz" " " /// >x</script>bbbbbbbb')
+      .result,
+    "aaaaaaa bbbbbbbb",
+    "77"
+  );
+});
 
-tap.test("78 - unclosed attributes - normal", (t) => {
-  t.hasStrict(
-    stripHtml('aaaaaaa<div class="zzzz>x</div>bbbbbbbb'),
-    { result: "aaaaaaa x bbbbbbbb" },
+test("78 - unclosed attributes - normal", () => {
+  equal(
+    stripHtml('aaaaaaa<div class="zzzz>x</div>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
     "78"
   );
-  t.end();
 });
 
-tap.test("79 - unclosed attributes - ranged", (t) => {
-  t.hasStrict(
-    stripHtml('aaaaaaa<script class="zzzz>x</script>bbbbbbbb'),
-    { result: "aaaaaaa bbbbbbbb" },
+test("79 - unclosed attributes - ranged", () => {
+  equal(
+    stripHtml('aaaaaaa<script class="zzzz>x</script>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
     "79"
   );
-  t.end();
 });
 
-tap.test("80 - unclosed attributes - single tag", (t) => {
-  t.hasStrict(
-    stripHtml('aaaaaaa<br class="zzzz>x<br>bbbbbbbb'),
-    { result: "aaaaaaa x bbbbbbbb" },
+test("80 - unclosed attributes - single tag", () => {
+  equal(
+    stripHtml('aaaaaaa<br class="zzzz>x<br>bbbbbbbb').result,
+    "aaaaaaa x bbbbbbbb",
     "80"
   );
-  t.end();
 });
 
-tap.test(
-  "81 - unclosed attributes - new tag starts, closing quote missing",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<br class="zzzz <br>bbbbbbbb'),
-      { result: "aaaaaaa bbbbbbbb" },
-      "81"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "82 - unclosed attributes - new tag starts, both quotes present",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aaaaaaa<br class="zzzz" <br>bbbbbbbb'),
-      { result: "aaaaaaa bbbbbbbb" },
-      "82"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "83 - unclosed attributes - cut off at the end of attribute's name",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<br class<br>bbbbbbbb"),
-      { result: "aaaaaaa bbbbbbbb" },
-      "83"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "84 - unclosed attributes - cut off with a rogue exclamation mark",
-  (t) => {
-    t.hasStrict(
-      stripHtml("aaaaaaa<br class!<br>bbbbbbbb"),
-      { result: "aaaaaaa bbbbbbbb" },
-      "84"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "85 - duplicated consecutive attribute values - inner whitespace",
-  (t) => {
-    t.hasStrict(
-      stripHtml('aa< br class1="b1" yo1   =   class2 = "b2" yo2 yo3>cc'),
-      { result: "aa cc" },
-      "85"
-    );
-    t.end();
-  }
-);
-
-tap.test("86 - space after bracket, multiple attrs, no equals", (t) => {
-  t.hasStrict(stripHtml("aa< br a b >cc"), { result: "aa< br a b >cc" }, "86");
-  t.end();
-});
-
-tap.test("87 - space after bracket, multiple attrs, no equals", (t) => {
-  t.hasStrict(
-    stripHtml("aa < br a b >cc"),
-    { result: "aa < br a b >cc" },
-    "87"
+test("81 - unclosed attributes - new tag starts, closing quote missing", () => {
+  equal(
+    stripHtml('aaaaaaa<br class="zzzz <br>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
+    "81"
   );
-  t.end();
 });
 
-tap.test("88 - space after bracket, multiple attrs, no equals", (t) => {
-  t.hasStrict(
-    stripHtml("aa< br a b > cc"),
-    { result: "aa< br a b > cc" },
-    "88"
+test("82 - unclosed attributes - new tag starts, both quotes present", () => {
+  equal(
+    stripHtml('aaaaaaa<br class="zzzz" <br>bbbbbbbb').result,
+    "aaaaaaa bbbbbbbb",
+    "82"
   );
-  t.end();
 });
 
-tap.test("89 - space after bracket, multiple attrs, no equals", (t) => {
-  t.hasStrict(
-    stripHtml("aa < br a b > cc"),
-    { result: "aa < br a b > cc" },
-    "89"
+test("83 - unclosed attributes - cut off at the end of attribute's name", () => {
+  equal(
+    stripHtml("aaaaaaa<br class<br>bbbbbbbb").result,
+    "aaaaaaa bbbbbbbb",
+    "83"
   );
-  t.end();
 });
 
-tap.test("90 - space after bracket, multiple attrs, no equals", (t) => {
-  t.hasStrict(
-    stripHtml("aa  < br a b >  cc"),
-    { result: "aa  < br a b >  cc" },
-    "90"
+test("84 - unclosed attributes - cut off with a rogue exclamation mark", () => {
+  equal(
+    stripHtml("aaaaaaa<br class!<br>bbbbbbbb").result,
+    "aaaaaaa bbbbbbbb",
+    "84"
   );
-  t.end();
 });
 
-tap.test("91 - various, #1", (t) => {
-  t.hasStrict(stripHtml('aa< br a b=" >cc'), { result: "aa cc" }, "91");
-  t.end();
+test("85 - duplicated consecutive attribute values - inner whitespace", () => {
+  equal(
+    stripHtml('aa< br class1="b1" yo1   =   class2 = "b2" yo2 yo3>cc').result,
+    "aa cc",
+    "85"
+  );
 });
 
-tap.test("92 - various, #2", (t) => {
-  t.hasStrict(stripHtml('aa< br a b= " >cc'), { result: "aa cc" }, "92");
-  t.end();
+test("86 - space after bracket, multiple attrs, no equals", () => {
+  equal(stripHtml("aa< br a b >cc").result, "aa< br a b >cc", "86");
 });
 
-tap.test("93 - various, #3", (t) => {
-  t.hasStrict(stripHtml('aa< br a b =" >cc'), { result: "aa cc" }, "93");
-  t.end();
+test("87 - space after bracket, multiple attrs, no equals", () => {
+  equal(stripHtml("aa < br a b >cc").result, "aa < br a b >cc", "87");
 });
 
-tap.test("94 - various, #4", (t) => {
-  t.hasStrict(stripHtml('aa< br a b = " >cc'), { result: "aa cc" }, "94");
-  t.end();
+test("88 - space after bracket, multiple attrs, no equals", () => {
+  equal(stripHtml("aa< br a b > cc").result, "aa< br a b > cc", "88");
 });
 
-tap.test("95 - various, #5", (t) => {
+test("89 - space after bracket, multiple attrs, no equals", () => {
+  equal(stripHtml("aa < br a b > cc").result, "aa < br a b > cc", "89");
+});
+
+test("90 - space after bracket, multiple attrs, no equals", () => {
+  equal(stripHtml("aa  < br a b >  cc").result, "aa  < br a b >  cc", "90");
+});
+
+test("91 - various, #1", () => {
+  equal(stripHtml('aa< br a b=" >cc').result, "aa cc", "91");
+});
+
+test("92 - various, #2", () => {
+  equal(stripHtml('aa< br a b= " >cc').result, "aa cc", "92");
+});
+
+test("93 - various, #3", () => {
+  equal(stripHtml('aa< br a b =" >cc').result, "aa cc", "93");
+});
+
+test("94 - various, #4", () => {
+  equal(stripHtml('aa< br a b = " >cc').result, "aa cc", "94");
+});
+
+test("95 - various, #5", () => {
   // xhtml
-  t.hasStrict(stripHtml('aa< br a b=" />cc'), { result: "aa cc" }, "95");
-  t.end();
+  equal(stripHtml('aa< br a b=" />cc').result, "aa cc", "95");
 });
 
-tap.test("96 - various, #6", (t) => {
-  t.hasStrict(stripHtml('aa< br a b= " />cc'), { result: "aa cc" }, "96");
-  t.end();
+test("96 - various, #6", () => {
+  equal(stripHtml('aa< br a b= " />cc').result, "aa cc", "96");
 });
 
-tap.test("97 - various, #7", (t) => {
-  t.hasStrict(stripHtml('aa< br a b =" />cc'), { result: "aa cc" }, "97");
-  t.end();
+test("97 - various, #7", () => {
+  equal(stripHtml('aa< br a b =" />cc').result, "aa cc", "97");
 });
 
-tap.test("98 - various, #8", (t) => {
-  t.hasStrict(stripHtml('aa< br a b = " />cc'), { result: "aa cc" }, "98");
-  t.end();
+test("98 - various, #8", () => {
+  equal(stripHtml('aa< br a b = " />cc').result, "aa cc", "98");
 });
 
-tap.test("99 - various, #9", (t) => {
-  t.hasStrict(stripHtml('aa< br a b=" / >cc'), { result: "aa cc" }, "99");
-  t.end();
+test("99 - various, #9", () => {
+  equal(stripHtml('aa< br a b=" / >cc').result, "aa cc", "99");
 });
 
-tap.test("100 - various, #10", (t) => {
-  t.hasStrict(stripHtml('aa< br a b= " / >cc'), { result: "aa cc" }, "100");
-  t.end();
+test("100 - various, #10", () => {
+  equal(stripHtml('aa< br a b= " / >cc').result, "aa cc", "100");
 });
 
-tap.test("101 - various, #11", (t) => {
-  t.hasStrict(stripHtml('aa< br a b =" / >cc'), { result: "aa cc" }, "101");
-  t.end();
+test("101 - various, #11", () => {
+  equal(stripHtml('aa< br a b =" / >cc').result, "aa cc", "101");
 });
 
-tap.test("102 - various, #12", (t) => {
-  t.hasStrict(stripHtml('aa< br a b = " / >cc'), { result: "aa cc" }, "102");
-  t.end();
+test("102 - various, #12", () => {
+  equal(stripHtml('aa< br a b = " / >cc').result, "aa cc", "102");
 });
 
-tap.test("103 - various, #13", (t) => {
-  t.hasStrict(stripHtml('aa< br a b=" // >cc'), { result: "aa cc" }, "103");
-  t.end();
+test("103 - various, #13", () => {
+  equal(stripHtml('aa< br a b=" // >cc').result, "aa cc", "103");
 });
 
-tap.test("104 - various, #14", (t) => {
-  t.hasStrict(stripHtml('aa< br a b= " // >cc'), { result: "aa cc" }, "104");
-  t.end();
+test("104 - various, #14", () => {
+  equal(stripHtml('aa< br a b= " // >cc').result, "aa cc", "104");
 });
 
-tap.test("105 - various, #15", (t) => {
-  t.hasStrict(stripHtml('aa< br a b =" // >cc'), { result: "aa cc" }, "105");
-  t.end();
+test("105 - various, #15", () => {
+  equal(stripHtml('aa< br a b =" // >cc').result, "aa cc", "105");
 });
 
-tap.test("106 - various, #16", (t) => {
-  t.hasStrict(stripHtml('aa< br a b = " // >cc'), { result: "aa cc" }, "106");
-  t.end();
+test("106 - various, #16", () => {
+  equal(stripHtml('aa< br a b = " // >cc').result, "aa cc", "106");
 });
 
-tap.test("107 - various, #17", (t) => {
-  t.hasStrict(
-    stripHtml(
-      '<div><article class="main" id=="something">text</article></div>'
-    ),
-    { result: "text" },
+test("107 - various, #17", () => {
+  equal(
+    stripHtml('<div><article class="main" id=="something">text</article></div>')
+      .result,
+    "text",
     "107"
   );
-  t.end();
 });
 
-tap.test("108 - various, #18 - suddenly cut off healthy HTML", (t) => {
-  t.hasStrict(
+test("108 - various, #18 - suddenly cut off healthy HTML", () => {
+  equal(
     stripHtml(
       `la <b>la</b> la<table><tr>
 <td><a href="http://codsen.com" target="_blank"><img src="http://cdn.codsen.com/nonexistent.gif" width="11" height="22" border="0" style="display:block; -ms-interpolation-mode:bicubic; color: #ffffff; font-style: it`
-    ),
-    { result: "la la la" },
+    ).result,
+    "la la la",
     "108 - HTML cut off in the middle of an inline CSS style"
   );
-  t.end();
 });
 
-tap.test("109 - unclosed tag followed by a tag - HTML", (t) => {
+test("109 - unclosed tag followed by a tag - HTML", () => {
   // tight
-  t.hasStrict(
-    stripHtml('111 <br class="zz"<img> 222'),
-    { result: "111 222" },
-    "109"
-  );
-  t.end();
+  equal(stripHtml('111 <br class="zz"<img> 222').result, "111 222", "109");
 });
 
-tap.test("110 - unclosed tag followed by a tag - XHTML", (t) => {
-  t.hasStrict(
-    stripHtml('111 <br class="zz"/<img> 222'),
-    { result: "111 222" },
-    "110"
-  );
-  t.end();
+test("110 - unclosed tag followed by a tag - XHTML", () => {
+  equal(stripHtml('111 <br class="zz"/<img> 222').result, "111 222", "110");
 });
 
-tap.test("111 - unclosed tag followed by a tag - HTML", (t) => {
+test("111 - unclosed tag followed by a tag - HTML", () => {
   // space
-  t.hasStrict(
-    stripHtml('111 <br class="zz" <img> 222'),
-    { result: "111 222" },
-    "111"
-  );
-  t.end();
+  equal(stripHtml('111 <br class="zz" <img> 222').result, "111 222", "111");
 });
 
-tap.test("112 - unclosed tag followed by a tag - XHTML", (t) => {
-  t.hasStrict(
-    stripHtml('111 <br class="zz"/ <img> 222'),
-    { result: "111 222" },
-    "112"
-  );
-  t.end();
+test("112 - unclosed tag followed by a tag - XHTML", () => {
+  equal(stripHtml('111 <br class="zz"/ <img> 222').result, "111 222", "112");
 });
 
-tap.test("113 - unclosed tag followed by a tag - HTML - line break", (t) => {
+test("113 - unclosed tag followed by a tag - HTML - line break", () => {
   //
-  t.hasStrict(
-    stripHtml('111 <br class="zz"\n<img> 222'),
-    { result: "111\n222" },
-    "113"
-  );
-  t.end();
+  equal(stripHtml('111 <br class="zz"\n<img> 222').result, "111\n222", "113");
 });
 
-tap.test("114 - unclosed tag followed by a tag - XHTML - line break", (t) => {
-  t.hasStrict(
-    stripHtml('111 <br class="zz"/\n<img> 222'),
-    { result: "111\n222" },
-    "114"
-  );
-  t.end();
+test("114 - unclosed tag followed by a tag - XHTML - line break", () => {
+  equal(stripHtml('111 <br class="zz"/\n<img> 222').result, "111\n222", "114");
 });
 
-tap.test(
-  "115 - unclosed tag followed by a tag - space and line break, HTML",
-  (t) => {
-    //
-    t.hasStrict(
-      stripHtml('111 <br class="zz" \n<img> 222'),
-      { result: "111\n222" },
-      "115"
-    );
-    t.end();
-  }
-);
+test("115 - unclosed tag followed by a tag - space and line break, HTML", () => {
+  //
+  equal(stripHtml('111 <br class="zz" \n<img> 222').result, "111\n222", "115");
+});
 
-tap.test(
-  "116 - unclosed tag followed by a tag - space and line break, XHTML",
-  (t) => {
-    t.hasStrict(
-      stripHtml('111 <br class="zz"/ \n<img> 222'),
-      { result: "111\n222" },
-      "116"
-    );
-    t.end();
-  }
-);
+test("116 - unclosed tag followed by a tag - space and line break, XHTML", () => {
+  equal(stripHtml('111 <br class="zz"/ \n<img> 222').result, "111\n222", "116");
+});
 
-tap.test("117 - unclosed tag followed by a tag - messy", (t) => {
-  t.hasStrict(
-    stripHtml('111 <br class="zz"\t/ \n<img> 222'),
-    { result: "111\n222" },
+test("117 - unclosed tag followed by a tag - messy", () => {
+  equal(
+    stripHtml('111 <br class="zz"\t/ \n<img> 222').result,
+    "111\n222",
     "117"
   );
-  t.end();
 });
 
-tap.test("118 - unclosed tag followed by a tag", (t) => {
-  t.hasStrict(
-    stripHtml('111 <br class="zz"\t/\r\n\t \n<img> 222'),
-    { result: "111\n\n222" },
+test("118 - unclosed tag followed by a tag", () => {
+  equal(
+    stripHtml('111 <br class="zz"\t/\r\n\t \n<img> 222').result,
+    "111\n\n222",
     "118"
   );
-  t.end();
 });
 
-tap.test("119 - unclosed tag followed by a tag", (t) => {
-  t.hasStrict(
-    stripHtml("111 <a\t/\r\n\t \n<img> 222"),
-    { result: "111\n\n222" },
-    "119"
-  );
-  t.end();
+test("119 - unclosed tag followed by a tag", () => {
+  equal(stripHtml("111 <a\t/\r\n\t \n<img> 222").result, "111\n\n222", "119");
 });
 
-tap.test("120 - dirty code - unclosed tag followed by a tag", (t) => {
-  t.hasStrict(
-    stripHtml("111 <a\t/\r\n\t \n<img> 222"),
-    { result: "111\n\n222" },
-    "120"
-  );
-  t.end();
+test("120 - dirty code - unclosed tag followed by a tag", () => {
+  equal(stripHtml("111 <a\t/\r\n\t \n<img> 222").result, "111\n\n222", "120");
 });
 
-tap.test("121 - two equals", (t) => {
-  t.hasStrict(
-    stripHtml('aaa <div class=="yo"> zzz'),
-    { result: "aaa zzz" },
-    "121"
-  );
-  t.end();
+test("121 - two equals", () => {
+  equal(stripHtml('aaa <div class=="yo"> zzz').result, "aaa zzz", "121");
 });
 
-tap.test("122 - space + two equals", (t) => {
-  t.hasStrict(
-    stripHtml('aaa <div class =="yo"> zzz'),
-    { result: "aaa zzz" },
-    "122"
-  );
-  t.end();
+test("122 - space + two equals", () => {
+  equal(stripHtml('aaa <div class =="yo"> zzz').result, "aaa zzz", "122");
 });
+
+test.run();

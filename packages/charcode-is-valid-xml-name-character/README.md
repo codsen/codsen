@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 1.13.0
 
 ```js
 import { strict as assert } from "assert";
+
 import {
   isProduction4,
   isProduction4a,
@@ -62,7 +63,7 @@ assert.equal(validSecondCharOnwards("?"), false);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/charcode-is-valid-xml-name-character/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/charcode-is-valid-xml-name-character/) for a full description of the API.
 
 ## Contributing
 
@@ -74,4 +75,6 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

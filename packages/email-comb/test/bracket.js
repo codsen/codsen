@@ -1,13 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 
 // bracket notation
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`,
-  (t) => {
-    const source = `<head>
+test(`01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`, () => {
+  let source = `<head>
 <style type="text/css">
   a[class="used"]{x:1;}
   b[class="unused1"]{y:2;}
@@ -17,7 +18,7 @@ tap.test(
 </body>
 `;
 
-    const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
   a[class="used"]{x:1;}
 </style>
@@ -26,16 +27,11 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(t, source).result, intended, "01");
+  equal(comb(source).result, intended, "01");
+});
 
-    t.end();
-  }
-);
-
-tap.test(
-  `02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notation - id's`,
-  (t) => {
-    const source = `<head>
+test(`02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notation - id's`, () => {
+  let source = `<head>
 <style type="text/css">
   a[id="used"]{x:1;}
   b[id="unused1"]{y:2;}
@@ -45,7 +41,7 @@ tap.test(
 </body>
 `;
 
-    const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
   a[id="used"]{x:1;}
 </style>
@@ -54,8 +50,7 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(t, source).result, intended, "02");
+  equal(comb(source).result, intended, "02");
+});
 
-    t.end();
-  }
-);
+test.run();

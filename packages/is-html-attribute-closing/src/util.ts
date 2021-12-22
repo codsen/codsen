@@ -67,7 +67,7 @@ function plausibleAttrStartsAtX(str: string, start: number): boolean {
     return false;
   }
   // const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
-  const regex =
+  let regex =
     /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
   return regex.test(str.slice(start));
 }
@@ -83,7 +83,7 @@ function guaranteedAttrStartsAtX(str: string, start: number): boolean {
   }
   // either quotes match or does not match but tag closing follows
   // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-  const regex =
+  let regex =
     /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   console.log(`088g return ${regex.test(str.slice(start))}`);
   return regex.test(str.slice(start));

@@ -1,9 +1,12 @@
 import fs from "fs-extra";
 import path from "path";
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
+
 // import pack from "../package.json";
 import {
   testFileContents,
@@ -16,12 +19,12 @@ import {
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - default sort, called on the whole folder", async (t) => {
+test("01 - default sort, called on the whole folder", async () => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  const tempFolder = tempy.directory();
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
 
   // The temp folder needs subfolders. Those have to be in place before we start
@@ -32,7 +35,7 @@ tap.test("01 - default sort, called on the whole folder", async (t) => {
 
   // 2. asynchronously write all test files
 
-  const processedFileContents = pMap(
+  let processedFileContents = pMap(
     testFilePaths,
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
@@ -66,18 +69,19 @@ tap.test("01 - default sort, called on the whole folder", async (t) => {
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received)
     )
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-  t.strictSame(await processedFileContents, sortedTestFileContents, "01");
-  t.end();
+  equal(await processedFileContents, sortedTestFileContents, "01");
 });
 
-tap.test("02 - sort, there's a broken JSON among files", async (t) => {
+test("02 - sort, there's a broken JSON among files", async () => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  const tempFolder = tempy.directory();
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
 
   // The temp folder needs subfolders. Those have to be in place before we start
@@ -88,7 +92,7 @@ tap.test("02 - sort, there's a broken JSON among files", async (t) => {
 
   // 2. asynchronously write all test files
 
-  const processedFileContents = pMap(
+  let processedFileContents = pMap(
     testFilePaths,
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
@@ -113,7 +117,7 @@ tap.test("02 - sort, there's a broken JSON among files", async (t) => {
     )
     .then(() => execa("./cli.js", [tempFolder]))
     .then((receivedStdOut) => {
-      t.match(receivedStdOut.stdout, /broken\.json/);
+      match(receivedStdOut.stdout, /broken\.json/);
       return pMap(testFilePaths, (oneOfPaths) =>
         fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
       ).then((contentsArray) => {
@@ -126,19 +130,20 @@ tap.test("02 - sort, there's a broken JSON among files", async (t) => {
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received)
     )
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-  t.strictSame(await processedFileContents, sortedTestFileContents, "02");
-  t.end();
+  equal(await processedFileContents, sortedTestFileContents, "02");
 });
 
-tap.test("03 - fixes minified dotfiles in JSON format", async (t) => {
-  const tempFolder = tempy.directory();
+test("03 - fixes minified dotfiles in JSON format", async () => {
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
-  const pathOfTheTestfile = path.join(tempFolder, ".eslintrc.json");
+  let pathOfTheTestfile = path.join(tempFolder, ".eslintrc.json");
 
-  const processedFileContents = fs
+  let processedFileContents = fs
     .writeFile(pathOfTheTestfile, minifiedContents)
     .then(() => execa("./cli.js", [tempFolder, ".eslintrc.json"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
@@ -146,19 +151,20 @@ tap.test("03 - fixes minified dotfiles in JSON format", async (t) => {
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received)
     )
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-  t.strictSame(await processedFileContents, prettifiedContents, "03");
-  t.end();
+  equal(await processedFileContents, prettifiedContents, "03");
 });
 
-tap.test("04 - topmost level is array", async (t) => {
-  const tempFolder = tempy.directory();
+test("04 - topmost level is array", async () => {
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
-  const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+  let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
 
-  const processedFileContents = fs
+  let processedFileContents = fs
     .writeFile(
       pathOfTheTestfile,
       JSON.stringify(
@@ -182,9 +188,11 @@ tap.test("04 - topmost level is array", async (t) => {
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received)
     )
-    .catch((err) => t.fail(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-  t.strictSame(
+  equal(
     await processedFileContents,
     `[
   {
@@ -198,21 +206,21 @@ tap.test("04 - topmost level is array", async (t) => {
 ]\n`,
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - no files found in the given directory", async (t) => {
+test("05 - no files found in the given directory", async () => {
   // fetch us a random temp folder
-  const tempFolder = tempy.directory();
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
 
   // call execa on that empty folder
-  const stdOutContents = await execa("./cli.js", [tempFolder]);
+  let stdOutContents = await execa("./cli.js", [tempFolder]);
   // CLI will complain no files could be found
-  t.match(
+  match(
     stdOutContents.stdout,
     /The inputs don't lead to any json files! Exiting./,
     "05"
   );
-  t.end();
 });
+
+test.run();

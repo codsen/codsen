@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { remSep } from "../dist/string-remove-thousand-separators.esm.js";
 
 // 🇬🇧 🇺🇸 thousand separators:

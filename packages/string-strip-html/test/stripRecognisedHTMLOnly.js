@@ -1,20 +1,24 @@
-import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
-tap.test("01 - mix of real and imaginary tags", (t) => {
-  t.hasStrict(
+import { stripHtml } from "./util/noLog.js";
+
+test("01 - mix of real and imaginary tags", () => {
+  equal(
     stripHtml(`<tr><zz>a</zz></tr>`, {
       stripRecognisedHTMLOnly: false,
-    }),
-    { result: "a" },
+    }).result,
+    "a",
     "01.01"
   );
-  t.hasStrict(
+  equal(
     stripHtml(`<tr><zz>a</zz></tr>`, {
       stripRecognisedHTMLOnly: true,
-    }),
-    { result: "<zz>a</zz>" },
+    }).result,
+    "<zz>a</zz>",
     "01.02"
   );
-  t.end();
 });
+
+test.run();

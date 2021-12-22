@@ -1,6 +1,8 @@
+import type { Range, Ranges } from "../../../ops/typedefs/common";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
-import { Range, Ranges } from "../../../scripts/common";
 
 interface Opts {
   inclusiveRangeEnds?: boolean;
@@ -17,7 +19,7 @@ function isIndexWithin(
   rangesArr: Ranges,
   originalOpts?: Opts
 ): boolean | Range {
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
   // insurance
   if (!Number.isInteger(originalIndex)) {
     throw new Error(

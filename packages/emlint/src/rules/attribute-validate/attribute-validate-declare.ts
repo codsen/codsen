@@ -30,7 +30,7 @@ function attributeValidateDeclare(
         )}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "declare") {
         // validate the parent

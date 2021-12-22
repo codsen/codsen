@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // This programmatic test is to ensure the tokenizer doesn't
@@ -8,8 +11,8 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // and so on, until we run in (str.length) runs we cover
 // the whole input source.
 
-tap.test(`no throwing on partial inputs, anywhere`, (t) => {
-  const str = `<!DOCTYPE html>
+test(`no throwing on partial inputs, anywhere`, () => {
+  let str = `<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
@@ -54,7 +57,7 @@ tap.test(`no throwing on partial inputs, anywhere`, (t) => {
 </html>`;
 
   for (let i = 1, len = str.length; i < len; i++) {
-    t.doesNotThrow(
+    not.throws(
       () =>
         ct(str.slice(0, i), {
           tagCb: () => {},
@@ -62,16 +65,16 @@ tap.test(`no throwing on partial inputs, anywhere`, (t) => {
       `${str.slice(0, i)}`
     );
   }
-  t.end();
 });
 
-tap.test(`02 isolated`, (t) => {
-  t.doesNotThrow(
+test(`02 isolated`, () => {
+  not.throws(
     () =>
       ct(`<body id="l" style="`, {
         tagCb: () => {},
       }),
     "02"
   );
-  t.end();
 });
+
+test.run();

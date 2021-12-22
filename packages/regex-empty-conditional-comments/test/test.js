@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.esm.js";
 
 const fixture = [
@@ -32,31 +35,31 @@ const fixture = [
 <!--<![endif]-->`,
 ];
 
-tap.test("matches each of comments", (t) => {
+test("matches each of comments", () => {
   // eslint-disable-next-line
   for (const comment of fixture) {
-    t.match(comment, emptyCondCommentRegex());
+    match(comment, emptyCondCommentRegex());
   }
 
-  t.notMatch(`<!--a-->`, emptyCondCommentRegex(), "01.01");
-  t.notMatch(
+  not.match(`<!--a-->`, emptyCondCommentRegex(), "01.01");
+  not.match(
     `<!--[if (gte mso 9)|(IE)]>z<![endif]-->`,
     emptyCondCommentRegex(),
     "01.02"
   );
-  t.notMatch(
+  not.match(
     "<!--[if (gte mso 9)|(IE)]>\n\t\tz\n<![endif]-->",
     emptyCondCommentRegex(),
     "01.03"
   );
-  t.notMatch(
+  not.match(
     `<!--[if !mso]><!-- -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->`,
     emptyCondCommentRegex(),
     "01.04"
   );
-  t.notMatch(
+  not.match(
     `<!--[if (gte mso 9)|(IE)]>
   <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
     <tr>
@@ -73,33 +76,31 @@ zzz
   );
 
   // as per https://stackoverflow.com/a/5983063/3943954
-  t.notMatch(
+  not.match(
     `<!--[if !mso]><!-- -->
   content targeted at non-outlook users goes here...
 <!--<![endif]-->`,
     emptyCondCommentRegex(),
     "01.06"
   );
-
-  t.end();
 });
 
-tap.test("returns comment on match", (t) => {
-  t.strictSame(
+test("returns comment on match", () => {
+  equal(
     "<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(
       emptyCondCommentRegex()
     ),
     ["<!--[if (gte mso 9)|(IE)]><![endif]-->"],
     "02.01"
   );
-  t.strictSame(
+  equal(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if gte mso 9]>
   <xml>
   <![endif]-->`.match(emptyCondCommentRegex()),
     ["<!--[if !mso]><![endif]-->"],
     "02.02"
   );
-  t.strictSame(
+  equal(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if !mso]><!-- -->
 
 <!--<![endif]-->`.match(emptyCondCommentRegex()),
@@ -111,11 +112,10 @@ tap.test("returns comment on match", (t) => {
     ],
     "02.03"
   );
-  t.end();
 });
 
-tap.test("deletes comments from code", (t) => {
-  t.equal(
+test("deletes comments from code", () => {
+  equal(
     `zzz <!--[if (gte mso 9)|(IE)]>\t<![endif]--> yyy <!-- does not touch this -->`.replace(
       emptyCondCommentRegex(),
       ""
@@ -123,5 +123,6 @@ tap.test("deletes comments from code", (t) => {
     "zzz  yyy <!-- does not touch this -->",
     "03"
   );
-  t.end();
 });
+
+test.run();

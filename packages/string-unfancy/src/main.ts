@@ -1,7 +1,9 @@
 /* eslint quote-props:0 */
 
 import he from "he";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 function existy(x: any): boolean {
@@ -13,7 +15,7 @@ interface UnknownValueObj {
 }
 
 function unfancy(str: string): string {
-  const CHARS: UnknownValueObj = {
+  let CHARS: UnknownValueObj = {
     "\u00B4": "'",
     ʻ: "'",
     ʼ: "'",
@@ -54,7 +56,7 @@ function unfancy(str: string): string {
   }
   for (let i = 0, len = res.length; i < len; i++) {
     if (Object.prototype.hasOwnProperty.call(CHARS, res[i])) {
-      res = res.slice(0, i) + CHARS[res[i]] + res.slice(i + 1);
+      res = `${res.slice(0, i)}${CHARS[res[i]]}${res.slice(i + 1)}`;
     }
   }
   return res;

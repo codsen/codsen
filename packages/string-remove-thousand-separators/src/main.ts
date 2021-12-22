@@ -1,7 +1,9 @@
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import trimChars from "lodash.trim";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Opts {
@@ -13,7 +15,7 @@ interface Opts {
 function remSep(str: string, originalOpts?: Partial<Opts>): string {
   // vars
   let allOK = true; // used to bail somewhere down the line. It's a killswitch.
-  const knownSeparatorsArray = [".", ",", "'", " "];
+  let knownSeparatorsArray = [".", ",", "'", " "];
   let firstSeparator;
 
   // validation
@@ -37,15 +39,15 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
   }
 
   // prep opts
-  const defaults: Opts = {
+  let defaults: Opts = {
     removeThousandSeparatorsFromNumbers: true,
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false,
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
 
   // trim whitespace and wrapping double quotes:
-  const res = trimChars(str.trim(), '"');
+  let res = trimChars(str.trim(), '"');
 
   // end sooner if it's an empty string:
   if (res === "") {
@@ -53,7 +55,7 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
   }
 
   // we'll manage the TO-DELETE string slice ranges using this:
-  const rangesToDelete = new Ranges();
+  let rangesToDelete = new Ranges();
 
   // traverse the string indexes
   for (let i = 0, len = res.length; i < len; i++) {

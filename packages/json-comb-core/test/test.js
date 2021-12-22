@@ -1,5 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+import { equal, ok, throws, not, unreachable } from "uvu/assert";
 import pMap from "p-map";
+
 import {
   getKeysetSync,
   getKeyset,
@@ -11,7 +13,7 @@ import {
 } from "../dist/json-comb-core.esm.js";
 
 function prepArraySync(arr) {
-  const keySet = getKeysetSync(arr);
+  let keySet = getKeysetSync(arr);
   return arr.map((obj) => enforceKeysetSync(obj, keySet));
 }
 
@@ -29,51 +31,76 @@ function makePromise(arr) {
 // 01. getKeysetSync()
 // -----------------------------------------------------------------------------
 
-tap.test("01 - getKeysetSync() - throws when there's no input", (t) => {
-  t.throws(() => {
+test("01 - getKeysetSync() - throws when there's no input", () => {
+  throws(() => {
     getKeysetSync();
   }, "01");
-  t.end();
 });
 
-tap.test("02 - getKeysetSync() - throws when input is not an array", (t) => {
-  t.throws(() => {
+test("02 - getKeysetSync() - throws when input is not an array", () => {
+  throws(() => {
     getKeysetSync("aa");
   }, "02");
-  t.end();
 });
 
-tap.test("03 - getKeysetSync() - throws when input array is empty", (t) => {
-  t.throws(() => {
+test("03 - getKeysetSync() - throws when input array is empty", () => {
+  throws(() => {
     getKeysetSync([]);
   }, "03");
-  t.end();
 });
 
-tap.test(
-  "04 - getKeysetSync() - throws when input array contains not only plain objects",
-  (t) => {
-    t.throws(() => {
-      getKeysetSync([
-        {
-          a: "a",
-          b: "b",
-        },
-        {
-          a: "a",
-        },
-        "zzzz",
-      ]);
-    }, "04");
-    t.end();
-  }
-);
+test("04 - getKeysetSync() - throws when input array contains not only plain objects", () => {
+  throws(() => {
+    getKeysetSync([
+      {
+        a: "a",
+        b: "b",
+      },
+      {
+        a: "a",
+      },
+      "zzzz",
+    ]);
+  }, "04");
+});
 
-tap.test(
-  "05 - getKeysetSync() - calculates - three objects - default placeholder",
-  (t) => {
-    t.strictSame(
-      getKeysetSync([
+test("05 - getKeysetSync() - calculates - three objects - default placeholder", () => {
+  equal(
+    getKeysetSync([
+      {
+        a: "a",
+        b: "c",
+        c: {
+          d: "d",
+          e: "e",
+        },
+      },
+      {
+        a: "a",
+      },
+      {
+        c: {
+          f: "f",
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: false,
+      c: {
+        d: false,
+        e: false,
+        f: false,
+      },
+    },
+    "05"
+  );
+});
+
+test("06 - getKeysetSync() - calculates - three objects - custom placeholder", () => {
+  equal(
+    getKeysetSync(
+      [
         {
           a: "a",
           b: "c",
@@ -90,140 +117,96 @@ tap.test(
             f: "f",
           },
         },
-      ]),
-      {
-        a: false,
-        b: false,
-        c: {
-          d: false,
-          e: false,
-          f: false,
-        },
+      ],
+      { placeholder: true }
+    ),
+    {
+      a: true,
+      b: true,
+      c: {
+        d: true,
+        e: true,
+        f: true,
       },
-      "05"
-    );
-    t.end();
-  }
-);
+    },
+    "06.01"
+  );
+  equal(
+    getKeysetSync(
+      [
+        {
+          a: "a",
+          b: "c",
+          c: {
+            d: "d",
+            e: "e",
+          },
+        },
+        {
+          a: "a",
+        },
+        {
+          c: {
+            f: "f",
+          },
+        },
+      ],
+      { placeholder: "" }
+    ),
+    {
+      a: "",
+      b: "",
+      c: {
+        d: "",
+        e: "",
+        f: "",
+      },
+    },
+    "06.02"
+  );
+  equal(
+    getKeysetSync(
+      [
+        {
+          a: "a",
+          b: "c",
+          c: {
+            d: "d",
+            e: "e",
+          },
+        },
+        {
+          a: "a",
+        },
+        {
+          c: {
+            f: "f",
+          },
+        },
+      ],
+      { placeholder: { a: "a" } }
+    ),
+    {
+      a: { a: "a" },
+      b: { a: "a" },
+      c: {
+        d: { a: "a" },
+        e: { a: "a" },
+        f: { a: "a" },
+      },
+    },
+    "06.03"
+  );
+});
 
-tap.test(
-  "06 - getKeysetSync() - calculates - three objects - custom placeholder",
-  (t) => {
-    t.strictSame(
-      getKeysetSync(
-        [
-          {
-            a: "a",
-            b: "c",
-            c: {
-              d: "d",
-              e: "e",
-            },
-          },
-          {
-            a: "a",
-          },
-          {
-            c: {
-              f: "f",
-            },
-          },
-        ],
-        { placeholder: true }
-      ),
-      {
-        a: true,
-        b: true,
-        c: {
-          d: true,
-          e: true,
-          f: true,
-        },
-      },
-      "06.01"
-    );
-    t.strictSame(
-      getKeysetSync(
-        [
-          {
-            a: "a",
-            b: "c",
-            c: {
-              d: "d",
-              e: "e",
-            },
-          },
-          {
-            a: "a",
-          },
-          {
-            c: {
-              f: "f",
-            },
-          },
-        ],
-        { placeholder: "" }
-      ),
-      {
-        a: "",
-        b: "",
-        c: {
-          d: "",
-          e: "",
-          f: "",
-        },
-      },
-      "06.02"
-    );
-    t.strictSame(
-      getKeysetSync(
-        [
-          {
-            a: "a",
-            b: "c",
-            c: {
-              d: "d",
-              e: "e",
-            },
-          },
-          {
-            a: "a",
-          },
-          {
-            c: {
-              f: "f",
-            },
-          },
-        ],
-        { placeholder: { a: "a" } }
-      ),
-      {
-        a: { a: "a" },
-        b: { a: "a" },
-        c: {
-          d: { a: "a" },
-          e: { a: "a" },
-          f: { a: "a" },
-        },
-      },
-      "06.03"
-    );
-    t.end();
-  }
-);
+test("07 - getKeysetSync() - settings argument is not a plain object - throws", () => {
+  throws(() => {
+    getKeysetSync([{ a: "a" }, { b: "b" }], "zzz");
+  }, /THROW_ID_24/);
+});
 
-tap.test(
-  "07 - getKeysetSync() - settings argument is not a plain object - throws",
-  (t) => {
-    t.throws(() => {
-      getKeysetSync([{ a: "a" }, { b: "b" }], "zzz");
-    }, /THROW_ID_24/);
-    t.end();
-  }
-);
-
-tap.test("08 - getKeysetSync() - multiple levels of nested arrays", (t) => {
-  t.strictSame(
+test("08 - getKeysetSync() - multiple levels of nested arrays", () => {
+  equal(
     getKeysetSync([
       {
         key2: [
@@ -265,11 +248,10 @@ tap.test("08 - getKeysetSync() - multiple levels of nested arrays", (t) => {
     },
     "08"
   );
-  t.end();
 });
 
-tap.test("09 - getKeysetSync() - objects that are directly in values", (t) => {
-  t.strictSame(
+test("09 - getKeysetSync() - objects that are directly in values", () => {
+  equal(
     getKeysetSync([
       {
         a: {
@@ -299,7 +281,7 @@ tap.test("09 - getKeysetSync() - objects that are directly in values", (t) => {
     },
     "09.01"
   );
-  t.strictSame(
+  equal(
     getKeysetSync([
       {
         a: {
@@ -329,73 +311,64 @@ tap.test("09 - getKeysetSync() - objects that are directly in values", (t) => {
     },
     "09.02"
   );
-  t.end();
 });
 
-tap.test(
-  "10 - getKeysetSync() - deeper level arrays containing only strings",
-  (t) => {
-    t.strictSame(
-      getKeysetSync([
-        {
-          a: false,
-          b: {
-            c: {
-              d: ["eee"],
-            },
-          },
-        },
-        {
-          a: false,
-        },
-      ]),
+test("10 - getKeysetSync() - deeper level arrays containing only strings", () => {
+  equal(
+    getKeysetSync([
       {
         a: false,
         b: {
           c: {
-            d: [],
+            d: ["eee"],
           },
         },
       },
-      "10"
-    );
-    t.end();
-  }
-);
+      {
+        a: false,
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [],
+        },
+      },
+    },
+    "10"
+  );
+});
 
-tap.test(
-  "11 - getKeysetSync() - deeper level array with string vs false",
-  (t) => {
-    t.strictSame(
-      getKeysetSync([
-        {
-          a: false,
-          b: {
-            c: {
-              d: ["eee"],
-            },
-          },
-        },
-        {
-          a: false,
-        },
-      ]),
+test("11 - getKeysetSync() - deeper level array with string vs false", () => {
+  equal(
+    getKeysetSync([
       {
         a: false,
         b: {
           c: {
-            d: [],
+            d: ["eee"],
           },
         },
       },
-      "11 - if arrays contain any strings, result is empty array"
-    );
-    t.end();
-  }
-);
+      {
+        a: false,
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [],
+        },
+      },
+    },
+    "11 - if arrays contain any strings, result is empty array"
+  );
+});
 
-tap.test("12 - getKeysetSync() - two deeper level arrays with strings", (t) => {
-  t.strictSame(
+test("12 - getKeysetSync() - two deeper level arrays with strings", () => {
+  equal(
     getKeysetSync([
       {
         a: false,
@@ -423,181 +396,172 @@ tap.test("12 - getKeysetSync() - two deeper level arrays with strings", (t) => {
     },
     "12 - if arrays contain any strings, result is empty array"
   );
-  t.end();
 });
 
-tap.test(
-  "13 - getKeysetSync() - two deeper level arrays with mixed contents",
-  (t) => {
-    t.strictSame(
-      getKeysetSync([
-        {
-          a: false,
-          b: {
-            c: {
-              d: ["eee"],
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: [{ a: "zzz" }],
-            },
-          },
-        },
-      ]),
+test("13 - getKeysetSync() - two deeper level arrays with mixed contents", () => {
+  equal(
+    getKeysetSync([
       {
         a: false,
         b: {
           c: {
-            d: [{ a: false }],
+            d: ["eee"],
           },
         },
       },
-      "13 - plain object vs string"
-    );
-    t.end();
-  }
-);
+      {
+        b: {
+          c: {
+            d: [{ a: "zzz" }],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ a: false }],
+        },
+      },
+    },
+    "13 - plain object vs string"
+  );
+});
 
-tap.test(
-  "14 - getKeysetSync() - two deeper level arrays with plain objects",
-  (t) => {
-    t.strictSame(
-      getKeysetSync([
-        {
-          a: false,
-          b: {
-            c: {
-              d: [{ a: "aaa" }],
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: [{ b: "bbb", c: "ccc" }],
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: false,
-            },
-          },
-        },
-        {
-          b: {
-            c: false,
-          },
-        },
-      ]),
+test("14 - getKeysetSync() - two deeper level arrays with plain objects", () => {
+  equal(
+    getKeysetSync([
       {
         a: false,
         b: {
           c: {
-            d: [{ a: false, b: false, c: false }],
+            d: [{ a: "aaa" }],
           },
         },
       },
-      "14.01 - object vs object"
-    );
-    t.strictSame(
-      getKeysetSync([
-        {
-          a: false,
-          b: {
-            c: {
-              d: [],
-            },
+      {
+        b: {
+          c: {
+            d: [{ b: "bbb", c: "ccc" }],
           },
         },
-        {
-          b: {
-            c: {
-              d: [{ b: "bbb", c: "ccc" }],
-            },
+      },
+      {
+        b: {
+          c: {
+            d: false,
           },
         },
-      ]),
+      },
+      {
+        b: {
+          c: false,
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ a: false, b: false, c: false }],
+        },
+      },
+    },
+    "14.01 - object vs object"
+  );
+  equal(
+    getKeysetSync([
       {
         a: false,
         b: {
           c: {
-            d: [{ b: false, c: false }],
+            d: [],
           },
         },
       },
-      "14.02 - object vs object"
-    );
-    t.strictSame(
-      getKeysetSync([
-        {
-          a: false,
-          b: {
-            c: {
-              d: false,
-            },
+      {
+        b: {
+          c: {
+            d: [{ b: "bbb", c: "ccc" }],
           },
         },
-        {
-          b: {
-            c: {
-              d: [{ b: "bbb", c: "ccc" }],
-            },
-          },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ b: false, c: false }],
         },
-      ]),
+      },
+    },
+    "14.02 - object vs object"
+  );
+  equal(
+    getKeysetSync([
       {
         a: false,
         b: {
           c: {
-            d: [{ b: false, c: false }],
+            d: false,
           },
         },
       },
-      "14.03 - object vs object"
-    );
-    t.strictSame(
-      getKeysetSync([
-        {
-          a: false,
-          b: {
-            c: {
-              d: "text",
-            },
+      {
+        b: {
+          c: {
+            d: [{ b: "bbb", c: "ccc" }],
           },
         },
-        {
-          b: {
-            c: {
-              d: [{ b: "bbb", c: "ccc" }],
-            },
-          },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ b: false, c: false }],
         },
-      ]),
+      },
+    },
+    "14.03 - object vs object"
+  );
+  equal(
+    getKeysetSync([
       {
         a: false,
         b: {
           c: {
-            d: [{ b: false, c: false }],
+            d: "text",
           },
         },
       },
-      "14.04 - object vs object"
-    );
-    t.end();
-  }
-);
+      {
+        b: {
+          c: {
+            d: [{ b: "bbb", c: "ccc" }],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ b: false, c: false }],
+        },
+      },
+    },
+    "14.04 - object vs object"
+  );
+});
 
 // -----------------------------------------------------------------------------
 // 02. enforceKeysetSync()
 // -----------------------------------------------------------------------------
 
-tap.test("15 - enforceKeysetSync() - enforces a simple schema", (t) => {
-  const schema = getKeysetSync([
+test("15 - enforceKeysetSync() - enforces a simple schema", () => {
+  let schema = getKeysetSync([
     {
       a: "aaa",
       b: "bbb",
@@ -606,7 +570,7 @@ tap.test("15 - enforceKeysetSync() - enforces a simple schema", (t) => {
       a: "ccc",
     },
   ]);
-  t.strictSame(
+  equal(
     enforceKeysetSync(
       {
         a: "ccc",
@@ -619,11 +583,10 @@ tap.test("15 - enforceKeysetSync() - enforces a simple schema", (t) => {
     },
     "15"
   );
-  t.end();
 });
 
-tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
-  const obj1 = {
+test("16 - enforceKeysetSync() - enforces a more complex schema", () => {
+  let obj1 = {
     b: [
       {
         c: "ccc",
@@ -632,15 +595,15 @@ tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
     ],
     a: "aaa",
   };
-  const obj2 = {
+  let obj2 = {
     a: "ccc",
     e: "eee",
   };
-  const obj3 = {
+  let obj3 = {
     a: "zzz",
   };
-  const schema = getKeysetSync([obj1, obj2, obj3]);
-  t.strictSame(
+  let schema = getKeysetSync([obj1, obj2, obj3]);
+  equal(
     schema,
     {
       a: false,
@@ -654,7 +617,7 @@ tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
     },
     "16.01 - .getKeysetSync"
   );
-  t.strictSame(
+  equal(
     enforceKeysetSync(obj1, schema),
     {
       a: "aaa",
@@ -668,7 +631,7 @@ tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
     },
     "16.02 - .enforceKeysetSync"
   );
-  t.strictSame(
+  equal(
     enforceKeysetSync(obj2, schema),
     {
       a: "ccc",
@@ -682,7 +645,7 @@ tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
     },
     "16.03 - .enforceKeysetSync"
   );
-  t.strictSame(
+  equal(
     enforceKeysetSync(obj3, schema),
     {
       a: "zzz",
@@ -696,62 +659,57 @@ tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
     },
     "16.04 - .enforceKeysetSync"
   );
-  t.end();
 });
 
-tap.test(
-  "17 - enforceKeysetSync() - enforces a schema involving arrays",
-  (t) => {
-    const obj1 = {
+test("17 - enforceKeysetSync() - enforces a schema involving arrays", () => {
+  let obj1 = {
+    a: [
+      {
+        b: "b",
+      },
+    ],
+  };
+  let obj2 = {
+    a: false,
+  };
+  let schema = getKeysetSync([obj1, obj2]);
+  equal(
+    schema,
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    "17.01 - .getKeysetSync"
+  );
+  equal(
+    enforceKeysetSync(obj1, schema),
+    {
       a: [
         {
           b: "b",
         },
       ],
-    };
-    const obj2 = {
-      a: false,
-    };
-    const schema = getKeysetSync([obj1, obj2]);
-    t.strictSame(
-      schema,
-      {
-        a: [
-          {
-            b: false,
-          },
-        ],
-      },
-      "17.01 - .getKeysetSync"
-    );
-    t.strictSame(
-      enforceKeysetSync(obj1, schema),
-      {
-        a: [
-          {
-            b: "b",
-          },
-        ],
-      },
-      "17.02 - .enforceKeysetSync"
-    );
-    t.strictSame(
-      enforceKeysetSync(obj2, schema),
-      {
-        a: [
-          {
-            b: false,
-          },
-        ],
-      },
-      "17.03 - .enforceKeysetSync"
-    );
-    t.end();
-  }
-);
+    },
+    "17.02 - .enforceKeysetSync"
+  );
+  equal(
+    enforceKeysetSync(obj2, schema),
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    "17.03 - .enforceKeysetSync"
+  );
+});
 
-tap.test("18 - enforceKeysetSync() - another set involving arrays", (t) => {
-  t.strictSame(
+test("18 - enforceKeysetSync() - another set involving arrays", () => {
+  equal(
     prepArraySync([
       {
         c: "c val",
@@ -790,11 +748,10 @@ tap.test("18 - enforceKeysetSync() - another set involving arrays", (t) => {
     ],
     "18"
   );
-  t.end();
 });
 
-tap.test("19 - enforceKeysetSync() - deep-nested arrays", (t) => {
-  t.strictSame(
+test("19 - enforceKeysetSync() - deep-nested arrays", () => {
+  equal(
     prepArraySync([
       {
         a: [
@@ -897,62 +854,57 @@ tap.test("19 - enforceKeysetSync() - deep-nested arrays", (t) => {
     ],
     "19"
   );
-  t.end();
 });
 
-tap.test(
-  "20 - enforceKeysetSync() - enforces a schema involving arrays",
-  (t) => {
-    const obj1 = {
+test("20 - enforceKeysetSync() - enforces a schema involving arrays", () => {
+  let obj1 = {
+    a: [
+      {
+        b: "b",
+      },
+    ],
+  };
+  let obj2 = {
+    a: "a",
+  };
+  let schema = getKeysetSync([obj1, obj2]);
+  equal(
+    schema,
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    "20.01 - .getKeysetSync"
+  );
+  equal(
+    enforceKeysetSync(obj1, schema),
+    {
       a: [
         {
           b: "b",
         },
       ],
-    };
-    const obj2 = {
-      a: "a",
-    };
-    const schema = getKeysetSync([obj1, obj2]);
-    t.strictSame(
-      schema,
-      {
-        a: [
-          {
-            b: false,
-          },
-        ],
-      },
-      "20.01 - .getKeysetSync"
-    );
-    t.strictSame(
-      enforceKeysetSync(obj1, schema),
-      {
-        a: [
-          {
-            b: "b",
-          },
-        ],
-      },
-      "20.02 - .enforceKeysetSync"
-    );
-    t.strictSame(
-      enforceKeysetSync(obj2, schema),
-      {
-        a: [
-          {
-            b: false,
-          },
-        ],
-      },
-      "20.03 - .enforceKeysetSync"
-    );
-    t.end();
-  }
-);
+    },
+    "20.02 - .enforceKeysetSync"
+  );
+  equal(
+    enforceKeysetSync(obj2, schema),
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    "20.03 - .enforceKeysetSync"
+  );
+});
 
-tap.test("21 - enforceKeysetSync() - multiple objects within an array", (t) => {
-  t.strictSame(
+test("21 - enforceKeysetSync() - multiple objects within an array", () => {
+  equal(
     prepArraySync([
       {
         a: "a",
@@ -1016,11 +968,10 @@ tap.test("21 - enforceKeysetSync() - multiple objects within an array", (t) => {
     ],
     "21"
   );
-  t.end();
 });
 
-tap.test("22 - enforceKeysetSync() - multiple levels of arrays", (t) => {
-  const obj1 = {
+test("22 - enforceKeysetSync() - multiple levels of arrays", () => {
+  let obj1 = {
     b: [
       {
         e: [
@@ -1037,11 +988,11 @@ tap.test("22 - enforceKeysetSync() - multiple levels of arrays", (t) => {
     ],
     a: "aaa",
   };
-  const obj2 = {
+  let obj2 = {
     c: "ccc",
     a: false,
   };
-  t.strictSame(
+  equal(
     prepArraySync([obj1, obj2]),
     [
       {
@@ -1083,11 +1034,10 @@ tap.test("22 - enforceKeysetSync() - multiple levels of arrays", (t) => {
     ],
     "22"
   );
-  t.end();
 });
 
-tap.test("23 - enforceKeysetSync() - array vs string clashes", (t) => {
-  t.strictSame(
+test("23 - enforceKeysetSync() - array vs string clashes", () => {
+  equal(
     prepArraySync([
       {
         a: "aaa",
@@ -1118,48 +1068,34 @@ tap.test("23 - enforceKeysetSync() - array vs string clashes", (t) => {
     ],
     "23"
   );
-  t.end();
 });
 
-tap.test("24 - enforceKeysetSync() - all inputs missing - throws", (t) => {
-  t.throws(() => {
+test("24 - enforceKeysetSync() - all inputs missing - throws", () => {
+  throws(() => {
     enforceKeysetSync();
   }, "24");
-  t.end();
 });
 
-tap.test(
-  "25 - enforceKeysetSync() - second input arg missing - throws",
-  (t) => {
-    t.throws(() => {
-      enforceKeysetSync({ a: "a" });
-    }, "25");
-    t.end();
-  }
-);
+test("25 - enforceKeysetSync() - second input arg missing - throws", () => {
+  throws(() => {
+    enforceKeysetSync({ a: "a" });
+  }, "25");
+});
 
-tap.test(
-  "26 - enforceKeysetSync() - second input arg is not a plain obj - throws",
-  (t) => {
-    t.throws(() => {
-      enforceKeysetSync({ a: "a" }, "zzz");
-    }, "26");
-    t.end();
-  }
-);
+test("26 - enforceKeysetSync() - second input arg is not a plain obj - throws", () => {
+  throws(() => {
+    enforceKeysetSync({ a: "a" }, "zzz");
+  }, "26");
+});
 
-tap.test(
-  "27 - enforceKeysetSync() - first input arg is not a plain obj - throws",
-  (t) => {
-    t.throws(() => {
-      enforceKeysetSync("zzz", "zzz");
-    }, "27");
-    t.end();
-  }
-);
+test("27 - enforceKeysetSync() - first input arg is not a plain obj - throws", () => {
+  throws(() => {
+    enforceKeysetSync("zzz", "zzz");
+  }, "27");
+});
 
-tap.test("28 - enforceKeysetSync() - array over empty array", (t) => {
-  const obj1 = {
+test("28 - enforceKeysetSync() - array over empty array", () => {
+  let obj1 = {
     a: [
       {
         d: "d",
@@ -1170,12 +1106,12 @@ tap.test("28 - enforceKeysetSync() - array over empty array", (t) => {
     ],
     c: "c",
   };
-  const obj2 = {
+  let obj2 = {
     a: [],
     b: "b",
   };
-  const schema = getKeysetSync([obj1, obj2]);
-  t.strictSame(
+  let schema = getKeysetSync([obj1, obj2]);
+  equal(
     schema,
     {
       a: [
@@ -1189,7 +1125,7 @@ tap.test("28 - enforceKeysetSync() - array over empty array", (t) => {
     },
     "28.01"
   );
-  t.strictSame(
+  equal(
     enforceKeysetSync(obj1, schema),
     {
       a: [
@@ -1207,7 +1143,7 @@ tap.test("28 - enforceKeysetSync() - array over empty array", (t) => {
     },
     "28.02"
   );
-  t.strictSame(
+  equal(
     enforceKeysetSync(obj2, schema),
     {
       a: [
@@ -1221,11 +1157,10 @@ tap.test("28 - enforceKeysetSync() - array over empty array", (t) => {
     },
     "28.03"
   );
-  t.end();
 });
 
-tap.test("29 - enforceKeysetSync() - opts", (t) => {
-  const schema = getKeysetSync([
+test("29 - enforceKeysetSync() - opts", () => {
+  let schema = getKeysetSync([
     {
       a: "aaa",
       b: { c: "ccc" },
@@ -1235,7 +1170,7 @@ tap.test("29 - enforceKeysetSync() - opts", (t) => {
       b: false,
     },
   ]);
-  t.strictSame(
+  equal(
     enforceKeysetSync(
       {
         a: "zzz",
@@ -1252,11 +1187,10 @@ tap.test("29 - enforceKeysetSync() - opts", (t) => {
     },
     "29"
   );
-  t.end();
 });
 
-tap.test("30 - enforceKeysetSync() - opts", (t) => {
-  const schema = getKeysetSync([
+test("30 - enforceKeysetSync() - opts", () => {
+  let schema = getKeysetSync([
     {
       a: "aaa",
       b: { c: "ccc" },
@@ -1266,7 +1200,7 @@ tap.test("30 - enforceKeysetSync() - opts", (t) => {
       b: false,
     },
   ]);
-  t.strictSame(
+  equal(
     enforceKeysetSync(
       {
         a: "zzz",
@@ -1282,11 +1216,10 @@ tap.test("30 - enforceKeysetSync() - opts", (t) => {
     },
     "30 - opts-targeted key is absent"
   );
-  t.end();
 });
 
-tap.test("31 - enforceKeysetSync() - opts off", (t) => {
-  const schema = getKeysetSync([
+test("31 - enforceKeysetSync() - opts off", () => {
+  let schema = getKeysetSync([
     {
       a: "aaa",
       b: { c: "ccc" },
@@ -1296,7 +1229,7 @@ tap.test("31 - enforceKeysetSync() - opts off", (t) => {
       b: false,
     },
   ]);
-  t.strictSame(
+  equal(
     enforceKeysetSync(
       {
         a: "zzz",
@@ -1312,32 +1245,27 @@ tap.test("31 - enforceKeysetSync() - opts off", (t) => {
     },
     "31"
   );
-  t.end();
 });
 
-tap.test(
-  "32 - enforceKeysetSync() - opts.doNotFillThesePathsIfTheyContainPlaceholders is wrong",
-  (t) => {
-    t.throws(() => {
-      enforceKeysetSync(
-        { a: "a" },
-        { a: "a", b: "b" },
-        { doNotFillThesePathsIfTheyContainPlaceholders: 1 }
-      );
-    }, "32.01");
-    t.throws(() => {
-      enforceKeysetSync(
-        { a: "a" },
-        { a: "a", b: "b" },
-        { doNotFillThesePathsIfTheyContainPlaceholders: [1] }
-      );
-    }, "32.02");
-    t.end();
-  }
-);
+test("32 - enforceKeysetSync() - opts.doNotFillThesePathsIfTheyContainPlaceholders is wrong", () => {
+  throws(() => {
+    enforceKeysetSync(
+      { a: "a" },
+      { a: "a", b: "b" },
+      { doNotFillThesePathsIfTheyContainPlaceholders: 1 }
+    );
+  }, "32.01");
+  throws(() => {
+    enforceKeysetSync(
+      { a: "a" },
+      { a: "a", b: "b" },
+      { doNotFillThesePathsIfTheyContainPlaceholders: [1] }
+    );
+  }, "32.02");
+});
 
-tap.test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
-  const schema = getKeysetSync([
+test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", () => {
+  let schema = getKeysetSync([
     {
       a: "aaa",
       b: "bbb",
@@ -1348,7 +1276,7 @@ tap.test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
       },
     },
   ]);
-  t.strictSame(
+  equal(
     enforceKeysetSync(
       {
         a: null,
@@ -1361,7 +1289,7 @@ tap.test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
     },
     "33.01 - default behaviour"
   );
-  t.strictSame(
+  equal(
     enforceKeysetSync(
       {
         a: null,
@@ -1377,15 +1305,14 @@ tap.test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
     },
     "33.02 - off via opts"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 03. guards against input arg mutation
 // -----------------------------------------------------------------------------
 
-tap.test("34 - enforceKeysetSync() - does not mutate the input args", (t) => {
-  const obj1 = {
+test("34 - enforceKeysetSync() - does not mutate the input args", () => {
+  let obj1 = {
     b: [
       {
         e: [
@@ -1402,13 +1329,13 @@ tap.test("34 - enforceKeysetSync() - does not mutate the input args", (t) => {
     ],
     a: "aaa",
   };
-  const obj2 = {
+  let obj2 = {
     c: "ccc",
     a: false,
   };
-  const dummyResult = enforceKeysetSync(obj2, getKeysetSync([obj1, obj2]));
-  t.pass(dummyResult); // necessary to avoid unused vars
-  t.strictSame(
+  let dummyResult = enforceKeysetSync(obj2, getKeysetSync([obj1, obj2]));
+  ok(dummyResult); // necessary to avoid unused vars
+  equal(
     obj2,
     {
       c: "ccc",
@@ -1416,15 +1343,14 @@ tap.test("34 - enforceKeysetSync() - does not mutate the input args", (t) => {
     },
     "34.01"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 04. noNewKeysSync()
 // -----------------------------------------------------------------------------
 
-tap.test("35 - noNewKeysSync() - BAU", (t) => {
-  t.strictSame(
+test("35 - noNewKeysSync() - BAU", () => {
+  equal(
     noNewKeysSync(
       {
         a: "a",
@@ -1439,7 +1365,7 @@ tap.test("35 - noNewKeysSync() - BAU", (t) => {
     [],
     "35.01 - no new keys"
   );
-  t.strictSame(
+  equal(
     noNewKeysSync(
       {
         a: "a",
@@ -1454,11 +1380,10 @@ tap.test("35 - noNewKeysSync() - BAU", (t) => {
     ["b"],
     "35.02 - new key, b"
   );
-  t.end();
 });
 
-tap.test("36 - noNewKeysSync() - objects within arrays within objects", (t) => {
-  t.strictSame(
+test("36 - noNewKeysSync() - objects within arrays within objects", () => {
+  equal(
     noNewKeysSync(
       {
         z: [
@@ -1492,7 +1417,7 @@ tap.test("36 - noNewKeysSync() - objects within arrays within objects", (t) => {
     [],
     "36.01 - same key set, just values differ"
   );
-  t.strictSame(
+  equal(
     noNewKeysSync(
       {
         z: [
@@ -1524,7 +1449,7 @@ tap.test("36 - noNewKeysSync() - objects within arrays within objects", (t) => {
     [],
     "36.02 - less keys"
   );
-  t.strictSame(
+  equal(
     noNewKeysSync(
       {
         z: [
@@ -1556,34 +1481,32 @@ tap.test("36 - noNewKeysSync() - objects within arrays within objects", (t) => {
     ["z[0].c", "z[1].c"],
     "36.03 - key c"
   );
-  t.end();
 });
 
-tap.test("37 - noNewKeysSync() - various throws", (t) => {
-  t.throws(() => {
+test("37 - noNewKeysSync() - various throws", () => {
+  throws(() => {
     noNewKeysSync();
   }, /THROW_ID_51/g);
-  t.throws(() => {
+  throws(() => {
     noNewKeysSync({ a: "a" });
   }, /THROW_ID_52/g);
-  t.throws(() => {
+  throws(() => {
     noNewKeysSync(1, { a: "a" });
   }, /THROW_ID_53/g);
-  t.throws(() => {
+  throws(() => {
     noNewKeysSync(["a"], ["a"]);
   }, /THROW_ID_53/g);
-  t.throws(() => {
+  throws(() => {
     noNewKeysSync({ a: "a" }, 1);
   }, /THROW_ID_54/g);
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 05. findUnusedSync()
 // -----------------------------------------------------------------------------
 
-tap.test("38 - findUnusedSync() - single-level plain objects", (t) => {
-  t.strictSame(
+test("38 - findUnusedSync() - single-level plain objects", () => {
+  equal(
     findUnusedSync([
       {
         a: false,
@@ -1599,7 +1522,7 @@ tap.test("38 - findUnusedSync() - single-level plain objects", (t) => {
     ["c"],
     "38.01 - running on defaults"
   );
-  t.strictSame(
+  equal(
     findUnusedSync([
       {
         a: false,
@@ -1616,11 +1539,10 @@ tap.test("38 - findUnusedSync() - single-level plain objects", (t) => {
     ["c"],
     "38.02 - not normalised is fine as well"
   );
-  t.end();
 });
 
-tap.test("39 - findUnusedSync() - multiple-level plain objects", (t) => {
-  t.strictSame(
+test("39 - findUnusedSync() - multiple-level plain objects", () => {
+  equal(
     findUnusedSync([
       {
         a: [
@@ -1658,7 +1580,7 @@ tap.test("39 - findUnusedSync() - multiple-level plain objects", (t) => {
     ["c", "a[0].l"],
     "39.01 - multiple levels, two objects, two unused keys, defaults"
   );
-  t.strictSame(
+  equal(
     findUnusedSync([
       {
         a: [
@@ -1698,11 +1620,10 @@ tap.test("39 - findUnusedSync() - multiple-level plain objects", (t) => {
     ["c", "a[0].l"],
     "39.02 - not normalised, see third and fourth args, not normalised objects"
   );
-  t.end();
 });
 
-tap.test("40 - findUnusedSync() - double-nested arrays", (t) => {
-  t.strictSame(
+test("40 - findUnusedSync() - double-nested arrays", () => {
+  equal(
     findUnusedSync([
       {
         a: [
@@ -1744,7 +1665,7 @@ tap.test("40 - findUnusedSync() - double-nested arrays", (t) => {
     ["c", "a[0][0].l", "a[0][1].k"],
     "40.01"
   );
-  t.strictSame(
+  equal(
     findUnusedSync([
       {
         a: [
@@ -1789,31 +1710,28 @@ tap.test("40 - findUnusedSync() - double-nested arrays", (t) => {
     ["c", "a[0][0].l", "a[0][1].k"],
     "40.02 - value false vs values as arrays - in the context of unused-ness"
   );
-  t.end();
 });
 
-tap.test("41 - findUnusedSync() - works on empty arrays", (t) => {
-  t.strictSame(findUnusedSync([]), [], "41.01");
-  t.strictSame(findUnusedSync([{}]), [], "41.02");
-  t.strictSame(findUnusedSync([{}, {}]), [], "41.03");
-  t.end();
+test("41 - findUnusedSync() - works on empty arrays", () => {
+  equal(findUnusedSync([]), [], "41.01");
+  equal(findUnusedSync([{}]), [], "41.02");
+  equal(findUnusedSync([{}, {}]), [], "41.03");
 });
 
-tap.test("42 - findUnusedSync() - various throws", (t) => {
-  t.throws(() => {
+test("42 - findUnusedSync() - various throws", () => {
+  throws(() => {
     findUnusedSync(1, { placeholder: false });
   }, "42.01");
-  t.doesNotThrow(() => {
+  not.throws(() => {
     findUnusedSync([1, 2, 3]);
   }, "42.02");
-  t.throws(() => {
+  throws(() => {
     findUnusedSync([{ a: "a" }, { a: "b" }], 1);
   }, "42.03");
-  t.end();
 });
 
-tap.test("43 - findUnusedSync() - case of empty array within an array", (t) => {
-  t.strictSame(
+test("43 - findUnusedSync() - case of empty array within an array", () => {
+  equal(
     findUnusedSync([
       {
         a: [[]],
@@ -1829,7 +1747,7 @@ tap.test("43 - findUnusedSync() - case of empty array within an array", (t) => {
     ["c"],
     "43.01 - normal"
   );
-  t.strictSame(
+  equal(
     findUnusedSync([
       {
         a: [[]],
@@ -1847,11 +1765,10 @@ tap.test("43 - findUnusedSync() - case of empty array within an array", (t) => {
     ["c"],
     "43.02 - not normalised"
   );
-  t.end();
 });
 
-tap.test("44 - findUnusedSync() - case of empty array within an array", (t) => {
-  t.strictSame(
+test("44 - findUnusedSync() - case of empty array within an array", () => {
+  equal(
     findUnusedSync([
       {
         a: [[]],
@@ -1862,7 +1779,7 @@ tap.test("44 - findUnusedSync() - case of empty array within an array", (t) => {
     [],
     "44.01 - normalised"
   );
-  t.strictSame(
+  equal(
     findUnusedSync([
       {
         a: [[]],
@@ -1875,449 +1792,428 @@ tap.test("44 - findUnusedSync() - case of empty array within an array", (t) => {
     ["c"],
     "44.02 - not normalised. Now that there are three inputs (even two of them empty-ish) result is the key c"
   );
-  t.end();
 });
 
-tap.test(
-  "45 - findUnusedSync() - objects containing objects (2 in total)",
-  (t) => {
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: {
-            x: false,
-            y: "y",
-          },
-          b: "bbb1",
-          c: false,
+test("45 - findUnusedSync() - objects containing objects (2 in total)", () => {
+  equal(
+    findUnusedSync([
+      {
+        a: {
+          x: false,
+          y: "y",
         },
-        {
-          a: {
-            x: false,
-            y: "z",
-          },
-          b: "bbb2",
-          c: false,
+        b: "bbb1",
+        c: false,
+      },
+      {
+        a: {
+          x: false,
+          y: "z",
         },
-      ]),
-      ["c", "a.x"],
-      "45.01"
-    );
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: {
-            x: false,
-            y: "y",
-          },
-          b: "bbb1",
-          c: false,
-          d: {
-            y: "y",
-            x: false,
-          },
-          e: false,
+        b: "bbb2",
+        c: false,
+      },
+    ]),
+    ["c", "a.x"],
+    "45.01"
+  );
+  equal(
+    findUnusedSync([
+      {
+        a: {
+          x: false,
+          y: "y",
         },
-        {
-          a: {
-            x: false,
-            y: "z",
-          },
-          b: "bbb2",
-          c: false,
-          d: {
-            y: "y",
-            x: false,
-          },
-          e: false,
+        b: "bbb1",
+        c: false,
+        d: {
+          y: "y",
+          x: false,
         },
-      ]),
-      ["c", "e", "a.x", "d.x"],
-      "45.02"
-    );
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: {
-            x: false,
-            y: "y",
-          },
-          b: "bbb1",
-          c: false,
-          d: {
-            y: "y",
-            x: false,
-          },
-          e: false,
+        e: false,
+      },
+      {
+        a: {
+          x: false,
+          y: "z",
         },
-        {
-          a: {
-            x: false,
-            y: "z",
-          },
-          b: "bbb2",
-          c: false,
-          d: {
-            y: "y",
-            x: false,
-          },
-          e: false,
+        b: "bbb2",
+        c: false,
+        d: {
+          y: "y",
+          x: false,
         },
-        { c: false },
-      ]),
-      ["c", "e", "a.x", "d.x"],
-      "45.03 - not normalised"
-    );
-    t.end();
-  }
-);
+        e: false,
+      },
+    ]),
+    ["c", "e", "a.x", "d.x"],
+    "45.02"
+  );
+  equal(
+    findUnusedSync([
+      {
+        a: {
+          x: false,
+          y: "y",
+        },
+        b: "bbb1",
+        c: false,
+        d: {
+          y: "y",
+          x: false,
+        },
+        e: false,
+      },
+      {
+        a: {
+          x: false,
+          y: "z",
+        },
+        b: "bbb2",
+        c: false,
+        d: {
+          y: "y",
+          x: false,
+        },
+        e: false,
+      },
+      { c: false },
+    ]),
+    ["c", "e", "a.x", "d.x"],
+    "45.03 - not normalised"
+  );
+});
 
-tap.test(
-  "46 - findUnusedSync() - objects containing objects (3 in total)",
-  (t) => {
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: {
-            x: false,
-            y: "y",
-            k: {
-              l: false,
-              m: "zzz",
-            },
+test("46 - findUnusedSync() - objects containing objects (3 in total)", () => {
+  equal(
+    findUnusedSync([
+      {
+        a: {
+          x: false,
+          y: "y",
+          k: {
+            l: false,
+            m: "zzz",
           },
-          b: "bbb1",
-          c: false,
         },
-        {
-          a: {
-            x: false,
-            y: "z",
-            k: {
-              l: false,
-              m: "yyy",
-            },
+        b: "bbb1",
+        c: false,
+      },
+      {
+        a: {
+          x: false,
+          y: "z",
+          k: {
+            l: false,
+            m: "yyy",
           },
-          b: "bbb2",
-          c: false,
         },
-      ]),
-      ["c", "a.x", "a.k.l"],
-      "46.01 - normalised, on default placeholder"
-    );
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: {
-            x: false,
-            y: "y",
-            k: {
-              l: false,
-              m: "zzz",
-            },
+        b: "bbb2",
+        c: false,
+      },
+    ]),
+    ["c", "a.x", "a.k.l"],
+    "46.01 - normalised, on default placeholder"
+  );
+  equal(
+    findUnusedSync([
+      {
+        a: {
+          x: false,
+          y: "y",
+          k: {
+            l: false,
+            m: "zzz",
           },
-          b: "bbb1",
-          c: false,
         },
-        {
-          a: {
-            x: false,
-            y: "z",
-            k: {
-              l: false,
-              m: "yyy",
-            },
+        b: "bbb1",
+        c: false,
+      },
+      {
+        a: {
+          x: false,
+          y: "z",
+          k: {
+            l: false,
+            m: "yyy",
           },
-          b: "bbb2",
-          c: false,
         },
-        {},
-        { c: false },
-      ]),
-      ["c", "a.x", "a.k.l"],
-      "46.02 - not normalised, on default placeholder"
-    );
-    t.end();
-  }
-);
+        b: "bbb2",
+        c: false,
+      },
+      {},
+      { c: false },
+    ]),
+    ["c", "a.x", "a.k.l"],
+    "46.02 - not normalised, on default placeholder"
+  );
+});
 
-tap.test(
-  "47 - findUnusedSync() - objects containing objects, mixed with arrays",
-  (t) => {
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: {
-            x: false,
-            y: "y",
-            k: {
-              l: false,
-              m: "zzz",
-              p: {
-                r: [
-                  {
-                    w: false,
-                    x: "zzz",
-                  },
-                  {
-                    w: false,
-                    x: "zzz",
-                  },
-                ],
-              },
+test("47 - findUnusedSync() - objects containing objects, mixed with arrays", () => {
+  equal(
+    findUnusedSync([
+      {
+        a: {
+          x: false,
+          y: "y",
+          k: {
+            l: false,
+            m: "zzz",
+            p: {
+              r: [
+                {
+                  w: false,
+                  x: "zzz",
+                },
+                {
+                  w: false,
+                  x: "zzz",
+                },
+              ],
             },
           },
-          b: "bbb1",
-          c: false,
         },
-        {
-          a: {
-            x: false,
-            y: "z",
-            k: {
-              l: false,
-              m: false,
-              p: {
-                r: [
-                  {
-                    w: "www",
-                    x: false,
-                  },
-                  {
-                    w: "zzz",
-                    x: false,
-                  },
-                ],
-              },
+        b: "bbb1",
+        c: false,
+      },
+      {
+        a: {
+          x: false,
+          y: "z",
+          k: {
+            l: false,
+            m: false,
+            p: {
+              r: [
+                {
+                  w: "www",
+                  x: false,
+                },
+                {
+                  w: "zzz",
+                  x: false,
+                },
+              ],
             },
           },
-          b: "bbb2",
-          c: false,
         },
-      ]),
-      ["c", "a.x", "a.k.l"],
-      "47.01"
-    );
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: {
-            x: false,
-            y: "y",
-            k: {
-              l: false,
-              m: "zzz",
-              p: {
-                r: [
-                  {
-                    w: "xxx",
-                    x: false,
-                  },
-                  {
-                    w: "w2",
-                    x: false,
-                  },
-                ],
-              },
+        b: "bbb2",
+        c: false,
+      },
+    ]),
+    ["c", "a.x", "a.k.l"],
+    "47.01"
+  );
+  equal(
+    findUnusedSync([
+      {
+        a: {
+          x: false,
+          y: "y",
+          k: {
+            l: false,
+            m: "zzz",
+            p: {
+              r: [
+                {
+                  w: "xxx",
+                  x: false,
+                },
+                {
+                  w: "w2",
+                  x: false,
+                },
+              ],
             },
           },
-          b: "bbb1",
-          c: false,
         },
-        {
-          a: {
-            x: false,
-            y: "z",
-            k: {
-              l: false,
-              m: false,
-              p: {
-                r: [
-                  {
-                    w: "www",
-                    x: false,
-                  },
-                  {
-                    w: "zzz",
-                    x: false,
-                  },
-                ],
-              },
+        b: "bbb1",
+        c: false,
+      },
+      {
+        a: {
+          x: false,
+          y: "z",
+          k: {
+            l: false,
+            m: false,
+            p: {
+              r: [
+                {
+                  w: "www",
+                  x: false,
+                },
+                {
+                  w: "zzz",
+                  x: false,
+                },
+              ],
             },
           },
-          b: "bbb2",
-          c: false,
         },
-      ]),
-      ["c", "a.x", "a.k.l", "a.k.p.r[0].x"],
-      "47.02 - even deeper"
-    );
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: {
-            x: false,
-            y: "y",
-            k: {
-              l: false,
-              m: "zzz",
-              p: {
-                r: [
-                  {
-                    w: "xxx",
-                    x: false,
-                  },
-                  {
-                    w: "w2",
-                    x: false,
-                  },
-                ],
-              },
+        b: "bbb2",
+        c: false,
+      },
+    ]),
+    ["c", "a.x", "a.k.l", "a.k.p.r[0].x"],
+    "47.02 - even deeper"
+  );
+  equal(
+    findUnusedSync([
+      {
+        a: {
+          x: false,
+          y: "y",
+          k: {
+            l: false,
+            m: "zzz",
+            p: {
+              r: [
+                {
+                  w: "xxx",
+                  x: false,
+                },
+                {
+                  w: "w2",
+                  x: false,
+                },
+              ],
             },
           },
-          b: "bbb1",
-          c: false,
         },
-        {
-          a: {
-            x: false,
-            y: "z",
-            k: {
-              l: false,
-              m: false,
-              p: {
-                r: [
-                  {
-                    w: "www",
-                    x: false,
-                  },
-                  {
-                    w: "zzz",
-                    x: false,
-                  },
-                  {},
-                ],
-              },
+        b: "bbb1",
+        c: false,
+      },
+      {
+        a: {
+          x: false,
+          y: "z",
+          k: {
+            l: false,
+            m: false,
+            p: {
+              r: [
+                {
+                  w: "www",
+                  x: false,
+                },
+                {
+                  w: "zzz",
+                  x: false,
+                },
+                {},
+              ],
             },
           },
-          b: "bbb2",
-          c: false,
         },
-        {},
-      ]),
-      ["c", "a.x", "a.k.l", "a.k.p.r[0].x"],
-      "47.03 - even deeper plus not normalised in deeper levels"
-    );
-    t.end();
-  }
-);
+        b: "bbb2",
+        c: false,
+      },
+      {},
+    ]),
+    ["c", "a.x", "a.k.l", "a.k.p.r[0].x"],
+    "47.03 - even deeper plus not normalised in deeper levels"
+  );
+});
 
-tap.test(
-  "48 - findUnusedSync() - array contents are not objects/arrays",
-  (t) => {
-    t.strictSame(
-      findUnusedSync([false, false, false]),
-      [],
-      "48.01 - topmost level, Booleans"
-    );
-    t.strictSame(
-      findUnusedSync(["zzz", "zzz", "zzz"]),
-      [],
-      "48.02 - topmost level, strings"
-    );
-    t.strictSame(
-      findUnusedSync([{}, {}, {}]),
-      [],
-      "48.03 - topmost level, empty plain objects"
-    );
-    t.end();
-  }
-);
+test("48 - findUnusedSync() - array contents are not objects/arrays", () => {
+  equal(
+    findUnusedSync([false, false, false]),
+    [],
+    "48.01 - topmost level, Booleans"
+  );
+  equal(
+    findUnusedSync(["zzz", "zzz", "zzz"]),
+    [],
+    "48.02 - topmost level, strings"
+  );
+  equal(
+    findUnusedSync([{}, {}, {}]),
+    [],
+    "48.03 - topmost level, empty plain objects"
+  );
+});
 
-tap.test(
-  "49 - findUnusedSync() - array > single object > array > unused inside",
-  (t) => {
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: [
-            {
-              k: false,
-              l: "l1",
-            },
-            {
-              k: false,
-              l: "l2",
-            },
-            {
-              k: false,
-              l: false,
-            },
-            {
-              k: false,
-              l: "l4",
-            },
-          ],
-          b: "b",
-        },
-      ]),
-      ["a[0].k"],
-      "49.01 - topmost array has a single object"
-    );
-    t.strictSame(
-      findUnusedSync([
-        {
-          a: [
-            {
-              k: false,
-              l: "l1",
-            },
-            {
-              k: false,
-              l: "l2",
-            },
-            {
-              k: false,
-              l: false,
-            },
-            {
-              k: false,
-              l: "l4",
-            },
-          ],
-          b: "b",
-        },
-        {
-          a: [
-            {
-              k: false,
-              l: "l1",
-            },
-            {
-              k: false,
-              l: "l2",
-            },
-            {
-              k: false,
-              l: false,
-            },
-            {
-              k: false,
-              l: "l4",
-            },
-          ],
-          b: "b",
-        },
-      ]),
-      ["a[0].k"],
-      "49.02 - topmost array has multiple objects"
-    );
-    t.end();
-  }
-);
+test("49 - findUnusedSync() - array > single object > array > unused inside", () => {
+  equal(
+    findUnusedSync([
+      {
+        a: [
+          {
+            k: false,
+            l: "l1",
+          },
+          {
+            k: false,
+            l: "l2",
+          },
+          {
+            k: false,
+            l: false,
+          },
+          {
+            k: false,
+            l: "l4",
+          },
+        ],
+        b: "b",
+      },
+    ]),
+    ["a[0].k"],
+    "49.01 - topmost array has a single object"
+  );
+  equal(
+    findUnusedSync([
+      {
+        a: [
+          {
+            k: false,
+            l: "l1",
+          },
+          {
+            k: false,
+            l: "l2",
+          },
+          {
+            k: false,
+            l: false,
+          },
+          {
+            k: false,
+            l: "l4",
+          },
+        ],
+        b: "b",
+      },
+      {
+        a: [
+          {
+            k: false,
+            l: "l1",
+          },
+          {
+            k: false,
+            l: "l2",
+          },
+          {
+            k: false,
+            l: false,
+          },
+          {
+            k: false,
+            l: "l4",
+          },
+        ],
+        b: "b",
+      },
+    ]),
+    ["a[0].k"],
+    "49.02 - topmost array has multiple objects"
+  );
+});
 
-tap.test("50 - findUnusedSync() - simple case of not normalised input", (t) => {
-  t.strictSame(
+test("50 - findUnusedSync() - simple case of not normalised input", () => {
+  equal(
     findUnusedSync([
       {
         a: false,
@@ -2336,11 +2232,10 @@ tap.test("50 - findUnusedSync() - simple case of not normalised input", (t) => {
     ["a", "b"],
     "50 - default placeholder"
   );
-  t.end();
 });
 
-tap.test("51 - findUnusedSync() - opts.comments", (t) => {
-  t.strictSame(
+test("51 - findUnusedSync() - opts.comments", () => {
+  equal(
     findUnusedSync([
       {
         a: false,
@@ -2358,7 +2253,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["c"],
     "51.01 - defaults recognise the comment substring within the key"
   );
-  t.strictSame(
+  equal(
     findUnusedSync(
       [
         {
@@ -2379,7 +2274,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.02 - ignores comment fields because they match default value"
   );
-  t.strictSame(
+  equal(
     findUnusedSync(
       [
         {
@@ -2400,7 +2295,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.03 - falsey opts.comments - instruction to turn it off"
   );
-  t.strictSame(
+  equal(
     findUnusedSync(
       [
         {
@@ -2421,7 +2316,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.04 - falsey opts.comments - instruction to turn it off"
   );
-  t.strictSame(
+  equal(
     findUnusedSync(
       [
         {
@@ -2442,7 +2337,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.05 - falsey opts.comments - instruction to turn it off"
   );
-  t.strictSame(
+  equal(
     findUnusedSync(
       [
         {
@@ -2463,7 +2358,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.06 - falsey opts.comments - instruction to turn it off"
   );
-  t.strictSame(
+  equal(
     findUnusedSync(
       [
         {
@@ -2484,14 +2379,13 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.07 - falsey opts.comments - instruction to turn it off"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 06. sortAllObjectsSync()
 // -----------------------------------------------------------------------------
 
-tap.test("52 - sortAllObjectsSync() - plain object", (t) => {
+test("52 - sortAllObjectsSync() - plain object", () => {
   let original = {
     a: "a",
     c: "c",
@@ -2502,27 +2396,25 @@ tap.test("52 - sortAllObjectsSync() - plain object", (t) => {
     b: "b",
     c: "c",
   };
-  t.notDeepEqual(JSON.stringify(original), JSON.stringify(sorted)); // control
-  t.strictSame(
+  not.equal(JSON.stringify(original), JSON.stringify(sorted)); // control
+  equal(
     JSON.stringify(sortAllObjectsSync(original)),
     JSON.stringify(sorted),
     "52.01"
   ); // test
-  t.end();
 });
 
-tap.test("53 - sortAllObjectsSync() - non-sortable input types", (t) => {
-  t.strictSame(sortAllObjectsSync(null), null, "53.01");
-  t.strictSame(sortAllObjectsSync(1), 1, "53.02");
-  t.strictSame(sortAllObjectsSync("zzz"), "zzz", "53.03");
-  t.strictSame(sortAllObjectsSync(undefined), undefined, "53.04");
-  const f = (a) => a;
-  t.strictSame(sortAllObjectsSync(f), f, "53.05");
-  t.end();
+test("53 - sortAllObjectsSync() - non-sortable input types", () => {
+  equal(sortAllObjectsSync(null), null, "53.01");
+  equal(sortAllObjectsSync(1), 1, "53.02");
+  equal(sortAllObjectsSync("zzz"), "zzz", "53.03");
+  equal(sortAllObjectsSync(undefined), undefined, "53.04");
+  let f = (a) => a;
+  equal(sortAllObjectsSync(f), f, "53.05");
 });
 
-tap.test("54 - sortAllObjectsSync() - object-array-object", (t) => {
-  t.strictSame(
+test("54 - sortAllObjectsSync() - object-array-object", () => {
+  equal(
     sortAllObjectsSync({
       a: "a",
       c: [
@@ -2557,11 +2449,10 @@ tap.test("54 - sortAllObjectsSync() - object-array-object", (t) => {
     },
     "54"
   );
-  t.end();
 });
 
-tap.test("55 - sortAllObjectsSync() - object very deep", (t) => {
-  t.strictSame(
+test("55 - sortAllObjectsSync() - object very deep", () => {
+  equal(
     sortAllObjectsSync({
       a: [
         [
@@ -2664,10 +2555,9 @@ tap.test("55 - sortAllObjectsSync() - object very deep", (t) => {
     },
     "55"
   );
-  t.end();
 });
 
-tap.test("56 - sortAllObjectsSync() - nested case", (t) => {
+test("56 - sortAllObjectsSync() - nested case", () => {
   let original = {
     b: "bbb",
     a: [
@@ -2690,17 +2580,16 @@ tap.test("56 - sortAllObjectsSync() - nested case", (t) => {
     b: "bbb",
     c: "ccc",
   };
-  t.notDeepEqual(JSON.stringify(original), JSON.stringify(sorted), "06.05.01"); // control
-  t.strictSame(
+  not.equal(JSON.stringify(original), JSON.stringify(sorted), "06.05.01"); // control
+  equal(
     JSON.stringify(sortAllObjectsSync(original)),
     JSON.stringify(sorted),
     "56.01"
   );
-  t.end();
 });
 
-tap.test("57 - sortAllObjectsSync() - nested case", (t) => {
-  const original = {
+test("57 - sortAllObjectsSync() - nested case", () => {
+  let original = {
     lastRan: 6,
     lastPublished: 5,
     "1.1.10": 2,
@@ -2708,7 +2597,7 @@ tap.test("57 - sortAllObjectsSync() - nested case", (t) => {
     "1.2.1": 4,
     "1.2.0": 3,
   };
-  const res = `{
+  let res = `{
   "1.1.9": 1,
   "1.1.10": 2,
   "1.2.0": 3,
@@ -2717,8 +2606,7 @@ tap.test("57 - sortAllObjectsSync() - nested case", (t) => {
   "lastRan": 6
 }`;
 
-  t.equal(JSON.stringify(sortAllObjectsSync(original), null, 2), res, "57");
-  t.end();
+  equal(JSON.stringify(sortAllObjectsSync(original), null, 2), res, "57");
 });
 
 // -----------------------------------------------------------------------------
@@ -2728,7 +2616,7 @@ tap.test("57 - sortAllObjectsSync() - nested case", (t) => {
 /* eslint prefer-const:0 */
 // we deliberately use VAR to "allow" mutation. In theory, of course, because it does not happen.
 
-tap.test("58 - does not mutate input args: enforceKeysetSync()", (t) => {
+test("58 - does not mutate input args: enforceKeysetSync()", () => {
   let source = {
     a: "a",
   };
@@ -2736,12 +2624,11 @@ tap.test("58 - does not mutate input args: enforceKeysetSync()", (t) => {
     a: "a",
   };
   let dummyResult = enforceKeysetSync(source, { a: false, b: false });
-  t.pass(dummyResult); // a mickey assertion to trick the Standard
-  t.equal(JSON.stringify(source), JSON.stringify(frozen), "58.01");
-  t.end();
+  ok(dummyResult); // a mickey assertion to trick the Standard
+  equal(JSON.stringify(source), JSON.stringify(frozen), "58.01");
 });
 
-tap.test("59 - does not mutate input args: noNewKeysSync()", (t) => {
+test("59 - does not mutate input args: noNewKeysSync()", () => {
   let source = {
     a: "a",
   };
@@ -2749,12 +2636,11 @@ tap.test("59 - does not mutate input args: noNewKeysSync()", (t) => {
     a: "a",
   };
   let dummyResult = noNewKeysSync(source, { a: false, b: false });
-  t.pass(dummyResult); // a mickey assertion to trick ESLint to think it's used
-  t.equal(JSON.stringify(source), JSON.stringify(frozen), "59.01");
-  t.end();
+  ok(dummyResult); // a mickey assertion to trick ESLint to think it's used
+  equal(JSON.stringify(source), JSON.stringify(frozen), "59.01");
 });
 
-tap.test("60 - does not mutate input args: sortAllObjectsSync()", (t) => {
+test("60 - does not mutate input args: sortAllObjectsSync()", () => {
   let source = {
     a: "a",
     c: "c",
@@ -2766,216 +2652,194 @@ tap.test("60 - does not mutate input args: sortAllObjectsSync()", (t) => {
     b: "b",
   };
   let dummyResult = sortAllObjectsSync(source); // let's try to mutate "source"
-  t.pass(dummyResult); // a mickey assertion to trick ESLint to think it's used
-  t.equal(JSON.stringify(source), JSON.stringify(frozen), "60.01");
-  t.end();
+  ok(dummyResult); // a mickey assertion to trick ESLint to think it's used
+  equal(JSON.stringify(source), JSON.stringify(frozen), "60.01");
 });
 
 // -----------------------------------------------------------------------------
 // 08. getKeyset()  - async version of getKeysetSync()
 // -----------------------------------------------------------------------------
 
-tap.test("61 - getKeyset() - throws when there's no input", (t) => {
-  t.throws(() => {
+test("61 - getKeyset() - throws when there's no input", () => {
+  throws(() => {
     getKeyset();
   }, "61");
-  t.end();
 });
 
-tap.test(
-  "62 - getKeyset() - throws when input is not an array of promises",
-  (t) => {
-    t.throws(() => {
-      getKeyset(makePromise("aa"));
-    }, "62");
-    t.end();
-  }
-);
+test("62 - getKeyset() - throws when input is not an array of promises", () => {
+  throws(() => {
+    getKeyset(makePromise("aa"));
+  }, "62");
+});
 
-tap.test(
-  "63 - getKeyset() - resolves to a rejected promise when input array contains not only plain objects",
-  async (t) => {
+test("63 - getKeyset() - resolves to a rejected promise when input array contains not only plain objects", async () => {
+  await getKeyset(
+    makePromise([
+      {
+        a: "a",
+        b: "b",
+      },
+      {
+        a: "a",
+      },
+      "zzzz", // <----- problem!
+    ])
+  )
+    .then(() => {
+      not.ok("not ok");
+    })
+    .catch(() => {
+      ok("ok");
+    });
+});
+
+test("64 - getKeyset() - calculates - three objects - default placeholder", async () => {
+  equal(
     await getKeyset(
       makePromise([
         {
           a: "a",
-          b: "b",
+          b: "c",
+          c: {
+            d: "d",
+            e: "e",
+          },
         },
         {
           a: "a",
         },
-        "zzzz", // <----- problem!
+        {
+          c: {
+            f: "f",
+          },
+        },
       ])
-    )
-      .then(() => {
-        t.fail("not ok");
-      })
-      .catch(() => {
-        t.pass("ok");
-      });
-    t.end();
-  }
-);
-
-tap.test(
-  "64 - getKeyset() - calculates - three objects - default placeholder",
-  async (t) => {
-    t.strictSame(
-      await getKeyset(
-        makePromise([
-          {
-            a: "a",
-            b: "c",
-            c: {
-              d: "d",
-              e: "e",
-            },
-          },
-          {
-            a: "a",
-          },
-          {
-            c: {
-              f: "f",
-            },
-          },
-        ])
-      ),
-      {
-        a: false,
-        b: false,
-        c: {
-          d: false,
-          e: false,
-          f: false,
-        },
+    ),
+    {
+      a: false,
+      b: false,
+      c: {
+        d: false,
+        e: false,
+        f: false,
       },
-      "64"
-    );
-    t.end();
-  }
-);
+    },
+    "64"
+  );
+});
 
-tap.test(
-  "65 - getKeyset() - calculates - three objects - custom placeholder",
-  async (t) => {
-    t.strictSame(
-      await getKeyset(
-        [
-          {
-            a: "a",
-            b: "c",
-            c: {
-              d: "d",
-              e: "e",
-            },
+test("65 - getKeyset() - calculates - three objects - custom placeholder", async () => {
+  equal(
+    await getKeyset(
+      [
+        {
+          a: "a",
+          b: "c",
+          c: {
+            d: "d",
+            e: "e",
           },
-          {
-            a: "a",
-          },
-          {
-            c: {
-              f: "f",
-            },
-          },
-        ],
-        { placeholder: true }
-      ),
-      {
-        a: true,
-        b: true,
-        c: {
-          d: true,
-          e: true,
-          f: true,
         },
-      },
-      "65.01"
-    );
-
-    t.strictSame(
-      await getKeyset(
-        [
-          {
-            a: "a",
-            b: "c",
-            c: {
-              d: "d",
-              e: "e",
-            },
-          },
-          {
-            a: "a",
-          },
-          {
-            c: {
-              f: "f",
-            },
-          },
-        ],
-        { placeholder: "" }
-      ),
-      {
-        a: "",
-        b: "",
-        c: {
-          d: "",
-          e: "",
-          f: "",
+        {
+          a: "a",
         },
-      },
-      "65.02"
-    );
-
-    t.strictSame(
-      await getKeyset(
-        [
-          {
-            a: "a",
-            b: "c",
-            c: {
-              d: "d",
-              e: "e",
-            },
+        {
+          c: {
+            f: "f",
           },
-          {
-            a: "a",
-          },
-          {
-            c: {
-              f: "f",
-            },
-          },
-        ],
-        { placeholder: { a: "a" } }
-      ),
-      {
-        a: { a: "a" },
-        b: { a: "a" },
-        c: {
-          d: { a: "a" },
-          e: { a: "a" },
-          f: { a: "a" },
         },
+      ],
+      { placeholder: true }
+    ),
+    {
+      a: true,
+      b: true,
+      c: {
+        d: true,
+        e: true,
+        f: true,
       },
-      "65.03"
-    );
-    t.end();
-  }
-);
+    },
+    "65.01"
+  );
 
-tap.test(
-  "66 - getKeyset() - settings argument is not a plain object - throws",
-  (t) => {
-    t.throws(() => {
-      getKeyset([{ a: "a" }, { b: "b" }], "zzz");
-    }, /THROW_ID_12/);
-    t.end();
-  }
-);
+  equal(
+    await getKeyset(
+      [
+        {
+          a: "a",
+          b: "c",
+          c: {
+            d: "d",
+            e: "e",
+          },
+        },
+        {
+          a: "a",
+        },
+        {
+          c: {
+            f: "f",
+          },
+        },
+      ],
+      { placeholder: "" }
+    ),
+    {
+      a: "",
+      b: "",
+      c: {
+        d: "",
+        e: "",
+        f: "",
+      },
+    },
+    "65.02"
+  );
 
-tap.test("67 - getKeyset() - multiple levels of nested arrays", async (t) => {
-  t.strictSame(
+  equal(
+    await getKeyset(
+      [
+        {
+          a: "a",
+          b: "c",
+          c: {
+            d: "d",
+            e: "e",
+          },
+        },
+        {
+          a: "a",
+        },
+        {
+          c: {
+            f: "f",
+          },
+        },
+      ],
+      { placeholder: { a: "a" } }
+    ),
+    {
+      a: { a: "a" },
+      b: { a: "a" },
+      c: {
+        d: { a: "a" },
+        e: { a: "a" },
+        f: { a: "a" },
+      },
+    },
+    "65.03"
+  );
+});
+
+test("66 - getKeyset() - settings argument is not a plain object - throws", () => {
+  throws(() => {
+    getKeyset([{ a: "a" }, { b: "b" }], "zzz");
+  }, /THROW_ID_12/);
+});
+
+test("67 - getKeyset() - multiple levels of nested arrays", async () => {
+  equal(
     await getKeyset([
       {
         key2: [
@@ -3017,93 +2881,230 @@ tap.test("67 - getKeyset() - multiple levels of nested arrays", async (t) => {
     },
     "67"
   );
-  t.end();
 });
 
-tap.test(
-  "68 - getKeyset() - objects that are directly in values",
-  async (t) => {
-    t.strictSame(
-      await getKeyset([
-        {
-          a: {
-            b: "c",
-            d: "e",
-          },
-          k: "l",
-        },
-        {
-          a: {
-            f: "g",
-            b: "c",
-            h: "i",
-          },
-          m: "n",
-        },
-      ]),
+test("68 - getKeyset() - objects that are directly in values", async () => {
+  equal(
+    await getKeyset([
       {
         a: {
-          b: false,
-          d: false,
-          f: false,
-          h: false,
+          b: "c",
+          d: "e",
         },
-        k: false,
-        m: false,
+        k: "l",
       },
-      "68.01"
-    );
-    t.strictSame(
-      await getKeyset([
-        {
-          a: {
-            f: "g",
-            b: "c",
-            h: "i",
-          },
-          m: "n",
-        },
-        {
-          a: {
-            b: "c",
-            d: "e",
-          },
-          k: "l",
-        },
-      ]),
       {
         a: {
-          b: false,
-          d: false,
-          f: false,
-          h: false,
+          f: "g",
+          b: "c",
+          h: "i",
         },
-        k: false,
-        m: false,
+        m: "n",
       },
-      "68.02"
-    );
-    t.end();
-  }
-);
+    ]),
+    {
+      a: {
+        b: false,
+        d: false,
+        f: false,
+        h: false,
+      },
+      k: false,
+      m: false,
+    },
+    "68.01"
+  );
+  equal(
+    await getKeyset([
+      {
+        a: {
+          f: "g",
+          b: "c",
+          h: "i",
+        },
+        m: "n",
+      },
+      {
+        a: {
+          b: "c",
+          d: "e",
+        },
+        k: "l",
+      },
+    ]),
+    {
+      a: {
+        b: false,
+        d: false,
+        f: false,
+        h: false,
+      },
+      k: false,
+      m: false,
+    },
+    "68.02"
+  );
+});
 
-tap.test(
-  "69 - getKeyset() - deeper level arrays containing only strings",
-  async (t) => {
-    t.strictSame(
-      await getKeyset([
-        {
-          a: false,
-          b: {
-            c: {
-              d: ["eee"],
-            },
+test("69 - getKeyset() - deeper level arrays containing only strings", async () => {
+  equal(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: ["eee"],
           },
         },
-        {
-          a: false,
+      },
+      {
+        a: false,
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [],
         },
-      ]),
+      },
+    },
+    "69"
+  );
+});
+
+test("70 - getKeyset() - deeper level array with string vs false", async () => {
+  equal(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: ["eee"],
+          },
+        },
+      },
+      {
+        a: false,
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [],
+        },
+      },
+    },
+    "70 - if arrays contain any strings, result is empty array"
+  );
+});
+
+test("71 - getKeyset() - two deeper level arrays with strings", async () => {
+  equal(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: ["eee"],
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: ["eee", "fff", "ggg"],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [],
+        },
+      },
+    },
+    "71 - if arrays contain any strings, result is empty array"
+  );
+});
+
+test("72 - getKeyset() - two deeper level arrays with mixed contents", async () => {
+  equal(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: ["eee"],
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: [{ a: "zzz" }],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ a: false }],
+        },
+      },
+    },
+    "72 - plain object vs string"
+  );
+});
+
+test("73 - getKeyset() - two deeper level arrays with plain objects", async () => {
+  equal(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: [{ a: "aaa" }],
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: [{ b: "bbb", c: "ccc" }],
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: false,
+          },
+        },
+      },
+      {
+        b: {
+          c: false,
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ a: false, b: false, c: false }],
+        },
+      },
+    },
+    "73.01 - object vs object"
+  );
+  equal(
+    await getKeyset([
       {
         a: false,
         b: {
@@ -3112,250 +3113,88 @@ tap.test(
           },
         },
       },
-      "69"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "70 - getKeyset() - deeper level array with string vs false",
-  async (t) => {
-    t.strictSame(
-      await getKeyset([
-        {
-          a: false,
-          b: {
-            c: {
-              d: ["eee"],
-            },
+      {
+        b: {
+          c: {
+            d: [{ b: "bbb", c: "ccc" }],
           },
         },
-        {
-          a: false,
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ b: false, c: false }],
         },
-      ]),
+      },
+    },
+    "73.02 - object vs object"
+  );
+  equal(
+    await getKeyset([
       {
         a: false,
         b: {
           c: {
-            d: [],
+            d: false,
           },
         },
       },
-      "70 - if arrays contain any strings, result is empty array"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "71 - getKeyset() - two deeper level arrays with strings",
-  async (t) => {
-    t.strictSame(
-      await getKeyset([
-        {
-          a: false,
-          b: {
-            c: {
-              d: ["eee"],
-            },
+      {
+        b: {
+          c: {
+            d: [{ b: "bbb", c: "ccc" }],
           },
         },
-        {
-          b: {
-            c: {
-              d: ["eee", "fff", "ggg"],
-            },
-          },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ b: false, c: false }],
         },
-      ]),
+      },
+    },
+    "73.03 - object vs object"
+  );
+  equal(
+    await getKeyset([
       {
         a: false,
         b: {
           c: {
-            d: [],
+            d: "text",
           },
         },
       },
-      "71 - if arrays contain any strings, result is empty array"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "72 - getKeyset() - two deeper level arrays with mixed contents",
-  async (t) => {
-    t.strictSame(
-      await getKeyset([
-        {
-          a: false,
-          b: {
-            c: {
-              d: ["eee"],
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: [{ a: "zzz" }],
-            },
-          },
-        },
-      ]),
       {
-        a: false,
         b: {
           c: {
-            d: [{ a: false }],
+            d: [{ b: "bbb", c: "ccc" }],
           },
         },
       },
-      "72 - plain object vs string"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  "73 - getKeyset() - two deeper level arrays with plain objects",
-  async (t) => {
-    t.strictSame(
-      await getKeyset([
-        {
-          a: false,
-          b: {
-            c: {
-              d: [{ a: "aaa" }],
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: [{ b: "bbb", c: "ccc" }],
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: false,
-            },
-          },
-        },
-        {
-          b: {
-            c: false,
-          },
-        },
-      ]),
-      {
-        a: false,
-        b: {
-          c: {
-            d: [{ a: false, b: false, c: false }],
-          },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ b: false, c: false }],
         },
       },
-      "73.01 - object vs object"
-    );
-    t.strictSame(
-      await getKeyset([
-        {
-          a: false,
-          b: {
-            c: {
-              d: [],
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: [{ b: "bbb", c: "ccc" }],
-            },
-          },
-        },
-      ]),
-      {
-        a: false,
-        b: {
-          c: {
-            d: [{ b: false, c: false }],
-          },
-        },
-      },
-      "73.02 - object vs object"
-    );
-    t.strictSame(
-      await getKeyset([
-        {
-          a: false,
-          b: {
-            c: {
-              d: false,
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: [{ b: "bbb", c: "ccc" }],
-            },
-          },
-        },
-      ]),
-      {
-        a: false,
-        b: {
-          c: {
-            d: [{ b: false, c: false }],
-          },
-        },
-      },
-      "73.03 - object vs object"
-    );
-    t.strictSame(
-      await getKeyset([
-        {
-          a: false,
-          b: {
-            c: {
-              d: "text",
-            },
-          },
-        },
-        {
-          b: {
-            c: {
-              d: [{ b: "bbb", c: "ccc" }],
-            },
-          },
-        },
-      ]),
-      {
-        a: false,
-        b: {
-          c: {
-            d: [{ b: false, c: false }],
-          },
-        },
-      },
-      "73.04 - object vs object"
-    );
-    t.end();
-  }
-);
+    },
+    "73.04 - object vs object"
+  );
+});
 
 // -----------------------------------------------------------------------------
 // 09. enforceKeyset()
 // -----------------------------------------------------------------------------
 
-tap.test("74 - enforceKeyset() - enforces a simple schema", async (t) => {
-  const schema = await getKeyset([
+test("74 - enforceKeyset() - enforces a simple schema", async () => {
+  let schema = await getKeyset([
     {
       a: "aaa",
       b: "bbb",
@@ -3364,7 +3203,7 @@ tap.test("74 - enforceKeyset() - enforces a simple schema", async (t) => {
       a: "ccc",
     },
   ]);
-  t.strictSame(
+  equal(
     await enforceKeyset(
       {
         a: "ccc",
@@ -3377,11 +3216,10 @@ tap.test("74 - enforceKeyset() - enforces a simple schema", async (t) => {
     },
     "74"
   );
-  t.end();
 });
 
-tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
-  const obj1 = {
+test("75 - enforceKeyset() - enforces a more complex schema", async () => {
+  let obj1 = {
     b: [
       {
         c: "ccc",
@@ -3390,15 +3228,15 @@ tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
     ],
     a: "aaa",
   };
-  const obj2 = {
+  let obj2 = {
     a: "ccc",
     e: "eee",
   };
-  const obj3 = {
+  let obj3 = {
     a: "zzz",
   };
-  const schema = await getKeyset([obj1, obj2, obj3]);
-  t.strictSame(
+  let schema = await getKeyset([obj1, obj2, obj3]);
+  equal(
     schema,
     {
       a: false,
@@ -3412,7 +3250,7 @@ tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
     },
     "75.01 - .getKeyset itself"
   );
-  t.strictSame(
+  equal(
     await enforceKeyset(obj1, schema),
     {
       a: "aaa",
@@ -3426,7 +3264,7 @@ tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
     },
     "75.02 - .enforceKeyset"
   );
-  t.strictSame(
+  equal(
     await enforceKeyset(obj2, schema),
     {
       a: "ccc",
@@ -3440,7 +3278,7 @@ tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
     },
     "75.03 - .enforceKeyset"
   );
-  t.strictSame(
+  equal(
     await enforceKeyset(obj3, schema),
     {
       a: "zzz",
@@ -3454,62 +3292,57 @@ tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
     },
     "75.04 - .enforceKeyset"
   );
-  t.end();
 });
 
-tap.test(
-  "76 - enforceKeyset() - enforces a schema involving arrays",
-  async (t) => {
-    const obj1 = {
+test("76 - enforceKeyset() - enforces a schema involving arrays", async () => {
+  let obj1 = {
+    a: [
+      {
+        b: "b",
+      },
+    ],
+  };
+  let obj2 = {
+    a: false,
+  };
+  let schema = await getKeyset([obj1, obj2]);
+  equal(
+    schema,
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    "76.01 - .getKeyset"
+  );
+  equal(
+    await enforceKeyset(obj1, schema),
+    {
       a: [
         {
           b: "b",
         },
       ],
-    };
-    const obj2 = {
-      a: false,
-    };
-    const schema = await getKeyset([obj1, obj2]);
-    t.strictSame(
-      schema,
-      {
-        a: [
-          {
-            b: false,
-          },
-        ],
-      },
-      "76.01 - .getKeyset"
-    );
-    t.strictSame(
-      await enforceKeyset(obj1, schema),
-      {
-        a: [
-          {
-            b: "b",
-          },
-        ],
-      },
-      "76.02 - .enforceKeyset"
-    );
-    t.strictSame(
-      await enforceKeyset(obj2, schema),
-      {
-        a: [
-          {
-            b: false,
-          },
-        ],
-      },
-      "76.03 - .enforceKeyset"
-    );
-    t.end();
-  }
-);
+    },
+    "76.02 - .enforceKeyset"
+  );
+  equal(
+    await enforceKeyset(obj2, schema),
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    "76.03 - .enforceKeyset"
+  );
+});
 
-tap.test("77 - enforceKeyset() - another set involving arrays", async (t) => {
-  t.strictSame(
+test("77 - enforceKeyset() - another set involving arrays", async () => {
+  equal(
     await prepArray(
       makePromise([
         {
@@ -3550,11 +3383,10 @@ tap.test("77 - enforceKeyset() - another set involving arrays", async (t) => {
     ],
     "77"
   );
-  t.end();
 });
 
-tap.test("78 - enforceKeyset() - deep-nested arrays", async (t) => {
-  t.strictSame(
+test("78 - enforceKeyset() - deep-nested arrays", async () => {
+  equal(
     await prepArray([
       {
         a: [
@@ -3657,133 +3489,124 @@ tap.test("78 - enforceKeyset() - deep-nested arrays", async (t) => {
     ],
     "78"
   );
-  t.end();
 });
 
-tap.test(
-  "79 - enforceKeyset() - enforces a schema involving arrays",
-  async (t) => {
-    const obj1 = {
+test("79 - enforceKeyset() - enforces a schema involving arrays", async () => {
+  let obj1 = {
+    a: [
+      {
+        b: "b",
+      },
+    ],
+  };
+  let obj2 = {
+    a: "a",
+  };
+  let schema = await getKeyset([obj1, obj2]);
+  equal(
+    schema,
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    "79.01 - .getKeyset"
+  );
+  equal(
+    await enforceKeyset(obj1, schema),
+    {
       a: [
         {
           b: "b",
         },
       ],
-    };
-    const obj2 = {
-      a: "a",
-    };
-    const schema = await getKeyset([obj1, obj2]);
-    t.strictSame(
-      schema,
+    },
+    "79.02 - .enforceKeyset"
+  );
+  equal(
+    await enforceKeyset(obj2, schema),
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    "79.03 - .enforceKeyset"
+  );
+});
+
+test("80 - enforceKeyset() - multiple objects within an array", async () => {
+  equal(
+    await prepArray([
+      {
+        a: "a",
+      },
       {
         a: [
           {
-            b: false,
+            d: "d",
           },
-        ],
-      },
-      "79.01 - .getKeyset"
-    );
-    t.strictSame(
-      await enforceKeyset(obj1, schema),
-      {
-        a: [
+          {
+            c: "c",
+          },
+          {
+            a: "a",
+          },
           {
             b: "b",
           },
         ],
       },
-      "79.02 - .enforceKeyset"
-    );
-    t.strictSame(
-      await enforceKeyset(obj2, schema),
+    ]),
+    [
       {
         a: [
           {
+            a: false,
             b: false,
+            c: false,
+            d: false,
           },
         ],
       },
-      "79.03 - .enforceKeyset"
-    );
-    t.end();
-  }
-);
+      {
+        a: [
+          {
+            a: false,
+            b: false,
+            c: false,
+            d: "d",
+          },
+          {
+            a: false,
+            b: false,
+            c: "c",
+            d: false,
+          },
+          {
+            a: "a",
+            b: false,
+            c: false,
+            d: false,
+          },
+          {
+            a: false,
+            b: "b",
+            c: false,
+            d: false,
+          },
+        ],
+      },
+    ],
+    "80"
+  );
+});
 
-tap.test(
-  "80 - enforceKeyset() - multiple objects within an array",
-  async (t) => {
-    t.strictSame(
-      await prepArray([
-        {
-          a: "a",
-        },
-        {
-          a: [
-            {
-              d: "d",
-            },
-            {
-              c: "c",
-            },
-            {
-              a: "a",
-            },
-            {
-              b: "b",
-            },
-          ],
-        },
-      ]),
-      [
-        {
-          a: [
-            {
-              a: false,
-              b: false,
-              c: false,
-              d: false,
-            },
-          ],
-        },
-        {
-          a: [
-            {
-              a: false,
-              b: false,
-              c: false,
-              d: "d",
-            },
-            {
-              a: false,
-              b: false,
-              c: "c",
-              d: false,
-            },
-            {
-              a: "a",
-              b: false,
-              c: false,
-              d: false,
-            },
-            {
-              a: false,
-              b: "b",
-              c: false,
-              d: false,
-            },
-          ],
-        },
-      ],
-      "80"
-    );
-    t.end();
-  }
-);
-
-tap.test("81 - enforceKeyset() - multiple levels of arrays", async (t) => {
-  const obj1 = {
+test("81 - enforceKeyset() - multiple levels of arrays", async () => {
+  let obj1 = {
     b: [
       {
         e: [
@@ -3800,11 +3623,11 @@ tap.test("81 - enforceKeyset() - multiple levels of arrays", async (t) => {
     ],
     a: "aaa",
   };
-  const obj2 = {
+  let obj2 = {
     c: "ccc",
     a: false,
   };
-  t.strictSame(
+  equal(
     await prepArray([obj1, obj2]),
     [
       {
@@ -3846,11 +3669,10 @@ tap.test("81 - enforceKeyset() - multiple levels of arrays", async (t) => {
     ],
     "81"
   );
-  t.end();
 });
 
-tap.test("82 - enforceKeyset() - array vs string clashes", async (t) => {
-  t.strictSame(
+test("82 - enforceKeyset() - array vs string clashes", async () => {
+  equal(
     await prepArray([
       {
         a: "aaa",
@@ -3881,59 +3703,42 @@ tap.test("82 - enforceKeyset() - array vs string clashes", async (t) => {
     ],
     "82"
   );
-  t.end();
 });
 
-tap.test(
-  "83 - enforceKeyset() - all inputs missing - resolves to rejected promise",
-  (t) => {
-    t.throws(() => {
-      enforceKeyset();
-    }, /THROW_ID_31/g);
-    t.end();
-  }
-);
+test("83 - enforceKeyset() - all inputs missing - resolves to rejected promise", () => {
+  throws(() => {
+    enforceKeyset();
+  }, /THROW_ID_31/g);
+});
 
-tap.test(
-  "84 - enforceKeyset() - second input arg missing - resolves to rejected promise",
-  (t) => {
-    t.throws(() => {
-      enforceKeyset({ a: "a" });
-    }, /THROW_ID_32/g);
-    t.end();
-  }
-);
+test("84 - enforceKeyset() - second input arg missing - resolves to rejected promise", () => {
+  throws(() => {
+    enforceKeyset({ a: "a" });
+  }, /THROW_ID_32/g);
+});
 
-tap.test(
-  "85 - enforceKeyset() - second input arg is not a plain obj - resolves to rejected promise",
-  async (t) => {
-    await enforceKeyset({ a: "a" }, "zzz")
-      .then(() => {
-        t.fail("not ok");
-      })
-      .catch(() => {
-        t.pass("ok");
-      });
-    t.end();
-  }
-);
+test("85 - enforceKeyset() - second input arg is not a plain obj - resolves to rejected promise", async () => {
+  await enforceKeyset({ a: "a" }, "zzz")
+    .then(() => {
+      not.ok("not ok");
+    })
+    .catch(() => {
+      ok("ok");
+    });
+});
 
-tap.test(
-  "86 - enforceKeyset() - first input arg is not a plain obj - resolves to rejected promise",
-  async (t) => {
-    await enforceKeyset("zzz", "zzz")
-      .then(() => {
-        t.fail("not ok");
-      })
-      .catch(() => {
-        t.pass("ok");
-      });
-    t.end();
-  }
-);
+test("86 - enforceKeyset() - first input arg is not a plain obj - resolves to rejected promise", async () => {
+  await enforceKeyset("zzz", "zzz")
+    .then(() => {
+      not.ok("not ok");
+    })
+    .catch(() => {
+      ok("ok");
+    });
+});
 
-tap.test("87 - enforceKeyset() - array over empty array", async (t) => {
-  const obj1 = {
+test("87 - enforceKeyset() - array over empty array", async () => {
+  let obj1 = {
     a: [
       {
         d: "d",
@@ -3944,12 +3749,12 @@ tap.test("87 - enforceKeyset() - array over empty array", async (t) => {
     ],
     c: "c",
   };
-  const obj2 = {
+  let obj2 = {
     a: [],
     b: "b",
   };
-  const schema = await getKeyset([obj1, obj2]);
-  t.strictSame(
+  let schema = await getKeyset([obj1, obj2]);
+  equal(
     schema,
     {
       a: [
@@ -3963,7 +3768,7 @@ tap.test("87 - enforceKeyset() - array over empty array", async (t) => {
     },
     "87.01"
   );
-  t.strictSame(
+  equal(
     await enforceKeyset(obj1, schema),
     {
       a: [
@@ -3981,7 +3786,7 @@ tap.test("87 - enforceKeyset() - array over empty array", async (t) => {
     },
     "87.02"
   );
-  t.strictSame(
+  equal(
     await enforceKeyset(obj2, schema),
     {
       a: [
@@ -3995,25 +3800,24 @@ tap.test("87 - enforceKeyset() - array over empty array", async (t) => {
     },
     "87.03"
   );
-  t.end();
 });
 
-tap.test(
-  "88 - enforceKeyset() - wrong opts - resolves to rejected promise",
-  (t) => {
-    t.rejects(async () => {
-      await enforceKeyset(
-        { a: "a" },
-        { a: "false", b: "b" },
-        { doNotFillThesePathsIfTheyContainPlaceholders: ["a", 1] }
-      );
-    }, "88");
-    t.end();
+test("88 - enforceKeyset() - wrong opts - resolves to rejected promise", async () => {
+  try {
+    await enforceKeyset(
+      { a: "a" },
+      { a: "false", b: "b" },
+      { doNotFillThesePathsIfTheyContainPlaceholders: ["a", 1] }
+    ).then(() => {
+      unreachable("88");
+    });
+  } catch (error) {
+    ok("88");
   }
-);
+});
 
-tap.test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
-  const schema = await getKeyset(
+test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async () => {
+  let schema = await getKeyset(
     makePromise([
       {
         a: "aaa",
@@ -4026,7 +3830,7 @@ tap.test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
       },
     ])
   );
-  t.strictSame(
+  equal(
     await enforceKeyset(
       {
         a: null,
@@ -4039,7 +3843,7 @@ tap.test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
     },
     "89.01 - defaults - null is explicit false"
   );
-  t.strictSame(
+  equal(
     await enforceKeyset(
       {
         a: null,
@@ -4055,5 +3859,6 @@ tap.test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
     },
     "89.02 - off via the opts"
   );
-  t.end();
 });
+
+test.run();

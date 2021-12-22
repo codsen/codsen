@@ -1,4 +1,4 @@
-import { Ranges } from "../../../scripts/common";
+import type { Ranges } from "../../../ops/typedefs/common";
 interface Opts {
     offset: number;
 }

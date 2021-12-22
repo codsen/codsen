@@ -1,6 +1,7 @@
 // `entEndsWith`
 
 import { strict as assert } from "assert";
+
 import { entEndsWith } from "../dist/all-named-html-entities.esm.js";
 
 // here's list of named HTML entities which end with character "2":

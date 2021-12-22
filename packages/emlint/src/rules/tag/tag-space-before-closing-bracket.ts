@@ -1,5 +1,6 @@
-import { Linter, RuleObjType } from "../../linter";
 import { left } from "string-left-right";
+
+import { Linter, RuleObjType } from "../../linter";
 import { isAnEnabledValue } from "../../util/util";
 
 // rule: tag-space-before-closing-bracket
@@ -24,7 +25,7 @@ function tagSpaceBeforeClosingBracket(
 
       // if there's no closing bracket, exit early
       if (context.str[node.end - 1] !== ">") {
-        console.log(`027 EXIT, there's no closing bracket`);
+        console.log(`028 EXIT, there's no closing bracket`);
         return;
       }
 
@@ -44,7 +45,7 @@ function tagSpaceBeforeClosingBracket(
       // "leftmostPos" is the initial position of the closing bracket ">":
       let leftmostPos = node.end - 1;
       // find the first non-whitespace character on the left:
-      const idxOnTheLeft = left(context.str, leftmostPos) as number;
+      let idxOnTheLeft = left(context.str, leftmostPos) as number;
       if (
         context.str[idxOnTheLeft] === "/" ||
         context.str[idxOnTheLeft] === BACKSLASH
@@ -52,7 +53,7 @@ function tagSpaceBeforeClosingBracket(
         leftmostPos = idxOnTheLeft;
       }
       console.log(
-        `055 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`leftmostPos`}\u001b[${39}m`} = ${JSON.stringify(
+        `056 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`leftmostPos`}\u001b[${39}m`} = ${JSON.stringify(
           leftmostPos,
           null,
           4
@@ -86,7 +87,7 @@ function tagSpaceBeforeClosingBracket(
           (context.str[leftmostPos - 2] &&
             !context.str[leftmostPos - 2].trim()))
       ) {
-        console.log(`089 always mode - enforce spaces`);
+        console.log(`090 always mode - enforce spaces`);
         context.report({
           ruleId: "tag-space-before-closing-bracket",
           message: "Add a space.",
@@ -121,7 +122,7 @@ function tagSpaceBeforeClosingBracket(
         // there's whitespace to the left of slash/closing bracket
         !context.str[leftmostPos - 1].trim()
       ) {
-        console.log(`124 never mode - ban spaces`);
+        console.log(`125 never mode - ban spaces`);
         context.report({
           ruleId: "tag-space-before-closing-bracket",
           message: "Remove space.",

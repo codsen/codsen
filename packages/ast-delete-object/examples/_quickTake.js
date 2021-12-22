@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { deleteObj } from "../dist/ast-delete-object.esm.js";
 
 // if all keys in source object match target object's keys, the

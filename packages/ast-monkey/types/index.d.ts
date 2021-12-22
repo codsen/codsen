@@ -5,7 +5,7 @@ declare type JsonValue = string | number | boolean | null | undefined | JsonObje
 declare type JsonObject = {
     [Key in string]?: JsonValue;
 };
-declare type JsonArray = Array<JsonValue>;
+declare type JsonArray = JsonValue[];
 interface Finding {
     index: number;
     key: string;

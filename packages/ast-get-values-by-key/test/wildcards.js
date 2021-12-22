@@ -1,8 +1,11 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
-tap.test("01 - get with wildcards", (t) => {
-  const source = {
+test("01 - get with wildcards", () => {
+  let source = {
     popsicles: 1,
     tentacles: 0,
     nested: [
@@ -12,7 +15,7 @@ tap.test("01 - get with wildcards", (t) => {
     ],
   };
 
-  t.strictSame(
+  equal(
     getByKey(source, "*cles"),
     [
       {
@@ -31,7 +34,7 @@ tap.test("01 - get with wildcards", (t) => {
     "01.01"
   );
 
-  t.strictSame(
+  equal(
     getByKey(source, ["*cles"]),
     [
       {
@@ -49,5 +52,6 @@ tap.test("01 - get with wildcards", (t) => {
     ],
     "01.02"
   );
-  t.end();
 });
+
+test.run();

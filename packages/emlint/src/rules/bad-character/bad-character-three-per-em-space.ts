@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/2004/index.htm
 
 function badCharacterThreePerEmSpace(context: Linter): RuleObjType {
-  const charCode = 8196;
+  let charCode = 8196;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/2064/index.htm
 
 function badCharacterInvisiblePlus(context: Linter): RuleObjType {
-  const charCode = 8292;
+  let charCode = 8292;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

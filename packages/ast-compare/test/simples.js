@@ -1,7 +1,8 @@
-import tap from "tap";
-import { compare } from "../dist/ast-compare.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
-const f = () => "zzz";
+import { compare } from "../dist/ast-compare.esm.js";
 
 // (input, objToDelete, strictOrNot)
 
@@ -9,26 +10,16 @@ const f = () => "zzz";
 // Obj - Simples
 // =============
 
-tap.test("01 - plain objects", (t) => {
-  t.strictSame(
-    compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }),
-    true,
-    "01"
-  );
-  t.end();
+test("01 - plain objects", () => {
+  equal(compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }), true, "01");
 });
 
-tap.test("02 - plain objects", (t) => {
-  t.strictSame(
-    compare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }),
-    false,
-    "02"
-  );
-  t.end();
+test("02 - plain objects", () => {
+  equal(compare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }), false, "02");
 });
 
-tap.test("03 - plain objects", (t) => {
-  t.is(
+test("03 - plain objects", () => {
+  is(
     compare(
       { a: "1", b: "2" },
       { a: "1", b: "2", c: "3" },
@@ -37,11 +28,10 @@ tap.test("03 - plain objects", (t) => {
     `The given object has key "c" which the other-one does not have.`,
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - plain objects", (t) => {
-  t.strictSame(
+test("04 - plain objects", () => {
+  equal(
     compare(
       { a: "1", b: "2", c: "3" },
       { a: "1", b: "2" },
@@ -50,33 +40,30 @@ tap.test("04 - plain objects", (t) => {
     false,
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - plain objects", (t) => {
-  t.not(
+test("05 - plain objects", () => {
+  type(
     compare(
       { a: "1", b: "2", c: "3" },
       { a: "1", b: "2" },
       { matchStrictly: true, verboseWhenMismatches: true }
     ),
-    true
+    "string"
   );
-  t.end();
 });
 
-tap.test("06 - plain objects", (t) => {
-  t.strictSame(
+test("06 - plain objects", () => {
+  equal(
     compare({ a: "1", b: "2" }, { a: "1", b: "2" }, { matchStrictly: true }),
     true,
     "06"
   );
-  t.end();
 });
 
-tap.test("07 - plain objects", (t) => {
+test("07 - plain objects", () => {
   // matchStrictly trumps hungryForWhitespace if key count does not match
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "2", c: "\n\n\n" },
       { a: "1", b: "2" },
@@ -85,12 +72,11 @@ tap.test("07 - plain objects", (t) => {
     false,
     "07"
   );
-  t.end();
 });
 
-tap.test("08 - plain objects", (t) => {
+test("08 - plain objects", () => {
   // matchStrictly trumps hungryForWhitespace if key count does not match
-  t.not(
+  type(
     compare(
       { a: "1", b: "2", c: "\n\n\n" },
       { a: "1", b: "2" },
@@ -99,14 +85,14 @@ tap.test("08 - plain objects", (t) => {
         hungryForWhitespace: true,
         verboseWhenMismatches: true,
       }
-    )
+    ),
+    "string"
   );
-  t.end();
 });
 
-tap.test("09 - plain objects - two whitespaces", (t) => {
+test("09 - plain objects - two whitespaces", () => {
   // keys match exactly, different white space matched
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "\t\t\t \n\n\n" },
       { a: "1", b: "     " },
@@ -115,12 +101,11 @@ tap.test("09 - plain objects - two whitespaces", (t) => {
     true,
     "09"
   );
-  t.end();
 });
 
-tap.test("10 - plain objects - whitespace vs empty str", (t) => {
+test("10 - plain objects - whitespace vs empty str", () => {
   // keys match exactly, white space matches to empty string
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "\t\t\t \n\n\n" },
       { a: "1", b: "" },
@@ -129,12 +114,11 @@ tap.test("10 - plain objects - whitespace vs empty str", (t) => {
     true,
     "10"
   );
-  t.end();
 });
 
-tap.test("11 - plain objects - empty str vs whitespace", (t) => {
+test("11 - plain objects - empty str vs whitespace", () => {
   // keys match exactly, empty string matches to white space
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "" },
       { a: "1", b: "\t\t\t \n\n\n" },
@@ -143,12 +127,11 @@ tap.test("11 - plain objects - empty str vs whitespace", (t) => {
     true,
     "11"
   );
-  t.end();
 });
 
-tap.test("12 - plain objects", (t) => {
+test("12 - plain objects", () => {
   // keys match exactly, string does not match to empty string
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "2" },
       { a: "1", b: "     " },
@@ -157,12 +140,11 @@ tap.test("12 - plain objects", (t) => {
     false,
     "12"
   );
-  t.end();
 });
 
-tap.test("13 - plain objects", (t) => {
+test("13 - plain objects", () => {
   // keys match exactly, string does not match to empty string
-  t.not(
+  type(
     compare(
       { a: "1", b: "2" },
       { a: "1", b: "     " },
@@ -172,14 +154,13 @@ tap.test("13 - plain objects", (t) => {
         verboseWhenMismatches: true,
       }
     ),
-    true
+    "string"
   );
-  t.end();
 });
 
-tap.test("14 - plain objects", (t) => {
+test("14 - plain objects", () => {
   // keys match exactly, different white space matched
-  t.strictSame(
+  equal(
     compare(
       { a: "1", b: "\t\t\t \n\n\n" },
       { a: "1", b: "     " },
@@ -188,12 +169,11 @@ tap.test("14 - plain objects", (t) => {
     false,
     "14"
   );
-  t.end();
 });
 
-tap.test("15 - plain objects", (t) => {
+test("15 - plain objects", () => {
   // keys match exactly, different white space matched
-  t.not(
+  type(
     compare(
       { a: "1", b: "\t\t\t \n\n\n" },
       { a: "1", b: "     " },
@@ -203,59 +183,48 @@ tap.test("15 - plain objects", (t) => {
         verboseWhenMismatches: true,
       }
     ),
-    true
+    "string"
   );
-  t.end();
 });
 
-tap.test("16 - comparison of empty plain objects", (t) => {
-  t.strictSame(compare({}, { a: "1", b: "2" }), false, "16");
-  t.end();
+test("16 - comparison of empty plain objects", () => {
+  equal(compare({}, { a: "1", b: "2" }), false, "16");
 });
 
-tap.test("17 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("17 - comparison of empty plain objects", () => {
+  equal(
     compare({}, { a: "1", b: "2" }, { hungryForWhitespace: true }),
     false,
     "17"
   );
-  t.end();
 });
 
-tap.test("18 - comparison of empty plain objects", (t) => {
-  t.strictSame(
-    compare({}, { a: "1", b: "2" }, { matchStrictly: true }),
-    false,
-    "18"
-  );
-  t.end();
+test("18 - comparison of empty plain objects", () => {
+  equal(compare({}, { a: "1", b: "2" }, { matchStrictly: true }), false, "18");
 });
 
-tap.test("19 - comparison of empty plain objects", (t) => {
-  t.strictSame(compare({ a: "1", b: "2", c: "3" }, {}), false, "19");
-  t.end();
+test("19 - comparison of empty plain objects", () => {
+  equal(compare({ a: "1", b: "2", c: "3" }, {}), false, "19");
 });
 
-tap.test("20 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("20 - comparison of empty plain objects", () => {
+  equal(
     compare({ a: "1", b: "2", c: "3" }, {}, { hungryForWhitespace: true }),
     false,
     "20"
   );
-  t.end();
 });
 
-tap.test("21 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("21 - comparison of empty plain objects", () => {
+  equal(
     compare({ a: "1", b: "2", c: "3" }, {}, { matchStrictly: true }),
     false,
     "21"
   );
-  t.end();
 });
 
-tap.test("22 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("22 - comparison of empty plain objects", () => {
+  equal(
     compare(
       { a: "1", b: "2", c: "3" },
       {},
@@ -264,20 +233,14 @@ tap.test("22 - comparison of empty plain objects", (t) => {
     false,
     "22"
   );
-  t.end();
 });
 
-tap.test("23 - comparison of empty plain objects", (t) => {
-  t.strictSame(
-    compare({ a: "1", b: "2", c: "3" }, { a: "\n\n\n" }),
-    false,
-    "23"
-  );
-  t.end();
+test("23 - comparison of empty plain objects", () => {
+  equal(compare({ a: "1", b: "2", c: "3" }, { a: "\n\n\n" }), false, "23");
 });
 
-tap.test("24 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("24 - comparison of empty plain objects", () => {
+  equal(
     compare(
       { a: "1", b: "2", c: "3" },
       { a: "\n\n\n" },
@@ -286,11 +249,10 @@ tap.test("24 - comparison of empty plain objects", (t) => {
     false,
     "24"
   );
-  t.end();
 });
 
-tap.test("25 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("25 - comparison of empty plain objects", () => {
+  equal(
     compare(
       { a: "1", b: "2", c: "3" },
       { a: "\n\n\n" },
@@ -299,11 +261,10 @@ tap.test("25 - comparison of empty plain objects", (t) => {
     false,
     "25"
   );
-  t.end();
 });
 
-tap.test("26 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("26 - comparison of empty plain objects", () => {
+  equal(
     compare(
       { a: "1", b: "2", c: "3" },
       { a: "\n\n\n" },
@@ -312,11 +273,10 @@ tap.test("26 - comparison of empty plain objects", (t) => {
     false,
     "26"
   );
-  t.end();
 });
 
-tap.test("27 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("27 - comparison of empty plain objects", () => {
+  equal(
     compare(
       { a: "1", b: "2", c: "3" },
       { a: "\n\n\n" },
@@ -325,34 +285,30 @@ tap.test("27 - comparison of empty plain objects", (t) => {
     false,
     "27"
   );
-  t.end();
 });
 
-tap.test("28 - comparing two empty plain objects", (t) => {
-  t.strictSame(compare({}, {}), true, "28");
-  t.end();
+test("28 - comparing two empty plain objects", () => {
+  equal(compare({}, {}), true, "28");
 });
 
-tap.test("29 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("29 - comparison of empty plain objects", () => {
+  equal(
     compare({}, {}, { hungryForWhitespace: true, matchStrictly: false }),
     true,
     "29"
   );
-  t.end();
 });
 
-tap.test("30 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("30 - comparison of empty plain objects", () => {
+  equal(
     compare({}, {}, { hungryForWhitespace: true, matchStrictly: true }),
     true,
     "30"
   );
-  t.end();
 });
 
-tap.test("31 - catching row 199 for 100% coverage", (t) => {
-  t.strictSame(
+test("31 - catching row 199 for 100% coverage", () => {
+  equal(
     compare(
       { a: { b: [] } },
       { a: { b: {} } },
@@ -361,76 +317,58 @@ tap.test("31 - catching row 199 for 100% coverage", (t) => {
     true,
     "31"
   );
-  t.end();
 });
 
-tap.test("32 - sneaky similarity", (t) => {
-  t.strictSame(
+test("32 - sneaky similarity", () => {
+  equal(
     compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: ["3"] }),
     false,
     "32"
   );
-  t.end();
 });
 
-tap.test("33 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("33 - comparison of empty plain objects", () => {
+  equal(
     compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: 3 }),
     false,
     "33"
   );
-  t.end();
 });
 
-tap.test("34 - comparison of empty plain objects", (t) => {
-  t.strictSame(
+test("34 - comparison of empty plain objects", () => {
+  equal(
     compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: { d: "3" } }),
     false,
     "34"
   );
-  t.end();
 });
 
-tap.test("35 - big object has one element extra", (t) => {
-  t.strictSame(
-    compare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }),
-    true,
-    "35"
-  );
-  t.end();
+test("35 - big object has one element extra", () => {
+  equal(compare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }), true, "35");
 });
 
-tap.test("36 - small object has one element extra", (t) => {
-  t.strictSame(
-    compare({ a: "1", b: "2" }, { a: "1", b: "2", c: 3 }),
+test("36 - small object has one element extra", () => {
+  equal(compare({ a: "1", b: "2" }, { a: "1", b: "2", c: 3 }), false, "36");
+});
+
+test("37 - object values are arrays, one has a string, another has none", () => {
+  equal(
+    compare(
+      {
+        key: ["a"],
+      },
+      {
+        key: [],
+      }
+    ),
     false,
-    "36"
+    "37"
   );
-  t.end();
 });
 
-tap.test(
-  "37 - object values are arrays, one has a string, another has none",
-  (t) => {
-    t.strictSame(
-      compare(
-        {
-          key: ["a"],
-        },
-        {
-          key: [],
-        }
-      ),
-      false,
-      "37"
-    );
-    t.end();
-  }
-);
-
-tap.test("38 - comparison of empty plain objects", (t) => {
+test("38 - comparison of empty plain objects", () => {
   // relying on default
-  t.not(
+  type(
     compare(
       {
         key: ["a"],
@@ -441,14 +379,15 @@ tap.test("38 - comparison of empty plain objects", (t) => {
       {
         verboseWhenMismatches: true,
       }
-    )
+    ),
+    "string",
+    "38"
   );
-  t.end();
 });
 
-tap.test("39 - comparison of empty plain objects", (t) => {
+test("39 - comparison of empty plain objects", () => {
   // same, default hardcoded
-  t.strictSame(
+  equal(
     compare(
       {
         key: ["a"],
@@ -461,72 +400,59 @@ tap.test("39 - comparison of empty plain objects", (t) => {
     false,
     "39"
   );
-  t.end();
 });
 
-tap.test(
-  "40 - comparison of empty plain objects - hungryForWhitespace",
-  (t) => {
-    t.strictSame(
-      compare(
-        {
-          key: ["a"],
-        },
-        {
-          key: [],
-        },
-        { hungryForWhitespace: true, matchStrictly: false }
-      ),
-      true,
-      "40"
-    );
-    t.end();
-  }
-);
+test("40 - comparison of empty plain objects - hungryForWhitespace", () => {
+  equal(
+    compare(
+      {
+        key: ["a"],
+      },
+      {
+        key: [],
+      },
+      { hungryForWhitespace: true, matchStrictly: false }
+    ),
+    true,
+    "40"
+  );
+});
 
-tap.test(
-  "41 - comparison of empty plain objects - same, default hardcoded",
-  (t) => {
-    t.strictSame(
-      compare(
-        {
-          key: ["a"],
-        },
-        {
-          key: [],
-        },
-        { hungryForWhitespace: false, matchStrictly: true }
-      ),
-      false,
-      "41"
-    );
-    t.end();
-  }
-);
+test("41 - comparison of empty plain objects - same, default hardcoded", () => {
+  equal(
+    compare(
+      {
+        key: ["a"],
+      },
+      {
+        key: [],
+      },
+      { hungryForWhitespace: false, matchStrictly: true }
+    ),
+    false,
+    "41"
+  );
+});
 
-tap.test(
-  "42 - comparison of empty plain objects - matchStrictly trump hungryForWhitespace",
-  (t) => {
-    // matchStrictly trump hungryForWhitespace - element count is uneven hence a falsey result
-    t.strictSame(
-      compare(
-        {
-          key: ["a"],
-        },
-        {
-          key: [],
-        },
-        { hungryForWhitespace: true, matchStrictly: true }
-      ),
-      false,
-      "42"
-    );
-    t.end();
-  }
-);
+test("42 - comparison of empty plain objects - matchStrictly trump hungryForWhitespace", () => {
+  // matchStrictly trump hungryForWhitespace - element count is uneven hence a falsey result
+  equal(
+    compare(
+      {
+        key: ["a"],
+      },
+      {
+        key: [],
+      },
+      { hungryForWhitespace: true, matchStrictly: true }
+    ),
+    false,
+    "42"
+  );
+});
 
-tap.test("43 - empty object with keys vs object with no keys", (t) => {
-  t.strictSame(
+test("43 - empty object with keys vs object with no keys", () => {
+  equal(
     compare(
       { a: "\n" },
       {},
@@ -535,11 +461,10 @@ tap.test("43 - empty object with keys vs object with no keys", (t) => {
     false,
     "43"
   );
-  t.end();
 });
 
-tap.test("44 - empty object with keys vs object with no keys", (t) => {
-  t.strictSame(
+test("44 - empty object with keys vs object with no keys", () => {
+  equal(
     compare(
       { a: "\n" },
       {},
@@ -548,11 +473,10 @@ tap.test("44 - empty object with keys vs object with no keys", (t) => {
     false,
     "44"
   );
-  t.end();
 });
 
-tap.test("45 - empty object with keys vs object with no keys", (t) => {
-  t.strictSame(
+test("45 - empty object with keys vs object with no keys", () => {
+  equal(
     compare(
       { a: "\n" },
       {},
@@ -561,11 +485,10 @@ tap.test("45 - empty object with keys vs object with no keys", (t) => {
     true,
     "45"
   );
-  t.end();
 });
 
-tap.test("46 - empty object with keys vs object with no keys", (t) => {
-  t.strictSame(
+test("46 - empty object with keys vs object with no keys", () => {
+  equal(
     compare(
       { a: "\n" },
       {},
@@ -574,53 +497,40 @@ tap.test("46 - empty object with keys vs object with no keys", (t) => {
     true,
     "46"
   );
-  t.end();
 });
 
-tap.test("47 - Boolean and numeric values", (t) => {
+test("47 - Boolean and numeric values", () => {
   // control - booleans and numbers as obj values
-  t.strictSame(
-    compare({ a: false, b: 2, c: "3" }, { a: false, b: 2 }),
-    true,
-    "47"
-  );
-  t.end();
+  equal(compare({ a: false, b: 2, c: "3" }, { a: false, b: 2 }), true, "47");
 });
 
-tap.test("48 - s is zero length, b is empty - defaults", (t) => {
-  t.strictSame(
+test("48 - s is zero length, b is empty - defaults", () => {
+  equal(
     compare({ a: "\n\n\n   \t\t\t", b: "2" }, { a: "", b: "2" }),
     false,
     "48"
   );
-  t.end();
 });
 
-tap.test(
-  "49 - s is zero length, b is empty - opts.hungryForWhitespace",
-  (t) => {
-    t.strictSame(
-      compare(
-        { a: "\n\n\n   \t\t\t", b: "2" },
-        { a: "", b: "2" },
-        { hungryForWhitespace: true }
-      ),
-      true,
-      "49"
-    );
-    t.end();
-  }
-);
+test("49 - s is zero length, b is empty - opts.hungryForWhitespace", () => {
+  equal(
+    compare(
+      { a: "\n\n\n   \t\t\t", b: "2" },
+      { a: "", b: "2" },
+      { hungryForWhitespace: true }
+    ),
+    true,
+    "49"
+  );
+});
 
-tap.test(
-  "50 - s is zero length, b is empty - opts.hungryForWhitespace",
-  (t) => {
-    // no keys array vs array with all empty vales
-    t.strictSame(
-      compare([{ a: "\n\n\n" }], {}, { hungryForWhitespace: true }),
-      true,
-      "50"
-    );
-    t.end();
-  }
-);
+test("50 - s is zero length, b is empty - opts.hungryForWhitespace", () => {
+  // no keys array vs array with all empty vales
+  equal(
+    compare([{ a: "\n\n\n" }], {}, { hungryForWhitespace: true }),
+    true,
+    "50"
+  );
+});
+
+test.run();

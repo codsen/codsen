@@ -4,7 +4,9 @@ import intersection from "lodash.intersection";
 import pull from "lodash.pull";
 import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface BoolValueObj {
@@ -23,12 +25,12 @@ function combinations(
   // =========
 
   // Creates an n-length array with all possible combinations of true/false
-  type Combi = Array<number[]>;
+  type Combi = number[][];
 
   function combi(n: number): Combi {
-    const r = [];
+    let r = [];
     for (let i = 0; i < 1 << n; i++) {
-      const c = [];
+      let c = [];
       for (let j = 0; j < n; j++) {
         c.push(i & (1 << j) ? 1 : 0);
       }
@@ -54,14 +56,14 @@ function combinations(
     );
   }
 
-  const incomingObject = clone(originalIncomingObject);
-  const overrideObject = clone(originalOverrideObject);
+  let incomingObject = clone(originalIncomingObject);
+  let overrideObject = clone(originalOverrideObject);
 
   // START
   // =====
 
-  const propertiesToMix = Object.keys(incomingObject);
-  const outcomingObjectsArray: BoolValueObj[] = [];
+  let propertiesToMix = Object.keys(incomingObject);
+  let outcomingObjectsArray: BoolValueObj[] = [];
   let propertiesToBeOverridden: string[] = [];
 
   // if there's override, prepare an alternative (a subset) array propertiesToMix
@@ -81,7 +83,7 @@ function combinations(
   // mix up whatever propertiesToMix has came to this point
   // ------------------------------------------------------
 
-  const boolCombinations = combi(Object.keys(propertiesToMix).length);
+  let boolCombinations = combi(Object.keys(propertiesToMix).length);
 
   let tempObject: BoolValueObj;
   boolCombinations.forEach((_elem1, index1) => {
@@ -96,12 +98,12 @@ function combinations(
   // propertiesToMix array:
   // ------------------------------------------------------------------------------
   if (isObj(overrideObject) && Object.keys(overrideObject).length) {
-    outcomingObjectsArray.forEach((elem3) =>
+    outcomingObjectsArray.forEach((elem3) => {
       propertiesToBeOverridden.forEach((elem4) => {
         // eslint-disable-next-line no-param-reassign
         elem3[elem4] = overrideObject[elem4];
-      })
-    );
+      });
+    });
   }
 
   // RETURN

@@ -1,5 +1,6 @@
-import { Linter, RuleObjType } from "../../linter";
 import { left } from "string-left-right";
+
+import { Linter, RuleObjType } from "../../linter";
 
 // rule: tag-void-slash
 // -----------------------------------------------------------------------------
@@ -19,10 +20,10 @@ function tagVoidSlash(
         `███████████████████████████████████████ tagVoidSlash() ███████████████████████████████████████`
       );
       console.log(
-        `022 tagVoidSlash(): ${`\u001b[${35}m${`mode`}\u001b[${39}m`} = "${mode}"`
+        `023 tagVoidSlash(): ${`\u001b[${35}m${`mode`}\u001b[${39}m`} = "${mode}"`
       );
       console.log(
-        `025 tagVoidSlash(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+        `026 tagVoidSlash(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
           node,
           null,
           4
@@ -30,15 +31,15 @@ function tagVoidSlash(
       );
 
       // PROCESSING:
-      const closingBracketPos = node.end - 1;
-      const slashPos: number = left(context.str, closingBracketPos) as number;
-      const leftOfSlashPos = left(context.str, slashPos) || 0;
+      let closingBracketPos = node.end - 1;
+      let slashPos: number = left(context.str, closingBracketPos) as number;
+      let leftOfSlashPos = left(context.str, slashPos) || 0;
 
       if (mode === "never" && node.void && context.str[slashPos] === "/") {
         // if slashes are forbidden on void tags, delete the slash and all
         // the whitespace in front, because there's never a space before
         // non-void tag's closing bracket without a slash, for example, "<span >"
-        console.log(`041 tagVoidSlash(): remove the slash`);
+        console.log(`042 tagVoidSlash(): remove the slash`);
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -66,7 +67,7 @@ function tagVoidSlash(
                   "always"))
           ))
       ) {
-        console.log(`069 tagVoidSlash()`);
+        console.log(`070 tagVoidSlash()`);
         // if slashes are requested on void tags, situation is more complex,
         // because we need to take into the account the rule
         // "tag-space-before-closing-slash"
@@ -77,12 +78,12 @@ function tagVoidSlash(
           context.processedRulesConfig["tag-space-before-closing-slash"][1] ===
             "always"
         ) {
-          console.log(`080 tagVoidSlash()`);
+          console.log(`081 tagVoidSlash()`);
           // space is needed
           // check, maybe space is there
           if (context.str[slashPos + 1] === " ") {
             // but space exists already
-            console.log(`085 tagVoidSlash(): add slash only`);
+            console.log(`086 tagVoidSlash(): add slash only`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -100,7 +101,7 @@ function tagVoidSlash(
             });
           } else {
             // space is missing so add one
-            console.log(`103 tagVoidSlash(): add space and slash`);
+            console.log(`104 tagVoidSlash(): add space and slash`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -124,7 +125,7 @@ function tagVoidSlash(
             context.processedRulesConfig["tag-space-before-closing-slash"] > 0)
         ) {
           // no space needed
-          console.log(`127 tagVoidSlash(): add slash only`);
+          console.log(`128 tagVoidSlash(): add slash only`);
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",

@@ -37,7 +37,7 @@ ianaSpec
   .split("%%")
   .filter((val) => val.trim().length && val.includes("Type:"))
   .forEach((val) => {
-    const splitLinesArr = val.split("\n").filter((val2) => val2.trim().length);
+    let splitLinesArr = val.split("\n").filter((val2) => val2.trim().length);
 
     let type;
     let value;

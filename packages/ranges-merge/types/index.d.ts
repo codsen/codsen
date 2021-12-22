@@ -1,4 +1,5 @@
-declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+import { Ranges } from 'ranges-sort';
+export { Range, Ranges } from 'ranges-sort';
 
 declare const version: string;
 declare type ProgressFn = (percentageDone: number) => void;
@@ -8,6 +9,6 @@ interface Opts {
     joinRangesThatTouchEdges: boolean;
 }
 declare const defaults: Opts;
-declare function rMerge(arrOfRanges: Range[] | null, originalOpts?: Partial<Opts>): Range[] | null;
+declare function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges;
 
 export { defaults, rMerge, version };

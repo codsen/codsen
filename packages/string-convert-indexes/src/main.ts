@@ -2,12 +2,18 @@
 
 import { traverse } from "ast-monkey-traverse";
 import GraphemeSplitter from "grapheme-splitter";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 // inner function, common for both external API's methods that does the job:
-function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
-  function isItOk(something: any) {
+function strConvertIndexes(
+  mode: "n" | "u",
+  str: string,
+  indexes: any
+): string | number {
+  function isItOk(something: any): boolean {
     if (
       !["string", "number"].includes(typeof something) ||
       (typeof something === "string" && !/^\d*$/.test(something)) ||
@@ -20,7 +26,7 @@ function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
     }
     return true;
   }
-  function oneNativeToUnicode(graphemeStrArr: string[], idx: number) {
+  function oneNativeToUnicode(graphemeStrArr: string[], idx: number): number {
     // we count what is the range of indexes current grapheme covers,
     // then return if given index falls in-between
     let currLowerIdx = 0;
@@ -30,7 +36,7 @@ function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
       currUpperIdx += graphemeStrArr[i].length;
 
       console.log(
-        `033 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
+        `039 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
           graphemeStrArr[i]
         } (${graphemeStrArr[i].split("").length})`
       );
@@ -48,7 +54,7 @@ function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
     );
   }
 
-  function oneUnicodeToNative(graphemeStrArr: string[], idx: number) {
+  function oneUnicodeToNative(graphemeStrArr: string[], idx: number): number {
     if (idx >= graphemeStrArr.length) {
       throw new Error(
         `string-convert-indexes: [THROW_ID_06] the index to convert, ${idx}, is not covered by graphemes length!`
@@ -78,14 +84,14 @@ function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
 
   // ---------------------------------------------------------------------------
 
-  const splitter = new GraphemeSplitter();
-  const graphemeStrArr = splitter.splitGraphemes(str);
+  let splitter = new GraphemeSplitter();
+  let graphemeStrArr = splitter.splitGraphemes(str);
 
   // easy - index will be the total count of all native JS index characters
   // leading up to this
 
   if (["string", "number"].includes(typeof indexes)) {
-    console.log(`088 ██ no AST`);
+    console.log(`094 ██ no AST`);
     // no need for traversal
     // validate
     if (isItOk(indexes)) {
@@ -110,11 +116,11 @@ function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
       )} (${typeof indexes})`
     );
   } else if (indexes && typeof indexes === "object") {
-    console.log(`113 ██ AST - traverse!`);
+    console.log(`119 ██ AST - traverse!`);
     // if it's array or object, traverse
     return mode === "u"
       ? traverse(indexes, (key, val, innerObj) => {
-          const current = val !== undefined ? val : key;
+          let current = val !== undefined ? val : key;
           if (["string", "number"].includes(typeof current)) {
             // process it then
             if (isItOk(current)) {
@@ -134,7 +140,7 @@ function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
           return current;
         })
       : traverse(indexes, (key, val, innerObj) => {
-          const current = val !== undefined ? val : key;
+          let current = val !== undefined ? val : key;
           if (["string", "number"].includes(typeof current)) {
             // process it then
             if (isItOk(current)) {

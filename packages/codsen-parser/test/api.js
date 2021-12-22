@@ -1,108 +1,105 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { cparser } from "../dist/codsen-parser.esm.js";
 
-tap.throws(
-  "00.01 - 1st arg missing",
-  () => {
-    cparser();
-  },
-  /THROW_ID_01/g,
-  "00.01"
-);
+test("01", () => {
+  throws(
+    () => {
+      cparser();
+    },
+    /THROW_ID_01/g,
+    "00.01"
+  );
 
-tap.throws(
-  "00.02 - 1st arg of a wrong type",
-  () => {
-    cparser(true);
-  },
-  /THROW_ID_02/g,
-  "00.02"
-);
+  throws(
+    () => {
+      cparser(true);
+    },
+    /THROW_ID_02/g,
+    "00.02"
+  );
 
-tap.throws(
-  "00.03 - 2nd arg (opts) is wrong",
-  () => {
-    cparser("a", "z");
-  },
-  /THROW_ID_03/g,
-  "00.03"
-);
+  throws(
+    () => {
+      cparser("a", "z");
+    },
+    /THROW_ID_03/g,
+    "00.03"
+  );
 
-tap.throws(
-  () => {
-    cparser("a", { tagCb: "z" });
-  },
-  /THROW_ID_04/g,
-  "00.04 - opts.tagCb() is wrong"
-);
+  throws(
+    () => {
+      cparser("a", { tagCb: "z" });
+    },
+    /THROW_ID_04/g,
+    "00.04 - opts.tagCb() is wrong"
+  );
 
-tap.throws(
-  () => {
-    cparser("a", { charCb: "z" });
-  },
-  /THROW_ID_05/g,
-  "00.05 - opts.charCb() is wrong"
-);
+  throws(
+    () => {
+      cparser("a", { charCb: "z" });
+    },
+    /THROW_ID_05/g,
+    "00.05 - opts.charCb() is wrong"
+  );
 
-tap.throws(
-  "00.06 - opts.reportProgressFunc is wrong",
-  () => {
-    cparser("a", { reportProgressFunc: "z" });
-  },
-  /THROW_ID_06/g,
-  "00.06"
-);
+  throws(
+    () => {
+      cparser("a", { reportProgressFunc: "z" });
+    },
+    /THROW_ID_06/g,
+    "00.06"
+  );
 
-tap.throws(
-  "00.07 - opts.errCb is wrong",
-  () => {
-    cparser("a", { errCb: "z" });
-  },
-  /THROW_ID_07/g,
-  "00.07"
-);
+  throws(
+    () => {
+      cparser("a", { errCb: "z" });
+    },
+    /THROW_ID_07/g,
+    "00.07"
+  );
+});
 
-tap.test("01 - opts.tagCb", (t) => {
-  const gathered = [];
+test("01 - opts.tagCb", () => {
+  let gathered = [];
   cparser("  <a>z", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
 
-  t.hasStrict(
-    gathered,
-    [
-      {
-        type: "text",
-        start: 0,
-        end: 2,
-      },
-      {
-        type: "tag",
-        start: 2,
-        end: 5,
-      },
-      {
-        type: "text",
-        start: 5,
-        end: 6,
-      },
-    ],
-    "01"
-  );
-  t.end();
+  compare(ok, gathered, [
+    {
+      type: "text",
+      start: 0,
+      end: 2,
+    },
+    {
+      type: "tag",
+      start: 2,
+      end: 5,
+    },
+    {
+      type: "text",
+      start: 5,
+      end: 6,
+    },
+  ]);
 });
 
-tap.test("02 - opts.charCb", (t) => {
-  const gathered = [];
+test("02 - opts.charCb", () => {
+  let gathered = [];
   cparser("<a>z1", {
     charCb: (obj) => {
       gathered.push(obj);
     },
   });
 
-  t.hasStrict(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -133,5 +130,6 @@ tap.test("02 - opts.charCb", (t) => {
     ],
     "02"
   );
-  t.end();
 });
+
+test.run();

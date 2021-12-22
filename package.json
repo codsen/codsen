@@ -1,74 +1,137 @@
 {
-  "name": "codsen-monorepo",
-  "version": "0.0.0-ignore",
-  "description": "Monorepo of all our npm libraries",
-  "license": "MIT",
+  "name": "codsen-mono",
+  "version": "0.0.0",
   "private": true,
-  "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
-  },
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com",
-  "author": "Roy Revelt <roy@codsen.com>",
+  "workspaces": [
+    "apps/*",
+    "components/*",
+    "packages/*"
+  ],
   "type": "module",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
   "scripts": {
-    "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist --ignore-scripts",
-    "build": "lerna run build --bail --concurrency 1",
-    "build:info": "node ./scripts/generate-info.js",
-    "build:playgrounds": "node ./scripts/fetch-webapps-json.js",
-    "build:packageExamples": "node ./scripts/packageExamples.js",
-    "build:packageJsons": "node scripts/packageJsons.js",
-    "build:readme": "node ./scripts/generate-readme.js",
-    "cm": "git-cz -n",
-    "changed": "lerna changed",
-    "format": "lerna run format",
-    "fresh": "npm run wipe && npm run build",
-    "lect": "make run-lect",
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "unit": "turbo run unit",
+    "perf": "turbo run perf",
+    "lect": "turbo run lect",
+    "format": "prettier --write '**/*.{ts,tsx,.md}'",
+    "deploy": "echo 'would deploy'",
+    "house": "uvu ops/helpers",
+    "turbo": "turbo",
     "lerna": "lerna",
-    "pub:vers": "lerna version --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
-    "republish": "lerna run republish",
-    "test": "FORCE_COLOR=1 lerna run test --bail --concurrency 1 && npm run build:readme && npm run build:info",
-    "test:ci": "FORCE_COLOR=1 lerna run test:ci --bail",
-    "test:only": "FORCE_COLOR=1 lerna run unittest --bail --concurrency 1 && npm run build:readme && npm run build:info",
-    "test:examples": "FORCE_COLOR=1 lerna run test:examples",
-    "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && npm run bootstrap",
+    "cm": "git-cz -n",
+    "ci:fetch:webapps": "node ./ops/scripts/fetch-webapps-json.js",
+    "ci:generate:info": "node ./ops/scripts/generate-info.js",
+    "ci:build:root-readme": "node ./ops/scripts/generate-readme.js",
+    "ci:lerna:version": "lerna version --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
+    "ci:publish:all": "echo 'we would run turbo run letspublishme'",
     "graph": "lerna-dependency-graph -f 'png' -o './deps-graph.png'",
-    "checkPublishedSizeLimit": "node ./scripts/check100MBLimit.js"
+    "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && yarn"
   },
-  "dependencies": {},
+  "turbo": {
+    "pipeline": {
+      "build": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "dist/**",
+          "types/**",
+          ".next/**"
+        ]
+      },
+      "test": {
+        "dependsOn": [
+          "lect",
+          "build"
+        ],
+        "outputs": []
+      },
+      "lint": {
+        "outputs": []
+      },
+      "unit": {
+        "dependsOn": [
+          "build"
+        ],
+        "outputs": []
+      },
+      "dev": {
+        "outputs": [],
+        "cache": false
+      },
+      "lect": {
+        "outputs": [],
+        "cache": false
+      },
+      "letspublish": {
+        "outputs": [],
+        "cache": false
+      },
+      "perf": {
+        "outputs": [],
+        "cache": false
+      },
+      "examples": {
+        "outputs": [],
+        "cache": false
+      },
+      "prepare": {
+        "dependsOn": [
+          "build", "unit", "examples", "lint"
+        ]
+      }
+    }
+  },
   "devDependencies": {
-    "@swc/cli": "^0.1.52",
-    "@swc/core": "^1.2.116",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/parser": "^5.5.0",
+    "@logux/eslint-config": "^46.1.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
     "axios": "^0.24.0",
     "benchmark": "^2.1.4",
+    "c8": "^7.10.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
-    "edit-package-json": "^0.5.7",
-    "esbuild": "^0.14.1",
-    "eslint": "^8.3.0",
+    "dequal": "^2.0.2",
+    "esbuild": "^0.14.7",
+    "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prefer-let": "^3.0.1",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-row-num": "^2.0.1",
     "eslint-plugin-test-num": "^2.0.1",
-    "esm": "^3.2.25",
     "execa": "^6.0.0",
-    "lect": "^0.18.7",
+    "json-comb-core": "^7.0.7",
     "lerna": "^4.0.0",
     "lerna-clean-changelogs-cli": "^2.0.7",
     "lerna-dependency-graph": "^1.1.0",
+    "lodash.partition": "^4.6.0",
+    "lodash.camelcase": "^4.3.0",
+    "perf-ref": "^1.0.3",
+    "prettier": "^2.5.1",
     "object-path": "^0.11.8",
-    "prettier": "^2.5.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.60.2",
+    "rollup-plugin-dts": "^4.0.1",
     "simple-git": "^2.48.0",
-    "tap-parse-string-to-object": "^3.0.7",
-    "title": "^3.4.3",
-    "typescript": "^4.5.2",
-    "write-file-atomic": "^3.0.3"
+    "tempy": "^2.0.0",
+    "turbo": "latest",
+    "typescript": "^4.5.3",
+    "uvu": "^0.5.2"
   }
 }

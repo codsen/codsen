@@ -22,7 +22,7 @@ const attributeRequired: AttributeRequired = (context, opts) => {
       //   `022 attributeRequired(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
-      const normalisedOpts = opts || {};
+      let normalisedOpts = opts || {};
 
       if (
         isObj(normalisedOpts) &&

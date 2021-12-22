@@ -1,102 +1,91 @@
-import tap from "tap";
-import { isAttrClosing as is } from "../dist/is-html-attribute-closing.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js";
 // const BACKSLASH = "\u005C";
 const doubleQuotes = `\u0022`;
 
 // -----------------------------------------------------------------------------
 
 const str1 = `<span width="${doubleQuotes}100">`;
-tap.test(`01 - double opening, space`, (t) => {
-  t.false(is(str1, 12, 13), "01");
-  t.end();
+test(`01 - double opening, space`, () => {
+  not.ok(isCl(str1, 12, 13), "01");
 });
 
-tap.test(`02 - double opening, space`, (t) => {
-  t.true(is(str1, 12, 17), "02");
-  t.end();
+test(`02 - double opening, space`, () => {
+  ok(isCl(str1, 12, 17), "02");
 });
 
 // -----------------------------------------------------------------------------
 
 const str2 = `<span width="${doubleQuotes} 100">`;
-tap.test(`03 - double opening, space`, (t) => {
-  t.false(is(str2, 12, 13), "03");
-  t.end();
+test(`03 - double opening, space`, () => {
+  not.ok(isCl(str2, 12, 13), "03");
 });
 
-tap.test(`04 - double opening, space`, (t) => {
-  t.true(is(str2, 12, 18), "04");
-  t.end();
+test(`04 - double opening, space`, () => {
+  ok(isCl(str2, 12, 18), "04");
 });
 
 // -----------------------------------------------------------------------------
 
 const str3 = `<span width="${doubleQuotes}100" height="200">`;
 // <span width=""100" height="200">
-tap.test(`05 - double opening, tight`, (t) => {
-  t.false(is(str3, 12, 13), "05");
-  t.end();
+test(`05 - double opening, tight`, () => {
+  not.ok(isCl(str3, 12, 13), "05");
 });
 
-tap.test(`06 - double opening, tight`, (t) => {
-  t.true(is(str3, 12, 17), "06"); // <---
-  t.end();
+test(`06 - double opening, tight`, () => {
+  ok(isCl(str3, 12, 17), "06"); // <---
 });
 
-tap.test(`07 - double opening, tight`, (t) => {
-  t.false(is(str3, 12, 26), "07");
-  t.end();
+test(`07 - double opening, tight`, () => {
+  not.ok(isCl(str3, 12, 26), "07");
 });
 
-tap.test(`08 - double opening, tight`, (t) => {
-  t.false(is(str3, 12, 30), "08");
-  t.end();
+test(`08 - double opening, tight`, () => {
+  not.ok(isCl(str3, 12, 30), "08");
 });
 
 // -----------------------------------------------------------------------------
 
 const str4 = `<span width="${doubleQuotes} 100" height="200">`;
 // <span width="" 100" height="200">
-tap.test(`09 - double opening, space`, (t) => {
-  t.false(is(str4, 12, 13), "09");
-  t.end();
+test(`09 - double opening, space`, () => {
+  not.ok(isCl(str4, 12, 13), "09");
 });
 
-tap.test(`10 - double opening, space`, (t) => {
-  t.true(is(str4, 12, 18), "10"); // <---
-  t.end();
+test(`10 - double opening, space`, () => {
+  ok(isCl(str4, 12, 18), "10"); // <---
 });
 
-tap.test(`11 - double opening, space`, (t) => {
-  t.false(is(str4, 12, 27), "11");
-  t.end();
+test(`11 - double opening, space`, () => {
+  not.ok(isCl(str4, 12, 27), "11");
 });
 
-tap.test(`12 - double opening, space`, (t) => {
-  t.false(is(str4, 12, 31), "12");
-  t.end();
+test(`12 - double opening, space`, () => {
+  not.ok(isCl(str4, 12, 31), "12");
 });
 
 // -----------------------------------------------------------------------------
 
 const str5 = `<span width="${doubleQuotes} 100" height='200'>`;
 // <span width="" 100" height="200">
-tap.test(`13 - double opening, space, single quotes attr`, (t) => {
-  t.false(is(str5, 12, 13), "13");
-  t.end();
+test(`13 - double opening, space, single quotes attr`, () => {
+  not.ok(isCl(str5, 12, 13), "13");
 });
 
-tap.test(`14 - double opening, space, single quotes attr`, (t) => {
-  t.true(is(str5, 12, 18), "14"); // <---
-  t.end();
+test(`14 - double opening, space, single quotes attr`, () => {
+  ok(isCl(str5, 12, 18), "14"); // <---
 });
 
-tap.test(`15 - double opening, space, single quotes attr`, (t) => {
-  t.false(is(str5, 12, 27), "15");
-  t.end();
+test(`15 - double opening, space, single quotes attr`, () => {
+  not.ok(isCl(str5, 12, 27), "15");
 });
 
-tap.test(`16 - double opening, space, single quotes attr`, (t) => {
-  t.false(is(str5, 12, 31), "16");
-  t.end();
+test(`16 - double opening, space, single quotes attr`, () => {
+  not.ok(isCl(str5, 12, 31), "16");
 });
+
+test.run();

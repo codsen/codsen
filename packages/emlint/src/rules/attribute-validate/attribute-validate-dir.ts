@@ -41,7 +41,7 @@ function attributeValidateDir(context: Linter): RuleObjType {
         }
 
         // check in two parts, first, a quick try, match the most common values only
-        const errorArr = validateString(
+        let errorArr = validateString(
           node.attribValueRaw, // value
           node.attribValueStartsAt as number, // offset
           {

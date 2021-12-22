@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/009b/index.htm
 
 function badCharacterControlSequenceIntroducer(context: Linter): RuleObjType {
-  const charCode = 155;
+  let charCode = 155;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

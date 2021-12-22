@@ -1,16 +1,19 @@
 /* eslint no-template-curly-in-string: 0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { jVar } from "../dist/json-variables.esm.js";
 
-tap.test("01 - UTIL > single markers in the values", (t) => {
-  t.doesNotThrow(() => {
+test("01 - UTIL > single markers in the values", () => {
+  not.throws(() => {
     jVar({
       a: "z",
       b: "%%_",
     });
   }, "01.01");
-  t.doesNotThrow(() => {
+  not.throws(() => {
     jVar(
       {
         a: "z",
@@ -22,7 +25,7 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
     );
   }, "01.02");
 
-  t.throws(() => {
+  throws(() => {
     jVar(
       {
         a: "z",
@@ -34,13 +37,13 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
     );
   }, /THROW_ID_16/);
 
-  t.doesNotThrow(() => {
+  not.throws(() => {
     jVar({
       a: "z",
       b: "%%-",
     });
   }, "01.04");
-  t.doesNotThrow(() => {
+  not.throws(() => {
     jVar(
       {
         a: "z",
@@ -52,7 +55,7 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
     );
   }, "01.05");
 
-  t.throws(() => {
+  throws(() => {
     jVar(
       {
         a: "z",
@@ -63,5 +66,6 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
       }
     );
   }, /THROW_ID_16/);
-  t.end();
 });
+
+test.run();

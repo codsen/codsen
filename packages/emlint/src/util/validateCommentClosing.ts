@@ -3,7 +3,7 @@ import { CommentToken } from "../../../codsen-tokenizer/src/util/util";
 import { ErrorObj } from "./commonTypes";
 
 function validateCommentClosing(token: CommentToken): ErrorObj[] {
-  const reference = {
+  let reference = {
     simple: "-->",
     only: "<![endif]-->",
     not: "<!--<![endif]-->",
@@ -26,7 +26,7 @@ function validateCommentClosing(token: CommentToken): ErrorObj[] {
     return [];
   }
 
-  const errorArr: ErrorObj[] = [];
+  let errorArr: ErrorObj[] = [];
 
   // assemble string without whitespace:
   let valueWithoutWhitespace = "";

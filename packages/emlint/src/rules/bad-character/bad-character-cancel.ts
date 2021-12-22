@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/0018/index.htm
 
 function badCharacterCancel(context: Linter): RuleObjType {
-  const charCode = 24;
+  let charCode = 24;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

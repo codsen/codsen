@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/2067/index.htm
 
 function badCharacterRightToLeftIsolate(context: Linter): RuleObjType {
-  const charCode = 8295;
+  let charCode = 8295;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

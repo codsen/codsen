@@ -32,7 +32,7 @@ function attributeValidateHeight(context: Linter): RuleObjType {
           });
         }
 
-        const errorArr = validateDigitAndUnit(
+        let errorArr = validateDigitAndUnit(
           node.attribValueRaw,
           node.attribValueStartsAt as number,
           {

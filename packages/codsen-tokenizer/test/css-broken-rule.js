@@ -1,11 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { compare } from "ast-compare";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // css broken rule
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - repeated closing curlies`, (t) => {
-  const gathered = [];
+test(`01 - repeated closing curlies`, () => {
+  let gathered = [];
   ct(
     `<style>
 .a{x}}
@@ -17,7 +21,7 @@ tap.test(`01 - repeated closing curlies`, (t) => {
       },
     }
   );
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -143,20 +147,19 @@ tap.test(`01 - repeated closing curlies`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
 // missing semicols in head CSS
 // -----------------------------------------------------------------------------
 
-tap.test(`02 - missing semicol`, (t) => {
-  const gathered = [];
+test(`02 - missing semicol`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c d:e;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -234,17 +237,16 @@ tap.test(`02 - missing semicol`, (t) => {
     ],
     "02"
   );
-  t.end();
 });
 
-tap.test(`03 - missing semicol, !important on the left`, (t) => {
-  const gathered = [];
+test(`03 - missing semicol, !important on the left`, () => {
+  let gathered = [];
   ct(`<style>.a{b:c !important d:e;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -322,17 +324,16 @@ tap.test(`03 - missing semicol, !important on the left`, (t) => {
     ],
     "03"
   );
-  t.end();
 });
 
-tap.test(`04 - missing semicol`, (t) => {
-  const gathered = [];
+test(`04 - missing semicol`, () => {
+  let gathered = [];
   ct(`<style>.a{color: red text-align: left;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -393,20 +394,19 @@ tap.test(`04 - missing semicol`, (t) => {
     },
     "04"
   );
-  t.end();
 });
 
 // missing value
 // -----------------------------------------------------------------------------
 
-tap.test(`05 - missing value`, (t) => {
-  const gathered = [];
+test(`05 - missing value`, () => {
+  let gathered = [];
   ct(`<style>.a{b}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -446,17 +446,16 @@ tap.test(`05 - missing value`, (t) => {
     },
     "05"
   );
-  t.end();
 });
 
-tap.test(`06 - missing value, trailing space`, (t) => {
-  const gathered = [];
+test(`06 - missing value, trailing space`, () => {
+  let gathered = [];
   ct(`<style>.a{b }</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -502,17 +501,16 @@ tap.test(`06 - missing value, trailing space`, (t) => {
     },
     "06"
   );
-  t.end();
 });
 
-tap.test(`07 - missing value but colon present`, (t) => {
-  const gathered = [];
+test(`07 - missing value but colon present`, () => {
+  let gathered = [];
   ct(`<style>.a{b:}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -552,17 +550,16 @@ tap.test(`07 - missing value but colon present`, (t) => {
     },
     "07"
   );
-  t.end();
 });
 
-tap.test(`08 - missing value but semi present`, (t) => {
-  const gathered = [];
+test(`08 - missing value but semi present`, () => {
+  let gathered = [];
   ct(`<style>.a{b;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -602,17 +599,16 @@ tap.test(`08 - missing value but semi present`, (t) => {
     },
     "08"
   );
-  t.end();
 });
 
-tap.test(`09 - missing value, both colon and semicolon present`, (t) => {
-  const gathered = [];
+test(`09 - missing value, both colon and semicolon present`, () => {
+  let gathered = [];
   ct(`<style>.a{b:;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -652,20 +648,19 @@ tap.test(`09 - missing value, both colon and semicolon present`, (t) => {
     },
     "09"
   );
-  t.end();
 });
 
 // not a colon is separating the key and value
 // -----------------------------------------------------------------------------
 
-tap.test(`10 - semi instead of a colon - baseline, correct`, (t) => {
-  const gathered = [];
+test(`10 - semi instead of a colon - baseline, correct`, () => {
+  let gathered = [];
   ct(`<style>div { float: left; }</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -717,17 +712,16 @@ tap.test(`10 - semi instead of a colon - baseline, correct`, (t) => {
     },
     "10"
   );
-  t.end();
 });
 
-tap.test(`11 - semi instead of a colon`, (t) => {
-  const gathered = [];
+test(`11 - semi instead of a colon`, () => {
+  let gathered = [];
   ct(`<style>div { float; left; }</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -800,17 +794,16 @@ tap.test(`11 - semi instead of a colon`, (t) => {
     },
     "11"
   );
-  t.end();
 });
 
-tap.test(`12 - semi instead of a colon, tight`, (t) => {
-  const gathered = [];
+test(`12 - semi instead of a colon, tight`, () => {
+  let gathered = [];
   ct(`<style>div{float;left;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -865,17 +858,16 @@ tap.test(`12 - semi instead of a colon, tight`, (t) => {
     },
     "12"
   );
-  t.end();
 });
 
-tap.test(`13 - abrupty ended code`, (t) => {
-  const gathered = [];
+test(`13 - abrupty ended code`, () => {
+  let gathered = [];
   ct(`<style>.a{color: red`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -915,17 +907,16 @@ tap.test(`13 - abrupty ended code`, (t) => {
     },
     "13"
   );
-  t.end();
 });
 
-tap.test(`14 - abrupty ended second css rule`, (t) => {
-  const gathered = [];
+test(`14 - abrupty ended second css rule`, () => {
+  let gathered = [];
   ct(`<style>.a{color:red; text-align`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered[1],
     {
       type: "rule",
@@ -986,19 +977,17 @@ tap.test(`14 - abrupty ended second css rule`, (t) => {
     },
     "14"
   );
-  t.end();
 });
 
-tap.test(`15 - abrupty ended second css rule`, (t) => {
-  const gathered = [];
+test(`15 - abrupty ended second css rule`, () => {
+  let gathered = [];
   ct(`<style>.a{color:red; text-align</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1066,22 +1055,20 @@ tap.test(`15 - abrupty ended second css rule`, (t) => {
         start: 31,
         end: 39,
       },
-    ],
+    ]),
     "15"
   );
-  t.end();
 });
 
-tap.test(`16 - nothing after colon`, (t) => {
-  const gathered = [];
+test(`16 - nothing after colon`, () => {
+  let gathered = [];
   ct(`<style>.a{ color: }</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1142,20 +1129,19 @@ tap.test(`16 - nothing after colon`, (t) => {
         end: 27,
         value: "</style>",
       },
-    ],
+    ]),
     "16"
   );
-  t.end();
 });
 
-tap.test(`17 - semi before !important`, (t) => {
-  const gathered = [];
+test(`17 - semi before !important`, () => {
+  let gathered = [];
   ct(`<style>.a{color:red; !important;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -1233,17 +1219,16 @@ tap.test(`17 - semi before !important`, (t) => {
     ],
     "17"
   );
-  t.end();
 });
 
-tap.test(`18`, (t) => {
-  const gathered = [];
+test(`18`, () => {
+  let gathered = [];
   ct(`<style>.a{color:red!IMPOTANT;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -1300,17 +1285,16 @@ tap.test(`18`, (t) => {
     ],
     "18"
   );
-  t.end();
 });
 
-tap.test(`19`, (t) => {
-  const gathered = [];
+test(`19`, () => {
+  let gathered = [];
   ct(`<style>.a{color:red;!IMPOTANT}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -1382,17 +1366,16 @@ tap.test(`19`, (t) => {
     ],
     "19"
   );
-  t.end();
 });
 
-tap.test(`20`, (t) => {
-  const gathered = [];
+test(`20`, () => {
+  let gathered = [];
   ct(`<style>.a{color:red important}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -1449,17 +1432,16 @@ tap.test(`20`, (t) => {
     ],
     "20"
   );
-  t.end();
 });
 
-tap.test(`21`, (t) => {
-  const gathered = [];
+test(`21`, () => {
+  let gathered = [];
   ct(`<style>.a{color:red 1important}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -1516,19 +1498,17 @@ tap.test(`21`, (t) => {
     ],
     "21"
   );
-  t.end();
 });
 
-tap.test(`22 - rogue letter`, (t) => {
-  const gathered = [];
+test(`22 - rogue letter`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;x}.b{color: red}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1622,22 +1602,20 @@ tap.test(`22 - rogue letter`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "22"
   );
-  t.end();
 });
 
-tap.test(`23 - rogue hash`, (t) => {
-  const gathered = [];
+test(`23 - rogue hash`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;#}.b{color: red}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1731,22 +1709,20 @@ tap.test(`23 - rogue hash`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "23"
   );
-  t.end();
 });
 
-tap.test(`24 - rogue quote`, (t) => {
-  const gathered = [];
+test(`24 - rogue quote`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;"}.b{color: red}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1840,22 +1816,20 @@ tap.test(`24 - rogue quote`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "24"
   );
-  t.end();
 });
 
-tap.test(`25 - rogue quote+bracket, curlies follow`, (t) => {
-  const gathered = [];
+test(`25 - rogue quote+bracket, curlies follow`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;x">color: red}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -1922,22 +1896,20 @@ tap.test(`25 - rogue quote+bracket, curlies follow`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "25"
   );
-  t.end();
 });
 
-tap.test(`26`, (t) => {
-  const gathered = [];
+test(`26`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;">color: red}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
-    gathered,
-    [
+  ok(
+    compare(gathered, [
       {
         type: "tag",
         start: 0,
@@ -2004,20 +1976,19 @@ tap.test(`26`, (t) => {
           },
         ],
       },
-    ],
+    ]),
     "26"
   );
-  t.end();
 });
 
-tap.test(`27 - spillage from HTML styles - rogue quote+bracket`, (t) => {
-  const gathered = [];
+test(`27 - spillage from HTML styles - rogue quote+bracket`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;x">.b,.c{color: red}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2130,17 +2101,16 @@ tap.test(`27 - spillage from HTML styles - rogue quote+bracket`, (t) => {
     ],
     "27"
   );
-  t.end();
 });
 
-tap.test(`28 - rogue quote+bracket, curlies follow`, (t) => {
-  const gathered = [];
+test(`28 - rogue quote+bracket, curlies follow`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;">}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2212,17 +2182,16 @@ tap.test(`28 - rogue quote+bracket, curlies follow`, (t) => {
     ],
     "28"
   );
-  t.end();
 });
 
-tap.test(`29`, (t) => {
-  const gathered = [];
+test(`29`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;"}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2294,17 +2263,16 @@ tap.test(`29`, (t) => {
     ],
     "29"
   );
-  t.end();
 });
 
-tap.test(`30 - repeated semi, tight`, (t) => {
-  const gathered = [];
+test(`30 - repeated semi, tight`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2376,17 +2344,16 @@ tap.test(`30 - repeated semi, tight`, (t) => {
     ],
     "30"
   );
-  t.end();
 });
 
-tap.test(`31 - repeated semi, space in front`, (t) => {
-  const gathered = [];
+test(`31 - repeated semi, space in front`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left; ;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2464,17 +2431,16 @@ tap.test(`31 - repeated semi, space in front`, (t) => {
     ],
     "31"
   );
-  t.end();
 });
 
-tap.test(`32 - repeated semi, tab in front`, (t) => {
-  const gathered = [];
+test(`32 - repeated semi, tab in front`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;\t;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2552,17 +2518,16 @@ tap.test(`32 - repeated semi, tab in front`, (t) => {
     ],
     "32"
   );
-  t.end();
 });
 
-tap.test(`33 - repeated semi, space after, bracket`, (t) => {
-  const gathered = [];
+test(`33 - repeated semi, space after, bracket`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;; }`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2640,17 +2605,16 @@ tap.test(`33 - repeated semi, space after, bracket`, (t) => {
     ],
     "33"
   );
-  t.end();
 });
 
-tap.test(`34 - repeated semi, space after, bracket missing`, (t) => {
-  const gathered = [];
+test(`34 - repeated semi, space after, bracket missing`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;; </style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2749,17 +2713,16 @@ tap.test(`34 - repeated semi, space after, bracket missing`, (t) => {
     ],
     "34"
   );
-  t.end();
 });
 
-tap.test(`35 - repeated semi, space after, new property follows`, (t) => {
-  const gathered = [];
+test(`35 - repeated semi, space after, new property follows`, () => {
+  let gathered = [];
   ct(`<style>.a{float:left;; color:red;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2852,17 +2815,16 @@ tap.test(`35 - repeated semi, space after, new property follows`, (t) => {
     ],
     "35"
   );
-  t.end();
 });
 
-tap.test(`36`, (t) => {
-  const gathered = [];
+test(`36`, () => {
+  let gathered = [];
   ct(`<style>a{;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2919,17 +2881,16 @@ tap.test(`36`, (t) => {
     ],
     "36"
   );
-  t.end();
 });
 
-tap.test(`37`, (t) => {
-  const gathered = [];
+test(`37`, () => {
+  let gathered = [];
   ct(`<style>a{ ; }`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -2998,17 +2959,16 @@ tap.test(`37`, (t) => {
     ],
     "37"
   );
-  t.end();
 });
 
-tap.test(`38`, (t) => {
-  const gathered = [];
+test(`38`, () => {
+  let gathered = [];
   ct(`<style>.a{;;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  equal(
     gathered,
     [
       {
@@ -3080,17 +3040,18 @@ tap.test(`38`, (t) => {
     ],
     "38"
   );
-  t.end();
 });
 
-tap.todo(`<style>.a{b:c z`);
-tap.todo(`<style>.a{b:c?`);
-tap.todo(`<style>.a{b:c ?`);
-tap.todo(`<style>.a{b:c?important;`);
-tap.todo(`<style>.a{b:c ?important;`);
-tap.todo(`<style>.a{b:c1important;`);
-tap.todo(`<style>.a{b:c 1important;`);
+test.skip(`<style>.a{b:c z`);
+test.skip(`<style>.a{b:c?`);
+test.skip(`<style>.a{b:c ?`);
+test.skip(`<style>.a{b:c?important;`);
+test.skip(`<style>.a{b:c ?important;`);
+test.skip(`<style>.a{b:c1important;`);
+test.skip(`<style>.a{b:c 1important;`);
 
 // also,
-tap.todo(`<style.a{b:c !important;}</style>`);
-tap.todo(`<style\n.a{b:c !important;}</style>`);
+test.skip(`<style.a{b:c !important;}</style>`);
+test.skip(`<style\n.a{b:c !important;}</style>`);
+
+test.run();

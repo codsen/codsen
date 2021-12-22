@@ -1,20 +1,20 @@
-import tap from "tap";
-import { compare } from "../dist/ast-compare.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
-const f = () => "zzz";
+import { compare } from "../dist/ast-compare.esm.js";
 
 // (input, objToDelete, strictOrNot)
 
 // various
 // -----------------------------------------------------------------------------
 
-tap.test("01 - null vs null", (t) => {
-  t.strictSame(compare(null, null), true, "01");
-  t.end();
+test("01 - null vs null", () => {
+  equal(compare(null, null), true, "01");
 });
 
-tap.test("02 - real-life #1", (t) => {
-  t.strictSame(
+test("02 - real-life #1", () => {
+  equal(
     compare(
       {
         type: "rule",
@@ -28,7 +28,7 @@ tap.test("02 - real-life #1", (t) => {
     false,
     "02.01"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         type: "rule",
@@ -43,7 +43,7 @@ tap.test("02 - real-life #1", (t) => {
     true,
     "02.02"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         type: "rule",
@@ -58,11 +58,10 @@ tap.test("02 - real-life #1", (t) => {
     true,
     "02.03"
   );
-  t.end();
 });
 
-tap.test("03 - real-life #2", (t) => {
-  t.strictSame(
+test("03 - real-life #2", () => {
+  equal(
     compare(
       {
         type: "rule",
@@ -76,7 +75,7 @@ tap.test("03 - real-life #2", (t) => {
     true,
     "03.01"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         type: "rule",
@@ -93,11 +92,10 @@ tap.test("03 - real-life #2", (t) => {
     true,
     "03.02"
   );
-  t.end();
 });
 
-tap.test("04 - real-life #3", (t) => {
-  t.strictSame(
+test("04 - real-life #3", () => {
+  equal(
     compare(
       {
         type: "stylesheet",
@@ -228,7 +226,7 @@ tap.test("04 - real-life #3", (t) => {
     false,
     "04.01"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         type: "stylesheet",
@@ -360,7 +358,7 @@ tap.test("04 - real-life #3", (t) => {
     false,
     "04.02"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         type: "stylesheet",
@@ -492,11 +490,10 @@ tap.test("04 - real-life #3", (t) => {
     true,
     "04.03"
   );
-  t.end();
 });
 
-tap.test("05 - real-life #3 reduced case", (t) => {
-  t.strictSame(
+test("05 - real-life #3 reduced case", () => {
+  equal(
     compare(
       {
         a: "a",
@@ -520,7 +517,7 @@ tap.test("05 - real-life #3 reduced case", (t) => {
     false,
     "05.01"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: "a",
@@ -544,7 +541,7 @@ tap.test("05 - real-life #3 reduced case", (t) => {
     false,
     "05.02"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: "a",
@@ -569,7 +566,7 @@ tap.test("05 - real-life #3 reduced case", (t) => {
     false,
     "05.03"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: "a",
@@ -594,11 +591,10 @@ tap.test("05 - real-life #3 reduced case", (t) => {
     true,
     "05.04"
   );
-  t.end();
 });
 
-tap.test("06 - input args of mismatching type - easy win", (t) => {
-  t.strictSame(
+test("06 - input args of mismatching type - easy win", () => {
+  equal(
     compare(
       {
         a: "a",
@@ -608,14 +604,14 @@ tap.test("06 - input args of mismatching type - easy win", (t) => {
     false,
     "06.01"
   );
-  t.strictSame(
+  equal(
     compare("a", {
       a: "a",
     }),
     false,
     "06.02"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: "a",
@@ -625,14 +621,14 @@ tap.test("06 - input args of mismatching type - easy win", (t) => {
     false,
     "06.03"
   );
-  t.strictSame(
+  equal(
     compare(["a"], {
       a: "a",
     }),
     false,
     "06.04"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: "a",
@@ -643,7 +639,7 @@ tap.test("06 - input args of mismatching type - easy win", (t) => {
     false,
     "06.05"
   );
-  t.strictSame(
+  equal(
     compare(
       "a",
       {
@@ -654,7 +650,7 @@ tap.test("06 - input args of mismatching type - easy win", (t) => {
     false,
     "06.06"
   );
-  t.strictSame(
+  equal(
     compare(
       {
         a: "a",
@@ -665,7 +661,7 @@ tap.test("06 - input args of mismatching type - easy win", (t) => {
     false,
     "06.07"
   );
-  t.strictSame(
+  equal(
     compare(
       ["a"],
       {
@@ -676,5 +672,6 @@ tap.test("06 - input args of mismatching type - easy win", (t) => {
     false,
     "06.08"
   );
-  t.end();
 });
+
+test.run();

@@ -1,6 +1,7 @@
 // Just deletes inline tags
 
 import { strict as assert } from "assert";
+
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 const someHtml = `This has an <b>un</b>bold word.`;

@@ -5,8 +5,8 @@ import { Ranges } from "../../../../../scripts/common";
 // -----------------------------------------------------------------------------
 
 function tagNameCase(context: Linter): RuleObjType {
-  const knownUpperCaseTags = ["CDATA"];
-  const variableCaseTagNames = ["doctype"];
+  let knownUpperCaseTags = ["CDATA"];
+  let variableCaseTagNames = ["doctype"];
   return {
     tag(node) {
       console.log(
@@ -48,7 +48,7 @@ function tagNameCase(context: Linter): RuleObjType {
             node.tagName.toUpperCase()
           ) {
             console.log(`050 tagNameCase(): wrong tag case!`);
-            const ranges: Ranges = [
+            let ranges: Ranges = [
               [
                 node.tagNameStartsAt,
                 node.tagNameEndsAt,
@@ -71,7 +71,7 @@ function tagNameCase(context: Linter): RuleObjType {
           !variableCaseTagNames.includes(node.tagName.toLowerCase())
         ) {
           console.log(`073 tagNameCase(): wrong tag case!`);
-          const ranges: Ranges = [
+          let ranges: Ranges = [
             [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName],
           ];
 

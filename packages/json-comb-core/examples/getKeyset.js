@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 // Asynchronous `getKeyset()`
 
 import { strict as assert } from "assert";
+
 import {
   getKeysetSync,
   getKeyset,
@@ -17,7 +19,7 @@ import {
 // Let's use an async IIFE to trigger the action and let us use await:
 (async () => {
   // First, prepare array of promises:
-  const source = [
+  let source = [
     {
       a: "a",
       b: "c",

@@ -1,37 +1,35 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { looseCompare } from "../dist/ast-loose-compare.esm.js";
 
 // ==============================
 // Precautions
 // ==============================
 
-tap.test("01 - both inputs missing", (t) => {
-  t.equal(looseCompare(), undefined, "01");
-  t.end();
+test("01 - both inputs missing", () => {
+  equal(looseCompare(), undefined, "01");
 });
 
-tap.test("02 - first input missing", (t) => {
-  t.equal(looseCompare({ a: "a" }), undefined, "02");
-  t.end();
+test("02 - first input missing", () => {
+  equal(looseCompare({ a: "a" }), undefined, "02");
 });
 
-tap.test("03 - second input missing", (t) => {
-  t.equal(looseCompare(undefined, { a: "a" }), undefined, "03");
-  t.end();
+test("03 - second input missing", () => {
+  equal(looseCompare(undefined, { a: "a" }), undefined, "03");
 });
 
-tap.test("04 - null as input", (t) => {
-  t.equal(looseCompare(undefined, { a: "a" }), undefined, "04");
-  t.end();
+test("04 - null as input", () => {
+  equal(looseCompare(undefined, { a: "a" }), undefined, "04");
 });
 
-tap.test("05 - falsey inputs", (t) => {
-  t.equal(looseCompare(null, undefined), undefined, "05");
-  t.end();
+test("05 - falsey inputs", () => {
+  equal(looseCompare(null, undefined), undefined, "05");
 });
 
-tap.test("06 - undefined in a second-level depth", (t) => {
-  t.equal(
+test("06 - undefined in a second-level depth", () => {
+  equal(
     looseCompare(
       {
         a: "a",
@@ -47,94 +45,81 @@ tap.test("06 - undefined in a second-level depth", (t) => {
     false,
     "06"
   );
-  t.end();
 });
 
 // ==============================
 // Obj - Simples
 // ==============================
 
-tap.test("07 - simple plain objects", (t) => {
-  t.equal(
+test("07 - simple plain objects", () => {
+  equal(
     looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }),
     true,
     "07"
   );
-  t.end();
 });
 
-tap.test("08 - simple plain objects #2", (t) => {
-  t.equal(
+test("08 - simple plain objects #2", () => {
+  equal(
     looseCompare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }),
     false,
     "08"
   );
-  t.end();
 });
 
-tap.test("09 - comparison against empty plain objects", (t) => {
-  t.equal(looseCompare({}, { a: "1", b: "2" }), false, "09.01");
-  t.equal(looseCompare({ a: "1", b: "2", c: "3" }, {}), false, "09.02");
-  t.end();
+test("09 - comparison against empty plain objects", () => {
+  equal(looseCompare({}, { a: "1", b: "2" }), false, "09.01");
+  equal(looseCompare({ a: "1", b: "2", c: "3" }, {}), false, "09.02");
 });
 
-tap.test("10 - comparing two empty plain objects", (t) => {
-  t.equal(looseCompare({}, {}), true, "10");
-  t.end();
+test("10 - comparing two empty plain objects", () => {
+  equal(looseCompare({}, {}), true, "10");
 });
 
-tap.test("11 - false match involving empty arrays, sneaky similarity", (t) => {
-  t.equal(
+test("11 - false match involving empty arrays, sneaky similarity", () => {
+  equal(
     looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: ["3"] }),
     false,
     "11.01"
   );
-  t.equal(
+  equal(
     looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: 3 }),
     false,
     "11.02"
   );
-  t.equal(
+  equal(
     looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: { d: "3" } }),
     false,
     "11.03"
   );
-  t.end();
 });
 
-tap.test("12 - simple plain arrays, integer, match", (t) => {
-  t.equal(
-    looseCompare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }),
-    true,
-    "12"
-  );
-  t.end();
+test("12 - simple plain arrays, integer, match", () => {
+  equal(looseCompare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }), true, "12");
 });
 
-tap.test("13 - simple plain arrays, integer, no match", (t) => {
-  t.equal(
+test("13 - simple plain arrays, integer, no match", () => {
+  equal(
     looseCompare({ a: "1", b: "2" }, { a: "1", b: "2", c: 3 }),
     false,
     "13"
   );
-  t.end();
 });
 
 // ==============================
 // Obj - Nested
 // ==============================
 
-tap.test("14 - simple nested plain objects", (t) => {
-  t.equal(
+test("14 - simple nested plain objects", () => {
+  equal(
     looseCompare({ a: { d: "4" }, b: "2", c: "3" }, { a: { d: "4" }, b: "2" }),
     true,
     "14"
   );
-  t.end();
 });
 
-tap.test("15 - simple nested plain objects + array wrapper", (t) => {
-  t.equal(
+test("15 - simple nested plain objects + array wrapper", () => {
+  equal(
     looseCompare(
       { a: [{ d: "4" }], b: "2", c: "3" },
       { a: [{ d: "4" }], b: "2" }
@@ -142,35 +127,29 @@ tap.test("15 - simple nested plain objects + array wrapper", (t) => {
     true,
     "15"
   );
-  t.end();
 });
 
-tap.test("16 - simple nested plain objects, won't find", (t) => {
-  t.equal(
+test("16 - simple nested plain objects, won't find", () => {
+  equal(
     looseCompare({ a: { d: "4" }, b: "2" }, { a: { d: "4" }, b: "2", c: "3" }),
     false,
     "16"
   );
-  t.end();
 });
 
-tap.test(
-  "17 - simple nested plain objects + array wrapper, won't find",
-  (t) => {
-    t.equal(
-      looseCompare(
-        { a: [{ d: "4" }], b: "2" },
-        { a: [{ d: "4" }], b: "2", c: "3" }
-      ),
-      false,
-      "17"
-    );
-    t.end();
-  }
-);
+test("17 - simple nested plain objects + array wrapper, won't find", () => {
+  equal(
+    looseCompare(
+      { a: [{ d: "4" }], b: "2" },
+      { a: [{ d: "4" }], b: "2", c: "3" }
+    ),
+    false,
+    "17"
+  );
+});
 
-tap.test("18 - obj, multiple nested levels, bigObj has more", (t) => {
-  t.equal(
+test("18 - obj, multiple nested levels, bigObj has more", () => {
+  equal(
     looseCompare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
       { a: { b: { c: { d: [{ e: "1" }] } } } }
@@ -178,11 +157,10 @@ tap.test("18 - obj, multiple nested levels, bigObj has more", (t) => {
     true,
     "18"
   );
-  t.end();
 });
 
-tap.test("19 - obj, multiple nested levels, equal", (t) => {
-  t.equal(
+test("19 - obj, multiple nested levels, equal", () => {
+  equal(
     looseCompare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
@@ -190,11 +168,10 @@ tap.test("19 - obj, multiple nested levels, equal", (t) => {
     true,
     "19"
   );
-  t.end();
 });
 
-tap.test("20 - obj, multiple nested levels, smallObj has more", (t) => {
-  t.equal(
+test("20 - obj, multiple nested levels, smallObj has more", () => {
+  equal(
     looseCompare(
       { a: { b: { c: { d: [{ e: "1" }] } } } },
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
@@ -202,21 +179,19 @@ tap.test("20 - obj, multiple nested levels, smallObj has more", (t) => {
     false,
     "20"
   );
-  t.end();
 });
 
 // ==============================
 // Arr - simples
 // ==============================
 
-tap.test("21 - simple arrays with strings", (t) => {
-  t.equal(looseCompare(["a", "b", "c"], ["a", "b"]), true, "21.01");
-  t.equal(looseCompare(["a", "b"], ["a", "b", "c"]), false, "21.02");
-  t.end();
+test("21 - simple arrays with strings", () => {
+  equal(looseCompare(["a", "b", "c"], ["a", "b"]), true, "21.01");
+  equal(looseCompare(["a", "b"], ["a", "b", "c"]), false, "21.02");
 });
 
-tap.test("22 - simple arrays with plain objects", (t) => {
-  t.equal(
+test("22 - simple arrays with plain objects", () => {
+  equal(
     looseCompare(
       [{ a: "1" }, { b: "2" }, { c: "3" }],
       [{ a: "1" }, { b: "2" }]
@@ -224,7 +199,7 @@ tap.test("22 - simple arrays with plain objects", (t) => {
     true,
     "22.01"
   );
-  t.equal(
+  equal(
     looseCompare(
       [{ a: "1" }, { b: "2" }],
       [{ a: "1" }, { b: "2" }, { c: "3" }]
@@ -232,11 +207,10 @@ tap.test("22 - simple arrays with plain objects", (t) => {
     false,
     "22.02"
   );
-  t.end();
 });
 
-tap.test("23 - arrays, nested with strings and objects", (t) => {
-  t.equal(
+test("23 - arrays, nested with strings and objects", () => {
+  equal(
     looseCompare(
       [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3", e: "4" }] }], "yo"],
       [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3" }] }]]
@@ -244,7 +218,7 @@ tap.test("23 - arrays, nested with strings and objects", (t) => {
     true,
     "23.01"
   );
-  t.equal(
+  equal(
     looseCompare(
       [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3" }] }]],
       [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3", e: "4" }] }], "yo"]
@@ -252,55 +226,48 @@ tap.test("23 - arrays, nested with strings and objects", (t) => {
     false,
     "23.02"
   );
-  t.end();
 });
 
-tap.test("24 - comparing empty arrays (variations)", (t) => {
-  t.equal(looseCompare([], []), true, "24.01");
-  t.equal(looseCompare([{}], [{}]), true, "24.02");
-  t.equal(looseCompare([{}, {}], [{}]), true, "24.03");
-  t.equal(looseCompare([{ a: [] }, {}, []], [{ a: [] }]), true, "24.04");
-  t.end();
+test("24 - comparing empty arrays (variations)", () => {
+  equal(looseCompare([], []), true, "24.01");
+  equal(looseCompare([{}], [{}]), true, "24.02");
+  equal(looseCompare([{}, {}], [{}]), true, "24.03");
+  equal(looseCompare([{ a: [] }, {}, []], [{ a: [] }]), true, "24.04");
 });
 
 // ==============================
 // Strings
 // ==============================
 
-tap.test("25 - simple strings", (t) => {
-  t.equal(looseCompare("aaaaa\nbbbbb", "aaaaa\nbbbbb"), true, "25.01");
-  t.equal(looseCompare("aaaaa\nbbbbb", "aaaaa\nc"), false, "25.02");
-  t.end();
+test("25 - simple strings", () => {
+  equal(looseCompare("aaaaa\nbbbbb", "aaaaa\nbbbbb"), true, "25.01");
+  equal(looseCompare("aaaaa\nbbbbb", "aaaaa\nc"), false, "25.02");
 });
 
-tap.test("26 - strings compared and fails", (t) => {
-  t.equal(looseCompare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"]), false, "26");
-  t.end();
+test("26 - strings compared and fails", () => {
+  equal(looseCompare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"]), false, "26");
 });
 
-tap.test("27 - strings compared, positive", (t) => {
-  t.equal(looseCompare(["aaaaa\nbbbbb"], ["aaaaa\nbbbbb"]), true, "27");
-  t.end();
+test("27 - strings compared, positive", () => {
+  equal(looseCompare(["aaaaa\nbbbbb"], ["aaaaa\nbbbbb"]), true, "27");
 });
 
-tap.test("28 - strings compared, positive", (t) => {
-  t.equal(looseCompare(["aaaaa\nbbbbb"], []), false, "28");
-  t.end();
+test("28 - strings compared, positive", () => {
+  equal(looseCompare(["aaaaa\nbbbbb"], []), false, "28");
 });
 
 // ==============================
 // Random
 // ==============================
 
-tap.test("29 - weird comparisons", (t) => {
-  t.equal(looseCompare(null, null), undefined, "29.01");
-  t.equal(looseCompare(null, undefined), undefined, "29.02");
-  t.equal(looseCompare([null], [undefined]), false, "29.03");
-  t.end();
+test("29 - weird comparisons", () => {
+  equal(looseCompare(null, null), undefined, "29.01");
+  equal(looseCompare(null, undefined), undefined, "29.02");
+  equal(looseCompare([null], [undefined]), false, "29.03");
 });
 
-tap.test("30 - real-life - won't find", (t) => {
-  t.equal(
+test("30 - real-life - won't find", () => {
+  equal(
     looseCompare(
       {
         type: "rule",
@@ -314,11 +281,10 @@ tap.test("30 - real-life - won't find", (t) => {
     false,
     "30"
   );
-  t.end();
 });
 
-tap.test("31 - real-life - will find", (t) => {
-  t.equal(
+test("31 - real-life - will find", () => {
+  equal(
     looseCompare(
       {
         type: "rule",
@@ -332,11 +298,10 @@ tap.test("31 - real-life - will find", (t) => {
     true,
     "31"
   );
-  t.end();
 });
 
-tap.test("32 - from README", (t) => {
-  t.equal(
+test("32 - from README", () => {
+  equal(
     looseCompare(
       {
         a: "a",
@@ -351,11 +316,10 @@ tap.test("32 - from README", (t) => {
     true,
     "32"
   );
-  t.end();
 });
 
-tap.test("33 - from real-life, precaution against false-positives", (t) => {
-  t.equal(
+test("33 - from real-life, precaution against false-positives", () => {
+  equal(
     looseCompare(
       {
         x: [[["\n \n\n"]]],
@@ -368,44 +332,42 @@ tap.test("33 - from real-life, precaution against false-positives", (t) => {
     false,
     "33"
   );
-  t.end();
 });
 
 // ==============================
 // Obj - Comparing empty space with empty space
 // ==============================
 
-tap.test("34 - simple plain objects #1", (t) => {
-  t.equal(
+test("34 - simple plain objects #1", () => {
+  equal(
     looseCompare({ a: "1", b: "\t\t\t", c: "3" }, { a: "1", b: "\n\n\n" }),
     true,
     "34.01"
   );
-  t.equal(
+  equal(
     looseCompare({ a: "1", b: "\t\t\t", c: "3" }, { a: "2", b: "\n\n\n" }),
     false,
     "34.02"
   );
-  t.equal(
+  equal(
     looseCompare({ a: "1", b: "\t\t\t", c: "3" }, { a: "", b: "\n\n\n" }),
     false,
     "34.03"
   );
-  t.equal(
+  equal(
     looseCompare({ a: "", b: "\t\t\t", c: "3" }, { a: "1", b: "\n\n\n" }),
     false,
     "34.04"
   );
-  t.equal(
+  equal(
     looseCompare({ a: "", b: "\t\t\t", c: "3" }, { a: "", b: "\n\n\n" }),
     true,
     "34.05"
   );
-  t.end();
 });
 
-tap.test("35 - simple plain objects #2", (t) => {
-  t.equal(
+test("35 - simple plain objects #2", () => {
+  equal(
     looseCompare(
       { a: "1", b: "\t\t\t", c: "3" },
       { a: "1", b: ["\n\n\n", "   "] }
@@ -413,7 +375,7 @@ tap.test("35 - simple plain objects #2", (t) => {
     true,
     "35.01"
   );
-  t.equal(
+  equal(
     looseCompare(
       { a: "1", b: ["\t\t\t"], c: "3" },
       { a: "1", b: ["\n\n\n", "   "] }
@@ -421,7 +383,7 @@ tap.test("35 - simple plain objects #2", (t) => {
     true,
     "35.02"
   );
-  t.equal(
+  equal(
     looseCompare(
       { a: "1", b: ["\t\t\t", "   ", "\n "], c: "3" },
       { a: "1", b: "\n\n\n" }
@@ -429,11 +391,10 @@ tap.test("35 - simple plain objects #2", (t) => {
     true,
     "35.03"
   );
-  t.end();
 });
 
-tap.test("36 - simple plain objects #3", (t) => {
-  t.equal(
+test("36 - simple plain objects #3", () => {
+  equal(
     looseCompare(
       { a: "1", b: ["\t\t\t", "  ", ["\t"]], c: "3" },
       { a: "1", b: ["\n\n\n"] }
@@ -441,11 +402,10 @@ tap.test("36 - simple plain objects #3", (t) => {
     true,
     "36"
   );
-  t.end();
 });
 
-tap.test("37 - simple plain objects #4", (t) => {
-  t.equal(
+test("37 - simple plain objects #4", () => {
+  equal(
     looseCompare(
       { a: "1", b: ["\t\t\t", "    ", " "], c: "2" },
       { a: "1", b: "\n\n\n" }
@@ -453,11 +413,10 @@ tap.test("37 - simple plain objects #4", (t) => {
     true,
     "37"
   );
-  t.end();
 });
 
-tap.test("38 - simple plain objects #5", (t) => {
-  t.equal(
+test("38 - simple plain objects #5", () => {
+  equal(
     looseCompare(
       { a: "1", b: ["\t\t\t", "   ", "   \n   "], c: "2" },
       { a: "1", b: "\n\n\n" }
@@ -465,15 +424,14 @@ tap.test("38 - simple plain objects #5", (t) => {
     true,
     "38"
   );
-  t.end();
 });
 
 // ==============================
 // Nested obj - Comparing empty space with empty space
 // ==============================
 
-tap.test("39 - simple nested plain objects - will find", (t) => {
-  t.equal(
+test("39 - simple nested plain objects - will find", () => {
+  equal(
     looseCompare(
       { a: "1", b: { c: { d: "\t\t\t" } }, c: "3" },
       { a: "1", b: "\n\n\n" }
@@ -481,7 +439,7 @@ tap.test("39 - simple nested plain objects - will find", (t) => {
     true,
     "39.01"
   );
-  t.equal(
+  equal(
     looseCompare(
       { a: "1", b: "\n\n\n", c: "3" },
       { a: "1", b: { c: { d: "\t\t\t" } } }
@@ -489,7 +447,7 @@ tap.test("39 - simple nested plain objects - will find", (t) => {
     true,
     "39.02"
   );
-  t.equal(
+  equal(
     looseCompare(
       { a: "1", b: ["\n\n\n", "\t\t   "], c: "3" },
       { a: "1", b: { c: [{ d: ["\t\t\t \n"] }] } }
@@ -497,11 +455,10 @@ tap.test("39 - simple nested plain objects - will find", (t) => {
     true,
     "39.03"
   );
-  t.end();
 });
 
-tap.test("40 - simple nested plain objects - won't find", (t) => {
-  t.equal(
+test("40 - simple nested plain objects - won't find", () => {
+  equal(
     looseCompare(
       { a: "1", b: { c: { d: "\t\t\t" } }, c: "3" },
       { a: "2", b: "\n\n\n" }
@@ -509,7 +466,7 @@ tap.test("40 - simple nested plain objects - won't find", (t) => {
     false,
     "40.01"
   );
-  t.equal(
+  equal(
     looseCompare(
       { a: "1", b: "\n\n\n", c: "3" },
       { a: "2", b: { c: { d: "\t\t\t" } } }
@@ -517,7 +474,7 @@ tap.test("40 - simple nested plain objects - won't find", (t) => {
     false,
     "40.02"
   );
-  t.equal(
+  equal(
     looseCompare(
       { a: "1", b: ["\n\n\n", "\t\t   "], c: "3" },
       { a: "2", b: { c: { d: "\t\t\t \n" } } }
@@ -525,46 +482,40 @@ tap.test("40 - simple nested plain objects - won't find", (t) => {
     false,
     "40.03"
   );
-  t.end();
 });
 
 // ==============================
 // Strings - empty space cases
 // ==============================
 
-tap.test("41 - Strings vs strings", (t) => {
-  t.equal(looseCompare("\n\n\n", "\t\t\t"), true, "41");
-  t.end();
+test("41 - Strings vs strings", () => {
+  equal(looseCompare("\n\n\n", "\t\t\t"), true, "41");
 });
 
-tap.test("42 - Comparing empty string to string", (t) => {
-  t.equal(looseCompare("", "\t\t\t"), true, "42");
-  t.end();
+test("42 - Comparing empty string to string", () => {
+  equal(looseCompare("", "\t\t\t"), true, "42");
 });
 
-tap.test("43 - Comparing string to empty string in an array", (t) => {
-  t.equal(looseCompare(["\n\n\n"], ""), true, "43");
-  t.end();
+test("43 - Comparing string to empty string in an array", () => {
+  equal(looseCompare(["\n\n\n"], ""), true, "43");
 });
 
-tap.test("44 - Comparing empty to empty string", (t) => {
-  t.equal(looseCompare("", ""), true, "44.01");
-  t.equal(looseCompare([""], ""), true, "44.02");
-  t.equal(looseCompare("", [""]), true, "44.03");
-  t.end();
+test("44 - Comparing empty to empty string", () => {
+  equal(looseCompare("", ""), true, "44.01");
+  equal(looseCompare([""], ""), true, "44.02");
+  equal(looseCompare("", [""]), true, "44.03");
 });
 
-tap.test("45 - Comparing empty array to empty plain object", (t) => {
-  t.equal(looseCompare({ a: "" }, [""]), true, "45");
-  t.end();
+test("45 - Comparing empty array to empty plain object", () => {
+  equal(looseCompare({ a: "" }, [""]), true, "45");
 });
 
 // ==============================
 // Other cases
 // ==============================
 
-tap.test("46 - both are plain objects, didn't match - returns false", (t) => {
-  t.equal(
+test("46 - both are plain objects, didn't match - returns false", () => {
+  equal(
     looseCompare(
       {
         a: [{}],
@@ -576,13 +527,13 @@ tap.test("46 - both are plain objects, didn't match - returns false", (t) => {
     false,
     "46"
   );
-  t.end();
 });
 
-tap.test("47 - two functions given - returns false", (t) => {
+test("47 - two functions given - returns false", () => {
   function dummy() {
     return "zzz";
   }
-  t.equal(looseCompare(dummy, dummy), false, "47");
-  t.end();
+  equal(looseCompare(dummy, dummy), false, "47");
 });
+
+test.run();

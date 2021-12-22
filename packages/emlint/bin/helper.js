@@ -7,9 +7,10 @@
 import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
+import { allRules } from "string-fix-broken-named-entities";
+
 const require = createRequire(import.meta.url);
 const nonFileBasedTagRules = require("../src/util/nonFileBasedTagRules.json");
-import { allRules } from "string-fix-broken-named-entities";
 
 // the rule "bad-html-entity-encoded-numeric" doesn't exist
 const preppedBrokenEntityRules = allRules.filter(

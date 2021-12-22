@@ -1,10 +1,13 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { extractVars as e } from "../dist/string-extract-sass-vars.esm.js";
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - opts.cb - custom override of a value", (t) => {
-  t.strictSame(
+test("01 - opts.cb - custom override of a value", () => {
+  equal(
     e(`$grey: #ccc;`, {
       cb: (val) => {
         if (val === "#ccc") {
@@ -18,5 +21,6 @@ tap.test("01 - opts.cb - custom override of a value", (t) => {
     },
     "01"
   );
-  t.end();
 });
+
+test.run();

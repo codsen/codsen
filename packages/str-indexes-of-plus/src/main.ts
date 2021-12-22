@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 function strIndexesOfPlus(
@@ -24,8 +25,8 @@ function strIndexesOfPlus(
       `str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: ${fromIndex}`
     );
   }
-  const strArr: string[] = Array.from(str);
-  const searchValueArr: string[] = Array.from(searchValue);
+  let strArr: string[] = Array.from(str);
+  let searchValueArr: string[] = Array.from(searchValue);
   if (
     strArr.length === 0 ||
     searchValueArr.length === 0 ||
@@ -38,7 +39,7 @@ function strIndexesOfPlus(
     fromIndex = 0;
   }
 
-  const res: number[] = [];
+  let res: number[] = [];
   let matchMode = false;
   let potentialFinding;
 

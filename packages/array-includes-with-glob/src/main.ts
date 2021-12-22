@@ -1,5 +1,7 @@
 import { isMatch } from "matcher";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Opts {
@@ -25,9 +27,9 @@ function includesWithGlob(
     return false; // because nothing can be found in it
   }
 
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
 
-  const input =
+  let input =
     typeof originalInput === "string"
       ? [originalInput]
       : Array.from(originalInput);

@@ -1,20 +1,23 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { combinations } from "../dist/object-boolean-combinations.esm.js";
 
 // ==============================
 // Basic, no overrides
 // ==============================
 
-tap.test("01 - one property - 1, no override", (t) => {
+test("01 - one property - 1, no override", () => {
   // non-boolean is supplied:
-  t.strictSame(
+  equal(
     combinations({
       a: 0,
     }),
     [{ a: false }, { a: true }],
     "01.01"
   );
-  t.strictSame(
+  equal(
     combinations({
       a: 1,
     }),
@@ -23,27 +26,26 @@ tap.test("01 - one property - 1, no override", (t) => {
   );
 
   // boolean is supplied:
-  t.strictSame(
+  equal(
     combinations({
       a: false,
     }),
     [{ a: false }, { a: true }],
     "01.03"
   );
-  t.strictSame(
+  equal(
     combinations({
       a: true,
     }),
     [{ a: false }, { a: true }],
     "01.04"
   );
-  t.end();
 });
 
-tap.test("02 - three properties, no override", (t) => {
+test("02 - three properties, no override", () => {
   // default - don't force bool
 
-  t.strictSame(
+  equal(
     combinations({
       a: 1,
       b: 1,
@@ -61,7 +63,7 @@ tap.test("02 - three properties, no override", (t) => {
     ],
     "02.01"
   );
-  t.strictSame(
+  equal(
     combinations({
       a: true,
       b: true,
@@ -79,11 +81,10 @@ tap.test("02 - three properties, no override", (t) => {
     ],
     "02.02"
   );
-  t.end();
 });
 
-tap.test("03 - non-boolean object overrides", (t) => {
-  t.strictSame(
+test("03 - non-boolean object overrides", () => {
+  equal(
     combinations(
       {
         a: true,
@@ -99,5 +100,6 @@ tap.test("03 - non-boolean object overrides", (t) => {
     ],
     "03"
   );
-  t.end();
 });
+
+test.run();

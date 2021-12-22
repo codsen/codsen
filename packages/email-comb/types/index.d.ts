@@ -3,7 +3,6 @@ interface Obj {
 }
 
 declare const version: string;
-
 interface HeadsAndTailsObj {
     heads: string;
     tails: string;

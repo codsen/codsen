@@ -1,25 +1,24 @@
 /* eslint no-unused-vars:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import compare from "./util.js";
 
 // Simple file, concentrate on row sorting, Balance, Credit & Debit col detection
 // -------------------------------------------------------------------
 
-tap.test("01. sorts a basic file, empty extra column in header", (t) => {
-  compare(t, "simples");
-  t.end();
+test("01. sorts a basic file, empty extra column in header", () => {
+  compare(equal, "simples");
 });
 
-tap.test("02. sorts a basic file, no headers", (t) => {
-  compare(t, "simples-no-header");
-  t.end();
+test("02. sorts a basic file, no headers", () => {
+  compare(equal, "simples-no-header");
 });
 
-tap.test(
-  "03. sorts a basic file with opposite order of the CSV entries",
-  (t) => {
-    compare(t, "simples-backwards");
-    t.end();
-  }
-);
+test("03. sorts a basic file with opposite order of the CSV entries", () => {
+  compare(equal, "simples-backwards");
+});
+
+test.run();

@@ -1,22 +1,25 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { crush } from "../dist/html-crush.esm.js";
 import { m, mixer } from "./util/util.js";
 
 // https://github.com/codsen/codsen/issues/16
 // https://github.com/hteumeuleu/email-bugs/issues/92
 
-tap.test(`01 - sampler`, (t) => {
-  t.equal(
+test(`01 - sampler`, () => {
+  equal(
     crush(
       `<style>
-	@media screen {
-		div {
-			color: white;
-		}}
+\t@media screen {
+\t\tdiv {
+\t\t\tcolor: white;
+\t\t}}
 
-	.foo {
-		background: green;
-	}
+\t.foo {
+\t\tbackground: green;
+\t}
 </style>`,
       {
         removeLineBreaks: true,
@@ -27,25 +30,24 @@ tap.test(`01 - sampler`, (t) => {
 </style>`,
     "01"
   );
-  t.end();
 });
 
-tap.test(`02 - spaced`, (t) => {
+test(`02 - spaced`, () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt) => {
-    t.equal(
+    equal(
       m(
-        t,
+        equal,
         `<style>
-	@media screen {
-		div {
-			color: white;
-		}
+\t@media screen {
+\t\tdiv {
+\t\t\tcolor: white;
+\t\t}
   }
-	.foo {
-		background: green;
-	}
+\t.foo {
+\t\tbackground: green;
+\t}
 </style>`,
         opt
       ).result,
@@ -55,25 +57,24 @@ tap.test(`02 - spaced`, (t) => {
       `${JSON.stringify(opt, null, 0)}`
     );
   });
-  t.end();
 });
 
-tap.test(`03 - already come tight`, (t) => {
+test(`03 - already come tight`, () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt) => {
-    t.equal(
+    equal(
       m(
-        t,
+        equal,
         `<style>
-	@media screen {
-		div {
-			color: white;
-		}}
+\t@media screen {
+\t\tdiv {
+\t\t\tcolor: white;
+\t\t}}
 
-	.foo {
-		background: green;
-	}
+\t.foo {
+\t\tbackground: green;
+\t}
 </style>`,
         opt
       ).result,
@@ -83,16 +84,15 @@ tap.test(`03 - already come tight`, (t) => {
       `${JSON.stringify(opt, null, 0)}`
     );
   });
-  t.end();
 });
 
-tap.test(`04 - already come tight, vs. Nunjucks`, (t) => {
+test(`04 - already come tight, vs. Nunjucks`, () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt) => {
-    t.equal(
+    equal(
       m(
-        t,
+        equal,
         `<style>
 @media screen{div{color:{{brandWhite}}}}.foo{background:green;}
 </style>`,
@@ -104,21 +104,20 @@ tap.test(`04 - already come tight, vs. Nunjucks`, (t) => {
       `${JSON.stringify(opt, null, 0)}`
     );
   });
-  t.end();
 });
 
-tap.test(`05 - line break falls between two curlies, #1`, (t) => {
-  t.equal(
+test(`05 - line break falls between two curlies, #1`, () => {
+  equal(
     crush(
       `<style>
-	@media screen {
-		div {
-			color: white;
-		}}
+\t@media screen {
+\t\tdiv {
+\t\t\tcolor: white;
+\t\t}}
 
-	.foo {
-		background: green;
-	}
+\t.foo {
+\t\tbackground: green;
+\t}
 </style>`,
       {
         removeLineBreaks: true,
@@ -131,21 +130,20 @@ tap.test(`05 - line break falls between two curlies, #1`, (t) => {
 </style>`,
     "05"
   );
-  t.end();
 });
 
-tap.test(`06 - line break falls between two curlies, #2`, (t) => {
-  t.equal(
+test(`06 - line break falls between two curlies, #2`, () => {
+  equal(
     crush(
       `<style>
-	@media screen {
-		div {
-			color: white;
-		}}
+\t@media screen {
+\t\tdiv {
+\t\t\tcolor: white;
+\t\t}}
 
-	.foo {
-		background: green;
-	}
+\t.foo {
+\t\tbackground: green;
+\t}
 </style>`,
       {
         removeLineBreaks: true,
@@ -158,21 +156,20 @@ tap.test(`06 - line break falls between two curlies, #2`, (t) => {
 </style>`,
     "06"
   );
-  t.end();
 });
 
-tap.test(`07 - line break falls between two curlies, #3`, (t) => {
-  t.equal(
+test(`07 - line break falls between two curlies, #3`, () => {
+  equal(
     crush(
       `<style>
-	@media screen {
-		div {
-			color: white;
-		}}
+\t@media screen {
+\t\tdiv {
+\t\t\tcolor: white;
+\t\t}}
 
-	.foo {
-		background: green;
-	}
+\t.foo {
+\t\tbackground: green;
+\t}
 </style>`,
       {
         removeLineBreaks: true,
@@ -185,21 +182,20 @@ tap.test(`07 - line break falls between two curlies, #3`, (t) => {
 </style>`,
     "07"
   );
-  t.end();
 });
 
-tap.test(`08 - line break falls between two curlies, #4`, (t) => {
-  t.equal(
+test(`08 - line break falls between two curlies, #4`, () => {
+  equal(
     crush(
       `<style>
-	@media screen {
-		div {
-			color: white;
-		}}
+\t@media screen {
+\t\tdiv {
+\t\t\tcolor: white;
+\t\t}}
 
-	.foo {
-		background: green;
-	}
+\t.foo {
+\t\tbackground: green;
+\t}
 </style>`,
       {
         removeLineBreaks: true,
@@ -212,5 +208,6 @@ tap.test(`08 - line break falls between two curlies, #4`, (t) => {
 </style>`,
     "08"
   );
-  t.end();
 });
+
+test.run();

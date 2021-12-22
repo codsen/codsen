@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { tokenizer } from "../dist/codsen-tokenizer.esm.js";
 
 const gathered = [];

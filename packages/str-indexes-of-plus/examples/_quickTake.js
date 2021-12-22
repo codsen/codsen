@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { strIndexesOfPlus } from "../dist/str-indexes-of-plus.esm.js";
 
 // searches for string in a string, returns array:

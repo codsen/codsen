@@ -1,5 +1,5 @@
 import { isIndexWithin } from "ranges-is-index-within";
-import { Ranges } from "../../../scripts/common";
+import type { Ranges } from "../../../ops/typedefs/common";
 
 // https://www.w3.org/TR/REC-xml/#NT-NameStartChar
 // Production 4 - except lowercase letters are missing
@@ -62,12 +62,12 @@ function isProduction4(char: string): boolean {
   return (
     (isIndexWithin(
       char.codePointAt(0) as number,
-      priorityNameChar as Ranges,
+      priorityNameChar,
       opts
     ) as boolean) ||
     (isIndexWithin(
       char.codePointAt(0) as number,
-      nameStartChar as Ranges,
+      nameStartChar,
       opts
     ) as boolean)
   );

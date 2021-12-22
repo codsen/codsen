@@ -1,3 +1,5 @@
+import { left } from "string-left-right";
+
 import { Linter, RuleObjType } from "../../linter";
 import { Range } from "../../../../../scripts/common";
 
@@ -10,8 +12,6 @@ import { Range } from "../../../../../scripts/common";
 // < table>
 // <   a href="">
 // <\n\nspan>
-
-import { left } from "string-left-right";
 
 const BACKSLASH = "\u005C";
 
@@ -31,7 +31,7 @@ function tagClosingBackslash(context: Linter): RuleObjType {
         )}`
       );
 
-      const ranges: Range[] = [];
+      let ranges: Range[] = [];
 
       //
       //
@@ -44,12 +44,10 @@ function tagClosingBackslash(context: Linter): RuleObjType {
       if (
         Number.isInteger(node.start) &&
         Number.isInteger(node.tagNameStartsAt) &&
-        context.str
-          .slice(node.start, node.tagNameStartsAt as number)
-          .includes(BACKSLASH)
+        context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH)
       ) {
-        console.log(`051 backslash in front!`);
-        for (let i = node.start; i < (node.tagNameStartsAt as number); i++) {
+        console.log(`049 backslash in front!`);
+        for (let i = node.start; i < node.tagNameStartsAt; i++) {
           // fish-out all backslashes
           if (context.str[i] === BACKSLASH) {
             // just delete the backslash because it doesn't belong here
@@ -57,7 +55,7 @@ function tagClosingBackslash(context: Linter): RuleObjType {
             // by 3rd level rules which can "see" the surrounding tag layout.
             ranges.push([i, i + 1]);
             console.log(
-              `060 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}]`
+              `058 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}]`
             );
           }
         }
@@ -79,14 +77,14 @@ function tagClosingBackslash(context: Linter): RuleObjType {
         let message = node.void
           ? "Replace backslash with slash."
           : "Delete this.";
-        const backSlashPos = left(context.str, node.end - 1);
+        let backSlashPos = left(context.str, node.end - 1);
 
         // So we confirmed there's left slash.
         // Is it completely rogue or is it meant to be self-closing tag's closing?
         let idxFrom = (left(context.str, backSlashPos) as number) + 1;
         let whatToInsert = node.void ? "/" : "";
         console.log(
-          `089 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+          `087 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
             idxFrom,
             null,
             4
@@ -117,7 +115,7 @@ function tagClosingBackslash(context: Linter): RuleObjType {
           // include any and all the whitespace to the left as well
           idxFrom = (left(context.str, backSlashPos) as number) + 1;
           console.log(
-            `120 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
+            `118 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
           );
         }
 
@@ -135,7 +133,7 @@ function tagClosingBackslash(context: Linter): RuleObjType {
           idxFrom = (left(context.str, backSlashPos) as number) + 1;
           whatToInsert = ` ${whatToInsert}`;
           console.log(
-            `138 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+            `136 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
           );
           // but if space is already present at the beginning of the range at
           // index left(context.str, backSlashPos) + 1, don't add one there
@@ -143,18 +141,18 @@ function tagClosingBackslash(context: Linter): RuleObjType {
             idxFrom += 1;
             whatToInsert = whatToInsert.trim();
             console.log(
-              `146 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+              `144 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
             );
           } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
             console.log(
-              `151 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+              `149 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
             );
           }
         }
 
         console.log(
-          `157 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+          `155 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
             idxFrom,
             null,
             4

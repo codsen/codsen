@@ -1,18 +1,21 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 import { mixer } from "./util/util.js";
 
 // Line trimming
 // -----------------------------------------------------------------------------
 
-tap.test(`01`, (t) => {
+test(`01`, () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
       trimStart: false,
       trimEnd: false,
       trimLines: false,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
         ` a bbb ${eol} c d `,
         JSON.stringify(opt, null, 0)
@@ -24,7 +27,7 @@ tap.test(`01`, (t) => {
       trimEnd: true,
       trimLines: false,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
         `a bbb ${eol} c d`,
         JSON.stringify(opt, null, 0)
@@ -33,17 +36,16 @@ tap.test(`01`, (t) => {
     mixer({
       trimLines: true,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
         `a bbb${eol}c d`,
         JSON.stringify(opt, null, 0)
       );
     });
   });
-  t.end();
 });
 
-tap.test(`02`, (t) => {
+test(`02`, () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
       trimStart: false,
@@ -52,7 +54,7 @@ tap.test(`02`, (t) => {
       trimnbsp: false,
       enforceSpacesOnly: false,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(
           `     \xa0    aaa   bbb    \xa0    ${eol}     \xa0     ccc   ddd   \xa0   `,
           opt
@@ -68,7 +70,7 @@ tap.test(`02`, (t) => {
       trimnbsp: false,
       enforceSpacesOnly: false,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(
           `     \xa0    aaa   bbb    \xa0    ${eol}     \xa0     ccc   ddd   \xa0   `,
           opt
@@ -78,12 +80,11 @@ tap.test(`02`, (t) => {
       );
     });
   });
-  t.end();
 });
 
-tap.test("03", (t) => {
+test("03", () => {
   // "     .    aaa   bbb    .    -     .     ccc   ddd   .   "
-  t.strictSame(
+  equal(
     collapse(
       `     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   `,
       {
@@ -113,12 +114,11 @@ tap.test("03", (t) => {
     },
     "03"
   );
-  t.end();
 });
 
-tap.test("04", (t) => {
+test("04", () => {
   // "a  .  -  .  b"
-  t.strictSame(
+  equal(
     collapse(`a  \xa0  \n  \xa0  b`, {
       removeEmptyLines: false,
       trimStart: false,
@@ -139,12 +139,11 @@ tap.test("04", (t) => {
     },
     "04"
   );
-  t.end();
 });
 
-tap.test("05", (t) => {
+test("05", () => {
   // "   .   aaa   .   "
-  t.strictSame(
+  equal(
     collapse(`   \xa0   aaa   \xa0   `, {
       trimStart: false,
       trimEnd: false,
@@ -155,26 +154,25 @@ tap.test("05", (t) => {
     `\xa0 aaa \xa0`,
     "05"
   );
-  t.end();
 });
 
-tap.test(`06`, (t) => {
+test(`06`, () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
-    t.strictSame(
+    equal(
       collapse(
         `${eol}${eol}     a    b    ${eol}    c    d      ${eol}     e     f     ${eol}${eol}${eol}     g    h    ${eol}`,
         { trimLines: true, trimnbsp: false }
       ).result,
       `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`
     );
-    t.strictSame(
+    equal(
       collapse(
         `${eol}${eol}     a    b    ${eol}    c    d      ${eol}     e     f     ${eol}${eol}${eol}     g    h    ${eol}`,
         { trimLines: true, trimnbsp: true }
       ).result,
       `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`
     );
-    t.strictSame(
+    equal(
       collapse(
         `\xa0${eol}${eol}  \xa0   a    b   \xa0 ${eol}  \xa0  c    d   \xa0\xa0   ${eol}  \xa0\xa0   e     f  \xa0\xa0   ${eol}${eol}${eol} \xa0\xa0    g    h    ${eol}\xa0\xa0`,
         { trimLines: true, trimnbsp: true }
@@ -182,10 +180,9 @@ tap.test(`06`, (t) => {
       `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`
     );
   });
-  t.end();
 });
 
-tap.test(`07`, (t) => {
+test(`07`, () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
       trimStart: true,
@@ -194,7 +191,7 @@ tap.test(`07`, (t) => {
       trimnbsp: false,
       removeEmptyLines: false,
     }).forEach((opt) => {
-      t.strictSame(
+      equal(
         collapse(
           `${eol}${eol}     a    b    ${eol}    c    d      ${eol}     e     f     ${eol}${eol}${eol}     g    h    ${eol}`,
           opt
@@ -204,16 +201,15 @@ tap.test(`07`, (t) => {
       );
     });
   });
-  t.end();
 });
 
-tap.test("08", (t) => {
+test("08", () => {
   // removeEmptyLines=0
   mixer({
     removeEmptyLines: false,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a \n \n b`, opt).result,
       `a \n \n b`,
       JSON.stringify(opt, null, 0)
@@ -223,7 +219,7 @@ tap.test("08", (t) => {
     removeEmptyLines: false,
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a \n \n b`, opt).result,
       `a\n\nb`,
       JSON.stringify(opt, null, 0)
@@ -234,7 +230,7 @@ tap.test("08", (t) => {
     removeEmptyLines: true,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a \n \n b`, opt).result,
       `a \n b`,
       JSON.stringify(opt, null, 0)
@@ -244,11 +240,12 @@ tap.test("08", (t) => {
     removeEmptyLines: true,
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a \n \n b`, opt).result,
       `a\nb`,
       JSON.stringify(opt, null, 0)
     );
   });
-  t.end();
 });
+
+test.run();

@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/2008/index.htm
 
 function badCharacterPunctuationSpace(context: Linter): RuleObjType {
-  const charCode = 8200;
+  let charCode = 8200;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

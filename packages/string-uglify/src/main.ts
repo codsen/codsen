@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 // tells code point of a given id number
@@ -12,10 +13,10 @@ interface Obj {
 
 // converts whole array into array uglified names
 function uglifyArr(arr: string[]): string[] {
-  const letters = "abcdefghijklmnopqrstuvwxyz";
-  const lettersAndNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let letters = "abcdefghijklmnopqrstuvwxyz";
+  let lettersAndNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-  const singleClasses: Obj = {
+  let singleClasses: Obj = {
     a: false,
     b: false,
     c: false,
@@ -43,7 +44,7 @@ function uglifyArr(arr: string[]): string[] {
     y: false,
     z: false,
   };
-  const singleIds: Obj = {
+  let singleIds: Obj = {
     a: false,
     b: false,
     c: false,
@@ -71,7 +72,7 @@ function uglifyArr(arr: string[]): string[] {
     y: false,
     z: false,
   };
-  const singleNameonly: Obj = {
+  let singleNameonly: Obj = {
     a: false,
     b: false,
     c: false,
@@ -101,7 +102,7 @@ function uglifyArr(arr: string[]): string[] {
   };
 
   // final array we'll assemble and eventually return
-  const res: string[] = [];
+  let res: string[] = [];
 
   // quick end
   if (!Array.isArray(arr) || !arr.length) {
@@ -116,9 +117,9 @@ function uglifyArr(arr: string[]): string[] {
       continue;
     }
 
-    const prefix = `.#`.includes(arr[id][0]) ? arr[id][0] : "";
-    const codePointSum = Array.from(arr[id]).reduce(
-      (acc, curr) => acc + (tellcp(curr) as number),
+    let prefix = `.#`.includes(arr[id][0]) ? arr[id][0] : "";
+    let codePointSum = Array.from(arr[id]).reduce(
+      (acc, curr) => acc + tellcp(curr),
       0
     );
 
@@ -126,7 +127,7 @@ function uglifyArr(arr: string[]): string[] {
       (`.#`.includes(arr[id][0]) && arr[id].length < 4) ||
       (!`.#`.includes(arr[id][0]) && arr[id].length < 3)
     ) {
-      const val = arr[id];
+      let val = arr[id];
       if (!res.includes(val)) {
         res.push(val);
 
@@ -167,14 +168,14 @@ function uglifyArr(arr: string[]): string[] {
       let soFarWeveGot = generated;
       let counter = 0;
 
-      const reducedCodePointSum = Array.from(arr[id]).reduce(
+      let reducedCodePointSum = Array.from(arr[id]).reduce(
         (acc, curr) =>
           acc < 200
             ? acc + tellcp(curr)
             : (acc + tellcp(curr)) % lettersAndNumbers.length,
         0
       );
-      const magicNumber = Array.from(arr[id])
+      let magicNumber = Array.from(arr[id])
         .map((val) => tellcp(val))
         .reduce((accum, curr) => {
           let temp = accum + curr;
@@ -228,7 +229,7 @@ function uglifyArr(arr: string[]): string[] {
   }
 
   console.log(
-    `231 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
+    `232 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
       singleClasses,
       null,
       4
@@ -249,14 +250,14 @@ function uglifyArr(arr: string[]): string[] {
   for (let i = 0, len = res.length; i < len; i++) {
     console.log("----------------------------------------");
     console.log(
-      `252 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
+      `253 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
     );
     if (res[i].startsWith(".")) {
       // if particular class name starts with a letter which hasn't been taken
       if (singleClasses[res[i].slice(1, 2)] === false) {
         singleClasses[res[i].slice(1, 2)] = res[i];
         console.log(
-          `259 shortened ${`\u001b[${33}m${
+          `260 shortened ${`\u001b[${33}m${
             res[i]
           }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
             0,
@@ -270,7 +271,7 @@ function uglifyArr(arr: string[]): string[] {
         res[i] = res[i].slice(0, 2);
       } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
         console.log(
-          `273 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
+          `274 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
             0,
             2
           )}`
@@ -283,7 +284,7 @@ function uglifyArr(arr: string[]): string[] {
       if (singleIds[res[i].slice(1, 2)] === false) {
         singleIds[res[i].slice(1, 2)] = res[i];
         console.log(
-          `286 shortened ${`\u001b[${33}m${
+          `287 shortened ${`\u001b[${33}m${
             res[i]
           }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
             0,
@@ -300,7 +301,7 @@ function uglifyArr(arr: string[]): string[] {
       if (!singleNameonly[res[i].slice(0, 1)]) {
         singleNameonly[res[i].slice(0, 1)] = res[i];
         console.log(
-          `303 shortened ${`\u001b[${33}m${
+          `304 shortened ${`\u001b[${33}m${
             res[i]
           }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
             0,

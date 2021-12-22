@@ -1,4 +1,8 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 
 // RULE IS TRIGGERED DIRECTLY FROM PARSER!
@@ -9,27 +13,27 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. basic
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
-  const str = "z <div>";
-  const messages = verify(t, str, {
+test(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, () => {
+  let str = "z <div>";
+  let messages = verify(not, str, {
     rules: {
       "tag-missing-closing": 0,
     },
   });
-  t.equal(applyFixes(str, messages), str, "01.01");
-  t.strictSame(messages, [], "01.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
 });
 
-tap.test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, (t) => {
-  const str = "z <div>";
-  const messages = verify(t, str, {
+test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, () => {
+  let str = "z <div>";
+  let messages = verify(not, str, {
     rules: {
       "tag-missing-closing": 1,
     },
   });
-  t.equal(applyFixes(str, messages), str, "02.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "02.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -43,18 +47,18 @@ tap.test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, (t) => {
     ],
     "02.02"
   );
-  t.end();
 });
 
-tap.test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, (t) => {
-  const str = "z <div>";
-  const messages = verify(t, str, {
+test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, () => {
+  let str = "z <div>";
+  let messages = verify(not, str, {
     rules: {
       "tag-missing-closing": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "03.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "03.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -68,94 +72,84 @@ tap.test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, (t) => {
     ],
     "03.02"
   );
-  t.end();
 });
 
-tap.test(
-  `04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 1`,
-  (t) => {
-    const str = "z <div>";
-    const messages = verify(t, str, {
-      rules: {
-        tag: 1,
+test(`04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 1`, () => {
+  let str = "z <div>";
+  let messages = verify(not, str, {
+    rules: {
+      tag: 1,
+    },
+  });
+  equal(applyFixes(str, messages), str, "04.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "tag-missing-closing",
+        severity: 1,
+        idxFrom: 2,
+        idxTo: 7,
+        message: `Closing tag is missing.`,
+        fix: null,
       },
-    });
-    t.equal(applyFixes(str, messages), str, "04.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-missing-closing",
-          severity: 1,
-          idxFrom: 2,
-          idxTo: 7,
-          message: `Closing tag is missing.`,
-          fix: null,
-        },
-      ],
-      "04.02"
-    );
-    t.end();
-  }
-);
+    ],
+    "04.02"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 2`,
-  (t) => {
-    const str = "z <div>";
-    const messages = verify(t, str, {
-      rules: {
-        tag: 2,
+test(`05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 2`, () => {
+  let str = "z <div>";
+  let messages = verify(not, str, {
+    rules: {
+      tag: 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "05.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "tag-missing-closing",
+        severity: 2,
+        idxFrom: 2,
+        idxTo: 7,
+        message: `Closing tag is missing.`,
+        fix: null,
       },
-    });
-    t.equal(applyFixes(str, messages), str, "05.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-missing-closing",
-          severity: 2,
-          idxFrom: 2,
-          idxTo: 7,
-          message: `Closing tag is missing.`,
-          fix: null,
-        },
-      ],
-      "05.02"
-    );
-    t.end();
-  }
-);
+    ],
+    "05.02"
+  );
+});
 
-tap.test(
-  `06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - no issue here`,
-  (t) => {
-    const str = "<style>\n\n</style>";
-    const messages = verify(t, str, {
-      rules: {
-        "tag-missing-closing": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "06.01");
-    t.strictSame(messages, [], "06.02");
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - no issue here`, () => {
+  let str = "<style>\n\n</style>";
+  let messages = verify(not, str, {
+    rules: {
+      "tag-missing-closing": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "06.01");
+  equal(messages, [], "06.02");
+});
 
-tap.test(`07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TD missing`, (t) => {
-  const str = `<table>
+test(`07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TD missing`, () => {
+  let str = `<table>
   <tr>
     <td>
       z
   </tr>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "tag-missing-closing": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "07.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "07.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -178,24 +172,24 @@ tap.test(`07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TD missing`, (t) => {
     ],
     "07.02"
   );
-  t.equal(messages.length, 1, "07.03");
-  t.end();
+  equal(messages.length, 1, "07.03");
 });
 
-tap.test(`08 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR missing`, (t) => {
-  const str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
+test(`08 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR missing`, () => {
+  let str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       z
     </td>
 </table>`;
-  const messages = verify(t, str, {
+  let messages = verify(not, str, {
     rules: {
       "tag-missing-closing": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "08.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "08.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -218,126 +212,109 @@ tap.test(`08 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR missing`, (t) => {
     ],
     "08.02"
   );
-  t.equal(messages.length, 1, "08.03");
-  t.end();
+  equal(messages.length, 1, "08.03");
 });
 
-tap.test(
-  `09 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TABLE missing`,
-  (t) => {
-    const str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
+test(`09 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TABLE missing`, () => {
+  let str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       z
     </td>
   </tr>`;
-    const messages = verify(t, str, {
-      rules: {
-        "tag-missing-closing": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "09.01");
-    t.match(
-      messages,
-      [
-        {
-          fix: null,
-          keepSeparateWhenFixing: false,
-          line: 1,
-          column: 1,
-          severity: 2,
-          message: "Closing tag is missing.",
-          ruleId: "tag-missing-closing",
-          idxFrom: 0,
-          idxTo: 60,
-          tokenObj: {
-            type: "tag",
-            start: 0,
-            end: 60,
-            value:
-              '<table width="1" border="0" cellpadding="0" cellspacing="0">',
-          },
+  let messages = verify(not, str, {
+    rules: {
+      "tag-missing-closing": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "09.01");
+  compare(
+    ok,
+    messages,
+    [
+      {
+        fix: null,
+        keepSeparateWhenFixing: false,
+        line: 1,
+        column: 1,
+        severity: 2,
+        message: "Closing tag is missing.",
+        ruleId: "tag-missing-closing",
+        idxFrom: 0,
+        idxTo: 60,
+        tokenObj: {
+          type: "tag",
+          start: 0,
+          end: 60,
+          value: '<table width="1" border="0" cellpadding="0" cellspacing="0">',
         },
-      ],
-      "09.02"
-    );
-    t.equal(messages.length, 1, "09.03");
-    t.end();
-  }
-);
+      },
+    ],
+    "09.02"
+  );
+  equal(messages.length, 1, "09.03");
+});
 
-tap.todo(
-  `10 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR+TD missing`,
-  (t) => {
-    const str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
+test.skip(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR+TD missing`, () => {
+  let str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       z
 </table>`;
-    const messages = verify(t, str, {
-      rules: {
-        "tag-missing-closing": 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), str, "10.01");
-    t.strictSame(messages, [], "10.02");
-    t.end();
-  }
-);
+  let messages = verify(not, str, {
+    rules: {
+      "tag-missing-closing": 2,
+    },
+  });
+  equal(applyFixes(str, messages), str, "01");
+  equal(messages, [], "01.02");
+});
 
 // 02. various
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `11 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`,
-  (t) => {
-    const str = `<br><br>zzz</br></br>`;
-    const fixed = `<br /><br />zzz<br /><br />`;
-    const messages = verify(t, str, {
-      rules: {
-        all: 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "11");
-    t.end();
-  }
-);
-
-tap.test(
-  `12 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`,
-  (t) => {
-    const str = `<br><br>zzz<br>`;
-    const fixed = `<br /><br />zzz<br />`;
-    const messages = verify(t, str, {
-      rules: {
-        all: 2,
-      },
-    });
-    t.equal(applyFixes(str, messages), fixed, "12");
-    t.end();
-  }
-);
-
-tap.todo(`13`, (t) => {
-  const str = `<br<div></div>`;
-  const fixed = `<br /><div></div>`;
-  const messages = verify(t, str, {
+test(`11 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`, () => {
+  let str = `<br><br>zzz</br></br>`;
+  let fixed = `<br /><br />zzz<br /><br />`;
+  let messages = verify(not, str, {
     rules: {
       all: 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "13");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "11");
 });
 
-tap.todo(`14`, (t) => {
-  const str = `<br\n<div></div>`;
-  const fixed = `<br />\n<div></div>`;
-  const messages = verify(t, str, {
+test(`12 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`, () => {
+  let str = `<br><br>zzz<br>`;
+  let fixed = `<br /><br />zzz<br />`;
+  let messages = verify(not, str, {
     rules: {
       all: 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "14");
-  t.end();
+  equal(applyFixes(str, messages), fixed, "12");
 });
+
+test.skip(`02`, () => {
+  let str = `<br<div></div>`;
+  let fixed = `<br /><div></div>`;
+  let messages = verify(not, str, {
+    rules: {
+      all: 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "02.01");
+});
+
+test.skip(`03`, () => {
+  let str = `<br\n<div></div>`;
+  let fixed = `<br />\n<div></div>`;
+  let messages = verify(not, str, {
+    rules: {
+      all: 2,
+    },
+  });
+  equal(applyFixes(str, messages), fixed, "03.01");
+});
+
+test.run();

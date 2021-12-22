@@ -1,45 +1,48 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 
 // false positives
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - one attribute`, (t) => {
-  const str = `<br class="h"/>`;
-  const messages = verify(t, str, {
+test(`01 - one attribute`, () => {
+  let str = `<br class="h"/>`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-on-closing-tag": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "01.01");
-  t.strictSame(messages, [], "01.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "01.01");
+  equal(messages, [], "01.02");
 });
 
-tap.test(`02 - one attribute`, (t) => {
-  const str = `<br class="h">`;
-  const messages = verify(t, str, {
+test(`02 - one attribute`, () => {
+  let str = `<br class="h">`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-on-closing-tag": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "02.01");
-  t.strictSame(messages, [], "02.02");
-  t.end();
+  equal(applyFixes(str, messages), str, "02.01");
+  equal(messages, [], "02.02");
 });
 
 // the cases
 // -----------------------------------------------------------------------------
 
-tap.test(`03 - one attribute`, (t) => {
-  const str = `<a>z</a class="y">`;
-  const messages = verify(t, str, {
+test(`03 - one attribute`, () => {
+  let str = `<a>z</a class="y">`;
+  let messages = verify(not, str, {
     rules: {
       "attribute-on-closing-tag": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "03.01");
-  t.match(
+  equal(applyFixes(str, messages), str, "03.01");
+  compare(
+    ok,
     messages,
     [
       {
@@ -53,6 +56,7 @@ tap.test(`03 - one attribute`, (t) => {
     ],
     "03.02"
   );
-  t.equal(messages.length, 1, "03.03");
-  t.end();
+  equal(messages.length, 1, "03.03");
 });
+
+test.run();

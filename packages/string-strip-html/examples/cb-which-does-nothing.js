@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 // A Bypass Callback and a Do-Nothing Callback
 
 import { strict as assert } from "assert";
+
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 // this callback just pushes proposed result to "rangesArr",

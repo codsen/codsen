@@ -1,9 +1,10 @@
+import { findMalformed } from "string-find-malformed";
+
 import { Linter, RuleObjType } from "../../linter";
 
 // rule: comment-opening-malformed
 // -----------------------------------------------------------------------------
 
-import { findMalformed } from "string-find-malformed";
 import validateCommentOpening from "../../util/validateCommentOpening";
 
 function commentOpeningMalformed(context: Linter): RuleObjType {
@@ -13,14 +14,14 @@ function commentOpeningMalformed(context: Linter): RuleObjType {
         `███████████████████████████████████████ commentOpeningMalformed() TEXT ███████████████████████████████████████`
       );
       console.log(
-        `016 commentOpeningMalformed(): node = ${JSON.stringify(node, null, 4)}`
+        `017 commentOpeningMalformed(): node = ${JSON.stringify(node, null, 4)}`
       );
       findMalformed(
         node.value,
         "<!--",
         (errorObj) => {
           console.log(
-            `023 commentOpeningMalformed() / findAllInstancesOf(): RAISE ERROR`
+            `024 commentOpeningMalformed() / findAllInstancesOf(): RAISE ERROR`
           );
           context.report({
             ...errorObj,
@@ -41,18 +42,18 @@ function commentOpeningMalformed(context: Linter): RuleObjType {
         `███████████████████████████████████████ commentOpeningMalformed() COMMENT ███████████████████████████████████████`
       );
       console.log(
-        `044 commentOpeningMalformed(): node = ${JSON.stringify(node, null, 4)}`
+        `045 commentOpeningMalformed(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (!node.closing) {
         // run the tag's value past the validator function
-        const errorArr = validateCommentOpening(node) || [];
+        let errorArr = validateCommentOpening(node) || [];
         console.log(
-          `051 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `052 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`055 commentOpeningMalformed(): RAISE ERROR`);
+          console.log(`056 commentOpeningMalformed(): RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "comment-opening-malformed" });
         });
       }

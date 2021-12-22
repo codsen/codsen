@@ -1,5 +1,8 @@
-const tap = require("tap");
-const { crush } = require("../dist/html-crush.umd");
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+const { crush } = require("../dist/html-crush.esm");
 
 const c = crush;
 
@@ -304,10 +307,10 @@ function generate() {
   )}`;
 }
 
-tap.test(`*** non-deterministic tests`, (t) => {
+test(`*** non-deterministic tests`, () => {
   let run = true;
   let counter = 0;
-  const startTime = Date.now();
+  let startTime = Date.now();
 
   let argWeSeek;
   process.argv.forEach((arg, i) => {
@@ -328,12 +331,12 @@ tap.test(`*** non-deterministic tests`, (t) => {
     while (run) {
       if (Date.now() - startTime < argWeSeek) {
         // generate random strong:
-        const generated = generate();
+        let generated = generate();
         // console.log(`\n${generated}`);
         // ensure that both original without whitespace and minified result without
         // whitespace are the same. In other words, no non-whitespace characters
         // were changed. Only whitespace.
-        t.equal(
+        equal(
           removeWhitespace(generated),
           removeWhitespace(
             c(generated, {
@@ -394,5 +397,4 @@ tap.test(`*** non-deterministic tests`, (t) => {
       }
     }
   }
-  t.end();
 });

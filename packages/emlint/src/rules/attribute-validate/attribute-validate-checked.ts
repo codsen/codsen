@@ -30,7 +30,7 @@ function attributeValidateChecked(
         )}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "checked") {
         // validate the parent

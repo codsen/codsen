@@ -2,7 +2,9 @@
 
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Obj {
@@ -37,25 +39,25 @@ type Callback = (
 ) => any;
 
 function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
-  function trimFirstDot(str: any) {
+  function trimFirstDot(str: string): string {
     if (typeof str === "string" && str[0] === ".") {
       return str.slice(1);
     }
     return str;
   }
   console.log(
-    `047 ${`\u001b[${33}m${`lookahead`}\u001b[${39}m`} = ${JSON.stringify(
+    `049 ${`\u001b[${33}m${`lookahead`}\u001b[${39}m`} = ${JSON.stringify(
       lookahead,
       null,
       4
     )}`
   );
-  const stop1 = { now: false };
+  let stop1 = { now: false };
 
   // that's where we stash the arguments that the callback function tries
   // to ping; we keep them until enough of them is gathered to set them as
   // "future" values:
-  const stash: any[] = [];
+  let stash: any[] = [];
   // ^ LIFO STACK
 
   //
@@ -66,10 +68,10 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
     callback: Callback,
     innerObj: InnerObj,
     stop: { now: boolean }
-  ) {
-    console.log(`070 ======= traverseInner() =======`);
+  ): void {
+    console.log(`072 ======= traverseInner() =======`);
     console.log(
-      `072 ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${JSON.stringify(
+      `074 ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${JSON.stringify(
         tree,
         null,
         4
@@ -80,22 +82,22 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
     innerObj.depth += 1;
 
     if (Array.isArray(tree)) {
-      console.log(`083 tree is array!`);
+      console.log(`085 tree is array!`);
       for (let i = 0, len = tree.length; i < len; i++) {
         console.log(
-          `086: ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`} key: ${JSON.stringify(
+          `088: ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`} key: ${JSON.stringify(
             tree[i],
             null,
             0
           )}`
         );
         if (stop.now) {
-          console.log(`093 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          console.log(`095 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
-        const path = `${innerObj.path}.${i}`;
+        let path = `${innerObj.path}.${i}`;
         console.log(
-          `098 ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+          `100 ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
             path,
             null,
             4
@@ -120,19 +122,19 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
         );
       }
     } else if (isObj(tree)) {
-      console.log(`123 tree is object`);
+      console.log(`125 tree is object`);
       // eslint-disable-next-line
       for (const key in tree) {
         console.log(
-          `127: ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`} key: ${key}`
+          `129: ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`} key: ${key}`
         );
         if (stop.now && key != null) {
-          console.log(`130 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          console.log(`132 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
-        const path = `${innerObj.path}.${key}`;
+        let path = `${innerObj.path}.${key}`;
         console.log(
-          `135 ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+          `137 ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
             path,
             null,
             4
@@ -159,18 +161,18 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
         );
       }
     }
-    console.log(`162 just returning tree, ${JSON.stringify(tree, null, 4)}`);
+    console.log(`164 just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
 
   // for DRY purposes, we extract the function which reports the first element
   // from the stash and removes that element.
-  function reportFirstFromStash() {
+  function reportFirstFromStash(): void {
     console.log(
-      `170 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`
+      `172 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`
     );
     // start to assemble node we're report to the callback cb1()
-    const currentElem: any = stash.shift();
+    let currentElem: any = stash.shift();
     // ^ shift removes it from stash
     // now we need the "future" nodes, as many as "lookahead" of them
 
@@ -185,7 +187,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
           clone([stash[i][0], stash[i][1], stash[i][2]])
         );
         console.log(
-          `188 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} currentElem[2].next now = ${JSON.stringify(
+          `190 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} currentElem[2].next now = ${JSON.stringify(
             currentElem[2].next,
             null,
             4
@@ -193,7 +195,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
         );
       } else {
         console.log(
-          `196 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${31}m${`STOP`}\u001b[${39}m`} - there are not enough elements in stash`
+          `198 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${31}m${`STOP`}\u001b[${39}m`} - there are not enough elements in stash`
         );
         break;
       }
@@ -201,7 +203,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
 
     // finally, ping the callback with assembled element:
     console.log(
-      `204 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
+      `206 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
         [...[currentElem[0], currentElem[1], currentElem[2]]],
         null,
         4
@@ -212,9 +214,9 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
 
   // used to buffer "lookahead"-amount of results and report them as "future"
   // nodes
-  function intermediary(...incoming: any) {
+  function intermediary(...incoming: any): void {
     console.log(
-      `217 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: INCOMING ${JSON.stringify(
+      `219 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: INCOMING ${JSON.stringify(
         incoming,
         null,
         4
@@ -227,7 +229,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
 
     stash.push([...incoming]);
     console.log(
-      `230 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
+      `232 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
         stash,
         null,
         4
@@ -237,7 +239,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
     // 2. if there are enough things gathered in stash, report the first one
     // from the stash:
     console.log(
-      `240 ${
+      `242 ${
         stash.length > lookahead
           ? `${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: ${`\u001b[${32}m${`ENOUGH VALUES IN STASH`}\u001b[${39}m`}`
           : `${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: ${`\u001b[${31}m${`NOT ENOUGH VALUES IN STASH, MOVE ON`}\u001b[${39}m`}`
@@ -245,7 +247,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
     );
     if (stash.length > lookahead) {
       console.log(
-        `248 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: stash.length=${
+        `250 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: stash.length=${
           stash.length
         } >= lookahead=${lookahead} - ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}`
       );
@@ -253,7 +255,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
       // the stash:
       reportFirstFromStash();
       console.log(
-        `256 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
+        `258 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
           stash,
           null,
           4
@@ -272,21 +274,21 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
     stop1
   );
 
-  console.log(`275 ███████████████████████████████████████`);
-  console.log(`276 ███████████████████████████████████████`);
   console.log(`277 ███████████████████████████████████████`);
   console.log(`278 ███████████████████████████████████████`);
+  console.log(`279 ███████████████████████████████████████`);
+  console.log(`280 ███████████████████████████████████████`);
 
   // once the end is reached, clean up the stash - that's the remaining elements
   // that will have less "future" reported in them, compared to what was
   // requested by "lookahead"
   if (stash.length) {
-    console.log(`284 REMAINING STASH`);
+    console.log(`286 REMAINING STASH`);
     for (let i = 0, len = stash.length; i < len; i++) {
-      console.log(`286 report ${i + 1}/${stash.length} stash element`);
+      console.log(`288 report ${i + 1}/${stash.length} stash element`);
       reportFirstFromStash();
       console.log(
-        `289 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
+        `291 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
           stash,
           null,
           4

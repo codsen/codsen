@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Opts {
@@ -25,7 +26,7 @@ function astralAwareSearch(
   whereToLook: string,
   whatToLookFor: string,
   opts?: { i?: boolean }
-) {
+): number[] {
   function existy(something: any): boolean {
     return something != null;
   }
@@ -37,14 +38,14 @@ function astralAwareSearch(
   ) {
     return [];
   }
-  const foundIndexArray = [];
-  const arrWhereToLook = Array.from(whereToLook);
-  const arrWhatToLookFor = Array.from(whatToLookFor);
+  let foundIndexArray = [];
+  let arrWhereToLook = Array.from(whereToLook);
+  let arrWhatToLookFor = Array.from(whatToLookFor);
   let found;
 
   for (let i = 0; i < arrWhereToLook.length; i++) {
     // check if current source character matches the first char of what we're looking for
-    if (opts && opts.i) {
+    if (opts?.i) {
       if (
         arrWhereToLook[i].toLowerCase() === arrWhatToLookFor[0].toLowerCase()
       ) {
@@ -119,7 +120,7 @@ function iterateLeft(
   i: boolean
 ): boolean {
   let matched = true;
-  const charsArray = Array.from(elem);
+  let charsArray = Array.from(elem);
   for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     // iterate each character of particular Outside:
     if (i) {
@@ -150,7 +151,7 @@ function iterateRight(
   i: boolean
 ): boolean {
   let matched = true;
-  const charsArray = Array.from(elem);
+  let charsArray = Array.from(elem);
   for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     // iterate each character of particular Outside:
     if (i) {
@@ -185,7 +186,7 @@ function er(
   options: Opts,
   originalReplacement: string
 ): string {
-  const defaults = {
+  let defaults = {
     i: {
       leftOutsideNot: false,
       leftOutside: false,
@@ -196,10 +197,10 @@ function er(
       rightOutsideNot: false,
     },
   };
-  const opts = { ...defaults, ...options };
+  let opts = { ...defaults, ...options };
 
   // enforce the peace and order:
-  const source = stringise(originalSource);
+  let source = stringise(originalSource);
   opts.leftOutsideNot = stringise(opts.leftOutsideNot);
   opts.leftOutside = stringise(opts.leftOutside);
   opts.leftMaybe = stringise(opts.leftMaybe);
@@ -207,19 +208,19 @@ function er(
   opts.rightMaybe = stringise(opts.rightMaybe);
   opts.rightOutside = stringise(opts.rightOutside);
   opts.rightOutsideNot = stringise(opts.rightOutsideNot);
-  const replacement = stringise(originalReplacement);
+  let replacement = stringise(originalReplacement);
 
-  const arrSource = Array.from(source[0]);
+  let arrSource = Array.from(source[0]);
   let foundBeginningIndex;
   let foundEndingIndex;
   let matched;
   let found;
-  const replacementRecipe: [number, number][] = [];
+  let replacementRecipe: [number, number][] = [];
   let result = "";
 
   //  T H E   L O O P
 
-  const allResults = astralAwareSearch(source[0], opts.searchFor, {
+  let allResults = astralAwareSearch(source[0], opts.searchFor, {
     i: opts.i.searchFor,
   });
 
@@ -228,7 +229,7 @@ function er(
     resIndex < resLen;
     resIndex++
   ) {
-    const oneOfFoundIndexes = allResults[resIndex];
+    let oneOfFoundIndexes = allResults[resIndex];
 
     // oneOfFoundIndexes is the index of starting index of found
     // the principle of replacement is after finding the searchFor string,
@@ -249,7 +250,7 @@ function er(
       for (let i = 0, len = opts.leftMaybe.length; i < len; i++) {
         // iterate each of the maybe's in the array:
         matched = true;
-        const splitLeftMaybe = Array.from(opts.leftMaybe[i]);
+        let splitLeftMaybe = Array.from(opts.leftMaybe[i]);
         for (let i2 = 0, len2 = splitLeftMaybe.length; i2 < len2; i2++) {
           // iterate each character of particular Maybe:
           if (opts.i.leftMaybe) {
@@ -284,7 +285,7 @@ function er(
       for (let i = 0, len = opts.rightMaybe.length; i < len; i++) {
         // iterate each of the Maybe's in the array:
         matched = true;
-        const splitRightMaybe = Array.from(opts.rightMaybe[i]);
+        let splitRightMaybe = Array.from(opts.rightMaybe[i]);
         for (let i2 = 0, len2 = splitRightMaybe.length; i2 < len2; i2++) {
           // iterate each character of particular Maybe:
           if (opts.i.rightMaybe) {

@@ -33,7 +33,7 @@ function attributeValidateFrameborder(context: Linter): RuleObjType {
         }
 
         // https://www.w3.org/TR/html4/present/frames.html#adef-frameborder
-        const errorArr = validateString(
+        let errorArr = validateString(
           node.attribValueRaw, // value
           node.attribValueStartsAt as number, // offset
           {

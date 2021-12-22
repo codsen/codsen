@@ -3,11 +3,10 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { splitEasy } from "../dist/csv-split-easy.esm.js";
+
+const callerDir = path.resolve(".");
 
 const testme = () => splitEasy("a,b,c\n\r,,\n\r,,\n,,\n,,\r,,\n,,\n,d,");
 

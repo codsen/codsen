@@ -4,16 +4,15 @@
 import path from "path";
 import fs from "fs";
 
+import { runPerf } from "../../../ops/scripts/perf.js";
+import { crush } from "../dist/html-crush.esm.js";
+
 const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
 
 const dummyHTML = fs.readFileSync(
   path.resolve("./perf/dummy_file.html"),
   "utf8"
 );
-
-// setup
-import { crush } from "../dist/html-crush.esm.js";
 
 const testme = () =>
   crush(dummyHTML, {

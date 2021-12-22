@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 // import { det as det1 } from "../dist/detergent.esm.js";
 import {
   det,
@@ -15,133 +18,124 @@ import {
   // leftSingleQuote
 } from "../t-util/util.js";
 
-tap.test(`01 - recursive entity de-coding, convertEntities=off`, (t) => {
+test(`01 - recursive entity de-coding, convertEntities=off`, () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `&amp;nbsp;`, opt).res,
+    equal(
+      det(ok, not, n, `&amp;nbsp;`, opt).res,
       `${rawNbsp}`,
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`02 - recursive entity de-coding, convertEntities=off`, (t) => {
+test(`02 - recursive entity de-coding, convertEntities=off`, () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `&amp;pound;`, opt).res,
+    equal(
+      det(ok, not, n, `&amp;pound;`, opt).res,
       "£",
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`03 - recursive entity de-coding, convertEntities=off`, (t) => {
+test(`03 - recursive entity de-coding, convertEntities=off`, () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `&amp;amp;amp;amp;pound;`, opt).res,
+    equal(
+      det(ok, not, n, `&amp;amp;amp;amp;pound;`, opt).res,
       "£",
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`04 - recursive entity de-coding, convertEntities=off`, (t) => {
+test(`04 - recursive entity de-coding, convertEntities=off`, () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `&#x26;#xA9;`, opt).res,
+    equal(
+      det(ok, not, n, `&#x26;#xA9;`, opt).res,
       "©",
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`05 - recursive entity de-coding, convertEntities=off`, (t) => {
+test(`05 - recursive entity de-coding, convertEntities=off`, () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `a&#x26;#x26;amp;b`, opt).res,
+    equal(
+      det(ok, not, n, `a&#x26;#x26;amp;b`, opt).res,
       "a&b",
       JSON.stringify(opt, null, 0)
     );
   });
-  t.end();
 });
 
-tap.test(`06 - recursive entity de-coding, convertEntities=on`, (t) => {
+test(`06 - recursive entity de-coding, convertEntities=on`, () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `&amp;nbsp;`, opt).res,
+    equal(
+      det(ok, not, n, `&amp;nbsp;`, opt).res,
       "&nbsp;",
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`07 - recursive entity de-coding, convertEntities=on`, (t) => {
+test(`07 - recursive entity de-coding, convertEntities=on`, () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `&amp;pound;`, opt).res,
+    equal(
+      det(ok, not, n, `&amp;pound;`, opt).res,
       "&pound;",
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`08 - recursive entity de-coding, convertEntities=on`, (t) => {
+test(`08 - recursive entity de-coding, convertEntities=on`, () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `&amp;amp;amp;amp;pound;`, opt).res,
+    equal(
+      det(ok, not, n, `&amp;amp;amp;amp;pound;`, opt).res,
       "&pound;",
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`09 - recursive entity de-coding, convertEntities=on`, (t) => {
+test(`09 - recursive entity de-coding, convertEntities=on`, () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `&#x26;#xA9;`, opt).res,
+    equal(
+      det(ok, not, n, `&#x26;#xA9;`, opt).res,
       "&copy;",
       JSON.stringify(opt, null, 4)
     );
   });
-  t.end();
 });
 
-tap.test(`10 - recursive entity de-coding, convertEntities=on`, (t) => {
+test(`10 - recursive entity de-coding, convertEntities=on`, () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
-    t.equal(
-      det(t, n, `a&#x26;#x26;amp;b`, opt).res,
+    equal(
+      det(ok, not, n, `a&#x26;#x26;amp;b`, opt).res,
       "a&amp;b",
       JSON.stringify(opt, null, 0)
     );
   });
-
-  t.end();
 });
+
+test.run();

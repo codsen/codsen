@@ -1,103 +1,53 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { isJinjaSpecific } from "../dist/regex-jinja-specific.esm.js";
 
 // /['"]%x?[\+0]?[.>^<]?\d+[\w%]['"]\|format\(/gi
 
-tap.test("01 format with percentage", (t) => {
-  t.match(
-    `{{ '%.2%'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "01"
-  );
-  t.end();
+test("01 format with percentage", () => {
+  match(`{{ '%.2%'|format(container.price.total) }}`, isJinjaSpecific(), "01");
 });
 
-tap.test("02 format in exponent notation", (t) => {
-  t.match(
-    `{{ '%.2e'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "02"
-  );
-  t.end();
+test("02 format in exponent notation", () => {
+  match(`{{ '%.2e'|format(container.price.total) }}`, isJinjaSpecific(), "02");
 });
 
-tap.test("03 no decimal places", (t) => {
-  t.match(
-    `{{ '%.0f'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "03"
-  );
-  t.end();
+test("03 no decimal places", () => {
+  match(`{{ '%.0f'|format(container.price.total) }}`, isJinjaSpecific(), "03");
 });
 
-tap.test("04 two decimal places", (t) => {
-  t.match(
-    `{{ '%.2f'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "04"
-  );
-  t.end();
+test("04 two decimal places", () => {
+  match(`{{ '%.2f'|format(container.price.total) }}`, isJinjaSpecific(), "04");
 });
 
-tap.test("05 two decimal places, with sign", (t) => {
-  t.match(
-    `{{ '%+.2f'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "05"
-  );
-  t.end();
+test("05 two decimal places, with sign", () => {
+  match(`{{ '%+.2f'|format(container.price.total) }}`, isJinjaSpecific(), "05");
 });
 
-tap.test("06 pad a number, left side, width 2", (t) => {
-  t.match(
-    `{{ '%0>2d'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "06"
-  );
-  t.end();
+test("06 pad a number, left side, width 2", () => {
+  match(`{{ '%0>2d'|format(container.price.total) }}`, isJinjaSpecific(), "06");
 });
 
-tap.test("07 pad a number, left side, width 2", (t) => {
-  t.match(
-    `{{ '%0>2d'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "07"
-  );
-  t.end();
+test("07 pad a number, left side, width 2", () => {
+  match(`{{ '%0>2d'|format(container.price.total) }}`, isJinjaSpecific(), "07");
 });
 
-tap.test("08 pad right side", (t) => {
-  t.match(
-    `{{ '%x<4d'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "08"
-  );
-  t.end();
+test("08 pad right side", () => {
+  match(`{{ '%x<4d'|format(container.price.total) }}`, isJinjaSpecific(), "08");
 });
 
-tap.test("09 center aligned", (t) => {
-  t.match(
-    `{{ '%^10d'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "09"
-  );
-  t.end();
+test("09 center aligned", () => {
+  match(`{{ '%^10d'|format(container.price.total) }}`, isJinjaSpecific(), "09");
 });
 
-tap.test("10 left aligned", (t) => {
-  t.match(
-    `{{ '%<10d'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "10"
-  );
-  t.end();
+test("10 left aligned", () => {
+  match(`{{ '%<10d'|format(container.price.total) }}`, isJinjaSpecific(), "10");
 });
 
-tap.test("11 right aligned", (t) => {
-  t.match(
-    `{{ '%10d'|format(container.price.total) }}`,
-    isJinjaSpecific(),
-    "11"
-  );
-  t.end();
+test("11 right aligned", () => {
+  match(`{{ '%10d'|format(container.price.total) }}`, isJinjaSpecific(), "11");
 });
+
+test.run();

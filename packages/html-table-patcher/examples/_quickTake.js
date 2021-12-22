@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { patcher } from "../dist/html-table-patcher.esm.js";
 
 assert.equal(

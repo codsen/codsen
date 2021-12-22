@@ -1,6 +1,6 @@
 import { left, right } from "string-left-right";
+
 import { version as v } from "../package.json";
-const version: string = v;
 import {
   Obj,
   prepConfig,
@@ -8,6 +8,8 @@ import {
   extractConfig,
   headsAndTails,
 } from "./util";
+
+const version: string = v;
 
 interface Opts {
   includeConfig: boolean;
@@ -33,13 +35,13 @@ function genAtomic(
   str: string,
   originalOpts?: Opts
 ): { log: { count: number }; result: string } {
-  function trimIfNeeded(str2: string, opts: Obj = {}) {
+  function trimIfNeeded(str2: string, opts: Obj = {}): string {
     // if config and heads/tails are turned off, don't trim
     if (!opts.includeConfig && !opts.includeHeadsAndTails) {
-      console.log(`039 didn't trim`);
+      console.log(`041 didn't trim`);
       return str2;
     }
-    console.log(`042 trim`);
+    console.log(`044 trim`);
     return str2.trim();
   }
 
@@ -53,12 +55,12 @@ function genAtomic(
     );
   }
 
-  const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
-  const generatedCount = {
+  let { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
+  let generatedCount = {
     count: 0,
   };
 
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     // opts.includeConfig is a superset feature of opts.includeHeadsAndTails
     opts.includeHeadsAndTails = true;
@@ -72,8 +74,7 @@ function genAtomic(
       !str.includes(CONFIGTAIL) &&
       !str.includes(CONTENTHEAD) &&
       !str.includes(CONTENTTAIL)) ||
-    (opts &&
-      opts.configOverride &&
+    (opts?.configOverride &&
       typeof opts.configOverride === "string" &&
       !opts.configOverride.includes("$$$") &&
       !opts.configOverride.includes(CONFIGHEAD) &&
@@ -81,7 +82,7 @@ function genAtomic(
       !opts.configOverride.includes(CONTENTHEAD) &&
       !opts.configOverride.includes(CONTENTTAIL))
   ) {
-    console.log(`084 quick ending, no $$$ found, returning input str`);
+    console.log(`085 quick ending, no $$$ found, returning input str`);
     return {
       log: {
         count: 0,
@@ -101,10 +102,10 @@ function genAtomic(
     opts.configOverride ? opts.configOverride : str
   );
   console.log(
-    `104 ${`\u001b[${33}m${`extractedConfig`}\u001b[${39}m`}:\n"${`\u001b[${32}m${extractedConfig}\u001b[${39}m`}"\n\n\n`
+    `105 ${`\u001b[${33}m${`extractedConfig`}\u001b[${39}m`}:\n"${`\u001b[${32}m${extractedConfig}\u001b[${39}m`}"\n\n\n`
   );
   console.log(
-    `107 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
+    `108 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
       rawContentAbove,
       null,
       4
@@ -135,7 +136,7 @@ function genAtomic(
   }
   console.log("--------------------------------------------------");
   console.log(
-    `138 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+    `139 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
   );
 
   // tackle config
@@ -143,12 +144,12 @@ function genAtomic(
     frontPart = `/* ${CONFIGHEAD}\n${extractedConfig.trim()}\n${CONFIGTAIL}\n${frontPart}`;
     console.log("--------------------------------------------------");
     console.log(
-      `146 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+      `147 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
     );
   }
 
   console.log(
-    `151 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
+    `152 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
       rawContentAbove,
       null,
       4
@@ -161,15 +162,15 @@ function genAtomic(
 
   // maybe there was some content above?
   if (str.includes(CONFIGHEAD)) {
-    console.log(`164 CONFIGHEAD detected`);
+    console.log(`165 CONFIGHEAD detected`);
     if (left(str, str.indexOf(CONFIGHEAD)) != null) {
-      console.log(`166 content in front of config head detected`);
+      console.log(`167 content in front of config head detected`);
       // in normal cases, content should be between opening CSS comment +
       // CONFIGHEAD and CONFIGTAIL + closing CSS comment, we just have to mind
       // the whitespace
       let sliceUpTo = str.indexOf(CONFIGHEAD);
       console.log(
-        `172 ${`\u001b[${33}m${`0 -> sliceUpTo`}\u001b[${39}m`} = "${str.slice(
+        `173 ${`\u001b[${33}m${`0 -> sliceUpTo`}\u001b[${39}m`} = "${str.slice(
           0,
           sliceUpTo
         )}"; ${`\u001b[${33}m${`sliceUpTo -> end`}\u001b[${39}m`} = "${str.slice(
@@ -182,7 +183,7 @@ function genAtomic(
       ) {
         sliceUpTo = left(str, left(str, sliceUpTo)) as number;
         console.log(
-          `185 new ${`\u001b[${33}m${`sliceUpTo`}\u001b[${39}m`} = ${JSON.stringify(
+          `186 new ${`\u001b[${33}m${`sliceUpTo`}\u001b[${39}m`} = ${JSON.stringify(
             sliceUpTo,
             null,
             4
@@ -190,7 +191,7 @@ function genAtomic(
         );
       }
       console.log(
-        `193 ${`\u001b[${31}m${`██`}\u001b[${39}m`} frontPart = "${frontPart}"`
+        `194 ${`\u001b[${31}m${`██`}\u001b[${39}m`} frontPart = "${frontPart}"`
       );
       let putInFront = "/* ";
       if (
@@ -211,7 +212,7 @@ function genAtomic(
       frontPart = `${str.slice(0, sliceUpTo)}${putInFront}${frontPart}`;
 
       console.log(
-        `214 ${`\u001b[${32}m${`██`}\u001b[${39}m`} new ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`} = ${JSON.stringify(
+        `215 ${`\u001b[${32}m${`██`}\u001b[${39}m`} new ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`} = ${JSON.stringify(
           frontPart,
           null,
           4
@@ -224,11 +225,11 @@ function genAtomic(
     str.includes(CONFIGTAIL) &&
     right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)
   ) {
-    console.log(`227 config tails detected`);
+    console.log(`228 config tails detected`);
     // extract content that follows CONFIGTAIL:
     let sliceFrom = str.indexOf(CONFIGTAIL) + CONFIGTAIL.length;
     console.log(
-      `231 ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${JSON.stringify(
+      `232 ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${JSON.stringify(
         sliceFrom,
         null,
         4
@@ -251,7 +252,7 @@ function genAtomic(
           right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length) as number
         ) as number) + 1;
       console.log(
-        `254 closing comment included, ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} now = ${sliceFrom}`
+        `255 closing comment included, ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} now = ${sliceFrom}`
       );
     }
 
@@ -259,10 +260,10 @@ function genAtomic(
     if (
       str.slice(right(str, sliceFrom - 1) as number).startsWith(CONTENTHEAD)
     ) {
-      const contentHeadsStartAt = right(str, sliceFrom);
+      let contentHeadsStartAt = right(str, sliceFrom);
       sliceFrom = contentHeadsStartAt || 0 + CONTENTHEAD.length;
       console.log(
-        `265 content head detected, starts at ${contentHeadsStartAt}; sliceFrom = ${sliceFrom}`
+        `266 content head detected, starts at ${contentHeadsStartAt}; sliceFrom = ${sliceFrom}`
       );
       if (
         str[right(str, sliceFrom - 1) as number] === "*" &&
@@ -270,12 +271,12 @@ function genAtomic(
       ) {
         sliceFrom =
           (right(str, right(str, sliceFrom - 1) as number) as number) + 1;
-        console.log(`273 sliceFrom = ${sliceFrom}`);
+        console.log(`274 sliceFrom = ${sliceFrom}`);
       }
 
       // if CONTENTTAIL exists, jump over all the content
       if (str.includes(CONTENTTAIL)) {
-        console.log(`278 content tail detected`);
+        console.log(`279 content tail detected`);
         sliceFrom = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
 
         // tackle any closing comment that follows:
@@ -283,7 +284,7 @@ function genAtomic(
           str[right(str, sliceFrom) as number] === "*" &&
           str[right(str, right(str, sliceFrom) as number) as number] === "/"
         ) {
-          console.log(`286 closing comment detected`);
+          console.log(`287 closing comment detected`);
           sliceFrom =
             (right(str, right(str, sliceFrom) as number) as number) + 1;
         }
@@ -291,7 +292,7 @@ function genAtomic(
     }
 
     console.log(
-      `294 ${`\u001b[${32}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom} ("${JSON.stringify(
+      `295 ${`\u001b[${32}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom} ("${JSON.stringify(
         str.slice(sliceFrom, sliceFrom + 30),
         null,
         4
@@ -300,12 +301,12 @@ function genAtomic(
     // now, check, does this ending chunk already include the content heads,
     // GENERATE-ATOMIC-CSS-CONTENT-STARTS,
     // because if so, there will be duplication and we need to remove them
-    const slicedFrom = str.slice(sliceFrom);
+    let slicedFrom = str.slice(sliceFrom);
     if (slicedFrom.length && slicedFrom.includes(CONTENTTAIL)) {
-      console.log(`305 CONTENTTAIL detected`);
+      console.log(`306 CONTENTTAIL detected`);
       sliceFrom = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
       console.log(
-        `308 new ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`
+        `309 new ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`
       );
       if (
         str[right(str, sliceFrom) as number] === "*" &&
@@ -313,7 +314,7 @@ function genAtomic(
       ) {
         sliceFrom = (right(str, right(str, sliceFrom) as number) as number) + 1;
         console.log(
-          `316 new ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`
+          `317 new ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`
         );
       }
     }
@@ -335,11 +336,11 @@ function genAtomic(
     }`;
   }
   console.log(
-    `338 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+    `339 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
   );
 
   console.log(
-    `342 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
+    `343 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
       rawContentAbove,
       null,
       4
@@ -351,18 +352,18 @@ function genAtomic(
   );
 
   if (typeof rawContentAbove === "string") {
-    console.log(`354 tackle pending rawContentAbove`);
+    console.log(`355 tackle pending rawContentAbove`);
 
     frontPart = `${rawContentAbove}${frontPart}`;
     console.log("--------------------------------------------------");
     console.log(
-      `359 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+      `360 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
     );
   }
 
   if (typeof rawContentBelow === "string") {
     console.log(
-      `365 tackle ${`\u001b[${33}m${`rawContentBelow`}\u001b[${39}m`} = ${JSON.stringify(
+      `366 tackle ${`\u001b[${33}m${`rawContentBelow`}\u001b[${39}m`} = ${JSON.stringify(
         rawContentBelow,
         null,
         4
@@ -373,7 +374,7 @@ function genAtomic(
       rawContentBelow.trim().endsWith("/*") &&
       !rawContentBelow.trim().startsWith("*/")
     ) {
-      console.log(`376 add opening CSS comment block to rawContentBelow`);
+      console.log(`377 add opening CSS comment block to rawContentBelow`);
       // but leave leading whitespace intact
       let frontPart2 = "";
       if (
@@ -383,7 +384,7 @@ function genAtomic(
       ) {
         frontPart2 = rawContentBelow.slice(0, right(rawContentBelow, 0) || 0);
         console.log(
-          `386 ${`\u001b[${33}m${`frontPart2`}\u001b[${39}m`} = ${JSON.stringify(
+          `387 ${`\u001b[${33}m${`frontPart2`}\u001b[${39}m`} = ${JSON.stringify(
             frontPart2,
             null,
             4
@@ -397,16 +398,16 @@ function genAtomic(
     console.log("--------------------------------------------------");
 
     console.log(
-      `400 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+      `401 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
     );
   }
 
   console.log("--------------------------------------------------");
   console.log(
-    `406 FINAL ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+    `407 FINAL ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
   );
 
-  const finalRes = `${trimIfNeeded(
+  let finalRes = `${trimIfNeeded(
     `${frontPart}${prepConfig(
       extractedConfig,
       opts.reportProgressFunc,
@@ -421,7 +422,7 @@ function genAtomic(
 
   console.log("\n\n\n");
   console.log(
-    `424 FINAL RES:
+    `425 FINAL RES:
 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`}
 ${finalRes}
 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`}

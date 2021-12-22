@@ -1,6 +1,9 @@
 /* eslint no-unused-vars:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import {
   find,
   get,
@@ -17,34 +20,33 @@ const defaultInput = {
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - arrayFirstOnly - nested arrays", (t) => {
-  const input = {
+test("01 - arrayFirstOnly - nested arrays", () => {
+  let input = {
     a: { b: ["c", "d", "e"] },
     f: ["g", "h"],
   };
 
-  const actual = arrayFirstOnly(input);
-  const intended = {
+  let actual = arrayFirstOnly(input);
+  let intended = {
     a: { b: ["c"] },
     f: ["g"],
   };
 
-  t.strictSame(actual, intended, "01");
-  t.end();
+  equal(actual, intended, "01");
 });
 
-tap.test("02 - arrayFirstOnly - arrays within arrays only, no obj", (t) => {
-  const input = [
+test("02 - arrayFirstOnly - arrays within arrays only, no obj", () => {
+  let input = [
     ["a", "b", "c"],
     ["d", ["e"]],
   ];
-  const actual = arrayFirstOnly(input);
-  const intended = [["a"]];
+  let actual = arrayFirstOnly(input);
+  let intended = [["a"]];
 
-  t.strictSame(actual, intended, "02.01");
+  equal(actual, intended, "02.01");
 
   // proof that the input was not mutated:
-  t.strictSame(
+  equal(
     input,
     [
       ["a", "b", "c"],
@@ -52,11 +54,10 @@ tap.test("02 - arrayFirstOnly - arrays within arrays only, no obj", (t) => {
     ],
     "02.02"
   );
-  t.end();
 });
 
-tap.test("03 - arrayFirstOnly - nested arrays #2", (t) => {
-  const input = [
+test("03 - arrayFirstOnly - nested arrays #2", () => {
+  let input = [
     {
       a: "a",
     },
@@ -64,41 +65,40 @@ tap.test("03 - arrayFirstOnly - nested arrays #2", (t) => {
       b: "b",
     },
   ];
-  const actual = arrayFirstOnly(input);
-  const intended = [
+  let actual = arrayFirstOnly(input);
+  let intended = [
     {
       a: "a",
     },
   ];
 
-  t.strictSame(actual, intended, "03");
-  t.end();
+  equal(actual, intended, "03");
 });
 
-tap.test("04 - arrayFirstOnly leaves objects alone", (t) => {
-  const input = {
+test("04 - arrayFirstOnly leaves objects alone", () => {
+  let input = {
     a: "a",
     b: {
       c: "c",
     },
   };
-  const actual = arrayFirstOnly(input);
-  const intended = {
+  let actual = arrayFirstOnly(input);
+  let intended = {
     a: "a",
     b: {
       c: "c",
     },
   };
 
-  t.strictSame(actual, intended, "04");
-  t.end();
+  equal(actual, intended, "04");
 });
 
-tap.test("05 - arrayFirstOnly leaves strings alone", (t) => {
-  const input = "zzz";
-  const actual = arrayFirstOnly(input);
-  const intended = "zzz";
+test("05 - arrayFirstOnly leaves strings alone", () => {
+  let input = "zzz";
+  let actual = arrayFirstOnly(input);
+  let intended = "zzz";
 
-  t.strictSame(actual, intended, "05");
-  t.end();
+  equal(actual, intended, "05");
 });
+
+test.run();

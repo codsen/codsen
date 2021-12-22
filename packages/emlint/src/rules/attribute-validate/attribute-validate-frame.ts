@@ -29,7 +29,7 @@ function attributeValidateFrame(context: Linter): RuleObjType {
         }
 
         // https://www.w3.org/TR/html4/struct/tables.html#adef-frame
-        const errorArr = validateString(
+        let errorArr = validateString(
           node.attribValueRaw, // value
           node.attribValueStartsAt as number, // offset
           {

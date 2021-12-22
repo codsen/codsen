@@ -1,13 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 import { comb as comb1 } from "../dist/email-comb.esm.js";
 
 // whitelisting
 // -----------------------------------------------------------------------------
 
-tap.test("01 - nothing removed because of settings.whitelist", (t) => {
-  const actual = comb(
-    t,
+test("01 - nothing removed because of settings.whitelist", () => {
+  let actual = comb(
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -37,7 +39,7 @@ tap.test("01 - nothing removed because of settings.whitelist", (t) => {
     }
   ).result;
 
-  const intended = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
+  let intended = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -62,13 +64,11 @@ tap.test("01 - nothing removed because of settings.whitelist", (t) => {
 </html>
 `;
 
-  t.strictSame(actual, intended, "01");
-  t.end();
+  equal(actual, intended, "01");
 });
 
-tap.test("02 - some removed, some whitelisted", (t) => {
-  const actual = comb(
-    t,
+test("02 - some removed, some whitelisted", () => {
+  let actual = comb(
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -99,7 +99,7 @@ tap.test("02 - some removed, some whitelisted", (t) => {
     }
   ).result;
 
-  const intended = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
+  let intended = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -123,13 +123,11 @@ tap.test("02 - some removed, some whitelisted", (t) => {
 </html>
 `;
 
-  t.strictSame(actual, intended, "02");
-  t.end();
+  equal(actual, intended, "02");
 });
 
-tap.test("03 - case of whitelisting everything", (t) => {
-  const actual = comb(
-    t,
+test("03 - case of whitelisting everything", () => {
+  let actual = comb(
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -160,7 +158,7 @@ tap.test("03 - case of whitelisting everything", (t) => {
     }
   ).result;
 
-  const intended = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
+  let intended = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -186,13 +184,11 @@ tap.test("03 - case of whitelisting everything", (t) => {
 </html>
 `;
 
-  t.strictSame(actual, intended, "03");
-  t.end();
+  equal(actual, intended, "03");
 });
 
-tap.test("04 - special case - checking adjacent markers #1", (t) => {
-  const actual = comb(
-    t,
+test("04 - special case - checking adjacent markers #1", () => {
+  let actual = comb(
     `<style type="text/css">
   .del-1{display: none;}
   .real{display: none;}
@@ -203,20 +199,18 @@ zzz
 </body>`
   ).result;
 
-  const intended = `<style type="text/css">
+  let intended = `<style type="text/css">
   .real{display: none;}
 </style>
 <body class="real">
 zzz
 </body>`;
 
-  t.strictSame(actual, intended, "04");
-  t.end();
+  equal(actual, intended, "04");
 });
 
-tap.test("05 - special case - checking adjacent markers #2", (t) => {
-  const actual = comb(
-    t,
+test("05 - special case - checking adjacent markers #2", () => {
+  let actual = comb(
     `<style type="text/css">.del-1{display: none;}.del-2{display: none;}.del-3{display: none;}</style>
 <body>
 zzz
@@ -224,19 +218,17 @@ zzz
 `
   ).result;
 
-  const intended = `<body>
+  let intended = `<body>
 zzz
 </body>
 `;
 
-  t.strictSame(actual, intended, "05");
-  t.end();
+  equal(actual, intended, "05");
 });
 
 // div~[^whatever] .del-1 {display: none;}
-tap.test("06 - special case - checking commas within curly braces", (t) => {
-  const actual = comb(
-    t,
+test("06 - special case - checking commas within curly braces", () => {
+  let actual = comb(
     `
 <style type="text/css">
   .used {display: block;}
@@ -247,19 +239,18 @@ zzz
 </body>`
   ).result;
 
-  const intended = `<style type="text/css">
+  let intended = `<style type="text/css">
   .used {display: block;}
 </style>
 <body class="used">
 zzz
 </body>`;
 
-  t.strictSame(actual, intended, "06");
-  t.end();
+  equal(actual, intended, "06");
 });
 
-tap.test("07 - whitelisting using non-class/id strings - baseline", (t) => {
-  const { result } = comb1(
+test("07 - whitelisting using non-class/id strings - baseline", () => {
+  let { result } = comb1(
     `<style type="text/css">
   [data-ogsc] .sm-text-red-500{display: none;}
 </style>
@@ -271,16 +262,15 @@ zzz
     }
   );
 
-  const intended = `<body>
+  let intended = `<body>
 zzz
 </body>`;
 
-  t.strictSame(result, intended, "07");
-  t.end();
+  equal(result, intended, "07");
 });
 
-tap.test("08 - whitelisting using non-class/id strings - whitelisting", (t) => {
-  const { result } = comb1(
+test("08 - whitelisting using non-class/id strings - whitelisting", () => {
+  let { result } = comb1(
     `<style type="text/css">
   [data-ogsc] .sm-text-red-500{display: none;}
 </style>
@@ -292,13 +282,14 @@ zzz
     }
   );
 
-  const intended = `<style type="text/css">
+  let intended = `<style type="text/css">
   [data-ogsc] .sm-text-red-500{display: none;}
 </style>
 <body>
 zzz
 </body>`;
 
-  t.strictSame(result, intended, "08");
-  t.end();
+  equal(result, intended, "08");
 });
+
+test.run();

@@ -9,9 +9,9 @@ function arrObjOrBoth(
   str: string,
   originalOpts?: Opts
 ): "array" | "object" | "any" {
-  const onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
-  const onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
-  const onlyAnyValues = [
+  let onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
+  let onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
+  let onlyAnyValues = [
     "any",
     "all",
     "everything",
@@ -23,13 +23,13 @@ function arrObjOrBoth(
     "e",
   ];
 
-  const defaults: Opts = {
+  let defaults: Opts = {
     msg: "",
     optsVarName: "given variable",
   };
-  const opts = { ...defaults, ...originalOpts };
+  let opts = { ...defaults, ...originalOpts };
 
-  if (opts && opts.msg && opts.msg.length > 0) {
+  if (opts?.msg && opts.msg.length > 0) {
     opts.msg = `${opts.msg.trim()} `;
   }
   if (opts.optsVarName !== "given variable") {

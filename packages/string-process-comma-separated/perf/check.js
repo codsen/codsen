@@ -3,15 +3,14 @@
 // deps
 import path from "path";
 
-const callerDir = path.resolve(".");
-import { runPerf } from "../../../scripts/run-perf.js";
-
-// setup
+import { runPerf } from "../../../ops/scripts/perf.js";
 import { processCommaSep } from "../dist/string-process-comma-separated.esm.js";
 
+const callerDir = path.resolve(".");
+
 const testme = () => {
-  const gatheredChunks = [];
-  const gatheredErrors = [];
+  let gatheredChunks = [];
+  let gatheredErrors = [];
   processCommaSep(`<FRAMESET rows="50%,,  50%">`, {
     from: 16,
     to: 26,

@@ -1,11 +1,13 @@
-import tap from "tap";
+import { test } from "uvu";
+import * as assert from "uvu/assert";
+
 import { stri as stri2 } from "../dist/stristri.esm.js";
 // import { stri, mixer } from "./util/util.js";
 
-tap.test(`01 - large input`, (t) => {
-  const gathered = [];
-  const source = "<div>{% if something %}text";
-  const res = stri2(source, {
+test(`01 - large input`, () => {
+  let gathered = [];
+  let source = "<div>{% if something %}text";
+  let res = stri2(source, {
     html: true,
     css: true,
     text: true,
@@ -15,15 +17,14 @@ tap.test(`01 - large input`, (t) => {
     },
   });
 
-  t.equal(res.result, "", "01.01");
-  t.strictSame(gathered, [], "01.02");
-  t.end();
+  assert.equal(res.result, "", "01.01");
+  assert.equal(gathered, [], "01.02");
 });
 
-tap.test(`02 - large input`, (t) => {
-  const gathered = [];
-  const source = "<div>{% if something %}text".repeat(1000);
-  const res = stri2(source, {
+test(`02 - large input`, () => {
+  let gathered = [];
+  let source = "<div>{% if something %}text".repeat(1000);
+  let res = stri2(source, {
     html: true,
     css: true,
     text: true,
@@ -33,7 +34,8 @@ tap.test(`02 - large input`, (t) => {
     },
   });
 
-  t.equal(res.result, "", "02.01");
-  t.ok(gathered.length > 90, "02.02");
-  t.end();
+  assert.equal(res.result, "", "02.01");
+  assert.ok(gathered.length > 90, "02.02");
 });
+
+test.run();

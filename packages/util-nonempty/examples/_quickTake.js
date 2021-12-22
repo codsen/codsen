@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { nonEmpty } from "../dist/util-nonempty.esm.js";
 
 assert.equal(nonEmpty("z"), true);

@@ -1,6 +1,8 @@
 import { combinations } from "object-boolean-combinations";
 import clone from "lodash.clonedeep";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 // takes subset of of opts object, ref
@@ -65,13 +67,13 @@ function mixer(
 
   // quick end
   if (!Object.keys(defaultsObj).length) {
-    console.log(`068 early return []`);
+    console.log(`070 early return []`);
     return [];
   }
 
-  const refClone = clone(ref);
-  const defaultsObjClone = clone(defaultsObj);
-  const optsWithBoolValues: PlainObjectOfBool = {};
+  let refClone = clone(ref);
+  let defaultsObjClone = clone(defaultsObj);
+  let optsWithBoolValues: PlainObjectOfBool = {};
 
   // 1. find out, what boolean-value keys are there in defaultsObj that
   // are missing in ref. If there are n keys, we'll generate 2^n objects.
@@ -87,21 +89,21 @@ function mixer(
   });
 
   console.log(
-    `090 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
+    `092 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
       refClone,
       null,
       4
     )}`
   );
   console.log(
-    `097 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
+    `099 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
       defaultsObjClone,
       null,
       4
     )}`
   );
   console.log(
-    `104 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
+    `106 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
       optsWithBoolValues,
       null,
       4
@@ -110,13 +112,13 @@ function mixer(
 
   // calculate combinations using combinations() - object-boolean-combinations
   // then restore the non-bool keys
-  const res = combinations(optsWithBoolValues).map((obj) => ({
+  let res = combinations(optsWithBoolValues).map((obj) => ({
     ...defaultsObj,
     ...refClone,
     ...obj,
   }));
 
-  console.log(`119 RETURN res = ${JSON.stringify(res, null, 4)}`);
+  console.log(`121 RETURN res = ${JSON.stringify(res, null, 4)}`);
 
   return res;
 }

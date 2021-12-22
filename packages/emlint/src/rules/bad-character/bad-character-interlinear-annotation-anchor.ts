@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/fff9/index.htm
 
 function badCharacterInterlinearAnnotationAnchor(context: Linter): RuleObjType {
-  const charCode = 65529;
+  let charCode = 65529;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

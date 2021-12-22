@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { Ranges } from "../dist/ranges-push.esm.js";
 import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
 

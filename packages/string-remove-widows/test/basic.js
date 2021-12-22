@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import {
   removeWidows,
   // version
@@ -16,13 +19,13 @@ const languages = ["html`, `css`, `js"];
 const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
 const eolTypes = ["LF`, `CR`, `CRLF"];
 
-tap.test(`01 - the most basic`, (t) => {
-  const resObj = removeWidows(`aaa bbb ccc ddd`, {
+test(`01 - the most basic`, () => {
+  let resObj = removeWidows(`aaa bbb ccc ddd`, {
     convertEntities: true,
     minCharCount: 5,
   });
-  t.equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`, "01.01");
-  t.strictSame(
+  equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`, "01.01");
+  equal(
     resObj.whatWasDone,
     {
       removeWidows: true,
@@ -30,17 +33,16 @@ tap.test(`01 - the most basic`, (t) => {
     },
     "01.02"
   );
-  t.strictSame(resObj.ranges, [[11, 12, encodedNbspHtml]], "01.03");
-  t.end();
+  equal(resObj.ranges, [[11, 12, encodedNbspHtml]], "01.03");
 });
 
-tap.test(`02`, (t) => {
-  const resObj = removeWidows(`aaa bbb ccc  ddd`, {
+test(`02`, () => {
+  let resObj = removeWidows(`aaa bbb ccc  ddd`, {
     convertEntities: true,
     minCharCount: 5,
   });
-  t.equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`, "02.01");
-  t.strictSame(
+  equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`, "02.01");
+  equal(
     resObj.whatWasDone,
     {
       removeWidows: true,
@@ -48,13 +50,12 @@ tap.test(`02`, (t) => {
     },
     "02.02"
   );
-  t.strictSame(resObj.ranges, [[11, 13, encodedNbspHtml]], "02.03");
-  t.end();
+  equal(resObj.ranges, [[11, 13, encodedNbspHtml]], "02.03");
 });
 
-tap.test(`03 - single sentence, no full stop`, (t) => {
+test(`03 - single sentence, no full stop`, () => {
   languages.forEach((targetLanguage, i) => {
-    t.equal(
+    equal(
       removeWidows(`aaa bbb ccc ddd`, {
         convertEntities: true,
         targetLanguage,
@@ -63,7 +64,7 @@ tap.test(`03 - single sentence, no full stop`, (t) => {
       `aaa bbb ccc${encodedNbsps[i]}ddd`,
       `01.03.0${1 + i} - ${targetLanguage}`
     );
-    t.equal(
+    equal(
       removeWidows(`aaa bbb ccc ddd`, {
         convertEntities: false,
         targetLanguage,
@@ -72,7 +73,7 @@ tap.test(`03 - single sentence, no full stop`, (t) => {
       `aaa bbb ccc${rawnbsp}ddd`,
       `01.03.0${2 + i} - ${targetLanguage}`
     );
-    t.equal(
+    equal(
       removeWidows(`aaa bbb ccc ddd`, {
         removeWidowPreventionMeasures: true,
         convertEntities: false,
@@ -83,12 +84,11 @@ tap.test(`03 - single sentence, no full stop`, (t) => {
       `01.03.0${3 + i} - ${targetLanguage}`
     );
   });
-  t.end();
 });
 
-tap.test(`04 - single sentence, full stop`, (t) => {
+test(`04 - single sentence, full stop`, () => {
   languages.forEach((targetLanguage, i) => {
-    t.equal(
+    equal(
       removeWidows(`Aaa bbb ccc ddd.`, {
         convertEntities: true,
         targetLanguage,
@@ -97,7 +97,7 @@ tap.test(`04 - single sentence, full stop`, (t) => {
       `Aaa bbb ccc${encodedNbsps[i]}ddd.`,
       `01.04.0${1 + i} - ${targetLanguage}`
     );
-    t.equal(
+    equal(
       removeWidows(`Aaa bbb ccc ddd.`, {
         convertEntities: false,
         targetLanguage,
@@ -106,7 +106,7 @@ tap.test(`04 - single sentence, full stop`, (t) => {
       `Aaa bbb ccc${rawnbsp}ddd.`,
       `01.04.0${2 + i} - ${targetLanguage}`
     );
-    t.equal(
+    equal(
       removeWidows(`Aaa bbb ccc ddd.`, {
         removeWidowPreventionMeasures: true,
         convertEntities: false,
@@ -117,13 +117,12 @@ tap.test(`04 - single sentence, full stop`, (t) => {
       `01.04.0${3 + i} - ${targetLanguage}`
     );
   });
-  t.end();
 });
 
-tap.test(`05 - paragraphs, full stops`, (t) => {
+test(`05 - paragraphs, full stops`, () => {
   ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
           {
@@ -137,7 +136,7 @@ tap.test(`05 - paragraphs, full stops`, (t) => {
           eolTypes[idx]
         } - convertEntities=true`
       );
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
           {
@@ -153,7 +152,7 @@ tap.test(`05 - paragraphs, full stops`, (t) => {
       );
 
       // nbsp in place already:
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
           {
@@ -165,7 +164,7 @@ tap.test(`05 - paragraphs, full stops`, (t) => {
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
         `01.05.0${3 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
       );
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
           {
@@ -179,7 +178,7 @@ tap.test(`05 - paragraphs, full stops`, (t) => {
       );
 
       // opts.removeWidowPreventionMeasures=on
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
           {
@@ -194,7 +193,7 @@ tap.test(`05 - paragraphs, full stops`, (t) => {
           eolTypes[idx]
         } - convertEntities=false`
       );
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
           {
@@ -210,58 +209,56 @@ tap.test(`05 - paragraphs, full stops`, (t) => {
       );
     });
   });
-  t.end();
 });
 
-tap.test(`06 - raw non-breaking space already there`, (t) => {
+test(`06 - raw non-breaking space already there`, () => {
   languages.forEach((targetLanguage, i) => {
-    const val1 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
+    let val1 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
       convertEntities: true,
       targetLanguage,
       minCharCount: 5,
     });
-    t.equal(
+    equal(
       val1.res,
       `aaa bbb ccc${encodedNbsps[i]}ddd`,
       `01.06.0${1 + i} - ${targetLanguage}`
     );
-    t.strictSame(val1.whatWasDone, {
+    equal(val1.whatWasDone, {
       removeWidows: true,
       convertEntities: false,
     });
 
-    const val2 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
+    let val2 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
       convertEntities: false,
       minCharCount: 5,
     });
-    t.equal(
+    equal(
       val2.res,
       `aaa bbb ccc${rawnbsp}ddd`,
       `01.06.0${2 + i} - ${targetLanguage}`
     );
-    t.strictSame(val2.whatWasDone, {
+    equal(val2.whatWasDone, {
       removeWidows: true,
       convertEntities: false,
     });
 
-    const val3 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
+    let val3 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
       removeWidowPreventionMeasures: true,
       convertEntities: false,
       minCharCount: 5,
     });
-    t.equal(val3.res, `aaa bbb ccc ddd`, `01.06.0${3 + i} - ${targetLanguage}`);
-    t.strictSame(val3.whatWasDone, {
+    equal(val3.res, `aaa bbb ccc ddd`, `01.06.0${3 + i} - ${targetLanguage}`);
+    equal(val3.whatWasDone, {
       removeWidows: true,
       convertEntities: false,
     });
   });
-  t.end();
 });
 
-tap.test(`07 - paragraphs, coming already fixed`, (t) => {
+test(`07 - paragraphs, coming already fixed`, () => {
   ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
           {
@@ -273,7 +270,7 @@ tap.test(`07 - paragraphs, coming already fixed`, (t) => {
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
         `01.07.0${1 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
       );
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
           {
@@ -288,7 +285,7 @@ tap.test(`07 - paragraphs, coming already fixed`, (t) => {
       );
 
       // removeWidowPreventionMeasures: true
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
           {
@@ -302,7 +299,7 @@ tap.test(`07 - paragraphs, coming already fixed`, (t) => {
           eolTypes[idx]
         } - removeWidowPreventionMeasures`
       );
-      t.equal(
+      equal(
         removeWidows(
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
           {
@@ -319,60 +316,55 @@ tap.test(`07 - paragraphs, coming already fixed`, (t) => {
       );
     });
   });
-  t.end();
 });
 
-tap.test(
-  `08 - paragraphs, coming already fixed and encoded but in wrong format`,
-  (t) => {
-    encodedNbsps.forEach((singleEncodedNbsp, z) => {
-      ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
-        languages.forEach((targetLanguage, i) => {
-          t.equal(
-            removeWidows(
-              `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${singleEncodedNbsp}hhh.`,
-              {
-                convertEntities: true,
-                targetLanguage,
-                minCharCount: 5,
-              }
-            ).res,
-            `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-            `01.08.0${
-              1 + i + idx + z
-            } - requested lang. ${targetLanguage} - existing lang. ${
-              languages[z]
-            } - ${eolTypes[idx]}`
-          );
+test(`08 - paragraphs, coming already fixed and encoded but in wrong format`, () => {
+  encodedNbsps.forEach((singleEncodedNbsp, z) => {
+    ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
+      languages.forEach((targetLanguage, i) => {
+        equal(
+          removeWidows(
+            `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${singleEncodedNbsp}hhh.`,
+            {
+              convertEntities: true,
+              targetLanguage,
+              minCharCount: 5,
+            }
+          ).res,
+          `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
+          `01.08.0${
+            1 + i + idx + z
+          } - requested lang. ${targetLanguage} - existing lang. ${
+            languages[z]
+          } - ${eolTypes[idx]}`
+        );
 
-          t.equal(
-            removeWidows(
-              `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${singleEncodedNbsp}hhh.`,
-              {
-                convertEntities: false,
-                targetLanguage,
-                minCharCount: 5,
-              }
-            ).res,
-            `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-            `01.08.0${
-              2 + i + idx + z
-            } - requested lang. ${targetLanguage} - existing lang. ${
-              languages[z]
-            } - ${eolTypes[idx]}`
-          );
-        });
+        equal(
+          removeWidows(
+            `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${singleEncodedNbsp}hhh.`,
+            {
+              convertEntities: false,
+              targetLanguage,
+              minCharCount: 5,
+            }
+          ).res,
+          `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
+          `01.08.0${
+            2 + i + idx + z
+          } - requested lang. ${targetLanguage} - existing lang. ${
+            languages[z]
+          } - ${eolTypes[idx]}`
+        );
       });
     });
-    t.end();
-  }
-);
+  });
+});
 
-tap.test(`09 - single word`, (t) => {
-  const str = `fhkdfhgkhdfjkghdkjfgjdfjgkdhfgkjhdkjfgdkfgdfjkh`;
+test(`09 - single word`, () => {
+  let str = `fhkdfhgkhdfjkghdkjfgjdfjgkdhfgkjhdkjfgdkfgdfjkh`;
   languages.forEach((targetLanguage, i) => {
     // removeWidowPreventionMeasures false
-    t.equal(
+    equal(
       removeWidows(str, {
         convertEntities: true,
         targetLanguage,
@@ -380,7 +372,7 @@ tap.test(`09 - single word`, (t) => {
       str,
       `01.09.0${1 + i} - ${targetLanguage}`
     );
-    t.equal(
+    equal(
       removeWidows(str, {
         convertEntities: false,
         targetLanguage,
@@ -390,7 +382,7 @@ tap.test(`09 - single word`, (t) => {
     );
 
     // removeWidowPreventionMeasures: true
-    t.equal(
+    equal(
       removeWidows(str, {
         removeWidowPreventionMeasures: true,
         targetLanguage,
@@ -398,7 +390,7 @@ tap.test(`09 - single word`, (t) => {
       str,
       `01.09.0${3 + i} - ${targetLanguage}`
     );
-    t.equal(
+    equal(
       removeWidows(str, {
         removeWidowPreventionMeasures: true,
         convertEntities: false,
@@ -408,7 +400,7 @@ tap.test(`09 - single word`, (t) => {
       `01.09.0${4 + i} - ${targetLanguage}`
     );
 
-    t.equal(
+    equal(
       removeWidows(str, {
         convertEntities: false,
         targetLanguage,
@@ -418,11 +410,10 @@ tap.test(`09 - single word`, (t) => {
       `01.09.0${5 + i} - ${targetLanguage}`
     );
   });
-  t.end();
 });
 
-tap.test(`10 - doesn't touch empty strings`, (t) => {
-  const sources = [
+test(`10 - doesn't touch empty strings`, () => {
+  let sources = [
     ``,
     ` `,
     `\t`,
@@ -445,7 +436,7 @@ tap.test(`10 - doesn't touch empty strings`, (t) => {
     `\r\n \t \r\n`,
   ];
   sources.forEach((str) => {
-    t.equal(
+    equal(
       removeWidows(``, {
         convertEntities: true,
       }).res,
@@ -453,12 +444,11 @@ tap.test(`10 - doesn't touch empty strings`, (t) => {
       `01.10 - ${JSON.stringify(str, null, 4)}`
     );
   });
-  t.end();
 });
 
-tap.test(`11 - doesn't break within tag`, (t) => {
-  const source = `aaa<br/>< br/>bbb< br/><br/>ccc< br/>< br/>ddd`;
-  t.equal(
+test(`11 - doesn't break within tag`, () => {
+  let source = `aaa<br/>< br/>bbb< br/><br/>ccc< br/>< br/>ddd`;
+  equal(
     removeWidows(source, {
       convertEntities: true,
       targetLanguage: `html`,
@@ -468,12 +458,11 @@ tap.test(`11 - doesn't break within tag`, (t) => {
     source,
     `11`
   );
-  t.end();
 });
 
-tap.test(`12 - doesn't add nbsp after line breaks`, (t) => {
-  const source = `aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc`;
-  t.equal(
+test(`12 - doesn't add nbsp after line breaks`, () => {
+  let source = `aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc`;
+  equal(
     removeWidows(source, {
       convertEntities: true,
       targetLanguage: `html`,
@@ -483,12 +472,11 @@ tap.test(`12 - doesn't add nbsp after line breaks`, (t) => {
     source,
     `12`
   );
-  t.end();
 });
 
-tap.test(`13 - line breaks and spaces`, (t) => {
-  const source = `aaa<br/>\n <br/>\n bbb<br/>\n <br/>\n ccc`;
-  t.equal(
+test(`13 - line breaks and spaces`, () => {
+  let source = `aaa<br/>\n <br/>\n bbb<br/>\n <br/>\n ccc`;
+  equal(
     removeWidows(source, {
       convertEntities: true,
       targetLanguage: `html`,
@@ -498,49 +486,43 @@ tap.test(`13 - line breaks and spaces`, (t) => {
     source,
     `13`
   );
-  t.end();
 });
 
-tap.test(`14 - ad hoc case`, (t) => {
-  const source = `&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`;
-  const res = removeWidows(source, {
+test(`14 - ad hoc case`, () => {
+  let source = `&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`;
+  let res = removeWidows(source, {
     ignore: "all",
     convertEntities: true,
     targetLanguage: "html",
     UKPostcodes: true,
     hyphens: true,
   });
-  t.strictSame(res.ranges, null, "14");
-  t.end();
+  equal(res.ranges, null, "14");
 });
 
-tap.test(
-  `15 - non-widow nbsp is decoded and reported correctly, mixed with widow case`,
-  (t) => {
-    const source = `abc&nbsp;def ghij knmn`;
-    const res = removeWidows(source, {
-      convertEntities: false,
-    });
-    t.equal(res.res, `abc${rawnbsp}def ghij${rawnbsp}knmn`, "15.01");
-    t.strictSame(
-      res.whatWasDone,
-      {
-        removeWidows: true,
-        convertEntities: true,
-      },
-      "15.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(`16 - non-widow nbsp only`, (t) => {
-  const source = `x&nbsp;x`;
-  const res = removeWidows(source, {
+test(`15 - non-widow nbsp is decoded and reported correctly, mixed with widow case`, () => {
+  let source = `abc&nbsp;def ghij knmn`;
+  let res = removeWidows(source, {
     convertEntities: false,
   });
-  t.equal(res.res, `x${rawnbsp}x`, "16.01");
-  t.strictSame(
+  equal(res.res, `abc${rawnbsp}def ghij${rawnbsp}knmn`, "15.01");
+  equal(
+    res.whatWasDone,
+    {
+      removeWidows: true,
+      convertEntities: true,
+    },
+    "15.02"
+  );
+});
+
+test(`16 - non-widow nbsp only`, () => {
+  let source = `x&nbsp;x`;
+  let res = removeWidows(source, {
+    convertEntities: false,
+  });
+  equal(res.res, `x${rawnbsp}x`, "16.01");
+  equal(
     res.whatWasDone,
     {
       removeWidows: false,
@@ -548,16 +530,15 @@ tap.test(`16 - non-widow nbsp only`, (t) => {
     },
     "16.02"
   );
-  t.end();
 });
 
-tap.test(`17 - nbsp only, nothing else`, (t) => {
-  const source = `&nbsp;`;
-  const res = removeWidows(source, {
+test(`17 - nbsp only, nothing else`, () => {
+  let source = `&nbsp;`;
+  let res = removeWidows(source, {
     convertEntities: false,
   });
-  t.equal(res.res, `${rawnbsp}`, "17.01");
-  t.strictSame(
+  equal(res.res, `${rawnbsp}`, "17.01");
+  equal(
     res.whatWasDone,
     {
       removeWidows: false,
@@ -565,5 +546,6 @@ tap.test(`17 - nbsp only, nothing else`, (t) => {
     },
     "17.02"
   );
-  t.end();
 });
+
+test.run();

@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/206c/index.htm
 
 function badCharacterInhibitArabicFormShaping(context: Linter): RuleObjType {
-  const charCode = 8300;
+  let charCode = 8300;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

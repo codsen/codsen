@@ -1,6 +1,7 @@
 // `allNamedEntities`
 
 import { strict as assert } from "assert";
+
 import { allNamedEntities } from "../dist/all-named-html-entities.esm.js";
 
 // total named entities count:

@@ -1,11 +1,14 @@
-import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { stripHtml } from "./util/noLog.js";
 
 // tag pairs vs content
 // -----------------------------------------------------------------------------
 
-tap.test("01 - tag pair among defaults", (t) => {
-  t.hasStrict(
+test("01 - tag pair among defaults", () => {
+  equal(
     stripHtml("abc<script>const x = 1;</script>xyz"),
     {
       result: "abc xyz",
@@ -18,11 +21,10 @@ tap.test("01 - tag pair among defaults", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - tag pair custom-defined", (t) => {
-  t.hasStrict(
+test("02 - tag pair custom-defined", () => {
+  equal(
     stripHtml("abc<script>const x = 1;</script>xyz", {
       stripTogetherWithTheirContents: ["script"],
     }),
@@ -37,11 +39,10 @@ tap.test("02 - tag pair custom-defined", (t) => {
     },
     "02"
   );
-  t.end();
 });
 
-tap.test("03 - tag pair's contents not deleted upon request", (t) => {
-  t.hasStrict(
+test("03 - tag pair's contents not deleted upon request", () => {
+  equal(
     stripHtml("abc<script>const x = 1;</script>xyz", {
       stripTogetherWithTheirContents: ["div"],
     }),
@@ -62,5 +63,6 @@ tap.test("03 - tag pair's contents not deleted upon request", (t) => {
     },
     "03"
   );
-  t.end();
 });
+
+test.run();

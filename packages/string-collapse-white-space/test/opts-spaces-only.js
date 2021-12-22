@@ -1,13 +1,16 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 import { mixer } from "./util/util.js";
 
 // opts.enforceSpacesOnly
 // -----------------------------------------------------------------------------
 
-tap.test(`01`, (t) => {
+test(`01`, () => {
   mixer().forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a b`, opt),
       {
         result: `a b`,
@@ -16,126 +19,84 @@ tap.test(`01`, (t) => {
       JSON.stringify(opt, null, 0)
     );
   });
-  t.end();
 });
 
-tap.test(`02`, (t) => {
+test(`02`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a \tb`, opt),
-      { result: `a \tb`, ranges: null },
-      "02"
-    );
+    equal(collapse(`a \tb`, opt), { result: `a \tb`, ranges: null }, "02");
   });
   mixer({
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a \tb`, opt),
-      { result: `a b`, ranges: [[2, 3]] },
-      "02"
-    );
+    equal(collapse(`a \tb`, opt), { result: `a b`, ranges: [[2, 3]] }, "02");
   });
-  t.end();
 });
 
-tap.test(`03`, (t) => {
+test(`03`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a \t\tb`, opt),
-      { result: `a \t\tb`, ranges: null },
-      "03"
-    );
+    equal(collapse(`a \t\tb`, opt), { result: `a \t\tb`, ranges: null }, "03");
   });
   mixer({
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a \t\tb`, opt),
-      { result: `a b`, ranges: [[2, 4]] },
-      "03"
-    );
+    equal(collapse(`a \t\tb`, opt), { result: `a b`, ranges: [[2, 4]] }, "03");
   });
-  t.end();
 });
 
-tap.test(`04`, (t) => {
+test(`04`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a\t\tb`, opt),
-      { result: `a\t\tb`, ranges: null },
-      "04"
-    );
+    equal(collapse(`a\t\tb`, opt), { result: `a\t\tb`, ranges: null }, "04");
   });
   mixer({
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a\t\tb`, opt),
       { result: `a b`, ranges: [[1, 3, " "]] },
       "04"
     );
   });
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`05`, (t) => {
+test(`05`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a  \tb`, opt),
-      { result: `a \tb`, ranges: [[1, 2]] },
-      "05"
-    );
+    equal(collapse(`a  \tb`, opt), { result: `a \tb`, ranges: [[1, 2]] }, "05");
   });
   mixer({
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a  \tb`, opt),
-      { result: `a b`, ranges: [[2, 4]] },
-      "06"
-    );
+    equal(collapse(`a  \tb`, opt), { result: `a b`, ranges: [[2, 4]] }, "06");
   });
-  t.end();
 });
 
-tap.test(`06 - reuse the last space`, (t) => {
+test(`06 - reuse the last space`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a\t  b`, opt),
-      { result: `a\t b`, ranges: [[2, 3]] },
-      "06"
-    );
+    equal(collapse(`a\t  b`, opt), { result: `a\t b`, ranges: [[2, 3]] }, "06");
   });
   mixer({
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a\t  b`, opt),
-      { result: `a b`, ranges: [[1, 3]] },
-      "06"
-    );
+    equal(collapse(`a\t  b`, opt), { result: `a b`, ranges: [[1, 3]] }, "06");
   });
-  t.end();
 });
 
-tap.test(`07`, (t) => {
+test(`07`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a\t\t\tb`, opt),
       { result: `a\t\t\tb`, ranges: null },
       "07"
@@ -144,19 +105,18 @@ tap.test(`07`, (t) => {
   mixer({
     enforceSpacesOnly: true,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a\t\t\tb`, opt),
       { result: `a b`, ranges: [[1, 4, " "]] },
       "07"
     );
   });
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`08`, (t) => {
-  t.strictSame(
+test(`08`, () => {
+  equal(
     collapse(`  \tx`, {
       enforceSpacesOnly: false,
       trimStart: false,
@@ -164,11 +124,10 @@ tap.test(`08`, (t) => {
     { result: ` \tx`, ranges: [[0, 1]] },
     "08"
   );
-  t.end();
 });
 
-tap.test(`09 - reuse the space`, (t) => {
-  t.strictSame(
+test(`09 - reuse the space`, () => {
+  equal(
     collapse(`  \tx`, {
       enforceSpacesOnly: true,
       trimStart: false,
@@ -176,11 +135,10 @@ tap.test(`09 - reuse the space`, (t) => {
     { result: ` x`, ranges: [[1, 3]] },
     "09"
   );
-  t.end();
 });
 
-tap.test(`10 - full replace`, (t) => {
-  t.strictSame(
+test(`10 - full replace`, () => {
+  equal(
     collapse(`\t \tx`, {
       enforceSpacesOnly: true,
       trimStart: false,
@@ -188,11 +146,10 @@ tap.test(`10 - full replace`, (t) => {
     { result: ` x`, ranges: [[0, 3, " "]] },
     "10"
   );
-  t.end();
 });
 
-tap.test(`11`, (t) => {
-  t.strictSame(
+test(`11`, () => {
+  equal(
     collapse(`  \tx`, {
       enforceSpacesOnly: false,
       trimStart: true,
@@ -200,11 +157,10 @@ tap.test(`11`, (t) => {
     { result: `x`, ranges: [[0, 3]] },
     "11"
   );
-  t.end();
 });
 
-tap.test(`12`, (t) => {
-  t.strictSame(
+test(`12`, () => {
+  equal(
     collapse(`\t \tx`, {
       enforceSpacesOnly: false,
       trimStart: true,
@@ -212,11 +168,10 @@ tap.test(`12`, (t) => {
     { result: `x`, ranges: [[0, 3]] },
     "12"
   );
-  t.end();
 });
 
-tap.test(`13`, (t) => {
-  t.strictSame(
+test(`13`, () => {
+  equal(
     collapse(`  \tx`, {
       enforceSpacesOnly: true,
       trimStart: true,
@@ -224,11 +179,10 @@ tap.test(`13`, (t) => {
     { result: `x`, ranges: [[0, 3]] },
     "13"
   );
-  t.end();
 });
 
-tap.test(`14`, (t) => {
-  t.strictSame(
+test(`14`, () => {
+  equal(
     collapse(`\t \tx`, {
       enforceSpacesOnly: true,
       trimStart: true,
@@ -236,13 +190,12 @@ tap.test(`14`, (t) => {
     { result: `x`, ranges: [[0, 3]] },
     "14"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`15`, (t) => {
-  t.strictSame(
+test(`15`, () => {
+  equal(
     collapse(`x\t  `, {
       enforceSpacesOnly: false,
       trimEnd: false,
@@ -250,11 +203,10 @@ tap.test(`15`, (t) => {
     { result: `x\t `, ranges: [[2, 3]] },
     "15"
   );
-  t.end();
 });
 
-tap.test(`16 - reuse`, (t) => {
-  t.strictSame(
+test(`16 - reuse`, () => {
+  equal(
     collapse(`x\t  `, {
       enforceSpacesOnly: true,
       trimEnd: false,
@@ -262,11 +214,10 @@ tap.test(`16 - reuse`, (t) => {
     { result: `x `, ranges: [[1, 3]] },
     "16"
   );
-  t.end();
 });
 
-tap.test(`17 - replace`, (t) => {
-  t.strictSame(
+test(`17 - replace`, () => {
+  equal(
     collapse(`x\t \t`, {
       enforceSpacesOnly: true,
       trimEnd: false,
@@ -274,11 +225,10 @@ tap.test(`17 - replace`, (t) => {
     { result: `x `, ranges: [[1, 4, " "]] },
     "17"
   );
-  t.end();
 });
 
-tap.test(`18`, (t) => {
-  t.strictSame(
+test(`18`, () => {
+  equal(
     collapse(`x\t  `, {
       enforceSpacesOnly: false,
       trimEnd: true,
@@ -286,11 +236,10 @@ tap.test(`18`, (t) => {
     { result: `x`, ranges: [[1, 4]] },
     "18"
   );
-  t.end();
 });
 
-tap.test(`19`, (t) => {
-  t.strictSame(
+test(`19`, () => {
+  equal(
     collapse(`x\t  `, {
       enforceSpacesOnly: true,
       trimEnd: true,
@@ -298,172 +247,151 @@ tap.test(`19`, (t) => {
     { result: `x`, ranges: [[1, 4]] },
     "19"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`20`, (t) => {
-  t.strictSame(
+test(`20`, () => {
+  equal(
     collapse(`a\t b`, {
       enforceSpacesOnly: false,
     }),
     { result: `a\t b`, ranges: null },
     "20"
   );
-  t.end();
 });
 
-tap.test(`21`, (t) => {
-  t.strictSame(
+test(`21`, () => {
+  equal(
     collapse(`a\t b`, {
       enforceSpacesOnly: true,
     }),
     { result: `a b`, ranges: [[1, 2]] },
     "21"
   );
-  t.end();
 });
 
-tap.test(`22`, (t) => {
-  t.strictSame(
+test(`22`, () => {
+  equal(
     collapse(`a\t\tb`, {
       enforceSpacesOnly: true,
     }),
     { result: `a b`, ranges: [[1, 3, " "]] },
     "22"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`23`, (t) => {
-  t.strictSame(
+test(`23`, () => {
+  equal(
     collapse(`a\tb`, {
       enforceSpacesOnly: false,
     }),
     { result: `a\tb`, ranges: null },
     "23"
   );
-  t.end();
 });
 
-tap.test(`24`, (t) => {
-  t.strictSame(
+test(`24`, () => {
+  equal(
     collapse(`a\tb`, {
       enforceSpacesOnly: true,
     }),
     { result: `a b`, ranges: [[1, 2, " "]] },
     "24"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`25`, (t) => {
-  t.strictSame(
+test(`25`, () => {
+  equal(
     collapse(`a\t\tb`, {
       enforceSpacesOnly: false,
     }),
     { result: `a\t\tb`, ranges: null },
     "25"
   );
-  t.end();
 });
 
-tap.test(`26`, (t) => {
-  t.strictSame(
+test(`26`, () => {
+  equal(
     collapse(`a\t\tb`, {
       enforceSpacesOnly: true,
     }),
     { result: `a b`, ranges: [[1, 3, " "]] },
     "26"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`27`, (t) => {
-  t.strictSame(
+test(`27`, () => {
+  equal(
     collapse(`a\nb`, {
       enforceSpacesOnly: false,
     }),
     { result: `a\nb`, ranges: null },
     "27"
   );
-  t.end();
 });
 
-tap.test(`28`, (t) => {
-  t.strictSame(
+test(`28`, () => {
+  equal(
     collapse(`a\nb`, {
       enforceSpacesOnly: true,
     }),
     { result: `a\nb`, ranges: null },
     "28"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`29`, (t) => {
-  t.strictSame(
+test(`29`, () => {
+  equal(
     collapse(`a\r\nb`, {
       enforceSpacesOnly: false,
     }),
     { result: `a\r\nb`, ranges: null },
     "29"
   );
-  t.end();
 });
 
-tap.test(`30`, (t) => {
-  t.strictSame(
+test(`30`, () => {
+  equal(
     collapse(`a\r\nb`, {
       enforceSpacesOnly: true,
     }),
     { result: `a\r\nb`, ranges: null },
     "30"
   );
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`31`, (t) => {
+test(`31`, () => {
   mixer({
     removeEmptyLines: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a\n\nb`, opt),
-      { result: `a\n\nb`, ranges: null },
-      "31"
-    );
+    equal(collapse(`a\n\nb`, opt), { result: `a\n\nb`, ranges: null }, "31");
   });
   mixer({
     removeEmptyLines: true,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(`a\n\nb`, opt),
-      { result: `a\nb`, ranges: [[1, 2]] },
-      "33"
-    );
+    equal(collapse(`a\n\nb`, opt), { result: `a\nb`, ranges: [[1, 2]] }, "33");
   });
-  t.end();
 });
 
 // -----------------------------------------------------------------------------
 
-tap.test(`32`, (t) => {
+test(`32`, () => {
   mixer({
     enforceSpacesOnly: false,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(
+    equal(
       collapse(`a \t \n \t b`, opt),
       { result: `a \t \n \t b`, ranges: null },
       "32"
@@ -473,33 +401,33 @@ tap.test(`32`, (t) => {
     enforceSpacesOnly: true,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(collapse(`a \t \n \t b`, opt).result, `a \n b`, "32");
+    equal(collapse(`a \t \n \t b`, opt).result, `a \n b`, "32");
   });
   mixer({
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(collapse(`a \t \n \t b`, opt).result, `a\nb`, "32");
+    equal(collapse(`a \t \n \t b`, opt).result, `a\nb`, "32");
   });
-  t.end();
 });
 
-tap.test(`33`, (t) => {
+test(`33`, () => {
   mixer({
     enforceSpacesOnly: false,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(collapse(`a \n \t b`, opt).result, `a \n \t b`, "33");
+    equal(collapse(`a \n \t b`, opt).result, `a \n \t b`, "33");
   });
   mixer({
     enforceSpacesOnly: true,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(collapse(`a \n \t b`, opt).result, `a \n b`, "33");
+    equal(collapse(`a \n \t b`, opt).result, `a \n b`, "33");
   });
   mixer({
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(collapse(`a \n \t b`, opt).result, `a\nb`, "33");
+    equal(collapse(`a \n \t b`, opt).result, `a\nb`, "33");
   });
-  t.end();
 });
+
+test.run();

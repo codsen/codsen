@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { right } from "string-left-right";
@@ -54,7 +55,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
 
   for (let i = from; i < to; i++) {
     console.log(
-      `057 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str2[${i}] = "${str2[i]}"`}\u001b[${39}m`}`
+      `058 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str2[${i}] = "${str2[i]}"`}\u001b[${39}m`}`
     );
     if (str2[i].trim().length) {
       charTrimmed += str2[i];
@@ -77,7 +78,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
   let probablyNumeric: string | boolean = false;
 
   console.log(
-    `080 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
+    `081 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
       charTrimmed[0],
       null,
       4
@@ -263,7 +264,7 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
           str[right(str, entityObj.tempRes.rightmostChar) as number] === ";"
       );
       console.log(
-        `266 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
+        `267 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
           copy,
           null,
           4
@@ -286,9 +287,7 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
         ) ||
         copy.every(
           (entObj) =>
-            entObj &&
-            entObj.tempRes &&
-            entObj.tempRes.gaps &&
+            entObj?.tempRes?.gaps &&
             Array.isArray(entObj.tempRes.gaps) &&
             entObj.tempRes.gaps.length
         )

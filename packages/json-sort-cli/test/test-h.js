@@ -1,6 +1,8 @@
 import fs from "fs-extra";
 import path from "path";
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa } from "execa";
 import tempy from "tempy";
 // import pMap from "p-map";
@@ -16,38 +18,40 @@ import tempy from "tempy";
 
 // -----------------------------------------------------------------------------
 
-tap.test("01 - help output mode", async (t) => {
-  const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.match(reportedVersion1.stdout, /Usage/, "01.01");
-  t.match(reportedVersion1.stdout, /Options/, "01.02");
-  t.match(reportedVersion1.stdout, /Example/, "01.03");
+test("01 - help output mode", async () => {
+  let reportedVersion1 = await execa("./cli.js", ["-h"]);
+  match(reportedVersion1.stdout, /Usage/, "01.01");
+  match(reportedVersion1.stdout, /Options/, "01.02");
+  match(reportedVersion1.stdout, /Example/, "01.03");
 
-  const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.match(reportedVersion2.stdout, /Usage/, "01.04");
-  t.match(reportedVersion2.stdout, /Options/, "01.05");
-  t.match(reportedVersion2.stdout, /Example/, "01.06");
-  t.end();
+  let reportedVersion2 = await execa("./cli.js", ["--help"]);
+  match(reportedVersion2.stdout, /Usage/, "01.04");
+  match(reportedVersion2.stdout, /Options/, "01.05");
+  match(reportedVersion2.stdout, /Example/, "01.06");
 });
 
-tap.test("02 - help flag trumps silent flag", async (t) => {
-  const unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
+test("02 - help flag trumps silent flag", async () => {
+  let unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
 
-  const tempFolder = tempy.directory();
+  let tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.writeFileSync(path.join(tempFolder, "sortme.json"), unsortedFile);
 
-  const output = await execa("./cli.js", [tempFolder, "-h", "-s"]).catch(
-    (err) => t.fail(err)
+  let output = await execa("./cli.js", [tempFolder, "-h", "-s"]).catch(
+    (err) => {
+      throw new Error(err);
+    }
   );
 
-  t.match(output.stdout, /Usage/, "02.01");
-  t.match(output.stdout, /Options/, "02.02");
-  t.match(output.exitCode, 0, "02.03");
-  t.strictSame(
+  match(output.stdout, /Usage/, "02.01");
+  match(output.stdout, /Options/, "02.02");
+  equal(output.exitCode, 0, "02.03");
+  equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
     "02.04 - file is untouched though"
   );
-  t.end();
 });
+
+test.run();

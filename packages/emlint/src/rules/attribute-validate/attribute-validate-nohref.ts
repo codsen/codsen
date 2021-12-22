@@ -22,7 +22,7 @@ function attributeValidateNohref(context: Linter, mode?: "xhtml"): RuleObjType {
         `022 attributeValidateNohref(): node = ${JSON.stringify(node, null, 4)}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "nohref") {
         // validate the parent

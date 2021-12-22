@@ -1,74 +1,51 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { alts } from "../dist/html-img-alt.esm.js";
 
 // GROUP FIFTEEN.
 // -----------------------------------------------------------------------------
 // alt with two single quotes, HTML
 
-tap.test("01 - alt with two single quotes, HTML", (t) => {
-  t.strictSame(alts("zzz<img     alt=''    >zzz"), 'zzz<img alt="" >zzz', "01");
-  t.end();
+test("01 - alt with two single quotes, HTML", () => {
+  equal(alts("zzz<img     alt=''    >zzz"), 'zzz<img alt="" >zzz', "01");
 });
 
-tap.test("02 - alt with two single quotes, HTML", (t) => {
-  t.strictSame(
-    alts("zzz<img     alt    =''    >zzz"),
-    'zzz<img alt="" >zzz',
-    "02"
-  );
-  t.end();
+test("02 - alt with two single quotes, HTML", () => {
+  equal(alts("zzz<img     alt    =''    >zzz"), 'zzz<img alt="" >zzz', "02");
 });
 
-tap.test("03 - alt with two single quotes, HTML", (t) => {
-  t.strictSame(
+test("03 - alt with two single quotes, HTML", () => {
+  equal(
     alts("zzz<img     alt    =    ''    >zzz"),
     'zzz<img alt="" >zzz',
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - alt with two single quotes, HTML", (t) => {
-  t.strictSame(
-    alts("zzz<img     alt    =    ''>zzz"),
-    'zzz<img alt="" >zzz',
-    "04"
-  );
-  t.end();
+test("04 - alt with two single quotes, HTML", () => {
+  equal(alts("zzz<img     alt    =    ''>zzz"), 'zzz<img alt="" >zzz', "04");
 });
 
-tap.test("05 - alt with two single quotes, HTML", (t) => {
-  t.strictSame(
-    alts("zzz<img     alt='   '    >zzz"),
-    'zzz<img alt="" >zzz',
-    "05"
-  );
-  t.end();
+test("05 - alt with two single quotes, HTML", () => {
+  equal(alts("zzz<img     alt='   '    >zzz"), 'zzz<img alt="" >zzz', "05");
 });
 
-tap.test("06 - alt with two single quotes, HTML", (t) => {
-  t.strictSame(
-    alts("zzz<img     alt    ='   '    >zzz"),
-    'zzz<img alt="" >zzz',
-    "06"
-  );
-  t.end();
+test("06 - alt with two single quotes, HTML", () => {
+  equal(alts("zzz<img     alt    ='   '    >zzz"), 'zzz<img alt="" >zzz', "06");
 });
 
-tap.test("07 - alt with two single quotes, HTML", (t) => {
-  t.strictSame(
+test("07 - alt with two single quotes, HTML", () => {
+  equal(
     alts("zzz<img     alt    =    '   '    >zzz"),
     'zzz<img alt="" >zzz',
     "07"
   );
-  t.end();
 });
 
-tap.test("08 - alt with two single quotes, HTML", (t) => {
-  t.strictSame(
-    alts("zzz<img     alt    =    '   '>zzz"),
-    'zzz<img alt="" >zzz',
-    "08"
-  );
-  t.end();
+test("08 - alt with two single quotes, HTML", () => {
+  equal(alts("zzz<img     alt    =    '   '>zzz"), 'zzz<img alt="" >zzz', "08");
 });
+
+test.run();

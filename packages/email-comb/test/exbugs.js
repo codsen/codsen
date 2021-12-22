@@ -1,12 +1,14 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 
 // ex-bugs
 // -----------------------------------------------------------------------------
 
-tap.test("01 - color code hashes within head styles with no selectors", (t) => {
-  const actual = comb(
-    t,
+test("01 - color code hashes within head styles with no selectors", () => {
+  let actual = comb(
     `<head>
 <style>
 a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-events: none; cursor: default;}
@@ -18,7 +20,7 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
 `
   );
 
-  const intended = `<head>
+  let intended = `<head>
 <style>
 a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-events: none; cursor: default;}
 </style>
@@ -28,17 +30,15 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
 </body>
 `;
 
-  t.strictSame(
+  equal(
     actual.result,
     intended,
     "01 - there are no classes or id's in the query selector, checking false positives"
   );
-  t.end();
 });
 
-tap.test("02 - selectors in head styles without classes or ids", (t) => {
-  const actual = comb(
-    t,
+test("02 - selectors in head styles without classes or ids", () => {
+  let actual = comb(
     `<head>
 <style>
 a {color: #525252;}
@@ -50,7 +50,7 @@ a {color: #525252;}
 `
   );
 
-  const intended = `<head>
+  let intended = `<head>
 <style>
 a {color: #525252;}
 </style>
@@ -60,17 +60,15 @@ a {color: #525252;}
 </body>
 `;
 
-  t.strictSame(
+  equal(
     actual.result,
     intended,
     "02 - there are no classes or id's in the query selector, checking false positives"
   );
-  t.end();
 });
 
-tap.test('03 - sneaky attributes that end with characters "id"', (t) => {
-  const actual = comb(
-    t,
+test('03 - sneaky attributes that end with characters "id"', () => {
+  let actual = comb(
     `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,7 +98,7 @@ tap.test('03 - sneaky attributes that end with characters "id"', (t) => {
 `
   );
 
-  const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -128,36 +126,29 @@ tap.test('03 - sneaky attributes that end with characters "id"', (t) => {
 </html>
 `;
 
-  t.strictSame(actual.result, intended, "03 - sneaky urlid attribute");
-  t.end();
+  equal(actual.result, intended, "03 - sneaky urlid attribute");
 });
 
-tap.test(
-  '04 - mini version of 08.05, sneaky attributes ending with "class"',
-  (t) => {
-    const actual = comb(
-      t,
-      `<body>
+test('04 - mini version of 08.05, sneaky attributes ending with "class"', () => {
+  let actual = comb(
+    `<body>
 <a href="zzz" superclass="26489" >Links</a>
 </body>
 </html>
 `
-    );
+  );
 
-    const intended = `<body>
+  let intended = `<body>
 <a href="zzz" superclass="26489" >Links</a>
 </body>
 </html>
 `;
 
-    t.strictSame(actual.result, intended, "04 - sneaky superclass attribute");
-    t.end();
-  }
-);
+  equal(actual.result, intended, "04 - sneaky superclass attribute");
+});
 
-tap.test('05 - sneaky attributes that end with characters "class"', (t) => {
-  const actual = comb(
-    t,
+test('05 - sneaky attributes that end with characters "class"', () => {
+  let actual = comb(
     `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,7 +178,7 @@ tap.test('05 - sneaky attributes that end with characters "class"', (t) => {
 `
   );
 
-  const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -215,13 +206,11 @@ tap.test('05 - sneaky attributes that end with characters "class"', (t) => {
 </html>
 `;
 
-  t.strictSame(actual.result, intended, "05 - sneaky superclass attribute");
-  t.end();
+  equal(actual.result, intended, "05 - sneaky superclass attribute");
 });
 
-tap.test("06 - color code hashes interpreted correctly, not as id's", (t) => {
-  const actual = comb(
-    t,
+test("06 - color code hashes interpreted correctly, not as id's", () => {
+  let actual = comb(
     `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -254,19 +243,17 @@ tap.test("06 - color code hashes interpreted correctly, not as id's", (t) => {
 `
   );
 
-  const intended = ["#head-only-id1", ".mobile_link"];
+  let intended = ["#head-only-id1", ".mobile_link"];
 
-  t.strictSame(
+  equal(
     actual.deletedFromHead,
     intended,
     "06 - look for #525252 in head styles, it should not be among results - v2.6.0+"
   );
-  t.end();
 });
 
-tap.test("07 - one-letter classes (modern notation)", (t) => {
-  const actual = comb(
-    t,
+test("07 - one-letter classes (modern notation)", () => {
+  let actual = comb(
     `<head>
 <style type="text/css">
 .h{display:none !important;}
@@ -278,7 +265,7 @@ tap.test("07 - one-letter classes (modern notation)", (t) => {
 `
   );
 
-  const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
 .h{display:none !important;}
 </style>
@@ -288,13 +275,11 @@ tap.test("07 - one-letter classes (modern notation)", (t) => {
 </body>
 `;
 
-  t.strictSame(actual.result, intended, "07 - class .h should not get removed");
-  t.end();
+  equal(actual.result, intended, "07 - class .h should not get removed");
 });
 
-tap.test("08 - one-letter classes (old notation)", (t) => {
-  const actual = comb(
-    t,
+test("08 - one-letter classes (old notation)", () => {
+  let actual = comb(
     `<head>
 <style type="text/css">
 *[class].h{display:none !important;}
@@ -306,7 +291,7 @@ tap.test("08 - one-letter classes (old notation)", (t) => {
 `
   );
 
-  const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
 *[class].h{display:none !important;}
 </style>
@@ -316,13 +301,11 @@ tap.test("08 - one-letter classes (old notation)", (t) => {
 </body>
 `;
 
-  t.strictSame(actual.result, intended, "08 - class .h should not get removed");
-  t.end();
+  equal(actual.result, intended, "08 - class .h should not get removed");
 });
 
-tap.test("09 - one-letter classes - comprehensive comparison", (t) => {
-  const actual = comb(
-    t,
+test("09 - one-letter classes - comprehensive comparison", () => {
+  let actual = comb(
     `<html>
 <head>
   <style>
@@ -346,7 +329,7 @@ tap.test("09 - one-letter classes - comprehensive comparison", (t) => {
 </html>`
   );
 
-  const intended = {
+  let intended = {
     result: `<html>
 <head>
 </head>
@@ -372,33 +355,31 @@ tap.test("09 - one-letter classes - comprehensive comparison", (t) => {
     ],
   };
 
-  t.equal(
+  equal(
     actual.allInHead.sort().join(" - "),
     intended.allInHead.sort().join(" - "),
     "09.01 - allInHead"
   );
-  t.equal(
+  equal(
     actual.allInBody.sort().join(" - "),
     intended.allInBody.sort().join(" - "),
     "09.02 - allInBody"
   );
-  t.equal(
+  equal(
     actual.deletedFromHead.sort().join(" - "),
     intended.deletedFromHead.sort().join(" - "),
     "09.03 - deletedFromHead"
   );
-  t.equal(
+  equal(
     actual.deletedFromBody.sort().join(" - "),
     intended.deletedFromBody.sort().join(" - "),
     "09.04 - deletedFromBody"
   );
-  t.equal(actual.result, intended.result, "09.05 - result");
-  t.end();
+  equal(actual.result, intended.result, "09.05 - result");
 });
 
-tap.test("10 - checking whole results object, all its keys #1", (t) => {
-  const actual = comb(
-    t,
+test("10 - checking whole results object, all its keys #1", () => {
+  let actual = comb(
     `<html>
 <head>
   <style>
@@ -413,7 +394,7 @@ tap.test("10 - checking whole results object, all its keys #1", (t) => {
 </html>`
   );
 
-  const intended = {
+  let intended = {
     result: `<html>
 <head>
 </head>
@@ -427,33 +408,31 @@ tap.test("10 - checking whole results object, all its keys #1", (t) => {
     deletedFromBody: [".used-1", ".unused-4"],
   };
 
-  t.strictSame(
+  equal(
     actual.allInHead.sort(),
     intended.allInHead.sort(),
     "10.01 - allInHead"
   );
-  t.strictSame(
+  equal(
     actual.allInBody.sort(),
     intended.allInBody.sort(),
     "10.02 - allInBody"
   );
-  t.strictSame(
+  equal(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
     "10.03 - deletedFromHead"
   );
-  t.strictSame(
+  equal(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
     "10.04 - deletedFromBody"
   );
-  t.strictSame(actual.result, intended.result, "10.05 - result");
-  t.end();
+  equal(actual.result, intended.result, "10.05 - result");
 });
 
-tap.test("11 - checking whole results object, all its keys #2", (t) => {
-  const actual = comb(
-    t,
+test("11 - checking whole results object, all its keys #2", () => {
+  let actual = comb(
     `<html>
 <head>
   <style>
@@ -469,7 +448,7 @@ tap.test("11 - checking whole results object, all its keys #2", (t) => {
 `
   );
 
-  const intended = {
+  let intended = {
     result: `<html>
 <head>
   <style>
@@ -489,43 +468,41 @@ tap.test("11 - checking whole results object, all its keys #2", (t) => {
     deletedFromBody: [".unused-4"],
   };
 
-  t.strictSame(
+  equal(
     actual.allInHead.sort(),
     intended.allInHead.sort(),
     "11.01 - allInHead"
   );
-  t.strictSame(
+  equal(
     actual.allInBody.sort(),
     intended.allInBody.sort(),
     "11.02 - allInBody"
   );
-  t.strictSame(
+  equal(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
     "11.03 - deletedFromHead"
   );
-  t.strictSame(
+  equal(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
     "11.04 - deletedFromBody"
   );
-  t.strictSame(actual.result, intended.result, "11.05 - result");
-  t.end();
+  equal(actual.result, intended.result, "11.05 - result");
 });
 
-tap.test("12 - Cosmin's reported bug", (t) => {
-  const srcs = [
+test("12 - Cosmin's reported bug", () => {
+  let srcs = [
     `<body><a href="http://a.b/c?d=2&id=xyz&e=0">\n`,
     `<body><a href="http://a.b/c?d=2&class=xyz&e=0">\n`,
   ];
   srcs.forEach((src) => {
-    t.strictSame(comb(t, src).result, src);
+    equal(comb(src).result, src);
   });
-  t.end();
 });
 
-tap.test("13 - inner whitespace #1", (t) => {
-  const inp = `<style>
+test("13 - inner whitespace #1", () => {
+  let inp = `<style>
 .abc {font-family: cursive;}
 </style>
 </head>
@@ -534,7 +511,7 @@ tap.test("13 - inner whitespace #1", (t) => {
 </td>
 `;
 
-  const outp = `<style>
+  let outp = `<style>
 .abc {font-family: cursive;}
 </style>
 </head>
@@ -542,12 +519,11 @@ tap.test("13 - inner whitespace #1", (t) => {
 <br class="abc">
 </td>
 `;
-  t.strictSame(comb(t, inp).result, outp, "13");
-  t.end();
+  equal(comb(inp).result, outp, "13");
 });
 
-tap.test("14 - inner whitespace #2", (t) => {
-  const inp = `<style>
+test("14 - inner whitespace #2", () => {
+  let inp = `<style>
 .abc {font-family: cursive;}
 </style>
 </head>
@@ -556,7 +532,7 @@ tap.test("14 - inner whitespace #2", (t) => {
 </td>
 `;
 
-  const outp = `<style>
+  let outp = `<style>
 .abc {font-family: cursive;}
 </style>
 </head>
@@ -564,12 +540,11 @@ tap.test("14 - inner whitespace #2", (t) => {
 <br class="abc">
 </td>
 `;
-  t.strictSame(comb(t, inp).result, outp, "14");
-  t.end();
+  equal(comb(inp).result, outp, "14");
 });
 
-tap.test("15 - inner whitespace #3", (t) => {
-  const inp = `<style>
+test("15 - inner whitespace #3", () => {
+  let inp = `<style>
 .abc {font-family: cursive;}
 </style>
 </head>
@@ -578,7 +553,7 @@ tap.test("15 - inner whitespace #3", (t) => {
 </td>
 `;
 
-  const outp = `<style>
+  let outp = `<style>
 .abc {font-family: cursive;}
 </style>
 </head>
@@ -586,12 +561,11 @@ tap.test("15 - inner whitespace #3", (t) => {
 <br class="abc">
 </td>
 `;
-  t.strictSame(comb(t, inp).result, outp, "15");
-  t.end();
+  equal(comb(inp).result, outp, "15");
 });
 
-tap.test("16 - adhoc", (t) => {
-  const inp = `<style>
+test("16 - adhoc", () => {
+  let inp = `<style>
 @media only screen{
   .klm{ font-size:16px !important; }
 }
@@ -601,7 +575,7 @@ tap.test("16 - adhoc", (t) => {
 <td class="klm nop">
 `;
 
-  const outp = `<style>
+  let outp = `<style>
 @media only screen{
   .klm{ font-size:16px !important; }
 }
@@ -610,12 +584,11 @@ tap.test("16 - adhoc", (t) => {
 <a href="a("'")">
 <td class="klm">
 `;
-  t.strictSame(comb(t, inp).result, outp, "16");
-  t.end();
+  equal(comb(inp).result, outp, "16");
 });
 
-tap.test("17 - adhoc", (t) => {
-  const inp = `<style>
+test("17 - adhoc", () => {
+  let inp = `<style>
 @media only screen{
   .klm{ font-size:16px !important; }
 }
@@ -625,7 +598,7 @@ tap.test("17 - adhoc", (t) => {
 <td class="klm nop">
 `;
 
-  const outp = `<style>
+  let outp = `<style>
 @media only screen{
   .klm{ font-size:16px !important; }
 }
@@ -634,12 +607,11 @@ tap.test("17 - adhoc", (t) => {
 <a href="https://www.maps.com/search/?api=1&query={{ prs.tuv.wxy | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
 <td class="klm">
 `;
-  t.strictSame(comb(t, inp).result, outp, "17");
-  t.end();
+  equal(comb(inp).result, outp, "17");
 });
 
-tap.test("18 - adhoc", (t) => {
-  const inp = `<style>
+test("18 - adhoc", () => {
+  let inp = `<style>
 @media screen {
   .sm-border-0 {
     border-width: 0 !important;
@@ -651,7 +623,7 @@ tap.test("18 - adhoc", (t) => {
 <td class="py-16 leading-0 sm-leading-full sm-border-0">
 `;
 
-  const outp = `<style>
+  let outp = `<style>
 @media screen {
   .sm-border-0 {
     border-width: 0 !important;
@@ -662,17 +634,17 @@ tap.test("18 - adhoc", (t) => {
 <span>S's</span>
 <td class="sm-border-0">
 `;
-  t.strictSame(comb(t, inp).result, outp, "18");
-  t.end();
+  equal(comb(inp).result, outp, "18");
 });
 
-tap.test("19 - #40 - pre", (t) => {
-  const inp = `<pre>Dear name.
+test("19 - #40 - pre", () => {
+  let inp = `<pre>Dear name.
 
 How are you?
 Yours sincerely,
 
-	Good person</pre>`;
-  t.strictSame(comb(t, inp).result, inp, "19");
-  t.end();
+\tGood person</pre>`;
+  equal(comb(inp).result, inp, "19");
 });
+
+test.run();

@@ -53,7 +53,7 @@ function attributeValidateStyle(
         }
 
         // validate the contents
-        if (node.attribValueRaw && node.attribValueRaw.trim()) {
+        if (node.attribValueRaw?.trim()) {
           console.log(
             `058 ${`\u001b[${35}m${`CALL validateStyle()`}\u001b[${39}m`}`
           );

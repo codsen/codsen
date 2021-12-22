@@ -1,37 +1,38 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 
 // inputs were pre-mangled by html-minifier
 // -----------------------------------------------------------------------------
 
-tap.test("01 - pair of tags, tight", (t) => {
-  const source = `<body><h2 style=padding:0;margin:10px class=test>News</h2></body>`;
-  const intended = `<body><h2 style=padding:0;margin:10px>News</h2></body>`;
+test("01 - pair of tags, tight", () => {
+  let source = `<body><h2 style=padding:0;margin:10px class=test>News</h2></body>`;
+  let intended = `<body><h2 style=padding:0;margin:10px>News</h2></body>`;
 
-  t.equal(comb(t, source).result, intended, "01");
-  t.end();
+  equal(comb(source).result, intended, "01");
 });
 
-tap.test("02 - pair of tags, spaced", (t) => {
-  const source = `<body><h2 style=padding:0;margin:10px class=test >News</h2></body>`;
-  const intended = `<body><h2 style=padding:0;margin:10px>News</h2></body>`;
+test("02 - pair of tags, spaced", () => {
+  let source = `<body><h2 style=padding:0;margin:10px class=test >News</h2></body>`;
+  let intended = `<body><h2 style=padding:0;margin:10px>News</h2></body>`;
 
-  t.equal(comb(t, source).result, intended, "02");
-  t.end();
+  equal(comb(source).result, intended, "02");
 });
 
-tap.test("03 - self-closing tag, tight", (t) => {
-  const source = `<body><br style=padding:0;margin:10px class=test/>News</body>`;
-  const intended = `<body><br style=padding:0;margin:10px/>News</body>`;
+test("03 - self-closing tag, tight", () => {
+  let source = `<body><br style=padding:0;margin:10px class=test/>News</body>`;
+  let intended = `<body><br style=padding:0;margin:10px/>News</body>`;
 
-  t.equal(comb(t, source).result, intended, "03");
-  t.end();
+  equal(comb(source).result, intended, "03");
 });
 
-tap.test("04 - self-closing tag, spaced", (t) => {
-  const source = `<body><br style=padding:0;margin:10px class=test />News</body>`;
-  const intended = `<body><br style=padding:0;margin:10px/>News</body>`;
+test("04 - self-closing tag, spaced", () => {
+  let source = `<body><br style=padding:0;margin:10px class=test />News</body>`;
+  let intended = `<body><br style=padding:0;margin:10px/>News</body>`;
 
-  t.equal(comb(t, source).result, intended, "04");
-  t.end();
+  equal(comb(source).result, intended, "04");
 });
+
+test.run();

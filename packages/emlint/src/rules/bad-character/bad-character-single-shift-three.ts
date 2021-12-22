@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/008f/index.htm
 
 function badCharacterSingleShiftTwo(context: Linter): RuleObjType {
-  const charCode = 143;
+  let charCode = 143;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

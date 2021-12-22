@@ -1,6 +1,8 @@
 import { left, right } from "string-left-right";
-import { Ranges } from "../../../scripts/common";
+import type { Ranges } from "../../../ops/typedefs/common";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 interface Result {
@@ -24,7 +26,7 @@ function extract(str: string): Result {
     );
   }
 
-  const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\``;
+  let badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\``;
   let stateCurrentlyIs: "." | "#" | undefined; // "." or "#"
 
   // functions
@@ -44,7 +46,7 @@ function extract(str: string): Result {
   // ======
 
   let selectorStartsAt = null;
-  const result: Result = {
+  let result: Result = {
     res: [],
     ranges: [],
   };
@@ -89,13 +91,13 @@ function extract(str: string): Result {
         if (stateCurrentlyIs) {
           stateCurrentlyIs = undefined;
           console.log(
-            `092 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`
+            `094 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`
           );
         }
       }
       selectorStartsAt = null;
       console.log(
-        `098 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
+        `100 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
       );
     }
 
@@ -107,12 +109,12 @@ function extract(str: string): Result {
     ) {
       selectorStartsAt = i;
       console.log(
-        `110 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
+        `112 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
       );
     }
 
     // catch zzz[class=]
-    const temp1 = right(str, i + 4);
+    let temp1 = right(str, i + 4);
     if (
       str.startsWith("class", i) &&
       typeof left(str, i) === "number" &&
@@ -120,7 +122,7 @@ function extract(str: string): Result {
       typeof temp1 === "number" &&
       str[temp1] === "="
     ) {
-      console.log(`123 [class= caught`);
+      console.log(`125 [class= caught`);
       // if it's zzz[class=something] (without quotes)
       /* istanbul ignore else */
       if (
@@ -128,42 +130,42 @@ function extract(str: string): Result {
         isLatinLetter(str[right(str, temp1) as number])
       ) {
         selectorStartsAt = right(str, temp1);
-        console.log(`131 SET selectorStartsAt = ${selectorStartsAt}`);
+        console.log(`133 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp1) as number]) &&
         isLatinLetter(str[right(str, right(str, temp1) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp1));
-        console.log(`137 SET selectorStartsAt = ${selectorStartsAt}`);
+        console.log(`139 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = ".";
     }
 
     // catch zzz[id=]
-    const temp2 = right(str, i + 1);
+    let temp2 = right(str, i + 1);
     if (
       str.startsWith("id", i) &&
       str[left(str, i) as number] === "[" &&
       temp2 !== null &&
       str[temp2] === "="
     ) {
-      console.log(`150 [id= caught`);
+      console.log(`152 [id= caught`);
       // if it's zzz[id=something] (without quotes)
       if (isLatinLetter(str[right(str, temp2) as number])) {
         selectorStartsAt = right(str, temp2);
-        console.log(`154 SET selectorStartsAt = ${selectorStartsAt}`);
+        console.log(`156 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp2) as number]) &&
         isLatinLetter(str[right(str, right(str, temp2) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp2));
-        console.log(`160 SET selectorStartsAt = ${selectorStartsAt}`);
+        console.log(`162 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = "#";
     }
 
     console.log(
-      `166 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
+      `168 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
         result,
         null,
         0

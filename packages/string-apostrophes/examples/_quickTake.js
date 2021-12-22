@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
 
 assert.deepEqual(

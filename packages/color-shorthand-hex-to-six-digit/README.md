@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 3.1.0
 
 ```js
 import { strict as assert } from "assert";
+
 import { conv } from "color-shorthand-hex-to-six-digit";
 
 // converts shorthand hex color codes within strings (imagine that could be
@@ -81,7 +82,7 @@ assert.equal(conv(null), null);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/color-shorthand-hex-to-six-digit/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/color-shorthand-hex-to-six-digit/) for a full description of the API.
 
 ## Contributing
 
@@ -93,4 +94,6 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

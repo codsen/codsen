@@ -7,11 +7,10 @@ import pReduce from "p-reduce";
 import isDirectory from "is-d";
 import writeFileAtomic from "write-file-atomic";
 import { promisify } from "util";
+import { arrayiffy } from "arrayiffy-if-string";
+import { fixRowNums } from "js-row-num";
 
 const write = promisify(writeFileAtomic);
-import { arrayiffy } from "arrayiffy-if-string";
-
-import { fixRowNums } from "js-row-num";
 // import updateNotifier from "update-notifier";
 
 function existy(x) {
@@ -70,7 +69,7 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs
     .readFile(oneOfPaths, "utf8")
     .then((filesContent) => {
-      const conf = {
+      let conf = {
         padStart: existy(cli.flags.pad) ? cli.flags.pad : 3,
       };
       if (cli.flags.trigger) {

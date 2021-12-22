@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { fillMissing } from "../dist/object-fill-missing-keys.esm.js";
 
 // ==============================
 // 1. Adds missing keys
 // ==============================
 
-tap.test("01 - filling in missing keys, simple plain object", (t) => {
-  t.strictSame(
+test("01 - filling in missing keys, simple plain object", () => {
+  equal(
     fillMissing(
       {
         a: "a",
@@ -24,11 +27,10 @@ tap.test("01 - filling in missing keys, simple plain object", (t) => {
     },
     "01"
   );
-  t.end();
 });
 
-tap.test("02 - filling in missing keys, nested, with arrays", (t) => {
-  t.strictSame(
+test("02 - filling in missing keys, nested, with arrays", () => {
+  equal(
     fillMissing(
       {
         a: "a",
@@ -58,7 +60,7 @@ tap.test("02 - filling in missing keys, nested, with arrays", (t) => {
     },
     "02.01"
   );
-  t.strictSame(
+  equal(
     fillMissing(
       {
         a: "a",
@@ -88,11 +90,10 @@ tap.test("02 - filling in missing keys, nested, with arrays", (t) => {
     },
     "02.02"
   );
-  t.end();
 });
 
-tap.test("03 - multiple values, sorting as well", (t) => {
-  t.strictSame(
+test("03 - multiple values, sorting as well", () => {
+  equal(
     fillMissing(
       {
         b: "b",
@@ -111,40 +112,35 @@ tap.test("03 - multiple values, sorting as well", (t) => {
     },
     "03"
   );
-  t.end();
 });
 
-tap.test(
-  "04 - nested arrays as values (array in schema overwrites Boolean)",
-  (t) => {
-    t.strictSame(
-      fillMissing(
-        {
-          a: false,
-        },
-        {
-          a: [
-            {
-              b: false,
-            },
-          ],
-        }
-      ),
+test("04 - nested arrays as values (array in schema overwrites Boolean)", () => {
+  equal(
+    fillMissing(
+      {
+        a: false,
+      },
       {
         a: [
           {
             b: false,
           },
         ],
-      },
-      "04"
-    );
-    t.end();
-  }
-);
+      }
+    ),
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    "04"
+  );
+});
 
-tap.test("05 - more complex nested arrays", (t) => {
-  t.strictSame(
+test("05 - more complex nested arrays", () => {
+  equal(
     fillMissing(
       {
         c: "c",
@@ -172,11 +168,10 @@ tap.test("05 - more complex nested arrays", (t) => {
     },
     "05"
   );
-  t.end();
 });
 
-tap.test("06 - ridiculously deep nesting", (t) => {
-  t.strictSame(
+test("06 - ridiculously deep nesting", () => {
+  equal(
     fillMissing(
       {
         a: false,
@@ -270,41 +265,36 @@ tap.test("06 - ridiculously deep nesting", (t) => {
     },
     "06"
   );
-  t.end();
 });
 
-tap.test(
-  "07 - cheeky case, custom placeholder on schema has value null",
-  (t) => {
-    t.strictSame(
-      fillMissing(
-        {
-          d: null,
-        },
-        {
-          a: null,
-          b: null,
-          c: null,
-        }
-      ),
+test("07 - cheeky case, custom placeholder on schema has value null", () => {
+  equal(
+    fillMissing(
+      {
+        d: null,
+      },
       {
         a: null,
         b: null,
         c: null,
-        d: null,
-      },
-      "07"
-    );
-    t.end();
-  }
-);
+      }
+    ),
+    {
+      a: null,
+      b: null,
+      c: null,
+      d: null,
+    },
+    "07"
+  );
+});
 
 // ==============================
 // 2. Normalises array contents
 // ==============================
 
-tap.test("08 - array one level-deep", (t) => {
-  t.strictSame(
+test("08 - array one level-deep", () => {
+  equal(
     fillMissing(
       {
         a: [
@@ -363,11 +353,10 @@ tap.test("08 - array one level-deep", (t) => {
     },
     "08"
   );
-  t.end();
 });
 
-tap.test("09 - multiple levels of nested arrays", (t) => {
-  t.strictSame(
+test("09 - multiple levels of nested arrays", () => {
+  equal(
     fillMissing(
       {
         c: "c",
@@ -407,15 +396,14 @@ tap.test("09 - multiple levels of nested arrays", (t) => {
     },
     "09"
   );
-  t.end();
 });
 
 // ==============================
 // 3. String vs array clashes
 // ==============================
 
-tap.test("10 - string vs array clash", (t) => {
-  t.strictSame(
+test("10 - string vs array clash", () => {
+  equal(
     fillMissing(
       {
         a: "a",
@@ -437,11 +425,10 @@ tap.test("10 - string vs array clash", (t) => {
     },
     "10"
   );
-  t.end();
 });
 
-tap.test("11 - string vs object clash", (t) => {
-  t.strictSame(
+test("11 - string vs object clash", () => {
+  equal(
     fillMissing(
       {
         a: "a",
@@ -459,11 +446,10 @@ tap.test("11 - string vs object clash", (t) => {
     },
     "11"
   );
-  t.end();
 });
 
-tap.test("12 - object vs array clash", (t) => {
-  t.strictSame(
+test("12 - object vs array clash", () => {
+  equal(
     fillMissing(
       {
         a: {
@@ -487,11 +473,10 @@ tap.test("12 - object vs array clash", (t) => {
     },
     "12"
   );
-  t.end();
 });
 
-tap.test("13 - array vs empty array", (t) => {
-  t.strictSame(
+test("13 - array vs empty array", () => {
+  equal(
     fillMissing(
       {
         a: [],
@@ -520,11 +505,10 @@ tap.test("13 - array vs empty array", (t) => {
     },
     "13"
   );
-  t.end();
 });
 
-tap.test("14 - array vs string", (t) => {
-  t.strictSame(
+test("14 - array vs string", () => {
+  equal(
     fillMissing(
       {
         a: "a",
@@ -553,11 +537,10 @@ tap.test("14 - array vs string", (t) => {
     },
     "14"
   );
-  t.end();
 });
 
-tap.test("15 - array vs bool", (t) => {
-  t.strictSame(
+test("15 - array vs bool", () => {
+  equal(
     fillMissing(
       {
         a: true,
@@ -586,11 +569,10 @@ tap.test("15 - array vs bool", (t) => {
     },
     "15"
   );
-  t.end();
 });
 
-tap.test("16 - multiple levels of nested arrays #1", (t) => {
-  t.strictSame(
+test("16 - multiple levels of nested arrays #1", () => {
+  equal(
     fillMissing(
       {
         a: false,
@@ -631,11 +613,10 @@ tap.test("16 - multiple levels of nested arrays #1", (t) => {
     },
     "16"
   );
-  t.end();
 });
 
-tap.test("17 - multiple levels of nested arrays #2", (t) => {
-  t.strictSame(
+test("17 - multiple levels of nested arrays #2", () => {
+  equal(
     fillMissing(
       {
         b: [
@@ -692,79 +673,71 @@ tap.test("17 - multiple levels of nested arrays #2", (t) => {
     },
     "17"
   );
-  t.end();
 });
 
 // ==============================
 // 4. Contingencies
 // ==============================
 
-tap.test("18 - number as input", (t) => {
-  t.throws(() => {
+test("18 - number as input", () => {
+  throws(() => {
     fillMissing(1, {
       a: {
         b: false,
       },
     });
   }, /THROW_ID_02/g);
-  t.end();
 });
 
-tap.test("19 - boolean as input", (t) => {
-  t.throws(() => {
+test("19 - boolean as input", () => {
+  throws(() => {
     fillMissing(true, {
       a: {
         b: false,
       },
     });
   }, /THROW_ID_02/g);
-  t.end();
 });
 
-tap.test("20 - null as input", (t) => {
-  t.throws(() => {
+test("20 - null as input", () => {
+  throws(() => {
     fillMissing(null, {
       a: {
         b: false,
       },
     });
   }, /THROW_ID_02/g);
-  t.end();
 });
 
-tap.test("21 - both args missing (as in hardcoded undefined)", (t) => {
-  t.throws(() => {
+test("21 - both args missing (as in hardcoded undefined)", () => {
+  throws(() => {
     fillMissing(undefined, undefined);
   }, /THROW_ID_02/g);
-  t.end();
 });
 
-tap.test("22 - both args completely missing", (t) => {
-  t.throws(() => {
+test("22 - both args completely missing", () => {
+  throws(() => {
     fillMissing();
   }, /THROW_ID_01/g);
-  t.end();
 });
 
-tap.test("23 - second arg is not a plain object", (t) => {
-  t.throws(() => {
+test("23 - second arg is not a plain object", () => {
+  throws(() => {
     fillMissing({ a: "b" }, 1);
   }, /THROW_ID_03/g);
-  t.end();
 });
 
-tap.test("24 - opts is not a plain object", (t) => {
-  t.throws(() => {
+test("24 - opts is not a plain object", () => {
+  throws(() => {
     fillMissing({ a: "c" }, { a: "b" }, 1);
   }, /THROW_ID_04/g);
-  t.doesNotThrow(() => {
+  not.throws(() => {
     fillMissing({ a: "c" }, { a: "b" }, null);
   }, "24.02");
-  t.end();
 });
 
-tap.test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
-  t.throws(() => {
+test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", () => {
+  throws(() => {
     fillMissing(
       { a: "c" },
       { a: "b" },
@@ -773,12 +746,12 @@ tap.test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
       }
     );
   }, /THROW_ID_06/g);
-  t.throws(() => {
+  throws(() => {
     fillMissing({ a: "c" }, [{ a: "b" }], {
       doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", { a: 1 }],
     });
   }, /THROW_ID_03/g);
-  t.throws(() => {
+  throws(() => {
     fillMissing(
       { a: "c" },
       { a: "b" },
@@ -787,296 +760,282 @@ tap.test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
       }
     );
   }, /THROW_ID_06/g);
-  t.end();
 });
 
 // ================================
 // 5. Input arg mutation prevention
 // ================================
 
-tap.test("26 - does not mutate the input args", (t) => {
-  const testObj = {
+test("26 - does not mutate the input args", () => {
+  let testObj = {
     a: "a",
   };
-  const tempRes = fillMissing(testObj, {
+  let tempRes = fillMissing(testObj, {
     a: false,
     b: false,
     c: false,
   });
-  t.pass(tempRes); // dummy
-  t.strictSame(
+  ok(tempRes); // dummy
+  equal(
     testObj,
     {
       a: "a",
     },
     "26.01"
   ); // real deal
-  t.end();
 });
 
 // ========================================================
 // 6. opts.doNotFillThesePathsIfTheyContainPlaceholders
 // ========================================================
 
-tap.test(
-  "27 - some keys filled, some ignored because they have placeholders-only",
-  (t) => {
-    // baseline behaviour
+test("27 - some keys filled, some ignored because they have placeholders-only", () => {
+  // baseline behaviour
 
-    t.strictSame(
-      fillMissing(
-        {
-          a: {
-            b: false,
-            x: "x",
-          },
-          z: "z",
-        },
-        {
-          a: {
-            b: {
-              c: false,
-              d: false,
-            },
-            x: false,
-          },
-          z: false,
-        }
-      ),
+  equal(
+    fillMissing(
       {
         a: {
-          b: {
-            c: false,
-            d: false,
-          },
-          x: "x",
-        },
-        z: "z",
-      },
-      "27.01 - default behaviour - keys are added"
-    );
-
-    t.strictSame(
-      fillMissing(
-        {
-          a: {
-            b: false,
-            x: "x",
-          },
-          z: "z",
-        },
-        {
-          a: {
-            b: {
-              c: false,
-              d: false,
-            },
-            x: false,
-          },
-          z: false,
-        },
-        {
-          doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
-        }
-      ),
-      {
-        a: {
-          b: false, // <---------------- observe, the keys were not added because it had a placeholder
-          x: "x",
-        },
-        z: "z",
-      },
-      "27.02 - opts.doNotFillThesePathsIfTheyContainPlaceholders"
-    );
-
-    t.strictSame(
-      fillMissing(
-        {
-          a: {
-            b: true, // <-- not placeholder but lower in data hierarchy (boolean)
-            x: "x",
-          },
-          z: "z",
-        },
-        {
-          a: {
-            b: {
-              // <-- value of path "a.b" is this object
-              c: false,
-              d: false,
-            },
-            x: false,
-          },
-          z: false,
-        },
-        {
-          doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
-        }
-      ),
-      {
-        a: {
-          b: {
-            c: false,
-            d: false,
-          }, // <---------------- observe, the keys were not added because it had a placeholder
-          x: "x",
-        },
-        z: "z",
-      },
-      "27.03 - triggering the normalisation when it's off from opts"
-    );
-
-    t.strictSame(
-      fillMissing(
-        {
-          a: {
-            x: "x",
-          },
-          z: "z",
-        },
-        {
-          a: {
-            b: {
-              c: false,
-              d: false,
-            },
-            x: false,
-          },
-          z: false,
-        },
-        {
-          doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
-        }
-      ),
-      {
-        a: {
-          b: false, // <---------------- observe, the keys were not added because it had a placeholder
-          x: "x",
-        },
-        z: "z",
-      },
-      "27.04 - key in given path is missing completely"
-    );
-
-    t.strictSame(
-      fillMissing(
-        {
-          a: "zzz",
           b: false,
+          x: "x",
         },
-        {
-          a: false,
-          b: { c: false },
+        z: "z",
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
         },
-        {
-          doNotFillThesePathsIfTheyContainPlaceholders: ["b"],
-        }
-      ),
+        z: false,
+      }
+    ),
+    {
+      a: {
+        b: {
+          c: false,
+          d: false,
+        },
+        x: "x",
+      },
+      z: "z",
+    },
+    "27.01 - default behaviour - keys are added"
+  );
+
+  equal(
+    fillMissing(
+      {
+        a: {
+          b: false,
+          x: "x",
+        },
+        z: "z",
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
+      }
+    ),
+    {
+      a: {
+        b: false, // <---------------- observe, the keys were not added because it had a placeholder
+        x: "x",
+      },
+      z: "z",
+    },
+    "27.02 - opts.doNotFillThesePathsIfTheyContainPlaceholders"
+  );
+
+  equal(
+    fillMissing(
+      {
+        a: {
+          b: true, // <-- not placeholder but lower in data hierarchy (boolean)
+          x: "x",
+        },
+        z: "z",
+      },
+      {
+        a: {
+          b: {
+            // <-- value of path "a.b" is this object
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
+      }
+    ),
+    {
+      a: {
+        b: {
+          c: false,
+          d: false,
+        }, // <---------------- observe, the keys were not added because it had a placeholder
+        x: "x",
+      },
+      z: "z",
+    },
+    "27.03 - triggering the normalisation when it's off from opts"
+  );
+
+  equal(
+    fillMissing(
+      {
+        a: {
+          x: "x",
+        },
+        z: "z",
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
+      }
+    ),
+    {
+      a: {
+        b: false, // <---------------- observe, the keys were not added because it had a placeholder
+        x: "x",
+      },
+      z: "z",
+    },
+    "27.04 - key in given path is missing completely"
+  );
+
+  equal(
+    fillMissing(
       {
         a: "zzz",
         b: false,
       },
-      "27.05"
-    );
+      {
+        a: false,
+        b: { c: false },
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ["b"],
+      }
+    ),
+    {
+      a: "zzz",
+      b: false,
+    },
+    "27.05"
+  );
 
-    // will also truncate the already normalised branches if they're on the path:
-    t.strictSame(
-      fillMissing(
-        {
-          a: {
-            b: {
-              c: false,
-              d: false,
-            },
-            x: {
-              y: false,
-            },
-          },
-          z: "z",
-        },
-        {
-          a: {
-            b: {
-              c: false,
-              d: false,
-            },
-            x: false,
-          },
-          z: false,
-        },
-        {
-          doNotFillThesePathsIfTheyContainPlaceholders: [
-            "lalala",
-            "a.b",
-            "a.x",
-          ],
-        }
-      ),
+  // will also truncate the already normalised branches if they're on the path:
+  equal(
+    fillMissing(
       {
         a: {
-          b: false,
-          x: false,
+          b: {
+            c: false,
+            d: false,
+          },
+          x: {
+            y: false,
+          },
         },
         z: "z",
       },
-      "27.06"
-    );
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ["lalala", "a.b", "a.x"],
+      }
+    ),
+    {
+      a: {
+        b: false,
+        x: false,
+      },
+      z: "z",
+    },
+    "27.06"
+  );
 
-    // will also truncate the already normalised branches if they're on the path:
-    t.strictSame(
-      fillMissing(
-        {
-          a: {
-            b: {
-              c: "r",
-              d: false,
-            },
-            x: {
-              y: false,
-            },
-          },
-          z: "z",
-        },
-        {
-          a: {
-            b: {
-              c: false,
-              d: false,
-            },
-            x: false,
-          },
-          z: false,
-        },
-        {
-          doNotFillThesePathsIfTheyContainPlaceholders: [
-            "lalala",
-            "a.b",
-            "a.x",
-          ],
-        }
-      ),
+  // will also truncate the already normalised branches if they're on the path:
+  equal(
+    fillMissing(
       {
         a: {
           b: {
             c: "r",
             d: false,
           },
-          x: false,
+          x: {
+            y: false,
+          },
         },
         z: "z",
       },
-      "27.07"
-    );
-    t.end();
-  }
-);
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ["lalala", "a.b", "a.x"],
+      }
+    ),
+    {
+      a: {
+        b: {
+          c: "r",
+          d: false,
+        },
+        x: false,
+      },
+      z: "z",
+    },
+    "27.07"
+  );
+});
 
 // ========================================================
 // 7. opts.useNullAsExplicitFalse
 // ========================================================
 
-tap.test("28 - opts.useNullAsExplicitFalse - case #1", (t) => {
-  t.strictSame(
+test("28 - opts.useNullAsExplicitFalse - case #1", () => {
+  equal(
     fillMissing(
       {
         a: {
@@ -1112,7 +1071,7 @@ tap.test("28 - opts.useNullAsExplicitFalse - case #1", (t) => {
     "28.01"
   );
 
-  t.strictSame(
+  equal(
     fillMissing(
       {
         a: {
@@ -1144,11 +1103,10 @@ tap.test("28 - opts.useNullAsExplicitFalse - case #1", (t) => {
     },
     "28.02"
   );
-  t.end();
 });
 
-tap.test("29 - opts.useNullAsExplicitFalse - case #2", (t) => {
-  t.strictSame(
+test("29 - opts.useNullAsExplicitFalse - case #2", () => {
+  equal(
     fillMissing(
       {
         a: null,
@@ -1165,7 +1123,7 @@ tap.test("29 - opts.useNullAsExplicitFalse - case #2", (t) => {
     },
     "29.01"
   );
-  t.strictSame(
+  equal(
     fillMissing(
       {
         a: null,
@@ -1182,11 +1140,10 @@ tap.test("29 - opts.useNullAsExplicitFalse - case #2", (t) => {
     },
     "29.02"
   );
-  t.end();
 });
 
-tap.test("30 - opts.useNullAsExplicitFalse - case #3", (t) => {
-  t.strictSame(
+test("30 - opts.useNullAsExplicitFalse - case #3", () => {
+  equal(
     fillMissing(
       {
         a: null,
@@ -1203,7 +1160,7 @@ tap.test("30 - opts.useNullAsExplicitFalse - case #3", (t) => {
     },
     "30.01"
   );
-  t.strictSame(
+  equal(
     fillMissing(
       {
         a: null,
@@ -1220,5 +1177,6 @@ tap.test("30 - opts.useNullAsExplicitFalse - case #3", (t) => {
     },
     "30.02"
   );
-  t.end();
 });
+
+test.run();

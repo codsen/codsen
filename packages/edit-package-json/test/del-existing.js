@@ -1,134 +1,128 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { deleter } from "./util/util.js";
 // import { set, del } from "../dist/edit-package-json.esm.js";
 
 // del - delete existing key
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - key in the root`, (t) => {
-  const source = `{
+test(`01 - key in the root`, () => {
+  let source = `{
   "a": "b",
   "c": "d"
 }`;
-  const result = `{
+  let result = `{
   "c": "d"
 }`;
-  deleter(t, source, result, "a", "05.01");
-  t.end();
+  deleter(equal, source, result, "a", "05.01");
 });
 
-tap.test(`02 - key in the root`, (t) => {
-  const source = `{
+test(`02 - key in the root`, () => {
+  let source = `{
   "a": "b",
   "c": "d"
 }`;
-  const result = `{
+  let result = `{
   "a": "b"
 }`;
-  deleter(t, source, result, "c", "05.02");
-  t.end();
+  deleter(equal, source, result, "c", "05.02");
 });
 
-tap.test(`03 - key in the root`, (t) => {
-  const source = `{
+test(`03 - key in the root`, () => {
+  let source = `{
   "a": "b",
   "c": "d",
   "e": "f"
 }`;
-  const result = `{
+  let result = `{
   "a": "b",
   "e": "f"
 }`;
-  deleter(t, source, result, "c", "05.03");
-  t.end();
+  deleter(equal, source, result, "c", "05.03");
 });
 
-tap.test(`04 - deletes the first array's element`, (t) => {
-  const source = `{"qwe": [
+test(`04 - deletes the first array's element`, () => {
+  let source = `{"qwe": [
   "ab",
   "cd",
   "ef"
 ]}`;
-  const result = `{"qwe": [
+  let result = `{"qwe": [
   "cd",
   "ef"
 ]}`;
-  deleter(t, source, result, "qwe.0", "05.04");
-  t.end();
+  deleter(equal, source, result, "qwe.0", "05.04");
 });
 
-tap.test(`05 - deletes the middle array's element`, (t) => {
-  const source = `{"qwe": [
+test(`05 - deletes the middle array's element`, () => {
+  let source = `{"qwe": [
   "ab",
   "cd",
   "ef"
 ]}`;
-  const result = `{"qwe": [
+  let result = `{"qwe": [
   "ab",
   "ef"
 ]}`;
-  deleter(t, source, result, "qwe.1", "05.05");
-  t.end();
+  deleter(equal, source, result, "qwe.1", "05.05");
 });
 
-tap.test(`06 - deletes the last array's element`, (t) => {
-  const source = `{"qwe": [
+test(`06 - deletes the last array's element`, () => {
+  let source = `{"qwe": [
   "ab",
   "cd",
   "ef"
 ]}`;
-  const result = `{"qwe": [
+  let result = `{"qwe": [
   "ab",
   "cd"
 ]}`;
-  deleter(t, source, result, "qwe.2", "05.06");
-  t.end();
+  deleter(equal, source, result, "qwe.2", "05.06");
 });
 
-tap.test(`07 - deletes the first array's element`, (t) => {
-  const source = `{"qwe": [
+test(`07 - deletes the first array's element`, () => {
+  let source = `{"qwe": [
   true,
   "cd",
   "ef"
 ]}`;
-  const result = `{"qwe": [
+  let result = `{"qwe": [
   "cd",
   "ef"
 ]}`;
-  deleter(t, source, result, "qwe.0", "05.07");
-  t.end();
+  deleter(equal, source, result, "qwe.0", "05.07");
 });
 
-tap.test(`08 - deletes the middle array's element`, (t) => {
-  const source = `{"qwe": [
+test(`08 - deletes the middle array's element`, () => {
+  let source = `{"qwe": [
   "ab",
   true,
   "ef"
 ]}`;
-  const result = `{"qwe": [
+  let result = `{"qwe": [
   "ab",
   "ef"
 ]}`;
-  deleter(t, source, result, "qwe.1", "05.08");
-  t.end();
+  deleter(equal, source, result, "qwe.1", "05.08");
 });
 
-tap.test(`09 - deletes the last array's element`, (t) => {
-  const source = `{"qwe": [
+test(`09 - deletes the last array's element`, () => {
+  let source = `{"qwe": [
   "ab",
   "cd",
   true
 ]}`;
-  const result = `{"qwe": [
+  let result = `{"qwe": [
   "ab",
   "cd"
 ]}`;
-  deleter(t, source, result, "qwe.2", "05.09");
-  t.end();
+  deleter(equal, source, result, "qwe.2", "05.09");
 });
 
-tap.test(`10 - dips to root level key before going to second branch`, (t) => {
-  const source = `{
+test(`10 - dips to root level key before going to second branch`, () => {
+  let source = `{
   "ab": {
     "cd": {
       "ef": "gh"
@@ -145,7 +139,7 @@ tap.test(`10 - dips to root level key before going to second branch`, (t) => {
     }
   }
 }`;
-  const result = `{
+  let result = `{
   "ab": {
     "cd": {
       "ef": "gh"
@@ -161,12 +155,11 @@ tap.test(`10 - dips to root level key before going to second branch`, (t) => {
     }
   }
 }`;
-  deleter(t, source, result, "ij.kl.mn.2", "05.10");
-  t.end();
+  deleter(equal, source, result, "ij.kl.mn.2", "05.10");
 });
 
-tap.test(`11 - nested arrays`, (t) => {
-  const source = `{
+test(`11 - nested arrays`, () => {
+  let source = `{
   "a": {
     "c": [
       {
@@ -180,7 +173,7 @@ tap.test(`11 - nested arrays`, (t) => {
     ]
   }
 }`;
-  const result = `{
+  let result = `{
   "a": {
     "c": [
       {
@@ -193,12 +186,11 @@ tap.test(`11 - nested arrays`, (t) => {
     ]
   }
 }`;
-  deleter(t, source, result, "a.f.0.h", "05.11");
-  t.end();
+  deleter(equal, source, result, "a.f.0.h", "05.11");
 });
 
-tap.test(`12 - nested arrays`, (t) => {
-  const source = `{
+test(`12 - nested arrays`, () => {
+  let source = `{
   "a": {
     "c": [
       {
@@ -214,7 +206,7 @@ tap.test(`12 - nested arrays`, (t) => {
     ]
   }
 }`;
-  const result = `{
+  let result = `{
   "a": {
     "c": [
       {
@@ -229,6 +221,7 @@ tap.test(`12 - nested arrays`, (t) => {
     ]
   }
 }`;
-  deleter(t, source, result, "a.f.0.h", "05.12");
-  t.end();
+  deleter(equal, source, result, "a.f.0.h", "05.12");
 });
+
+test.run();

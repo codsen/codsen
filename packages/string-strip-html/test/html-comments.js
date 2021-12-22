@@ -1,294 +1,214 @@
-import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { stripHtml } from "./util/noLog.js";
 
 // comments
 // -----------------------------------------------------------------------------
 
-tap.test("01 - strips HTML comments", (t) => {
+test("01 - strips HTML comments", () => {
   // group #1. spaces on both outsides
-  t.hasStrict(
-    stripHtml("aaa <!-- <tr> --> bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa <!-- <tr> --> bbb").result,
+    "aaa bbb",
     "01.01 - double space"
   );
-  t.hasStrict(
-    stripHtml("aaa <!-- <tr>--> bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa <!-- <tr>--> bbb").result,
+    "aaa bbb",
     "01.02 - single space"
   );
-  t.hasStrict(
-    stripHtml("aaa <!--<tr> --> bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa <!--<tr> --> bbb").result,
+    "aaa bbb",
     "01.03 - single space"
   );
-  t.hasStrict(
-    stripHtml("aaa <!--<tr>--> bbb"),
-    { result: "aaa bbb" },
-    "01.04 - no space"
-  );
+  equal(stripHtml("aaa <!--<tr>--> bbb").result, "aaa bbb", "01.04 - no space");
 
   // group #2. spaces on right only
-  t.hasStrict(
-    stripHtml("aaa<!-- <tr> --> bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa<!-- <tr> --> bbb").result,
+    "aaa bbb",
     "01.05 - double space"
   );
-  t.hasStrict(
-    stripHtml("aaa<!-- <tr>--> bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa<!-- <tr>--> bbb").result,
+    "aaa bbb",
     "01.06 - single space"
   );
-  t.hasStrict(
-    stripHtml("aaa<!--<tr> --> bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa<!--<tr> --> bbb").result,
+    "aaa bbb",
     "01.07 - single space"
   );
-  t.hasStrict(
-    stripHtml("aaa<!--<tr>--> bbb"),
-    { result: "aaa bbb" },
-    "01.08 - no space"
-  );
+  equal(stripHtml("aaa<!--<tr>--> bbb").result, "aaa bbb", "01.08 - no space");
 
   // group #3. spaces on left only
-  t.hasStrict(
-    stripHtml("aaa <!-- <tr> -->bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa <!-- <tr> -->bbb").result,
+    "aaa bbb",
     "01.09 - double space"
   );
-  t.hasStrict(
-    stripHtml("aaa <!-- <tr>-->bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa <!-- <tr>-->bbb").result,
+    "aaa bbb",
     "01.10 - single space"
   );
-  t.hasStrict(
-    stripHtml("aaa <!--<tr> -->bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa <!--<tr> -->bbb").result,
+    "aaa bbb",
     "01.11 - single space"
   );
-  t.hasStrict(
-    stripHtml("aaa <!--<tr>-->bbb"),
-    { result: "aaa bbb" },
-    "01.12 - no space"
-  );
+  equal(stripHtml("aaa <!--<tr>-->bbb").result, "aaa bbb", "01.12 - no space");
 
   // group #4. no spaces outside
-  t.hasStrict(
-    stripHtml("aaa<!-- <tr> -->bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa<!-- <tr> -->bbb").result,
+    "aaa bbb",
     "01.13 - double space"
   );
-  t.hasStrict(
-    stripHtml("aaa<!-- <tr>-->bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa<!-- <tr>-->bbb").result,
+    "aaa bbb",
     "01.14 - single space"
   );
-  t.hasStrict(
-    stripHtml("aaa<!--<tr> -->bbb"),
-    { result: "aaa bbb" },
+  equal(
+    stripHtml("aaa<!--<tr> -->bbb").result,
+    "aaa bbb",
     "01.15 - single space"
   );
-  t.hasStrict(
-    stripHtml("aaa<!--<tr>-->bbb"),
-    { result: "aaa bbb" },
-    "01.16 - no space"
-  );
-  t.end();
+  equal(stripHtml("aaa<!--<tr>-->bbb").result, "aaa bbb", "01.16 - no space");
 });
 
-tap.test("02 - HTML comments around string edges", (t) => {
-  t.hasStrict(stripHtml("aaa <!-- <tr> --> "), { result: "aaa" }, "02.01");
-  t.hasStrict(stripHtml("aaa <!-- <tr> -->"), { result: "aaa" }, "02.02");
+test("02 - HTML comments around string edges", () => {
+  equal(stripHtml("aaa <!-- <tr> --> ").result, "aaa", "02.01");
+  equal(stripHtml("aaa <!-- <tr> -->").result, "aaa", "02.02");
 
-  t.hasStrict(stripHtml(" <!-- <tr> --> aaa"), { result: "aaa" }, "02.03");
-  t.hasStrict(stripHtml("<!-- <tr> -->aaa"), { result: "aaa" }, "02.04");
+  equal(stripHtml(" <!-- <tr> --> aaa").result, "aaa", "02.03");
+  equal(stripHtml("<!-- <tr> -->aaa").result, "aaa", "02.04");
 
-  t.hasStrict(
-    stripHtml(" <!-- <tr> --> aaa <!-- <tr> -->"),
-    { result: "aaa" },
-    "02.05"
-  );
-  t.hasStrict(
-    stripHtml("<!-- <tr> -->aaa<!-- <tr> -->"),
-    { result: "aaa" },
-    "02.06"
-  );
-  t.hasStrict(
-    stripHtml("   <!-- <tr> -->aaa<!-- <tr> -->   "),
-    { result: "aaa" },
+  equal(stripHtml(" <!-- <tr> --> aaa <!-- <tr> -->").result, "aaa", "02.05");
+  equal(stripHtml("<!-- <tr> -->aaa<!-- <tr> -->").result, "aaa", "02.06");
+  equal(
+    stripHtml("   <!-- <tr> -->aaa<!-- <tr> -->   ").result,
+    "aaa",
     "02.07"
   );
-  t.end();
 });
 
-tap.test("03 - false positives #1 - Nunjucks code", (t) => {
-  t.hasStrict(stripHtml("a< 2zzz==>b"), { result: "a< 2zzz==>b" }, "03");
-  t.end();
+test("03 - false positives #1 - Nunjucks code", () => {
+  equal(stripHtml("a< 2zzz==>b").result, "a< 2zzz==>b", "03");
 });
 
-tap.test("04 - unclosed tag followed by another tag - range tag", (t) => {
-  t.hasStrict(
-    stripHtml('<script>alert("123")</script<body>'),
-    { result: "" },
-    "04"
-  );
-  t.end();
+test("04 - unclosed tag followed by another tag - range tag", () => {
+  equal(stripHtml('<script>alert("123")</script<body>').result, "", "04");
 });
 
-tap.test("05 - unclosed tag followed by self-closing tag", (t) => {
-  t.hasStrict(
-    stripHtml('<script>alert("123")</script</body>'),
-    { result: "" },
-    "05"
-  );
-  t.end();
+test("05 - unclosed tag followed by self-closing tag", () => {
+  equal(stripHtml('<script>alert("123")</script</body>').result, "", "05");
 });
 
-tap.test("06 - unclosed tag followed by another tag", (t) => {
-  t.hasStrict(
-    stripHtml('<script>alert("123")</script</ body>'),
-    { result: "" },
-    "06"
-  );
-  t.end();
+test("06 - unclosed tag followed by another tag", () => {
+  equal(stripHtml('<script>alert("123")</script</ body>').result, "", "06");
 });
 
-tap.test("07 - unclosed tag followed by another tag", (t) => {
-  t.hasStrict(
-    stripHtml('<script>alert("123")</script<body/>'),
-    { result: "" },
-    "07"
-  );
-  t.end();
+test("07 - unclosed tag followed by another tag", () => {
+  equal(stripHtml('<script>alert("123")</script<body/>').result, "", "07");
 });
 
-tap.test("08 - unclosed tag followed by another unclosed tag", (t) => {
-  t.hasStrict(
-    stripHtml('<script>alert("123")</script<body'),
-    { result: "" },
-    "08"
-  );
-  t.end();
+test("08 - unclosed tag followed by another unclosed tag", () => {
+  equal(stripHtml('<script>alert("123")</script<body').result, "", "08");
 });
 
-tap.test("09 - unclosed tag followed by another tag - non-range tag", (t) => {
-  t.hasStrict(
-    stripHtml("<article>text here</article<body>"),
-    { result: "text here" },
+test("09 - unclosed tag followed by another tag - non-range tag", () => {
+  equal(
+    stripHtml("<article>text here</article<body>").result,
+    "text here",
     "09"
   );
-  t.end();
 });
 
-tap.test(
-  "10 - unclosed tag followed by another tag - non-range, self-closing tag",
-  (t) => {
-    t.hasStrict(
-      stripHtml("<article>text here</article</body>"),
-      { result: "text here" },
-      "10"
-    );
-    t.end();
-  }
-);
+test("10 - unclosed tag followed by another tag - non-range, self-closing tag", () => {
+  equal(
+    stripHtml("<article>text here</article</body>").result,
+    "text here",
+    "10"
+  );
+});
 
-tap.test(
-  "11 - unclosed tag followed by another tag - self-closing, inner whitespace",
-  (t) => {
-    t.hasStrict(
-      stripHtml("<article>text here</article</ body>"),
-      { result: "text here" },
-      "11"
-    );
-    t.end();
-  }
-);
+test("11 - unclosed tag followed by another tag - self-closing, inner whitespace", () => {
+  equal(
+    stripHtml("<article>text here</article</ body>").result,
+    "text here",
+    "11"
+  );
+});
 
-tap.test(
-  "12 - unclosed tag followed by another tag - with closing slash",
-  (t) => {
-    t.hasStrict(
-      stripHtml("<article>text here</article<body/>"),
-      { result: "text here" },
-      "12"
-    );
-    t.end();
-  }
-);
+test("12 - unclosed tag followed by another tag - with closing slash", () => {
+  equal(
+    stripHtml("<article>text here</article<body/>").result,
+    "text here",
+    "12"
+  );
+});
 
-tap.test("13 - unclosed tag followed by another tag - html", (t) => {
-  t.hasStrict(
-    stripHtml("<article>text here</article<body"),
-    { result: "text here" },
+test("13 - unclosed tag followed by another tag - html", () => {
+  equal(
+    stripHtml("<article>text here</article<body").result,
+    "text here",
     "13"
   );
-  t.end();
 });
 
-tap.test(
-  "14 - unclosed tag followed by another tag - strips many tags",
-  (t) => {
-    t.hasStrict(
-      stripHtml("a<something<anything<whatever<body<html"),
-      { result: "a" },
-      "14"
-    );
-    t.end();
-  }
-);
+test("14 - unclosed tag followed by another tag - strips many tags", () => {
+  equal(stripHtml("a<something<anything<whatever<body<html").result, "a", "14");
+});
 
-tap.test(
-  "15 - unclosed tag followed by another tag - bails because of spaces",
-  (t) => {
-    t.hasStrict(
-      stripHtml("a < something < anything < whatever < body < html"),
-      { result: "a < something < anything < whatever < body < html" },
-      "15"
-    );
-    t.end();
-  }
-);
+test("15 - unclosed tag followed by another tag - bails because of spaces", () => {
+  equal(
+    stripHtml("a < something < anything < whatever < body < html").result,
+    "a < something < anything < whatever < body < html",
+    "15"
+  );
+});
 
-tap.test(
-  "16 - range tags are overlapping - both default known range tags",
-  (t) => {
-    t.hasStrict(
-      stripHtml("<script>tra la <style>la</script>la la</style> rr"),
-      { result: "rr" },
-      "16"
-    );
-    t.end();
-  }
-);
+test("16 - range tags are overlapping - both default known range tags", () => {
+  equal(
+    stripHtml("<script>tra la <style>la</script>la la</style> rr").result,
+    "rr",
+    "16"
+  );
+});
 
-tap.test("17 - range tags are overlapping - both were just custom-set", (t) => {
-  t.hasStrict(
+test("17 - range tags are overlapping - both were just custom-set", () => {
+  equal(
     stripHtml("<zzz>tra la <yyy>la</zzz>la la</yyy> rr", {
       stripTogetherWithTheirContents: ["zzz", "yyy"],
-    }),
-    { result: "rr" },
+    }).result,
+    "rr",
     "17"
   );
-  t.end();
 });
 
-tap.test("18 - range tags are overlapping - nested", (t) => {
-  t.hasStrict(
+test("18 - range tags are overlapping - nested", () => {
+  equal(
     stripHtml("<zzz>tra <script>la</script> la <yyy>la</zzz>la la</yyy> rr", {
       stripTogetherWithTheirContents: ["zzz", "yyy"],
-    }),
-    { result: "rr" },
+    }).result,
+    "rr",
     "18"
   );
-  t.end();
 });
 
-tap.test("19 - range tags are overlapping - wildcard", (t) => {
-  t.hasStrict(
+test("19 - range tags are overlapping - wildcard", () => {
+  equal(
     stripHtml("<zzz>tra <script>la</script> la <yyy>la</zzz>la la</yyy> rr", {
       stripTogetherWithTheirContents: ["*"],
-    }),
-    { result: "rr" },
+    }).result,
+    "rr",
     "19"
   );
-  t.end();
 });
+
+test.run();

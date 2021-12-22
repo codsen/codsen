@@ -38,6 +38,7 @@ If you need a legacy version which works with `require`, use version 5.1.0
 
 ```js
 import { strict as assert } from "assert";
+
 import { sort } from "csv-sort";
 
 // Sorts double-entry bookkeeping CSV's - bank statements for example
@@ -69,7 +70,7 @@ assert.deepEqual(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/csv-sort/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/csv-sort/) for a full description of the API.
 
 ## Contributing
 
@@ -81,6 +82,8 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)
 
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

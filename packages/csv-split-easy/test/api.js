@@ -1,37 +1,41 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { splitEasy } from "../dist/csv-split-easy.esm.js";
 
-tap.test("01 - wrong input types causes throwing up", (t) => {
-  t.throws(() => {
+test("01 - wrong input types causes throwing up", () => {
+  throws(() => {
     splitEasy(null);
   }, "01.01");
-  t.throws(() => {
+  throws(() => {
     splitEasy(1);
   }, "01.02");
-  t.throws(() => {
+  throws(() => {
     splitEasy(undefined);
   }, "01.03");
-  t.throws(() => {
+  throws(() => {
     splitEasy();
   }, "01.04");
-  t.throws(() => {
+  throws(() => {
     splitEasy(true);
   }, "01.05");
-  t.throws(() => {
+  throws(() => {
     splitEasy(NaN);
   }, "01.06");
-  t.throws(() => {
+  throws(() => {
     splitEasy({ a: "a" });
   }, "01.07");
-  t.throws(() => {
+  throws(() => {
     splitEasy("a", 1); // opts are not object
   }, "01.08");
-  t.doesNotThrow(() => {
+  not.throws(() => {
     splitEasy("a"); // opts missing
   }, "01.09");
-  t.throws(() => {
-    const f = () => null;
+  throws(() => {
+    let f = () => null;
     splitEasy(f);
   }, "01.10");
-  t.end();
 });
+
+test.run();

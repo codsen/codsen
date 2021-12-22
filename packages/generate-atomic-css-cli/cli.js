@@ -9,10 +9,9 @@ import pReduce from "p-reduce";
 import isDirectory from "is-d";
 import writeFileAtomic from "write-file-atomic";
 import { promisify } from "util";
+import { genAtomic, version } from "generate-atomic-css";
 
 const write = promisify(writeFileAtomic);
-
-import { genAtomic, version } from "generate-atomic-css";
 // import updateNotifier from "update-notifier";
 
 const { log } = console;

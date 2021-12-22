@@ -2,23 +2,29 @@
 // https://www.fileformat.info/info/unicode/char/0080/index.htm
 // -----------------------------------------------------------------------------
 
-import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
+// eslint-disable-next-line no-unused-vars
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
+
+import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-tap.test(`01 - detects two CONTROL characters`, (t) => {
-  const str = "\u0080dlkgjld\u0080j";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+test(`01 - detects two CONTROL characters`, () => {
+  let str = "\u0080dlkgjld\u0080j";
+  let linter = new Linter();
+  let messages = linter.verify(str, {
     rules: {
       "bad-character-control-0080": 2,
     },
   });
-  t.match(
+  compare(
+    ok,
     messages,
     [
       {
@@ -48,6 +54,7 @@ tap.test(`01 - detects two CONTROL characters`, (t) => {
     ],
     "01.01"
   );
-  t.equal(applyFixes(str, messages), "dlkgjldj", "01.02");
-  t.end();
+  equal(applyFixes(str, messages), "dlkgjldj", "01.02");
 });
+
+test.run();

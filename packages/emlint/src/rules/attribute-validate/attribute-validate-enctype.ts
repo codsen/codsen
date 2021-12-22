@@ -1,9 +1,10 @@
+import db from "mime-db";
+
 import { Linter, RuleObjType } from "../../linter";
 
 // rule: attribute-validate-enctype
 // -----------------------------------------------------------------------------
 
-import db from "mime-db";
 import { validateString } from "../../util/util";
 
 function attributeValidateEnctype(context: Linter): RuleObjType {
@@ -14,7 +15,7 @@ function attributeValidateEnctype(context: Linter): RuleObjType {
       );
 
       console.log(
-        `017 attributeValidateEnctype(): node = ${JSON.stringify(
+        `018 attributeValidateEnctype(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -34,7 +35,7 @@ function attributeValidateEnctype(context: Linter): RuleObjType {
         }
 
         // check in two parts, first, a quick try, match the most common values only
-        const errorArr = validateString(
+        let errorArr = validateString(
           node.attribValueRaw, // value
           node.attribValueStartsAt as number, // offset
           {
@@ -57,7 +58,7 @@ function attributeValidateEnctype(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`060 RAISE ERROR`);
+          console.log(`061 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-enctype" });
         });
       }

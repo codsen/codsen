@@ -1,133 +1,130 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { applyFixes, verify } from "../../../t-util/util.js";
 // import { deepContains } from "ast-deep-contains");
 
 // 1. no config - nothing happens
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, (t) => {
-  const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
-  const messages = verify(t, str, {
+test(`01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, () => {
+  let str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
+  let messages = verify(not, str, {
     rules: {
       "tag-is-present": 0,
     },
   });
-  t.strictSame(messages, [], "01.01");
-  t.equal(applyFixes(str, messages), str, "01.02");
-  t.end();
+  equal(messages, [], "01.01");
+  equal(applyFixes(str, messages), str, "01.02");
 });
 
-tap.test(`02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
-  const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
-  const messages = verify(t, str, {
+test(`02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, () => {
+  let str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
+  let messages = verify(not, str, {
     rules: {
       "tag-is-present": 1,
     },
   });
-  t.strictSame(messages, [], "02.01");
-  t.equal(applyFixes(str, messages), str, "02.02");
-  t.end();
+  equal(messages, [], "02.01");
+  equal(applyFixes(str, messages), str, "02.02");
 });
 
-tap.test(`03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, (t) => {
-  const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
-  const messages = verify(t, str, {
+test(`03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, () => {
+  let str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
+  let messages = verify(not, str, {
     rules: {
       "tag-is-present": 2,
     },
   });
-  t.strictSame(messages, [], "03.01");
-  t.equal(applyFixes(str, messages), str, "03.02");
-  t.end();
+  equal(messages, [], "03.01");
+  equal(applyFixes(str, messages), str, "03.02");
 });
 
 // 02. flagging up tags by their names
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact match`,
-  (t) => {
-    const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
-    const messages = verify(t, str, {
-      rules: {
-        "tag-is-present": [2, "h1"],
+test(`04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact match`, () => {
+  let str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
+  let messages = verify(not, str, {
+    rules: {
+      "tag-is-present": [2, "h1"],
+    },
+  });
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "tag-is-present",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 4,
+        message: "h1 is not allowed.",
+        fix: {
+          ranges: [[0, 4]],
+        },
       },
-    });
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-is-present",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 4,
-          message: "h1 is not allowed.",
-          fix: {
-            ranges: [[0, 4]],
-          },
+      {
+        ruleId: "tag-is-present",
+        severity: 2,
+        idxFrom: 43,
+        idxTo: 48,
+        message: "h1 is not allowed.",
+        fix: {
+          ranges: [[43, 48]],
         },
-        {
-          ruleId: "tag-is-present",
-          severity: 2,
-          idxFrom: 43,
-          idxTo: 48,
-          message: "h1 is not allowed.",
-          fix: {
-            ranges: [[43, 48]],
-          },
-        },
-      ],
-      "04.01"
-    );
-    t.equal(
-      applyFixes(str, messages),
-      "<div><zzz><yo><br/><a></a><script></yo>",
-      "04.02"
-    );
-    t.end();
-  }
-);
+      },
+    ],
+    "04.01"
+  );
+  equal(
+    applyFixes(str, messages),
+    "<div><zzz><yo><br/><a></a><script></yo>",
+    "04.02"
+  );
+});
 
-tap.test(
-  `05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wildcard`,
-  (t) => {
-    const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
-    const messages = verify(t, str, {
-      rules: {
-        "tag-is-present": [2, "h*"],
+test(`05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wildcard`, () => {
+  let str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
+  let messages = verify(not, str, {
+    rules: {
+      "tag-is-present": [2, "h*"],
+    },
+  });
+  compare(
+    ok,
+    messages,
+    [
+      {
+        ruleId: "tag-is-present",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 4,
+        message: "h1 is not allowed.",
+        fix: {
+          ranges: [[0, 4]],
+        },
       },
-    });
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "tag-is-present",
-          severity: 2,
-          idxFrom: 0,
-          idxTo: 4,
-          message: "h1 is not allowed.",
-          fix: {
-            ranges: [[0, 4]],
-          },
+      {
+        ruleId: "tag-is-present",
+        severity: 2,
+        idxFrom: 43,
+        idxTo: 48,
+        message: "h1 is not allowed.",
+        fix: {
+          ranges: [[43, 48]],
         },
-        {
-          ruleId: "tag-is-present",
-          severity: 2,
-          idxFrom: 43,
-          idxTo: 48,
-          message: "h1 is not allowed.",
-          fix: {
-            ranges: [[43, 48]],
-          },
-        },
-      ],
-      "05.01"
-    );
-    t.equal(
-      applyFixes(str, messages),
-      "<div><zzz><yo><br/><a></a><script></yo>",
-      "05.02"
-    );
-    t.end();
-  }
-);
+      },
+    ],
+    "05.01"
+  );
+  equal(
+    applyFixes(str, messages),
+    "<div><zzz><yo><br/><a></a><script></yo>",
+    "05.02"
+  );
+});
+
+test.run();

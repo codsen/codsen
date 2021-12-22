@@ -1,6 +1,7 @@
 // Sort by a certain column
 
 import { strict as assert } from "assert";
+
 import { sortByCol } from "../dist/array-of-arrays-sort-by-col.esm.js";
 
 // Sort by a second element (column index === 1):

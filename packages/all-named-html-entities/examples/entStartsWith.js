@@ -1,6 +1,7 @@
 // `entStartsWith`
 
 import { strict as assert } from "assert";
+
 import { entStartsWith } from "../dist/all-named-html-entities.esm.js";
 
 // for perf reasons, they're pre-grouped by first two letters

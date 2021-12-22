@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { rSort } from "../dist/ranges-sort.esm.js";
 
 // Ranges (see codsen.com/ranges/) are sorted:

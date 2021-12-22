@@ -1,213 +1,202 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
-tap.test(
-  `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - stray closing closing block comment`,
-  (t) => {
-    const gathered = [];
-    ct(`<a style="   color: red;  */">`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - stray closing closing block comment`, () => {
+  let gathered = [];
+  ct(`<a style="   color: red;  */">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  equal(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 30,
+        value: '<a style="   color: red;  */">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 8,
+            attribOpeningQuoteAt: 9,
+            attribClosingQuoteAt: 28,
+            attribValueRaw: "   color: red;  */",
+            attribValue: [
+              {
+                type: "text",
+                start: 10,
+                end: 13,
+                value: "   ",
+              },
+              {
+                property: "color",
+                propertyStarts: 13,
+                propertyEnds: 18,
+                colon: 18,
+                value: "red",
+                valueStarts: 20,
+                valueEnds: 23,
+                importantStarts: null,
+                importantEnds: null,
+                important: null,
+                semi: 23,
+                start: 13,
+                end: 24,
+              },
+              {
+                type: "text",
+                start: 24,
+                end: 26,
+                value: "  ",
+              },
+              {
+                type: "comment",
+                start: 26,
+                end: 28,
+                value: "*/",
+                closing: true,
+                kind: "block",
+                language: "css",
+              },
+            ],
+            attribValueStartsAt: 10,
+            attribValueEndsAt: 28,
+            attribStarts: 3,
+            attribEnds: 29,
+            attribLeft: 1,
+          },
+        ],
       },
-    });
-    t.strictSame(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 30,
-          value: '<a style="   color: red;  */">',
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 2,
-          tagName: "a",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: "inline",
-          attribs: [
-            {
-              attribName: "style",
-              attribNameRecognised: true,
-              attribNameStartsAt: 3,
-              attribNameEndsAt: 8,
-              attribOpeningQuoteAt: 9,
-              attribClosingQuoteAt: 28,
-              attribValueRaw: "   color: red;  */",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 10,
-                  end: 13,
-                  value: "   ",
-                },
-                {
-                  property: "color",
-                  propertyStarts: 13,
-                  propertyEnds: 18,
-                  colon: 18,
-                  value: "red",
-                  valueStarts: 20,
-                  valueEnds: 23,
-                  importantStarts: null,
-                  importantEnds: null,
-                  important: null,
-                  semi: 23,
-                  start: 13,
-                  end: 24,
-                },
-                {
-                  type: "text",
-                  start: 24,
-                  end: 26,
-                  value: "  ",
-                },
-                {
-                  type: "comment",
-                  start: 26,
-                  end: 28,
-                  value: "*/",
-                  closing: true,
-                  kind: "block",
-                  language: "css",
-                },
-              ],
-              attribValueStartsAt: 10,
-              attribValueEndsAt: 28,
-              attribStarts: 3,
-              attribEnds: 29,
-              attribLeft: 1,
-            },
-          ],
-        },
-      ],
-      "01"
-    );
-    t.end();
-  }
-);
+    ],
+    "01"
+  );
+});
 
-tap.test(
-  `02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - multiple stray closing closing block comments`,
-  (t) => {
-    const gathered = [];
-    ct(`<a style="  */*/ */  ">`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - multiple stray closing closing block comments`, () => {
+  let gathered = [];
+  ct(`<a style="  */*/ */  ">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  equal(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 23,
+        value: '<a style="  */*/ */  ">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 8,
+            attribOpeningQuoteAt: 9,
+            attribClosingQuoteAt: 21,
+            attribValueRaw: "  */*/ */  ",
+            attribValue: [
+              {
+                type: "text",
+                start: 10,
+                end: 12,
+                value: "  ",
+              },
+              {
+                type: "comment",
+                start: 12,
+                end: 14,
+                value: "*/",
+                closing: true,
+                kind: "block",
+                language: "css",
+              },
+              {
+                type: "comment",
+                start: 14,
+                end: 16,
+                value: "*/",
+                closing: true,
+                kind: "block",
+                language: "css",
+              },
+              {
+                type: "text",
+                start: 16,
+                end: 17,
+                value: " ",
+              },
+              {
+                type: "comment",
+                start: 17,
+                end: 19,
+                value: "*/",
+                closing: true,
+                kind: "block",
+                language: "css",
+              },
+              {
+                type: "text",
+                start: 19,
+                end: 21,
+                value: "  ",
+              },
+            ],
+            attribValueStartsAt: 10,
+            attribValueEndsAt: 21,
+            attribStarts: 3,
+            attribEnds: 22,
+            attribLeft: 1,
+          },
+        ],
       },
-    });
-    t.strictSame(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 23,
-          value: '<a style="  */*/ */  ">',
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 2,
-          tagName: "a",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: "inline",
-          attribs: [
-            {
-              attribName: "style",
-              attribNameRecognised: true,
-              attribNameStartsAt: 3,
-              attribNameEndsAt: 8,
-              attribOpeningQuoteAt: 9,
-              attribClosingQuoteAt: 21,
-              attribValueRaw: "  */*/ */  ",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 10,
-                  end: 12,
-                  value: "  ",
-                },
-                {
-                  type: "comment",
-                  start: 12,
-                  end: 14,
-                  value: "*/",
-                  closing: true,
-                  kind: "block",
-                  language: "css",
-                },
-                {
-                  type: "comment",
-                  start: 14,
-                  end: 16,
-                  value: "*/",
-                  closing: true,
-                  kind: "block",
-                  language: "css",
-                },
-                {
-                  type: "text",
-                  start: 16,
-                  end: 17,
-                  value: " ",
-                },
-                {
-                  type: "comment",
-                  start: 17,
-                  end: 19,
-                  value: "*/",
-                  closing: true,
-                  kind: "block",
-                  language: "css",
-                },
-                {
-                  type: "text",
-                  start: 19,
-                  end: 21,
-                  value: "  ",
-                },
-              ],
-              attribValueStartsAt: 10,
-              attribValueEndsAt: 21,
-              attribStarts: 3,
-              attribEnds: 22,
-              attribLeft: 1,
-            },
-          ],
-        },
-      ],
-      "02"
-    );
-    t.end();
-  }
-);
+    ],
+    "02"
+  );
+});
 
-tap.todo(
-  `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - tag cut off in the middle of inline css style - closing`,
-  (t) => {
-    const gathered = [];
-    ct(`<a style="  /* zzz */ color: red; </a>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    });
-    t.strictSame(gathered, [], "03");
-    t.end();
-  }
-);
+test.skip(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - tag cut off in the middle of inline css style - closing`, () => {
+  let gathered = [];
+  ct(`<a style="  /* zzz */ color: red; </a>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  equal(gathered, [], "01");
+});
 
-tap.todo(
-  `04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - tag cut off in the middle of inline css style - new starts`,
-  (t) => {
-    const gathered = [];
-    ct(`<a style="  /* zzz */ color: red; <table><tr><td>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    });
-    t.strictSame(gathered, [], "04");
-    t.end();
-  }
-);
+test.skip(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - tag cut off in the middle of inline css style - new starts`, () => {
+  let gathered = [];
+  ct(`<a style="  /* zzz */ color: red; <table><tr><td>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  equal(gathered, [], "02");
+});
+
+test.run();

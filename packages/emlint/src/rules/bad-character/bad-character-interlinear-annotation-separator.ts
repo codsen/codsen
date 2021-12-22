@@ -10,7 +10,7 @@ import { badChars } from "../../util/bad-character-all";
 function badCharacterInterlinearAnnotationSeparator(
   context: Linter
 ): RuleObjType {
-  const charCode = 65530;
+  let charCode = 65530;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

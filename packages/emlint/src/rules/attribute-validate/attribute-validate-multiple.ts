@@ -30,7 +30,7 @@ function attributeValidateMultiple(
         )}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "multiple") {
         // validate the parent

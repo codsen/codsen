@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/001c/index.htm
 
 function badCharacterInformationSeparatorFour(context: Linter): RuleObjType {
-  const charCode = 28;
+  let charCode = 28;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

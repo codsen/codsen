@@ -7,7 +7,7 @@ function pathPrev(str: string): null | string {
   if (!str) {
     return null;
   }
-  const extractedValue = str.slice(str.lastIndexOf(".") + 1);
+  let extractedValue = str.slice(str.lastIndexOf(".") + 1);
   if (extractedValue === "0") {
     return null;
   }

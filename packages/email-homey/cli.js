@@ -54,7 +54,7 @@ const cli = meow(
 
 function step5() {
   let indexOfThePlaceholder = null;
-  const marker = "magicFoldersList";
+  let marker = "magicFoldersList";
   indexOfThePlaceholder = seedData.indexOf(marker);
 
   // find the quotes style
@@ -203,7 +203,7 @@ if (state.toDoList.length === 0) {
   );
   process.exit(0);
 } else {
-  const workingPath = path.join(state.toDoList[0], "*");
+  let workingPath = path.join(state.toDoList[0], "*");
   // console.log(`\n\u001b[${33}m${`workingPath: ${workingPath}`}\u001b[${39}m\n`);
   globby(workingPath, { onlyDirectories: true })
     .then((folderPaths) => {
@@ -212,7 +212,7 @@ if (state.toDoList.length === 0) {
     })
     .then((folderPaths) =>
       folderPaths.map((singlePath) => {
-        const tempArr = singlePath.split(path.sep);
+        let tempArr = singlePath.split(path.sep);
         return tempArr[tempArr.length - 1];
       })
     )

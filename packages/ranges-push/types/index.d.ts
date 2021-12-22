@@ -1,7 +1,6 @@
 declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
 
 declare const version: string;
-
 interface Opts {
     limitToBeAddedWhitespace: boolean;
     limitLinebreaksCount: number;
@@ -13,11 +12,9 @@ declare class Ranges {
     ranges: Range[];
     opts: Opts;
     add(originalFrom: number, originalTo?: number, addVal?: undefined | null | string): void;
-    add(originalFrom: Range[] | null): void;
-    add(originalFrom: Range | null): void;
+    add(originalFrom: Range[] | Range | null): void;
     push(originalFrom: number, originalTo?: number, addVal?: undefined | null | string): void;
-    push(originalFrom: Range[] | null): void;
-    push(originalFrom: Range | null): void;
+    push(originalFrom: Range[] | Range | null): void;
     current(): null | Range[];
     wipe(): void;
     replace(givenRanges: Range[]): void;

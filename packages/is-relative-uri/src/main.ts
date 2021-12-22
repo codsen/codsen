@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+
 const version: string = v;
 
 // Reference used:
@@ -341,11 +342,11 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
       `is-relative-uri: [THROW_ID_02] opts be plain object, it was given as ${originalOpts} (type ${typeof originalOpts})`
     );
   }
-  const defaults = {
+  let defaults = {
     flagUpUrisWithSchemes: true,
     offset: 0,
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error(
       `is-relative-uri: [THROW_ID_02] opts.offset must be an integer, it was given as ${
@@ -358,7 +359,7 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
     opts.offset = 0;
   }
   console.log(
-    `361 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} opts = ${JSON.stringify(
+    `362 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} opts = ${JSON.stringify(
       opts,
       null,
       4
@@ -507,7 +508,7 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
   }
 
   // ---------------------------------------------------------------------------
-  console.log(`510 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`511 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   return {
     res: true,
     message: null,

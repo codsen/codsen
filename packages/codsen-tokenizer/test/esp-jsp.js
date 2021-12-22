@@ -1,21 +1,26 @@
 /* eslint no-template-curly-in-string:0 */
 
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // JSP (Java Server Pages) templating tags
 
 // const openingCurly = "\x7B";
 
-tap.test(`01 - JSP c: with \${ reminding a Responsys tag`, (t) => {
-  const gathered = [];
-  const input = '<c:set var="someList" value="${jspProp.someList}" />';
+test(`01 - JSP c: with \${ resembling a Responsys tag`, () => {
+  let gathered = [];
+  let input = '<c:set var="someList" value="${jspProp.someList}" />';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -33,18 +38,18 @@ tap.test(`01 - JSP c: with \${ reminding a Responsys tag`, (t) => {
     ],
     "01"
   );
-  t.end();
 });
 
-tap.test(`02 - JSP scriptlet`, (t) => {
-  const gathered = [];
-  const input = "<% code fragment %>";
+test(`02 - JSP scriptlet`, () => {
+  let gathered = [];
+  let input = "<% code fragment %>";
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -62,18 +67,18 @@ tap.test(`02 - JSP scriptlet`, (t) => {
     ],
     "02"
   );
-  t.end();
 });
 
-tap.test(`03 - JSP scriptlet`, (t) => {
-  const gathered = [];
-  const input = `<% out.println("Your IP: " + request.getRemoteAddr()); %>`;
+test(`03 - JSP scriptlet`, () => {
+  let gathered = [];
+  let input = `<% out.println("Your IP: " + request.getRemoteAddr()); %>`;
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -91,10 +96,9 @@ tap.test(`03 - JSP scriptlet`, (t) => {
     ],
     "03"
   );
-  t.end();
 });
 
-tap.test(`04 - declarations`, (t) => {
+test(`04 - declarations`, () => {
   [
     // spaced out:
     `<%! declaration; %>`,
@@ -107,13 +111,14 @@ tap.test(`04 - declarations`, (t) => {
     `<%!int a, b, c;%>`,
     `<%!Circle a = new Circle(1.0);%>`,
   ].forEach((input) => {
-    const gathered = [];
+    let gathered = [];
     ct(input, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(
+    compare(
+      ok,
       gathered,
       [
         {
@@ -132,10 +137,9 @@ tap.test(`04 - declarations`, (t) => {
       input
     );
   });
-  t.end();
 });
 
-tap.test(`05 - expressions`, (t) => {
+test(`05 - expressions`, () => {
   [
     // spaced out:
     `<%= expression %>`,
@@ -144,13 +148,14 @@ tap.test(`05 - expressions`, (t) => {
     `<%=expression%>`,
     `<%=(new java.util.Date()).toLocaleString()%>`,
   ].forEach((input) => {
-    const gathered = [];
+    let gathered = [];
     ct(input, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(
+    compare(
+      ok,
       gathered,
       [
         {
@@ -169,18 +174,18 @@ tap.test(`05 - expressions`, (t) => {
       input
     );
   });
-  t.end();
 });
 
-tap.test(`06 - mixed`, (t) => {
-  const gathered = [];
-  const input = `<p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>`;
+test(`06 - mixed`, () => {
+  let gathered = [];
+  let input = `<p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>`;
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -234,23 +239,23 @@ tap.test(`06 - mixed`, (t) => {
     ],
     "06"
   );
-  t.end();
 });
 
-tap.test(`07 - comments`, (t) => {
+test(`07 - comments`, () => {
   [
     // spaced out:
     `<%-- This is JSP comment --%>`,
     // tight:
     `<%--This is JSP comment--%>`,
   ].forEach((input) => {
-    const gathered = [];
+    let gathered = [];
     ct(input, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(
+    compare(
+      ok,
       gathered,
       [
         {
@@ -269,10 +274,9 @@ tap.test(`07 - comments`, (t) => {
       input
     );
   });
-  t.end();
 });
 
-tap.test(`08 - directives`, (t) => {
+test(`08 - directives`, () => {
   [
     // spaced out:
     `<%@ directive attribute="value" %>`,
@@ -299,13 +303,14 @@ tap.test(`08 - directives`, (t) => {
     `<%@taglib prefix="t' tagdir='/WEB-INF/tags'%>`,
     `<%@taglib prefix="t' tagdir='/WEB-INF/tags"%>`,
   ].forEach((input) => {
-    const gathered = [];
+    let gathered = [];
     ct(input, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
     });
-    t.match(
+    compare(
+      ok,
       gathered,
       [
         {
@@ -324,18 +329,18 @@ tap.test(`08 - directives`, (t) => {
       input
     );
   });
-  t.end();
 });
 
-tap.test(`09 - JSP actions`, (t) => {
-  const gathered = [];
-  const input = `<jsp:action_name attribute="value"/>`;
+test(`09 - JSP actions`, () => {
+  let gathered = [];
+  let input = `<jsp:action_name attribute="value"/>`;
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -353,18 +358,18 @@ tap.test(`09 - JSP actions`, (t) => {
     ],
     "09"
   );
-  t.end();
 });
 
-tap.test(`10 - use bean`, (t) => {
-  const gathered = [];
-  const input = `<jsp:useBean id = "name" class = "package.class" />`;
+test(`10 - use bean`, () => {
+  let gathered = [];
+  let input = `<jsp:useBean id = "name" class = "package.class" />`;
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -382,18 +387,18 @@ tap.test(`10 - use bean`, (t) => {
     ],
     "10"
   );
-  t.end();
 });
 
-tap.test(`11 - use cms`, (t) => {
-  const gathered = [];
-  const input = `<cms:enable-ade />`;
+test(`11 - use cms`, () => {
+  let gathered = [];
+  let input = `<cms:enable-ade />`;
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -411,19 +416,19 @@ tap.test(`11 - use cms`, (t) => {
     ],
     "11"
   );
-  t.end();
 });
 
-tap.test(`12 - standalone JSP prop`, (t) => {
-  const gathered = [];
-  const input =
+test(`12 - standalone JSP prop`, () => {
+  let gathered = [];
+  let input =
     "<p>${jspProp.cardTypeName} **** **** **** ${jspProp.cardNumber}</p>";
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -489,18 +494,18 @@ tap.test(`12 - standalone JSP prop`, (t) => {
     ],
     "12"
   );
-  t.end();
 });
 
-tap.test(`13 - c: without closing slash`, (t) => {
-  const gathered = [];
-  const input = `<c:if test="\${!empty something}">`;
+test(`13 - c: without closing slash`, () => {
+  let gathered = [];
+  let input = `<c:if test="\${!empty something}">`;
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -518,12 +523,11 @@ tap.test(`13 - c: without closing slash`, (t) => {
     ],
     "13"
   );
-  t.end();
 });
 
-tap.test(`14 - IF-ELSE mixed with HTML`, (t) => {
-  const gathered = [];
-  const input = `<%! int day = 1; %>
+test(`14 - IF-ELSE mixed with HTML`, () => {
+  let gathered = [];
+  let input = `<%! int day = 1; %>
 <html>
    <head><title>Example</title></head>
    <body>
@@ -539,7 +543,8 @@ tap.test(`14 - IF-ELSE mixed with HTML`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  compare(
+    ok,
     gathered,
     [
       {
@@ -743,5 +748,6 @@ tap.test(`14 - IF-ELSE mixed with HTML`, (t) => {
     ],
     "14"
   );
-  t.end();
 });
+
+test.run();

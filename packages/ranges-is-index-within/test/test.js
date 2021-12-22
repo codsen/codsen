@@ -1,55 +1,53 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { isIndexWithin as wthn } from "../dist/ranges-is-index-within.esm.js";
 
 // ==============================
 // 01. One range
 // ==============================
 
-tap.test("01 - one range, both defaults and inclusive", (t) => {
-  t.strictSame(wthn(1, [[0, 3]]), true, "01.01 - within range");
-  t.strictSame(
-    wthn(0, [[0, 3]]),
-    false,
-    "01.02 - on the starting of the range"
-  );
-  t.strictSame(
+test("01 - one range, both defaults and inclusive", () => {
+  equal(wthn(1, [[0, 3]]), true, "01.01 - within range");
+  equal(wthn(0, [[0, 3]]), false, "01.02 - on the starting of the range");
+  equal(
     wthn(0, [[0, 3]], { inclusiveRangeEnds: true }),
     true,
     "01.03 - on the starting of the range, inclusive"
   );
-  t.strictSame(wthn(3, [[0, 3]]), false, "01.04 - on the ending of the range");
-  t.strictSame(
+  equal(wthn(3, [[0, 3]]), false, "01.04 - on the ending of the range");
+  equal(
     wthn(3, [[0, 3]], { inclusiveRangeEnds: true }),
     true,
     "01.05 - on the ending of the range, inclusive"
   );
-  t.strictSame(wthn(99, [[0, 3]]), false, "01.06 - outside of the range");
-  t.strictSame(
+  equal(wthn(99, [[0, 3]]), false, "01.06 - outside of the range");
+  equal(
     wthn(99, [[0, 3]], { inclusiveRangeEnds: true }),
     false,
     "01.07 - outside of the range, inclusive"
   );
-  t.strictSame(
+  equal(
     wthn(99, null, { inclusiveRangeEnds: true }),
     false,
     "01.08 - matching against null"
   );
-  t.strictSame(wthn(0, null), false, "01.09 - matching against null");
-  t.end();
+  equal(wthn(0, null), false, "01.09 - matching against null");
 });
 
-tap.test("02 - one range, opts.returnMatchedRangeInsteadOfTrue", (t) => {
-  t.strictSame(
+test("02 - one range, opts.returnMatchedRangeInsteadOfTrue", () => {
+  equal(
     wthn(1, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     [0, 3],
     "02.01 - within range"
   );
-  t.strictSame(
+  equal(
     wthn(0, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "02.02 - on the starting of the range"
   );
-  t.strictSame(
+  equal(
     wthn(0, [[0, 3]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true,
@@ -57,12 +55,12 @@ tap.test("02 - one range, opts.returnMatchedRangeInsteadOfTrue", (t) => {
     [0, 3],
     "02.03 - on the starting of the range, inclusive"
   );
-  t.strictSame(
+  equal(
     wthn(3, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "02.04 - on the ending of the range"
   );
-  t.strictSame(
+  equal(
     wthn(3, [[0, 3]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true,
@@ -70,12 +68,12 @@ tap.test("02 - one range, opts.returnMatchedRangeInsteadOfTrue", (t) => {
     [0, 3],
     "02.05 - on the ending of the range, inclusive"
   );
-  t.strictSame(
+  equal(
     wthn(99, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "02.06 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(99, [[0, 3]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true,
@@ -83,15 +81,14 @@ tap.test("02 - one range, opts.returnMatchedRangeInsteadOfTrue", (t) => {
     false,
     "02.07 - outside of the range, inclusive"
   );
-  t.end();
 });
 
 // ==============================
 // 02. Two ranges
 // ==============================
 
-tap.test("03 - two ranges, edges on defaults", (t) => {
-  t.strictSame(
+test("03 - two ranges, edges on defaults", () => {
+  equal(
     wthn(1, [
       [2, 4],
       [6, 8],
@@ -99,7 +96,7 @@ tap.test("03 - two ranges, edges on defaults", (t) => {
     false,
     "03.01 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(5, [
       [2, 4],
       [6, 8],
@@ -107,7 +104,7 @@ tap.test("03 - two ranges, edges on defaults", (t) => {
     false,
     "03.02 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(9, [
       [2, 4],
       [6, 8],
@@ -115,7 +112,7 @@ tap.test("03 - two ranges, edges on defaults", (t) => {
     false,
     "03.03 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(3, [
       [2, 4],
       [6, 8],
@@ -123,7 +120,7 @@ tap.test("03 - two ranges, edges on defaults", (t) => {
     true,
     "03.04 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(7, [
       [2, 4],
       [6, 8],
@@ -131,12 +128,11 @@ tap.test("03 - two ranges, edges on defaults", (t) => {
     true,
     "03.05 - outside of the range"
   );
-  t.end();
 });
 
-tap.test("04 - two ranges, edges inclusive", (t) => {
+test("04 - two ranges, edges inclusive", () => {
   // same as 02.01
-  t.strictSame(
+  equal(
     wthn(
       1,
       [
@@ -148,7 +144,7 @@ tap.test("04 - two ranges, edges inclusive", (t) => {
     false,
     "04.01 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(
       5,
       [
@@ -160,7 +156,7 @@ tap.test("04 - two ranges, edges inclusive", (t) => {
     false,
     "04.02 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(
       9,
       [
@@ -172,7 +168,7 @@ tap.test("04 - two ranges, edges inclusive", (t) => {
     false,
     "04.03 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(
       3,
       [
@@ -184,7 +180,7 @@ tap.test("04 - two ranges, edges inclusive", (t) => {
     true,
     "04.04 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(
       7,
       [
@@ -198,7 +194,7 @@ tap.test("04 - two ranges, edges inclusive", (t) => {
   );
 
   // checking range edges:
-  t.strictSame(
+  equal(
     wthn(
       2,
       [
@@ -210,7 +206,7 @@ tap.test("04 - two ranges, edges inclusive", (t) => {
     true,
     "04.06"
   );
-  t.strictSame(
+  equal(
     wthn(
       4,
       [
@@ -222,7 +218,7 @@ tap.test("04 - two ranges, edges inclusive", (t) => {
     true,
     "04.07"
   );
-  t.strictSame(
+  equal(
     wthn(
       6,
       [
@@ -234,7 +230,7 @@ tap.test("04 - two ranges, edges inclusive", (t) => {
     true,
     "04.08"
   );
-  t.strictSame(
+  equal(
     wthn(
       8,
       [
@@ -246,241 +242,232 @@ tap.test("04 - two ranges, edges inclusive", (t) => {
     true,
     "04.09"
   );
-  t.end();
 });
 
-tap.test(
-  "05 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults",
-  (t) => {
-    t.strictSame(
-      wthn(
-        1,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        { returnMatchedRangeInsteadOfTrue: true }
-      ),
-      false,
-      "05.01 - outside of the range"
-    );
-    t.strictSame(
-      wthn(
-        5,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        { returnMatchedRangeInsteadOfTrue: true }
-      ),
-      false,
-      "05.02 - outside of the range"
-    );
-    t.strictSame(
-      wthn(
-        9,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        { returnMatchedRangeInsteadOfTrue: true }
-      ),
-      false,
-      "05.03 - outside of the range"
-    );
-    t.strictSame(
-      wthn(
-        3,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        { returnMatchedRangeInsteadOfTrue: true }
-      ),
-      [2, 4],
-      "05.04 - outside of the range"
-    );
-    t.strictSame(
-      wthn(
-        7,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        { returnMatchedRangeInsteadOfTrue: true }
-      ),
-      [6, 8],
-      "05.05 - outside of the range"
-    );
-    t.end();
-  }
-);
+test("05 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults", () => {
+  equal(
+    wthn(
+      1,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
+    false,
+    "05.01 - outside of the range"
+  );
+  equal(
+    wthn(
+      5,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
+    false,
+    "05.02 - outside of the range"
+  );
+  equal(
+    wthn(
+      9,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
+    false,
+    "05.03 - outside of the range"
+  );
+  equal(
+    wthn(
+      3,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
+    [2, 4],
+    "05.04 - outside of the range"
+  );
+  equal(
+    wthn(
+      7,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
+    [6, 8],
+    "05.05 - outside of the range"
+  );
+});
 
-tap.test(
-  "06 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive",
-  (t) => {
-    // same as 02.01
-    t.strictSame(
-      wthn(
-        1,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      false,
-      "06.01 - outside of the range"
-    );
-    t.strictSame(
-      wthn(
-        5,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      false,
-      "06.02 - outside of the range"
-    );
-    t.strictSame(
-      wthn(
-        9,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      false,
-      "06.03 - outside of the range"
-    );
-    t.strictSame(
-      wthn(
-        3,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      [2, 4],
-      "06.04 - outside of the range"
-    );
-    t.strictSame(
-      wthn(
-        7,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      [6, 8],
-      "06.05 - outside of the range"
-    );
-    // checking range edges:
-    t.strictSame(
-      wthn(
-        2,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      [2, 4],
-      "06.06"
-    );
-    t.strictSame(
-      wthn(
-        4,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      [2, 4],
-      "06.07"
-    );
-    t.strictSame(
-      wthn(
-        6,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      [6, 8],
-      "06.08"
-    );
-    t.strictSame(
-      wthn(
-        8,
-        [
-          [2, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      [6, 8],
-      "06.09"
-    );
-    t.strictSame(
-      wthn(
-        0,
-        [
-          [0, 4],
-          [6, 8],
-        ],
-        {
-          inclusiveRangeEnds: true,
-          returnMatchedRangeInsteadOfTrue: true,
-        }
-      ),
-      [0, 4],
-      "06.10 - zero"
-    );
-    t.end();
-  }
-);
+test("06 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive", () => {
+  // same as 02.01
+  equal(
+    wthn(
+      1,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    false,
+    "06.01 - outside of the range"
+  );
+  equal(
+    wthn(
+      5,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    false,
+    "06.02 - outside of the range"
+  );
+  equal(
+    wthn(
+      9,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    false,
+    "06.03 - outside of the range"
+  );
+  equal(
+    wthn(
+      3,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    [2, 4],
+    "06.04 - outside of the range"
+  );
+  equal(
+    wthn(
+      7,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    [6, 8],
+    "06.05 - outside of the range"
+  );
+  // checking range edges:
+  equal(
+    wthn(
+      2,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    [2, 4],
+    "06.06"
+  );
+  equal(
+    wthn(
+      4,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    [2, 4],
+    "06.07"
+  );
+  equal(
+    wthn(
+      6,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    [6, 8],
+    "06.08"
+  );
+  equal(
+    wthn(
+      8,
+      [
+        [2, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    [6, 8],
+    "06.09"
+  );
+  equal(
+    wthn(
+      0,
+      [
+        [0, 4],
+        [6, 8],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+      }
+    ),
+    [0, 4],
+    "06.10 - zero"
+  );
+});
 
 // ==============================
 // 03. Many ranges
 // ==============================
 
-tap.test("07 - more than two ranges, uneven count, not inclusive", (t) => {
-  t.strictSame(
+test("07 - more than two ranges, uneven count, not inclusive", () => {
+  equal(
     wthn(5, [
       [2, 4],
       [6, 8],
@@ -493,7 +480,7 @@ tap.test("07 - more than two ranges, uneven count, not inclusive", (t) => {
     false,
     "07.01 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(
       5,
       [
@@ -510,7 +497,7 @@ tap.test("07 - more than two ranges, uneven count, not inclusive", (t) => {
     false,
     "07.02 - with opts, outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(
       5,
       [
@@ -527,7 +514,7 @@ tap.test("07 - more than two ranges, uneven count, not inclusive", (t) => {
     false,
     "07.03 - outside of the range"
   );
-  t.strictSame(
+  equal(
     wthn(
       5,
       [
@@ -544,11 +531,10 @@ tap.test("07 - more than two ranges, uneven count, not inclusive", (t) => {
     false,
     "07.04 - with opts, outside of the range"
   );
-  t.end();
 });
 
-tap.test("08 - even more ranges, not inclusive", (t) => {
-  t.strictSame(
+test("08 - even more ranges, not inclusive", () => {
+  equal(
     wthn(0, [
       [5, 10],
       [15, 20],
@@ -567,7 +553,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.01"
   );
-  t.strictSame(
+  equal(
     wthn(
       0,
       [
@@ -590,7 +576,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.02-2"
   );
-  t.strictSame(
+  equal(
     wthn(1, [
       [5, 10],
       [15, 20],
@@ -609,7 +595,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.03"
   );
-  t.strictSame(
+  equal(
     wthn(
       1,
       [
@@ -632,7 +618,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.04-2"
   );
-  t.strictSame(
+  equal(
     wthn(2, [
       [5, 10],
       [15, 20],
@@ -651,7 +637,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.05"
   );
-  t.strictSame(
+  equal(
     wthn(3, [
       [5, 10],
       [15, 20],
@@ -670,7 +656,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.06"
   );
-  t.strictSame(
+  equal(
     wthn(4, [
       [5, 10],
       [15, 20],
@@ -689,7 +675,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.07"
   );
-  t.strictSame(
+  equal(
     wthn(5, [
       [5, 10],
       [15, 20],
@@ -708,7 +694,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.08"
   );
-  t.strictSame(
+  equal(
     wthn(
       5,
       [
@@ -731,7 +717,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.09-2"
   );
-  t.strictSame(
+  equal(
     wthn(6, [
       [5, 10],
       [15, 20],
@@ -750,7 +736,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.10"
   );
-  t.strictSame(
+  equal(
     wthn(
       6,
       [
@@ -773,7 +759,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [5, 10],
     "08.11-2"
   );
-  t.strictSame(
+  equal(
     wthn(7, [
       [5, 10],
       [15, 20],
@@ -792,7 +778,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.12"
   );
-  t.strictSame(
+  equal(
     wthn(
       7,
       [
@@ -815,7 +801,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [5, 10],
     "08.13"
   );
-  t.strictSame(
+  equal(
     wthn(8, [
       [5, 10],
       [15, 20],
@@ -834,7 +820,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.14"
   );
-  t.strictSame(
+  equal(
     wthn(
       8,
       [
@@ -857,7 +843,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [5, 10],
     "08.15-2"
   );
-  t.strictSame(
+  equal(
     wthn(9, [
       [5, 10],
       [15, 20],
@@ -876,7 +862,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.16"
   );
-  t.strictSame(
+  equal(
     wthn(
       9,
       [
@@ -899,7 +885,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [5, 10],
     "08.17-2"
   );
-  t.strictSame(
+  equal(
     wthn(10, [
       [5, 10],
       [15, 20],
@@ -918,7 +904,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.18"
   );
-  t.strictSame(
+  equal(
     wthn(
       10,
       [
@@ -941,7 +927,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.19-2"
   );
-  t.strictSame(
+  equal(
     wthn(11, [
       [5, 10],
       [15, 20],
@@ -960,7 +946,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.20"
   );
-  t.strictSame(
+  equal(
     wthn(
       11,
       [
@@ -983,7 +969,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.21-2"
   );
-  t.strictSame(
+  equal(
     wthn(12, [
       [5, 10],
       [15, 20],
@@ -1002,7 +988,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.22"
   );
-  t.strictSame(
+  equal(
     wthn(13, [
       [5, 10],
       [15, 20],
@@ -1021,7 +1007,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.23"
   );
-  t.strictSame(
+  equal(
     wthn(14, [
       [5, 10],
       [15, 20],
@@ -1040,7 +1026,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.24"
   );
-  t.strictSame(
+  equal(
     wthn(15, [
       [5, 10],
       [15, 20],
@@ -1059,7 +1045,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.25"
   );
-  t.strictSame(
+  equal(
     wthn(
       15,
       [
@@ -1082,7 +1068,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.26-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       15,
       [
@@ -1105,7 +1091,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.27-3"
   );
-  t.strictSame(
+  equal(
     wthn(
       15,
       [
@@ -1128,7 +1114,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [15, 20],
     "08.28-4"
   );
-  t.strictSame(
+  equal(
     wthn(16, [
       [5, 10],
       [15, 20],
@@ -1147,7 +1133,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.29"
   );
-  t.strictSame(
+  equal(
     wthn(
       16,
       [
@@ -1170,7 +1156,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [15, 20],
     "08.30-2"
   );
-  t.strictSame(
+  equal(
     wthn(17, [
       [5, 10],
       [15, 20],
@@ -1189,7 +1175,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.31"
   );
-  t.strictSame(
+  equal(
     wthn(18, [
       [5, 10],
       [15, 20],
@@ -1208,7 +1194,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.32"
   );
-  t.strictSame(
+  equal(
     wthn(19, [
       [5, 10],
       [15, 20],
@@ -1227,7 +1213,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.33"
   );
-  t.strictSame(
+  equal(
     wthn(20, [
       [5, 10],
       [15, 20],
@@ -1246,7 +1232,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.34"
   );
-  t.strictSame(
+  equal(
     wthn(
       20,
       [
@@ -1269,7 +1255,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.35-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       20,
       [
@@ -1292,7 +1278,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.36-3"
   );
-  t.strictSame(
+  equal(
     wthn(
       20,
       [
@@ -1315,7 +1301,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [15, 20],
     "08.37-4"
   );
-  t.strictSame(
+  equal(
     wthn(21, [
       [5, 10],
       [15, 20],
@@ -1334,7 +1320,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.38"
   );
-  t.strictSame(
+  equal(
     wthn(22, [
       [5, 10],
       [15, 20],
@@ -1353,7 +1339,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.39"
   );
-  t.strictSame(
+  equal(
     wthn(23, [
       [5, 10],
       [15, 20],
@@ -1372,7 +1358,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.40"
   );
-  t.strictSame(
+  equal(
     wthn(24, [
       [5, 10],
       [15, 20],
@@ -1391,7 +1377,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.41"
   );
-  t.strictSame(
+  equal(
     wthn(25, [
       [5, 10],
       [15, 20],
@@ -1410,7 +1396,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.42"
   );
-  t.strictSame(
+  equal(
     wthn(26, [
       [5, 10],
       [15, 20],
@@ -1429,7 +1415,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.43"
   );
-  t.strictSame(
+  equal(
     wthn(27, [
       [5, 10],
       [15, 20],
@@ -1448,7 +1434,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.44"
   );
-  t.strictSame(
+  equal(
     wthn(28, [
       [5, 10],
       [15, 20],
@@ -1467,7 +1453,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.45"
   );
-  t.strictSame(
+  equal(
     wthn(29, [
       [5, 10],
       [15, 20],
@@ -1486,7 +1472,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.46"
   );
-  t.strictSame(
+  equal(
     wthn(30, [
       [5, 10],
       [15, 20],
@@ -1505,7 +1491,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.47"
   );
-  t.strictSame(
+  equal(
     wthn(31, [
       [5, 10],
       [15, 20],
@@ -1524,7 +1510,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.48"
   );
-  t.strictSame(
+  equal(
     wthn(32, [
       [5, 10],
       [15, 20],
@@ -1543,7 +1529,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.49"
   );
-  t.strictSame(
+  equal(
     wthn(33, [
       [5, 10],
       [15, 20],
@@ -1562,7 +1548,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.50"
   );
-  t.strictSame(
+  equal(
     wthn(34, [
       [5, 10],
       [15, 20],
@@ -1581,7 +1567,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.51"
   );
-  t.strictSame(
+  equal(
     wthn(35, [
       [5, 10],
       [15, 20],
@@ -1600,7 +1586,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.52"
   );
-  t.strictSame(
+  equal(
     wthn(36, [
       [5, 10],
       [15, 20],
@@ -1619,7 +1605,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.53"
   );
-  t.strictSame(
+  equal(
     wthn(37, [
       [5, 10],
       [15, 20],
@@ -1638,7 +1624,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.54"
   );
-  t.strictSame(
+  equal(
     wthn(38, [
       [5, 10],
       [15, 20],
@@ -1657,7 +1643,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.55"
   );
-  t.strictSame(
+  equal(
     wthn(39, [
       [5, 10],
       [15, 20],
@@ -1676,7 +1662,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.56"
   );
-  t.strictSame(
+  equal(
     wthn(40, [
       [5, 10],
       [15, 20],
@@ -1695,7 +1681,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.57"
   );
-  t.strictSame(
+  equal(
     wthn(41, [
       [5, 10],
       [15, 20],
@@ -1714,7 +1700,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.58"
   );
-  t.strictSame(
+  equal(
     wthn(42, [
       [5, 10],
       [15, 20],
@@ -1733,7 +1719,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.59"
   );
-  t.strictSame(
+  equal(
     wthn(43, [
       [5, 10],
       [15, 20],
@@ -1752,7 +1738,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.60"
   );
-  t.strictSame(
+  equal(
     wthn(44, [
       [5, 10],
       [15, 20],
@@ -1771,7 +1757,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.61"
   );
-  t.strictSame(
+  equal(
     wthn(45, [
       [5, 10],
       [15, 20],
@@ -1790,7 +1776,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.62"
   );
-  t.strictSame(
+  equal(
     wthn(46, [
       [5, 10],
       [15, 20],
@@ -1809,7 +1795,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.63"
   );
-  t.strictSame(
+  equal(
     wthn(47, [
       [5, 10],
       [15, 20],
@@ -1828,7 +1814,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.64"
   );
-  t.strictSame(
+  equal(
     wthn(48, [
       [5, 10],
       [15, 20],
@@ -1847,7 +1833,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.65"
   );
-  t.strictSame(
+  equal(
     wthn(49, [
       [5, 10],
       [15, 20],
@@ -1866,7 +1852,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.66"
   );
-  t.strictSame(
+  equal(
     wthn(50, [
       [5, 10],
       [15, 20],
@@ -1885,7 +1871,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.67"
   );
-  t.strictSame(
+  equal(
     wthn(51, [
       [5, 10],
       [15, 20],
@@ -1904,7 +1890,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.68"
   );
-  t.strictSame(
+  equal(
     wthn(52, [
       [5, 10],
       [15, 20],
@@ -1923,7 +1909,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.69"
   );
-  t.strictSame(
+  equal(
     wthn(53, [
       [5, 10],
       [15, 20],
@@ -1942,7 +1928,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.70"
   );
-  t.strictSame(
+  equal(
     wthn(54, [
       [5, 10],
       [15, 20],
@@ -1961,7 +1947,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.71"
   );
-  t.strictSame(
+  equal(
     wthn(55, [
       [5, 10],
       [15, 20],
@@ -1980,7 +1966,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.72-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       55,
       [
@@ -2003,7 +1989,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.73-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       55,
       [
@@ -2026,7 +2012,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.74-3"
   );
-  t.strictSame(
+  equal(
     wthn(
       55,
       [
@@ -2049,7 +2035,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [55, 60],
     "08.75-4"
   );
-  t.strictSame(
+  equal(
     wthn(56, [
       [5, 10],
       [15, 20],
@@ -2068,7 +2054,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.76-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       56,
       [
@@ -2091,7 +2077,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [55, 60],
     "08.77-2"
   );
-  t.strictSame(
+  equal(
     wthn(57, [
       [5, 10],
       [15, 20],
@@ -2110,7 +2096,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.78"
   );
-  t.strictSame(
+  equal(
     wthn(58, [
       [5, 10],
       [15, 20],
@@ -2129,7 +2115,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.79"
   );
-  t.strictSame(
+  equal(
     wthn(59, [
       [5, 10],
       [15, 20],
@@ -2148,7 +2134,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.80"
   );
-  t.strictSame(
+  equal(
     wthn(60, [
       [5, 10],
       [15, 20],
@@ -2167,7 +2153,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.81"
   );
-  t.strictSame(
+  equal(
     wthn(61, [
       [5, 10],
       [15, 20],
@@ -2186,7 +2172,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.82"
   );
-  t.strictSame(
+  equal(
     wthn(62, [
       [5, 10],
       [15, 20],
@@ -2205,7 +2191,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.83"
   );
-  t.strictSame(
+  equal(
     wthn(63, [
       [5, 10],
       [15, 20],
@@ -2224,7 +2210,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.84"
   );
-  t.strictSame(
+  equal(
     wthn(64, [
       [5, 10],
       [15, 20],
@@ -2243,7 +2229,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.85-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       64,
       [
@@ -2266,7 +2252,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.86-2"
   );
-  t.strictSame(
+  equal(
     wthn(65, [
       [5, 10],
       [15, 20],
@@ -2285,7 +2271,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.87-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       65,
       [
@@ -2308,7 +2294,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.88-2"
   );
-  t.strictSame(
+  equal(
     wthn(66, [
       [5, 10],
       [15, 20],
@@ -2327,7 +2313,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.89-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       66,
       [
@@ -2350,7 +2336,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [65, 70],
     "08.90-2"
   );
-  t.strictSame(
+  equal(
     wthn(67, [
       [5, 10],
       [15, 20],
@@ -2369,7 +2355,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.91"
   );
-  t.strictSame(
+  equal(
     wthn(68, [
       [5, 10],
       [15, 20],
@@ -2388,7 +2374,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.92-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       68,
       [
@@ -2411,7 +2397,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [65, 70],
     "08.93-2"
   );
-  t.strictSame(
+  equal(
     wthn(69, [
       [5, 10],
       [15, 20],
@@ -2430,7 +2416,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.94"
   );
-  t.strictSame(
+  equal(
     wthn(70, [
       [5, 10],
       [15, 20],
@@ -2449,7 +2435,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.95"
   );
-  t.strictSame(
+  equal(
     wthn(71, [
       [5, 10],
       [15, 20],
@@ -2468,7 +2454,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.96"
   );
-  t.strictSame(
+  equal(
     wthn(72, [
       [5, 10],
       [15, 20],
@@ -2487,7 +2473,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.97"
   );
-  t.strictSame(
+  equal(
     wthn(73, [
       [5, 10],
       [15, 20],
@@ -2506,7 +2492,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.98"
   );
-  t.strictSame(
+  equal(
     wthn(74, [
       [5, 10],
       [15, 20],
@@ -2525,7 +2511,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.99"
   );
-  t.strictSame(
+  equal(
     wthn(75, [
       [5, 10],
       [15, 20],
@@ -2544,7 +2530,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.100"
   );
-  t.strictSame(
+  equal(
     wthn(76, [
       [5, 10],
       [15, 20],
@@ -2563,7 +2549,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.101-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       76,
       [
@@ -2586,7 +2572,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [75, 80],
     "08.102-2"
   );
-  t.strictSame(
+  equal(
     wthn(77, [
       [5, 10],
       [15, 20],
@@ -2605,7 +2591,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.103"
   );
-  t.strictSame(
+  equal(
     wthn(78, [
       [5, 10],
       [15, 20],
@@ -2624,7 +2610,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.104"
   );
-  t.strictSame(
+  equal(
     wthn(79, [
       [5, 10],
       [15, 20],
@@ -2643,7 +2629,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.105"
   );
-  t.strictSame(
+  equal(
     wthn(80, [
       [5, 10],
       [15, 20],
@@ -2662,7 +2648,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.106"
   );
-  t.strictSame(
+  equal(
     wthn(81, [
       [5, 10],
       [15, 20],
@@ -2681,7 +2667,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.107"
   );
-  t.strictSame(
+  equal(
     wthn(82, [
       [5, 10],
       [15, 20],
@@ -2700,7 +2686,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.108"
   );
-  t.strictSame(
+  equal(
     wthn(83, [
       [5, 10],
       [15, 20],
@@ -2719,7 +2705,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.109"
   );
-  t.strictSame(
+  equal(
     wthn(84, [
       [5, 10],
       [15, 20],
@@ -2738,7 +2724,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.110"
   );
-  t.strictSame(
+  equal(
     wthn(85, [
       [5, 10],
       [15, 20],
@@ -2757,7 +2743,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.111"
   );
-  t.strictSame(
+  equal(
     wthn(86, [
       [5, 10],
       [15, 20],
@@ -2776,7 +2762,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.112-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       86,
       [
@@ -2799,7 +2785,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [85, 90],
     "08.113-2"
   );
-  t.strictSame(
+  equal(
     wthn(87, [
       [5, 10],
       [15, 20],
@@ -2818,7 +2804,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.114"
   );
-  t.strictSame(
+  equal(
     wthn(88, [
       [5, 10],
       [15, 20],
@@ -2837,7 +2823,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.115"
   );
-  t.strictSame(
+  equal(
     wthn(89, [
       [5, 10],
       [15, 20],
@@ -2856,7 +2842,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.116"
   );
-  t.strictSame(
+  equal(
     wthn(90, [
       [5, 10],
       [15, 20],
@@ -2875,7 +2861,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.117"
   );
-  t.strictSame(
+  equal(
     wthn(91, [
       [5, 10],
       [15, 20],
@@ -2894,7 +2880,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.118"
   );
-  t.strictSame(
+  equal(
     wthn(92, [
       [5, 10],
       [15, 20],
@@ -2913,7 +2899,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.119"
   );
-  t.strictSame(
+  equal(
     wthn(93, [
       [5, 10],
       [15, 20],
@@ -2932,7 +2918,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.120"
   );
-  t.strictSame(
+  equal(
     wthn(94, [
       [5, 10],
       [15, 20],
@@ -2951,7 +2937,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.121"
   );
-  t.strictSame(
+  equal(
     wthn(95, [
       [5, 10],
       [15, 20],
@@ -2970,7 +2956,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.122"
   );
-  t.strictSame(
+  equal(
     wthn(96, [
       [5, 10],
       [15, 20],
@@ -2989,7 +2975,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.123"
   );
-  t.strictSame(
+  equal(
     wthn(97, [
       [5, 10],
       [15, 20],
@@ -3008,7 +2994,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.124-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       97,
       [
@@ -3031,7 +3017,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [95, 100],
     "08.125-2"
   );
-  t.strictSame(
+  equal(
     wthn(98, [
       [5, 10],
       [15, 20],
@@ -3050,7 +3036,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.126"
   );
-  t.strictSame(
+  equal(
     wthn(99, [
       [5, 10],
       [15, 20],
@@ -3069,7 +3055,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.127"
   );
-  t.strictSame(
+  equal(
     wthn(100, [
       [5, 10],
       [15, 20],
@@ -3088,7 +3074,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.128-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       100,
       [
@@ -3111,7 +3097,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.129-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       100,
       [
@@ -3134,7 +3120,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.130-3"
   );
-  t.strictSame(
+  equal(
     wthn(
       100,
       [
@@ -3160,7 +3146,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
 
   //
 
-  t.strictSame(
+  equal(
     wthn(
       105,
       [
@@ -3183,7 +3169,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [105, 110],
     "08.132"
   );
-  t.strictSame(
+  equal(
     wthn(
       110,
       [
@@ -3206,7 +3192,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.133"
   );
-  t.strictSame(
+  equal(
     wthn(
       112,
       [
@@ -3229,7 +3215,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.134"
   );
-  t.strictSame(
+  equal(
     wthn(
       116,
       [
@@ -3252,7 +3238,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.135-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       116,
       [
@@ -3275,7 +3261,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [115, 120],
     "08.136-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       120,
       [
@@ -3298,7 +3284,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.137"
   );
-  t.strictSame(
+  equal(
     wthn(
       124,
       [
@@ -3321,7 +3307,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.138-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       124,
       [
@@ -3344,7 +3330,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.139-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       124,
       [
@@ -3367,7 +3353,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.140-3"
   );
-  t.strictSame(
+  equal(
     wthn(
       124,
       [
@@ -3390,7 +3376,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.141-4"
   );
-  t.strictSame(
+  equal(
     wthn(
       126,
       [
@@ -3413,7 +3399,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.142-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       126,
       [
@@ -3436,7 +3422,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     true,
     "08.143-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       126,
       [
@@ -3459,7 +3445,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [125, 130],
     "08.144-3"
   );
-  t.strictSame(
+  equal(
     wthn(
       126,
       [
@@ -3483,7 +3469,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     "08.145-4"
   );
 
-  t.strictSame(
+  equal(
     wthn(
       130,
       [
@@ -3506,7 +3492,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.146-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       130,
       [
@@ -3529,7 +3515,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     [125, 130],
     "08.147-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       130,
       [
@@ -3552,7 +3538,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.148-3"
   );
-  t.strictSame(
+  equal(
     wthn(
       130,
       [
@@ -3577,7 +3563,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
   );
 
   // outside of the range
-  t.strictSame(
+  equal(
     wthn(
       131,
       [
@@ -3600,7 +3586,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.150-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       131,
       [
@@ -3623,7 +3609,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.151-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       131,
       [
@@ -3646,7 +3632,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.152-3"
   );
-  t.strictSame(
+  equal(
     wthn(
       131,
       [
@@ -3669,7 +3655,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.153-4"
   );
-  t.strictSame(
+  equal(
     wthn(
       132,
       [
@@ -3692,7 +3678,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.154-1"
   );
-  t.strictSame(
+  equal(
     wthn(
       132,
       [
@@ -3715,7 +3701,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.155-2"
   );
-  t.strictSame(
+  equal(
     wthn(
       132,
       [
@@ -3738,7 +3724,7 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.156-3"
   );
-  t.strictSame(
+  equal(
     wthn(
       132,
       [
@@ -3761,22 +3747,21 @@ tap.test("08 - even more ranges, not inclusive", (t) => {
     false,
     "08.157-4"
   );
-  t.end();
 });
 
-tap.test("09 - small ranges - zero", (t) => {
-  t.strictSame(wthn(0, [[0, 1]]), false, "09.01 - no opts");
-  t.strictSame(
+test("09 - small ranges - zero", () => {
+  equal(wthn(0, [[0, 1]]), false, "09.01 - no opts");
+  equal(
     wthn(0, [[0, 1]], { inclusiveRangeEnds: false }),
     false,
     "09.02 - hardcoded opts defaults"
   );
-  t.strictSame(
+  equal(
     wthn(0, [[0, 1]], { inclusiveRangeEnds: true }),
     true,
     "09.03 - inclusive"
   );
-  t.strictSame(
+  equal(
     wthn(0, [
       [0, 1],
       [2, 3],
@@ -3784,7 +3769,7 @@ tap.test("09 - small ranges - zero", (t) => {
     false,
     "09.04"
   );
-  t.strictSame(
+  equal(
     wthn(0, [
       [0, 1],
       [1, 3],
@@ -3792,7 +3777,7 @@ tap.test("09 - small ranges - zero", (t) => {
     false,
     "09.05 - overlap"
   );
-  t.strictSame(
+  equal(
     wthn(0, [
       [0, 1],
       [0, 3],
@@ -3800,7 +3785,7 @@ tap.test("09 - small ranges - zero", (t) => {
     false,
     "09.06 - overlap #2"
   );
-  t.strictSame(
+  equal(
     wthn(0, [
       [0, 10],
       [0, 3],
@@ -3808,7 +3793,7 @@ tap.test("09 - small ranges - zero", (t) => {
     false,
     "09.07 - overlap and wrong order"
   );
-  t.strictSame(
+  equal(
     wthn(
       0,
       [
@@ -3820,7 +3805,7 @@ tap.test("09 - small ranges - zero", (t) => {
     true,
     "09.08 - overlap and wrong order - inclusive"
   );
-  t.strictSame(
+  equal(
     wthn(
       0,
       [
@@ -3835,12 +3820,12 @@ tap.test("09 - small ranges - zero", (t) => {
 
   // returnMatchedRangeInsteadOfTrue: true
 
-  t.strictSame(
+  equal(
     wthn(0, [[0, 1]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "09.10 - no opts"
   );
-  t.strictSame(
+  equal(
     wthn(0, [[0, 1]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true,
@@ -3848,7 +3833,7 @@ tap.test("09 - small ranges - zero", (t) => {
     false,
     "09.11 - hardcoded opts defaults"
   );
-  t.strictSame(
+  equal(
     wthn(0, [[0, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true,
@@ -3856,7 +3841,7 @@ tap.test("09 - small ranges - zero", (t) => {
     [0, 1],
     "09.12 - inclusive"
   );
-  t.strictSame(
+  equal(
     wthn(
       0,
       [
@@ -3868,7 +3853,7 @@ tap.test("09 - small ranges - zero", (t) => {
     false,
     "09.13"
   );
-  t.strictSame(
+  equal(
     wthn(
       0,
       [
@@ -3880,7 +3865,7 @@ tap.test("09 - small ranges - zero", (t) => {
     false,
     "09.14 - overlap"
   );
-  t.strictSame(
+  equal(
     wthn(
       0,
       [
@@ -3892,7 +3877,7 @@ tap.test("09 - small ranges - zero", (t) => {
     false,
     "09.15 - overlap #2"
   );
-  t.strictSame(
+  equal(
     wthn(
       0,
       [
@@ -3904,7 +3889,7 @@ tap.test("09 - small ranges - zero", (t) => {
     false,
     "09.16 - overlap and wrong order"
   );
-  t.strictSame(
+  equal(
     wthn(
       0,
       [
@@ -3919,7 +3904,7 @@ tap.test("09 - small ranges - zero", (t) => {
     [0, 10],
     "09.17 - overlap and wrong order - inclusive"
   );
-  t.strictSame(
+  equal(
     wthn(
       0,
       [
@@ -3934,29 +3919,28 @@ tap.test("09 - small ranges - zero", (t) => {
     [0, 3],
     "09.18 - overlap and wrong order - inclusive"
   );
-  t.end();
 });
 
-tap.test("10 - small ranges - one", (t) => {
-  t.strictSame(wthn(1, [[0, 1]]), false, "10.01 - no opts");
-  t.strictSame(
+test("10 - small ranges - one", () => {
+  equal(wthn(1, [[0, 1]]), false, "10.01 - no opts");
+  equal(
     wthn(1, [[0, 1]], { inclusiveRangeEnds: false }),
     false,
     "10.02 - hardcoded opts defaults"
   );
-  t.strictSame(
+  equal(
     wthn(1, [[0, 1]], { inclusiveRangeEnds: true }),
     true,
     "10.03 - inclusive"
   );
 
   // opts.returnMatchedRangeInsteadOfTrue
-  t.strictSame(
+  equal(
     wthn(1, [[0, 1]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "10.04"
   );
-  t.strictSame(
+  equal(
     wthn(1, [[0, 1]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true,
@@ -3964,7 +3948,7 @@ tap.test("10 - small ranges - one", (t) => {
     false,
     "10.05 - hardcoded opts defaults"
   );
-  t.strictSame(
+  equal(
     wthn(1, [[0, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true,
@@ -3972,38 +3956,29 @@ tap.test("10 - small ranges - one", (t) => {
     [0, 1],
     "10.06 - inclusive"
   );
-  t.end();
 });
 
-tap.test("11 - identical range endings", (t) => {
-  t.strictSame(
-    wthn(0, [[0, 0]], { inclusiveRangeEnds: false }),
-    false,
-    "11.01"
-  );
-  t.strictSame(
-    wthn(1, [[1, 1]], { inclusiveRangeEnds: false }),
-    false,
-    "11.02"
-  );
-  t.strictSame(wthn(0, [[0, 0]], { inclusiveRangeEnds: true }), true, "11.03");
-  t.strictSame(wthn(1, [[1, 1]], { inclusiveRangeEnds: true }), true, "11.04");
-  t.strictSame(
+test("11 - identical range endings", () => {
+  equal(wthn(0, [[0, 0]], { inclusiveRangeEnds: false }), false, "11.01");
+  equal(wthn(1, [[1, 1]], { inclusiveRangeEnds: false }), false, "11.02");
+  equal(wthn(0, [[0, 0]], { inclusiveRangeEnds: true }), true, "11.03");
+  equal(wthn(1, [[1, 1]], { inclusiveRangeEnds: true }), true, "11.04");
+  equal(
     wthn(0, [[1, 1]], { inclusiveRangeEnds: true }),
     false,
     "11.05 - identical range ends, index under"
   );
-  t.strictSame(
+  equal(
     wthn(2, [[1, 1]], { inclusiveRangeEnds: true }),
     false,
     "11.06 - identical range ends, index above"
   );
-  t.strictSame(
+  equal(
     wthn(2, [[1, 1]], { inclusiveRangeEnds: false }),
     false,
     "11.07 - identical range ends, index above"
   );
-  t.strictSame(
+  equal(
     wthn(
       1,
       [
@@ -4016,7 +3991,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.08 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       2,
       [
@@ -4029,7 +4004,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.09 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       3,
       [
@@ -4042,7 +4017,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.10 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       1,
       [
@@ -4055,7 +4030,7 @@ tap.test("11 - identical range endings", (t) => {
     true,
     "11.11 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       2,
       [
@@ -4068,7 +4043,7 @@ tap.test("11 - identical range endings", (t) => {
     true,
     "11.12 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       3,
       [
@@ -4081,7 +4056,7 @@ tap.test("11 - identical range endings", (t) => {
     true,
     "11.13 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       2,
       [
@@ -4094,7 +4069,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.14 - identical consecutive with gap"
   );
-  t.strictSame(
+  equal(
     wthn(
       2,
       [
@@ -4109,7 +4084,7 @@ tap.test("11 - identical range endings", (t) => {
   );
 
   // opts.returnMatchedRangeInsteadOfTrue
-  t.strictSame(
+  equal(
     wthn(0, [[0, 0]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true,
@@ -4117,7 +4092,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.16"
   );
-  t.strictSame(
+  equal(
     wthn(1, [[1, 1]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true,
@@ -4125,7 +4100,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.17"
   );
-  t.strictSame(
+  equal(
     wthn(0, [[0, 0]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true,
@@ -4133,7 +4108,7 @@ tap.test("11 - identical range endings", (t) => {
     [0, 0],
     "11.18"
   );
-  t.strictSame(
+  equal(
     wthn(1, [[1, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true,
@@ -4141,7 +4116,7 @@ tap.test("11 - identical range endings", (t) => {
     [1, 1],
     "11.19"
   );
-  t.strictSame(
+  equal(
     wthn(0, [[1, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true,
@@ -4149,7 +4124,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.20 - identical range ends, index under"
   );
-  t.strictSame(
+  equal(
     wthn(2, [[1, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true,
@@ -4157,7 +4132,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.21 - identical range ends, index above"
   );
-  t.strictSame(
+  equal(
     wthn(2, [[1, 1]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true,
@@ -4165,7 +4140,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.22 - identical range ends, index above"
   );
-  t.strictSame(
+  equal(
     wthn(
       1,
       [
@@ -4181,7 +4156,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.23 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       2,
       [
@@ -4197,7 +4172,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.24 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       3,
       [
@@ -4213,7 +4188,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.25 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       1,
       [
@@ -4229,7 +4204,7 @@ tap.test("11 - identical range endings", (t) => {
     [1, 1],
     "11.26 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       2,
       [
@@ -4245,7 +4220,7 @@ tap.test("11 - identical range endings", (t) => {
     [2, 2],
     "11.27 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       3,
       [
@@ -4261,7 +4236,7 @@ tap.test("11 - identical range endings", (t) => {
     [3, 3],
     "11.28 - identical consecutive"
   );
-  t.strictSame(
+  equal(
     wthn(
       2,
       [
@@ -4277,7 +4252,7 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.29 - identical consecutive with gap"
   );
-  t.strictSame(
+  equal(
     wthn(
       2,
       [
@@ -4293,15 +4268,14 @@ tap.test("11 - identical range endings", (t) => {
     false,
     "11.30 - identical consecutive with gap"
   );
-  t.end();
 });
 
 // ==============================
 // 4. AD-HOC
 // ==============================
 
-tap.test("Ad-hoc #1", (t) => {
-  t.strictSame(
+test("Ad-hoc #1", () => {
+  equal(
     wthn(
       130,
       [
@@ -4324,7 +4298,7 @@ tap.test("Ad-hoc #1", (t) => {
     [125, 130],
     "12.01"
   );
-  t.strictSame(
+  equal(
     wthn(
       130,
       [
@@ -4350,11 +4324,10 @@ tap.test("Ad-hoc #1", (t) => {
     [125, 130],
     "12.02"
   );
-  t.end();
 });
 
-tap.test("Ad-hoc #2", (t) => {
-  t.strictSame(
+test("Ad-hoc #2", () => {
+  equal(
     wthn(21, [
       [5, 10],
       [15, 20],
@@ -4373,11 +4346,10 @@ tap.test("Ad-hoc #2", (t) => {
     false,
     "13"
   );
-  t.end();
 });
 
-tap.test("Ad-hoc #3", (t) => {
-  t.strictSame(
+test("Ad-hoc #3", () => {
+  equal(
     wthn(6, [
       [5, 10],
       [15, 20],
@@ -4396,5 +4368,6 @@ tap.test("Ad-hoc #3", (t) => {
     true,
     "14"
   );
-  t.end();
 });
+
+test.run();

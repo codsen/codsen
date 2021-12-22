@@ -35,7 +35,7 @@ function attributeValidateClassid(context: Linter): RuleObjType {
         // beware, the charStart and charEnd are not offset, their "zero" is
         // start of an attribute's value, so if you use them, you need to
         // offset to the true index, you must add "(node.attribValueStartsAt as number)" value
-        const { charStart, charEnd, errorArr } = checkForWhitespace(
+        let { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValueRaw,
           node.attribValueStartsAt as number
         );

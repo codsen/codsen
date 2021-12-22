@@ -3,7 +3,7 @@ declare type JsonValue = string | number | boolean | null | JsonObject | JsonArr
 declare type JsonObject = {
     [Key in string]?: JsonValue;
 };
-declare type JsonArray = Array<JsonValue>;
+declare type JsonArray = JsonValue[];
 /**
  * Compare anything: AST, objects, arrays and strings
  */

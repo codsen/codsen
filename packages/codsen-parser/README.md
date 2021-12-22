@@ -36,6 +36,7 @@ npm i codsen-parser
 
 ```js
 import { strict as assert } from "assert";
+
 import { cparser } from "codsen-parser";
 
 assert.deepEqual(cparser("<br>z</a>"), [
@@ -82,7 +83,7 @@ assert.deepEqual(cparser("<br>z</a>"), [
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/codsen-parser/) for a full description of the API and examples.
+Please [visit codsen.com](https://codsen.com/os/codsen-parser/) for a full description of the API.
 
 ## Contributing
 
@@ -94,4 +95,6 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

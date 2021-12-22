@@ -1,81 +1,61 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 import { mixer } from "./util/util.js";
 
-tap.test(`01  - one line, trimLines=false`, (t) => {
-  const input = `  a  `;
+test(`01  - one line, trimLines=false`, () => {
+  let input = `  a  `;
   mixer({
     trimStart: false,
     trimEnd: false,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(input, opt).result,
-      ` a `,
-      JSON.stringify(opt, null, 0)
-    );
+    equal(collapse(input, opt).result, ` a `, JSON.stringify(opt, null, 0));
   });
-  t.end();
 });
 
-tap.test(`02  - one line, trimLines=false`, (t) => {
-  const input = `  a  `;
+test(`02  - one line, trimLines=false`, () => {
+  let input = `  a  `;
   mixer({
     trimStart: true,
     trimEnd: false,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(input, opt).result,
-      `a `,
-      JSON.stringify(opt, null, 0)
-    );
+    equal(collapse(input, opt).result, `a `, JSON.stringify(opt, null, 0));
   });
-  t.end();
 });
 
-tap.test(`03  - one line, trimLines=false`, (t) => {
-  const input = `  a  `;
+test(`03  - one line, trimLines=false`, () => {
+  let input = `  a  `;
   mixer({
     trimStart: false,
     trimEnd: true,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(input, opt).result,
-      ` a`,
-      JSON.stringify(opt, null, 0)
-    );
+    equal(collapse(input, opt).result, ` a`, JSON.stringify(opt, null, 0));
   });
-  t.end();
 });
 
-tap.test(`04  - one line, trimLines=false`, (t) => {
-  const input = `  a  `;
+test(`04  - one line, trimLines=false`, () => {
+  let input = `  a  `;
   mixer({
     trimStart: true,
     trimEnd: true,
     trimLines: false,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(input, opt).result,
-      `a`,
-      JSON.stringify(opt, null, 0)
-    );
+    equal(collapse(input, opt).result, `a`, JSON.stringify(opt, null, 0));
   });
-  t.end();
 });
 
-tap.test(`05  - one line, trimLines=true`, (t) => {
-  const input = `  a  `;
+test(`05  - one line, trimLines=true`, () => {
+  let input = `  a  `;
   mixer({
     trimLines: true,
   }).forEach((opt) => {
-    t.strictSame(
-      collapse(input, opt).result,
-      `a`,
-      JSON.stringify(opt, null, 0)
-    );
+    equal(collapse(input, opt).result, `a`, JSON.stringify(opt, null, 0));
   });
-  t.end();
 });
+
+test.run();

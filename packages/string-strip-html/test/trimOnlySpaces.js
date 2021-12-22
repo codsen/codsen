@@ -1,206 +1,159 @@
-import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { stripHtml } from "./util/noLog.js";
 
 // opts.trimOnlySpaces
 // -----------------------------------------------------------------------------
 
-tap.test(
-  "01 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all",
-  (t) => {
-    t.hasStrict(stripHtml("\xa0 a \xa0"), { result: "a" }, "01");
-    t.end();
-  }
-);
+test("01 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all", () => {
+  equal(stripHtml("\xa0 a \xa0").result, "a", "01");
+});
 
-tap.test(
-  "02 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all, trailing whitespace",
-  (t) => {
-    t.hasStrict(stripHtml(" \xa0 a \xa0 "), { result: "a" }, "02");
-    t.end();
-  }
-);
+test("02 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all, trailing whitespace", () => {
+  equal(stripHtml(" \xa0 a \xa0 ").result, "a", "02");
+});
 
-tap.test("03 - opts.trimOnlySpaces - opts.trimOnlySpaces = on", (t) => {
-  t.hasStrict(
-    stripHtml("\xa0 a \xa0", { trimOnlySpaces: true }),
-    { result: "\xa0 a \xa0" },
+test("03 - opts.trimOnlySpaces - opts.trimOnlySpaces = on", () => {
+  equal(
+    stripHtml("\xa0 a \xa0", { trimOnlySpaces: true }).result,
+    "\xa0 a \xa0",
     "03"
   );
-  t.end();
 });
 
-tap.test("04 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, loose", (t) => {
-  t.hasStrict(
-    stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: true }),
-    { result: "\xa0 a \xa0" },
+test("04 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, loose", () => {
+  equal(
+    stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: true }).result,
+    "\xa0 a \xa0",
     "04"
   );
-  t.end();
 });
 
-tap.test("05 - opts.trimOnlySpaces - default", (t) => {
-  t.hasStrict(stripHtml("\xa0 <article> \xa0"), { result: "" }, "05");
-  t.end();
+test("05 - opts.trimOnlySpaces - default", () => {
+  equal(stripHtml("\xa0 <article> \xa0").result, "", "05");
 });
 
-tap.test("06 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, tag", (t) => {
-  t.hasStrict(
-    stripHtml("\xa0 <article> \xa0", { trimOnlySpaces: true }),
-    { result: "\xa0\xa0" },
+test("06 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, tag", () => {
+  equal(
+    stripHtml("\xa0 <article> \xa0", { trimOnlySpaces: true }).result,
+    "\xa0\xa0",
     "06"
   );
-  t.end();
 });
 
-tap.test(
-  "07 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, two tags",
-  (t) => {
-    t.hasStrict(
-      stripHtml(" \xa0 <article> \xa0 <div> \xa0 ", { trimOnlySpaces: true }),
-      { result: "\xa0 \xa0" },
-      "07"
-    );
-    t.end();
-  }
-);
-
-tap.test("08 - opts.trimOnlySpaces - whitespace around", (t) => {
-  t.hasStrict(stripHtml(" \xa0 <article> \xa0 "), { result: "" }, "08");
-  t.end();
+test("07 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, two tags", () => {
+  equal(
+    stripHtml(" \xa0 <article> \xa0 <div> \xa0 ", { trimOnlySpaces: true })
+      .result,
+    "\xa0 \xa0",
+    "07"
+  );
 });
 
-tap.test(
-  "09 - opts.trimOnlySpaces - whitespace around, trimOnlySpaces = on",
-  (t) => {
-    t.hasStrict(
-      stripHtml(" \xa0 <article> \xa0 ", { trimOnlySpaces: true }),
-      { result: "\xa0\xa0" },
-      "09"
-    );
-    t.end();
-  }
-);
+test("08 - opts.trimOnlySpaces - whitespace around", () => {
+  equal(stripHtml(" \xa0 <article> \xa0 ").result, "", "08");
+});
 
-tap.test(
-  "10 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all",
-  (t) => {
-    t.hasStrict(stripHtml(" \t a \n "), { result: "a" }, "10");
-    t.end();
-  }
-);
+test("09 - opts.trimOnlySpaces - whitespace around, trimOnlySpaces = on", () => {
+  equal(
+    stripHtml(" \xa0 <article> \xa0 ", { trimOnlySpaces: true }).result,
+    "\xa0\xa0",
+    "09"
+  );
+});
 
-tap.test(
-  "11 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - trimOnlySpaces = on",
-  (t) => {
-    t.hasStrict(
-      stripHtml(" \t a \n ", { trimOnlySpaces: true }),
-      { result: "\t a \n" },
-      "11"
-    );
-    t.end();
-  }
-);
+test("10 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all", () => {
+  equal(stripHtml(" \t a \n ").result, "a", "10");
+});
 
-tap.test(
-  "12 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - CRLF",
-  (t) => {
-    t.hasStrict(
-      stripHtml(" \t\n a \r\n ", { trimOnlySpaces: true }),
-      { result: "\t\n a \r\n" },
-      "12"
-    );
-    t.end();
-  }
-);
+test("11 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - trimOnlySpaces = on", () => {
+  equal(
+    stripHtml(" \t a \n ", { trimOnlySpaces: true }).result,
+    "\t a \n",
+    "11"
+  );
+});
 
-tap.test(
-  "13 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - tag",
-  (t) => {
-    t.hasStrict(stripHtml("\t\r\n <article> \t\r\n"), { result: "" }, "13");
-    t.end();
-  }
-);
+test("12 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - CRLF", () => {
+  equal(
+    stripHtml(" \t\n a \r\n ", { trimOnlySpaces: true }).result,
+    "\t\n a \r\n",
+    "12"
+  );
+});
 
-tap.test("14 - opts.trimOnlySpaces - tabs and CRLF", (t) => {
-  t.hasStrict(
-    stripHtml("\t\r\n <article> \t\r\n", { trimOnlySpaces: true }),
-    { result: "\t\r\n\t\r\n" },
+test("13 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - tag", () => {
+  equal(stripHtml("\t\r\n <article> \t\r\n").result, "", "13");
+});
+
+test("14 - opts.trimOnlySpaces - tabs and CRLF", () => {
+  equal(
+    stripHtml("\t\r\n <article> \t\r\n", { trimOnlySpaces: true }).result,
+    "\t\r\n\t\r\n",
     "14"
   );
-  t.end();
 });
 
-tap.test(
-  "15 - opts.trimOnlySpaces - spaced tabs and CRs, trimOnlySpaces = on",
-  (t) => {
-    t.hasStrict(
-      stripHtml(" \t \r \n <article> \t \r \n ", { trimOnlySpaces: true }),
-      { result: "\t \r \n\t \r \n" },
-      "15"
-    );
-    t.end();
-  }
-);
+test("15 - opts.trimOnlySpaces - spaced tabs and CRs, trimOnlySpaces = on", () => {
+  equal(
+    stripHtml(" \t \r \n <article> \t \r \n ", { trimOnlySpaces: true }).result,
+    "\t \r \n\t \r \n",
+    "15"
+  );
+});
 
-tap.test(
-  "16 - opts.trimOnlySpaces - combos of tags and whitespace, trimOnlySpaces = on",
-  (t) => {
-    t.hasStrict(
-      stripHtml(" \n <article> \xa0 <div> \xa0 </article> \t ", {
-        trimOnlySpaces: true,
-      }),
-      { result: "\n \t" },
-      "16"
-    );
-    t.end();
-  }
-);
+test("16 - opts.trimOnlySpaces - combos of tags and whitespace, trimOnlySpaces = on", () => {
+  equal(
+    stripHtml(" \n <article> \xa0 <div> \xa0 </article> \t ", {
+      trimOnlySpaces: true,
+    }).result,
+    "\n \t",
+    "16"
+  );
+});
 
-tap.test("17 - opts.trimOnlySpaces - tags, trimOnlySpaces = on", (t) => {
-  t.hasStrict(
+test("17 - opts.trimOnlySpaces - tags, trimOnlySpaces = on", () => {
+  equal(
     stripHtml(" \na<article> \xa0 <div> \xa0 </article>b\t ", {
       trimOnlySpaces: true,
-    }),
-    { result: "\na b\t" },
+    }).result,
+    "\na b\t",
     "17"
   );
-  t.end();
 });
 
-tap.test("18 - opts.trimOnlySpaces - letters around are retained", (t) => {
-  t.hasStrict(
+test("18 - opts.trimOnlySpaces - letters around are retained", () => {
+  equal(
     stripHtml(" \n a <article> \xa0 <div> \xa0 </article> b \t ", {
       trimOnlySpaces: true,
-    }),
-    { result: "\n a b \t" },
+    }).result,
+    "\n a b \t",
     "18"
   );
-  t.end();
 });
 
-tap.test("19 - opts.trimOnlySpaces - opts.ignoreTags combo", (t) => {
-  t.hasStrict(
+test("19 - opts.trimOnlySpaces - opts.ignoreTags combo", () => {
+  equal(
     stripHtml(" \n a <article> \xa0 <div> \xa0 </article> b \t ", {
       trimOnlySpaces: true,
       ignoreTags: ["div"],
-    }),
-    { result: "\n a <div> b \t" },
+    }).result,
+    "\n a <div> b \t",
     "19"
   );
-  t.end();
 });
 
-tap.test(
-  "20 - opts.trimOnlySpaces - opts.ignoreTags combo - plausible but recognised",
-  (t) => {
-    t.hasStrict(
-      stripHtml(" \n a <article> \xa0 < div> \xa0 </article> b \t ", {
-        trimOnlySpaces: true,
-        ignoreTags: ["div"],
-      }),
-      { result: "\n a < div> b \t" },
-      "20"
-    );
-    t.end();
-  }
-);
+test("20 - opts.trimOnlySpaces - opts.ignoreTags combo - plausible but recognised", () => {
+  equal(
+    stripHtml(" \n a <article> \xa0 < div> \xa0 </article> b \t ", {
+      trimOnlySpaces: true,
+      ignoreTags: ["div"],
+    }).result,
+    "\n a < div> b \t",
+    "20"
+  );
+});
+
+test.run();

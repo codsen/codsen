@@ -1,8 +1,11 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { detectIsItHTMLOrXhtml as detect } from "../dist/detect-is-it-html-or-xhtml.esm.js";
 
-tap.test("01 - real-life code", (t) => {
-  t.equal(
+test("01 - real-life code", () => {
+  equal(
     detect(
       `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,5 +27,6 @@ tap.test("01 - real-life code", (t) => {
     "xhtml",
     "01"
   );
-  t.end();
 });
+
+test.run();

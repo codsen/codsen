@@ -1,12 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { er } from "../dist/easy-replace.esm.js";
 
 // ==============================
 // no searchFor + no maybes + outsides
 // ==============================
 
-tap.test("01 - one rightOutside, not found", (t) => {
-  t.equal(
+test("01 - one rightOutside, not found", () => {
+  equal(
     er(
       "aaa🦄a bbbb🦄 cccc🦄",
       {
@@ -23,11 +26,10 @@ tap.test("01 - one rightOutside, not found", (t) => {
     "aaa🦄a bbbb🦄 cccc🦄",
     "test 7.1"
   );
-  t.end();
 });
 
-tap.test("02 - one leftOutside, not found", (t) => {
-  t.equal(
+test("02 - one leftOutside, not found", () => {
+  equal(
     er(
       "🦄aaaa 🦄bbbb 🦄cccc",
       {
@@ -44,11 +46,10 @@ tap.test("02 - one leftOutside, not found", (t) => {
     "🦄aaaa 🦄bbbb 🦄cccc",
     "test 7.2"
   );
-  t.end();
 });
 
-tap.test("03 - one leftOutside, not found + null replacement", (t) => {
-  t.equal(
+test("03 - one leftOutside, not found + null replacement", () => {
+  equal(
     er(
       "aa🦄aa bb🦄bb cc🦄cc",
       {
@@ -65,11 +66,10 @@ tap.test("03 - one leftOutside, not found + null replacement", (t) => {
     "aa🦄aa bb🦄bb cc🦄cc",
     "test 7.3"
   );
-  t.end();
 });
 
-tap.test("04 - leftOutside and replacement are null", (t) => {
-  t.equal(
+test("04 - leftOutside and replacement are null", () => {
+  equal(
     er(
       "aaaa bbbb cccc",
       {
@@ -80,11 +80,10 @@ tap.test("04 - leftOutside and replacement are null", (t) => {
     "aaaa bbbb cccc",
     "test 7.4"
   );
-  t.end();
 });
 
-tap.test("05 - left outside and replacement are undefined", (t) => {
-  t.equal(
+test("05 - left outside and replacement are undefined", () => {
+  equal(
     er(
       "aaaa bbbb cccc",
       {
@@ -95,5 +94,6 @@ tap.test("05 - left outside and replacement are undefined", (t) => {
     "aaaa bbbb cccc",
     "test 7.5"
   );
-  t.end();
 });
+
+test.run();

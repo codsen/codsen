@@ -1,14 +1,15 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { comb } from "./util/util.js";
 
 // various
 // -----------------------------------------------------------------------------
 
-tap.test("01 - bug #01", (t) => {
-  const { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
-    comb(
-      t,
-      `<head>
+test("01 - bug #01", () => {
+  let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } = comb(
+    `<head>
 <style type="text/css">
 @font-face {zzz}
 .unused {zzz}
@@ -17,11 +18,11 @@ tap.test("01 - bug #01", (t) => {
 <body a="z;">
 </body>
 `
-    );
+  );
 
-  t.strictSame(allInBody, [], "01.01");
-  t.strictSame(allInHead, [".unused"], "01.02");
-  t.strictSame(
+  equal(allInBody, [], "01.01");
+  equal(allInHead, [".unused"], "01.02");
+  equal(
     result,
     `<head>
 <style type="text/css">
@@ -33,13 +34,12 @@ tap.test("01 - bug #01", (t) => {
 `,
     "01.03"
   );
-  t.strictSame(deletedFromHead, [".unused"], "01.04");
-  t.strictSame(deletedFromBody, [], "01.05");
-  t.end();
+  equal(deletedFromHead, [".unused"], "01.04");
+  equal(deletedFromBody, [], "01.05");
 });
 
-tap.test("02 - working on early (stage I) per-line removal", (t) => {
-  const source = `
+test("02 - working on early (stage I) per-line removal", () => {
+  let source = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +66,7 @@ tap.test("02 - working on early (stage I) per-line removal", (t) => {
 </html>
 `;
 
-  const intended = `<!DOCTYPE html>
+  let intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -85,15 +85,12 @@ tap.test("02 - working on early (stage I) per-line removal", (t) => {
 </html>
 `;
 
-  t.strictSame(comb(t, source).result, intended, "02");
-  t.end();
+  equal(comb(source).result, intended, "02");
 });
 
 // sneaky matching used/unused class/id names
-tap.test(
-  "03 - HTML inline CSS comments are removed - commented out selectors - semicols clean and inside comments",
-  (t) => {
-    const source = `<style>
+test("03 - HTML inline CSS comments are removed - commented out selectors - semicols clean and inside comments", () => {
+  let source = `<style>
   .aa {z:2;}
 </style>
 </head>
@@ -101,7 +98,7 @@ tap.test(
 </body>
 `;
 
-    const intended = `<style>
+  let intended = `<style>
   .aa {z:2;}
 </style>
 </head>
@@ -109,15 +106,11 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(t, source).result, intended, "03");
-    t.end();
-  }
-);
+  equal(comb(source).result, intended, "03");
+});
 
-tap.test(
-  "04 - HTML inline CSS comments are removed - commented out selectors - removing comments will result in missing semicol",
-  (t) => {
-    const source = `<style>
+test("04 - HTML inline CSS comments are removed - commented out selectors - removing comments will result in missing semicol", () => {
+  let source = `<style>
   .aa {z:2;}
 </style>
 </head>
@@ -125,7 +118,7 @@ tap.test(
 </body>
 `;
 
-    const intended = `<style>
+  let intended = `<style>
   .aa {z:2;}
 </style>
 </head>
@@ -133,15 +126,11 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(t, source).result, intended, "04");
-    t.end();
-  }
-);
+  equal(comb(source).result, intended, "04");
+});
 
-tap.test(
-  "05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments",
-  (t) => {
-    const source = `<head>
+test("05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments", () => {
+  let source = `<head>
 <style type="text/css">
   .aa {z:2;}
 </style>
@@ -150,7 +139,7 @@ tap.test(
 </body>
 `;
 
-    const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
   .aa {z:2;}
 </style>
@@ -159,15 +148,11 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(t, source).result, intended, "05");
-    t.end();
-  }
-);
+  equal(comb(source).result, intended, "05");
+});
 
-tap.test(
-  "06 - Even without backend heads/tails set, it should recognise double curlies and curly-percentage -type heads",
-  (t) => {
-    const source = `<style>
+test("06 - Even without backend heads/tails set, it should recognise double curlies and curly-percentage -type heads", () => {
+  let source = `<style>
   .aa {bb:2;}
 </style>
 </head>
@@ -175,18 +160,17 @@ tap.test(
 </body>
 `;
 
-    const intended = `</head>
+  let intended = `</head>
 <body><a>
 </body>
 `;
 
-    t.equal(comb(t, source).result, intended, "06");
-    t.end();
-  }
-);
+  equal(comb(source).result, intended, "06");
+});
 
-tap.todo("07 - empty class/id without equals and value gets deleted", (t) => {
-  const source = `<style>
+// TODO
+test.skip("01 - empty class/id without equals and value gets deleted", () => {
+  let source = `<style>
   .aa {bb:2;}
 </style>
 </head>
@@ -194,19 +178,16 @@ tap.todo("07 - empty class/id without equals and value gets deleted", (t) => {
 </body>
 `;
 
-  const intended = `</head>
+  let intended = `</head>
 <body><a>
 </body>
 `;
 
-  t.equal(comb(t, source).result, intended, "07");
-  t.end();
+  equal(comb(source).result, intended, "01.01");
 });
 
-tap.test(
-  "08 - empty class/id with equals but without value gets deleted",
-  (t) => {
-    const source = `<style>
+test("08 - empty class/id with equals but without value gets deleted", () => {
+  let source = `<style>
   .aa {bb:2;}
 </style>
 </head>
@@ -214,7 +195,7 @@ tap.test(
 </body>
 `;
 
-    const intended = `<style>
+  let intended = `<style>
   .aa {bb:2;}
 </style>
 </head>
@@ -222,13 +203,11 @@ tap.test(
 </body>
 `;
 
-    t.equal(comb(t, source).result, intended, "08");
-    t.end();
-  }
-);
+  equal(comb(source).result, intended, "08");
+});
 
-tap.test("09 - cleans spaces within classes and id's", (t) => {
-  const source = `<head>
+test("09 - cleans spaces within classes and id's", () => {
+  let source = `<head>
 <style type="text/css">
   .unused1[z], .unused.used {a:1;}
   .used[z] {a:2;}
@@ -238,7 +217,7 @@ tap.test("09 - cleans spaces within classes and id's", (t) => {
 </body>
 `;
 
-  const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
   .used[z] {a:2;}
 </style>
@@ -247,31 +226,26 @@ tap.test("09 - cleans spaces within classes and id's", (t) => {
 </body>
 `;
 
-  t.equal(comb(t, source).result, intended, "09");
-  t.end();
+  equal(comb(source).result, intended, "09");
 });
 
-tap.test("10 - does not mangle different-type line endings, LF", (t) => {
-  const source = "a\n";
-  t.equal(comb(t, source).result, source, "10");
-  t.end();
+test("10 - does not mangle different-type line endings, LF", () => {
+  let source = "a\n";
+  equal(comb(source).result, source, "10");
 });
 
-tap.test("11 - does not mangle different-type line endings, CR", (t) => {
-  const source = "a\r";
-  t.equal(comb(t, source).result, source, "11");
-  t.end();
+test("11 - does not mangle different-type line endings, CR", () => {
+  let source = "a\r";
+  equal(comb(source).result, source, "11");
 });
 
-tap.test("12 - does not mangle different-type line endings, LFCR", (t) => {
-  const source = "a\r\n";
-  t.equal(comb(t, source).result, source, "12");
-  t.end();
+test("12 - does not mangle different-type line endings, LFCR", () => {
+  let source = "a\r\n";
+  equal(comb(source).result, source, "12");
 });
 
-tap.test("13 - dirty code #1", (t) => {
-  const actual = comb(
-    t,
+test("13 - dirty code #1", () => {
+  let actual = comb(
     `<body>
 
 <style>
@@ -294,17 +268,15 @@ float:left !important;}
 </style>`
   ).result;
 
-  const intended = `<body>
+  let intended = `<body>
 <td align="left" style="color:#00000;"><a href="https://email.yo.com" style="color:#000000;">p</a>
 `;
 
-  t.equal(actual, intended, "13");
-  t.end();
+  equal(actual, intended, "13");
 });
 
-tap.test("14 - adhoc #1", (t) => {
-  const actual = comb(
-    t,
+test("14 - adhoc #1", () => {
+  let actual = comb(
     `<style>
   .aa{b: c;}
 </style>
@@ -314,7 +286,7 @@ tap.test("14 - adhoc #1", (t) => {
 `
   ).result;
 
-  const intended = `<style>
+  let intended = `<style>
   .aa{b: c;}
 </style>
 <body>
@@ -322,13 +294,11 @@ tap.test("14 - adhoc #1", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "14");
-  t.end();
+  equal(actual, intended, "14");
 });
 
-tap.test("15 - adhoc 2", (t) => {
-  const actual = comb(
-    t,
+test("15 - adhoc 2", () => {
+  let actual = comb(
     `<head>
 <style type="text/css">
   .aa {z:2;}
@@ -339,7 +309,7 @@ tap.test("15 - adhoc 2", (t) => {
 `
   ).result;
 
-  const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
   .aa {z:2;}
 </style>
@@ -348,13 +318,11 @@ tap.test("15 - adhoc 2", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "15");
-  t.end();
+  equal(actual, intended, "15");
 });
 
-tap.test("16 - adhoc 3", (t) => {
-  const actual = comb(
-    t,
+test("16 - adhoc 3", () => {
+  let actual = comb(
     `<head>
 <style type="text/css">
   @media y z (a-a:0px){.col-1,.col-2,.zz{m:100%!n}}
@@ -365,7 +333,7 @@ tap.test("16 - adhoc 3", (t) => {
 `
   ).result;
 
-  const intended = `<head>
+  let intended = `<head>
 <style type="text/css">
   @media y z (a-a:0px){.zz{m:100%!n}}
 </style>
@@ -374,52 +342,50 @@ tap.test("16 - adhoc 3", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "16");
-  t.end();
+  equal(actual, intended, "16");
 });
 
-tap.test("17 - bug #36", (t) => {
-  const input = `<style>@media only screen {}</style>
+test("17 - bug #36", () => {
+  let input = `<style>@media only screen {}</style>
 <style>.foo {x: y;}</style>
 <body><span class="foo">z</span>`;
-  const { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
-    comb(t, input);
+  let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
+    comb(input);
 
-  t.strictSame(allInBody, [".foo"], "17.01");
-  t.strictSame(allInHead, [".foo"], "17.02");
-  t.strictSame(
+  equal(allInBody, [".foo"], "17.01");
+  equal(allInHead, [".foo"], "17.02");
+  equal(
     result,
     `<style>.foo {x: y;}</style>
 <body><span class="foo">z</span>`,
     "17.03"
   );
-  t.strictSame(deletedFromHead, [], "17.04");
-  t.strictSame(deletedFromBody, [], "17.05");
-  t.end();
+  equal(deletedFromHead, [], "17.04");
+  equal(deletedFromBody, [], "17.05");
 });
 
-tap.test("18 - bug #45 - id", (t) => {
-  const input = `<body><div>https://x?id=z</div>`;
-  const { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
-    comb(t, input);
+test("18 - bug #45 - id", () => {
+  let input = `<body><div>https://x?id=z</div>`;
+  let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
+    comb(input);
 
-  t.strictSame(allInBody, [], "18.01");
-  t.strictSame(allInHead, [], "18.02");
-  t.strictSame(result, input, "18.03");
-  t.strictSame(deletedFromHead, [], "18.04");
-  t.strictSame(deletedFromBody, [], "18.05");
-  t.end();
+  equal(allInBody, [], "18.01");
+  equal(allInHead, [], "18.02");
+  equal(result, input, "18.03");
+  equal(deletedFromHead, [], "18.04");
+  equal(deletedFromBody, [], "18.05");
 });
 
-tap.test("19 - bug #45 - class", (t) => {
-  const input = `<body><div>https://x?class=z</div>`;
-  const { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
-    comb(t, input);
+test("19 - bug #45 - class", () => {
+  let input = `<body><div>https://x?class=z</div>`;
+  let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
+    comb(input);
 
-  t.strictSame(allInBody, [], "19.01");
-  t.strictSame(allInHead, [], "19.02");
-  t.strictSame(result, input, "19.03");
-  t.strictSame(deletedFromHead, [], "19.04");
-  t.strictSame(deletedFromBody, [], "19.05");
-  t.end();
+  equal(allInBody, [], "19.01");
+  equal(allInHead, [], "19.02");
+  equal(result, input, "19.03");
+  equal(deletedFromHead, [], "19.04");
+  equal(deletedFromBody, [], "19.05");
 });
+
+test.run();

@@ -1,59 +1,55 @@
-import tap from "tap";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { stripHtml } from "./util/noLog.js";
 
 // JSP's
 // -----------------------------------------------------------------------------
 
-tap.test("01", (t) => {
-  const input = `kl <c:when test="\${ab > cd}"> mn`;
-  t.hasStrict(stripHtml(input), { result: input }, "01");
-  t.end();
+test("01", () => {
+  let input = `kl <c:when test="\${ab > cd}"> mn`;
+  equal(stripHtml(input).result, input, "01");
 });
 
-tap.test("02", (t) => {
-  const input = `kl <c:when test="\${ab < cd}"> mn`;
-  t.hasStrict(stripHtml(input), { result: input }, "02");
-  t.end();
+test("02", () => {
+  let input = `kl <c:when test="\${ab < cd}"> mn`;
+  equal(stripHtml(input).result, input, "02");
 });
 
-tap.test("03", (t) => {
-  const input = `kl <c:when test="\${!empty ab.cd && ab.cd > 0.00}"> mn`;
-  t.hasStrict(stripHtml(input), { result: input }, "03");
-  t.end();
+test("03", () => {
+  let input = `kl <c:when test="\${!empty ab.cd && ab.cd > 0.00}"> mn`;
+  equal(stripHtml(input).result, input, "03");
 });
 
-tap.test("04", (t) => {
-  const input = `kl <c:when test="\${!empty ab.cd && ab.cd < 0.00}"> mn`;
-  t.hasStrict(stripHtml(input), { result: input }, "04");
-  t.end();
+test("04", () => {
+  let input = `kl <c:when test="\${!empty ab.cd && ab.cd < 0.00}"> mn`;
+  equal(stripHtml(input).result, input, "04");
 });
 
-tap.test("05", (t) => {
-  const input = `<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>`;
-  t.hasStrict(stripHtml(input), { result: input }, "05");
-  t.end();
+test("05", () => {
+  let input = `<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>`;
+  equal(stripHtml(input).result, input, "05");
 });
 
-tap.test("06", (t) => {
-  const input = `kl <fmt:blablabla> mn`;
-  t.hasStrict(stripHtml(input), { result: input }, "06");
-  t.end();
+test("06", () => {
+  let input = `kl <fmt:blablabla> mn`;
+  equal(stripHtml(input).result, input, "06");
 });
 
-tap.test("07", (t) => {
-  const input = `kl <sql:blablabla> mn`;
-  t.hasStrict(stripHtml(input), { result: input }, "07");
-  t.end();
+test("07", () => {
+  let input = `kl <sql:blablabla> mn`;
+  equal(stripHtml(input).result, input, "07");
 });
 
-tap.test("08", (t) => {
-  const input = `kl <x:blablabla> mn`;
-  t.hasStrict(stripHtml(input), { result: input }, "08");
-  t.end();
+test("08", () => {
+  let input = `kl <x:blablabla> mn`;
+  equal(stripHtml(input).result, input, "08");
 });
 
-tap.test("09", (t) => {
-  const input = `kl <fn:blablabla> mn`;
-  t.hasStrict(stripHtml(input), { result: input }, "09");
-  t.end();
+test("09", () => {
+  let input = `kl <fn:blablabla> mn`;
+  equal(stripHtml(input).result, input, "09");
 });
+
+test.run();

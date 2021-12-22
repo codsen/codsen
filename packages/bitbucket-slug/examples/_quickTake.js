@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { bSlug } from "../dist/bitbucket-slug.esm.js";
 
 assert.equal(

@@ -29,7 +29,7 @@ function attributeValidateNoresize(
         )}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "noresize") {
         // validate the parent

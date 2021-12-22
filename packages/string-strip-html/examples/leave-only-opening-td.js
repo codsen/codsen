@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 // Leave only opening `td` tags
 
 import { strict as assert } from "assert";
+
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 const someHtml = `<table width="100" border="0" cellpadding="0" cellspacing="0">

@@ -23,7 +23,7 @@ function attributeValidateDefer(context: Linter, mode?: "xhtml"): RuleObjType {
         `023 attributeValidateDefer(): node = ${JSON.stringify(node, null, 4)}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "defer") {
         // validate the parent

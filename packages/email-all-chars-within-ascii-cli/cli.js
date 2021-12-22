@@ -12,13 +12,13 @@ import inquirer from "inquirer";
 import path from "path";
 // import updateNotifier from "update-notifier";
 import pullAll from "lodash.pullall";
-
 import { createRequire } from "module";
+import argv from "minimist";
+
 const require1 = createRequire(import.meta.url);
 const package1 = require1("./package.json");
 
 const { name, version } = package1;
-import argv from "minimist";
 const argv1 = argv(process.argv.slice(2));
 
 const { log } = console;
@@ -42,8 +42,8 @@ const help = `
 // updateNotifier({ pkg: package }).notify();
 
 function offerAListOfFilesToPickFrom() {
-  const ui = new inquirer.ui.BottomBar();
-  const allFilesHere = globby.sync("./*.*");
+  let ui = new inquirer.ui.BottomBar();
+  let allFilesHere = globby.sync("./*.*");
   if (!allFilesHere.length) {
     log(
       chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_01] ") +
@@ -52,7 +52,7 @@ function offerAListOfFilesToPickFrom() {
     return process.exit(1);
   }
   ui.log.write(chalk.grey("To quit, press CTRL+C"));
-  const questions = [
+  let questions = [
     {
       type: "list",
       name: "file",
@@ -96,7 +96,7 @@ if (!state.toDoList.length) {
 ) {
   // ---------------------------------  2  -------------------------------------
   // basically achieving: (!fs.existsSync)
-  const erroneous = pullAll(
+  let erroneous = pullAll(
     state.toDoList.map((onePath) => path.resolve(onePath)),
     state.toDoList.map((onePath) => path.resolve(onePath)).filter(fs.existsSync)
   ).map((singlePath) => path.basename(singlePath)); // then filtering file names-only
@@ -152,7 +152,7 @@ thePromise
           // in case somebody puts empty flag without a value
           lineLength = undefined;
         }
-        const findings = within(filesContents, {
+        let findings = within(filesContents, {
           lineLength,
         });
         if (findings.length) {
@@ -187,7 +187,7 @@ thePromise
             //     4
             //   )}`
             // );
-            const startingPos = filesContents[
+            let startingPos = filesContents[
               obj.positionIdx - obj.column + 1
             ].trim()
               ? obj.positionIdx - obj.column + 1
@@ -200,11 +200,11 @@ thePromise
             //   )}`
             // );
 
-            const sliceFrom = Math.max(
+            let sliceFrom = Math.max(
               obj.positionIdx - Math.min(obj.column, 40),
               startingPos
             );
-            const sliceTo = Math.min(
+            let sliceTo = Math.min(
               ...[
                 filesContents.indexOf("\n", obj.positionIdx),
                 filesContents.indexOf("\r", obj.positionIdx),
@@ -225,7 +225,7 @@ thePromise
             //     4
             //   )}`
             // );
-            const currLinesChunk = filesContents
+            let currLinesChunk = filesContents
               .slice(sliceFrom, sliceTo)
               .replace(/\t/g, " ");
             console.log(`\n${chalk.inverse(obj.line)} ${currLinesChunk}`);

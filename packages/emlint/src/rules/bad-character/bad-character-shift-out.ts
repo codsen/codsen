@@ -8,7 +8,7 @@ import { badChars } from "../../util/bad-character-all";
 // https://www.fileformat.info/info/unicode/char/000e/index.htm
 
 function badCharacterShiftOut(context: Linter): RuleObjType {
-  const charCode = 14;
+  let charCode = 14;
   return {
     character({ chr, i }) {
       if (chr.charCodeAt(0) === charCode) {

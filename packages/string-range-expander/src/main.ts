@@ -1,6 +1,8 @@
+import type { Range } from "../../../ops/typedefs/common";
+
 import { version as v } from "../package.json";
+
 const version: string = v;
-import { Range } from "../../../scripts/common";
 
 interface Opts {
   str: string;
@@ -31,7 +33,7 @@ const defaults: Opts = {
 };
 
 function expander(originalOpts: Partial<Opts>): Range {
-  const letterOrDigit = /^[0-9a-zA-Z]+$/;
+  let letterOrDigit = /^[0-9a-zA-Z]+$/;
 
   // Internal functions
   // ---------------------------------------------------------------------------
@@ -98,8 +100,7 @@ function expander(originalOpts: Partial<Opts>): Range {
     );
   }
   if (
-    originalOpts &&
-    originalOpts.str &&
+    originalOpts?.str &&
     !originalOpts.str[originalOpts.from] &&
     originalOpts.from !== originalOpts.to
   ) {
@@ -107,11 +108,7 @@ function expander(originalOpts: Partial<Opts>): Range {
       `string-range-expander: [THROW_ID_05] The given input string opts.str ("${originalOpts.str}") must contain the character at index "from" ("${originalOpts.from}")`
     );
   }
-  if (
-    originalOpts &&
-    originalOpts.str &&
-    !originalOpts.str[originalOpts.to - 1]
-  ) {
+  if (originalOpts?.str && !originalOpts.str[originalOpts.to - 1]) {
     throw new Error(
       `string-range-expander: [THROW_ID_06] The given input string, opts.str ("${
         originalOpts.str
@@ -143,7 +140,7 @@ function expander(originalOpts: Partial<Opts>): Range {
   // Prepare the opts
   // ---------------------------------------------------------------------------
 
-  const opts: Opts = { ...defaults, ...originalOpts };
+  let opts: Opts = { ...defaults, ...originalOpts };
   if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;
@@ -177,12 +174,12 @@ function expander(originalOpts: Partial<Opts>): Range {
   // Action
   // ---------------------------------------------------------------------------
 
-  const str = opts.str; // convenience
+  let str = opts.str; // convenience
   let from = opts.from;
   let to = opts.to;
 
   console.log(
-    `185 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
+    `182 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
   );
 
   // 1. expand the given range outwards and leave a single space or
@@ -197,7 +194,7 @@ function expander(originalOpts: Partial<Opts>): Range {
       (opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
   ) {
     // loop backwards
-    console.log(`200 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
+    console.log(`197 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
     for (let i = from; i--; ) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
@@ -211,7 +208,7 @@ function expander(originalOpts: Partial<Opts>): Range {
             from = i + 2;
           }
           console.log(
-            `214 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
+            `211 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
           );
           break;
         } else if (i === 0) {
@@ -221,7 +218,7 @@ function expander(originalOpts: Partial<Opts>): Range {
             from = 1;
           }
           console.log(
-            `224 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
+            `221 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
           );
           break;
         }
@@ -237,12 +234,12 @@ function expander(originalOpts: Partial<Opts>): Range {
       opts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     // loop forward
-    console.log(`240 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
+    console.log(`237 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (
         !opts.ifRightSideIncludesThisCropItToo.includes(str[i]) &&
-        ((str[i] && str[i].trim()) || str[i] === undefined)
+        str[i]?.trim()
       ) {
         if (
           opts.wipeAllWhitespaceOnRight ||
@@ -253,7 +250,7 @@ function expander(originalOpts: Partial<Opts>): Range {
           to = i - 1;
         }
         console.log(
-          `256 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
+          `253 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
         );
         break;
       }
@@ -279,7 +276,7 @@ function expander(originalOpts: Partial<Opts>): Range {
         (str[to] &&
           opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))))
   ) {
-    console.log("282");
+    console.log("279");
     if (
       opts.extendToOneSide !== "right" &&
       isWhitespace(str[from - 1]) &&
@@ -315,10 +312,10 @@ function expander(originalOpts: Partial<Opts>): Range {
       )) &&
     (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))
   ) {
-    console.log(`318 RETURN: [${from}, ${to}, " "]`);
+    console.log(`315 RETURN: [${from}, ${to}, " "]`);
     return [from, to, " "];
   }
-  console.log(`321 RETURN: [${from}, ${to}]`);
+  console.log(`318 RETURN: [${from}, ${to}]`);
   return [from, to];
 }
 

@@ -30,7 +30,7 @@ function attributeValidateDisabled(
         )}`
       );
 
-      const errorArr: ErrorObj[] = [];
+      let errorArr: ErrorObj[] = [];
 
       if (node.attribName === "disabled") {
         // validate the parent

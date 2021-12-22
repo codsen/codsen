@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { flattenAllArrays } from "../dist/object-flatten-all-arrays.esm.js";
 
 assert.deepEqual(

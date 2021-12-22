@@ -1,6 +1,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+
 import { extractVars } from "../dist/string-extract-sass-vars.esm.js";
 
 assert.deepEqual(

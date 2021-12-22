@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 
 const key = ["crlf", "cr", "lf"];
@@ -6,158 +9,124 @@ const key = ["crlf", "cr", "lf"];
 // opts.limitConsecutiveEmptyLinesTo
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=off`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
-      t.equal(
-        collapse(`a${presentEolType}${presentEolType}b`, {
-          removeEmptyLines: false,
-        }).result,
-        `a${presentEolType}${presentEolType}b`,
-        `EOL ${key[idx]}`
-      );
-    });
-    t.end();
-  }
-);
+test(`01 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=off`, () => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    equal(
+      collapse(`a${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: false,
+      }).result,
+      `a${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
 
-tap.test(
-  `02 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=on`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
-      t.equal(
-        collapse(`a${presentEolType}${presentEolType}b`, {
-          removeEmptyLines: true,
-        }).result,
-        `a${presentEolType}b`,
-        `EOL ${key[idx]}`
-      );
-    });
-    t.end();
-  }
-);
+test(`02 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=on`, () => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    equal(
+      collapse(`a${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true,
+      }).result,
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
 
-tap.test(
-  `03 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
-      t.equal(
-        collapse(
-          `a${presentEolType}${presentEolType}${presentEolType}${presentEolType}b`,
-          {
-            removeEmptyLines: true,
-            limitConsecutiveEmptyLinesTo: 1,
-          }
-        ).result,
-        `a${presentEolType}${presentEolType}b`,
-        `EOL ${key[idx]}`
-      );
-    });
-    t.end();
-  }
-);
-
-tap.test(
-  `04 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
-      t.equal(
-        collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
+test(`03 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, () => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    equal(
+      collapse(
+        `a${presentEolType}${presentEolType}${presentEolType}${presentEolType}b`,
+        {
           removeEmptyLines: true,
           limitConsecutiveEmptyLinesTo: 1,
-        }).result,
-        `a${presentEolType}${presentEolType}b`,
-        `EOL ${key[idx]}`
-      );
-    });
-    t.end();
-  }
-);
+        }
+      ).result,
+      `a${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
 
-tap.test(
-  `05 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
-      t.equal(
-        collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
-          removeEmptyLines: true,
-          limitConsecutiveEmptyLinesTo: 2,
-        }).result,
-        `a${presentEolType}${presentEolType}${presentEolType}b`,
-        `EOL ${key[idx]}`
-      );
-    });
-    t.end();
-  }
-);
+test(`04 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, () => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    equal(
+      collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 1,
+      }).result,
+      `a${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
 
-tap.test(
-  `06 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
-      t.equal(
-        collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
-          removeEmptyLines: true,
-          limitConsecutiveEmptyLinesTo: 3,
-        }).result,
-        `a${presentEolType}${presentEolType}${presentEolType}b`,
-        `EOL ${key[idx]}`
-      );
-    });
-    t.end();
-  }
-);
+test(`05 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`, () => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    equal(
+      collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 2,
+      }).result,
+      `a${presentEolType}${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
 
-tap.test(
-  `07 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
-      t.equal(
-        collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
-          removeEmptyLines: true,
-          limitConsecutiveEmptyLinesTo: 99,
-        }).result,
-        `a${presentEolType}${presentEolType}${presentEolType}b`,
-        `EOL ${key[idx]}`
-      );
-    });
-    t.end();
-  }
-);
+test(`06 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`, () => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    equal(
+      collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 3,
+      }).result,
+      `a${presentEolType}${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
 
-tap.test(
-  `08 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=off`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
-      t.equal(
-        collapse(`a${presentEolType} ${presentEolType}b`, {
-          removeEmptyLines: true,
-          limitConsecutiveEmptyLinesTo: 0,
-          trimLines: false,
-        }).result,
-        `a${presentEolType}b`,
-        `EOL ${key[idx]}`
-      );
-    });
-    t.end();
-  }
-);
+test(`07 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`, () => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    equal(
+      collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 99,
+      }).result,
+      `a${presentEolType}${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
 
-tap.test(
-  `09 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=on`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
-      t.equal(
-        collapse(`a${presentEolType} ${presentEolType}b`, {
-          removeEmptyLines: true,
-          limitConsecutiveEmptyLinesTo: 0,
-          trimLines: true,
-        }).result,
-        `a${presentEolType}b`,
-        `EOL ${key[idx]}`
-      );
-    });
-    t.end();
-  }
-);
+test(`08 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=off`, () => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    equal(
+      collapse(`a${presentEolType} ${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 0,
+        trimLines: false,
+      }).result,
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test(`09 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=on`, () => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    equal(
+      collapse(`a${presentEolType} ${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 0,
+        trimLines: true,
+      }).result,
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test.run();

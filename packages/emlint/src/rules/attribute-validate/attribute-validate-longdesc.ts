@@ -45,7 +45,7 @@ function attributeValidateLongdesc(context: Linter): RuleObjType {
           // only check for rogue whitespace -
           // TODO - add more rules, https://www.w3schools.com/TagS/att_img_longdesc.asp
 
-          const { errorArr } = checkForWhitespace(
+          let { errorArr } = checkForWhitespace(
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );

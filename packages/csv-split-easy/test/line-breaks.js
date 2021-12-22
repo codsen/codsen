@@ -1,4 +1,7 @@
-import tap from "tap";
+import { test } from "uvu";
+// eslint-disable-next-line no-unused-vars
+import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
 import { splitEasy } from "../dist/csv-split-easy.esm.js";
 
 // some art first
@@ -30,8 +33,8 @@ import { splitEasy } from "../dist/csv-split-easy.esm.js";
 // group 01 - concentrating on line breaks: varying amounts and different types
 // ============================================================================
 //
-tap.test("01 - breaks lines correctly leaving no empty lines", (t) => {
-  t.strictSame(
+test("01 - breaks lines correctly leaving no empty lines", () => {
+  equal(
     splitEasy("a,b,c\nd,e,f"),
     [
       ["a", "b", "c"],
@@ -39,7 +42,7 @@ tap.test("01 - breaks lines correctly leaving no empty lines", (t) => {
     ],
     "01.01 - minimal amount of chars in each col"
   );
-  t.strictSame(
+  equal(
     splitEasy(
       "apples and some more apples,bananas,cherries\ndonuts,eclairs,froyos"
     ),
@@ -49,7 +52,7 @@ tap.test("01 - breaks lines correctly leaving no empty lines", (t) => {
     ],
     "01.02 - normal words in each col"
   );
-  t.strictSame(
+  equal(
     splitEasy("a,b,c\n\r\n\r\r\r\r\n\n\nd,e,f"),
     [
       ["a", "b", "c"],
@@ -57,7 +60,7 @@ tap.test("01 - breaks lines correctly leaving no empty lines", (t) => {
     ],
     "01.03 - minimal amount of chars in each col"
   );
-  t.strictSame(
+  equal(
     splitEasy(
       "apples and some more apples,bananas,cherries\n\r\r\r\r\n\n\n\n\ndonuts,eclairs,froyos"
     ),
@@ -67,21 +70,20 @@ tap.test("01 - breaks lines correctly leaving no empty lines", (t) => {
     ],
     "01.04 - normal words in each col"
   );
-  t.end();
 });
 
-tap.test("02 - breaks lines that have empty values", (t) => {
-  t.strictSame(
+test("02 - breaks lines that have empty values", () => {
+  equal(
     splitEasy(",,\na,b,c"),
     [["a", "b", "c"]],
     "02.01 - whole row comprises of empty values"
   );
-  t.strictSame(
+  equal(
     splitEasy("a,b\n,\n,"),
     [["a", "b"]],
     "02.02 - only first row contains real data"
   );
-  t.strictSame(
+  equal(
     splitEasy("a,b\n\r,\n,c"),
     [
       ["a", "b"],
@@ -89,7 +91,7 @@ tap.test("02 - breaks lines that have empty values", (t) => {
     ],
     "02.03 - only first row contains real data"
   );
-  t.strictSame(
+  equal(
     splitEasy('a,b\n\r"",""\n,c'),
     [
       ["a", "b"],
@@ -97,7 +99,7 @@ tap.test("02 - breaks lines that have empty values", (t) => {
     ],
     "02.04 - empty row all with double quotes"
   );
-  t.strictSame(
+  equal(
     splitEasy('a,b\n\r"",""\n"",c'),
     [
       ["a", "b"],
@@ -105,7 +107,7 @@ tap.test("02 - breaks lines that have empty values", (t) => {
     ],
     "02.05 - more double quotes"
   );
-  t.strictSame(
+  equal(
     splitEasy('a,"b"\n\r"",""\n"","c"'),
     [
       ["a", "b"],
@@ -113,7 +115,7 @@ tap.test("02 - breaks lines that have empty values", (t) => {
     ],
     "02.06 - double quotes almost everywhere"
   );
-  t.strictSame(
+  equal(
     splitEasy("a,b,c\n\r,,\n\r,,\n,,\n,,\r,,\n,,\n,d,"),
     [
       ["a", "b", "c"],
@@ -121,13 +123,12 @@ tap.test("02 - breaks lines that have empty values", (t) => {
     ],
     "02.07 - many empty rows"
   );
-  t.strictSame(splitEasy(",,,"), [[""]], "02.08 - three commas");
-  t.strictSame(splitEasy(""), [[""]], "02.09 - nothing");
-  t.end();
+  equal(splitEasy(",,,"), [[""]], "02.08 - three commas");
+  equal(splitEasy(""), [[""]], "02.09 - nothing");
 });
 
-tap.test("03 - copes with leading/trailing empty space", (t) => {
-  t.strictSame(
+test("03 - copes with leading/trailing empty space", () => {
+  equal(
     splitEasy(`Description,Debit Amount,Credit Amount,Balance
 Client #1 payment,,1000,1940
 Bought table,10,,940
@@ -144,7 +145,7 @@ Bought pens,10,,1000\n`),
     ],
     "03.01 - one trailing \\n"
   );
-  t.strictSame(
+  equal(
     splitEasy(`\nDescription,Debit Amount,Credit Amount,Balance
 Client #1 payment,,1000,1940
 Bought table,10,,940
@@ -161,5 +162,6 @@ Bought pens,10,,1000\n \r \n \r \r\r\r\n\n\n\n      `),
     ],
     "03.02 - bunch of leading and trailing whitespace"
   );
-  t.end();
 });
+
+test.run();
