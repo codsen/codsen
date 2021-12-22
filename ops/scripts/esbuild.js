@@ -36,6 +36,7 @@ const banner = {
 if (pkg.exports && (typeof pkg.exports === "string" || pkg.exports.default)) {
   esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
+    platform: "node",
     format: "esm",
     bundle: true,
     minify: mode !== "dev", //false //

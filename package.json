@@ -88,7 +88,10 @@
       },
       "prepare": {
         "dependsOn": [
-          "build", "unit", "examples", "lint"
+          "build",
+          "unit",
+          "examples",
+          "lint"
         ]
       }
     }
