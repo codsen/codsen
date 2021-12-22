@@ -38,7 +38,6 @@
   },
   "type": "module",
   "exports": {
-    "script": "./dist/emlint.umd.js",
     "default": "./dist/emlint.esm.js"
   },
   "types": "types/index.d.ts",
