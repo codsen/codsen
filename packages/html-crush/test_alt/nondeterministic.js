@@ -2,7 +2,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
-const { crush } = require("../dist/html-crush.esm");
+const { crush } = require("../dist/html-crush.esm.js");
 
 const c = crush;
 
