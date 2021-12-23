@@ -7,6 +7,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 // inner function, common for both external API's methods that does the job:
 function strConvertIndexes(
   mode: "n" | "u",
@@ -35,11 +37,12 @@ function strConvertIndexes(
       // to start, lower is the same
       currUpperIdx += graphemeStrArr[i].length;
 
-      console.log(
-        `039 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
-          graphemeStrArr[i]
-        } (${graphemeStrArr[i].split("").length})`
-      );
+      DEV &&
+        console.log(
+          `042 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
+            graphemeStrArr[i]
+          } (${graphemeStrArr[i].split("").length})`
+        );
       if (idx >= currLowerIdx && idx < currUpperIdx) {
         return i;
       }
@@ -91,11 +94,11 @@ function strConvertIndexes(
   // leading up to this
 
   if (["string", "number"].includes(typeof indexes)) {
-    console.log(`094 ██ no AST`);
+    DEV && console.log(`097 ██ no AST`);
     // no need for traversal
     // validate
     if (isItOk(indexes)) {
-      console.log(`OK`);
+      DEV && console.log(`OK`);
 
       if (mode === "u") {
         return typeof indexes === "string"
@@ -116,7 +119,7 @@ function strConvertIndexes(
       )} (${typeof indexes})`
     );
   } else if (indexes && typeof indexes === "object") {
-    console.log(`119 ██ AST - traverse!`);
+    DEV && console.log(`122 ██ AST - traverse!`);
     // if it's array or object, traverse
     return mode === "u"
       ? traverse(indexes, (key, val, innerObj) => {

@@ -1,15 +1,19 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-start
 // -----------------------------------------------------------------------------
 
 function attributeValidateStart(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateStart() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateStart() ███████████████████████████████████████`
+        );
 
       if (node.attribName === "start") {
         // validate the parent
@@ -34,12 +38,13 @@ function attributeValidateStart(context: Linter): RuleObjType {
             customPxMessage: `Starting sequence number is not in pixels.`,
           }
         );
-        console.log(
-          `038 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
+        DEV &&
+          console.log(
+            `043 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`042 RAISE ERROR`);
+          DEV && console.log(`047 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-start" });
         });
       }

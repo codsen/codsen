@@ -5,6 +5,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 function isStr(something: any): boolean {
   return typeof something === "string";
 }
@@ -18,13 +20,14 @@ function stringifyPath(something: any): string {
   return String(something);
 }
 function stringifyAndEscapeValue(something: any): string {
-  console.log(
-    `022 ██ stringifyAndEscapeValue() called with ${JSON.stringify(
-      something,
-      null,
-      0
-    )} (${typeof something})`
-  );
+  DEV &&
+    console.log(
+      `025 ██ stringifyAndEscapeValue() called with ${JSON.stringify(
+        something,
+        null,
+        0
+      )} (${typeof something})`
+    );
 
   // since incoming strings will come already wrapped with legit double quotes, we don't need to escape them
   if (
@@ -79,7 +82,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
     // if (i > 80 && str[i] && str[i].trim()) {
     // if (str[i] && str[i].trim()) {
     if (str[i] !== " ") {
-      console.log(something);
+      DEV && console.log(something);
     }
   }
   let len = str.length;
@@ -173,9 +176,10 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       currentlyWithinArray = true;
       if (str[i] !== "]") {
         currentlyWithinObject = false;
-        console.log(
-          `177 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray};  ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
-        );
+        DEV &&
+          console.log(
+            `181 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray};  ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
+          );
       }
     }
 
@@ -183,9 +187,10 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       currentlyWithinObject = true;
       if (str[i] !== "}") {
         currentlyWithinArray = false;
-        console.log(
-          `187 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray};  ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
-        );
+        DEV &&
+          console.log(
+            `192 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray};  ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
+          );
       }
     }
 
@@ -195,7 +200,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       isNotEscape(str, i - 1) &&
       !replaceThisValue
     ) {
-      console.log(`198 object's start caught`);
+      DEV && console.log(`203 object's start caught`);
       if (currentlyWithinArray) {
         // we can't push here first zero because opening bracket pushes the first
         // zero in path - we only bump for second element onwards -
@@ -253,7 +258,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       isNotEscape(str, i - 1) &&
       !replaceThisValue
     ) {
-      console.log(`256 inside sq. bracket clauses`);
+      DEV && console.log(`261 inside sq. bracket clauses`);
       withinArrayIndexes.pop();
       log(
         `248 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`withinArrayIndexes`}\u001b[${39}m`} = ${JSON.stringify(
@@ -269,9 +274,10 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       log(`258 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
       reset();
 
-      console.log(
-        `273 FIY, currentlyWithinObject = ${currentlyWithinObject}; currentlyWithinArray = ${currentlyWithinArray}`
-      );
+      DEV &&
+        console.log(
+          `279 FIY, currentlyWithinObject = ${currentlyWithinObject}; currentlyWithinArray = ${currentlyWithinArray}`
+        );
       if (itsTheFirstElem) {
         itsTheFirstElem = false;
         log(
@@ -281,17 +287,19 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
     }
 
     if (typeof withinQuotesSince !== "number" && str[i] === "]") {
-      console.log(`284`);
+      DEV && console.log(`290`);
       if (!withinArrayIndexes.length) {
         currentlyWithinArray = false;
-        console.log(
-          `288 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
-        );
+        DEV &&
+          console.log(
+            `295 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
+          );
         if (withinObjectIndexes.length && !currentlyWithinObject) {
           currentlyWithinObject = true;
-          console.log(
-            `293 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} currentlyWithinObject = ${currentlyWithinObject}`
-          );
+          DEV &&
+            console.log(
+              `301 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} currentlyWithinObject = ${currentlyWithinObject}`
+            );
         }
       } else if (
         withinArrayIndexes.length &&
@@ -299,33 +307,36 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
           withinArrayIndexes[withinArrayIndexes.length - 1] >
             withinObjectIndexes[withinObjectIndexes.length - 1])
       ) {
-        console.log(
-          `303 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
-        );
+        DEV &&
+          console.log(
+            `312 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
+          );
         currentlyWithinArray = true;
       }
     }
 
     if (typeof withinQuotesSince !== "number" && str[i] === "}") {
       if (!withinObjectIndexes.length) {
-        console.log(
-          `312 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
-        );
+        DEV &&
+          console.log(
+            `322 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
+          );
         currentlyWithinObject = false;
       } else if (
         !withinArrayIndexes.length ||
         withinObjectIndexes[withinObjectIndexes.length - 1] >
           withinArrayIndexes[withinArrayIndexes.length - 1]
       ) {
-        console.log(
-          `321 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
-        );
+        DEV &&
+          console.log(
+            `332 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
+          );
         currentlyWithinObject = true;
       }
     }
 
     // for arrays, this is the beginning of what to replace
-    console.log(`328 above of beginning of what to replace in arrays`);
+    DEV && console.log(`339 above of beginning of what to replace in arrays`);
     if (
       currentlyWithinArray &&
       stringifyPath(path) === currentPath.join(".") &&
@@ -334,7 +345,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       // (stringifyPath(path) === currentPath.join(".") ||
       //   currentPath.join(".").endsWith(`.${stringifyPath(path)}`))
     ) {
-      console.log(`337 arrays - beginning of what to replace`);
+      DEV && console.log(`348 arrays - beginning of what to replace`);
       replaceThisValue = true;
       log(
         `329 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`
@@ -352,7 +363,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       isNotEscape(str, i - 1) &&
       !replaceThisValue
     ) {
-      console.log(`355 array's start caught`);
+      DEV && console.log(`366 array's start caught`);
       withinArrayIndexes.push(i);
       itsTheFirstElem = true;
       log(
@@ -364,7 +375,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       );
 
       // if (left(str, i) !== null) {
-      // console.log(`356 it's not root-level array, so push zero into path`);
+      // DEV && console.log(`356 it's not root-level array, so push zero into path`);
       currentPath.push(0);
       log(
         `359 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} zero to path, now = ${JSON.stringify(
@@ -535,13 +546,14 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       str[i] === "," &&
       currentlyWithinObject
     ) {
-      console.log(
-        `539 COMMA within object caught - before popping, ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
-          currentPath,
-          null,
-          0
-        )}`
-      );
+      DEV &&
+        console.log(
+          `551 COMMA within object caught - before popping, ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
+            currentPath,
+            null,
+            0
+          )}`
+        );
       currentPath.pop();
       log(
         `535 POP(), now ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
@@ -572,13 +584,14 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       } else if (str[i] === "}") {
         log(`558 closing curlie caught`);
         if (valueEndedAt || str[left(str, i) as number] !== "{") {
-          console.log(
-            `576 before popping, ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
-              currentPath,
-              null,
-              0
-            )}`
-          );
+          DEV &&
+            console.log(
+              `589 before popping, ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
+                currentPath,
+                null,
+                0
+              )}`
+            );
           currentPath.pop();
           log(
             `569 POP(), now ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
@@ -600,9 +613,10 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
         ) {
           currentlyWithinObject = false;
           currentlyWithinArray = true;
-          console.log(
-            `604 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}; ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
-          );
+          DEV &&
+            console.log(
+              `618 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}; ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
+            );
         }
 
         // also reset but don't touch the path - rabbit hole goes deeper
@@ -665,7 +679,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
         skipUntilTheFollowingIsMet[skipUntilTheFollowingIsMet.length - 1] &&
       isNotEscape(str, i - 1)
     ) {
-      console.log(`668 POP clause`);
+      DEV && console.log(`682 POP clause`);
       skipUntilTheFollowingIsMet.pop();
       log(
         `677 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} skipUntilTheFollowingIsMet = ${JSON.stringify(
@@ -680,9 +694,9 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       !currentlyWithinArray &&
       typeof valueStartedAt === "number"
     ) {
-      console.log(`683 about to catch various opening brackets/quotes`);
+      DEV && console.log(`697 about to catch various opening brackets/quotes`);
       if (str[i] === "{" && isNotEscape(str, i - 1)) {
-        console.log(`685`);
+        DEV && console.log(`699`);
         skipUntilTheFollowingIsMet.push("}");
         log(
           `695 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${JSON.stringify(
@@ -692,7 +706,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
           )}`
         );
       } else if (str[i] === "[" && isNotEscape(str, i - 1)) {
-        console.log(`695`);
+        DEV && console.log(`709`);
         skipUntilTheFollowingIsMet.push("]");
         log(
           `705 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${JSON.stringify(
@@ -702,7 +716,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
           )}`
         );
       } else if (str[i] === `"` && isNotEscape(str, i - 1)) {
-        console.log(`705`);
+        DEV && console.log(`719`);
         skipUntilTheFollowingIsMet.push(`"`);
         log(
           `715 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${JSON.stringify(
@@ -712,7 +726,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
           )}`
         );
       }
-      console.log(`715`);
+      DEV && console.log(`729`);
     }
 
     //
@@ -790,13 +804,14 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
             extraLineBreak = "\n";
           }
           let endingPartsBeginning = i + (str[i].trim() ? 1 : 0);
-          console.log(
-            `794 SET ${`\u001b[${33}m${`endingPartsBeginning`}\u001b[${39}m`} = ${JSON.stringify(
-              endingPartsBeginning,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `809 SET ${`\u001b[${33}m${`endingPartsBeginning`}\u001b[${39}m`} = ${JSON.stringify(
+                endingPartsBeginning,
+                null,
+                4
+              )}`
+            );
 
           if (
             (currentlyWithinArray &&
@@ -805,36 +820,39 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
             (str[endingPartsBeginning - 1] === "," &&
               str[valueStartedAt - 1] !== `"`)
           ) {
-            console.log(
-              `809 endingPartsBeginning before = ${endingPartsBeginning}`
-            );
+            DEV &&
+              console.log(
+                `825 endingPartsBeginning before = ${endingPartsBeginning}`
+              );
             endingPartsBeginning -= 1;
-            console.log(
-              `813 endingPartsBeginning after = ${endingPartsBeginning}`
-            );
+            DEV &&
+              console.log(
+                `830 endingPartsBeginning after = ${endingPartsBeginning}`
+              );
           }
 
           if (currentlyWithinArray && str[valueStartedAt - 1] === `"`) {
-            console.log(`818 valueStartedAt before = ${valueStartedAt}`);
+            DEV && console.log(`835 valueStartedAt before = ${valueStartedAt}`);
             valueStartedAt = valueStartedAt - 1;
-            console.log(`820 valueStartedAt after = ${valueStartedAt}`);
+            DEV && console.log(`837 valueStartedAt after = ${valueStartedAt}`);
           }
 
-          console.log(
-            `RETURNING:\n${`\u001b[${36}m${`[0, ${valueStartedAt}]`}\u001b[${39}m`}: ${JSON.stringify(
-              str.slice(0, valueStartedAt),
-              null,
-              0
-            )}\nstringifyAndEscapeValue(calculatedValueToInsert) = ${JSON.stringify(
-              stringifyAndEscapeValue(calculatedValueToInsert),
-              null,
-              0
-            )}\n${`\u001b[${36}m${`[${endingPartsBeginning}, ${str.length}]`}\u001b[${39}m`}: ${JSON.stringify(
-              str.slice(endingPartsBeginning),
-              null,
-              0
-            )}`
-          );
+          DEV &&
+            console.log(
+              `RETURNING:\n${`\u001b[${36}m${`[0, ${valueStartedAt}]`}\u001b[${39}m`}: ${JSON.stringify(
+                str.slice(0, valueStartedAt),
+                null,
+                0
+              )}\nstringifyAndEscapeValue(calculatedValueToInsert) = ${JSON.stringify(
+                stringifyAndEscapeValue(calculatedValueToInsert),
+                null,
+                0
+              )}\n${`\u001b[${36}m${`[${endingPartsBeginning}, ${str.length}]`}\u001b[${39}m`}: ${JSON.stringify(
+                str.slice(endingPartsBeginning),
+                null,
+                0
+              )}`
+            );
           return `${str.slice(0, valueStartedAt)}${stringifyAndEscapeValue(
             calculatedValueToInsert
           )}${extraLineBreak}${str.slice(endingPartsBeginning)}`;
@@ -954,7 +972,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
 }
 
 function set(str: string, path: string, valToInsert: string | number): string {
-  console.log(`957 set()`);
+  DEV && console.log(`975 set()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
       `edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as ${JSON.stringify(
@@ -968,7 +986,7 @@ function set(str: string, path: string, valToInsert: string | number): string {
 }
 
 function del(str: string, path: string): string {
-  console.log(`971 del()`);
+  DEV && console.log(`989 del()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
       `edit-package-json/del(): [THROW_ID_02] first input argument must be a non-empty string. It was given as ${JSON.stringify(

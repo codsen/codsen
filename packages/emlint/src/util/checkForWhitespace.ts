@@ -10,6 +10,9 @@ interface Res {
   trimmedVal: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function checkForWhitespace(str: string, idxOffset: number): Res {
   // insurance
   if (typeof str !== "string") {
@@ -27,21 +30,23 @@ function checkForWhitespace(str: string, idxOffset: number): Res {
   // ...left side:
   if (!str.length || !str[0].trim().length) {
     charStart = right(str) as any; // returns digit or null - index of next non whitespace char on the right
-    console.log(
-      `031 checkForWhitespace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
-        charStart,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `035 checkForWhitespace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+          charStart,
+          null,
+          4
+        )}`
+      );
     if (!str.length || charStart === null) {
       // it's just whitespace here
       charEnd = null;
-      console.log(
-        `041 checkForWhitespace(): PUSH "Missing value." error on [${+idxOffset}, ${
-          +idxOffset + str.length
-        }]`
-      );
+      DEV &&
+        console.log(
+          `046 checkForWhitespace(): PUSH "Missing value." error on [${+idxOffset}, ${
+            +idxOffset + str.length
+          }]`
+        );
       errorArr.push({
         idxFrom: +idxOffset, // that is, idxOffset + 0
         idxTo: +idxOffset + str.length,
@@ -49,33 +54,36 @@ function checkForWhitespace(str: string, idxOffset: number): Res {
         fix: null, // can't fix - value is missing completely!
       });
     } else {
-      console.log(
-        `053 checkForWhitespace(): PUSH [${idxOffset}, ${
-          idxOffset + charStart
-        }]`
-      );
+      DEV &&
+        console.log(
+          `059 checkForWhitespace(): PUSH [${idxOffset}, ${
+            idxOffset + charStart
+          }]`
+        );
       gatheredRanges.push([idxOffset, idxOffset + charStart]);
     }
   }
   // ...right side:
   if (charEnd && !str[str.length - 1].trim()) {
     charEnd = (left(str, str.length - 1) as number) + 1;
+    DEV &&
+      console.log(
+        `071 checkForWhitespace(): SET ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+          charEnd,
+          null,
+          4
+        )}`
+      );
+    gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
+  }
+  DEV &&
     console.log(
-      `064 checkForWhitespace(): SET ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
-        charEnd,
+      `081 checkForWhitespace(): FIY, ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
+        gatheredRanges,
         null,
         4
       )}`
     );
-    gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
-  }
-  console.log(
-    `073 checkForWhitespace(): FIY, ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
-      gatheredRanges,
-      null,
-      4
-    )}`
-  );
 
   if (!gatheredRanges.length) {
     trimmedVal = str;
@@ -90,7 +98,7 @@ function checkForWhitespace(str: string, idxOffset: number): Res {
     gatheredRanges.length = 0;
     trimmedVal = str.trim();
   }
-  console.log(`093 checkForWhitespace(): END`);
+  DEV && console.log(`101 checkForWhitespace(): END`);
 
   return { charStart, charEnd, errorArr, trimmedVal };
 }

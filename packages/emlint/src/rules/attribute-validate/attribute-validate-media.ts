@@ -3,19 +3,28 @@ import { isMediaD } from "is-media-descriptor";
 import { Linter, RuleObjType } from "../../linter";
 import checkForWhitespace from "../../util/checkForWhitespace";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-media
 // -----------------------------------------------------------------------------
 
 function attributeValidateMedia(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateMedia() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateMedia() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `017 attributeValidateMedia(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `022 attributeValidateMedia(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "media") {
         // validate the parent
@@ -36,24 +45,26 @@ function attributeValidateMedia(context: Linter): RuleObjType {
           node.attribValueRaw,
           node.attribValueStartsAt as number
         );
-        console.log(
-          `${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
-            charStart,
-            null,
-            4
-          )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
-            charEnd,
-            null,
-            4
-          )}`
-        );
-        console.log(
-          `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-            errorArr,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+              charStart,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+              charEnd,
+              null,
+              4
+            )}`
+          );
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         // concat errors from "is-media-descriptor" and report all:
         errorArr
           .concat(
@@ -65,7 +76,7 @@ function attributeValidateMedia(context: Linter): RuleObjType {
             )
           )
           .forEach((errorObj) => {
-            console.log(`068 RAISE ERROR`);
+            DEV && console.log(`079 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-media" });
           });
       }

@@ -5,20 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import { validateString } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateHttpequiv(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateHttpequiv() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateHttpequiv() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateHttpequiv(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateHttpequiv(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "http-equiv") {
         // validate the parent
@@ -48,16 +53,17 @@ function attributeValidateHttpequiv(context: Linter): RuleObjType {
           }
         );
 
-        console.log(
-          `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-            errorArr,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`060 RAISE ERROR`);
+          DEV && console.log(`066 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-http-equiv",

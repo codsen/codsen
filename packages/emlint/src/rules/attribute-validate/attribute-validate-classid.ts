@@ -5,20 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateClassid(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateClassid() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateClassid() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateClassid(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateClassid(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "classid") {
         // validate the parent
@@ -37,7 +42,7 @@ function attributeValidateClassid(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`040 RAISE ERROR`);
+            DEV && console.log(`045 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-classid",

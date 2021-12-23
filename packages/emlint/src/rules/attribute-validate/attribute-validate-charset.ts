@@ -6,20 +6,25 @@ import { Linter, RuleObjType } from "../../linter";
 import { validateString } from "../../util/util";
 import { knownCharsets } from "../../util/constants";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateCharset(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateCharset() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateCharset() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `017 attributeValidateCharset(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `022 attributeValidateCharset(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "charset") {
         // validate the parent
@@ -56,16 +61,17 @@ function attributeValidateCharset(context: Linter): RuleObjType {
               permittedValues: knownCharsets,
             }
           );
-          console.log(
-            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`068 RAISE ERROR`);
+            DEV && console.log(`074 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-charset",

@@ -1,6 +1,9 @@
 import { Linter, RuleObjType } from "../../linter";
 import { isObj } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-required
 // -----------------------------------------------------------------------------
 
@@ -15,10 +18,11 @@ interface AttributeRequired {
 const attributeRequired: AttributeRequired = (context, opts) => {
   return {
     tag(node) {
-      console.log(
-        `███████████████████████████████████████ attributeRequired() ███████████████████████████████████████`
-      );
-      // console.log(
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeRequired() ███████████████████████████████████████`
+        );
+      // DEV && console.log(
       //   `022 attributeRequired(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -30,7 +34,7 @@ const attributeRequired: AttributeRequired = (context, opts) => {
         normalisedOpts[node.tagName] &&
         isObj(normalisedOpts[node.tagName])
       ) {
-        console.log(`033 attributeRequired(): check attrs`);
+        DEV && console.log(`037 attributeRequired(): check attrs`);
 
         Object.keys(normalisedOpts[node.tagName])
           // pick boolean true
@@ -43,9 +47,10 @@ const attributeRequired: AttributeRequired = (context, opts) => {
               !node.attribs ||
               !node.attribs.some((attrObj) => attrObj.attribName === attr)
             ) {
-              console.log(
-                `047 attributeRequired(): ${`\u001b[${31}m${`${attr} missing`}\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `052 attributeRequired(): ${`\u001b[${31}m${`${attr} missing`}\u001b[${39}m`}`
+                );
               context.report({
                 ruleId: "attribute-required",
                 message: `Attribute "${attr}" is missing.`,

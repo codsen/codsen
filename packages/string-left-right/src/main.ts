@@ -5,6 +5,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface Opts {
   i?: boolean;
 }
@@ -323,7 +325,7 @@ function seq(
   opts: Opts,
   args: any[]
 ): SeqOutput | null {
-  console.log(`326 seq() called:`);
+  DEV && console.log(`328 seq() called:`);
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -335,7 +337,7 @@ function seq(
     (direction === "left" && !str[~-idx])
   ) {
     // if next character on the particular side doesn't even exist, that's a quick end
-    console.log(`338 RETURN null`);
+    DEV && console.log(`340 RETURN null`);
     return null;
   }
   // we start to look on the particular side from index "idx".
@@ -343,7 +345,8 @@ function seq(
   // know where to start looking on from next. Any failed finding
   // in a sequence is instant return "null".
   let lastFinding = idx;
-  console.log(`346 Set lastFinding = ${lastFinding}. Starting the loop.`);
+  DEV &&
+    console.log(`349 Set lastFinding = ${lastFinding}. Starting the loop.`);
 
   let gaps: [number, number][] = [];
   let leftmostChar: number | undefined;
@@ -357,59 +360,65 @@ function seq(
   // we use while loop because for loop would not do in hungry matching cases,
   // where we need to repeat same step (hungrily matched character) few times.
   while (i < args.length) {
-    console.log(
-      `361 ${`\u001b[${34}m${`███████████████████████████████████████ seq() looping ${args[i]}`}\u001b[${39}m`}; i = ${i}`
-    );
-    if (!isStr(args[i]) || !args[i].length) {
+    DEV &&
       console.log(
-        `365 continue because ${JSON.stringify(
-          args[i],
-          null,
-          4
-        )} is not a non-empty string`
+        `365 ${`\u001b[${34}m${`███████████████████████████████████████ seq() looping ${args[i]}`}\u001b[${39}m`}; i = ${i}`
       );
+    if (!isStr(args[i]) || !args[i].length) {
+      DEV &&
+        console.log(
+          `370 continue because ${JSON.stringify(
+            args[i],
+            null,
+            4
+          )} is not a non-empty string`
+        );
       i += 1;
       continue;
     }
-    console.log(
-      `375 ${`\u001b[${36}m${`============= args[${i}]=${args[i]}`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `381 ${`\u001b[${36}m${`============= args[${i}]=${args[i]}`}\u001b[${39}m`}`
+      );
     let { value, optional, hungry } = separateValueFromFlags(args[i]);
-    console.log(
-      `379 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${JSON.stringify(
-        value,
-        null,
-        4
-      )}; ${`\u001b[${33}m${`optional`}\u001b[${39}m`} = ${JSON.stringify(
-        optional,
-        null,
-        4
-      )}; ${`\u001b[${33}m${`hungry`}\u001b[${39}m`} = ${JSON.stringify(
-        hungry,
-        null,
-        4
-      )};`
-    );
+    DEV &&
+      console.log(
+        `386 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${JSON.stringify(
+          value,
+          null,
+          4
+        )}; ${`\u001b[${33}m${`optional`}\u001b[${39}m`} = ${JSON.stringify(
+          optional,
+          null,
+          4
+        )}; ${`\u001b[${33}m${`hungry`}\u001b[${39}m`} = ${JSON.stringify(
+          hungry,
+          null,
+          4
+        )};`
+      );
 
     let whattsOnTheSide =
       direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
-    console.log(
-      `397 ██ ${`\u001b[${33}m${`whattsOnTheSide`}\u001b[${39}m`} = ${JSON.stringify(
-        whattsOnTheSide,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `405 ██ ${`\u001b[${33}m${`whattsOnTheSide`}\u001b[${39}m`} = ${JSON.stringify(
+          whattsOnTheSide,
+          null,
+          4
+        )}`
+      );
     if (
       (opts.i &&
         str[whattsOnTheSide as number].toLowerCase() === value.toLowerCase()) ||
       (!opts.i && str[whattsOnTheSide as number] === value)
     ) {
-      console.log(
-        `409 SET whattsOnTheSide = ${whattsOnTheSide} (${
-          str[whattsOnTheSide as number]
-        })`
-      );
+      DEV &&
+        console.log(
+          `418 SET whattsOnTheSide = ${whattsOnTheSide} (${
+            str[whattsOnTheSide as number]
+          })`
+        );
 
       // OK, one was matched, we're in the right clauses (otherwise we'd skip
       // if it was optional or break the matching)
@@ -419,13 +428,14 @@ function seq(
         direction === "right"
           ? right(str, whattsOnTheSide as number)
           : left(str, whattsOnTheSide as number);
-      console.log(
-        `423 ██ ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
-          temp,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `433 ██ ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+            temp,
+            null,
+            4
+          )}`
+        );
       if (
         hungry &&
         ((opts.i &&
@@ -434,32 +444,35 @@ function seq(
       ) {
         // satiated means next iteration is allowed not to match anything
         satiated = true;
-        console.log(
-          `438 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`satiated`}\u001b[${39}m`} = ${JSON.stringify(
-            satiated,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `449 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`satiated`}\u001b[${39}m`} = ${JSON.stringify(
+              satiated,
+              null,
+              4
+            )}`
+          );
       } else {
         // move on
         i += 1;
+        DEV &&
+          console.log(
+            `460 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
+              i,
+              null,
+              4
+            )}`
+          );
+      }
+
+      DEV &&
         console.log(
-          `448 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
+          `470 ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
             i,
             null,
             4
           )}`
         );
-      }
-
-      console.log(
-        `457 ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
-          i,
-          null,
-          4
-        )}`
-      );
 
       // 1. first, tackle gaps
 
@@ -469,17 +482,22 @@ function seq(
         direction === "right" &&
         whattsOnTheSide > lastFinding + 1
       ) {
-        console.log(`472 push gap [${lastFinding + 1}, ${whattsOnTheSide}]`);
+        DEV &&
+          console.log(`486 push gap [${lastFinding + 1}, ${whattsOnTheSide}]`);
         gaps.push([lastFinding + 1, whattsOnTheSide]);
       } else if (
         direction === "left" &&
         typeof whattsOnTheSide === "number" &&
         whattsOnTheSide < ~-lastFinding
       ) {
-        console.log(`479 unshift gap [${whattsOnTheSide + 1}, ${lastFinding}]`);
+        DEV &&
+          console.log(
+            `495 unshift gap [${whattsOnTheSide + 1}, ${lastFinding}]`
+          );
         gaps.unshift([whattsOnTheSide + 1, lastFinding]);
       }
-      console.log(`482 ${`\u001b[${32}m${value} MATCHED!\u001b[${39}m`}`);
+      DEV &&
+        console.log(`500 ${`\u001b[${32}m${value} MATCHED!\u001b[${39}m`}`);
 
       // 2. second, tackle the matching
 
@@ -497,47 +515,51 @@ function seq(
         leftmostChar = whattsOnTheSide as number;
       }
 
-      console.log(`500 SET lastFinding = ${lastFinding}`);
+      DEV && console.log(`518 SET lastFinding = ${lastFinding}`);
     } else if (optional) {
-      console.log(
-        `503 ${`\u001b[${32}m${`CONTINUE`}\u001b[${39}m`} because it was optional`
-      );
+      DEV &&
+        console.log(
+          `522 ${`\u001b[${32}m${`CONTINUE`}\u001b[${39}m`} because it was optional`
+        );
       i += 1;
       continue;
     } else if (satiated) {
-      console.log(
-        `509 ${`\u001b[${32}m${`CONTINUE`}\u001b[${39}m`} because "satiated" is on`
-      );
+      DEV &&
+        console.log(
+          `529 ${`\u001b[${32}m${`CONTINUE`}\u001b[${39}m`} because "satiated" is on`
+        );
       i += 1;
       satiated = undefined;
       continue;
     } else {
-      console.log(`515 RETURN null`);
+      DEV && console.log(`535 RETURN null`);
       return null;
     }
   }
-  console.log(
-    `520 ${`\u001b[${34}m${`███████████████████████████████████████ seq() stops looping`}\u001b[${39}m`}`
-  );
-  console.log(`522 FINAL gaps = ${JSON.stringify(gaps, null, 4)}`);
+  DEV &&
+    console.log(
+      `541 ${`\u001b[${34}m${`███████████████████████████████████████ seq() stops looping`}\u001b[${39}m`}`
+    );
+  DEV && console.log(`543 FINAL gaps = ${JSON.stringify(gaps, null, 4)}`);
 
   // if all arguments in sequence were empty strings, we return falsey null:
   if (leftmostChar === undefined || rightmostChar === undefined) {
-    console.log(`526 RETURN ${`\u001b[${33}m${`null`}\u001b[${39}m`}`);
+    DEV && console.log(`547 RETURN ${`\u001b[${33}m${`null`}\u001b[${39}m`}`);
     return null;
   }
 
-  console.log(
-    `531 RETURN ${`\u001b[${33}m${JSON.stringify(
-      {
-        gaps,
-        leftmostChar,
-        rightmostChar,
-      },
-      null,
-      4
-    )}\u001b[${39}m`}`
-  );
+  DEV &&
+    console.log(
+      `553 RETURN ${`\u001b[${33}m${JSON.stringify(
+        {
+          gaps,
+          leftmostChar,
+          rightmostChar,
+        },
+        null,
+        4
+      )}\u001b[${39}m`}`
+    );
   return { gaps, leftmostChar, rightmostChar };
 }
 
@@ -573,7 +595,7 @@ const seqDefaults: Opts = {
 function leftSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
   // if there are no arguments, it becomes left()
   if (!args || !args.length) {
-    // console.log(`493 leftSeq() calling left()`);
+    // DEV && console.log(`493 leftSeq() calling left()`);
     // return left(str, idx);
     throw new Error(
       `string-left-right/leftSeq(): only two input arguments were passed! Did you intend to use left() method instead?`
@@ -585,22 +607,23 @@ function leftSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
   } else {
     opts = seqDefaults;
   }
-  console.log(
-    `589 leftSeq() ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `612 leftSeq() ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
 
-  console.log(`596 leftSeq() calling seq()`);
+  DEV && console.log(`619 leftSeq() calling seq()`);
   return seq("left", str, idx, opts, Array.from(args).reverse());
 }
 
 function rightSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
   // if there are no arguments, it becomes right()
   if (!args || !args.length) {
-    // console.log(`520 rightSeq() calling right()`);
+    // DEV && console.log(`520 rightSeq() calling right()`);
     // return right(str, idx);
     throw new Error(
       `string-left-right/rightSeq(): only two input arguments were passed! Did you intend to use right() method instead?`
@@ -612,14 +635,15 @@ function rightSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
   } else {
     opts = seqDefaults;
   }
-  console.log(
-    `616 rightSeq() ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
-  console.log(`622 rightSeq() calling seq()`);
+  DEV &&
+    console.log(
+      `640 rightSeq() ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
+  DEV && console.log(`646 rightSeq() calling seq()`);
   return seq("right", str, idx, opts, args);
 }
 
@@ -677,7 +701,7 @@ function chomp(
     (direction === "right" && !str[idx + 1]) ||
     (direction === "left" && +idx === 0)
   ) {
-    console.log(`680 there's no space to go further in this direction`);
+    DEV && console.log(`704 there's no space to go further in this direction`);
     return null;
   }
 
@@ -685,60 +709,67 @@ function chomp(
   // ACTION.
   //
 
-  console.log(
-    `689 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}; ${`\u001b[${33}m${`args`}\u001b[${39}m`} = ${JSON.stringify(
-      args,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `714 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}; ${`\u001b[${33}m${`args`}\u001b[${39}m`} = ${JSON.stringify(
+        args,
+        null,
+        4
+      )}`
+    );
 
   let lastRes = null;
   let lastIdx = null;
   do {
-    console.log();
-    console.log(
-      `705 ${`\u001b[${90}m${`███████████████████████████████████████ v`}\u001b[${39}m`}\n`
-    );
+    DEV && console.log();
+    DEV &&
+      console.log(
+        `731 ${`\u001b[${90}m${`███████████████████████████████████████ v`}\u001b[${39}m`}\n`
+      );
     lastRes =
       direction === "right"
         ? rightSeq(str, typeof lastIdx === "number" ? lastIdx : idx, ...args)
         : leftSeq(str, typeof lastIdx === "number" ? lastIdx : idx, ...args);
-    console.log();
-    console.log(
-      `713 ${`\u001b[${90}m${`███████████████████████████████████████ ^`}\u001b[${39}m`}\n`
-    );
-    console.log(
-      `716 ${`\u001b[${36}m${`lastRes = ${JSON.stringify(
-        lastRes,
-        null,
-        4
-      )}`}\u001b[${39}m`}`
-    );
+    DEV && console.log();
+    DEV &&
+      console.log(
+        `740 ${`\u001b[${90}m${`███████████████████████████████████████ ^`}\u001b[${39}m`}\n`
+      );
+    DEV &&
+      console.log(
+        `744 ${`\u001b[${36}m${`lastRes = ${JSON.stringify(
+          lastRes,
+          null,
+          4
+        )}`}\u001b[${39}m`}`
+      );
     if (lastRes !== null) {
       lastIdx =
         direction === "right" ? lastRes.rightmostChar : lastRes.leftmostChar;
-      console.log(
-        `726 ${`\u001b[${36}m${`another sequence; confirmed! Now set `}\u001b[${39}m`} ${`\u001b[${33}m${`lastIdx`}\u001b[${39}m`} = ${JSON.stringify(
-          lastIdx,
-          null,
-          4
-        )};`
-      );
+      DEV &&
+        console.log(
+          `755 ${`\u001b[${36}m${`another sequence; confirmed! Now set `}\u001b[${39}m`} ${`\u001b[${33}m${`lastIdx`}\u001b[${39}m`} = ${JSON.stringify(
+            lastIdx,
+            null,
+            4
+          )};`
+        );
     }
   } while (lastRes);
   if (lastIdx != null && direction === "right") {
     lastIdx += 1;
   }
-  console.log();
-  console.log(
-    `739 ${`\u001b[${90}m${`███████████████████████████████████████`}\u001b[${39}m`} fin\n`
-  );
-  console.log(`741 ${`\u001b[${33}m${`lastIdx`}\u001b[${39}m`} = ${lastIdx}`);
+  DEV && console.log();
+  DEV &&
+    console.log(
+      `769 ${`\u001b[${90}m${`███████████████████████████████████████`}\u001b[${39}m`} fin\n`
+    );
+  DEV &&
+    console.log(`772 ${`\u001b[${33}m${`lastIdx`}\u001b[${39}m`} = ${lastIdx}`);
 
   if (lastIdx === null) {
     // if nothing was matched
@@ -760,22 +791,24 @@ function chomp(
     // quick ending - no whitespace on the right at all:
     if (str[lastIdx]?.trim()) {
       // if the character follows tightly right after,
-      console.log(`763 RETURN ${lastIdx}`);
+      DEV && console.log(`794 RETURN ${lastIdx}`);
       return lastIdx;
     }
     // Default, 0 is leave single space if possible or chomp up to nearest line
     // break character or chomp up to EOL
     let whatsOnTheRight = right(str, lastIdx);
-    console.log(
-      `770 SET ${`\u001b[${33}m${`whatsOnTheRight`}\u001b[${39}m`} = ${whatsOnTheRight}`
-    );
+    DEV &&
+      console.log(
+        `802 SET ${`\u001b[${33}m${`whatsOnTheRight`}\u001b[${39}m`} = ${whatsOnTheRight}`
+      );
     if (!opts || opts.mode === 0) {
       if (whatsOnTheRight === lastIdx + 1) {
         // if there's one whitespace character, Bob's your uncle here's
         // the final result
-        console.log(
-          `777 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${lastIdx}`
-        );
+        DEV &&
+          console.log(
+            `810 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${lastIdx}`
+          );
         return lastIdx;
       }
       if (
@@ -783,37 +816,39 @@ function chomp(
         str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") ||
         str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")
       ) {
-        console.log(`786 loop`);
+        DEV && console.log(`819 loop`);
         // if there are line break characters between current "lastIdx" we're on
         // and the first non-whitespace character on the right
         for (let y = lastIdx, len = str.length; y < len; y++) {
           if (`\n\r`.includes(str[y])) {
-            console.log(`791 RETURN ${y}`);
+            DEV && console.log(`824 RETURN ${y}`);
             return y;
           }
         }
       } else {
-        console.log(
-          `797 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
-            whatsOnTheRight ? ~-whatsOnTheRight : str.length
-          }`
-        );
+        DEV &&
+          console.log(
+            `831 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
+              whatsOnTheRight ? ~-whatsOnTheRight : str.length
+            }`
+          );
         return whatsOnTheRight ? ~-whatsOnTheRight : str.length;
       }
     } else if (opts.mode === 1) {
       // mode 1 doesn't touch the whitespace, so it's quick:
-      console.log(`805 RETURN ${lastIdx}`);
+      DEV && console.log(`839 RETURN ${lastIdx}`);
       return lastIdx;
     } else if (opts.mode === 2) {
       // mode 2 hungrily chomps all whitespace except newlines
       let remainderString = str.slice(lastIdx);
-      console.log(
-        `811 ${`\u001b[${33}m${`remainderString`}\u001b[${39}m`} = ${JSON.stringify(
-          remainderString,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `846 ${`\u001b[${33}m${`remainderString`}\u001b[${39}m`} = ${JSON.stringify(
+            remainderString,
+            null,
+            4
+          )}`
+        );
       if (
         remainderString.trim() ||
         remainderString.includes("\n") ||
@@ -822,19 +857,19 @@ function chomp(
         // if there are line breaks, we need to loop to chomp up to them but not further
         for (let y = lastIdx, len = str.length; y < len; y++) {
           if (str[y].trim() || `\n\r`.includes(str[y])) {
-            console.log(`825 RETURN ${y}`);
+            DEV && console.log(`860 RETURN ${y}`);
             return y;
           }
         }
       }
       // ELSE, last but not least, chomp to the end:
-      console.log(`831 RETURN ${str.length}`);
+      DEV && console.log(`866 RETURN ${str.length}`);
       return str.length;
     }
     // ELSE - mode 3
 
     // mode 3 is an aggro chomp - will chump all whitespace
-    console.log(`837 RETURN ${whatsOnTheRight || str.length}`);
+    DEV && console.log(`872 RETURN ${whatsOnTheRight || str.length}`);
     return whatsOnTheRight || str.length;
 
     //
@@ -856,25 +891,30 @@ function chomp(
   // quick ending - no whitespace on the left at all:
   if (str[lastIdx] && str[~-lastIdx] && str[~-lastIdx].trim()) {
     // if the non-whitespace character is on the left
-    console.log(`859 RETURN ${lastIdx}`);
+    DEV && console.log(`894 RETURN ${lastIdx}`);
     return lastIdx;
   }
 
   // Default, 0 is leave single space if possible or chomp up to nearest line
   // break character or chomp up to index zero, start of the string
   let whatsOnTheLeft = left(str, lastIdx);
-  console.log(
-    `867 SET ${`\u001b[${33}m${`whatsOnTheLeft`}\u001b[${39}m`} = ${whatsOnTheLeft}`
-  );
-  console.log(
-    `870 FIY, ${`\u001b[${33}m${`lastIdx`}\u001b[${39}m`} = ${lastIdx}`
-  );
+  DEV &&
+    console.log(
+      `903 SET ${`\u001b[${33}m${`whatsOnTheLeft`}\u001b[${39}m`} = ${whatsOnTheLeft}`
+    );
+  DEV &&
+    console.log(
+      `907 FIY, ${`\u001b[${33}m${`lastIdx`}\u001b[${39}m`} = ${lastIdx}`
+    );
   if (!opts || opts.mode === 0) {
-    console.log(`873`);
+    DEV && console.log(`910`);
     if (whatsOnTheLeft === lastIdx - 2) {
       // if there's one whitespace character between here and next real character, Bob's your uncle here's
       // the final result
-      console.log(`877 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${lastIdx}`);
+      DEV &&
+        console.log(
+          `916 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${lastIdx}`
+        );
       return lastIdx;
     }
     if (
@@ -882,32 +922,34 @@ function chomp(
       str.slice(0, lastIdx).includes("\n") ||
       str.slice(0, lastIdx).includes("\r")
     ) {
-      console.log(
-        `886 ${`\u001b[${36}m${`loop backwards from ${lastIdx}`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `927 ${`\u001b[${36}m${`loop backwards from ${lastIdx}`}\u001b[${39}m`}`
+        );
       // if there are line break characters between current "lastIdx" we're on
       // and the first non-whitespace character on the right
       for (let y = lastIdx; y--; ) {
-        console.log(
-          `892 ${`\u001b[${36}m${`str[${y}] = ${JSON.stringify(
-            str[y],
-            null,
-            0
-          )}`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `934 ${`\u001b[${36}m${`str[${y}] = ${JSON.stringify(
+              str[y],
+              null,
+              0
+            )}`}\u001b[${39}m`}`
+          );
         if (`\n\r`.includes(str[y]) || str[y].trim()) {
-          console.log(`899 RETURN ${y + 1 + (str[y].trim() ? 1 : 0)}`);
+          DEV && console.log(`941 RETURN ${y + 1 + (str[y].trim() ? 1 : 0)}`);
           return y + 1 + (str[y].trim() ? 1 : 0);
         }
       }
     }
     // ELSE
-    console.log(`905 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 0`);
+    DEV && console.log(`947 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 0`);
     return 0;
   }
   if (opts.mode === 1) {
     // mode 1 doesn't touch the whitespace, so it's quick:
-    console.log(`910 RETURN ${lastIdx}`);
+    DEV && console.log(`952 RETURN ${lastIdx}`);
     return lastIdx;
   }
   if (opts.mode === 2) {
@@ -921,19 +963,22 @@ function chomp(
       // if there are line breaks, we need to loop to chomp up to them but not further
       for (let y = lastIdx; y--; ) {
         if (str[y].trim() || `\n\r`.includes(str[y])) {
-          console.log(`924 RETURN ${y + 1}`);
+          DEV && console.log(`966 RETURN ${y + 1}`);
           return y + 1;
         }
       }
     }
     // ELSE, last but not least, chomp to the end:
-    console.log(`930 RETURN 0`);
+    DEV && console.log(`972 RETURN 0`);
     return 0;
   }
   // ELSE - mode 3
 
   // mode 3 is an aggro chomp - will chump all whitespace
-  console.log(`936 RETURN ${whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0}`);
+  DEV &&
+    console.log(
+      `980 RETURN ${whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0}`
+    );
   return whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0;
 
   //
@@ -972,19 +1017,20 @@ function chomp(
 //
 
 function chompLeft(str: string, idx: number, ...args: any[]): number | null {
-  console.log(
-    `976 chompLeft(): received ${`\u001b[${33}m${`args`}\u001b[${39}m`} = ${JSON.stringify(
-      args,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `1022 chompLeft(): received ${`\u001b[${33}m${`args`}\u001b[${39}m`} = ${JSON.stringify(
+        args,
+        null,
+        4
+      )}`
+    );
   // if there are no arguments, null
   if (!args.length || (args.length === 1 && isObj(args[0]))) {
-    console.log(`984 return null because there's nothing to match`);
+    DEV && console.log(`1030 return null because there's nothing to match`);
     return null;
   }
-  console.log(`987 chompLeft()`);
+  DEV && console.log(`1033 chompLeft()`);
 
   //
   // OPTS.
@@ -1013,16 +1059,17 @@ function chompLeft(str: string, idx: number, ...args: any[]): number | null {
         } (type ${typeof opts.mode})`
       );
     }
-    console.log(`1016 FINAL opts = ${JSON.stringify(opts, null, 4)}`);
+    DEV && console.log(`1062 FINAL opts = ${JSON.stringify(opts, null, 4)}`);
     return chomp("left", str, idx, opts, clone(args).slice(1));
   }
   if (!isStr(args[0])) {
-    console.log(`1020 FINAL opts = ${JSON.stringify(defaults, null, 4)}`);
+    DEV &&
+      console.log(`1067 FINAL opts = ${JSON.stringify(defaults, null, 4)}`);
     return chomp("left", str, idx, defaults, clone(args).slice(1));
   }
   // ELSE
   // all arguments are values to match, first element is not options object
-  console.log(`1025 FINAL opts = ${JSON.stringify(defaults, null, 4)}`);
+  DEV && console.log(`1072 FINAL opts = ${JSON.stringify(defaults, null, 4)}`);
   return chomp("left", str, idx, defaults, clone(args));
 }
 
@@ -1053,19 +1100,20 @@ function chompLeft(str: string, idx: number, ...args: any[]): number | null {
 //
 
 function chompRight(str: string, idx: number, ...args: any[]): number | null {
-  console.log(
-    `1057 chompRight(): received ${`\u001b[${33}m${`args`}\u001b[${39}m`} = ${JSON.stringify(
-      args,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `1105 chompRight(): received ${`\u001b[${33}m${`args`}\u001b[${39}m`} = ${JSON.stringify(
+        args,
+        null,
+        4
+      )}`
+    );
   // if there are no arguments, null
   if (!args.length || (args.length === 1 && isObj(args[0]))) {
-    console.log(`1065 return null because there's nothing to match`);
+    DEV && console.log(`1113 return null because there's nothing to match`);
     return null;
   }
-  console.log(`1068 chompRight()`);
+  DEV && console.log(`1116 chompRight()`);
 
   //
   // OPTS.
@@ -1094,16 +1142,17 @@ function chompRight(str: string, idx: number, ...args: any[]): number | null {
         } (type ${typeof opts.mode})`
       );
     }
-    console.log(`1097 FINAL opts = ${JSON.stringify(opts, null, 4)}`);
+    DEV && console.log(`1145 FINAL opts = ${JSON.stringify(opts, null, 4)}`);
     return chomp("right", str, idx, opts, clone(args).slice(1));
   }
   if (!isStr(args[0])) {
-    console.log(`1101 FINAL opts = ${JSON.stringify(defaults, null, 4)}`);
+    DEV &&
+      console.log(`1150 FINAL opts = ${JSON.stringify(defaults, null, 4)}`);
     return chomp("right", str, idx, defaults, clone(args).slice(1));
   }
   // ELSE
   // all arguments are values to match, first element is not options object
-  console.log(`1106 FINAL opts = ${JSON.stringify(defaults, null, 4)}`);
+  DEV && console.log(`1155 FINAL opts = ${JSON.stringify(defaults, null, 4)}`);
   return chomp("right", str, idx, defaults, clone(args));
 }
 

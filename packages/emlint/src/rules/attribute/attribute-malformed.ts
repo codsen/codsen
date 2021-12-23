@@ -4,6 +4,9 @@ import { left } from "string-left-right";
 
 import { Linter, RuleObjType } from "../../linter";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-malformed
 // -----------------------------------------------------------------------------
 
@@ -17,19 +20,22 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
 
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeMalformed() ███████████████████████████████████████`
-      );
-      console.log(
-        `024 ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
-          config,
-          null,
-          4
-        )}`
-      );
-      console.log(
-        `031 attributeMalformed(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeMalformed() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `029 ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
+            config,
+            null,
+            4
+          )}`
+        );
+      DEV &&
+        console.log(
+          `037 attributeMalformed(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       let inTheEndUseDoubles = true;
       if (
@@ -42,13 +48,14 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
       ) {
         inTheEndUseDoubles = false;
       }
-      console.log(
-        `046 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`inTheEndUseDoubles`}\u001b[${39}m`} = ${JSON.stringify(
-          inTheEndUseDoubles,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `053 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`inTheEndUseDoubles`}\u001b[${39}m`} = ${JSON.stringify(
+            inTheEndUseDoubles,
+            null,
+            4
+          )}`
+        );
 
       let repeatedQuotesPresent = false;
 
@@ -56,7 +63,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         // exclude ESP tags etc.
         node.attribName === undefined
       ) {
-        console.log(`059 early bail, this is not an attribute token`);
+        DEV && console.log(`066 early bail, this is not an attribute token`);
         return;
       }
 
@@ -68,9 +75,10 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         !node.attribName.startsWith("xmlns:") &&
         !blacklist.includes(node.parent.tagName)
       ) {
-        console.log(
-          `072 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `080 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
+          );
 
         let somethingMatched = false;
 
@@ -78,7 +86,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
           if (oneOfAttribs === node.attribName.toLowerCase()) {
             // only the letter case is wrong, for example
             // <img SRC="spacer.gif" ALT=""/>
-            console.log(`081 RAISE ERROR`);
+            DEV && console.log(`089 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Should be lowercase.`,
@@ -99,7 +107,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
           } else if (leven(oneOfAttribs, node.attribName) === 1) {
             // <img srcc="spacer.gif" altt=""/>
             //         ^                 ^
-            console.log(`102 RAISE ERROR`);
+            DEV && console.log(`110 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Probably meant "${oneOfAttribs}".`,
@@ -122,9 +130,10 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
 
         if (!somethingMatched) {
           // the attribute was not recognised
-          console.log(
-            `126 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
-          );
+          DEV &&
+            console.log(
+              `135 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
+            );
           context.report({
             ruleId: "attribute-malformed",
             message: `Unrecognised attribute "${node.attribName}".`,
@@ -144,7 +153,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
             node.attribClosingQuoteAt &&
             node.attribClosingQuoteAt === node.attribOpeningQuoteAt + 1))
       ) {
-        console.log(`147`);
+        DEV && console.log(`156`);
         if (
           // if opening quotes are present, let's use their location
           node.attribOpeningQuoteAt !== null &&
@@ -153,16 +162,17 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
             node.attribOpeningQuoteAt
           ) !== "="
         ) {
-          console.log(`156`);
+          DEV && console.log(`165`);
           let message = `Malformed around equal.`;
           if (
             !context.str
               .slice(node.attribNameEndsAt, node.attribOpeningQuoteAt)
               .includes("=")
           ) {
-            console.log(
-              `164 ${`\u001b[${31}m${`EQUAL MISSING`}\u001b[${39}m`}`
-            );
+            DEV &&
+              console.log(
+                `174 ${`\u001b[${31}m${`EQUAL MISSING`}\u001b[${39}m`}`
+              );
             message = `Equal is missing.`;
           }
 
@@ -176,9 +186,10 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
             whatToAdd = undefined;
           }
 
-          console.log(
-            `180 ${`\u001b[${31}m${`RAISE ERROR ABOUT EQUALS SIGN`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `191 ${`\u001b[${31}m${`RAISE ERROR ABOUT EQUALS SIGN`}\u001b[${39}m`}`
+            );
           context.report({
             ruleId: "attribute-malformed",
             message,
@@ -204,9 +215,10 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         context.str[node.attribValueStartsAt] ===
           context.str[node.attribOpeningQuoteAt]
       ) {
-        console.log(
-          `208 ${`\u001b[${31}m${`REPEATED OPENING QUOTES`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `220 ${`\u001b[${31}m${`REPEATED OPENING QUOTES`}\u001b[${39}m`}`
+          );
         let message = `Delete repeated opening quotes.`;
         context.report({
           ruleId: "attribute-malformed",
@@ -233,9 +245,10 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         context.str[node.attribValueEndsAt] ===
           context.str[node.attribClosingQuoteAt]
       ) {
-        console.log(
-          `237 ${`\u001b[${31}m${`REPEATED CLOSING QUOTES`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `250 ${`\u001b[${31}m${`REPEATED CLOSING QUOTES`}\u001b[${39}m`}`
+          );
         let message = `Delete repeated closing quotes.`;
         context.report({
           ruleId: "attribute-malformed",
@@ -258,7 +271,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
       ) {
         // does it exist?
         if (node.attribOpeningQuoteAt) {
-          console.log(`261 attributeMalformed(): wrong opening quote`);
+          DEV && console.log(`274 attributeMalformed(): wrong opening quote`);
           context.report({
             ruleId: "attribute-malformed",
             message: `Wrong opening quote.`,
@@ -275,7 +288,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
             },
           });
         } else if (node.attribValueStartsAt) {
-          console.log(`278 attributeMalformed(): missing opening quote`);
+          DEV && console.log(`291 attributeMalformed(): missing opening quote`);
           context.report({
             ruleId: "attribute-malformed",
             message: `Add an opening quote.`,
@@ -300,7 +313,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         (inTheEndUseDoubles ? `"` : `'`)
       ) {
         if (node.attribClosingQuoteAt) {
-          console.log(`303 attributeMalformed(): wrong closing quote`);
+          DEV && console.log(`316 attributeMalformed(): wrong closing quote`);
           context.report({
             ruleId: "attribute-malformed",
             message: `Wrong closing quote.`,
@@ -317,7 +330,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
             },
           });
         } else if (node.attribValueEndsAt || node.attribOpeningQuoteAt) {
-          console.log(`320 attributeMalformed(): missing closing quote`);
+          DEV && console.log(`333 attributeMalformed(): missing closing quote`);
           // if the is no value, only opening quote:
           // <img alt="/>
           // value will be null, so we use opening quote's position instead
@@ -360,7 +373,7 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         (node.attribLeft + 2 !== node.attribStarts ||
           context.str[node.attribStarts - 1] !== " ")
       ) {
-        console.log(`363 whitespace missing`);
+        DEV && console.log(`376 whitespace missing`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Add a space.`,
@@ -381,12 +394,13 @@ function attributeMalformed(context: Linter, ...config: Config[]): RuleObjType {
         ((inTheEndUseDoubles && node.attribValueRaw.includes(`"`)) ||
           (!inTheEndUseDoubles && node.attribValueRaw.includes(`'`)))
       ) {
-        console.log(
-          `385 ${`\u001b[${31}m${`unencoded quotes present within the value!`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `399 ${`\u001b[${31}m${`unencoded quotes present within the value!`}\u001b[${39}m`}`
+          );
         node.attribValueRaw.split("").forEach((char, idx) => {
           if (char === (inTheEndUseDoubles ? `"` : "'")) {
-            console.log(`389 whitespace missing`);
+            DEV && console.log(`403 whitespace missing`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Unencoded quote.`,

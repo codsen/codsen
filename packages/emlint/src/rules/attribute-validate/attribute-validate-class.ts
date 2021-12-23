@@ -6,16 +6,25 @@ import { Linter, RuleObjType } from "../../linter";
 import checkClassOrIdValue from "../../util/checkClassOrIdValue";
 import checkForWhitespace from "../../util/checkForWhitespace";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateClass(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateClass() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateClass() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `017 attributeValidateClass(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `022 attributeValidateClass(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "class") {
         // validate the parent
@@ -55,21 +64,22 @@ function attributeValidateClass(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `059 \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charStart`}\u001b[${39}m`} = ${JSON.stringify(
-              (node.attribValueStartsAt as number) + (charStart as number),
-              null,
-              4
-            )}; \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
-              (node.attribValueStartsAt as number) + (charEnd as number),
-              null,
-              4
-            )}; \n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `069 \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+                (node.attribValueStartsAt as number) + (charStart as number),
+                null,
+                4
+              )}; \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+                (node.attribValueStartsAt as number) + (charEnd as number),
+                null,
+                4
+              )}; \n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           if (typeof charStart === "number" && typeof charEnd === "number") {
             checkClassOrIdValue(
@@ -84,16 +94,17 @@ function attributeValidateClass(context: Linter): RuleObjType {
             );
           }
 
-          console.log(
-            `088 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `099 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`096 RAISE ERROR`);
+            DEV && console.log(`107 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-class" });
           });
         }

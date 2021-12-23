@@ -37,7 +37,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-    "dev": "MODE=dev node '../../ops/scripts/esbuild.js' && npm run dts",
+    "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
     "dts": "rollup -c",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js'",
@@ -45,7 +45,7 @@
     "lint": "eslint . --fix",
     "perf": "node perf/check.js",
     "prepare": "echo 'ready'",
-    "pretest": "npm run build",
+    "pretest": "npm run lect && npm run build",
     "test": "c8 npm run unit && npm run examples && npm run lint",
     "unit": "uvu test"
   },
@@ -65,14 +65,7 @@
         ""
       ]
     },
-    "req": "{ stri }",
-    "various": {
-      "devDependencies": [
-        "lodash.clonedeep",
-        "object-path",
-        "test-mixer"
-      ]
-    }
+    "various": {}
   },
   "dependencies": {
     "codsen-tokenizer": "^6.0.7",
@@ -83,8 +76,6 @@
   },
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
-    "@types/node": "^16.11.11",
-    "@types/tap": "^15.0.5",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "lodash.clonedeep": "^4.5.0",

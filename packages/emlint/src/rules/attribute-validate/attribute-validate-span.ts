@@ -5,12 +5,16 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateSpan(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateSpan() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateSpan() ███████████████████████████████████████`
+        );
 
       if (node.attribName === "span") {
         // validate the parent
@@ -35,12 +39,13 @@ function attributeValidateSpan(context: Linter): RuleObjType {
             customPxMessage: `Columns number is not in pixels.`,
           }
         );
-        console.log(
-          `039 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
+        DEV &&
+          console.log(
+            `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`043 RAISE ERROR`);
+          DEV && console.log(`048 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-span" });
         });
       }

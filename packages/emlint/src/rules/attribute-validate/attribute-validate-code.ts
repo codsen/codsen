@@ -5,16 +5,21 @@ import { Linter, RuleObjType } from "../../linter";
 
 import checkForWhitespace from "../../util/checkForWhitespace";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateCode(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateCode() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateCode() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateCode(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateCode(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "code") {
         // validate the parent
@@ -43,27 +48,29 @@ function attributeValidateCode(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
-              charStart,
-              null,
-              4
-            )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
-              charEnd,
-              null,
-              4
-            )}`
-          );
-          console.log(
-            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+                charStart,
+                null,
+                4
+              )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+                charEnd,
+                null,
+                4
+              )}`
+            );
+          DEV &&
+            console.log(
+              `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`066 RAISE ERROR`);
+            DEV && console.log(`073 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-code" });
           });
         }

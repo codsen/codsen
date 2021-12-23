@@ -12,6 +12,8 @@
 
 import { Layer, LayerEsp } from "./util";
 
+declare let DEV: boolean;
+
 // RETURNS: undefined or integer, length of a matched ESP lump.
 function matchLayerLast(
   wholeEspTagLump: string,
@@ -25,7 +27,7 @@ function matchLayerLast(
     ? layers[0]
     : layers[layers.length - 1];
 
-  // console.log(
+  // DEV && console.log(
   //   `023 matchLayer(): ${`\u001b[${33}m${`whichLayerToMatch`}\u001b[${39}m`} = ${JSON.stringify(
   //     whichLayerToMatch,
   //     null,
@@ -36,7 +38,7 @@ function matchLayerLast(
   if (whichLayerToMatch.type !== "esp") {
     // we aim to match ESP tag layers, so instantly it's falsey result
     // because layer we match against is not ESP tag layer
-    // console.log(`033 matchLayer(): early return undefined`);
+    // DEV && console.log(`033 matchLayer(): early return undefined`);
     return;
   }
 
@@ -60,15 +62,16 @@ function matchLayerLast(
         whichLayerToMatch.guessedClosingLump.length - 2
       ] === wholeEspTagLump[wholeEspTagLump.length - 2])
   ) {
-    console.log(
-      `064 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
-        wholeEspTagLump.length
-      }`
-    );
+    DEV &&
+      console.log(
+        `067 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
+          wholeEspTagLump.length
+        }`
+      );
     return wholeEspTagLump.length;
   }
 
-  // console.log(`054 matchLayer(): finally, return undefined`);
+  // DEV && console.log(`054 matchLayer(): finally, return undefined`);
 }
 
 export default matchLayerLast;

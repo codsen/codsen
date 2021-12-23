@@ -18,6 +18,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 // -----------------------------------------------------------------------------
 
 interface Obj {
@@ -119,26 +121,27 @@ function getKeyset<ValueType>(
     placeholder: false,
   };
   let opts = { ...defaults, ...originalOpts };
-  console.log(
-    `123 CALLING check-types-mini:\nopts = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}\ndefaults = ${JSON.stringify(
-      defaults,
-      null,
-      4
-    )}\nopts = ${JSON.stringify(
-      {
-        msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
-        schema: {
-          placeholder: ["null", "number", "string", "boolean", "object"],
+  DEV &&
+    console.log(
+      `126 CALLING check-types-mini:\nopts = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}\ndefaults = ${JSON.stringify(
+        defaults,
+        null,
+        4
+      )}\nopts = ${JSON.stringify(
+        {
+          msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
+          schema: {
+            placeholder: ["null", "number", "string", "boolean", "object"],
+          },
         },
-      },
-      null,
-      4
-    )}`
-  );
+        null,
+        4
+      )}`
+    );
   let culpritIndex: any;
   let culpritVal: any;
 
@@ -496,9 +499,9 @@ function findUnusedSync(
               (!opts1 || !opts1.comments || !includes(key, opts1.comments))
           )
         );
-        // console.log(`unusedKeys = ${JSON.stringify(unusedKeys, null, 4)}`)
+        // DEV && console.log(`unusedKeys = ${JSON.stringify(unusedKeys, null, 4)}`)
         res = res.concat(unusedKeys.map((el) => `${path}.${el}`));
-        // console.log(`res = ${JSON.stringify(res, null, 4)}`)
+        // DEV && console.log(`res = ${JSON.stringify(res, null, 4)}`)
       }
       // ------ PART 2 ------
       // no matter how many objects are there within our array, if any values

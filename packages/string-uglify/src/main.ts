@@ -2,6 +2,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 // tells code point of a given id number
 function tellcp(str: string, idNum = 0): number {
   return str.codePointAt(idNum) || 0;
@@ -186,7 +188,7 @@ function uglifyArr(arr: string[]): string[] {
           } while (temp >= 10);
           return temp;
         }, 0);
-      // console.log(
+      // DEV && console.log(
       //   `${`\u001b[${33}m${`magicNumber`}\u001b[${39}m`} = ${JSON.stringify(
       //     magicNumber,
       //     null,
@@ -228,54 +230,58 @@ function uglifyArr(arr: string[]): string[] {
     }
   }
 
-  console.log(
-    `232 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
-      singleClasses,
-      null,
-      4
-    )}\n${`\u001b[${33}m${`singleIds`}\u001b[${39}m`} = ${JSON.stringify(
-      singleIds,
-      null,
-      4
-    )}\n${`\u001b[${33}m${`singleNameonly`}\u001b[${39}m`} = ${JSON.stringify(
-      singleNameonly,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `235 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
+        singleClasses,
+        null,
+        4
+      )}\n${`\u001b[${33}m${`singleIds`}\u001b[${39}m`} = ${JSON.stringify(
+        singleIds,
+        null,
+        4
+      )}\n${`\u001b[${33}m${`singleNameonly`}\u001b[${39}m`} = ${JSON.stringify(
+        singleNameonly,
+        null,
+        4
+      )}`
+    );
 
   // loop through all uglified values again and if the one letter name that
   // matches current name's first letter (considering it might be id, class or
   // just name), shorten that value up to that single letter.
   for (let i = 0, len = res.length; i < len; i++) {
-    console.log("----------------------------------------");
-    console.log(
-      `253 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
-    );
+    DEV && console.log("----------------------------------------");
+    DEV &&
+      console.log(
+        `257 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
+      );
     if (res[i].startsWith(".")) {
       // if particular class name starts with a letter which hasn't been taken
       if (singleClasses[res[i].slice(1, 2)] === false) {
         singleClasses[res[i].slice(1, 2)] = res[i];
-        console.log(
-          `260 shortened ${`\u001b[${33}m${
-            res[i]
-          }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
-            0,
-            2
-          )}\u001b[${39}m`}; set ${`\u001b[${33}m${`singleClasses[${res[
-            i
-          ].slice(1, 2)}]`}\u001b[${39}m`} = ${
-            singleClasses[res[i].slice(1, 2)]
-          }`
-        );
+        DEV &&
+          console.log(
+            `265 shortened ${`\u001b[${33}m${
+              res[i]
+            }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
+              0,
+              2
+            )}\u001b[${39}m`}; set ${`\u001b[${33}m${`singleClasses[${res[
+              i
+            ].slice(1, 2)}]`}\u001b[${39}m`} = ${
+              singleClasses[res[i].slice(1, 2)]
+            }`
+          );
         res[i] = res[i].slice(0, 2);
       } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
-        console.log(
-          `274 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
-            0,
-            2
-          )}`
-        );
+        DEV &&
+          console.log(
+            `280 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
+              0,
+              2
+            )}`
+          );
         // This means, particular class name was repeated in the list and
         // was shortened. We must shorten it to the same value.
         res[i] = res[i].slice(0, 2);
@@ -283,14 +289,15 @@ function uglifyArr(arr: string[]): string[] {
     } else if (res[i].startsWith("#")) {
       if (singleIds[res[i].slice(1, 2)] === false) {
         singleIds[res[i].slice(1, 2)] = res[i];
-        console.log(
-          `287 shortened ${`\u001b[${33}m${
-            res[i]
-          }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
-            0,
-            2
-          )}\u001b[${39}m`};`
-        );
+        DEV &&
+          console.log(
+            `294 shortened ${`\u001b[${33}m${
+              res[i]
+            }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
+              0,
+              2
+            )}\u001b[${39}m`};`
+          );
         res[i] = res[i].slice(0, 2);
       } else if (singleIds[res[i].slice(1, 2)] === res[i]) {
         // This means, particular id name was repeated in the list and
@@ -300,14 +307,15 @@ function uglifyArr(arr: string[]): string[] {
     } else if (!res[i].startsWith(".") && !res[i].startsWith("#")) {
       if (!singleNameonly[res[i].slice(0, 1)]) {
         singleNameonly[res[i].slice(0, 1)] = res[i];
-        console.log(
-          `304 shortened ${`\u001b[${33}m${
-            res[i]
-          }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
-            0,
-            1
-          )}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `312 shortened ${`\u001b[${33}m${
+              res[i]
+            }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
+              0,
+              1
+            )}\u001b[${39}m`}`
+          );
         res[i] = res[i].slice(0, 1);
       } else if (singleNameonly[res[i].slice(0, 1)] === res[i]) {
         // This means, particular id name was repeated in the list and

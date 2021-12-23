@@ -1,18 +1,27 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onblur
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnblur(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnblur() ███████████████████████████████████████`
-      );
-      console.log(
-        `014 attributeValidateOnblur(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnblur() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `019 attributeValidateOnblur(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onblur") {
         // validate the parent
@@ -53,16 +62,17 @@ function attributeValidateOnblur(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `057 attributeValidateOnblur(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `067 attributeValidateOnblur(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`065 attributeValidateOnblur(): RAISE ERROR`);
+            DEV && console.log(`075 attributeValidateOnblur(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onblur",

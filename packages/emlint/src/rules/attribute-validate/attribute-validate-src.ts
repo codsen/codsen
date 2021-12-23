@@ -5,16 +5,21 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateSrc(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateSrc() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateSrc() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateSrc(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateSrc(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "src") {
         // validate the parent
@@ -35,7 +40,7 @@ function attributeValidateSrc(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`038 RAISE ERROR`);
+            DEV && console.log(`043 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-src" });
           });
         }

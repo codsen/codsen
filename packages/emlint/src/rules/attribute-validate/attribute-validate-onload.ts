@@ -1,19 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onload
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnload(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnload() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnload() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnload(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnload(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onload") {
         // validate the parent
@@ -43,16 +52,17 @@ function attributeValidateOnload(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `047 attributeValidateOnload(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `057 attributeValidateOnload(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`055 attributeValidateOnload(): RAISE ERROR`);
+            DEV && console.log(`065 attributeValidateOnload(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onload",

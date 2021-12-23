@@ -7,6 +7,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 // ---------------------------------------------------------------------
 // MAIN:
 
@@ -51,13 +53,14 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
     );
   }
   let input = clone(originalInput);
-  console.log(
-    `055 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
-      input,
-      null,
-      4
-    )}; keys = ${Object.keys(input)}`
-  );
+  DEV &&
+    console.log(
+      `058 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
+        input,
+        null,
+        4
+      )}; keys = ${Object.keys(input)}`
+    );
 
   if (opts.cleanup) {
     let findings = find(input, {
@@ -65,25 +68,27 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
       val: opts.val,
       only: opts.only,
     });
-    console.log(
-      `069 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
-        findings,
-        null,
-        4
-      )}`
-    );
-    let currentIndex: number;
-    let nodeToDelete: number;
-    while (Array.isArray(findings) && findings.length) {
-      console.log(`078 ███████████████████████████████████████ LOOP`);
-      nodeToDelete = findings[0].index;
+    DEV &&
       console.log(
-        `081 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nodeToDelete`}\u001b[${39}m`} = ${JSON.stringify(
-          nodeToDelete,
+        `073 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
+          findings,
           null,
           4
         )}`
       );
+    let currentIndex: number;
+    let nodeToDelete: number;
+    while (Array.isArray(findings) && findings.length) {
+      DEV && console.log(`082 ███████████████████████████████████████ LOOP`);
+      nodeToDelete = findings[0].index;
+      DEV &&
+        console.log(
+          `086 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nodeToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+            nodeToDelete,
+            null,
+            4
+          )}`
+        );
       for (let i = 1, len = findings[0].path.length; i < len; i++) {
         currentIndex = findings[0].path[len - 1 - i];
         if (
@@ -101,28 +106,31 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
       input = drop(input, { index: nodeToDelete }) as Obj;
       findings = find(input, { key: opts.key, val: opts.val, only: opts.only });
     }
-    console.log(`104 ███████████████████████████████████████ END OF A LOOP`);
+    DEV &&
+      console.log(`110 ███████████████████████████████████████ END OF A LOOP`);
+    DEV &&
+      console.log(
+        `113 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
+          input,
+          null,
+          4
+        )}`
+      );
+    return input;
+  }
+  DEV && console.log(`121 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} del();`);
+  DEV &&
     console.log(
-      `106 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
+      `124 ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
         input,
+        null,
+        4
+      )}; opts = ${JSON.stringify(
+        { key: opts.key, val: opts.val, only: opts.only },
         null,
         4
       )}`
     );
-    return input;
-  }
-  console.log(`114 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} del();`);
-  console.log(
-    `116 ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
-      input,
-      null,
-      4
-    )}; opts = ${JSON.stringify(
-      { key: opts.key, val: opts.val, only: opts.only },
-      null,
-      4
-    )}`
-  );
   return del(input, { key: opts.key, val: opts.val, only: opts.only }) as Obj;
 }
 

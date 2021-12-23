@@ -7,6 +7,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 type OffsetValueCb = (amountToOffset: number) => void;
 type Callback = (
   fromIdx: number,
@@ -64,46 +66,50 @@ function rProcessOutside(
   // separate the iterator because it might be called with inverted ranges or
   // with separately calculated "everything" if the ranges are empty/falsey
   function iterator(str: string, arrOfArrays: Ranges): void {
-    console.log(
-      `068 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
-    );
-    console.log(
-      `071 ${`\u001b[${36}m${`loop [${JSON.stringify(
-        arrOfArrays,
-        null,
-        0
-      )}]`}\u001b[${39}m`}`
-    );
-    (arrOfArrays || []).forEach(([fromIdx, toIdx]) => {
+    DEV &&
       console.log(
-        `079 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
+        `071 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
       );
-      console.log(`081 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
+    DEV &&
+      console.log(
+        `075 ${`\u001b[${36}m${`loop [${JSON.stringify(
+          arrOfArrays,
+          null,
+          0
+        )}]`}\u001b[${39}m`}`
+      );
+    (arrOfArrays || []).forEach(([fromIdx, toIdx]) => {
+      DEV &&
+        console.log(
+          `084 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
+        );
+      DEV && console.log(`086 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
       for (let i = fromIdx; i < toIdx; i++) {
-        console.log(`083 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
+        DEV && console.log(`088 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
         let charLength = runes(str.slice(i))[0].length;
 
-        console.log(`086 charLength = ${charLength}`);
+        DEV && console.log(`091 charLength = ${charLength}`);
         // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         cb(i, i + charLength, (offsetValue) => {
           /* istanbul ignore else */
           if (offsetValue != null) {
-            console.log(`091 offset i by "${offsetValue}" requested`);
-            console.log(`092 old i = ${i}`);
+            DEV && console.log(`096 offset i by "${offsetValue}" requested`);
+            DEV && console.log(`097 old i = ${i}`);
             i += offsetValue;
-            console.log(`094 new i = ${i}`);
+            DEV && console.log(`099 new i = ${i}`);
           }
         });
         if (charLength && charLength > 1) {
-          console.log(`098 old i = ${i}`);
+          DEV && console.log(`103 old i = ${i}`);
           i += charLength - 1;
-          console.log(`100 new i = ${i}`);
+          DEV && console.log(`105 new i = ${i}`);
         }
       }
     });
-    console.log(
-      `105 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `111 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
+      );
   }
 
   if (originalRanges?.length) {
@@ -118,13 +124,14 @@ function rProcessOutside(
       ),
       originalStr.length
     );
-    console.log(
-      `122 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
-        temp,
-        null,
-        0
-      )}`
-    );
+    DEV &&
+      console.log(
+        `129 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+          temp,
+          null,
+          0
+        )}`
+      );
 
     iterator(originalStr, temp);
   } else {

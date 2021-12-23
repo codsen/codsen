@@ -8,6 +8,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface Stop {
   now: boolean;
 }
@@ -37,41 +39,44 @@ function traverse(tree1: any, cb1: Callback): any {
     originalInnerObj: Partial<InnerObj>,
     stop: Stop
   ): any {
-    console.log(`040 ======= traverseInner() =======`);
+    DEV && console.log(`042 ======= traverseInner() =======`);
     let tree: any = clone(treeOriginal);
 
     let res;
     let innerObj = { depth: -1, path: "", ...originalInnerObj };
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
-      console.log(`047 tree is array!`);
+      DEV && console.log(`049 tree is array!`);
       for (let i = 0, len = tree.length; i < len; i++) {
-        console.log(
-          `050 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `053 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+          );
         if (stop.now) {
-          console.log(`053 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`056 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         let path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
-        console.log(
-          `058 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
-            path,
-            null,
-            4
-          )}`
-        );
-        if (tree[i] !== undefined) {
-          innerObj.parent = clone(tree);
-          innerObj.parentType = "array";
-          innerObj.parentKey = parent(path);
+        DEV &&
           console.log(
-            `069 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
-              innerObj.parentKey,
+            `062 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+              path,
               null,
               4
             )}`
           );
+        if (tree[i] !== undefined) {
+          innerObj.parent = clone(tree);
+          innerObj.parentType = "array";
+          innerObj.parentKey = parent(path);
+          DEV &&
+            console.log(
+              `074 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+                innerObj.parentKey,
+                null,
+                4
+              )}`
+            );
           // innerObj.path = `${innerObj.path}[${i}]`
           res = traverseInner(
             callback(
@@ -95,44 +100,48 @@ function traverse(tree1: any, cb1: Callback): any {
         }
       }
     } else if (isObj(tree)) {
-      console.log(`098 tree is object`);
+      DEV && console.log(`103 tree is object`);
       // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (let key in tree) {
-        console.log(
-          `102 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `108 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+          );
         if (stop.now && key != null) {
-          console.log(`105 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`111 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
-        console.log(
-          `109 FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
-            innerObj.path,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `116 FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
+              innerObj.path,
+              null,
+              4
+            )}`
+          );
         let path = innerObj.path ? `${innerObj.path}.${key}` : key;
-        console.log(
-          `117 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
-            path,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `125 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+              path,
+              null,
+              4
+            )}`
+          );
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
         innerObj.parent = clone(tree);
         innerObj.parentType = "object";
         innerObj.parentKey = parent(path);
-        console.log(
-          `130 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
-            innerObj.parentKey,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `139 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+              innerObj.parentKey,
+              null,
+              4
+            )}`
+          );
         res = traverseInner(
           callback(key, tree[key], { ...innerObj, path } as InnerObj, stop),
           callback,
@@ -146,7 +155,8 @@ function traverse(tree1: any, cb1: Callback): any {
         }
       }
     }
-    console.log(`149 just returning tree, ${JSON.stringify(tree, null, 4)}`);
+    DEV &&
+      console.log(`159 just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
   return traverseInner(tree1, cb1, {}, stop2);

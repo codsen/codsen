@@ -2,6 +2,9 @@ import splitByWhitespace from "./splitByWhitespace";
 import { CommentToken } from "../../../codsen-tokenizer/src/util/util";
 import { ErrorObj } from "./commonTypes";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function validateCommentClosing(token: CommentToken): ErrorObj[] {
   let reference = {
     simple: "-->",
@@ -9,13 +12,14 @@ function validateCommentClosing(token: CommentToken): ErrorObj[] {
     not: "<!--<![endif]-->",
   };
 
-  console.log(
-    `013 validateCommentClosing(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-      token,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `017 validateCommentClosing(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+        token,
+        null,
+        4
+      )}`
+    );
 
   // if all is fine, end quick
   if (
@@ -53,13 +57,14 @@ function validateCommentClosing(token: CommentToken): ErrorObj[] {
     }
   );
 
-  console.log(
-    `057 ██ ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
-      valueWithoutWhitespace,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `062 ██ ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
+        valueWithoutWhitespace,
+        null,
+        4
+      )}`
+    );
 
   // if all it took was to remove some whitespace to get a correct value,
   // that's the end - return the "errorArr" with only whitespace ranges:
@@ -68,21 +73,23 @@ function validateCommentClosing(token: CommentToken): ErrorObj[] {
     (token.kind === "only" && valueWithoutWhitespace === "<![endif]-->") ||
     (token.kind === "not" && valueWithoutWhitespace === "<!--<![endif]-->")
   ) {
-    console.log(
-      `072 validateCommentClosing(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `078 validateCommentClosing(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+      );
     return errorArr;
   }
 
   // if processing continues, it means something more is wrong
-  console.log(`078 validateCommentClosing(): something is wrong`);
-  console.log(
-    `080 validateCommentClosing(): errorArr so far: ${JSON.stringify(
-      errorArr,
-      null,
-      4
-    )}`
-  );
+  DEV && console.log(`084 validateCommentClosing(): something is wrong`);
+  DEV &&
+    console.log(
+      `087 validateCommentClosing(): errorArr so far: ${JSON.stringify(
+        errorArr,
+        null,
+        4
+      )}`
+    );
   errorArr.push({
     idxFrom: token.start,
     idxTo: token.end,

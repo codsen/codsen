@@ -5,16 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateUsemap(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateUsemap() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateUsemap() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateUsemap(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateUsemap(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "usemap") {
         // validate the parent
@@ -31,7 +40,7 @@ function attributeValidateUsemap(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`034 RAISE ERROR`);
+            DEV && console.log(`043 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-usemap",

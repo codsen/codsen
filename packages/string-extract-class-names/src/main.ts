@@ -5,6 +5,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface Result {
   res: string[];
   ranges: Ranges;
@@ -56,11 +58,12 @@ function extract(str: string): Result {
   // algorithm ending clauses - things' ending at string's end can now be
   // tackled in the same logic as things' that end in the middle of the string
   for (let i = 0, len = str.length; i <= len; i++) {
-    console.log(
-      `${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${
-        str[i]
-      }\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`
-    );
+    DEV &&
+      console.log(
+        `${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${
+          str[i]
+        }\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`
+      );
 
     // catch the ending of a selector's name:
 
@@ -90,15 +93,17 @@ function extract(str: string): Result {
 
         if (stateCurrentlyIs) {
           stateCurrentlyIs = undefined;
-          console.log(
-            `094 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`
-          );
+          DEV &&
+            console.log(
+              `098 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`
+            );
         }
       }
       selectorStartsAt = null;
-      console.log(
-        `100 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
-      );
+      DEV &&
+        console.log(
+          `105 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
+        );
     }
 
     // catch dot or hash:
@@ -108,9 +113,10 @@ function extract(str: string): Result {
       (str[i] === "." || str[i] === "#")
     ) {
       selectorStartsAt = i;
-      console.log(
-        `112 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
-      );
+      DEV &&
+        console.log(
+          `118 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
+        );
     }
 
     // catch zzz[class=]
@@ -122,7 +128,7 @@ function extract(str: string): Result {
       typeof temp1 === "number" &&
       str[temp1] === "="
     ) {
-      console.log(`125 [class= caught`);
+      DEV && console.log(`131 [class= caught`);
       // if it's zzz[class=something] (without quotes)
       /* istanbul ignore else */
       if (
@@ -130,13 +136,13 @@ function extract(str: string): Result {
         isLatinLetter(str[right(str, temp1) as number])
       ) {
         selectorStartsAt = right(str, temp1);
-        console.log(`133 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`139 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp1) as number]) &&
         isLatinLetter(str[right(str, right(str, temp1) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp1));
-        console.log(`139 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`145 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = ".";
     }
@@ -149,28 +155,29 @@ function extract(str: string): Result {
       temp2 !== null &&
       str[temp2] === "="
     ) {
-      console.log(`152 [id= caught`);
+      DEV && console.log(`158 [id= caught`);
       // if it's zzz[id=something] (without quotes)
       if (isLatinLetter(str[right(str, temp2) as number])) {
         selectorStartsAt = right(str, temp2);
-        console.log(`156 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`162 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp2) as number]) &&
         isLatinLetter(str[right(str, right(str, temp2) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp2));
-        console.log(`162 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`168 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = "#";
     }
 
-    console.log(
-      `168 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
-        result,
-        null,
-        0
-      )}`}\u001b[${39}m`
-    );
+    DEV &&
+      console.log(
+        `175 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
+          result,
+          null,
+          0
+        )}`}\u001b[${39}m`
+      );
   }
 
   // absence of ranges is falsy "null", not truthy empty array, so

@@ -5,6 +5,9 @@ import splitByWhitespace from "./splitByWhitespace";
 import isSingleSpace from "./isSingleSpace";
 import { ErrorObj } from "./commonTypes";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 interface Opts {
   typeName: string;
   from: number;
@@ -24,16 +27,18 @@ function checkClassOrIdValue(
     offset: 0,
   };
   let opts: Opts = { ...defaults, ...originalOpts };
-  console.log(
-    `028 checkClassOrIdValue(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
-  console.log(
-    `035 checkClassOrIdValue(): ${`\u001b[${36}m${`traverse and extract ${opts.typeName}s`}\u001b[${39}m`}`
-  );
+  DEV &&
+    console.log(
+      `032 checkClassOrIdValue(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
+  DEV &&
+    console.log(
+      `040 checkClassOrIdValue(): ${`\u001b[${36}m${`traverse and extract ${opts.typeName}s`}\u001b[${39}m`}`
+    );
 
   let listOfUniqueNames = new Set();
 
@@ -55,22 +60,23 @@ function checkClassOrIdValue(
     //
     ([charFrom, charTo]) => {
       // value starts at "from" and ends at "to"
-      console.log(`058 charFrom = ${charFrom}; charTo = ${charTo}`);
+      DEV && console.log(`063 charFrom = ${charFrom}; charTo = ${charTo}`);
       // evaluate
       let extractedName = str.slice(charFrom, charTo);
       if (!classNameRegex.test(extractedName)) {
-        console.log(
-          `063 splitByWhitespace(): PUSH ${JSON.stringify(
-            {
-              idxFrom: charFrom,
-              idxTo: charTo,
-              message: `Wrong ${opts.typeName} name.`,
-              fix: null,
-            },
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `069 splitByWhitespace(): PUSH ${JSON.stringify(
+              {
+                idxFrom: charFrom,
+                idxTo: charTo,
+                message: `Wrong ${opts.typeName} name.`,
+                fix: null,
+              },
+              null,
+              4
+            )}`
+          );
         errorArr.push({
           idxFrom: charFrom,
           idxTo: charTo,

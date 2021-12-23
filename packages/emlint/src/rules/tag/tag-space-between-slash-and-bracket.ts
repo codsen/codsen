@@ -2,6 +2,9 @@ import { left } from "string-left-right";
 
 import { Linter, RuleObjType } from "../../linter";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 const BACKSLASH = "\u005C";
 
 // rule: tag-space-between-slash-and-bracket
@@ -22,7 +25,7 @@ function tagSpaceBetweenSlashAndBracket(context: Linter): RuleObjType {
         idxOnTheLeft < node.end - 2
       ) {
         let idxFrom = idxOnTheLeft + 1;
-        console.log(`025 whitespace present between slash and bracket!`);
+        DEV && console.log(`028 whitespace present between slash and bracket!`);
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
           message: "Bad whitespace.",

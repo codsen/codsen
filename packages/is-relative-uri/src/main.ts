@@ -2,6 +2,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 // Reference used:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 
@@ -358,13 +360,14 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
     // to cater false/null
     opts.offset = 0;
   }
-  console.log(
-    `362 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} opts = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `365 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} opts = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
 
   // ---------------------------------------------------------------------------
 
@@ -508,7 +511,7 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
   }
 
   // ---------------------------------------------------------------------------
-  console.log(`511 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  DEV && console.log(`514 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   return {
     res: true,
     message: null,

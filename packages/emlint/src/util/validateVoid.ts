@@ -3,6 +3,9 @@ import { Linter } from "../linter";
 import { ErrorObj } from "./commonTypes";
 import { Attrib } from "../../../codsen-tokenizer/src/util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 interface Obj {
   [key: string]: any;
 }
@@ -54,21 +57,23 @@ function validateVoid(
       context.str.slice(node.attribNameEndsAt, node.attribEnds) !==
         `=${quotesType}${node.attribName}${quotesType}`
     ) {
-      console.log(
-        `058 validateVoid(): ${`\u001b[${31}m${`XHTML requested`}\u001b[${39}m`} - attrib value is missing!`
-      );
+      DEV &&
+        console.log(
+          `062 validateVoid(): ${`\u001b[${31}m${`XHTML requested`}\u001b[${39}m`} - attrib value is missing!`
+        );
 
-      console.log(
-        `062 validateVoid(): ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
-          [
-            node.attribNameEndsAt,
-            node.attribEnds,
-            `=${quotesType}${node.attribName}${quotesType}`,
-          ],
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `067 validateVoid(): ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
+            [
+              node.attribNameEndsAt,
+              node.attribEnds,
+              `=${quotesType}${node.attribName}${quotesType}`,
+            ],
+            null,
+            4
+          )}`
+        );
 
       errorArr.push({
         idxFrom: node.attribNameStartsAt,
@@ -100,11 +105,12 @@ function validateVoid(
     isObj(opts.enforceSiblingAttributes) &&
     Object.keys(opts.enforceSiblingAttributes as Obj).length
   ) {
-    console.log(`103 validateVoid(): sibling attributes enforced`);
+    DEV && console.log(`108 validateVoid(): sibling attributes enforced`);
     Object.keys(opts.enforceSiblingAttributes as Obj).forEach((siblingAttr) => {
-      console.log(
-        `106 validateVoid(): checking presence of attribute "${siblingAttr}"`
-      );
+      DEV &&
+        console.log(
+          `112 validateVoid(): checking presence of attribute "${siblingAttr}"`
+        );
       if (
         Array.isArray(node.parent.attribs) &&
         !node.parent.attribs.some(

@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onkeypress
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnkeypress(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnkeypress() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnkeypress() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnkeypress(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnkeypress(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onkeypress") {
         // validate the parent
@@ -68,16 +73,18 @@ function attributeValidateOnkeypress(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `072 attributeValidateOnkeypress(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `078 attributeValidateOnkeypress(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`080 attributeValidateOnkeypress(): RAISE ERROR`);
+            DEV &&
+              console.log(`087 attributeValidateOnkeypress(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onkeypress",

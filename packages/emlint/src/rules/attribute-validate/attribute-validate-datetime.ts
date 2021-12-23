@@ -5,20 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import { validateString, isoDateRegex } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateDatetime(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateDatetime() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateDatetime() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateDatetime(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateDatetime(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "datetime") {
         // validate the parent
@@ -43,19 +48,20 @@ function attributeValidateDatetime(context: Linter): RuleObjType {
             noSpaceAfterComma: false,
           }
         );
-        console.log(
-          `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-            errorArr,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         // HTML attribute accept MIME types as values. Here we reference the given
         // value against all official MIME types, taken from IANA and other sources,
         // https://www.npmjs.com/package/mime-db
 
         errorArr.forEach((errorObj) => {
-          console.log(`058 RAISE ERROR`);
+          DEV && console.log(`064 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-datetime",

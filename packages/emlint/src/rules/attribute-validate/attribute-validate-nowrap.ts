@@ -2,25 +2,35 @@ import { Linter, RuleObjType } from "../../linter";
 import { ErrorObj } from "../../util/commonTypes";
 import validateVoid from "../../util/validateVoid";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-nowrap
 // -----------------------------------------------------------------------------
 
 function attributeValidateNowrap(context: Linter, mode?: "xhtml"): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateNowrap() ███████████████████████████████████████`
-      );
-      console.log(
-        `${`\u001b[${33}m${`mode`}\u001b[${39}m`} = ${JSON.stringify(
-          mode,
-          null,
-          4
-        )}`
-      );
-      console.log(
-        `022 attributeValidateNowrap(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateNowrap() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `${`\u001b[${33}m${`mode`}\u001b[${39}m`} = ${JSON.stringify(
+            mode,
+            null,
+            4
+          )}`
+        );
+      DEV &&
+        console.log(
+          `028 attributeValidateNowrap(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       let errorArr: ErrorObj[] = [];
 
@@ -44,7 +54,7 @@ function attributeValidateNowrap(context: Linter, mode?: "xhtml"): RuleObjType {
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`047 RAISE ERROR`);
+            DEV && console.log(`057 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-nowrap",

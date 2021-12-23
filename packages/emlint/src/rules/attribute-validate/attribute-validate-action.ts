@@ -5,15 +5,24 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateAction(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateAction() ███████████████████████████████████████`
-      );
-      console.log(
-        `015 attributeValidateAction(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateAction() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `020 attributeValidateAction(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "action") {
         // validate the parent
@@ -32,7 +41,7 @@ function attributeValidateAction(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`035 RAISE ERROR`);
+            DEV && console.log(`044 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-action",

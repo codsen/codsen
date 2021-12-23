@@ -1617,7 +1617,7 @@ function get(
 // removes the grouped rule so that only real, single rules
 // are passed to Linter
 function normaliseRequestedRules(opts: RulesObj): RulesObj {
-  // console.log(
+  // DEV && console.log(
   //   `870 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
@@ -1736,13 +1736,14 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
     });
   }
 
-  console.log(
-    `1740 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
-      res,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `1741 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+        res,
+        null,
+        4
+      )}`
+    );
   return res;
 }
 

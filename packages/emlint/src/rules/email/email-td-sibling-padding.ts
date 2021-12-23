@@ -1,6 +1,9 @@
 import { Linter, RuleObjType } from "../../linter";
 import { Property } from "../../../../codsen-tokenizer/src/util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: email-td-sibling-padding
 // -----------------------------------------------------------------------------
 
@@ -11,9 +14,10 @@ function tdSiblingPadding(context: Linter): RuleObjType {
   let end: number;
   return {
     tag(node) {
-      console.log(
-        `███████████████████████████████████████ tdSiblingPadding() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ tdSiblingPadding() ███████████████████████████████████████`
+        );
       if (
         // if this node is TR tag
         node.tagName === "tr" &&
@@ -51,11 +55,12 @@ function tdSiblingPadding(context: Linter): RuleObjType {
             )
         )
       ) {
-        console.log(
-          `055 ${`${`\u001b[${36}m${`██`}\u001b[${39}m`}${`\u001b[${34}m${`██`}\u001b[${39}m`}`.repeat(
-            20
-          )} RAISE ERROR [${start}, ${end}]`
-        );
+        DEV &&
+          console.log(
+            `060 ${`${`\u001b[${36}m${`██`}\u001b[${39}m`}${`\u001b[${34}m${`██`}\u001b[${39}m`}`.repeat(
+              20
+            )} RAISE ERROR [${start}, ${end}]`
+          );
         context.report({
           ruleId: "email-td-sibling-padding",
           message: `Don't set padding on TD when sibling TD's are present.`,

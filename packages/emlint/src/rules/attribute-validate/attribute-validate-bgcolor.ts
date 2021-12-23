@@ -5,14 +5,18 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateColor from "../../util/validateColor";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateBgcolor(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateBgcolor() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateBgcolor() ███████████████████████████████████████`
+        );
 
-      // console.log(
+      // DEV && console.log(
       //   `015 attributeValidateBgcolor(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -52,12 +56,13 @@ function attributeValidateBgcolor(context: Linter): RuleObjType {
               hexEightOK: false,
             }
           );
-          console.log(
-            `056 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-          );
+          DEV &&
+            console.log(
+              `061 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`060 RAISE ERROR`);
+            DEV && console.log(`065 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-bgcolor",

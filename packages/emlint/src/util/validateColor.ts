@@ -7,6 +7,9 @@ import {
 import { isLetter } from "./util";
 import { ErrorObj } from "./commonTypes";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 interface Obj {
   [key: string]: any;
 }
@@ -52,9 +55,10 @@ function validateColor(
       isLetter(attrVal[1]) &&
       Object.keys(extendedColorNames).includes(attrVal.toLowerCase())
     ) {
-      console.log(
-        `056 ${`\u001b[${32}m${`known color name "${attrVal.toLowerCase()}" matched`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `060 ${`\u001b[${32}m${`known color name "${attrVal.toLowerCase()}" matched`}\u001b[${39}m`}`
+        );
 
       if (!opts.namedCssLevel1OK) {
         errorArr.push({
@@ -100,9 +104,10 @@ function validateColor(
           fix: null,
         });
       } else if (!sixDigitHexColorRegex.test(attrVal)) {
-        console.log(
-          `104 ${`\u001b[${32}m${`attribute's value "${attrVal.toLowerCase()}" didn't pass the sixDigitHexColorRegex regex`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `109 ${`\u001b[${32}m${`attribute's value "${attrVal.toLowerCase()}" didn't pass the sixDigitHexColorRegex regex`}\u001b[${39}m`}`
+          );
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,

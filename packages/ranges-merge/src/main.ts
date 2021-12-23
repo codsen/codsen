@@ -5,6 +5,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface UnknownValueObj {
   [key: string]: any;
 }
@@ -97,7 +99,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
     opts = { ...defaults };
   }
 
-  console.log("100");
+  DEV && console.log("102");
 
   // progress-wise, sort takes first 20%
 
@@ -138,14 +140,15 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
 
   // loop from the end:
   for (let i = len; i > 0; i--) {
-    console.log("\n\n");
-    console.log(
-      `\u001b[${36}m${`137 -------------- sortedRanges[${i}] = ${JSON.stringify(
-        sortedRanges[i],
-        null,
-        0
-      )} --------------`}\u001b[${39}m\n`
-    );
+    DEV && console.log("\n\n");
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`137 -------------- sortedRanges[${i}] = ${JSON.stringify(
+          sortedRanges[i],
+          null,
+          0
+        )} --------------`}\u001b[${39}m\n`
+      );
 
     if (opts.progressFn) {
       percentageDone = Math.floor((1 - i / len) * 78) + 21;
@@ -155,7 +158,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
       ) {
         lastPercentageDone = percentageDone;
         opts.progressFn(percentageDone);
-        // console.log(
+        // DEV && console.log(
         //   `153 REPORTING ${`\u001b[${33}m${`doneSoFar`}\u001b[${39}m`} = ${doneSoFar}`
         // );
       }
@@ -169,16 +172,17 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
       (opts.joinRangesThatTouchEdges &&
         sortedRanges[i][0] <= sortedRanges[i - 1][1])
     ) {
-      console.log(`172  sortedRanges[${i}][0] = ${`\u001b[${33}m${
-        sortedRanges[i][0]
-      }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
-        i - 1
-      }][0] = ${`\u001b[${33}m${sortedRanges[i - 1][0]}\u001b[${39}m`} ||
+      DEV &&
+        console.log(`176  sortedRanges[${i}][0] = ${`\u001b[${33}m${
+          sortedRanges[i][0]
+        }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
+          i - 1
+        }][0] = ${`\u001b[${33}m${sortedRanges[i - 1][0]}\u001b[${39}m`} ||
      sortedRanges[${i}][0] = ${`\u001b[${33}m${
-        sortedRanges[i][0]
-      }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
-        i - 1
-      }][1] = ${`\u001b[${33}m${sortedRanges[i - 1][1]}\u001b[${39}m`}
+          sortedRanges[i][0]
+        }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
+          i - 1
+        }][1] = ${`\u001b[${33}m${sortedRanges[i - 1][1]}\u001b[${39}m`}
 `);
       sortedRanges[i - 1][0] = Math.min(
         sortedRanges[i][0],
@@ -188,13 +192,14 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
         sortedRanges[i][1],
         sortedRanges[i - 1][1]
       );
-      console.log(
-        `192 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${
-          i - 1
-        }][0] = ${sortedRanges[i - 1][0]}; sortedRanges[${i - 1}][1] = ${
-          sortedRanges[i - 1][1]
-        }`
-      );
+      DEV &&
+        console.log(
+          `197 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${
+            i - 1
+          }][0] = ${sortedRanges[i - 1][0]}; sortedRanges[${i - 1}][1] = ${
+            sortedRanges[i - 1][1]
+          }`
+        );
 
       // tend the third argument, "what to insert"
       if (
@@ -202,7 +207,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
         (sortedRanges[i - 1][0] >= sortedRanges[i][0] ||
           sortedRanges[i - 1][1] <= sortedRanges[i][1])
       ) {
-        console.log(`205 inside tend the insert value clauses`);
+        DEV && console.log(`210 inside tend the insert value clauses`);
 
         // if the value of the range before exists:
         if (sortedRanges[i - 1][2] !== null) {
@@ -227,38 +232,43 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
       }
 
       // get rid of the second element:
-      console.log(
-        "231 --------------------------------------------------------"
-      );
-      console.log(
-        `234 before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
-          sortedRanges,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          "237 --------------------------------------------------------"
+        );
+      DEV &&
+        console.log(
+          `241 before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+            sortedRanges,
+            null,
+            4
+          )}`
+        );
       sortedRanges.splice(i, 1);
-      console.log(
-        `242 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
-          sortedRanges,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `250 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+            sortedRanges,
+            null,
+            4
+          )}`
+        );
       // reset the traversal, start from the end again
       i = sortedRanges.length;
-      console.log(
-        `251 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
-      );
+      DEV &&
+        console.log(
+          `260 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
+        );
     }
   }
-  console.log(
-    `256 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(
-      sortedRanges,
-      null,
-      4
-    )}\n`
-  );
+  DEV &&
+    console.log(
+      `266 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(
+        sortedRanges,
+        null,
+        4
+      )}\n`
+    );
   return sortedRanges.length ? sortedRanges : null;
 }
 

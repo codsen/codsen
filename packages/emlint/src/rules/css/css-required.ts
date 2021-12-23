@@ -3,6 +3,9 @@ import op from "object-path";
 import { Linter, RuleObjType } from "../../linter";
 import { isObj } from "../../util/util";
 import { Obj, Attrib, Property } from "../../util/commonTypes";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
 // import { AttribSupplementedWithParent } from "../../util/commonTypes";
 
 // rule: css-required
@@ -20,16 +23,18 @@ interface CssRequired {
 const cssRequired: CssRequired = (context, opts) => {
   return {
     tag(node) {
-      console.log(
-        `███████████████████████████████████████ cssRequired() ███████████████████████████████████████`
-      );
-      console.log(
-        `027 cssRequired(): incoming ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ cssRequired() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `032 cssRequired(): incoming ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       let normalisedOpts: Obj = {};
       // normalise the opts
@@ -60,7 +65,7 @@ const cssRequired: CssRequired = (context, opts) => {
         isObj(normalisedOpts[node.tagName]) &&
         Object.keys(normalisedOpts[node.tagName]).length
       ) {
-        console.log(`063 attributeRequired(): check attrs`);
+        DEV && console.log(`068 attributeRequired(): check attrs`);
 
         // quick end - style attribute is missing
         let styleAttrib: undefined | Attrib;
@@ -74,24 +79,27 @@ const cssRequired: CssRequired = (context, opts) => {
         }
 
         if (isObj(styleAttrib)) {
-          console.log(
-            `078 ${`\u001b[${32}m${`style attr is not missing`}\u001b[${39}m`}`
-          );
-          console.log(
-            `081 FIY, ${`\u001b[${33}m${`styleAttrib`}\u001b[${39}m`} = ${JSON.stringify(
-              styleAttrib,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `084 ${`\u001b[${32}m${`style attr is not missing`}\u001b[${39}m`}`
+            );
+          DEV &&
+            console.log(
+              `088 FIY, ${`\u001b[${33}m${`styleAttrib`}\u001b[${39}m`} = ${JSON.stringify(
+                styleAttrib,
+                null,
+                4
+              )}`
+            );
           Object.keys(normalisedOpts[node.tagName])
             // go through each settings object
             .forEach((rule) => {
-              console.log(
-                `091 checking ${`\u001b[${33}m${`rule`}\u001b[${39}m`} ${`\u001b[${35}m${rule}: ${
-                  normalisedOpts[node.tagName][rule]
-                }\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `099 checking ${`\u001b[${33}m${`rule`}\u001b[${39}m`} ${`\u001b[${35}m${rule}: ${
+                    normalisedOpts[node.tagName][rule]
+                  }\u001b[${39}m`}`
+                );
               // it depends, is it just bool true, a loose requirement, or strict,
               // a value being enforced, when coming as a string or a number
               if (
@@ -99,43 +107,48 @@ const cssRequired: CssRequired = (context, opts) => {
                   typeof normalisedOpts[node.tagName][rule]
                 )
               ) {
-                console.log(
-                  `103 ${`\u001b[${32}m${`strict value check`}\u001b[${39}m`}`
-                );
+                DEV &&
+                  console.log(
+                    `112 ${`\u001b[${32}m${`strict value check`}\u001b[${39}m`}`
+                  );
                 let propFound = false;
                 // check all present properties (will include text whitespace nodes!)
                 (styleAttrib as Attrib).attribValue.forEach((stylePropNode) => {
-                  console.log(
-                    `109 ███████████████████████████████████████ ${`\u001b[${33}m${`stylePropNode`}\u001b[${39}m`} = ${JSON.stringify(
-                      stylePropNode,
-                      null,
-                      4
-                    )}`
-                  );
-                  console.log(
-                    `${`\u001b[${33}m${`rule`}\u001b[${39}m`} = ${JSON.stringify(
-                      rule,
-                      null,
-                      4
-                    )}`
-                  );
-                  console.log(
-                    `${`\u001b[${33}m${`(stylePropNode as Property).property`}\u001b[${39}m`} = ${JSON.stringify(
-                      (stylePropNode as Property).property,
-                      null,
-                      4
-                    )}`
-                  );
+                  DEV &&
+                    console.log(
+                      `119 ███████████████████████████████████████ ${`\u001b[${33}m${`stylePropNode`}\u001b[${39}m`} = ${JSON.stringify(
+                        stylePropNode,
+                        null,
+                        4
+                      )}`
+                    );
+                  DEV &&
+                    console.log(
+                      `${`\u001b[${33}m${`rule`}\u001b[${39}m`} = ${JSON.stringify(
+                        rule,
+                        null,
+                        4
+                      )}`
+                    );
+                  DEV &&
+                    console.log(
+                      `${`\u001b[${33}m${`(stylePropNode as Property).property`}\u001b[${39}m`} = ${JSON.stringify(
+                        (stylePropNode as Property).property,
+                        null,
+                        4
+                      )}`
+                    );
                   if ((stylePropNode as Property).property === rule) {
                     propFound = true;
-                    console.log(`131 checking ${rule}`);
+                    DEV && console.log(`143 checking ${rule}`);
                     if (
                       (stylePropNode as Property).value !==
                       String(normalisedOpts[node.tagName][rule])
                     ) {
-                      console.log(
-                        `137 ${`\u001b[${31}m${rule} has wrong value!\u001b[${39}m`}`
-                      );
+                      DEV &&
+                        console.log(
+                          `150 ${`\u001b[${31}m${rule} has wrong value!\u001b[${39}m`}`
+                        );
                       let should = (stylePropNode as Property).valueStarts
                         ? `Should be`
                         : `Missing value`;
@@ -157,9 +170,10 @@ const cssRequired: CssRequired = (context, opts) => {
                 });
 
                 if (!propFound) {
-                  console.log(
-                    `161 ${`\u001b[${31}m${rule} is missing!\u001b[${39}m`}`
-                  );
+                  DEV &&
+                    console.log(
+                      `175 ${`\u001b[${31}m${rule} is missing!\u001b[${39}m`}`
+                    );
                   context.report({
                     ruleId: "css-required",
                     message: `"${rule}: ${
@@ -171,17 +185,19 @@ const cssRequired: CssRequired = (context, opts) => {
                   });
                 }
               } else {
-                console.log(
-                  `175 ${`\u001b[${32}m${`just check is rule present (any value OK)`}\u001b[${39}m`}`
-                );
+                DEV &&
+                  console.log(
+                    `190 ${`\u001b[${32}m${`just check is rule present (any value OK)`}\u001b[${39}m`}`
+                  );
                 if (
                   !(styleAttrib as Attrib).attribValue.some(
                     (ruleNode) => (ruleNode as Property).property === rule
                   )
                 ) {
-                  console.log(
-                    `183 ${`\u001b[${31}m${rule} is missing!\u001b[${39}m`}`
-                  );
+                  DEV &&
+                    console.log(
+                      `199 ${`\u001b[${31}m${rule} is missing!\u001b[${39}m`}`
+                    );
                   context.report({
                     ruleId: "css-required",
                     message: `Property "${rule}" is missing.`,
@@ -193,9 +209,10 @@ const cssRequired: CssRequired = (context, opts) => {
               }
             });
         } else {
-          console.log(
-            `197 ${`\u001b[${31}m${`style attr is missing`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `214 ${`\u001b[${31}m${`style attr is missing`}\u001b[${39}m`}`
+            );
           context.report({
             ruleId: "css-required",
             message: `Attribute "style" is missing.`,

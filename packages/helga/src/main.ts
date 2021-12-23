@@ -2,6 +2,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface Obj {
   [key: string]: any;
 }
@@ -27,7 +29,7 @@ const escapes: Obj = {
 
 function unescape(str: string): string {
   return str.replace(/\\([bfnrtv'"\\0])/g, (match) => {
-    console.log(`${`\u001b[${33}m${`match`}\u001b[${39}m`} = ${match}`);
+    DEV && console.log(`${`\u001b[${33}m${`match`}\u001b[${39}m`} = ${match}`);
     return (
       escapes[match] ||
       (match && (match.startsWith(`\\`) ? escapes[match.slice(1)] : ""))
@@ -40,7 +42,7 @@ function helga(
   originalOpts?: Opts
 ): { minified: string; beautified: string } {
   let opts = { ...defaults, ...originalOpts };
-  // console.log(
+  // DEV && console.log(
   //   `011 using ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,

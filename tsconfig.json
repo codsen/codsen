@@ -5,6 +5,8 @@
     "skipLibCheck": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": []
+    "types": [
+      "node"
+    ]
   }
 }

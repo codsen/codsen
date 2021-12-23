@@ -5,16 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateWidth(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateWidth() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateWidth() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateWidth(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateWidth(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "width") {
         // validate the parent
@@ -50,7 +59,7 @@ function attributeValidateWidth(context: Linter): RuleObjType {
               noUnitsIsFine: true,
             }
           ).forEach((errorObj) => {
-            console.log(`053 RAISE ERROR`);
+            DEV && console.log(`062 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-width" });
           });
         } else if (["colgroup", "col"].includes(node.parent.tagName)) {
@@ -64,7 +73,7 @@ function attributeValidateWidth(context: Linter): RuleObjType {
               noUnitsIsFine: true,
             }
           ).forEach((errorObj) => {
-            console.log(`067 RAISE ERROR`);
+            DEV && console.log(`076 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-width" });
           });
         } else {
@@ -77,7 +86,7 @@ function attributeValidateWidth(context: Linter): RuleObjType {
               noUnitsIsFine: true,
             }
           ).forEach((errorObj) => {
-            console.log(`080 RAISE ERROR`);
+            DEV && console.log(`089 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-width" });
           });
         }

@@ -5,15 +5,24 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateColor from "../../util/validateColor";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateVlink(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateVlink() ███████████████████████████████████████`
-      );
-      console.log(
-        `015 attributeValidateVlink(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateVlink() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `020 attributeValidateVlink(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "vlink") {
         // validate the parent
@@ -37,9 +46,10 @@ function attributeValidateVlink(context: Linter): RuleObjType {
             fix: null,
           });
         } else {
-          console.log(
-            `041 attributeValidateVlink(): value exists so let's validate it`
-          );
+          DEV &&
+            console.log(
+              `051 attributeValidateVlink(): value exists so let's validate it`
+            );
           let errorArr = validateColor(
             node.attribValueRaw,
             node.attribValueStartsAt as number,
@@ -52,16 +62,17 @@ function attributeValidateVlink(context: Linter): RuleObjType {
               hexEightOK: false,
             }
           );
-          console.log(
-            `056 attributeValidateVlink(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `067 attributeValidateVlink(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`064 attributeValidateVlink(): RAISE ERROR`);
+            DEV && console.log(`075 attributeValidateVlink(): RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-vlink" });
           });
         }

@@ -11,23 +11,23 @@ function ensureXIsNotPresentBeforeOneOfY(
   x: string,
   y: string[] = []
 ): boolean {
-  console.log(`014e ensureXIsNotPresentBeforeOneOfY() called`);
+  DEV && console.log(`014e ensureXIsNotPresentBeforeOneOfY() called`);
   for (let i = startingIdx, len = str.length; i < len; i++) {
-    console.log(`016e str[i] = ${str[i]}`);
+    DEV && console.log(`016e str[i] = ${str[i]}`);
     if (y.some((oneOfStr) => str.startsWith(oneOfStr, i))) {
       // it's escape clause, bracket or whatever was reached and yet,
       // "x" hasn't been encountered yet
-      console.log(`020e return true`);
+      DEV && console.log(`020e return true`);
       return true;
     }
     if (str[i] === x) {
       // if "x" was found, that's it - falsey result
-      console.log(`025e return false`);
+      DEV && console.log(`025e return false`);
       return false;
     }
   }
   // default result
-  console.log(`030e return true`);
+  DEV && console.log(`030e return true`);
   return true;
 }
 
@@ -60,9 +60,10 @@ function xBeforeYOnTheRight(
 //                              ^
 //                            start
 function plausibleAttrStartsAtX(str: string, start: number): boolean {
-  console.log(
-    `${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
-  );
+  DEV &&
+    console.log(
+      `${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
+    );
   if (!isAttrNameChar(str[start]) || !start) {
     return false;
   }
@@ -74,18 +75,19 @@ function plausibleAttrStartsAtX(str: string, start: number): boolean {
 
 // difference is equal is required
 function guaranteedAttrStartsAtX(str: string, start: number): boolean {
-  console.log(
-    `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
-  );
+  DEV &&
+    console.log(
+      `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
+    );
   if (!start || !isAttrNameChar(str[start])) {
-    console.log(`081g return false`);
+    DEV && console.log(`083g return false`);
     return false;
   }
   // either quotes match or does not match but tag closing follows
   // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   let regex =
     /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-  console.log(`088g return ${regex.test(str.slice(start))}`);
+  DEV && console.log(`090g return ${regex.test(str.slice(start))}`);
   return regex.test(str.slice(start));
 }
 
@@ -97,13 +99,14 @@ function findAttrNameCharsChunkOnTheLeft(
     return;
   }
   for (let y = i; y--; ) {
-    console.log(
-      `101 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
-        str[y],
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `104 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
+          str[y],
+          null,
+          4
+        )}`
+      );
     if (str[y].trim().length && !isAttrNameChar(str[y])) {
       return str.slice(y + 1, i);
     }

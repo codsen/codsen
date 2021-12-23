@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onchange
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnchange(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnchange() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnchange() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnchange(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnchange(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onchange") {
         // validate the parent
@@ -48,16 +53,17 @@ function attributeValidateOnchange(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `052 attributeValidateOnchange(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `058 attributeValidateOnchange(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`060 attributeValidateOnchange(): RAISE ERROR`);
+            DEV && console.log(`066 attributeValidateOnchange(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onchange",

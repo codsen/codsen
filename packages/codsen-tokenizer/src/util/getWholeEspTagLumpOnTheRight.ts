@@ -12,14 +12,16 @@ function getWholeEspTagLumpOnTheRight(
   // getLastEspLayerObj()
   let lastEspLayerObj = layers[getLastEspLayerObjIdx(layers) as number];
 
-  console.log(
-    `016 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
-  );
+  DEV &&
+    console.log(
+      `017 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
+    );
 
   for (let y = i + 1; y < len; y++) {
-    console.log(
-      `021 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `023 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
+      );
 
     // if righty character is on the left and now it's lefty,
     // we have a situation like:
@@ -34,9 +36,10 @@ function getWholeEspTagLumpOnTheRight(
     //
     // we slice off where righty starts
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
-      console.log(
-        `038 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `041 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+        );
       break;
     }
 
@@ -60,9 +63,10 @@ function getWholeEspTagLumpOnTheRight(
       // bail if it's a bracket
       str[y] === "("
     ) {
-      console.log(
-        `064 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `068 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+        );
       break;
     }
 
@@ -92,7 +96,7 @@ function getWholeEspTagLumpOnTheRight(
     ) {
       wholeEspTagLumpOnTheRight += str[y];
     } else {
-      console.log(`095 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+      DEV && console.log(`099 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
       break;
     }
   }
@@ -173,7 +177,7 @@ function getWholeEspTagLumpOnTheRight(
     }
   }
 
-  console.log(`176 getWholeEspTagLumpOnTheRight(): final return`);
+  DEV && console.log(`180 getWholeEspTagLumpOnTheRight(): final return`);
 
   return wholeEspTagLumpOnTheRight;
 }

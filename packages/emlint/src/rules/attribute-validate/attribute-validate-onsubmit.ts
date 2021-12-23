@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onsubmit
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnsubmit(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnsubmit() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnsubmit() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnsubmit(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnsubmit(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onsubmit") {
         // validate the parent
@@ -47,16 +52,17 @@ function attributeValidateOnsubmit(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `051 attributeValidateOnsubmit(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `057 attributeValidateOnsubmit(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`059 attributeValidateOnsubmit(): RAISE ERROR`);
+            DEV && console.log(`065 attributeValidateOnsubmit(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onsubmit",

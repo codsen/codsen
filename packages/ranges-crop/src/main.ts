@@ -6,6 +6,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
   if (arrOfRanges === null) {
     return null;
@@ -96,13 +98,14 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
   //                       finally, the real action
   // ---------------------------------------------------------------------------
 
-  console.log(
-    `100 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
-      arrOfRanges,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `103 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
+        arrOfRanges,
+        null,
+        4
+      )}`
+    );
   let res = (rMerge(arrOfRanges) || [])
     .filter(
       (singleRangeArr) =>
@@ -111,32 +114,41 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
     )
     .map((singleRangeArr) => {
       if (singleRangeArr[1] > strLen) {
-        console.log(
-          `115 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
-        );
-        if (singleRangeArr[2] != null) {
+        DEV &&
           console.log(
-            `119 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
+            `119 - we will process the ${JSON.stringify(
+              singleRangeArr,
+              null,
+              0
+            )}`
           );
+        if (singleRangeArr[2] != null) {
+          DEV &&
+            console.log(
+              `128 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
+            );
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
         }
-        console.log(
-          `124 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
-        );
+        DEV &&
+          console.log(
+            `134 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
+          );
         return [singleRangeArr[0], strLen];
       }
-      console.log(
-        `129 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
-      );
+      DEV &&
+        console.log(
+          `140 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
+        );
       return singleRangeArr;
     });
-  console.log(
-    `134 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
-      res,
-      null,
-      4
-    )}\n\n\n`
-  );
+  DEV &&
+    console.log(
+      `146 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
+        res,
+        null,
+        4
+      )}\n\n\n`
+    );
 
   return !res.length ? null : (res as Ranges);
 }

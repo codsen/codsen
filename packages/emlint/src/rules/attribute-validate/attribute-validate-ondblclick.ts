@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-ondblclick
 // -----------------------------------------------------------------------------
 
 function attributeValidateOndblclick(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOndblclick() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOndblclick() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOndblclick(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOndblclick(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "ondblclick") {
         // validate the parent
@@ -68,16 +73,18 @@ function attributeValidateOndblclick(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `072 attributeValidateOndblclick(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `078 attributeValidateOndblclick(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`080 attributeValidateOndblclick(): RAISE ERROR`);
+            DEV &&
+              console.log(`087 attributeValidateOndblclick(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-ondblclick",

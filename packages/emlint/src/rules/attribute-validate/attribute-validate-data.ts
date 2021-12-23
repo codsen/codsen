@@ -5,16 +5,21 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateData(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateData() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateData() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateData(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateData(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "data") {
         // validate the parent
@@ -31,7 +36,7 @@ function attributeValidateData(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`034 RAISE ERROR`);
+            DEV && console.log(`039 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-data" });
           });
         }

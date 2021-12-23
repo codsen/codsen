@@ -9,12 +9,16 @@ import op from "object-path";
 import { Linter, RuleObjType } from "../../linter";
 import { isObj } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function commentMismatchingPair(context: Linter): RuleObjType {
   return {
     ast(node) {
-      console.log(
-        `███████████████████████████████████████ commentMismatchingPair() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ commentMismatchingPair() ███████████████████████████████████████`
+        );
 
       // we have raw AST, we need to traverse it and find mismatching-kind pairs
       // of type="comment" tokens, only-not or not-only
@@ -27,7 +31,7 @@ function commentMismatchingPair(context: Linter): RuleObjType {
           if (isObj(current)) {
             // monkey will traverse every key, every string within.
             // We need to pick the objects of a type we need: "comment"
-            // console.log(
+            // DEV && console.log(
             //   `210 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} PING ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
             //     current,
             //     null,
@@ -36,25 +40,27 @@ function commentMismatchingPair(context: Linter): RuleObjType {
             // );
 
             if (current.type === "comment" && current.closing) {
-              console.log(
-                `040 FIY ${`\u001b[${33}m${`current token is closing`}\u001b[${39}m`}: ${JSON.stringify(
-                  current,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `045 FIY ${`\u001b[${33}m${`current token is closing`}\u001b[${39}m`}: ${JSON.stringify(
+                    current,
+                    null,
+                    4
+                  )}`
+                );
 
               let previousToken = op.get(
                 node,
                 pathPrev(innerObj.path) as string
               );
-              console.log(
-                `052 ${`\u001b[${33}m${`previousToken`}\u001b[${39}m`} = ${JSON.stringify(
-                  previousToken,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `058 ${`\u001b[${33}m${`previousToken`}\u001b[${39}m`} = ${JSON.stringify(
+                    previousToken,
+                    null,
+                    4
+                  )}`
+                );
 
               if (
                 isObj(previousToken) &&
@@ -62,9 +68,10 @@ function commentMismatchingPair(context: Linter): RuleObjType {
                 !previousToken.closing
               ) {
                 if (previousToken.kind === "not" && current.kind === "only") {
-                  console.log(
-                    `066 ${`\u001b[${31}m${`ERROR: head is "not"-kind comment, current token, a tail, is "only"`}\u001b[${39}m`}`
-                  );
+                  DEV &&
+                    console.log(
+                      `073 ${`\u001b[${31}m${`ERROR: head is "not"-kind comment, current token, a tail, is "only"`}\u001b[${39}m`}`
+                    );
 
                   // turn tail into "not"-kind, add front part (<!--)
 
@@ -85,9 +92,10 @@ function commentMismatchingPair(context: Linter): RuleObjType {
                   previousToken.kind === "only" &&
                   current.kind === "not"
                 ) {
-                  console.log(
-                    `089 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
-                  );
+                  DEV &&
+                    console.log(
+                      `097 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
+                    );
 
                   // turn tail into "only"-kind, remove front part (<!--)
 

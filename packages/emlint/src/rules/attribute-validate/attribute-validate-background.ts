@@ -5,20 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateBackground(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateBackground() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateBackground() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateBackground(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateBackground(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "background") {
         // validate the parent
@@ -37,7 +42,7 @@ function attributeValidateBackground(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`040 RAISE ERROR`);
+            DEV && console.log(`045 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-background",

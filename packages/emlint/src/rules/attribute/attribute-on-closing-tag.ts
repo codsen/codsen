@@ -1,4 +1,7 @@
 import { Linter, RuleObjType } from "../../linter";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
 // import { Range } from "../../../../../scripts/common";
 
 // rule: attribute-on-closing-tag
@@ -10,16 +13,18 @@ interface AttributeOnClosingTag {
 const attributeOnClosingTag: AttributeOnClosingTag = (context) => {
   return {
     tag(node) {
-      console.log(
-        `███████████████████████████████████████ attributeOnClosingTag() ███████████████████████████████████████`
-      );
-      console.log(
-        `017 attributeOnClosingTag(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeOnClosingTag() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `022 attributeOnClosingTag(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       // if there is more than 1 attribute
       if (node.closing && Array.isArray(node.attribs) && node.attribs.length) {
-        console.log(`022 attributeOnClosingTag(): RAISE ERROR`);
+        DEV && console.log(`027 attributeOnClosingTag(): RAISE ERROR`);
         context.report({
           ruleId: "attribute-on-closing-tag",
           message: `Attribute on a closing tag.`,

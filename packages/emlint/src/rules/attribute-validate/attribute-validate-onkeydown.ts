@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onkeydown
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnkeydown(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnkeydown() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnkeydown() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnkeydown(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnkeydown(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onkeydown") {
         // validate the parent
@@ -68,16 +73,17 @@ function attributeValidateOnkeydown(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `072 attributeValidateOnkeydown(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `078 attributeValidateOnkeydown(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`080 attributeValidateOnkeydown(): RAISE ERROR`);
+            DEV && console.log(`086 attributeValidateOnkeydown(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onkeydown",

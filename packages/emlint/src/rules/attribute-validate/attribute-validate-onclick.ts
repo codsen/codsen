@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onclick
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnclick(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnclick() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnclick() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnclick(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnclick(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onclick") {
         // validate the parent
@@ -68,16 +73,17 @@ function attributeValidateOnclick(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `072 attributeValidateOnclick(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `078 attributeValidateOnclick(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`080 attributeValidateOnclick(): RAISE ERROR`);
+            DEV && console.log(`086 attributeValidateOnclick(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onclick",

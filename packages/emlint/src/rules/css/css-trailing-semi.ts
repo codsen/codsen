@@ -5,6 +5,9 @@ import {
 } from "../../../../codsen-tokenizer/src/util/util";
 import { AttribSupplementedWithParent } from "../../util/commonTypes";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: css-trailing-semi
 // -----------------------------------------------------------------------------
 
@@ -19,7 +22,7 @@ function processNode(
   context: Linter,
   mode: Mode
 ): void {
-  console.log(`022 css-trailing-semi/processNode() called`);
+  DEV && console.log(`025 css-trailing-semi/processNode() called`);
   // first let's set the properties array container, it might come
   // from different places, depending is it head CSS styles or inline HTML styles
   let nodeArr;
@@ -32,19 +35,21 @@ function processNode(
   }
 
   if (!nodeArr) {
-    console.log(
-      `036 css-trailing-semi/processNode(): ${`\u001b[${31}m${`early exit`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `040 css-trailing-semi/processNode(): ${`\u001b[${31}m${`early exit`}\u001b[${39}m`}`
+      );
     return;
   }
 
-  console.log(
-    `042 css-trailing-semi/processNode(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nodeArr`}\u001b[${39}m`} = ${JSON.stringify(
-      nodeArr,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `047 css-trailing-semi/processNode(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nodeArr`}\u001b[${39}m`} = ${JSON.stringify(
+        nodeArr,
+        null,
+        4
+      )}`
+    );
 
   // extract all properties - arr array records
   // all whitespace are as text tokens and we want to exclude them
@@ -54,13 +59,14 @@ function processNode(
   let properties: Property[] = nodeArr.filter(
     (property: any) => property.property !== undefined
   );
-  console.log(
-    `058 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`properties`}\u001b[${39}m`} = ${JSON.stringify(
-      properties as any,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `064 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`properties`}\u001b[${39}m`} = ${JSON.stringify(
+        properties as any,
+        null,
+        4
+      )}`
+    );
 
   let property: Property = properties[~-properties.length];
   if (
@@ -70,9 +76,10 @@ function processNode(
     property.semi === null &&
     property.valueEnds
   ) {
-    console.log(
-      `074 ${`\u001b[${31}m${`caught a property without a semicolon`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `081 ${`\u001b[${31}m${`caught a property without a semicolon`}\u001b[${39}m`}`
+      );
     let idxFrom = property.start;
     let idxTo = property.end;
     let positionToInsert = (property.importantEnds ||
@@ -113,32 +120,37 @@ interface TrailingSemi {
   (context: Linter, mode: Mode): RuleObjType;
 }
 const trailingSemi: TrailingSemi = (context, mode) => {
-  console.log(`116 trailingSemi(): mode = ${JSON.stringify(mode, null, 4)}`);
+  DEV &&
+    console.log(`124 trailingSemi(): mode = ${JSON.stringify(mode, null, 4)}`);
   return {
     rule(node) {
-      console.log(
-        `███████████████████████████████████████ trailingSemi(), rule ███████████████████████████████████████`
-      );
-      console.log(
-        `123 trailingSemi(): incoming ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ trailingSemi(), rule ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `133 trailingSemi(): incoming ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
       processNode(node, context, mode);
     },
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ trailingSemi(), attr ███████████████████████████████████████`
-      );
-      console.log(
-        `136 trailingSemi(): incoming ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ trailingSemi(), attr ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `148 trailingSemi(): incoming ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
       processNode(node, context, mode);
     },
   };

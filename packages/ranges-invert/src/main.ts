@@ -6,6 +6,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface Opts {
   strictlyTwoElementsInRangeArrays?: boolean;
   skipChecks?: boolean;
@@ -67,7 +69,7 @@ function rInvert(
 
   // opts validation
 
-  console.log("███████████████████████████████████████");
+  DEV && console.log("███████████████████████████████████████");
   // declare defaults, so we can enforce types later:
   let defaults: Opts = {
     strictlyTwoElementsInRangeArrays: false,
@@ -150,27 +152,32 @@ function rInvert(
     // hopefully input ranges were really sorted...
   }
 
-  console.log(
-    `154 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
-      prep,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `157 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+        prep,
+        null,
+        4
+      )}`
+    );
 
   let res: Range[] = (prep as any[]).reduce((accum, currArr, i, arr) => {
-    console.log(`\u001b[${35}m${`=====================`}\u001b[${39}m`);
-    console.log(
-      `accum = ${accum.length ? JSON.stringify(accum, null, 0) : "[]"}`
-    );
-    console.log(`currArr = ${JSON.stringify(currArr, null, 0)}`);
-    console.log(`i = ${i}`);
+    DEV && console.log(`\u001b[${35}m${`=====================`}\u001b[${39}m`);
+    DEV &&
+      console.log(
+        `accum = ${accum.length ? JSON.stringify(accum, null, 0) : "[]"}`
+      );
+    DEV && console.log(`currArr = ${JSON.stringify(currArr, null, 0)}`);
+    DEV && console.log(`i = ${i}`);
 
     let res2 = [];
 
     // if the first range's first index is not zero, additionally add zero range:
     if (i === 0 && arr[0][0] !== 0) {
-      console.log(`173 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
+      DEV &&
+        console.log(
+          `179 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`
+        );
       res2.push([0, arr[0][0]]);
     }
 
@@ -179,9 +186,10 @@ function rInvert(
     // add the inverted chunk that follows it, [2, 4].
     let endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
-      console.log(
-        `183 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
-      );
+      DEV &&
+        console.log(
+          `191 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
+        );
 
       // this can happen only when opts.skipChecks is on:
       if (opts.skipChecks && currArr[1] > endingIndex) {
@@ -201,13 +209,14 @@ function rInvert(
     return (accum as any[]).concat(res2 as any[]);
   }, []) as any[];
 
-  console.log(
-    `${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
-      res,
-      null,
-      4
-    )}\n\n\n`
-  );
+  DEV &&
+    console.log(
+      `${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
+        res,
+        null,
+        4
+      )}\n\n\n`
+    );
 
   return rCrop(res as Ranges, strLen);
 }

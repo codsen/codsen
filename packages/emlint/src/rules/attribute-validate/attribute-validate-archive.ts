@@ -5,20 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateArchive(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateArchive() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateArchive() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateArchive(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateArchive(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "archive") {
         // validate the parent
@@ -53,7 +58,7 @@ function attributeValidateArchive(context: Linter): RuleObjType {
             separator: "comma",
             multipleOK: true,
           }).forEach((errorObj) => {
-            console.log(`056 RAISE ERROR`);
+            DEV && console.log(`061 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-archive",
@@ -68,7 +73,7 @@ function attributeValidateArchive(context: Linter): RuleObjType {
             separator: "space", // or "comma"
             multipleOK: true,
           }).forEach((errorObj) => {
-            console.log(`071 RAISE ERROR`);
+            DEV && console.log(`076 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-archive",

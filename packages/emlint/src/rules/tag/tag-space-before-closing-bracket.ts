@@ -3,6 +3,9 @@ import { left } from "string-left-right";
 import { Linter, RuleObjType } from "../../linter";
 import { isAnEnabledValue } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: tag-space-before-closing-bracket
 // -----------------------------------------------------------------------------
 
@@ -14,18 +17,19 @@ function tagSpaceBeforeClosingBracket(
 ): RuleObjType {
   return {
     tag(node) {
-      console.log(
-        `███████████████████████████████████████ tagSpaceBeforeClosingBracket() ███████████████████████████████████████`
-      );
-      console.log(`mode = ${JSON.stringify(mode, null, 4)}`);
-      console.log(`node = ${JSON.stringify(node, null, 4)}`);
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ tagSpaceBeforeClosingBracket() ███████████████████████████████████████`
+        );
+      DEV && console.log(`mode = ${JSON.stringify(mode, null, 4)}`);
+      DEV && console.log(`node = ${JSON.stringify(node, null, 4)}`);
 
       // -----------------------------------------------------------------------------
       // early exit
 
       // if there's no closing bracket, exit early
       if (context.str[node.end - 1] !== ">") {
-        console.log(`028 EXIT, there's no closing bracket`);
+        DEV && console.log(`032 EXIT, there's no closing bracket`);
         return;
       }
 
@@ -52,13 +56,14 @@ function tagSpaceBeforeClosingBracket(
       ) {
         leftmostPos = idxOnTheLeft;
       }
-      console.log(
-        `056 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`leftmostPos`}\u001b[${39}m`} = ${JSON.stringify(
-          leftmostPos,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `061 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`leftmostPos`}\u001b[${39}m`} = ${JSON.stringify(
+            leftmostPos,
+            null,
+            4
+          )}`
+        );
 
       // -----------------------------------------------------------------------------
       // depends, is format-prettier enabled or not
@@ -87,7 +92,7 @@ function tagSpaceBeforeClosingBracket(
           (context.str[leftmostPos - 2] &&
             !context.str[leftmostPos - 2].trim()))
       ) {
-        console.log(`090 always mode - enforce spaces`);
+        DEV && console.log(`095 always mode - enforce spaces`);
         context.report({
           ruleId: "tag-space-before-closing-bracket",
           message: "Add a space.",
@@ -122,7 +127,7 @@ function tagSpaceBeforeClosingBracket(
         // there's whitespace to the left of slash/closing bracket
         !context.str[leftmostPos - 1].trim()
       ) {
-        console.log(`125 never mode - ban spaces`);
+        DEV && console.log(`130 never mode - ban spaces`);
         context.report({
           ruleId: "tag-space-before-closing-bracket",
           message: "Remove space.",

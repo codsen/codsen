@@ -2,6 +2,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
 // As a bonus, it turns digit-only value strings into numbers.
 
@@ -36,13 +38,14 @@ function extractVars(
     );
   }
   let opts: Opts = { ...defaults, ...originalOpts };
-  console.log(
-    `040 ${`\u001b[${33}m${`opts`}\u001b[${39}m`}: ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `043 ${`\u001b[${33}m${`opts`}\u001b[${39}m`}: ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
   if (opts.cb && typeof opts.cb !== "function") {
     throw new Error(
       `string-extract-sass-vars: [THROW_ID_02] opts.cb should be function! But it was given as ${JSON.stringify(
@@ -86,13 +89,14 @@ function extractVars(
       str[i - 1] !== BACKSLASH
     ) {
       withinQuotes = null;
-      console.log(
-        `090 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
-          withinQuotes,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `094 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
+            withinQuotes,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch the state of being within quotes
@@ -103,37 +107,40 @@ function extractVars(
       `'"`.includes(str[i])
     ) {
       withinQuotes = str[i];
-      console.log(
-        `107 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
-          withinQuotes,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `112 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
+            withinQuotes,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch ending of withinSlashSlashComment
     if (withinSlashSlashComment && `\r\n`.includes(str[i])) {
       withinSlashSlashComment = false;
-      console.log(
-        `119 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
-          withinSlashSlashComment,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `125 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
+            withinSlashSlashComment,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch a start of slashslash comments block
     if (!withinComments && str[i] === "/" && str[i + 1] === "/") {
       withinSlashSlashComment = true;
-      console.log(
-        `131 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
-          withinSlashSlashComment,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `138 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
+            withinSlashSlashComment,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch the ending of slash astrisk comments block
@@ -143,26 +150,28 @@ function extractVars(
       str[i - 1] === "/"
     ) {
       withinSlashAsteriskComment = false;
-      console.log(
-        `147 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
-          withinSlashAsteriskComment,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `155 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
+            withinSlashAsteriskComment,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch a start of slash astrisk comments block
     // withinSlashAsteriskComment
     if (!withinComments && str[i] === "/" && str[i + 1] === "*") {
       withinSlashAsteriskComment = true;
-      console.log(
-        `160 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
-          withinSlashAsteriskComment,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `169 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
+            withinSlashAsteriskComment,
+            null,
+            4
+          )}`
+        );
     }
 
     // "within various comments" states aggregator
@@ -170,13 +179,14 @@ function extractVars(
 
     // Logging:
     // -------------------------------------------------------------------------
-    console.log(
-      `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${
-        withinComments ? 90 : 35
-      }m${`str[ ${i} ] = ${
-        str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
-      }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
-    );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${
+          withinComments ? 90 : 35
+        }m${`str[ ${i} ] = ${
+          str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
+        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+      );
 
     //
     //
@@ -193,13 +203,14 @@ function extractVars(
     // -----------------------------------------------------------------------------
     if (!withinComments && str[i] === "$" && varNameStartsAt === null) {
       varNameStartsAt = i + 1;
-      console.log(
-        `197 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varNameStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
-          varNameStartsAt,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `208 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varNameStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            varNameStartsAt,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch the ending of a value
@@ -217,13 +228,14 @@ function extractVars(
           : varValueStartsAt + 1,
         (lastNonQuoteCharAt || 0) + 1
       );
-      console.log(
-        `221 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${JSON.stringify(
-          varValue,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `233 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${JSON.stringify(
+            varValue,
+            null,
+            4
+          )}`
+        );
 
       if (/^-?\d*\.?\d*$/.test(varValue)) {
         varValue = +varValue;
@@ -249,13 +261,14 @@ function extractVars(
       varValueStartsAt === null
     ) {
       varValueStartsAt = i;
-      console.log(
-        `253 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValueStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
-          varValueStartsAt,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `266 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValueStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            varValueStartsAt,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch the ending of the var name
@@ -268,13 +281,14 @@ function extractVars(
       !withinQuotes
     ) {
       varName = str.slice(varNameStartsAt, i);
-      console.log(
-        `272 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${JSON.stringify(
-          varName,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `286 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${JSON.stringify(
+            varName,
+            null,
+            4
+          )}`
+        );
     }
 
     //
@@ -294,63 +308,72 @@ function extractVars(
 
     // LOGGING:
 
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`██ withinComments`}\u001b[${39}m`} = ${`\u001b[${
+          withinComments ? 32 : 31
+        }m${withinComments}\u001b[${39}m`}`
+      );
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`██ withinQuotes`}\u001b[${39}m`} = ${`\u001b[${
+          withinQuotes ? 32 : 31
+        }m${withinQuotes}\u001b[${39}m`}`
+      );
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`██ withinSlashSlashComment`}\u001b[${39}m`} = ${`\u001b[${
+          withinSlashSlashComment ? 32 : 31
+        }m${withinSlashSlashComment}\u001b[${39}m`}`
+      );
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`██ withinSlashAsteriskComment`}\u001b[${39}m`} = ${`\u001b[${
+          withinSlashAsteriskComment ? 32 : 31
+        }m${withinSlashAsteriskComment}\u001b[${39}m`}`
+      );
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`██ varNameStartsAt`}\u001b[${39}m`} = ${varNameStartsAt}`
+      );
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`██ varValueStartsAt`}\u001b[${39}m`} = ${varValueStartsAt}`
+      );
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`██ lastNonQuoteCharAt`}\u001b[${39}m`} = ${JSON.stringify(
+          lastNonQuoteCharAt,
+          null,
+          4
+        )}`
+      );
+    DEV &&
+      console.log(
+        `${
+          varName
+            ? `${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${varName}; `
+            : ""
+        }${
+          varValue
+            ? `${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${varValue}; `
+            : ""
+        }`
+      );
+  }
+
+  DEV &&
     console.log(
-      `${`\u001b[${90}m${`██ withinComments`}\u001b[${39}m`} = ${`\u001b[${
-        withinComments ? 32 : 31
-      }m${withinComments}\u001b[${39}m`}`
-    );
-    console.log(
-      `${`\u001b[${90}m${`██ withinQuotes`}\u001b[${39}m`} = ${`\u001b[${
-        withinQuotes ? 32 : 31
-      }m${withinQuotes}\u001b[${39}m`}`
-    );
-    console.log(
-      `${`\u001b[${90}m${`██ withinSlashSlashComment`}\u001b[${39}m`} = ${`\u001b[${
-        withinSlashSlashComment ? 32 : 31
-      }m${withinSlashSlashComment}\u001b[${39}m`}`
-    );
-    console.log(
-      `${`\u001b[${90}m${`██ withinSlashAsteriskComment`}\u001b[${39}m`} = ${`\u001b[${
-        withinSlashAsteriskComment ? 32 : 31
-      }m${withinSlashAsteriskComment}\u001b[${39}m`}`
-    );
-    console.log(
-      `${`\u001b[${90}m${`██ varNameStartsAt`}\u001b[${39}m`} = ${varNameStartsAt}`
-    );
-    console.log(
-      `${`\u001b[${90}m${`██ varValueStartsAt`}\u001b[${39}m`} = ${varValueStartsAt}`
-    );
-    console.log(
-      `${`\u001b[${90}m${`██ lastNonQuoteCharAt`}\u001b[${39}m`} = ${JSON.stringify(
-        lastNonQuoteCharAt,
+      `367 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+        res,
         null,
         4
       )}`
     );
-    console.log(
-      `${
-        varName
-          ? `${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${varName}; `
-          : ""
-      }${
-        varValue
-          ? `${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${varValue}; `
-          : ""
-      }`
-    );
-  }
-
-  console.log(
-    `344 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
-      res,
-      null,
-      4
-    )}`
-  );
 
   // opts.throwIfEmpty
   if (!Object.keys(res).length && opts.throwIfEmpty) {
-    console.log(`353 ${`\u001b[${31}m${`throw`}\u001b[${39}m`}`);
+    DEV && console.log(`376 ${`\u001b[${31}m${`throw`}\u001b[${39}m`}`);
     throw new Error(
       `string-extract-sass-vars: [THROW_ID_03] no keys extracted! (setting opts.originalOpts)`
     );

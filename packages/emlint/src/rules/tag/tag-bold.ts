@@ -1,5 +1,8 @@
 import { Linter, RuleObjType } from "../../linter";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: tag-bold
 // -----------------------------------------------------------------------------
 
@@ -8,13 +11,15 @@ import { Linter, RuleObjType } from "../../linter";
 function tagBold(context: Linter, suggested = "strong"): RuleObjType {
   return {
     tag(node) {
-      console.log(
-        `███████████████████████████████████████ tagBold() ███████████████████████████████████████`
-      );
-      console.log(`014 tagBold(): node = ${JSON.stringify(node, null, 4)}`);
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ tagBold() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(`019 tagBold(): node = ${JSON.stringify(node, null, 4)}`);
 
       if (node.tagName === "bold") {
-        console.log(`017 RAISE ERROR [${node.start}, ${node.end}]`);
+        DEV && console.log(`022 RAISE ERROR [${node.start}, ${node.end}]`);
         context.report({
           ruleId: "tag-bold",
           message: `Tag "bold" does not exist in HTML.`,

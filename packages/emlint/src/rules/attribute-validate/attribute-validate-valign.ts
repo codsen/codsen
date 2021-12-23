@@ -5,16 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import { validateString } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateValign(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateValign() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateValign() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateValign(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateValign(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "valign") {
         // validate the parent
@@ -46,7 +55,7 @@ function attributeValidateValign(context: Linter): RuleObjType {
               canBeCommaSeparated: false,
             }
           ).forEach((errorObj) => {
-            console.log(`049 RAISE ERROR`);
+            DEV && console.log(`058 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-valign",

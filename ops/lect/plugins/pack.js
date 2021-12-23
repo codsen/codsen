@@ -2,6 +2,8 @@ import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import sortPackageJson from "sort-package-json";
 import { dequal } from "dequal";
+// import omit from "lodash.omit";
+// import intersection from "lodash.intersection";
 
 function format(obj) {
   if (typeof obj !== "object") {
@@ -29,6 +31,7 @@ function format(obj) {
 // -----------------------------------------------------------------------------
 
 // writes package.json
+// async function packageJson({ state, lectrc, rootPackageJSON }) {
 async function packageJson({ state, lectrc }) {
   let content = { ...state.pack };
 
@@ -81,6 +84,15 @@ async function packageJson({ state, lectrc }) {
       1
     )}`;
   }
+
+  // 6. remove devdeps from this package.json which are already present
+  // in root package.json devdeps
+  // content = omit(content, (val) =>
+  //   intersection(
+  //     Object.keys(rootPackageJSON.devDependencies),
+  //     Object.keys(content.devDependencies || {})
+  //   ).includes(val)
+  // );
 
   // 6. write
   try {

@@ -9,6 +9,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
 
 interface Opts {
@@ -192,13 +194,14 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
   }
 
   let opts: Opts = { ...defaults, ...originalOpts };
-  console.log(
-    `196 FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `199 FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
 
   // normalize the opts.removeHTMLComments
   if (typeof opts.removeHTMLComments === "boolean") {
@@ -211,15 +214,16 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
       ...new Set(opts.breakToTheLeftOf.map((val) => val[0])),
     ].join("");
   }
-  console.log(
-    `215 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
-      [...breakToTheLeftOfFirstLetters],
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `219 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
+        [...breakToTheLeftOfFirstLetters],
+        null,
+        4
+      )}`
+    );
 
-  // console.log(
+  // DEV && console.log(
   //   `0187 ${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
   //     breakToTheLeftOfFirstLetters,
   //     null,
@@ -227,8 +231,8 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
   //   )}`
   // );
   //
-  // console.log("\n");
-  // console.log(
+  // DEV && console.log("\n");
+  // DEV && console.log(
   //   `0196 ${`\u001b[${33}m${`██ ██ ██`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
@@ -300,13 +304,14 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           leavePercForLastStage -
         opts.reportProgressFuncFrom
     );
-    console.log(
-      `304 ${`\u001b[${33}m${`ceil`}\u001b[${39}m`} = ${JSON.stringify(
-        ceil,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `309 ${`\u001b[${33}m${`ceil`}\u001b[${39}m`} = ${JSON.stringify(
+          ceil,
+          null,
+          4
+        )}`
+      );
   }
 
   // one more round to collapse the whitespace to:
@@ -340,11 +345,12 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
 
       // Logging:
       // ███████████████████████████████████████
-      console.log(
-        `\n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
-          str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 0)
-        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
-      );
+      DEV &&
+        console.log(
+          `\n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+            str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 0)
+          }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+        );
 
       // Report the progress. We'll allocate 98% of the progress bar to this stage
       if (opts.reportProgressFunc) {
@@ -386,31 +392,36 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str[i] === "}" &&
         str[i - 1] === "}"
       ) {
-        console.log(
-          `390 ${`\u001b[${32}m${`TWO CLOSING CURLY BRACES`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `397 ${`\u001b[${32}m${`TWO CLOSING CURLY BRACES`}\u001b[${39}m`}`
+          );
         if (countCharactersPerLine + 1 >= opts.lineLengthLimit) {
-          console.log(`393 line length exceeded!`);
+          DEV && console.log(`400 line length exceeded!`);
           finalIndexesToDelete.push(i, i, lineEnding);
-          console.log(
-            `396 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-              [i, i, lineEnding],
-              null,
-              0
-            )}`
-          );
-          console.log(
-            `403 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${0}`
-          );
+          DEV &&
+            console.log(
+              `404 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                [i, i, lineEnding],
+                null,
+                0
+              )}`
+            );
+          DEV &&
+            console.log(
+              `412 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${0}`
+            );
           countCharactersPerLine = 0;
         } else {
-          console.log(`407 within line length limit, overwrite the stage`);
+          DEV &&
+            console.log(`417 within line length limit, overwrite the stage`);
           stageFrom = i;
           stageTo = i;
           stageAdd = " ";
-          console.log(
-            `412 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stageFrom = ${stageFrom}; stageTo = ${stageTo}; stageAdd = "${stageAdd}"`
-          );
+          DEV &&
+            console.log(
+              `423 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stageFrom = ${stageFrom}; stageTo = ${stageTo}; stageAdd = "${stageAdd}"`
+            );
         }
       }
 
@@ -419,7 +430,7 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
 
       if (doNothing && typeof doNothing === "number" && i >= doNothing) {
         doNothing = undefined;
-        console.log(`422 TURN OFF doNothing`);
+        DEV && console.log(`433 TURN OFF doNothing`);
       }
 
       // catch ending of </script...
@@ -430,7 +441,7 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str.startsWith("</script", i) &&
         !isLetter(str[i + 8])
       ) {
-        console.log(`433 ENDING OF A SCRIPT TAG CAUGHT`);
+        DEV && console.log(`444 ENDING OF A SCRIPT TAG CAUGHT`);
         // 1. if there is a line break, chunk of whitespace and </script>,
         // delete that chunk of whitespace, leave line break.
         // If there's non-whitespace character, chunk of whitespace and </script>,
@@ -445,25 +456,28 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           !str[~-i].trim()
         ) {
           // march backwards
-          console.log(`448 \u001b[${36}m${`march backwards`}\u001b[${39}m`);
+          DEV &&
+            console.log(`460 \u001b[${36}m${`march backwards`}\u001b[${39}m`);
           for (let y = i; y--; ) {
-            console.log(
-              `\u001b[${36}m${`str[${y}] = ${JSON.stringify(
-                str[y],
-                null,
-                0
-              )}`}\u001b[${39}m`
-            );
+            DEV &&
+              console.log(
+                `\u001b[${36}m${`str[${y}] = ${JSON.stringify(
+                  str[y],
+                  null,
+                  0
+                )}`}\u001b[${39}m`
+              );
             if (str[y] === "\n" || str[y] === "\r" || str[y].trim()) {
               if (y + 1 < i) {
-                console.log(
-                  `460 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                    y + 1
-                  }, ${i}]`
-                );
+                DEV &&
+                  console.log(
+                    `474 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                      y + 1
+                    }, ${i}]`
+                  );
                 finalIndexesToDelete.push(y + 1, i);
               }
-              console.log(`\u001b[${36}m${`BREAK`}\u001b[${39}m`);
+              DEV && console.log(`\u001b[${36}m${`BREAK`}\u001b[${39}m`);
               break;
             }
           }
@@ -472,11 +486,12 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         // 2.
         scriptStartedAt = null;
         doNothing = false;
-        console.log(
-          `476 SET ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = null, ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = false`
-        );
+        DEV &&
+          console.log(
+            `491 SET ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = null, ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = false`
+          );
         i += 8;
-        console.log(`OFFSET i now = ${i}, then CONTINUE`);
+        DEV && console.log(`OFFSET i now = ${i}, then CONTINUE`);
         continue;
       }
 
@@ -489,7 +504,7 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str.startsWith("<script", i) &&
         !isLetter(str[i + 7])
       ) {
-        console.log(`492 STARTING OF A SCRIPT TAG CAUGHT`);
+        DEV && console.log(`507 STARTING OF A SCRIPT TAG CAUGHT`);
         scriptStartedAt = i;
         doNothing = true;
         let whatToInsert = "";
@@ -501,18 +516,20 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
             whatToInsert = lineEnding;
           }
           finalIndexesToDelete.push(whitespaceStartedAt, i, whatToInsert);
-          console.log(
-            `505 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-              whitespaceStartedAt + 1
-            }, ${i}, ${JSON.stringify(whatToInsert, null, 0)}]`
-          );
+          DEV &&
+            console.log(
+              `521 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                whitespaceStartedAt + 1
+              }, ${i}, ${JSON.stringify(whatToInsert, null, 0)}]`
+            );
         }
 
         whitespaceStartedAt = null;
         lastLinebreak = null;
-        console.log(
-          `514 SET ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = ${i}, ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = true, RESET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = null`
-        );
+        DEV &&
+          console.log(
+            `531 SET ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = ${i}, ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = true, RESET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = null`
+          );
       }
 
       //
@@ -541,9 +558,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         !/\w/.test(str[i]) // not a letter
       ) {
         tagName = str.slice(tagNameStartsAt, i);
-        console.log(
-          `545 SET ${`\u001b[${33}m${`tagName`}\u001b[${39}m`} = ${tagName}`
-        );
+        DEV &&
+          console.log(
+            `563 SET ${`\u001b[${33}m${`tagName`}\u001b[${39}m`} = ${tagName}`
+          );
 
         // check for inner tag whitespace
         let idxOnTheRight = right(str, ~-i);
@@ -554,12 +572,13 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           right(str, i)
         ) {
           finalIndexesToDelete.push(i, right(str, i) as number);
-          console.log(
-            `558 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${right(
-              str,
-              i
-            )}]`
-          );
+          DEV &&
+            console.log(
+              `577 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${right(
+                str,
+                i
+              )}]`
+            );
         } else if (
           idxOnTheRight &&
           str[idxOnTheRight] === "/" &&
@@ -568,12 +587,13 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           // if there's a space in front of "/>"
           if (!str[i].trim() && right(str, i)) {
             finalIndexesToDelete.push(i, right(str, i) as number);
-            console.log(
-              `572 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${right(
-                str,
-                i
-              )}]`
-            );
+            DEV &&
+              console.log(
+                `592 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${right(
+                  str,
+                  i
+                )}]`
+              );
           }
           // if there's space between slash and bracket
           if (str[idxOnTheRight + 1] !== ">" && right(str, idxOnTheRight + 1)) {
@@ -581,11 +601,12 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
               idxOnTheRight + 1,
               right(str, idxOnTheRight + 1) as number
             );
-            console.log(
-              `585 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                idxOnTheRight + 1
-              }, ${right(str, right(str, idxOnTheRight + 1))}]`
-            );
+            DEV &&
+              console.log(
+                `606 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                  idxOnTheRight + 1
+                }, ${right(str, right(str, idxOnTheRight + 1))}]`
+              );
           }
         }
       }
@@ -601,13 +622,13 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
       ) {
         if (/\w/.test(str[i])) {
           tagNameStartsAt = i;
-          console.log(`604 SET tagNameStartsAt = ${tagNameStartsAt}`);
+          DEV && console.log(`625 SET tagNameStartsAt = ${tagNameStartsAt}`);
         } else if (
           str[right(str, ~-i) as number] === "/" &&
           /\w/.test(str[right(str, right(str, ~-i) as number) as number] || "")
         ) {
           tagNameStartsAt = right(str, right(str, ~-i));
-          console.log(`610 SET tagNameStartsAt = ${tagNameStartsAt}`);
+          DEV && console.log(`631 SET tagNameStartsAt = ${tagNameStartsAt}`);
         }
       }
 
@@ -621,9 +642,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str[i] === "*" &&
         str[i + 1] === "/"
       ) {
-        console.log(
-          `625 ${`\u001b[${32}m${`ENDING OF A CSS COMMENT CAUGHT`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `647 ${`\u001b[${32}m${`ENDING OF A CSS COMMENT CAUGHT`}\u001b[${39}m`}`
+          );
         // stage:
         [stageFrom, stageTo] = expander({
           str,
@@ -634,37 +656,41 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           ifRightSideIncludesThisThenCropTightly:
             DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
         });
-        console.log(
-          `638 EXPANDED TO ${JSON.stringify([stageFrom, stageTo], null, 0)}`
-        );
+        DEV &&
+          console.log(
+            `661 EXPANDED TO ${JSON.stringify([stageFrom, stageTo], null, 0)}`
+          );
 
         // reset marker:
         styleCommentStartedAt = null;
-        console.log(
-          `644 SET ${`\u001b[${33}m${`styleCommentStartedAt`}\u001b[${39}m`} = null`
-        );
+        DEV &&
+          console.log(
+            `668 SET ${`\u001b[${33}m${`styleCommentStartedAt`}\u001b[${39}m`} = null`
+          );
 
         if (stageFrom != null) {
           finalIndexesToDelete.push(stageFrom, stageTo);
-          console.log(
-            `650 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}]`
-          );
+          DEV &&
+            console.log(
+              `675 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}]`
+            );
         } else {
           countCharactersPerLine += 1;
-          console.log(
-            `655 ${`\u001b[${33}m${`countCharactersPerLine++`}\u001b[${39}m`}, now = ${JSON.stringify(
-              countCharactersPerLine,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `681 ${`\u001b[${33}m${`countCharactersPerLine++`}\u001b[${39}m`}, now = ${JSON.stringify(
+                countCharactersPerLine,
+                null,
+                4
+              )}`
+            );
           i += 1;
         }
-        // console.log(`0796 CONTINUE`);
+        // DEV && console.log(`0796 CONTINUE`);
         // continue;
 
         doNothing = i + 2;
-        console.log(`667 SET doNothing = ${doNothing}`);
+        DEV && console.log(`693 SET doNothing = ${doNothing}`);
       }
 
       // catch a start of CSS comments
@@ -677,45 +703,54 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str[i] === "/" &&
         str[i + 1] === "*"
       ) {
-        console.log(
-          `681 ${`\u001b[${32}m${`STARTING OF A CSS COMMENT CAUGHT`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `708 ${`\u001b[${32}m${`STARTING OF A CSS COMMENT CAUGHT`}\u001b[${39}m`}`
+          );
 
         // independently of options settings, mark the options setting
         // "removeCSSComments" as applicable:
         if (!applicableOpts.removeCSSComments) {
           applicableOpts.removeCSSComments = true;
-          console.log(
-            `689 SET ${`\u001b[${33}m${`applicableOpts.removeCSSComments`}\u001b[${39}m`} = ${JSON.stringify(
-              applicableOpts.removeCSSComments,
-              null,
-              4
-            )}; now applicableOpts = ${JSON.stringify(applicableOpts, null, 4)}`
-          );
+          DEV &&
+            console.log(
+              `717 SET ${`\u001b[${33}m${`applicableOpts.removeCSSComments`}\u001b[${39}m`} = ${JSON.stringify(
+                applicableOpts.removeCSSComments,
+                null,
+                4
+              )}; now applicableOpts = ${JSON.stringify(
+                applicableOpts,
+                null,
+                4
+              )}`
+            );
         }
 
         if (opts.removeCSSComments) {
           styleCommentStartedAt = i;
-          console.log(
-            `700 SET ${`\u001b[${33}m${`styleCommentStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
-              styleCommentStartedAt,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `733 SET ${`\u001b[${33}m${`styleCommentStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
+                styleCommentStartedAt,
+                null,
+                4
+              )}`
+            );
         }
       }
 
       // catch an ending of mso conditional tags
       // ███████████████████████████████████████
       if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
-        console.log(
-          `713 ${`\u001b[${36}m${`██ CONDITIONAL'S CLOSING CAUGHT`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `747 ${`\u001b[${36}m${`██ CONDITIONAL'S CLOSING CAUGHT`}\u001b[${39}m`}`
+          );
         withinHTMLConditional = false;
-        console.log(
-          `717 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinHTMLConditional`}\u001b[${39}m`} = ${withinHTMLConditional}`
-        );
+        DEV &&
+          console.log(
+            `752 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinHTMLConditional`}\u001b[${39}m`} = ${withinHTMLConditional}`
+          );
       }
 
       // catch an end of HTML comment
@@ -730,9 +765,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         let distanceFromHereToCommentEnding;
 
         if (str.startsWith("-->", i)) {
-          console.log(
-            `734 ${`\u001b[${32}m${`ENDING OF AN HTML COMMENT CAUGHT`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `770 ${`\u001b[${32}m${`ENDING OF AN HTML COMMENT CAUGHT`}\u001b[${39}m`}`
+            );
           distanceFromHereToCommentEnding = 3;
         } else if (str[i] === ">" && str[i - 1] === "]") {
           distanceFromHereToCommentEnding = 1;
@@ -745,38 +781,42 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
             from: htmlCommentStartedAt,
             to: i + distanceFromHereToCommentEnding,
           });
-          console.log(
-            `749 EXPANDED TO ${JSON.stringify([stageFrom, stageTo], null, 0)}`
-          );
+          DEV &&
+            console.log(
+              `786 EXPANDED TO ${JSON.stringify([stageFrom, stageTo], null, 0)}`
+            );
 
           // reset marker:
           htmlCommentStartedAt = null;
-          console.log(
-            `755 SET ${`\u001b[${33}m${`htmlCommentStartedAt`}\u001b[${39}m`} = null`
-          );
+          DEV &&
+            console.log(
+              `793 SET ${`\u001b[${33}m${`htmlCommentStartedAt`}\u001b[${39}m`} = null`
+            );
 
           if (stageFrom != null) {
             // it depends is there any character allowance left from the
             // line length limit or not
-            console.log(
-              `762 ${`\u001b[${33}m${`cpl`}\u001b[${39}m`} = ${JSON.stringify(
-                cpl,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `801 ${`\u001b[${33}m${`cpl`}\u001b[${39}m`} = ${JSON.stringify(
+                  cpl,
+                  null,
+                  4
+                )}`
+              );
             if (
               opts.lineLengthLimit &&
               cpl - (stageTo - stageFrom) >= opts.lineLengthLimit
             ) {
               finalIndexesToDelete.push(stageFrom, stageTo, lineEnding);
-              console.log(
-                `774 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}, ${JSON.stringify(
-                  lineEnding,
-                  null,
-                  0
-                )}]`
-              );
+              DEV &&
+                console.log(
+                  `814 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}, ${JSON.stringify(
+                    lineEnding,
+                    null,
+                    0
+                  )}]`
+                );
               // Currently we're not on the bracket ">" of the comment
               // closing "-->", we're at the start of it, that first
               // dash. This means, we'll still traverse to the end
@@ -787,41 +827,45 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
               // "distanceFromHereToCommentEnding".
               cpl = -distanceFromHereToCommentEnding;
               // here we've reset cpl to some negative value, like -3
-              console.log(
-                `791 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} cpl = ${cpl}`
-              );
+              DEV &&
+                console.log(
+                  `832 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} cpl = ${cpl}`
+                );
             } else {
               // we have some character length allowance left so
               // let's just delete the comment and reduce the cpl
               // by that length
               finalIndexesToDelete.push(stageFrom, stageTo);
-              console.log(
-                `799 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}]`
-              );
+              DEV &&
+                console.log(
+                  `841 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}]`
+                );
 
               cpl -= stageTo - stageFrom;
-              console.log(
-                `804 ${`\u001b[${31}m${`SET`}\u001b[${39}m`} cpl = ${cpl}`
-              );
+              DEV &&
+                console.log(
+                  `847 ${`\u001b[${31}m${`SET`}\u001b[${39}m`} cpl = ${cpl}`
+                );
             }
 
             // finalIndexesToDelete.push(i + 1, i + 1, "\n");
-            // console.log(`1485 PUSH [${i + 1}, ${i + 1}, "\\n"]`);
+            // DEV && console.log(`1485 PUSH [${i + 1}, ${i + 1}, "\\n"]`);
             // countCharactersPerLine = 0;
           } else {
-            console.log(
-              `813 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
-                countCharactersPerLine + distanceFromHereToCommentEnding - 1
-              }`
-            );
+            DEV &&
+              console.log(
+                `857 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
+                  countCharactersPerLine + distanceFromHereToCommentEnding - 1
+                }`
+              );
             countCharactersPerLine += distanceFromHereToCommentEnding - 1;
             i += distanceFromHereToCommentEnding - 1;
           }
-          // console.log(`0796 CONTINUE`);
+          // DEV && console.log(`0796 CONTINUE`);
           // continue;
 
           doNothing = i + distanceFromHereToCommentEnding;
-          console.log(`824 SET doNothing = ${doNothing}`);
+          DEV && console.log(`868 SET doNothing = ${doNothing}`);
         }
       }
 
@@ -836,21 +880,24 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           (opts.removeHTMLComments === 2 && str.startsWith("<![endif", i))) &&
         htmlCommentStartedAt === null
       ) {
-        console.log(
-          `840 ${`\u001b[${32}m${`STARTING OF AN HTML COMMENT CAUGHT`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `885 ${`\u001b[${32}m${`STARTING OF AN HTML COMMENT CAUGHT`}\u001b[${39}m`}`
+          );
 
         // detect outlook conditionals
         if (str.startsWith("[if", i + 4)) {
-          console.log(`845`);
+          DEV && console.log(`890`);
           if (!withinHTMLConditional) {
-            console.log(
-              `848 ${`\u001b[${36}m${`██ CONDITIONAL'S OPENING CAUGHT`}\u001b[${39}m`}`
-            );
+            DEV &&
+              console.log(
+                `894 ${`\u001b[${36}m${`██ CONDITIONAL'S OPENING CAUGHT`}\u001b[${39}m`}`
+              );
             withinHTMLConditional = true;
-            console.log(
-              `852 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinHTMLConditional`}\u001b[${39}m`} = ${withinHTMLConditional}`
-            );
+            DEV &&
+              console.log(
+                `899 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinHTMLConditional`}\u001b[${39}m`} = ${withinHTMLConditional}`
+              );
           }
 
           // skip the second counterpart, "<!-->" of "<!--[if !mso]><!-->"
@@ -859,13 +906,14 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           // is not needed
           if (opts.removeHTMLComments === 2) {
             htmlCommentStartedAt = i;
-            console.log(
-              `863 SET ${`\u001b[${33}m${`htmlCommentStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
-                htmlCommentStartedAt,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `911 SET ${`\u001b[${33}m${`htmlCommentStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
+                  htmlCommentStartedAt,
+                  null,
+                  4
+                )}`
+              );
           }
         } else if (
           // setting is either 1 or 2 (delete text comments only or any comments):
@@ -875,26 +923,32 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           (!withinHTMLConditional || opts.removeHTMLComments === 2)
         ) {
           htmlCommentStartedAt = i;
-          console.log(
-            `879 SET ${`\u001b[${33}m${`htmlCommentStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
-              htmlCommentStartedAt,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `928 SET ${`\u001b[${33}m${`htmlCommentStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
+                htmlCommentStartedAt,
+                null,
+                4
+              )}`
+            );
         }
 
         // independently of options settings, mark the options setting
         // "removeHTMLComments" as applicable:
         if (!applicableOpts.removeHTMLComments) {
           applicableOpts.removeHTMLComments = true;
-          console.log(
-            `892 SET ${`\u001b[${33}m${`applicableOpts.removeHTMLComments`}\u001b[${39}m`} = ${JSON.stringify(
-              applicableOpts.removeHTMLComments,
-              null,
-              4
-            )}; now applicableOpts = ${JSON.stringify(applicableOpts, null, 4)}`
-          );
+          DEV &&
+            console.log(
+              `942 SET ${`\u001b[${33}m${`applicableOpts.removeHTMLComments`}\u001b[${39}m`} = ${JSON.stringify(
+                applicableOpts.removeHTMLComments,
+                null,
+                4
+              )}; now applicableOpts = ${JSON.stringify(
+                applicableOpts,
+                null,
+                4
+              )}`
+            );
         }
 
         // opts.removeHTMLComments: 0|1|2
@@ -911,9 +965,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         !isLetter(str[i + 7])
       ) {
         withinStyleTag = false;
-        console.log(
-          `915 SET ${`\u001b[${33}m${`withinStyleTag`}\u001b[${39}m`} = false`
-        );
+        DEV &&
+          console.log(
+            `970 SET ${`\u001b[${33}m${`withinStyleTag`}\u001b[${39}m`} = false`
+          );
       } else if (
         !doNothing &&
         !withinStyleTag &&
@@ -922,9 +977,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         !isLetter(str[i + 6])
       ) {
         withinStyleTag = true;
-        console.log(
-          `926 SET ${`\u001b[${33}m${`withinStyleTag`}\u001b[${39}m`} = true`
-        );
+        DEV &&
+          console.log(
+            `982 SET ${`\u001b[${33}m${`withinStyleTag`}\u001b[${39}m`} = true`
+          );
 
         // if opts.breakToTheLeftOf have "<style" among them, break to the
         // right of this tag as well
@@ -935,11 +991,12 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           str[i + 24]
         ) {
           finalIndexesToDelete.push(i + 23, i + 23, lineEnding);
-          console.log(
-            `939 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i + 23}, ${
-              i + 23
-            }, ${JSON.stringify(lineEnding, null, 0)}]`
-          );
+          DEV &&
+            console.log(
+              `996 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i + 23}, ${
+                i + 23
+              }, ${JSON.stringify(lineEnding, null, 0)}]`
+            );
         }
       }
 
@@ -953,9 +1010,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str.endsWith("style=", i)
       ) {
         withinInlineStyle = i;
-        console.log(
-          `957 SET ${`\u001b[${33}m${`withinInlineStyle`}\u001b[${39}m`} = ${withinInlineStyle}`
-        );
+        DEV &&
+          console.log(
+            `1015 SET ${`\u001b[${33}m${`withinInlineStyle`}\u001b[${39}m`} = ${withinInlineStyle}`
+          );
       }
 
       // catch whitespace
@@ -964,9 +1022,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         // if whitespace
         if (whitespaceStartedAt === null) {
           whitespaceStartedAt = i;
-          console.log(
-            `968 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = ${whitespaceStartedAt}`
-          );
+          DEV &&
+            console.log(
+              `1027 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = ${whitespaceStartedAt}`
+            );
         }
       } else if (
         !doNothing &&
@@ -976,15 +1035,16 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         )
       ) {
         // catch the ending of a whitespace chunk
-        // console.log(`0912`);
+        // DEV && console.log(`0912`);
         if (whitespaceStartedAt !== null) {
-          console.log(`981`);
+          DEV && console.log(`1040`);
           if (opts.removeLineBreaks) {
-            console.log(
-              `984 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
-                countCharactersPerLine + 1
-              }`
-            );
+            DEV &&
+              console.log(
+                `1044 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
+                  countCharactersPerLine + 1
+                }`
+              );
             countCharactersPerLine += 1;
           }
 
@@ -992,12 +1052,13 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
             beginningOfAFile = false;
             if (opts.removeIndentations || opts.removeLineBreaks) {
               finalIndexesToDelete.push(0, i);
-              console.log(
-                `996 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [0, ${i}]`
-              );
+              DEV &&
+                console.log(
+                  `1057 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [0, ${i}]`
+                );
             }
           } else {
-            console.log("1000 not beginning of a file");
+            DEV && console.log("1061 not beginning of a file");
             // so it's not beginning of a file
 
             // this is the most important area of the program - catching normal
@@ -1006,9 +1067,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
             // ===================================================================
             // ██ CASE 1. Remove indentations only.
             if (opts.removeIndentations && !opts.removeLineBreaks) {
-              console.log(
-                `1010 inside ${`\u001b[${33}m${`CASE 1`}\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `1072 inside ${`\u001b[${33}m${`CASE 1`}\u001b[${39}m`}`
+                );
 
               if (
                 !nonWhitespaceCharMet &&
@@ -1016,11 +1078,12 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                 i > lastLinebreak
               ) {
                 finalIndexesToDelete.push(lastLinebreak + 1, i);
-                console.log(
-                  `1020 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                    lastLinebreak + 1
-                  }, ${i}]`
-                );
+                DEV &&
+                  console.log(
+                    `1083 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                      lastLinebreak + 1
+                    }, ${i}]`
+                  );
               } else if (whitespaceStartedAt + 1 < i) {
                 // we'll try to recycle some spaces, either at the
                 // beginning (preferable) or ending (at least) of the
@@ -1043,28 +1106,32 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                 ) {
                   // push the whole whitespace chunk
                   finalIndexesToDelete.push(whitespaceStartedAt, i);
-                  console.log(
-                    `1047 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                      whitespaceStartedAt + 1
-                    }, ${i}]`
-                  );
+                  DEV &&
+                    console.log(
+                      `1111 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                        whitespaceStartedAt + 1
+                      }, ${i}]`
+                    );
                 } else if (str[whitespaceStartedAt] === " ") {
                   finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
-                  console.log(
-                    `1054 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                      whitespaceStartedAt + 1
-                    }, ${i}]`
-                  );
+                  DEV &&
+                    console.log(
+                      `1119 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                        whitespaceStartedAt + 1
+                      }, ${i}]`
+                    );
                 } else if (str[~-i] === " ") {
                   finalIndexesToDelete.push(whitespaceStartedAt, ~-i);
-                  console.log(
-                    `1061 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${~-i}]`
-                  );
+                  DEV &&
+                    console.log(
+                      `1127 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${~-i}]`
+                    );
                 } else {
                   finalIndexesToDelete.push(whitespaceStartedAt, i, " ");
-                  console.log(
-                    `1066 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, " "]`
-                  );
+                  DEV &&
+                    console.log(
+                      `1133 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, " "]`
+                    );
                 }
               }
             }
@@ -1072,27 +1139,30 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
             // ===================================================================
             // ██ CASE 2. Remove linebreaks (includes indentation removal by definition).
             if (opts.removeLineBreaks || withinInlineStyle) {
-              console.log(
-                `1076 inside ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `1144 inside ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`}`
+                );
               //
               // ██ CASE 2-1 - special break points from opts.breakToTheLeftOf
 
-              console.log(
-                `1082 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
-                  [...breakToTheLeftOfFirstLetters],
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `1151 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
+                    [...breakToTheLeftOfFirstLetters],
+                    null,
+                    4
+                  )}`
+                );
               if (
                 breakToTheLeftOfFirstLetters.includes(str[i]) &&
                 matchRightIncl(str, i, opts.breakToTheLeftOf)
               ) {
-                console.log("1092 inside CASE 2-1");
-                console.log(
-                  `1094 \u001b[${36}m${`██`}\u001b[${39}m line break removal section`
-                );
+                DEV && console.log("1161 inside CASE 2-1");
+                DEV &&
+                  console.log(
+                    `1164 \u001b[${36}m${`██`}\u001b[${39}m line break removal section`
+                  );
 
                 // maybe there was just single line break?
                 if (
@@ -1105,13 +1175,14 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                     whitespaceStartedAt === i - 2
                   )
                 ) {
-                  console.log(
-                    `1109 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, ${JSON.stringify(
-                      lineEnding,
-                      null,
-                      0
-                    )}]`
-                  );
+                  DEV &&
+                    console.log(
+                      `1180 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, ${JSON.stringify(
+                        lineEnding,
+                        null,
+                        0
+                      )}]`
+                    );
                   finalIndexesToDelete.push(whitespaceStartedAt, i, lineEnding);
                 }
                 stageFrom = null;
@@ -1119,21 +1190,23 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                 stageAdd = null;
                 whitespaceStartedAt = null;
 
-                console.log(
-                  `1123 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${1}`
-                );
+                DEV &&
+                  console.log(
+                    `1195 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${1}`
+                  );
 
                 countCharactersPerLine = 1;
-                console.log(
-                  `1128 RESET all ${`\u001b[${33}m${`stage*`}\u001b[${39}m`} and ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`}`
-                );
-                console.log(`1130 CONTINUE`);
+                DEV &&
+                  console.log(
+                    `1201 RESET all ${`\u001b[${33}m${`stage*`}\u001b[${39}m`} and ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`}`
+                  );
+                DEV && console.log(`1203 CONTINUE`);
                 continue;
               }
 
               // ██ CASE 2-2 - rest of whitespace chunk removal clauses
 
-              console.log("1136 inside CASE 2-2");
+              DEV && console.log("1209 inside CASE 2-2");
               let whatToAdd = " ";
 
               // skip for inline tags and also inline comparisons vs. numbers
@@ -1150,7 +1223,7 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                 //     "0123456789".includes(str[left(str, i)])))
               ) {
                 // nothing
-                console.log(`1153 do nothing`);
+                DEV && console.log(`1226 do nothing`);
               } else if (
                 (str[~-whitespaceStartedAt] &&
                   DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(
@@ -1174,7 +1247,7 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                     str[right(str, i) as number] === "<")) ||
                 (str[i] === "/" && str[right(str, i) as number] === ">")
               ) {
-                console.log(`1177 whatToAdd = ""`);
+                DEV && console.log(`1250 whatToAdd = ""`);
 
                 whatToAdd = "";
 
@@ -1186,17 +1259,22 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                 ) {
                   // delete whitespace between / and >
                   finalIndexesToDelete.push(i + 1, right(str, i) as number);
-                  console.log(
-                    `1190 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                      i + 1
-                    }, ${right(str, i)}]`
-                  );
+                  DEV &&
+                    console.log(
+                      `1264 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                        i + 1
+                      }, ${right(str, i)}]`
+                    );
 
-                  console.log(
-                    `1196 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
-                      countCharactersPerLine - (right(str, i) as number) - i + 1
-                    }`
-                  );
+                  DEV &&
+                    console.log(
+                      `1271 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
+                        countCharactersPerLine -
+                        (right(str, i) as number) -
+                        i +
+                        1
+                      }`
+                    );
                   countCharactersPerLine -= (right(str, i) as number) - i + 1;
                 }
               }
@@ -1208,31 +1286,34 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                 str[whitespaceStartedAt - 1] === "}"
               ) {
                 whatToAdd = " ";
-                console.log(
-                  `1212 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = "${whatToAdd}"`
-                );
+                DEV &&
+                  console.log(
+                    `1291 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = "${whatToAdd}"`
+                  );
               }
 
-              console.log(
-                `1217 calculated ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
-                  whatToAdd,
-                  null,
-                  0
-                )}`
-              );
-              if (whatToAdd?.length) {
+              DEV &&
                 console.log(
-                  `1225 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
-                    countCharactersPerLine + 1
-                  }`
+                  `1297 calculated ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
+                    whatToAdd,
+                    null,
+                    0
+                  )}`
                 );
+              if (whatToAdd?.length) {
+                DEV &&
+                  console.log(
+                    `1306 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
+                      countCharactersPerLine + 1
+                    }`
+                  );
                 countCharactersPerLine += 1;
               }
 
               // TWO CASES:
               if (!opts.lineLengthLimit) {
-                console.log(`\u001b[${35}m${`1099: 2-1`}\u001b[${39}m`);
-                console.log("1235: !opts.lineLengthLimit");
+                DEV && console.log(`\u001b[${35}m${`1099: 2-1`}\u001b[${39}m`);
+                DEV && console.log("1316: !opts.lineLengthLimit");
                 // 2-1: Line-length limiting is off (easy)
                 // We skip the stage part, the whitespace chunks to straight to
                 // finalIndexesToDelete ranges array.
@@ -1246,21 +1327,23 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                   )
                 ) {
                   finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
-                  console.log(
-                    `1250 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, ${JSON.stringify(
-                      whatToAdd,
-                      null,
-                      0
-                    )}]`
-                  );
+                  DEV &&
+                    console.log(
+                      `1332 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, ${JSON.stringify(
+                        whatToAdd,
+                        null,
+                        0
+                      )}]`
+                    );
                 }
               } else {
-                console.log(`\u001b[${35}m${`1123: 2-2`}\u001b[${39}m`);
-                console.log(
-                  `1260 - 2-2 - opts.lineLengthLimit; ${`\u001b[${33}m${`LIMIT`}\u001b[${39}m`} = ${`\u001b[${35}m${
-                    opts.lineLengthLimit
-                  }\u001b[${39}m`}; ${`\u001b[${33}m${`COUNT`}\u001b[${39}m`} = ${`\u001b[${35}m${countCharactersPerLine}\u001b[${39}m`}`
-                );
+                DEV && console.log(`\u001b[${35}m${`1123: 2-2`}\u001b[${39}m`);
+                DEV &&
+                  console.log(
+                    `1343 - 2-2 - opts.lineLengthLimit; ${`\u001b[${33}m${`LIMIT`}\u001b[${39}m`} = ${`\u001b[${35}m${
+                      opts.lineLengthLimit
+                    }\u001b[${39}m`}; ${`\u001b[${33}m${`COUNT`}\u001b[${39}m`} = ${`\u001b[${35}m${countCharactersPerLine}\u001b[${39}m`}`
+                  );
                 // 2-2: Line-length limiting is on (not that easy)
                 // maybe we are already beyond the limit?
                 if (
@@ -1269,12 +1352,14 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                   str[i] === ">" ||
                   (str[i] === "/" && str[i + 1] === ">")
                 ) {
-                  console.log(`\u001b[${35}m${`1137: 2-2-1`}\u001b[${39}m`);
-                  console.log(
-                    `1274: ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`}(${countCharactersPerLine}) >= ${`\u001b[${33}m${`opts.lineLengthLimit`}\u001b[${39}m`}(${
-                      opts.lineLengthLimit
-                    })`
-                  );
+                  DEV &&
+                    console.log(`\u001b[${35}m${`1137: 2-2-1`}\u001b[${39}m`);
+                  DEV &&
+                    console.log(
+                      `1359: ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`}(${countCharactersPerLine}) >= ${`\u001b[${33}m${`opts.lineLengthLimit`}\u001b[${39}m`}(${
+                        opts.lineLengthLimit
+                      })`
+                    );
 
                   if (
                     countCharactersPerLine > opts.lineLengthLimit ||
@@ -1285,9 +1370,9 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                       !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i + 1]))
                   ) {
                     whatToAdd = lineEnding;
-                    console.log(`1288 SET whatToAdd = "\\n"`);
+                    DEV && console.log(`1373 SET whatToAdd = "\\n"`);
                     countCharactersPerLine = 1;
-                    console.log(`1290 RESET countCharactersPerLine = 1`);
+                    DEV && console.log(`1375 RESET countCharactersPerLine = 1`);
                   }
 
                   // replace the whitespace only in two cases:
@@ -1304,50 +1389,57 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                       i,
                       whatToAdd
                     );
-                    console.log(
-                      `1308 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, ${JSON.stringify(
-                        whatToAdd,
-                        null,
-                        0
-                      )}]`
-                    );
+                    DEV &&
+                      console.log(
+                        `1394 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, ${JSON.stringify(
+                          whatToAdd,
+                          null,
+                          0
+                        )}]`
+                      );
                     lastLinebreak = null;
-                    console.log(
-                      `1316 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = ${JSON.stringify(
-                        lastLinebreak,
-                        null,
-                        4
-                      )}`
-                    );
+                    DEV &&
+                      console.log(
+                        `1403 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = ${JSON.stringify(
+                          lastLinebreak,
+                          null,
+                          4
+                        )}`
+                      );
                   }
                   stageFrom = null;
                   stageTo = null;
                   stageAdd = null;
-                  console.log(
-                    `1327 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} all stage* vars`
-                  );
+                  DEV &&
+                    console.log(
+                      `1415 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} all stage* vars`
+                    );
                 } else if (
                   stageFrom === null ||
                   whitespaceStartedAt < stageFrom
                 ) {
                   // only submit the range if it's bigger
-                  console.log(`\u001b[${35}m${`1191: 2-2-2`}\u001b[${39}m`);
-                  console.log(
-                    `1336: ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`}(${countCharactersPerLine}) <= ${`\u001b[${33}m${`opts.lineLengthLimit`}\u001b[${39}m`}(${
-                      opts.lineLengthLimit
-                    })`
-                  );
+                  DEV &&
+                    console.log(`\u001b[${35}m${`1191: 2-2-2`}\u001b[${39}m`);
+                  DEV &&
+                    console.log(
+                      `1426: ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`}(${countCharactersPerLine}) <= ${`\u001b[${33}m${`opts.lineLengthLimit`}\u001b[${39}m`}(${
+                        opts.lineLengthLimit
+                      })`
+                    );
                   stageFrom = whitespaceStartedAt;
                   stageTo = i;
                   stageAdd = whatToAdd;
-                  console.log(
-                    `1344 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stageFrom = ${stageFrom}; stageTo = ${stageTo}; stageAdd = "${stageAdd}"`
-                  );
+                  DEV &&
+                    console.log(
+                      `1435 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stageFrom = ${stageFrom}; stageTo = ${stageTo}; stageAdd = "${stageAdd}"`
+                    );
                 }
 
-                console.log(
-                  `1349 stageFrom = ${stageFrom}; whitespaceStartedAt = ${whitespaceStartedAt}`
-                );
+                DEV &&
+                  console.log(
+                    `1441 stageFrom = ${stageFrom}; whitespaceStartedAt = ${whitespaceStartedAt}`
+                  );
               }
             }
             // ===================================================================
@@ -1355,44 +1447,48 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
 
           // finally, toggle the marker:
           whitespaceStartedAt = null;
-          console.log(
-            `1359 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = ${whitespaceStartedAt}, (${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} = ${countCharactersPerLine})`
-          );
+          DEV &&
+            console.log(
+              `1452 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = ${whitespaceStartedAt}, (${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} = ${countCharactersPerLine})`
+            );
 
           // toggle nonWhitespaceCharMet
           if (!nonWhitespaceCharMet) {
             nonWhitespaceCharMet = true;
-            console.log(
-              `1366 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${JSON.stringify(
-                nonWhitespaceCharMet,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `1460 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${JSON.stringify(
+                  nonWhitespaceCharMet,
+                  null,
+                  4
+                )}`
+              );
           }
           // continue;
         } else {
           // 1. case when first character in string is not whitespace:
           if (beginningOfAFile) {
             beginningOfAFile = false;
-            console.log(
-              `1379 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`beginningOfAFile`}\u001b[${39}m`} = ${JSON.stringify(
-                beginningOfAFile,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `1474 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`beginningOfAFile`}\u001b[${39}m`} = ${JSON.stringify(
+                  beginningOfAFile,
+                  null,
+                  4
+                )}`
+              );
           }
 
           // 2. tend count if linebreak removal is on:
           if (opts.removeLineBreaks) {
             // there was no whitespace gap and linebreak removal is on, so just
             // increment the count
-            console.log(
-              `1392 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
-                countCharactersPerLine + 1
-              }`
-            );
+            DEV &&
+              console.log(
+                `1488 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
+                  countCharactersPerLine + 1
+                }`
+              );
             countCharactersPerLine += 1;
           }
         }
@@ -1403,13 +1499,14 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         // toggle nonWhitespaceCharMet
         if (!nonWhitespaceCharMet) {
           nonWhitespaceCharMet = true;
-          console.log(
-            `1407 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${JSON.stringify(
-              nonWhitespaceCharMet,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `1504 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${JSON.stringify(
+                nonWhitespaceCharMet,
+                null,
+                4
+              )}`
+            );
         }
       }
 
@@ -1428,24 +1525,28 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           str.slice(0, i).trim() &&
           (!str.startsWith("<![endif]", i) || !matchLeft(str, i, "<!--"))
         ) {
-          console.log(
-            `1432 ${`\u001b[${31}m${`opts.breakToTheLeftOf BREAKPOINT!`}\u001b[${39}m`}`
-          );
-          console.log(
-            `1435 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i}, "\\n"]`
-          );
+          DEV &&
+            console.log(
+              `1530 ${`\u001b[${31}m${`opts.breakToTheLeftOf BREAKPOINT!`}\u001b[${39}m`}`
+            );
+          DEV &&
+            console.log(
+              `1534 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i}, "\\n"]`
+            );
           finalIndexesToDelete.push(i, i, lineEnding);
           stageFrom = null;
           stageTo = null;
           stageAdd = null;
 
-          console.log(
-            `1443 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${1}`
-          );
+          DEV &&
+            console.log(
+              `1543 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${1}`
+            );
           countCharactersPerLine = 1;
-          console.log(
-            `1447 RESET all ${`\u001b[${33}m${`stage*`}\u001b[${39}m`}, then CONTINUE`
-          );
+          DEV &&
+            console.log(
+              `1548 RESET all ${`\u001b[${33}m${`stage*`}\u001b[${39}m`}, then CONTINUE`
+            );
           continue;
         } else if (
           opts.lineLengthLimit &&
@@ -1458,7 +1559,7 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
             CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) ||
             !str[i].trim()
           ) {
-            console.log(`1461 inside release-stage clauses`);
+            DEV && console.log(`1562 inside release-stage clauses`);
             // 1. release stage contents - now they'll be definitely deleted
             // =============================================================
             if (
@@ -1467,21 +1568,23 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
               (stageFrom !== stageTo || stageAdd?.length)
             ) {
               let whatToAdd = stageAdd;
-              console.log(
-                `1471 INITIAL ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
-                  whatToAdd,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `1573 INITIAL ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
+                    whatToAdd,
+                    null,
+                    4
+                  )}`
+                );
 
-              console.log(
-                `1479 FIY, ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} = ${JSON.stringify(
-                  countCharactersPerLine,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `1582 FIY, ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} = ${JSON.stringify(
+                    countCharactersPerLine,
+                    null,
+                    4
+                  )}`
+                );
 
               // if we are not on breaking point, last "stageAdd" needs to be
               // amended into linebreak because otherwise we'll exceed the
@@ -1493,9 +1596,14 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                 countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
                   opts.lineLengthLimit
               ) {
-                console.log(
-                  `1497 SET whatToAdd = ${JSON.stringify(lineEnding, null, 0)}`
-                );
+                DEV &&
+                  console.log(
+                    `1601 SET whatToAdd = ${JSON.stringify(
+                      lineEnding,
+                      null,
+                      0
+                    )}`
+                  );
                 whatToAdd = lineEnding;
               }
 
@@ -1511,45 +1619,50 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                   str[stageFrom] === " "
                 )
               ) {
-                console.log(
-                  `1515 - ${`\u001b[${32}m${`REPLACE`}\u001b[${39}m`} this white space`
-                );
+                DEV &&
+                  console.log(
+                    `1624 - ${`\u001b[${32}m${`REPLACE`}\u001b[${39}m`} this white space`
+                  );
                 // push this range only if it's not between curlies, } and {
                 if (!(str[~-stageFrom] === "}" && str[stageTo] === "{")) {
                   finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
-                  console.log(
-                    `1521 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
-                      whatToAdd,
-                      null,
-                      0
-                    )}]`
-                  );
+                  DEV &&
+                    console.log(
+                      `1631 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
+                        whatToAdd,
+                        null,
+                        0
+                      )}]`
+                    );
                   lastLinebreak = null;
-                  console.log(
-                    `1529 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = ${JSON.stringify(
-                      lastLinebreak,
-                      null,
-                      4
-                    )}`
-                  );
+                  DEV &&
+                    console.log(
+                      `1640 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = ${JSON.stringify(
+                        lastLinebreak,
+                        null,
+                        4
+                      )}`
+                    );
                 } // else {
-                //   console.log(
+                //   DEV && console.log(
                 //     `1419 didn't push because whitespace is between curlies`
                 //   );
                 // }
               } else {
-                console.log(
-                  `1542 ${`${`\u001b[${31}m${`██`}\u001b[${39}m`}${`\u001b[${33}m${`██`}\u001b[${39}m`}`.repeat(
-                    10
-                  )} - lastLinebreak = ${lastLinebreak}`
-                );
+                DEV &&
+                  console.log(
+                    `1654 ${`${`\u001b[${31}m${`██`}\u001b[${39}m`}${`\u001b[${33}m${`██`}\u001b[${39}m`}`.repeat(
+                      10
+                    )} - lastLinebreak = ${lastLinebreak}`
+                  );
                 // countCharactersPerLine -= i - (lastLinebreak || 0);
               }
             }
 
-            console.log(
-              `1551 ${`\u001b[${33}m${`leftTagName`}\u001b[${39}m`} = ${leftTagName}`
-            );
+            DEV &&
+              console.log(
+                `1664 ${`\u001b[${33}m${`leftTagName`}\u001b[${39}m`} = ${leftTagName}`
+              );
             // 2. put this current place into stage
             // =============================================================
             if (
@@ -1576,9 +1689,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
               stageFrom = i;
               stageTo = i;
               stageAdd = null;
-              console.log(
-                `1580 SET stage from = ${stageFrom}; stageTo = ${stageTo}; RESET "stageAdd = null"`
-              );
+              DEV &&
+                console.log(
+                  `1694 SET stage from = ${stageFrom}; stageTo = ${stageTo}; RESET "stageAdd = null"`
+                );
             } else if (
               styleCommentStartedAt === null &&
               stageFrom !== null &&
@@ -1603,13 +1717,13 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
               stageFrom = null;
               stageTo = null;
               stageAdd = null;
-              console.log("1606 RESET all stage vars");
+              DEV && console.log("1720 RESET all stage vars");
             }
           }
         } else if (opts.lineLengthLimit) {
           // countCharactersPerLine > opts.lineLengthLimit
 
-          console.log(`1612 ${`\u001b[${36}m${`██`}\u001b[${39}m`}`);
+          DEV && console.log(`1726 ${`\u001b[${36}m${`██`}\u001b[${39}m`}`);
           // LIMIT HAS BEEN EXCEEDED!
           // WE NEED TO BREAK RIGHT HERE
           if (
@@ -1624,9 +1738,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             // ██ 1.
             //
-            console.log(
-              `1628 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} char break on left`
-            );
+            DEV &&
+              console.log(
+                `1743 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} char break on left`
+              );
             // if really exceeded, not on limit, commit stage which will shorten
             // the string and maybe we'll be within the limit range again
             if (
@@ -1634,7 +1749,7 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
               stageTo !== null &&
               (stageFrom !== stageTo || stageAdd?.length)
             ) {
-              console.log(`1637 FOUND STAGED`);
+              DEV && console.log(`1752 FOUND STAGED`);
               // case in test 02.11.09
               // We might have passed some tabs for example, which should be
               // deleted what might put line length back within limit. Or not.
@@ -1651,7 +1766,8 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                 opts.lineLengthLimit
               ) {
                 // still beyond limit so break at stage
-                console.log(`1654 ${`\u001b[${34}m${`██`}\u001b[${39}m`}`);
+                DEV &&
+                  console.log(`1770 ${`\u001b[${34}m${`██`}\u001b[${39}m`}`);
               } else {
                 // So,
                 // countCharactersPerLine -
@@ -1659,15 +1775,17 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                 // opts.lineLengthLimit
 
                 // don't break at stage, just apply its contents and we're good
-                console.log(`1662 ${`\u001b[${34}m${`██`}\u001b[${39}m`}`);
+                DEV &&
+                  console.log(`1779 ${`\u001b[${34}m${`██`}\u001b[${39}m`}`);
                 finalIndexesToDelete.push(stageFrom, stageTo, stageAdd);
-                console.log(
-                  `1665 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
-                    stageAdd,
-                    null,
-                    4
-                  )}]`
-                );
+                DEV &&
+                  console.log(
+                    `1783 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
+                      stageAdd,
+                      null,
+                      4
+                    )}]`
+                  );
 
                 // We're not done yet. We are currently located on a potential
                 // break point,
@@ -1681,42 +1799,47 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
                     1 ===
                   opts.lineLengthLimit
                 ) {
-                  console.log(`1684 ${`\u001b[${34}m${`██`}\u001b[${39}m`}`);
+                  DEV &&
+                    console.log(`1803 ${`\u001b[${34}m${`██`}\u001b[${39}m`}`);
                   finalIndexesToDelete.push(i, i, lineEnding);
-                  console.log(
-                    `1687 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i}, ${JSON.stringify(
-                      lineEnding,
-                      null,
-                      0
-                    )}]`
-                  );
+                  DEV &&
+                    console.log(
+                      `1807 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i}, ${JSON.stringify(
+                        lineEnding,
+                        null,
+                        0
+                      )}]`
+                    );
                   countCharactersPerLine = 0;
-                  console.log(
-                    `1695 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} countCharactersPerLine = 0`
-                  );
+                  DEV &&
+                    console.log(
+                      `1816 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} countCharactersPerLine = 0`
+                    );
                 }
 
                 // reset
                 stageFrom = null;
                 stageTo = null;
                 stageAdd = null;
-                console.log(`1703 RESET all stage vars`);
+                DEV && console.log(`1824 RESET all stage vars`);
               }
             } else {
-              console.log(`1706 BUT NO STAGED FOUND`);
+              DEV && console.log(`1827 BUT NO STAGED FOUND`);
               //
               finalIndexesToDelete.push(i, i, lineEnding);
-              console.log(
-                `1710 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i}, ${JSON.stringify(
-                  lineEnding,
-                  null,
-                  0
-                )}]`
-              );
+              DEV &&
+                console.log(
+                  `1832 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i}, ${JSON.stringify(
+                    lineEnding,
+                    null,
+                    0
+                  )}]`
+                );
               countCharactersPerLine = 0;
-              console.log(
-                `1718 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} countCharactersPerLine = 0`
-              );
+              DEV &&
+                console.log(
+                  `1841 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} countCharactersPerLine = 0`
+                );
             }
           } else if (
             str[i + 1] &&
@@ -1728,41 +1851,46 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             // ██ 2.
             //
-            console.log(
-              `1732 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} break on the right of this character`
-            );
+            DEV &&
+              console.log(
+                `1856 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} break on the right of this character`
+              );
             if (
               stageFrom !== null &&
               stageTo !== null &&
               (stageFrom !== stageTo || stageAdd?.length)
             ) {
-              console.log(`1739 FOUND STAGED`);
+              DEV && console.log(`1863 FOUND STAGED`);
             } else {
-              console.log(`1741 BUT NO STAGED FOUND`);
+              DEV && console.log(`1865 BUT NO STAGED FOUND`);
               //
               finalIndexesToDelete.push(i + 1, i + 1, lineEnding);
-              console.log(
-                `1745 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i + 1}, ${
-                  i + 1
-                }, ${JSON.stringify(lineEnding, null, 0)}]`
-              );
+              DEV &&
+                console.log(
+                  `1870 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i + 1}, ${
+                    i + 1
+                  }, ${JSON.stringify(lineEnding, null, 0)}]`
+                );
               countCharactersPerLine = 0;
-              console.log(
-                `1751 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} countCharactersPerLine = 0`
-              );
+              DEV &&
+                console.log(
+                  `1877 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} countCharactersPerLine = 0`
+                );
             }
           } else if (!str[i].trim()) {
             // ██ 3.
             //
-            console.log(
-              `1758 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} whitespace as breaking point`
-            );
+            DEV &&
+              console.log(
+                `1885 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} whitespace as breaking point`
+              );
           } else if (!str[i + 1]) {
             // ██ 4.
             //
-            console.log(
-              `1764 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} EOL is next`
-            );
+            DEV &&
+              console.log(
+                `1892 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} EOL is next`
+              );
             // if we reached the end of string, check what's in stage
             if (
               stageFrom !== null &&
@@ -1770,13 +1898,14 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
               (stageFrom !== stageTo || stageAdd?.length)
             ) {
               finalIndexesToDelete.push(stageFrom, stageTo, lineEnding);
-              console.log(
-                `1774 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
-                  lineEnding,
-                  null,
-                  0
-                )}]`
-              );
+              DEV &&
+                console.log(
+                  `1903 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
+                    lineEnding,
+                    null,
+                    0
+                  )}]`
+                );
             }
           }
         }
@@ -1795,11 +1924,12 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
         !"/".includes(str[i])
       ) {
-        console.log(
-          `1799 ${`\u001b[${32}m${`██ LIMIT REACHED`}\u001b[${39}m`}! countCharactersPerLine(${`\u001b[${33}m${countCharactersPerLine}\u001b[${39}m`}) >= opts.lineLengthLimit(${`\u001b[${33}m${
-            opts.lineLengthLimit
-          }\u001b[${39}m`}) MIGHT RELEASE STAGE TO FINAL`
-        );
+        DEV &&
+          console.log(
+            `1929 ${`\u001b[${32}m${`██ LIMIT REACHED`}\u001b[${39}m`}! countCharactersPerLine(${`\u001b[${33}m${countCharactersPerLine}\u001b[${39}m`}) >= opts.lineLengthLimit(${`\u001b[${33}m${
+              opts.lineLengthLimit
+            }\u001b[${39}m`}) MIGHT RELEASE STAGE TO FINAL`
+          );
 
         // two possible cases:
         // 1. we hit the line length limit and we can break afterwards
@@ -1819,9 +1949,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
             countCharactersPerLine === opts.lineLengthLimit
           ) {
             whatToAdd = stageAdd as string;
-            console.log(
-              `1823 SET whatToAdd = ${JSON.stringify(whatToAdd, null, 4)}`
-            );
+            DEV &&
+              console.log(
+                `1954 SET whatToAdd = ${JSON.stringify(whatToAdd, null, 4)}`
+              );
           }
 
           // final correction - we might need to extend stageFrom to include
@@ -1832,39 +1963,44 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
             left(str, stageFrom)
           ) {
             stageFrom = (left(str, stageFrom) as number) + 1;
-            console.log(
-              `1836 ${`\u001b[${33}m${`CORRECTION`}\u001b[${39}m`} stageFrom now = ${stageFrom}`
-            );
+            DEV &&
+              console.log(
+                `1968 ${`\u001b[${33}m${`CORRECTION`}\u001b[${39}m`} stageFrom now = ${stageFrom}`
+              );
           }
-          console.log(
-            `1840 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
-              whatToAdd,
-              null,
-              0
-            )}]`
-          );
+          DEV &&
+            console.log(
+              `1973 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
+                whatToAdd,
+                null,
+                0
+              )}]`
+            );
           finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
 
-          console.log(
-            `1849 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
-              i - stageTo
-            }`
-          );
-          countCharactersPerLine = i - stageTo;
-          if (str[i].length) {
+          DEV &&
             console.log(
-              `1856 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
-                countCharactersPerLine + 1
+              `1983 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
+                i - stageTo
               }`
             );
+          countCharactersPerLine = i - stageTo;
+          if (str[i].length) {
+            DEV &&
+              console.log(
+                `1991 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`} ${countCharactersPerLine} -> ${
+                  countCharactersPerLine + 1
+                }`
+              );
             countCharactersPerLine += 1;
           }
           stageFrom = null;
           stageTo = null;
           stageAdd = null;
-          console.log(
-            `1866 RESET stage* vars; per-line count to ${countCharactersPerLine}`
-          );
+          DEV &&
+            console.log(
+              `2002 RESET stage* vars; per-line count to ${countCharactersPerLine}`
+            );
         }
       }
 
@@ -1878,25 +2014,27 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         // =======================================================================
         // mark this
         lastLinebreak = i;
-        console.log(
-          `1882 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = ${JSON.stringify(
-            lastLinebreak,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `2019 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = ${JSON.stringify(
+              lastLinebreak,
+              null,
+              4
+            )}`
+          );
 
         // =======================================================================
         // reset nonWhitespaceCharMet
         if (nonWhitespaceCharMet) {
           nonWhitespaceCharMet = false;
-          console.log(
-            `1894 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${JSON.stringify(
-              nonWhitespaceCharMet,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `2032 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${JSON.stringify(
+                nonWhitespaceCharMet,
+                null,
+                4
+              )}`
+            );
         }
 
         // =======================================================================
@@ -1910,9 +2048,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           str[i + 1] !== "\n"
         ) {
           finalIndexesToDelete.push(whitespaceStartedAt, i);
-          console.log(
-            `1914 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} line's trailing whitespace [${whitespaceStartedAt}, ${i}]`
-          );
+          DEV &&
+            console.log(
+              `2053 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} line's trailing whitespace [${whitespaceStartedAt}, ${i}]`
+            );
         }
       }
 
@@ -1920,9 +2059,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
       // ███████████████████████████████████████
       if (!str[i + 1]) {
         if (withinStyleTag && styleCommentStartedAt !== null) {
-          console.log(
-            `1924 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} THIS UNFINISHED COMMENT`
-          );
+          DEV &&
+            console.log(
+              `2064 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} THIS UNFINISHED COMMENT`
+            );
           (finalIndexesToDelete as any).push(
             ...expander({
               str,
@@ -1938,20 +2078,22 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
           // catch trailing whitespace at the end of the string which is not legit
           // trailing linebreak
           finalIndexesToDelete.push(whitespaceStartedAt, i + 1);
-          console.log(
-            `1942 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} string's trailing whitespace [${whitespaceStartedAt}, ${
-              i + 1
-            }]`
-          );
+          DEV &&
+            console.log(
+              `2083 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} string's trailing whitespace [${whitespaceStartedAt}, ${
+                i + 1
+              }]`
+            );
         } else if (
           whitespaceStartedAt &&
           ((str[i] === "\r" && str[i + 1] === "\n") ||
             (str[i] === "\n" && str[i - 1] !== "\r"))
         ) {
           finalIndexesToDelete.push(whitespaceStartedAt, i);
-          console.log(
-            `1953 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} string's trailing whitespace [${whitespaceStartedAt}, ${i}]`
-          );
+          DEV &&
+            console.log(
+              `2095 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} string's trailing whitespace [${whitespaceStartedAt}, ${i}]`
+            );
         }
       }
 
@@ -1984,9 +2126,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str[withinInlineStyle] === str[i]
       ) {
         withinInlineStyle = null;
-        console.log(
-          `1988 SET ${`\u001b[${33}m${`withinInlineStyle`}\u001b[${39}m`} = null`
-        );
+        DEV &&
+          console.log(
+            `2131 SET ${`\u001b[${33}m${`withinInlineStyle`}\u001b[${39}m`} = null`
+          );
       }
 
       // catch <pre...>
@@ -1998,14 +2141,15 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str.startsWith("<pre", i) &&
         !isLetter(str[i + 4])
       ) {
-        console.log(`2001 OPENING PRE TAG CAUGHT`);
+        DEV && console.log(`2144 OPENING PRE TAG CAUGHT`);
 
         let locationOfClosingPre = str.indexOf("</pre", i + 5);
         if (locationOfClosingPre > 0) {
           doNothing = locationOfClosingPre;
-          console.log(
-            `2007 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `2151 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`}`
+            );
         }
       }
 
@@ -2018,14 +2162,15 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str.startsWith("<code", i) &&
         !isLetter(str[i + 5])
       ) {
-        console.log(`2021 OPENING CODE TAG CAUGHT`);
+        DEV && console.log(`2165 OPENING CODE TAG CAUGHT`);
 
         let locationOfClosingCode = str.indexOf("</code", i + 5);
         if (locationOfClosingCode > 0) {
           doNothing = locationOfClosingCode;
-          console.log(
-            `2027 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `2172 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`}`
+            );
         }
       }
 
@@ -2033,14 +2178,15 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
       // ███████████████████████████████████████
 
       if (!doNothing && str.startsWith("<![CDATA[", i)) {
-        console.log(`2036 STARTING OF <![CDATA[`);
+        DEV && console.log(`2181 STARTING OF <![CDATA[`);
 
         let locationOfClosingCData = str.indexOf("]]>", i + 9);
         if (locationOfClosingCData > 0) {
           doNothing = locationOfClosingCData;
-          console.log(
-            `2042 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `2188 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`}`
+            );
         }
       }
 
@@ -2056,16 +2202,18 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         // if another tag starts on the right, hand over the name:
         if (str[right(str, i) as number] === "<") {
           leftTagName = tagName;
-          console.log(
-            `2060 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`leftTagName`}\u001b[${39}m`} = ${leftTagName}`
-          );
+          DEV &&
+            console.log(
+              `2207 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`leftTagName`}\u001b[${39}m`} = ${leftTagName}`
+            );
         }
 
         tagNameStartsAt = null;
         tagName = null;
-        console.log(
-          `2067 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} tagNameStartsAt = null; tagName = null;`
-        );
+        DEV &&
+          console.log(
+            `2215 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} tagNameStartsAt = null; tagName = null;`
+          );
       }
 
       // catch tag's opening bracket
@@ -2073,9 +2221,10 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
       if (str[i] === "<" && leftTagName !== null) {
         // reset it after use
         leftTagName = null;
-        console.log(
-          `2077 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`leftTagName`}\u001b[${39}m`} = null`
-        );
+        DEV &&
+          console.log(
+            `2226 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`leftTagName`}\u001b[${39}m`} = null`
+          );
       }
 
       // catch Jinja/Nunjucks two opening curlies and jump to the closing ones if latter exists
@@ -2087,56 +2236,60 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         str.indexOf("}}") !== -1
       ) {
         doNothing = str.indexOf("}}") + 2;
-        console.log(`2090 SET doNothing = ${doNothing}`);
+        DEV && console.log(`2239 SET doNothing = ${doNothing}`);
       }
 
       // logging after each loop's iteration:
       // ███████████████████████████████████████
-      console.log(
-        `    \u001b[${90}m${`██ ██ ██ ██ ██ END ██ ██ ██ ██ ██`}\u001b[${39}m`
-      );
-      console.log(
-        `2099 ${`\u001b[${35}m${`cpl`}\u001b[${39}m`} = ${`\u001b[${35}m${cpl}\u001b[${39}m`};`
-      );
+      DEV &&
+        console.log(
+          `    \u001b[${90}m${`██ ██ ██ ██ ██ END ██ ██ ██ ██ ██`}\u001b[${39}m`
+        );
+      DEV &&
+        console.log(
+          `2250 ${`\u001b[${35}m${`cpl`}\u001b[${39}m`} = ${`\u001b[${35}m${cpl}\u001b[${39}m`};`
+        );
 
       let logDoNothing = true;
 
-      console.log(
-        `${`\u001b[${36}m${`countCharactersPerLine`}\u001b[${39}m`} = ${JSON.stringify(
-          countCharactersPerLine,
-          null,
-          0
-        )}; ${`\u001b[${33}m${`stageFrom`}\u001b[${39}m`} = ${stageFrom}; ${`\u001b[${33}m${`stageTo`}\u001b[${39}m`} = ${stageTo}; ${`\u001b[${33}m${`stageAdd`}\u001b[${39}m`} = ${JSON.stringify(
-          stageAdd,
-          null,
-          0
-        )}; ${`\u001b[${33}m${`indexes`}\u001b[${39}m`} = ${JSON.stringify(
-          finalIndexesToDelete.current(),
-          null,
-          0
-        )}; ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = ${lastLinebreak}; ${`\u001b[${33}m${`withinStyleTag`}\u001b[${39}m`} = ${withinStyleTag}; ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${nonWhitespaceCharMet};\n${
-          logDoNothing
-            ? `${`\u001b[${doNothing ? 31 : 32}m${`██ doNothing ${
-                doNothing || "OFF"
-              } ██`}\u001b[${39}m`}; `
-            : ""
-        }${`\u001b[${withinInlineStyle ? 32 : 31}m${`██ withinInlineStyle ${
-          withinInlineStyle ? "yes" : "no"
-        } ██`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `${`\u001b[${36}m${`countCharactersPerLine`}\u001b[${39}m`} = ${JSON.stringify(
+            countCharactersPerLine,
+            null,
+            0
+          )}; ${`\u001b[${33}m${`stageFrom`}\u001b[${39}m`} = ${stageFrom}; ${`\u001b[${33}m${`stageTo`}\u001b[${39}m`} = ${stageTo}; ${`\u001b[${33}m${`stageAdd`}\u001b[${39}m`} = ${JSON.stringify(
+            stageAdd,
+            null,
+            0
+          )}; ${`\u001b[${33}m${`indexes`}\u001b[${39}m`} = ${JSON.stringify(
+            finalIndexesToDelete.current(),
+            null,
+            0
+          )}; ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = ${lastLinebreak}; ${`\u001b[${33}m${`withinStyleTag`}\u001b[${39}m`} = ${withinStyleTag}; ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${nonWhitespaceCharMet};\n${
+            logDoNothing
+              ? `${`\u001b[${doNothing ? 31 : 32}m${`██ doNothing ${
+                  doNothing || "OFF"
+                } ██`}\u001b[${39}m`}; `
+              : ""
+          }${`\u001b[${withinInlineStyle ? 32 : 31}m${`██ withinInlineStyle ${
+            withinInlineStyle ? "yes" : "no"
+          } ██`}\u001b[${39}m`}`
+        );
 
       //
       //
       //
       // end of the loop
     }
-    console.log(
-      `2134 AFTER THE LOOP, finalIndexesToDelete.current() = ${JSON.stringify(
-        finalIndexesToDelete.current(),
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `2287 AFTER THE LOOP, finalIndexesToDelete.current() = ${JSON.stringify(
+          finalIndexesToDelete.current(),
+          null,
+          4
+        )}`
+      );
 
     if (finalIndexesToDelete.current()) {
       let ranges = finalIndexesToDelete.current();
@@ -2146,13 +2299,14 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         opts.reportProgressFuncTo -
         (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
           leavePercForLastStage;
-      console.log(
-        `2150 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
-          startingPercentageDone,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `2304 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+            startingPercentageDone,
+            null,
+            4
+          )}`
+        );
 
       let res = rApply(str, ranges, (applyPercDone) => {
         // allocate remaining "leavePercForLastStage" percentage of the total
@@ -2171,14 +2325,16 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         }
       });
 
-      console.log(
-        `2175 returning ${`\u001b[${33}m${`res`}\u001b[${39}m`} =\n\n${JSON.stringify(
-          res,
-          null,
-          4
-        )}\n\n ${`\u001b[${90}m${`or:`}\u001b[${39}m`}\n\n"${res}"`
-      );
-      console.log(`\u001b[${90}m${`\n      ██ FIN ██\n\n`}\u001b[${39}m`);
+      DEV &&
+        console.log(
+          `2330 returning ${`\u001b[${33}m${`res`}\u001b[${39}m`} =\n\n${JSON.stringify(
+            res,
+            null,
+            4
+          )}\n\n ${`\u001b[${90}m${`or:`}\u001b[${39}m`}\n\n"${res}"`
+        );
+      DEV &&
+        console.log(`\u001b[${90}m${`\n      ██ FIN ██\n\n`}\u001b[${39}m`);
       let resLen = res.length;
       return {
         log: {
@@ -2197,19 +2353,20 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
     }
   }
   // ELSE - return the original input string
-  console.log(
-    `2201 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
-      str,
-      null,
-      4
-    )}\n\n ${`\u001b[${90}m${`or:`}\u001b[${39}m`}\n\n${str}`
-  );
+  DEV &&
+    console.log(
+      `2358 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
+        str,
+        null,
+        4
+      )}\n\n ${`\u001b[${90}m${`or:`}\u001b[${39}m`}\n\n${str}`
+    );
 
-  console.log(" ");
-  console.log(" ");
-  console.log(`\u001b[${90}m${`      ██ FIN ██\n\n`}\u001b[${39}m`);
-  console.log(" ");
-  console.log(" ");
+  DEV && console.log(" ");
+  DEV && console.log(" ");
+  DEV && console.log(`\u001b[${90}m${`      ██ FIN ██\n\n`}\u001b[${39}m`);
+  DEV && console.log(" ");
+  DEV && console.log(" ");
 
   return {
     log: {

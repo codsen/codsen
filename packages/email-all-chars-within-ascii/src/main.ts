@@ -2,6 +2,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface Res {
   type: "character" | "line length";
   line: number;
@@ -71,7 +73,7 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
       (!str[i] || str[i] === "\r" || str[i] === "\n") &&
       column > opts.lineLength
     ) {
-      console.log(`074 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+      DEV && console.log(`076 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
       res.push({
         type: "line length",
         line: currLine,
@@ -103,11 +105,12 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
     // logging
     // =======
 
-    console.log(
-      `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
-        str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
-      }; column = ${column}; line = ${currLine}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
-    );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+          str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
+        }; column = ${column}; line = ${currLine}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+      );
 
     // track non-ASCII
     // ===============
@@ -130,7 +133,7 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
         currCodePoint === 12 ||
         (currCodePoint > 13 && currCodePoint < 32)
       ) {
-        console.log(`133 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+        DEV && console.log(`136 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         res.push({
           type: "character",
           line: currLine,
@@ -152,13 +155,14 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
     // -----------------------------------------------------------------------------
   }
 
-  console.log(
-    `156 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
-      res,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `160 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+        res,
+        null,
+        4
+      )}`
+    );
   return res;
 }
 

@@ -5,6 +5,9 @@ import {
   Property,
 } from "../../../../codsen-tokenizer/src/util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: format-prettier
 // it tries to format to how Prettier would
 // -----------------------------------------------------------------------------
@@ -14,13 +17,14 @@ function processCSS(
   context: Linter
 ): void {
   // group all CSS processing into one function
-  console.log(
-    `018 format-prettier/processCSS(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-      token,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `022 format-prettier/processCSS(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+        token,
+        null,
+        4
+      )}`
+    );
 
   let nodeArr;
   if ((token as any).properties !== undefined) {
@@ -32,9 +36,10 @@ function processCSS(
   }
 
   if (!nodeArr) {
-    console.log(
-      `036 format-prettier/processCSS(): ${`\u001b[${31}m${`early exit`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `041 format-prettier/processCSS(): ${`\u001b[${31}m${`early exit`}\u001b[${39}m`}`
+      );
     return;
   }
 
@@ -43,7 +48,7 @@ function processCSS(
   (nodeArr as Property[])
     .filter((property) => property.property !== undefined)
     .forEach((property) => {
-      // console.log(
+      // DEV && console.log(
       //   `055 ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
       //     property,
       //     null,
@@ -58,9 +63,10 @@ function processCSS(
         (property.valueStarts !== property.colon + 2 ||
           context.str[property.colon + 1] !== " ")
       ) {
-        console.log(
-          `062 format-prettier/processCSS(): space after colon missing`
-        );
+        DEV &&
+          console.log(
+            `068 format-prettier/processCSS(): space after colon missing`
+          );
         context.report({
           ruleId: "format-prettier",
           idxFrom: property.start,
@@ -83,16 +89,18 @@ function processCSS(
         (lastEnding + 1 !== property.importantStarts ||
           context.str[lastEnding] !== " ")
       ) {
-        console.log(
-          `087 FIY, ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${JSON.stringify(
-            property.importantStarts,
-            null,
-            4
-          )}`
-        );
-        console.log(
-          `094 format-prettier/processCSS(): missing space in front of !imporant`
-        );
+        DEV &&
+          console.log(
+            `094 FIY, ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${JSON.stringify(
+              property.importantStarts,
+              null,
+              4
+            )}`
+          );
+        DEV &&
+          console.log(
+            `102 format-prettier/processCSS(): missing space in front of !imporant`
+          );
         context.report({
           ruleId: "format-prettier",
           idxFrom: property.start,
@@ -113,13 +121,14 @@ function processCSS(
   if (nodeArr.length > 1) {
     let somethingMet = false;
     for (let i = 0, len = nodeArr.length; i < len; i++) {
-      console.log(
-        `117 SET ${`\u001b[${33}m${`nodeArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
-          nodeArr[i],
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `126 SET ${`\u001b[${33}m${`nodeArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
+            nodeArr[i],
+            null,
+            4
+          )}`
+        );
       // if it's text token, maybe it's whitespace, so enforce its value
       // to be a single space
       if (
@@ -150,9 +159,10 @@ function processCSS(
             nodeArr[i - 1].value.includes("\r"))
         )
       ) {
-        console.log(
-          `154 format-prettier/processCSS(): some whitespace is wrong...`
-        );
+        DEV &&
+          console.log(
+            `164 format-prettier/processCSS(): some whitespace is wrong...`
+          );
         context.report({
           ruleId: "format-prettier",
           idxFrom: nodeArr[i - 1].start,
@@ -176,9 +186,10 @@ function processCSS(
       ) {
         // then it's an issue right away because if there was a whitespace gap,
         // it would be a text token
-        console.log(
-          `180 format-prettier/processCSS(): space in front of ${nodeArr[i].start} missing`
-        );
+        DEV &&
+          console.log(
+            `191 format-prettier/processCSS(): space in front of ${nodeArr[i].start} missing`
+          );
         context.report({
           ruleId: "format-prettier",
           idxFrom: nodeArr[i].start,
@@ -207,16 +218,18 @@ interface FormatPrettier {
 const formatPrettier: FormatPrettier = (context) => {
   return {
     rule(node) {
-      console.log(
-        `███████████████████████████████████████ formatPrettier(), rule ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ formatPrettier(), rule ███████████████████████████████████████`
+        );
       // format the head CSS style rule
       processCSS(node, context);
     },
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ formatPrettier(), attr ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ formatPrettier(), attr ███████████████████████████████████████`
+        );
       // format the inline HTML style attribute CSS rules
       processCSS(node, context);
     },

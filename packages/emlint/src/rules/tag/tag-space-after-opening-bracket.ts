@@ -3,16 +3,20 @@ import { left, right } from "string-left-right";
 import { Linter, RuleObjType } from "../../linter";
 import { Ranges } from "../../../../../scripts/common";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: tag-space-after-opening-bracket
 // -----------------------------------------------------------------------------
 
 function tagSpaceAfterOpeningBracket(context: Linter): RuleObjType {
   return {
     tag(node) {
-      console.log(
-        `███████████████████████████████████████ tagSpaceAfterOpeningBracket() ███████████████████████████████████████`
-      );
-      console.log(`node = ${JSON.stringify(node, null, 4)}`);
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ tagSpaceAfterOpeningBracket() ███████████████████████████████████████`
+        );
+      DEV && console.log(`node = ${JSON.stringify(node, null, 4)}`);
       let ranges: Ranges = [];
       // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartsAt);
 
@@ -25,7 +29,7 @@ function tagSpaceAfterOpeningBracket(context: Linter): RuleObjType {
         // and it's a whitespace character
         !context.str[node.start + 1].trim()
       ) {
-        console.log(`028 whitespace after opening bracket confirmed`);
+        DEV && console.log(`032 whitespace after opening bracket confirmed`);
         ranges.push([
           node.start + 1,
           right(context.str, node.start + 1) || context.str.length,
@@ -39,7 +43,7 @@ function tagSpaceAfterOpeningBracket(context: Linter): RuleObjType {
         // character in front of the tag's name is whitespace
         !context.str[node.tagNameStartsAt - 1].trim()
       ) {
-        console.log(`042 whitespace before tag name confirmed`);
+        DEV && console.log(`046 whitespace before tag name confirmed`);
         let charToTheLeftOfTagNameIdx =
           left(context.str, node.tagNameStartsAt) || 0;
         if (charToTheLeftOfTagNameIdx !== node.start) {

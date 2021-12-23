@@ -5,14 +5,18 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateCoords(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateCoords() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateCoords() ███████████████████████████████████████`
+        );
 
-      // console.log(
+      // DEV && console.log(
       //   `020 attributeValidateCoords(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -27,13 +31,14 @@ function attributeValidateCoords(context: Linter): RuleObjType {
             fix: null,
           });
         } else {
-          console.log(
-            `031 attributeValidateCoords(): ${`\u001b[${33}m${`node.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
-              node.attribValueRaw,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `036 attributeValidateCoords(): ${`\u001b[${33}m${`node.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
+                node.attribValueRaw,
+                null,
+                4
+              )}`
+            );
 
           // "coords" values depend on "shape" attribute's value
           if (
@@ -56,13 +61,14 @@ function attributeValidateCoords(context: Linter): RuleObjType {
             let shapeAttr = node.parent.attribs.filter(
               (attrObj) => attrObj.attribName === "shape"
             )[0];
-            console.log(
-              `${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`shapeAttr`}\u001b[${39}m`} = ${JSON.stringify(
-                shapeAttr,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`shapeAttr`}\u001b[${39}m`} = ${JSON.stringify(
+                  shapeAttr,
+                  null,
+                  4
+                )}`
+              );
 
             let enforceCount: null | number | "even" | "odd" = null;
             if (shapeAttr.attribValueRaw === "rect") {
@@ -93,7 +99,7 @@ function attributeValidateCoords(context: Linter): RuleObjType {
 
             if (Array.isArray(errorArr) && errorArr.length) {
               errorArr.forEach((errorObj) => {
-                console.log(`096 RAISE ERROR`);
+                DEV && console.log(`102 RAISE ERROR`);
                 context.report({
                   ...errorObj,
                   ruleId: "attribute-validate-coords",

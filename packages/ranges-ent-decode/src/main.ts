@@ -7,16 +7,19 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 function chomp(str: string): string {
   // eslint-disable-next-line no-param-reassign
   str = str.replace(/(amp;)|(#x26;)/gi, "");
-  console.log(
-    `014 ${`\u001b[${33}m${`str after chomp`}\u001b[${39}m`} = ${JSON.stringify(
-      str,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `017 ${`\u001b[${33}m${`str after chomp`}\u001b[${39}m`} = ${JSON.stringify(
+        str,
+        null,
+        4
+      )}`
+    );
   return str;
 }
 
@@ -48,20 +51,22 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
   }
   let opts: Opts = { ...defaults, ...originalOpts };
 
-  console.log(
-    `052 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
-      str,
-      null,
-      4
-    )}`
-  );
-  console.log(
-    `059 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `056 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+        str,
+        null,
+        4
+      )}`
+    );
+  DEV &&
+    console.log(
+      `064 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
 
   // vars
   // ---------------------------------------------------------------------------
@@ -103,14 +108,15 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
 
   // eslint-disable-next-line no-cond-assign
   while ((array1 = entityRegex.exec(str)) !== null) {
-    console.log(
-      `--------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${
-        entityRegex.lastIndex - array1[0].length
-      }, ${entityRegex.lastIndex}]`
-    );
+    DEV &&
+      console.log(
+        `--------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${
+          entityRegex.lastIndex - array1[0].length
+        }, ${entityRegex.lastIndex}]`
+      );
     let chomped = chomp(array1[0]);
     if (chomped === "&") {
-      console.log('113 chomped === "&"');
+      DEV && console.log('119 chomped === "&"');
       rangesArr.push([
         entityRegex.lastIndex - array1[0].length,
         entityRegex.lastIndex,
@@ -118,21 +124,23 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
       ]);
     } else {
       let decoded = he.decode(chomped, opts);
-      console.log(
-        `122 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
-      );
-      if (decoded !== chomped) {
+      DEV &&
         console.log(
-          `126 will push "${`\u001b[${33}m${JSON.stringify(
-            [
-              entityRegex.lastIndex - array1[0].length,
-              entityRegex.lastIndex,
-              decoded,
-            ],
-            null,
-            4
-          )}\u001b[${39}m`}"`
+          `129 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
         );
+      if (decoded !== chomped) {
+        DEV &&
+          console.log(
+            `134 will push "${`\u001b[${33}m${JSON.stringify(
+              [
+                entityRegex.lastIndex - array1[0].length,
+                entityRegex.lastIndex,
+                decoded,
+              ],
+              null,
+              4
+            )}\u001b[${39}m`}"`
+          );
         rangesArr.push([
           entityRegex.lastIndex - array1[0].length,
           entityRegex.lastIndex,

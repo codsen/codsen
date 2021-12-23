@@ -9,6 +9,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface Res {
   ok: boolean;
   assertsTotal: number;
@@ -24,15 +26,15 @@ interface StreamInterface extends NodeJS.ReadWriteStream {
 }
 
 function parseTap(something: string | StreamInterface): Res | Promise<Res> {
-  console.log(`027 parseTap called!`);
+  DEV && console.log(`029 parseTap called!`);
   if (isStream(something)) {
-    console.log(`stream was given`);
+    DEV && console.log(`stream was given`);
     return new Promise((resolve, reject) => {
       let counter = new Counter();
 
       (something as StreamInterface).pipe(split2()).pipe(
         through2.obj((line, _encoding, next) => {
-          // console.log(
+          // DEV && console.log(
           //   `${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
           //     line,
           //     null,
@@ -51,7 +53,7 @@ function parseTap(something: string | StreamInterface): Res | Promise<Res> {
       (something as StreamInterface).on("error", reject);
     });
   } else if (typeof something === "string") {
-    console.log(`not a stream but string was given`);
+    DEV && console.log(`not a stream but string was given`);
     if (!something.length) {
       return {
         ok: true,

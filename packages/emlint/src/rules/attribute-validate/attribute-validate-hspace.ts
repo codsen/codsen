@@ -5,14 +5,18 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateHspace(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateHspace() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateHspace() ███████████████████████████████████████`
+        );
 
-      // console.log(
+      // DEV && console.log(
       //   `015 attributeValidateHspace(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -36,12 +40,13 @@ function attributeValidateHspace(context: Linter): RuleObjType {
             noUnitsIsFine: true,
           }
         );
-        console.log(
-          `040 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
+        DEV &&
+          console.log(
+            `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`044 RAISE ERROR`);
+          DEV && console.log(`049 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-hspace" });
         });
       }

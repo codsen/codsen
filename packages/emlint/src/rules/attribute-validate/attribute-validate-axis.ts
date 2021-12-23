@@ -5,16 +5,21 @@ import { Linter, RuleObjType } from "../../linter";
 
 import checkForWhitespace from "../../util/checkForWhitespace";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateAxis(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateAxis() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateAxis() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateAxis(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateAxis(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "axis") {
         // validate the parent
@@ -42,16 +47,17 @@ function attributeValidateAxis(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`054 RAISE ERROR`);
+            DEV && console.log(`060 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-axis" });
           });
         }

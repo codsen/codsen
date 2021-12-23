@@ -466,7 +466,7 @@ function doConvertEntities(
   dontEncodeNonLatin: boolean
 ): string {
   if (dontEncodeNonLatin) {
-    // console.log(
+    // !global.NO_LOG && DEV && console.log(
     //   `427 doConvertEntities() - inside if (dontEncodeNonLatin) clauses`
     // );
     // split, check, encode conditionally
@@ -474,7 +474,7 @@ function doConvertEntities(
       .map((char) => {
         // Separately check lower character indexes because statistically they are
         // most likely to be encountered. That's letters, quotes brackets and so on.
-        // console.log(
+        // !global.NO_LOG && DEV && console.log(
         //   `435 doConvertEntities() - char = "${char}"; ${`\u001b[${33}m${`char.charCodeAt(0)`}\u001b[${39}m`} = ${JSON.stringify(
         //     char.charCodeAt(0),
         //     null,
@@ -489,7 +489,7 @@ function doConvertEntities(
               char.charCodeAt(0) < rangeArr[1]
           )
         ) {
-          // console.log(
+          // !global.NO_LOG && DEV && console.log(
           //   `450 doConvertEntities() - encoding to "${he.encode(char, {
           //     useNamedReferences: true,
           //   })}"`
@@ -502,7 +502,7 @@ function doConvertEntities(
       })
       .join("");
   }
-  // console.log(`462 doConvertEntities() - outside if (dontEncodeNonLatin)`);
+  // !global.NO_LOG && DEV && console.log(`462 doConvertEntities() - outside if (dontEncodeNonLatin)`);
   // else, if dontEncodeNonLatin if off, just encode everything:
   return he.encode(inputString, {
     useNamedReferences: true,

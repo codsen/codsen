@@ -7,30 +7,34 @@ const defaults: Opts = {
   caseInsensitive: false,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function includesWithRegex(
   arr: (string | RegExp)[],
   whatToMatch: string,
   originalOpts?: Partial<Opts>
 ): boolean {
   let opts = { ...defaults, ...originalOpts };
-  console.log(" ---------- ");
-  console.log(
-    `018 includesWithRegex() called to match ${JSON.stringify(
-      whatToMatch,
-      null,
-      0
-    )} against:\n${JSON.stringify(arr, null, 4)}; opts = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
+  DEV && console.log(" ---------- ");
+  DEV &&
+    console.log(
+      `022 includesWithRegex() called to match ${JSON.stringify(
+        whatToMatch,
+        null,
+        0
+      )} against:\n${JSON.stringify(arr, null, 4)}; opts = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
   if (!Array.isArray(arr) || !arr.length) {
     // definitely does not include
-    console.log(`030 includesWithRegex() quick end, return false`);
+    DEV && console.log(`034 includesWithRegex() quick end, return false`);
     return false;
   }
-  // console.log(
+  // DEV && console.log(
   //   `017 includesWithRegex(): ${`\u001b[${33}m${`whatToMatch`}\u001b[${39}m`} = ${JSON.stringify(
   //     whatToMatch,
   //     null,

@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onfocus
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnfocus(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnfocus() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnfocus() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnfocus(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnfocus(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onfocus") {
         // validate the parent
@@ -58,16 +63,17 @@ function attributeValidateOnfocus(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `062 attributeValidateOnfocus(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `068 attributeValidateOnfocus(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`070 attributeValidateOnfocus(): RAISE ERROR`);
+            DEV && console.log(`076 attributeValidateOnfocus(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onfocus",

@@ -1,6 +1,9 @@
 import { TagTokenWithChildren } from "../../util/commonTypes";
 import { Linter, RuleObjType } from "../../linter";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-align-mismatch
 // -----------------------------------------------------------------------------
 
@@ -20,44 +23,48 @@ const attributeAlignMismatch: AttributeAlignMismatch = (context) => {
         // and has children tags
         node.children.length
       ) {
-        console.log(
-          `███████████████████████████████████████ attributeAlignMismatch() ███████████████████████████████████████`
-        );
-        console.log(
-          `027 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
-            node,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `███████████████████████████████████████ attributeAlignMismatch() ███████████████████████████████████████`
+          );
+        DEV &&
+          console.log(
+            `032 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+              node,
+              null,
+              4
+            )}`
+          );
 
-        console.log(`034 - find out align attr's value`);
+        DEV && console.log(`039 - find out align attr's value`);
         let alignAttrVal: string | undefined;
         for (let i = node.attribs.length; i--; ) {
           if (node.attribs[i].attribName === "align") {
             alignAttrVal = node.attribs[i].attribValueRaw;
-            console.log(
-              `040 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`alignAttrVal`}\u001b[${39}m`} = ${`\u001b[${35}m${alignAttrVal}\u001b[${39}m`}`
-            );
+            DEV &&
+              console.log(
+                `046 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`alignAttrVal`}\u001b[${39}m`} = ${`\u001b[${35}m${alignAttrVal}\u001b[${39}m`}`
+              );
             break;
           }
         }
 
         if (typeof alignAttrVal === "string") {
-          console.log(`047 loop all children nodes, look for <table>s`);
+          DEV && console.log(`053 loop all children nodes, look for <table>s`);
           for (let i = node.children.length; i--; ) {
             if (
               node.children[i].type === "tag" &&
               (node.children[i] as TagTokenWithChildren).tagName === "table" &&
               !(node.children[i] as TagTokenWithChildren).closing
             ) {
-              console.log(
-                `055 ${`\u001b[${33}m${`node.children[i]`}\u001b[${39}m`} = ${JSON.stringify(
-                  node.children[i],
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `062 ${`\u001b[${33}m${`node.children[i]`}\u001b[${39}m`} = ${JSON.stringify(
+                    node.children[i],
+                    null,
+                    4
+                  )}`
+                );
               if (
                 Array.isArray(
                   (node.children[i] as TagTokenWithChildren).attribs
@@ -70,11 +77,12 @@ const attributeAlignMismatch: AttributeAlignMismatch = (context) => {
                       attrib.attribName === "align" &&
                       attrib.attribValueRaw !== alignAttrVal
                     ) {
-                      console.log(
-                        `074 attributeAlignMismatch(): mismatching align: ${`\u001b[${35}m${
-                          attrib.attribValueRaw
-                        }\u001b[${39}m`}`
-                      );
+                      DEV &&
+                        console.log(
+                          `082 attributeAlignMismatch(): mismatching align: ${`\u001b[${35}m${
+                            attrib.attribValueRaw
+                          }\u001b[${39}m`}`
+                        );
                       context.report({
                         ruleId: "attribute-align-mismatch",
                         message: `Does not match parent td's "align".`,

@@ -1,6 +1,9 @@
 import { Linter, RuleObjType } from "../../linter";
 import { validateString, linkTypes } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-rel
 // -----------------------------------------------------------------------------
 
@@ -10,13 +13,15 @@ function attributeValidateRel(
 ): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateRel() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateRel() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `018 attributeValidateRel(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `023 attributeValidateRel(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "rel") {
         // validate the parent
@@ -41,16 +46,17 @@ function attributeValidateRel(
           }
         );
 
-        console.log(
-          `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-            errorArr,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`053 RAISE ERROR`);
+          DEV && console.log(`059 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-rel" });
         });
       }

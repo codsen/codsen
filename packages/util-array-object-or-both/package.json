@@ -33,7 +33,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-    "dev": "MODE=dev node '../../ops/scripts/esbuild.js' && npm run dts",
+    "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
     "dts": "rollup -c",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js'",
@@ -41,7 +41,7 @@
     "lint": "eslint . --fix",
     "perf": "node perf/check.js",
     "prepare": "echo 'ready'",
-    "pretest": "npm run build",
+    "pretest": "npm run lect && npm run build",
     "test": "c8 npm run unit && npm run examples && npm run lint",
     "unit": "uvu test"
   },
@@ -61,21 +61,12 @@
         ""
       ]
     },
-    "req": "{ arrObjOrBoth }",
-    "various": {
-      "devDependencies": [
-        "@types/lodash.includes"
-      ]
-    }
+    "various": {}
   },
   "dependencies": {
     "lodash.includes": "^4.3.0"
   },
   "devDependencies": {
-    "@types/lodash.includes": "^4.3.6",
-    "@types/node": "^16.11.11",
-    "@types/tap": "^15.0.5",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/parser": "^5.5.0"
+    "@types/lodash.includes": "^4.3.6"
   }
 }

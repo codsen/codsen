@@ -1,3 +1,4 @@
+declare let DEV: boolean;
 interface Obj {
   [key: string]: any;
 }
@@ -5292,15 +5293,20 @@ const notEmailFriendlyLowercaseSetOnly = new Set([
 const notEmailFriendlyMinLength = 2;
 const notEmailFriendlyMaxLength = 31;
 
-console.log(
-  `5296 notEmailFriendly - total keys: ${Object.keys(notEmailFriendly).length}`
-);
-console.log(
-  `5299 notEmailFriendlySetOnly - total size: ${notEmailFriendlySetOnly.size}`
-);
-console.log(
-  `5302 notEmailFriendlyLowercaseSetOnly - total size: ${notEmailFriendlyLowercaseSetOnly.size}`
-);
+DEV &&
+  console.log(
+    `5298 notEmailFriendly - total keys: ${
+      Object.keys(notEmailFriendly).length
+    }`
+  );
+DEV &&
+  console.log(
+    `5304 notEmailFriendlySetOnly - total size: ${notEmailFriendlySetOnly.size}`
+  );
+DEV &&
+  console.log(
+    `5308 notEmailFriendlyLowercaseSetOnly - total size: ${notEmailFriendlyLowercaseSetOnly.size}`
+  );
 
 // -------------------------------------------------------------------------
 

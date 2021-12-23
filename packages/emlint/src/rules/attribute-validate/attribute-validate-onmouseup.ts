@@ -5,20 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateOnmouseup(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnmouseup() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnmouseup() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateOnmouseup(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateOnmouseup(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onmouseup") {
         // validate the parent
@@ -68,16 +73,17 @@ function attributeValidateOnmouseup(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `072 attributeValidateOnmouseup(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `078 attributeValidateOnmouseup(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`080 attributeValidateOnmouseup(): RAISE ERROR`);
+            DEV && console.log(`086 attributeValidateOnmouseup(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onmouseup",

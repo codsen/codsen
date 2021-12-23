@@ -5,16 +5,21 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateHref(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateHref() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateHref() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateHref(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateHref(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "href") {
         // validate the parent
@@ -31,7 +36,7 @@ function attributeValidateHref(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`034 RAISE ERROR`);
+            DEV && console.log(`039 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-href" });
           });
         }

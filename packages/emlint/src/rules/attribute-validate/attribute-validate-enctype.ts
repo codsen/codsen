@@ -7,20 +7,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import { validateString } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateEnctype(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateEnctype() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateEnctype() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `018 attributeValidateEnctype(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `023 attributeValidateEnctype(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "enctype") {
         // validate the parent
@@ -49,16 +54,17 @@ function attributeValidateEnctype(context: Linter): RuleObjType {
           }
         );
 
-        console.log(
-          `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-            errorArr,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`061 RAISE ERROR`);
+          DEV && console.log(`067 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-enctype" });
         });
       }

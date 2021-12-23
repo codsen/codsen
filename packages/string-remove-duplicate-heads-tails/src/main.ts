@@ -9,6 +9,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface Opts {
   heads: string[];
   tails: string[];
@@ -135,7 +137,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   function delLeadingEmptyHeadTailChunks(str1: string, opts1: Opts): string {
     let noteDownTheIndex: number | undefined;
     // do heads, from beginning of the input string:
-    console.log("138 calling matchRightIncl()");
+    DEV && console.log("140 calling matchRightIncl()");
     let resultOfAttemptToMatchHeads = matchRightIncl(str1, 0, opts1.heads, {
       trimBeforeMatching: true,
       cb: (_char, _theRemainderOfTheString, index) => {
@@ -148,7 +150,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       return str1;
     }
     // do tails now:
-    console.log("151 calling matchRightIncl()");
+    DEV && console.log("153 calling matchRightIncl()");
     let resultOfAttemptToMatchTails = matchRightIncl(
       str1,
       noteDownTheIndex as number,
@@ -177,7 +179,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   function delTrailingEmptyHeadTailChunks(str1: string, opts1: Opts): string {
     let noteDownTheIndex;
     // do tails now - match from the end of a string, trimming along:
-    console.log("180 calling matchLeftIncl()");
+    DEV && console.log("182 calling matchLeftIncl()");
     let resultOfAttemptToMatchTails = matchLeftIncl(
       str1,
       str1.length - 1,
@@ -195,7 +197,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       return str1;
     }
     // do heads that precede those tails:
-    console.log("198 calling matchLeftIncl()");
+    DEV && console.log("200 calling matchLeftIncl()");
     let resultOfAttemptToMatchHeads = matchLeftIncl(
       str1,
       noteDownTheIndex,
@@ -222,7 +224,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
 
   //                      E A R L Y    E N D I N G
 
-  console.log("225 calling both matchRightIncl() and matchLeftIncl()");
+  DEV && console.log("227 calling both matchRightIncl() and matchLeftIncl()");
   if (
     !opts.heads.length ||
     !matchRightIncl(str, 0, opts.heads, {
@@ -233,9 +235,10 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       trimBeforeMatching: true,
     })
   ) {
-    console.log(
-      `\u001b[${33}m${"211 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye."}\u001b[${39}m`
-    );
+    DEV &&
+      console.log(
+        `\u001b[${33}m${"211 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye."}\u001b[${39}m`
+      );
     return trimSpaces(str).res;
   }
 
@@ -245,57 +248,64 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   for (let i = 0, len = str.length; i < len; i++) {
     //
     // console log bits for development
-    console.log(
-      `\u001b[${33}m${`--------------------------------------- ${
-        str[i].trim() === "" ? "space" : `  ${str[i]}  `
-      } ---[${i < 10 ? `0${i}` : i}]---`}\u001b[${39}m`
-    );
-    console.log(
-      `\u001b[${36}m${`* conditional ranges: ${JSON.stringify(
-        conditionalRanges.current(),
-        null,
-        0
-      )}`}\u001b[${39}m`
-    );
-    console.log(
-      `\u001b[${36}m${`* real ranges: ${JSON.stringify(
-        realRanges.current(),
-        null,
-        0
-      )}`}\u001b[${39}m`
-    );
-    console.log(
-      `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
-        firstNonMarkerChunkFound,
-        null,
-        4
-      )}`}\u001b[${39}m`
-    );
-    console.log(
-      `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
-        secondNonMarkerChunkFound,
-        null,
-        4
-      )}`}\u001b[${39}m`
-    );
-    console.log(
-      `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
-        itsFirstTail,
-        null,
-        4
-      )}`}\u001b[${39}m`
-    );
-    console.log(
-      `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
-        lastMatched,
-        null,
-        4
-      )}\n`}\u001b[${39}m`
-    );
+    DEV &&
+      console.log(
+        `\u001b[${33}m${`--------------------------------------- ${
+          str[i].trim() === "" ? "space" : `  ${str[i]}  `
+        } ---[${i < 10 ? `0${i}` : i}]---`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* conditional ranges: ${JSON.stringify(
+          conditionalRanges.current(),
+          null,
+          0
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* real ranges: ${JSON.stringify(
+          realRanges.current(),
+          null,
+          0
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
+          firstNonMarkerChunkFound,
+          null,
+          4
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
+          secondNonMarkerChunkFound,
+          null,
+          4
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
+          itsFirstTail,
+          null,
+          4
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
+          lastMatched,
+          null,
+          4
+        )}\n`}\u001b[${39}m`
+      );
 
     // catch whitespace
     if (str[i].trim() === "") {
-      console.log("! skip");
+      DEV && console.log("! skip");
     } else {
       // so it's not a whitespace character.
 
@@ -307,7 +317,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
 
       // match heads
       let noteDownTheIndex;
-      console.log("310 calling matchRightIncl()");
+      DEV && console.log("320 calling matchRightIncl()");
       let resultOfAttemptToMatchHeads = matchRightIncl(str, i, opts.heads, {
         trimBeforeMatching: true,
         cb: (_char, _theRemainderOfTheString, index) => {
@@ -323,12 +333,12 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
           itsFirstTail = true;
         }
 
-        console.log(`326 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
+        DEV && console.log(`336 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
 
         // 0. Just in case, check maybe there are tails following right away,
         // in that case definitely remove both
         let tempIndexUpTo;
-        console.log("331 calling matchRightIncl()");
+        DEV && console.log("341 calling matchRightIncl()");
         let resultOfAttemptToMatchTails = matchRightIncl(
           str,
           noteDownTheIndex,
@@ -354,7 +364,10 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
           firstNonMarkerChunkFound &&
           lastMatched !== "tails"
         ) {
-          console.log(`\u001b[${33}m${"329 wiping conditional"}\u001b[${39}m`);
+          DEV &&
+            console.log(
+              `\u001b[${33}m${"329 wiping conditional"}\u001b[${39}m`
+            );
           realRanges.push(conditionalRanges.current() as any);
         }
 
@@ -367,28 +380,32 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
           // deal with any existing content in the conditionals:
           if (conditionalRanges.current()) {
             // first, if there are any conditional ranges, they become real-ones:
-            console.log(
-              `\u001b[${33}m${"343 pushing conditionals into real"}\u001b[${39}m`
-            );
+            DEV &&
+              console.log(
+                `\u001b[${33}m${"343 pushing conditionals into real"}\u001b[${39}m`
+              );
             realRanges.push(conditionalRanges.current() as any);
             // then, wipe conditionals:
-            console.log(
-              `\u001b[${33}m${"348 wiping conditionals"}\u001b[${39}m`
-            );
+            DEV &&
+              console.log(
+                `\u001b[${33}m${"348 wiping conditionals"}\u001b[${39}m`
+              );
             conditionalRanges.wipe();
           }
 
-          console.log(
-            `\u001b[${33}m${`369 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
-          );
+          DEV &&
+            console.log(
+              `\u001b[${33}m${`369 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            );
           // then, add this new range:
           conditionalRanges.push(i, noteDownTheIndex);
         } else {
           // Every heads or tails go to conditional array. First encountered
           // non-head/tail wipes all.
-          console.log(
-            `\u001b[${33}m${`377 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
-          );
+          DEV &&
+            console.log(
+              `\u001b[${33}m${`377 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            );
           conditionalRanges.push(i, noteDownTheIndex);
         }
 
@@ -396,60 +413,67 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         lastMatched = "heads";
 
         // 4. offset the index
-        console.log(
-          `\u001b[${33}m${`387 offsetting i to ${
-            (noteDownTheIndex as number) - 1
-          }`}\u001b[${39}m`
-        );
+        DEV &&
+          console.log(
+            `\u001b[${33}m${`387 offsetting i to ${
+              (noteDownTheIndex as number) - 1
+            }`}\u001b[${39}m`
+          );
         i = (noteDownTheIndex as number) - 1;
 
-        console.log(
-          `\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
-            conditionalRanges.current(),
-            null,
-            0
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* real ranges: ${JSON.stringify(
-            realRanges.current(),
-            null,
-            0
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
-            firstNonMarkerChunkFound,
-            null,
-            4
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
-            secondNonMarkerChunkFound,
-            null,
-            4
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
-            lastMatched,
-            null,
-            4
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
-            itsFirstTail,
-            null,
-            4
-          )}`}\u001b[${39}m`
-        );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
+              conditionalRanges.current(),
+              null,
+              0
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* real ranges: ${JSON.stringify(
+              realRanges.current(),
+              null,
+              0
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
+              firstNonMarkerChunkFound,
+              null,
+              4
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
+              secondNonMarkerChunkFound,
+              null,
+              4
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
+              lastMatched,
+              null,
+              4
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
+              itsFirstTail,
+              null,
+              4
+            )}`}\u001b[${39}m`
+          );
         continue;
       }
 
       // match tails
-      console.log("452 calling matchRightIncl()");
+      DEV && console.log("476 calling matchRightIncl()");
       let resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
         trimBeforeMatching: true,
         cb: (_char, _theRemainderOfTheString, index) => {
@@ -461,36 +485,40 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         // reset marker
         itsFirstLetter = true;
 
-        console.log(`TAILS MATCHED: ${resultOfAttemptToMatchTails}`);
+        DEV && console.log(`TAILS MATCHED: ${resultOfAttemptToMatchTails}`);
 
         if (!itsFirstTail) {
           // if that's a second chunk, this means each chunk will be wrapped
           // and we can't peel of those wrappings, hence only the second tail
           // can be added to conditionals' array.
-          console.log(
-            `\u001b[${33}m${`458 pushing into conditionals: [${i}, ${noteDownTheIndex}]`}\u001b[${39}m`
-          );
+          DEV &&
+            console.log(
+              `\u001b[${33}m${`458 pushing into conditionals: [${i}, ${noteDownTheIndex}]`}\u001b[${39}m`
+            );
           conditionalRanges.push(i, noteDownTheIndex);
         } else {
           // 1.
-          console.log(
-            `${`\u001b[${33}m${"447 lastMatched"}\u001b[${39}m`} = ${JSON.stringify(
-              lastMatched,
-              null,
-              4
-            )}`
-          );
-          if (lastMatched === "heads") {
+          DEV &&
             console.log(
-              `\u001b[${33}m${"455 WIPING CONDITIONALS"}\u001b[${39}m`
+              `${`\u001b[${33}m${"447 lastMatched"}\u001b[${39}m`} = ${JSON.stringify(
+                lastMatched,
+                null,
+                4
+              )}`
             );
+          if (lastMatched === "heads") {
+            DEV &&
+              console.log(
+                `\u001b[${33}m${"455 WIPING CONDITIONALS"}\u001b[${39}m`
+              );
             conditionalRanges.wipe();
           }
 
           // 2. if it's just the first tail, do nothing, but turn off the flag
-          console.log(
-            `\u001b[${33}m${"462 itsFirstTail = false"}\u001b[${39}m`
-          );
+          DEV &&
+            console.log(
+              `\u001b[${33}m${"462 itsFirstTail = false"}\u001b[${39}m`
+            );
           itsFirstTail = false;
         }
 
@@ -498,55 +526,62 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         lastMatched = "tails";
 
         // 2. offset the index
-        console.log(
-          `\u001b[${33}m${`489 offsetting i to ${
-            noteDownTheIndex - 1
-          }`}\u001b[${39}m`
-        );
+        DEV &&
+          console.log(
+            `\u001b[${33}m${`489 offsetting i to ${
+              noteDownTheIndex - 1
+            }`}\u001b[${39}m`
+          );
         i = noteDownTheIndex - 1;
 
-        console.log(
-          `\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
-            conditionalRanges.current(),
-            null,
-            0
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* real ranges: ${JSON.stringify(
-            realRanges.current(),
-            null,
-            0
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
-            firstNonMarkerChunkFound,
-            null,
-            4
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
-            secondNonMarkerChunkFound,
-            null,
-            4
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
-            lastMatched,
-            null,
-            4
-          )}`}\u001b[${39}m`
-        );
-        console.log(
-          `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
-            itsFirstTail,
-            null,
-            4
-          )}`}\u001b[${39}m`
-        );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
+              conditionalRanges.current(),
+              null,
+              0
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* real ranges: ${JSON.stringify(
+              realRanges.current(),
+              null,
+              0
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
+              firstNonMarkerChunkFound,
+              null,
+              4
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
+              secondNonMarkerChunkFound,
+              null,
+              4
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
+              lastMatched,
+              null,
+              4
+            )}`}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
+              itsFirstTail,
+              null,
+              4
+            )}`}\u001b[${39}m`
+          );
         continue;
       }
 
@@ -557,9 +592,10 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         itsFirstTail = true;
       }
       if (itsFirstLetter && !firstNonMarkerChunkFound) {
-        console.log(
-          `\u001b[${33}m${"530 firstNonMarkerChunkFound = true"}\u001b[${39}m`
-        );
+        DEV &&
+          console.log(
+            `\u001b[${33}m${"530 firstNonMarkerChunkFound = true"}\u001b[${39}m`
+          );
         // wipe the conditionals:
         // conditionalRanges.wipe()
 
@@ -567,10 +603,12 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         firstNonMarkerChunkFound = true;
         itsFirstLetter = false;
       } else if (itsFirstLetter && !secondNonMarkerChunkFound) {
-        console.log(
-          `\u001b[${33}m${"540 secondNonMarkerChunkFound = true"}\u001b[${39}m`
-        );
-        console.log(`\u001b[${33}m${"542 itsFirstTail = true"}\u001b[${39}m`);
+        DEV &&
+          console.log(
+            `\u001b[${33}m${"540 secondNonMarkerChunkFound = true"}\u001b[${39}m`
+          );
+        DEV &&
+          console.log(`\u001b[${33}m${"542 itsFirstTail = true"}\u001b[${39}m`);
         secondNonMarkerChunkFound = true;
         itsFirstTail = true;
         itsFirstLetter = false;
@@ -587,13 +625,66 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       }
     }
 
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
+          conditionalRanges.current(),
+          null,
+          0
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* real ranges: ${JSON.stringify(
+          realRanges.current(),
+          null,
+          0
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
+          firstNonMarkerChunkFound,
+          null,
+          4
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
+          secondNonMarkerChunkFound,
+          null,
+          4
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
+          lastMatched,
+          null,
+          4
+        )}`}\u001b[${39}m`
+      );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
+          itsFirstTail,
+          null,
+          4
+        )}`}\u001b[${39}m`
+      );
+    //
+  }
+
+  DEV &&
     console.log(
-      `\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
+      `\u001b[${36}m${`\n================\n\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
         conditionalRanges.current(),
         null,
         0
       )}`}\u001b[${39}m`
     );
+  DEV &&
     console.log(
       `\u001b[${36}m${`* real ranges: ${JSON.stringify(
         realRanges.current(),
@@ -601,6 +692,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         0
       )}`}\u001b[${39}m`
     );
+  DEV &&
     console.log(
       `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
         firstNonMarkerChunkFound,
@@ -608,6 +700,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         4
       )}`}\u001b[${39}m`
     );
+  DEV &&
     console.log(
       `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
         secondNonMarkerChunkFound,
@@ -615,6 +708,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         4
       )}`}\u001b[${39}m`
     );
+  DEV &&
     console.log(
       `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
         lastMatched,
@@ -622,6 +716,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         4
       )}`}\u001b[${39}m`
     );
+  DEV &&
     console.log(
       `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
         itsFirstTail,
@@ -629,51 +724,6 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
         4
       )}`}\u001b[${39}m`
     );
-    //
-  }
-
-  console.log(
-    `\u001b[${36}m${`\n================\n\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
-      conditionalRanges.current(),
-      null,
-      0
-    )}`}\u001b[${39}m`
-  );
-  console.log(
-    `\u001b[${36}m${`* real ranges: ${JSON.stringify(
-      realRanges.current(),
-      null,
-      0
-    )}`}\u001b[${39}m`
-  );
-  console.log(
-    `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
-      firstNonMarkerChunkFound,
-      null,
-      4
-    )}`}\u001b[${39}m`
-  );
-  console.log(
-    `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
-      secondNonMarkerChunkFound,
-      null,
-      4
-    )}`}\u001b[${39}m`
-  );
-  console.log(
-    `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
-      lastMatched,
-      null,
-      4
-    )}`}\u001b[${39}m`
-  );
-  console.log(
-    `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
-      itsFirstTail,
-      null,
-      4
-    )}`}\u001b[${39}m`
-  );
 
   if (conditionalRanges.current()) {
     realRanges.push(conditionalRanges.current() as any);

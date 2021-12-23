@@ -7,22 +7,32 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateCommentOpening from "../../util/validateCommentOpening";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function commentOpeningMalformed(context: Linter): RuleObjType {
   return {
     text: (node) => {
-      console.log(
-        `███████████████████████████████████████ commentOpeningMalformed() TEXT ███████████████████████████████████████`
-      );
-      console.log(
-        `017 commentOpeningMalformed(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ commentOpeningMalformed() TEXT ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `022 commentOpeningMalformed(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
       findMalformed(
         node.value,
         "<!--",
         (errorObj) => {
-          console.log(
-            `024 commentOpeningMalformed() / findAllInstancesOf(): RAISE ERROR`
-          );
+          DEV &&
+            console.log(
+              `034 commentOpeningMalformed() / findAllInstancesOf(): RAISE ERROR`
+            );
           context.report({
             ...errorObj,
             message: "Malformed opening comment tag.",
@@ -38,22 +48,29 @@ function commentOpeningMalformed(context: Linter): RuleObjType {
       );
     },
     comment: (node) => {
-      console.log(
-        `███████████████████████████████████████ commentOpeningMalformed() COMMENT ███████████████████████████████████████`
-      );
-      console.log(
-        `045 commentOpeningMalformed(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ commentOpeningMalformed() COMMENT ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `057 commentOpeningMalformed(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (!node.closing) {
         // run the tag's value past the validator function
         let errorArr = validateCommentOpening(node) || [];
-        console.log(
-          `052 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
+        DEV &&
+          console.log(
+            `069 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`056 commentOpeningMalformed(): RAISE ERROR`);
+          DEV && console.log(`073 commentOpeningMalformed(): RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "comment-opening-malformed" });
         });
       }

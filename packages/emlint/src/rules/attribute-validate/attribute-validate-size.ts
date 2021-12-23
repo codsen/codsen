@@ -7,14 +7,18 @@ import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 import checkForWhitespace from "../../util/checkForWhitespace";
 import { fontSizeRegex } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateSize(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateSize() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateSize() ███████████████████████████████████████`
+        );
 
-      // console.log(
+      // DEV && console.log(
       //   `015 attributeValidateSize(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -38,22 +42,24 @@ function attributeValidateSize(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
 
-          console.log(
-            `042 attributeValidateSize(): charStart = ${charStart}; charEnd = ${charEnd}`
-          );
-          console.log(
-            `045 attributeValidateSize(): ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `047 attributeValidateSize(): charStart = ${charStart}; charEnd = ${charEnd}`
+            );
+          DEV &&
+            console.log(
+              `051 attributeValidateSize(): ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           // sort errorArr right here because some of the values will be
           // checked with regex quickly and it would be burden to stick
           // this whitespace reporting on every size attribute tag's case
           errorArr.forEach((errorObj) => {
-            console.log(`056 RAISE ERROR`);
+            DEV && console.log(`062 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-size" });
           });
 
@@ -67,15 +73,16 @@ function attributeValidateSize(context: Linter): RuleObjType {
             // the attribute's value is not empty
 
             let extractedVal = node.attribValueRaw.slice(charStart, charEnd);
-            console.log(
-              `071 attributeValidateSize(): ${`\u001b[${33}m${`extractedVal`}\u001b[${39}m`} = ${JSON.stringify(
-                extractedVal,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `078 attributeValidateSize(): ${`\u001b[${33}m${`extractedVal`}\u001b[${39}m`} = ${JSON.stringify(
+                  extractedVal,
+                  null,
+                  4
+                )}`
+              );
             if (["hr", "input", "select"].includes(node.parent.tagName)) {
-              console.log(`078 validate hr/input/select tag's size`);
+              DEV && console.log(`085 validate hr/input/select tag's size`);
               // no need to check whitespace, opts.skipWhitespaceChecks: true
               validateDigitAndUnit(
                 extractedVal,
@@ -87,14 +94,14 @@ function attributeValidateSize(context: Linter): RuleObjType {
                   skipWhitespaceChecks: true,
                 }
               ).forEach((errorObj) => {
-                console.log(`090 RAISE ERROR`);
+                DEV && console.log(`097 RAISE ERROR`);
                 context.report({
                   ...errorObj,
                   ruleId: "attribute-validate-size",
                 });
               });
             } else if (["font", "basefont"].includes(node.parent.tagName)) {
-              console.log(`097 validate font/basefont tag's size`);
+              DEV && console.log(`104 validate font/basefont tag's size`);
               if (!extractedVal.match(fontSizeRegex)) {
                 let errorArr2 = validateDigitAndUnit(
                   extractedVal,
@@ -122,7 +129,7 @@ function attributeValidateSize(context: Linter): RuleObjType {
                 }
 
                 errorArr2.forEach((errorObj) => {
-                  console.log(`125 RAISE ERROR`);
+                  DEV && console.log(`132 RAISE ERROR`);
                   context.report({
                     ...errorObj,
                     ruleId: "attribute-validate-size",

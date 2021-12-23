@@ -6,15 +6,24 @@ import { ErrorObj } from "../../util/commonTypes";
 
 import { validateString } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateAlign(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateAlign() ███████████████████████████████████████`
-      );
-      console.log(
-        `016 attributeValidateAlign(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateAlign() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `021 attributeValidateAlign(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "align") {
         // validate the parent
@@ -132,16 +141,17 @@ function attributeValidateAlign(context: Linter): RuleObjType {
           );
         }
 
-        console.log(
-          `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-            errorArr,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`144 RAISE ERROR`);
+          DEV && console.log(`154 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-align" });
         });
       }

@@ -2,6 +2,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 // find where is a given element located
 function binarySearch(el: number, arr: number[]): number {
   let m = 0;
@@ -43,13 +45,14 @@ function lineCol(
   line: number;
   col: number;
 } | null {
-  console.log(`046`);
+  DEV && console.log(`048`);
   if (
     !skipChecks &&
     ((!Array.isArray(input) && typeof input !== "string") ||
       ((typeof input === "string" || Array.isArray(input)) && !input.length))
   ) {
-    console.log(`052 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
+    DEV &&
+      console.log(`055 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
     return null;
   }
   if (
@@ -58,7 +61,8 @@ function lineCol(
       (typeof input === "string" && idx >= input.length) ||
       (Array.isArray(input) && idx + 1 >= input[input.length - 1]))
   ) {
-    console.log(`061 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
+    DEV &&
+      console.log(`065 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
     return null;
   }
 
@@ -66,21 +70,23 @@ function lineCol(
   if (typeof input === "string") {
     // not cached - calculate the line start indexes
     let startIndexesOfEachLine = getLineStartIndexes(input);
-    console.log(
-      `070 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startIndexesOfEachLine`}\u001b[${39}m`} = ${JSON.stringify(
-        startIndexesOfEachLine,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `075 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startIndexesOfEachLine`}\u001b[${39}m`} = ${JSON.stringify(
+          startIndexesOfEachLine,
+          null,
+          4
+        )}`
+      );
     let line = binarySearch(idx, startIndexesOfEachLine);
-    console.log(
-      `078 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
-        line,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `084 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+          line,
+          null,
+          4
+        )}`
+      );
     return {
       col: idx - startIndexesOfEachLine[line] + 1,
       line: line + 1,
@@ -89,13 +95,14 @@ function lineCol(
 
   // ELSE - cached line start indexes - we don't even need the string source!
   let line = binarySearch(idx, input);
-  console.log(
-    `093 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
-      line,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `100 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+        line,
+        null,
+        4
+      )}`
+    );
   return {
     col: idx - input[line] + 1,
     line: line + 1,

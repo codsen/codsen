@@ -1,6 +1,8 @@
+declare let DEV: boolean;
+
 // pings each line to the callback cb()
 function stringPingLineByLine(str: string, cb: (str2: string) => void): void {
-  // console.log(
+  // DEV && console.log(
   //   `004 ${`\u001b[${33}m${`█`}\u001b[${39}m`} stringPingLineByLine() called!`
   // );
   let start = null;
@@ -8,15 +10,16 @@ function stringPingLineByLine(str: string, cb: (str2: string) => void): void {
   for (let i = 0, len = str.length; i < len; i++) {
     if (["\n", "\r"].includes(str[i])) {
       if (start !== null) {
-        console.log(
-          `012 ${`\u001b[${33}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`PING`}\u001b[${39}m`} "${`\u001b[${36}m${str.slice(
-            start,
-            i
-          )}\u001b[${39}m`}"`
-        );
+        DEV &&
+          console.log(
+            `015 ${`\u001b[${33}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`PING`}\u001b[${39}m`} "${`\u001b[${36}m${str.slice(
+              start,
+              i
+            )}\u001b[${39}m`}"`
+          );
         cb(str.slice(start, i));
         start = null;
-        // console.log(
+        // DEV && console.log(
         //   `020 ${`\u001b[${33}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} start = null`
         // );
       }
@@ -24,7 +27,7 @@ function stringPingLineByLine(str: string, cb: (str2: string) => void): void {
     // not a linebreak character
     else if (start === null) {
       start = i;
-      // console.log(
+      // DEV && console.log(
       //   `028 ${`\u001b[${33}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} start = ${start}`
       // );
     }
@@ -32,12 +35,13 @@ function stringPingLineByLine(str: string, cb: (str2: string) => void): void {
     // if an end is reached, ping the remainder
     if (start !== null && !str[i + 1]) {
       cb(str.slice(start, i + 1));
-      console.log(
-        `036 ${`\u001b[${33}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`PING`}\u001b[${39}m`} "${str.slice(
-          start,
-          i + 1
-        )}"`
-      );
+      DEV &&
+        console.log(
+          `040 ${`\u001b[${33}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`PING`}\u001b[${39}m`} "${str.slice(
+            start,
+            i + 1
+          )}"`
+        );
     }
   }
 }
@@ -74,28 +78,31 @@ class Counter {
   }
 
   readLine(lineStr: string): void {
-    console.log(
-      !this.doNothing
-        ? `${`\u001b[${90}m${`======================================== readLine() start`}\u001b[${39}m`}`
-        : ""
-    );
+    DEV &&
+      console.log(
+        !this.doNothing
+          ? `${`\u001b[${90}m${`======================================== readLine() start`}\u001b[${39}m`}`
+          : ""
+      );
     // catch the --- to ...
     if (!this.doNothing && lineStr.trim() === "---") {
       this.doNothing = true;
       // this.canCount = false;
-      console.log(
-        `087 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.doNothing = ${
-          this.doNothing
-        }; this.canCount = ${this.canCount}`
-      );
+      DEV &&
+        console.log(
+          `093 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.doNothing = ${
+            this.doNothing
+          }; this.canCount = ${this.canCount}`
+        );
     }
     if (this.doNothing && lineStr.trim() === "...") {
       this.doNothing = false;
-      console.log(
-        `095 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.doNothing = ${
-          this.doNothing
-        }`
-      );
+      DEV &&
+        console.log(
+          `102 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.doNothing = ${
+            this.doNothing
+          }`
+        );
     }
     // catch the assertion result lines
     else if (!this.doNothing && this.canCount) {
@@ -105,89 +112,99 @@ class Counter {
       ) {
         if (lineStr.trim().startsWith("ok")) {
           this.total.assertsPassed += 1;
-          console.log(
-            `109 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${33}m${`this.total.assertsPassed`}\u001b[${39}m`} = ${
-              this.total.assertsPassed
-            }`
-          );
-        } else if (lineStr.trim().startsWith("not ok")) {
-          this.total.assertsFailed += 1;
-          console.log(
-            `116 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${33}m${`this.total.assertsFailed`}\u001b[${39}m`} = ${
-              this.total.assertsFailed
-            }`
-          );
-          if (!this.thereWereFailuresInThisSuite) {
-            this.thereWereFailuresInThisSuite = true;
+          DEV &&
             console.log(
-              `123 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${31}m${`this.thereWereFailuresInThisSuite`}\u001b[${39}m`} = ${
-                this.thereWereFailuresInThisSuite
+              `117 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${33}m${`this.total.assertsPassed`}\u001b[${39}m`} = ${
+                this.total.assertsPassed
               }`
             );
+        } else if (lineStr.trim().startsWith("not ok")) {
+          this.total.assertsFailed += 1;
+          DEV &&
+            console.log(
+              `125 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${33}m${`this.total.assertsFailed`}\u001b[${39}m`} = ${
+                this.total.assertsFailed
+              }`
+            );
+          if (!this.thereWereFailuresInThisSuite) {
+            this.thereWereFailuresInThisSuite = true;
+            DEV &&
+              console.log(
+                `133 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${31}m${`this.thereWereFailuresInThisSuite`}\u001b[${39}m`} = ${
+                  this.thereWereFailuresInThisSuite
+                }`
+              );
           }
         }
 
         this.total.assertsTotal += 1;
-        console.log(
-          `132 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${33}m${`this.total.assertsTotal`}\u001b[${39}m`} = ${
-            this.total.assertsTotal
-          }`
-        );
+        DEV &&
+          console.log(
+            `143 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${33}m${`this.total.assertsTotal`}\u001b[${39}m`} = ${
+              this.total.assertsTotal
+            }`
+          );
       } else {
         this.canCount = false;
-        console.log(
-          `139 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${31}m${`this.canCount`}\u001b[${39}m`} = ${
-            this.canCount
-          }`
-        );
+        DEV &&
+          console.log(
+            `151 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} ${`\u001b[${31}m${`this.canCount`}\u001b[${39}m`} = ${
+              this.canCount
+            }`
+          );
       }
     }
 
     // if { is on a separate line, bump the suite count and reset the this.thereWereFailuresInThisSuite
     if (!this.doNothing && lineStr.trim() === "{") {
-      console.log(
-        `149 ${`\u001b[${35}m${`█`}\u001b[${39}m`} NEW SUITE'S OPENING CURLIE CAUGHT`
-      );
+      DEV &&
+        console.log(
+          `162 ${`\u001b[${35}m${`█`}\u001b[${39}m`} NEW SUITE'S OPENING CURLIE CAUGHT`
+        );
       this.total.suitesTotal += 1;
 
       if (this.thereWereFailuresInThisSuite !== null) {
         // second suite onwards already has a gathered result
         if (this.thereWereFailuresInThisSuite) {
           this.total.suitesFailed += 1;
-          console.log(
-            `158 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = ${
-              this.total.suitesFailed
-            }`
-          );
+          DEV &&
+            console.log(
+              `172 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = ${
+                this.total.suitesFailed
+              }`
+            );
         } else {
           this.total.suitesPassed += 1;
-          console.log(
-            `165 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = ${
-              this.total.suitesPassed
-            }`
-          );
+          DEV &&
+            console.log(
+              `180 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = ${
+                this.total.suitesPassed
+              }`
+            );
         }
       }
 
       // reset:
       this.thereWereFailuresInThisSuite = false;
 
-      console.log(
-        `176 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = ${
-          this.total.suitesTotal
-        }; this.thereWereFailuresInThisSuite = false`
-      );
+      DEV &&
+        console.log(
+          `192 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = ${
+            this.total.suitesTotal
+          }; this.thereWereFailuresInThisSuite = false`
+        );
     }
 
     // "# Subtest" opens the gates
     let magicKeyw = "# Subtest";
     if (!this.doNothing && !this.canCount && lineStr.includes(magicKeyw)) {
       this.canCount = true;
-      console.log(
-        `187 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.canCount = ${
-          this.canCount
-        }`
-      );
+      DEV &&
+        console.log(
+          `204 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.canCount = ${
+            this.canCount
+          }`
+        );
 
       // if suite's opening curlie is on the same line, for example:
       //
@@ -196,122 +213,137 @@ class Counter {
       // then bump the suite count
       if (lineStr.slice(0, lineStr.indexOf(magicKeyw)).trim().endsWith("{")) {
         this.total.suitesTotal += 1;
-        console.log(
-          `200 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = ${
-            this.total.suitesTotal
-          }`
-        );
+        DEV &&
+          console.log(
+            `218 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = ${
+              this.total.suitesTotal
+            }`
+          );
 
         // we must skip the first opening curlies and count suite passing
         // for all others
         if (this.thereWereFailuresInThisSuite === null) {
           // if it's first suite's opening curlie
           this.thereWereFailuresInThisSuite = false;
-          console.log(
-            `211 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.thereWereFailuresInThisSuite = ${
-              this.thereWereFailuresInThisSuite
-            }`
-          );
+          DEV &&
+            console.log(
+              `230 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.thereWereFailuresInThisSuite = ${
+                this.thereWereFailuresInThisSuite
+              }`
+            );
         } else if (this.thereWereFailuresInThisSuite) {
           this.total.suitesFailed += 1;
           this.thereWereFailuresInThisSuite = false;
-          console.log(
-            `219 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = ${
-              this.total.suitesFailed
-            }; this.thereWereFailuresInThisSuite = ${
-              this.thereWereFailuresInThisSuite
-            }`
-          );
+          DEV &&
+            console.log(
+              `239 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = ${
+                this.total.suitesFailed
+              }; this.thereWereFailuresInThisSuite = ${
+                this.thereWereFailuresInThisSuite
+              }`
+            );
         } else {
           this.total.suitesPassed += 1;
-          console.log(
-            `228 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = ${
-              this.total.suitesPassed
-            }`
-          );
+          DEV &&
+            console.log(
+              `249 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = ${
+                this.total.suitesPassed
+              }`
+            );
         }
       }
     }
 
-    console.log(
-      !this.doNothing
-        ? `${`\u001b[${90}m${`---------------------------------------- readLine() end`}\u001b[${39}m`}`
-        : ""
-    );
-    console.log(
-      !this.doNothing
-        ? `${`\u001b[${90}m${`this.canCount:`}\u001b[${39}m`} ${`\u001b[${
-            this.canCount ? 32 : 31
-          }m${this.canCount}\u001b[${39}m`}`
-        : ""
-    );
-    console.log(
-      !this.doNothing
-        ? `${`\u001b[${90}m${`this.doNothing:`}\u001b[${39}m`} ${`\u001b[${
-            this.doNothing ? 32 : 31
-          }m${this.doNothing}\u001b[${39}m`}`
-        : ""
-    );
-    console.log(
-      !this.doNothing
-        ? `${`\u001b[${90}m${`this.thereWereFailuresInThisSuite:`}\u001b[${39}m`} ${`\u001b[${
-            this.thereWereFailuresInThisSuite ? 32 : 31
-          }m${this.thereWereFailuresInThisSuite}\u001b[${39}m`}`
-        : ""
-    );
-    console.log(
-      !this.doNothing
-        ? `${`\u001b[${90}m${`this.total:`}\u001b[${39}m`} ${`\u001b[${90}m${JSON.stringify(
-            this.total,
-            null,
-            0
-          )}\u001b[${39}m`}`
-        : ""
-    );
+    DEV &&
+      console.log(
+        !this.doNothing
+          ? `${`\u001b[${90}m${`---------------------------------------- readLine() end`}\u001b[${39}m`}`
+          : ""
+      );
+    DEV &&
+      console.log(
+        !this.doNothing
+          ? `${`\u001b[${90}m${`this.canCount:`}\u001b[${39}m`} ${`\u001b[${
+              this.canCount ? 32 : 31
+            }m${this.canCount}\u001b[${39}m`}`
+          : ""
+      );
+    DEV &&
+      console.log(
+        !this.doNothing
+          ? `${`\u001b[${90}m${`this.doNothing:`}\u001b[${39}m`} ${`\u001b[${
+              this.doNothing ? 32 : 31
+            }m${this.doNothing}\u001b[${39}m`}`
+          : ""
+      );
+    DEV &&
+      console.log(
+        !this.doNothing
+          ? `${`\u001b[${90}m${`this.thereWereFailuresInThisSuite:`}\u001b[${39}m`} ${`\u001b[${
+              this.thereWereFailuresInThisSuite ? 32 : 31
+            }m${this.thereWereFailuresInThisSuite}\u001b[${39}m`}`
+          : ""
+      );
+    DEV &&
+      console.log(
+        !this.doNothing
+          ? `${`\u001b[${90}m${`this.total:`}\u001b[${39}m`} ${`\u001b[${90}m${JSON.stringify(
+              this.total,
+              null,
+              0
+            )}\u001b[${39}m`}`
+          : ""
+      );
   }
 
   getTotal(): Total {
     if (this.thereWereFailuresInThisSuite) {
       this.total.suitesFailed += 1;
       this.thereWereFailuresInThisSuite = false;
-      console.log(
-        `278 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} this.total.suitesFailed = ${
-          this.total.suitesFailed
-        }; this.thereWereFailuresInThisSuite = ${
-          this.thereWereFailuresInThisSuite
-        }`
-      );
+      DEV &&
+        console.log(
+          `305 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} this.total.suitesFailed = ${
+            this.total.suitesFailed
+          }; this.thereWereFailuresInThisSuite = ${
+            this.thereWereFailuresInThisSuite
+          }`
+        );
     } else if (this.total.suitesTotal) {
       this.total.suitesPassed += 1;
     }
 
     if (!this.total.suitesTotal && this.total.assertsTotal) {
-      console.log(
-        `290 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${36}m${`SUITE TOTALS ARE ZERO, LET'S FIX THIS`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `318 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${36}m${`SUITE TOTALS ARE ZERO, LET'S FIX THIS`}\u001b[${39}m`}`
+        );
       this.total.suitesTotal = 1;
-      console.log(
-        `294 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = 1`
-      );
+      DEV &&
+        console.log(
+          `323 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = 1`
+        );
       if (this.thereWereFailuresInThisSuite) {
         this.total.suitesFailed = 1;
-        console.log(
-          `299 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = 1`
-        );
+        DEV &&
+          console.log(
+            `329 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = 1`
+          );
       } else {
         this.total.suitesPassed = 1;
-        console.log(
-          `304 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = 1`
-        );
+        DEV &&
+          console.log(
+            `335 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = 1`
+          );
       }
     }
-    console.log(
-      `309 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}:\n${JSON.stringify(
-        this.total,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `341 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}:\n${JSON.stringify(
+          this.total,
+          null,
+          4
+        )}`
+      );
     return { ...this.total };
   }
 }

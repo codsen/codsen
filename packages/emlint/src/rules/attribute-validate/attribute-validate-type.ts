@@ -7,16 +7,21 @@ import { Linter, RuleObjType } from "../../linter";
 
 import { validateString } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateType(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateType() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateType() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `018 attributeValidateType(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `023 attributeValidateType(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "type") {
         // validate the parent
@@ -90,7 +95,7 @@ function attributeValidateType(context: Linter): RuleObjType {
               noSpaceAfterComma: false,
             }
           ).forEach((errorObj) => {
-            console.log(`093 RAISE ERROR`);
+            DEV && console.log(`098 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-type",
@@ -117,7 +122,7 @@ function attributeValidateType(context: Linter): RuleObjType {
               noSpaceAfterComma: false,
             }
           ).forEach((errorObj) => {
-            console.log(`120 RAISE ERROR`);
+            DEV && console.log(`125 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-type",
@@ -143,7 +148,7 @@ function attributeValidateType(context: Linter): RuleObjType {
               noSpaceAfterComma: false,
             }
           ).forEach((errorObj) => {
-            console.log(`146 RAISE ERROR`);
+            DEV && console.log(`151 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-type",
@@ -160,7 +165,7 @@ function attributeValidateType(context: Linter): RuleObjType {
               noSpaceAfterComma: false,
             }
           ).forEach((errorObj) => {
-            console.log(`163 RAISE ERROR`);
+            DEV && console.log(`168 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-type",
@@ -177,7 +182,7 @@ function attributeValidateType(context: Linter): RuleObjType {
               noSpaceAfterComma: false,
             }
           ).forEach((errorObj) => {
-            console.log(`180 RAISE ERROR`);
+            DEV && console.log(`185 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-type",
@@ -194,7 +199,7 @@ function attributeValidateType(context: Linter): RuleObjType {
               noSpaceAfterComma: false,
             }
           ).forEach((errorObj) => {
-            console.log(`197 RAISE ERROR`);
+            DEV && console.log(`202 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-type",

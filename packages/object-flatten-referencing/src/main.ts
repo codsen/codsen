@@ -66,8 +66,8 @@ function flattenReferencing(
     joinArraysUsingBrs = true,
     currentRoot = ""
   ): string {
-    // console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
-    // console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
+    // DEV && console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
+    // DEV && console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
     let input = clone(originalInput);
     let reference = clone(originalReference);
 
@@ -79,7 +79,7 @@ function flattenReferencing(
       Object.keys(input).forEach((key) => {
         let currentPath =
           currentRoot + (currentRoot.length === 0 ? key : `.${key}`);
-        // console.log(`* currentPath = ${JSON.stringify(currentPath, null, 4)}\n\n`)
+        // DEV && console.log(`* currentPath = ${JSON.stringify(currentPath, null, 4)}\n\n`)
         if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true; // reset it for the new key.

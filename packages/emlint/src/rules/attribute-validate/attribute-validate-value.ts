@@ -6,14 +6,18 @@ import { Linter, RuleObjType } from "../../linter";
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 import checkForWhitespace from "../../util/checkForWhitespace";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateValue(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateValue() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateValue() ███████████████████████████████████████`
+        );
 
-      // console.log(
+      // DEV && console.log(
       //   `015 attributeValidateValue(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -47,7 +51,7 @@ function attributeValidateValue(context: Linter): RuleObjType {
               customPxMessage: `Sequence number should not be in pixels.`,
             }
           ).forEach((errorObj) => {
-            console.log(`050 RAISE ERROR`);
+            DEV && console.log(`054 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-value",
@@ -61,7 +65,7 @@ function attributeValidateValue(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`064 RAISE ERROR`);
+            DEV && console.log(`068 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-value",

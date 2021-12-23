@@ -2,6 +2,9 @@ import { Linter, RuleObjType } from "../../linter";
 import { ErrorObj } from "../../util/commonTypes";
 import validateVoid from "../../util/validateVoid";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-readonly
 // -----------------------------------------------------------------------------
 
@@ -11,23 +14,26 @@ function attributeValidateReadonly(
 ): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateReadonly() ███████████████████████████████████████`
-      );
-      console.log(
-        `${`\u001b[${33}m${`mode`}\u001b[${39}m`} = ${JSON.stringify(
-          mode,
-          null,
-          4
-        )}`
-      );
-      console.log(
-        `025 attributeValidateReadonly(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateReadonly() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `${`\u001b[${33}m${`mode`}\u001b[${39}m`} = ${JSON.stringify(
+            mode,
+            null,
+            4
+          )}`
+        );
+      DEV &&
+        console.log(
+          `031 attributeValidateReadonly(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       let errorArr: ErrorObj[] = [];
 
@@ -51,7 +57,7 @@ function attributeValidateReadonly(
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`054 RAISE ERROR`);
+            DEV && console.log(`060 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-readonly",

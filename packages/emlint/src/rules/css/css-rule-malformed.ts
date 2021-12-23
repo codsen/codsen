@@ -1,5 +1,8 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateStyle from "../../../src/util/validateStyle";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
 // import { Property } from "../../../../codsen-tokenizer/src/util/util";
 // import { Range } from "../../../../../scripts/common";
 
@@ -17,16 +20,18 @@ interface CSSRuleMalformed {
 const cssRuleMalformed: CSSRuleMalformed = (context) => {
   return {
     rule(node) {
-      console.log(
-        `███████████████████████████████████████ cssRuleMalformed() ███████████████████████████████████████`
-      );
-      console.log(
-        `024 cssRuleMalformed(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ cssRuleMalformed() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `029 cssRuleMalformed(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (Array.isArray(node.properties) && node.properties.length) {
         // validateStyle() will report errors into context directly
@@ -39,9 +44,10 @@ const cssRuleMalformed: CSSRuleMalformed = (context) => {
         );
       }
 
-      console.log(
-        `043 ${`\u001b[${32}m${`END of css-rule-malformed`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `049 ${`\u001b[${32}m${`END of css-rule-malformed`}\u001b[${39}m`}`
+        );
     },
   };
 };

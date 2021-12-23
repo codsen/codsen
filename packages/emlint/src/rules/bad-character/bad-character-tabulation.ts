@@ -3,6 +3,9 @@ import { leftStopAtNewLines } from "string-left-right";
 import { Linter, RuleObjType } from "../../linter";
 import { badChars } from "../../util/bad-character-all";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: bad-character-tabulation
 // -----------------------------------------------------------------------------
 
@@ -16,13 +19,14 @@ const badCharacterTabulation: BadCharacterTabulation = (
   context,
   ...originalOpts
 ) => {
-  console.log(
-    `${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
-      originalOpts,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+        originalOpts,
+        null,
+        4
+      )}`
+    );
 
   // indentation tabs might be OK, check config.
   // tabs between text not OK.

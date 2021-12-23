@@ -4,6 +4,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 interface UnknownValueObj {
   [key: string]: any;
 }
@@ -49,36 +51,40 @@ function generateAst(
   let res = {};
 
   input.forEach((arr) => {
-    console.log(
-      `${`\u001b[${36}m${`================================================ ${arr}`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `${`\u001b[${36}m${`================================================ ${arr}`}\u001b[${39}m`}`
+      );
 
     let temp = null;
     for (let i = arr.length; i--; ) {
-      console.log(arr[i]);
+      DEV && console.log(arr[i]);
       temp = { [arr[i]]: [temp] }; // uses ES6 computed property names
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names
     }
     res = mergeAdvanced(res, temp, { concatInsteadOfMerging: !opts.dedupe });
-    console.log(
-      `${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
-        temp,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+          temp,
+          null,
+          4
+        )}`
+      );
 
-    console.log(
-      `${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
-        res,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+          res,
+          null,
+          4
+        )}`
+      );
   });
-  console.log(
-    `\u001b[${36}m${`================================================`}\u001b[${39}m\n\n`
-  );
+  DEV &&
+    console.log(
+      `\u001b[${36}m${`================================================`}\u001b[${39}m\n\n`
+    );
   return sortObject(res);
 }
 

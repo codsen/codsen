@@ -32,6 +32,9 @@ const state = {
 // 1. Read package.json in the root where this script was called
 
 const packageJson = JSON.parse(await fs.readFile("package.json", "utf8"));
+const rootPackageJSON = JSON.parse(
+  await fs.readFile(path.resolve("../../package.json"), "utf8")
+);
 state.pack = packageJson;
 state.root = path.resolve("./");
 
@@ -62,7 +65,7 @@ if (state.isRollup) {
     ).str;
   } catch (e) {
     console.log(
-      `065 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}: ${e}`
+      `068 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}: ${e}`
     );
   }
 }
@@ -78,7 +81,7 @@ await Promise.all([
   // delete bad files
   Promise.resolve(hardDelete({ lectrc })),
   // write package.json
-  Promise.resolve(pack({ state, lectrc })),
+  Promise.resolve(pack({ state, lectrc, rootPackageJSON })),
   // write .npmignore
   Promise.resolve(npmIgnore({ state, lectrc })),
   // write rollup.config.js
@@ -88,6 +91,6 @@ await Promise.all([
   // TBC - write ./.semaphore/semaphore.yml
   // Promise.resolve(semaphore({ state })),
 ]).catch((e) => {
-  console.log(`091 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
+  console.log(`094 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
   process.exit(1);
 });

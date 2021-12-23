@@ -11,7 +11,7 @@ function startsHtmlComment(
   token: Token,
   layers: Layer[]
 ): boolean {
-  // console.log(
+  // DEV && console.log(
   //   `R1: ${!!matchRight(str, i, ["!--"], {
   //     maxMismatches: 1,
   //     firstMustMatch: true, // <--- FUZZY MATCH, BUT EXCL. MARK IS OBLIGATORY
@@ -23,15 +23,15 @@ function startsHtmlComment(
   //       trimBeforeMatching: true
   //     })}`
   // );
-  // console.log(
+  // DEV && console.log(
   //   `R2: ${!matchRight(str, i, ["![cdata", "<"], {
   //     i: true,
   //     maxMismatches: 1,
   //     trimBeforeMatching: true
   //   })}`
   // );
-  // console.log(`R3: ${!!(token.type !== "comment" || token.kind !== "not")}`);
-  // console.log(
+  // DEV && console.log(`R3: ${!!(token.type !== "comment" || token.kind !== "not")}`);
+  // DEV && console.log(
   //   `R3*: ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${JSON.stringify(
   //     token.kind,
   //     null,

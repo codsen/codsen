@@ -5,14 +5,18 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateColspan(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateColspan() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateColspan() ███████████████████████████████████████`
+        );
 
-      // console.log(
+      // DEV && console.log(
       //   `015 attributeValidateColspan(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -37,12 +41,13 @@ function attributeValidateColspan(context: Linter): RuleObjType {
             customGenericValueError: "Should be integer, no units.",
           }
         );
-        console.log(
-          `041 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
+        DEV &&
+          console.log(
+            `046 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`045 RAISE ERROR`);
+          DEV && console.log(`050 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-colspan" });
         });
       }

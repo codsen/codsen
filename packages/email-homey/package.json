@@ -58,11 +58,7 @@
         ""
       ]
     },
-    "various": {
-      "devDependencies": [
-        "@types/lodash.uniq"
-      ]
-    }
+    "various": {}
   },
   "dependencies": {
     "chalk": "^4.1.2",

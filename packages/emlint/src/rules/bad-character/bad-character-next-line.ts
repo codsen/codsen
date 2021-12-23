@@ -1,6 +1,9 @@
 import { Linter, RuleObjType } from "../../linter";
 import { badChars } from "../../util/bad-character-all";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: bad-character-next-line
 // -----------------------------------------------------------------------------
 

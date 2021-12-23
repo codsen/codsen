@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onreset
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnreset(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnreset() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnreset() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnreset(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnreset(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onreset") {
         // validate the parent
@@ -47,16 +52,17 @@ function attributeValidateOnreset(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `051 attributeValidateOnreset(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `057 attributeValidateOnreset(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`059 attributeValidateOnreset(): RAISE ERROR`);
+            DEV && console.log(`065 attributeValidateOnreset(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onreset",

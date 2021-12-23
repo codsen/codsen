@@ -4,15 +4,8 @@ import camelCase from "lodash.camelcase";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
-const mode = process.env.MODE;
 const name = path.basename(path.resolve("./"));
 const pkg = require(path.join(path.resolve("./"), `package.json`));
-
-// pure here means they can be removed if unused (if minifying is on, of course)
-const pure =
-  mode === "dev"
-    ? []
-    : ["console.log", "console.time", "console.timeEnd", "console.timeLog"];
 
 // bundle, but set dependencies as external
 const external = [
@@ -39,11 +32,12 @@ if (pkg.exports && (typeof pkg.exports === "string" || pkg.exports.default)) {
     platform: "node",
     format: "esm",
     bundle: true,
-    minify: mode !== "dev", //false //
+    define: { DEV: !!process.env.DEV },
+    minify: !process.env.DEV,
     sourcemap: false,
     target: ["esnext"],
     outfile: path.join(path.resolve("./"), `dist/${name}.esm.js`),
-    pure,
+    // pure,
     banner,
     external,
   });
@@ -56,11 +50,12 @@ if (pkg.exports && pkg.exports.script) {
     format: "iife",
     globalName: camelCase(name),
     bundle: true,
-    minify: !mode,
+    define: { DEV: !!process.env.DEV },
+    minify: !process.env.DEV,
     sourcemap: false,
     target: ["chrome58"],
     outfile: path.join(path.resolve("./"), `dist/${name}.umd.js`),
-    pure,
+    // pure,
     banner,
     // no "external" - bundle everything
   });

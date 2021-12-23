@@ -6,14 +6,18 @@ import { ErrorObj } from "../../util/commonTypes";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateRows(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateRows() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateRows() ███████████████████████████████████████`
+        );
 
-      // console.log(
+      // DEV && console.log(
       //   `015 attributeValidateRows(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -29,13 +33,14 @@ function attributeValidateRows(context: Linter): RuleObjType {
           });
         }
 
-        console.log(
-          `033 attributeValidateRows(): ${`\u001b[${33}m${`node.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
-            node.attribValueRaw,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `038 attributeValidateRows(): ${`\u001b[${33}m${`node.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueRaw,
+              null,
+              4
+            )}`
+          );
 
         let errorArr: ErrorObj[] = [];
         // if value is empty or otherwise does not exist
@@ -61,13 +66,14 @@ function attributeValidateRows(context: Linter): RuleObjType {
               customGenericValueError: "Should be: pixels|%|*.",
             }
           );
-          console.log(
-            `065 attributeValidateRows(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `071 attributeValidateRows(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
         } else if (node.parent.tagName === "textarea") {
           // each character must be a digit
           errorArr = validateDigitAndUnit(
@@ -79,18 +85,19 @@ function attributeValidateRows(context: Linter): RuleObjType {
               customGenericValueError: "Should be integer, no units.",
             }
           );
-          console.log(
-            `083 attributeValidateRows(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `090 attributeValidateRows(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
         }
 
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`093 RAISE ERROR`);
+            DEV && console.log(`100 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-rows" });
           });
         }

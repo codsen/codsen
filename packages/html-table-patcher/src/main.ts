@@ -6,6 +6,8 @@ import { traverse } from "ast-monkey-traverse-with-lookahead";
 import { version as v } from "../package.json";
 
 const version: string = v;
+
+declare let DEV: boolean;
 const htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 
 const ranges = new Ranges();
@@ -57,13 +59,14 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
     opts.cssStylesContent = "";
   }
 
-  console.log(
-    `061 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `064 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
 
   // the bizness
   // ---------------------------------------------------------------------------
@@ -78,7 +81,10 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
   // and of the known comment token paths:
   let knownCommentTokenPaths: string[] = [];
 
-  console.log(`081 ${`\u001b[${36}m${`COMMENCE THE TRAVERSE`}\u001b[${39}m`}`);
+  DEV &&
+    console.log(
+      `086 ${`\u001b[${36}m${`COMMENCE THE TRAVERSE`}\u001b[${39}m`}`
+    );
   traverse(cparser(str), (token, _val, innerObj) => {
     /* istanbul ignore else */
     if (
@@ -111,11 +117,12 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
       )
     ) {
       // so this table does have some text nodes straight inside TABLE tag
-      console.log(
-        `115 ${`\u001b[${32}m${`TABLE caught!`}\u001b[${39}m`} Path: ${
-          innerObj.path
-        }`
-      );
+      DEV &&
+        console.log(
+          `122 ${`\u001b[${32}m${`TABLE caught!`}\u001b[${39}m`} Path: ${
+            innerObj.path
+          }`
+        );
 
       // find out how many TD's are there on TR's that have TD's (if any exist)
       // then, that value, if greater then 1 will be the colspan value -
@@ -139,8 +146,8 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
             (firstTrFound = childNodeObj)
         )
       ) {
-        console.log(`142 ${`\u001b[${32}m${`TR`}\u001b[${39}m`} found`);
-        // console.log(
+        DEV && console.log(`149 ${`\u001b[${32}m${`TR`}\u001b[${39}m`} found`);
+        // DEV && console.log(
         //   `108 ${`\u001b[${33}m${`firstTrFound`}\u001b[${39}m`} = ${JSON.stringify(
         //     firstTrFound,
         //     null,
@@ -154,7 +161,7 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
 
         let count = 0;
 
-        // console.log(
+        // DEV && console.log(
         //   `132 FILTER ${`\u001b[${33}m${`firstTrFound.children`}\u001b[${39}m`} = ${JSON.stringify(
         //     firstTrFound.children,
         //     null,
@@ -167,7 +174,7 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
           i++
         ) {
           let obj = (firstTrFound as any).children[i];
-          // console.log(
+          // DEV && console.log(
           //   `141 ---------------- ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
           //     obj,
           //     null,
@@ -200,7 +207,7 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
             count = 0;
           }
 
-          // console.log(
+          // DEV && console.log(
           //   `174 ${`\u001b[${33}m${`count`}\u001b[${39}m`} = ${JSON.stringify(
           //     count,
           //     null,
@@ -210,13 +217,14 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
         }
       }
 
-      console.log(
-        `214 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`colspanVal`}\u001b[${39}m`} = ${JSON.stringify(
-          colspanVal,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `222 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`colspanVal`}\u001b[${39}m`} = ${JSON.stringify(
+            colspanVal,
+            null,
+            4
+          )}`
+        );
 
       //
       //
@@ -227,11 +235,12 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
       //
       // -----------------------------------------------------------------------------
 
-      console.log(" ");
-      console.log(
-        `232                        ${`\u001b[${35}m${`TYPE I.`}\u001b[${39}m`}`
-      );
-      console.log(" ");
+      DEV && console.log(" ");
+      DEV &&
+        console.log(
+          `241                        ${`\u001b[${35}m${`TYPE I.`}\u001b[${39}m`}`
+        );
+      DEV && console.log(" ");
 
       // now filter all "text" type children nodes from this TABLE tag
       // this key below is the table tag we filtered in the beginning
@@ -242,24 +251,27 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
         )
         // wrap each with TR+TD with colspan:
         .forEach((obj: Obj) => {
-          console.log(
-            `246 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TABLE`}\u001b[${39}m`} --------------------`
-          );
-          console.log(
-            `249 text node, ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
-              obj,
-              null,
-              4
-            )}`
-          );
-          console.log(" ");
-          console.log(
-            `257 ${
-              obj.value.trim()
-                ? `${`\u001b[${32}m${`this one needs wrapping`}\u001b[${39}m`}`
-                : `${`\u001b[${31}m${`this one does not need wrapping`}\u001b[${39}m`}`
-            }`
-          );
+          DEV &&
+            console.log(
+              `256 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TABLE`}\u001b[${39}m`} --------------------`
+            );
+          DEV &&
+            console.log(
+              `260 text node, ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+                obj,
+                null,
+                4
+              )}`
+            );
+          DEV && console.log(" ");
+          DEV &&
+            console.log(
+              `269 ${
+                obj.value.trim()
+                  ? `${`\u001b[${32}m${`this one needs wrapping`}\u001b[${39}m`}`
+                  : `${`\u001b[${31}m${`this one does not need wrapping`}\u001b[${39}m`}`
+              }`
+            );
           if (obj.value.replace(htmlCommentRegex, "").trim()) {
             // There will always be whitespace in nicely formatted tags,
             // so ignore text tokens which have values that trim to zero length.
@@ -291,11 +303,12 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
       //
       // -----------------------------------------------------------------------------
 
-      console.log(" ");
-      console.log(
-        `296                        ${`\u001b[${35}m${`TYPE II.`}\u001b[${39}m`}`
-      );
-      console.log(" ");
+      DEV && console.log(" ");
+      DEV &&
+        console.log(
+          `309                        ${`\u001b[${35}m${`TYPE II.`}\u001b[${39}m`}`
+        );
+      DEV && console.log(" ");
 
       (token as Obj).children
         // filter out text nodes:
@@ -304,7 +317,7 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
             obj.type === "tag" && obj.tagName === "tr" && !obj.closing
         )
         .forEach((trTag: Obj) => {
-          // console.log(
+          // DEV && console.log(
           //   `224 ██ ${`\u001b[${33}m${`trTag`}\u001b[${39}m`} = ${JSON.stringify(
           //     trTag,
           //     null,
@@ -317,9 +330,10 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
 
           let doNothing = false;
           for (let i = 0, len = trTag.children.length; i < len; i++) {
-            console.log(
-              `321 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TR`}\u001b[${39}m`} --------------------`
-            );
+            DEV &&
+              console.log(
+                `335 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TR`}\u001b[${39}m`} --------------------`
+              );
             let childNodeObj = trTag.children[i];
 
             // deactivate
@@ -347,36 +361,40 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
               ["text", "esp"].includes(childNodeObj.type) &&
               childNodeObj.value.trim()
             ) {
-              console.log(
-                `351 ██ ${`\u001b[${33}m${`childNodeObj`}\u001b[${39}m`} = ${JSON.stringify(
-                  childNodeObj,
-                  null,
-                  4
-                )}`
-              );
-
-              console.log(" ");
-              console.log(
-                `360 ${
-                  childNodeObj.value.trim()
-                    ? `${`\u001b[${32}m${`this one needs wrapping`}\u001b[${39}m`}`
-                    : `${`\u001b[${31}m${`this one does not need wrapping`}\u001b[${39}m`}`
-                }`
-              );
-              if (childNodeObj.value.trim()) {
-                // There will always be whitespace in nicely formatted tags,
-                // so ignore text tokens which have values that trim to zero length.
-
+              DEV &&
                 console.log(
-                  `371 ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
-                    i,
+                  `366 ██ ${`\u001b[${33}m${`childNodeObj`}\u001b[${39}m`} = ${JSON.stringify(
+                    childNodeObj,
                     null,
                     4
                   )}`
                 );
 
+              DEV && console.log(" ");
+              DEV &&
+                console.log(
+                  `376 ${
+                    childNodeObj.value.trim()
+                      ? `${`\u001b[${32}m${`this one needs wrapping`}\u001b[${39}m`}`
+                      : `${`\u001b[${31}m${`this one does not need wrapping`}\u001b[${39}m`}`
+                  }`
+                );
+              if (childNodeObj.value.trim()) {
+                // There will always be whitespace in nicely formatted tags,
+                // so ignore text tokens which have values that trim to zero length.
+
+                DEV &&
+                  console.log(
+                    `388 ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
+                      i,
+                      null,
+                      4
+                    )}`
+                  );
+
                 if (!i) {
-                  console.log(`379 it's the first element, so TR is behind`);
+                  DEV &&
+                    console.log(`397 it's the first element, so TR is behind`);
                   ranges.push(
                     childNodeObj.start,
                     childNodeObj.end,
@@ -389,7 +407,10 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
                     }>\n    ${childNodeObj.value.trim()}\n  </td>\n</tr>\n<tr>\n`
                   );
                 } else if (i && len > 1 && i === len - 1) {
-                  console.log(`392 it's the last element, closing TR is next`);
+                  DEV &&
+                    console.log(
+                      `412 it's the last element, closing TR is next`
+                    );
                   ranges.push(
                     childNodeObj.start,
                     childNodeObj.end,
@@ -402,7 +423,7 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
                     }>\n    ${childNodeObj.value.trim()}\n  </td>\n`
                   );
                 } else {
-                  console.log(`405 the previous tag was TD`);
+                  DEV && console.log(`426 the previous tag was TD`);
                   ranges.push(
                     childNodeObj.start,
                     childNodeObj.end,
@@ -420,29 +441,32 @@ function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
           }
         });
 
-      console.log(
-        `424 ---------------------------- ${`\u001b[${32}m${`DONE`}\u001b[${39}m`} ----------------------------`
-      );
+      DEV &&
+        console.log(
+          `446 ---------------------------- ${`\u001b[${32}m${`DONE`}\u001b[${39}m`} ----------------------------`
+        );
     }
   });
 
-  console.log(
-    `430 after traversal, ${`\u001b[${33}m${`knownCommentTokenPaths`}\u001b[${39}m`} = ${JSON.stringify(
-      knownCommentTokenPaths,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `453 after traversal, ${`\u001b[${33}m${`knownCommentTokenPaths`}\u001b[${39}m`} = ${JSON.stringify(
+        knownCommentTokenPaths,
+        null,
+        4
+      )}`
+    );
 
-  console.log(" ");
-  console.log(`438 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  DEV && console.log(" ");
+  DEV && console.log(`461 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
 
   if (ranges.current()) {
     let result = rApply(str, ranges.current());
     ranges.wipe();
-    console.log(
-      `444 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${result}`
-    );
+    DEV &&
+      console.log(
+        `468 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${result}`
+      );
     return { result };
   }
 

@@ -3,18 +3,23 @@ import { isLangCode } from "is-language-code";
 import { Linter, RuleObjType } from "../../linter";
 import checkForWhitespace from "../../util/checkForWhitespace";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-lang
 // -----------------------------------------------------------------------------
 
 function attributeValidateLang(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateLang() ███████████████████████████████████████`
-      );
-      console.log(
-        `016 attributeValidateLang(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateLang() ███████████████████████████████████████`
+        );
+      DEV &&
+        console.log(
+          `021 attributeValidateLang(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "lang") {
         // validate the parent
@@ -47,35 +52,38 @@ function attributeValidateLang(context: Linter): RuleObjType {
           node.attribValueRaw,
           node.attribValueStartsAt as number
         );
-        console.log(
-          `051 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
-            charStart,
-            null,
-            4
-          )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
-            charEnd,
-            null,
-            4
-          )}`
-        );
-        console.log(
-          `062 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-            errorArr,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `057 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+              charStart,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+              charEnd,
+              null,
+              4
+            )}`
+          );
+        DEV &&
+          console.log(
+            `069 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         // validate using "is-language-code" from npm:
         let { message } = isLangCode(
           node.attribValueRaw.slice(charStart as number, charEnd as number)
         );
-        console.log(
-          `073 attributeValidateLang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
-            message,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `081 attributeValidateLang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
+              message,
+              null,
+              4
+            )}`
+          );
         if (message) {
           errorArr.push({
             idxFrom:
@@ -87,7 +95,7 @@ function attributeValidateLang(context: Linter): RuleObjType {
         }
 
         errorArr.forEach((errorObj) => {
-          console.log(`090 RAISE ERROR`);
+          DEV && console.log(`098 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-lang" });
         });
       }

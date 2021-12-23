@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onmouseover
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnmouseover(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnmouseover() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnmouseover() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnmouseover(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnmouseover(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onmouseover") {
         // validate the parent
@@ -67,16 +72,18 @@ function attributeValidateOnmouseover(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `071 attributeValidateOnmouseover(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `077 attributeValidateOnmouseover(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`079 attributeValidateOnmouseover(): RAISE ERROR`);
+            DEV &&
+              console.log(`086 attributeValidateOnmouseover(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onmouseover",

@@ -5,16 +5,21 @@ import { Linter, RuleObjType } from "../../linter";
 
 import checkForWhitespace from "../../util/checkForWhitespace";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateName(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateName() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateName() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateName(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateName(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "name") {
         // validate the parent
@@ -60,15 +65,16 @@ function attributeValidateName(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
           errorArr.forEach((errorObj) => {
-            console.log(`071 RAISE ERROR`);
+            DEV && console.log(`077 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-name" });
           });
         }

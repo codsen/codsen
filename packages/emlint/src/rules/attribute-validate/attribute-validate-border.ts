@@ -5,14 +5,18 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateBorder(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateBorder() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateBorder() ███████████████████████████████████████`
+        );
 
-      // console.log(
+      // DEV && console.log(
       //   `015 attributeValidateBorder(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -37,12 +41,13 @@ function attributeValidateBorder(context: Linter): RuleObjType {
             theOnlyGoodUnits: [], // empty array means no units allowed
           }
         );
-        console.log(
-          `041 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
+        DEV &&
+          console.log(
+            `046 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`045 RAISE ERROR`);
+          DEV && console.log(`050 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-border" });
         });
       }

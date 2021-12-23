@@ -5,12 +5,16 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateTabindex(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateTabindex() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateTabindex() ███████████████████████████████████████`
+        );
 
       if (node.attribName === "tabindex") {
         // validate the parent
@@ -46,12 +50,13 @@ function attributeValidateTabindex(context: Linter): RuleObjType {
             maxValue: 32767,
           }
         );
-        console.log(
-          `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
+        DEV &&
+          console.log(
+            `055 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`054 RAISE ERROR`);
+          DEV && console.log(`059 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-tabindex",

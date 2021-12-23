@@ -5,6 +5,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 // takes subset of of opts object, ref
 // and whole default opts
 
@@ -67,7 +69,7 @@ function mixer(
 
   // quick end
   if (!Object.keys(defaultsObj).length) {
-    console.log(`070 early return []`);
+    DEV && console.log(`072 early return []`);
     return [];
   }
 
@@ -88,27 +90,30 @@ function mixer(
     }
   });
 
-  console.log(
-    `092 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
-      refClone,
-      null,
-      4
-    )}`
-  );
-  console.log(
-    `099 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
-      defaultsObjClone,
-      null,
-      4
-    )}`
-  );
-  console.log(
-    `106 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
-      optsWithBoolValues,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `095 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
+        refClone,
+        null,
+        4
+      )}`
+    );
+  DEV &&
+    console.log(
+      `103 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
+        defaultsObjClone,
+        null,
+        4
+      )}`
+    );
+  DEV &&
+    console.log(
+      `111 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
+        optsWithBoolValues,
+        null,
+        4
+      )}`
+    );
 
   // calculate combinations using combinations() - object-boolean-combinations
   // then restore the non-bool keys
@@ -118,7 +123,7 @@ function mixer(
     ...obj,
   }));
 
-  console.log(`121 RETURN res = ${JSON.stringify(res, null, 4)}`);
+  DEV && console.log(`126 RETURN res = ${JSON.stringify(res, null, 4)}`);
 
   return res;
 }

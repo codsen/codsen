@@ -57,6 +57,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 const importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
 
 const defaults: Opts = {
@@ -201,9 +203,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
   function tokenReset(): void {
     // object-assign is basically cloning - objects are passed by reference,
     // we can't risk mutating the default object:
-    console.log(
-      `205 ${`\u001b[${36}m${`██ tokenReset():`}\u001b[${39}m`} tokenReset() called`
-    );
+    DEV &&
+      console.log(
+        `208 ${`\u001b[${36}m${`██ tokenReset():`}\u001b[${39}m`} tokenReset() called`
+      );
     token = {
       type: null,
       start: null,
@@ -233,14 +236,15 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
   function attribReset(): void {
     // object-assign is basically cloning - objects are passed by reference,
     // we can't risk mutating the default object:
-    console.log(
-      `237 ${`\u001b[${36}m${`██ attribReset():`}\u001b[${39}m`} attribReset() called`
-    );
+    DEV &&
+      console.log(
+        `241 ${`\u001b[${36}m${`██ attribReset():`}\u001b[${39}m`} attribReset() called`
+      );
     attrib = clone(attribDefaults);
   }
 
   function attribPush(tokenObj: TextToken | CommentToken | Property): void {
-    console.log(`243`);
+    DEV && console.log(`247`);
     // 1. clean up any existing tokens first
     /* istanbul ignore else */
     if (
@@ -253,23 +257,25 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         attrib.attribValue[~-attrib.attribValue.length].start,
         tokenObj.start
       );
+      DEV &&
+        console.log(
+          `262 complete previous attr, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+            attrib,
+            null,
+            4
+          )}`
+        );
+    }
+
+    attrib.attribValue.push(tokenObj);
+    DEV &&
       console.log(
-        `257 complete previous attr, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+        `273 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} now = ${JSON.stringify(
           attrib,
           null,
           4
         )}`
       );
-    }
-
-    attrib.attribValue.push(tokenObj);
-    console.log(
-      `267 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} now = ${JSON.stringify(
-        attrib,
-        null,
-        4
-      )}`
-    );
   }
 
   // same for property
@@ -299,24 +305,26 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
   function pushProperty(p: Property | TextToken): void {
     // push and init and patch up to resume
     if (attrib?.attribName === "style") {
-      console.log(`302 push property`);
-      console.log(
-        `304 FIY, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-          attrib,
-          null,
-          4
-        )}`
-      );
-      console.log(
-        `311 FIY, ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
-          attrib.attribValue,
-          null,
-          4
-        )}`
-      );
+      DEV && console.log(`308 push property`);
+      DEV &&
+        console.log(
+          `311 FIY, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+            attrib,
+            null,
+            4
+          )}`
+        );
+      DEV &&
+        console.log(
+          `319 FIY, ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+            attrib.attribValue,
+            null,
+            4
+          )}`
+        );
       attrib.attribValue.push({ ...p });
     } else if (token && Array.isArray((token as RuleToken).properties)) {
-      console.log(`319 push property`);
+      DEV && console.log(`327 push property`);
       (token as RuleToken).properties.push({ ...p });
     }
   }
@@ -432,9 +440,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
   // processes closing comment - it's DRY'ed here because it's in multiple places
   // considering broken code like stray closing inline css comment blocks etc.
   function closingComment(i: number): void {
-    console.log(
-      `436 closingComment(): ${`\u001b[${32}m${`closing comment`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `445 closingComment(): ${`\u001b[${32}m${`closing comment`}\u001b[${39}m`}`
+      );
     let end = (right(str, i) || i) + 1;
     attribPush({
       type: "comment",
@@ -448,24 +457,26 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
     // skip next character
     doNothing = end;
-    console.log(
-      `452 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-        doNothing,
-        null,
-        4
-      )}`
-    );
-
-    // pop the block comment layer
-    if (lastLayerIs("block")) {
-      layers.pop();
+    DEV &&
       console.log(
-        `463 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} layers, now = ${JSON.stringify(
-          layers,
+        `462 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+          doNothing,
           null,
           4
         )}`
       );
+
+    // pop the block comment layer
+    if (lastLayerIs("block")) {
+      layers.pop();
+      DEV &&
+        console.log(
+          `474 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} layers, now = ${JSON.stringify(
+            layers,
+            null,
+            4
+          )}`
+        );
     }
   }
 
@@ -474,9 +485,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     cb: null | CharCb | TokenCb,
     lookaheadLength: number
   ): void {
-    console.log(
-      `478 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `490 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`
+      );
     // start to assemble node we're report to the callback cb1()
     let currentElem = stash.shift();
     // ^ shift removes it from stash
@@ -486,28 +498,30 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     let next = [];
 
     for (let i = 0; i < lookaheadLength; i++) {
-      console.log(`i = ${i}`);
+      DEV && console.log(`i = ${i}`);
       // we want as many as "lookaheadLength" from stash but there might be
       // not enough there
       if (stash[i]) {
         next.push(clone(stash[i]));
-        console.log(`494`);
+        DEV && console.log(`506`);
       } else {
-        console.log(
-          `497 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${31}m${`STOP`}\u001b[${39}m`} - there are not enough elements in stash`
-        );
+        DEV &&
+          console.log(
+            `510 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${31}m${`STOP`}\u001b[${39}m`} - there are not enough elements in stash`
+          );
         break;
       }
     }
 
     // finally, ping the callback with assembled element:
-    console.log(
-      `505 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
-        currentElem,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `519 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
+          currentElem,
+          null,
+          4
+        )}`
+      );
     if (typeof cb === "function") {
       cb(currentElem as any, next as any[]);
     }
@@ -523,29 +537,31 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       charStash.push(incomingToken);
 
       // 2. is there are enough tokens in the stash, ping the first-one
-      console.log(
-        `527 ${
-          charStash.length > opts.charCbLookahead
-            ? `${`\u001b[${36}m${`pingCharCb()`}\u001b[${39}m`}: ${`\u001b[${32}m${`ENOUGH VALUES IN CHAR STASH`}\u001b[${39}m`}`
-            : `${`\u001b[${36}m${`pingCharCb()`}\u001b[${39}m`}: ${`\u001b[${31}m${`NOT ENOUGH VALUES IN CHAR STASH, MOVE ON`}\u001b[${39}m`}`
-        }`
-      );
+      DEV &&
+        console.log(
+          `542 ${
+            charStash.length > opts.charCbLookahead
+              ? `${`\u001b[${36}m${`pingCharCb()`}\u001b[${39}m`}: ${`\u001b[${32}m${`ENOUGH VALUES IN CHAR STASH`}\u001b[${39}m`}`
+              : `${`\u001b[${36}m${`pingCharCb()`}\u001b[${39}m`}: ${`\u001b[${31}m${`NOT ENOUGH VALUES IN CHAR STASH, MOVE ON`}\u001b[${39}m`}`
+          }`
+        );
       if (charStash.length > opts.charCbLookahead) {
         reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
-        console.log(
-          `536 ${`\u001b[${90}m${`██ charStash`}\u001b[${39}m`} = ${JSON.stringify(
-            charStash,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `552 ${`\u001b[${90}m${`██ charStash`}\u001b[${39}m`} = ${JSON.stringify(
+              charStash,
+              null,
+              4
+            )}`
+          );
       }
     }
   }
 
   function pingTagCb(incomingToken: Token): void {
     if (opts.tagCb) {
-      // console.log(
+      // DEV && console.log(
       //   `419 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} tagCb() with ${JSON.stringify(
       //     incomingToken,
       //     null,
@@ -558,34 +574,37 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       tagStash.push(incomingToken);
 
       // 2. is there are enough tokens in the stash, ping the first-one
-      console.log(
-        `562 ${
-          tagStash.length > opts.tagCbLookahead
-            ? `${`\u001b[${36}m${`pingTagCb()`}\u001b[${39}m`}: ${`\u001b[${32}m${`ENOUGH VALUES IN TAG STASH`}\u001b[${39}m`}`
-            : `${`\u001b[${36}m${`pingTagCb()`}\u001b[${39}m`}: ${`\u001b[${31}m${`NOT ENOUGH VALUES IN TAG STASH, MOVE ON`}\u001b[${39}m`}`
-        }`
-      );
+      DEV &&
+        console.log(
+          `579 ${
+            tagStash.length > opts.tagCbLookahead
+              ? `${`\u001b[${36}m${`pingTagCb()`}\u001b[${39}m`}: ${`\u001b[${32}m${`ENOUGH VALUES IN TAG STASH`}\u001b[${39}m`}`
+              : `${`\u001b[${36}m${`pingTagCb()`}\u001b[${39}m`}: ${`\u001b[${31}m${`NOT ENOUGH VALUES IN TAG STASH, MOVE ON`}\u001b[${39}m`}`
+          }`
+        );
       if (tagStash.length > opts.tagCbLookahead) {
         reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
-        console.log(
-          `571 pingTagCb(): ${`\u001b[${90}m${`██ tagStash`}\u001b[${39}m`} = ${JSON.stringify(
-            tagStash,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `589 pingTagCb(): ${`\u001b[${90}m${`██ tagStash`}\u001b[${39}m`} = ${JSON.stringify(
+              tagStash,
+              null,
+              4
+            )}`
+          );
       }
     }
   }
 
   function dumpCurrentToken(incomingToken: Token, i: number): void {
-    console.log(
-      `583 ${`\u001b[${35}m${`dumpCurrentToken()`}\u001b[${39}m`}; incoming incomingToken=${JSON.stringify(
-        incomingToken,
-        null,
-        0
-      )}; i = ${`\u001b[${33}m${i}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `602 ${`\u001b[${35}m${`dumpCurrentToken()`}\u001b[${39}m`}; incoming incomingToken=${JSON.stringify(
+          incomingToken,
+          null,
+          0
+        )}; i = ${`\u001b[${33}m${i}\u001b[${39}m`}`
+      );
     // Let's ensure it was not a token with trailing whitespace, because now is
     // the time to separate it and report it as a standalone token.
     // Also, the following clause will catch the unclosed tags like
@@ -597,7 +616,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       incomingToken.start < i &&
       ((str[~-i] && !str[~-i].trim()) || str[i] === "<")
     ) {
-      console.log(`600`);
+      DEV && console.log(`619`);
       // this ending is definitely a token ending. Now the question is,
       // maybe we need to split all gathered token contents into two:
       // maybe it's a tag and a whitespace? or an unclosed tag?
@@ -605,35 +624,37 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       // we'll need to find where this last chunk started and terminate the
       // previous token (one which started at the current token.start) there.
       if (left(str, i) !== null) {
-        console.log(`608`);
+        DEV && console.log(`627`);
         incomingToken.end = (left(str, i) as number) + 1;
       } else {
-        console.log(`611`);
+        DEV && console.log(`630`);
         incomingToken.end = i;
       }
       incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
-      console.log(
-        `616 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`incomingToken.end`}\u001b[${39}m`} = ${
-          incomingToken.end
-        } (last two characters ending at incomingToken.end: ${JSON.stringify(
-          str[~-incomingToken.end],
-          null,
-          4
-        )} + ${JSON.stringify(
-          str[incomingToken.end],
-          null,
-          4
-        )}); ${`\u001b[${33}m${`incomingToken.value`}\u001b[${39}m`} = "${
-          incomingToken.value
-        }"`
-      );
+      DEV &&
+        console.log(
+          `636 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`incomingToken.end`}\u001b[${39}m`} = ${
+            incomingToken.end
+          } (last two characters ending at incomingToken.end: ${JSON.stringify(
+            str[~-incomingToken.end],
+            null,
+            4
+          )} + ${JSON.stringify(
+            str[incomingToken.end],
+            null,
+            4
+          )}); ${`\u001b[${33}m${`incomingToken.value`}\u001b[${39}m`} = "${
+            incomingToken.value
+          }"`
+        );
       if (
         incomingToken.type === "tag" &&
         !"/>".includes(str[~-incomingToken.end])
       ) {
-        console.log(
-          `635 ${`\u001b[${35}m${`██ UNCLOSED TAG CASES`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `656 ${`\u001b[${35}m${`██ UNCLOSED TAG CASES`}\u001b[${39}m`}`
+          );
         // we need to potentially shift the incomingToken.end left, imagine:
         // <a href="z" click here</a>
         //                       ^
@@ -653,32 +674,35 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           Array.isArray(incomingToken.attribs) &&
           incomingToken.attribs.length
         ) {
-          console.log(
-            `657 ${`\u001b[${32}m${`██ validate all attributes`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `679 ${`\u001b[${32}m${`██ validate all attributes`}\u001b[${39}m`}`
+            );
           // initial cut-off point is token.tagNameEndsAt
-          console.log(`660 SET cutOffIndex = ${cutOffIndex}`);
+          DEV && console.log(`682 SET cutOffIndex = ${cutOffIndex}`);
           // with each validated attribute, push the cutOffIndex forward:
           for (
             let i2 = 0, len2 = incomingToken.attribs.length;
             i2 < len2;
             i2++
           ) {
-            console.log(
-              `668 ${`\u001b[${36}m${`incomingToken.attribs[${i2}]`}\u001b[${39}m`} = ${JSON.stringify(
-                incomingToken.attribs[i2],
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `691 ${`\u001b[${36}m${`incomingToken.attribs[${i2}]`}\u001b[${39}m`} = ${JSON.stringify(
+                  incomingToken.attribs[i2],
+                  null,
+                  4
+                )}`
+              );
             if (
               incomingToken.attribs[i2].attribNameRecognised &&
               incomingToken.attribs[i2].attribEnds
             ) {
               cutOffIndex = incomingToken.attribs[i2].attribEnds;
-              console.log(
-                `680 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`cutOffIndex`}\u001b[${39}m`} = ${cutOffIndex}`
-              );
+              DEV &&
+                console.log(
+                  `704 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`cutOffIndex`}\u001b[${39}m`} = ${cutOffIndex}`
+                );
 
               // small tweak - consider this:
               // <a href="z" click here</a>
@@ -695,12 +719,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 str[cutOffIndex + 1].trim()
               ) {
                 cutOffIndex += 1;
-                console.log(
-                  `699 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`cutOffIndex`}\u001b[${39}m`} = ${cutOffIndex}`
-                );
+                DEV &&
+                  console.log(
+                    `724 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`cutOffIndex`}\u001b[${39}m`} = ${cutOffIndex}`
+                  );
               }
             } else {
-              console.log(`703 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+              DEV &&
+                console.log(`729 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
               // delete false attributes from incomingToken.attribs
               if (i2 === 0) {
                 // if it's the first attribute and it's already
@@ -712,13 +738,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 // leave only attributes up to i2-th
                 incomingToken.attribs = incomingToken.attribs.splice(0, i2);
               }
-              console.log(
-                `716 ${`\u001b[${32}m${`CALCULATED`}\u001b[${39}m`} ${`\u001b[${33}m${`incomingToken.attribs`}\u001b[${39}m`} = ${JSON.stringify(
-                  incomingToken.attribs,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `743 ${`\u001b[${32}m${`CALCULATED`}\u001b[${39}m`} ${`\u001b[${33}m${`incomingToken.attribs`}\u001b[${39}m`} = ${JSON.stringify(
+                    incomingToken.attribs,
+                    null,
+                    4
+                  )}`
+                );
 
               // in the end stop the loop:
               break;
@@ -730,11 +757,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
         if (!incomingToken.tagNameEndsAt) {
           incomingToken.tagNameEndsAt = cutOffIndex;
-          console.log(
-            `734 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`incomingToken.tagNameEndsAt`}\u001b[${39}m`} = ${
-              incomingToken.tagNameEndsAt
-            }`
-          );
+          DEV &&
+            console.log(
+              `762 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`incomingToken.tagNameEndsAt`}\u001b[${39}m`} = ${
+                incomingToken.tagNameEndsAt
+              }`
+            );
         }
         if (
           incomingToken.tagNameStartsAt &&
@@ -745,73 +773,80 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             incomingToken.tagNameStartsAt,
             cutOffIndex
           );
-          console.log(
-            `749 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`incomingToken.tagName`}\u001b[${39}m`} = ${
-              incomingToken.tagName
-            }`
-          );
+          DEV &&
+            console.log(
+              `778 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`incomingToken.tagName`}\u001b[${39}m`} = ${
+                incomingToken.tagName
+              }`
+            );
           incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
         }
 
-        console.log(`756 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
+        DEV && console.log(`785 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
         pingTagCb(incomingToken);
         initToken("text", cutOffIndex);
         attribReset();
-        console.log(
-          `761 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
-            token.start
-          }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
-        );
-      } else {
-        console.log(`766 ${`\u001b[${35}m${`██ HEALTHY TAG`}\u001b[${39}m`}`);
-        console.log(`767 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
-        pingTagCb(incomingToken);
-        console.log(`769 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
-        tokenReset();
-        // if there was whitespace after token's end:
-        if (str[~-i] && !str[~-i].trim()) {
-          console.log(`773 indeed there was whitespace after token's end`);
-          initToken("text", (left(str, i) as number) + 1);
-          attribReset();
+        DEV &&
           console.log(
-            `777 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+            `791 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
               token.start
             }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
           );
+      } else {
+        DEV &&
+          console.log(`797 ${`\u001b[${35}m${`██ HEALTHY TAG`}\u001b[${39}m`}`);
+        DEV && console.log(`798 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
+        pingTagCb(incomingToken);
+        DEV && console.log(`800 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
+        tokenReset();
+        // if there was whitespace after token's end:
+        if (str[~-i] && !str[~-i].trim()) {
+          DEV &&
+            console.log(`805 indeed there was whitespace after token's end`);
+          initToken("text", (left(str, i) as number) + 1);
+          attribReset();
+          DEV &&
+            console.log(
+              `810 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+                token.start
+              }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
+            );
         }
       }
 
-      console.log(
-        `785 FINALLY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-          token,
-          null,
-          4
-        )}`
-      );
-    }
-
-    // if a token is already being recorded, end it
-    if (token.start !== null) {
-      console.log(`795 *`);
-      if (token.end === null && token.start !== i) {
-        // (esp tags will have it set already)
-        token.end = i;
-        token.value = str.slice(token.start, token.end);
+      DEV &&
         console.log(
-          `801 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-            token.end
-          }; ${`\u001b[${33}m${`token.value`}\u001b[${39}m`} = ${JSON.stringify(
-            token.value,
+          `819 FINALLY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+            token,
             null,
             4
           )}`
         );
+    }
+
+    // if a token is already being recorded, end it
+    if (token.start !== null) {
+      DEV && console.log(`829 *`);
+      if (token.end === null && token.start !== i) {
+        // (esp tags will have it set already)
+        token.end = i;
+        token.value = str.slice(token.start, token.end);
+        DEV &&
+          console.log(
+            `836 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+              token.end
+            }; ${`\u001b[${33}m${`token.value`}\u001b[${39}m`} = ${JSON.stringify(
+              token.value,
+              null,
+              4
+            )}`
+          );
       }
 
       // normally we'd ping the token but let's not forget we have token stashes
       // in "attribToBackup" and "parentTokenToBackup"
 
-      console.log(`814 *`);
+      DEV && console.log(`849 *`);
       if (token.start !== null && token.end) {
         // if it's a text token inside "at" rule, nest it, push into that
         // "at" rule pending in layers - otherwise, ping as standalone
@@ -819,21 +854,23 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           (layers[~-layers.length] as LayerKindAt).token.rules.push(
             token as any
           );
-          console.log(
-            `823 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} into layers AT rule`
-          );
+          DEV &&
+            console.log(
+              `859 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} into layers AT rule`
+            );
         } else {
-          console.log(
-            `827 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} as standalone`
-          );
+          DEV &&
+            console.log(
+              `864 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} as standalone`
+            );
           pingTagCb(token);
         }
       }
-      console.log(`832 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
+      DEV && console.log(`869 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
       tokenReset();
     }
 
-    console.log(`836 end of dumpCurrentToken() reached`);
+    DEV && console.log(`873 end of dumpCurrentToken() reached`);
   }
 
   function atRuleWaitingForClosingCurlie(): boolean {
@@ -969,13 +1006,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
   }
 
   function attrEndsAt(idx: number, extras?: boolean): boolean {
-    console.log(
-      `973 incoming: ${`\u001b[${33}m${`extras`}\u001b[${39}m`} = ${JSON.stringify(
-        extras,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `1011 incoming: ${`\u001b[${33}m${`extras`}\u001b[${39}m`} = ${JSON.stringify(
+          extras,
+          null,
+          4
+        )}`
+      );
     // either we're within normal head css styles:
     return (
       (`;}/`.includes(str[idx]) &&
@@ -1015,11 +1053,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
     // Logging:
     // -------------------------------------------------------------------------
-    console.log(
-      `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
-        str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
-      }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
-    );
+    DEV &&
+      console.log(
+        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+          str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
+        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+      );
 
     // Progress:
     // -------------------------------------------------------------------------
@@ -1047,7 +1086,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         if (currentPercentageDone !== lastPercentage) {
           lastPercentage = currentPercentageDone;
           opts.reportProgressFunc(currentPercentageDone);
-          console.log(`1050 DONE ${currentPercentageDone}%`);
+          DEV && console.log(`1089 DONE ${currentPercentageDone}%`);
         }
       }
     }
@@ -1066,22 +1105,24 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       token.type &&
       !["rule", "at", "text", "comment"].includes(token.type)
     ) {
-      console.log(
-        `1070 FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-          token,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `1110 FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+            token,
+            null,
+            4
+          )}`
+        );
       withinStyle = false;
-      console.log(
-        `1078 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinStyle`}\u001b[${39}m`} = false`
-      );
+      DEV &&
+        console.log(
+          `1119 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinStyle`}\u001b[${39}m`} = false`
+        );
     }
 
     if (doNothing && i >= doNothing) {
       doNothing = 0;
-      console.log(`1084 TURN OFF doNothing`);
+      DEV && console.log(`1125 TURN OFF doNothing`);
     }
 
     // skip chain of the same-type characters
@@ -1104,20 +1145,22 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         property.valueEnds = i;
         property.value = str.slice(property.valueStarts, i);
         property.importantStarts = i;
-        console.log(
-          `1108 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueEnds`}\u001b[${39}m`} = ${
-            property.valueEnds
-          };  ${`\u001b[${33}m${`property.value`}\u001b[${39}m`} = ${
-            property.value
-          };  ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${
-            property.importantStarts
-          }`
-        );
+        DEV &&
+          console.log(
+            `1150 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueEnds`}\u001b[${39}m`} = ${
+              property.valueEnds
+            };  ${`\u001b[${33}m${`property.value`}\u001b[${39}m`} = ${
+              property.value
+            };  ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${
+              property.importantStarts
+            }`
+          );
       }
 
-      console.log(
-        `1119 ${`\u001b[${32}m${`SKIP`}\u001b[${39}m`} middle of the letters chunk`
-      );
+      DEV &&
+        console.log(
+          `1162 ${`\u001b[${32}m${`SKIP`}\u001b[${39}m`} middle of the letters chunk`
+        );
       continue;
     }
 
@@ -1127,9 +1170,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       str[i] === str[~-i] &&
       str[i] === str[i + 1]
     ) {
-      console.log(
-        `1131 ${`\u001b[${32}m${`SKIP`}\u001b[${39}m`} middle of the spaces chunk`
-      );
+      DEV &&
+        console.log(
+          `1175 ${`\u001b[${32}m${`SKIP`}\u001b[${39}m`} middle of the spaces chunk`
+        );
       continue;
     }
 
@@ -1137,7 +1181,8 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     // -------------------------------------------------------------------------
 
     if (!doNothing && atRuleWaitingForClosingCurlie()) {
-      console.log(`1140 inside catch the curly tails of at-rules' clauses`);
+      DEV &&
+        console.log(`1185 inside catch the curly tails of at-rules' clauses`);
 
       // if (token.type === null && str[i] === "}") {
       // if (str[i] === "}") {
@@ -1149,150 +1194,167 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         ) {
           // rule token must end earlier
           if (token.type === "rule") {
-            console.log(`1152 complete the "rule" token`);
+            DEV && console.log(`1197 complete the "rule" token`);
             token.end = (leftVal as number) + 1;
             token.value = str.slice(token.start, token.end);
-            console.log(
-              `1156 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-                token,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `1202 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                  token,
+                  null,
+                  4
+                )}`
+              );
             pingTagCb(token);
 
             // if it's a text token inside "at" rule, nest it, push into that
             // "at" rule pending in layers - otherwise, ping as standalone
             if (lastLayerIs("at")) {
               (layers[~-layers.length] as LayerKindAt).token.rules.push(token);
-              console.log(
-                `1169 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} into layers AT rule`
-              );
+              DEV &&
+                console.log(
+                  `1216 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} into layers AT rule`
+                );
             }
 
-            console.log(`1173 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
+            DEV &&
+              console.log(`1221 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
             tokenReset();
 
             // if there was trailing whitespace, initiate it
             if (leftVal !== null && leftVal < ~-i) {
-              console.log(
-                `1179 initiate whitespace from [${leftVal + 1}, ${i}]`
-              );
+              DEV &&
+                console.log(
+                  `1228 initiate whitespace from [${leftVal + 1}, ${i}]`
+                );
               initToken("text", leftVal + 1);
               attribReset();
-              console.log(
-                `1184 ${`\u001b[${33}m${`token`}\u001b[${39}m`} now = ${JSON.stringify(
-                  token,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `1234 ${`\u001b[${33}m${`token`}\u001b[${39}m`} now = ${JSON.stringify(
+                    token,
+                    null,
+                    4
+                  )}`
+                );
             }
           }
 
-          console.log(`1193 call dumpCurrentToken()`);
+          DEV && console.log(`1243 call dumpCurrentToken()`);
           dumpCurrentToken(token, i);
 
-          console.log(
-            `1197 ${`\u001b[${35}m${`██`}\u001b[${39}m`} restore at rule from layers`
-          );
+          DEV &&
+            console.log(
+              `1248 ${`\u001b[${35}m${`██`}\u001b[${39}m`} restore at rule from layers`
+            );
           let poppedToken = layers.pop() as LayerKindAt;
           token = clone(poppedToken.token);
-          console.log(`1201 new token: ${JSON.stringify(token, null, 4)}`);
+          DEV &&
+            console.log(`1253 new token: ${JSON.stringify(token, null, 4)}`);
 
           // then, continue on "at" rule's token...
 
           token.closingCurlyAt = i;
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
-          console.log(
-            `1209 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-              token,
-              null,
-              4
-            )} before pinging`
-          );
+          DEV &&
+            console.log(
+              `1262 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                token,
+                null,
+                4
+              )} before pinging`
+            );
           pingTagCb(token);
 
           // if it's a "rule" token and a parent "at" rule is pending in layers,
           // also put this "rule" into that parent in layers
           if (lastLayerIs("at")) {
-            console.log(
-              `1221 ${`\u001b[${32}m${`PUSH this rule into last AT layer`}\u001b[${39}m`}`
-            );
+            DEV &&
+              console.log(
+                `1275 ${`\u001b[${32}m${`PUSH this rule into last AT layer`}\u001b[${39}m`}`
+              );
             (layers[~-layers.length] as LayerKindAt).token.rules.push(
               token as any
             );
           }
 
-          console.log(`1228 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
+          DEV && console.log(`1282 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
           tokenReset();
 
-          console.log(
-            `1232 ${`\u001b[${31}m${`skip the remaining of the program clauses for this index`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `1287 ${`\u001b[${31}m${`skip the remaining of the program clauses for this index`}\u001b[${39}m`}`
+            );
           doNothing = i + 1;
-          console.log(
-            `1236 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-          );
+          DEV &&
+            console.log(
+              `1292 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+            );
         }
       } else if (token.type === "text" && str[i] && str[i].trim()) {
         // terminate the text token, all the non-whitespace characters comprise
         // rules because we're inside the at-token, it's CSS!
         token.end = i;
         token.value = str.slice(token.start, token.end);
-        console.log(
-          `1245 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-            token,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `1302 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+              token,
+              null,
+              4
+            )}`
+          );
 
         // if it's a text token inside "at" rule, nest it, push into that
         // "at" rule pending in layers - otherwise, ping as standalone
         if (lastLayerIs("at")) {
           (layers[~-layers.length] as LayerKindAt).token.rules.push(token);
-          console.log(
-            `1257 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} into layers AT rule`
-          );
+          DEV &&
+            console.log(
+              `1315 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} into layers AT rule`
+            );
         } else {
-          console.log(
-            `1261 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} as standalone`
-          );
+          DEV &&
+            console.log(
+              `1320 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} as standalone`
+            );
           pingTagCb(token);
         }
-        console.log(`1265 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
+        DEV && console.log(`1324 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
         tokenReset();
       }
     }
 
     if (token.end && token.end === i) {
-      console.log(`1271 token was captured in the past, so push it now`);
+      DEV && console.log(`1330 token was captured in the past, so push it now`);
       if ((token as any).tagName === "style" && !(token as any).closing) {
         withinStyle = true;
-        console.log(
-          `1275 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinStyle`}\u001b[${39}m`} = true`
-        );
+        DEV &&
+          console.log(
+            `1335 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinStyle`}\u001b[${39}m`} = true`
+          );
       }
       // we need to retain the information after tag was dumped to tagCb() and wiped
       if (attribToBackup) {
-        console.log(`1280 THIS TAG GOES INTO ATTRIBUTE'S attribValue`);
+        DEV && console.log(`1340 THIS TAG GOES INTO ATTRIBUTE'S attribValue`);
 
         // 1. restore
         attrib = attribToBackup;
-        console.log(
-          `1285 ${`\u001b[${35}m${`RESTORE`}\u001b[${39}m`} attrib from stashed, now = ${JSON.stringify(
-            attrib,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `1346 ${`\u001b[${35}m${`RESTORE`}\u001b[${39}m`} attrib from stashed, now = ${JSON.stringify(
+              attrib,
+              null,
+              4
+            )}`
+          );
 
         // 2. push current token into attrib.attribValue
-        console.log(
-          `1294 PUSH token to be inside ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `1356 PUSH token to be inside ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
+          );
         attrib.attribValue.push(token as any);
 
         // 3. restore real token
@@ -1302,29 +1364,32 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         attribToBackup = undefined;
         parentTokenToBackup = undefined;
 
-        console.log(
-          `1306 ${`\u001b[${33}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-            token,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `1369 ${`\u001b[${33}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+              token,
+              null,
+              4
+            )}`
+          );
       } else {
-        console.log(`1313 call dumpCurrentToken()`);
+        DEV && console.log(`1376 call dumpCurrentToken()`);
         dumpCurrentToken(token, i);
 
-        console.log(`1316 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} layers`);
+        DEV &&
+          console.log(`1380 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} layers`);
         layers.length = 0;
       }
     }
 
-    console.log(
-      `1322 ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
-        attrib.attribValue,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(
+        `1387 ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+          attrib.attribValue,
+          null,
+          4
+        )}`
+      );
 
     //
     //
@@ -1344,9 +1409,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         ["tag", "at"].includes(token.type) &&
         (token as any).kind !== "cdata"
       ) {
-        console.log(
-          `1348 ${`\u001b[${36}m${`LAYERS CLAUSES`}\u001b[${39}m`} ("tag", "rule" or "at")`
-        );
+        DEV &&
+          console.log(
+            `1414 ${`\u001b[${36}m${`LAYERS CLAUSES`}\u001b[${39}m`} ("tag", "rule" or "at")`
+          );
         if (
           str[i] &&
           (SOMEQUOTE.includes(str[i]) || `()`.includes(str[i])) &&
@@ -1370,15 +1436,17 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           // can catch it, validating values, imagine "float" value "left" comes
           // with quotes, as in ""left""
         ) {
-          console.log(
-            `1374 ${`\u001b[${32}m${`a new layer quotes`}\u001b[${39}m`}`
-          );
-          console.log(
-            `1377 last layer's value: ${
-              lastLayerIs("simple") &&
-              (layers[~-layers.length] as LayerSimple).value
-            }`
-          );
+          DEV &&
+            console.log(
+              `1441 ${`\u001b[${32}m${`a new layer quotes`}\u001b[${39}m`}`
+            );
+          DEV &&
+            console.log(
+              `1445 last layer's value: ${
+                lastLayerIs("simple") &&
+                (layers[~-layers.length] as LayerSimple).value
+              }`
+            );
           if (
             // maybe it's the closing counterpart?
             lastLayerIs("simple") &&
@@ -1386,7 +1454,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               flipEspTag(str[i])
           ) {
             layers.pop();
-            console.log(`1389 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`);
+            DEV &&
+              console.log(
+                `1459 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`
+              );
           } else {
             // it's opening then
             layers.push({
@@ -1394,26 +1465,27 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               value: str[i],
               position: i,
             });
-            console.log(
-              `1398 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-                {
-                  type: "simple",
-                  value: str[i],
-                  position: i,
-                },
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `1470 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                  {
+                    type: "simple",
+                    value: str[i],
+                    position: i,
+                  },
+                  null,
+                  4
+                )}`
+              );
           }
         }
       } else if (
         token.type === "comment" &&
         ["only", "not"].includes(token.kind)
       ) {
-        console.log(`1414 inside "comments" layers clauses`);
+        DEV && console.log(`1486 inside "comments" layers clauses`);
         if ([`[`, `]`].includes(str[i])) {
-          console.log(`1416`);
+          DEV && console.log(`1488`);
           if (
             // maybe it's the closing counterpart?
             lastLayerIs("simple") &&
@@ -1422,7 +1494,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           ) {
             // maybe it's the closing counterpart?
             layers.pop();
-            console.log(`1425 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`);
+            DEV &&
+              console.log(
+                `1499 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`
+              );
           } else {
             // it's opening then
             layers.push({
@@ -1430,16 +1505,17 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               value: str[i],
               position: i,
             });
-            console.log(
-              `1434 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-                {
-                  type: "simple",
-                  value: str[i],
-                },
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `1510 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                  {
+                    type: "simple",
+                    value: str[i],
+                  },
+                  null,
+                  4
+                )}`
+              );
           }
         }
       } else if (
@@ -1455,7 +1531,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           )
         )
       ) {
-        console.log(`1458`);
+        DEV && console.log(`1534`);
         if (
           // maybe it's the closing counterpart?
           lastLayerIs("simple") &&
@@ -1463,15 +1539,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         ) {
           // maybe it's the closing counterpart?
           layers.pop();
-          console.log(`1466 ${`\u001b[${32}m${`POP LAYERS`}\u001b[${39}m`}`);
+          DEV &&
+            console.log(`1543 ${`\u001b[${32}m${`POP LAYERS`}\u001b[${39}m`}`);
 
-          console.log(
-            `1469 ${`\u001b[${31}m${`skip the remaining of the program clauses for this index`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `1547 ${`\u001b[${31}m${`skip the remaining of the program clauses for this index`}\u001b[${39}m`}`
+            );
           doNothing = i + 1;
-          console.log(
-            `1473 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-          );
+          DEV &&
+            console.log(
+              `1552 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+            );
         } else if (!`]})>`.includes(str[i])) {
           // it's opening then
           layers.push({
@@ -1479,20 +1558,21 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             value: str[i],
             position: i,
           });
-          console.log(
-            `1483 ${`\u001b[${32}m${`PUSH LAYER`}\u001b[${39}m`} ${JSON.stringify(
-              {
-                type: "simple",
-                value: str[i],
-              },
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `1563 ${`\u001b[${32}m${`PUSH LAYER`}\u001b[${39}m`} ${JSON.stringify(
+                {
+                  type: "simple",
+                  value: str[i],
+                },
+                null,
+                4
+              )}`
+            );
         }
       }
 
-      // console.log(
+      // DEV && console.log(
       //   `1094 FIY, currently ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
       //     layers,
       //     null,
@@ -1519,11 +1599,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       // adds a comma, @,media
       // or adds a space, @ media
       token.identifierStartsAt = i;
-      console.log(
-        `1523 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.identifierStartsAt`}\u001b[${39}m`} = ${
-          token.identifierStartsAt
-        }`
-      );
+      DEV &&
+        console.log(
+          `1604 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.identifierStartsAt`}\u001b[${39}m`} = ${
+            token.identifierStartsAt
+          }`
+        );
     }
 
     // catch the end of the "at" rule token
@@ -1536,17 +1617,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       !token.queryEndsAt &&
       `{;`.includes(str[i])
     ) {
-      console.log(`1539 end of the "at" rule token clauses start`);
+      DEV && console.log(`1620 end of the "at" rule token clauses start`);
       if (str[i] === "{") {
         if (str[~-i] && str[~-i].trim()) {
           token.queryEndsAt = i;
-          console.log(
-            `1544 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
-              token.queryEndsAt,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `1626 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+                token.queryEndsAt,
+                null,
+                4
+              )}`
+            );
         } else {
           // trim the trailing whitespace:
           // @media (max-width: 600px) {
@@ -1559,13 +1641,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           // @media (max-width: 600px) {
           //                         ^
           //            that would be index of this bracket
-          console.log(
-            `1563 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
-              token.queryEndsAt,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `1646 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+                token.queryEndsAt,
+                null,
+                4
+              )}`
+            );
         }
       } else {
         // ; closing, for example, illegal:
@@ -1574,24 +1657,26 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         //          we're here
         //
         token.queryEndsAt = left(str, i + 1) || 0;
-        console.log(
-          `1578 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
-            token.queryEndsAt,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `1662 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+              token.queryEndsAt,
+              null,
+              4
+            )}`
+          );
       }
 
       if (token.queryStartsAt && token.queryEndsAt) {
         token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
-        console.log(
-          `1589 ${`\u001b[${33}m${`token.query`}\u001b[${39}m`} = ${JSON.stringify(
-            token.query,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `1674 ${`\u001b[${33}m${`token.query`}\u001b[${39}m`} = ${JSON.stringify(
+              token.query,
+              null,
+              4
+            )}`
+          );
       }
 
       token.end = str[i] === ";" ? i + 1 : i;
@@ -1599,46 +1684,55 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
       if (str[i] === ";") {
         // if code is clean, that would be @charset for example, no curlies
-        console.log(`1602 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} the token`);
+        DEV &&
+          console.log(
+            `1689 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} the token`
+          );
         pingTagCb(token);
       } else {
         // then it's opening curlie
-        console.log(`1606 ${`\u001b[${32}m${`NEST`}\u001b[${39}m`} children`);
-        console.log(
-          `1608 starting ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
-            layers,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(`1695 ${`\u001b[${32}m${`NEST`}\u001b[${39}m`} children`);
+        DEV &&
+          console.log(
+            `1698 starting ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+              layers,
+              null,
+              4
+            )}`
+          );
 
         token.openingCurlyAt = i;
-        console.log(
-          `1617 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.openingCurlyAt`}\u001b[${39}m`} = ${
-            token.openingCurlyAt
-          }`
-        );
+        DEV &&
+          console.log(
+            `1708 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.openingCurlyAt`}\u001b[${39}m`} = ${
+              token.openingCurlyAt
+            }`
+          );
 
         // push so far gathered token into layers
         layers.push({
           type: "at",
           token,
         });
-        console.log(
-          `1628 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} "at" token to layers`
-        );
+        DEV &&
+          console.log(
+            `1720 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} "at" token to layers`
+          );
       }
 
-      console.log(`1632 ${`\u001b[${31}m${`REST`}\u001b[${39}m`} the token`);
+      DEV &&
+        console.log(`1725 ${`\u001b[${31}m${`REST`}\u001b[${39}m`} the token`);
       tokenReset();
       doNothing = i + 1;
-      console.log(
-        `1636 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-          doNothing,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `1730 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+            doNothing,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch the start of the query
@@ -1653,11 +1747,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       !token.queryStartsAt
     ) {
       token.queryStartsAt = i;
-      console.log(
-        `1657 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryStartsAt`}\u001b[${39}m`} = ${
-          token.queryStartsAt
-        }`
-      );
+      DEV &&
+        console.log(
+          `1752 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryStartsAt`}\u001b[${39}m`} = ${
+            token.queryStartsAt
+          }`
+        );
     }
 
     // catch the end of at rule's identifierStartsAt
@@ -1675,13 +1770,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     ) {
       token.identifierEndsAt = i;
       token.identifier = str.slice(token.identifierStartsAt, i);
-      console.log(
-        `1679 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.identifierEndsAt`}\u001b[${39}m`} = ${
-          token.identifierEndsAt
-        }; ${`\u001b[${33}m${`token.identifier`}\u001b[${39}m`} = "${
-          token.identifier
-        }"`
-      );
+      DEV &&
+        console.log(
+          `1775 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.identifierEndsAt`}\u001b[${39}m`} = ${
+            token.identifierEndsAt
+          }; ${`\u001b[${33}m${`token.identifier`}\u001b[${39}m`} = "${
+            token.identifier
+          }"`
+        );
     }
 
     // catch the end of a CSS chunk
@@ -1697,20 +1793,22 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             !str[i].trim() &&
             charsThatEndCSSChunks.includes(str[rightVal])))
       ) {
-        console.log(
-          `1701 FIY, ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} was ${selectorChunkStartedAt}`
-        );
-        console.log(
-          `1704 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to selectors[]: ${JSON.stringify(
-            {
-              value: str.slice(selectorChunkStartedAt, i),
-              selectorStarts: selectorChunkStartedAt,
-              selectorEnds: i,
-            },
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `1798 FIY, ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} was ${selectorChunkStartedAt}`
+          );
+        DEV &&
+          console.log(
+            `1802 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to selectors[]: ${JSON.stringify(
+              {
+                value: str.slice(selectorChunkStartedAt, i),
+                selectorStarts: selectorChunkStartedAt,
+                selectorEnds: i,
+              },
+              null,
+              4
+            )}`
+          );
         token.selectors.push({
           value: str.slice(selectorChunkStartedAt, i),
           selectorStarts: selectorChunkStartedAt,
@@ -1718,16 +1816,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         });
 
         selectorChunkStartedAt = undefined;
-        console.log(
-          `1722 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `1821 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`}`
+          );
 
         token.selectorsEnd = i;
-        console.log(
-          `1727 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.selectorsEnd`}\u001b[${39}m`} = ${
-            token.selectorsEnd
-          }`
-        );
+        DEV &&
+          console.log(
+            `1827 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.selectorsEnd`}\u001b[${39}m`} = ${
+              token.selectorsEnd
+            }`
+          );
       } else if (
         str[i] === "{" &&
         str[i - 1] !== "{" && // avoid Nunjucks variable as CSS rule's value
@@ -1740,90 +1840,104 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // <style>.a{float:left;x">.b{color: red}
         //                           ^
         //                    we're here
-        console.log(
-          `1744 ${`\u001b[${31}m${`opening curlies!`}\u001b[${39}m`}`
-        );
-        console.log(`1746 march backwards, find where selector chunk started`);
+        DEV &&
+          console.log(
+            `1845 ${`\u001b[${31}m${`opening curlies!`}\u001b[${39}m`}`
+          );
+        DEV &&
+          console.log(
+            `1849 march backwards, find where selector chunk started`
+          );
         // let selectorChunkStartedAt2;
         for (let y = i; y--; ) {
-          console.log(
-            `1750 ${`\u001b[${36}m${`str[${y}]`}\u001b[${39}m`} = ${JSON.stringify(
-              str[y],
-              null,
-              4
-            )}`
-          );
-          if (!str[y].trim() || `{}"';`.includes(str[y])) {
+          DEV &&
             console.log(
-              `1758 ${`\u001b[${34}m${`BREAK`}\u001b[${39}m`}, slice: "${`\u001b[${35}m${str.slice(
-                y + 1,
-                i
-              )}\u001b[${39}m`}"`
+              `1855 ${`\u001b[${36}m${`str[${y}]`}\u001b[${39}m`} = ${JSON.stringify(
+                str[y],
+                null,
+                4
+              )}`
             );
+          if (!str[y].trim() || `{}"';`.includes(str[y])) {
+            DEV &&
+              console.log(
+                `1864 ${`\u001b[${34}m${`BREAK`}\u001b[${39}m`}, slice: "${`\u001b[${35}m${str.slice(
+                  y + 1,
+                  i
+                )}\u001b[${39}m`}"`
+              );
 
             // patch the property
             if (property?.start && !property.end) {
               property.end = y + 1;
               property.property = str.slice(property.start, property.end);
-              console.log(
-                `1769 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${
-                  property.end
-                };  ${`\u001b[${33}m${`property.property`}\u001b[${39}m`} = ${
-                  property.property
-                }`
-              );
-              console.log(
-                `1776 PATCHED ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-                  property,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `1876 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${
+                    property.end
+                  };  ${`\u001b[${33}m${`property.property`}\u001b[${39}m`} = ${
+                    property.property
+                  }`
+                );
+              DEV &&
+                console.log(
+                  `1884 PATCHED ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                    property,
+                    null,
+                    4
+                  )}`
+                );
               pushProperty(property);
               propertyReset();
-              console.log(
-                `1785 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `1894 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+                );
 
               token.end = y + 1;
               token.value = str.slice(token.start, token.end);
-              console.log(
-                `1791 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-                  token.end
-                }; ${`\u001b[${33}m${`token.value`}\u001b[${39}m`} = ${
-                  token.value
-                }`
-              );
-              console.log(
-                `1798 PATCHED ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-                  token,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `1901 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                    token.end
+                  }; ${`\u001b[${33}m${`token.value`}\u001b[${39}m`} = ${
+                    token.value
+                  }`
+                );
+              DEV &&
+                console.log(
+                  `1909 PATCHED ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                    token,
+                    null,
+                    4
+                  )}`
+                );
 
-              console.log(`1805 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
+              DEV &&
+                console.log(`1917 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
               pingTagCb(token);
               initToken(str[y + 1] === "@" ? "at" : "rule", y + 1);
               attribReset();
               token.left = left(str, y + 1);
               token.selectorsStart = y + 1;
-              console.log(
-                `1812 NEW ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-                  token,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `1925 NEW ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                    token,
+                    null,
+                    4
+                  )}`
+                );
 
               i = y + 1;
-              console.log(
-                `1821 ${`\u001b[${31}m${`REWIND`}\u001b[${39}m`} ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
-                  i,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `1935 ${`\u001b[${31}m${`REWIND`}\u001b[${39}m`} ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
+                    i,
+                    null,
+                    4
+                  )}`
+                );
             }
 
             break;
@@ -1858,9 +1972,9 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     // we extract the last type="esp" layer to simplify calculations
     let lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
 
-    console.log(`1861 main sorting checks start`);
+    DEV && console.log(`1975 main sorting checks start`);
     if (!doNothing && str[i]) {
-      // console.log(
+      // DEV && console.log(
       //   `1857 ███████████████████████████████████████ IS TAG STARTING? ${startsTag(
       //     str,
       //     i,
@@ -1870,7 +1984,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       //   )}`
       // );
 
-      // console.log(
+      // DEV && console.log(
       //   `1707 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
       //     str,
       //     i,
@@ -1880,7 +1994,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       //   )}`
       // );
 
-      // console.log(
+      // DEV && console.log(
       //   `1717 ███████████████████████████████████████ IS ESP TAG STARTING? ${startsEsp(
       //     str,
       //     i,
@@ -1898,84 +2012,91 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         //
         //
         //
-        console.log(`1901 (html) tag opening`);
+        DEV && console.log(`2015 (html) tag opening`);
 
         if (token.type && token.start !== null) {
           if (token.type === "rule") {
-            console.log(`1905`);
+            DEV && console.log(`2019`);
             if (property?.start) {
               // patch important if needed
               if (property.importantStarts && !property.importantEnds) {
                 property.importantEnds = i;
                 property.important = str.slice(property.importantStarts, i);
-                console.log(
-                  `1912 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantEnds`}\u001b[${39}m`} = ${
-                    property.importantEnds
-                  };  ${`\u001b[${33}m${`property.important`}\u001b[${39}m`} = "${
-                    property.important
-                  }"`
-                );
+                DEV &&
+                  console.log(
+                    `2027 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantEnds`}\u001b[${39}m`} = ${
+                      property.importantEnds
+                    };  ${`\u001b[${33}m${`property.important`}\u001b[${39}m`} = "${
+                      property.important
+                    }"`
+                  );
               }
               // patch property
               if (property.propertyStarts && !property.propertyEnds) {
                 property.propertyEnds = i;
-                console.log(
-                  `1923 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.propertyEnds`}\u001b[${39}m`} = ${
-                    property.propertyEnds
-                  }`
-                );
+                DEV &&
+                  console.log(
+                    `2039 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.propertyEnds`}\u001b[${39}m`} = ${
+                      property.propertyEnds
+                    }`
+                  );
                 if (!property.property) {
                   property.property = str.slice(property.propertyStarts, i);
-                  console.log(
-                    `1930 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.property`}\u001b[${39}m`} = ${JSON.stringify(
-                      property.property,
-                      null,
-                      4
-                    )}`
-                  );
+                  DEV &&
+                    console.log(
+                      `2047 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.property`}\u001b[${39}m`} = ${JSON.stringify(
+                        property.property,
+                        null,
+                        4
+                      )}`
+                    );
                 }
               }
               if (!property.end) {
                 property.end = i;
-                console.log(
-                  `1941 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${
-                    property.end
-                  }`
-                );
+                DEV &&
+                  console.log(
+                    `2059 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${
+                      property.end
+                    }`
+                  );
               }
 
               // patch value
               if (property.valueStarts && !property.valueEnds) {
                 property.valueEnds = i;
-                console.log(
-                  `1951 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueEnds`}\u001b[${39}m`} = ${
-                    property.valueEnds
-                  }`
-                );
+                DEV &&
+                  console.log(
+                    `2070 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueEnds`}\u001b[${39}m`} = ${
+                      property.valueEnds
+                    }`
+                  );
                 if (!property.value) {
                   property.value = str.slice(property.valueStarts, i);
-                  console.log(
-                    `1958 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.value`}\u001b[${39}m`} = ${JSON.stringify(
-                      property.value,
-                      null,
-                      4
-                    )}`
-                  );
+                  DEV &&
+                    console.log(
+                      `2078 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.value`}\u001b[${39}m`} = ${JSON.stringify(
+                        property.value,
+                        null,
+                        4
+                      )}`
+                    );
                 }
               }
 
               pushProperty(property);
               propertyReset();
-              console.log(
-                `1970 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `2091 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+                );
             }
           }
 
-          console.log(`1975 call dumpCurrentToken()`);
+          DEV && console.log(`2096 call dumpCurrentToken()`);
           dumpCurrentToken(token, i);
 
-          console.log(`1978 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
+          DEV && console.log(`2099 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
           tokenReset();
         }
 
@@ -1984,37 +2105,41 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         initToken("tag", i);
         attribReset();
 
-        console.log(
-          `1988 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
-            token.start
-          }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
-        );
+        DEV &&
+          console.log(
+            `2110 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+              token.start
+            }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
+          );
 
         if (withinStyle) {
           withinStyle = false;
-          console.log(
-            `1996 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinStyle`}\u001b[${39}m`} = false`
-          );
+          DEV &&
+            console.log(
+              `2119 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinStyle`}\u001b[${39}m`} = false`
+            );
         }
 
         // extract the tag name:
         let badCharacters = `?![-/`;
         let extractedTagName = "";
         let letterMet = false;
-        console.log(".");
-        console.log(
-          `2006 ${`\u001b[${36}m${`extract the tag name`}\u001b[${39}m`}`
-        );
+        DEV && console.log(".");
+        DEV &&
+          console.log(
+            `2130 ${`\u001b[${36}m${`extract the tag name`}\u001b[${39}m`}`
+          );
 
         if (rightVal) {
           for (let y = rightVal; y < len; y++) {
-            console.log(
-              `${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
-                str[y],
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
+                  str[y],
+                  null,
+                  4
+                )}`
+              );
             if (
               !letterMet &&
               str[y] &&
@@ -2040,13 +2165,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               //               ^
               //             this
             ) {
-              console.log(
-                `2044 SET ${`\u001b[${33}m${`extractedTagName`}\u001b[${39}m`} = ${JSON.stringify(
-                  extractedTagName,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `2170 SET ${`\u001b[${33}m${`extractedTagName`}\u001b[${39}m`} = ${JSON.stringify(
+                    extractedTagName,
+                    null,
+                    4
+                  )}`
+                );
               break;
             } else if (!badCharacters.includes(str[y])) {
               extractedTagName += str[y].trim().toLowerCase();
@@ -2054,49 +2180,54 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           }
         }
 
-        console.log(".");
+        DEV && console.log(".");
 
         // set the kind:
 
         if (extractedTagName === "doctype") {
           (token as TagToken).kind = "doctype";
-          console.log(
-            `2064 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              (token as TagToken).kind
-            }`
-          );
+          DEV &&
+            console.log(
+              `2191 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                (token as TagToken).kind
+              }`
+            );
         } else if (extractedTagName === "cdata") {
           (token as TagToken).kind = "cdata";
-          console.log(
-            `2071 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              (token as TagToken).kind
-            }`
-          );
+          DEV &&
+            console.log(
+              `2199 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                (token as TagToken).kind
+              }`
+            );
         } else if (extractedTagName === "xml") {
           (token as TagToken).kind = "xml";
-          console.log(
-            `2078 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              (token as TagToken).kind
-            }`
-          );
+          DEV &&
+            console.log(
+              `2207 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                (token as TagToken).kind
+              }`
+            );
         } else if (inlineTags.has(extractedTagName)) {
           (token as TagToken).kind = "inline";
-          console.log(
-            `2085 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              (token as TagToken).kind
-            }`
-          );
+          DEV &&
+            console.log(
+              `2215 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                (token as TagToken).kind
+              }`
+            );
 
           if (extractedTagName) {
             // for perf
             doNothing = i;
-            console.log(
-              `2094 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-                doNothing,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `2225 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+                  doNothing,
+                  null,
+                  4
+                )}`
+              );
           }
         }
       } else if (!withinScript && startsHtmlComment(str, i, token, layers)) {
@@ -2107,10 +2238,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         //
         //
         //
-        console.log(`2110 HTML comment opening`);
+        DEV && console.log(`2241 HTML comment opening`);
 
         if (token.start != null) {
-          console.log(`2113 call dumpCurrentToken()`);
+          DEV && console.log(`2244 call dumpCurrentToken()`);
           dumpCurrentToken(token, i);
         }
 
@@ -2120,20 +2251,22 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         attribReset();
         // the "language" default is "html" anyway so no need to set it
 
-        console.log(
-          `2124 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
-            token.start
-          }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
-        );
+        DEV &&
+          console.log(
+            `2256 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+              token.start
+            }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
+          );
 
         // set "closing"
         if (str[i] === "-") {
           (token as CommentToken).closing = true;
-          console.log(
-            `2133 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
-              (token as CommentToken).closing
-            }`
-          );
+          DEV &&
+            console.log(
+              `2266 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+                (token as CommentToken).closing
+              }`
+            );
         } else if (
           matchRightIncl(str, i, ["<![endif]-->"], {
             i: true,
@@ -2143,20 +2276,22 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         ) {
           (token as CommentToken).closing = true;
           (token as CommentToken).kind = "only";
-          console.log(
-            `2147 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
-              (token as CommentToken).closing
-            }; ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              (token as CommentToken).kind
-            }`
-          );
+          DEV &&
+            console.log(
+              `2281 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+                (token as CommentToken).closing
+              }; ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                (token as CommentToken).kind
+              }`
+            );
         }
 
         if (withinStyle) {
           withinStyle = false;
-          console.log(
-            `2158 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinStyle`}\u001b[${39}m`} = false`
-          );
+          DEV &&
+            console.log(
+              `2293 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinStyle`}\u001b[${39}m`} = false`
+            );
         }
       } else if (
         !withinScript &&
@@ -2169,10 +2304,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         //
         //
         //
-        console.log(`2172 CSS block comment opening`);
+        DEV && console.log(`2307 CSS block comment opening`);
 
         if (token.start != null) {
-          console.log(`2175 call dumpCurrentToken()`);
+          DEV && console.log(`2310 call dumpCurrentToken()`);
           dumpCurrentToken(token, i);
         }
 
@@ -2182,11 +2317,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         attribReset();
 
         (token as CommentToken).language = "css";
-        console.log(
-          `2186 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.language`}\u001b[${39}m`} = ${
-            (token as CommentToken).language
-          }`
-        );
+        DEV &&
+          console.log(
+            `2322 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.language`}\u001b[${39}m`} = ${
+              (token as CommentToken).language
+            }`
+          );
         (token as CommentToken).kind =
           str[i] === "/" && str[i + 1] === "/" ? "line" : "block";
         token.value = str.slice(i, i + 2);
@@ -2200,21 +2336,23 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         }
 
         doNothing = i + 2;
-        console.log(
-          `2204 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-        );
+        DEV &&
+          console.log(
+            `2341 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+          );
 
-        console.log(
-          `2208 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-            token,
-            null,
-            4
-          )}; ${`\u001b[${33}m${`withinStyleComment`}\u001b[${39}m`} = ${JSON.stringify(
-            withinStyleComment,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `2346 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+              token,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`withinStyleComment`}\u001b[${39}m`} = ${JSON.stringify(
+              withinStyleComment,
+              null,
+              4
+            )}`
+          );
       } else if (
         !withinScript &&
         // if we encounter two consecutive characters of guessed lump
@@ -2302,9 +2440,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         //
         //
         //
-        console.log(
-          `2306 ${`\u001b[${32}m${`ESP heads or tails start here`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `2445 ${`\u001b[${32}m${`ESP heads or tails start here`}\u001b[${39}m`}`
+          );
 
         // in case of inline CSS styles, check, maybe we need to end any
         // inline CSS rule tokens
@@ -2317,13 +2456,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             attrib.attribValue[~-attrib.attribValue.length].start,
             i
           );
-          console.log(
-            `2321 ${`\u001b[${32}m${`PATCH`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValue[~-attrib.attribValue.length]`}\u001b[${39}m`} = ${JSON.stringify(
-              attrib.attribValue[~-attrib.attribValue.length],
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `2461 ${`\u001b[${32}m${`PATCH`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValue[~-attrib.attribValue.length]`}\u001b[${39}m`} = ${JSON.stringify(
+                attrib.attribValue[~-attrib.attribValue.length],
+                null,
+                4
+              )}`
+            );
         }
 
         //
@@ -2335,29 +2475,32 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           i,
           layers
         );
-        console.log(
-          `2339 ██ ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wholeEspTagLumpOnTheRight`}\u001b[${39}m`} = ${wholeEspTagLumpOnTheRight}`
-        );
-        console.log(
-          `2342 FIY, ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
-            layers,
-            null,
-            4
-          )}`
-        );
-        console.log(
-          `2349 FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-            token,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `2480 ██ ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wholeEspTagLumpOnTheRight`}\u001b[${39}m`} = ${wholeEspTagLumpOnTheRight}`
+          );
+        DEV &&
+          console.log(
+            `2484 FIY, ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+              layers,
+              null,
+              4
+            )}`
+          );
+        DEV &&
+          console.log(
+            `2492 FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+              token,
+              null,
+              4
+            )}`
+          );
 
         // lump can't end with attribute's ending, that is, something like:
         // <frameset cols="**">
         // that's a false positive
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
-          console.log(`2360`);
+          DEV && console.log(`2503`);
           // check the "layers" records - maybe it's a closing part of a set?
           let lengthOfClosingEspChunk;
 
@@ -2377,16 +2520,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               layers
             ))
           ) {
-            console.log(
-              `2381 closing part of a set ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} against the last layer`
-            );
-            console.log(
-              `2384 ${`\u001b[${33}m${`lengthOfClosingEspChunk`}\u001b[${39}m`} = ${JSON.stringify(
-                lengthOfClosingEspChunk,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `2525 closing part of a set ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} against the last layer`
+              );
+            DEV &&
+              console.log(
+                `2529 ${`\u001b[${33}m${`lengthOfClosingEspChunk`}\u001b[${39}m`} = ${JSON.stringify(
+                  lengthOfClosingEspChunk,
+                  null,
+                  4
+                )}`
+              );
 
             // if this was closing of a standalone esp tag, terminate it and ping
             // it to the cb()
@@ -2403,52 +2548,57 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 //                         ^
                 if (str[i] === ">" && str[leftVal as number] === "/") {
                   token.tailStartsAt = leftVal;
-                  console.log(
-                    `2407 closing slash correction, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} token.tailStartsAt=${
-                      token.tailStartsAt
-                    }`
-                  );
+                  DEV &&
+                    console.log(
+                      `2553 closing slash correction, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} token.tailStartsAt=${
+                        token.tailStartsAt
+                      }`
+                    );
                   token.tail = str.slice(token.tailStartsAt as number, i + 1);
                 }
 
-                console.log(
-                  `2415 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${32}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-                    token,
-                    null,
-                    4
-                  )}`
-                );
+                DEV &&
+                  console.log(
+                    `2562 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${32}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                      token,
+                      null,
+                      4
+                    )}`
+                  );
               }
 
               // activate doNothing until the end of tails because otherwise,
               // mid-tail characters will initiate new tail start clauses
               // and we'll have overlap/false result
               doNothing = token.tailEndsAt as number;
-              console.log(
-                `2428 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-              );
+              DEV &&
+                console.log(
+                  `2576 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+                );
 
-              console.log(
-                `2432 FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-                  token,
-                  null,
-                  4
-                )}; ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-                  property,
-                  null,
-                  4
-                )}; ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-                  attrib,
-                  null,
-                  4
-                )};`
-              );
+              DEV &&
+                console.log(
+                  `2581 FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                    token,
+                    null,
+                    4
+                  )}; ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                    property,
+                    null,
+                    4
+                  )}; ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                    attrib,
+                    null,
+                    4
+                  )};`
+                );
               // it depends will we ping it as a standalone token or will we
               // nest inside the parent tag among attributes
               if (parentTokenToBackup) {
-                console.log(
-                  `2450 ${`\u001b[${32}m${`NEST INSIDE THE STASHED TAG`}\u001b[${39}m`}`
-                );
+                DEV &&
+                  console.log(
+                    `2600 ${`\u001b[${32}m${`NEST INSIDE THE STASHED TAG`}\u001b[${39}m`}`
+                  );
                 // push token to parent, to be among its attributes
 
                 // 1. ensure key "attribs" exist (thinking about comment tokens etc)
@@ -2459,96 +2609,108 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 // 2. push somewhere
                 if (property?.start) {
                   // push to attribValue
-                  console.log(
-                    `2463 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} token to be inside ${`\u001b[${33}m${`property.value`}\u001b[${39}m`}`
-                  );
+                  DEV &&
+                    console.log(
+                      `2614 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} token to be inside ${`\u001b[${33}m${`property.value`}\u001b[${39}m`}`
+                    );
                   if (!Array.isArray(property.value)) {
                     property.value = [];
                   }
                   property.value.push({ ...token } as any);
 
-                  console.log(
-                    `2471 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-                      property,
-                      null,
-                      4
-                    )}`
-                  );
+                  DEV &&
+                    console.log(
+                      `2623 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                        property,
+                        null,
+                        4
+                      )}`
+                    );
                 } else if (attribToBackup) {
                   // restore
                   attrib = attribToBackup;
-                  console.log(
-                    `2481 ${`\u001b[${35}m${`RESTORE`}\u001b[${39}m`} attrib from stashed, now = ${JSON.stringify(
-                      attrib,
-                      null,
-                      4
-                    )}`
-                  );
+                  DEV &&
+                    console.log(
+                      `2634 ${`\u001b[${35}m${`RESTORE`}\u001b[${39}m`} attrib from stashed, now = ${JSON.stringify(
+                        attrib,
+                        null,
+                        4
+                      )}`
+                    );
 
                   // push to attribValue
-                  console.log(
-                    `2490 PUSH token to be inside ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
-                  );
+                  DEV &&
+                    console.log(
+                      `2644 PUSH token to be inside ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
+                    );
                   attrib.attribValue.push({ ...token } as any);
                 } else if (
                   attrib?.attribStarts &&
                   Array.isArray(attrib.attribValue)
                 ) {
                   // push to attrib value
-                  console.log(`2498 PUSH token to attrib`);
+                  DEV && console.log(`2652 PUSH token to attrib`);
                   attrib.attribValue.push({ ...token } as any);
-                  console.log(
-                    `2501 now ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
-                      attrib.attribValue,
-                      null,
-                      4
-                    )}`
-                  );
+                  DEV &&
+                    console.log(
+                      `2656 now ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+                        attrib.attribValue,
+                        null,
+                        4
+                      )}`
+                    );
                 } else {
                   // push to attribs
-                  console.log(`2509 PUSH token to be among attribs`);
+                  DEV && console.log(`2664 PUSH token to be among attribs`);
                   parentTokenToBackup.attribs.push({ ...token } as any);
                 }
 
                 // 3. parentTokenToBackup becomes token
                 token = clone(parentTokenToBackup);
-                console.log(
-                  `2516 ${`\u001b[${32}m${`RESTORE`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-                    token,
-                    null,
-                    4
-                  )}`
-                );
+                DEV &&
+                  console.log(
+                    `2672 ${`\u001b[${32}m${`RESTORE`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                      token,
+                      null,
+                      4
+                    )}`
+                  );
 
                 // 4. resets
                 parentTokenToBackup = undefined;
                 attribToBackup = undefined;
 
                 // 5. pop layers, remove the opening ESP tag record
-                console.log(`2528 POP layers`);
+                DEV && console.log(`2684 POP layers`);
                 layers.pop();
 
                 // 6. finally, continue, bypassing the rest of the code in this loop
-                console.log(
-                  `2533 ${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`
-                );
+                DEV &&
+                  console.log(
+                    `2690 ${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`
+                  );
 
                 continue;
               } else {
-                console.log(
-                  `2539 ${`\u001b[${32}m${`PING AS STANDALONE`}\u001b[${39}m`}`
-                );
+                DEV &&
+                  console.log(
+                    `2697 ${`\u001b[${32}m${`PING AS STANDALONE`}\u001b[${39}m`}`
+                  );
                 dumpCurrentToken(token, i);
               }
 
-              console.log(`2544 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
+              DEV &&
+                console.log(`2703 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
               tokenReset();
             }
 
             // pop the recorded layers, at this moment record of ESP chunk
             // will be lost:
             layers.pop();
-            console.log(`2551 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`);
+            DEV &&
+              console.log(
+                `2712 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`
+              );
           } else if (
             layers.length &&
             // eslint-disable-next-line no-cond-assign
@@ -2558,19 +2720,22 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               true
             ))
           ) {
-            console.log(
-              `2562 closing part of a set ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} against first layer`
-            );
-            console.log(
-              `2565 wipe all layers, there were strange unclosed characters`
-            );
-            console.log(
-              `2568 ${`\u001b[${33}m${`lengthOfClosingEspChunk`}\u001b[${39}m`} = ${JSON.stringify(
-                lengthOfClosingEspChunk,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `2725 closing part of a set ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} against first layer`
+              );
+            DEV &&
+              console.log(
+                `2729 wipe all layers, there were strange unclosed characters`
+              );
+            DEV &&
+              console.log(
+                `2733 ${`\u001b[${33}m${`lengthOfClosingEspChunk`}\u001b[${39}m`} = ${JSON.stringify(
+                  lengthOfClosingEspChunk,
+                  null,
+                  4
+                )}`
+              );
 
             // if this was closing of a standalone esp tag, terminate it and ping
             // it to the cb()
@@ -2578,13 +2743,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               if (!token.end) {
                 token.end = i + (lengthOfClosingEspChunk || 0);
                 token.value = str.slice(token.start, token.end);
-                console.log(
-                  `2582 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-                    token,
-                    null,
-                    4
-                  )} before pinging`
-                );
+                DEV &&
+                  console.log(
+                    `2748 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                      token,
+                      null,
+                      4
+                    )} before pinging`
+                  );
               }
               if (!token.tailStartsAt) {
                 token.tailStartsAt = i;
@@ -2595,14 +2761,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               }
               dumpCurrentToken(token, i);
 
-              console.log(`2598 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
+              DEV &&
+                console.log(`2765 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
               tokenReset();
             }
 
             // pop the recorded layers, at this moment record of ESP chunk
             // will be lost:
             layers.length = 0;
-            console.log(`2605 ${`\u001b[${32}m${`WIPE`}\u001b[${39}m`} layers`);
+            DEV &&
+              console.log(
+                `2774 ${`\u001b[${32}m${`WIPE`}\u001b[${39}m`} layers`
+              );
           } else if (
             // insurance against stray tails inside attributes:
             // <a b="{ x %}">
@@ -2665,27 +2835,31 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             (attrib.attribValue[~-attrib.attribValue.length] as any).type ===
               "text"
           ) {
-            console.log(
-              `2669 ${`\u001b[${31}m${`██`}\u001b[${39}m`} seems like a stray lump`
-            );
-            console.log(
-              `2672 FIY, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-                attrib,
-                null,
-                4
-              )}`
-            );
-            console.log(
-              `2679 FIY, ${`\u001b[${33}m${`disposableVar`}\u001b[${39}m`} = ${JSON.stringify(
-                disposableVar,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `2840 ${`\u001b[${31}m${`██`}\u001b[${39}m`} seems like a stray lump`
+              );
+            DEV &&
+              console.log(
+                `2844 FIY, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                  attrib,
+                  null,
+                  4
+                )}`
+              );
+            DEV &&
+              console.log(
+                `2852 FIY, ${`\u001b[${33}m${`disposableVar`}\u001b[${39}m`} = ${JSON.stringify(
+                  disposableVar,
+                  null,
+                  4
+                )}`
+              );
 
-            console.log(
-              `2687 let's convert last attrib.attribValue[] object into ESP-type`
-            );
+            DEV &&
+              console.log(
+                `2861 let's convert last attrib.attribValue[] object into ESP-type`
+              );
 
             // token does contain ESP tags, so it's not pure HTML
             token.pureHTML = false;
@@ -2709,9 +2883,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             // <a b="something { x %}">
 
             if (!disposableVar.idx) {
-              console.log(
-                `2713 ${`\u001b[${33}m${`ESP tag is this whole text token`}\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `2888 ${`\u001b[${33}m${`ESP tag is this whole text token`}\u001b[${39}m`}`
+                );
               newTokenToPutInstead.head = disposableVar.char;
               newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
               newTokenToPutInstead.headEndsAt =
@@ -2724,23 +2899,26 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               (attrib.attribValue as any[])[~-attrib.attribValue.length] =
                 newTokenToPutInstead;
             } else {
-              console.log(
-                `2728 ${`\u001b[${33}m${`we need to extract frontal part of text token`}\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `2904 ${`\u001b[${33}m${`we need to extract frontal part of text token`}\u001b[${39}m`}`
+                );
             }
           } else {
-            console.log(
-              `2733 closing part of a set ${`\u001b[${31}m${`NOT MATCHED`}\u001b[${39}m`} - means it's a new opening`
-            );
+            DEV &&
+              console.log(
+                `2910 closing part of a set ${`\u001b[${31}m${`NOT MATCHED`}\u001b[${39}m`} - means it's a new opening`
+              );
 
             // If we've got an unclosed heads and here new heads are starting,
             // pop the last heads in layers - they will never be matched anyway.
             // Let parser/linter deal with it
             if (lastLayerIs("esp")) {
               layers.pop();
-              console.log(
-                `2742 ${`\u001b[${31}m${`POP layers - it was heads without tails`}\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `2920 ${`\u001b[${31}m${`POP layers - it was heads without tails`}\u001b[${39}m`}`
+                );
             }
 
             // if we're within a tag attribute, push the last esp token there
@@ -2748,36 +2926,38 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               if (!Array.isArray(attribToBackup.attribValue)) {
                 attribToBackup.attribValue = [];
               }
-              console.log(`2751 push token to attribValue`);
+              DEV && console.log(`2929 push token to attribValue`);
               attribToBackup.attribValue.push(token as any);
             }
 
-            console.log(`2755 push new layer`);
+            DEV && console.log(`2933 push new layer`);
             layers.push({
               type: "esp",
               openingLump: wholeEspTagLumpOnTheRight,
               guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
               position: i,
             });
-            console.log(
-              `2763 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-                {
-                  type: "esp",
-                  openingLump: wholeEspTagLumpOnTheRight,
-                  guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
-                  position: i,
-                },
-                null,
-                4
-              )}`
-            );
-            console.log(
-              `2775 ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
-                layers,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `2942 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                  {
+                    type: "esp",
+                    openingLump: wholeEspTagLumpOnTheRight,
+                    guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
+                    position: i,
+                  },
+                  null,
+                  4
+                )}`
+              );
+            DEV &&
+              console.log(
+                `2955 ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+                  layers,
+                  null,
+                  4
+                )}`
+              );
 
             // also, if it's a standalone ESP token, terminate the previous token
             // and start recording a new-one
@@ -2788,24 +2968,27 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
               // we nest ESP tokens inside "tag" type attributes
               if (token.type === "tag") {
-                console.log(
-                  `2792 ${`\u001b[${36}m${`██`}\u001b[${39}m`} ESP tag-inside-tag clauses`
-                );
+                DEV &&
+                  console.log(
+                    `2973 ${`\u001b[${36}m${`██`}\u001b[${39}m`} ESP tag-inside-tag clauses`
+                  );
                 // maybe it's an ESP token within an inline CSS style?
                 // <div style="width: {{ w }}">
 
-                console.log(
-                  `2798 FIY, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-                    attrib,
-                    null,
-                    4
-                  )}`
-                );
+                DEV &&
+                  console.log(
+                    `2980 FIY, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                      attrib,
+                      null,
+                      4
+                    )}`
+                  );
 
                 if (attrib && attrib.attribName === "style") {
-                  console.log(
-                    `2807 ${`\u001b[${32}m${`ESP inside inline CSS style rule's value`}\u001b[${39}m`}`
-                  );
+                  DEV &&
+                    console.log(
+                      `2990 ${`\u001b[${32}m${`ESP inside inline CSS style rule's value`}\u001b[${39}m`}`
+                    );
 
                   if (
                     property.start &&
@@ -2814,13 +2997,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                     !property.valueStarts
                   ) {
                     property.valueStarts = i;
-                    console.log(
-                      `2818 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueStarts`}\u001b[${39}m`} = ${JSON.stringify(
-                        property.valueStarts,
-                        null,
-                        4
-                      )}`
-                    );
+                    DEV &&
+                      console.log(
+                        `3002 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueStarts`}\u001b[${39}m`} = ${JSON.stringify(
+                          property.valueStarts,
+                          null,
+                          4
+                        )}`
+                      );
                   } else if (property.start) {
                     // imagine:
 
@@ -2836,32 +3020,33 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
                     if (!Array.isArray(property.value)) {
                       // terminate the property
-                      console.log(
-                        `2840 ███████████████████████████████████████ FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-                          token,
-                          null,
-                          4
-                        )}; ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-                          property,
-                          null,
-                          4
-                        )}; ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-                          attrib,
-                          null,
-                          4
-                        )}`
-                      );
+                      DEV &&
+                        console.log(
+                          `3025 ███████████████████████████████████████ FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                            token,
+                            null,
+                            4
+                          )}; ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                            property,
+                            null,
+                            4
+                          )}; ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                            attrib,
+                            null,
+                            4
+                          )}`
+                        );
 
                       // complete the property
                       if (property.propertyStarts && !property.propertyEnds) {
-                        console.log(`2857`);
+                        DEV && console.log(`3042`);
                         property.propertyEnds = (leftVal as number) + 1;
                         property.property = str.slice(
                           property.propertyStarts,
                           i
                         );
                       } else if (property.valueStarts && !property.valueEnds) {
-                        console.log(`2864`);
+                        DEV && console.log(`3049`);
                         property.valueEnds = (leftVal as number) + 1;
                         property.value = str.slice(
                           property.valueStarts,
@@ -2873,19 +3058,21 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                         property.end = (leftVal as number) + 1;
                       }
 
-                      console.log(
-                        `2877 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-                          property,
-                          null,
-                          4
-                        )}`
-                      );
+                      DEV &&
+                        console.log(
+                          `3063 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                            property,
+                            null,
+                            4
+                          )}`
+                        );
 
                       if (attrib && Array.isArray(attrib.attribValue)) {
                         attrib.attribValue.push(clone(property));
-                        console.log(
-                          `2887 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} property into ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
-                        );
+                        DEV &&
+                          console.log(
+                            `3074 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} property into ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
+                          );
 
                         // if there was trailing whitespace, like for example:
                         // <td style="a: b;\n    {% if x %}c: d {% endif %}\ne: f;">
@@ -2894,9 +3081,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                         //
                         // then create the missing text token to reflect this gap
                         if (property.end !== i) {
-                          console.log(
-                            `2898 PATCH NEEDED ███████████████████████████████████████`
-                          );
+                          DEV &&
+                            console.log(
+                              `3086 PATCH NEEDED ███████████████████████████████████████`
+                            );
                           let newTextToken = getNewToken(
                             "text",
                             (leftVal as number) + 1
@@ -2906,20 +3094,22 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                             (leftVal as number) + 1,
                             i
                           );
-                          console.log(
-                            `2910 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}${`\u001b[${33}m${`newTextToken`}\u001b[${39}m`} = ${JSON.stringify(
-                              newTextToken,
-                              null,
-                              4
-                            )}`
-                          );
+                          DEV &&
+                            console.log(
+                              `3099 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}${`\u001b[${33}m${`newTextToken`}\u001b[${39}m`} = ${JSON.stringify(
+                                newTextToken,
+                                null,
+                                4
+                              )}`
+                            );
                           attrib.attribValue.push(clone(newTextToken));
                         }
 
                         propertyReset();
-                        console.log(
-                          `2921 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} property`
-                        );
+                        DEV &&
+                          console.log(
+                            `3111 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} property`
+                          );
                       }
                     }
                   }
@@ -2936,35 +3126,38 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                     token.tagNameEndsAt = i;
                     token.tagName = str.slice(token.tagNameStartsAt, i);
                     token.recognised = isTagNameRecognised(token.tagName);
-                    console.log(
-                      `2940 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndsAt`}\u001b[${39}m`} = ${
-                        token.tagNameEndsAt
-                      }; ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
-                        token.tagName
-                      }`
-                    );
+                    DEV &&
+                      console.log(
+                        `3131 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndsAt`}\u001b[${39}m`} = ${
+                          token.tagNameEndsAt
+                        }; ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
+                          token.tagName
+                        }`
+                      );
                   }
 
                   if (attrib.attribStarts && !attrib.attribEnds) {
                     attribToBackup = clone(attrib);
-                    console.log(
-                      `2951 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attribToBackup`}\u001b[${39}m`} = ${JSON.stringify(
-                        attribToBackup,
-                        null,
-                        4
-                      )}`
-                    );
+                    DEV &&
+                      console.log(
+                        `3143 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attribToBackup`}\u001b[${39}m`} = ${JSON.stringify(
+                          attribToBackup,
+                          null,
+                          4
+                        )}`
+                      );
                   }
                 }
 
                 parentTokenToBackup = clone(token);
-                console.log(
-                  `2962 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`parentTokenToBackup`}\u001b[${39}m`} = ${JSON.stringify(
-                    parentTokenToBackup,
-                    null,
-                    4
-                  )}`
-                );
+                DEV &&
+                  console.log(
+                    `3155 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`parentTokenToBackup`}\u001b[${39}m`} = ${JSON.stringify(
+                      parentTokenToBackup,
+                      null,
+                      4
+                    )}`
+                  );
               } else if (token.type === "text") {
                 // case like:
                 // <div style="x: a{{ b }}c{{ d }}e;">
@@ -2973,31 +3166,34 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
                 token.end = i;
                 token.value = str.slice(token.start, i);
-                console.log(
-                  `2977 COMPLETE ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-                    token,
-                    null,
-                    4
-                  )}`
-                );
-
-                if (Array.isArray(property.value)) {
-                  property.value.push(token);
+                DEV &&
                   console.log(
-                    `2987 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`property`}\u001b[${39}m`} now: ${JSON.stringify(
-                      property,
+                    `3171 COMPLETE ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                      token,
                       null,
                       4
                     )}`
                   );
+
+                if (Array.isArray(property.value)) {
+                  property.value.push(token);
+                  DEV &&
+                    console.log(
+                      `3182 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`property`}\u001b[${39}m`} now: ${JSON.stringify(
+                        property,
+                        null,
+                        4
+                      )}`
+                    );
                 } else {
-                  console.log(`2994 dump the token`);
+                  DEV && console.log(`3189 dump the token`);
                   dumpCurrentToken(token, i);
                 }
               } else if (!attribToBackup) {
-                console.log(
-                  `2999 ${`\u001b[${36}m${`██`}\u001b[${39}m`} standalone ESP tag - call the dump`
-                );
+                DEV &&
+                  console.log(
+                    `3195 ${`\u001b[${36}m${`██`}\u001b[${39}m`} standalone ESP tag - call the dump`
+                  );
                 dumpCurrentToken(token, i);
               } else if (
                 attribToBackup &&
@@ -3011,9 +3207,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 !attribToBackup.attribValue[~-attribToBackup.attribValue.length]
                   .end
               ) {
-                console.log(
-                  `3015 complete the unclosed token in attribToBackup`
-                );
+                DEV &&
+                  console.log(
+                    `3212 complete the unclosed token in attribToBackup`
+                  );
                 attribToBackup.attribValue[
                   ~-attribToBackup.attribValue.length
                 ].end = i;
@@ -3025,13 +3222,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                   ].start,
                   i
                 );
-                console.log(
-                  `3029 ██ patched ${`\u001b[${33}m${`attribToBackup`}\u001b[${39}m`} = ${JSON.stringify(
-                    attribToBackup,
-                    null,
-                    4
-                  )}`
-                );
+                DEV &&
+                  console.log(
+                    `3227 ██ patched ${`\u001b[${33}m${`attribToBackup`}\u001b[${39}m`} = ${JSON.stringify(
+                      attribToBackup,
+                      null,
+                      4
+                    )}`
+                  );
               }
             }
 
@@ -3042,11 +3240,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             // attribReset();
             // ^^^ DON'T RESET attrib - because we nest ESP tags within attrib.value
 
-            console.log(
-              `3046 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
-                token.start
-              }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
-            );
+            DEV &&
+              console.log(
+                `3245 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+                  token.start
+                }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
+                  token.type
+                }`
+              );
             (token as EspToken).head = wholeEspTagLumpOnTheRight;
             (token as EspToken).headStartsAt = i;
             (token as EspToken).headEndsAt =
@@ -3055,13 +3256,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             // toggle parentTokenToBackup.pureHTML
             if (parentTokenToBackup?.pureHTML) {
               parentTokenToBackup.pureHTML = false;
-              console.log(
-                `3059 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`parentTokenToBackup.pureHTML`}\u001b[${39}m`} = ${JSON.stringify(
-                  parentTokenToBackup.pureHTML,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `3261 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`parentTokenToBackup.pureHTML`}\u001b[${39}m`} = ${JSON.stringify(
+                    parentTokenToBackup.pureHTML,
+                    null,
+                    4
+                  )}`
+                );
             }
 
             // if text token has been initiated, imagine:
@@ -3082,23 +3284,25 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               Array.isArray(attribToBackup.attribValue) &&
               attribToBackup.attribValue.length
             ) {
-              console.log(`3085 *`);
+              DEV && console.log(`3287 *`);
               if (
                 attribToBackup.attribValue[~-attribToBackup.attribValue.length]
                   .start === token.start
               ) {
-                console.log(
-                  `3091 ${`\u001b[${31}m${`TEXT TOKEN INITIATED WHERE ESP WILL BE`}\u001b[${39}m`}`
-                );
+                DEV &&
+                  console.log(
+                    `3294 ${`\u001b[${31}m${`TEXT TOKEN INITIATED WHERE ESP WILL BE`}\u001b[${39}m`}`
+                  );
                 // erase it from stash
                 attribToBackup.attribValue.pop();
-                console.log(
-                  `3096 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} attribToBackup.attribValue, now attribToBackup.attribValue: ${JSON.stringify(
-                    attribToBackup.attribValue,
-                    null,
-                    4
-                  )}`
-                );
+                DEV &&
+                  console.log(
+                    `3300 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} attribToBackup.attribValue, now attribToBackup.attribValue: ${JSON.stringify(
+                      attribToBackup.attribValue,
+                      null,
+                      4
+                    )}`
+                  );
               } else if (
                 // if the "text" type object is the last in "attribValue" and
                 // it's not closed, let's close it and calculate its value:
@@ -3110,7 +3314,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 !attribToBackup.attribValue[~-attribToBackup.attribValue.length]
                   .end
               ) {
-                console.log(`3113`);
+                DEV && console.log(`3317`);
                 attribToBackup.attribValue[
                   ~-attribToBackup.attribValue.length
                 ].end = i;
@@ -3123,7 +3327,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                   i
                 );
 
-                console.log(`3126`);
+                DEV && console.log(`3330`);
               }
             }
           }
@@ -3131,12 +3335,13 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           // do nothing for the second and following characters from the lump
           doNothing =
             i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
-          console.log(
-            `3135 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-          );
+          DEV &&
+            console.log(
+              `3340 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+            );
         }
 
-        console.log(`3139 end of ESP head/tail clauses reached`);
+        DEV && console.log(`3344 end of ESP head/tail clauses reached`);
       } else if (
         !withinScript &&
         withinStyle &&
@@ -3164,63 +3369,69 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // or rogue characters. In either case, inside styles, when
         // "withinStyle" is on, non-whitespace character terminates
         // this text token and "rule" token starts
-        console.log(
-          `3168 ██ ${`\u001b[${32}m${`at/rule starts`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `3374 ██ ${`\u001b[${32}m${`at/rule starts`}\u001b[${39}m`}`
+          );
 
         if (token.type) {
-          console.log(`3172 call dumpCurrentToken()`);
+          DEV && console.log(`3378 call dumpCurrentToken()`);
           dumpCurrentToken(token, i);
         }
 
         initToken(str[i] === "@" ? "at" : "rule", i);
         attribReset();
         (token as RuleToken).left = lastNonWhitespaceCharAt;
-        console.log(
-          `3180 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.left`}\u001b[${39}m`} = ${JSON.stringify(
-            (token as RuleToken).left,
-            null,
-            4
-          )}`
-        );
-        (token as RuleToken).nested = layers.some((o) => o.type === "at");
-        console.log(
-          `3188 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.nested`}\u001b[${39}m`} = ${JSON.stringify(
-            (token as RuleToken).nested,
-            null,
-            4
-          )}`
-        );
-      } else if (!token.type) {
-        console.log(`3195 BLANK token, so initiate text token`);
-        initToken("text", i);
-        attribReset();
-        console.log(
-          `3199 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-            token,
-            null,
-            4
-          )}`
-        );
-
-        if (withinScript && str.indexOf("</script>", i)) {
+        DEV &&
           console.log(
-            `3208 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-              doNothing,
+            `3387 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.left`}\u001b[${39}m`} = ${JSON.stringify(
+              (token as RuleToken).left,
               null,
               4
             )}`
           );
+        (token as RuleToken).nested = layers.some((o) => o.type === "at");
+        DEV &&
+          console.log(
+            `3396 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.nested`}\u001b[${39}m`} = ${JSON.stringify(
+              (token as RuleToken).nested,
+              null,
+              4
+            )}`
+          );
+      } else if (!token.type) {
+        DEV && console.log(`3403 BLANK token, so initiate text token`);
+        initToken("text", i);
+        attribReset();
+        DEV &&
+          console.log(
+            `3408 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+              token,
+              null,
+              4
+            )}`
+          );
+
+        if (withinScript && str.indexOf("</script>", i)) {
+          DEV &&
+            console.log(
+              `3418 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+                doNothing,
+                null,
+                4
+              )}`
+            );
           doNothing = str.indexOf("</script>", i);
         } else {
           doNothing = i;
-          console.log(
-            `3218 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-              doNothing,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `3429 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+                doNothing,
+                null,
+                4
+              )}`
+            );
         }
       }
     }
@@ -3258,13 +3469,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         trimBeforeMatching: true,
         maxMismatches: 2,
       });
-      console.log(
-        `3262 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${
-          R1 ? 32 : 31
-        }m${`R1`}\u001b[${39}m`} = ${R1}; ${`\u001b[${
-          R2 ? 32 : 31
-        }m${`R2`}\u001b[${39}m`} = ${R2}`
-      );
+      DEV &&
+        console.log(
+          `3474 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${
+            R1 ? 32 : 31
+          }m${`R1`}\u001b[${39}m`} = ${R1}; ${`\u001b[${
+            R2 ? 32 : 31
+          }m${`R2`}\u001b[${39}m`} = ${R2}`
+        );
     }
 
     // catch the end of a css property (with or without !important)
@@ -3296,7 +3508,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 property.value[~-property.value.length].type === "esp"
             ))))
     ) {
-      console.log(`3299 ${`\u001b[${32}m${`css property ends`}\u001b[${39}m`}`);
+      DEV &&
+        console.log(
+          `3513 ${`\u001b[${32}m${`css property ends`}\u001b[${39}m`}`
+        );
 
       /* istanbul ignore else */
       if (property.importantStarts && !property.importantEnds) {
@@ -3305,17 +3520,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           property.importantStarts,
           property.importantEnds
         );
-        console.log(
-          `3309 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantEnds`}\u001b[${39}m`} = ${JSON.stringify(
-            property.importantEnds,
-            null,
-            4
-          )}; ${`\u001b[${33}m${`property.important`}\u001b[${39}m`} = ${JSON.stringify(
-            property.important,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3525 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantEnds`}\u001b[${39}m`} = ${JSON.stringify(
+              property.importantEnds,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`property.important`}\u001b[${39}m`} = ${JSON.stringify(
+              property.important,
+              null,
+              4
+            )}`
+          );
       }
 
       /* istanbul ignore else */
@@ -3323,73 +3539,79 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         property.valueEnds = (left(str, i) as number) + 1;
         if (!Array.isArray(property.value)) {
           property.value = str.slice(property.valueStarts, property.valueEnds);
-          console.log(
-            `3327 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueEnds`}\u001b[${39}m`} = ${JSON.stringify(
-              property.valueEnds,
-              null,
-              4
-            )}; ${`\u001b[${33}m${`property.value`}\u001b[${39}m`} = ${JSON.stringify(
-              property.value,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `3544 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueEnds`}\u001b[${39}m`} = ${JSON.stringify(
+                property.valueEnds,
+                null,
+                4
+              )}; ${`\u001b[${33}m${`property.value`}\u001b[${39}m`} = ${JSON.stringify(
+                property.value,
+                null,
+                4
+              )}`
+            );
         }
       }
 
       /* istanbul ignore else */
       if (str[i] === ";") {
         property.semi = i;
-        console.log(
-          `3344 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
-            property.semi,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3562 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
+              property.semi,
+              null,
+              4
+            )}`
+          );
         property.end = i + 1;
-        console.log(
-          `3352 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-            property.end,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3571 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+              property.end,
+              null,
+              4
+            )}`
+          );
       } else if (str[rightVal as number] === ";") {
         property.semi = rightVal;
         property.end = (property.semi as number) + 1;
-        console.log(
-          `3362 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
-            property.semi,
-            null,
-            4
-          )}; ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-            property.end,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3582 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
+              property.semi,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+              property.end,
+              null,
+              4
+            )}`
+          );
 
         doNothing = property.end;
-        console.log(
-          `3375 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-            doNothing,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3596 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+              doNothing,
+              null,
+              4
+            )}`
+          );
       }
 
       /* istanbul ignore else */
       if (!property.end) {
         property.end = (left(str, i) as number) + 1;
-        console.log(
-          `3387 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-            property.end,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3609 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+              property.end,
+              null,
+              4
+            )}`
+          );
       }
 
       /* istanbul ignore else */
@@ -3398,25 +3620,27 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         token.value = str.slice(token.start, i);
         if (Array.isArray(property.value)) {
           property.value.push(token);
-          console.log(
-            `3402 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-              property,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `3625 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                property,
+                null,
+                4
+              )}`
+            );
         }
 
         // restore real token
         if (parentTokenToBackup) {
           token = clone(parentTokenToBackup);
-          console.log(
-            `3414 ${`\u001b[${32}m${`RESTORE`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-              token,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `3638 ${`\u001b[${32}m${`RESTORE`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                token,
+                null,
+                4
+              )}`
+            );
         }
       }
 
@@ -3435,44 +3659,48 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         newTextToken = getNewToken("text", property.valueEnds) as TextToken;
         newTextToken.end = i;
         newTextToken.value = str.slice(property.valueEnds as number, i);
-        console.log(
-          `3439 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}${`\u001b[${33}m${`newTextToken`}\u001b[${39}m`} = ${JSON.stringify(
-            newTextToken,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3664 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}${`\u001b[${33}m${`newTextToken`}\u001b[${39}m`} = ${JSON.stringify(
+              newTextToken,
+              null,
+              4
+            )}`
+          );
       }
 
       pushProperty(property);
-      console.log(
-        `3449 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-          property,
-          null,
-          4
-        )}, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`}`
-      );
-      propertyReset();
-      if (newTextToken) {
+      DEV &&
         console.log(
-          `3458 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-            newTextToken,
+          `3675 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+            property,
             null,
             4
-          )}`
+          )}, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`}`
         );
+      propertyReset();
+      if (newTextToken) {
+        DEV &&
+          console.log(
+            `3685 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+              newTextToken,
+              null,
+              4
+            )}`
+          );
         pushProperty(newTextToken);
       }
 
       if (!doNothing && (!str[i] || str[i].trim()) && str[i] === ";") {
         doNothing = i;
-        console.log(
-          `3470 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-            doNothing,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3698 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+              doNothing,
+              null,
+              4
+            )}`
+          );
       }
     }
 
@@ -3487,9 +3715,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       property.valueStarts &&
       !property.valueEnds
     ) {
-      console.log(
-        `3491 ${`\u001b[${90}m${`css property's value ending clauses`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `3720 ${`\u001b[${90}m${`css property's value ending clauses`}\u001b[${39}m`}`
+        );
       if (
         // either end was reached
         !str[i] ||
@@ -3513,13 +3742,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           (str.slice(i, rightVal).includes("\n") ||
             str.slice(i, rightVal).includes("\r")))
       ) {
-        console.log(
-          `3517 FIY, ${`\u001b[${33}m${`lastNonWhitespaceCharAt`}\u001b[${39}m`} = ${JSON.stringify(
-            lastNonWhitespaceCharAt,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3747 FIY, ${`\u001b[${33}m${`lastNonWhitespaceCharAt`}\u001b[${39}m`} = ${JSON.stringify(
+              lastNonWhitespaceCharAt,
+              null,
+              4
+            )}`
+          );
 
         if (
           lastNonWhitespaceCharAt &&
@@ -3531,11 +3761,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             !`'";`.includes(str[rightVal]))
         ) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
-          console.log(
-            `3535 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueEnds`}\u001b[${39}m`} = ${
-              property.valueEnds
-            }`
-          );
+          DEV &&
+            console.log(
+              `3766 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueEnds`}\u001b[${39}m`} = ${
+                property.valueEnds
+              }`
+            );
 
           // if it's a text token, end it, imagine
           // <div style="width: {{ w }}px">
@@ -3544,21 +3775,23 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           if (token.type === "text") {
             token.end = i;
             token.value = str.slice(token.start, i);
-            console.log(
-              `3548 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-                token.end
-              }`
-            );
+            DEV &&
+              console.log(
+                `3780 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                  token.end
+                }`
+              );
 
             if (Array.isArray(property.value)) {
               property.value.push(token);
-              console.log(
-                `3556 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`property`}\u001b[${39}m`}, now: ${JSON.stringify(
-                  property,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `3789 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`property`}\u001b[${39}m`}, now: ${JSON.stringify(
+                    property,
+                    null,
+                    4
+                  )}`
+                );
             }
 
             // restore parent token
@@ -3570,22 +3803,24 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               property.valueStarts,
               lastNonWhitespaceCharAt + 1
             );
-            console.log(
-              `3574 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.value`}\u001b[${39}m`} = ${
-                property.value
-              }`
-            );
+            DEV &&
+              console.log(
+                `3808 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.value`}\u001b[${39}m`} = ${
+                  property.value
+                }`
+              );
           }
         }
         if (str[i] === ";") {
           property.semi = i;
-          console.log(
-            `3583 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
-              property.semi,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `3818 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
+                property.semi,
+                null,
+                4
+              )}`
+            );
         } else if (
           // it's whitespace
           str[i] &&
@@ -3594,13 +3829,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           str[rightVal as number] === ";"
         ) {
           property.semi = rightVal;
-          console.log(
-            `3598 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
-              property.semi,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `3834 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
+                property.semi,
+                null,
+                4
+              )}`
+            );
         }
 
         if (
@@ -3609,13 +3845,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         ) {
           // set the ending too
           property.end = property.semi + 1; // happy path, clean code has "end" at semi
-          console.log(
-            `3613 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-              property.end,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `3850 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+                property.end,
+                null,
+                4
+              )}`
+            );
         }
 
         if (
@@ -3631,41 +3868,45 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         ) {
           // we need to end it because this is it
           property.end = i;
+          DEV &&
+            console.log(
+              `3873 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+                property.end,
+                null,
+                4
+              )}`
+            );
+        }
+
+        DEV &&
           console.log(
-            `3635 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-              property.end,
+            `3883 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+              property,
               null,
               4
             )}`
           );
-        }
-
-        console.log(
-          `3644 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-            property,
-            null,
-            4
-          )}`
-        );
 
         if (property.end) {
           // push and init and patch up to resume
           if (property.end > i) {
             // if ending is in the future, skip everything up to it
             doNothing = property.end;
-            console.log(
-              `3657 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-                doNothing,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `3897 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+                  doNothing,
+                  null,
+                  4
+                )}`
+              );
           }
           pushProperty(property);
           propertyReset();
-          console.log(
-            `3667 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `3908 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+            );
         }
       } else if (
         str[i] === ":" &&
@@ -3679,14 +3920,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         //         ^
         //  we're here
         //
-        console.log(`3682 ${`\u001b[${31}m${`MISSING SEMICOL`}\u001b[${39}m`}`);
-        console.log(
-          `3684 FIY, ${`\u001b[${33}m${`lastNonWhitespaceCharAt`}\u001b[${39}m`} = ${JSON.stringify(
-            lastNonWhitespaceCharAt,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `3925 ${`\u001b[${31}m${`MISSING SEMICOL`}\u001b[${39}m`}`
+          );
+        DEV &&
+          console.log(
+            `3929 FIY, ${`\u001b[${33}m${`lastNonWhitespaceCharAt`}\u001b[${39}m`} = ${JSON.stringify(
+              lastNonWhitespaceCharAt,
+              null,
+              4
+            )}`
+          );
 
         // semicolon is missing...
         // traverse backwards from "lastNonWhitespaceCharAt", just in case
@@ -3696,12 +3941,13 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         //
         // we're looking to pinpoint where one rule ends and another starts.
 
-        console.log(
-          `3700 ██ "${str.slice(
-            right(str, property.colon) as any,
-            lastNonWhitespaceCharAt + 1
-          )}"`
-        );
+        DEV &&
+          console.log(
+            `3946 ██ "${str.slice(
+              right(str, property.colon) as any,
+              lastNonWhitespaceCharAt + 1
+            )}"`
+          );
         let split: string[] = [];
 
         if (right(str, property.colon)) {
@@ -3711,13 +3957,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               lastNonWhitespaceCharAt + 1
             )
             .split(/\s+/);
-          console.log(
-            `${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
-              split,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
+                split,
+                null,
+                4
+              )}`
+            );
         }
         if (split.length === 2) {
           // it's missing semicol, like: .a{b:c d:e;}
@@ -3727,30 +3974,33 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           property.valueEnds = property.valueStarts + split[0].length;
           property.value = str.slice(property.valueStarts, property.valueEnds);
           property.end = property.valueEnds;
-          console.log(
-            `3731 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-              property,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `3979 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                property,
+                null,
+                4
+              )}`
+            );
 
           // push and init and patch up to resume
-          console.log(
-            `3740 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-              property,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `3989 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                property,
+                null,
+                4
+              )}`
+            );
           pushProperty(property);
           // backup the values before wiping the property:
           let whitespaceStarts = property.end;
           let newPropertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
           propertyReset();
-          console.log(
-            `3752 push, then ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `4002 push, then ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+            );
 
           pushProperty({
             type: "text",
@@ -3758,23 +4008,25 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             end: newPropertyStarts,
             value: str.slice(whitespaceStarts, newPropertyStarts),
           } as any);
-          console.log(
-            `3762 PUSH to ${`\u001b[${33}m${`token.properties`}\u001b[${39}m`}, now = ${JSON.stringify(
-              (token as any).properties,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4013 PUSH to ${`\u001b[${33}m${`token.properties`}\u001b[${39}m`}, now = ${JSON.stringify(
+                (token as any).properties,
+                null,
+                4
+              )}`
+            );
 
           property.start = newPropertyStarts;
           property.propertyStarts = newPropertyStarts;
-          console.log(
-            `3772 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-              property,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4024 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                property,
+                null,
+                4
+              )}`
+            );
         }
       } else if (str[i] === "/" && str[rightVal as number] === "*") {
         // comment starts
@@ -3793,20 +4045,22 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           property.end = i;
         }
 
-        console.log(
-          `3797 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-            property,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `4050 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+              property,
+              null,
+              4
+            )}`
+          );
 
         // push and init and patch up to resume
         pushProperty(property);
         propertyReset();
-        console.log(
-          `3808 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `4062 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+          );
       }
     }
 
@@ -3821,26 +4075,28 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     ) {
       property.semi = i;
       property.end = i + 1;
-      console.log(
-        `3825 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
-          property.semi,
-          null,
-          4
-        )}; ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-          property.end,
-          null,
-          4
-        )}`
-      );
-      if (!property.propertyEnds) {
-        property.propertyEnds = i;
+      DEV &&
         console.log(
-          `3838 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.propertyEnds`}\u001b[${39}m`} = ${JSON.stringify(
-            property.propertyEnds,
+          `4080 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
+            property.semi,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+            property.end,
             null,
             4
           )}`
         );
+      if (!property.propertyEnds) {
+        property.propertyEnds = i;
+        DEV &&
+          console.log(
+            `4094 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.propertyEnds`}\u001b[${39}m`} = ${JSON.stringify(
+              property.propertyEnds,
+              null,
+              4
+            )}`
+          );
       }
       if (
         property.propertyStarts &&
@@ -3851,33 +4107,36 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           property.propertyStarts,
           property.propertyEnds
         );
+        DEV &&
+          console.log(
+            `4112 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.property`}\u001b[${39}m`} = ${JSON.stringify(
+              property.property,
+              null,
+              4
+            )}`
+          );
+      }
+
+      pushProperty(property);
+      DEV &&
         console.log(
-          `3855 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.property`}\u001b[${39}m`} = ${JSON.stringify(
-            property.property,
+          `4123 push ${JSON.stringify(
+            property,
+            null,
+            4
+          )}, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`}`
+        );
+      propertyReset();
+
+      doNothing = i;
+      DEV &&
+        console.log(
+          `4134 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+            doNothing,
             null,
             4
           )}`
         );
-      }
-
-      pushProperty(property);
-      console.log(
-        `3865 push ${JSON.stringify(
-          property,
-          null,
-          4
-        )}, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`}`
-      );
-      propertyReset();
-
-      doNothing = i;
-      console.log(
-        `3875 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-          doNothing,
-          null,
-          4
-        )}`
-      );
     }
 
     // catch the end of css property's !important
@@ -3891,15 +4150,16 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     ) {
       property.importantEnds = i;
       property.important = str.slice(property.importantStarts, i);
-      console.log(
-        `3895 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantEnds`}\u001b[${39}m`} = ${
-          property.importantEnds
-        };  ${`\u001b[${33}m${`property.important`}\u001b[${39}m`} = ${JSON.stringify(
-          property.important,
-          null,
-          0
-        )}`
-      );
+      DEV &&
+        console.log(
+          `4155 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantEnds`}\u001b[${39}m`} = ${
+            property.importantEnds
+          };  ${`\u001b[${33}m${`property.important`}\u001b[${39}m`} = ${JSON.stringify(
+            property.important,
+            null,
+            0
+          )}`
+        );
     }
 
     // catch the start of css property's !important
@@ -3915,17 +4175,19 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // considering missing excl. mark cases, more strict req.:
         (isLatinLetter(str[i]) && str.slice(i).match(importantStartsRegexp)))
     ) {
-      console.log(
-        `3919 ${`\u001b[${32}m${`css property's !important starts`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `4180 ${`\u001b[${32}m${`css property's !important starts`}\u001b[${39}m`}`
+        );
       property.importantStarts = i;
-      console.log(
-        `3923 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${JSON.stringify(
-          property.importantStarts,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `4185 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${JSON.stringify(
+            property.importantStarts,
+            null,
+            4
+          )}`
+        );
 
       // correction for cases like:
       // <style>.a{color:red 1important}
@@ -3953,13 +4215,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           property.valueStarts as number,
           property.valueEnds
         );
-        console.log(
-          `3957 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-            property,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `4220 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+              property,
+              null,
+              4
+            )}`
+          );
         property.importantStarts--;
         property.important = `${str[i - 1]}${property.important}`;
       }
@@ -3980,7 +4243,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       str[i] &&
       str[i].trim()
     ) {
-      console.log(`3983`);
+      DEV && console.log(`4246`);
       /* istanbul ignore else */
       if (
         // stopper character met:
@@ -3988,17 +4251,19 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // either it's real closing quote or not a quote
         ifQuoteThenAttrClosingQuote(i)
       ) {
-        console.log(`3991 ${`\u001b[${31}m${`broken code!`}\u001b[${39}m`}`);
+        DEV &&
+          console.log(`4255 ${`\u001b[${31}m${`broken code!`}\u001b[${39}m`}`);
         /* istanbul ignore else */
         if (str[i] === ";") {
           property.semi = i;
-          console.log(
-            `3996 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
-              property.semi,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4261 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
+                property.semi,
+                null,
+                4
+              )}`
+            );
         }
 
         let temp;
@@ -4009,30 +4274,33 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           property.end = property.semi
             ? property.semi + 1
             : (left(str, i) as number) + 1;
-          console.log(
-            `4013 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-              property.end,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4279 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+                property.end,
+                null,
+                4
+              )}`
+            );
           temp = property.end;
         }
 
         // push and init and patch up to resume
         pushProperty(property);
         propertyReset();
-        console.log(
-          `4026 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `4293 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+          );
 
-        console.log(
-          `4030 FIY, ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
-            temp,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `4298 FIY, ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+              temp,
+              null,
+              4
+            )}`
+          );
 
         // if there was a whitespace gap, submit it as text token
         /* istanbul ignore else */
@@ -4045,25 +4313,29 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           } as any);
         }
       } else if (str[i] === "!") {
-        console.log(
-          `4049 ${`\u001b[${32}m${`css property's !important starts`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `4318 ${`\u001b[${32}m${`css property's !important starts`}\u001b[${39}m`}`
+          );
         property.importantStarts = i;
-        console.log(
-          `4053 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${
-            property.importantStarts
-          }`
-        );
+        DEV &&
+          console.log(
+            `4323 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${
+              property.importantStarts
+            }`
+          );
       } else {
-        console.log(
-          `4059 ${`\u001b[${32}m${`css property's value starts`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `4330 ${`\u001b[${32}m${`css property's value starts`}\u001b[${39}m`}`
+          );
         property.valueStarts = i;
-        console.log(
-          `4063 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueStarts`}\u001b[${39}m`} = ${
-            property.valueStarts
-          }`
-        );
+        DEV &&
+          console.log(
+            `4335 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.valueStarts`}\u001b[${39}m`} = ${
+              property.valueStarts
+            }`
+          );
       }
     }
 
@@ -4078,13 +4350,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       str.indexOf("}}", i) > 0
     ) {
       doNothing = str.indexOf("}}") + 2;
-      console.log(
-        `4082 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-          doNothing,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `4355 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+            doNothing,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch the start of a css chunk
@@ -4100,27 +4373,30 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     ) {
       if (!",".includes(str[i])) {
         selectorChunkStartedAt = i;
-        console.log(
-          `4104 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} = ${selectorChunkStartedAt}`
-        );
+        DEV &&
+          console.log(
+            `4378 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} = ${selectorChunkStartedAt}`
+          );
 
         if (token.selectorsStart === null) {
           token.selectorsStart = i;
-          console.log(
-            `4110 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.selectorsStart`}\u001b[${39}m`} = ${
-              token.selectorsStart
-            }`
-          );
+          DEV &&
+            console.log(
+              `4385 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.selectorsStart`}\u001b[${39}m`} = ${
+                token.selectorsStart
+              }`
+            );
         }
       } else {
         // this contraption is needed to catch commas and assign
         // correctly broken chunk range, [selectorsStart, selectorsEnd]
         token.selectorsEnd = i + 1;
-        console.log(
-          `4120 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.selectorsEnd`}\u001b[${39}m`} = ${
-            token.selectorsEnd
-          }`
-        );
+        DEV &&
+          console.log(
+            `4396 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.selectorsEnd`}\u001b[${39}m`} = ${
+              token.selectorsEnd
+            }`
+          );
       }
     }
 
@@ -4169,32 +4445,35 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       //
       (str[i] !== "/" || str[i - 1] !== "/")
     ) {
-      console.log(
-        `4173 ${`\u001b[${32}m${`css property's name ends`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `4450 ${`\u001b[${32}m${`css property's name ends`}\u001b[${39}m`}`
+        );
 
       property.propertyEnds = i;
       property.property = str.slice(property.propertyStarts, i);
-      console.log(
-        `4179 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-          property,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `4457 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+            property,
+            null,
+            4
+          )}`
+        );
       if (property.valueStarts) {
         // it's needed to safeguard against case like:
         // <style>.a{b:c d:e;}</style>
         //                ^
         //            imagine we're here - valueStarts is not set!
         property.end = i;
-        console.log(
-          `4192 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-            property.end,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `4471 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+              property.end,
+              null,
+              4
+            )}`
+          );
       }
 
       // missing colon and onwards:
@@ -4207,13 +4486,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       ) {
         if (str[i] === ";") {
           property.semi = i;
-          console.log(
-            `4211 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
-              property.semi,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4491 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
+                property.semi,
+                null,
+                4
+              )}`
+            );
         }
 
         // precaution against broken code:
@@ -4221,21 +4501,23 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         //
         if (!property.end) {
           property.end = property.semi ? property.semi + 1 : i;
-          console.log(
-            `4225 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-              property.end,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4506 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+                property.end,
+                null,
+                4
+              )}`
+            );
         }
 
         // push and init and patch up to resume
         pushProperty(property);
         propertyReset();
-        console.log(
-          `4237 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `4519 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+          );
       }
 
       // cases with replaced colon:
@@ -4251,15 +4533,17 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // and it's not terminating character
         !`:'"`.includes(str[i])
       ) {
-        console.log(
-          `4255 ${`\u001b[${31}m${`dodgy character?`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `4538 ${`\u001b[${31}m${`dodgy character?`}\u001b[${39}m`}`
+          );
         // find out locations of next semi and next colon
         let nextSemi = str.indexOf(";", i);
         let nextColon = str.indexOf(":", i);
-        console.log(
-          `4261 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextSemi`}\u001b[${39}m`} = ${nextSemi}; ${`\u001b[${33}m${`nextColon`}\u001b[${39}m`} = ${nextColon}`
-        );
+        DEV &&
+          console.log(
+            `4545 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextSemi`}\u001b[${39}m`} = ${nextSemi}; ${`\u001b[${33}m${`nextColon`}\u001b[${39}m`} = ${nextColon}`
+          );
         // whatever the situation, colon must not be before semi on the right
         // either one or both missing is fine, we just want to avoid
         // <div style="floa.t:left;
@@ -4285,18 +4569,20 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           // <div style="float.left;">
           //                  ^
           //            we're here
-          console.log(
-            `4289 ${`\u001b[${32}m${`CORRECTION #1 - set this as colon`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `4574 ${`\u001b[${32}m${`CORRECTION #1 - set this as colon`}\u001b[${39}m`}`
+            );
           property.colon = i;
           property.valueStarts = rightVal;
-          console.log(
-            `4294 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.colon`}\u001b[${39}m`} = ${
-              property.colon
-            }; ${`\u001b[${33}m${`property.valueStarts`}\u001b[${39}m`} = ${
-              property.valueStarts
-            }`
-          );
+          DEV &&
+            console.log(
+              `4580 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.colon`}\u001b[${39}m`} = ${
+                property.colon
+              }; ${`\u001b[${33}m${`property.valueStarts`}\u001b[${39}m`} = ${
+                property.valueStarts
+              }`
+            );
         } else if (
           nextColon !== -1 &&
           nextSemi !== -1 &&
@@ -4306,22 +4592,25 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           // <div style="floa/t:left;">
           //                 ^
           //          we're here
-          console.log(
-            `4310 ${`\u001b[${32}m${`CORRECTION #2 - patch by extending the prop`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `4597 ${`\u001b[${32}m${`CORRECTION #2 - patch by extending the prop`}\u001b[${39}m`}`
+            );
           property.propertyEnds = null;
-          console.log(
-            `4314 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.propertyEnds`}\u001b[${39}m`} = ${
-              property.propertyEnds
-            }`
-          );
+          DEV &&
+            console.log(
+              `4602 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.propertyEnds`}\u001b[${39}m`} = ${
+                property.propertyEnds
+              }`
+            );
         } else if (str[i] === "!") {
           property.importantStarts = i;
-          console.log(
-            `4321 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${
-              property.importantStarts
-            }`
-          );
+          DEV &&
+            console.log(
+              `4610 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.importantStarts`}\u001b[${39}m`} = ${
+                property.importantStarts
+              }`
+            );
         }
       }
     }
@@ -4342,32 +4631,35 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       str[i] === ":"
     ) {
       property.colon = i;
-      console.log(
-        `4346 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.colon`}\u001b[${39}m`} = ${JSON.stringify(
-          property.colon,
-          null,
-          4
-        )}`
-      );
-
-      // if string abruptly ends, record it here
-      if (!rightVal) {
-        property.end = i + 1;
+      DEV &&
         console.log(
-          `4357 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
-            property.end,
+          `4636 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.colon`}\u001b[${39}m`} = ${JSON.stringify(
+            property.colon,
             null,
             4
           )}`
         );
 
+      // if string abruptly ends, record it here
+      if (!rightVal) {
+        property.end = i + 1;
+        DEV &&
+          console.log(
+            `4648 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.end`}\u001b[${39}m`} = ${JSON.stringify(
+              property.end,
+              null,
+              4
+            )}`
+          );
+
         if (str[i + 1]) {
           // push and init and patch up to resume
           pushProperty(property);
           propertyReset();
-          console.log(
-            `4369 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `4661 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+            );
 
           // that's some trailing whitespace, create a new text token for it
           if ((token as any).properties) {
@@ -4377,33 +4669,36 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               end: null as any,
               value: null as any,
             });
-            console.log(
-              `4381 PUSH to ${`\u001b[${33}m${`token.properties`}\u001b[${39}m`}, now = ${JSON.stringify(
-                (token as any).properties,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `4674 PUSH to ${`\u001b[${33}m${`token.properties`}\u001b[${39}m`}, now = ${JSON.stringify(
+                  (token as any).properties,
+                  null,
+                  4
+                )}`
+              );
 
             doNothing = i + 1;
-            console.log(
-              `4390 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-                doNothing,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `4684 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+                  doNothing,
+                  null,
+                  4
+                )}`
+              );
           }
         }
       }
 
-      console.log(
-        `4401 FIY, ${`\u001b[${33}m${`lastNonWhitespaceCharAt`}\u001b[${39}m`} = ${JSON.stringify(
-          lastNonWhitespaceCharAt,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `4696 FIY, ${`\u001b[${33}m${`lastNonWhitespaceCharAt`}\u001b[${39}m`} = ${JSON.stringify(
+            lastNonWhitespaceCharAt,
+            null,
+            4
+          )}`
+        );
 
       // insurance against rogue characters
       // <style>.a{float:left;x">color: red}
@@ -4422,13 +4717,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           property.propertyStarts as number,
           property.propertyEnds
         );
-        console.log(
-          `4426 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.propertyEnds`}\u001b[${39}m`} = ${
-            property.propertyEnds
-          }; ${`\u001b[${33}m${`property.property`}\u001b[${39}m`} = ${
-            property.property
-          }`
-        );
+        DEV &&
+          console.log(
+            `4722 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.propertyEnds`}\u001b[${39}m`} = ${
+              property.propertyEnds
+            }; ${`\u001b[${33}m${`property.property`}\u001b[${39}m`} = ${
+              property.property
+            }`
+          );
       }
     }
 
@@ -4449,9 +4745,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       !property.propertyStarts &&
       !property.importantStarts
     ) {
-      console.log(
-        `4453 ${`\u001b[${32}m${`css property's name starts`}\u001b[${39}m`}`
-      );
+      DEV &&
+        console.log(
+          `4750 ${`\u001b[${32}m${`css property's name starts`}\u001b[${39}m`}`
+        );
 
       // first, check maybe there's unfinished text token before it
       if (
@@ -4465,13 +4762,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           token.properties[~-token.properties.length].start,
           i
         );
-        console.log(
-          `4469 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} last elem of ${`\u001b[${33}m${`token.properties[]`}\u001b[${39}m`} to: ${JSON.stringify(
-            token.properties[~-token.properties.length],
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `4767 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} last elem of ${`\u001b[${33}m${`token.properties[]`}\u001b[${39}m`} to: ${JSON.stringify(
+              token.properties[~-token.properties.length],
+              null,
+              4
+            )}`
+          );
       }
 
       // in normal cases we're set propertyStarts but sometimes it can be
@@ -4484,7 +4782,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       // "property"
 
       if (str[i] === ";") {
-        console.log(`4487`);
+        DEV && console.log(`4785`);
         initProperty({
           start: i,
           end: i + 1,
@@ -4492,42 +4790,46 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         });
         pushProperty(property);
         propertyReset();
-        console.log(
-          `4496 init, push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `4795 init, push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+          );
       } else if (str[i] === "!") {
-        console.log(`4499`);
+        DEV && console.log(`4798`);
         initProperty({
           start: i,
           importantStarts: i,
         });
-        console.log(
-          `4505 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-            property,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `4805 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+              property,
+              null,
+              4
+            )}`
+          );
       } else {
-        console.log(`4512`);
+        DEV && console.log(`4812`);
         initProperty(i);
-        console.log(
-          `4515 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-            property,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `4816 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+              property,
+              null,
+              4
+            )}`
+          );
       }
 
       doNothing = i;
-      console.log(
-        `4525 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-          doNothing,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `4827 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+            doNothing,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch the start a property
@@ -4561,7 +4863,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       // it's not inside CSS block comment
       !lastLayerIs("block")
     ) {
-      console.log(`4564 inside start of css property/comment token`);
+      DEV && console.log(`4866 inside start of css property/comment token`);
       // It's either css comment or a css property.
       // Dirty characters go as property name, then later we validate and
       // catch them.
@@ -4573,9 +4875,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // asterisk follows, straight away or after whitespace
         str[rightVal as number] === "*"
       ) {
-        console.log(
-          `4577 ${`\u001b[${32}m${`BLOCK COMMENT OPENING`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `4880 ${`\u001b[${32}m${`BLOCK COMMENT OPENING`}\u001b[${39}m`}`
+          );
 
         attribPush({
           type: "comment",
@@ -4593,34 +4896,36 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           value: str.slice(i, (rightVal as number) + 1), // think of broken cases with whitespace, / *
           position: i,
         });
-        console.log(
-          `4597 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} new layer, ${JSON.stringify(
-            {
-              type: "block",
-              value: str[i],
-              position: i,
-            },
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `4901 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} new layer, ${JSON.stringify(
+              {
+                type: "block",
+                value: str[i],
+                position: i,
+              },
+              null,
+              4
+            )}`
+          );
 
         // skip the next char, consider there might be whitespace in front
         doNothing = (rightVal as number) + 1;
-        console.log(
-          `4611 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-            doNothing,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `4916 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+              doNothing,
+              null,
+              4
+            )}`
+          );
       }
       // if it's a closing comment
       else if (str[i] === "*" && str[rightVal as number] === "/") {
-        console.log(`4620 call closingComment()`);
+        DEV && console.log(`4925 call closingComment()`);
         closingComment(i);
       } else {
-        console.log(`4623`);
+        DEV && console.log(`4928`);
         // first, close the text token if it's not ended
         if (
           Array.isArray(attrib.attribValue) &&
@@ -4632,13 +4937,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             attrib.attribValue[~-attrib.attribValue.length].start,
             i
           );
-          console.log(
-            `4636 complete last attrib object: ${JSON.stringify(
-              attrib.attribValue[~-attrib.attribValue.length],
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4942 complete last attrib object: ${JSON.stringify(
+                attrib.attribValue[~-attrib.attribValue.length],
+                null,
+                4
+              )}`
+            );
         }
 
         // initiate a property
@@ -4647,54 +4953,58 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // the !important is alone by itself
         // also, it can be semi along by itself
         if (str[i] === ";") {
-          console.log(`4650`);
+          DEV && console.log(`4956`);
           initProperty({
             start: i,
             end: i + 1,
             semi: i,
           });
-          console.log(
-            `4657 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-              property,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4964 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                property,
+                null,
+                4
+              )}`
+            );
           doNothing = i;
-          console.log(
-            `4665 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-              doNothing,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4973 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+                doNothing,
+                null,
+                4
+              )}`
+            );
         } else if (R2) {
-          console.log(`4672`);
+          DEV && console.log(`4980`);
           initProperty({
             start: i,
             importantStarts: i,
           });
-          console.log(
-            `4678 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-              property,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `4987 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                property,
+                null,
+                4
+              )}`
+            );
         } else {
           // protection against unclosed quotes
           // <div style="float:left;; >
           //                          ^
           //                    we're here
-          console.log(`4689`);
+          DEV && console.log(`4998`);
           initProperty(i);
-          console.log(
-            `4692 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-              property,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `5002 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+                property,
+                null,
+                4
+              )}`
+            );
         }
       }
     }
@@ -4716,11 +5026,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       if (token.type === "tag" && !layers.length && str[i] === ">") {
         token.end = i + 1;
         token.value = str.slice(token.start, token.end);
-        console.log(
-          `4720 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-            token.end
-          }`
-        );
+        DEV &&
+          console.log(
+            `5031 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+              token.end
+            }`
+          );
         // at this point other attributes might be still not submitted yet,
         // we can't reset it here
       } else if (
@@ -4767,15 +5078,17 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           //     ^
           //    we're here
           //
-          console.log(
-            `4771 ${`\u001b[${32}m${`OUTLOOK CONDITIONAL "ONLY" DETECTED`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `5083 ${`\u001b[${32}m${`OUTLOOK CONDITIONAL "ONLY" DETECTED`}\u001b[${39}m`}`
+            );
           token.kind = "only";
-          console.log(
-            `4775 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              token.kind
-            }`
-          );
+          DEV &&
+            console.log(
+              `5088 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                token.kind
+              }`
+            );
         } else if (
           // ensure it's not starting with closing counterpart,
           // --><![endif]-->
@@ -4794,50 +5107,57 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           //     ^
           //    we're here
           //
-          console.log(
-            `4798 ${`\u001b[${32}m${`OUTLOOK CONDITIONAL "NOT" DETECTED`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `5112 ${`\u001b[${32}m${`OUTLOOK CONDITIONAL "NOT" DETECTED`}\u001b[${39}m`}`
+            );
           token.kind = "not";
           token.closing = true;
-          console.log(
-            `4803 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              token.kind
-            }; ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
-              token.closing
-            }`
-          );
+          DEV &&
+            console.log(
+              `5118 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                token.kind
+              }; ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+                token.closing
+              }`
+            );
         } else if (
           token.kind === "simple" &&
           token.language === "html" &&
           !token.closing &&
           str[rightVal as number] === ">"
         ) {
-          console.log(
-            `4816 ${`\u001b[${32}m${`simplet-kind comment token's ending caught`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `5132 ${`\u001b[${32}m${`simplet-kind comment token's ending caught`}\u001b[${39}m`}`
+            );
           token.end = (rightVal as number) + 1;
           token.kind = "simplet";
           token.closing = null;
-          console.log(
-            `4822 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-              token.end
-            }`
-          );
-          console.log(
-            `4827 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              token.kind
-            }`
-          );
-          console.log(
-            `4832 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
-              token.closing
-            }`
-          );
+          DEV &&
+            console.log(
+              `5139 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                token.end
+              }`
+            );
+          DEV &&
+            console.log(
+              `5145 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                token.kind
+              }`
+            );
+          DEV &&
+            console.log(
+              `5151 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+                token.closing
+              }`
+            );
         } else if (token.language === "html") {
           // if it's a simple HTML comment, <!--, end it right here
-          console.log(
-            `4839 ${`\u001b[${32}m${`${token.kind} comment token's ending caught`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `5159 ${`\u001b[${32}m${`${token.kind} comment token's ending caught`}\u001b[${39}m`}`
+            );
           token.end = i + 1;
 
           // tokenizer will catch <!- as opening, so we need to extend
@@ -4847,19 +5167,21 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             str[rightVal as number] === "-"
           ) {
             token.end = (rightVal as number) + 1;
-            console.log(
-              `4851 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-                token.end
-              }`
-            );
+            DEV &&
+              console.log(
+                `5172 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                  token.end
+                }`
+              );
           }
 
           token.value = str.slice(token.start, token.end);
-          console.log(
-            `4859 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-              token.end
-            }`
-          );
+          DEV &&
+            console.log(
+              `5181 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                token.end
+              }`
+            );
         }
         // at this point other attributes might be still not submitted yet,
         // we can't reset it here
@@ -4879,7 +5201,8 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           (layers[~-layers.length] as any).value === "["
         ) {
           layers.pop();
-          console.log(`4882 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} layers`);
+          DEV &&
+            console.log(`5205 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} layers`);
         }
 
         // the difference between opening Outlook conditional comment "only"
@@ -4892,26 +5215,30 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             lastMustMatch: true,
           })
         ) {
-          console.log(
-            `4896 that's kind="not" comment and it continues on the right`
-          );
+          DEV &&
+            console.log(
+              `5220 that's kind="not" comment and it continues on the right`
+            );
           token.kind = "not";
-          console.log(
-            `4900 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              token.kind
-            }`
-          );
+          DEV &&
+            console.log(
+              `5225 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                token.kind
+              }`
+            );
         } else {
-          console.log(
-            `4906 that's the end of opening type="comment" kind="only" comment`
-          );
+          DEV &&
+            console.log(
+              `5232 that's the end of opening type="comment" kind="only" comment`
+            );
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
-          console.log(
-            `4911 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-              token.end
-            }`
-          );
+          DEV &&
+            console.log(
+              `5238 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                token.end
+              }`
+            );
         }
       } else if (
         token.type === "comment" &&
@@ -4921,11 +5248,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       ) {
         token.end = i + 1;
         token.value = str.slice(token.start, token.end);
-        console.log(
-          `4925 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-            token.end
-          }`
-        );
+        DEV &&
+          console.log(
+            `5253 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+              token.end
+            }`
+          );
       } else if (
         token.type === "esp" &&
         token.end === null &&
@@ -4933,7 +5261,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         typeof token.tail === "string" &&
         token.tail.includes(str[i])
       ) {
-        console.log(`4936 POSSIBLE ESP TAILS`);
+        DEV && console.log(`5264 POSSIBLE ESP TAILS`);
         // extract the whole lump of ESP tag characters:
         let wholeEspTagClosing = "";
 
@@ -4944,7 +5272,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             break;
           }
         }
-        console.log(`4947 wholeEspTagClosing = ${wholeEspTagClosing}`);
+        DEV && console.log(`5275 wholeEspTagClosing = ${wholeEspTagClosing}`);
 
         // now, imagine the new heads start, for example,
         // {%- z -%}{%-
@@ -4953,13 +5281,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
         // find the breaking point where tails end
         if (wholeEspTagClosing.length > token.head.length) {
-          console.log(
-            `4957 wholeEspTagClosing.length = ${`\u001b[${33}m${
-              wholeEspTagClosing.length
-            }\u001b[${39}m`} > token.head.length = ${`\u001b[${33}m${
-              token.head.length
-            }\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `5286 wholeEspTagClosing.length = ${`\u001b[${33}m${
+                wholeEspTagClosing.length
+              }\u001b[${39}m`} > token.head.length = ${`\u001b[${33}m${
+                token.head.length
+              }\u001b[${39}m`}`
+            );
           // in order for this to be tails + new heads, the total length should be
           // at least bigger than heads.
           //
@@ -4982,7 +5311,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           //
           let headsFirstChar = token.head[0];
           if (wholeEspTagClosing.endsWith(token.head)) {
-            console.log(`4985 - chunk ends with the same heads`);
+            DEV && console.log(`5314 - chunk ends with the same heads`);
             // we have a situation like
             // zzz *|aaaa|**|bbb|*
             //           ^
@@ -5004,34 +5333,38 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
             token.end = i + wholeEspTagClosing.length - token.head.length;
             token.value = str.slice(token.start, token.end);
-            console.log(
-              `5008 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-                token.end
-              }`
-            );
+            DEV &&
+              console.log(
+                `5338 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                  token.end
+                }`
+              );
             doNothing = token.end;
-            console.log(
-              `5014 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-            );
+            DEV &&
+              console.log(
+                `5345 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+              );
           } else if (wholeEspTagClosing.startsWith(token.tail)) {
             token.end = i + token.tail.length;
             token.value = str.slice(token.start, token.end);
-            console.log(
-              `5020 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-                token.end
-              }`
-            );
+            DEV &&
+              console.log(
+                `5352 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                  token.end
+                }`
+              );
             doNothing = token.end;
-            console.log(
-              `5026 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-            );
+            DEV &&
+              console.log(
+                `5359 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+              );
           } else if (
             (!token.tail.includes(headsFirstChar) &&
               wholeEspTagClosing.includes(headsFirstChar)) ||
             wholeEspTagClosing.endsWith(token.head) ||
             wholeEspTagClosing.startsWith(token.tail)
           ) {
-            console.log(`5034`);
+            DEV && console.log(`5367`);
             // We're very lucky because heads and tails are using different
             // characters, possibly opposite brackets of some kind.
             // That's Nunjucks, Responsys (but no eDialog) patterns.
@@ -5042,20 +5375,22 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             let secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(
               wholeEspTagClosing.indexOf(headsFirstChar)
             );
-            console.log(
-              `${`\u001b[${33}m${`firstPartOfWholeEspTagClosing`}\u001b[${39}m`} = ${JSON.stringify(
-                firstPartOfWholeEspTagClosing,
-                null,
-                4
-              )}`
-            );
-            console.log(
-              `${`\u001b[${33}m${`secondPartOfWholeEspTagClosing`}\u001b[${39}m`} = ${JSON.stringify(
-                secondPartOfWholeEspTagClosing,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `${`\u001b[${33}m${`firstPartOfWholeEspTagClosing`}\u001b[${39}m`} = ${JSON.stringify(
+                  firstPartOfWholeEspTagClosing,
+                  null,
+                  4
+                )}`
+              );
+            DEV &&
+              console.log(
+                `${`\u001b[${33}m${`secondPartOfWholeEspTagClosing`}\u001b[${39}m`} = ${JSON.stringify(
+                  secondPartOfWholeEspTagClosing,
+                  null,
+                  4
+                )}`
+              );
             // imagine we sliced off (Nunjucks): -%}{%-
             // if every character from anticipated tails (-%}) is present in the front
             // chunk, Bob's your uncle, that's tails with new heads following.
@@ -5066,18 +5401,20 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 .split("")
                 .every((char) => firstPartOfWholeEspTagClosing.includes(char))
             ) {
-              console.log(`5069 definitely tails + new heads`);
+              DEV && console.log(`5404 definitely tails + new heads`);
               token.end = i + firstPartOfWholeEspTagClosing.length;
               token.value = str.slice(token.start, token.end);
-              console.log(
-                `5073 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-                  token.end
-                }`
-              );
+              DEV &&
+                console.log(
+                  `5409 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                    token.end
+                  }`
+                );
               doNothing = token.end;
-              console.log(
-                `5079 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-              );
+              DEV &&
+                console.log(
+                  `5416 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+                );
             }
           } else {
             // so heads and tails don't contain unique character, and more so,
@@ -5085,49 +5422,54 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             // For example, ESP heads/tails can be *|zzz|*
             // Imaginary example, following heads would be variation of those
             // above, ^|zzz|^
-            console.log(`CASE #2.`);
+            DEV && console.log(`CASE #2.`);
             // TODO
             // for now, return defaults, from else scenario below:
             // we consider this whole chunk is tails.
             token.end = i + wholeEspTagClosing.length;
             token.value = str.slice(token.start, token.end);
-            console.log(
-              `5095 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-                token.end
-              }`
-            );
+            DEV &&
+              console.log(
+                `5433 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                  token.end
+                }`
+              );
             doNothing = token.end;
-            console.log(
-              `5101 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-            );
+            DEV &&
+              console.log(
+                `5440 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+              );
           }
-          console.log(`5104`);
+          DEV && console.log(`5443`);
         } else {
           // we consider this whole chunk is tails.
           token.end = i + wholeEspTagClosing.length;
           token.value = str.slice(token.start, token.end);
-          console.log(
-            `5110 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-              token.end
-            }`
-          );
+          DEV &&
+            console.log(
+              `5450 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                token.end
+              }`
+            );
 
           // if last layer is ESP tag and we've got its closing, pop the layer
           if (lastLayerIs("esp")) {
-            console.log(
-              `5118 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers, now ${`\u001b[${33}m${`layers`}\u001b[${39}m`}: ${JSON.stringify(
-                layers,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `5459 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers, now ${`\u001b[${33}m${`layers`}\u001b[${39}m`}: ${JSON.stringify(
+                  layers,
+                  null,
+                  4
+                )}`
+              );
             layers.pop();
           }
 
           doNothing = token.end;
-          console.log(
-            `5129 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-          );
+          DEV &&
+            console.log(
+              `5471 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+            );
         }
       }
       // END OF if (!doNothing)
@@ -5142,42 +5484,46 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       token.tagNameStartsAt &&
       !token.tagNameEndsAt
     ) {
-      console.log(`5145 catch the end of a tag name clauses`);
+      DEV && console.log(`5487 catch the end of a tag name clauses`);
 
       // tag names can be with numbers, h1
       if (!str[i] || !charSuitableForTagName(str[i])) {
         token.tagNameEndsAt = i;
-        console.log(
-          `5151 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndsAt`}\u001b[${39}m`} = ${
-            token.tagNameEndsAt
-          }`
-        );
+        DEV &&
+          console.log(
+            `5494 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndsAt`}\u001b[${39}m`} = ${
+              token.tagNameEndsAt
+            }`
+          );
 
         token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
-        console.log(
-          `5158 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
-            token.tagName
-          }`
-        );
+        DEV &&
+          console.log(
+            `5502 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
+              token.tagName
+            }`
+          );
 
         if (token.tagName && token.tagName.toLowerCase() === "script") {
           withinScript = !withinScript;
-          console.log(
-            `5166 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${JSON.stringify(
-              withinScript,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `5511 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${JSON.stringify(
+                withinScript,
+                null,
+                4
+              )}`
+            );
         }
 
         if (token.tagName === "xml" && token.closing && !token.kind) {
           token.kind = "xml";
-          console.log(
-            `5177 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              token.kind
-            }`
-          );
+          DEV &&
+            console.log(
+              `5523 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+                token.kind
+              }`
+            );
         }
 
         // We evaluate self-closing tags not by presence of slash but evaluating
@@ -5185,29 +5531,32 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // catch and fix missing closing slashes.
         if (voidTags.includes(token.tagName)) {
           token.void = true;
-          console.log(
-            `5189 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.void`}\u001b[${39}m`} = ${
-              token.void
-            }`
-          );
+          DEV &&
+            console.log(
+              `5536 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.void`}\u001b[${39}m`} = ${
+                token.void
+              }`
+            );
         }
 
         token.recognised = isTagNameRecognised(token.tagName);
 
-        console.log(
-          `5198 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.recognised`}\u001b[${39}m`} = ${
-            token.recognised
-          }`
-        );
+        DEV &&
+          console.log(
+            `5546 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.recognised`}\u001b[${39}m`} = ${
+              token.recognised
+            }`
+          );
 
         doNothing = i;
-        console.log(
-          `5205 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-            doNothing,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `5554 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+              doNothing,
+              null,
+              4
+            )}`
+          );
       }
     }
 
@@ -5221,51 +5570,56 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       token.start != null &&
       (token.start < i || str[token.start] !== "<")
     ) {
-      console.log(`5224 catch the start of a tag name clauses`);
+      DEV && console.log(`5573 catch the start of a tag name clauses`);
       // MULTIPLE ENTRY!
       // Consider closing tag's slashes and tag name itself.
 
       if (str[i] === "/") {
         token.closing = true;
-        console.log(
-          `5231 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
-            token.closing
-          }`
-        );
-
-        doNothing = i;
-        console.log(
-          `5238 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-            doNothing,
-            null,
-            4
-          )}`
-        );
-      } else if (isLatinLetter(str[i])) {
-        token.tagNameStartsAt = i;
-        console.log(
-          `5247 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameStartsAt`}\u001b[${39}m`} = ${
-            token.tagNameStartsAt
-          }`
-        );
-        // if by now closing marker is still null, set it to false - there
-        // won't be any closing slashes between opening bracket and tag name
-        if (!token.closing) {
-          token.closing = false;
+        DEV &&
           console.log(
-            `5256 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+            `5581 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
               token.closing
             }`
           );
 
-          doNothing = i;
+        doNothing = i;
+        DEV &&
           console.log(
-            `5263 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+            `5589 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
               doNothing,
               null,
               4
             )}`
           );
+      } else if (isLatinLetter(str[i])) {
+        token.tagNameStartsAt = i;
+        DEV &&
+          console.log(
+            `5599 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameStartsAt`}\u001b[${39}m`} = ${
+              token.tagNameStartsAt
+            }`
+          );
+        // if by now closing marker is still null, set it to false - there
+        // won't be any closing slashes between opening bracket and tag name
+        if (!token.closing) {
+          token.closing = false;
+          DEV &&
+            console.log(
+              `5609 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+                token.closing
+              }`
+            );
+
+          doNothing = i;
+          DEV &&
+            console.log(
+              `5617 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+                doNothing,
+                null,
+                4
+              )}`
+            );
         }
       } else {
         // TODO - tag opening followed by not-a-letter?
@@ -5284,7 +5638,8 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       attrib.attribNameEndsAt === null &&
       !isAttrNameChar(str[i])
     ) {
-      console.log(`5287 inside catch the tag attribute name end clauses`);
+      DEV &&
+        console.log(`5642 inside catch the tag attribute name end clauses`);
       attrib.attribNameEndsAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
       attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
@@ -5294,43 +5649,48 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         token.pureHTML = false;
       }
 
-      console.log(
-        `5298 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribNameEndsAt`}\u001b[${39}m`} = ${
-          attrib.attribNameEndsAt
-        }; ${`\u001b[${33}m${`attrib.attribName`}\u001b[${39}m`} = ${JSON.stringify(
-          attrib.attribName,
-          null,
-          0
-        )}`
-      );
+      DEV &&
+        console.log(
+          `5654 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribNameEndsAt`}\u001b[${39}m`} = ${
+            attrib.attribNameEndsAt
+          }; ${`\u001b[${33}m${`attrib.attribName`}\u001b[${39}m`} = ${JSON.stringify(
+            attrib.attribName,
+            null,
+            0
+          )}`
+        );
 
       // maybe there's a space in front of equal, <div class= "">
       if (str[i] && !str[i].trim() && str[rightVal as number] === "=") {
-        console.log(`5309 equal on the right`);
+        DEV && console.log(`5665 equal on the right`);
       } else if (
         (str[i] && !str[i].trim()) ||
         str[i] === ">" ||
         (str[i] === "/" && str[rightVal as number] === ">")
       ) {
         if (`'"`.includes(str[rightVal as number])) {
-          console.log(
-            `5317 ${`\u001b[${31}m${`space instead of equal`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `5674 ${`\u001b[${31}m${`space instead of equal`}\u001b[${39}m`}`
+            );
         } else {
-          console.log(
-            `5321 ${`\u001b[${31}m${`a value-less attribute detected`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `5679 ${`\u001b[${31}m${`a value-less attribute detected`}\u001b[${39}m`}`
+            );
           attrib.attribEnds = i;
-          console.log(
-            `5325 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
-              attrib.attribEnds
-            }`
-          );
+          DEV &&
+            console.log(
+              `5684 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+                attrib.attribEnds
+              }`
+            );
 
           // push and wipe
-          console.log(
-            `5332 ${`\u001b[${32}m${`PUSH ATTR AND WIPE`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `5692 ${`\u001b[${32}m${`PUSH ATTR AND WIPE`}\u001b[${39}m`}`
+            );
           token.attribs.push(clone(attrib));
           attribReset();
         }
@@ -5349,30 +5709,33 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       attrib.attribStarts === null &&
       isAttrNameChar(str[i])
     ) {
-      console.log(`5352 inside catch the tag attribute name start clauses`);
+      DEV &&
+        console.log(`5713 inside catch the tag attribute name start clauses`);
       attrib.attribStarts = i;
       // even though in theory left() which reports first non-whitespace
       // character's index on the left can be null, it does not happen
       // in this context - there will be tag's name or something in front!
       attrib.attribLeft = lastNonWhitespaceCharAt as number;
       attrib.attribNameStartsAt = i;
-      console.log(
-        `5360 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribStarts`}\u001b[${39}m`} = ${
-          attrib.attribStarts
-        }; ${`\u001b[${33}m${`attrib.attribLeft`}\u001b[${39}m`} = ${
-          attrib.attribLeft
-        }; ${`\u001b[${33}m${`attrib.attribNameStartsAt`}\u001b[${39}m`} = ${
-          attrib.attribNameStartsAt
-        }`
-      );
+      DEV &&
+        console.log(
+          `5722 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribStarts`}\u001b[${39}m`} = ${
+            attrib.attribStarts
+          }; ${`\u001b[${33}m${`attrib.attribLeft`}\u001b[${39}m`} = ${
+            attrib.attribLeft
+          }; ${`\u001b[${33}m${`attrib.attribNameStartsAt`}\u001b[${39}m`} = ${
+            attrib.attribNameStartsAt
+          }`
+        );
 
-      console.log(
-        `5370 ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
-          attrib.attribValue,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `5733 ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+            attrib.attribValue,
+            null,
+            4
+          )}`
+        );
     }
 
     // catch the curlies inside CSS rule
@@ -5386,11 +5749,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         !token.openingCurlyAt
       ) {
         token.openingCurlyAt = i;
-        console.log(
-          `5390 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.openingCurlyAt`}\u001b[${39}m`} = ${
-            token.openingCurlyAt
-          }`
-        );
+        DEV &&
+          console.log(
+            `5754 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.openingCurlyAt`}\u001b[${39}m`} = ${
+              token.openingCurlyAt
+            }`
+          );
       } else if (
         str[i] === "}" &&
         token.openingCurlyAt &&
@@ -5399,11 +5763,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         token.closingCurlyAt = i;
         token.end = i + 1;
         token.value = str.slice(token.start, token.end);
-        console.log(
-          `5403 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closingCurlyAt`}\u001b[${39}m`} = ${
-            token.closingCurlyAt
-          }; ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${token.end}`
-        );
+        DEV &&
+          console.log(
+            `5768 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closingCurlyAt`}\u001b[${39}m`} = ${
+              token.closingCurlyAt
+            }; ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${token.end}`
+          );
 
         // check is the property's last text token closed:
         if (
@@ -5417,37 +5782,40 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             token.properties[~-token.properties.length].start,
             i
           );
-          console.log(
-            `5421 ${`\u001b[${32}m${`COMPLETE`}\u001b[${39}m`} ${`\u001b[${33}m${`token.properties[]`}\u001b[${39}m`} last elem, now = ${JSON.stringify(
-              token.properties[~-token.properties.length],
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `5787 ${`\u001b[${32}m${`COMPLETE`}\u001b[${39}m`} ${`\u001b[${33}m${`token.properties[]`}\u001b[${39}m`} last elem, now = ${JSON.stringify(
+                token.properties[~-token.properties.length],
+                null,
+                4
+              )}`
+            );
         }
 
         // if there's partial, still-pending property, push it
         if (property.start) {
-          console.log(
-            `5432 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the pending property`
-          );
+          DEV &&
+            console.log(
+              `5799 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the pending property`
+            );
           token.properties.push(property);
           propertyReset();
         }
 
-        console.log(`5438 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
+        DEV && console.log(`5805 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
         pingTagCb(token);
 
         // if it's a "rule" token and a parent "at" rule is pending in layers,
         // also put this "rule" into that parent in layers
         if (lastLayerIs("at")) {
-          console.log(
-            `5445 ${`\u001b[${32}m${`PUSH this rule into last AT layer`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `5813 ${`\u001b[${32}m${`PUSH this rule into last AT layer`}\u001b[${39}m`}`
+            );
           (layers[~-layers.length] as LayerKindAt).token.rules.push(token);
         }
 
-        console.log(`5450 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
+        DEV && console.log(`5818 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
         tokenReset();
       }
     }
@@ -5463,9 +5831,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       !attrib.attribValue[~-attrib.attribValue.length].end
     ) {
       // TODO
-      console.log(
-        `5467 ${`\u001b[${35}m${`██`}\u001b[${39}m`} inside attribute sub-token end clauses`
-      );
+      DEV &&
+        console.log(
+          `5836 ${`\u001b[${35}m${`██`}\u001b[${39}m`} inside attribute sub-token end clauses`
+        );
 
       // if it's a closing comment
       if (str[i] === "*" && str[rightVal as number] === "/") {
@@ -5509,9 +5878,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // there is no unfinished property being recorded
         !property.propertyStarts)
     ) {
-      console.log(
-        `5513 ${`\u001b[${36}m${`██`}\u001b[${39}m`} inside attribute sub-token start clauses`
-      );
+      DEV &&
+        console.log(
+          `5883 ${`\u001b[${36}m${`██`}\u001b[${39}m`} inside attribute sub-token start clauses`
+        );
 
       // if it's suitable for property, start a property
 
@@ -5557,21 +5927,23 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           start: i,
           semi: i,
         });
-        console.log(
-          `5561 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
-            property,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `5932 ${`\u001b[${32}m${`INIT`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+              property,
+              null,
+              4
+            )}`
+          );
         doNothing = i + 1;
-        console.log(
-          `5569 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
-            doNothing,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `5941 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
+              doNothing,
+              null,
+              4
+            )}`
+          );
       }
       // if it's whitespace, for example,
       // <a style="  /* zzz */color: red;  ">
@@ -5588,7 +5960,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // if it's a property, because it's comment's contents.
         lastLayerIs("block")
       ) {
-        console.log(`5591`);
+        DEV && console.log(`5963`);
         // depends where to push, is it inline css or head css rule
         if (attrib.attribName) {
           (attrib.attribValue as any).push({
@@ -5597,13 +5969,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             end: null,
             value: null,
           });
-          console.log(
-            `5601 PUSH to ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}, now = ${JSON.stringify(
-              attrib.attribValue,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `5974 PUSH to ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}, now = ${JSON.stringify(
+                attrib.attribValue,
+                null,
+                4
+              )}`
+            );
         } else if (
           token.type === "rule" &&
           // we don't want to push over the properties in-progress
@@ -5618,13 +5991,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             end: null as any,
             value: null as any,
           });
-          console.log(
-            `5622 PUSH to ${`\u001b[${33}m${`token.properties`}\u001b[${39}m`}, now = ${JSON.stringify(
-              token.properties,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `5996 PUSH to ${`\u001b[${33}m${`token.properties`}\u001b[${39}m`}, now = ${JSON.stringify(
+                token.properties,
+                null,
+                4
+              )}`
+            );
         }
       }
     }
@@ -5639,19 +6013,20 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       i >= attrib.attribValueStartsAt &&
       attrib.attribValueEndsAt === null
     ) {
-      console.log(`5642 inside a catching end of a tag attr clauses`);
+      DEV && console.log(`6016 inside a catching end of a tag attr clauses`);
       if (SOMEQUOTE.includes(str[i])) {
-        console.log(`5644 currently on a quote`);
+        DEV && console.log(`6018 currently on a quote`);
 
-        console.log(
-          `5647 ███████████████████████████████████████ isAttrClosing(str, ${
-            attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt
-          }, ${i}) = ${isAttrClosing(
-            str,
-            attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
-            i
-          )}`
-        );
+        DEV &&
+          console.log(
+            `6022 ███████████████████████████████████████ isAttrClosing(str, ${
+              attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt
+            }, ${i}) = ${isAttrClosing(
+              str,
+              attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
+              i
+            )}`
+          );
 
         if (
           // so we're on a single/double quote,
@@ -5681,16 +6056,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               i
             ))
         ) {
-          console.log(
-            `5685 ${`\u001b[${32}m${`opening and closing quotes matched!`}\u001b[${39}m`}`
-          );
-          console.log(
-            `5688 ${`\u001b[${32}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-              attrib,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `6061 ${`\u001b[${32}m${`opening and closing quotes matched!`}\u001b[${39}m`}`
+            );
+          DEV &&
+            console.log(
+              `6065 ${`\u001b[${32}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                attrib,
+                null,
+                4
+              )}`
+            );
 
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
@@ -5701,13 +6078,15 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
           if (property.propertyStarts) {
             attrib.attribValue.push(clone(property));
-            console.log(
-              `5705 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} property into ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
-            );
+            DEV &&
+              console.log(
+                `6083 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} property into ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
+              );
             propertyReset();
-            console.log(
-              `5709 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} property`
-            );
+            DEV &&
+              console.log(
+                `6088 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} property`
+              );
           }
 
           if (
@@ -5715,28 +6094,31 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             attrib.attribValue.length &&
             !attrib.attribValue[~-attrib.attribValue.length].end
           ) {
-            console.log(
-              `5719 set the ending on the last object within "attribValue"`
-            );
+            DEV &&
+              console.log(
+                `6099 set the ending on the last object within "attribValue"`
+              );
             // if it's not a property (of inline style), set its "end"
             if (
               !(attrib.attribValue[~-attrib.attribValue.length] as any).property
             ) {
               attrib.attribValue[~-attrib.attribValue.length].end = i;
-              console.log(
-                `5727 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValue[${~-attrib
-                  .attribValue.length}].end`}\u001b[${39}m`} = ${
-                  attrib.attribValue[~-attrib.attribValue.length].end
-                };`
-              );
+              DEV &&
+                console.log(
+                  `6108 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValue[${~-attrib
+                    .attribValue.length}].end`}\u001b[${39}m`} = ${
+                    attrib.attribValue[~-attrib.attribValue.length].end
+                  };`
+                );
 
               if (
                 (attrib.attribValue[~-attrib.attribValue.length] as any)
                   .property === null
               ) {
-                console.log(
-                  `5738 ${`\u001b[${31}m${`CSS property without a value!`}\u001b[${39}m`}`
-                );
+                DEV &&
+                  console.log(
+                    `6120 ${`\u001b[${31}m${`CSS property without a value!`}\u001b[${39}m`}`
+                  );
                 // it's CSS property without a value:
                 // <img style="display" />
                 (
@@ -5748,44 +6130,49 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 (
                   attrib.attribValue[~-attrib.attribValue.length] as any
                 ).propertyEnds = i;
-                console.log(
-                  `5752 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValue[${~-attrib
-                    .attribValue.length}].value`}\u001b[${39}m`} = ${
-                    attrib.attribValue[~-attrib.attribValue.length].value
-                  }; ${`\u001b[${33}m${`attrib.attribValue[${~-attrib
-                    .attribValue.length}].propertyEnds`}\u001b[${39}m`} = ${i}`
-                );
+                DEV &&
+                  console.log(
+                    `6135 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValue[${~-attrib
+                      .attribValue.length}].value`}\u001b[${39}m`} = ${
+                      attrib.attribValue[~-attrib.attribValue.length].value
+                    }; ${`\u001b[${33}m${`attrib.attribValue[${~-attrib
+                      .attribValue
+                      .length}].propertyEnds`}\u001b[${39}m`} = ${i}`
+                  );
               } else {
-                console.log(`5759 assign to value`);
+                DEV && console.log(`6143 assign to value`);
                 attrib.attribValue[~-attrib.attribValue.length].value =
                   str.slice(
                     attrib.attribValue[~-attrib.attribValue.length].start,
                     i
                   );
-                console.log(
-                  `5766 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValue[${~-attrib
-                    .attribValue.length}].value`}\u001b[${39}m`} = ${
-                    attrib.attribValue[~-attrib.attribValue.length].value
-                  }`
-                );
+                DEV &&
+                  console.log(
+                    `6151 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValue[${~-attrib
+                      .attribValue.length}].value`}\u001b[${39}m`} = ${
+                      attrib.attribValue[~-attrib.attribValue.length].value
+                    }`
+                  );
               }
             }
           }
-          console.log(
-            `5775 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-              attrib,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `6161 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                attrib,
+                null,
+                4
+              )}`
+            );
 
           // 2. if the pair was mismatching, wipe layers' last element
           if (str[attrib.attribOpeningQuoteAt as number] !== str[i]) {
             layers.pop();
             layers.pop();
-            console.log(
-              `5787 POP x 2, now layers = ${JSON.stringify(layers, null, 4)}`
-            );
+            DEV &&
+              console.log(
+                `6174 POP x 2, now layers = ${JSON.stringify(layers, null, 4)}`
+              );
           }
 
           // 3. last check for the last attribValue's .end - in some broken code
@@ -5798,23 +6185,25 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             !attrib.attribValue[~-attrib.attribValue.length].end
           ) {
             attrib.attribValue[~-attrib.attribValue.length].end = i;
+            DEV &&
+              console.log(
+                `6190 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} .end on the last attribValue, now = ${JSON.stringify(
+                  attrib.attribValue[~-attrib.attribValue.length],
+                  null,
+                  4
+                )}`
+              );
+          }
+
+          // 4. push and wipe
+          DEV &&
             console.log(
-              `5802 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} .end on the last attribValue, now = ${JSON.stringify(
-                attrib.attribValue[~-attrib.attribValue.length],
+              `6201 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                attrib,
                 null,
                 4
               )}`
             );
-          }
-
-          // 4. push and wipe
-          console.log(
-            `5812 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-              attrib,
-              null,
-              4
-            )}`
-          );
           token.attribs.push(clone(attrib));
           attribReset();
         } else if (
@@ -5839,16 +6228,17 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             value: null as any,
           });
 
-          console.log(
-            `5843 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} new to attrib.attribValue, now ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}: ${JSON.stringify(
-              attrib.attribValue,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `6233 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} new to attrib.attribValue, now ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}: ${JSON.stringify(
+                attrib.attribValue,
+                null,
+                4
+              )}`
+            );
         }
 
-        console.log(`5851`);
+        DEV && console.log(`6241`);
       } else if (
         attrib.attribOpeningQuoteAt === null &&
         ((str[i] && !str[i].trim()) ||
@@ -5857,7 +6247,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       ) {
         // ^ either whitespace or tag's closing or ESP literal's start ends
         // the attribute's value if there are no quotes
-        console.log(`5860 opening quote was missing, terminate attr val here`);
+        DEV &&
+          console.log(
+            `6252 opening quote was missing, terminate attr val here`
+          );
 
         attrib.attribValueEndsAt = i;
         attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
@@ -5873,19 +6266,20 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           );
         }
         attrib.attribEnds = i;
-        console.log(
-          `5877 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueEndsAt`}\u001b[${39}m`} = ${
-            attrib.attribValueEndsAt
-          }; ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${
-            attrib.attribValueRaw
-          }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
-            attrib.attribValue,
-            null,
-            4
-          )}; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
-            attrib.attribEnds
-          }`
-        );
+        DEV &&
+          console.log(
+            `6271 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueEndsAt`}\u001b[${39}m`} = ${
+              attrib.attribValueEndsAt
+            }; ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${
+              attrib.attribValueRaw
+            }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+              attrib.attribValue,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+              attrib.attribEnds
+            }`
+          );
 
         // 2. push and wipe
         token.attribs.push(clone(attrib));
@@ -5893,23 +6287,25 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
         // 3. pop layers
         layers.pop();
-        console.log(
-          `5897 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`}, now:\n${JSON.stringify(
-            layers,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `6292 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`}, now:\n${JSON.stringify(
+              layers,
+              null,
+              4
+            )}`
+          );
 
         // 4. tackle the tag ending
         if (str[i] === ">") {
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
-          console.log(
-            `5909 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-              token.end
-            }`
-          );
+          DEV &&
+            console.log(
+              `6305 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                token.end
+              }`
+            );
         }
       } else if (
         str[i] === "=" &&
@@ -5935,9 +6331,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)))
         )
       ) {
-        console.log(
-          `5939 ${`\u001b[${31}m${`MISSING CLOSING QUOTE ON PREVIOUS ATTR.`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `6336 ${`\u001b[${31}m${`MISSING CLOSING QUOTE ON PREVIOUS ATTR.`}\u001b[${39}m`}`
+          );
 
         // all depends, are there whitespace characters:
         // imagine
@@ -5946,16 +6343,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // <a href="xyz border="0">
         // that's two different cases - there's nothing to salvage in former!
 
-        console.log(
-          `5950 ${`\u001b[${36}m${`██ traverse backwards, try to salvage something`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `6348 ${`\u001b[${36}m${`██ traverse backwards, try to salvage something`}\u001b[${39}m`}`
+          );
         let whitespaceFound;
         let attribClosingQuoteAt;
 
         for (let y = leftVal; y >= attrib.attribValueStartsAt; y--) {
-          console.log(
-            `5957 ${`\u001b[${36}m${`------- str[${y}] = ${str[y]} -------`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `6356 ${`\u001b[${36}m${`------- str[${y}] = ${str[y]} -------`}\u001b[${39}m`}`
+            );
 
           // catch where whitespace starts
           if (!whitespaceFound && str[y] && !str[y].trim()) {
@@ -5964,13 +6363,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             if (attribClosingQuoteAt) {
               // slice the captured chunk
               let extractedChunksVal = str.slice(y, attribClosingQuoteAt);
-              console.log(
-                `5968 ${`\u001b[${33}m${`extractedChunksVal`}\u001b[${39}m`} = ${JSON.stringify(
-                  extractedChunksVal,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `6368 ${`\u001b[${33}m${`extractedChunksVal`}\u001b[${39}m`} = ${JSON.stringify(
+                    extractedChunksVal,
+                    null,
+                    4
+                  )}`
+                );
             }
           }
 
@@ -5986,22 +6386,24 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             if (!attribClosingQuoteAt) {
               // that's the first, default location
               attribClosingQuoteAt = y + 1;
-              console.log(
-                `5990 SET attribClosingQuoteAt = ${attribClosingQuoteAt}`
-              );
+              DEV &&
+                console.log(
+                  `6391 SET attribClosingQuoteAt = ${attribClosingQuoteAt}`
+                );
             } else {
-              console.log(`5993 X`);
+              DEV && console.log(`6394 X`);
             }
           }
         }
 
-        console.log(
-          `5999 FIY, ${`\u001b[${33}m${`attribClosingQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
-            attribClosingQuoteAt,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `6401 FIY, ${`\u001b[${33}m${`attribClosingQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+              attribClosingQuoteAt,
+              null,
+              4
+            )}`
+          );
 
         if (attribClosingQuoteAt) {
           attrib.attribValueEndsAt = attribClosingQuoteAt;
@@ -6011,13 +6413,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               attribClosingQuoteAt
             );
 
-            console.log(
-              `6015 FIY, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-                attrib,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `6418 FIY, ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                  attrib,
+                  null,
+                  4
+                )}`
+              );
 
             if (
               Array.isArray(attrib.attribValue) &&
@@ -6030,51 +6433,55 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 attrib.attribValue[~-attrib.attribValue.length].start,
                 attrib.attribValueEndsAt
               );
-              console.log(
-                `6034 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} attrib.attribValue's last object's end and value: ${JSON.stringify(
-                  attrib.attribValue,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `6438 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} attrib.attribValue's last object's end and value: ${JSON.stringify(
+                    attrib.attribValue,
+                    null,
+                    4
+                  )}`
+                );
             }
           }
           attrib.attribEnds = attribClosingQuoteAt;
-          console.log(
-            `6044 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${
-              attrib.attribClosingQuoteAt
-            }; ${`\u001b[${33}m${`attrib.attribValueEndsAt`}\u001b[${39}m`} = ${
-              attrib.attribValueEndsAt
-            }; ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${
-              attrib.attribValueRaw
-            }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
-              attrib.attribValue,
-              null,
-              4
-            )}; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
-              attrib.attribEnds
-            }`
-          );
+          DEV &&
+            console.log(
+              `6449 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${
+                attrib.attribClosingQuoteAt
+              }; ${`\u001b[${33}m${`attrib.attribValueEndsAt`}\u001b[${39}m`} = ${
+                attrib.attribValueEndsAt
+              }; ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${
+                attrib.attribValueRaw
+              }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+                attrib.attribValue,
+                null,
+                4
+              )}; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+                attrib.attribEnds
+              }`
+            );
 
           // 2. if the pair was mismatching, wipe layers' last element
           if (str[attrib.attribOpeningQuoteAt as number] !== str[i]) {
             layers.pop();
-            console.log(
-              `6063 POP x 1, now layers = ${JSON.stringify(layers, null, 4)}`
-            );
+            DEV &&
+              console.log(
+                `6469 POP x 1, now layers = ${JSON.stringify(layers, null, 4)}`
+              );
           }
 
           // 3. push and wipe
           token.attribs.push(clone(attrib));
           attribReset();
 
-          console.log(
-            `6072 ██ ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-              attrib,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `6479 ██ ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                attrib,
+                null,
+                4
+              )}`
+            );
 
           // 4. pull the i back to the position where the attribute ends
           i = ~-attribClosingQuoteAt;
@@ -6098,11 +6505,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
           // 2. end the attribute
           attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
-          console.log(
-            `6102 SET ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
-              attrib.attribEnds
-            }`
-          );
+          DEV &&
+            console.log(
+              `6510 SET ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+                attrib.attribEnds
+              }`
+            );
 
           // 3. value doesn't start, this needs correction
           attrib.attribValueStartsAt = null;
@@ -6121,26 +6529,28 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           continue;
         }
       } else if (str[i] === "/" && str[rightVal as number] === ">") {
-        console.log(`6124 ${`\u001b[${33}m${`TAG ENDS`}\u001b[${39}m`}`);
+        DEV && console.log(`6532 ${`\u001b[${33}m${`TAG ENDS`}\u001b[${39}m`}`);
         if (attrib.attribValueStartsAt) {
           attrib.attribValueStartsAt = null;
-          console.log(
-            `6128 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
-              attrib.attribValueStartsAt,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `6537 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+                attrib.attribValueStartsAt,
+                null,
+                4
+              )}`
+            );
         }
         if (!attrib.attribEnds) {
           attrib.attribEnds = i;
-          console.log(
-            `6138 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${JSON.stringify(
-              attrib.attribEnds,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `6548 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${JSON.stringify(
+                attrib.attribEnds,
+                null,
+                4
+              )}`
+            );
         }
       } else if (
         attrib &&
@@ -6159,9 +6569,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           (attrib.attribValue[~-attrib.attribValue.length].end &&
             attrib.attribValue[~-attrib.attribValue.length].end <= i))
       ) {
-        console.log(
-          `6163 ${`\u001b[${33}m${`ATTR. DOESN'T END, STRING VALUE TOKEN STARTS UNDER attribValue`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `6574 ${`\u001b[${33}m${`ATTR. DOESN'T END, STRING VALUE TOKEN STARTS UNDER attribValue`}\u001b[${39}m`}`
+          );
 
         attrib.attribValue.push({
           type: "text",
@@ -6170,13 +6581,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           value: null as any,
         });
 
-        console.log(
-          `6174 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} new to attrib.attribValue, now ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}: ${JSON.stringify(
-            attrib.attribValue,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `6586 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} new to attrib.attribValue, now ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}: ${JSON.stringify(
+              attrib.attribValue,
+              null,
+              4
+            )}`
+          );
       } else if (
         property &&
         !property.importantStarts &&
@@ -6198,24 +6610,26 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
         // backup the parent tag token
         parentTokenToBackup = clone(token);
-        console.log(
-          `6202 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`parentTokenToBackup`}\u001b[${39}m`} = ${JSON.stringify(
-            parentTokenToBackup,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `6615 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`parentTokenToBackup`}\u001b[${39}m`} = ${JSON.stringify(
+              parentTokenToBackup,
+              null,
+              4
+            )}`
+          );
 
         // initiate a text token
         initToken("text", i);
 
-        console.log(
-          `6213 ${`\u001b[${33}m${`token`}\u001b[${39}m`} now = ${JSON.stringify(
-            token,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `6627 ${`\u001b[${33}m${`token`}\u001b[${39}m`} now = ${JSON.stringify(
+              token,
+              null,
+              4
+            )}`
+          );
       }
     } else if (
       token.type === "esp" &&
@@ -6227,9 +6641,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       str[attribToBackup.attribOpeningQuoteAt] === str[i] &&
       isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, i)
     ) {
-      console.log(
-        `6231 ${`\u001b[${31}m${`██`}\u001b[${39}m`} emergency catching tag attr closing quotes inside attribute, with ESP tag unclosed`
-      );
+      DEV &&
+        console.log(
+          `6646 ${`\u001b[${31}m${`██`}\u001b[${39}m`} emergency catching tag attr closing quotes inside attribute, with ESP tag unclosed`
+        );
 
       // imagine unclosed ESP tag inside attr value:
       // <tr class="{% x">
@@ -6239,16 +6654,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       // we need to still proactively look for closing attribute quotes,
       // even inside ESP tags, if we're inside tag attributes
 
-      console.log(
-        `6243 ${`\u001b[${32}m${`opening and closing quotes matched!`}\u001b[${39}m`}`
-      );
-      console.log(
-        `6246 ${`\u001b[${32}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`attribToBackup`}\u001b[${39}m`} = ${JSON.stringify(
-          attribToBackup,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `6659 ${`\u001b[${32}m${`opening and closing quotes matched!`}\u001b[${39}m`}`
+        );
+      DEV &&
+        console.log(
+          `6663 ${`\u001b[${32}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`attribToBackup`}\u001b[${39}m`} = ${JSON.stringify(
+            attribToBackup,
+            null,
+            4
+          )}`
+        );
 
       // 1. patch up missing token (which is type="esp" currently) values
       token.end = i;
@@ -6258,7 +6675,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
         attribToBackup.attribValue = [];
       }
-      console.log(`6261 push token to attribValue`);
+      DEV && console.log(`6678 push token to attribValue`);
       attribToBackup.attribValue.push(token);
 
       // 3. patch up missing values in attribToBackup
@@ -6279,13 +6696,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       attribToBackup = undefined;
       parentTokenToBackup = undefined;
 
-      console.log(
-        `6283 FIY, now ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-          token,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `6701 FIY, now ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+            token,
+            null,
+            4
+          )}`
+        );
 
       attribReset();
 
@@ -6326,7 +6744,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       str[i] &&
       str[i].trim()
     ) {
-      console.log(`6329 inside catching attr value start clauses`);
+      DEV && console.log(`6747 inside catching attr value start clauses`);
       if (
         str[i] === "=" &&
         !SOMEQUOTE.includes(str[rightVal as number]) &&
@@ -6344,13 +6762,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             )
           : undefined;
 
-        console.log(
-          `6348 ${`\u001b[${33}m${`firstQuoteOnTheRightIdx`}\u001b[${39}m`} = ${JSON.stringify(
-            firstQuoteOnTheRightIdx,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `6767 ${`\u001b[${33}m${`firstQuoteOnTheRightIdx`}\u001b[${39}m`} = ${JSON.stringify(
+              firstQuoteOnTheRightIdx,
+              null,
+              4
+            )}`
+          );
 
         // catch attribute name - equal - attribute name - equal
         // <span width=height=100>
@@ -6367,7 +6786,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               .toLowerCase()
           )
         ) {
-          console.log(`6370 attribute ends`);
+          DEV && console.log(`6789 attribute ends`);
           // we have something like:
           // <span width=height=100>
 
@@ -6375,9 +6794,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           attrib.attribEnds = i + 1;
 
           // 2. push and wipe
-          console.log(
-            `6379 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `6799 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
+            );
           token.attribs.push({ ...attrib });
           attribReset();
         } else if (
@@ -6405,16 +6825,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             )
           ).some((char) => `<>=`.includes(char))
         ) {
-          console.log(
-            `6409 case of missing opening quotes - attribute continues`
-          );
+          DEV &&
+            console.log(
+              `6830 case of missing opening quotes - attribute continues`
+            );
           // case of missing opening quotes
           attrib.attribValueStartsAt = rightVal;
-          console.log(
-            `6414 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${
-              attrib.attribValueStartsAt
-            }`
-          );
+          DEV &&
+            console.log(
+              `6836 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${
+                attrib.attribValueStartsAt
+              }`
+            );
 
           // push missing entry into layers
           layers.push({
@@ -6422,17 +6844,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             value: null as any,
             position: attrib.attribValueStartsAt as any,
           });
-          console.log(
-            `6426 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-              {
-                type: "simple",
-                value: null,
-                position: attrib.attribValueStartsAt,
-              },
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `6849 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                {
+                  type: "simple",
+                  value: null,
+                  position: attrib.attribValueStartsAt,
+                },
+                null,
+                4
+              )}`
+            );
         }
       } else if (SOMEQUOTE.includes(str[i])) {
         // maybe it's <span width='"100"> and it's a false opening quote, '
@@ -6464,7 +6887,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))
           ).some((char) => `<>=${str[i]}`.includes(char))
         ) {
-          console.log(`6467 ${`\u001b[${31}m${`rogue quote!`}\u001b[${39}m`}`);
+          DEV &&
+            console.log(
+              `6892 ${`\u001b[${31}m${`rogue quote!`}\u001b[${39}m`}`
+            );
           // pop the layers
           layers.pop();
         } else {
@@ -6474,13 +6900,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
           /* eslint no-lonely-if: "off" */
           if (!attrib.attribOpeningQuoteAt) {
-            console.log(`6477 all fine, mark the quote as starting`);
+            DEV && console.log(`6903 all fine, mark the quote as starting`);
             attrib.attribOpeningQuoteAt = i;
-            console.log(
-              `6480 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribOpeningQuoteAt`}\u001b[${39}m`} = ${
-                attrib.attribOpeningQuoteAt
-              }`
-            );
+            DEV &&
+              console.log(
+                `6907 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribOpeningQuoteAt`}\u001b[${39}m`} = ${
+                  attrib.attribOpeningQuoteAt
+                }`
+              );
 
             if (
               // character exists on the right
@@ -6491,11 +6918,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                 !ifQuoteThenAttrClosingQuote(i + 1))
             ) {
               attrib.attribValueStartsAt = i + 1;
-              console.log(
-                `6495 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${
-                  attrib.attribValueStartsAt
-                }`
-              );
+              DEV &&
+                console.log(
+                  `6923 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${
+                    attrib.attribValueStartsAt
+                  }`
+                );
             }
           } else {
             // One quote exists.
@@ -6504,15 +6932,16 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             //
             /* istanbul ignore else */
             if (isAttrClosing(str, attrib.attribOpeningQuoteAt, i)) {
-              console.log(`6507`);
+              DEV && console.log(`6935`);
               attrib.attribClosingQuoteAt = i;
-              console.log(
-                `6510 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
-                  attrib.attribClosingQuoteAt,
-                  null,
-                  4
-                )}`
-              );
+              DEV &&
+                console.log(
+                  `6939 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+                    attrib.attribClosingQuoteAt,
+                    null,
+                    4
+                  )}`
+                );
             }
 
             /* istanbul ignore else */
@@ -6522,44 +6951,49 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                   attrib.attribOpeningQuoteAt + 1,
                   attrib.attribClosingQuoteAt
                 );
-                console.log(
-                  `6526 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
-                    attrib.attribValueRaw,
-                    null,
-                    4
-                  )}`
-                );
+                DEV &&
+                  console.log(
+                    `6956 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
+                      attrib.attribValueRaw,
+                      null,
+                      4
+                    )}`
+                  );
               } else {
                 attrib.attribValueRaw = "";
-                console.log(
-                  `6535 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
-                    attrib.attribValueRaw,
-                    null,
-                    4
-                  )}`
-                );
+                DEV &&
+                  console.log(
+                    `6966 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
+                      attrib.attribValueRaw,
+                      null,
+                      4
+                    )}`
+                  );
               }
 
               attrib.attribEnds = i + 1;
-              console.log(
-                `6545 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
-                  attrib.attribEnds
-                }`
-              );
+              DEV &&
+                console.log(
+                  `6977 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+                    attrib.attribEnds
+                  }`
+                );
               // push and wipe
-              console.log(
-                `6551 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
-              );
+              DEV &&
+                console.log(
+                  `6984 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
+                );
               token.attribs.push(clone(attrib));
               attribReset();
             }
-            console.log(
-              `6557 now ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-                attrib,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `6991 now ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+                  attrib,
+                  null,
+                  4
+                )}`
+              );
           }
         }
       }
@@ -6591,9 +7025,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       attrib.attribStarts &&
       !attrib.attribEnds
     ) {
-      console.log(
-        `6595 ${`\u001b[${31}m${`██`}\u001b[${39}m`} bracket within attribute's value`
-      );
+      DEV &&
+        console.log(
+          `7030 ${`\u001b[${31}m${`██`}\u001b[${39}m`} bracket within attribute's value`
+        );
       // Idea is simple: we have to situations:
       // 1. this closing bracket is real, closing bracket
       // 2. this closing bracket is unencoded raw text
@@ -6610,29 +7045,32 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       if (str[i + 1]) {
         // Traverse then
         for (let y = i + 1; y < len; y++) {
-          console.log(
-            `6614 ${`\u001b[${36}m${`str[${y}] = ${JSON.stringify(
-              str[y],
-              null,
-              0
-            )}`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `7050 ${`\u001b[${36}m${`str[${y}] = ${JSON.stringify(
+                str[y],
+                null,
+                0
+              )}`}\u001b[${39}m`}`
+            );
 
           // if we reach the closing counterpart of the quotes, terminate
           if (
             attrib.attribOpeningQuoteAt &&
             str[y] === str[attrib.attribOpeningQuoteAt]
           ) {
-            console.log(
-              `6627 closing quote (${
-                str[attrib.attribOpeningQuoteAt]
-              }) found, ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
-            );
+            DEV &&
+              console.log(
+                `7064 closing quote (${
+                  str[attrib.attribOpeningQuoteAt]
+                }) found, ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+              );
             if (y !== i + 1 && str[~-y] !== "=") {
               thisIsRealEnding = true;
-              console.log(
-                `6634 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
-              );
+              DEV &&
+                console.log(
+                  `7072 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
+                );
             }
             break;
           } else if (str[y] === ">") {
@@ -6641,36 +7079,39 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             break;
           } else if (str[y] === "<") {
             thisIsRealEnding = true;
-            console.log(
-              `6645 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
-            );
+            DEV &&
+              console.log(
+                `7084 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
+              );
 
             // TODO - pop only if type === "simple" and it's the same opening
             // quotes of this attribute
             layers.pop();
-            console.log(
-              `6652 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`}, now:\n${JSON.stringify(
-                layers,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `7092 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`}, now:\n${JSON.stringify(
+                  layers,
+                  null,
+                  4
+                )}`
+              );
 
-            console.log(`6659 break`);
+            DEV && console.log(`7099 break`);
             break;
           } else if (!str[y + 1]) {
             // if end was reached and nothing caught, that's also positive sign
             thisIsRealEnding = true;
-            console.log(
-              `6665 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
-            );
+            DEV &&
+              console.log(
+                `7106 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
+              );
 
-            console.log(`6668 break`);
+            DEV && console.log(`7109 break`);
             break;
           }
         }
       } else {
-        console.log(`6673 string ends so this was the bracket`);
+        DEV && console.log(`7114 string ends so this was the bracket`);
         thisIsRealEnding = true;
       }
 
@@ -6686,11 +7127,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       if (thisIsRealEnding) {
         token.end = i + 1;
         token.value = str.slice(token.start, token.end);
-        console.log(
-          `6690 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-            token.end
-          }`
-        );
+        DEV &&
+          console.log(
+            `7132 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+              token.end
+            }`
+          );
 
         // set and push the attribute's records, just closing quote will be
         // null and possibly value too
@@ -6709,7 +7151,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
             attrib.attribValue.length &&
             !attrib.attribValue[~-attrib.attribValue.length].end
           ) {
-            console.log(`6712`);
+            DEV && console.log(`7154`);
             attrib.attribValue[~-attrib.attribValue.length].end = i;
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(
               attrib.attribValue[~-attrib.attribValue.length].start,
@@ -6723,11 +7165,12 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
         if (attrib.attribEnds === null) {
           attrib.attribEnds = i;
-          console.log(
-            `6727 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
-              attrib.attribEnds
-            }`
-          );
+          DEV &&
+            console.log(
+              `7170 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+                attrib.attribEnds
+              }`
+            );
         }
 
         // for broken code cases, clean up attribValue like:
@@ -6748,9 +7191,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
         if (attrib) {
           // 2. push and wipe
-          console.log(
-            `6752 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `7196 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
+            );
           token.attribs.push(clone(attrib));
           attribReset();
         }
@@ -6778,17 +7222,18 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     // -------------------------------------------------------------------------
 
     if (str[i] && opts.charCb) {
-      console.log(
-        `6782 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
-          {
-            type: token.type,
-            chr: str[i],
-            i,
-          },
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `7227 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            {
+              type: token.type,
+              chr: str[i],
+              i,
+            },
+            null,
+            4
+          )}`
+        );
       pingCharCb({
         type: token.type,
         chr: str[i],
@@ -6818,9 +7263,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         // maybe it's a broken code case where ESP token is set
         // as the main "token" and there's backed up real tag token?
         if (token.type === "esp" && parentTokenToBackup) {
-          console.log(
-            `6822 ${`\u001b[${31}m${`broken ESP token!`}\u001b[${39}m`}`
-          );
+          DEV &&
+            console.log(
+              `7268 ${`\u001b[${31}m${`broken ESP token!`}\u001b[${39}m`}`
+            );
 
           // property by now will be already pushed to attrib,
           // so we check its contents directly
@@ -6835,13 +7281,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               clone(token)
             );
 
-            console.log(
-              `6839 SET ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
-                attrib.attribValue,
-                null,
-                4
-              )}`
-            );
+            DEV &&
+              console.log(
+                `7286 SET ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+                  attrib.attribValue,
+                  null,
+                  4
+                )}`
+              );
 
             // patch missing values on attrib
             if (!attrib.attribValueEndsAt) {
@@ -6850,13 +7297,14 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
           }
 
           token = clone(parentTokenToBackup);
-          console.log(
-            `6854 ${`\u001b[${32}m${`RESTORE`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-              token,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `7302 ${`\u001b[${32}m${`RESTORE`}\u001b[${39}m`} ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+                token,
+                null,
+                4
+              )}`
+            );
           attribToBackup = undefined;
           parentTokenToBackup = undefined;
 
@@ -6865,34 +7313,38 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         }
 
         attribReset();
-        console.log(`6868 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} attrib`);
+        DEV &&
+          console.log(`7317 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} attrib`);
       } else if (attrib?.attribName) {
-        console.log(
-          `6871 FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
-            token,
-            null,
-            4
-          )}; ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
-            attrib,
-            null,
-            4
-          )}`
-        );
-
-        // push and wipe
-        console.log(
-          `6884 ${`\u001b[${32}m${`PUSH ATTR AND WIPE`}\u001b[${39}m`}`
-        );
-        // patch the attr ending if it's missing
-        if (!attrib.attribEnds) {
-          attrib.attribEnds = i;
+        DEV &&
           console.log(
-            `6890 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${JSON.stringify(
-              attrib.attribEnds,
+            `7321 FIY, ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+              token,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+              attrib,
               null,
               4
             )}`
           );
+
+        // push and wipe
+        DEV &&
+          console.log(
+            `7335 ${`\u001b[${32}m${`PUSH ATTR AND WIPE`}\u001b[${39}m`}`
+          );
+        // patch the attr ending if it's missing
+        if (!attrib.attribEnds) {
+          attrib.attribEnds = i;
+          DEV &&
+            console.log(
+              `7342 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${JSON.stringify(
+                attrib.attribEnds,
+                null,
+                4
+              )}`
+            );
         }
         (token as any).attribs.push({ ...attrib });
         attribReset();
@@ -6939,12 +7391,13 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         }
         pushProperty(property);
         propertyReset();
-        console.log(
-          `6943 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
-        );
+        DEV &&
+          console.log(
+            `7396 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
+          );
       }
 
-      console.log(`6947 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
+      DEV && console.log(`7400 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
       pingTagCb(token);
     }
 
@@ -6972,108 +7425,119 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     // logging:
     // -------------------------------------------------------------------------
 
-    console.log(
-      `${`\u001b[${90}m${`==========================================\n██ token: ${JSON.stringify(
-        token,
-        null,
-        4
-      )}${
-        property.propertyStarts || property.importantStarts
-          ? `\n██ property: ${JSON.stringify(property, null, 4)}`
-          : ""
-      }${
-        attrib.attribStarts
-          ? `\n██ attrib: ${JSON.stringify(attrib, null, 4)}`
-          : ""
-      }${
-        attribToBackup
-          ? `\n██ attribToBackup: ${JSON.stringify(attribToBackup, null, 4)}`
-          : ""
-      }${
-        parentTokenToBackup
-          ? `\n██ parentTokenToBackup: ${JSON.stringify(
-              parentTokenToBackup,
-              null,
-              4
-            )}`
-          : ""
-      }${
-        layers.length ? `\n██ layers: ${JSON.stringify(layers, null, 4)}` : ""
-      }`}\u001b[${39}m`}${
-        doNothing
-          ? `\n${`\u001b[${31}m${`DO NOTHING UNTIL ${doNothing}`}\u001b[${39}m`}`
-          : ""
-      }`
-    );
-    console.log(
-      `${`\u001b[${90}m${`withinStyle = ${withinStyle}`}\u001b[${39}m`}  ${`\u001b[${90}m${`withinStyleComment = ${withinStyleComment}`}\u001b[${39}m`}  ${`\u001b[${90}m${`withinScript = ${withinScript}`}\u001b[${39}m`}`
-    );
-    console.log(
-      `${`\u001b[${90}m${`selectorChunkStartedAt = ${selectorChunkStartedAt}`}\u001b[${39}m`}`
-    );
-    console.log(`${`\u001b[${90}m${`rightVal = ${rightVal}`}\u001b[${39}m`}`);
-    console.log(
-      `${`\u001b[${90}m${`lastNonWhitespaceCharAt = ${lastNonWhitespaceCharAt}`}\u001b[${39}m`}`
-    );
-    console.log(
-      `${
-        parentTokenToBackup
-          ? `${`\u001b[${90}m${`parentTokenToBackup = ${JSON.stringify(
-              parentTokenToBackup,
-              null,
-              4
-            )}`}\u001b[${39}m`}`
-          : ""
-      }`
-    );
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`==========================================\n██ token: ${JSON.stringify(
+          token,
+          null,
+          4
+        )}${
+          property.propertyStarts || property.importantStarts
+            ? `\n██ property: ${JSON.stringify(property, null, 4)}`
+            : ""
+        }${
+          attrib.attribStarts
+            ? `\n██ attrib: ${JSON.stringify(attrib, null, 4)}`
+            : ""
+        }${
+          attribToBackup
+            ? `\n██ attribToBackup: ${JSON.stringify(attribToBackup, null, 4)}`
+            : ""
+        }${
+          parentTokenToBackup
+            ? `\n██ parentTokenToBackup: ${JSON.stringify(
+                parentTokenToBackup,
+                null,
+                4
+              )}`
+            : ""
+        }${
+          layers.length ? `\n██ layers: ${JSON.stringify(layers, null, 4)}` : ""
+        }`}\u001b[${39}m`}${
+          doNothing
+            ? `\n${`\u001b[${31}m${`DO NOTHING UNTIL ${doNothing}`}\u001b[${39}m`}`
+            : ""
+        }`
+      );
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`withinStyle = ${withinStyle}`}\u001b[${39}m`}  ${`\u001b[${90}m${`withinStyleComment = ${withinStyleComment}`}\u001b[${39}m`}  ${`\u001b[${90}m${`withinScript = ${withinScript}`}\u001b[${39}m`}`
+      );
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`selectorChunkStartedAt = ${selectorChunkStartedAt}`}\u001b[${39}m`}`
+      );
+    DEV &&
+      console.log(`${`\u001b[${90}m${`rightVal = ${rightVal}`}\u001b[${39}m`}`);
+    DEV &&
+      console.log(
+        `${`\u001b[${90}m${`lastNonWhitespaceCharAt = ${lastNonWhitespaceCharAt}`}\u001b[${39}m`}`
+      );
+    DEV &&
+      console.log(
+        `${
+          parentTokenToBackup
+            ? `${`\u001b[${90}m${`parentTokenToBackup = ${JSON.stringify(
+                parentTokenToBackup,
+                null,
+                4
+              )}`}\u001b[${39}m`}`
+            : ""
+        }`
+      );
   }
 
   //
   // finally, clear stashes
   //
   if (charStash.length) {
-    console.log(
-      `7036 FINALLY, clear ${`\u001b[${33}m${`charStash`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `7496 FINALLY, clear ${`\u001b[${33}m${`charStash`}\u001b[${39}m`}`
+      );
     for (let i = 0, len2 = charStash.length; i < len2; i++) {
       reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
-      console.log(
-        `7041 ${`\u001b[${90}m${`██ charStash`}\u001b[${39}m`} = ${JSON.stringify(
-          charStash,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `7502 ${`\u001b[${90}m${`██ charStash`}\u001b[${39}m`} = ${JSON.stringify(
+            charStash,
+            null,
+            4
+          )}`
+        );
     }
   }
 
   if (tagStash.length) {
-    console.log(
-      `7052 FINALLY, clear ${`\u001b[${33}m${`tagStash`}\u001b[${39}m`}`
-    );
+    DEV &&
+      console.log(
+        `7514 FINALLY, clear ${`\u001b[${33}m${`tagStash`}\u001b[${39}m`}`
+      );
     for (let i = 0, len2 = tagStash.length; i < len2; i++) {
       reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
-      console.log(
-        `7057 ${`\u001b[${90}m${`██ tagStash`}\u001b[${39}m`} = ${JSON.stringify(
-          tagStash,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `7520 ${`\u001b[${90}m${`██ tagStash`}\u001b[${39}m`} = ${JSON.stringify(
+            tagStash,
+            null,
+            4
+          )}`
+        );
     }
   }
 
   // return stats
   let timeTakenInMilliseconds = Date.now() - start;
-  console.log(" ");
-  console.log(
-    `7070 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`timeTakenInMilliseconds`}\u001b[${39}m`} = ${JSON.stringify(
-      timeTakenInMilliseconds,
-      null,
-      4
-    )}`
-  );
-  console.log(" ");
+  DEV && console.log(" ");
+  DEV &&
+    console.log(
+      `7534 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`timeTakenInMilliseconds`}\u001b[${39}m`} = ${JSON.stringify(
+        timeTakenInMilliseconds,
+        null,
+        4
+      )}`
+    );
+  DEV && console.log(" ");
   return {
     timeTakenInMilliseconds,
   };

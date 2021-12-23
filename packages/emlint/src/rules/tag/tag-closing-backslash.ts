@@ -3,6 +3,9 @@ import { left } from "string-left-right";
 import { Linter, RuleObjType } from "../../linter";
 import { Range } from "../../../../../scripts/common";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: tag-closing-backslash
 // -----------------------------------------------------------------------------
 
@@ -18,18 +21,20 @@ const BACKSLASH = "\u005C";
 function tagClosingBackslash(context: Linter): RuleObjType {
   return {
     tag(node) {
-      console.log(
-        `███████████████████████████████████████ tagClosingBackslash() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ tagClosingBackslash() ███████████████████████████████████████`
+        );
       // since we know the location of the closing bracket,
       // let's look to the left, is there a slash and check the distance
-      console.log(
-        `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       let ranges: Range[] = [];
 
@@ -46,7 +51,7 @@ function tagClosingBackslash(context: Linter): RuleObjType {
         Number.isInteger(node.tagNameStartsAt) &&
         context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH)
       ) {
-        console.log(`049 backslash in front!`);
+        DEV && console.log(`054 backslash in front!`);
         for (let i = node.start; i < node.tagNameStartsAt; i++) {
           // fish-out all backslashes
           if (context.str[i] === BACKSLASH) {
@@ -54,9 +59,10 @@ function tagClosingBackslash(context: Linter): RuleObjType {
             // if there's a need for closing (left) slash, it will be added
             // by 3rd level rules which can "see" the surrounding tag layout.
             ranges.push([i, i + 1]);
-            console.log(
-              `058 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}]`
-            );
+            DEV &&
+              console.log(
+                `064 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}]`
+              );
           }
         }
       }
@@ -83,17 +89,18 @@ function tagClosingBackslash(context: Linter): RuleObjType {
         // Is it completely rogue or is it meant to be self-closing tag's closing?
         let idxFrom = (left(context.str, backSlashPos) as number) + 1;
         let whatToInsert = node.void ? "/" : "";
-        console.log(
-          `087 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
-            idxFrom,
-            null,
-            4
-          )}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = ${JSON.stringify(
-            whatToInsert,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `094 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+              idxFrom,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = ${JSON.stringify(
+              whatToInsert,
+              null,
+              4
+            )}`
+          );
 
         if (
           context.processedRulesConfig["tag-space-before-closing-slash"] &&
@@ -114,9 +121,10 @@ function tagClosingBackslash(context: Linter): RuleObjType {
         ) {
           // include any and all the whitespace to the left as well
           idxFrom = (left(context.str, backSlashPos) as number) + 1;
-          console.log(
-            `118 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
-          );
+          DEV &&
+            console.log(
+              `126 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
+            );
         }
 
         // but if spaces are requested via "tag-space-before-closing-slash",
@@ -132,32 +140,36 @@ function tagClosingBackslash(context: Linter): RuleObjType {
         ) {
           idxFrom = (left(context.str, backSlashPos) as number) + 1;
           whatToInsert = ` ${whatToInsert}`;
-          console.log(
-            `136 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
-          );
+          DEV &&
+            console.log(
+              `145 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+            );
           // but if space is already present at the beginning of the range at
           // index left(context.str, backSlashPos) + 1, don't add one there
           if (node.void && context.str[idxFrom + 1] === " ") {
             idxFrom += 1;
             whatToInsert = whatToInsert.trim();
-            console.log(
-              `144 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
-            );
+            DEV &&
+              console.log(
+                `154 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+              );
           } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
-            console.log(
-              `149 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
-            );
+            DEV &&
+              console.log(
+                `160 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+              );
           }
         }
 
-        console.log(
-          `155 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
-            idxFrom,
-            null,
-            4
-          )}`
-        );
+        DEV &&
+          console.log(
+            `167 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+              idxFrom,
+              null,
+              4
+            )}`
+          );
 
         // maybe slashes are forbidden on void tags?
         if (

@@ -5,20 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateCodebase(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateCodebase() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateCodebase() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateCodebase(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateCodebase(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "codebase") {
         // validate the parent
@@ -35,7 +40,7 @@ function attributeValidateCodebase(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`038 RAISE ERROR`);
+            DEV && console.log(`043 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-codebase",

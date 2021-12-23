@@ -4,6 +4,9 @@ import { notEmailFriendly } from "html-entities-not-email-friendly";
 import { Linter } from "../linter";
 // import { ErrorObj } from "./commonTypes";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function validateCharEncoding(
   charStr: string, // string value of a character
   posIdx: number, // where this character is located (like token.start)
@@ -23,13 +26,14 @@ function validateCharEncoding(
     };`;
   }
 
-  console.log(
-    `027 ${`\u001b[${33}m${`encodedChr`}\u001b[${39}m`} = ${JSON.stringify(
-      encodedChr,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `031 ${`\u001b[${33}m${`encodedChr`}\u001b[${39}m`} = ${JSON.stringify(
+        encodedChr,
+        null,
+        4
+      )}`
+    );
 
   let charName = "";
   if (charStr.charCodeAt(0) === 160) {

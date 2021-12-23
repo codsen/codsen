@@ -8,6 +8,9 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 interface UnknownValueObj {
   [key: string]: any;
 }
@@ -48,9 +51,9 @@ function internalApi(
   // if object is passed, crawl it, checking for keyValPair:
   /* istanbul ignore else */
   if (isObj(ast)) {
-    // console.log('\nwill compare:')
-    // console.log('ast = ' + JSON.stringify(ast, null, 4))
-    // console.log('keyValPair = ' + JSON.stringify(keyValPair, null, 4))
+    // DEV && console.log('\nwill compare:')
+    // DEV && console.log('ast = ' + JSON.stringify(ast, null, 4))
+    // DEV && console.log('keyValPair = ' + JSON.stringify(keyValPair, null, 4))
     if (compare(ast, keyValPair)) {
       if (set) {
         /* istanbul ignore else */
@@ -64,7 +67,7 @@ function internalApi(
     } else {
       Object.keys(ast).forEach((key) => {
         if (Array.isArray(ast[key]) || isObj(ast[key])) {
-          // console.log('ast[key] = ' + JSON.stringify(ast[key], null, 4))
+          // DEV && console.log('ast[key] = ' + JSON.stringify(ast[key], null, 4))
           if (set) {
             ast[key] = internalApi(
               ast[key],
@@ -81,7 +84,7 @@ function internalApi(
   } else if (Array.isArray(ast)) {
     // else, it's an array. Iterate each key, if it's an obj, call findTag()
     ast.forEach((_el, i) => {
-      // console.log('array el[' + i + ']=' + JSON.stringify(el, null, 4))
+      // DEV && console.log('array el[' + i + ']=' + JSON.stringify(el, null, 4))
       /* istanbul ignore else */
       if (isObj(ast[i]) || Array.isArray(ast[i])) {
         if (set) {
@@ -99,10 +102,10 @@ function internalApi(
   }
 
   if (truthy(replacementContentsArr)) {
-    // console.log('ast = ' + JSON.stringify(ast, null, 4))
+    // DEV && console.log('ast = ' + JSON.stringify(ast, null, 4))
     return ast;
   }
-  // console.log('result = ' + JSON.stringify(result, null, 4))
+  // DEV && console.log('result = ' + JSON.stringify(result, null, 4))
   return result;
 }
 

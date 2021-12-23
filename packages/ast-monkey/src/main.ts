@@ -7,6 +7,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 /* eslint no-use-before-define: 0 */
 // From "type-fest" by Sindre Sorhus, with added undefined
 type JsonValue =
@@ -55,17 +57,18 @@ function isObj(something: any): boolean {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
-  console.log(`058 monkey() called`);
+  DEV && console.log(`060 monkey() called`);
   let opts: InternalOpts = {
     ...originalOpts,
   };
-  console.log(
-    `063 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `066 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
 
   // ---------------------------------------------------------------------------
   // action
@@ -87,17 +90,18 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
   if (!existy(opts.key) && opts.val !== undefined) {
     vo = true;
   }
-  console.log(
-    `091 ${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
-      ko,
-      null,
-      4
-    )}; ${`\u001b[${33}m${`valueOnly, vo`}\u001b[${39}m`} = ${JSON.stringify(
-      vo,
-      null,
-      4
-    )}`
-  );
+  DEV &&
+    console.log(
+      `095 ${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
+        ko,
+        null,
+        4
+      )}; ${`\u001b[${33}m${`valueOnly, vo`}\u001b[${39}m`} = ${JSON.stringify(
+        vo,
+        null,
+        4
+      )}`
+    );
 
   let input = originalInput;
   if (
@@ -112,24 +116,26 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
   //
   //
 
-  console.log(`115 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
+  DEV && console.log(`119 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
   input = traverse(input, (key, val, innerObj) => {
-    console.log(`117 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
-    console.log(
-      `119 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
-        key,
-        null,
-        4
-      )}; ${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${JSON.stringify(
-        val,
-        null,
-        4
-      )}; ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
-        innerObj,
-        null,
-        4
-      )}`
-    );
+    DEV &&
+      console.log(`122 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
+    DEV &&
+      console.log(
+        `125 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
+          key,
+          null,
+          4
+        )}; ${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${JSON.stringify(
+          val,
+          null,
+          4
+        )}; ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
+          innerObj,
+          null,
+          4
+        )}`
+      );
     let temp: Finding;
     data.count += 1;
     data.gatherPath.length = innerObj.depth;
@@ -190,7 +196,8 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
     }
     return innerObj.parentType === "object" ? val : key;
   });
-  console.log(`193 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
+  DEV &&
+    console.log(`200 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
 
   // returns
   if (opts.mode === "get") {

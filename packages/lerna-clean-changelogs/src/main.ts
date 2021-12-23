@@ -2,6 +2,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 function isStr(something: string): any {
   return typeof something === "string";
 }
@@ -49,7 +51,7 @@ function cleanChangelogs(
         "$1commit/"
       );
     let linesArr = changelogContents.split(/\r?\n/);
-    // console.log(
+    // DEV && console.log(
     //   `${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
     //     linesArr,
     //     null,
@@ -74,7 +76,7 @@ function cleanChangelogs(
           linesArr[i] = `#${linesArr[i]}`;
         }
       });
-      // console.log(
+      // DEV && console.log(
       //   `062 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
       //     linesArr,
       //     null,
@@ -93,13 +95,14 @@ function cleanChangelogs(
 
     let newLinesArr = [];
     for (let i = linesArr.length; i--; ) {
-      console.log(
-        `----------------${`\u001b[${36}m${i}\u001b[${39}m`}\n${`\u001b[${33}m${`linesArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
-          linesArr[i],
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `----------------${`\u001b[${36}m${i}\u001b[${39}m`}\n${`\u001b[${33}m${`linesArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
+            linesArr[i],
+            null,
+            4
+          )}`
+        );
       if (
         linesArr[i].startsWith("**Note:** Version bump only") ||
         (extras && linesArr[i].toLowerCase().includes("wip"))
@@ -127,9 +130,10 @@ function cleanChangelogs(
           // sitting on an empty line:
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
-          console.log(
-            `131 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
-          );
+          DEV &&
+            console.log(
+              `135 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            );
         }
       }
       // fix asterisk list items into dash (Prettier default):
@@ -142,9 +146,10 @@ function cleanChangelogs(
       // reset:
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
-        console.log(
-          `146 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
-        );
+        DEV &&
+          console.log(
+            `151 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          );
       }
     }
 

@@ -5,16 +5,21 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateUri from "../../util/validateUri";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateCite(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateCite() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateCite() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateCite(): node = ${JSON.stringify(node, null, 4)}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateCite(): node = ${JSON.stringify(node, null, 4)}`
+        );
 
       if (node.attribName === "cite") {
         // validate the parent
@@ -33,7 +38,7 @@ function attributeValidateCite(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`036 RAISE ERROR`);
+            DEV && console.log(`041 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-cite" });
           });
         }

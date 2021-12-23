@@ -5,20 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateCharoff(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateCharoff() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateCharoff() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateCharoff(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateCharoff(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "charoff") {
         // validate the parent
@@ -63,9 +68,10 @@ function attributeValidateCharoff(context: Linter): RuleObjType {
               customGenericValueError: "Should be integer, no units.",
             }
           );
-          console.log(
-            `067 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-          );
+          DEV &&
+            console.log(
+              `073 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+            );
 
           // tag has to have "char" attribute:
           if (
@@ -82,7 +88,7 @@ function attributeValidateCharoff(context: Linter): RuleObjType {
           }
 
           errorArr.forEach((errorObj) => {
-            console.log(`085 RAISE ERROR`);
+            DEV && console.log(`091 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-charoff",

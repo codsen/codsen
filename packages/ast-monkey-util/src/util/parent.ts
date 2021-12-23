@@ -1,3 +1,5 @@
+declare let DEV: boolean;
+
 // calulate parent key, for example,
 // "a" => null
 // "0" => null
@@ -13,7 +15,7 @@ function parent(str: string): null | string {
     }
 
     for (let i = lastDotAt - 1; i--; ) {
-      console.log(`016 str[${i}] = ${str[i]}`);
+      DEV && console.log(`018 str[${i}] = ${str[i]}`);
       if (str[i] === ".") {
         return str.slice(i + 1, lastDotAt);
       }

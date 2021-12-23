@@ -5,20 +5,25 @@ import { Linter, RuleObjType } from "../../linter";
 
 import { validateString } from "../../util/util";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateValuetype(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateValuetype() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateValuetype() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `016 attributeValidateValuetype(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `021 attributeValidateValuetype(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "valuetype") {
         // validate the parent
@@ -39,7 +44,7 @@ function attributeValidateValuetype(context: Linter): RuleObjType {
               canBeCommaSeparated: false,
             }
           ).forEach((errorObj) => {
-            console.log(`042 RAISE ERROR`);
+            DEV && console.log(`047 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-valuetype",

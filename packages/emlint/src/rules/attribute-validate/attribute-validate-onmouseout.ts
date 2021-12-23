@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onmouseout
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnmouseout(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnmouseout() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnmouseout() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnmouseout(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnmouseout(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onmouseout") {
         // validate the parent
@@ -67,16 +72,18 @@ function attributeValidateOnmouseout(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `071 attributeValidateOnmouseout(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `077 attributeValidateOnmouseout(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`079 attributeValidateOnmouseout(): RAISE ERROR`);
+            DEV &&
+              console.log(`086 attributeValidateOnmouseout(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onmouseout",

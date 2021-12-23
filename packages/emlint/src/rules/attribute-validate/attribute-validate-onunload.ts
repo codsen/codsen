@@ -1,23 +1,28 @@
 import { Linter, RuleObjType } from "../../linter";
 import validateScript from "../../util/validateScript";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 // rule: attribute-validate-onunload
 // -----------------------------------------------------------------------------
 
 function attributeValidateOnunload(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateOnunload() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateOnunload() ███████████████████████████████████████`
+        );
 
-      console.log(
-        `015 attributeValidateOnunload(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
+      DEV &&
+        console.log(
+          `020 attributeValidateOnunload(): node = ${JSON.stringify(
+            node,
+            null,
+            4
+          )}`
+        );
 
       if (node.attribName === "onunload") {
         // validate the parent
@@ -47,16 +52,17 @@ function attributeValidateOnunload(context: Linter): RuleObjType {
             node.attribValueRaw,
             node.attribValueStartsAt as number
           );
-          console.log(
-            `051 attributeValidateOnunload(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
+          DEV &&
+            console.log(
+              `057 attributeValidateOnunload(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
 
           errorArr.forEach((errorObj) => {
-            console.log(`059 attributeValidateOnunload(): RAISE ERROR`);
+            DEV && console.log(`065 attributeValidateOnunload(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onunload",

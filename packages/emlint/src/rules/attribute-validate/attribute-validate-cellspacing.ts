@@ -5,14 +5,18 @@ import { Linter, RuleObjType } from "../../linter";
 
 import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare let DEV: boolean;
+
 function attributeValidateCellspacing(context: Linter): RuleObjType {
   return {
     attribute(node) {
-      console.log(
-        `███████████████████████████████████████ attributeValidateCellspacing() ███████████████████████████████████████`
-      );
+      DEV &&
+        console.log(
+          `███████████████████████████████████████ attributeValidateCellspacing() ███████████████████████████████████████`
+        );
 
-      // console.log(
+      // DEV && console.log(
       //   `015 attributeValidateCellspacing(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
@@ -40,12 +44,13 @@ function attributeValidateCellspacing(context: Linter): RuleObjType {
               "Should be integer, either no units or percentage.",
           }
         );
-        console.log(
-          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
+        DEV &&
+          console.log(
+            `049 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
         errorArr.forEach((errorObj) => {
-          console.log(`048 RAISE ERROR`);
+          DEV && console.log(`053 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-cellspacing",
