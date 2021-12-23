@@ -58,6 +58,9 @@
         "outputs": []
       },
       "lint": {
+        "dependsOn": [
+          "build"
+        ],
         "outputs": []
       },
       "unit": {
