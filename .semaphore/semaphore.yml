@@ -44,7 +44,9 @@ blocks:
             - yarn
             # fetch the latest webapps' JSON file from Codsen GitHub repo
             - yarn run ci:fetch:webapps
-            # "build" + "unit" + "examples" + "lint":
+            # efficiently build all
+            - yarn turbo run build
+            # "unit" + "examples" + "lint":
             - yarn turbo run prepare
             # generate statistics files:
             - yarn run ci:generate:info
