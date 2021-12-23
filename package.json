@@ -87,7 +87,7 @@
       },
       "examples": {
         "dependsOn": [
-          "build"
+          "^build"
         ],
         "outputs": [],
         "cache": false
