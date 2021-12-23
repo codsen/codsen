@@ -40,10 +40,10 @@ blocks:
             - npm whoami
             - pwd
             - ls
-            # fetch the latest webapps' JSON file from Codsen GitHub repo
-            - yarn run ci:fetch:webapps
             # install deps
             - yarn
+            # fetch the latest webapps' JSON file from Codsen GitHub repo
+            - yarn run ci:fetch:webapps
             # "build" + "unit" + "examples" + "lint":
             - yarn turbo run prepare
             # generate statistics files:
