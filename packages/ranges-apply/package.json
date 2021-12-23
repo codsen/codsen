@@ -66,6 +66,5 @@
   "dependencies": {
     "ranges-merge": "^8.0.7",
     "tiny-invariant": "^1.2.0"
-  },
-  "devDependencies": {}
+  }
 }

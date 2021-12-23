@@ -85,10 +85,7 @@
     "object-path": "^0.11.8"
   },
   "devDependencies": {
-    "@rollup/plugin-json": "^4.1.0",
     "@types/lodash.isplainobject": "^4.0.6",
-    "@types/object-path": "^0.11.1",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/parser": "^5.5.0"
+    "@types/object-path": "^0.11.1"
   }
 }

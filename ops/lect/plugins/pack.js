@@ -2,8 +2,8 @@ import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import sortPackageJson from "sort-package-json";
 import { dequal } from "dequal";
-// import omit from "lodash.omit";
-// import intersection from "lodash.intersection";
+import omit from "lodash.omit";
+import intersection from "lodash.intersection";
 
 function format(obj) {
   if (typeof obj !== "object") {
@@ -31,8 +31,7 @@ function format(obj) {
 // -----------------------------------------------------------------------------
 
 // writes package.json
-// async function packageJson({ state, lectrc, rootPackageJSON }) {
-async function packageJson({ state, lectrc }) {
+async function packageJson({ state, lectrc, rootPackageJSON }) {
   let content = { ...state.pack };
 
   // 1. set scripts
@@ -87,12 +86,19 @@ async function packageJson({ state, lectrc }) {
 
   // 6. remove devdeps from this package.json which are already present
   // in root package.json devdeps
-  // content = omit(content, (val) =>
-  //   intersection(
-  //     Object.keys(rootPackageJSON.devDependencies),
-  //     Object.keys(content.devDependencies || {})
-  //   ).includes(val)
-  // );
+  if (Object.keys(content.devDependencies || {}).length) {
+    content.devDependencies = omit(
+      content.devDependencies,
+      intersection(
+        Object.keys(rootPackageJSON.devDependencies),
+        Object.keys(content.devDependencies || {})
+      )
+    );
+  }
+
+  if (!Object.keys(content.devDependencies || {}).length) {
+    objectPath.del(content, "devDependencies");
+  }
 
   // 6. write
   try {

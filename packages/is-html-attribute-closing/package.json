@@ -73,10 +73,5 @@
     "is-char-suitable-for-html-attr-name": "^3.0.7",
     "string-left-right": "^5.0.7",
     "string-match-left-right": "^8.0.7"
-  },
-  "devDependencies": {
-    "@rollup/plugin-json": "^4.1.0",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/parser": "^5.5.0"
   }
 }

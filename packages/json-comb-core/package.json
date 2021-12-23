@@ -80,11 +80,8 @@
     "type-detect": "^4.0.8"
   },
   "devDependencies": {
-    "@rollup/plugin-json": "^4.1.0",
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/lodash.includes": "^4.3.6",
-    "@types/semver-compare": "^1.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/parser": "^5.5.0"
+    "@types/semver-compare": "^1.0.1"
   }
 }
