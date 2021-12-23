@@ -83,6 +83,9 @@
         "cache": false
       },
       "examples": {
+        "dependsOn": [
+          "build"
+        ],
         "outputs": [],
         "cache": false
       },
