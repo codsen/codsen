@@ -94,7 +94,7 @@
       },
       "prepare": {
         "dependsOn": [
-          "build",
+          "^build",
           "unit",
           "examples",
           "lint"
