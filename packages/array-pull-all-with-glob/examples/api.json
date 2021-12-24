@@ -1,1 +1,0 @@
-{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport &#x7B; pull &#x7D; from \"array-pull-all-with-glob\";\n\nassert.deepEqual(\n  pull(\n    [\"keep_me\", \"name-1\", \"name-2\", \"name-jhkgdhgkhdfghdkghfdk\"],\n    [\"name-*\"]\n  ),\n  [\"keep_me\"]\n);"}}

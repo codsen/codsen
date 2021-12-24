@@ -1,1 +1,0 @@
-{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport &#x7B; arrayiffy &#x7D; from \"arrayiffy-if-string\";\n\nassert.deepEqual(arrayiffy(\"aaa\"), [\"aaa\"]);\n\nassert.deepEqual(arrayiffy(\"\"), []);\n\nassert.equal(arrayiffy(true), true);\n\nassert.equal(arrayiffy(), undefined);"}}

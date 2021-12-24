@@ -1,1 +1,0 @@
-{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport &#x7B; rSort &#x7D; from \"ranges-sort\";\n\n// Ranges (see codsen.com/ranges/) are sorted:\nassert.deepEqual(\n  rSort([\n    [2, 3],\n    [9, 10, \"bad grey wolf\"],\n    [1, 2],\n  ]),\n  [\n    [1, 2],\n    [2, 3],\n    [9, 10, \"bad grey wolf\"],\n  ]\n);"}}

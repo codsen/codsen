@@ -1,1 +1,0 @@
-{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport &#x7B; isJSP &#x7D; from \"regex-is-jsp\";\n\n// detects JSP code\nassert.equal(isJSP().test(`<div><% out.println(\"Hi!\"); %></div>`), true);\n\n// in case if it's not nunjucks\nassert.equal(isJSP().test(`<div>tralala</div>`), false);"}}
