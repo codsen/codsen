@@ -33,17 +33,17 @@
   },
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-    "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
+    "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+    "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
     "dts": "rollup -c",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js'",
-    "letspublish": "npm publish || :",
+    "letspublish": "yarn publish || :",
     "lint": "eslint . --fix",
     "perf": "node perf/check.js",
     "prepare": "echo 'ready'",
-    "pretest": "npm run lect && npm run build",
-    "test": "c8 npm run unit && npm run examples && npm run lint",
+    "pretest": "yarn run lect && yarn run build",
+    "test": "c8 yarn run unit && yarn run examples && yarn run lint",
     "unit": "uvu test"
   },
   "engines": {

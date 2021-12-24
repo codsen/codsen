@@ -1,5 +1,6 @@
 # folders:
 .turbo
+coverage
 perf
 reference
 src

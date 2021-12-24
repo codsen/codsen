@@ -1,5 +1,6 @@
 # folders:
 .turbo
+coverage
 test
 
 # files:

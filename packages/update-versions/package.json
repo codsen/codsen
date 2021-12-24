@@ -43,10 +43,10 @@
     "build": "echo 'no build needed'",
     "dev": "echo 'no build needed'",
     "lect": "node '../../ops/lect/lect.js'",
-    "letspublish": "npm publish || :",
+    "letspublish": "yarn publish || :",
     "lint": "eslint . --fix",
     "prepare": "echo 'ready'",
-    "test": "c8 npm run unit && npm run lint",
+    "test": "c8 yarn run unit && yarn run lint",
     "unit": "uvu test"
   },
   "engines": {
