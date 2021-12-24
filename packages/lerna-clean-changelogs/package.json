@@ -1,6 +1,6 @@
 {
   "name": "lerna-clean-changelogs",
-  "version": "3.0.9",
+  "version": "3.0.10",
   "description": "Removes frivolous entries from commitizen generated changelogs",
   "keywords": [
     "changelog",

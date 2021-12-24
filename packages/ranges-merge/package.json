@@ -1,6 +1,6 @@
 {
   "name": "ranges-merge",
-  "version": "8.0.9",
+  "version": "8.0.10",
   "description": "Merge and sort string index ranges",
   "keywords": [
     "index",
@@ -64,8 +64,8 @@
     }
   },
   "dependencies": {
-    "ranges-push": "^6.0.9",
-    "ranges-sort": "^5.0.9"
+    "ranges-push": "^6.0.10",
+    "ranges-sort": "^5.0.10"
   },
   "devDependencies": {
     "lodash.clonedeep": "^4.5.0"

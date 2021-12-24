@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Generate Atomic CSS",
   "keywords": [
     "api",
@@ -64,6 +64,6 @@
     }
   },
   "dependencies": {
-    "string-left-right": "^5.0.9"
+    "string-left-right": "^5.0.10"
   }
 }

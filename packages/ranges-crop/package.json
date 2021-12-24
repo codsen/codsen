@@ -1,6 +1,6 @@
 {
   "name": "ranges-crop",
-  "version": "5.0.9",
+  "version": "5.0.10",
   "description": "Crop array of ranges when they go beyond the reference string's length",
   "keywords": [
     "array",
@@ -63,10 +63,10 @@
     }
   },
   "dependencies": {
-    "ranges-merge": "^8.0.9"
+    "ranges-merge": "^8.0.10"
   },
   "devDependencies": {
     "lodash.clonedeep": "^4.5.0",
-    "ranges-apply": "^6.0.9"
+    "ranges-apply": "^6.0.10"
   }
 }

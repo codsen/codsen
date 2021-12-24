@@ -1,6 +1,6 @@
 {
   "name": "line-column-mini",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Convert string index to line-column position",
   "keywords": [
     "string",
