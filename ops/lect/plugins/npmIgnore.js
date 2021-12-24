@@ -16,10 +16,10 @@ async function npmIgnore({ lectrc }) {
   }
 
   // always include these folders
-  let foldersBlacklist = [];
+  let foldersBlacklist = ["coverage", ".turbo"];
 
   // always include these files
-  let filesBlacklist = [];
+  let filesBlacklist = [".npmignore"];
 
   // List from https://docs.npmjs.com/misc/developers
   let npmWillTakeCareOfThese = [

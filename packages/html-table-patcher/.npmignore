@@ -1,6 +1,5 @@
 # folders:
 .turbo
-coverage
 perf
 src
 tap

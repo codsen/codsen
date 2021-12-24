@@ -1,7 +1,5 @@
 # folders:
-.nyc_output
 .turbo
-coverage
 test
 
 # files:
