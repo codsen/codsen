@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "5.0.7",
+  "version": "5.0.8",
   "description": "Pluggable email template code linter",
   "keywords": [
     "analysis",
@@ -76,21 +76,21 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^3.0.7",
-    "ast-monkey-util": "^2.0.7",
-    "codsen-parser": "^0.12.7",
+    "ast-monkey-traverse": "^3.0.8",
+    "ast-monkey-util": "^2.0.8",
+    "codsen-parser": "^0.12.8",
     "define-lazy-prop": "^3.0.0",
     "globby": "^12.0.2",
     "he": "^1.2.0",
-    "html-all-known-attributes": "^5.0.7",
-    "html-entities-not-email-friendly": "^0.6.7",
+    "html-all-known-attributes": "^5.0.8",
+    "html-entities-not-email-friendly": "^0.6.8",
     "is-d": "^1.0.0",
-    "is-language-code": "^4.0.7",
-    "is-media-descriptor": "^4.0.7",
-    "is-relative-uri": "^4.0.7",
+    "is-language-code": "^4.0.8",
+    "is-media-descriptor": "^4.0.8",
+    "is-relative-uri": "^4.0.8",
     "is-url-superb": "^6.1.0",
     "leven": "^4.0.0",
-    "line-column-mini": "^2.0.7",
+    "line-column-mini": "^2.0.8",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isregexp": "^4.0.1",
     "matcher": "^5.0.0",
@@ -98,13 +98,13 @@
     "mime-db": "^1.51.0",
     "object-path": "^0.11.8",
     "p-reduce": "^3.0.0",
-    "ranges-merge": "^8.0.7",
+    "ranges-merge": "^8.0.8",
     "rgba-regex": "^1.0.0",
-    "string-find-malformed": "^3.0.7",
-    "string-fix-broken-named-entities": "^6.0.7",
-    "string-left-right": "^5.0.7",
-    "string-match-left-right": "^8.0.7",
-    "string-process-comma-separated": "^3.0.7",
+    "string-find-malformed": "^3.0.8",
+    "string-fix-broken-named-entities": "^6.0.8",
+    "string-left-right": "^5.0.8",
+    "string-match-left-right": "^8.0.8",
+    "string-process-comma-separated": "^3.0.8",
     "tiny-typed-emitter": "^2.1.0",
     "update-notifier": "^5.1.0",
     "url-regex": "^5.0.0"
@@ -114,7 +114,7 @@
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/lodash.isregexp": "^4.0.6",
     "@types/mime-db": "^1.43.1",
-    "ast-deep-contains": "^4.0.7",
-    "ranges-apply": "^6.0.7"
+    "ast-deep-contains": "^4.0.8",
+    "ranges-apply": "^6.0.8"
   }
 }

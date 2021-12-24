@@ -1,6 +1,6 @@
 {
   "name": "string-left-right",
-  "version": "5.0.7",
+  "version": "5.0.8",
   "description": "Looks up the first non-whitespace character to the left/right of a given index",
   "keywords": [
     "check",

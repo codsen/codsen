@@ -1,6 +1,6 @@
 {
   "name": "string-overlap-one-on-another",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Lay one string on top of another, with an optional offset",
   "keywords": [
     "add",

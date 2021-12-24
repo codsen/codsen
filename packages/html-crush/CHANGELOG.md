@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.8](https://github.com/codsen/codsen/compare/html-crush@5.0.7...html-crush@5.0.8) (2021-12-24)
+
+
+### Bug Fixes
+
+* add missing extension ([147bd6e](https://github.com/codsen/codsen/commit/147bd6ec2a2d44c09749f0fba0ca3e3d9c52da94))
+
+
+
+
+
 ## 5.0.0 (2021-09-09)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "string-split-by-whitespace",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Split string into array by chunks of whitespace",
   "keywords": [
     "alt",
@@ -68,9 +68,9 @@
     }
   },
   "dependencies": {
-    "ranges-is-index-within": "^3.0.7"
+    "ranges-is-index-within": "^3.0.8"
   },
   "devDependencies": {
-    "string-find-heads-tails": "^5.0.7"
+    "string-find-heads-tails": "^5.0.8"
   }
 }

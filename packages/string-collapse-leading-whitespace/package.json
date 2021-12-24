@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-leading-whitespace",
-  "version": "6.0.7",
+  "version": "6.0.8",
   "description": "Collapse the leading and trailing whitespace of a string",
   "keywords": [
     "alt",
