@@ -1,6 +1,6 @@
 {
   "name": "is-relative-uri",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "Is given string a relative URI?",
   "keywords": [
     "href",
@@ -64,6 +64,6 @@
     }
   },
   "devDependencies": {
-    "ranges-apply": "^6.0.8"
+    "ranges-apply": "^6.0.9"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "6.1.4",
+  "version": "6.1.5",
   "description": "Remove unused CSS from email templates",
   "keywords": [
     "body",
@@ -64,20 +64,20 @@
     }
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^6.0.8",
-    "html-crush": "^5.0.8",
+    "array-pull-all-with-glob": "^6.0.9",
+    "html-crush": "^5.0.9",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "matcher": "^5.0.0",
-    "ranges-apply": "^6.0.8",
-    "ranges-push": "^6.0.8",
-    "regex-empty-conditional-comments": "^2.0.8",
-    "string-extract-class-names": "^7.0.8",
-    "string-left-right": "^5.0.8",
-    "string-match-left-right": "^8.0.8",
-    "string-range-expander": "^3.0.8",
-    "string-uglify": "^2.0.8"
+    "ranges-apply": "^6.0.9",
+    "ranges-push": "^6.0.9",
+    "regex-empty-conditional-comments": "^2.0.9",
+    "string-extract-class-names": "^7.0.9",
+    "string-left-right": "^5.0.9",
+    "string-match-left-right": "^8.0.9",
+    "string-range-expander": "^3.0.9",
+    "string-uglify": "^2.0.9"
   },
   "devDependencies": {
     "@types/lodash.intersection": "^4.4.6",

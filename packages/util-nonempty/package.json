@@ -1,6 +1,6 @@
 {
   "name": "util-nonempty",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "keywords": [
     "array",

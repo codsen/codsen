@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-sort-by-col",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "Sort array of arrays by column, rippling the sorting outwards from that column",
   "keywords": [
     "array",

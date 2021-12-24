@@ -1,6 +1,6 @@
 {
   "name": "string-extract-sass-vars",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Parse SASS variables file into a plain object of CSS key-value pairs",
   "keywords": [
     "css",
@@ -67,6 +67,6 @@
     "various": {}
   },
   "devDependencies": {
-    "color-shorthand-hex-to-six-digit": "^4.0.8"
+    "color-shorthand-hex-to-six-digit": "^4.0.9"
   }
 }
