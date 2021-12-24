@@ -60,14 +60,32 @@ blocks:
             - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             # run lerna version with all extras:
             - yarn run ci:lerna:version
-            # now build again, because those bumped versions need to be written into header comment blocks:
+            # PS. above, we don't push git tags because
+            # if something goes wrong further (and there is another build coming)
+            # then we'd have problems.
+            #
+            # Now build again, because those bumped versions need to be written into header comment blocks:
             - yarn run build
             # run perf, it will save down the latest dep version in perf/historical.json
             - yarn run perf
-            # assemble the lump of all package.jsons:
+            # finally, sort the git matters
             - git status
             - git add packages
-            - git add stats
+            - git add ops
             - git add README.md
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
-            - git log -5
+            # publish to npm
+            - yarn run ci:publish:all
+            # push repo with all artifacts to git remote
+            - git push
+            - git push origin --tags
+            # reset jsdelivr caches
+            - curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js || echo 'email-comb unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/string-strip-html/dist/string-strip-html.umd.js || echo 'string-strip-html unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/stristri/dist/stristri.umd.js || echo 'stristri unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/emlint/dist/emlint.umd.js || echo 'emlint unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/codsen-tokenizer/dist/codsen-tokenizer.umd.js || echo 'codsen-tokenizer unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/codsen-parser/dist/codsen-parser.umd.js || echo 'codsen-parser unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js || echo 'json-variables unreachable on jsdelivr'
