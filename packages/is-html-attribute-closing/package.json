@@ -1,6 +1,6 @@
 {
   "name": "is-html-attribute-closing",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Is a character on a given index a closing of an HTML attribute?",
   "keywords": [
     "attribute",
@@ -69,9 +69,9 @@
     "various": {}
   },
   "dependencies": {
-    "html-all-known-attributes": "^5.0.8",
-    "is-char-suitable-for-html-attr-name": "^3.0.8",
-    "string-left-right": "^5.0.8",
-    "string-match-left-right": "^8.0.8"
+    "html-all-known-attributes": "^5.0.9",
+    "is-char-suitable-for-html-attr-name": "^3.0.9",
+    "string-left-right": "^5.0.9",
+    "string-match-left-right": "^8.0.9"
   }
 }

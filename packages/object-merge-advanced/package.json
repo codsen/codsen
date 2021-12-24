@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "13.0.8",
+  "version": "13.0.9",
   "description": "Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "keywords": [
     "advanced",
@@ -69,7 +69,7 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.uniq": "^4.5.0",
     "matcher": "^5.0.0",
-    "util-nonempty": "^4.0.8"
+    "util-nonempty": "^4.0.9"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.6",
