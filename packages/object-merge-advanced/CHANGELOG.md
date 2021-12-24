@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [13.0.10](https://github.com/codsen/codsen/compare/object-merge-advanced@13.0.7...object-merge-advanced@13.0.10) (2021-12-24)
-
-**Note:** Version bump only for package object-merge-advanced
-
-
-
-
-
 ## 13.0.0 (2021-09-09)
 
 ### Features
