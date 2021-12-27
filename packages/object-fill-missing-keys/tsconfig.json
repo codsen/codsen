@@ -1,4 +1,26 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {}
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*",
+    "package.json",
+    "../../ops/typedefs/common.ts"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "../arrayiffy-if-string"
+    },
+    {
+      "path": "../object-all-values-equal-to"
+    },
+    {
+      "path": "../object-merge-advanced"
+    }
+  ]
 }

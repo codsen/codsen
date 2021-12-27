@@ -1,4 +1,29 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {}
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*",
+    "package.json",
+    "../../ops/typedefs/common.ts"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "../html-all-known-attributes"
+    },
+    {
+      "path": "../is-char-suitable-for-html-attr-name"
+    },
+    {
+      "path": "../string-left-right"
+    },
+    {
+      "path": "../string-match-left-right"
+    }
+  ]
 }

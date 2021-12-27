@@ -18,8 +18,20 @@ async function tsconfig({ state }) {
   }
 
   let newTsConfig = `{
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {}
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*",
+    "package.json",
+    "../../ops/typedefs/common.ts"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ],
+  "references": []
 }
 `;
 

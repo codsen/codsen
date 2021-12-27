@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "apps/*",
+    "webapps/*",
     "components/*",
     "packages/*"
   ],
@@ -20,13 +20,13 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "test": "turbo run test",
-    "unit": "turbo run unit",
+    "test": "yarn run house && turbo run test",
+    "unit": "yarn run house && turbo run unit",
     "perf": "turbo run perf",
     "lect": "turbo run lect",
     "format": "prettier --write '**/*.{ts,tsx,.md}'",
     "deploy": "echo 'would deploy'",
-    "house": "uvu ops/helpers",
+    "house": "uvu ops/helpers && yarn update:projectReferences",
     "turbo": "turbo",
     "lerna": "lerna",
     "cm": "git-cz -n",
@@ -36,7 +36,9 @@
     "ci:lerna:version": "lerna version --no-push --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
     "ci:publish:all": "turbo run letspublish",
     "graph": "lerna-dependency-graph -f 'png' -o './deps-graph.png'",
-    "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && yarn"
+    "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && yarn",
+    "test:projectReferences": "workspaces-to-typescript-project-references --includesRoot --check",
+    "update:projectReferences": "workspaces-to-typescript-project-references --includesRoot"
   },
   "turbo": {
     "pipeline": {
@@ -103,6 +105,7 @@
   },
   "devDependencies": {
     "@logux/eslint-config": "^46.1.0",
+    "@monorepo-utils/workspaces-to-typescript-project-references": "^2.7.4",
     "@rollup/plugin-json": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",

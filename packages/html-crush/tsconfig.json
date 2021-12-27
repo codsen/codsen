@@ -1,4 +1,35 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {}
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*",
+    "package.json",
+    "../../ops/typedefs/common.ts"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "../ranges-apply"
+    },
+    {
+      "path": "../ranges-push"
+    },
+    {
+      "path": "../string-left-right"
+    },
+    {
+      "path": "../string-match-left-right"
+    },
+    {
+      "path": "../string-range-expander"
+    },
+    {
+      "path": "../test-mixer"
+    }
+  ]
 }

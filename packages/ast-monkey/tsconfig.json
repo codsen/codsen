@@ -1,4 +1,29 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {}
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*",
+    "package.json",
+    "../../ops/typedefs/common.ts"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "../ast-compare"
+    },
+    {
+      "path": "../ast-monkey-traverse"
+    },
+    {
+      "path": "../check-types-mini"
+    },
+    {
+      "path": "../util-array-object-or-both"
+    }
+  ]
 }

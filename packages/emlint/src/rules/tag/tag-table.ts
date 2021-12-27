@@ -334,10 +334,10 @@ function tagTable(context: Linter): RuleObjType {
                       attrib.attribValue &&
                       attrib.attribValue.length &&
                       attrib.attribValue.some((valObjNode) => {
-                        if ((valObjNode as any).type === "text") {
-                          if (Number.isInteger(+(valObjNode as any).value)) {
+                        if (valObjNode.type === "text") {
+                          if (Number.isInteger(+valObjNode.value)) {
                             // drill through and also extract the value
-                            temp = +(valObjNode as any).value;
+                            temp = +valObjNode.value;
                             return true;
                           }
                           bail = true;

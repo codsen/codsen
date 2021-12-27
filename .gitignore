@@ -19,6 +19,7 @@ dist/
 types/
 
 # misc
+.cache
 .DS_Store
 *.pem
 ideas.md

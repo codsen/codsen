@@ -1,4 +1,62 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {}
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*",
+    "package.json",
+    "../../ops/typedefs/common.ts"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "../all-named-html-entities"
+    },
+    {
+      "path": "../html-entities-not-email-friendly"
+    },
+    {
+      "path": "../ranges-apply"
+    },
+    {
+      "path": "../ranges-invert"
+    },
+    {
+      "path": "../ranges-process-outside"
+    },
+    {
+      "path": "../ranges-push"
+    },
+    {
+      "path": "../string-apostrophes"
+    },
+    {
+      "path": "../string-collapse-white-space"
+    },
+    {
+      "path": "../string-fix-broken-named-entities"
+    },
+    {
+      "path": "../string-left-right"
+    },
+    {
+      "path": "../string-range-expander"
+    },
+    {
+      "path": "../string-remove-widows"
+    },
+    {
+      "path": "../string-strip-html"
+    },
+    {
+      "path": "../string-trim-spaces-only"
+    },
+    {
+      "path": "../test-mixer"
+    }
+  ]
 }

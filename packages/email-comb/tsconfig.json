@@ -1,4 +1,47 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {}
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*",
+    "package.json",
+    "../../ops/typedefs/common.ts"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "../array-pull-all-with-glob"
+    },
+    {
+      "path": "../html-crush"
+    },
+    {
+      "path": "../ranges-apply"
+    },
+    {
+      "path": "../ranges-push"
+    },
+    {
+      "path": "../regex-empty-conditional-comments"
+    },
+    {
+      "path": "../string-extract-class-names"
+    },
+    {
+      "path": "../string-left-right"
+    },
+    {
+      "path": "../string-match-left-right"
+    },
+    {
+      "path": "../string-range-expander"
+    },
+    {
+      "path": "../string-uglify"
+    }
+  ]
 }

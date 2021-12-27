@@ -60,6 +60,7 @@ function mixer(
         caught = refKey;
         return true;
       }
+      return false;
     })
   ) {
     throw new Error(
@@ -69,7 +70,7 @@ function mixer(
 
   // quick end
   if (!Object.keys(defaultsObj).length) {
-    DEV && console.log(`072 early return []`);
+    DEV && console.log(`073 early return []`);
     return [];
   }
 
@@ -92,7 +93,7 @@ function mixer(
 
   DEV &&
     console.log(
-      `095 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
+      `096 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
         refClone,
         null,
         4
@@ -100,7 +101,7 @@ function mixer(
     );
   DEV &&
     console.log(
-      `103 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
+      `104 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
         defaultsObjClone,
         null,
         4
@@ -108,7 +109,7 @@ function mixer(
     );
   DEV &&
     console.log(
-      `111 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
+      `112 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
         optsWithBoolValues,
         null,
         4
@@ -123,7 +124,7 @@ function mixer(
     ...obj,
   }));
 
-  DEV && console.log(`126 RETURN res = ${JSON.stringify(res, null, 4)}`);
+  DEV && console.log(`127 RETURN res = ${JSON.stringify(res, null, 4)}`);
 
   return res;
 }
