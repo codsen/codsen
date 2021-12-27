@@ -1,0 +1,14 @@
+{
+  "size": {
+    "gutter": {
+      "default": {
+        "value": "2rem",
+        "comment": "aiming at 20px"
+      },
+      "small": {
+        "value": "1.5rem",
+        "comment": "aiming at 15px"
+      }
+    }
+  }
+}

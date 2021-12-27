@@ -1,0 +1,66 @@
+{
+  "color": {
+    "semantic": {
+      "desk": {
+        "value": "{color.light.border.value}",
+        "comment": "{color.light.border.comment}"
+      },
+      "paper": {
+        "value": "{color.light.white.default.value}",
+        "comment": "{color.light.white.default.comment}"
+      },
+      "text": {
+        "value": "{color.light.text.value}",
+        "comment": "{color.light.text.comment}"
+      },
+      "link": {
+        "default": {
+          "value": "{color.light.text.value}",
+          "comment": "{color.light.text.comment}"
+        },
+        "text-decoration": {
+          "value": "{color.light.green.default.value}",
+          "comment": "{color.light.green.default.comment}"
+        },
+        "hover-fg": {
+          "value": "{color.dark.black.default.value}",
+          "comment": "{color.dark.black.default.comment}"
+        },
+        "hover-bg": {
+          "value": "{color.light.blue.value}",
+          "comment": "{color.light.blue.comment}"
+        }
+      },
+      "border": {
+        "value": "{color.light.border.value}",
+        "comment": "{color.light.border.comment}"
+      },
+      "codsen": {
+        "letters": {
+          "value": "{color.dark.black.default.value}",
+          "comment": "{color.dark.black.default.comment}"
+        },
+        "underline": {
+          "value": "{color.light.blue.value}",
+          "comment": "{color.light.blue.comment}"
+        },
+        "spot1": {
+          "value": "#03E5FB",
+          "comment": "the right side of the underline"
+        },
+        "spot2": {
+          "value": "#77F7FA",
+          "comment": "the tiny blob on the underline"
+        },
+        "roundel_bg": {
+          "value": "{color.light.yellow.value}",
+          "comment": "{color.light.yellow.comment}"
+        },
+        "roundel_fg": {
+          "value": "{color.light.white.default.value}",
+          "comment": "{color.light.white.default.comment}"
+        }
+      }
+    }
+  }
+}

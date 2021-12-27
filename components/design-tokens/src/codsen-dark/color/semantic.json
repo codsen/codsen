@@ -1,0 +1,66 @@
+{
+  "color": {
+    "semantic": {
+      "desk": {
+        "value": "{color.dark.black.default.value}",
+        "comment": "{color.dark.black.default.comment}"
+      },
+      "paper": {
+        "value": "{color.dark.black.surface.value}",
+        "comment": "{color.dark.black.surface.comment}"
+      },
+      "text": {
+        "value": "{color.dark.text.value}",
+        "comment": "{color.dark.text.comment}"
+      },
+      "link": {
+        "default": {
+          "value": "{color.light.grey.darker.value}",
+          "comment": "{color.light.grey.darker.comment}"
+        },
+        "text-decoration": {
+          "value": "{color.dark.orange.default.value}",
+          "comment": "{color.dark.orange.default.comment}"
+        },
+        "hover-fg": {
+          "value": "{color.dark.black.default.value}",
+          "comment": "{color.dark.black.default.comment}"
+        },
+        "hover-bg": {
+          "value": "{color.dark.red.default.value}",
+          "comment": "{color.dark.red.default.comment}"
+        }
+      },
+      "border": {
+        "value": "{color.dark.border.value}",
+        "comment": "{color.dark.border.comment}"
+      },
+      "codsen": {
+        "letters": {
+          "value": "{color.dark.white.default.value}",
+          "comment": "{color.dark.white.default.comment}"
+        },
+        "underline": {
+          "value": "{color.dark.red.default.value}",
+          "comment": "{color.dark.red.default.comment}"
+        },
+        "spot1": {
+          "value": "{color.dark.red.default.value}",
+          "comment": "the right side of the underline"
+        },
+        "spot2": {
+          "value": "{color.dark.red.default.value}",
+          "comment": "the tiny blob on the underline"
+        },
+        "roundel_bg": {
+          "value": "{color.dark.yellow.default.value}",
+          "comment": "{color.dark.yellow.default.comment}"
+        },
+        "roundel_fg": {
+          "value": "{color.dark.yellow.default.value}",
+          "comment": "{color.dark.yellow.default.comment}"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "name": "@codsen/design-tokens",
+  "version": "0.1.0",
+  "description": "Codsen design tokens",
+  "author": "Roy Revelt <roy@codsen.com>",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "rimraf ./dist && node ./scripts/build",
+    "lint": "eslint ./scripts --ext .js",
+    "postinstall": "npm run build"
+  },
+  "eslintConfig": {
+    "extends": "../../eslint.config.js"
+  },
+  "devDependencies": {
+    "fs-extra": "^10.0.0",
+    "rimraf": "^3.0.2",
+    "style-dictionary": "^3.0.3",
+    "change-case": "^4.1.2"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "size": {
+    "semantic": {
+      "gutter": {
+        "value": "{size.gutter.small.value}",
+        "comment": "{size.gutter.small.comment}"
+      }
+    }
+  }
+}
