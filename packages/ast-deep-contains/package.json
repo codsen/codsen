@@ -80,7 +80,7 @@
     "various": {}
   },
   "dependencies": {
-    "@sindresorhus/is": "^4.2.0",
+    "@sindresorhus/is": "^4.2.1",
     "ast-monkey-traverse": "^3.0.10",
     "object-path": "^0.11.8"
   },

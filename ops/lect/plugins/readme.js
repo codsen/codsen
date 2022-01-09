@@ -59,9 +59,7 @@ async function readme({ state, quickTakeExample, lectrc }) {
   </a>
 </div>
 
-## Install
-
-${esmNotice}
+## Install${state.isRollup ? `\n\n${esmNotice}` : ""}
 
 \`\`\`bash
 npm i${!state.isRollup && state.isBin ? " -g" : ""} ${state.pack.name}
@@ -71,24 +69,22 @@ npm i${!state.isRollup && state.isBin ? " -g" : ""} ${state.pack.name}
           esmBump[state.pack.name]
         }`
       : ""
-  }
-
-${
-  !state.isRollup && state.pack.bin
-    ? `\n\nThen, call it from the command line using ${
-        state.pack.bin && Object.keys(state.pack.bin).length > 1
-          ? "one of the following keywords"
-          : "keyword"
-      }:
+  }${
+    !state.isRollup && state.pack.bin
+      ? `\n\nThen, call it from the command line using ${
+          state.pack.bin && Object.keys(state.pack.bin).length > 1
+            ? "one of the following keywords"
+            : "keyword"
+        }:
 
 \`\`\`bash
 ${Object.keys(state.pack.bin).join("\n")}
 \`\`\`
 `
-    : ""
-}${
+      : ""
+  }${
     quickTakeExample
-      ? `## Quick Take\n
+      ? `\n\n## Quick Take\n
 \`\`\`js
 ${quickTakeExample}
 \`\`\`\n\n`

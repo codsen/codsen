@@ -2,9 +2,6 @@
   "extends": "./tsconfig.base.json",
   "references": [
     {
-      "path": "webapps/codsen-com"
-    },
-    {
       "path": "packages/all-named-html-entities"
     },
     {
