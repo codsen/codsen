@@ -1,0 +1,8 @@
+# folders:
+.turbo
+coverage
+test
+
+# files:
+.npmignore
+.prettierignore
