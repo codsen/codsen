@@ -1,6 +1,6 @@
 # Codsen
 
-> A turbo-monorepo of 118 npm packages 📦📦📦
+> A turbo-monorepo of 119 npm packages 📦📦📦
 
 ## 📚 Documentation
 
@@ -24,4 +24,4 @@ For bugs, feature requests and so on, use the [Issue Tracker](https://github.com
 
 MIT License
 
-Copyright (c) 2010-2021 Roy Revelt and other contributors
+Copyright (c) 2010-2022 Roy Revelt and other contributors

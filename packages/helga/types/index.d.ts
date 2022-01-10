@@ -1,13 +1,16 @@
 declare const version: string;
 interface Opts {
-    targetJSON: boolean;
+  targetJSON: boolean;
 }
 declare const defaults: {
-    targetJSON: boolean;
+  targetJSON: boolean;
 };
-declare function helga(str: string, originalOpts?: Opts): {
-    minified: string;
-    beautified: string;
+declare function helga(
+  str: string,
+  originalOpts?: Opts
+): {
+  minified: string;
+  beautified: string;
 };
 
 export { defaults, helga, version };

@@ -17,26 +17,33 @@ async function tsconfig({ state }) {
     return Promise.resolve(null);
   }
 
-  let newTsConfig = `{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "include": [
-    "src/**/*",
-    "package.json",
-    "../../ops/typedefs/common.ts"
-  ],
-  "exclude": [
-    ".git",
-    "node_modules"
-  ],
-  "references": []
-}
-`;
-
+  // read the old config, get "references" contents
+  let oldReferences;
   try {
-    await writeFileAtomic("tsconfig.json", newTsConfig);
+    oldReferences = JSON.parse(
+      await fs.readFile("tsconfig.json", "utf8")
+    ).references;
+  } catch (error) {
+    console.log(`lect: could not extract old TS config contents: ${error}`);
+  }
+  if (!Array.isArray(oldReferences)) {
+    oldReferences = [];
+  }
+
+  let newTsConfig = {
+    extends: "../../tsconfig.base.json",
+    compilerOptions: {
+      outDir: "dist",
+    },
+    include: ["src/**/*", "package.json", "../../ops/typedefs/common.ts"],
+    exclude: [".git", "node_modules"],
+    references: oldReferences,
+  };
+  try {
+    await writeFileAtomic(
+      "tsconfig.json",
+      `${JSON.stringify(newTsConfig, null, 2)}\n`
+    );
     // happy path end - resolve
     return Promise.resolve(null);
   } catch (err) {

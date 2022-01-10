@@ -26,7 +26,7 @@
     "lect": "turbo run lect",
     "format": "prettier --write '**/*.{ts,tsx,.md}'",
     "deploy": "echo 'would deploy'",
-    "house": "uvu ops/helpers && yarn update:projectReferences",
+    "house": "yarn run ci:fetch:webapps && uvu ops/helpers && yarn update:projectReferences && yarn run ci:build:root-readme && yarn run ci:generate:info",
     "turbo": "turbo",
     "lerna": "lerna",
     "cm": "git-cz -n",

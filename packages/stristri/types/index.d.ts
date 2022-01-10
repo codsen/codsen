@@ -1,28 +1,28 @@
 interface Opts {
+  html: boolean;
+  css: boolean;
+  text: boolean;
+  templatingTags: boolean;
+  js: boolean;
+  reportProgressFunc: null | ((percDone: number) => void);
+  reportProgressFuncFrom: number;
+  reportProgressFuncTo: number;
+}
+interface Res {
+  log: {
+    timeTakenInMilliseconds: number;
+  };
+  result: string;
+  applicableOpts: {
     html: boolean;
     css: boolean;
     text: boolean;
     templatingTags: boolean;
     js: boolean;
-    reportProgressFunc: null | ((percDone: number) => void);
-    reportProgressFuncFrom: number;
-    reportProgressFuncTo: number;
-}
-interface Res {
-    log: {
-        timeTakenInMilliseconds: number;
-    };
-    result: string;
-    applicableOpts: {
-        html: boolean;
-        css: boolean;
-        text: boolean;
-        templatingTags: boolean;
-        js: boolean;
-    };
-    templatingLang: {
-        name: null | string;
-    };
+  };
+  templatingLang: {
+    name: null | string;
+  };
 }
 declare const defaultOpts: Opts;
 

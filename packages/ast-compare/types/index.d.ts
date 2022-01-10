@@ -1,17 +1,27 @@
-declare type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+declare type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JsonObject
+  | JsonArray;
 declare type JsonObject = {
-    [Key in string]?: JsonValue;
+  [Key in string]?: JsonValue;
 };
 declare type JsonArray = JsonValue[];
 interface Opts {
-    hungryForWhitespace?: boolean;
-    matchStrictly?: boolean;
-    verboseWhenMismatches?: boolean;
-    useWildcards?: boolean;
+  hungryForWhitespace?: boolean;
+  matchStrictly?: boolean;
+  verboseWhenMismatches?: boolean;
+  useWildcards?: boolean;
 }
 /**
  * Compare anything: AST, objects, arrays, strings and nested thereof
  */
-declare function compare(b: JsonValue, s: JsonValue, originalOpts?: Opts): boolean | string;
+declare function compare(
+  b: JsonValue,
+  s: JsonValue,
+  originalOpts?: Opts
+): boolean | string;
 
 export { compare };

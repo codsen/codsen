@@ -46,13 +46,14 @@
   "scripts": {
     "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
     "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
-    "dts": "rollup -c",
+    "dts": "rollup -c && yarn run prettier 'types/index.d.ts'",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js'",
     "letspublish": "yarn publish || :",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --fix && yarn run prettier",
     "perf": "node perf/check.js",
     "prepare": "echo 'ready'",
+    "prettier": "prettier --write '**/*.{ts,tsx,.md}'",
     "pretest": "yarn run lect && yarn run build",
     "test": "c8 yarn run unit && yarn run examples && yarn run lint",
     "unit": "uvu test"

@@ -15,7 +15,13 @@ async function readme({ state, quickTakeExample, lectrc }) {
 
   let badge3 = `<img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">`;
 
-  let esmNotice = `This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:`;
+  let esmNotice = `The latest version is **ESM only**: Node 12+ is needed to use it and it must be \`import\`ed instead of \`require\`d.`;
+
+  if (typeof esmBump === "object" && esmBump[state.pack.name]) {
+    esmNotice += ` If your project is not on ESM yet and you want to use \`require\`, use an older version of this program, \`${
+      esmBump[state.pack.name]
+    }\`.`;
+  }
 
   let play = "";
   if (webapps[state.pack.name] && !webapps[state.pack.name].url) {
@@ -64,12 +70,6 @@ async function readme({ state, quickTakeExample, lectrc }) {
 \`\`\`bash
 npm i${!state.isRollup && state.isBin ? " -g" : ""} ${state.pack.name}
 \`\`\`${
-    !!state.isRollup && typeof esmBump === "object" && esmBump[state.pack.name]
-      ? `\n\nIf you need a legacy version which works with \`require\`, use version ${
-          esmBump[state.pack.name]
-        }`
-      : ""
-  }${
     !state.isRollup && state.pack.bin
       ? `\n\nThen, call it from the command line using ${
           state.pack.bin && Object.keys(state.pack.bin).length > 1

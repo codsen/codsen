@@ -26,13 +26,11 @@
 
 ## Install
 
-This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:
+The latest version is **ESM only**: Node 12+ is needed to use it and it must be `import`ed instead of `require`d. If your project is not on ESM yet and you want to use `require`, use an older version of this program, `5.1.0`.
 
 ```bash
 npm i csv-sort
 ```
-
-If you need a legacy version which works with `require`, use version 5.1.0
 
 ## Quick Take
 
@@ -80,7 +78,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright (c) 2010-2021 Roy Revelt and other contributors
+Copyright (c) 2010-2022 Roy Revelt and other contributors
 
 
 List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)

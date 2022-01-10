@@ -2,10 +2,10 @@ version: v1.0
 name: CODSEN
 agent:
   machine:
-    type: e1-standard-2
+    type: e1-standard-8
     os_image: ubuntu2004
 execution_time_limit:
-  hours: 2
+  hours: 1
 blocks:
   - name: Publish the packages
     task:

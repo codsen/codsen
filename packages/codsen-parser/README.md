@@ -26,7 +26,7 @@
 
 ## Install
 
-This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:
+The latest version is **ESM only**: Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
 
 ```bash
 npm i codsen-parser
@@ -93,7 +93,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright (c) 2010-2021 Roy Revelt and other contributors
+Copyright (c) 2010-2022 Roy Revelt and other contributors
 
 
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">

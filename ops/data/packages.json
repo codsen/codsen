@@ -22,6 +22,7 @@
         "bitbucket-slug",
         "charcode-is-valid-xml-name-character",
         "check-types-mini",
+        "codsen",
         "codsen-parser",
         "codsen-tokenizer",
         "color-shorthand-hex-to-six-digit",
@@ -123,6 +124,7 @@
         "util-nonempty"
     ],
     "cli": [
+        "codsen",
         "csv-sort-cli",
         "email-all-chars-within-ascii-cli",
         "email-homey",
@@ -252,8 +254,8 @@
         "eslint-plugin-test-num",
         "perf-ref"
     ],
-    "totalPackageCount": 121,
-    "cliCount": 11,
+    "totalPackageCount": 122,
+    "cliCount": 12,
     "programsCount": 107,
     "specialCount": 1,
     "packagesOutsideMonorepoCount": 3

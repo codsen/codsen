@@ -1,5 +1,5 @@
 interface Obj {
-    [key: string]: any;
+  [key: string]: any;
 }
 declare const notEmailFriendly: Obj;
 declare const notEmailFriendlySetOnly: Set<string>;
@@ -7,4 +7,10 @@ declare const notEmailFriendlyLowercaseSetOnly: Set<string>;
 declare const notEmailFriendlyMinLength = 2;
 declare const notEmailFriendlyMaxLength = 31;
 
-export { notEmailFriendly, notEmailFriendlyLowercaseSetOnly, notEmailFriendlyMaxLength, notEmailFriendlyMinLength, notEmailFriendlySetOnly };
+export {
+  notEmailFriendly,
+  notEmailFriendlyLowercaseSetOnly,
+  notEmailFriendlyMaxLength,
+  notEmailFriendlyMinLength,
+  notEmailFriendlySetOnly,
+};

@@ -1,6 +1,6 @@
 declare const defaultOpts: {
-    allowCustomTagNames: boolean;
-    skipOpeningBracket: boolean;
+  allowCustomTagNames: boolean;
+  skipOpeningBracket: boolean;
 };
 declare const BACKSLASH = "\\";
 declare const knownHtmlTags: string[];

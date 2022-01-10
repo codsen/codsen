@@ -1,6 +1,12 @@
-declare type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+declare type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JsonObject
+  | JsonArray;
 declare type JsonObject = {
-    [Key in string]?: JsonValue;
+  [Key in string]?: JsonValue;
 };
 declare type JsonArray = JsonValue[];
 declare const version: string;
@@ -17,4 +23,18 @@ declare function decode(ent: string): string | null;
 declare const minLength = 2;
 declare const maxLength = 31;
 
-export { allNamedEntities, allNamedEntitiesSetOnly, allNamedEntitiesSetOnlyCaseInsensitive, brokenNamedEntities, decode, entEndsWith, entEndsWithCaseInsensitive, entStartsWith, entStartsWithCaseInsensitive, maxLength, minLength, uncertain, version };
+export {
+  allNamedEntities,
+  allNamedEntitiesSetOnly,
+  allNamedEntitiesSetOnlyCaseInsensitive,
+  brokenNamedEntities,
+  decode,
+  entEndsWith,
+  entEndsWithCaseInsensitive,
+  entStartsWith,
+  entStartsWithCaseInsensitive,
+  maxLength,
+  minLength,
+  uncertain,
+  version,
+};

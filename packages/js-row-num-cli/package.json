@@ -41,8 +41,9 @@
     "dev": "echo 'no build needed'",
     "lect": "node '../../ops/lect/lect.js'",
     "letspublish": "yarn publish || :",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --fix && yarn run prettier",
     "prepare": "echo 'ready'",
+    "prettier": "prettier --write '**/*.{ts,tsx,.md}'",
     "test": "c8 yarn run unit && yarn run lint",
     "unit": "uvu test"
   },

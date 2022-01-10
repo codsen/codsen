@@ -1,6 +1,6 @@
 declare const version: string;
 interface Opts {
-    unfancyTheAltContents: boolean;
+  unfancyTheAltContents: boolean;
 }
 declare function alts(str: string, originalOpts?: Partial<Opts>): string;
 

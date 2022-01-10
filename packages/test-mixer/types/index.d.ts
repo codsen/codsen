@@ -1,10 +1,13 @@
 declare const version: string;
 declare type PlainObject = {
-    [name: string]: any;
+  [name: string]: any;
 };
 declare type PlainObjectOfBool = {
-    [name: string]: boolean;
+  [name: string]: boolean;
 };
-declare function mixer(ref?: PlainObject, defaultsObj?: PlainObject): PlainObjectOfBool[];
+declare function mixer(
+  ref?: PlainObject,
+  defaultsObj?: PlainObject
+): PlainObjectOfBool[];
 
 export { mixer, version };

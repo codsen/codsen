@@ -1,20 +1,20 @@
 import type { Ranges } from "../../../ops/typedefs/common";
 interface Opts {
-    offset: number;
+  offset: number;
 }
 declare const recognisedMediaTypes: string[];
 declare const lettersOnlyRegex: RegExp;
 interface LoopOpts extends Opts {
-    idxFrom: number;
-    idxTo: number;
+  idxFrom: number;
+  idxTo: number;
 }
 interface ResObj {
-    idxFrom: number;
-    idxTo: number;
-    message: string;
-    fix: {
-        ranges: Ranges;
-    } | null;
+  idxFrom: number;
+  idxTo: number;
+  message: string;
+  fix: {
+    ranges: Ranges;
+  } | null;
 }
 declare function loop(str: string, opts: LoopOpts, res: ResObj[]): void;
 export { loop, recognisedMediaTypes, lettersOnlyRegex, Opts, ResObj };

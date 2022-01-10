@@ -3,9 +3,9 @@ declare function findType(something: string): string;
 
 declare const version: string;
 interface Res {
-    res: string[][];
-    msgContent: null | string;
-    msgType: null | string;
+  res: string[][];
+  msgContent: null | string;
+  msgType: null | string;
 }
 /**
  * Sorts double-entry bookkeeping CSV coming from internet banking

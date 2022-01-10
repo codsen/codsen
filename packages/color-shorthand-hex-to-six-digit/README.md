@@ -26,13 +26,11 @@
 
 ## Install
 
-This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:
+The latest version is **ESM only**: Node 12+ is needed to use it and it must be `import`ed instead of `require`d. If your project is not on ESM yet and you want to use `require`, use an older version of this program, `3.1.0`.
 
 ```bash
 npm i color-shorthand-hex-to-six-digit
 ```
-
-If you need a legacy version which works with `require`, use version 3.1.0
 
 ## Quick Take
 

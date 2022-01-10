@@ -1,7 +1,11 @@
 declare const version: string;
 interface UnknownValueObj {
-    [key: string]: any;
+  [key: string]: any;
 }
-declare function getObj(originalAst: any, keyValPair: UnknownValueObj, replacementContentsArr?: UnknownValueObj[]): any;
+declare function getObj(
+  originalAst: any,
+  keyValPair: UnknownValueObj,
+  replacementContentsArr?: UnknownValueObj[]
+): any;
 
 export { getObj, version };

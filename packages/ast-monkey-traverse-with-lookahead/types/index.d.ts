@@ -1,28 +1,33 @@
 declare const version: string;
 interface Obj {
-    [key: string]: any;
+  [key: string]: any;
 }
 declare type NextToken = [
-    key: "string",
-    value: any,
-    innerObj: {
-        depth: number;
-        path: string;
-        parent: any;
-        parentType: string;
-    }
-];
-interface InnerObj {
+  key: "string",
+  value: any,
+  innerObj: {
     depth: number;
     path: string;
-    topmostKey?: string;
-    parent?: any;
-    parentType?: string;
-    next?: NextToken[];
+    parent: any;
+    parentType: string;
+  }
+];
+interface InnerObj {
+  depth: number;
+  path: string;
+  topmostKey?: string;
+  parent?: any;
+  parentType?: string;
+  next?: NextToken[];
 }
-declare type Callback = (key: string | Obj, val: any, innerObj: InnerObj, stop: {
+declare type Callback = (
+  key: string | Obj,
+  val: any,
+  innerObj: InnerObj,
+  stop: {
     now: boolean;
-}) => any;
+  }
+) => any;
 declare function traverse(tree1: any, cb1: Callback, lookahead?: number): void;
 
 export { traverse, version };

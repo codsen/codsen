@@ -10,20 +10,40 @@ declare const rawMdash = "\u2014";
 declare const encodedMdashHtml = "&mdash;";
 declare const encodedMdashCss = "\\2014";
 declare const encodedMdashJs = "\\u2014";
-declare const headsAndTailsJinja: ({
-    heads: string;
-    tails: string;
-} | {
-    heads: string[];
-    tails: string[];
-})[];
+declare const headsAndTailsJinja: (
+  | {
+      heads: string;
+      tails: string;
+    }
+  | {
+      heads: string[];
+      tails: string[];
+    }
+)[];
 declare const headsAndTailsHugo: {
-    heads: string;
-    tails: string;
+  heads: string;
+  tails: string;
 }[];
 declare const headsAndTailsHexo: {
-    heads: string[];
-    tails: string[];
+  heads: string[];
+  tails: string[];
 }[];
 declare const knownHTMLTags: string[];
-export { rawnbsp, encodedNbspHtml, encodedNbspCss, encodedNbspJs, rawNdash, encodedNdashHtml, encodedNdashCss, encodedNdashJs, rawMdash, encodedMdashHtml, encodedMdashCss, encodedMdashJs, headsAndTailsJinja, headsAndTailsHugo, headsAndTailsHexo, knownHTMLTags, };
+export {
+  rawnbsp,
+  encodedNbspHtml,
+  encodedNbspCss,
+  encodedNbspJs,
+  rawNdash,
+  encodedNdashHtml,
+  encodedNdashCss,
+  encodedNdashJs,
+  rawMdash,
+  encodedMdashHtml,
+  encodedMdashCss,
+  encodedMdashJs,
+  headsAndTailsJinja,
+  headsAndTailsHugo,
+  headsAndTailsHexo,
+  knownHTMLTags,
+};

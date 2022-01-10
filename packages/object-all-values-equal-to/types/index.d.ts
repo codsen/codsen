@@ -1,7 +1,11 @@
 declare const version: string;
 interface Opts {
-    arraysMustNotContainPlaceholders: boolean;
+  arraysMustNotContainPlaceholders: boolean;
 }
-declare function allEq(inputOriginal: any, valueOriginal: any, originalOpts?: Partial<Opts>): boolean;
+declare function allEq(
+  inputOriginal: any,
+  valueOriginal: any,
+  originalOpts?: Partial<Opts>
+): boolean;
 
 export { allEq, version };
