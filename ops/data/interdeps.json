@@ -200,7 +200,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 9729,
+        "size": 10251,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -627,7 +627,7 @@
     },
     {
         "name": "string-find-heads-tails",
-        "size": 7354,
+        "size": 7372,
         "imports": [
             "arrayiffy-if-string",
             "string-match-left-right"
