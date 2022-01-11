@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.0.11](https://github.com/codsen/codsen/compare/object-all-values-equal-to@3.0.10...object-all-values-equal-to@3.0.11) (2022-01-11)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-
-
-
-
 ## 3.0.0 (2021-09-09)
 
 ### Features

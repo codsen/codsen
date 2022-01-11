@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.5.11](https://github.com/codsen/codsen/compare/edit-package-json@0.5.10...edit-package-json@0.5.11) (2022-01-11)
-
-**Note:** Version bump only for package edit-package-json
-
-
-
-
-
 ## 0.5.0 (2021-09-09)
 
 ### Features
