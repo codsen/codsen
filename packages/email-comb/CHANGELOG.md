@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.1.8](https://github.com/codsen/codsen/compare/email-comb@6.1.7...email-comb@6.1.8) (2022-01-11)
-
+## 6.1.8 (2022-01-11)
 
 ### Bug Fixes
 
-* add safeguards against inputs with excessive whitespace ([4694257](https://github.com/codsen/codsen/commit/4694257a4d75825470a0f4da9603e52620aaf3a3)), closes [#35](https://github.com/codsen/codsen/issues/35)
-
-
-
-
+- add safeguards against inputs with excessive whitespace ([4694257](https://github.com/codsen/codsen/commit/4694257a4d75825470a0f4da9603e52620aaf3a3)), closes [#35](https://github.com/codsen/codsen/issues/35)
 
 ## 6.1.0 (2021-11-04)
 
