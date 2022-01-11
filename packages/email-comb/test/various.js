@@ -388,4 +388,24 @@ test("19 - bug #45 - class", () => {
   equal(deletedFromBody, [], "19.05");
 });
 
+test("20 - issue #35 - 8MB file", () => {
+  // 8601323 bytes length = 8601323/1024/1024 = 8.2 MB
+  let chunkOfWhitespace = new Array(200).map(() => " ".repeat(300)).join("\n");
+
+  let input = `<head>
+  <style type="text/css">
+    @media y z (a-a:0px){.col-1,.col-2,.zz{m:100%!n}}
+  </style>
+  </head>
+  <body><br class="  zz   bb  cc  "/>${`<a>z</a>`.repeat(20000)}
+  </body>
+  `.replace(/>/g, `>${chunkOfWhitespace}`);
+
+  let { allInBody, allInHead, deletedFromHead, deletedFromBody } = comb(input);
+  equal(allInBody, [".bb", ".cc", ".zz"], "19.01");
+  equal(allInHead, [".col-1", ".col-2", ".zz"], "19.02");
+  equal(deletedFromHead, [".col-1", ".col-2"], "19.04");
+  equal(deletedFromBody, [".bb", ".cc"], "19.05");
+});
+
 test.run();

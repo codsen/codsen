@@ -79,7 +79,7 @@ test("02 - removes bogus HTML comments", () => {
   .a {b:2;}
 </style>
 <body class="a">
-<! zzz trlalala\n lfhdfghdfgkdh >
+<! zzz trlalala  lfhdfghdfgkdh >
 </body>
 `;
 

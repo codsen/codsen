@@ -864,10 +864,17 @@ test("21 - head CSS is given minified, comma separated", () => {
 <a class="col-3">
 </html>
 `;
+  let intended3 = `<head>
+  <style>.col-3 {y:3%}</style>
+</head>
+<body>
+<a class="col-3">
+</html>
+`;
 
   equal(comb(source1).result, intended, "21.01");
   equal(comb(source2).result, intended, "21.02");
-  equal(comb(source3).result, intended, "21.03");
+  equal(comb(source3).result, intended3, "21.03");
 });
 
 test("22 - head CSS is expanded", () => {
