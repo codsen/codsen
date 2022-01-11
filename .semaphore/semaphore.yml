@@ -15,23 +15,17 @@ blocks:
         - name: SSH_PRIVATE_KEY
       prologue:
         commands:
-          # Node
           - nvm install node
           - nvm use 16
           - node --version
           - npm --version
-          # Yarn
-          - npm i -g corepack
-          # SSH
-          - mkdir -p ~/.ssh
-          - chmod 700 ~/.ssh
-          - echo 'echo "$SSH_PASSPHRASE"' > ~/.ssh/.print_ssh_password
-          - chmod 700 ~/.ssh/.print_ssh_password
-          - chmod +x ~/.ssh/.print_ssh_password
-          - eval $(ssh-agent -s)
-          - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | DISPLAY=":0.0" SSH_ASKPASS=~/.ssh/.print_ssh_password setsid ssh-add - > /dev/null
-          # Checkout
+          # Correct premissions since they are too open by default:
+          - chmod 0600 ~/.ssh/id_rsa
+          # Add the key to the ssh agent:
+          - ssh-add ~/.ssh/id_rsa
           - checkout
+          # install yarn
+          - npm i -g corepack
       jobs:
         - name: Publish
           commands:
