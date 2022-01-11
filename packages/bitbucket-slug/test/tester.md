@@ -78,7 +78,6 @@ There are two words above, first lowercase, ends with full stop
 
 Three words, first lowercase, ends with full stop
 
-
 ---
 
 ## Word!
@@ -229,15 +228,15 @@ All H2 wrapped with brackets
 
 ---
 
-## Something*
+## Something\*
 
 Asterisk in the end
 
-## 2*2
+## 2\*2
 
 Digits with asterisk, tight
 
-## Something * Something
+## Something \* Something
 
 Asterisk surrounded by spaces
 
@@ -373,7 +372,7 @@ Caret, with space
 
 Underscore between letters
 
-## something _ something
+## something \_ something
 
 Underscore surrounded by spaces
 
@@ -416,7 +415,6 @@ Double pipe
 ## Tilde means approximately ~100
 
 Single tilde in front of digit
-
 
 ## Tilde ~ here
 

@@ -59,11 +59,8 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 MIT License
 
 Copyright (c) 2010-2022 Roy Revelt and other contributors
-
-
 Some tests and some regexes adapted from he.js
 MIT Licence - Copyright © 2013-2018 Mathias Bynens <https://mathiasbynens.be/>
 https://github.com/mathiasbynens/he
 
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
-

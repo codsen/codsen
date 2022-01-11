@@ -87,9 +87,9 @@ ${Object.keys(state.pack.bin).join("\n")}
       ? `\n\n## Quick Take\n
 \`\`\`js
 ${quickTakeExample}
-\`\`\`\n\n`
+\`\`\`\n`
       : ""
-  }## Documentation
+  }\n## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/${
     state.pack.name
@@ -108,24 +108,21 @@ To report bugs or request features or assistance, [raise an issue](https://githu
     lectrc.licence.header.length > 0 ? `${lectrc.licence.header}` : ""
   }`;
   content += `${
-    lectrc.licence.restofit.length > 0
-      ? `\n\n${lectrc.licence.restofit}\n\n`
-      : ""
+    lectrc.licence.restofit.length > 0 ? `\n\n${lectrc.licence.restofit}` : ""
   }`;
 
-  if (licenceExtras) {
+  if (
+    licenceExtras &&
+    arrayiffy(licenceExtras).filter((singleExtra) => singleExtra.length).length
+  ) {
     content += `\n${arrayiffy(licenceExtras)
-      .filter((singleExtra) => singleExtra.length > 0)
-      .join("\n")}`;
-  }
-
-  if (!content.endsWith("\n")) {
-    content += "\n\n";
+      .filter((singleExtra) => singleExtra.length)
+      .join("\n\n")}`;
   }
 
   content = content.replace(/%YEAR%/, String(new Date().getFullYear()));
 
-  content += `${badge1} ${badge2} ${badge3}\n\n`;
+  content += `\n\n${badge1} ${badge2} ${badge3}\n`;
 
   try {
     await writeFileAtomic("README.md", content);

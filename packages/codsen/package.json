@@ -27,9 +27,9 @@
     "dev": "echo 'no build needed'",
     "lect": "node '../../ops/lect/lect.js'",
     "letspublish": "yarn publish || :",
-    "lint": "eslint . --fix && yarn run prettier",
+    "lint": "eslint . --fix",
     "prepare": "echo 'ready'",
-    "prettier": "prettier --write '**/*.{ts,tsx,.md}'",
+    "prettier:format": "prettier --write '**/*.{js,md}' --no-error-on-unmatched-pattern",
     "test": "c8 yarn run unit && yarn run lint",
     "unit": "uvu test"
   },
