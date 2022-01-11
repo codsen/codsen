@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii",
-  "version": "4.0.10",
+  "version": "4.0.11",
   "description": "Scans all characters within a string and checks are they within ASCII range",
   "keywords": [
     "7bit",
@@ -65,6 +65,6 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^7.0.10"
+    "check-types-mini": "^7.0.11"
   }
 }

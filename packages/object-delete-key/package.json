@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "keywords": [
     "ast",
@@ -72,10 +72,10 @@
     }
   },
   "dependencies": {
-    "ast-is-empty": "^3.0.10",
-    "ast-monkey": "^8.0.10",
+    "ast-is-empty": "^3.0.11",
+    "ast-monkey": "^8.0.11",
     "lodash.clonedeep": "^4.5.0",
-    "util-array-object-or-both": "^4.0.10"
+    "util-array-object-or-both": "^4.0.11"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.6"

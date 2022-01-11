@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "Compare anything: AST, objects, arrays and strings",
   "keywords": [
     "array",
@@ -75,7 +75,7 @@
     }
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^3.0.10",
+    "ast-contains-only-empty-space": "^3.0.11",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {

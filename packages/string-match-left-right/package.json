@@ -1,6 +1,6 @@
 {
   "name": "string-match-left-right",
-  "version": "8.0.10",
+  "version": "8.0.11",
   "description": "Match substrings on the left or right of a given index, ignoring whitespace",
   "keywords": [
     "left",
@@ -64,9 +64,9 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^4.0.10",
+    "arrayiffy-if-string": "^4.0.11",
     "lodash.isplainobject": "^4.0.6",
-    "string-character-is-astral-surrogate": "^2.0.10"
+    "string-character-is-astral-surrogate": "^2.0.11"
   },
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.6"
