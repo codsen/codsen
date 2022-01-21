@@ -35,7 +35,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ranges-apply
 
-## 2.9.0 (2018-12-26)
+## [2.9.0](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.8.1...ranges-apply@2.9.0) (2018-12-26)
 
 ### Bug Fixes
 
@@ -47,6 +47,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 `;
 
 const changelog1Fixed = `# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [2.9.0](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.8.1...ranges-apply@2.9.0) (2018-12-26)
+
+### Bug Fixes
+
+- aaa
+
+### Features
+
+- bbb
+`;
+
+const changelog1FixedWithExtrasRemoved = `# Change Log
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -189,6 +205,43 @@ test(`05 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - globs, multiple w
     .catch((err) => {
       throw new Error(err);
     });
+});
+
+test(`06 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed directly at a file with extras removed`, async () => {
+  // 1. fetch us an empty, random, temporary folder:
+
+  // Re-route the test files into `temp/` folder instead for easier access when
+  // troubleshooting. Just comment out one of two:
+  // const tempFolder = "temp";
+  let tempFolder = tempy.directory();
+  fs.ensureDirSync(path.resolve(tempFolder));
+
+  // write a changelog:
+  let processedFileContents = fs
+    .writeFile(path.join(tempFolder, "changelog.md"), changelog1)
+    .then(() =>
+      execa(
+        `cd ${tempFolder} && ${path.resolve()}/cli.js changelog.md --extras`,
+        {
+          shell: true,
+        }
+      )
+    )
+    .then((execasMsg) => {
+      match(
+        execasMsg.stdout,
+        /1 updated/,
+        "02.01.01 - prints a message that all went OK"
+      );
+      return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
+    })
+    .then((received) =>
+      execaCommand(`rm -rf ${tempFolder}`, {
+        shell: true,
+      }).then(() => received)
+    );
+
+  equal(await processedFileContents, changelog1FixedWithExtrasRemoved, "04.01");
 });
 
 test.run();

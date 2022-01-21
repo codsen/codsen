@@ -72,9 +72,10 @@ function readSortAndWriteOverFile(oneOfPaths) {
     .then((filesContent) => {
       let preppedContents;
       try {
-        preppedContents = cleanChangelogs(filesContent, {
-          extras: !!(cli.flags.e || cli.flags.extras),
-        });
+        preppedContents = cleanChangelogs(
+          filesContent,
+          !!(cli.flags.e || cli.flags.extras)
+        );
       } catch (err) {
         return null;
       }
