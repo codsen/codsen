@@ -13,7 +13,8 @@ import pack from "./plugins/pack.js";
 import npmIgnore from "./plugins/npmIgnore.js";
 import rollupConfig from "./plugins/rollupConfig.js";
 import tsconfig from "./plugins/tsconfig.js";
-// import semaphore from "./plugins/semaphore.js";
+import allContrib from "./plugins/allContributors.js";
+// import semaphore from "./plugins/semaphore";
 
 import { fileURLToPath } from "url";
 
@@ -65,7 +66,7 @@ if (state.isRollup) {
     ).str;
   } catch (e) {
     console.log(
-      `068 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}: ${e}`
+      `069 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}: ${e}`
     );
   }
 }
@@ -88,9 +89,11 @@ await Promise.all([
   Promise.resolve(rollupConfig({ state })),
   // write tsconfig.json
   Promise.resolve(tsconfig({ state })),
+  // write .all-contributorsrc
+  Promise.resolve(allContrib({ state })),
   // TBC - write ./.semaphore/semaphore.yml
   // Promise.resolve(semaphore({ state })),
 ]).catch((e) => {
-  console.log(`094 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
+  console.log(`097 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
   process.exit(1);
 });

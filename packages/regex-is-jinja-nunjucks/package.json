@@ -40,7 +40,7 @@
     "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
     "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
     "examples": "node '../../ops/scripts/run-examples.js'",
-    "lect": "node '../../ops/lect/lect.js'",
+    "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
     "letspublish": "yarn publish || :",
     "lint": "eslint . --fix",
     "perf": "node perf/check.js",
@@ -49,6 +49,7 @@
     "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
     "pretest": "yarn run lect && yarn run build",
     "test": "yarn run devtest",
+    "ts": "node -r esbuild-register",
     "unit": "uvu test"
   },
   "engines": {

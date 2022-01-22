@@ -133,7 +133,8 @@
       "testStats.json",
       "testStats.md",
       "travis.js",
-      "spack.config.js"
+      "spack.config.js",
+      ".all-contributorsrc"
     ],
     "badFolders": [
       ".turbo",
@@ -206,7 +207,7 @@
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
       "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js'",
+      "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
       "letspublish": "yarn publish || :",
       "lint": "eslint . --fix",
       "prettier": "prettier",
@@ -216,6 +217,7 @@
       "pretest": "yarn run lect && yarn run build",
       "test": "yarn run devtest",
       "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
+      "ts": "node -r esbuild-register",
       "unit": "uvu test"
     }
   },

@@ -4,5 +4,6 @@ coverage
 test
 
 # files:
+.all-contributorsrc
 .npmignore
 .prettierignore

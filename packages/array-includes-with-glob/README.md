@@ -1,6 +1,6 @@
 # array-includes-with-glob
 
-> Like _.includes but with wildcards
+> Like \_.includes but with wildcards
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/array-includes-with-glob" rel="nofollow noreferrer noopener">

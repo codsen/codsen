@@ -1,6 +1,6 @@
 # array-pull-all-with-glob
 
-> Like _.pullAll but with globs (wildcards)
+> Like \_.pullAll but with globs (wildcards)
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/array-pull-all-with-glob" rel="nofollow noreferrer noopener">

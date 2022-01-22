@@ -2,9 +2,8 @@
 
 /* eslint operator-assignment:0 */
 
-import fs, { F_OK, accessSync } from "fs";
+import fs, { constants, accessSync } from "fs";
 import path from "path";
-import git from "simple-git";
 import { sortAllObjectsSync } from "json-comb-core";
 
 // READ ALL LIBS
@@ -40,7 +39,7 @@ fs.readdirSync(path.resolve("packages"))
       try {
         accessSync(
           path.join("packages", packageName, "rollup.config.js"),
-          F_OK
+          constants.F_OK
         );
         programPackages.push(packageJsonContents.name);
       } catch (e) {}
@@ -53,6 +52,11 @@ fs.readdirSync(path.resolve("packages"))
     }
   });
 
+// interface SingleInterdep {
+//   name: string;
+//   size: number;
+//   imports: string[];
+// }
 const interdep = [];
 
 // 1. Assemble a JSON of all packages and their deps
@@ -66,7 +70,21 @@ const interdep = [];
 //   ]
 // },
 
-const dependencyStats = { dependencies: {}, devDependencies: {} };
+// interface Obj {
+//   [key: string]: number;
+// }
+// interface DependencyStats {
+//   dependencies: Obj;
+//   devDependencies: Obj;
+//   top10ExternalDeps: string[];
+//   top10OwnDeps: string[];
+// }
+const dependencyStats = {
+  dependencies: {},
+  devDependencies: {},
+  top10ExternalDeps: [],
+  top10OwnDeps: [],
+};
 
 for (let i = 0, len = allPackages.length; i < len; i++) {
   let name = allPackages[i];
@@ -74,11 +92,8 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
     continue;
   }
 
-  // console.log(
-  //   `077 ======== processing ${`\u001b[${35}m${name}\u001b[${39}m`} ========`
-  // );
   let pack = JSON.parse(
-    fs.readFileSync(path.join("packages", name, "package.json"))
+    fs.readFileSync(path.join("packages", name, "package.json"), "utf8")
   );
 
   let size = 0;
@@ -160,65 +175,42 @@ const packages = {
 // 3. compile top 10 of own and external deps and devdeps
 // -----------------------------------------------------------------------------
 
-const top10OwnDeps = [];
-const top10ExternalDeps = [];
 // there are no devdeps statistics because all devdeps are the same
+// and shared from the root - it's a monorepo!
 
-let foundOwnMax;
-let foundExternalMax;
-for (let i = 0; i < 10; i++) {
-  // reset
-  foundOwnMax = null;
-  foundExternalMax = null;
+const howManyToExtract = 10;
 
-  // iterate
-  Object.keys(dependencyStats.dependencies).forEach((depName) => {
-    if (
-      (!foundOwnMax ||
-        dependencyStats.dependencies[depName] >
-          dependencyStats.dependencies[foundOwnMax]) &&
-      allPackages.includes(depName) &&
-      !top10OwnDeps.some((obj) =>
-        Object.prototype.hasOwnProperty.call(obj, depName)
-      )
-    ) {
-      foundOwnMax = depName;
-    }
+const ownPackages = (p) => allPackages.includes(p);
+const externalPackages = (p) => !ownPackages(p);
 
-    if (
-      (!foundExternalMax ||
-        dependencyStats.dependencies[depName] >
-          dependencyStats.dependencies[foundExternalMax]) &&
-      !allPackages.includes(depName) &&
-      !top10ExternalDeps.some((obj) =>
-        Object.prototype.hasOwnProperty.call(obj, depName)
-      )
-    ) {
-      foundExternalMax = depName;
-    }
-  });
-  if (foundOwnMax) {
-    top10OwnDeps.push({
-      [foundOwnMax]: dependencyStats.dependencies[foundOwnMax],
-    });
+// max to min order
+const sortByDependencyStats = (a, b) => {
+  if (dependencyStats.dependencies[a] > dependencyStats.dependencies[b]) {
+    return -1;
   }
-  if (foundExternalMax) {
-    top10ExternalDeps.push({
-      [foundExternalMax]: dependencyStats.dependencies[foundExternalMax],
-    });
+  if (dependencyStats.dependencies[a] < dependencyStats.dependencies[b]) {
+    return 1;
   }
-}
+  return 0;
+};
 
-dependencyStats.top10OwnDeps = top10OwnDeps;
-dependencyStats.top10ExternalDeps = top10ExternalDeps;
+dependencyStats.top10OwnDeps = Object.keys(dependencyStats.dependencies)
+  .filter(ownPackages)
+  .sort(sortByDependencyStats)
+  .slice(0, howManyToExtract);
+
+dependencyStats.top10ExternalDeps = Object.keys(dependencyStats.dependencies)
+  .filter(externalPackages)
+  .sort(sortByDependencyStats)
+  .slice(0, howManyToExtract);
 
 // 4. write files
 // -----------------------------------------------------------------------------
 
 fs.writeFile(
   path.resolve("./ops/data/interdeps.json"),
-  // JSON.stringify(interdep, null, 4),
-  JSON.stringify(
+  // JSON.stringify(interdep, null, 2),
+  `${JSON.stringify(
     interdep.filter((obj1) => {
       return !(
         !obj1.imports.length &&
@@ -226,8 +218,8 @@ fs.writeFile(
       );
     }),
     null,
-    4
-  ),
+    2
+  )}\n`,
   (err) => {
     if (err) {
       throw err;
@@ -238,7 +230,7 @@ fs.writeFile(
 
 fs.writeFile(
   path.resolve("./ops/data/packages.json"),
-  JSON.stringify(packages, null, 4),
+  `${JSON.stringify(packages, null, 2)}\n`,
   (err) => {
     if (err) {
       throw err;
@@ -249,7 +241,7 @@ fs.writeFile(
 
 fs.writeFile(
   path.resolve("./ops/data/dependencyStats.json"),
-  JSON.stringify(sortAllObjectsSync(dependencyStats), null, 4),
+  `${JSON.stringify(sortAllObjectsSync(dependencyStats), null, 2)}\n`,
   (err) => {
     if (err) {
       throw err;
@@ -259,24 +251,3 @@ fs.writeFile(
     );
   }
 );
-
-// 5. gather git repo info
-// ---------------------------------------------------------------------------
-
-let commitTotal = null;
-try {
-  // git rev-list --count HEAD
-  commitTotal = await git(".git").raw(["rev-list", "--count", "HEAD"]);
-  fs.writeFile(
-    path.join("./ops/data/gitStats.json"),
-    JSON.stringify({ commitTotal: commitTotal.trim() }, null, 4),
-    (err) => {
-      if (err) {
-        throw err;
-      }
-      console.log(`\u001b[${32}m${`gitStats.json written OK`}\u001b[${39}m`);
-    }
-  );
-} catch (e) {
-  throw new Error("generate-info.js: can't access git data for gitStats.json");
-}
