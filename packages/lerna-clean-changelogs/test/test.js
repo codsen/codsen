@@ -53,12 +53,17 @@ function compare(name) {
   equal(
     c(changelog).res,
     noExtras,
-    `no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    `no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`
   );
   equal(
-    c(changelog, true).res,
+    c(changelog, { extras: false }).res,
+    noExtras,
+    `hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+  );
+  equal(
+    c(changelog, { extras: true }).res,
     withExtras,
-    `with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    `optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
   );
 }
 

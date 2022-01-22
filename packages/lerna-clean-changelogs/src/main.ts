@@ -8,9 +8,17 @@ function isStr(something: string): any {
   return typeof something === "string";
 }
 
+interface Opts {
+  extras: boolean;
+}
+
+const defaults: Opts = {
+  extras: false,
+};
+
 function cleanChangelogs(
   changelogContents: string,
-  extras = false
+  originalOpts?: Partial<Opts>
 ): {
   version: string;
   res: string;
@@ -27,6 +35,8 @@ function cleanChangelogs(
       }, equal to:\n${JSON.stringify(changelogContents, null, 4)}`
     );
   }
+
+  let opts: Opts = { ...defaults, ...originalOpts };
 
   let final;
   let lastLineWasEmpty = false;
@@ -59,7 +69,7 @@ function cleanChangelogs(
     //   )}`
     // );
 
-    if (extras) {
+    if (opts.extras) {
       // ███
       // 1. remove links from titles, for example, turn:
       // ## [2.9.1](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
@@ -105,7 +115,7 @@ function cleanChangelogs(
         );
       if (
         linesArr[i].startsWith("**Note:** Version bump only") ||
-        (extras && linesArr[i].toLowerCase().includes("wip"))
+        (opts.extras && linesArr[i].toLowerCase().includes("wip"))
       ) {
         // delete all the blank lines above the culprit:
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
@@ -132,7 +142,7 @@ function cleanChangelogs(
           lastLineWasEmpty = true;
           DEV &&
             console.log(
-              `135 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+              `145 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
             );
         }
       }
@@ -148,7 +158,7 @@ function cleanChangelogs(
         lastLineWasEmpty = false;
         DEV &&
           console.log(
-            `151 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `161 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
       }
     }

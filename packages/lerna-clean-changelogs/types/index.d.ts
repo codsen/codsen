@@ -1,7 +1,10 @@
 declare const version: string;
+interface Opts {
+  extras: boolean;
+}
 declare function cleanChangelogs(
   changelogContents: string,
-  extras?: boolean
+  originalOpts?: Partial<Opts>
 ): {
   version: string;
   res: string;
