@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css-cli",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "Generates and updates all HTML templates' atomic CSS",
   "keywords": [
     "atomic",
@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "fs-extra": "^10.0.0",
-    "generate-atomic-css": "^2.0.11",
+    "generate-atomic-css": "^2.0.12",
     "globby": "^12.2.0",
     "is-d": "^1.0.0",
     "meow": "^10.1.2",

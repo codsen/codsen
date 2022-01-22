@@ -1,6 +1,6 @@
 {
   "name": "string-trim-spaces-only",
-  "version": "4.0.11",
+  "version": "4.0.12",
   "description": "Like String.trim() but you can choose granularly what to trim",
   "keywords": [
     "characters",

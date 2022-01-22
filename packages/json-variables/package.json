@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "11.0.11",
+  "version": "11.0.12",
   "description": "Resolves custom-marked, cross-referenced paths in parsed JSON",
   "keywords": [
     "comb",
@@ -75,15 +75,15 @@
     "various": {}
   },
   "dependencies": {
-    "arrayiffy-if-string": "^4.0.11",
-    "ast-get-values-by-key": "^4.0.11",
-    "ast-monkey-traverse": "^3.0.11",
+    "arrayiffy-if-string": "^4.0.12",
+    "ast-get-values-by-key": "^4.0.12",
+    "ast-monkey-traverse": "^3.0.12",
     "matcher": "^5.0.0",
     "object-path": "^0.11.8",
-    "ranges-apply": "^6.0.11",
-    "ranges-push": "^6.0.11",
-    "string-find-heads-tails": "^5.0.11",
-    "string-match-left-right": "^8.0.11",
-    "string-remove-duplicate-heads-tails": "^6.0.11"
+    "ranges-apply": "^6.0.12",
+    "ranges-push": "^6.0.12",
+    "string-find-heads-tails": "^5.0.12",
+    "string-match-left-right": "^8.0.12",
+    "string-remove-duplicate-heads-tails": "^6.0.12"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "8.0.11",
+  "version": "8.0.12",
   "description": "Extracts, cleans and encodes text",
   "keywords": [
     "brief",
@@ -70,25 +70,25 @@
     }
   },
   "dependencies": {
-    "all-named-html-entities": "^2.0.11",
+    "all-named-html-entities": "^2.0.12",
     "ansi-regex": "^6.0.1",
     "he": "^1.2.0",
-    "html-entities-not-email-friendly": "^0.6.11",
-    "ranges-apply": "^6.0.11",
-    "ranges-invert": "^5.0.11",
-    "ranges-process-outside": "^5.0.11",
-    "ranges-push": "^6.0.11",
-    "string-apostrophes": "^2.0.11",
-    "string-collapse-white-space": "^10.0.11",
-    "string-fix-broken-named-entities": "^6.0.11",
-    "string-left-right": "^5.0.11",
-    "string-range-expander": "^3.0.11",
-    "string-remove-widows": "^3.0.11",
-    "string-strip-html": "^9.1.5",
-    "string-trim-spaces-only": "^4.0.11"
+    "html-entities-not-email-friendly": "^0.6.12",
+    "ranges-apply": "^6.0.12",
+    "ranges-invert": "^5.0.12",
+    "ranges-process-outside": "^5.0.12",
+    "ranges-push": "^6.0.12",
+    "string-apostrophes": "^2.0.12",
+    "string-collapse-white-space": "^10.0.12",
+    "string-fix-broken-named-entities": "^6.0.12",
+    "string-left-right": "^5.0.12",
+    "string-range-expander": "^3.0.12",
+    "string-remove-widows": "^3.0.12",
+    "string-strip-html": "^9.1.6",
+    "string-trim-spaces-only": "^4.0.12"
   },
   "devDependencies": {
     "lodash.clonedeep": "^4.5.0",
-    "test-mixer": "^3.0.11"
+    "test-mixer": "^3.0.12"
   }
 }

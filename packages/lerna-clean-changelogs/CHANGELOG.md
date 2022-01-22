@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/codsen/codsen/compare/lerna-clean-changelogs@3.0.11...lerna-clean-changelogs@4.0.0) (2022-01-22)
+
+
+### Bug Fixes
+
+* set options as a plain object ([814cf09](https://github.com/codsen/codsen/commit/814cf090d14c9810b2cf6074fad316fa43d125c8)), closes [#36](https://github.com/codsen/codsen/issues/36)
+
+
+### BREAKING CHANGES
+
+* from now, the options should be set as a plain object, ie. { extras: true }
+
+
+
+
+
 ## 3.0.0 (2021-09-09)
 
 ### Features

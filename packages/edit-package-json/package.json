@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "0.5.11",
+  "version": "0.5.12",
   "description": "Edit package.json without parsing, as string, to keep the formatting intact",
   "keywords": [
     "changes",
@@ -69,11 +69,11 @@
     }
   },
   "dependencies": {
-    "ranges-apply": "^6.0.11",
-    "string-left-right": "^5.0.11"
+    "ranges-apply": "^6.0.12",
+    "string-left-right": "^5.0.12"
   },
   "devDependencies": {
-    "ast-monkey-traverse": "^3.0.11",
+    "ast-monkey-traverse": "^3.0.12",
     "globby": "^12.2.0",
     "lodash.clonedeep": "^4.5.0",
     "p-map": "^5.3.0"

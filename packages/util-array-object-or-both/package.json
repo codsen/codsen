@@ -1,6 +1,6 @@
 {
   "name": "util-array-object-or-both",
-  "version": "4.0.11",
+  "version": "4.0.12",
   "description": "Validate and normalise user choice: array, object or both?",
   "keywords": [
     "array",
