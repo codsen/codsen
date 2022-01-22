@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.12](https://github.com/codsen/codsen/compare/charcode-is-valid-xml-name-character@2.0.11...charcode-is-valid-xml-name-character@2.0.12) (2022-01-22)
-
-**Note:** Version bump only for package charcode-is-valid-xml-name-character
-
-
-
-
-
 ## 2.0.0 (2021-09-09)
 
 ### Features
