@@ -217,7 +217,6 @@
       "pretest": "yarn run lect && yarn run build",
       "test": "yarn run devtest",
       "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
-      "ts": "node -r esbuild-register",
       "unit": "uvu test"
     }
   },

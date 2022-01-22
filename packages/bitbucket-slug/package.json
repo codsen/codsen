@@ -57,7 +57,6 @@
     "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
     "pretest": "yarn run lect && yarn run build",
     "test": "yarn run devtest",
-    "ts": "node -r esbuild-register",
     "unit": "uvu test"
   },
   "engines": {
