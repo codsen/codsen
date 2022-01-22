@@ -42,6 +42,7 @@
   "scripts": {
     "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
     "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
+    "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
     "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js'",
@@ -52,7 +53,7 @@
     "prettier": "prettier",
     "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
     "pretest": "yarn run lect && yarn run build",
-    "test": "c8 yarn run unit && yarn run examples && yarn run lint",
+    "test": "yarn run devtest",
     "unit": "uvu test"
   },
   "engines": {
@@ -81,6 +82,6 @@
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.6",
     "@types/type-detect": "^4.0.1",
-    "type-fest": "^2.9.0"
+    "type-fest": "^2.10.0"
   }
 }

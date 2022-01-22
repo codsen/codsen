@@ -37,7 +37,10 @@ npm i string-convert-indexes
 ```js
 import { strict as assert } from "assert";
 
-import { nativeToUnicode, unicodeToNative } from "string-convert-indexes";
+import {
+  nativeToUnicode,
+  unicodeToNative,
+} from "string-convert-indexes";
 
 // CONVERTING NATIVE JS INDEXES TO UNICODE-CHAR-COUNT-BASED
 // 𝌆 - \uD834\uDF06

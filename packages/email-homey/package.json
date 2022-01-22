@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "chalk": "^5.0.0",
-    "globby": "^12.0.2",
+    "globby": "^12.2.0",
     "lodash.uniq": "^4.5.0",
     "log-symbols": "^5.1.0",
     "meow": "^10.1.2",

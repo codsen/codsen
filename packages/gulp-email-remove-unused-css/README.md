@@ -29,7 +29,6 @@
 ```bash
 npm i gulp-email-remove-unused-css
 ```
-
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/gulp-email-remove-unused-css/) for a full description of the API.

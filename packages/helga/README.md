@@ -31,7 +31,6 @@ The latest version is **ESM only**: Node 12+ is needed to use it and it must be 
 ```bash
 npm i helga
 ```
-
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/helga/) for a full description of the API.

@@ -69,7 +69,7 @@
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
     "edit-package-json": "^0.5.11",
-    "globby": "^12.0.2",
+    "globby": "^12.2.0",
     "is-online": "^9.0.1",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^5.0.0",
@@ -80,7 +80,7 @@
     "p-reduce": "^3.0.0",
     "pacote": "^12.0.2",
     "update-notifier": "^5.1.0",
-    "write-file-atomic": "^3.0.3"
+    "write-file-atomic": "^4.0.0"
   },
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.6",

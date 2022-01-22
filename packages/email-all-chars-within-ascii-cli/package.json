@@ -63,7 +63,7 @@
   "dependencies": {
     "chalk": "^5.0.0",
     "email-all-chars-within-ascii": "^4.0.11",
-    "globby": "^12.0.2",
+    "globby": "^12.2.0",
     "inquirer": "^8.2.0",
     "lodash.pullall": "^4.2.0",
     "minimist": "^1.2.5",

@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "fs-extra": "^10.0.0",
-    "globby": "^12.0.2",
+    "globby": "^12.2.0",
     "is-d": "^1.0.0",
     "json-comb-core": "^7.0.11",
     "meow": "^10.1.2",

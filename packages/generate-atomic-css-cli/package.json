@@ -66,11 +66,11 @@
   "dependencies": {
     "fs-extra": "^10.0.0",
     "generate-atomic-css": "^2.0.11",
-    "globby": "^12.0.2",
+    "globby": "^12.2.0",
     "is-d": "^1.0.0",
     "meow": "^10.1.2",
     "p-reduce": "^3.0.0",
     "update-notifier": "^5.1.0",
-    "write-file-atomic": "^3.0.3"
+    "write-file-atomic": "^4.0.0"
   }
 }

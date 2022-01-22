@@ -214,7 +214,8 @@
       "perf": "node perf/check.js",
       "prepare": "echo 'ready'",
       "pretest": "yarn run lect && yarn run build",
-      "test": "c8 yarn run unit && yarn run examples && yarn run lint",
+      "test": "yarn run devtest",
+      "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
       "unit": "uvu test"
     }
   },
