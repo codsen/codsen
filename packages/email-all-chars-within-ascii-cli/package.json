@@ -61,10 +61,10 @@
     }
   },
   "dependencies": {
-    "chalk": "^5.0.0",
+    "chalk": "^5.0.1",
     "email-all-chars-within-ascii": "^4.0.12",
-    "globby": "^12.2.0",
-    "inquirer": "^8.2.0",
+    "globby": "^13.1.1",
+    "inquirer": "^8.2.1",
     "lodash.pullall": "^4.2.0",
     "minimist": "^1.2.5",
     "string-left-right": "^5.0.12",

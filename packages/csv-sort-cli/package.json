@@ -64,10 +64,10 @@
     }
   },
   "dependencies": {
-    "chalk": "^5.0.0",
+    "chalk": "^5.0.1",
     "csv-sort": "^6.0.12",
-    "globby": "^12.2.0",
-    "inquirer": "^8.2.0",
+    "globby": "^13.1.1",
+    "inquirer": "^8.2.1",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^10.1.2",
@@ -76,6 +76,6 @@
   "devDependencies": {
     "@types/lodash.pullall": "^4.2.6",
     "@types/lodash.uniq": "^4.5.6",
-    "fs-extra": "^10.0.0"
+    "fs-extra": "^10.0.1"
   }
 }

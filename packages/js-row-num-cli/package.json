@@ -65,13 +65,13 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^4.0.12",
-    "fs-extra": "^10.0.0",
-    "globby": "^12.2.0",
+    "fs-extra": "^10.0.1",
+    "globby": "^13.1.1",
     "is-d": "^1.0.0",
     "js-row-num": "^5.0.12",
     "meow": "^10.1.2",
     "p-reduce": "^3.0.0",
     "update-notifier": "^5.1.0",
-    "write-file-atomic": "^4.0.0"
+    "write-file-atomic": "^4.0.1"
   }
 }

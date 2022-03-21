@@ -74,6 +74,6 @@
     "various": {}
   },
   "dependencies": {
-    "@babel/runtime": "^7.16.7"
+    "@babel/runtime": "^7.17.8"
   }
 }

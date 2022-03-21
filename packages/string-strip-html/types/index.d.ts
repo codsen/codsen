@@ -9,11 +9,11 @@ declare const version: string;
 interface Attribute {
   nameStarts: number;
   nameEnds: number;
-  equalsAt: number;
+  equalsAt?: number;
   name: string;
-  valueStarts: number;
-  valueEnds: number;
-  value: string;
+  valueStarts?: number;
+  valueEnds?: number;
+  value?: string;
 }
 interface Tag {
   attributes: Attribute[];
