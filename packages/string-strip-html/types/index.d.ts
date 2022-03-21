@@ -6,8 +6,17 @@ declare type Range =
 declare type Ranges = Range[] | null;
 
 declare const version: string;
+interface Attribute {
+  nameStarts: number;
+  nameEnds: number;
+  equalsAt: number;
+  name: string;
+  valueStarts: number;
+  valueEnds: number;
+  value: string;
+}
 interface Tag {
-  attributes: string[];
+  attributes: Attribute[];
   lastClosingBracketAt: number;
   lastOpeningBracketAt: number;
   slashPresent: number;
