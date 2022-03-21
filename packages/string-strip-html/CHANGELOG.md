@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [9.1.7](https://github.com/codsen/codsen/compare/string-strip-html@9.1.6...string-strip-html@9.1.7) (2022-03-21)
 
-
 ### Bug Fixes
 
-* correct the types ([7ec82ab](https://github.com/codsen/codsen/commit/7ec82aba4f80e90ef6564dcff60f8e4fe5e19fc8))
-
-
-
-
+- correct the types ([7ec82ab](https://github.com/codsen/codsen/commit/7ec82aba4f80e90ef6564dcff60f8e4fe5e19fc8))
 
 ## 9.1.0 (2021-11-22)
 
