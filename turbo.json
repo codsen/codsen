@@ -1,0 +1,67 @@
+{
+  "pipeline": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        "types/**",
+        ".next/**"
+      ]
+    },
+    "test": {
+      "dependsOn": [
+        "lect",
+        "build"
+      ],
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": []
+    },
+    "unit": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": []
+    },
+    "dev": {
+      "outputs": [],
+      "cache": false
+    },
+    "lect": {
+      "outputs": [],
+      "cache": false
+    },
+    "prettier:format": {
+      "outputs": [],
+      "cache": false
+    },
+    "letspublish": {
+      "outputs": [],
+      "cache": false
+    },
+    "perf": {
+      "outputs": [],
+      "cache": false
+    },
+    "examples": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [],
+      "cache": false
+    },
+    "prepare": {
+      "dependsOn": [
+        "unit",
+        "examples",
+        "lint"
+      ]
+    }
+  }
+}
