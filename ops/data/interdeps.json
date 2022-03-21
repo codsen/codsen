@@ -138,7 +138,7 @@
   },
   {
     "name": "codsen-tokenizer",
-    "size": 40208,
+    "size": 40202,
     "imports": [
       "html-all-known-attributes",
       "is-char-suitable-for-html-attr-name",
@@ -200,7 +200,7 @@
   },
   {
     "name": "edit-package-json",
-    "size": 10251,
+    "size": 10245,
     "imports": [
       "ranges-apply",
       "string-left-right"
@@ -418,7 +418,7 @@
   },
   {
     "name": "lerna-clean-changelogs",
-    "size": 1593,
+    "size": 1591,
     "imports": []
   },
   {
@@ -542,7 +542,7 @@
   },
   {
     "name": "ranges-push",
-    "size": 6933,
+    "size": 6916,
     "imports": [
       "string-collapse-leading-whitespace",
       "string-trim-spaces-only"
@@ -642,7 +642,7 @@
   },
   {
     "name": "string-fix-broken-named-entities",
-    "size": 11370,
+    "size": 11364,
     "imports": [
       "all-named-html-entities",
       "string-left-right"
@@ -684,7 +684,7 @@
   },
   {
     "name": "string-remove-thousand-separators",
-    "size": 1860,
+    "size": 1878,
     "imports": [
       "ranges-apply",
       "ranges-push"

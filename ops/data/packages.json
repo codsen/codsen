@@ -119,6 +119,7 @@
     "stristri",
     "tap-parse-string-to-object",
     "test-mixer",
+    "tsd-extract",
     "update-versions",
     "util-array-object-or-both",
     "util-nonempty"
@@ -243,6 +244,7 @@
     "stristri",
     "tap-parse-string-to-object",
     "test-mixer",
+    "tsd-extract",
     "util-array-object-or-both",
     "util-nonempty"
   ],
@@ -254,9 +256,9 @@
     "eslint-plugin-test-num",
     "perf-ref"
   ],
-  "totalPackageCount": 122,
+  "totalPackageCount": 123,
   "cliCount": 12,
-  "programsCount": 107,
+  "programsCount": 108,
   "specialCount": 1,
   "packagesOutsideMonorepoCount": 3
 }
