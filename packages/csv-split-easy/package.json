@@ -1,6 +1,6 @@
 {
   "name": "csv-split-easy",
-  "version": "6.0.12",
+  "version": "6.0.13",
   "description": "Splits the CSV string into array of arrays, each representing a row of columns",
   "keywords": [
     "add",
@@ -71,6 +71,6 @@
     }
   },
   "dependencies": {
-    "string-remove-thousand-separators": "^6.0.12"
+    "string-remove-thousand-separators": "^6.0.13"
   }
 }

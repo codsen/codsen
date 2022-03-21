@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "8.0.12",
+  "version": "8.0.13",
   "description": "Extracts, cleans and encodes text",
   "keywords": [
     "brief",
@@ -83,8 +83,8 @@
     "string-fix-broken-named-entities": "^6.0.12",
     "string-left-right": "^5.0.12",
     "string-range-expander": "^3.0.12",
-    "string-remove-widows": "^3.0.12",
-    "string-strip-html": "^9.1.6",
+    "string-remove-widows": "^3.0.13",
+    "string-strip-html": "^9.1.7",
     "string-trim-spaces-only": "^4.0.12"
   },
   "devDependencies": {

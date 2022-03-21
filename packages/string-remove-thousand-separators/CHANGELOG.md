@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.13](https://github.com/codsen/codsen/compare/string-remove-thousand-separators@6.0.12...string-remove-thousand-separators@6.0.13) (2022-03-21)
+
+
+### Bug Fixes
+
+* exit early if number less than one is given ([dc4ffc1](https://github.com/codsen/codsen/commit/dc4ffc12caefc58d370dfde2e34f6b8659f0bb04)), closes [#42](https://github.com/codsen/codsen/issues/42)
+
+
+
+
+
 ## 6.0.0 (2021-09-09)
 
 ### Features
