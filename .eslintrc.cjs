@@ -29,6 +29,8 @@ module.exports = {
     "test-num/correct-test-num": 0,
     "import/extensions": 0,
     "import/order": 0,
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-unnecessary-condition": 0,
   },
