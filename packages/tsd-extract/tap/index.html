@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>tsd-extract tap</title>
+    <style type="text/css">
+      * {
+        padding: 0;
+        margin: 0;
+        font-size: 22px;
+        color: #f9c76b; /* yellow-ish */
+        background-color: #1c2c34;
+        font-family: sans-serif;
+      }
+      html,
+      body,
+      #app {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
+      }
+      textarea {
+        color: #bec5cf; /* white-ish */
+        width: 100%;
+        height: 100%;
+        font-family: monospace;
+      }
+      #app {
+        display: flex;
+        flex-direction: column;
+      }
+      .top-panel,
+      .bottom-panel {
+        height: 100%;
+      }
+      .top-panel {
+        display: flex;
+        flex-direction: row;
+      }
+      .bottom-panel {
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        flex: 0;
+      }
+      .bottom-panel a {
+        display: inline-block;
+        padding: 5px 15px;
+        border: 1px solid;
+        text-decoration: none;
+        border-radius: 99rem;
+        margin: 10px;
+      }
+      .bottom-panel a:hover {
+        text-decoration: underline;
+      }
+      .w-50 {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+      }
+      .vertical-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .f0 {
+        flex: 0;
+      }
+      .f1 {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="top-panel">
+        <div class="w-50 vertical-container">
+          <div class="f0">
+            <textarea
+              v-model="def"
+              placeholder="name of the TS statement"
+            ></textarea>
+          </div>
+          <div class="f1">
+            <textarea
+              ref="in"
+              v-model="text1"
+              placeholder="put .d.ts here"
+            ></textarea>
+          </div>
+        </div>
+        <div class="w-50 vertical-container">
+          <div class="f1">
+            <textarea ref="out1" v-model="rawOutput"></textarea>
+          </div>
+          <div class="f1">
+            <textarea ref="out2" v-model="valueOrError"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-panel">
+        <a v-for="identifier in all" v-on:click="search(identifier)"
+          >{{identifier}}</a
+        >
+      </div>
+    </div>
+
+    <script src="vue.js"></script>
+    <script src="../dist/tsd-extract.umd.js"></script>
+    <script>
+      Vue.config.productionTip = false;
+      function isStr(something) {
+        return typeof something === "string";
+      }
+      function isObj(something) {
+        return typeof isObj === "object";
+      }
+      const { extract } = tsdExtract;
+      const myStorage = window.localStorage;
+      window.Event = new Vue();
+      new Vue({
+        el: "#app",
+        data: {
+          text1: "",
+          def: "",
+        },
+        mounted: function () {
+          const retrievedText1 = myStorage.getItem("tsd-extract-text1");
+          const retrievedDef = myStorage.getItem("tsd-extract-def");
+          if (typeof retrievedText1 === "string" && retrievedText1.length) {
+            this.text1 = retrievedText1;
+          } else {
+            this.text1 = "";
+          }
+          if (typeof retrievedDef === "string" && retrievedDef.length) {
+            this.def = retrievedDef;
+          } else {
+            this.def = "";
+          }
+          this.$refs.in.focus();
+        },
+        computed: {
+          all: function () {
+            return extract(this.text1, this.def, {
+              extractAll: true,
+            }).all;
+          },
+          rawOutput: function () {
+            return JSON.stringify(
+              extract(this.text1, this.def, {
+                extractAll: true,
+              }),
+              null,
+              4
+            );
+          },
+          valueOrError: function () {
+            const { error, value } = extract(this.text1, this.def, {
+              extractAll: true,
+            });
+            return error || value;
+          },
+        },
+        watch: {
+          text1: function () {
+            // dump the input into the local storage:
+            if (isStr(this.text1) && this.text1.length) {
+              myStorage.setItem("tsd-extract-text1", this.text1);
+            } else {
+              myStorage.setItem("tsd-extract-text1", "");
+            }
+          },
+          def: function () {
+            if (isStr(this.def) && this.def.length) {
+              myStorage.setItem("tsd-extract-def", this.def);
+            } else {
+              myStorage.setItem("tsd-extract-def", "");
+            }
+          },
+        },
+        methods: {
+          search(identifier) {
+            this.def = identifier;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
