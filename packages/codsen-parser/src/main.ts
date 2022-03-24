@@ -844,9 +844,9 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
             console.log(
               `845 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
             );
-          let suspiciousEndingStartsAt = (
-            suspiciousCommentTagEndingRegExp.exec(tokenObj.value) || {}
-          ).index;
+          let suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(
+            tokenObj.value
+          )?.index;
 
           let suspiciousEndingEndsAt =
             (suspiciousEndingStartsAt || 0) +
