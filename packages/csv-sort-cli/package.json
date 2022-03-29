@@ -67,7 +67,7 @@
     "chalk": "^5.0.1",
     "csv-sort": "^6.0.13",
     "globby": "^13.1.1",
-    "inquirer": "^8.2.1",
+    "inquirer": "^8.2.2",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^10.1.2",

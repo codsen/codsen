@@ -128,7 +128,7 @@
   },
   {
     "name": "codsen-parser",
-    "size": 7110,
+    "size": 7105,
     "imports": [
       "ast-monkey-util",
       "codsen-tokenizer",
