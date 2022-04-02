@@ -85,7 +85,7 @@ test("01 - case-insensitive flag works", () => {
   );
 });
 
-test("test 15.2 - case-insensitive leftMaybe", () => {
+test("02 - case-insensitive leftMaybe", () => {
   equal(
     er(
       "zzz Abbb zzz",
@@ -101,7 +101,7 @@ test("test 15.2 - case-insensitive leftMaybe", () => {
       "yyy"
     ),
     "zzz Ayyy zzz",
-    "test 15.2.1 - flag off - testing leftMaybe only"
+    "02.01"
   );
   equal(
     er(
@@ -121,7 +121,7 @@ test("test 15.2 - case-insensitive leftMaybe", () => {
       "yyy"
     ),
     "zzz yyy zzz",
-    "test 15.2.2 - flag on - testing leftMaybe only"
+    "02.02"
   );
   equal(
     er(
@@ -141,7 +141,7 @@ test("test 15.2 - case-insensitive leftMaybe", () => {
       "yyy"
     ),
     "zzz Abbb zzz",
-    "test 15.2.3 - flag on - testing searchFor + leftMaybe"
+    "02.03"
   );
   equal(
     er(
@@ -162,11 +162,11 @@ test("test 15.2 - case-insensitive leftMaybe", () => {
       "yyy"
     ),
     "zzz yyy zzz",
-    "test 15.2.4 - flag on - testing searchFor + leftMaybe"
+    "02.04"
   );
 });
 
-test("test 15.3 - case-insensitive rightMaybe", () => {
+test("03 - case-insensitive rightMaybe", () => {
   equal(
     er(
       "zzz bbbC zzz",
@@ -182,7 +182,7 @@ test("test 15.3 - case-insensitive rightMaybe", () => {
       "yyy"
     ),
     "zzz yyyC zzz",
-    "test 15.3.1 - flag off - testing rightMaybe only"
+    "03.01"
   );
   equal(
     er(
@@ -202,7 +202,7 @@ test("test 15.3 - case-insensitive rightMaybe", () => {
       "yyy"
     ),
     "zzz yyy zzz",
-    "test 15.3.2 - flag on - testing rightMaybe only"
+    "03.02"
   );
   equal(
     er(
@@ -222,7 +222,7 @@ test("test 15.3 - case-insensitive rightMaybe", () => {
       "yyy"
     ),
     "zzz bbbC zzz",
-    "test 15.3.3 - flag on - testing searchFor + rightMaybe"
+    "03.03"
   );
   equal(
     er(
@@ -243,11 +243,11 @@ test("test 15.3 - case-insensitive rightMaybe", () => {
       "yyy"
     ),
     "zzz yyy zzz",
-    "test 15.3.4 - flag on - testing searchFor + rightMaybe"
+    "03.04"
   );
 });
 
-test("test 15.4 - case-insensitive leftOutside", () => {
+test("04 - case-insensitive leftOutside", () => {
   equal(
     er(
       "zzz Abbb zzz",
@@ -263,7 +263,7 @@ test("test 15.4 - case-insensitive leftOutside", () => {
       "yyy"
     ),
     "zzz Abbb zzz",
-    "test 15.4.1 - flag off - testing leftOutside only"
+    "04.01"
   );
   equal(
     er(
@@ -283,7 +283,7 @@ test("test 15.4 - case-insensitive leftOutside", () => {
       "yyy"
     ),
     "zzz Ayyy zzz",
-    "test 15.4.2 - flag on - testing leftOutside only"
+    "04.02"
   );
   equal(
     er(
@@ -303,7 +303,7 @@ test("test 15.4 - case-insensitive leftOutside", () => {
       "yyy"
     ),
     "zzz Abbb zzz",
-    "test 15.4.3 - flag on - testing searchFor + leftOutside"
+    "04.03"
   );
   equal(
     er(
@@ -324,11 +324,11 @@ test("test 15.4 - case-insensitive leftOutside", () => {
       "yyy"
     ),
     "zzz Ayyy zzz",
-    "test 15.4.4 - flag on - testing searchFor + leftOutside"
+    "04.04"
   );
 });
 
-test("test 15.5 - case-insensitive rightOutside", () => {
+test("05 - case-insensitive rightOutside", () => {
   equal(
     er(
       "zzz bbbC zzz",
@@ -344,7 +344,7 @@ test("test 15.5 - case-insensitive rightOutside", () => {
       "yyy"
     ),
     "zzz bbbC zzz",
-    "test 15.5.1 - flag off - testing rightOutside only"
+    "05.01"
   );
   equal(
     er(
@@ -364,7 +364,7 @@ test("test 15.5 - case-insensitive rightOutside", () => {
       "yyy"
     ),
     "zzz yyyC zzz",
-    "test 15.5.2 - flag on - testing rightOutside only"
+    "05.02"
   );
   equal(
     er(
@@ -384,7 +384,7 @@ test("test 15.5 - case-insensitive rightOutside", () => {
       "yyy"
     ),
     "zzz bbbC zzz",
-    "test 15.5.3 - flag on - testing searchFor + rightOutside"
+    "05.03"
   );
   equal(
     er(
@@ -405,11 +405,11 @@ test("test 15.5 - case-insensitive rightOutside", () => {
       "yyy"
     ),
     "zzz yyyC zzz",
-    "test 15.5.4 - flag on - testing searchFor + rightOutside"
+    "05.04"
   );
 });
 
-test("test 15.6 - case-insensitive leftOutsideNot", () => {
+test("06 - case-insensitive leftOutsideNot", () => {
   equal(
     er(
       "zzz Abbb zzz",
@@ -425,7 +425,7 @@ test("test 15.6 - case-insensitive leftOutsideNot", () => {
       "yyy"
     ),
     "zzz Ayyy zzz",
-    "test 15.6.1 - flag off - testing leftOutsideNot only"
+    "06.01"
   );
   equal(
     er(
@@ -445,7 +445,7 @@ test("test 15.6 - case-insensitive leftOutsideNot", () => {
       "yyy"
     ),
     "zzz Abbb zzz",
-    "test 15.6.2 - flag on - testing leftOutsideNot only"
+    "06.02"
   );
   equal(
     er(
@@ -465,7 +465,7 @@ test("test 15.6 - case-insensitive leftOutsideNot", () => {
       "yyy"
     ),
     "zzz Abbb zzz",
-    "test 15.6.3 - flag on - testing searchFor + leftOutsideNot"
+    "06.03"
   );
   equal(
     er(
@@ -486,7 +486,7 @@ test("test 15.6 - case-insensitive leftOutsideNot", () => {
       "yyy"
     ),
     "zzz Abbb zzz",
-    "test 15.6.4 - flag on - testing searchFor + leftOutsideNot"
+    "06.04"
   );
   equal(
     er(
@@ -507,11 +507,11 @@ test("test 15.6 - case-insensitive leftOutsideNot", () => {
       "yyy"
     ),
     "zzz Ayyy zzz",
-    "test 15.6.5 - flag on - testing searchFor + leftOutsideNot"
+    "06.05"
   );
 });
 
-test("test 15.7 - case-insensitive rightOutsideNot", () => {
+test("07 - case-insensitive rightOutsideNot", () => {
   equal(
     er(
       "zzz bbbC zzz",
@@ -527,7 +527,7 @@ test("test 15.7 - case-insensitive rightOutsideNot", () => {
       "yyy"
     ),
     "zzz yyyC zzz",
-    "test 15.7.1 - flag off - testing rightOutsideNot only"
+    "07.01"
   );
   equal(
     er(
@@ -547,7 +547,7 @@ test("test 15.7 - case-insensitive rightOutsideNot", () => {
       "yyy"
     ),
     "zzz bbbC zzz",
-    "test 15.7.2 - flag on - testing rightOutsideNot only"
+    "07.02"
   );
   equal(
     er(
@@ -567,7 +567,7 @@ test("test 15.7 - case-insensitive rightOutsideNot", () => {
       "yyy"
     ),
     "zzz bbbC zzz",
-    "test 15.7.3 - flag on - testing searchFor + rightOutsideNot"
+    "07.03"
   );
   equal(
     er(
@@ -588,7 +588,7 @@ test("test 15.7 - case-insensitive rightOutsideNot", () => {
       "yyy"
     ),
     "zzz bbbC zzz",
-    "test 15.7.4 - flag on - testing searchFor + rightOutsideNot"
+    "07.04"
   );
   equal(
     er(
@@ -609,7 +609,7 @@ test("test 15.7 - case-insensitive rightOutsideNot", () => {
       "yyy"
     ),
     "zzz yyyC zzz",
-    "test 15.7.5 - flag on - testing searchFor + rightOutsideNot"
+    "07.05"
   );
 });
 

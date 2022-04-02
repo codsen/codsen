@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
-test.only("01", () => {
+test("01", () => {
   let gathered = [];
   ct("abc", {
     reportProgressFunc: null,

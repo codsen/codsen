@@ -3042,16 +3042,16 @@ test(`38`, () => {
   );
 });
 
-test.skip(`<style>.a{b:c z`);
-test.skip(`<style>.a{b:c?`);
-test.skip(`<style>.a{b:c ?`);
-test.skip(`<style>.a{b:c?important;`);
-test.skip(`<style>.a{b:c ?important;`);
-test.skip(`<style>.a{b:c1important;`);
-test.skip(`<style>.a{b:c 1important;`);
+// test.todo(`<style>.a{b:c z`);
+// test.todo(`<style>.a{b:c?`);
+// test.todo(`<style>.a{b:c ?`);
+// test.todo(`<style>.a{b:c?important;`);
+// test.todo(`<style>.a{b:c ?important;`);
+// test.todo(`<style>.a{b:c1important;`);
+// test.todo(`<style>.a{b:c 1important;`);
 
-// also,
-test.skip(`<style.a{b:c !important;}</style>`);
-test.skip(`<style\n.a{b:c !important;}</style>`);
+// // also,
+// test.todo(`<style.a{b:c !important;}</style>`);
+// test.todo(`<style\n.a{b:c !important;}</style>`);
 
 test.run();
