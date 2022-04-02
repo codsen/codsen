@@ -56,7 +56,7 @@
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "dequal": "^2.0.2",
-    "esbuild": "^0.14.28",
+    "esbuild": "^0.14.30",
     "esbuild-register": "^3.3.2",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.5.0",
