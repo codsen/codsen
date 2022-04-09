@@ -72,7 +72,7 @@
     }
   },
   "dependencies": {
-    "html-entities": "^2.3.2",
+    "html-entities": "^2.3.3",
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1",
     "lodash.without": "^4.4.0",
