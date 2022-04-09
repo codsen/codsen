@@ -42,4 +42,43 @@ test("01 export from, one line", () => {
   );
 });
 
+test("02 two exports from", () => {
+  let source = `export { a } from "b";
+export { c } from "d";`;
+  equal(
+    extract(source, "export", { extractAll: false }),
+    {
+      identifiers: ["export"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 6,
+      content: '{ a } from "b";',
+      contentStartsAt: 7,
+      contentEndsAt: 22,
+      value: 'export { a } from "b";',
+      valueStartsAt: 0,
+      valueEndsAt: 22,
+      all: [],
+      error: null,
+    },
+    "02.01"
+  );
+  equal(
+    extract(source, "export", { extractAll: true }),
+    {
+      identifiers: ["export"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 6,
+      content: '{ a } from "b";',
+      contentStartsAt: 7,
+      contentEndsAt: 22,
+      value: 'export { a } from "b";',
+      valueStartsAt: 0,
+      valueEndsAt: 22,
+      all: ["export"],
+      error: null,
+    },
+    "02.02"
+  );
+});
+
 test.run();
