@@ -4,7 +4,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { extract } from "../dist/tsd-extract.esm.js";
 
-test("01 export from, one line", () => {
+test("01 - export from, one line", () => {
   let source = `export { x } from "y";`;
   equal(
     extract(source, "export", { extractAll: false }),
@@ -42,7 +42,7 @@ test("01 export from, one line", () => {
   );
 });
 
-test("02 two exports from", () => {
+test("02 - two exports from", () => {
   let source = `export { a } from "b";
 export { c } from "d";`;
   equal(
@@ -78,6 +78,46 @@ export { c } from "d";`;
       error: null,
     },
     "02.02"
+  );
+});
+
+test("03 - others follow", () => {
+  let source = `export { a } from "b";
+declare const c: string;
+  `;
+  equal(
+    extract(source, "export", { extractAll: false }),
+    {
+      identifiers: ["export"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 6,
+      content: '{ a } from "b";',
+      contentStartsAt: 7,
+      contentEndsAt: 22,
+      value: 'export { a } from "b";',
+      valueStartsAt: 0,
+      valueEndsAt: 22,
+      all: [],
+      error: null,
+    },
+    "03.01"
+  );
+  equal(
+    extract(source, "export", { extractAll: true }),
+    {
+      identifiers: ["export"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 6,
+      content: '{ a } from "b";',
+      contentStartsAt: 7,
+      contentEndsAt: 22,
+      value: 'export { a } from "b";',
+      valueStartsAt: 0,
+      valueEndsAt: 22,
+      all: ["export", "c"],
+      error: null,
+    },
+    "03.02"
   );
 });
 

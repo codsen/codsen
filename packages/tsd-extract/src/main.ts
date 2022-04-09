@@ -77,6 +77,16 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
   let resolvedOpts: Opts = Object.assign(defaults, opts);
   DEV && console.log(`resolvedOpts: ${JSON.stringify(resolvedOpts, null, 4)}`);
 
+  // there's a challenge when content follows closing curly:
+  // export { x } from "y";
+  //              ^^^^^^^^^
+  //
+  // When this flag is enabled, we continue adding characters
+  // within quotes. The plan is, when we stumble upon "from",
+  // we'd enable this flag and catch "y", independent does it
+  // have trailing semicolon or not.
+  let catchNextQuotedChunk = false;
+
   let statementDefault = {
     identifiers: [],
     identifiersStartAt: null,
@@ -90,13 +100,14 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
   };
   let statement: Statement = { ...statementDefault, identifiers: [] };
   function resetStatement(): void {
+    catchNextQuotedChunk = false;
     statement = { ...statementDefault, identifiers: [] };
   }
   resetStatement();
 
   // early exit
   if (!resolvedOpts.extractAll && (!def || !str.includes(def))) {
-    DEV && console.log(`099 ${`\u001b[${31}m${`EXIT`}\u001b[${39}m`}`);
+    DEV && console.log(`110 ${`\u001b[${31}m${`EXIT`}\u001b[${39}m`}`);
     return { ...statementDefault, all: [], error: NOTFOUNDSTR };
   }
 
@@ -113,16 +124,6 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
 
   let ret: ReturnType | null = null; // final return value (used in case opts.extractAll is on)
   let all = new Set<string>();
-
-  // there's a challenge when content follows closing curly:
-  // export { x } from "y";
-  //              ^^^^^^^^^
-  //
-  // When this flag is enabled, we continue adding characters
-  // within quotes. The plan is, when we stumble upon "from",
-  // we'd enable this flag and catch "y", independent does it
-  // have trailing semicolon or not.
-  let catchNextQuotedChunk = false;
 
   // Chunks:
   // -------------------------------------------------------------------------
@@ -158,7 +159,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       lastNonWhitespaceChar = i;
       DEV &&
         console.log(
-          `161 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastNonWhitespaceChar`}\u001b[${39}m`} = ${JSON.stringify(
+          `162 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastNonWhitespaceChar`}\u001b[${39}m`} = ${JSON.stringify(
             lastNonWhitespaceChar,
             null,
             4
@@ -168,7 +169,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
   }
 
   function patchMissingValues(i: number): void {
-    DEV && console.log(`171 patchMissingValues() called`);
+    DEV && console.log(`172 patchMissingValues() called`);
 
     if (
       typeof statement.contentStartsAt === "number" &&
@@ -177,7 +178,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       statement.contentEndsAt = lastNonWhitespaceChar + 1;
       DEV &&
         console.log(
-          `180 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.contentEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `181 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.contentEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
             statement.contentEndsAt,
             null,
             4
@@ -196,7 +197,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       );
       DEV &&
         console.log(
-          `199 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
+          `200 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
             statement.content,
             null,
             4
@@ -211,7 +212,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       statement.valueEndsAt = lastNonWhitespaceChar + 1;
       DEV &&
         console.log(
-          `214 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.valueEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `215 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.valueEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
             statement.valueEndsAt,
             null,
             4
@@ -230,7 +231,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       );
       DEV &&
         console.log(
-          `233 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.value`}\u001b[${39}m`} = ${JSON.stringify(
+          `234 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.value`}\u001b[${39}m`} = ${JSON.stringify(
             statement.value,
             null,
             4
@@ -247,7 +248,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         statement.identifiers.push(...chunk.identifiers);
         DEV &&
           console.log(
-            `250 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiers`}\u001b[${39}m`} now = ${JSON.stringify(
+            `251 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiers`}\u001b[${39}m`} now = ${JSON.stringify(
               statement.identifiers,
               null,
               4
@@ -262,7 +263,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
           statement.identifiersStartAt = chunk.startsAt;
           DEV &&
             console.log(
-              `265 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiersStartAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `266 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiersStartAt`}\u001b[${39}m`} = ${JSON.stringify(
                 statement.identifiersStartAt,
                 null,
                 4
@@ -275,7 +276,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
           statement.identifiersEndAt = i;
           DEV &&
             console.log(
-              `278 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiersEndAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `279 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiersEndAt`}\u001b[${39}m`} = ${JSON.stringify(
                 statement.identifiersEndAt,
                 null,
                 4
@@ -287,7 +288,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
 
     DEV &&
       console.log(
-        `290 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} patched ${`\u001b[${33}m${`statement`}\u001b[${39}m`} = ${JSON.stringify(
+        `291 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} patched ${`\u001b[${33}m${`statement`}\u001b[${39}m`} = ${JSON.stringify(
           statement,
           null,
           4
@@ -332,22 +333,22 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
     // Catch the comments
     if (str[i] === "/") {
       if (str[i + 1] === "*") {
-        DEV && console.log(`335 a comment opening caught`);
+        DEV && console.log(`336 a comment opening caught`);
         DEV &&
-          console.log(`337 OLD ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+          console.log(`338 OLD ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
         if (str.includes("*/", i + 1)) {
           i = str.indexOf("*/", i + 1) + 2;
         } else {
           i = str.length - 1;
         }
         DEV &&
-          console.log(`344 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+          console.log(`345 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
         continue;
       } else if (str[i + 1] === "/") {
-        DEV && console.log(`347 skip until line break`);
+        DEV && console.log(`348 skip until line break`);
 
         DEV &&
-          console.log(`350 OLD ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+          console.log(`351 OLD ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
         if (str.includes("\n", i + 1)) {
           i = str.indexOf("\n", i + 1);
         } else if (str.includes("\r", i + 1)) {
@@ -356,7 +357,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
           i = str.length - 1;
         }
         DEV &&
-          console.log(`359 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+          console.log(`360 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
         continue;
       }
     }
@@ -394,7 +395,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         // some other identifier starts
         NON_IDENTIFIER_CHARS.includes(str[i]))
     ) {
-      DEV && console.log(`397 inside the catch identifier's end clauses`);
+      DEV && console.log(`398 inside the catch identifier's end clauses`);
       // 1. chunk.endsAt is a "rolling" value to end up as
       // the value of "identifiersEndAt"
       chunk.endsAt = i;
@@ -403,7 +404,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       let identifier = str.slice(identifierStartsAt, i);
       DEV &&
         console.log(
-          `406 ${`\u001b[${35}m${`██ EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`identifier`}\u001b[${39}m`} = ${JSON.stringify(
+          `407 ${`\u001b[${35}m${`██ EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`identifier`}\u001b[${39}m`} = ${JSON.stringify(
             identifier,
             null,
             4
@@ -412,7 +413,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       chunk.identifiers.push(identifier);
       DEV &&
         console.log(
-          `415 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`chunk.identifiers`}\u001b[${39}m`} now = ${JSON.stringify(
+          `416 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`chunk.identifiers`}\u001b[${39}m`} now = ${JSON.stringify(
             chunk.identifiers,
             null,
             4
@@ -428,7 +429,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
           statement.valueStartsAt = identifierStartsAt;
           DEV &&
             console.log(
-              `431 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk.startsAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `432 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk.startsAt`}\u001b[${39}m`} = ${JSON.stringify(
                 chunk.startsAt,
                 null,
                 4
@@ -457,7 +458,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       identifierStartsAt = null;
       DEV &&
         console.log(
-          `460 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`identifierStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `461 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`identifierStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             identifierStartsAt,
             null,
             4
@@ -473,7 +474,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         all.add(identifier);
         DEV &&
           console.log(
-            `476 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${identifier}\u001b[${39}m`} to ${`\u001b[${33}m${`all`}\u001b[${39}m`} = ${JSON.stringify(
+            `477 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${identifier}\u001b[${39}m`} to ${`\u001b[${33}m${`all`}\u001b[${39}m`} = ${JSON.stringify(
               [...all],
               null,
               4
@@ -488,7 +489,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       typeof chunk.startsAt === "number" &&
       (str[i] in PAIRS || `=:`.includes(str[i]))
     ) {
-      DEV && console.log(`491 caught a chunk's end`);
+      DEV && console.log(`492 caught a chunk's end`);
       // 1. set statement, but only if "def" was not found yet
 
       // It's because if opts.extractAll is enabled, after we find
@@ -502,7 +503,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       statement.identifiersEndAt = chunk.endsAt;
       DEV &&
         console.log(
-          `505 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiers`}\u001b[${39}m`} = ${JSON.stringify(
+          `506 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiers`}\u001b[${39}m`} = ${JSON.stringify(
             statement.identifiers,
             null,
             4
@@ -521,7 +522,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         statement.contentStartsAt = i;
         DEV &&
           console.log(
-            `524 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.contentStarstAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `525 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.contentStarstAt`}\u001b[${39}m`} = ${JSON.stringify(
               statement.contentStartsAt,
               null,
               4
@@ -541,7 +542,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
       }
 
       // 3. reset chunk
-      DEV && console.log(`544 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} chunk`);
+      DEV && console.log(`545 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} chunk`);
       resetChunk();
     }
 
@@ -557,7 +558,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
           !ignoreUntil.length ||
           str[i] !== ignoreUntil[~-ignoreUntil.length])
       ) {
-        DEV && console.log(`560 - it's an opening counterpart`);
+        DEV && console.log(`561 - it's an opening counterpart`);
         //
         // activate the ignores - skip until the closing counterpart,
         // but beware the nesting - continue catching nested pairs
@@ -565,19 +566,19 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         resetChunk();
         DEV &&
           console.log(
-            `568 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`}, now = ${JSON.stringify(
+            `569 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`}, now = ${JSON.stringify(
               ignoreUntil,
               null,
               0
             )}; ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} chunk`
           );
       } else if (ignoreUntil.length) {
-        DEV && console.log(`575`);
+        DEV && console.log(`576`);
         if (str[i] === ignoreUntil[~-ignoreUntil.length]) {
           ignoreUntil.pop();
           DEV &&
             console.log(
-              `580 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`} now = ${JSON.stringify(
+              `581 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`} now = ${JSON.stringify(
                 ignoreUntil,
                 null,
                 4
@@ -608,7 +609,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         catchNextQuotedChunk = true;
         DEV &&
           console.log(
-            `611 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`catchNextQuotedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+            `612 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`catchNextQuotedChunk`}\u001b[${39}m`} = ${JSON.stringify(
               catchNextQuotedChunk,
               null,
               4
@@ -619,7 +620,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         (statement.contentStartsAt === null ||
           str[statement.contentStartsAt] !== ":")
       ) {
-        DEV && console.log(`622`);
+        DEV && console.log(`623`);
         // if the semicolon was missing, at this point, we'll have "identifiersEndAt"
         // still set; that's how we detect the curlies chunk was passed by now
         if (
@@ -630,12 +631,12 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
           //                                                          we're here
           str[statement.identifiersEndAt] !== "("
         ) {
-          DEV && console.log(`633`);
+          DEV && console.log(`634`);
           if (!resolvedOpts.extractAll && statement.identifiers.includes(def)) {
             // patch up the missing values
             DEV &&
               console.log(
-                `638 PATCHING! ${`\u001b[${33}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`lastNonWhitespaceChar`}\u001b[${39}m`} = ${JSON.stringify(
+                `639 PATCHING! ${`\u001b[${33}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`lastNonWhitespaceChar`}\u001b[${39}m`} = ${JSON.stringify(
                   lastNonWhitespaceChar,
                   null,
                   4
@@ -645,24 +646,24 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
             patchMissingValues(i);
 
             DEV &&
-              console.log(`648 ${`\u001b[${35}m${`RETURN`}\u001b[${39}m`}`);
+              console.log(`649 ${`\u001b[${35}m${`RETURN`}\u001b[${39}m`}`);
             // "all" is empty unless requested
             return { ...statement, all: [], error: null };
           }
 
           if (statement.identifiers.includes(def)) {
-            DEV && console.log(`654 patch statement`);
+            DEV && console.log(`655 patch statement`);
             patchMissingValues(i);
             DEV &&
               console.log(
-                `658 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`
+                `659 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`
               );
             ret = { ...statement, all: [], error: null };
           }
           resetStatement();
           DEV &&
             console.log(
-              `665 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`
+              `666 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`
             );
         }
 
@@ -673,7 +674,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
           identifierStartsAt = i;
           DEV &&
             console.log(
-              `676 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`identifierStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `677 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`identifierStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
                 identifierStartsAt,
                 null,
                 4
@@ -704,7 +705,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
     //                                S
 
     // Update "lastNonWhitespaceChar"
-    DEV && console.log(`707 call updateLastNonWhitespaceChar()`);
+    DEV && console.log(`708 call updateLastNonWhitespaceChar()`);
     updateLastNonWhitespaceChar(i);
 
     // EOL
@@ -712,38 +713,39 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
 
     if (
       !str[i] &&
+      !ret &&
       (chunk.identifiers.includes(def) || statement.identifiers.includes(def))
     ) {
-      DEV && console.log(`717 EOL clauses`);
+      DEV && console.log(`719 EOL clauses`);
       patchMissingValues(i);
 
       DEV &&
         console.log(
-          `722 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`
+          `724 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`
         );
       ret = { ...statement, all: [], error: null };
       resetStatement();
       DEV &&
-        console.log(`727 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`);
+        console.log(`729 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`);
     }
 
     // Catch semi
     // -----------------------------------------------------------------------------
     if (!ignoreUntil.length && str[i] === ";") {
-      DEV && console.log(`733`);
+      DEV && console.log(`735`);
       if (statement.identifiers.includes(def)) {
         DEV &&
-          console.log(`736 ${`\u001b[${32}m${`END REACHED`}\u001b[${39}m`}`);
+          console.log(`738 ${`\u001b[${32}m${`END REACHED`}\u001b[${39}m`}`);
         patchMissingValues(i);
-        DEV && console.log(`738`);
+        DEV && console.log(`740`);
 
         if (!resolvedOpts.extractAll) {
-          DEV && console.log(`741 ${`\u001b[${35}m${`RETURN`}\u001b[${39}m`}`);
+          DEV && console.log(`743 ${`\u001b[${35}m${`RETURN`}\u001b[${39}m`}`);
           return { ...statement, all: [...all], error: null };
-        } else {
+        } else if (!ret) {
           DEV &&
             console.log(
-              `746 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`
+              `748 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`
             );
           // remember to patch "all" in the end, now it's incomplete
           ret = { ...statement, all: [], error: null };
@@ -755,7 +757,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         resetStatement();
         DEV &&
           console.log(
-            `758 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`
+            `760 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`
           );
       }
     }
@@ -812,13 +814,13 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
   }
 
   if (ret) {
-    DEV && console.log(`815 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ret`);
+    DEV && console.log(`817 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ret`);
     ret.all = [...all];
     return ret;
   }
   DEV &&
     console.log(
-      `821 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} error ${NOTFOUNDSTR}`
+      `823 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} error ${NOTFOUNDSTR}`
     );
   return { ...statementDefault, all: [...all], error: NOTFOUNDSTR };
 }
