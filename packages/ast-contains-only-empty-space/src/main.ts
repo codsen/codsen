@@ -1,4 +1,7 @@
 import { traverse } from "ast-monkey-traverse";
+import { version as v } from "../package.json";
+
+const version: string = v;
 
 declare let DEV: boolean;
 
@@ -7,15 +10,15 @@ declare let DEV: boolean;
  */
 function empty(input: unknown): boolean {
   if (typeof input === "string") {
-    DEV && console.log(`010 return ${!input.trim()}`);
+    DEV && console.log(`013 return ${!input.trim()}`);
     return !input.trim();
   }
   if (!["object", "string"].includes(typeof input) || !input) {
-    DEV && console.log(`014 return false`);
+    DEV && console.log(`017 return false`);
     return false;
   }
   let found = true;
-  DEV && console.log(`018 ${`\u001b[${36}m${`AST traversal!`}\u001b[${39}m`}`);
+  DEV && console.log(`021 ${`\u001b[${36}m${`AST traversal!`}\u001b[${39}m`}`);
   input = traverse(input, (key, val, innerObj, stop) => {
     DEV && console.log(" ");
     DEV &&
@@ -28,7 +31,7 @@ function empty(input: unknown): boolean {
       );
     DEV &&
       console.log(
-        `031 -------------------------------------- path: ${innerObj.path}`
+        `034 -------------------------------------- path: ${innerObj.path}`
       );
     let current = val !== undefined ? val : key;
     DEV &&
@@ -43,16 +46,16 @@ function empty(input: unknown): boolean {
       found = false;
       DEV &&
         console.log(
-          `046 found = false, ${`\u001b[${31}m${`stopping`}\u001b[${39}m`}`
+          `049 found = false, ${`\u001b[${31}m${`stopping`}\u001b[${39}m`}`
         );
       stop.now = true;
     }
     return current;
   });
-  DEV && console.log(`052 -------------------------------------- fin.`);
+  DEV && console.log(`055 -------------------------------------- fin.`);
 
-  DEV && console.log(`054 return ${found}`);
+  DEV && console.log(`057 return ${found}`);
   return found;
 }
 
-export { empty };
+export { empty, version };
