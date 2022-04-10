@@ -202,4 +202,4 @@ function fillMissing(
   );
 }
 
-export { fillMissing, version };
+export { fillMissing, defaults, version };
