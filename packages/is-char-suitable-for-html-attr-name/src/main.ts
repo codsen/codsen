@@ -1,6 +1,10 @@
 // Follows the spec:
 // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
 
+import { version as v } from "../package.json";
+
+const version: string = v;
+
 function isAttrNameChar(char: any | string): boolean {
   return (
     typeof char === "string" &&
@@ -16,4 +20,4 @@ function isAttrNameChar(char: any | string): boolean {
   );
 }
 
-export { isAttrNameChar };
+export { isAttrNameChar, version };
