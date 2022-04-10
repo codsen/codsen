@@ -3,10 +3,11 @@ interface Opts {
   offset: number;
   offsetFillerCharacter: string;
 }
+declare const defaults: Opts;
 declare function overlap(
   str1: string,
   str2: string,
   originalOpts?: Partial<Opts>
 ): string;
 
-export { overlap, version };
+export { defaults, overlap, version };

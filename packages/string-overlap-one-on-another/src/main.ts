@@ -104,4 +104,4 @@ function overlap(
   return str2 + (str1.length > str2.length ? str1.slice(str2.length) : "");
 }
 
-export { overlap, version };
+export { overlap, defaults, version };
