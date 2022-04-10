@@ -16,7 +16,6 @@ coverage
 out/
 build/
 dist/
-types/
 
 # misc
 .cache
