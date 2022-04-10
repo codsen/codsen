@@ -5,10 +5,11 @@ interface Opts {
   strictlyTwoElementsInRangeArrays?: boolean;
   skipChecks?: boolean;
 }
+declare const defaults: Opts;
 declare function rInvert(
   arrOfRanges: Ranges,
   strLen: number,
   originalOptions?: Opts
 ): Ranges;
 
-export { rInvert, version };
+export { defaults, rInvert, version };

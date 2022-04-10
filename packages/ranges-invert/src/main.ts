@@ -12,6 +12,10 @@ interface Opts {
   strictlyTwoElementsInRangeArrays?: boolean;
   skipChecks?: boolean;
 }
+const defaults: Opts = {
+  strictlyTwoElementsInRangeArrays: false,
+  skipChecks: false,
+};
 
 function rInvert(
   arrOfRanges: Ranges,
@@ -71,10 +75,6 @@ function rInvert(
 
   DEV && console.log("███████████████████████████████████████");
   // declare defaults, so we can enforce types later:
-  let defaults: Opts = {
-    strictlyTwoElementsInRangeArrays: false,
-    skipChecks: false,
-  };
   // fill any settings with defaults if missing:
   let opts = { ...defaults, ...originalOptions };
   // arrOfRanges validation
@@ -221,4 +221,4 @@ function rInvert(
   return rCrop(res as Ranges, strLen);
 }
 
-export { rInvert, version };
+export { rInvert, defaults, version };
