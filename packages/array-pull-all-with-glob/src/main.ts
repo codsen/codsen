@@ -8,6 +8,11 @@ interface Opts {
   caseSensitive?: boolean;
 }
 
+// opts are mirroring matcher's at the moment, can't promise that for the future
+const defaults: Opts = {
+  caseSensitive: true,
+};
+
 /**
  * Like _.pullAll but with globs (wildcards)
  */
@@ -27,11 +32,6 @@ function pull(
     typeof originalToBeRemoved === "string"
       ? [originalToBeRemoved]
       : Array.from(originalToBeRemoved);
-
-  // opts are mirroring matcher's at the moment, can't promise that for the future
-  let defaults: Opts = {
-    caseSensitive: true,
-  };
   let opts: Opts = { ...defaults, ...originalOpts };
 
   let res = Array.from(originalInput).filter(
@@ -45,4 +45,4 @@ function pull(
   return res;
 }
 
-export { pull, version };
+export { pull, defaults, version };
