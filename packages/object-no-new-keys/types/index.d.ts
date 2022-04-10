@@ -13,10 +13,11 @@ declare type JsonArray = JsonValue[];
 interface Opts {
   mode: 1 | 2;
 }
+declare const defaults: Opts;
 declare function noNewKeys(
   inputOuter: JsonValue,
   referenceOuter: JsonValue,
   originalOptsOuter?: Opts
 ): any;
 
-export { noNewKeys, version };
+export { defaults, noNewKeys, version };

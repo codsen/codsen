@@ -21,6 +21,9 @@ function isObj(something: any): boolean {
 interface Opts {
   mode: 1 | 2;
 }
+const defaults: Opts = {
+  mode: 2,
+};
 
 function noNewKeys(
   inputOuter: JsonValue,
@@ -36,9 +39,6 @@ function noNewKeys(
       )} (type ${typeof originalOptsOuter})`
     );
   }
-  let defaults = {
-    mode: 2,
-  };
   let optsOuter = { ...defaults, ...originalOptsOuter };
   if (
     typeof optsOuter.mode === "string" &&
@@ -132,4 +132,4 @@ function noNewKeys(
   }).res;
 }
 
-export { noNewKeys, version };
+export { noNewKeys, defaults, version };
