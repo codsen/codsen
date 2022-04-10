@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.1.0 (2022-04-10)
 
-
 ### Features
 
-* export version ([bccad1c](https://github.com/codsen/codsen/commit/bccad1c2487cd265f5908541060c37d5074408c2))
-
-
-
-
+- export version ([bccad1c](https://github.com/codsen/codsen/commit/bccad1c2487cd265f5908541060c37d5074408c2))
 
 ## 3.0.0 (2021-09-09)
 

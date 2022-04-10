@@ -5,7 +5,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 0.1.0 (2022-04-10)
 
-
 ### Features
 
-* merge in the data repo ([57a44ac](https://github.com/codsen/codsen/commit/57a44ac66032ff716529472d68f6522db4a59273))
+- merge in the data repo ([57a44ac](https://github.com/codsen/codsen/commit/57a44ac66032ff716529472d68f6522db4a59273))

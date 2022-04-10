@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.1.0 (2022-04-10)
 
-
 ### Features
 
-* export defaults ([ac9dac8](https://github.com/codsen/codsen/commit/ac9dac8f74e885ccad7d22fbd6837d1111855ba4))
-
-
-
-
+- export defaults ([ac9dac8](https://github.com/codsen/codsen/commit/ac9dac8f74e885ccad7d22fbd6837d1111855ba4))
 
 ## 4.0.0 (2021-09-09)
 

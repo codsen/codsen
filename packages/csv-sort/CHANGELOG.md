@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.0.14](https://github.com/codsen/codsen/compare/csv-sort@6.0.13...csv-sort@6.0.14) (2022-04-10)
-
-**Note:** Version bump only for package csv-sort
-
-
-
-
-
 ## 6.0.0 (2021-09-09)
 
 ### Features

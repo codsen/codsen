@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.1.0 (2022-04-10)
 
-
 ### Features
 
-* export defaults ([4bc7c0f](https://github.com/codsen/codsen/commit/4bc7c0fd98f3c2e768df04a8e34b6465d04835d9))
-
-
-
-
+- export defaults ([4bc7c0f](https://github.com/codsen/codsen/commit/4bc7c0fd98f3c2e768df04a8e34b6465d04835d9))
 
 # [4.0.0](https://github.com/codsen/codsen/compare/lerna-clean-changelogs@3.0.11...lerna-clean-changelogs@4.0.0) (2022-01-22)
 
