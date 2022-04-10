@@ -10,6 +10,9 @@ const version: string = v;
 interface Opts {
   arraysMustNotContainPlaceholders: boolean;
 }
+const defaults: Opts = {
+  arraysMustNotContainPlaceholders: true,
+};
 
 // T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
 // -----------------------------------------------------------------------------
@@ -81,13 +84,10 @@ function allEq(
   }
 
   // prep opts
-  let defaults: Opts = {
-    arraysMustNotContainPlaceholders: true,
-  };
   let opts: Opts = { ...defaults, ...originalOpts };
 
   // and finally,
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 
-export { allEq, version };
+export { allEq, defaults, version };
