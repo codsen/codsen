@@ -11,6 +11,7 @@ test("01 - content missing, semi", () => {
   equal(
     extract(`interface abc;`, "abc", {
       extractAll: true,
+      semi: true,
     }),
     {
       identifiers: ["interface", "abc"],
@@ -30,6 +31,7 @@ test("01 - content missing, semi", () => {
   equal(
     extract(`interface abc;`, "abc", {
       extractAll: false,
+      semi: true,
     }),
     {
       identifiers: ["interface", "abc"],
@@ -46,12 +48,53 @@ test("01 - content missing, semi", () => {
     },
     "01.02"
   );
+  equal(
+    extract(`interface abc;`, "abc", {
+      extractAll: true,
+      semi: false,
+    }),
+    {
+      identifiers: ["interface", "abc"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 13,
+      content: null,
+      contentStartsAt: null,
+      contentEndsAt: null,
+      value: `interface abc`,
+      valueStartsAt: 0,
+      valueEndsAt: 13,
+      all: ["abc"],
+      error: null,
+    },
+    "01.03"
+  );
+  equal(
+    extract(`interface abc;`, "abc", {
+      extractAll: false,
+      semi: false,
+    }),
+    {
+      identifiers: ["interface", "abc"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 13,
+      content: null,
+      contentStartsAt: null,
+      contentEndsAt: null,
+      value: `interface abc`,
+      valueStartsAt: 0,
+      valueEndsAt: 13,
+      all: [],
+      error: null,
+    },
+    "01.04"
+  );
 });
 
 test("02 - content missing, no semi", () => {
   equal(
     extract(`interface abc`, "abc", {
       extractAll: true,
+      semi: true,
     }),
     {
       identifiers: ["interface", "abc"],
@@ -71,6 +114,7 @@ test("02 - content missing, no semi", () => {
   equal(
     extract(`interface abc`, "abc", {
       extractAll: false,
+      semi: true,
     }),
     {
       identifiers: ["interface", "abc"],
@@ -86,6 +130,46 @@ test("02 - content missing, no semi", () => {
       error: null,
     },
     "02.02"
+  );
+  equal(
+    extract(`interface abc`, "abc", {
+      extractAll: true,
+      semi: false,
+    }),
+    {
+      identifiers: ["interface", "abc"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 13,
+      content: null,
+      contentStartsAt: null,
+      contentEndsAt: null,
+      value: `interface abc`,
+      valueStartsAt: 0,
+      valueEndsAt: 13,
+      all: ["abc"],
+      error: null,
+    },
+    "02.03"
+  );
+  equal(
+    extract(`interface abc`, "abc", {
+      extractAll: false,
+      semi: false,
+    }),
+    {
+      identifiers: ["interface", "abc"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 13,
+      content: null,
+      contentStartsAt: null,
+      contentEndsAt: null,
+      value: `interface abc`,
+      valueStartsAt: 0,
+      valueEndsAt: 13,
+      all: [],
+      error: null,
+    },
+    "02.04"
   );
 });
 
