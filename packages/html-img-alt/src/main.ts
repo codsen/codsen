@@ -12,6 +12,9 @@ declare let DEV: boolean;
 interface Opts {
   unfancyTheAltContents: boolean;
 }
+const defaults: Opts = {
+  unfancyTheAltContents: true,
+};
 
 function isObj(something: any): boolean {
   return (
@@ -70,9 +73,6 @@ function alts(str: string, originalOpts?: Partial<Opts>): string {
 
   // opts
   // ================
-  let defaults = {
-    unfancyTheAltContents: true,
-  };
   let opts: Opts = { ...defaults, ...originalOpts };
   checkTypesMini(opts, defaults, { msg: "html-img-alt/alts(): [THROW_ID_03]" });
 
@@ -651,4 +651,4 @@ ${`\u001b[${90}m${`plausibleWithinQuotesRanges.current() = ${plausibleWithinQuot
   return str;
 }
 
-export { alts, version };
+export { alts, defaults, version };
