@@ -12,6 +12,9 @@ interface Obj {
 interface Opts {
   flattenArraysContainingStringsToBeEmpty: boolean;
 }
+const defaults: Opts = {
+  flattenArraysContainingStringsToBeEmpty: false,
+};
 
 function flattenAllArrays(
   originalIncommingObj: Obj,
@@ -28,9 +31,6 @@ function flattenAllArrays(
   // setup
   // =====
 
-  let defaults: Opts = {
-    flattenArraysContainingStringsToBeEmpty: false,
-  };
   let opts: Opts = { ...defaults, ...originalOpts };
 
   let incommingObj = clone(originalIncommingObj);
@@ -85,4 +85,4 @@ function flattenAllArrays(
   return incommingObj;
 }
 
-export { flattenAllArrays, version };
+export { flattenAllArrays, defaults, version };
