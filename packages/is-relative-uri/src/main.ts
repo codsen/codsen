@@ -325,6 +325,10 @@ interface Opts {
   flagUpUrisWithSchemes: boolean;
   offset: number;
 }
+const defaults: Opts = {
+  flagUpUrisWithSchemes: true,
+  offset: 0,
+};
 
 interface Res {
   res: boolean;
@@ -344,10 +348,6 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
       `is-relative-uri: [THROW_ID_02] opts be plain object, it was given as ${originalOpts} (type ${typeof originalOpts})`
     );
   }
-  let defaults = {
-    flagUpUrisWithSchemes: true,
-    offset: 0,
-  };
   let opts: Opts = { ...defaults, ...originalOpts };
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error(
@@ -518,4 +518,4 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
   };
 }
 
-export { isRel, version };
+export { isRel, defaults, version };
