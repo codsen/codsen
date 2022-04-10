@@ -1,4 +1,7 @@
 import deburr from "lodash.deburr";
+import { version as v } from "../package.json";
+
+const version: string = v;
 
 /**
  * Generate BitBucket readme header anchor slug URLs
@@ -19,4 +22,4 @@ function bSlug(str: string): string {
     .replace(/ /g, "-")}`; // replace spaces with dashes
 }
 
-export { bSlug };
+export { bSlug, version };
