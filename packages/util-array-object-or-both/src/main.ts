@@ -1,9 +1,16 @@
 import includes from "lodash.includes";
+import { version as v } from "../package.json";
+
+const version: string = v;
 
 interface Opts {
   msg?: string;
   optsVarName?: string;
 }
+const defaults: Opts = {
+  msg: "",
+  optsVarName: "given variable",
+};
 
 function arrObjOrBoth(
   str: string,
@@ -23,10 +30,6 @@ function arrObjOrBoth(
     "e",
   ];
 
-  let defaults: Opts = {
-    msg: "",
-    optsVarName: "given variable",
-  };
   let opts = { ...defaults, ...originalOpts };
 
   if (opts?.msg && opts.msg.length > 0) {
@@ -50,4 +53,4 @@ function arrObjOrBoth(
   );
 }
 
-export { arrObjOrBoth };
+export { arrObjOrBoth, defaults, version };
