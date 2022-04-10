@@ -12,6 +12,11 @@ interface Opts {
   padSingleDecimalPlaceNumbers: boolean;
   forceUKStyle: boolean;
 }
+const defaults: Opts = {
+  removeThousandSeparatorsFromNumbers: true,
+  padSingleDecimalPlaceNumbers: true,
+  forceUKStyle: false,
+};
 
 function remSep(str: string, originalOpts?: Partial<Opts>): string {
   let allOK = true; // used to bail somewhere down the line. It's a killswitch.
@@ -39,11 +44,6 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
   }
 
   // prep opts
-  let defaults: Opts = {
-    removeThousandSeparatorsFromNumbers: true,
-    padSingleDecimalPlaceNumbers: true,
-    forceUKStyle: false,
-  };
   let opts: Opts = { ...defaults, ...originalOpts };
 
   // trim whitespace and wrapping double quotes:
@@ -235,4 +235,4 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
   return res;
 }
 
-export { remSep, version };
+export { remSep, defaults, version };

@@ -4,6 +4,7 @@ interface Opts {
   padSingleDecimalPlaceNumbers: boolean;
   forceUKStyle: boolean;
 }
+declare const defaults: Opts;
 declare function remSep(str: string, originalOpts?: Partial<Opts>): string;
 
-export { remSep, version };
+export { defaults, remSep, version };
