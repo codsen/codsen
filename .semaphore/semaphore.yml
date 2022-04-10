@@ -54,6 +54,7 @@ blocks:
             - git status
             - git add packages
             - git add ops
+            - git add data
             - git add README.md
             - git add yarn.lock
             - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
@@ -71,6 +72,7 @@ blocks:
             - git status
             - git add packages
             - git add ops
+            - git add data
             - git add README.md
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             # publish to npm
