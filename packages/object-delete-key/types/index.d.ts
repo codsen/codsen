@@ -9,9 +9,10 @@ interface Opts {
   cleanup: boolean;
   only: Only;
 }
+declare const defaults: Opts;
 declare function deleteKey(
   originalInput: Obj,
   originalOpts?: Partial<Opts>
 ): Obj;
 
-export { deleteKey, version };
+export { defaults, deleteKey, version };

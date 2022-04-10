@@ -24,6 +24,12 @@ interface Opts {
   cleanup: boolean;
   only: Only;
 }
+const defaults: Opts = {
+  key: null,
+  val: undefined,
+  cleanup: true,
+  only: "any",
+};
 
 function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
   function existy(x: any): boolean {
@@ -34,12 +40,6 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
       "object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon."
     );
   }
-  let defaults = {
-    key: null,
-    val: undefined,
-    cleanup: true,
-    only: "any" as Only,
-  };
   let opts: Opts = { ...defaults, ...originalOpts };
   opts.only = arrObjOrBoth(opts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
@@ -134,4 +134,4 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
   return del(input, { key: opts.key, val: opts.val, only: opts.only }) as Obj;
 }
 
-export { deleteKey, version };
+export { deleteKey, defaults, version };
