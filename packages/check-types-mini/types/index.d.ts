@@ -1,3 +1,4 @@
+declare const version: string;
 interface Obj {
   [key: string]: any;
 }
@@ -11,6 +12,7 @@ interface Opts {
   msg: string;
   optsVarName: string;
 }
+declare const defaults: Opts;
 /**
  * Validate options object
  */
@@ -20,4 +22,4 @@ declare function checkTypesMini(
   originalOptions?: Partial<Opts>
 ): void;
 
-export { checkTypesMini };
+export { checkTypesMini, defaults, version };
