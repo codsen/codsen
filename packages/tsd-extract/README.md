@@ -26,7 +26,7 @@
 
 ## Install
 
-The latest version is **ESM only**: Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:
 
 ```bash
 npm i tsd-extract

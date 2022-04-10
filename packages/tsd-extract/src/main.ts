@@ -861,4 +861,4 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
   return { ...statementDefault, all: [...all], error: NOTFOUNDSTR };
 }
 
-export { extract, version };
+export { extract, defaults, version };
