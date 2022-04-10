@@ -8,6 +8,7 @@ interface Opts {
   wildcard: string;
   dedupePlease: boolean;
 }
+declare const defaults: Opts;
 /**
  * Groups array of strings by omitting number characters
  */
@@ -16,4 +17,4 @@ declare function groupStr(
   originalOpts?: Partial<Opts>
 ): UnknownValueObj;
 
-export { groupStr, version };
+export { defaults, groupStr, version };

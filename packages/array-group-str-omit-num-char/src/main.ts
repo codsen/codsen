@@ -242,4 +242,4 @@ function groupStr(
   return resObj;
 }
 
-export { groupStr, version, Range, Ranges };
+export { groupStr, defaults, version, Range, Ranges };
