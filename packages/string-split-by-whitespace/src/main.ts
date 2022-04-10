@@ -8,6 +8,9 @@ const version: string = v;
 interface Opts {
   ignoreRanges: Range[];
 }
+const defaults: Opts = {
+  ignoreRanges: [],
+};
 
 function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
   if (str === undefined) {
@@ -22,9 +25,6 @@ function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
   if (str.trim() === "") {
     return [];
   }
-  let defaults = {
-    ignoreRanges: [],
-  };
   let opts: Opts = { ...defaults, ...originalOpts };
   if (
     opts.ignoreRanges.length > 0 &&
@@ -76,4 +76,4 @@ function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
   return res;
 }
 
-export { splitByW, version };
+export { splitByW, defaults, version };
