@@ -1,12 +1,7 @@
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import arrayiffy from "../../helpers/arrayiffy.js";
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-
-const webapps = require("../../data/webapps.json");
-const esmBump = require("../../data/esmBump.json");
+import { esmBump } from "@codsen/data";
 
 async function readme({ state, quickTakeExample, lectrc }) {
   let badge1 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
@@ -15,18 +10,7 @@ async function readme({ state, quickTakeExample, lectrc }) {
 
   let badge3 = `<img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">`;
 
-  let esmNotice = `The latest version is **ESM only**: Node 12+ is needed to use it and it must be \`import\`ed instead of \`require\`d.`;
-
-  if (typeof esmBump === "object" && esmBump[state.pack.name]) {
-    esmNotice += ` If your project is not on ESM yet and you want to use \`require\`, use an older version of this program, \`${
-      esmBump[state.pack.name]
-    }\`.`;
-  }
-
-  let play = "";
-  if (webapps[state.pack.name] && !webapps[state.pack.name].url) {
-    play = ` and even a test <a href="https://codsen.com/os/${state.pack.name}/play">playground</a>`;
-  }
+  let esmNotice = `This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:`;
 
   // start setting up the final readme's string:
   let content = `# ${state.pack.name}
@@ -65,35 +49,45 @@ async function readme({ state, quickTakeExample, lectrc }) {
   </a>
 </div>
 
-## Install${state.isRollup ? `\n\n${esmNotice}` : ""}
+## Install
+
+${esmNotice}
 
 \`\`\`bash
 npm i${!state.isRollup && state.isBin ? " -g" : ""} ${state.pack.name}
 \`\`\`${
-    !state.isRollup && state.pack.bin
-      ? `\n\nThen, call it from the command line using ${
-          state.pack.bin && Object.keys(state.pack.bin).length > 1
-            ? "one of the following keywords"
-            : "keyword"
-        }:
+    !!state.isRollup && typeof esmBump === "object" && esmBump[state.pack.name]
+      ? `\n\nIf you need a legacy version which works with \`require\`, use version ${
+          esmBump[state.pack.name]
+        }`
+      : ""
+  }
+
+${
+  !state.isRollup && state.pack.bin
+    ? `\n\nThen, call it from the command line using ${
+        state.pack.bin && Object.keys(state.pack.bin).length > 1
+          ? "one of the following keywords"
+          : "keyword"
+      }:
 
 \`\`\`bash
 ${Object.keys(state.pack.bin).join("\n")}
 \`\`\`
 `
-      : ""
-  }${
+    : ""
+}${
     quickTakeExample
-      ? `\n\n## Quick Take\n
+      ? `## Quick Take\n
 \`\`\`js
 ${quickTakeExample}
-\`\`\`\n`
+\`\`\`\n\n`
       : ""
-  }\n## Documentation
+  }## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/${
     state.pack.name
-  }/) for a full description of the API${play || ""}.
+  }/) for a full description of the API.
 
 ## Contributing
 
@@ -108,21 +102,24 @@ To report bugs or request features or assistance, [raise an issue](https://githu
     lectrc.licence.header.length > 0 ? `${lectrc.licence.header}` : ""
   }`;
   content += `${
-    lectrc.licence.restofit.length > 0 ? `\n\n${lectrc.licence.restofit}` : ""
+    lectrc.licence.restofit.length > 0
+      ? `\n\n${lectrc.licence.restofit}\n\n`
+      : ""
   }`;
 
-  if (
-    licenceExtras &&
-    arrayiffy(licenceExtras).filter((singleExtra) => singleExtra.length).length
-  ) {
+  if (licenceExtras) {
     content += `\n${arrayiffy(licenceExtras)
-      .filter((singleExtra) => singleExtra.length)
-      .join("\n\n")}`;
+      .filter((singleExtra) => singleExtra.length > 0)
+      .join("\n")}`;
+  }
+
+  if (!content.endsWith("\n")) {
+    content += "\n\n";
   }
 
   content = content.replace(/%YEAR%/, String(new Date().getFullYear()));
 
-  content += `\n\n${badge1} ${badge2} ${badge3}\n`;
+  content += `${badge1} ${badge2} ${badge3}\n\n`;
 
   try {
     await writeFileAtomic("README.md", content);

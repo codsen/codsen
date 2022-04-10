@@ -2,10 +2,17 @@
   "name": "codsen-mono",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "https://codsen.com"
+  },
   "workspaces": [
     "webapps/*",
     "components/*",
-    "packages/*"
+    "packages/*",
+    "data/"
   ],
   "type": "module",
   "engines": {

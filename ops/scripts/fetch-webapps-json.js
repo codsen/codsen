@@ -23,8 +23,8 @@ const data = await axios
   });
 if (typeof data === "object" && data.detergent) {
   fs.writeFileSync(
-    path.resolve("./ops/data/webapps.json"),
-    JSON.stringify(data)
+    path.resolve("./data/sources/webapps.ts"),
+    `export const webapps = ${JSON.stringify(data, null, 4)};\n`
   );
   console.log(`\u001b[${32}m${`webapps.json written OK`}\u001b[${39}m`);
 }
