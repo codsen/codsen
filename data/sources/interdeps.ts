@@ -6,7 +6,7 @@ export const interdeps = [
     },
     {
         "name": "array-group-str-omit-num-char",
-        "size": 1444,
+        "size": 1458,
         "imports": [
             "ranges-apply"
         ]
@@ -21,7 +21,7 @@ export const interdeps = [
     },
     {
         "name": "array-pull-all-with-glob",
-        "size": 561,
+        "size": 579,
         "imports": []
     },
     {
@@ -31,14 +31,14 @@ export const interdeps = [
     },
     {
         "name": "ast-compare",
-        "size": 3381,
+        "size": 3439,
         "imports": [
             "ast-contains-only-empty-space"
         ]
     },
     {
         "name": "ast-contains-only-empty-space",
-        "size": 522,
+        "size": 558,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -120,7 +120,7 @@ export const interdeps = [
     },
     {
         "name": "check-types-mini",
-        "size": 5514,
+        "size": 5560,
         "imports": [
             "arrayiffy-if-string",
             "ast-monkey-traverse"
@@ -303,7 +303,7 @@ export const interdeps = [
     },
     {
         "name": "html-img-alt",
-        "size": 3095,
+        "size": 3109,
         "imports": [
             "check-types-mini",
             "ranges-apply",
@@ -323,7 +323,7 @@ export const interdeps = [
     },
     {
         "name": "is-char-suitable-for-html-attr-name",
-        "size": 483,
+        "size": 519,
         "imports": []
     },
     {
@@ -358,7 +358,7 @@ export const interdeps = [
     },
     {
         "name": "is-relative-uri",
-        "size": 5846,
+        "size": 5864,
         "imports": []
     },
     {
@@ -418,7 +418,7 @@ export const interdeps = [
     },
     {
         "name": "lerna-clean-changelogs",
-        "size": 1591,
+        "size": 1605,
         "imports": []
     },
     {
@@ -435,7 +435,7 @@ export const interdeps = [
     },
     {
         "name": "object-all-values-equal-to",
-        "size": 1295,
+        "size": 1313,
         "imports": []
     },
     {
@@ -445,7 +445,7 @@ export const interdeps = [
     },
     {
         "name": "object-delete-key",
-        "size": 1384,
+        "size": 1402,
         "imports": [
             "ast-is-empty",
             "ast-monkey",
@@ -454,7 +454,7 @@ export const interdeps = [
     },
     {
         "name": "object-fill-missing-keys",
-        "size": 2761,
+        "size": 2775,
         "imports": [
             "arrayiffy-if-string",
             "object-all-values-equal-to",
@@ -463,7 +463,7 @@ export const interdeps = [
     },
     {
         "name": "object-flatten-all-arrays",
-        "size": 957,
+        "size": 975,
         "imports": []
     },
     {
@@ -482,7 +482,7 @@ export const interdeps = [
     },
     {
         "name": "object-no-new-keys",
-        "size": 1531,
+        "size": 1553,
         "imports": []
     },
     {
@@ -513,7 +513,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-invert",
-        "size": 2481,
+        "size": 2499,
         "imports": [
             "ranges-crop",
             "ranges-merge"
@@ -655,7 +655,7 @@ export const interdeps = [
     },
     {
         "name": "string-match-left-right",
-        "size": 5760,
+        "size": 5810,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -684,7 +684,7 @@ export const interdeps = [
     },
     {
         "name": "string-remove-thousand-separators",
-        "size": 1878,
+        "size": 1896,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -702,7 +702,7 @@ export const interdeps = [
     },
     {
         "name": "string-split-by-whitespace",
-        "size": 1144,
+        "size": 1162,
         "imports": [
             "ranges-is-index-within"
         ]
@@ -758,7 +758,7 @@ export const interdeps = [
     },
     {
         "name": "util-array-object-or-both",
-        "size": 947,
+        "size": 1001,
         "imports": []
     },
     {

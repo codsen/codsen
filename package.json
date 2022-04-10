@@ -91,6 +91,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.70.1",
     "rollup-plugin-dts": "^4.2.1",
+    "simple-git": "^3.6.0",
     "tempy": "^2.0.0",
     "turbo": "^1.2.1",
     "typescript": "^4.5.4",
