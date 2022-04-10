@@ -197,44 +197,4 @@ test("07 - dirty code - space between class and =", () => {
   equal(actual, intended, "07");
 });
 
-// TODO
-test.skip("01 - dirty code - blank class attribute name", () => {
-  let actual1 = comb(
-    `<head>
-<style>
-  .aa, .bb { w:1; }
-</style>
-<body class="bb"><br class >
-</body>
-`
-  ).result;
-  let intended1 = `<head>
-<style>
-  .bb { w:1; }
-</style>
-<body class="bb"><br>
-</body>
-`;
-
-  let actual2 = comb(
-    `<head>
-<style>
-  .aa, .bb { w:1; }
-</style>
-<body class="bb"><br class />
-</body>
-`
-  ).result;
-  let intended2 = `<head>
-<style>
-  .bb { w:1; }
-</style>
-<body class="bb"><br/>
-</body>
-`;
-
-  equal(actual1, intended1, "01.01");
-  equal(actual2, intended2, "01.02");
-});
-
 test.run();
