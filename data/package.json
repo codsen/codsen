@@ -1,0 +1,20 @@
+{
+  "name": "@codsen/data",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./index.tsx",
+  "scripts": {
+    "build": "rimraf ./dist && tsc index.ts --module commonjs --outDir dist --declaration",
+    "postinstall": "yarn run build"
+  },
+  "dependencies": {
+    "@codsen/data": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.3",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.5.4"
+  }
+}
