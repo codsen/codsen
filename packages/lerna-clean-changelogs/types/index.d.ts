@@ -2,6 +2,7 @@ declare const version: string;
 interface Opts {
   extras: boolean;
 }
+declare const defaults: Opts;
 declare function cleanChangelogs(
   changelogContents: string,
   originalOpts?: Partial<Opts>
@@ -10,4 +11,4 @@ declare function cleanChangelogs(
   res: string;
 };
 
-export { cleanChangelogs, version };
+export { cleanChangelogs, defaults, version };

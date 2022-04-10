@@ -175,4 +175,4 @@ function cleanChangelogs(
   };
 }
 
-export { cleanChangelogs, version };
+export { cleanChangelogs, defaults, version };
