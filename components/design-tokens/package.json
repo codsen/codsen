@@ -15,15 +15,16 @@
   "scripts": {
     "build": "rimraf ./dist && node ./scripts/build",
     "lint": "eslint ./scripts --ext .js",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "test": "echo 'no tests yet'"
   },
   "eslintConfig": {
-    "extends": "../../eslint.config.js"
+    "extends": "../../.eslintrc.cjs"
   },
   "devDependencies": {
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.0.1",
     "rimraf": "^3.0.2",
-    "style-dictionary": "^3.0.3",
+    "style-dictionary": "^3.7.0",
     "change-case": "^4.1.2"
   }
 }

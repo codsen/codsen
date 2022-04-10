@@ -3,7 +3,13 @@ const StyleDictionary = require("style-dictionary");
 const changeCase = require("change-case");
 
 const namespace = "c";
-const brands = ["global", "codsen-light", "codsen-dark", "detergent-light", "detergent-dark"];
+const brands = [
+  "global",
+  "codsen-light",
+  "codsen-dark",
+  "detergent-light",
+  "detergent-dark",
+];
 const platforms = [
   "web/js",
   "web/json",
@@ -21,10 +27,14 @@ function getStyleDictionaryConfig(brand, platform) {
       // accompanying any other stylesheets exported from here.
       // To include, un-comment the following:
       // "./src/global/**/*.json",
-      `./src/global/*/${platform}/*.json`],
+      `./src/global/*/${platform}/*.json`,
+    ],
     source: [
-      ...(brand !== "global" ? ["./src/global/**/*.json", `./src/${brand}/*/*.json`] : [`./src/${brand}/*/*.json`]),
-      `./src/${brand}/*/${platform}/*.json`],
+      ...(brand !== "global"
+        ? ["./src/global/**/*.json", `./src/${brand}/*/*.json`]
+        : [`./src/${brand}/*/*.json`]),
+      `./src/${brand}/*/${platform}/*.json`,
+    ],
     platforms: {
       "web/js": {
         transformGroup: "js",
@@ -82,10 +92,14 @@ function getStyleDictionaryConfig(brand, platform) {
         buildPath: `dist/${brand}/json/`,
         prefix: namespace,
         files: [
-          ...[brand === "global" ?{
-            destination: "tokens.json",
-            format: "json/flat",
-          } : undefined],
+          ...[
+            brand === "global"
+              ? {
+                  destination: "tokens.json",
+                  format: "json/flat",
+                }
+              : undefined,
+          ],
         ],
       },
       "web/scss": {
@@ -95,10 +109,14 @@ function getStyleDictionaryConfig(brand, platform) {
         prefix: namespace,
         files: [
           {
-            destination: `scss/variables/_space-${brand === "global" ? "constants" : "semantic"}.scss`,
+            destination: `scss/variables/_space-${
+              brand === "global" ? "constants" : "semantic"
+            }.scss`,
             format: "scss/map-deep",
             filter: (token) =>
-              (token.attributes.category === "space" && ((brand === "global" && token.attributes.type !== "semantic") || (brand !== "global" && token.attributes.type === "semantic")))
+              token.attributes.category === "space" &&
+              ((brand === "global" && token.attributes.type !== "semantic") ||
+                (brand !== "global" && token.attributes.type === "semantic")),
           },
         ],
       },
@@ -108,40 +126,61 @@ function getStyleDictionaryConfig(brand, platform) {
         buildPath: `dist/${brand}/`,
         prefix: namespace,
         files: [
-          ...[brand === "global" ? {
-            destination: "css/variables/other.css",
-            format: "css/variables",
-            filter: (token) =>
-              !token.attributes.category.match(
-                /^(color|font-stack|mode|modifier|space|size|surface|typography)$/
-              ),
-          }: undefined],
-          ...[brand !== "global" ? {
-            destination: "css/variables/color-semantic-with-media.css",
-            format: "css/variables-only",
-            "options": {
-              "indent": 4 // make the indentation match
-            },
-            filter: (token) =>
-            token.attributes.category === "color" && token.attributes.type === "semantic"
-          }: undefined],
+          ...[
+            brand === "global"
+              ? {
+                  destination: "css/variables/other.css",
+                  format: "css/variables",
+                  filter: (token) =>
+                    !token.attributes.category.match(
+                      /^(color|font-stack|mode|modifier|space|size|surface|typography)$/
+                    ),
+                }
+              : undefined,
+          ],
+          ...[
+            brand !== "global"
+              ? {
+                  destination: "css/variables/color-semantic-with-media.css",
+                  format: "css/variables-only",
+                  options: {
+                    indent: 4, // make the indentation match
+                  },
+                  filter: (token) =>
+                    token.attributes.category === "color" &&
+                    token.attributes.type === "semantic",
+                }
+              : undefined,
+          ],
           {
-            destination: `css/variables/color-${brand === "global" ? "constants" : "semantic"}.css`,
+            destination: `css/variables/color-${
+              brand === "global" ? "constants" : "semantic"
+            }.css`,
             format: "css/variables",
             filter: (token) =>
-              (token.attributes.category === "color" && ((brand === "global" && token.attributes.type !== "semantic") || (brand !== "global" && token.attributes.type === "semantic")))
+              token.attributes.category === "color" &&
+              ((brand === "global" && token.attributes.type !== "semantic") ||
+                (brand !== "global" && token.attributes.type === "semantic")),
           },
           {
-            destination: `css/variables/size-${brand === "global" ? "constants" : "semantic"}.css`,
+            destination: `css/variables/size-${
+              brand === "global" ? "constants" : "semantic"
+            }.css`,
             format: "css/variables",
             filter: (token) =>
-              (token.attributes.category === "size" && ((brand === "global" && token.attributes.type !== "semantic") || (brand !== "global" && token.attributes.type === "semantic")))
+              token.attributes.category === "size" &&
+              ((brand === "global" && token.attributes.type !== "semantic") ||
+                (brand !== "global" && token.attributes.type === "semantic")),
           },
           {
-            destination: `css/variables/space-${brand === "global" ? "constants" : "semantic"}.css`,
+            destination: `css/variables/space-${
+              brand === "global" ? "constants" : "semantic"
+            }.css`,
             format: "css/variables",
             filter: (token) =>
-              (token.attributes.category === "space" && ((brand === "global" && token.attributes.type !== "semantic") || (brand !== "global" && token.attributes.type === "semantic")))
+              token.attributes.category === "space" &&
+              ((brand === "global" && token.attributes.type !== "semantic") ||
+                (brand !== "global" && token.attributes.type === "semantic")),
           },
           // TODO: mode, modifier, space, surface
         ],
