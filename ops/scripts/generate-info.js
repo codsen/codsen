@@ -22,6 +22,7 @@ const packagesOutsideMonorepo = [
   "eslint-plugin-row-num",
   "eslint-plugin-test-num",
   "perf-ref",
+  "tsd-extract-noesm",
 ];
 const allPackages = [...packagesOutsideMonorepo];
 const cliPackages = [];

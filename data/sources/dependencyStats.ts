@@ -83,7 +83,7 @@ export const dependencyStats: DependencyStats = {
         "log-symbols": 1,
         "log-update": 1,
         "matcher": 9,
-        "meow": 10,
+        "meow": 11,
         "mime-db": 1,
         "minimist": 1,
         "object-all-values-equal-to": 1,
@@ -147,7 +147,7 @@ export const dependencyStats: DependencyStats = {
         "tiny-invariant": 1,
         "tiny-typed-emitter": 1,
         "type-detect": 3,
-        "update-notifier": 11,
+        "update-notifier": 12,
         "url-regex": 1,
         "util-array-object-or-both": 2,
         "util-nonempty": 1,
@@ -209,13 +209,13 @@ export const dependencyStats: DependencyStats = {
             "lodash.clonedeep": 19
         },
         {
-            "update-notifier": 11
+            "update-notifier": 12
+        },
+        {
+            "meow": 11
         },
         {
             "globby": 10
-        },
-        {
-            "meow": 10
         },
         {
             "matcher": 9

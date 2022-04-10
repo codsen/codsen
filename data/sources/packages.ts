@@ -21,6 +21,7 @@ const all = [
     "bitbucket-slug",
     "charcode-is-valid-xml-name-character",
     "check-types-mini",
+    "codsen",
     "codsen-parser",
     "codsen-tokenizer",
     "color-shorthand-hex-to-six-digit",
@@ -117,11 +118,14 @@ const all = [
     "stristri",
     "tap-parse-string-to-object",
     "test-mixer",
+    "tsd-extract",
+    "tsd-extract-noesm",
     "update-versions",
     "util-array-object-or-both",
     "util-nonempty"
 ] as const;
 const cli = [
+    "codsen",
     "csv-sort-cli",
     "email-all-chars-within-ascii-cli",
     "email-homey",
@@ -240,6 +244,7 @@ const programs = [
     "stristri",
     "tap-parse-string-to-object",
     "test-mixer",
+    "tsd-extract",
     "util-array-object-or-both",
     "util-nonempty"
 ] as const;
@@ -350,13 +355,15 @@ const script = [
     "string-unfancy",
     "stristri",
     "test-mixer",
+    "tsd-extract",
     "util-array-object-or-both",
     "util-nonempty"
 ] as const;
 const packagesOutsideMonorepo = [
     "eslint-plugin-row-num",
     "eslint-plugin-test-num",
-    "perf-ref"
+    "perf-ref",
+    "tsd-extract-noesm"
 ] as const;
 
 export type Package = typeof all[number];
@@ -368,10 +375,10 @@ export const packages = {
     special,
     script,
     packagesOutsideMonorepo,
-    totalPackageCount: 121,
-    cliCount: 11,
-    programsCount: 107,
+    totalPackageCount: 124,
+    cliCount: 12,
+    programsCount: 108,
     specialCount: 1,
-    scriptCount: 105,
-    packagesOutsideMonorepoCount: 3,
+    scriptCount: 106,
+    packagesOutsideMonorepoCount: 4,
 };
