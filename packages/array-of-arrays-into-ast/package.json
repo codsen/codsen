@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-into-ast",
-  "version": "3.0.12",
+  "version": "3.0.13",
   "description": "Turns an array of arrays of data into a nested tree of plain objects",
   "keywords": [
     "array",
@@ -67,7 +67,7 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^7.0.12",
+    "check-types-mini": "^7.1.0",
     "object-merge-advanced": "^13.0.12"
   }
 }

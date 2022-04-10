@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 3.1.0 (2022-04-10)
+
+
+### Features
+
+* export defaults ([89a0431](https://github.com/codsen/codsen/commit/89a0431b38f2b523a4d9da12ecb4264620bb646e))
+
+
+
+
+
 ## 3.0.0 (2021-09-09)
 
 ### Features

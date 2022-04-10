@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "5.0.13",
+  "version": "5.0.14",
   "description": "Pluggable email template code linter",
   "keywords": [
     "analysis",
@@ -81,7 +81,7 @@
   "dependencies": {
     "ast-monkey-traverse": "^3.0.12",
     "ast-monkey-util": "^2.0.12",
-    "codsen-parser": "^0.12.13",
+    "codsen-parser": "^0.12.14",
     "define-lazy-prop": "^3.0.0",
     "globby": "^13.1.1",
     "he": "^1.2.0",
@@ -90,7 +90,7 @@
     "is-d": "^1.0.0",
     "is-language-code": "^4.0.12",
     "is-media-descriptor": "^4.0.12",
-    "is-relative-uri": "^4.0.12",
+    "is-relative-uri": "^4.1.0",
     "is-url-superb": "^6.1.0",
     "leven": "^4.0.0",
     "line-column-mini": "^2.0.12",
@@ -106,7 +106,7 @@
     "string-find-malformed": "^3.0.12",
     "string-fix-broken-named-entities": "^6.0.12",
     "string-left-right": "^5.0.12",
-    "string-match-left-right": "^8.0.12",
+    "string-match-left-right": "^8.1.0",
     "string-process-comma-separated": "^3.0.12",
     "tiny-typed-emitter": "^2.1.0",
     "update-notifier": "^5.1.0",

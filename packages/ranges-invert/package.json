@@ -1,6 +1,6 @@
 {
   "name": "ranges-invert",
-  "version": "5.0.12",
+  "version": "5.1.0",
   "description": "Invert string index ranges",
   "keywords": [
     "array",

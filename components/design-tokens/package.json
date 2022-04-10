@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@codsen/design-tokens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Codsen design tokens",
   "author": "Roy Revelt <roy@codsen.com>",
   "license": "UNLICENSED",
@@ -22,9 +22,9 @@
     "extends": "../../.eslintrc.cjs"
   },
   "devDependencies": {
+    "change-case": "^4.1.2",
     "fs-extra": "^10.0.1",
     "rimraf": "^3.0.2",
-    "style-dictionary": "^3.7.0",
-    "change-case": "^4.1.2"
+    "style-dictionary": "^3.7.0"
   }
 }
