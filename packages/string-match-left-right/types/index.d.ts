@@ -1,3 +1,4 @@
+declare const version: string;
 interface Opts {
   cb:
     | undefined
@@ -15,6 +16,7 @@ interface Opts {
   lastMustMatch: boolean;
   hungry: boolean;
 }
+declare const defaults: Opts;
 declare function matchLeftIncl(
   str: string,
   position: number,
@@ -40,4 +42,11 @@ declare function matchRight(
   opts?: Partial<Opts>
 ): boolean | string;
 
-export { matchLeft, matchLeftIncl, matchRight, matchRightIncl };
+export {
+  defaults,
+  matchLeft,
+  matchLeftIncl,
+  matchRight,
+  matchRightIncl,
+  version,
+};
