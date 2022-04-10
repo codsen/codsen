@@ -8,13 +8,15 @@ Please [visit codsen.com](https://codsen.com/os/) for an overview and full docum
 
 ## 🛠️ Tech stack
 
-- `yarn` — with workspaces
-- `lerna` — for version bumping and changelogs
-- `turborepo` — to run tasks
-- `uvu` + `c8` — unit test runner and coverage
-- `typescript` — for all source code
+- `yarn` — v.1 still, with workspaces
+- `lerna` + `conventional-changelogs` — automates versioning and changelogs
+- `turborepo` — to run tasks within monorepo
+- `uvu` + `c8` — program unit test runner and code coverage
+- `jest` + `cypress` — web app unit test runner and e2e's
+- `typescript` — with Project References — for all source code
 - `esbuild` — to build `*.ts` into ESM and IIFE
 - `rollup` + `rollup-plugin-dts` — to generate `*.d.ts`
+- `remix` — drives all web apps here
 
 ## 🐛 Issue Tracker
 
