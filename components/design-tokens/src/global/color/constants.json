@@ -39,9 +39,19 @@
           "comment": "100%"
         }
       },
+      "link": {
+        "default": {
+          "value": "#0a6ada",
+          "comment": "85%"
+        }
+      },
       "text": {
         "value": "#17131f",
         "comment": "12%, violet tint, our special unique text colour"
+      },
+      "grad": {
+        "value": "#4f416b",
+        "comment": "22%, brighter violet shade for text gradients"
       },
       "border": {
         "value": "#dedede",
@@ -65,6 +75,10 @@
         "twentyFive": {
           "value": "#404040",
           "comment": "25%"
+        },
+        "thirtyEight": {
+          "value": "#404040",
+          "comment": "38% - darkest on surface to satisfy AA+"
         }
       },
       "red": {
@@ -109,9 +123,23 @@
           "comment": "73%"
         }
       },
+      "link": {
+        "default": {
+          "value": "#4584cc",
+          "comment": "80%"
+        },
+        "darker": {
+          "value": "#346399",
+          "comment": "60%"
+        }
+      },
       "text": {
         "value": "#807e79",
         "comment": "50%"
+      },
+      "grad": {
+        "value": "#969183",
+        "comment": "59%, darker shade of the color of dark Codsen logo SVG"
       },
       "border": {
         "value": "#2b2b2b",

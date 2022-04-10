@@ -1,0 +1,21 @@
+{
+  "space": {
+    "breakpoints": {
+      "narrow": {
+        "value": 425
+      },
+      "mid": {
+        "value": 550
+      },
+      "thousand": {
+        "value": 1000
+      },
+      "wide": {
+        "value": 1200
+      },
+      "xxl": {
+        "value": 1800
+      }
+    }
+  }
+}

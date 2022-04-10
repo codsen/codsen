@@ -4,4 +4,4 @@ It contains all design tokens, for all subrands (codsen, detergent etc.) and all
 
 It's aimed at CSS variables, Remix and old-school hand-written CSS files. No `styled-components` or `tailwind`.
 
-Also, no SASS either, although `webapps/*` use PostCSS file format (`*.pcss`) and `postcss-nested` plugin to allow rule nesting.
+All CSS is written in SASS (.scss), compiled to CSS via Dart compiler.

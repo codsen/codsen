@@ -13,10 +13,18 @@
         "value": "{color.light.text.value}",
         "comment": "{color.light.text.comment}"
       },
+      "grad": {
+        "value": "{color.light.grad.value}",
+        "comment": "{color.light.grad.comment}"
+      },
+      "grey": {
+        "value": "{color.light.grey.lighter.value}",
+        "comment": "{color.light.grey.lighter.comment}"
+      },
       "link": {
         "default": {
-          "value": "{color.light.text.value}",
-          "comment": "{color.light.text.comment}"
+          "value": "{color.light.link.default.value}",
+          "comment": "{color.light.link.default.comment}"
         },
         "text-decoration": {
           "value": "{color.light.green.default.value}",
@@ -29,6 +37,22 @@
         "hover-bg": {
           "value": "{color.light.blue.value}",
           "comment": "{color.light.blue.comment}"
+        }
+      },
+      "aside": {
+        "link": {
+          "default": {
+            "value": "{color.light.grey.darker}"
+          },
+          "hover-fg": {
+            "value": "{color.light.text.value}"
+          }
+        }
+      },
+      "h2": {
+        "border": {
+          "value": "{color.semantic.border.value}",
+          "comment": "{color.semantic.border.comment}"
         }
       },
       "border": {
@@ -59,6 +83,50 @@
         "roundel_fg": {
           "value": "{color.light.white.default.value}",
           "comment": "{color.light.white.default.comment}"
+        },
+        "nav": {
+          "value": "{color.light.text.value}",
+          "comment": "{color.light.text.comment}"
+        },
+        "footer": {
+          "heading": {
+            "value": "{color.light.text.value}",
+            "comment": "{color.light.text.comment}"
+          },
+          "body": {
+            "value": "{color.light.text.value}",
+            "comment": "{color.light.text.comment}"
+          },
+          "link": {
+            "value": "{color.light.link.default.value}",
+            "comment": "{color.light.link.default.comment}"
+          }
+        }
+      },
+      "svg": {
+        "outline": {
+          "value": "{color.light.grey.lighter.value}",
+          "comment": "{color.light.grey.lighter.comment}"
+        },
+        "yellow": {
+          "value": "{color.light.yellow.value}",
+          "comment": "{color.light.yellow.comment}"
+        },
+        "green": {
+          "value": "{color.light.green.default.value}",
+          "comment": "{color.light.green.default.comment}"
+        },
+        "blue": {
+          "value": "{color.light.blue.value}",
+          "comment": "{color.light.blue.comment}"
+        },
+        "black-fill": {
+          "value": "{color.dark.black.surface.value}",
+          "comment": "{color.dark.black.surface.comment}"
+        },
+        "black-stroke": {
+          "value": "{color.dark.black.surface.value}",
+          "comment": "{color.dark.black.surface.comment}"
         }
       }
     }
