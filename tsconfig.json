@@ -317,10 +317,16 @@
       "path": "packages/test-mixer"
     },
     {
+      "path": "packages/tsd-extract"
+    },
+    {
       "path": "packages/util-array-object-or-both"
     },
     {
       "path": "packages/util-nonempty"
+    },
+    {
+      "path": "data"
     }
   ]
 }

@@ -33,13 +33,12 @@
     "lect": "turbo run lect",
     "format": "prettier --write '**/*.{ts,tsx,.md}'",
     "deploy": "echo 'would deploy'",
-    "house": "yarn run prettier && yarn run ci:fetch:webapps && uvu ops/helpers && yarn update:projectReferences && yarn run ci:build:root-readme && yarn run ci:generate:info",
+    "house": "yarn run prettier && uvu ops/helpers && yarn update:projectReferences && yarn run ci:build:root-readme && yarn run ci:generate:info",
     "turbo": "turbo",
     "lerna": "lerna",
     "ts": "deno run --allow-read --allow-run --allow-write --allow-net",
     "cm": "git-cz -n",
     "prettier": "turbo run prettier:format",
-    "ci:fetch:webapps": "node ./ops/scripts/fetch-webapps-json.js",
     "ci:generate:info": "node ./ops/scripts/generate-info.js",
     "ci:build:root-readme": "node ./ops/scripts/generate-readme.js",
     "ci:lerna:version": "lerna version --no-push --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
@@ -94,7 +93,7 @@
     "rollup-plugin-dts": "^4.2.1",
     "tempy": "^2.0.0",
     "turbo": "^1.2.1",
-    "typescript": "^4.6.3",
+    "typescript": "^4.5.4",
     "uvu": "^0.5.3"
   },
   "packageManager": "yarn@1.22.17"

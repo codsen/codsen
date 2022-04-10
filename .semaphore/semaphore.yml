@@ -42,8 +42,6 @@ blocks:
             - ls
             # install deps
             - yarn
-            # fetch the latest webapps' JSON file from Codsen GitHub repo
-            - yarn run ci:fetch:webapps
             # efficiently build all
             - yarn turbo run build
             # "unit" + "examples" + "lint":
