@@ -150,7 +150,7 @@ export const packageJSONData = {
     },
     "array-includes-with-glob": {
         "name": "array-includes-with-glob",
-        "version": "4.0.12",
+        "version": "4.0.13",
         "description": "Like _.includes but with wildcards",
         "keywords": [
             "array",
@@ -2873,7 +2873,7 @@ export const packageJSONData = {
     },
     "email-comb": {
         "name": "email-comb",
-        "version": "6.1.10",
+        "version": "6.1.11",
         "description": "Remove unused CSS from email templates",
         "keywords": [
             "body",
@@ -3310,7 +3310,7 @@ export const packageJSONData = {
     },
     "gulp-email-remove-unused-css": {
         "name": "gulp-email-remove-unused-css",
-        "version": "4.0.14",
+        "version": "4.0.15",
         "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
         "keywords": [
             "body",
@@ -3368,7 +3368,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "email-comb": "^6.1.10",
+            "email-comb": "^6.1.11",
             "plugin-error": "^1.0.1"
         },
         "devDependencies": {
