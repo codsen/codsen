@@ -4,8 +4,8 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 interface Opts {
-  msg?: string;
-  optsVarName?: string;
+  msg: string;
+  optsVarName: string;
 }
 const defaults: Opts = {
   msg: "",
@@ -14,7 +14,7 @@ const defaults: Opts = {
 
 function arrObjOrBoth(
   str: string,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): "array" | "object" | "any" {
   let onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
   let onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
@@ -32,7 +32,7 @@ function arrObjOrBoth(
 
   let opts = { ...defaults, ...originalOpts };
 
-  if (opts?.msg && opts.msg.length > 0) {
+  if (opts?.msg && opts.msg.length) {
     opts.msg = `${opts.msg.trim()} `;
   }
   if (opts.optsVarName !== "given variable") {
