@@ -28,7 +28,7 @@ const defaults: Opts = {
 function noNewKeys(
   inputOuter: JsonValue,
   referenceOuter: JsonValue,
-  originalOptsOuter?: Opts
+  originalOptsOuter?: Partial<Opts>
 ): any {
   if (originalOptsOuter && !isObj(originalOptsOuter)) {
     throw new TypeError(
@@ -39,12 +39,12 @@ function noNewKeys(
       )} (type ${typeof originalOptsOuter})`
     );
   }
-  let optsOuter = { ...defaults, ...originalOptsOuter };
+  let optsOuter: Opts = { ...defaults, ...originalOptsOuter };
   if (
     typeof optsOuter.mode === "string" &&
     ["1", "2"].includes(optsOuter.mode)
   ) {
-    (optsOuter as Obj).mode = +optsOuter.mode;
+    (optsOuter as any).mode = +optsOuter.mode;
   } else if (![1, 2].includes(optsOuter.mode)) {
     throw new TypeError(
       `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode should be "1" or "2" (string or number).`
@@ -65,11 +65,11 @@ function noNewKeys(
         // then traverse recursively.
         Object.keys(input).forEach((key) => {
           if (!Object.prototype.hasOwnProperty.call(reference, key)) {
-            temp = innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key;
+            temp = innerVar.path.length ? `${innerVar.path}.${key}` : key;
             innerVar.res.push(temp);
           } else if (isObj(input[key]) || Array.isArray(input[key])) {
             temp = {
-              path: innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key,
+              path: innerVar.path.length ? `${innerVar.path}.${key}` : key,
               res: innerVar.res,
             };
             innerVar.res = objectNoNewKeysInternal(
@@ -85,7 +85,7 @@ function noNewKeys(
         // record all the keys of the input, but don't traverse deeper
         innerVar.res = innerVar.res.concat(
           Object.keys(input).map((key) =>
-            innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key
+            innerVar.path.length ? `${innerVar.path}.${key}` : key
           )
         );
       }
@@ -95,7 +95,7 @@ function noNewKeys(
         // traverse each
         for (let i = 0, len = input.length; i < len; i++) {
           temp = {
-            path: `${innerVar.path.length > 0 ? innerVar.path : ""}[${i}]`,
+            path: `${innerVar.path.length ? innerVar.path : ""}[${i}]`,
             res: innerVar.res,
           };
           if (opts.mode === 2) {
@@ -119,7 +119,7 @@ function noNewKeys(
         // traverse all elements of the input and put their locations to innerVar.res
         innerVar.res = innerVar.res.concat(
           input.map(
-            (_el, i) => `${innerVar.path.length > 0 ? innerVar.path : ""}[${i}]`
+            (_el, i) => `${innerVar.path.length ? innerVar.path : ""}[${i}]`
           )
         );
       }

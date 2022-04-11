@@ -17,7 +17,7 @@ declare const defaults: Opts;
 declare function noNewKeys(
   inputOuter: JsonValue,
   referenceOuter: JsonValue,
-  originalOptsOuter?: Opts
+  originalOptsOuter?: Partial<Opts>
 ): any;
 
 export { defaults, noNewKeys, version };
