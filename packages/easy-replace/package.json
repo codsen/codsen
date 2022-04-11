@@ -1,6 +1,6 @@
 {
   "name": "easy-replace",
-  "version": "5.0.13",
+  "version": "5.0.14",
   "description": "Replace strings with optional lookarounds, but without regexes",
   "keywords": [
     "easy",

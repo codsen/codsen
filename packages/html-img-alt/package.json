@@ -1,6 +1,6 @@
 {
   "name": "html-img-alt",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Adds missing alt attributes to img tags. Non-parsing.",
   "keywords": [
     "add",
@@ -73,9 +73,9 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^7.1.0",
-    "ranges-apply": "^6.0.12",
-    "ranges-push": "^6.0.12",
+    "check-types-mini": "^7.1.1",
+    "ranges-apply": "^6.1.0",
+    "ranges-push": "^6.1.0",
     "string-unfancy": "^5.0.12"
   }
 }

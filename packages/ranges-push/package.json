@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "6.0.12",
+  "version": "6.1.0",
   "description": "Gather string index ranges",
   "keywords": [
     "delete",

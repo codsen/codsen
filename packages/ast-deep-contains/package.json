@@ -1,6 +1,6 @@
 {
   "name": "ast-deep-contains",
-  "version": "4.0.12",
+  "version": "4.1.0",
   "description": "Like t.same assert on array of objects, where element order doesn't matter.",
   "keywords": [
     "array",

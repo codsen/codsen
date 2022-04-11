@@ -1,6 +1,6 @@
 {
   "name": "object-all-values-equal-to",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Does the AST/nested-plain-object/array/whatever contain only one kind of value?",
   "keywords": [
     "all",
