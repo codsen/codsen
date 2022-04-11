@@ -310,7 +310,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
     );
   }
   if (
-    opts.whitelist.length > 0 &&
+    opts.whitelist.length &&
     !opts.whitelist.every((el) => typeof el === "string")
   ) {
     throw new TypeError(
@@ -330,7 +330,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       )}`
     );
   }
-  if (opts.backend.length > 0 && opts.backend.some((val) => !isObj(val))) {
+  if (opts.backend.length && opts.backend.some((val) => !isObj(val))) {
     throw new TypeError(
       `email-comb: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n${JSON.stringify(
         opts.backend,
@@ -340,7 +340,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
     );
   }
   if (
-    opts.backend.length > 0 &&
+    opts.backend.length &&
     !opts.backend.every(
       (obj) => hasOwnProp(obj, "heads") && hasOwnProp(obj, "tails")
     )
