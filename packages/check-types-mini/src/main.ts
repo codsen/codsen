@@ -229,7 +229,7 @@ function internalApi(
       console.log(
         `230 so \u001b[${31}m${`opts.enforceStrictKeyset is ON`}\u001b[${39}m`
       );
-    if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
+    if (existy(opts.schema) && Object.keys(opts.schema).length) {
       if (
         ref &&
         pullAllWithGlob(
@@ -255,7 +255,7 @@ function internalApi(
           } not covered by schema and/or reference objects: ${keys.join(", ")}`
         );
       }
-    } else if (isObj(ref) && Object.keys(ref as Obj).length > 0) {
+    } else if (isObj(ref) && Object.keys(ref as Obj).length) {
       if (
         pullAllWithGlob(
           pullAll(Object.keys(obj), Object.keys(ref as Obj)),
