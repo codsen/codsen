@@ -286,7 +286,7 @@ function enforceKeyset(
   };
   let opts = { ...defaults, ...originalOpts };
   if (
-    opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
+    opts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
     !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
       isStr(val)
     )
@@ -380,7 +380,7 @@ function enforceKeysetSync(
   };
   let opts = { ...defaults, ...originalOpts };
   if (
-    opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
+    opts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
     !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
       isStr(val)
     )
@@ -539,7 +539,7 @@ function findUnusedSync(
       let appendix = "";
       let innerDot = "";
 
-      if (extras.length > 0) {
+      if (extras.length) {
         extras.forEach((singleExtra, i) => {
           if (keysContents[i] === "Array") {
             appendix = `[${i}]`;
