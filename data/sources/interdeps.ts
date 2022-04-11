@@ -6,7 +6,7 @@ export const interdeps = [
     },
     {
         "name": "array-group-str-omit-num-char",
-        "size": 1458,
+        "size": 1456,
         "imports": [
             "ranges-apply"
         ]
@@ -21,7 +21,7 @@ export const interdeps = [
     },
     {
         "name": "array-pull-all-with-glob",
-        "size": 579,
+        "size": 577,
         "imports": []
     },
     {
@@ -31,14 +31,14 @@ export const interdeps = [
     },
     {
         "name": "ast-compare",
-        "size": 3439,
+        "size": 3437,
         "imports": [
             "ast-contains-only-empty-space"
         ]
     },
     {
         "name": "ast-contains-only-empty-space",
-        "size": 558,
+        "size": 556,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -120,7 +120,7 @@ export const interdeps = [
     },
     {
         "name": "check-types-mini",
-        "size": 5560,
+        "size": 5558,
         "imports": [
             "arrayiffy-if-string",
             "ast-monkey-traverse"
@@ -223,7 +223,7 @@ export const interdeps = [
     },
     {
         "name": "email-comb",
-        "size": 20415,
+        "size": 20417,
         "imports": [
             "array-pull-all-with-glob",
             "html-crush",
@@ -239,7 +239,7 @@ export const interdeps = [
     },
     {
         "name": "emlint",
-        "size": 175326,
+        "size": 175325,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -303,7 +303,7 @@ export const interdeps = [
     },
     {
         "name": "html-img-alt",
-        "size": 3109,
+        "size": 3107,
         "imports": [
             "check-types-mini",
             "ranges-apply",
@@ -323,7 +323,7 @@ export const interdeps = [
     },
     {
         "name": "is-char-suitable-for-html-attr-name",
-        "size": 519,
+        "size": 517,
         "imports": []
     },
     {
@@ -358,7 +358,7 @@ export const interdeps = [
     },
     {
         "name": "is-relative-uri",
-        "size": 5864,
+        "size": 5862,
         "imports": []
     },
     {
@@ -435,7 +435,7 @@ export const interdeps = [
     },
     {
         "name": "object-all-values-equal-to",
-        "size": 1313,
+        "size": 1311,
         "imports": []
     },
     {
@@ -445,7 +445,7 @@ export const interdeps = [
     },
     {
         "name": "object-delete-key",
-        "size": 1402,
+        "size": 1400,
         "imports": [
             "ast-is-empty",
             "ast-monkey",
@@ -454,7 +454,7 @@ export const interdeps = [
     },
     {
         "name": "object-fill-missing-keys",
-        "size": 2775,
+        "size": 2773,
         "imports": [
             "arrayiffy-if-string",
             "object-all-values-equal-to",
@@ -463,7 +463,7 @@ export const interdeps = [
     },
     {
         "name": "object-flatten-all-arrays",
-        "size": 975,
+        "size": 973,
         "imports": []
     },
     {
@@ -513,7 +513,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-invert",
-        "size": 2499,
+        "size": 2497,
         "imports": [
             "ranges-crop",
             "ranges-merge"
@@ -655,7 +655,7 @@ export const interdeps = [
     },
     {
         "name": "string-match-left-right",
-        "size": 5810,
+        "size": 5808,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -684,7 +684,7 @@ export const interdeps = [
     },
     {
         "name": "string-remove-thousand-separators",
-        "size": 1896,
+        "size": 1894,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -702,7 +702,7 @@ export const interdeps = [
     },
     {
         "name": "string-split-by-whitespace",
-        "size": 1162,
+        "size": 1160,
         "imports": [
             "ranges-is-index-within"
         ]
@@ -758,7 +758,7 @@ export const interdeps = [
     },
     {
         "name": "util-array-object-or-both",
-        "size": 1001,
+        "size": 999,
         "imports": []
     },
     {
