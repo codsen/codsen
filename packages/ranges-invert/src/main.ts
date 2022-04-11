@@ -9,8 +9,8 @@ const version: string = v;
 declare let DEV: boolean;
 
 interface Opts {
-  strictlyTwoElementsInRangeArrays?: boolean;
-  skipChecks?: boolean;
+  strictlyTwoElementsInRangeArrays: boolean;
+  skipChecks: boolean;
 }
 const defaults: Opts = {
   strictlyTwoElementsInRangeArrays: false,
@@ -20,7 +20,7 @@ const defaults: Opts = {
 function rInvert(
   arrOfRanges: Ranges,
   strLen: number,
-  originalOptions?: Opts
+  originalOptions?: Partial<Opts>
 ): Ranges {
   if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError(
