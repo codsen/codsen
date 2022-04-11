@@ -5,7 +5,6 @@ import { strict as assert } from "assert";
 
 import { comb, defaults, version } from "../dist/email-comb.esm.js";
 
-// aptly named classes:
 const source = `<head>
 <style type="text/css">
 .unused1[z] {a:1;}
