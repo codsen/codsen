@@ -97,7 +97,7 @@ function trimIfString(something: any): any {
 }
 
 function getTopmostKey(str: string): string {
-  if (typeof str === "string" && str.length > 0 && str.indexOf(".") !== -1) {
+  if (typeof str === "string" && str.length && str.indexOf(".") !== -1) {
     for (let i = 0, len = str.length; i < len; i++) {
       if (str[i] === ".") {
         return str.slice(0, i);
@@ -107,7 +107,7 @@ function getTopmostKey(str: string): string {
   return str;
 }
 function withoutTopmostKey(str: string): string {
-  if (typeof str === "string" && str.length > 0 && str.indexOf(".") !== -1) {
+  if (typeof str === "string" && str.length && str.indexOf(".") !== -1) {
     for (let i = 0, len = str.length; i < len; i++) {
       if (str[i] === ".") {
         return str.slice(i + 1);
@@ -117,7 +117,7 @@ function withoutTopmostKey(str: string): string {
   return str;
 }
 function goLevelUp(str: string): string {
-  if (typeof str === "string" && str.length > 0 && str.indexOf(".") !== -1) {
+  if (typeof str === "string" && str.length && str.indexOf(".") !== -1) {
     for (let i = str.length; i--; ) {
       if (str[i] === ".") {
         return str.slice(0, i);
@@ -127,7 +127,7 @@ function goLevelUp(str: string): string {
   return str;
 }
 function getLastKey(str: string): string {
-  if (typeof str === "string" && str.length > 0 && str.indexOf(".") !== -1) {
+  if (typeof str === "string" && str.length && str.indexOf(".") !== -1) {
     for (let i = str.length; i--; ) {
       if (str[i] === ".") {
         return str.slice(i + 1);
@@ -144,10 +144,10 @@ function containsHeadsOrTails(str: string, opts: Opts): boolean {
     str.includes(opts.heads) ||
     str.includes(opts.tails) ||
     (isStr(opts.headsNoWrap) &&
-      opts.headsNoWrap.length > 0 &&
+      opts.headsNoWrap.length &&
       str.includes(opts.headsNoWrap)) ||
     (isStr(opts.tailsNoWrap) &&
-      opts.tailsNoWrap.length > 0 &&
+      opts.tailsNoWrap.length &&
       str.includes(opts.tailsNoWrap))
   ) {
     return true;
@@ -163,7 +163,7 @@ function removeWrappingHeadsAndTails(
   let tempTo;
   if (
     typeof str === "string" &&
-    str.length > 0 &&
+    str.length &&
     matchRightIncl(str, 0, heads, {
       trimBeforeMatching: true,
       cb: (_c, _t, index) => {
@@ -338,7 +338,7 @@ function findValues(
     if (
       opts.lookForDataContainers &&
       typeof opts.dataContainerIdentifierTails === "string" &&
-      opts.dataContainerIdentifierTails.length > 0 &&
+      opts.dataContainerIdentifierTails.length &&
       !currentPath.endsWith(opts.dataContainerIdentifierTails)
     ) {
       // 1.1.1. first check data store
@@ -379,7 +379,7 @@ function findValues(
       if (
         opts.lookForDataContainers &&
         typeof opts.dataContainerIdentifierTails === "string" &&
-        opts.dataContainerIdentifierTails.length > 0 &&
+        opts.dataContainerIdentifierTails.length &&
         !currentPath.endsWith(opts.dataContainerIdentifierTails)
       ) {
         // 1.1.1. first check data store
@@ -460,7 +460,7 @@ function findValues(
         console.log(
           `461 *** gotPathArr = ${JSON.stringify(gotPathArr, null, 4)}`
         );
-      if (gotPathArr.length > 0) {
+      if (gotPathArr.length) {
         for (let y = 0, len2 = gotPathArr.length; y < len2; y++) {
           if (
             isStr(gotPathArr[y].val) ||
@@ -495,7 +495,7 @@ function findValues(
       let gotPath = getByKey(input, getTopmostKey(varName));
       DEV &&
         console.log(`497 *** gotPath = ${JSON.stringify(gotPath, null, 4)}`);
-      if (gotPath.length > 0) {
+      if (gotPath.length) {
         for (let y = 0, len2 = gotPath.length; y < len2; y++) {
           let temp = objectPath.get(gotPath[y].val, withoutTopmostKey(varName));
           if (temp && isStr(temp)) {
@@ -908,7 +908,7 @@ function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
   let culpritVal;
   let culpritIndex;
   if (
-    opts.dontWrapVars.length > 0 &&
+    opts.dontWrapVars.length &&
     !opts.dontWrapVars.every((el, idx) => {
       if (!isStr(el)) {
         culpritVal = el;
