@@ -27,7 +27,7 @@ function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
   }
   let opts: Opts = { ...defaults, ...originalOpts };
   if (
-    opts.ignoreRanges.length > 0 &&
+    opts.ignoreRanges.length &&
     !opts.ignoreRanges.every((arr) => Array.isArray(arr))
   ) {
     throw new Error(
