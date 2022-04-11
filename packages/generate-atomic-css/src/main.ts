@@ -35,7 +35,7 @@ const defaults: Opts = {
 
 function genAtomic(
   str: string,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): { log: { count: number }; result: string } {
   function trimIfNeeded(str2: string, opts: Obj = {}): string {
     // if config and heads/tails are turned off, don't trim
