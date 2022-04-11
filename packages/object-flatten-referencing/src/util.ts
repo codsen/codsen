@@ -89,7 +89,7 @@ function flattenArr(
   }
   let arr: any[] = clone(arrOrig);
   let res = "";
-  if (arr.length > 0) {
+  if (arr.length) {
     if (joinArraysUsingBrs) {
       for (let i = 0, len = arr.length; i < len; i++) {
         if (isStr(arr[i])) {
@@ -110,9 +110,9 @@ function flattenArr(
             wrap ? opts.wrapTailsWith : ""
           }`;
         } else if (Array.isArray(arr[i])) {
-          if (arr[i].length > 0 && arr[i].every(isStr)) {
+          if (arr[i].length && arr[i].every(isStr)) {
             let lineBreak = "";
-            if (opts.mergeArraysWithLineBreaks && res.length > 0) {
+            if (opts.mergeArraysWithLineBreaks && res.length) {
               lineBreak = `<br${opts.xhtml ? " /" : ""}>`;
             }
             res = arr[i].reduce(
@@ -156,7 +156,7 @@ function flattenArr(
 
 function arrayiffyString(something: string | any): any {
   if (isStr(something)) {
-    if (something.length > 0) {
+    if (something.length) {
       return [something];
     }
     return [];

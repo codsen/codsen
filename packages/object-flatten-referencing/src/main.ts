@@ -83,20 +83,20 @@ function flattenReferencing(
         if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true; // reset it for the new key.
-            if (opts.dontWrapKeys.length > 0) {
+            if (opts.dontWrapKeys.length) {
               wrap =
                 wrap &&
                 !opts.dontWrapKeys.some((elem) =>
                   isMatch(key, elem, { caseSensitive: true })
                 );
             }
-            if (opts.dontWrapPaths.length > 0) {
+            if (opts.dontWrapPaths.length) {
               wrap =
                 wrap &&
                 !opts.dontWrapPaths.some((elem) => elem === currentPath);
             }
             if (
-              opts.preventWrappingIfContains.length > 0 &&
+              opts.preventWrappingIfContains.length &&
               typeof input[key] === "string"
             ) {
               wrap =
@@ -260,7 +260,7 @@ function flattenReferencing(
         input = flattenArr(input, opts, wrap, joinArraysUsingBrs);
       }
     } else if (isStr(input)) {
-      if (input.length > 0 && (opts.wrapHeadsWith || opts.wrapTailsWith)) {
+      if (input.length && (opts.wrapHeadsWith || opts.wrapTailsWith)) {
         if (
           !opts.preventDoubleWrapping ||
           ((opts.wrapHeadsWith === "" ||
