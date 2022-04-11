@@ -17,12 +17,12 @@ function isStr(something: any): boolean {
 }
 
 interface Opts {
-  fromIndex?: number;
-  throwWhenSomethingWrongIsDetected?: boolean;
-  allowWholeValueToBeOnlyHeadsOrTails?: boolean;
-  source?: string;
-  matchHeadsAndTailsStrictlyInPairsByTheirOrder?: boolean;
-  relaxedAPI?: boolean;
+  fromIndex: number;
+  throwWhenSomethingWrongIsDetected: boolean;
+  allowWholeValueToBeOnlyHeadsOrTails: boolean;
+  source: string;
+  matchHeadsAndTailsStrictlyInPairsByTheirOrder: boolean;
+  relaxedAPI: boolean;
 }
 
 const defaults = {
@@ -45,7 +45,7 @@ function strFindHeadsTails(
   str: string,
   heads: string | string[],
   tails: string | string[],
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): ResObj[] {
   // prep opts
   if (originalOpts && !isObj(originalOpts)) {
@@ -129,7 +129,7 @@ function strFindHeadsTails(
     ) {
       if (opts.relaxedAPI) {
         // eslint-disable-next-line no-param-reassign
-        heads = heads.filter((el) => isStr(el) && el.length > 0);
+        heads = heads.filter((el) => isStr(el) && el.length);
         if (heads.length === 0) {
           return [];
         }
@@ -145,12 +145,12 @@ function strFindHeadsTails(
     } else if (
       !heads.every((val, index) => {
         culpritsIndex = index;
-        return isStr(val) && val.length > 0 && val.trim() !== "";
+        return isStr(val) && val.length && val.trim() !== "";
       })
     ) {
       if (opts.relaxedAPI) {
         // eslint-disable-next-line no-param-reassign
-        heads = heads.filter((el) => isStr(el) && el.length > 0);
+        heads = heads.filter((el) => isStr(el) && el.length);
         if (heads.length === 0) {
           return [];
         }
@@ -207,7 +207,7 @@ function strFindHeadsTails(
     ) {
       if (opts.relaxedAPI) {
         // eslint-disable-next-line no-param-reassign
-        tails = tails.filter((el) => isStr(el) && el.length > 0);
+        tails = tails.filter((el) => isStr(el) && el.length);
         if (tails.length === 0) {
           return [];
         }
@@ -223,12 +223,12 @@ function strFindHeadsTails(
     } else if (
       !tails.every((val, index) => {
         culpritsIndex = index;
-        return isStr(val) && val.length > 0 && val.trim() !== "";
+        return isStr(val) && val.length && val.trim() !== "";
       })
     ) {
       if (opts.relaxedAPI) {
         // eslint-disable-next-line no-param-reassign
-        tails = tails.filter((el) => isStr(el) && el.length > 0);
+        tails = tails.filter((el) => isStr(el) && el.length);
         if (tails.length === 0) {
           return [];
         }

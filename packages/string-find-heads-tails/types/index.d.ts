@@ -1,11 +1,11 @@
 declare const version: string;
 interface Opts {
-  fromIndex?: number;
-  throwWhenSomethingWrongIsDetected?: boolean;
-  allowWholeValueToBeOnlyHeadsOrTails?: boolean;
-  source?: string;
-  matchHeadsAndTailsStrictlyInPairsByTheirOrder?: boolean;
-  relaxedAPI?: boolean;
+  fromIndex: number;
+  throwWhenSomethingWrongIsDetected: boolean;
+  allowWholeValueToBeOnlyHeadsOrTails: boolean;
+  source: string;
+  matchHeadsAndTailsStrictlyInPairsByTheirOrder: boolean;
+  relaxedAPI: boolean;
 }
 declare const defaults: {
   fromIndex: number;
@@ -25,7 +25,7 @@ declare function strFindHeadsTails(
   str: string,
   heads: string | string[],
   tails: string | string[],
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): ResObj[];
 
 export { defaults, strFindHeadsTails, version };
