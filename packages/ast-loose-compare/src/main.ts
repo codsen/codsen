@@ -46,7 +46,7 @@ function internalCompare(
   }
   // if both are arrays
   if (Array.isArray(bigObj) && Array.isArray(smallObj)) {
-    if (smallObj.length > 0) {
+    if (smallObj.length) {
       for (i = 0, len = smallObj.length; i < len; i++) {
         if (Array.isArray(smallObj[i]) || isObj(smallObj[i])) {
           res = internalCompare(bigObj[i], smallObj[i], res);
@@ -71,7 +71,7 @@ function internalCompare(
     }
   } else if (isObj(bigObj) && isObj(smallObj)) {
     // if both are plain objects
-    if (Object.keys(smallObj as UnknownValueObj).length > 0) {
+    if (Object.keys(smallObj as UnknownValueObj).length) {
       let keysArr = Object.keys(smallObj as UnknownValueObj);
       for (i = 0, len = keysArr.length; i < len; i++) {
         /* istanbul ignore else */
