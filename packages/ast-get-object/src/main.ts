@@ -57,7 +57,7 @@ function internalApi(
     if (compare(ast, keyValPair)) {
       if (set) {
         /* istanbul ignore else */
-        if ((replacementContentsArr as UnknownValueObj[]).length > 0) {
+        if ((replacementContentsArr as UnknownValueObj[]).length) {
           ast = (replacementContentsArr as UnknownValueObj[])[0];
           (replacementContentsArr as UnknownValueObj[]).shift();
         }
