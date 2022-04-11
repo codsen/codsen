@@ -1,7 +1,7 @@
 declare const version: string;
 interface Opts {
-  skipContainers?: boolean;
-  arrayStrictComparison?: boolean;
+  skipContainers: boolean;
+  arrayStrictComparison: boolean;
 }
 declare const defaults: Opts;
 interface Callback {
@@ -18,7 +18,7 @@ declare function deepContains(
   tree2: any,
   cb: Callback,
   errCb: ErrorCallback,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): void;
 
 export { deepContains, defaults, version };

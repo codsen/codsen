@@ -33,8 +33,8 @@ interface UnknownValueObj {
 }
 
 interface Opts {
-  skipContainers?: boolean;
-  arrayStrictComparison?: boolean;
+  skipContainers: boolean;
+  arrayStrictComparison: boolean;
 }
 
 const defaults: Opts = {
@@ -58,7 +58,7 @@ function deepContains(
   tree2: any,
   cb: Callback,
   errCb: ErrorCallback,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): void {
   let opts = { ...defaults, ...originalOpts };
   if (is(tree1) !== is(tree2)) {
