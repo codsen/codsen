@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.1.1](https://github.com/codsen/codsen/compare/string-remove-thousand-separators@6.1.0...string-remove-thousand-separators@6.1.1) (2022-04-11)
-
-**Note:** Version bump only for package string-remove-thousand-separators
-
-
-
-
-
 # [6.1.0](https://github.com/codsen/codsen/compare/string-remove-thousand-separators@6.0.13...string-remove-thousand-separators@6.1.0) (2022-04-10)
 
 ### Features

@@ -5,19 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.1.0 (2022-04-11)
 
-
 ### Bug Fixes
 
-* use Partial, every opts key is optional ([844685c](https://github.com/codsen/codsen/commit/844685ca133e107bb10c46c75c6cba70a7a5a8f3))
-
+- use Partial, every opts key is optional ([844685c](https://github.com/codsen/codsen/commit/844685ca133e107bb10c46c75c6cba70a7a5a8f3))
 
 ### Features
 
-* export defaults and version ([1107244](https://github.com/codsen/codsen/commit/1107244b45eff96ac1fc4ab992031ede0d10ba8c))
-
-
-
-
+- export defaults and version ([1107244](https://github.com/codsen/codsen/commit/1107244b45eff96ac1fc4ab992031ede0d10ba8c))
 
 ## 2.0.0 (2021-09-09)
 

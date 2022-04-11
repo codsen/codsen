@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.1.1](https://github.com/codsen/codsen/compare/util-array-object-or-both@4.1.0...util-array-object-or-both@4.1.1) (2022-04-11)
-
-**Note:** Version bump only for package util-array-object-or-both
-
-
-
-
-
 # 4.1.0 (2022-04-10)
 
 ### Features
