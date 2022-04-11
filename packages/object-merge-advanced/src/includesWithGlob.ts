@@ -3,8 +3,8 @@ import { isMatch } from "matcher";
 // it's a copy of array-includes-with-glob 3.1.0, to prevent circular deps
 
 interface Opts {
-  arrayVsArrayAllMustBeFound?: "any" | "all";
-  caseSensitive?: boolean;
+  arrayVsArrayAllMustBeFound: "any" | "all";
+  caseSensitive: boolean;
 }
 
 const defaults: Opts = {
@@ -18,7 +18,7 @@ const defaults: Opts = {
 function includesWithGlob(
   originalInput: string | string[],
   stringToFind: string | string[],
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): boolean {
   // maybe we can end prematurely:
   if (!originalInput.length || !stringToFind.length) {
