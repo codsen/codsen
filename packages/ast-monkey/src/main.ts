@@ -104,11 +104,7 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
     );
 
   let input = originalInput;
-  if (
-    opts.mode === "arrayFirstOnly" &&
-    Array.isArray(input) &&
-    input.length > 0
-  ) {
+  if (opts.mode === "arrayFirstOnly" && Array.isArray(input) && input.length) {
     input = [input[0]];
   }
 
@@ -116,13 +112,13 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
   //
   //
 
-  DEV && console.log(`119 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
+  DEV && console.log(`115 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
   input = traverse(input, (key, val, innerObj) => {
     DEV &&
-      console.log(`122 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
+      console.log(`118 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
     DEV &&
       console.log(
-        `125 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
+        `121 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
           key,
           null,
           4
@@ -197,7 +193,7 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
     return innerObj.parentType === "object" ? val : key;
   });
   DEV &&
-    console.log(`200 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
+    console.log(`196 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
 
   // returns
   if (opts.mode === "get") {
@@ -240,7 +236,7 @@ function find(input: JsonValue, originalOpts: FindOpts): Finding[] {
     },
     msg: "ast-monkey/get(): [THROW_ID_04*]",
   });
-  if (typeof opts.only === "string" && opts.only.length > 0) {
+  if (typeof opts.only === "string" && opts.only.length) {
     opts.only = arrObjOrBoth(opts.only, {
       optsVarName: "opts.only",
       msg: "ast-monkey/find(): [THROW_ID_05*]",
@@ -394,7 +390,7 @@ function del(input: JsonValue, originalOpts: DelOpts): JsonValue {
     },
     msg: "ast-monkey/drop(): [THROW_ID_29*]",
   });
-  if (typeof opts.only === "string" && opts.only.length > 0) {
+  if (typeof opts.only === "string" && opts.only.length) {
     opts.only = arrObjOrBoth(opts.only, {
       msg: "ast-monkey/del(): [THROW_ID_30*]",
       optsVarName: "opts.only",
