@@ -39,7 +39,7 @@ function unescape(str: string): string {
 
 function helga(
   str: string,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): { minified: string; beautified: string } {
   let opts = { ...defaults, ...originalOpts };
   // DEV && console.log(
