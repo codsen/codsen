@@ -6,7 +6,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface UnknownValueObj {
+interface PlainObj {
   [key: string]: any;
 }
 
@@ -18,10 +18,10 @@ const defaults: Opts = {
   dedupe: true,
 };
 
-function sortObject(obj: UnknownValueObj): UnknownValueObj {
+function sortObject(obj: PlainObj): PlainObj {
   return Object.keys(obj)
     .sort()
-    .reduce((result: UnknownValueObj, key) => {
+    .reduce((result: PlainObj, key) => {
       result[key] = obj[key];
       return result;
     }, {});
@@ -30,27 +30,24 @@ function sortObject(obj: UnknownValueObj): UnknownValueObj {
 /**
  * Turns an array of arrays of data into a nested tree of plain objects
  */
-function generateAst(
-  input: any[],
-  originalOpts?: Partial<Opts>
-): UnknownValueObj {
-  if (!Array.isArray(input)) {
+function generateAst(inputArr: any[], opts?: Partial<Opts>): PlainObj {
+  if (!Array.isArray(inputArr)) {
     throw new Error(
-      `array-of-arrays-into-ast: [THROW_ID_01] input must be array. Currently it's of a type ${typeof input} equal to:\n${JSON.stringify(
-        input,
+      `array-of-arrays-into-ast: [THROW_ID_01] inputArr must be array. Currently it's of a type ${typeof inputArr} equal to:\n${JSON.stringify(
+        inputArr,
         null,
         4
       )}`
     );
-  } else if (input.length === 0) {
+  } else if (inputArr.length === 0) {
     return {};
   }
 
-  let opts: Opts = { ...defaults, ...originalOpts };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
   let res = {};
 
-  input.forEach((arr) => {
+  inputArr.forEach((arr) => {
     DEV &&
       console.log(
         `${`\u001b[${36}m${`================================================ ${arr}`}\u001b[${39}m`}`
@@ -62,7 +59,9 @@ function generateAst(
       temp = { [arr[i]]: [temp] }; // uses ES6 computed property names
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names
     }
-    res = mergeAdvanced(res, temp, { concatInsteadOfMerging: !opts.dedupe });
+    res = mergeAdvanced(res, temp, {
+      concatInsteadOfMerging: !resolvedOpts.dedupe,
+    });
     DEV &&
       console.log(
         `${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
