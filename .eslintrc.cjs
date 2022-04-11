@@ -33,6 +33,7 @@ module.exports = {
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
   },
   overrides: [
     {
