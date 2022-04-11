@@ -645,7 +645,7 @@ ${`\u001b[${90}m${`plausibleWithinQuotesRanges.current() = ${plausibleWithinQuot
         4
       )}\n\n\n\n\n\n`
     );
-  if (rangesArr.current() && (rangesArr.current() as any[]).length > 0) {
+  if (rangesArr.current() && (rangesArr.current() as any[]).length) {
     return rApply(str, rangesArr.current());
   }
   return str;
