@@ -23,7 +23,7 @@ function allValuesEqualTo(input: any, value: any, opts: Opts): boolean {
     }
     if (
       opts.arraysMustNotContainPlaceholders &&
-      input.length > 0 &&
+      input.length &&
       input.some((el) => isEq(el, value))
     ) {
       return false;
