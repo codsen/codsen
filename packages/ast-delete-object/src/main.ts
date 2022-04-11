@@ -14,8 +14,8 @@ interface UnknownValueObj {
 }
 
 interface Opts {
-  matchKeysStrictly?: boolean;
-  hungryForWhitespace?: boolean;
+  matchKeysStrictly: boolean;
+  hungryForWhitespace: boolean;
 }
 
 const defaults: Opts = {
@@ -29,7 +29,7 @@ const defaults: Opts = {
 function deleteObj(
   originalInput: any,
   objToDelete: UnknownValueObj,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): any {
   if (!originalInput) {
     throw new Error(

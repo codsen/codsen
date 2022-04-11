@@ -3,8 +3,8 @@ interface UnknownValueObj {
   [key: string]: any;
 }
 interface Opts {
-  matchKeysStrictly?: boolean;
-  hungryForWhitespace?: boolean;
+  matchKeysStrictly: boolean;
+  hungryForWhitespace: boolean;
 }
 declare const defaults: Opts;
 /**
@@ -13,7 +13,7 @@ declare const defaults: Opts;
 declare function deleteObj(
   originalInput: any,
   objToDelete: UnknownValueObj,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): any;
 
 export { defaults, deleteObj, version };
