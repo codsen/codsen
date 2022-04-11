@@ -106,7 +106,7 @@ function stringise(incoming: any): string[] {
     return incoming
       .filter((el) => existy(el) && typeof el !== "boolean")
       .map((el) => String(el))
-      .filter((el) => el.length > 0);
+      .filter((el) => el.length);
   }
   return [String(incoming)];
 }
@@ -246,7 +246,7 @@ function er(
     // they're not hungry, i.e. the whole Maybe must be of the left of searchFor exactly
     //
     /* istanbul ignore else */
-    if (opts.leftMaybe.length > 0) {
+    if (opts.leftMaybe.length) {
       for (let i = 0, len = opts.leftMaybe.length; i < len; i++) {
         // iterate each of the maybe's in the array:
         matched = true;
@@ -281,7 +281,7 @@ function er(
     }
     // ===================== rightMaybe =====================
     /* istanbul ignore else */
-    if (opts.rightMaybe.length > 0) {
+    if (opts.rightMaybe.length) {
       for (let i = 0, len = opts.rightMaybe.length; i < len; i++) {
         // iterate each of the Maybe's in the array:
         matched = true;
@@ -406,7 +406,7 @@ function er(
   // =====
   // first we need to remove any overlaps in the recipe, cases like:
   // [ [0,10], [2,12] ] => [ [0,10], [10,12] ]
-  if (replacementRecipe.length > 0) {
+  if (replacementRecipe.length) {
     replacementRecipe.forEach((_elem, i) => {
       // iterate through all replacement-recipe-array's elements:
       if (
@@ -429,7 +429,7 @@ function er(
   //
   // iterate the recipe array and perform the replacement:
   // first, if replacements don't start with 0, attach this part onto result let:
-  if (replacementRecipe.length > 0 && replacementRecipe[0][0] !== 0) {
+  if (replacementRecipe.length && replacementRecipe[0][0] !== 0) {
     result += arrSource.slice(0, replacementRecipe[0][0]).join("");
   }
   replacementRecipe.forEach((_elem, i) => {
