@@ -13,7 +13,7 @@ export const interdeps = [
     },
     {
         "name": "array-of-arrays-into-ast",
-        "size": 843,
+        "size": 846,
         "imports": [
             "check-types-mini",
             "object-merge-advanced"
