@@ -226,7 +226,7 @@ class Ranges {
           DEV && console.log(`226`);
           let calculatedVal =
             (this.last() as Range)[2] &&
-            ((this.last() as Range)[2] as string).length > 0 &&
+            ((this.last() as Range)[2] as string).length &&
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1)
               ? `${(this.last() as Range)[2]}${addVal}`
