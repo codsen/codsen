@@ -482,7 +482,7 @@ export const interdeps = [
     },
     {
         "name": "object-no-new-keys",
-        "size": 1553,
+        "size": 1551,
         "imports": []
     },
     {

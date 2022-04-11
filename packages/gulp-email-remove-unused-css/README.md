@@ -26,10 +26,11 @@
 
 ## Install
 
+This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 3.9.0 (`npm i gulp-email-remove-unused-css@3.9.0`).
+
 ```bash
 npm i gulp-email-remove-unused-css
 ```
-
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/gulp-email-remove-unused-css/) for a full description of the API.

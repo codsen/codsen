@@ -26,13 +26,11 @@
 
 ## Install
 
-This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:
+This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 3.1.0 (`npm i util-array-object-or-both@3.1.0`).
 
 ```bash
 npm i util-array-object-or-both
 ```
-
-If you need a legacy version which works with `require`, use version 3.1.0
 
 ## Quick Take
 

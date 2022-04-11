@@ -26,7 +26,7 @@
 
 ## Install
 
-The latest version is **ESM only**: Node 12+ is needed to use it and it must be `import`ed instead of `require`d. If your project is not on ESM yet and you want to use `require`, use an older version of this program, `2.1.0`.
+This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 2.1.0 (`npm i string-remove-widows@2.1.0`).
 
 ```bash
 npm i string-remove-widows
@@ -49,7 +49,7 @@ assert.equal(res, "Some text with many words on one&nbsp;line.");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-remove-widows/) for a full description of the API and even a test <a href="https://codsen.com/os/string-remove-widows/play">playground</a>.
+Please [visit codsen.com](https://codsen.com/os/string-remove-widows/) for a full description of the API.
 
 ## Contributing
 

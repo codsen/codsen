@@ -15,6 +15,8 @@ import git from "simple-git";
 import { sortAllObjectsSync } from "json-comb-core";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 
+const isCI = process?.env?.CI || false;
+
 // READ ALL LIBS
 // =============
 
@@ -406,24 +408,27 @@ fs.writeFile(
 // 5. gather git repo info
 // ---------------------------------------------------------------------------
 
-let commitTotal = null;
-try {
-  // git rev-list --count HEAD
-  commitTotal = await git(".git").raw(["rev-list", "--count", "HEAD"]);
-  fs.writeFile(
-    path.join("./data/sources/gitStats.ts"),
-    `export const gitStats = ${JSON.stringify(
-      { commitTotal: commitTotal.trim() },
-      null,
-      4
-    )}`,
-    (err) => {
-      if (err) {
-        throw err;
+// don't run git stats on CI because it won't read all the commits, only ~50
+if (!isCI) {
+  let commitTotal = null;
+  try {
+    // git rev-list --count HEAD
+    commitTotal = await git(".git").raw(["rev-list", "--count", "HEAD"]);
+    fs.writeFile(
+      path.join("./data/sources/gitStats.ts"),
+      `export const gitStats = ${JSON.stringify(
+        { commitTotal: commitTotal.trim() },
+        null,
+        4
+      )}`,
+      (err) => {
+        if (err) {
+          throw err;
+        }
+        console.log(`\u001b[${32}m${`gitStats.ts written OK`}\u001b[${39}m`);
       }
-      console.log(`\u001b[${32}m${`gitStats.ts written OK`}\u001b[${39}m`);
-    }
-  );
-} catch (e) {
-  throw new Error("generate-info.js: can't access git data for gitStats.ts");
+    );
+  } catch (e) {
+    throw new Error("generate-info.js: can't access git data for gitStats.ts");
+  }
 }

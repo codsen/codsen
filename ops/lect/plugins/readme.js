@@ -3,6 +3,10 @@ import writeFileAtomic from "write-file-atomic";
 import arrayiffy from "../../helpers/arrayiffy.js";
 import { esmBump } from "@codsen/data";
 
+const separateNonESMPackages = {
+  "tsd-extract": "tsd-extract-noesm",
+};
+
 async function readme({ state, quickTakeExample, lectrc }) {
   let badge1 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
 
@@ -10,7 +14,21 @@ async function readme({ state, quickTakeExample, lectrc }) {
 
   let badge3 = `<img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">`;
 
-  let esmNotice = `This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:`;
+  let esmNotice = `This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).${
+    typeof esmBump === "object" && esmBump[state.pack.name]
+      ? ` If you're not ready yet, install an older version of this program, ${
+          esmBump[state.pack.name]
+        } (\`npm i ${state.pack.name}@${esmBump[state.pack.name]}\`).`
+      : ""
+  }${
+    separateNonESMPackages[state.pack.name]
+      ? ` If you're not ready yet, use a non-ESM alternative, [${
+          separateNonESMPackages[state.pack.name]
+        }](https://www.npmjs.com/package/${
+          separateNonESMPackages[state.pack.name]
+        }).`
+      : ""
+  }`;
 
   // start setting up the final readme's string:
   let content = `# ${state.pack.name}
@@ -49,41 +67,33 @@ async function readme({ state, quickTakeExample, lectrc }) {
   </a>
 </div>
 
-## Install
-
-${esmNotice}
+## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}
 
 \`\`\`bash
 npm i${!state.isRollup && state.isBin ? " -g" : ""} ${state.pack.name}
 \`\`\`${
-    !!state.isRollup && typeof esmBump === "object" && esmBump[state.pack.name]
-      ? `\n\nIf you need a legacy version which works with \`require\`, use version ${
-          esmBump[state.pack.name]
-        }`
-      : ""
-  }
-
-${
-  !state.isRollup && state.pack.bin
-    ? `\n\nThen, call it from the command line using ${
-        state.pack.bin && Object.keys(state.pack.bin).length > 1
-          ? "one of the following keywords"
-          : "keyword"
-      }:
+    !state.isRollup && state.pack.bin
+      ? `\n\nThen, call it from the command line using ${
+          state.pack.bin && Object.keys(state.pack.bin).length > 1
+            ? "one of the following keywords"
+            : "keyword"
+        }:
 
 \`\`\`bash
 ${Object.keys(state.pack.bin).join("\n")}
 \`\`\`
 `
-    : ""
-}${
+      : ""
+  }${
     quickTakeExample
-      ? `## Quick Take\n
+      ? `\n\n## Quick Take
+
 \`\`\`js
 ${quickTakeExample}
 \`\`\`\n\n`
       : ""
-  }## Documentation
+  }
+## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/${
     state.pack.name
@@ -102,24 +112,23 @@ To report bugs or request features or assistance, [raise an issue](https://githu
     lectrc.licence.header.length > 0 ? `${lectrc.licence.header}` : ""
   }`;
   content += `${
-    lectrc.licence.restofit.length > 0
-      ? `\n\n${lectrc.licence.restofit}\n\n`
-      : ""
+    lectrc.licence.restofit.length > 0 ? `\n\n${lectrc.licence.restofit}` : ""
   }`;
 
-  if (licenceExtras) {
-    content += `\n${arrayiffy(licenceExtras)
+  if (
+    licenceExtras &&
+    Array.isArray(licenceExtras) &&
+    (licenceExtras.length > 1 ||
+      (typeof licenceExtras[0] === "string" && licenceExtras[0].trim().length))
+  ) {
+    content += `\n\n${arrayiffy(licenceExtras)
       .filter((singleExtra) => singleExtra.length > 0)
       .join("\n")}`;
   }
 
-  if (!content.endsWith("\n")) {
-    content += "\n\n";
-  }
-
   content = content.replace(/%YEAR%/, String(new Date().getFullYear()));
 
-  content += `${badge1} ${badge2} ${badge3}\n\n`;
+  content += `\n\n${badge1} ${badge2} ${badge3}\n`;
 
   try {
     await writeFileAtomic("README.md", content);

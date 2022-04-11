@@ -26,7 +26,7 @@
 
 ## Install
 
-The latest version is **ESM only**: Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
 
 ```bash
 npm i codsen-parser

@@ -26,7 +26,7 @@
 
 ## Install
 
-The latest version is **ESM only**: Node 12+ is needed to use it and it must be `import`ed instead of `require`d. If your project is not on ESM yet and you want to use `require`, use an older version of this program, `1.4.0`.
+This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 1.4.0 (`npm i ast-monkey-util@1.4.0`).
 
 ```bash
 npm i ast-monkey-util

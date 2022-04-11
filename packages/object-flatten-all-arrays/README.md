@@ -26,13 +26,11 @@
 
 ## Install
 
-This package is ESM only: Node 12+ is needed to use it and it must be imported instead of required:
+This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 5.1.0 (`npm i object-flatten-all-arrays@5.1.0`).
 
 ```bash
 npm i object-flatten-all-arrays
 ```
-
-If you need a legacy version which works with `require`, use version 5.1.0
 
 ## Quick Take
 

@@ -1,32 +1,32 @@
 export const programClassification = {
-  "webApps": {
+  webApps: {
     "email-comb": "emailcomb.com",
     "html-crush": "htmlcrush.com",
-    "detergent": "detergent.io"
+    detergent: "detergent.io",
   },
-  "flagshipLibsList": ["email-comb", "html-crush", "detergent"],
-  "rangeLibsList": [
+  flagshipLibsList: ["email-comb", "html-crush", "detergent"],
+  rangeLibsList: [
     "ranges-push",
     "ranges-apply",
     "ranges-merge",
     "ranges-sort",
     "ranges-offset",
-    "string-range-expander"
+    "string-range-expander",
   ],
-  "objectLibsList": [
+  objectLibsList: [
     "json-comb-core",
     "json-variables",
     "object-merge-advanced",
     "object-boolean-combinations",
-    "test-mixer"
+    "test-mixer",
   ],
-  "astLibsList": [
+  astLibsList: [
     "ast-monkey",
     "ast-monkey-traverse",
     "ast-monkey-util",
-    "ast-monkey-traverse-with-lookahead"
+    "ast-monkey-traverse-with-lookahead",
   ],
-  "stringLibsList": [
+  stringLibsList: [
     "edit-package-json",
     "easy-replace",
     "str-indexes-of-plus",
@@ -34,21 +34,21 @@ export const programClassification = {
     "email-all-chars-within-ascii",
     "js-row-num",
     "line-column-mini",
-    "arrayiffy-if-string"
+    "arrayiffy-if-string",
   ],
-  "cliAppsList": [
+  cliAppsList: [
     "json-comb",
     "update-versions",
     "lerna-clean-changelogs-cli",
     "lerna-link-dep",
-    "lect"
+    "lect",
   ],
-  "lernaLibsList": [
+  lernaLibsList: [
     "lerna-clean-changelogs-cli",
     "lerna-link-dep",
-    "update-versions"
+    "update-versions",
   ],
-  "htmlLibsList": [
+  htmlLibsList: [
     "emlint",
     "html-crush",
     "stristri",
@@ -66,6 +66,6 @@ export const programClassification = {
     "is-char-suitable-for-html-attr-name",
     "all-named-html-entities",
     "charcode-is-valid-xml-name-character",
-    "html-entities-not-email-friendly"
-  ]
-}
+    "html-entities-not-email-friendly",
+  ],
+};
