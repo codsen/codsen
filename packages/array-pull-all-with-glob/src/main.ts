@@ -5,10 +5,10 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 interface Opts {
-  caseSensitive?: boolean;
+  caseSensitive: boolean;
 }
 
-// opts are mirroring matcher's at the moment, can't promise that for the future
+// resolvedOpts are mirroring matcher's at the moment, can't promise that for the future
 const defaults: Opts = {
   caseSensitive: true,
 };
@@ -17,28 +17,26 @@ const defaults: Opts = {
  * Like _.pullAll but with globs (wildcards)
  */
 function pull(
-  originalInput: string[],
-  originalToBeRemoved: string | string[],
-  originalOpts?: Opts
+  strArr: string[],
+  toBeRemoved: string | string[],
+  opts?: Partial<Opts>
 ): string[] {
   // insurance
-  if (!originalInput.length) {
+  if (!strArr.length) {
     return [];
   }
-  if (!originalInput.length || !originalToBeRemoved.length) {
-    return Array.from(originalInput);
+  if (!strArr.length || !toBeRemoved.length) {
+    return Array.from(strArr);
   }
-  let toBeRemoved: string[] =
-    typeof originalToBeRemoved === "string"
-      ? [originalToBeRemoved]
-      : Array.from(originalToBeRemoved);
-  let opts: Opts = { ...defaults, ...originalOpts };
+  let resolvedToBeRemoved: string[] =
+    typeof toBeRemoved === "string" ? [toBeRemoved] : Array.from(toBeRemoved);
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
-  let res = Array.from(originalInput).filter(
+  let res = Array.from(strArr).filter(
     (originalVal) =>
-      !toBeRemoved.some((remVal) =>
+      !resolvedToBeRemoved.some((remVal) =>
         isMatch(originalVal, remVal, {
-          caseSensitive: opts.caseSensitive,
+          caseSensitive: resolvedOpts.caseSensitive,
         })
       )
   );

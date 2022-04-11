@@ -1,15 +1,15 @@
 declare const version: string;
 interface Opts {
-  caseSensitive?: boolean;
+  caseSensitive: boolean;
 }
 declare const defaults: Opts;
 /**
  * Like _.pullAll but with globs (wildcards)
  */
 declare function pull(
-  originalInput: string[],
-  originalToBeRemoved: string | string[],
-  originalOpts?: Opts
+  strArr: string[],
+  toBeRemoved: string | string[],
+  opts?: Partial<Opts>
 ): string[];
 
 export { defaults, pull, version };
