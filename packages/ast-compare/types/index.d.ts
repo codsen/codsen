@@ -11,10 +11,10 @@ declare type JsonObject = {
 };
 declare type JsonArray = JsonValue[];
 interface Opts {
-  hungryForWhitespace?: boolean;
-  matchStrictly?: boolean;
-  verboseWhenMismatches?: boolean;
-  useWildcards?: boolean;
+  hungryForWhitespace: boolean;
+  matchStrictly: boolean;
+  verboseWhenMismatches: boolean;
+  useWildcards: boolean;
 }
 declare const defaults: Opts;
 /**
@@ -23,7 +23,7 @@ declare const defaults: Opts;
 declare function compare(
   b: JsonValue,
   s: JsonValue,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): boolean | string;
 
 export { compare, defaults, version };

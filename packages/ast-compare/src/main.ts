@@ -32,10 +32,10 @@ function isBlank(something: any): boolean {
 }
 
 interface Opts {
-  hungryForWhitespace?: boolean;
-  matchStrictly?: boolean;
-  verboseWhenMismatches?: boolean;
-  useWildcards?: boolean;
+  hungryForWhitespace: boolean;
+  matchStrictly: boolean;
+  verboseWhenMismatches: boolean;
+  useWildcards: boolean;
 }
 
 const defaults: Opts = {
@@ -56,7 +56,7 @@ const defaults: Opts = {
 function compare(
   b: JsonValue,
   s: JsonValue,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): boolean | string {
   DEV && console.log(" \n███████████████████████████████████████\n ");
   DEV && console.log(`062 compare() CALLED`);
