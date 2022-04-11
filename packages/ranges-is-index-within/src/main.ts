@@ -5,8 +5,8 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 interface Opts {
-  inclusiveRangeEnds?: boolean;
-  returnMatchedRangeInsteadOfTrue?: boolean;
+  inclusiveRangeEnds: boolean;
+  returnMatchedRangeInsteadOfTrue: boolean;
 }
 
 const defaults: Opts = {
@@ -17,7 +17,7 @@ const defaults: Opts = {
 function isIndexWithin(
   originalIndex: number,
   rangesArr: Ranges,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): boolean | Range {
   let opts = { ...defaults, ...originalOpts };
   // insurance

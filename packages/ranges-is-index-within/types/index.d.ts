@@ -5,14 +5,14 @@ declare type Ranges = Range[] | null;
 
 declare const version: string;
 interface Opts {
-  inclusiveRangeEnds?: boolean;
-  returnMatchedRangeInsteadOfTrue?: boolean;
+  inclusiveRangeEnds: boolean;
+  returnMatchedRangeInsteadOfTrue: boolean;
 }
 declare const defaults: Opts;
 declare function isIndexWithin(
   originalIndex: number,
   rangesArr: Ranges,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): boolean | Range;
 
 export { defaults, isIndexWithin, version };
