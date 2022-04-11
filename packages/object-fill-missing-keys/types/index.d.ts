@@ -11,7 +11,7 @@ declare const defaults: Opts;
 declare function fillMissing(
   originalIncompleteWrapper: Obj,
   originalSchemaWrapper: Obj,
-  originalOptsWrapper?: Opts
+  originalOptsWrapper?: Partial<Opts>
 ): Obj;
 
 export { defaults, fillMissing, version };

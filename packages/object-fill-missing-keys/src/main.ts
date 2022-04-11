@@ -100,7 +100,7 @@ function fillMissingKeys(
       if (incomplete.length === 0) {
         return schema;
       }
-      if (schema.length > 0) {
+      if (schema.length) {
         for (let i = incomplete.length; i--; ) {
           let currentPath = `${path ? `${path}.` : ""}0`;
           if (isObj(schema[0]) || Array.isArray(schema[0])) {
@@ -128,7 +128,7 @@ function fillMissingKeys(
 function fillMissing(
   originalIncompleteWrapper: Obj,
   originalSchemaWrapper: Obj,
-  originalOptsWrapper?: Opts
+  originalOptsWrapper?: Partial<Opts>
 ): Obj {
   // first argument must be an object. However, we're going to call recursively,
   // so we have to wrap the main function with another, wrapper-one, and perform
@@ -169,7 +169,7 @@ function fillMissing(
   }
 
   // fill any settings with defaults if missing:
-  let opts = { ...defaults, ...(originalOptsWrapper || {}) };
+  let opts: Opts = { ...defaults, ...(originalOptsWrapper || {}) };
 
   opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(
     opts.doNotFillThesePathsIfTheyContainPlaceholders as any
@@ -178,7 +178,7 @@ function fillMissing(
   let culpritsVal = null;
   let culpritsIndex = null;
   if (
-    opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
+    opts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
     !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((key, idx) => {
       if (!isStr(key)) {
         culpritsVal = key;
