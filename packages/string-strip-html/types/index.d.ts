@@ -79,6 +79,6 @@ interface Res {
 /**
  * Strips HTML tags from strings. No parser, accepts mixed sources.
  */
-declare function stripHtml(str: string, originalOpts?: Partial<Opts>): Res;
+declare function stripHtml(str: string, opts?: Partial<Opts>): Res;
 
 export { CbObj, defaults, stripHtml, version };
