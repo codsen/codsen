@@ -20,6 +20,6 @@ interface Opts {
   textAmpersandCatcherCb: null | ((idx: number) => void);
   progressFn: null | ((percDone: number) => void);
 }
-declare function fixEnt(str: string, originalOpts?: Partial<Opts>): Ranges;
+declare function fixEnt(str: string, opts?: Partial<Opts>): Ranges;
 
 export { allRules, fixEnt, version };
