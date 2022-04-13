@@ -13,7 +13,7 @@ declare function findMalformed(
   str: string,
   refStr: string,
   cb: (obj: DataObj) => void,
-  originalOpts?: Partial<Opts> | undefined | null
+  opts?: Partial<Opts> | undefined | null
 ): void;
 
 export { defaults, findMalformed, version };

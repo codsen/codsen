@@ -35,7 +35,7 @@ function findMalformed(
   str: string,
   refStr: string,
   cb: (obj: DataObj) => void,
-  originalOpts?: Partial<Opts> | undefined | null
+  opts?: Partial<Opts> | undefined | null
 ): void {
   DEV && console.log(`040 strFindMalformed() START:`);
   DEV &&
@@ -81,35 +81,38 @@ function findMalformed(
       `string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: ${cb} (type: ${typeof cb})`
     );
   }
-  if (originalOpts && !isObj(originalOpts)) {
+  if (opts && !isObj(opts)) {
     throw new TypeError(
-      `string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${originalOpts} (type: ${typeof originalOpts})`
+      `string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${opts} (type: ${typeof opts})`
     );
   }
 
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts = { ...defaults, ...opts };
 
-  // we perform the validation upon Object-assigned "opts" instead
-  // of incoming "originalOpts" because we don't want to mutate the
-  // "originalOpts" and making note of fixed values, Object-assigning
-  // "opts" and then putting those noted fixed values on top is more
+  // we perform the validation upon Object-assigned "resolvedOpts" instead
+  // of incoming "opts" because we don't want to mutate the
+  // "opts" and making note of fixed values, Object-assigning
+  // "resolvedOpts" and then putting those noted fixed values on top is more
   // tedious than letting Object-assign to do the job, then validating
   // it, then trying to salvage the value (if possible).
 
   if (
-    typeof opts.stringOffset === "string" &&
-    /^\d*$/.test(opts.stringOffset)
+    typeof resolvedOpts.stringOffset === "string" &&
+    /^\d*$/.test(resolvedOpts.stringOffset)
   ) {
-    opts.stringOffset = Number(opts.stringOffset);
-  } else if (!Number.isInteger(opts.stringOffset) || opts.stringOffset < 0) {
+    resolvedOpts.stringOffset = Number(resolvedOpts.stringOffset);
+  } else if (
+    !Number.isInteger(resolvedOpts.stringOffset) ||
+    resolvedOpts.stringOffset < 0
+  ) {
     throw new TypeError(
-      `[THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: ${opts.stringOffset}`
+      `[THROW_ID_05] resolvedOpts.stringOffset must be a natural number or zero! Currently it's: ${resolvedOpts.stringOffset}`
     );
   }
   DEV &&
     console.log(
-      `111 FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-        opts,
+      `114 FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+        resolvedOpts,
         null,
         4
       )}`
@@ -122,12 +125,12 @@ function findMalformed(
   let len = str.length;
 
   // "current" character (str[i]) is matched against first character
-  // of "refStr", then, if opts.maxDistance allows and refStr has
+  // of "refStr", then, if resolvedOpts.maxDistance allows and refStr has
   // enough length, current character (str[i]) is matched against the
   // second character of "refStr" - this time, "patience" is subtracted
   // by amount of skipped characters, in this case, by 1... and so on...
   // That matching chain is a "for" loop and that loop's length is below:
-  let len2 = Math.min(refStr.length, (opts.maxDistance || 0) + 1);
+  let len2 = Math.min(refStr.length, (resolvedOpts.maxDistance || 0) + 1);
 
   interface MatchesObj {
     startsAt: number;
@@ -138,7 +141,7 @@ function findMalformed(
   let pendingMatchesArr: MatchesObj[] = [];
 
   // when it attempts to dip below zero, match is failed
-  let patience: number = opts.maxDistance || 1;
+  let patience: number = resolvedOpts.maxDistance || 1;
 
   let wasThisLetterMatched;
 
@@ -163,8 +166,8 @@ function findMalformed(
         }`}\u001b[${39}m \u001b[${36}m${`================================`}\u001b[${39}m\n`
       );
 
-    if (opts.ignoreWhitespace && !str[i].trim()) {
-      DEV && console.log(`167 ${`\u001b[${32}m${`SKIP`}\u001b[${39}m`}`);
+    if (resolvedOpts.ignoreWhitespace && !str[i].trim()) {
+      DEV && console.log(`170 ${`\u001b[${32}m${`SKIP`}\u001b[${39}m`}`);
       continue;
     }
 
@@ -181,7 +184,7 @@ function findMalformed(
 
     DEV &&
       console.log(
-        `184 ${`\u001b[${34}m${`I. tend the existing entries in pendingMatchesArr[]`}\u001b[${39}m`}`
+        `187 ${`\u001b[${34}m${`I. tend the existing entries in pendingMatchesArr[]`}\u001b[${39}m`}`
       );
     for (let z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {
       DEV && console.log(" ");
@@ -189,7 +192,7 @@ function findMalformed(
       DEV && console.log(" ");
       DEV &&
         console.log(
-          `192 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+          `195 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
             pendingMatchesArr[z],
             null,
             4
@@ -202,18 +205,18 @@ function findMalformed(
         pendingMatchesArr[z].pendingToCheck.length &&
         str[i] === pendingMatchesArr[z].pendingToCheck[0]
       ) {
-        DEV && console.log(`205 CASE I. Happy path - matched.`);
+        DEV && console.log(`208 CASE I. Happy path - matched.`);
         wasThisLetterMatched = true;
         DEV &&
           console.log(
-            `209 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} wasThisLetterMatched = ${wasThisLetterMatched}`
+            `212 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} wasThisLetterMatched = ${wasThisLetterMatched}`
           );
 
         // if matched, shift() it
         pendingMatchesArr[z].pendingToCheck.shift();
         DEV &&
           console.log(
-            `216 ${`\u001b[${32}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck now = ${JSON.stringify(
+            `219 ${`\u001b[${32}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck now = ${JSON.stringify(
               pendingMatchesArr[z].pendingToCheck,
               null,
               4
@@ -224,11 +227,11 @@ function findMalformed(
         pendingMatchesArr[z].pendingToCheck.length &&
         str[i] === pendingMatchesArr[z].pendingToCheck[1]
       ) {
-        DEV && console.log(`227 CASE II. Next-one matched instead.`);
+        DEV && console.log(`230 CASE II. Next-one matched instead.`);
         wasThisLetterMatched = true;
         DEV &&
           console.log(
-            `231 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} wasThisLetterMatched = ${wasThisLetterMatched}`
+            `234 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} wasThisLetterMatched = ${wasThisLetterMatched}`
           );
 
         // if matched, shift() it
@@ -236,7 +239,7 @@ function findMalformed(
         pendingMatchesArr[z].pendingToCheck.shift();
         DEV &&
           console.log(
-            `239 ${`\u001b[${32}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck now = ${JSON.stringify(
+            `242 ${`\u001b[${32}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck now = ${JSON.stringify(
               pendingMatchesArr[z].pendingToCheck,
               null,
               4
@@ -246,7 +249,7 @@ function findMalformed(
         pendingMatchesArr[z].patienceLeft -= 1;
         DEV &&
           console.log(
-            `249 ${`\u001b[${31}m${`DECREASE PATIENCE`}\u001b[${39}m`} ${`\u001b[${33}m${`patienceLeft`}\u001b[${39}m`} = ${
+            `252 ${`\u001b[${31}m${`DECREASE PATIENCE`}\u001b[${39}m`} ${`\u001b[${33}m${`patienceLeft`}\u001b[${39}m`} = ${
               pendingMatchesArr[z].patienceLeft
             }`
           );
@@ -255,7 +258,7 @@ function findMalformed(
         pendingMatchesArr[z].patienceLeft -= 1;
         DEV &&
           console.log(
-            `258 ${`\u001b[${31}m${`DECREASE PATIENCE`}\u001b[${39}m`} ${`\u001b[${33}m${`patienceLeft`}\u001b[${39}m`} = ${
+            `261 ${`\u001b[${31}m${`DECREASE PATIENCE`}\u001b[${39}m`} ${`\u001b[${33}m${`patienceLeft`}\u001b[${39}m`} = ${
               pendingMatchesArr[z].patienceLeft
             }`
           );
@@ -267,7 +270,7 @@ function findMalformed(
         ) {
           DEV &&
             console.log(
-              `270 ██ str[${right(str, i)}] = "${
+              `273 ██ str[${right(str, i)}] = "${
                 str[right(str, i) as number]
               }" DIDN'T MATCH pendingMatchesArr[${z}].pendingToCheck[0] = "${
                 pendingMatchesArr[z].pendingToCheck[0]
@@ -276,7 +279,7 @@ function findMalformed(
           pendingMatchesArr[z].pendingToCheck.shift();
           DEV &&
             console.log(
-              `279 ${`\u001b[${31}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck now: ${JSON.stringify(
+              `282 ${`\u001b[${31}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck now: ${JSON.stringify(
                 pendingMatchesArr[z].pendingToCheck,
                 null,
                 4
@@ -288,7 +291,7 @@ function findMalformed(
           // pendingMatchesArr[z].pendingToCheck:
           DEV &&
             console.log(
-              `291 ${`\u001b[${32}m${`CHECK`}\u001b[${39}m`}, does str[${i}]=${
+              `294 ${`\u001b[${32}m${`CHECK`}\u001b[${39}m`}, does str[${i}]=${
                 str[i]
               } === pendingMatchesArr[${z}].pendingToCheck[0]=${
                 pendingMatchesArr[z].pendingToCheck[0]
@@ -298,7 +301,7 @@ function findMalformed(
             pendingMatchesArr[z].pendingToCheck.shift();
             DEV &&
               console.log(
-                `301 pendingMatchesArr[z].pendingToCheck now: ${JSON.stringify(
+                `304 pendingMatchesArr[z].pendingToCheck now: ${JSON.stringify(
                   pendingMatchesArr[z].pendingToCheck,
                   null,
                   4
@@ -325,7 +328,7 @@ function findMalformed(
     if (Array.isArray(tempArr) && tempArr.length) {
       DEV &&
         console.log(
-          `328 ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `331 ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
             tempArr,
             null,
             4
@@ -333,11 +336,13 @@ function findMalformed(
         );
       DEV &&
         console.log(
-          `336 ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
+          `339 ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
             {
-              idxFrom: Math.min(...tempArr) + (opts.stringOffset || 0),
+              idxFrom: Math.min(...tempArr) + (resolvedOpts.stringOffset || 0),
               idxTo:
-                i + (wasThisLetterMatched ? 1 : 0) + (opts.stringOffset || 0),
+                i +
+                (wasThisLetterMatched ? 1 : 0) +
+                (resolvedOpts.stringOffset || 0),
             },
             null,
             4
@@ -348,8 +353,8 @@ function findMalformed(
       if (str.slice(idxFrom, idxTo) !== refStr) {
         // only ping malformed values, don't ping those exactly matching "refStr"
         cb({
-          idxFrom: idxFrom + (opts.stringOffset || 0),
-          idxTo: idxTo + (opts.stringOffset || 0),
+          idxFrom: idxFrom + (resolvedOpts.stringOffset || 0),
+          idxTo: idxTo + (resolvedOpts.stringOffset || 0),
         });
       }
 
@@ -361,12 +366,12 @@ function findMalformed(
 
     DEV &&
       console.log(
-        `364 ${`\u001b[${34}m${`II. check the current character, maybe it matches something new`}\u001b[${39}m`}`
+        `369 ${`\u001b[${34}m${`II. check the current character, maybe it matches something new`}\u001b[${39}m`}`
       );
     for (let y = 0; y < len2; y++) {
       DEV &&
         console.log(
-          `369 ${`\u001b[${36}m${`=== matching index: ${y}, that's characters str[${i}]="${str[i]}" vs. refStr[${y}]="${refStr[y]}" ===`}\u001b[${39}m`}`
+          `374 ${`\u001b[${36}m${`=== matching index: ${y}, that's characters str[${i}]="${str[i]}" vs. refStr[${y}]="${refStr[y]}" ===`}\u001b[${39}m`}`
         );
 
       if (str[i] === refStr[y]) {
@@ -377,7 +382,7 @@ function findMalformed(
         };
         DEV &&
           console.log(
-            `380 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+            `385 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
               whatToPush,
               null,
               4
