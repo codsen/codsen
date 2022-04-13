@@ -9,7 +9,7 @@ interface Opts {
 declare const defaults: Opts;
 declare function extractVars(
   str: string,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): UnknownValueObj;
 
 export { defaults, extractVars, version };
