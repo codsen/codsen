@@ -29,6 +29,6 @@ interface Res {
   ranges: Ranges;
 }
 declare const cbSchema: string[];
-declare function collapse(str: string, originalOpts?: Partial<Opts>): Res;
+declare function collapse(str: string, opts?: Partial<Opts>): Res;
 
 export { cbSchema, collapse, defaults, version };
