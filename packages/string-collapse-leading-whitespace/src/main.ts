@@ -4,7 +4,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-function collWhitespace(str: string, originallineBreakLimit = 1): string {
+function collWhitespace(str: string, lineBreakLimit = 1): string {
   let rawNbsp = "\u00A0";
   // helpers
 
@@ -191,18 +191,18 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
 
   if (typeof str === "string" && str.length) {
     // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
-    let lineBreakLimit = 1;
+    let resolvedLineBreakLimit = 1;
     if (
-      typeof +originallineBreakLimit === "number" &&
-      Number.isInteger(+originallineBreakLimit) &&
-      +originallineBreakLimit >= 0
+      typeof +lineBreakLimit === "number" &&
+      Number.isInteger(+lineBreakLimit) &&
+      +lineBreakLimit >= 0
     ) {
-      lineBreakLimit = +originallineBreakLimit;
+      resolvedLineBreakLimit = +lineBreakLimit;
     }
     DEV &&
       console.log(
-        `204 ${`\u001b[${33}m${`lineBreakLimit`}\u001b[${39}m`} = ${JSON.stringify(
-          lineBreakLimit,
+        `204 ${`\u001b[${33}m${`resolvedLineBreakLimit`}\u001b[${39}m`} = ${JSON.stringify(
+          resolvedLineBreakLimit,
           null,
           4
         )}`
@@ -268,11 +268,15 @@ function collWhitespace(str: string, originallineBreakLimit = 1): string {
     // -------------------------------------------------------------------------
 
     DEV && console.log(`270 end reached`);
-    return `${prep(frontPart, lineBreakLimit, false)}${str.trim()}${reverse(
-      prep(reverse(endPart), lineBreakLimit, true)
+    return `${prep(
+      frontPart,
+      resolvedLineBreakLimit,
+      false
+    )}${str.trim()}${reverse(
+      prep(reverse(endPart), resolvedLineBreakLimit, true)
     )}`;
   }
-  DEV && console.log(`275 just return whatever was given`);
+  DEV && console.log(`279 just return whatever was given`);
   return str;
 }
 

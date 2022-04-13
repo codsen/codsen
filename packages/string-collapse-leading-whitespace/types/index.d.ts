@@ -1,7 +1,4 @@
 declare const version: string;
-declare function collWhitespace(
-  str: string,
-  originallineBreakLimit?: number
-): string;
+declare function collWhitespace(str: string, lineBreakLimit?: number): string;
 
 export { collWhitespace, version };
