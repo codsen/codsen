@@ -121,4 +121,105 @@ declare const c: string;
   );
 });
 
+test("04 - re-exports", () => {
+  let source = `export { x as y } from "z";`;
+  equal(
+    extract(source, "export", { extractAll: false, stripAs: false }),
+    {
+      identifiers: ["export"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 6,
+      content: '{ x as y } from "z";',
+      contentStartsAt: 7,
+      contentEndsAt: 27,
+      value: 'export { x as y } from "z";',
+      valueStartsAt: 0,
+      valueEndsAt: 27,
+      all: [],
+      error: null,
+    },
+    "04.01"
+  );
+  equal(
+    extract(source, "export", { extractAll: false, stripAs: true }),
+    {
+      identifiers: ["export"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 6,
+      content: '{ y } from "z";',
+      contentStartsAt: 7,
+      contentEndsAt: 27,
+      value: 'export { y } from "z";',
+      valueStartsAt: 0,
+      valueEndsAt: 27,
+      all: [],
+      error: null,
+    },
+    "04.02"
+  );
+});
+
+test("05 - re-exports, more realistic", () => {
+  let source = `export {
+  isProduction4,
+  isProduction4a,
+  isProduction4 as validFirstChar,
+  isProduction4a as validSecondCharOnwards,
+};`;
+  equal(
+    extract(source, "export", { extractAll: false, stripAs: false }),
+    {
+      identifiers: ["export"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 6,
+      content: `{
+  isProduction4,
+  isProduction4a,
+  isProduction4 as validFirstChar,
+  isProduction4a as validSecondCharOnwards,
+};`,
+      contentStartsAt: 7,
+      contentEndsAt: 125,
+      value: `export {
+  isProduction4,
+  isProduction4a,
+  isProduction4 as validFirstChar,
+  isProduction4a as validSecondCharOnwards,
+};`,
+      valueStartsAt: 0,
+      valueEndsAt: 125,
+      all: [],
+      error: null,
+    },
+    "05.01"
+  );
+  equal(
+    extract(source, "export", { extractAll: false, stripAs: true }),
+    {
+      identifiers: ["export"],
+      identifiersStartAt: 0,
+      identifiersEndAt: 6,
+      content: `{
+  isProduction4,
+  isProduction4a,
+  validFirstChar,
+  validSecondCharOnwards,
+};`,
+      contentStartsAt: 7,
+      contentEndsAt: 125,
+      value: `export {
+  isProduction4,
+  isProduction4a,
+  validFirstChar,
+  validSecondCharOnwards,
+};`,
+      valueStartsAt: 0,
+      valueEndsAt: 125,
+      all: [],
+      error: null,
+    },
+    "05.02"
+  );
+});
+
 test.run();

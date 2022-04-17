@@ -3,6 +3,7 @@ interface Opts {
   extractAll: boolean;
   semi: boolean;
   mustInclude: string | undefined;
+  stripAs: boolean;
 }
 interface Statement {
   identifiers: string[];
