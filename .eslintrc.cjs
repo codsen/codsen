@@ -3,11 +3,7 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: [
-    "eslint:recommended",
-    "plugin:prettier/recommended",
-    "@logux/eslint-config/ts",
-  ],
+  extends: ["eslint:recommended", "plugin:prettier/recommended"],
   parserOptions: {
     ecmaVersion: "latest",
   },
