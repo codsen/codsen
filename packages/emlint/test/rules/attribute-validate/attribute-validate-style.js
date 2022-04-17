@@ -6,7 +6,6 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 // eslint-disable-next-line no-unused-vars
 import { compare } from "../../../../../ops/helpers/shallow-compare.js";
-
 import { applyFixes, verify } from "../../../t-util/util.js";
 
 // 01. validation

@@ -45,7 +45,7 @@ export const interdeps = [
     },
     {
         "name": "ast-deep-contains",
-        "size": 2089,
+        "size": 2087,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -113,7 +113,7 @@ export const interdeps = [
     },
     {
         "name": "charcode-is-valid-xml-name-character",
-        "size": 1087,
+        "size": 1086,
         "imports": [
             "ranges-is-index-within"
         ]
@@ -200,7 +200,7 @@ export const interdeps = [
     },
     {
         "name": "edit-package-json",
-        "size": 10245,
+        "size": 10243,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -260,7 +260,7 @@ export const interdeps = [
     },
     {
         "name": "generate-atomic-css",
-        "size": 8120,
+        "size": 8118,
         "imports": [
             "string-left-right"
         ]
@@ -351,7 +351,7 @@ export const interdeps = [
     },
     {
         "name": "is-media-descriptor",
-        "size": 6043,
+        "size": 6041,
         "imports": [
             "string-process-comma-separated"
         ]
@@ -363,7 +363,7 @@ export const interdeps = [
     },
     {
         "name": "js-row-num",
-        "size": 2636,
+        "size": 2634,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -468,14 +468,14 @@ export const interdeps = [
     },
     {
         "name": "object-flatten-referencing",
-        "size": 4826,
+        "size": 4824,
         "imports": [
             "str-indexes-of-plus"
         ]
     },
     {
         "name": "object-merge-advanced",
-        "size": 7186,
+        "size": 7184,
         "imports": [
             "util-nonempty"
         ]
@@ -492,21 +492,21 @@ export const interdeps = [
     },
     {
         "name": "ranges-apply",
-        "size": 2453,
+        "size": 2451,
         "imports": [
             "ranges-merge"
         ]
     },
     {
         "name": "ranges-crop",
-        "size": 1900,
+        "size": 1898,
         "imports": [
             "ranges-merge"
         ]
     },
     {
         "name": "ranges-ent-decode",
-        "size": 2088,
+        "size": 2086,
         "imports": [
             "ranges-merge"
         ]
@@ -521,12 +521,12 @@ export const interdeps = [
     },
     {
         "name": "ranges-is-index-within",
-        "size": 813,
+        "size": 811,
         "imports": []
     },
     {
         "name": "ranges-merge",
-        "size": 2314,
+        "size": 2312,
         "imports": [
             "ranges-push",
             "ranges-sort"
@@ -542,7 +542,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-push",
-        "size": 6914,
+        "size": 6912,
         "imports": [
             "string-collapse-leading-whitespace",
             "string-trim-spaces-only"
@@ -550,7 +550,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-regex",
-        "size": 1335,
+        "size": 1333,
         "imports": [
             "ranges-merge"
         ]
@@ -587,7 +587,7 @@ export const interdeps = [
     },
     {
         "name": "string-apostrophes",
-        "size": 6112,
+        "size": 6110,
         "imports": [
             "ranges-apply"
         ]
@@ -604,7 +604,7 @@ export const interdeps = [
     },
     {
         "name": "string-collapse-white-space",
-        "size": 3553,
+        "size": 3559,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -627,7 +627,7 @@ export const interdeps = [
     },
     {
         "name": "string-find-heads-tails",
-        "size": 7360,
+        "size": 7376,
         "imports": [
             "arrayiffy-if-string",
             "string-match-left-right"
@@ -635,14 +635,14 @@ export const interdeps = [
     },
     {
         "name": "string-find-malformed",
-        "size": 2742,
+        "size": 2748,
         "imports": [
             "string-left-right"
         ]
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 11364,
+        "size": 11396,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
@@ -709,7 +709,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 16683,
+        "size": 16707,
         "imports": [
             "ranges-apply",
             "ranges-push",

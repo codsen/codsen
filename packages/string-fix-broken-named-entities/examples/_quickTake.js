@@ -1,9 +1,9 @@
 // Quick Take
 
 import { strict as assert } from "assert";
+import { rApply } from "ranges-apply";
 
 import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
-import { rApply } from "ranges-apply";
 
 const source = "&nsp;x&nsp;y&nsp;";
 

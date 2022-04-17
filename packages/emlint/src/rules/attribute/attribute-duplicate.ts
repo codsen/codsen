@@ -1,8 +1,8 @@
 import { rMerge } from "ranges-merge";
 import { right } from "string-left-right";
+import type { Range } from "../../../../../ops/typedefs/common";
 
 import { Linter, RuleObjType } from "../../linter";
-import type { Range } from "../../../../../ops/typedefs/common";
 
 // rule: attribute-duplicate
 // -----------------------------------------------------------------------------
