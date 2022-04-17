@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.3.0 (2022-04-17)
+
+
+### Features
+
+* opts.stripAs ([e4e1ca6](https://github.com/codsen/codsen/commit/e4e1ca6792045068f80ac40684eac9b7758aae7f))
+
+
+
+
+
 # [0.2.0](https://github.com/codsen/codsen/compare/tsd-extract@0.1.0...tsd-extract@0.2.0) (2022-04-10)
 
 ### Bug Fixes

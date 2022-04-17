@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-referencing",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "Flatten complex nested objects according to a reference objects",
   "keywords": [
     "advanced",

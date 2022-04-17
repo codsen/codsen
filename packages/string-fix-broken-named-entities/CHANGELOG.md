@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.13 (2022-04-17)
+
+**Note:** Version bump only for package string-fix-broken-named-entities
+
+
+
+
+
 ## 6.0.0 (2021-09-09)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "string-find-malformed",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Search for a malformed string. Think of Levenshtein distance but in search.",
   "keywords": [
     "character",
