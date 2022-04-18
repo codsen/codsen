@@ -1,5 +1,3 @@
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-
 import clone from "lodash.clonedeep";
 import { compare } from "ast-compare";
 import { traverse } from "ast-monkey-traverse";
@@ -9,9 +7,10 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-interface UnknownValueObj {
-  [key: string]: any;
-}
+// From "type-fest" by Sindre Sorhus:
+type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+type JsonObject = { [Key in string]?: JsonValue };
+type JsonArray = JsonValue[];
 
 interface Opts {
   matchKeysStrictly: boolean;
@@ -26,14 +25,14 @@ const defaults: Opts = {
 /**
  * Delete all plain objects in AST if they contain a certain key/value pair
  */
-function deleteObj(
-  originalInput: any,
-  objToDelete: UnknownValueObj,
-  originalOpts?: Partial<Opts>
-): any {
-  if (!originalInput) {
+function deleteObj<T extends JsonValue>(
+  input: T,
+  objToDelete: JsonObject,
+  opts?: Partial<Opts>
+): T {
+  if (!input) {
     throw new Error(
-      "ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!"
+      "ast-delete-object/deleteObj(): [THROW_ID_01] Missing resolvedInput!"
     );
   }
   if (!objToDelete) {
@@ -41,29 +40,31 @@ function deleteObj(
       "ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!"
     );
   }
-  if (originalOpts && !isObj(originalOpts)) {
+  if (opts && !isObj(opts)) {
     throw new Error(
       "ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!"
     );
   }
 
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts = { ...defaults, ...opts };
 
-  let input = clone(originalInput);
+  let resolvedInput = clone(input);
   let current;
 
-  // compare input itself
+  // compare resolvedInput itself
   if (
-    compare(input, objToDelete, {
-      hungryForWhitespace: opts.hungryForWhitespace,
-      matchStrictly: opts.matchKeysStrictly,
+    isObj(resolvedInput) &&
+    isObj(objToDelete) &&
+    compare(resolvedInput, objToDelete, {
+      hungryForWhitespace: resolvedOpts.hungryForWhitespace,
+      matchStrictly: resolvedOpts.matchKeysStrictly,
     })
   ) {
-    return {};
+    return {} as any;
   }
 
   // traversal
-  input = traverse(input, (key, val) => {
+  resolvedInput = traverse(resolvedInput, (key, val) => {
     current = val !== undefined ? val : key;
     if (isObj(current)) {
       if (
@@ -76,8 +77,8 @@ function deleteObj(
       }
       if (
         compare(current, objToDelete, {
-          hungryForWhitespace: opts.hungryForWhitespace,
-          matchStrictly: opts.matchKeysStrictly,
+          hungryForWhitespace: resolvedOpts.hungryForWhitespace,
+          matchStrictly: resolvedOpts.matchKeysStrictly,
         })
       ) {
         return NaN;
@@ -85,7 +86,7 @@ function deleteObj(
     }
     return current;
   });
-  return input;
+  return resolvedInput;
 }
 
 export { deleteObj, defaults, version };
