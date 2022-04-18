@@ -16,9 +16,6 @@ interface Opts {
   cb: null | ((from: number, to: number) => void);
   errCb: null | ErrCb;
 }
-declare function processCommaSep(
-  str: string,
-  originalOpts?: Partial<Opts>
-): void;
+declare function processCommaSep(str: string, opts?: Partial<Opts>): void;
 
 export { processCommaSep, version };
