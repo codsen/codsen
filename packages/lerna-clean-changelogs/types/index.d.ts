@@ -4,8 +4,8 @@ interface Opts {
 }
 declare const defaults: Opts;
 declare function cleanChangelogs(
-  changelogContents: string,
-  originalOpts?: Partial<Opts>
+  changelog: string,
+  opts?: Partial<Opts>
 ): {
   version: string;
   res: string;

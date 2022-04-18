@@ -17,50 +17,50 @@ const defaults: Opts = {
 };
 
 function cleanChangelogs(
-  changelogContents: string,
-  originalOpts?: Partial<Opts>
+  changelog: string,
+  opts?: Partial<Opts>
 ): {
   version: string;
   res: string;
 } {
   // validate the first input argument:
-  if (changelogContents === undefined) {
+  if (changelog === undefined) {
     throw new Error(
       `lerna-clean-changelogs: [THROW_ID_01] The first input argument is missing!`
     );
-  } else if (!isStr(changelogContents)) {
+  } else if (!isStr(changelog)) {
     throw new Error(
       `lerna-clean-changelogs: [THROW_ID_02] The first input argument must be a string! It was given as ${
-        Array.isArray(changelogContents) ? "array" : typeof changelogContents
-      }, equal to:\n${JSON.stringify(changelogContents, null, 4)}`
+        Array.isArray(changelog) ? "array" : typeof changelog
+      }, equal to:\n${JSON.stringify(changelog, null, 4)}`
     );
   }
 
-  let opts: Opts = { ...defaults, ...originalOpts };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
   let final;
   let lastLineWasEmpty = false;
 
   if (
-    typeof changelogContents === "string" &&
-    changelogContents.length &&
-    (!changelogContents.includes("\n") || !changelogContents.includes("\r"))
+    typeof changelog === "string" &&
+    changelog.length &&
+    (!changelog.includes("\n") || !changelog.includes("\r"))
   ) {
     /* istanbul ignore next */
     let changelogEndedWithLinebreak =
-      isStr(changelogContents) &&
-      changelogContents.length &&
-      (changelogContents[changelogContents.length - 1] === "\n" ||
-        changelogContents[changelogContents.length - 1] === "\r");
+      isStr(changelog) &&
+      changelog.length &&
+      (changelog[changelog.length - 1] === "\n" ||
+        changelog[changelog.length - 1] === "\r");
 
     // eslint-disable-next-line no-param-reassign
-    changelogContents = changelogContents
+    changelog = changelog
       .trim()
       .replace(
         /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
         "$1commit/"
       );
-    let linesArr = changelogContents.split(/\r?\n/);
+    let linesArr = changelog.split(/\r?\n/);
     // DEV && console.log(
     //   `${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
     //     linesArr,
@@ -69,7 +69,7 @@ function cleanChangelogs(
     //   )}`
     // );
 
-    if (opts.extras) {
+    if (resolvedOpts.extras) {
       // ███
       // 1. remove links from titles, for example, turn:
       // ## [2.9.1](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
@@ -115,7 +115,7 @@ function cleanChangelogs(
         );
       if (
         linesArr[i].startsWith("**Note:** Version bump only") ||
-        (opts.extras && linesArr[i].toLowerCase().includes("wip"))
+        (resolvedOpts.extras && linesArr[i].toLowerCase().includes("wip"))
       ) {
         // delete all the blank lines above the culprit:
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
@@ -171,7 +171,7 @@ function cleanChangelogs(
 
   return {
     version,
-    res: final || changelogContents,
+    res: final || changelog,
   };
 }
 
