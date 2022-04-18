@@ -176,7 +176,7 @@ interface Res {
 /**
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
  */
-declare function tokenizer(str: string, originalOpts?: Partial<Opts>): Res;
+declare function tokenizer(str: string, opts?: Partial<Opts>): Res;
 declare const util: {
   matchLayerLast: typeof matchLayerLast;
 };
