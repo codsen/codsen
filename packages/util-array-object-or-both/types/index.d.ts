@@ -6,7 +6,7 @@ interface Opts {
 declare const defaults: Opts;
 declare function arrObjOrBoth(
   str: string,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): "array" | "object" | "any";
 
 export { arrObjOrBoth, defaults, version };

@@ -14,7 +14,7 @@ const defaults: Opts = {
 
 function arrObjOrBoth(
   str: string,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): "array" | "object" | "any" {
   let onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
   let onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
@@ -30,13 +30,13 @@ function arrObjOrBoth(
     "e",
   ];
 
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
-  if (opts?.msg && opts.msg.length) {
-    opts.msg = `${opts.msg.trim()} `;
+  if (resolvedOpts?.msg && resolvedOpts.msg.length) {
+    resolvedOpts.msg = `${resolvedOpts.msg.trim()} `;
   }
-  if (opts.optsVarName !== "given variable") {
-    opts.optsVarName = `variable "${opts.optsVarName}"`;
+  if (resolvedOpts.optsVarName !== "given variable") {
+    resolvedOpts.optsVarName = `variable "${resolvedOpts.optsVarName}"`;
   }
 
   if (includes(onlyObjectValues, str.toLowerCase().trim())) {
@@ -49,7 +49,7 @@ function arrObjOrBoth(
     return "any";
   }
   throw new TypeError(
-    `${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`
+    `${resolvedOpts.msg}The ${resolvedOpts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`
   );
 }
 
