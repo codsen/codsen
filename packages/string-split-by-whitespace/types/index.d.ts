@@ -7,6 +7,6 @@ interface Opts {
   ignoreRanges: Range[];
 }
 declare const defaults: Opts;
-declare function splitByW(str: string, originalOpts?: Partial<Opts>): string[];
+declare function splitByW(str: string, opts?: Partial<Opts>): string[];
 
 export { defaults, splitByW, version };

@@ -12,7 +12,7 @@ const defaults: Opts = {
   ignoreRanges: [],
 };
 
-function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
+function splitByW(str: string, opts?: Partial<Opts>): string[] {
   if (str === undefined) {
     throw new Error(
       "string-split-by-whitespace: [THROW_ID_01] The input is missing!"
@@ -25,13 +25,13 @@ function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
   if (str.trim() === "") {
     return [];
   }
-  let opts: Opts = { ...defaults, ...originalOpts };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
   if (
-    opts.ignoreRanges.length &&
-    !opts.ignoreRanges.every((arr) => Array.isArray(arr))
+    resolvedOpts.ignoreRanges.length &&
+    !resolvedOpts.ignoreRanges.every((arr) => Array.isArray(arr))
   ) {
     throw new Error(
-      "string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!"
+      "string-split-by-whitespace: [THROW_ID_03] The resolvedOpts.ignoreRanges contains elements which are not arrays!"
     );
   }
 
@@ -43,13 +43,13 @@ function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
     if (
       nonWhitespaceSubStringStartsAt === null &&
       str[i].trim() &&
-      (!opts ||
-        !opts.ignoreRanges ||
-        !opts.ignoreRanges.length ||
-        (opts.ignoreRanges.length &&
+      (!resolvedOpts ||
+        !resolvedOpts.ignoreRanges ||
+        !resolvedOpts.ignoreRanges.length ||
+        (resolvedOpts.ignoreRanges.length &&
           !isIndexWithin(
             i,
-            opts.ignoreRanges.map((arr) => [arr[0], arr[1] - 1]),
+            resolvedOpts.ignoreRanges.map((arr) => [arr[0], arr[1] - 1]),
             {
               inclusiveRangeEnds: true,
             }
@@ -63,8 +63,8 @@ function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
         nonWhitespaceSubStringStartsAt = null;
       } else if (
-        opts.ignoreRanges.length &&
-        isIndexWithin(i, opts.ignoreRanges)
+        resolvedOpts.ignoreRanges.length &&
+        isIndexWithin(i, resolvedOpts.ignoreRanges)
       ) {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i - 1));
         nonWhitespaceSubStringStartsAt = null;
