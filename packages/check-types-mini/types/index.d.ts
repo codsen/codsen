@@ -19,7 +19,7 @@ declare const defaults: Opts;
 declare function checkTypesMini(
   obj: Obj,
   ref: Obj | null,
-  originalOptions?: Partial<Opts>
+  opts?: Partial<Opts>
 ): void;
 
 export { checkTypesMini, defaults, version };
