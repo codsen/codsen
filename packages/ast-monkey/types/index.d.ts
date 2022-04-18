@@ -24,28 +24,28 @@ interface FindOpts {
   val: any;
   only?: undefined | null | "any" | "array" | "object";
 }
-declare function find(input: JsonValue, originalOpts: FindOpts): Finding[];
+declare function find(input: JsonValue, opts: FindOpts): Finding[];
 interface GetOpts {
   index: number;
   only?: undefined | null | "any" | "array" | "object";
 }
-declare function get(input: JsonValue, originalOpts: GetOpts): JsonValue;
+declare function get(input: JsonValue, opts: GetOpts): JsonValue;
 interface SetOpts {
   key: null | string;
   val: any;
   index: number;
 }
-declare function set(input: JsonValue, originalOpts: SetOpts): JsonValue;
+declare function set(input: JsonValue, opts: SetOpts): JsonValue;
 interface DropOpts {
   index: number;
 }
-declare function drop(input: JsonValue, originalOpts: DropOpts): JsonValue;
+declare function drop(input: JsonValue, opts: DropOpts): JsonValue;
 interface DelOpts {
   key: null | string;
   val: any;
   only?: undefined | null | "any" | "array" | "object";
 }
-declare function del(input: JsonValue, originalOpts: DelOpts): JsonValue;
+declare function del(input: JsonValue, opts: DelOpts): JsonValue;
 declare function arrayFirstOnly(input: JsonValue): JsonValue;
 
 export { arrayFirstOnly, del, drop, find, get, set, version };
