@@ -9,9 +9,9 @@ interface Opts {
 }
 declare const defaults: Opts;
 declare function fillMissing(
-  originalIncompleteWrapper: Obj,
-  originalSchemaWrapper: Obj,
-  originalOptsWrapper?: Partial<Opts>
+  incomplete: Obj,
+  schema: Obj,
+  opts?: Partial<Opts>
 ): Obj;
 
 export { defaults, fillMissing, version };

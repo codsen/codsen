@@ -47,7 +47,7 @@ function existy(x: any): boolean {
 function fillMissingKeys(
   incompleteOriginal: Obj,
   schema: Obj,
-  opts: Opts,
+  resolvedOpts: Opts,
   path = ""
 ): Obj {
   let incomplete = clone(incompleteOriginal);
@@ -55,8 +55,10 @@ function fillMissingKeys(
     existy(incomplete) ||
     !(
       path.length &&
-      opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) &&
-      allEq(incomplete, opts.placeholder)
+      resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
+        path
+      ) &&
+      allEq(incomplete, resolvedOpts.placeholder)
     )
   ) {
     if (isObj(schema) && isObj(incomplete)) {
@@ -66,32 +68,32 @@ function fillMissingKeys(
         let currentPath = `${path ? `${path}.` : ""}${key}`;
 
         if (
-          opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
+          resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
             currentPath
           )
         ) {
           if (existy(incomplete[key])) {
-            if (allEq(incomplete[key], opts.placeholder)) {
-              incomplete[key] = opts.placeholder;
+            if (allEq(incomplete[key], resolvedOpts.placeholder)) {
+              incomplete[key] = resolvedOpts.placeholder;
             }
           } else {
             // just create the key and set to placeholder value
-            incomplete[key] = opts.placeholder;
+            incomplete[key] = resolvedOpts.placeholder;
           }
         }
 
         if (
           !existy(incomplete[key]) ||
           !(
-            opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
+            resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
               currentPath
-            ) && allEq(incomplete[key], opts.placeholder)
+            ) && allEq(incomplete[key], resolvedOpts.placeholder)
           )
         ) {
           incomplete[key] = fillMissingKeys(
             incomplete[key],
             schema[key],
-            opts,
+            resolvedOpts,
             currentPath
           );
         }
@@ -107,7 +109,7 @@ function fillMissingKeys(
             incomplete[i] = fillMissingKeys(
               incomplete[i],
               schema[0],
-              opts,
+              resolvedOpts,
               currentPath
             );
           }
@@ -115,7 +117,7 @@ function fillMissingKeys(
       }
     } else {
       return mergeAdvanced(schema, incomplete, {
-        useNullAsExplicitFalse: opts.useNullAsExplicitFalse,
+        useNullAsExplicitFalse: resolvedOpts.useNullAsExplicitFalse,
       });
     }
   }
@@ -125,11 +127,7 @@ function fillMissingKeys(
 // =================================================
 // T H E   E X P O S E D   F U N C T I O N
 
-function fillMissing(
-  originalIncompleteWrapper: Obj,
-  originalSchemaWrapper: Obj,
-  originalOptsWrapper?: Partial<Opts>
-): Obj {
+function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
   // first argument must be an object. However, we're going to call recursively,
   // so we have to wrap the main function with another, wrapper-one, and perform
   // object-checks only on that wrapper. This way, only objects can come in,
@@ -142,64 +140,58 @@ function fillMissing(
       "object-fill-missing-keys: [THROW_ID_01] All arguments are missing!"
     );
   }
-  if (!isObj(originalIncompleteWrapper)) {
+  if (!isObj(incomplete)) {
     throw new Error(
       `object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${typ(
-        originalIncompleteWrapper
-      )}" and it's equal to: ${JSON.stringify(
-        originalIncompleteWrapper,
-        null,
-        4
-      )}`
+        incomplete
+      )}" and it's equal to: ${JSON.stringify(incomplete, null, 4)}`
     );
   }
-  if (!isObj(originalSchemaWrapper)) {
+  if (!isObj(schema)) {
     throw new Error(
       `object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${typ(
-        originalSchemaWrapper
-      )}" and it's equal to: ${JSON.stringify(originalSchemaWrapper, null, 4)}`
+        schema
+      )}" and it's equal to: ${JSON.stringify(schema, null, 4)}`
     );
   }
-  if (originalOptsWrapper && !isObj(originalOptsWrapper)) {
+  if (opts && !isObj(opts)) {
     throw new Error(
       `object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${typ(
-        originalOptsWrapper
-      )}" and it's equal to: ${JSON.stringify(originalOptsWrapper, null, 4)}`
+        opts
+      )}" and it's equal to: ${JSON.stringify(opts, null, 4)}`
     );
   }
 
   // fill any settings with defaults if missing:
-  let opts: Opts = { ...defaults, ...(originalOptsWrapper || {}) };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
-  opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(
-    opts.doNotFillThesePathsIfTheyContainPlaceholders as any
+  resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(
+    resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders as any
   );
 
   let culpritsVal = null;
   let culpritsIndex = null;
   if (
-    opts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
-    !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((key, idx) => {
-      if (!isStr(key)) {
-        culpritsVal = key;
-        culpritsIndex = idx;
-        return false;
+    resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
+    !resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.every(
+      (key, idx) => {
+        if (!isStr(key)) {
+          culpritsVal = key;
+          culpritsIndex = idx;
+          return false;
+        }
+        return true;
       }
-      return true;
-    })
+    )
   ) {
     throw new Error(
-      `object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${culpritsIndex}" is not a string! It's ${typ(
+      `object-fill-missing-keys: [THROW_ID_06] resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${culpritsIndex}" is not a string! It's ${typ(
         culpritsVal
       )}, equal to:\n${JSON.stringify(culpritsVal, null, 4)}`
     );
   }
 
-  return fillMissingKeys(
-    clone(originalIncompleteWrapper),
-    clone(originalSchemaWrapper),
-    opts
-  );
+  return fillMissingKeys(clone(incomplete), clone(schema), resolvedOpts);
 }
 
 export { fillMissing, defaults, version };
