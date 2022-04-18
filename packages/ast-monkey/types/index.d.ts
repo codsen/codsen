@@ -29,7 +29,7 @@ interface GetOpts {
   index: number;
   only?: undefined | null | "any" | "array" | "object";
 }
-declare function get(input: JsonValue, originalOpts: GetOpts): GetOpts;
+declare function get(input: JsonValue, originalOpts: GetOpts): JsonValue;
 interface SetOpts {
   key: null | string;
   val: any;

@@ -251,7 +251,7 @@ interface GetOpts {
   index: number; // obligatory for get()
   only?: undefined | null | "any" | "array" | "object";
 }
-function get(input: JsonValue, originalOpts: GetOpts): GetOpts {
+function get(input: JsonValue, originalOpts: GetOpts): JsonValue {
   if (!existy(input)) {
     throw new Error(
       "ast-monkey/main.js/get(): [THROW_ID_06] Please provide the input"
