@@ -45,6 +45,6 @@ declare const defaults: Opts;
 /**
  * Remove unused CSS from email templates
  */
-declare function comb(str: string, originalOpts?: Partial<Opts>): Res;
+declare function comb(str: string, opts?: Partial<Opts>): Res;
 
 export { comb, defaults, version };
