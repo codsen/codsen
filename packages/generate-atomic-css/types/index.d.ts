@@ -23,7 +23,7 @@ interface Opts {
 declare const defaults: Opts;
 declare function genAtomic(
   str: string,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): {
   log: {
     count: number;

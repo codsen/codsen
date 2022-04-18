@@ -35,11 +35,11 @@ const defaults: Opts = {
 
 function genAtomic(
   str: string,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): { log: { count: number }; result: string } {
-  function trimIfNeeded(str2: string, opts: Obj = {}): string {
+  function trimIfNeeded(str2: string, resolvedOpts: Obj = {}): string {
     // if config and heads/tails are turned off, don't trim
-    if (!opts.includeConfig && !opts.includeHeadsAndTails) {
+    if (!resolvedOpts.includeConfig && !resolvedOpts.includeHeadsAndTails) {
       DEV && console.log(`043 didn't trim`);
       return str2;
     }
@@ -62,27 +62,27 @@ function genAtomic(
     count: 0,
   };
 
-  let opts = { ...defaults, ...originalOpts };
-  if (opts.includeConfig && !opts.includeHeadsAndTails) {
-    // opts.includeConfig is a superset feature of opts.includeHeadsAndTails
-    opts.includeHeadsAndTails = true;
+  let resolvedOpts = { ...defaults, ...opts };
+  if (resolvedOpts.includeConfig && !resolvedOpts.includeHeadsAndTails) {
+    // resolvedOpts.includeConfig is a superset feature of resolvedOpts.includeHeadsAndTails
+    resolvedOpts.includeHeadsAndTails = true;
   }
 
   // quick end if there are no $$$ in the input
   if (
-    (!opts.configOverride &&
+    (!resolvedOpts.configOverride &&
       !str.includes("$$$") &&
       !str.includes(CONFIGHEAD) &&
       !str.includes(CONFIGTAIL) &&
       !str.includes(CONTENTHEAD) &&
       !str.includes(CONTENTTAIL)) ||
-    (opts?.configOverride &&
-      typeof opts.configOverride === "string" &&
-      !opts.configOverride.includes("$$$") &&
-      !opts.configOverride.includes(CONFIGHEAD) &&
-      !opts.configOverride.includes(CONFIGTAIL) &&
-      !opts.configOverride.includes(CONTENTHEAD) &&
-      !opts.configOverride.includes(CONTENTTAIL))
+    (resolvedOpts?.configOverride &&
+      typeof resolvedOpts.configOverride === "string" &&
+      !resolvedOpts.configOverride.includes("$$$") &&
+      !resolvedOpts.configOverride.includes(CONFIGHEAD) &&
+      !resolvedOpts.configOverride.includes(CONFIGTAIL) &&
+      !resolvedOpts.configOverride.includes(CONTENTHEAD) &&
+      !resolvedOpts.configOverride.includes(CONTENTTAIL))
   ) {
     DEV && console.log(`087 quick ending, no $$$ found, returning input str`);
     return {
@@ -101,7 +101,7 @@ function genAtomic(
   // find out what to generate
   // eslint-disable-next-line prefer-const
   let [extractedConfig, rawContentAbove, rawContentBelow] = extractConfig(
-    opts.configOverride ? opts.configOverride : str
+    resolvedOpts.configOverride ? resolvedOpts.configOverride : str
   );
   DEV &&
     console.log(
@@ -129,10 +129,10 @@ function genAtomic(
     };
   }
 
-  if (opts.includeConfig || opts.includeHeadsAndTails) {
+  if (resolvedOpts.includeConfig || resolvedOpts.includeHeadsAndTails) {
     // wrap with content heads:
     frontPart = `${CONTENTHEAD} */\n`;
-    if (!opts.includeConfig) {
+    if (!resolvedOpts.includeConfig) {
       frontPart = `/* ${frontPart}`;
     }
     // and with content tails:
@@ -145,7 +145,7 @@ function genAtomic(
     );
 
   // tackle config
-  if (opts.includeConfig) {
+  if (resolvedOpts.includeConfig) {
     frontPart = `/* ${CONFIGHEAD}\n${extractedConfig.trim()}\n${CONFIGTAIL}\n${frontPart}`;
     DEV && console.log("--------------------------------------------------");
     DEV &&
@@ -435,14 +435,14 @@ function genAtomic(
   let finalRes = `${trimIfNeeded(
     `${frontPart}${prepConfig(
       extractedConfig,
-      opts.reportProgressFunc,
-      opts.reportProgressFuncFrom,
-      opts.reportProgressFuncTo,
-      true, // opts.includeConfig || opts.includeHeadsAndTails
+      resolvedOpts.reportProgressFunc,
+      resolvedOpts.reportProgressFuncFrom,
+      resolvedOpts.reportProgressFuncTo,
+      true, // resolvedOpts.includeConfig || resolvedOpts.includeHeadsAndTails
       generatedCount,
-      opts.pad
+      resolvedOpts.pad
     )}${endPart}`,
-    opts
+    resolvedOpts
   )}\n`;
 
   DEV && console.log("\n\n\n");
