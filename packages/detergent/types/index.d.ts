@@ -42,6 +42,6 @@ declare const version: string;
 /**
  * Extracts, cleans and encodes text
  */
-declare function det(str: string, inputOpts?: Partial<Opts>): Res;
+declare function det(str: string, opts?: Partial<Opts>): Res;
 
 export { det, defaultOpts as opts, version };
