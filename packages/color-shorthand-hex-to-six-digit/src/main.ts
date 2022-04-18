@@ -11,12 +11,14 @@ const version: string = v;
 /**
  * Convert shorthand hex color codes into full
  */
-function conv(originalInput: any): any {
-  // prevent any input argument mutation:
-  let input = clone(originalInput);
-
-  // f's
-  // ====================
+function conv(input: any): any {
+  if (
+    typeof input !== "string" &&
+    !Array.isArray(input) &&
+    !isPlainObject(input)
+  ) {
+    return input;
+  }
 
   function toFullHex(
     hex: string,
@@ -39,18 +41,18 @@ function conv(originalInput: any): any {
   // action
   // ====================
 
-  if (typeof originalInput === "string") {
-    input = input.replace(r(), toFullHex);
-  } else if (Array.isArray(input)) {
-    for (let i = 0, len = input.length; i < len; i++) {
-      input[i] = conv(input[i]);
-    }
-  } else if (isPlainObject(originalInput)) {
-    Object.keys(input).forEach((key) => {
-      input[key] = conv(input[key]);
+  if (typeof input === "string") {
+    return input.replace(r(), toFullHex);
+  }
+  if (Array.isArray(input)) {
+    return input.map(conv);
+  }
+  if (isPlainObject(input)) {
+    let clonedInput = clone(input);
+    Object.keys(clonedInput).forEach((key) => {
+      clonedInput[key] = conv(clonedInput[key]);
     });
-  } else {
-    return originalInput;
+    return clonedInput;
   }
   return input;
 }
