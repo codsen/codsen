@@ -27,7 +27,7 @@ const defaults: Opts = {
   tails: ["}}"],
 };
 
-function remDup(str: string, originalOpts?: LenientOpts): string {
+function remDup(str: string, opts?: Partial<LenientOpts>): string {
   //
 
   let has = Object.prototype.hasOwnProperty;
@@ -42,13 +42,13 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   if (typeof str !== "string") {
     return str;
   }
-  if (originalOpts && !isObj(originalOpts)) {
+  if (opts && !isObj(opts)) {
     throw new Error(
-      `string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ${typeof originalOpts}!`
+      `string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ${typeof opts}!`
     );
   }
-  // at this point, we can clone the originalOpts
-  let clonedOriginalOpts: Opts = { ...originalOpts } as Opts;
+  // at this point, we can clone the opts
+  let clonedOriginalOpts: Opts = { ...opts } as Opts;
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
     if (
@@ -57,7 +57,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       )
     ) {
       throw new Error(
-        "string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!"
+        "string-remove-duplicate-heads-tails: [THROW_ID_04] The resolvedOpts.heads contains elements which are not string-type!"
       );
     } else if (typeof clonedOriginalOpts.heads === "string") {
       clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads as string);
@@ -70,7 +70,7 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       )
     ) {
       throw new Error(
-        "string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!"
+        "string-remove-duplicate-heads-tails: [THROW_ID_05] The resolvedOpts.tails contains elements which are not string-type!"
       );
     } else if (typeof clonedOriginalOpts.tails === "string") {
       clonedOriginalOpts.tails = arrayiffy(clonedOriginalOpts.tails);
@@ -84,11 +84,11 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   }
   str = temp;
 
-  let opts: Opts = { ...defaults, ...clonedOriginalOpts };
+  let resolvedOpts: Opts = { ...defaults, ...clonedOriginalOpts };
 
   // first, let's trim heads and tails' array elements:
-  opts.heads = opts.heads.map((el) => el.trim());
-  opts.tails = opts.tails.map((el) => el.trim());
+  resolvedOpts.heads = resolvedOpts.heads.map((el) => el.trim());
+  resolvedOpts.tails = resolvedOpts.tails.map((el) => el.trim());
 
   //                        P R E P A R A T I O N S
 
@@ -171,8 +171,8 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
     return str1;
   }
   // action
-  while (str !== delLeadingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts)).res;
+  while (str !== delLeadingEmptyHeadTailChunks(str, resolvedOpts)) {
+    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, resolvedOpts)).res;
   }
 
   // delete trailing empty head-tail clumps as in "a ((()))((()))"
@@ -218,20 +218,20 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
     return str1;
   }
   // action
-  while (str !== delTrailingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts)).res;
+  while (str !== delTrailingEmptyHeadTailChunks(str, resolvedOpts)) {
+    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, resolvedOpts)).res;
   }
 
   //                      E A R L Y    E N D I N G
 
   DEV && console.log("227 calling both matchRightIncl() and matchLeftIncl()");
   if (
-    !opts.heads.length ||
-    !matchRightIncl(str, 0, opts.heads, {
+    !resolvedOpts.heads.length ||
+    !matchRightIncl(str, 0, resolvedOpts.heads, {
       trimBeforeMatching: true,
     }) ||
-    !opts.tails.length ||
-    !matchLeftIncl(str, str.length - 1, opts.tails, {
+    !resolvedOpts.tails.length ||
+    !matchLeftIncl(str, str.length - 1, resolvedOpts.tails, {
       trimBeforeMatching: true,
     })
   ) {
@@ -318,13 +318,18 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       // match heads
       let noteDownTheIndex;
       DEV && console.log("320 calling matchRightIncl()");
-      let resultOfAttemptToMatchHeads = matchRightIncl(str, i, opts.heads, {
-        trimBeforeMatching: true,
-        cb: (_char, _theRemainderOfTheString, index) => {
-          noteDownTheIndex = index;
-          return true;
-        },
-      });
+      let resultOfAttemptToMatchHeads = matchRightIncl(
+        str,
+        i,
+        resolvedOpts.heads,
+        {
+          trimBeforeMatching: true,
+          cb: (_char, _theRemainderOfTheString, index) => {
+            noteDownTheIndex = index;
+            return true;
+          },
+        }
+      );
       if (resultOfAttemptToMatchHeads && noteDownTheIndex) {
         // reset marker
         itsFirstLetter = true;
@@ -333,16 +338,16 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
           itsFirstTail = true;
         }
 
-        DEV && console.log(`336 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
+        DEV && console.log(`341 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
 
         // 0. Just in case, check maybe there are tails following right away,
         // in that case definitely remove both
         let tempIndexUpTo;
-        DEV && console.log("341 calling matchRightIncl()");
+        DEV && console.log("346 calling matchRightIncl()");
         let resultOfAttemptToMatchTails = matchRightIncl(
           str,
           noteDownTheIndex,
-          opts.tails,
+          resolvedOpts.tails,
           {
             trimBeforeMatching: true,
             cb: (_char, _theRemainderOfTheString, index) => {
@@ -473,14 +478,19 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
       }
 
       // match tails
-      DEV && console.log("476 calling matchRightIncl()");
-      let resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
-        trimBeforeMatching: true,
-        cb: (_char, _theRemainderOfTheString, index) => {
-          noteDownTheIndex = Number.isInteger(index) ? index : str.length;
-          return true;
-        },
-      });
+      DEV && console.log("481 calling matchRightIncl()");
+      let resultOfAttemptToMatchTails = matchRightIncl(
+        str,
+        i,
+        resolvedOpts.tails,
+        {
+          trimBeforeMatching: true,
+          cb: (_char, _theRemainderOfTheString, index) => {
+            noteDownTheIndex = Number.isInteger(index) ? index : str.length;
+            return true;
+          },
+        }
+      );
       if (resultOfAttemptToMatchTails && noteDownTheIndex) {
         // reset marker
         itsFirstLetter = true;

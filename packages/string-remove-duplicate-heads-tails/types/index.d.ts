@@ -8,6 +8,6 @@ interface LenientOpts {
   tails: string | string[];
 }
 declare const defaults: Opts;
-declare function remDup(str: string, originalOpts?: LenientOpts): string;
+declare function remDup(str: string, opts?: Partial<LenientOpts>): string;
 
 export { defaults, remDup, version };
