@@ -31,42 +31,42 @@ const defaults: Opts = {
   only: "any",
 };
 
-function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
+function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
   function existy(x: any): boolean {
     return x != null;
   }
-  if (!existy(originalInput)) {
+  if (!existy(input)) {
     throw new Error(
       "object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon."
     );
   }
-  let opts: Opts = { ...defaults, ...originalOpts };
-  opts.only = arrObjOrBoth(opts.only, {
+  let resolvedOpts: Opts = { ...defaults, ...opts };
+  resolvedOpts.only = arrObjOrBoth(resolvedOpts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
-    optsVarName: "opts.only",
+    optsVarName: "resolvedOpts.only",
   });
-  // after this, opts.only is equal to either: 1) object, 2) array OR 3) any
+  // after this, resolvedOpts.only is equal to either: 1) object, 2) array OR 3) any
 
-  if (!existy(opts.key) && !existy(opts.val)) {
+  if (!existy(resolvedOpts.key) && !existy(resolvedOpts.val)) {
     throw new Error(
       "object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value."
     );
   }
-  let input = clone(originalInput);
+  let resolvedInput = clone(input);
   DEV &&
     console.log(
-      `058 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
-        input,
+      `058 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
+        resolvedInput,
         null,
         4
-      )}; keys = ${Object.keys(input)}`
+      )}; keys = ${Object.keys(resolvedInput)}`
     );
 
-  if (opts.cleanup) {
-    let findings = find(input, {
-      key: opts.key,
-      val: opts.val,
-      only: opts.only,
+  if (resolvedOpts.cleanup) {
+    let findings = find(resolvedInput, {
+      key: resolvedOpts.key,
+      val: resolvedOpts.val,
+      only: resolvedOpts.only,
     });
     DEV &&
       console.log(
@@ -93,45 +93,57 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
         currentIndex = findings[0].path[len - 1 - i];
         if (
           isEmpty(
-            del(get(input, { index: currentIndex }) as Obj, {
-              key: opts.key,
-              val: opts.val,
-              only: opts.only,
+            del(get(resolvedInput, { index: currentIndex }) as Obj, {
+              key: resolvedOpts.key,
+              val: resolvedOpts.val,
+              only: resolvedOpts.only,
             })
           )
         ) {
           nodeToDelete = currentIndex;
         }
       }
-      input = drop(input, { index: nodeToDelete }) as Obj;
-      findings = find(input, { key: opts.key, val: opts.val, only: opts.only });
+      resolvedInput = drop(resolvedInput, { index: nodeToDelete }) as Obj;
+      findings = find(resolvedInput, {
+        key: resolvedOpts.key,
+        val: resolvedOpts.val,
+        only: resolvedOpts.only,
+      });
     }
     DEV &&
-      console.log(`110 ███████████████████████████████████████ END OF A LOOP`);
+      console.log(`114 ███████████████████████████████████████ END OF A LOOP`);
     DEV &&
       console.log(
-        `113 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
-          input,
+        `117 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
+          resolvedInput,
           null,
           4
         )}`
       );
-    return input;
+    return resolvedInput;
   }
-  DEV && console.log(`121 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} del();`);
+  DEV && console.log(`125 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} del();`);
   DEV &&
     console.log(
-      `124 ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
-        input,
+      `128 ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
+        resolvedInput,
         null,
         4
-      )}; opts = ${JSON.stringify(
-        { key: opts.key, val: opts.val, only: opts.only },
+      )}; resolvedOpts = ${JSON.stringify(
+        {
+          key: resolvedOpts.key,
+          val: resolvedOpts.val,
+          only: resolvedOpts.only,
+        },
         null,
         4
       )}`
     );
-  return del(input, { key: opts.key, val: opts.val, only: opts.only }) as Obj;
+  return del(resolvedInput, {
+    key: resolvedOpts.key,
+    val: resolvedOpts.val,
+    only: resolvedOpts.only,
+  }) as Obj;
 }
 
 export { deleteKey, defaults, version };

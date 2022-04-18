@@ -10,9 +10,6 @@ interface Opts {
   only: Only;
 }
 declare const defaults: Opts;
-declare function deleteKey(
-  originalInput: Obj,
-  originalOpts?: Partial<Opts>
-): Obj;
+declare function deleteKey(input: Obj, opts?: Partial<Opts>): Obj;
 
 export { defaults, deleteKey, version };
