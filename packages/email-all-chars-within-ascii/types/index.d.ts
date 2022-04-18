@@ -12,6 +12,6 @@ interface Opts {
   lineLength: number;
 }
 declare const defaults: Opts;
-declare function within(str: string, originalOpts?: Partial<Opts>): Res[];
+declare function within(str: string, opts?: Partial<Opts>): Res[];
 
 export { defaults, version, within };

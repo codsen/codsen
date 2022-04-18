@@ -22,7 +22,7 @@ const defaults: Opts = {
   lineLength: 500,
 };
 
-function within(str: string, originalOpts?: Partial<Opts>): Res[] {
+function within(str: string, opts?: Partial<Opts>): Res[] {
   if (typeof str !== "string") {
     throw new Error(
       `email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(
@@ -32,10 +32,10 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
       )}`
     );
   }
-  if (originalOpts && typeof originalOpts !== "object") {
+  if (opts && typeof opts !== "object") {
     throw new Error(
-      `email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but ${typeof originalOpts}, equal to:\n${JSON.stringify(
-        originalOpts,
+      `email-all-chars-within-ascii/within(): [THROW_ID_02] The resolvedOpts is not a plain object but ${typeof opts}, equal to:\n${JSON.stringify(
+        opts,
         null,
         4
       )}`
@@ -47,7 +47,7 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
   }
 
   // set the options
-  let opts: Opts = { ...defaults, ...originalOpts };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
   // -----------------------------------------------------------------------------
 
@@ -69,9 +69,9 @@ function within(str: string, originalOpts?: Partial<Opts>): Res[] {
     // =====================
 
     if (
-      opts.lineLength &&
+      resolvedOpts.lineLength &&
       (!str[i] || str[i] === "\r" || str[i] === "\n") &&
-      column > opts.lineLength
+      column > resolvedOpts.lineLength
     ) {
       DEV && console.log(`076 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
       res.push({
