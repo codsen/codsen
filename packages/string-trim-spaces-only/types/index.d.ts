@@ -17,6 +17,6 @@ interface Res {
   res: string;
   ranges: Ranges;
 }
-declare function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res;
+declare function trimSpaces(str: string, opts?: Partial<Opts>): Res;
 
 export { defaults, trimSpaces, version };

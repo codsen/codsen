@@ -29,7 +29,7 @@ interface Res {
   ranges: Ranges;
 }
 
-function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
+function trimSpaces(str: string, opts?: Partial<Opts>): Res {
   // insurance:
   if (typeof str !== "string") {
     throw new Error(
@@ -40,18 +40,18 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
       )}`
     );
   }
-  // opts preparation:
-  let opts = { ...defaults, ...originalOpts };
+  // resolvedOpts preparation:
+  let resolvedOpts = { ...defaults, ...opts };
 
   function check(char: string): boolean {
     return (
-      (opts.classicTrim && !char.trim()) ||
-      (!opts.classicTrim &&
-        ((opts.space && char === " ") ||
-          (opts.cr && char === "\r") ||
-          (opts.lf && char === "\n") ||
-          (opts.tab && char === "\t") ||
-          (opts.nbsp && char === "\u00a0")))
+      (resolvedOpts.classicTrim && !char.trim()) ||
+      (!resolvedOpts.classicTrim &&
+        ((resolvedOpts.space && char === " ") ||
+          (resolvedOpts.cr && char === "\r") ||
+          (resolvedOpts.lf && char === "\n") ||
+          (resolvedOpts.tab && char === "\t") ||
+          (resolvedOpts.nbsp && char === "\u00a0")))
     );
   }
 
@@ -87,7 +87,7 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
           break;
         }
         // if we traversed the whole string this way and didn't stumble on a non-
-        // space/whitespace character (depending on opts.classicTrim), this means
+        // space/whitespace character (depending on resolvedOpts.classicTrim), this means
         // whole thing can be trimmed:
         if (i === str.length - 1) {
           // this means there are only spaces/whitespace from beginning to the end
