@@ -335,7 +335,7 @@ interface Res {
   message: string | null;
 }
 
-function isRel(str: string, originalOpts?: Partial<Opts>): Res {
+function isRel(str: string, opts?: Partial<Opts>): Res {
   // insurance first
   // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
@@ -343,27 +343,27 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
       `is-relative-uri: [THROW_ID_01] input string must be string, it was given as "${str}" (type ${typeof str})`
     );
   }
-  if (originalOpts && typeof originalOpts !== "object") {
+  if (opts && typeof opts !== "object") {
     throw new Error(
-      `is-relative-uri: [THROW_ID_02] opts be plain object, it was given as ${originalOpts} (type ${typeof originalOpts})`
+      `is-relative-uri: [THROW_ID_02] resolvedOpts be plain object, it was given as ${opts} (type ${typeof opts})`
     );
   }
-  let opts: Opts = { ...defaults, ...originalOpts };
-  if (opts.offset && !Number.isInteger(opts.offset)) {
+  let resolvedOpts: Opts = { ...defaults, ...opts };
+  if (resolvedOpts.offset && !Number.isInteger(resolvedOpts.offset)) {
     throw new Error(
-      `is-relative-uri: [THROW_ID_02] opts.offset must be an integer, it was given as ${
-        opts.offset
-      } (type ${typeof opts.offset})`
+      `is-relative-uri: [THROW_ID_02] resolvedOpts.offset must be an integer, it was given as ${
+        resolvedOpts.offset
+      } (type ${typeof resolvedOpts.offset})`
     );
   }
-  if (!opts.offset) {
+  if (!resolvedOpts.offset) {
     // to cater false/null
-    opts.offset = 0;
+    resolvedOpts.offset = 0;
   }
   DEV &&
     console.log(
-      `365 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} opts = ${JSON.stringify(
-        opts,
+      `365 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} resolvedOpts = ${JSON.stringify(
+        resolvedOpts,
         null,
         4
       )}`
@@ -491,10 +491,10 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
     };
   }
 
-  // opts.flagUpUrisWithSchemes
+  // resolvedOpts.flagUpUrisWithSchemes
   // ---------------------------------------------------------------------------
   if (
-    opts.flagUpUrisWithSchemes &&
+    resolvedOpts.flagUpUrisWithSchemes &&
     (str.startsWith(`http:`) ||
       str.startsWith(`https:`) ||
       str.startsWith(`ftp:`) ||

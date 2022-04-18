@@ -8,6 +8,6 @@ interface Res {
   res: boolean;
   message: string | null;
 }
-declare function isRel(str: string, originalOpts?: Partial<Opts>): Res;
+declare function isRel(str: string, opts?: Partial<Opts>): Res;
 
 export { defaults, isRel, version };
