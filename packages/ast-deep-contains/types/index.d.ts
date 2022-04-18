@@ -18,7 +18,7 @@ declare function deepContains(
   tree2: any,
   cb: Callback,
   errCb: ErrorCallback,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): void;
 
 export { deepContains, defaults, version };

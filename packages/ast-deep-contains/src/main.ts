@@ -58,9 +58,9 @@ function deepContains(
   tree2: any,
   cb: Callback,
   errCb: ErrorCallback,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): void {
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts = { ...defaults, ...opts };
   if (is(tree1) !== is(tree2)) {
     errCb(
       `the first input arg is of a type ${is(
@@ -99,7 +99,7 @@ function deepContains(
       if (objectPath.has(tree1, path)) {
         DEV && console.log(`100 tree1 does have the path "${path}"`);
         if (
-          !opts.arrayStrictComparison &&
+          !resolvedOpts.arrayStrictComparison &&
           is.plainObject(current) &&
           innerObj.parentType === "array" &&
           innerObj.parent.length > 1
@@ -432,7 +432,7 @@ function deepContains(
                       arr2[(matchPairObj as any)[0]],
                       cb,
                       errCb,
-                      opts
+                      resolvedOpts
                     );
                   }
                 });
@@ -448,8 +448,8 @@ function deepContains(
           let retrieved = objectPath.get(tree1, path);
           DEV &&
             console.log(
-              `451 ${`\u001b[${33}m${`opts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
-                opts.skipContainers,
+              `451 ${`\u001b[${33}m${`resolvedOpts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
+                resolvedOpts.skipContainers,
                 null,
                 4
               )}`
@@ -465,7 +465,7 @@ function deepContains(
               )}`
             );
           if (
-            !opts.skipContainers ||
+            !resolvedOpts.skipContainers ||
             (!is.plainObject(retrieved) && !Array.isArray(retrieved))
           ) {
             DEV &&
