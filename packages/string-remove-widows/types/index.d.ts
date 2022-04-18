@@ -34,6 +34,6 @@ interface Res {
     convertEntities: boolean;
   };
 }
-declare function removeWidows(str: string, originalOpts?: Partial<Opts>): Res;
+declare function removeWidows(str: string, opts?: Partial<Opts>): Res;
 
 export { defaults, removeWidows, version };
