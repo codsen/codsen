@@ -34,7 +34,7 @@ const defaults: Opts = {
   addSingleSpaceToPreventAccidentalConcatenation: false,
 };
 
-function expander(originalOpts: Partial<Opts>): Range {
+function expander(opts: Partial<Opts>): Range {
   let letterOrDigit = /^[0-9a-zA-Z]+$/;
 
   // Internal functions
@@ -53,19 +53,15 @@ function expander(originalOpts: Partial<Opts>): Range {
   // Sanitise the inputs
   // ---------------------------------------------------------------------------
 
-  if (
-    !originalOpts ||
-    typeof originalOpts !== "object" ||
-    Array.isArray(originalOpts)
-  ) {
+  if (!opts || typeof opts !== "object" || Array.isArray(opts)) {
     let supplementalString;
-    if (originalOpts === undefined) {
+    if (opts === undefined) {
       supplementalString = "but it is missing completely.";
-    } else if (originalOpts === null) {
+    } else if (opts === null) {
       supplementalString = "but it was given as null.";
     } else {
-      supplementalString = `but it was given as ${typeof originalOpts}, equal to:\n${JSON.stringify(
-        originalOpts,
+      supplementalString = `but it was given as ${typeof opts}, equal to:\n${JSON.stringify(
+        opts,
         null,
         4
       )}.`;
@@ -74,80 +70,74 @@ function expander(originalOpts: Partial<Opts>): Range {
       `string-range-expander: [THROW_ID_01] Input must be a plain object ${supplementalString}`
     );
   } else if (
-    typeof originalOpts === "object" &&
-    originalOpts !== null &&
-    !Array.isArray(originalOpts) &&
-    !Object.keys(originalOpts).length
+    typeof opts === "object" &&
+    opts !== null &&
+    !Array.isArray(opts) &&
+    !Object.keys(opts).length
   ) {
     throw new Error(
       `string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.`
     );
   }
-  if (typeof originalOpts.from !== "number") {
+  if (typeof opts.from !== "number") {
     throw new Error(
-      `string-range-expander: [THROW_ID_03] The input's "from" value opts.from, is not a number! Currently it's given as ${typeof originalOpts.from}, equal to ${JSON.stringify(
-        originalOpts.from,
+      `string-range-expander: [THROW_ID_03] The input's "from" value resolvedOpts.from, is not a number! Currently it's given as ${typeof opts.from}, equal to ${JSON.stringify(
+        opts.from,
         null,
         0
       )}`
     );
   }
-  if (typeof originalOpts.to !== "number") {
+  if (typeof opts.to !== "number") {
     throw new Error(
-      `string-range-expander: [THROW_ID_04] The input's "to" value opts.to, is not a number! Currently it's given as ${typeof originalOpts.to}, equal to ${JSON.stringify(
-        originalOpts.to,
+      `string-range-expander: [THROW_ID_04] The input's "to" value resolvedOpts.to, is not a number! Currently it's given as ${typeof opts.to}, equal to ${JSON.stringify(
+        opts.to,
         null,
         0
       )}`
     );
   }
-  if (
-    originalOpts?.str &&
-    !originalOpts.str[originalOpts.from] &&
-    originalOpts.from !== originalOpts.to
-  ) {
+  if (opts?.str && !opts.str[opts.from] && opts.from !== opts.to) {
     throw new Error(
-      `string-range-expander: [THROW_ID_05] The given input string opts.str ("${originalOpts.str}") must contain the character at index "from" ("${originalOpts.from}")`
+      `string-range-expander: [THROW_ID_05] The given input string resolvedOpts.str ("${opts.str}") must contain the character at index "from" ("${opts.from}")`
     );
   }
-  if (originalOpts?.str && !originalOpts.str[originalOpts.to - 1]) {
+  if (opts?.str && !opts.str[opts.to - 1]) {
     throw new Error(
-      `string-range-expander: [THROW_ID_06] The given input string, opts.str ("${
-        originalOpts.str
-      }") must contain the character at index before "to" ("${
-        originalOpts.to - 1
-      }")`
+      `string-range-expander: [THROW_ID_06] The given input string, resolvedOpts.str ("${
+        opts.str
+      }") must contain the character at index before "to" ("${opts.to - 1}")`
     );
   }
-  if (originalOpts.from > originalOpts.to) {
+  if (opts.from > opts.to) {
     throw new Error(
-      `string-range-expander: [THROW_ID_07] The given "from" index, "${originalOpts.from}" is greater than "to" index, "${originalOpts.to}". That's wrong!`
+      `string-range-expander: [THROW_ID_07] The given "from" index, "${opts.from}" is greater than "to" index, "${opts.to}". That's wrong!`
     );
   }
   if (
-    (isStr(originalOpts.extendToOneSide) &&
-      originalOpts.extendToOneSide !== "left" &&
-      originalOpts.extendToOneSide !== "right") ||
-    (!isStr(originalOpts.extendToOneSide) &&
-      originalOpts.extendToOneSide !== undefined &&
-      originalOpts.extendToOneSide !== false)
+    (isStr(opts.extendToOneSide) &&
+      opts.extendToOneSide !== "left" &&
+      opts.extendToOneSide !== "right") ||
+    (!isStr(opts.extendToOneSide) &&
+      opts.extendToOneSide !== undefined &&
+      opts.extendToOneSide !== false)
   ) {
     throw new Error(
-      `string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: "${
-        originalOpts.extendToOneSide
-      }" (${typeof originalOpts.extendToOneSide}). It has to be either Boolean "false" or strings "left" or "right"`
+      `string-range-expander: [THROW_ID_08] The resolvedOpts.extendToOneSide value is not recognisable! It's set to: "${
+        opts.extendToOneSide
+      }" (${typeof opts.extendToOneSide}). It has to be either Boolean "false" or strings "left" or "right"`
     );
   }
 
-  // Prepare the opts
+  // Prepare the resolvedOpts
   // ---------------------------------------------------------------------------
 
-  let opts: Opts = { ...defaults, ...originalOpts };
-  if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
+  let resolvedOpts: Opts = { ...defaults, ...opts };
+  if (Array.isArray(resolvedOpts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;
     if (
-      opts.ifLeftSideIncludesThisThenCropTightly.every((val, i) => {
+      resolvedOpts.ifLeftSideIncludesThisThenCropTightly.every((val, i) => {
         if (!isStr(val)) {
           culpritsIndex = i;
           culpritsValue = val;
@@ -156,12 +146,12 @@ function expander(originalOpts: Partial<Opts>): Range {
         return true;
       })
     ) {
-      opts.ifLeftSideIncludesThisThenCropTightly =
-        opts.ifLeftSideIncludesThisThenCropTightly.join("");
+      resolvedOpts.ifLeftSideIncludesThisThenCropTightly =
+        resolvedOpts.ifLeftSideIncludesThisThenCropTightly.join("");
     } else {
       throw new Error(
-        `string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n${JSON.stringify(
-          opts.ifLeftSideIncludesThisThenCropTightly,
+        `string-range-expander: [THROW_ID_09] The resolvedOpts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n${JSON.stringify(
+          resolvedOpts.ifLeftSideIncludesThisThenCropTightly,
           null,
           4
         )}. Now, that array contains not only string elements. For example, an element at index ${culpritsIndex} is of a type ${typeof culpritsValue} (equal to ${JSON.stringify(
@@ -176,37 +166,39 @@ function expander(originalOpts: Partial<Opts>): Range {
   // Action
   // ---------------------------------------------------------------------------
 
-  let str = opts.str; // convenience
-  let from = opts.from;
-  let to = opts.to;
+  let str = resolvedOpts.str; // convenience
+  let from = resolvedOpts.from;
+  let to = resolvedOpts.to;
 
   DEV &&
     console.log(
-      `185 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
+      `175 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
     );
 
   // 1. expand the given range outwards and leave a single space or
   // {single-of-whatever-there-was} (like line break, tab etc) on each side
   if (
-    opts.extendToOneSide !== "right" &&
+    resolvedOpts.extendToOneSide !== "right" &&
     ((isWhitespace(str[from - 1]) &&
       (isWhitespace(str[from - 2]) ||
-        opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2]))) ||
+        resolvedOpts.ifLeftSideIncludesThisCropItToo.includes(
+          str[from - 2]
+        ))) ||
       (str[from - 1] &&
-        opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1])) ||
-      (opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
+        resolvedOpts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1])) ||
+      (resolvedOpts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
   ) {
     // loop backwards
     DEV &&
-      console.log(`201 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
+      console.log(`193 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
     for (let i = from; i--; ) {
       DEV &&
         console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
-      if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
+      if (!resolvedOpts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
         if (str[i].trim()) {
           if (
-            opts.wipeAllWhitespaceOnLeft ||
-            opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])
+            resolvedOpts.wipeAllWhitespaceOnLeft ||
+            resolvedOpts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])
           ) {
             from = i + 1;
           } else {
@@ -214,18 +206,18 @@ function expander(originalOpts: Partial<Opts>): Range {
           }
           DEV &&
             console.log(
-              `217 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
+              `209 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
             );
           break;
         } else if (i === 0) {
-          if (opts.wipeAllWhitespaceOnLeft) {
+          if (resolvedOpts.wipeAllWhitespaceOnLeft) {
             from = 0;
           } else {
             from = 1;
           }
           DEV &&
             console.log(
-              `228 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
+              `220 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
             );
           break;
         }
@@ -235,23 +227,23 @@ function expander(originalOpts: Partial<Opts>): Range {
 
   // 2. expand forward
   if (
-    opts.extendToOneSide !== "left" &&
+    resolvedOpts.extendToOneSide !== "left" &&
     ((isWhitespace(str[to]) &&
-      (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1]))) ||
-      opts.ifRightSideIncludesThisCropItToo.includes(str[to]))
+      (resolvedOpts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1]))) ||
+      resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     // loop forward
-    DEV && console.log(`244 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
+    DEV && console.log(`236 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       DEV &&
         console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (
-        !opts.ifRightSideIncludesThisCropItToo.includes(str[i]) &&
+        !resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[i]) &&
         str[i]?.trim()
       ) {
         if (
-          opts.wipeAllWhitespaceOnRight ||
-          opts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])
+          resolvedOpts.wipeAllWhitespaceOnRight ||
+          resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])
         ) {
           to = i;
         } else {
@@ -259,7 +251,7 @@ function expander(originalOpts: Partial<Opts>): Range {
         }
         DEV &&
           console.log(
-            `262 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
+            `254 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
           );
         break;
       }
@@ -268,36 +260,42 @@ function expander(originalOpts: Partial<Opts>): Range {
 
   // 3. tight crop adjustments
   if (
-    (opts.extendToOneSide !== "right" &&
-      isStr(opts.ifLeftSideIncludesThisThenCropTightly) &&
-      opts.ifLeftSideIncludesThisThenCropTightly &&
+    (resolvedOpts.extendToOneSide !== "right" &&
+      isStr(resolvedOpts.ifLeftSideIncludesThisThenCropTightly) &&
+      resolvedOpts.ifLeftSideIncludesThisThenCropTightly &&
       ((str[from - 2] &&
-        opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2])) ||
+        resolvedOpts.ifLeftSideIncludesThisThenCropTightly.includes(
+          str[from - 2]
+        )) ||
         (str[from - 1] &&
-          opts.ifLeftSideIncludesThisThenCropTightly.includes(
+          resolvedOpts.ifLeftSideIncludesThisThenCropTightly.includes(
             str[from - 1]
           )))) ||
-    (opts.extendToOneSide !== "left" &&
-      isStr(opts.ifRightSideIncludesThisThenCropTightly) &&
-      opts.ifRightSideIncludesThisThenCropTightly &&
+    (resolvedOpts.extendToOneSide !== "left" &&
+      isStr(resolvedOpts.ifRightSideIncludesThisThenCropTightly) &&
+      resolvedOpts.ifRightSideIncludesThisThenCropTightly &&
       ((str[to + 1] &&
-        opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1])) ||
+        resolvedOpts.ifRightSideIncludesThisThenCropTightly.includes(
+          str[to + 1]
+        )) ||
         (str[to] &&
-          opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))))
+          resolvedOpts.ifRightSideIncludesThisThenCropTightly.includes(
+            str[to]
+          ))))
   ) {
-    DEV && console.log("288");
+    DEV && console.log("286");
     if (
-      opts.extendToOneSide !== "right" &&
+      resolvedOpts.extendToOneSide !== "right" &&
       isWhitespace(str[from - 1]) &&
-      !opts.wipeAllWhitespaceOnLeft
+      !resolvedOpts.wipeAllWhitespaceOnLeft
     ) {
       from -= 1;
       DEV && console.log(`${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`);
     }
     if (
-      opts.extendToOneSide !== "left" &&
+      resolvedOpts.extendToOneSide !== "left" &&
       isWhitespace(str[to]) &&
-      !opts.wipeAllWhitespaceOnRight
+      !resolvedOpts.wipeAllWhitespaceOnRight
     ) {
       DEV && console.log(`${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`);
       to += 1;
@@ -305,26 +303,30 @@ function expander(originalOpts: Partial<Opts>): Range {
   }
 
   if (
-    opts.addSingleSpaceToPreventAccidentalConcatenation &&
+    resolvedOpts.addSingleSpaceToPreventAccidentalConcatenation &&
     str[from - 1] &&
     str[from - 1].trim() &&
     str[to] &&
     str[to].trim() &&
-    ((!opts.ifLeftSideIncludesThisThenCropTightly &&
-      !opts.ifRightSideIncludesThisThenCropTightly) ||
+    ((!resolvedOpts.ifLeftSideIncludesThisThenCropTightly &&
+      !resolvedOpts.ifRightSideIncludesThisThenCropTightly) ||
       !(
-        (!opts.ifLeftSideIncludesThisThenCropTightly ||
-          opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) &&
-        (!opts.ifRightSideIncludesThisThenCropTightly ||
+        (!resolvedOpts.ifLeftSideIncludesThisThenCropTightly ||
+          resolvedOpts.ifLeftSideIncludesThisThenCropTightly.includes(
+            str[from - 1]
+          )) &&
+        (!resolvedOpts.ifRightSideIncludesThisThenCropTightly ||
           (str[to] &&
-            opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))
+            resolvedOpts.ifRightSideIncludesThisThenCropTightly.includes(
+              str[to]
+            )))
       )) &&
     (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))
   ) {
-    DEV && console.log(`324 RETURN: [${from}, ${to}, " "]`);
+    DEV && console.log(`326 RETURN: [${from}, ${to}, " "]`);
     return [from, to, " "];
   }
-  DEV && console.log(`327 RETURN: [${from}, ${to}]`);
+  DEV && console.log(`329 RETURN: [${from}, ${to}]`);
   return [from, to];
 }
 

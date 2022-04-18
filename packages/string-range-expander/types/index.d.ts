@@ -17,6 +17,6 @@ interface Opts {
   addSingleSpaceToPreventAccidentalConcatenation: boolean;
 }
 declare const defaults: Opts;
-declare function expander(originalOpts: Partial<Opts>): Range;
+declare function expander(opts: Partial<Opts>): Range;
 
 export { defaults, expander, version };
