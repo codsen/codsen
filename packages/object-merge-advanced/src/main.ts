@@ -39,31 +39,12 @@ interface InfoObj {
 }
 
 interface Opts {
-  cb?:
-    | null
-    | ((input1: any, input2: any, result: any, infoObj?: InfoObj) => any); // cb(input1, input2, result)
-  mergeObjectsOnlyWhenKeysetMatches?: boolean;
-  ignoreKeys?: string | string[];
-  hardMergeKeys?: string | string[];
-  hardArrayConcatKeys?: string[];
-  mergeArraysContainingStringsToBeEmpty?: boolean;
-  oneToManyArrayObjectMerge?: boolean;
-  hardMergeEverything?: boolean;
-  hardArrayConcat?: boolean;
-  ignoreEverything?: boolean;
-  concatInsteadOfMerging?: boolean;
-  dedupeStringsInArrayValues?: boolean;
-  mergeBoolsUsingOrNotAnd?: boolean;
-  useNullAsExplicitFalse?: boolean;
-}
-
-interface SettledOpts extends Opts {
   cb:
     | null
     | ((input1: any, input2: any, result: any, infoObj?: InfoObj) => any); // cb(input1, input2, result)
   mergeObjectsOnlyWhenKeysetMatches: boolean;
-  ignoreKeys: string[];
-  hardMergeKeys: string[];
+  ignoreKeys: string | string[];
+  hardMergeKeys: string | string[];
   hardArrayConcatKeys: string[];
   mergeArraysContainingStringsToBeEmpty: boolean;
   oneToManyArrayObjectMerge: boolean;
@@ -117,7 +98,7 @@ function getType(something: any): argType {
   return typeof something;
 }
 
-const defaults: SettledOpts = {
+const defaults: Opts = {
   cb: null, // cb(input1, input2, result)
   mergeObjectsOnlyWhenKeysetMatches: true, // otherwise, concatenation will be preferred
   ignoreKeys: [],
@@ -136,32 +117,12 @@ const defaults: SettledOpts = {
 
 function mergeAdvanced(
   infoObj: InfoObj,
-  input1orig: any,
-  input2orig: any,
-  originalOpts: Opts
+  input1: any,
+  input2: any,
+  opts: Opts
 ): any {
   // DEFAULTS
   // ---------------------------------------------------------------------------
-
-  let opts = { ...defaults, ...originalOpts };
-  if (typeof opts.ignoreKeys === "string") {
-    opts.ignoreKeys = [opts.ignoreKeys];
-  }
-  if (typeof opts.hardMergeKeys === "string") {
-    opts.hardMergeKeys = [opts.hardMergeKeys];
-  }
-
-  // hardMergeKeys: '*' <===> hardMergeEverything === true
-  // also hardMergeKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
-  if (opts.hardMergeKeys.includes("*")) {
-    opts.hardMergeEverything = true;
-  }
-
-  // ignoreKeys: '*' <===> ignoreEverything === true
-  // also ignoreKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
-  if (opts.ignoreKeys.includes("*")) {
-    opts.ignoreEverything = true;
-  }
 
   // this variable takes "path" coming from input and appends the key
   // name following object-path notation.
@@ -180,15 +141,12 @@ function mergeAdvanced(
   // ---------------------------------------------------------------------------
 
   // when null is used as explicit false, it overrides everything and anything:
-  if (
-    opts.useNullAsExplicitFalse &&
-    (input1orig === null || input2orig === null)
-  ) {
+  if (opts.useNullAsExplicitFalse && (input1 === null || input2 === null)) {
     if (typeof opts.cb === "function") {
       DEV &&
         console.log(
-          `190 RET ${JSON.stringify(
-            opts.cb(input1orig, input2orig, null, {
+          `148 RET ${JSON.stringify(
+            opts.cb(input1, input2, null, {
               path: infoObj.path,
               key: infoObj.key,
               type: infoObj.type,
@@ -197,7 +155,7 @@ function mergeAdvanced(
             4
           )}`
         );
-      return opts.cb(input1orig, input2orig, null, {
+      return opts.cb(input1, input2, null, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type,
@@ -208,10 +166,8 @@ function mergeAdvanced(
 
   // clone the values to prevent accidental mutations, but only if it makes sense -
   // it applies to arrays and plain objects only (as far as we're concerned here)
-  let i1 =
-    isArr(input1orig) || isObj(input1orig) ? clone(input1orig) : input1orig;
-  let i2 =
-    isArr(input2orig) || isObj(input2orig) ? clone(input2orig) : input2orig;
+  let i1 = isArr(input1) || isObj(input1) ? clone(input1) : input1;
+  let i2 = isArr(input2) || isObj(input2) ? clone(input2) : input2;
 
   let uniRes;
   if (opts.ignoreEverything) {
@@ -229,18 +185,18 @@ function mergeAdvanced(
     );
   DEV &&
     console.log(
-      `232 \u001b[${36}m${`i1 = ${JSON.stringify(i1, null, 0)}`}\u001b[${39}m`
+      `188 \u001b[${36}m${`i1 = ${JSON.stringify(i1, null, 0)}`}\u001b[${39}m`
     );
   DEV &&
     console.log(
-      `236 \u001b[${36}m${`i2 = ${JSON.stringify(i2, null, 0)}`}\u001b[${39}m`
+      `192 \u001b[${36}m${`i2 = ${JSON.stringify(i2, null, 0)}`}\u001b[${39}m`
     );
   // DEV && console.log(`168 uniRes = ${JSON.stringify(uniRes, null, 4)}`);
   // DEV && console.log(`169 uni = ${JSON.stringify(uni, null, 4)}`);
 
   DEV &&
     console.log(
-      `243 received ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
+      `199 received ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
         infoObj,
         null,
         4
@@ -251,7 +207,7 @@ function mergeAdvanced(
   // to judge case-by-case. Principle is to aim to retain as much data as possible
   // after merging.
   if (isArr(i1)) {
-    DEV && console.log(`254 i1 is array, cases 1-20`);
+    DEV && console.log(`210 i1 is array, cases 1-20`);
     if (nonEmpty(i1)) {
       // cases 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
       if (isArr(i2) && nonEmpty(i2)) {
@@ -264,32 +220,22 @@ function mergeAdvanced(
           let currentResult = uni ? uniRes : [];
 
           if (typeof opts.cb === "function") {
-            return opts.cb(
-              clone(input1orig),
-              clone(input2orig),
-              currentResult,
-              {
-                path: currPath,
-                key: infoObj.key,
-                type: infoObj.type,
-              }
-            );
+            return opts.cb(clone(input1), clone(input2), currentResult, {
+              path: currPath,
+              key: infoObj.key,
+              type: infoObj.type,
+            });
           }
           return currentResult;
         }
         if (opts.hardArrayConcat) {
           let currentResult = uni ? uniRes : i1.concat(i2);
           if (typeof opts.cb === "function") {
-            return opts.cb(
-              clone(input1orig),
-              clone(input2orig),
-              currentResult,
-              {
-                path: currPath,
-                key: infoObj.key,
-                type: infoObj.type,
-              }
-            );
+            return opts.cb(clone(input1), clone(input2), currentResult, {
+              path: currPath,
+              key: infoObj.key,
+              type: infoObj.type,
+            });
           }
           return currentResult;
         }
@@ -305,7 +251,7 @@ function mergeAdvanced(
             : `${index}`;
           DEV &&
             console.log(
-              `308 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
+              `254 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
             );
 
           // calculate the merge outcome:
@@ -384,7 +330,7 @@ function mergeAdvanced(
         // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
         let currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+          return opts.cb(clone(input1), clone(input2), currentResult, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type,
@@ -398,7 +344,7 @@ function mergeAdvanced(
         // cases 11, 13, 15, 17
         let currentResult = uni ? uniRes : i2;
         if (typeof opts.cb === "function") {
-          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+          return opts.cb(clone(input1), clone(input2), currentResult, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type,
@@ -409,7 +355,7 @@ function mergeAdvanced(
       // cases 12, 14, 16, 18, 19, 20
       let currentResult = uni ? uniRes : i1;
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: currPath,
           key: infoObj.key,
           type: infoObj.type,
@@ -418,7 +364,7 @@ function mergeAdvanced(
       return currentResult;
     }
   } else if (isObj(i1)) {
-    DEV && console.log(`421 i1 is object, cases 21-40`);
+    DEV && console.log(`367 i1 is object, cases 21-40`);
     if (nonEmpty(i1)) {
       // cases 21-30
       if (isArr(i2)) {
@@ -427,23 +373,18 @@ function mergeAdvanced(
           // case 21
           let currentResult = uni ? uniRes : i2;
           if (typeof opts.cb === "function") {
-            return opts.cb(
-              clone(input1orig),
-              clone(input2orig),
-              currentResult,
-              {
-                path: currPath,
-                key: infoObj.key,
-                type: infoObj.type,
-              }
-            );
+            return opts.cb(clone(input1), clone(input2), currentResult, {
+              path: currPath,
+              key: infoObj.key,
+              type: infoObj.type,
+            });
           }
           return currentResult;
         }
         // case 22
         let currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+          return opts.cb(clone(input1), clone(input2), currentResult, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type,
@@ -452,26 +393,26 @@ function mergeAdvanced(
         return currentResult;
       }
       if (isObj(i2)) {
-        DEV && console.log(`455 case 23 - both objects`);
+        DEV && console.log(`396 case 23 - both objects`);
         // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
         Object.keys(i2).forEach((key) => {
           // calculate current path:
           currPath = infoObj.path?.length ? `${infoObj.path}.${key}` : `${key}`;
           DEV &&
             console.log(
-              `462 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
+              `403 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
             );
 
           // calculate the merge outcome:
           if (i1.hasOwnProperty(key)) {
             DEV &&
-              console.log(`468 working on i1 and i2 objects' keys "${key}"`);
+              console.log(`409 working on i1 and i2 objects' keys "${key}"`);
             // key clash
             if (includesWithGlob(key, opts.ignoreKeys)) {
               // set the ignoreEverything for all deeper recursive traversals,
               // otherwise, it will get lost, yet, ignores apply to all children
               // DEV && console.log('455. - ignoreEverything')
-              DEV && console.log(`474 - 1st Recursion, key=${key}`);
+              DEV && console.log(`415 - 1st Recursion, key=${key}`);
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
@@ -488,8 +429,8 @@ function mergeAdvanced(
               // without this switch (opts.hardMergeEverything) we'd lose the visibility
               // of the name of the key; we can't "bubble up" to check all parents' key names,
               // are any of them positive for "hard merge"...
-              DEV && console.log("491 - hardMergeEverything");
-              DEV && console.log(`492 - 2nd Recursion, key=${key}`);
+              DEV && console.log("432 - hardMergeEverything");
+              DEV && console.log(`433 - 2nd Recursion, key=${key}`);
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
@@ -500,13 +441,13 @@ function mergeAdvanced(
                 i2[key],
                 { ...opts, hardMergeEverything: true }
               );
-              DEV && console.log(`503 continuing after recursion`);
+              DEV && console.log(`444 continuing after recursion`);
             } else if (includesWithGlob(key, opts.hardArrayConcatKeys)) {
               // set the hardArrayConcat option to true for all deeper values.
               // It will force a concat of both values, as long as they are both arrays
               // No merge will happen.
               // DEV && console.log('489. - hardArrayConcat')
-              DEV && console.log(`509 - 3rd Recursion, key=${key}`);
+              DEV && console.log(`450 - 3rd Recursion, key=${key}`);
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
@@ -518,11 +459,11 @@ function mergeAdvanced(
                 { ...opts, hardArrayConcat: true }
               );
             } else {
-              DEV && console.log("521 regular merge");
-              DEV && console.log("522 4th Recursion");
+              DEV && console.log("462 regular merge");
+              DEV && console.log("463 4th Recursion");
               DEV &&
                 console.log(
-                  `525 ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
+                  `466 ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
                     {
                       path: currPath,
                       key,
@@ -557,38 +498,38 @@ function mergeAdvanced(
               DEV && console.log(" ");
               DEV &&
                 console.log(
-                  `560 ███████████████████████████████████████ AFTER RECURSION i1[${key}] = ${JSON.stringify(
+                  `501 ███████████████████████████████████████ AFTER RECURSION i1[${key}] = ${JSON.stringify(
                     i1[key],
                     null,
                     4
                   )}`
                 );
             }
-            DEV && console.log(`567`);
+            DEV && console.log(`508`);
           } else {
             i1[key] = i2[key]; // key does not exist, so creates it
           }
         });
 
-        DEV && console.log(`573`);
+        DEV && console.log(`514`);
 
         let currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+          return opts.cb(clone(input1), clone(input2), currentResult, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type,
           });
         }
 
-        DEV && console.log(`584 - return i1 = ${JSON.stringify(i1, null, 4)}`);
+        DEV && console.log(`525 - return i1 = ${JSON.stringify(i1, null, 4)}`);
 
         return i1;
       }
       // cases 24, 25, 26, 27, 28, 29, 30
       let currentResult = uni ? uniRes : i1;
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -602,7 +543,7 @@ function mergeAdvanced(
       // cases 31, 32, 33, 34, 35, 37
       let currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -613,7 +554,7 @@ function mergeAdvanced(
     // 36, 38, 39, 40
     let currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+      return opts.cb(clone(input1), clone(input2), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type,
@@ -621,38 +562,33 @@ function mergeAdvanced(
     }
     return currentResult;
   } else if (isDate(i1)) {
-    DEV && console.log(`624 ██ i1 is date`);
+    DEV && console.log(`565 ██ i1 is date`);
 
     if (isFinite(+i1)) {
-      DEV && console.log(`627 i1 is a finite date`);
+      DEV && console.log(`568 i1 is a finite date`);
 
       if (isDate(i2)) {
-        DEV && console.log(`630 i2 is date`);
+        DEV && console.log(`571 i2 is date`);
         if (isFinite(+i2)) {
-          DEV && console.log(`632 i2 is a finite date`);
+          DEV && console.log(`573 i2 is a finite date`);
 
           // compares dates
           let currentResult = uni ? uniRes : i1 > i2 ? i1 : i2;
           if (typeof opts.cb === "function") {
-            return opts.cb(
-              clone(input1orig),
-              clone(input2orig),
-              currentResult,
-              {
-                path: infoObj.path,
-                key: infoObj.key,
-                type: infoObj.type,
-              }
-            );
+            return opts.cb(clone(input1), clone(input2), currentResult, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type,
+            });
           }
           return currentResult;
         }
 
-        DEV && console.log(`651 i2 is not a finite date`);
+        DEV && console.log(`587 i2 is not a finite date`);
         // return i1 date
         let currentResult = uni ? uniRes : i1;
         if (typeof opts.cb === "function") {
-          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+          return opts.cb(clone(input1), clone(input2), currentResult, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type,
@@ -660,12 +596,12 @@ function mergeAdvanced(
         }
         return currentResult;
       }
-      DEV && console.log(`663 i2 is not a date`);
+      DEV && console.log(`599 i2 is not a date`);
 
       // if i2 is truthy, return it, otherwise return date at i1
       let currentResult = uni ? uniRes : i2 || i1;
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -673,14 +609,14 @@ function mergeAdvanced(
       }
       return currentResult;
     }
-    DEV && console.log(`676 i1 is not a finite date`);
+    DEV && console.log(`612 i1 is not a finite date`);
 
     if (isDate(i2)) {
-      DEV && console.log(`679 i2 is date`);
+      DEV && console.log(`615 i2 is date`);
       // return i2 date
       let currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -688,11 +624,11 @@ function mergeAdvanced(
       }
       return currentResult;
     }
-    DEV && console.log(`691 i2 is not a date`);
+    DEV && console.log(`627 i2 is not a date`);
 
     let currentResult = uni ? uniRes : i2;
     if (typeof opts.cb === "function") {
-      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+      return opts.cb(clone(input1), clone(input2), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type,
@@ -701,13 +637,13 @@ function mergeAdvanced(
     return currentResult;
   } else if (isStr(i1)) {
     if (nonEmpty(i1)) {
-      DEV && console.log(`704 i1 non-empty, cases 41-50`);
+      DEV && console.log(`640 i1 non-empty, cases 41-50`);
       if ((isArr(i2) || isObj(i2) || isStr(i2)) && nonEmpty(i2)) {
         // cases 41, 43, 45
         // take care of hard merge setting cases, opts.hardMergeKeys
         let currentResult = uni ? uniRes : i2;
         if (typeof opts.cb === "function") {
-          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+          return opts.cb(clone(input1), clone(input2), currentResult, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type,
@@ -718,7 +654,7 @@ function mergeAdvanced(
       // cases 42, 44, 46, 47, 48, 49, 50
       let currentResult = uni ? uniRes : i1;
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -727,12 +663,12 @@ function mergeAdvanced(
       return currentResult;
     }
     // i1 is empty string
-    DEV && console.log(`730, i1 is empty string, cases 51-60`);
+    DEV && console.log(`666, i1 is empty string, cases 51-60`);
     if (i2 != null && !isBool(i2)) {
       // cases 51, 52, 53, 54, 55, 56, 57
       let currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -743,7 +679,7 @@ function mergeAdvanced(
     // 58, 59, 60
     let currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+      return opts.cb(clone(input1), clone(input2), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type,
@@ -751,12 +687,12 @@ function mergeAdvanced(
     }
     return currentResult;
   } else if (isNum(i1)) {
-    DEV && console.log(`754 i1 is number cases 61-70`);
+    DEV && console.log(`690 i1 is number cases 61-70`);
     if (nonEmpty(i2)) {
       // cases 61, 63, 65, 67
       let currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -767,7 +703,7 @@ function mergeAdvanced(
     // cases 62, 64, 66, 68, 69, 70
     let currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+      return opts.cb(clone(input1), clone(input2), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type,
@@ -775,13 +711,13 @@ function mergeAdvanced(
     }
     return currentResult;
   } else if (isBool(i1)) {
-    DEV && console.log(`778 i1 is bool, cases 71-80`);
+    DEV && console.log(`714 i1 is bool, cases 71-80`);
     if (isBool(i2)) {
       // case 78 - two Booleans
       if (opts.mergeBoolsUsingOrNotAnd) {
         let currentResult = uni ? uniRes : i1 || i2; // default - OR
         if (typeof opts.cb === "function") {
-          return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+          return opts.cb(clone(input1), clone(input2), currentResult, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type,
@@ -791,7 +727,7 @@ function mergeAdvanced(
       }
       let currentResult = uni ? uniRes : i1 && i2; // alternative merge using AND
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -804,7 +740,7 @@ function mergeAdvanced(
       // cases 71, 72, 73, 74, 75, 76, 77
       let currentResult = uni ? uniRes : i2;
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -816,7 +752,7 @@ function mergeAdvanced(
     // cases 79*, 80
     let currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+      return opts.cb(clone(input1), clone(input2), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type,
@@ -831,14 +767,14 @@ function mergeAdvanced(
       let currentResult = uni ? uniRes : i2;
       DEV &&
         console.log(
-          `834 \u001b[${32}m${`currentResult`}\u001b[${39}m = ${currentResult}`
+          `770 \u001b[${32}m${`currentResult`}\u001b[${39}m = ${currentResult}`
         );
       DEV &&
         console.log(
-          `838 \u001b[${32}m${`opts.cb`}\u001b[${39}m = ${!!opts.cb}`
+          `774 \u001b[${32}m${`opts.cb`}\u001b[${39}m = ${!!opts.cb}`
         );
       if (typeof opts.cb === "function") {
-        return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+        return opts.cb(clone(input1), clone(input2), currentResult, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type,
@@ -849,7 +785,7 @@ function mergeAdvanced(
     // cases 89, 90
     let currentResult = uni ? uniRes : i1;
     if (typeof opts.cb === "function") {
-      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+      return opts.cb(clone(input1), clone(input2), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type,
@@ -857,10 +793,10 @@ function mergeAdvanced(
     }
     return currentResult;
   } else {
-    DEV && console.log(`860 cases 91-100`);
+    DEV && console.log(`796 cases 91-100`);
     let currentResult = uni ? uniRes : i2;
     if (typeof opts.cb === "function") {
-      return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+      return opts.cb(clone(input1), clone(input2), currentResult, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type,
@@ -868,47 +804,43 @@ function mergeAdvanced(
     }
     return currentResult;
   }
-  DEV && console.log(`871 FINAL ROW - i1=${JSON.stringify(i1, null, 4)}`);
-  DEV && console.log(`872 FINAL ROW - i2=${JSON.stringify(i2, null, 4)}`);
+  DEV && console.log(`807 FINAL ROW - i1=${JSON.stringify(i1, null, 4)}`);
+  DEV && console.log(`808 FINAL ROW - i2=${JSON.stringify(i2, null, 4)}`);
 
   // return i1
 
   let currentResult = uni ? uniRes : i1;
   DEV &&
     console.log(
-      `879 FINAL ROW - currentResult = ${JSON.stringify(
+      `815 FINAL ROW - currentResult = ${JSON.stringify(
         currentResult,
         null,
         4
       )}`
     );
-  DEV && console.log(`885 FINAL ROW - uni = ${JSON.stringify(uni, null, 4)}`);
+  DEV && console.log(`821 FINAL ROW - uni = ${JSON.stringify(uni, null, 4)}`);
   DEV &&
     console.log(
-      `888 FINAL ROW - uniRes = ${JSON.stringify(uniRes, null, 4)}\n\n\n`
+      `824 FINAL ROW - uniRes = ${JSON.stringify(uniRes, null, 4)}\n\n\n`
     );
 
   if (typeof opts.cb === "function") {
-    DEV && console.log(`892 RETURN`);
-    return opts.cb(clone(input1orig), clone(input2orig), currentResult, {
+    DEV && console.log(`828 RETURN`);
+    return opts.cb(clone(input1), clone(input2), currentResult, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type,
     });
   }
 
-  DEV && console.log(`900 RETURN ${JSON.stringify(currentResult, null, 4)}`);
+  DEV && console.log(`836 RETURN ${JSON.stringify(currentResult, null, 4)}`);
   return currentResult;
 }
 
 /**
  * Recursively, deeply merge of anything
  */
-function externalApi(
-  input1orig: any,
-  input2orig: any,
-  originalOpts: Opts
-): any {
+function externalApi(input1: any, input2: any, opts?: Partial<Opts>): any {
   if (!arguments.length) {
     throw new TypeError(
       "object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing"
@@ -919,25 +851,46 @@ function externalApi(
 
   DEV &&
     console.log(
-      `${`\u001b[${33}m${`getType(input1orig)`}\u001b[${39}m`} = ${JSON.stringify(
-        getType(input1orig),
+      `${`\u001b[${33}m${`getType(input1)`}\u001b[${39}m`} = ${JSON.stringify(
+        getType(input1),
         null,
         4
       )}`
     );
   DEV &&
     console.log(
-      `${`\u001b[${33}m${`getType(input2orig)`}\u001b[${39}m`} = ${JSON.stringify(
-        getType(input2orig),
+      `${`\u001b[${33}m${`getType(input2)`}\u001b[${39}m`} = ${JSON.stringify(
+        getType(input2),
         null,
         4
       )}`
     );
+
+  let resolvedOpts: Opts = { ...defaults, ...opts };
+  if (typeof resolvedOpts.ignoreKeys === "string") {
+    resolvedOpts.ignoreKeys = [resolvedOpts.ignoreKeys];
+  }
+  if (typeof resolvedOpts.hardMergeKeys === "string") {
+    resolvedOpts.hardMergeKeys = [resolvedOpts.hardMergeKeys];
+  }
+
+  // hardMergeKeys: '*' <===> hardMergeEverything === true
+  // also hardMergeKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
+  if (resolvedOpts?.hardMergeKeys?.includes("*")) {
+    resolvedOpts.hardMergeEverything = true;
+  }
+
+  // ignoreKeys: '*' <===> ignoreEverything === true
+  // also ignoreKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
+  if (resolvedOpts?.ignoreKeys?.includes("*")) {
+    resolvedOpts.ignoreEverything = true;
+  }
+
   return mergeAdvanced(
-    { key: null, path: "", type: [getType(input1orig), getType(input2orig)] },
-    input1orig,
-    input2orig,
-    originalOpts
+    { key: null, path: "", type: [getType(input1), getType(input2)] },
+    input1,
+    input2,
+    resolvedOpts
   );
 }
 

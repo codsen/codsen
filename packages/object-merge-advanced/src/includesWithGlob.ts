@@ -16,41 +16,38 @@ const defaults: Opts = {
  * Like _.includes but with wildcards
  */
 function includesWithGlob(
-  originalInput: string | string[],
+  input: string | string[],
   stringToFind: string | string[],
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): boolean {
   // maybe we can end prematurely:
-  if (!originalInput.length || !stringToFind.length) {
+  if (!input.length || !stringToFind.length) {
     return false; // because nothing can be found in it
   }
 
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts = { ...defaults, ...opts };
 
-  let input =
-    typeof originalInput === "string"
-      ? [originalInput]
-      : Array.from(originalInput);
+  let resolvedInput = typeof input === "string" ? [input] : Array.from(input);
 
   if (typeof stringToFind === "string") {
-    return input.some((val) =>
-      isMatch(val, stringToFind, { caseSensitive: opts.caseSensitive })
+    return resolvedInput.some((val) =>
+      isMatch(val, stringToFind, { caseSensitive: resolvedOpts.caseSensitive })
     );
   }
   // array then.
-  if (opts.arrayVsArrayAllMustBeFound === "any") {
+  if (resolvedOpts.arrayVsArrayAllMustBeFound === "any") {
     return stringToFind.some((stringToFindVal) =>
-      input.some((val) =>
+      resolvedInput.some((val) =>
         isMatch(val, stringToFindVal, {
-          caseSensitive: opts.caseSensitive,
+          caseSensitive: resolvedOpts.caseSensitive,
         })
       )
     );
   }
   return stringToFind.every((stringToFindVal) =>
-    input.some((val) =>
+    resolvedInput.some((val) =>
       isMatch(val, stringToFindVal, {
-        caseSensitive: opts.caseSensitive,
+        caseSensitive: resolvedOpts.caseSensitive,
       })
     )
   );

@@ -18,30 +18,12 @@ interface InfoObj {
   type: [argType, argType];
 }
 interface Opts {
-  cb?:
-    | null
-    | ((input1: any, input2: any, result: any, infoObj?: InfoObj) => any);
-  mergeObjectsOnlyWhenKeysetMatches?: boolean;
-  ignoreKeys?: string | string[];
-  hardMergeKeys?: string | string[];
-  hardArrayConcatKeys?: string[];
-  mergeArraysContainingStringsToBeEmpty?: boolean;
-  oneToManyArrayObjectMerge?: boolean;
-  hardMergeEverything?: boolean;
-  hardArrayConcat?: boolean;
-  ignoreEverything?: boolean;
-  concatInsteadOfMerging?: boolean;
-  dedupeStringsInArrayValues?: boolean;
-  mergeBoolsUsingOrNotAnd?: boolean;
-  useNullAsExplicitFalse?: boolean;
-}
-interface SettledOpts extends Opts {
   cb:
     | null
     | ((input1: any, input2: any, result: any, infoObj?: InfoObj) => any);
   mergeObjectsOnlyWhenKeysetMatches: boolean;
-  ignoreKeys: string[];
-  hardMergeKeys: string[];
+  ignoreKeys: string | string[];
+  hardMergeKeys: string | string[];
   hardArrayConcatKeys: string[];
   mergeArraysContainingStringsToBeEmpty: boolean;
   oneToManyArrayObjectMerge: boolean;
@@ -53,14 +35,14 @@ interface SettledOpts extends Opts {
   mergeBoolsUsingOrNotAnd: boolean;
   useNullAsExplicitFalse: boolean;
 }
-declare const defaults: SettledOpts;
+declare const defaults: Opts;
 /**
  * Recursively, deeply merge of anything
  */
 declare function externalApi(
-  input1orig: any,
-  input2orig: any,
-  originalOpts: Opts
+  input1: any,
+  input2: any,
+  opts?: Partial<Opts>
 ): any;
 
 export { defaults, externalApi as mergeAdvanced, version };
