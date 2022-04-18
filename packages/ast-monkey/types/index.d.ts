@@ -34,12 +34,10 @@ interface SetOpts {
   key: null | string;
   val: any;
   index: number;
-  only?: undefined | null | "any" | "array" | "object";
 }
 declare function set(input: JsonValue, originalOpts: SetOpts): JsonValue;
 interface DropOpts {
   index: number;
-  only?: undefined | null | "any" | "array" | "object";
 }
 declare function drop(input: JsonValue, originalOpts: DropOpts): JsonValue;
 interface DelOpts {

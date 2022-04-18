@@ -268,7 +268,7 @@ function get(input: JsonValue, originalOpts: GetOpts): GetOpts {
     );
   }
   let opts = { ...originalOpts };
-  if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
+  if (typeof opts.index === "string" && /^\d+$/.test(opts.index)) {
     opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
     throw new Error(
@@ -283,8 +283,7 @@ function get(input: JsonValue, originalOpts: GetOpts): GetOpts {
 interface SetOpts {
   key: null | string;
   val: any;
-  index: number; // obligatory for get()
-  only?: undefined | null | "any" | "array" | "object";
+  index: number;
 }
 function set(input: JsonValue, originalOpts: SetOpts): JsonValue {
   if (!existy(input)) {
@@ -308,7 +307,7 @@ function set(input: JsonValue, originalOpts: SetOpts): JsonValue {
     );
   }
   let opts = { ...originalOpts };
-  if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
+  if (typeof opts.index === "string" && /^\d+$/.test(opts.index)) {
     opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
     throw new Error(
@@ -330,8 +329,7 @@ function set(input: JsonValue, originalOpts: SetOpts): JsonValue {
 }
 
 interface DropOpts {
-  index: number; // obligatory for get()
-  only?: undefined | null | "any" | "array" | "object";
+  index: number;
 }
 function drop(input: JsonValue, originalOpts: DropOpts): JsonValue {
   if (!existy(input)) {
@@ -350,7 +348,7 @@ function drop(input: JsonValue, originalOpts: DropOpts): JsonValue {
     );
   }
   let opts = { ...originalOpts };
-  if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
+  if (typeof opts.index === "string" && /^\d+$/.test(opts.index)) {
     opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
     throw new Error(
