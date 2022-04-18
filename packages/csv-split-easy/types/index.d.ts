@@ -5,9 +5,6 @@ interface Opts {
   forceUKStyle: boolean;
 }
 declare const defaults: Opts;
-declare function splitEasy(
-  str: string,
-  originalOpts?: Partial<Opts>
-): string[][];
+declare function splitEasy(str: string, opts?: Partial<Opts>): string[][];
 
 export { defaults, splitEasy, version };

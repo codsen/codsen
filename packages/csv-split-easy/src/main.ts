@@ -18,7 +18,7 @@ const defaults: Opts = {
   forceUKStyle: false,
 };
 
-function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
+function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
   // traverse the string and push each column into array
   // when line break is detected, push what's gathered into main array
   let colStarts = 0;
@@ -29,18 +29,18 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
   let thisRowContainsOnlyEmptySpace = true; // we need at least one non-empty element to
   // flip it to `false` on each line
 
-  if (originalOpts && typeof originalOpts !== "object") {
+  if (opts && typeof opts !== "object") {
     throw new Error(
-      `csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ${typeof originalOpts} equal to:\n${JSON.stringify(
-        originalOpts,
+      `csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ${typeof opts} equal to:\n${JSON.stringify(
+        opts,
         null,
         4
       )}`
     );
   }
 
-  // prep opts
-  let opts: Opts = { ...defaults, ...originalOpts };
+  // prep resolvedOpts
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
   if (typeof str !== "string") {
     throw new TypeError(
@@ -88,9 +88,10 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
           ? newElem.replace(/""/g, '"')
           : remSep(newElem, {
               removeThousandSeparatorsFromNumbers:
-                opts.removeThousandSeparatorsFromNumbers,
-              padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-              forceUKStyle: opts.forceUKStyle,
+                resolvedOpts.removeThousandSeparatorsFromNumbers,
+              padSingleDecimalPlaceNumbers:
+                resolvedOpts.padSingleDecimalPlaceNumbers,
+              forceUKStyle: resolvedOpts.forceUKStyle,
             });
         rowArray.push(processedElem); // push it anyway, if it's empty or not.
         // later if whole row comprises of empty columns (thisRowContainsOnlyEmptySpace still
@@ -117,9 +118,10 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
             newElem, // same, push anyway. We'll check `resArray` in the end
             {
               removeThousandSeparatorsFromNumbers:
-                opts.removeThousandSeparatorsFromNumbers,
-              padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-              forceUKStyle: opts.forceUKStyle,
+                resolvedOpts.removeThousandSeparatorsFromNumbers,
+              padSingleDecimalPlaceNumbers:
+                resolvedOpts.padSingleDecimalPlaceNumbers,
+              forceUKStyle: resolvedOpts.forceUKStyle,
             }
           )
         );
@@ -150,9 +152,10 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
           rowArray.push(
             remSep(newElem, {
               removeThousandSeparatorsFromNumbers:
-                opts.removeThousandSeparatorsFromNumbers,
-              padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-              forceUKStyle: opts.forceUKStyle,
+                resolvedOpts.removeThousandSeparatorsFromNumbers,
+              padSingleDecimalPlaceNumbers:
+                resolvedOpts.padSingleDecimalPlaceNumbers,
+              forceUKStyle: resolvedOpts.forceUKStyle,
             })
           );
         }
@@ -195,9 +198,10 @@ function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
         rowArray.push(
           remSep(newElem, {
             removeThousandSeparatorsFromNumbers:
-              opts.removeThousandSeparatorsFromNumbers,
-            padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-            forceUKStyle: opts.forceUKStyle,
+              resolvedOpts.removeThousandSeparatorsFromNumbers,
+            padSingleDecimalPlaceNumbers:
+              resolvedOpts.padSingleDecimalPlaceNumbers,
+            forceUKStyle: resolvedOpts.forceUKStyle,
           })
         );
       }
