@@ -18,13 +18,10 @@ interface Opts {
   enforceStrictKeyset: boolean;
 }
 declare const defaults: Opts;
-declare function flattenObject(
-  objOrig: Obj,
-  originalOpts?: Partial<Opts>
-): any[];
+declare function flattenObject(obj: Obj, opts?: Partial<Opts>): any[];
 declare function flattenArr(
-  arrOrig: any[],
-  originalOpts?: Partial<Opts>,
+  arr: any[],
+  opts?: Partial<Opts>,
   wrap?: boolean,
   joinArraysUsingBrs?: boolean
 ): string;
@@ -32,9 +29,9 @@ declare function arrayiffyString(something: string | any): any;
 
 declare const version: string;
 declare function flattenReferencing(
-  originalInput1: any,
-  originalReference1: any,
-  opts1?: Partial<Opts>
+  input: any,
+  reference: any,
+  opts?: Partial<Opts>
 ): any;
 
 export {

@@ -50,27 +50,29 @@ function isStr(something: any): boolean {
   return typeof something === "string";
 }
 
-function flattenObject(objOrig: Obj, originalOpts?: Partial<Opts>): any[] {
-  let opts: Opts = { ...defaults, ...originalOpts };
-  if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
+function flattenObject(obj: Obj, opts?: Partial<Opts>): any[] {
+  let resolvedOpts: Opts = { ...defaults, ...opts };
+  if (arguments.length === 0 || Object.keys(obj).length === 0) {
     return [];
   }
-  let obj = clone(objOrig);
+  let resolvedObj = clone(obj);
   let res: any[] = [];
-  if (isObj(obj)) {
-    Object.keys(obj).forEach((key) => {
-      if (isObj(obj[key])) {
-        obj[key] = flattenObject(obj[key], opts);
+  if (isObj(resolvedObj)) {
+    Object.keys(resolvedObj).forEach((key) => {
+      if (isObj(resolvedObj[key])) {
+        resolvedObj[key] = flattenObject(resolvedObj[key], resolvedOpts);
       }
-      if (Array.isArray(obj[key])) {
+      if (Array.isArray(resolvedObj[key])) {
         res = res.concat(
-          obj[key].map(
-            (el: any) => `${key}${opts.objectKeyAndValueJoinChar}${el}`
+          resolvedObj[key].map(
+            (el: any) => `${key}${resolvedOpts.objectKeyAndValueJoinChar}${el}`
           )
         );
       }
-      if (isStr(obj[key])) {
-        res.push(`${key}${opts.objectKeyAndValueJoinChar}${obj[key]}`);
+      if (isStr(resolvedObj[key])) {
+        res.push(
+          `${key}${resolvedOpts.objectKeyAndValueJoinChar}${resolvedObj[key]}`
+        );
       }
     });
   }
@@ -78,44 +80,44 @@ function flattenObject(objOrig: Obj, originalOpts?: Partial<Opts>): any[] {
 }
 
 function flattenArr(
-  arrOrig: any[],
-  originalOpts?: Partial<Opts>,
+  arr: any[],
+  opts?: Partial<Opts>,
   wrap = false,
   joinArraysUsingBrs = false
 ): string {
-  let opts: Opts = { ...defaults, ...originalOpts };
-  if (arguments.length === 0 || arrOrig.length === 0) {
+  let resolvedOpts: Opts = { ...defaults, ...opts };
+  if (arguments.length === 0 || arr.length === 0) {
     return "";
   }
-  let arr: any[] = clone(arrOrig);
+  let resolvedArr: any[] = clone(arr);
   let res = "";
-  if (arr.length) {
+  if (resolvedArr.length) {
     if (joinArraysUsingBrs) {
-      for (let i = 0, len = arr.length; i < len; i++) {
-        if (isStr(arr[i])) {
+      for (let i = 0, len = resolvedArr.length; i < len; i++) {
+        if (isStr(resolvedArr[i])) {
           let lineBreak;
           lineBreak = "";
           if (
-            opts.mergeArraysWithLineBreaks &&
+            resolvedOpts.mergeArraysWithLineBreaks &&
             i > 0 &&
-            (!opts.mergeWithoutTrailingBrIfLineContainsBr ||
-              typeof arr[i - 1] !== "string" ||
-              (opts.mergeWithoutTrailingBrIfLineContainsBr &&
-                arr[i - 1] !== undefined &&
-                !arr[i - 1].toLowerCase().includes("<br")))
+            (!resolvedOpts.mergeWithoutTrailingBrIfLineContainsBr ||
+              typeof resolvedArr[i - 1] !== "string" ||
+              (resolvedOpts.mergeWithoutTrailingBrIfLineContainsBr &&
+                resolvedArr[i - 1] !== undefined &&
+                !resolvedArr[i - 1].toLowerCase().includes("<br")))
           ) {
-            lineBreak = `<br${opts.xhtml ? " /" : ""}>`;
+            lineBreak = `<br${resolvedOpts.xhtml ? " /" : ""}>`;
           }
-          res += `${lineBreak}${wrap ? opts.wrapHeadsWith : ""}${arr[i]}${
-            wrap ? opts.wrapTailsWith : ""
-          }`;
-        } else if (Array.isArray(arr[i])) {
-          if (arr[i].length && arr[i].every(isStr)) {
+          res += `${lineBreak}${wrap ? resolvedOpts.wrapHeadsWith : ""}${
+            resolvedArr[i]
+          }${wrap ? resolvedOpts.wrapTailsWith : ""}`;
+        } else if (Array.isArray(resolvedArr[i])) {
+          if (resolvedArr[i].length && resolvedArr[i].every(isStr)) {
             let lineBreak = "";
-            if (opts.mergeArraysWithLineBreaks && res.length) {
-              lineBreak = `<br${opts.xhtml ? " /" : ""}>`;
+            if (resolvedOpts.mergeArraysWithLineBreaks && res.length) {
+              lineBreak = `<br${resolvedOpts.xhtml ? " /" : ""}>`;
             }
-            res = arr[i].reduce(
+            res = resolvedArr[i].reduce(
               (acc: string, val: string, i2: number, arr2: any[]) => {
                 let trailingSpace = "";
                 if (i2 !== arr2.length - 1) {
@@ -124,9 +126,9 @@ function flattenArr(
                 return (
                   acc +
                   (i2 === 0 ? lineBreak : "") +
-                  (wrap ? opts.wrapHeadsWith : "") +
+                  (wrap ? resolvedOpts.wrapHeadsWith : "") +
                   val +
-                  (wrap ? opts.wrapTailsWith : "") +
+                  (wrap ? resolvedOpts.wrapTailsWith : "") +
                   trailingSpace
                 );
               },
@@ -136,18 +138,18 @@ function flattenArr(
         }
       }
     } else {
-      res = arr.reduce((acc, val, i, arr2) => {
+      res = resolvedArr.reduce((acc, val, i, arr2) => {
         let lineBreak = "";
-        if (opts.mergeArraysWithLineBreaks && i > 0) {
-          lineBreak = `<br${opts.xhtml ? " /" : ""}>`;
+        if (resolvedOpts.mergeArraysWithLineBreaks && i > 0) {
+          lineBreak = `<br${resolvedOpts.xhtml ? " /" : ""}>`;
         }
         let trailingSpace = "";
         if (i !== arr2.length - 1) {
           trailingSpace = " ";
         }
         return `${acc}${i === 0 ? lineBreak : ""}${
-          wrap ? opts.wrapHeadsWith : ""
-        }${val}${wrap ? opts.wrapTailsWith : ""}${trailingSpace}`;
+          wrap ? resolvedOpts.wrapHeadsWith : ""
+        }${val}${wrap ? resolvedOpts.wrapTailsWith : ""}${trailingSpace}`;
       }, res);
     }
   }

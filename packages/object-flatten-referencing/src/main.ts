@@ -25,9 +25,9 @@ function isStr(something: any): boolean {
 }
 
 function flattenReferencing(
-  originalInput1: any,
-  originalReference1: any,
-  opts1?: Partial<Opts>
+  input: any,
+  reference: any,
+  opts?: Partial<Opts>
 ): any {
   if (arguments.length === 0) {
     throw new Error(
@@ -36,16 +36,16 @@ function flattenReferencing(
   }
   if (arguments.length === 1) {
     throw new Error(
-      "object-flatten-referencing/ofr(): [THROW_ID_02] reference object missing!"
+      "object-flatten-referencing/ofr(): [THROW_ID_02] resolvedReference object missing!"
     );
   }
-  if (existy(opts1) && !isObj(opts1)) {
+  if (existy(opts) && !isObj(opts)) {
     throw new Error(
-      `object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: ${typeof opts1}`
+      `object-flatten-referencing/ofr(): [THROW_ID_03] third resolvedInput, options object must be a plain object. Currently it's: ${typeof opts}`
     );
   }
 
-  let originalOpts: Opts = { ...defaults, ...opts1 };
+  let originalOpts: Opts = { ...defaults, ...opts };
 
   originalOpts.dontWrapKeys = arrayiffyString(originalOpts.dontWrapKeys);
   originalOpts.preventWrappingIfContains = arrayiffyString(
@@ -61,74 +61,74 @@ function flattenReferencing(
   function ofr(
     originalInput: any,
     originalReference: any,
-    opts: Opts,
+    opts2: Opts,
     wrap = true,
     joinArraysUsingBrs = true,
     currentRoot = ""
   ): string {
     // DEV && console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
     // DEV && console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
-    let input = clone(originalInput);
-    let reference = clone(originalReference);
+    let resolvedInput = clone(originalInput);
+    let resolvedReference = clone(originalReference);
 
-    if (!opts.wrapGlobalFlipSwitch) {
+    if (!opts2.wrapGlobalFlipSwitch) {
       wrap = false;
     }
 
-    if (isObj(input)) {
-      Object.keys(input).forEach((key) => {
+    if (isObj(resolvedInput)) {
+      Object.keys(resolvedInput).forEach((key) => {
         let currentPath =
           currentRoot + (currentRoot.length === 0 ? key : `.${key}`);
         // DEV && console.log(`* currentPath = ${JSON.stringify(currentPath, null, 4)}\n\n`)
-        if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
-          if (opts.wrapGlobalFlipSwitch) {
+        if (opts2.ignore.length === 0 || !opts2.ignore.includes(key)) {
+          if (opts2.wrapGlobalFlipSwitch) {
             wrap = true; // reset it for the new key.
-            if (opts.dontWrapKeys.length) {
+            if (opts2.dontWrapKeys.length) {
               wrap =
                 wrap &&
-                !opts.dontWrapKeys.some((elem) =>
+                !opts2.dontWrapKeys.some((elem) =>
                   isMatch(key, elem, { caseSensitive: true })
                 );
             }
-            if (opts.dontWrapPaths.length) {
+            if (opts2.dontWrapPaths.length) {
               wrap =
                 wrap &&
-                !opts.dontWrapPaths.some((elem) => elem === currentPath);
+                !opts2.dontWrapPaths.some((elem) => elem === currentPath);
             }
             if (
-              opts.preventWrappingIfContains.length &&
-              typeof input[key] === "string"
+              opts2.preventWrappingIfContains.length &&
+              typeof resolvedInput[key] === "string"
             ) {
               wrap =
                 wrap &&
-                !opts.preventWrappingIfContains.some((elem) =>
-                  input[key].includes(elem)
+                !opts2.preventWrappingIfContains.some((elem) =>
+                  resolvedInput[key].includes(elem)
                 );
             }
           }
 
           if (
-            existy(reference[key]) ||
-            (!existy(reference[key]) &&
-              opts.whatToDoWhenReferenceIsMissing === 2)
+            existy(resolvedReference[key]) ||
+            (!existy(resolvedReference[key]) &&
+              opts2.whatToDoWhenReferenceIsMissing === 2)
           ) {
-            if (Array.isArray(input[key])) {
+            if (Array.isArray(resolvedInput[key])) {
               if (
-                opts.whatToDoWhenReferenceIsMissing === 2 ||
-                isStr(reference[key])
+                opts2.whatToDoWhenReferenceIsMissing === 2 ||
+                isStr(resolvedReference[key])
               ) {
-                // reference is string
+                // resolvedReference is string
                 // that's array vs. string clash:
-                input[key] = flattenArr(
-                  input[key],
-                  opts,
+                resolvedInput[key] = flattenArr(
+                  resolvedInput[key],
+                  opts2,
                   wrap,
                   joinArraysUsingBrs
                 );
               } else {
-                // reference is array as well
+                // resolvedReference is array as well
                 // that's array vs. array clash, for example
-                // so input[key] is array. Let's check, does it contain only strings, or
+                // so resolvedInput[key] is array. Let's check, does it contain only strings, or
                 // do some elements contain array of strings? Because if so, those deeper-level
                 // arrays must be joined with spaces. Outermost arrays must be joined by BR's.
                 // We're talking about ['1111', '2222', '3333'] in:
@@ -147,13 +147,13 @@ function flattenReferencing(
                 // ['1111', '2222', '3333'] should be joined by spaces.
                 // ['xxxx', [...], 'yyyy', 'zzzz'] should be joined by BR's
                 if (
-                  input[key].every(
+                  resolvedInput[key].every(
                     (el: any) => typeof el === "string" || Array.isArray(el)
                   )
                 ) {
                   // check that those array elements contain only string elements:
                   let allOK = true;
-                  input[key].forEach((oneOfElements: any) => {
+                  resolvedInput[key].forEach((oneOfElements: any) => {
                     // check that child arrays contain only string elements
                     if (
                       Array.isArray(oneOfElements) &&
@@ -166,23 +166,23 @@ function flattenReferencing(
                     joinArraysUsingBrs = false;
                   }
                 }
-                input[key] = ofr(
-                  input[key],
-                  reference[key],
-                  opts,
+                resolvedInput[key] = ofr(
+                  resolvedInput[key],
+                  resolvedReference[key],
+                  opts2,
                   wrap,
                   joinArraysUsingBrs,
                   currentPath
                 );
               }
-            } else if (isObj(input[key])) {
+            } else if (isObj(resolvedInput[key])) {
               if (
-                opts.whatToDoWhenReferenceIsMissing === 2 ||
-                isStr(reference[key])
+                opts2.whatToDoWhenReferenceIsMissing === 2 ||
+                isStr(resolvedReference[key])
               ) {
-                input[key] = flattenArr(
-                  flattenObject(input[key], opts),
-                  opts,
+                resolvedInput[key] = flattenArr(
+                  flattenObject(resolvedInput[key], opts2),
+                  opts2,
                   wrap,
                   joinArraysUsingBrs
                 );
@@ -194,90 +194,102 @@ function flattenReferencing(
                 // to prevent that, we flip the switch on the global wrap
                 // setting for all deeper child nodes.
                 // we also clone the options object so as not to mutate it.
-                input[key] = ofr(
-                  input[key],
-                  reference[key],
-                  { ...opts, wrapGlobalFlipSwitch: false },
+                resolvedInput[key] = ofr(
+                  resolvedInput[key],
+                  resolvedReference[key],
+                  { ...opts2, wrapGlobalFlipSwitch: false },
                   wrap,
                   joinArraysUsingBrs,
                   currentPath
                 );
               } else {
-                input[key] = ofr(
-                  input[key],
-                  reference[key],
-                  opts,
+                resolvedInput[key] = ofr(
+                  resolvedInput[key],
+                  resolvedReference[key],
+                  opts2,
                   wrap,
                   joinArraysUsingBrs,
                   currentPath
                 );
               }
-            } else if (isStr(input[key])) {
-              input[key] = ofr(
-                input[key],
-                reference[key],
-                opts,
+            } else if (isStr(resolvedInput[key])) {
+              resolvedInput[key] = ofr(
+                resolvedInput[key],
+                resolvedReference[key],
+                opts2,
                 wrap,
                 joinArraysUsingBrs,
                 currentPath
               );
             }
-          } else if (typeof input[key] !== typeof reference[key]) {
-            if (opts.whatToDoWhenReferenceIsMissing === 1) {
+          } else if (
+            typeof resolvedInput[key] !== typeof resolvedReference[key]
+          ) {
+            if (opts2.whatToDoWhenReferenceIsMissing === 1) {
               throw new Error(
-                `object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key ${key} and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing.`
+                `object-flatten-referencing/ofr(): [THROW_ID_06] resolvedReference object does not have the key ${key} and we need it. TIP: Turn off throwing via opts2.whatToDoWhenReferenceIsMissing.`
               );
             }
-            // when opts.whatToDoWhenReferenceIsMissing === 2, library does nothing,
+            // when opts2.whatToDoWhenReferenceIsMissing === 2, library does nothing,
             // so we simply let it slip through.
           }
         }
       });
-    } else if (Array.isArray(input)) {
-      if (Array.isArray(reference)) {
-        input.forEach((_el, i) => {
-          if (existy(input[i]) && existy(reference[i])) {
-            input[i] = ofr(
-              input[i],
-              reference[i],
-              opts,
+    } else if (Array.isArray(resolvedInput)) {
+      if (Array.isArray(resolvedReference)) {
+        resolvedInput.forEach((_el, i) => {
+          if (existy(resolvedInput[i]) && existy(resolvedReference[i])) {
+            resolvedInput[i] = ofr(
+              resolvedInput[i],
+              resolvedReference[i],
+              opts2,
               wrap,
               joinArraysUsingBrs,
               `${currentRoot}[${i}]`
             );
           } else {
-            input[i] = ofr(
-              input[i],
-              reference[0],
-              opts,
+            resolvedInput[i] = ofr(
+              resolvedInput[i],
+              resolvedReference[0],
+              opts2,
               wrap,
               joinArraysUsingBrs,
               `${currentRoot}[${i}]`
             );
           }
         });
-      } else if (isStr(reference)) {
-        input = flattenArr(input, opts, wrap, joinArraysUsingBrs);
+      } else if (isStr(resolvedReference)) {
+        resolvedInput = flattenArr(
+          resolvedInput,
+          opts2,
+          wrap,
+          joinArraysUsingBrs
+        );
       }
-    } else if (isStr(input)) {
-      if (input.length && (opts.wrapHeadsWith || opts.wrapTailsWith)) {
+    } else if (isStr(resolvedInput)) {
+      if (
+        resolvedInput.length &&
+        (opts2.wrapHeadsWith || opts2.wrapTailsWith)
+      ) {
         if (
-          !opts.preventDoubleWrapping ||
-          ((opts.wrapHeadsWith === "" ||
-            !strIndexesOfPlus(input, opts.wrapHeadsWith.trim()).length) &&
-            (opts.wrapTailsWith === "" ||
-              !strIndexesOfPlus(input, opts.wrapTailsWith.trim()).length))
+          !opts2.preventDoubleWrapping ||
+          ((opts2.wrapHeadsWith === "" ||
+            !strIndexesOfPlus(resolvedInput, opts2.wrapHeadsWith.trim())
+              .length) &&
+            (opts2.wrapTailsWith === "" ||
+              !strIndexesOfPlus(resolvedInput, opts2.wrapTailsWith.trim())
+                .length))
         ) {
-          input = `${wrap ? opts.wrapHeadsWith : ""}${input}${
-            wrap ? opts.wrapTailsWith : ""
+          resolvedInput = `${wrap ? opts2.wrapHeadsWith : ""}${resolvedInput}${
+            wrap ? opts2.wrapTailsWith : ""
           }`;
         }
       }
     }
-    return input;
+    return resolvedInput;
   }
 
-  return ofr(originalInput1, originalReference1, originalOpts);
+  return ofr(input, reference, originalOpts);
 }
 
 export {
