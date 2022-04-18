@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 9.1.2 (2022-04-18)
 
-
 ### Bug Fixes
 
-* tweak types ([050580c](https://github.com/codsen/codsen/commit/050580c1c7935383d499a7f46acb1e6cb44a0ae4))
-
-
-
-
+- tweak types ([050580c](https://github.com/codsen/codsen/commit/050580c1c7935383d499a7f46acb1e6cb44a0ae4))
 
 # 9.1.0 (2022-04-10)
 

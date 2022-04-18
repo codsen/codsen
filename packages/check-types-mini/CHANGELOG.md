@@ -5,15 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.1.3 (2022-04-18)
 
-
 ### Bug Fixes
 
-* correct the Quick Take example ([86566b9](https://github.com/codsen/codsen/commit/86566b9ba8a3ad2371b4de48b3a6a474a5e71cfc))
-* tweak types ([8105826](https://github.com/codsen/codsen/commit/8105826931820464072a9320a8bfbc0e10022955))
-
-
-
-
+- correct the Quick Take example ([86566b9](https://github.com/codsen/codsen/commit/86566b9ba8a3ad2371b4de48b3a6a474a5e71cfc))
+- tweak types ([8105826](https://github.com/codsen/codsen/commit/8105826931820464072a9320a8bfbc0e10022955))
 
 # 7.1.0 (2022-04-10)
 

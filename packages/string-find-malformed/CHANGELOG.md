@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.1.2 (2022-04-18)
 
-
 ### Bug Fixes
 
-* tweak the types ([dd6a429](https://github.com/codsen/codsen/commit/dd6a429e54dac5d58c2be72261f59e556e605f86))
-
-
-
-
+- tweak the types ([dd6a429](https://github.com/codsen/codsen/commit/dd6a429e54dac5d58c2be72261f59e556e605f86))
 
 # 3.1.0 (2022-04-11)
 

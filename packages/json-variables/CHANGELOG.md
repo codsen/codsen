@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 11.0.16 (2022-04-18)
 
-
 ### Bug Fixes
 
-* tweak types ([5da8102](https://github.com/codsen/codsen/commit/5da8102fa04b52c63b5a7a32733aaf8eace13569))
-
-
-
-
+- tweak types ([5da8102](https://github.com/codsen/codsen/commit/5da8102fa04b52c63b5a7a32733aaf8eace13569))
 
 ## 11.0.0 (2021-09-09)
 
