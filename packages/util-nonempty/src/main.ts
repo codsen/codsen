@@ -1,12 +1,10 @@
-/* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
-
 import isPlainObject from "lodash.isplainobject";
 
 import { version as v } from "../package.json";
 
 const version: string = v;
 
-function nonEmpty(input: any): boolean {
+function nonEmpty(input: unknown): boolean {
   // deliberate ==, catches undefined and null
   if (input == null) {
     return false;
@@ -15,7 +13,7 @@ function nonEmpty(input: any): boolean {
     return !!input.length;
   }
   if (isPlainObject(input)) {
-    return !!Object.keys(input).length;
+    return !!Object.keys(input as object).length;
   }
   return typeof input === "number";
 }
