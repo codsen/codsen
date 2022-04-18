@@ -18,7 +18,7 @@ const defaults: Opts = {
   forceUKStyle: false,
 };
 
-function remSep(str: string, originalOpts?: Partial<Opts>): string {
+function remSep(str: string, opts?: Partial<Opts>): string {
   let allOK = true; // used to bail somewhere down the line. It's a killswitch.
   let knownSeparatorsArray = [".", ",", "'", " "];
   let firstSeparator;
@@ -33,18 +33,18 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
       )}`
     );
   }
-  if (originalOpts && typeof originalOpts !== "object") {
+  if (opts && typeof opts !== "object") {
     throw new TypeError(
-      `string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof originalOpts}, equal to:\n${JSON.stringify(
-        originalOpts,
+      `string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof opts}, equal to:\n${JSON.stringify(
+        opts,
         null,
         4
       )}`
     );
   }
 
-  // prep opts
-  let opts: Opts = { ...defaults, ...originalOpts };
+  // prep resolvedOpts
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
   // trim whitespace and wrapping double quotes:
   let res = trimChars(str.trim(), '"');
@@ -76,21 +76,24 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
 
     // -------------------------------------------------------------------------
     // catch empty space for Russian-style thousand separators (spaces):
-    if (opts.removeThousandSeparatorsFromNumbers && res[i].trim() === "") {
+    if (
+      resolvedOpts.removeThousandSeparatorsFromNumbers &&
+      res[i].trim() === ""
+    ) {
       DEV &&
         console.log(
-          `082 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`
+          `085 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`
         );
       rangesToDelete.add(i, i + 1);
     }
     // -------------------------------------------------------------------------
     // catch single quotes for Swiss-style thousand separators:
     // (safe to delete instantly because they're not commas or dots)
-    if (opts.removeThousandSeparatorsFromNumbers && res[i] === "'") {
+    if (resolvedOpts.removeThousandSeparatorsFromNumbers && res[i] === "'") {
       rangesToDelete.add(i, i + 1);
       DEV &&
         console.log(
-          `093 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`
+          `096 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`
         );
       // but if single quote follows this, that's dodgy and let's bail
       if (res[i + 1] === "'") {
@@ -117,7 +120,7 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
                   allOK = false;
                   DEV &&
                     console.log(
-                      `120 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
+                      `123 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
                         allOK,
                         null,
                         4
@@ -129,11 +132,11 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
                   // thousands separator followed by three digits...
                   // =============
                   // 1. submit for deletion
-                  if (opts.removeThousandSeparatorsFromNumbers) {
+                  if (resolvedOpts.removeThousandSeparatorsFromNumbers) {
                     rangesToDelete.add(i, i + 1);
                     DEV &&
                       console.log(
-                        `136 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
+                        `139 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
                           i + 1
                         }]`
                       );
@@ -158,8 +161,8 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
                 break;
               }
             } else if (
-              opts.removeThousandSeparatorsFromNumbers &&
-              opts.forceUKStyle &&
+              resolvedOpts.removeThousandSeparatorsFromNumbers &&
+              resolvedOpts.forceUKStyle &&
               res[i] === ","
             ) {
               //
@@ -170,7 +173,7 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
               rangesToDelete.add(i, i + 1, ".");
               DEV &&
                 console.log(
-                  `173 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
+                  `176 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
                     i + 1
                   }, "."]`
                 );
@@ -187,21 +190,21 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
           // Thousands separator followed by only one digit and then string ends.
           // =============
           // Convert Russian notation if requested:
-          if (opts.forceUKStyle && res[i] === ",") {
+          if (resolvedOpts.forceUKStyle && res[i] === ",") {
             rangesToDelete.add(i, i + 1, ".");
             DEV &&
               console.log(
-                `194 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
+                `197 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
                   i + 1
                 }, "."]`
               );
           }
           // Pad it with zero if requested:
-          if (opts.padSingleDecimalPlaceNumbers) {
+          if (resolvedOpts.padSingleDecimalPlaceNumbers) {
             rangesToDelete.add(i + 2, i + 2, "0");
             DEV &&
               console.log(
-                `204 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i + 2}, ${
+                `207 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i + 2}, ${
                   i + 2
                 }, "0"]`
               );
@@ -216,7 +219,7 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
       allOK = false;
       DEV &&
         console.log(
-          `219 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
+          `222 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
             allOK,
             null,
             4
@@ -227,11 +230,11 @@ function remSep(str: string, originalOpts?: Partial<Opts>): string {
   }
 
   if (allOK && rangesToDelete.current()) {
-    DEV && console.log(`230 RETURN`);
+    DEV && console.log(`233 RETURN`);
     return rApply(res, rangesToDelete.current());
   }
 
-  DEV && console.log(`234 RETURN`);
+  DEV && console.log(`237 RETURN`);
   return res;
 }
 

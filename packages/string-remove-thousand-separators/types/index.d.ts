@@ -5,6 +5,6 @@ interface Opts {
   forceUKStyle: boolean;
 }
 declare const defaults: Opts;
-declare function remSep(str: string, originalOpts?: Partial<Opts>): string;
+declare function remSep(str: string, opts?: Partial<Opts>): string;
 
 export { defaults, remSep, version };
