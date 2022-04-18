@@ -30,6 +30,6 @@ declare const version: string;
 /**
  * Extracts or deletes HTML, CSS, text and/or templating tags from string
  */
-declare function stri(input: string, originalOpts?: Partial<Opts>): Res;
+declare function stri(input: string, opts?: Partial<Opts>): Res;
 
 export { defaultOpts as defaults, stri, version };

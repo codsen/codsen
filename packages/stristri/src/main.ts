@@ -57,7 +57,7 @@ function returnHelper(
 /**
  * Extracts or deletes HTML, CSS, text and/or templating tags from string
  */
-function stri(input: string, originalOpts?: Partial<Opts>): Res {
+function stri(input: string, opts?: Partial<Opts>): Res {
   let start = Date.now();
   DEV &&
     console.log(
@@ -78,30 +78,30 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
       )} (${typeof input})`
     );
   }
-  if (originalOpts && typeof originalOpts !== "object") {
+  if (opts && typeof opts !== "object") {
     throw new Error(
       `stristri: [THROW_ID_02] the second input arg must be a plain object! It was given as ${JSON.stringify(
-        originalOpts,
+        opts,
         null,
         4
-      )} (${typeof originalOpts})`
+      )} (${typeof opts})`
     );
   }
 
-  let opts = {
+  let resolvedOpts = {
     ...defaultOpts,
-    ...originalOpts,
+    ...opts,
   };
   DEV &&
     console.log(
-      `097 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-        opts,
+      `097 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+        resolvedOpts,
         null,
         4
       )}`
     );
 
-  // Prepare blank applicable opts object, extract all bool keys,
+  // Prepare blank applicable resolvedOpts object, extract all bool keys,
   // anticipate that there will be non-bool values in the future.
   let applicableOpts: ApplicableOpts = {
     html: false,
@@ -166,7 +166,7 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
                 )}`
               );
           }
-          if (opts.css) {
+          if (resolvedOpts.css) {
             gatheredRanges.push([token.start, token.end, " "]);
             DEV && console.log(`171 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
           }
@@ -196,14 +196,14 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
                 `196 ${`\u001b[${33}m${`withinHTMLComment`}\u001b[${39}m`} = ${withinHTMLComment}`
               );
           }
-          if (opts.html) {
+          if (resolvedOpts.html) {
             gatheredRanges.push([token.start, token.end, " "]);
             DEV && console.log(`201 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
           }
         }
       } else if (token.type === "tag") {
         DEV && console.log(`205 ${`\u001b[${35}m${`TAG TOKEN`}\u001b[${39}m`}`);
-        // mark applicable opts
+        // mark applicable resolvedOpts
         if (!applicableOpts.html) {
           applicableOpts.html = true;
           DEV &&
@@ -213,7 +213,7 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
               }`
             );
         }
-        if (opts.html) {
+        if (resolvedOpts.html) {
           gatheredRanges.push([token.start, token.end, " "]);
           DEV && console.log(`218 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         }
@@ -272,7 +272,7 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
       } else if (["at", "rule"].includes(token.type)) {
         DEV &&
           console.log(`274 ${`\u001b[${35}m${`AT/RULE TOKEN`}\u001b[${39}m`}`);
-        // mark applicable opts
+        // mark applicable resolvedOpts
         if (!applicableOpts.css) {
           applicableOpts.css = true;
           DEV &&
@@ -282,14 +282,14 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
               }`
             );
         }
-        if (opts.css) {
+        if (resolvedOpts.css) {
           gatheredRanges.push([token.start, token.end, " "]);
           DEV && console.log(`287 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         }
       } else if (token.type === "text") {
         DEV &&
           console.log(`291 ${`\u001b[${35}m${`TEXT TOKEN`}\u001b[${39}m`}`);
-        // mark applicable opts
+        // mark applicable resolvedOpts
         if (withinScript) {
           applicableOpts.js = true;
           DEV &&
@@ -314,14 +314,14 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
             );
         }
         if (
-          (withinCSS && opts.css) ||
-          (withinScript && opts.js) ||
-          (withinHTMLComment && opts.html) ||
+          (withinCSS && resolvedOpts.css) ||
+          (withinScript && resolvedOpts.js) ||
+          (withinHTMLComment && resolvedOpts.html) ||
           (!withinCSS &&
             !withinHTMLComment &&
             !withinXML &&
             !withinScript &&
-            opts.text)
+            resolvedOpts.text)
         ) {
           if (withinScript) {
             gatheredRanges.push([token.start, token.end]);
@@ -336,7 +336,7 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
         }
       } else if (token.type === "esp") {
         DEV && console.log(`338 ${`\u001b[${35}m${`ESP TOKEN`}\u001b[${39}m`}`);
-        // mark applicable opts
+        // mark applicable resolvedOpts
         if (!applicableOpts.templatingTags) {
           applicableOpts.templatingTags = true;
           DEV &&
@@ -348,7 +348,7 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
               )}`
             );
         }
-        if (opts.templatingTags) {
+        if (resolvedOpts.templatingTags) {
           gatheredRanges.push([token.start, token.end, " "]);
           DEV && console.log(`353 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         }
@@ -363,9 +363,9 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
           `${`\u001b[${90}m${`withinScript = ${withinScript}`}\u001b[${39}m`}`
         );
     },
-    reportProgressFunc: opts.reportProgressFunc,
-    reportProgressFuncFrom: opts.reportProgressFuncFrom,
-    reportProgressFuncTo: opts.reportProgressFuncTo * 0.95, // leave the last 5% for collapsing etc.
+    reportProgressFunc: resolvedOpts.reportProgressFunc,
+    reportProgressFuncFrom: resolvedOpts.reportProgressFuncFrom,
+    reportProgressFuncTo: resolvedOpts.reportProgressFuncTo * 0.95, // leave the last 5% for collapsing etc.
   });
 
   DEV &&
