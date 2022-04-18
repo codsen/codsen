@@ -3,5 +3,17 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "cSpell.words": [
+    "codsen",
+    "scanerless",
+    "Revelt",
+    "frontmatter",
+    "esbuild",
+    "Indieweb",
+    "Libera",
+    "rehype",
+    "iife",
+    "sindresorhus"
+  ]
 }
