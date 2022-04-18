@@ -101,17 +101,17 @@ function sortAllObjectsSync(input: any): any {
 
 function getKeyset<ValueType>(
   arrOfPromises: Iterable<PromiseLike<ValueType> | ValueType>,
-  originalOpts?: { placeholder?: boolean }
+  opts?: { placeholder?: boolean }
 ): Promise<Obj> {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!"
     );
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (existy(opts) && !isObj(opts)) {
     throw new TypeError(
-      `json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: ${typeof originalOpts}, equal to: ${JSON.stringify(
-        originalOpts,
+      `json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
+        opts,
         null,
         4
       )}`
@@ -120,11 +120,11 @@ function getKeyset<ValueType>(
   let defaults = {
     placeholder: false,
   };
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
       `126 CALLING check-types-mini:\nopts = ${JSON.stringify(
-        opts,
+        resolvedOpts,
         null,
         4
       )}\ndefaults = ${JSON.stringify(
@@ -186,7 +186,7 @@ function getKeyset<ValueType>(
           ), // reducer
         {} // initialValue
       ).then((res2) => {
-        resolve(setAllValuesTo(res2, opts.placeholder));
+        resolve(setAllValuesTo(res2, resolvedOpts.placeholder));
       });
     });
   });
@@ -194,10 +194,7 @@ function getKeyset<ValueType>(
 
 // -----------------------------------------------------------------------------
 
-function getKeysetSync(
-  arrOriginal: Obj[],
-  originalOpts?: { placeholder?: any }
-) {
+function getKeysetSync(arrOriginal: Obj[], opts?: { placeholder?: any }) {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!"
@@ -213,10 +210,10 @@ function getKeysetSync(
       "json-comb-core/getKeysetSync(): [THROW_ID_23] Input array is empty!"
     );
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (existy(opts) && !isObj(opts)) {
     throw new TypeError(
-      `json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ${typeof originalOpts}, equal to: ${JSON.stringify(
-        originalOpts,
+      `json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
+        opts,
         null,
         4
       )}`
@@ -228,7 +225,7 @@ function getKeysetSync(
   let defaults = {
     placeholder: false,
   };
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts = { ...defaults, ...opts };
 
   let fOpts = {
     flattenArraysContainingStringsToBeEmpty: true,
@@ -252,7 +249,9 @@ function getKeysetSync(
       }
     );
   });
-  schemaObj = sortAllObjectsSync(setAllValuesTo(schemaObj, opts.placeholder));
+  schemaObj = sortAllObjectsSync(
+    setAllValuesTo(schemaObj, resolvedOpts.placeholder)
+  );
   return schemaObj;
 }
 
@@ -267,7 +266,7 @@ interface EnforceKeysetOpts {
 function enforceKeyset(
   obj: Obj,
   schemaKeyset: Obj,
-  originalOpts?: EnforceKeysetOpts
+  opts?: EnforceKeysetOpts
 ): Promise<Obj> {
   if (arguments.length === 0) {
     throw new Error(
@@ -284,16 +283,16 @@ function enforceKeyset(
     placeholder: false,
     useNullAsExplicitFalse: true,
   };
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts = { ...defaults, ...opts };
   if (
-    opts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
-    !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
+    resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
+    !resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
       isStr(val)
     )
   ) {
     throw new Error(
-      `json-comb-core/enforceKeyset(): [THROW_ID_33] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
-        opts.doNotFillThesePathsIfTheyContainPlaceholders,
+      `json-comb-core/enforceKeyset(): [THROW_ID_33] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
+        resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders,
         null,
         4
       )}`
@@ -329,7 +328,11 @@ function enforceKeyset(
         resolve(
           sortAllObjectsSync(
             clone(
-              fillMissing(clone(objResolved), clone(schemaKeysetResolved), opts)
+              fillMissing(
+                clone(objResolved),
+                clone(schemaKeysetResolved),
+                resolvedOpts
+              )
             )
           )
         );
@@ -343,7 +346,7 @@ function enforceKeyset(
 function enforceKeysetSync(
   obj: Obj,
   schemaKeyset: Obj,
-  originalOpts?: EnforceKeysetOpts
+  opts?: EnforceKeysetOpts
 ) {
   if (arguments.length === 0) {
     throw new Error(
@@ -378,22 +381,24 @@ function enforceKeysetSync(
     placeholder: false,
     useNullAsExplicitFalse: true,
   };
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts = { ...defaults, ...opts };
   if (
-    opts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
-    !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
+    resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
+    !resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
       isStr(val)
     )
   ) {
     throw new Error(
-      `json-comb-core/enforceKeyset(): [THROW_ID_45] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
-        opts.doNotFillThesePathsIfTheyContainPlaceholders,
+      `json-comb-core/enforceKeyset(): [THROW_ID_45] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
+        resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders,
         null,
         4
       )}`
     );
   }
-  return sortAllObjectsSync(fillMissing(clone(obj), schemaKeyset, opts));
+  return sortAllObjectsSync(
+    fillMissing(clone(obj), schemaKeyset, resolvedOpts)
+  );
 }
 
 // -----------------------------------------------------------------------------
@@ -436,7 +441,7 @@ function noNewKeysSync(obj: Obj, schemaKeyset: Obj) {
 
 function findUnusedSync(
   arrOriginal: any[],
-  originalOpts?: { placeholder?: boolean; comments?: string }
+  opts?: { placeholder?: boolean; comments?: string }
 ) {
   //
   // PREPARATIONS AND TYPE CHECKS
@@ -451,18 +456,18 @@ function findUnusedSync(
       `json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ${typeof arrOriginal}`
     );
   }
-  if (arguments.length > 1 && !isObj(originalOpts)) {
+  if (arguments.length > 1 && !isObj(opts)) {
     throw new TypeError(
-      `json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ${typeof originalOpts}`
+      `json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ${typeof opts}`
     );
   }
   let defaults = {
     placeholder: false,
     comments: "__comment__",
   };
-  let opts = { ...defaults, ...originalOpts };
-  if (!opts.comments) {
-    opts.comments = "";
+  let resolvedOpts = { ...defaults, ...opts };
+  if (!resolvedOpts.comments) {
+    resolvedOpts.comments = "";
   }
   let arr = clone(arrOriginal);
 
@@ -562,7 +567,7 @@ function findUnusedSync(
     return removeLeadingDot(res);
   }
 
-  return findUnusedSyncInner(arr, opts);
+  return findUnusedSyncInner(arr, resolvedOpts);
 }
 
 // -----------------------------------------------------------------------------

@@ -5,13 +5,13 @@ interface Obj {
 declare function sortAllObjectsSync(input: any): any;
 declare function getKeyset<ValueType>(
   arrOfPromises: Iterable<PromiseLike<ValueType> | ValueType>,
-  originalOpts?: {
+  opts?: {
     placeholder?: boolean;
   }
 ): Promise<Obj>;
 declare function getKeysetSync(
   arrOriginal: Obj[],
-  originalOpts?: {
+  opts?: {
     placeholder?: any;
   }
 ): {};
@@ -23,17 +23,17 @@ interface EnforceKeysetOpts {
 declare function enforceKeyset(
   obj: Obj,
   schemaKeyset: Obj,
-  originalOpts?: EnforceKeysetOpts
+  opts?: EnforceKeysetOpts
 ): Promise<Obj>;
 declare function enforceKeysetSync(
   obj: Obj,
   schemaKeyset: Obj,
-  originalOpts?: EnforceKeysetOpts
+  opts?: EnforceKeysetOpts
 ): any;
 declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): any;
 declare function findUnusedSync(
   arrOriginal: any[],
-  originalOpts?: {
+  opts?: {
     placeholder?: boolean;
     comments?: string;
   }
