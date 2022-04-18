@@ -6,6 +6,6 @@ interface Opts {
   strict: boolean;
 }
 declare const defaults: Opts;
-declare function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges;
+declare function rEntDecode(str: string, opts?: Partial<Opts>): Ranges;
 
 export { defaults, rEntDecode, version };

@@ -33,7 +33,7 @@ const defaults: Opts = {
   strict: false,
 };
 
-function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
+function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   // insurance:
   // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
@@ -44,12 +44,12 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
     // fast ending, matching Ranges notation - absence is marked by falsy null
     return null;
   }
-  if (originalOpts != null && !isObj(originalOpts)) {
+  if (opts != null && !isObj(opts)) {
     throw new TypeError(
-      `ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ${originalOpts}, type ${typeof originalOpts}`
+      `ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ${opts}, type ${typeof opts}`
     );
   }
-  let opts: Opts = { ...defaults, ...originalOpts };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
   DEV &&
     console.log(
@@ -61,8 +61,8 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
     );
   DEV &&
     console.log(
-      `064 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-        opts,
+      `064 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+        resolvedOpts,
         null,
         4
       )}`
@@ -90,7 +90,7 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
 
   let regexInvalidEntity = /&#(?:[xX][^a-fA-F0-9]|[^0-9xX])/;
 
-  if (opts.strict) {
+  if (resolvedOpts.strict) {
     let matchedInvalidEntities = str.match(regexInvalidEntity);
     if (matchedInvalidEntities) {
       throw new Error(
@@ -123,7 +123,7 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
         "&",
       ]);
     } else {
-      let decoded = he.decode(chomped, opts);
+      let decoded = he.decode(chomped, resolvedOpts);
       DEV &&
         console.log(
           `129 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
