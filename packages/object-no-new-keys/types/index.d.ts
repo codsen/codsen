@@ -15,9 +15,9 @@ interface Opts {
 }
 declare const defaults: Opts;
 declare function noNewKeys(
-  inputOuter: JsonValue,
-  referenceOuter: JsonValue,
-  originalOptsOuter?: Partial<Opts>
+  input: JsonValue,
+  reference: JsonValue,
+  opts?: Partial<Opts>
 ): any;
 
 export { defaults, noNewKeys, version };

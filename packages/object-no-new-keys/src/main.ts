@@ -26,20 +26,20 @@ const defaults: Opts = {
 };
 
 function noNewKeys(
-  inputOuter: JsonValue,
-  referenceOuter: JsonValue,
-  originalOptsOuter?: Partial<Opts>
+  input: JsonValue,
+  reference: JsonValue,
+  opts?: Partial<Opts>
 ): any {
-  if (originalOptsOuter && !isObj(originalOptsOuter)) {
+  if (opts && !isObj(opts)) {
     throw new TypeError(
-      `object-no-new-keys/noNewKeys(): [THROW_ID_02] opts should be a plain object. It was given as ${JSON.stringify(
-        originalOptsOuter,
+      `object-no-new-keys/noNewKeys(): [THROW_ID_02] resolvedOpts should be a plain object. It was given as ${JSON.stringify(
+        opts,
         null,
         4
-      )} (type ${typeof originalOptsOuter})`
+      )} (type ${typeof opts})`
     );
   }
-  let optsOuter: Opts = { ...defaults, ...originalOptsOuter };
+  let optsOuter: Opts = { ...defaults, ...opts };
   if (
     typeof optsOuter.mode === "string" &&
     ["1", "2"].includes(optsOuter.mode)
@@ -47,78 +47,81 @@ function noNewKeys(
     (optsOuter as any).mode = +optsOuter.mode;
   } else if (![1, 2].includes(optsOuter.mode)) {
     throw new TypeError(
-      `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode should be "1" or "2" (string or number).`
+      `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] resolvedOpts.mode should be "1" or "2" (string or number).`
     );
   }
 
   function objectNoNewKeysInternal(
-    input: any,
-    reference: any,
-    opts: Obj,
+    resolvedInput: any,
+    resolvedRef: any,
+    resolvedOpts: Obj,
     innerVar: any
   ): any {
     let temp;
-    if (isObj(input)) {
-      if (isObj(reference)) {
-        // input and reference both are objects.
+    if (isObj(resolvedInput)) {
+      if (isObj(resolvedRef)) {
+        // resolvedInput and resolvedRef both are objects.
         // match the keys and record any unique-ones.
         // then traverse recursively.
-        Object.keys(input).forEach((key) => {
-          if (!Object.prototype.hasOwnProperty.call(reference, key)) {
+        Object.keys(resolvedInput).forEach((key) => {
+          if (!Object.prototype.hasOwnProperty.call(resolvedRef, key)) {
             temp = innerVar.path.length ? `${innerVar.path}.${key}` : key;
             innerVar.res.push(temp);
-          } else if (isObj(input[key]) || Array.isArray(input[key])) {
+          } else if (
+            isObj(resolvedInput[key]) ||
+            Array.isArray(resolvedInput[key])
+          ) {
             temp = {
               path: innerVar.path.length ? `${innerVar.path}.${key}` : key,
               res: innerVar.res,
             };
             innerVar.res = objectNoNewKeysInternal(
-              input[key],
-              reference[key],
-              opts,
+              resolvedInput[key],
+              resolvedRef[key],
+              resolvedOpts,
               temp
             ).res;
           }
         });
       } else {
-        // input is object, but reference is not.
-        // record all the keys of the input, but don't traverse deeper
+        // resolvedInput is object, but resolvedRef is not.
+        // record all the keys of the resolvedInput, but don't traverse deeper
         innerVar.res = innerVar.res.concat(
-          Object.keys(input).map((key) =>
+          Object.keys(resolvedInput).map((key) =>
             innerVar.path.length ? `${innerVar.path}.${key}` : key
           )
         );
       }
-    } else if (Array.isArray(input)) {
-      if (Array.isArray(reference)) {
-        // both input and reference are arrays.
+    } else if (Array.isArray(resolvedInput)) {
+      if (Array.isArray(resolvedRef)) {
+        // both resolvedInput and resolvedRef are arrays.
         // traverse each
-        for (let i = 0, len = input.length; i < len; i++) {
+        for (let i = 0, len = resolvedInput.length; i < len; i++) {
           temp = {
             path: `${innerVar.path.length ? innerVar.path : ""}[${i}]`,
             res: innerVar.res,
           };
-          if (opts.mode === 2) {
+          if (resolvedOpts.mode === 2) {
             innerVar.res = objectNoNewKeysInternal(
-              input[i],
-              reference[0],
-              opts,
+              resolvedInput[i],
+              resolvedRef[0],
+              resolvedOpts,
               temp
             ).res;
           } else {
             innerVar.res = objectNoNewKeysInternal(
-              input[i],
-              reference[i],
-              opts,
+              resolvedInput[i],
+              resolvedRef[i],
+              resolvedOpts,
               temp
             ).res;
           }
         }
       } else {
         // mismatch
-        // traverse all elements of the input and put their locations to innerVar.res
+        // traverse all elements of the resolvedInput and put their locations to innerVar.res
         innerVar.res = innerVar.res.concat(
-          input.map(
+          resolvedInput.map(
             (_el, i) => `${innerVar.path.length ? innerVar.path : ""}[${i}]`
           )
         );
@@ -126,7 +129,7 @@ function noNewKeys(
     }
     return innerVar;
   }
-  return objectNoNewKeysInternal(inputOuter, referenceOuter, optsOuter, {
+  return objectNoNewKeysInternal(input, reference, optsOuter, {
     path: "",
     res: [],
   }).res;
