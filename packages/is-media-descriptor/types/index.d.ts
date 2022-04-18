@@ -19,9 +19,6 @@ declare const version: string;
 declare const defaults: {
   offset: number;
 };
-declare function isMediaD(
-  originalStr: string,
-  originalOpts?: Partial<Opts>
-): ResObj[];
+declare function isMediaD(str: string, opts?: Partial<Opts>): ResObj[];
 
 export { defaults, isMediaD, version };
