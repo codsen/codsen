@@ -12,9 +12,6 @@ interface Opts {
   extractedLogContentsWereGiven: boolean;
 }
 declare const defaults: Opts;
-declare function fixRowNums(
-  str: string,
-  originalOpts?: Partial<Opts>
-): string | Ranges;
+declare function fixRowNums(str: string, opts?: Partial<Opts>): string | Ranges;
 
 export { defaults, fixRowNums, version };
