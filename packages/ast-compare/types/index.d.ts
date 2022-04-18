@@ -23,7 +23,7 @@ declare const defaults: Opts;
 declare function compare(
   b: JsonValue,
   s: JsonValue,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): boolean | string;
 
 export { compare, defaults, version };
