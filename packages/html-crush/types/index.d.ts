@@ -35,6 +35,6 @@ interface Res {
 /**
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
  */
-declare function crush(str: string, originalOpts?: Partial<Opts>): Res;
+declare function crush(str: string, opts?: Partial<Opts>): Res;
 
 export { crush, defaults, version };
