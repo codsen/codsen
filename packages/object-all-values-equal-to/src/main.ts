@@ -16,13 +16,13 @@ const defaults: Opts = {
 
 // T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
 // -----------------------------------------------------------------------------
-function allValuesEqualTo(input: any, value: any, opts: Opts): boolean {
+function allValuesEqualTo(input: any, value: any, resolvedOpts: Opts): boolean {
   if (Array.isArray(input)) {
     if (input.length === 0) {
       return true;
     }
     if (
-      opts.arraysMustNotContainPlaceholders &&
+      resolvedOpts.arraysMustNotContainPlaceholders &&
       input.length &&
       input.some((el) => isEq(el, value))
     ) {
@@ -31,7 +31,7 @@ function allValuesEqualTo(input: any, value: any, opts: Opts): boolean {
     // so at this point
     // backwards traversal for increased performance:
     for (let i = input.length; i--; ) {
-      if (!allValuesEqualTo(input[i], value, opts)) {
+      if (!allValuesEqualTo(input[i], value, resolvedOpts)) {
         return false;
       }
     }
@@ -43,7 +43,7 @@ function allValuesEqualTo(input: any, value: any, opts: Opts): boolean {
       return true;
     }
     for (let i = keys.length; i--; ) {
-      if (!allValuesEqualTo(input[keys[i]], value, opts)) {
+      if (!allValuesEqualTo(input[keys[i]], value, resolvedOpts)) {
         return false;
       }
     }
@@ -57,37 +57,33 @@ function allValuesEqualTo(input: any, value: any, opts: Opts): boolean {
 // we use this wrapper function because there will be recursive calls and it would
 // be a waste of resources to perform the input checks each time within recursion
 
-function allEq(
-  inputOriginal: any,
-  valueOriginal: any,
-  originalOpts?: Partial<Opts>
-): boolean {
+function allEq(input: any, value: any, opts?: Partial<Opts>): boolean {
   // precautions:
-  if (inputOriginal === undefined) {
+  if (input === undefined) {
     throw new Error(
       "object-all-values-equal-to: [THROW_ID_01] The first input is undefined! Please provide the first argument."
     );
   }
-  if (valueOriginal === undefined) {
+  if (value === undefined) {
     throw new Error(
       "object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument."
     );
   }
-  if (originalOpts && !isObj(originalOpts)) {
+  if (opts && !isObj(opts)) {
     throw new Error(
-      `object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ${typeof originalOpts}, equal to:\n${JSON.stringify(
-        originalOpts,
+      `object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ${typeof opts}, equal to:\n${JSON.stringify(
+        opts,
         null,
         4
       )}`
     );
   }
 
-  // prep opts
-  let opts: Opts = { ...defaults, ...originalOpts };
+  // prep resolvedOpts
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
   // and finally,
-  return allValuesEqualTo(inputOriginal, valueOriginal, opts);
+  return allValuesEqualTo(input, value, resolvedOpts);
 }
 
 export { allEq, defaults, version };
