@@ -24,6 +24,6 @@ declare const defaults: Opts;
 /**
  * Resolves custom-marked, cross-referenced paths in parsed JSON
  */
-declare function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj;
+declare function jVar(input: Obj, opts?: Partial<Opts>): Obj;
 
 export { defaults, jVar, version };

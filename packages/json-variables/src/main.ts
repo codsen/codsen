@@ -136,19 +136,19 @@ function getLastKey(str: string): string {
   }
   return str;
 }
-function containsHeadsOrTails(str: string, opts: Opts): boolean {
+function containsHeadsOrTails(str: string, resolvedOpts: Opts): boolean {
   if (typeof str !== "string" || !str.trim()) {
     return false;
   }
   if (
-    str.includes(opts.heads) ||
-    str.includes(opts.tails) ||
-    (isStr(opts.headsNoWrap) &&
-      opts.headsNoWrap.length &&
-      str.includes(opts.headsNoWrap)) ||
-    (isStr(opts.tailsNoWrap) &&
-      opts.tailsNoWrap.length &&
-      str.includes(opts.tailsNoWrap))
+    str.includes(resolvedOpts.heads) ||
+    str.includes(resolvedOpts.tails) ||
+    (isStr(resolvedOpts.headsNoWrap) &&
+      resolvedOpts.headsNoWrap.length &&
+      str.includes(resolvedOpts.headsNoWrap)) ||
+    (isStr(resolvedOpts.tailsNoWrap) &&
+      resolvedOpts.tailsNoWrap.length &&
+      str.includes(resolvedOpts.tailsNoWrap))
   ) {
     return true;
   }
@@ -185,7 +185,7 @@ function removeWrappingHeadsAndTails(
 }
 function wrap(
   placementValue: string,
-  opts: Opts,
+  resolvedOpts: Opts,
   dontWrapTheseVars = false,
   breadCrumbPath: string[],
   newPath: string,
@@ -220,31 +220,31 @@ function wrap(
       )}\n`
     );
 
-  // opts validation
-  if (!opts.wrapHeadsWith) {
+  // resolvedOpts validation
+  if (!resolvedOpts.wrapHeadsWith) {
     // eslint-disable-next-line no-param-reassign
-    opts.wrapHeadsWith = "";
+    resolvedOpts.wrapHeadsWith = "";
   }
-  if (!opts.wrapTailsWith) {
+  if (!resolvedOpts.wrapTailsWith) {
     // eslint-disable-next-line no-param-reassign
-    opts.wrapTailsWith = "";
+    resolvedOpts.wrapTailsWith = "";
   }
 
-  // main opts
+  // main resolvedOpts
 
   if (
     isStr(placementValue) &&
     !dontWrapTheseVars &&
-    opts.wrapGlobalFlipSwitch &&
-    !opts.dontWrapVars.some((val) => isMatch(oldVarName, val)) && // considering double-wrapping prevention setting:
-    (!opts.preventDoubleWrapping ||
-      (opts.preventDoubleWrapping &&
+    resolvedOpts.wrapGlobalFlipSwitch &&
+    !resolvedOpts.dontWrapVars.some((val) => isMatch(oldVarName, val)) && // considering double-wrapping prevention setting:
+    (!resolvedOpts.preventDoubleWrapping ||
+      (resolvedOpts.preventDoubleWrapping &&
         isStr(placementValue) &&
-        !placementValue.includes(opts.wrapHeadsWith as string) &&
-        !placementValue.includes(opts.wrapTailsWith as string)))
+        !placementValue.includes(resolvedOpts.wrapHeadsWith as string) &&
+        !placementValue.includes(resolvedOpts.wrapTailsWith as string)))
   ) {
     DEV && console.log("246 +++ WE WILL WRAP THIS!");
-    return `${opts.wrapHeadsWith}${placementValue}${opts.wrapTailsWith}`;
+    return `${resolvedOpts.wrapHeadsWith}${placementValue}${resolvedOpts.wrapTailsWith}`;
   }
   if (dontWrapTheseVars) {
     DEV &&
@@ -257,16 +257,16 @@ function wrap(
       );
     DEV &&
       console.log(
-        `260 opts.wrapHeadsWith = ${JSON.stringify(
-          opts.wrapHeadsWith,
+        `260 resolvedOpts.wrapHeadsWith = ${JSON.stringify(
+          resolvedOpts.wrapHeadsWith,
           null,
           4
         )}`
       );
     DEV &&
       console.log(
-        `268 opts.wrapTailsWith = ${JSON.stringify(
-          opts.wrapTailsWith,
+        `268 resolvedOpts.wrapTailsWith = ${JSON.stringify(
+          resolvedOpts.wrapTailsWith,
           null,
           4
         )}`
@@ -276,8 +276,8 @@ function wrap(
       console.log(
         `277 about to return:\n${JSON.stringify(
           remDup(placementValue, {
-            heads: opts.wrapHeadsWith,
-            tails: opts.wrapTailsWith,
+            heads: resolvedOpts.wrapHeadsWith,
+            tails: resolvedOpts.wrapTailsWith,
           }),
           null,
           4
@@ -296,16 +296,16 @@ function wrap(
       return placementValue;
     }
     let tempValue = remDup(placementValue, {
-      heads: opts.wrapHeadsWith,
-      tails: opts.wrapTailsWith,
+      heads: resolvedOpts.wrapHeadsWith,
+      tails: resolvedOpts.wrapTailsWith,
     });
     if (!isStr(tempValue)) {
       return tempValue;
     }
     return removeWrappingHeadsAndTails(
       tempValue,
-      opts.wrapHeadsWith,
-      opts.wrapTailsWith
+      resolvedOpts.wrapHeadsWith,
+      resolvedOpts.wrapTailsWith
     );
   }
   DEV && console.log("311 +++ NO WRAP");
@@ -315,7 +315,7 @@ function findValues(
   input: any,
   varName: string,
   path: string,
-  opts: Opts
+  resolvedOpts: Opts
 ): string | undefined {
   DEV &&
     console.log(
@@ -336,24 +336,24 @@ function findValues(
 
     // first, check the current level's datastore:
     if (
-      opts.lookForDataContainers &&
-      typeof opts.dataContainerIdentifierTails === "string" &&
-      opts.dataContainerIdentifierTails.length &&
-      !currentPath.endsWith(opts.dataContainerIdentifierTails)
+      resolvedOpts.lookForDataContainers &&
+      typeof resolvedOpts.dataContainerIdentifierTails === "string" &&
+      resolvedOpts.dataContainerIdentifierTails.length &&
+      !currentPath.endsWith(resolvedOpts.dataContainerIdentifierTails)
     ) {
       // 1.1.1. first check data store
       DEV && console.log("345: 1.1.0.");
       DEV &&
         console.log(
           `\n256 * datastore = ${JSON.stringify(
-            currentPath + opts.dataContainerIdentifierTails,
+            currentPath + resolvedOpts.dataContainerIdentifierTails,
             null,
             4
           )}`
         );
       let gotPath = objectPath.get(
         input,
-        currentPath + opts.dataContainerIdentifierTails
+        currentPath + resolvedOpts.dataContainerIdentifierTails
       );
       DEV && console.log(`358 * gotPath = ${JSON.stringify(gotPath, null, 4)}`);
       if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
@@ -377,24 +377,24 @@ function findValues(
 
       // first, check the current level's datastore:
       if (
-        opts.lookForDataContainers &&
-        typeof opts.dataContainerIdentifierTails === "string" &&
-        opts.dataContainerIdentifierTails.length &&
-        !currentPath.endsWith(opts.dataContainerIdentifierTails)
+        resolvedOpts.lookForDataContainers &&
+        typeof resolvedOpts.dataContainerIdentifierTails === "string" &&
+        resolvedOpts.dataContainerIdentifierTails.length &&
+        !currentPath.endsWith(resolvedOpts.dataContainerIdentifierTails)
       ) {
         // 1.1.1. first check data store
         DEV && console.log("386: 1.1.1.");
         DEV &&
           console.log(
             `\n296 * datastore = ${JSON.stringify(
-              currentPath + opts.dataContainerIdentifierTails,
+              currentPath + resolvedOpts.dataContainerIdentifierTails,
               null,
               4
             )}`
           );
         let gotPath = objectPath.get(
           input,
-          currentPath + opts.dataContainerIdentifierTails
+          currentPath + resolvedOpts.dataContainerIdentifierTails
         );
         DEV &&
           console.log(`400 * gotPath = ${JSON.stringify(gotPath, null, 4)}`);
@@ -512,7 +512,7 @@ function findValues(
 // Explanation of the resolveString() function's inputs.
 
 // Heads or tails were detected in the "string", which is located in the "path"
-// within "input" (JSON object normally, an AST). All the settings are in "opts".
+// within "input" (JSON object normally, an AST). All the settings are in "resolvedOpts".
 // Since this function will be called recursively, we have to keep a breadCrumbPath -
 // all keys visited so far and always check, was the current key not been
 // traversed already (present in breadCrumbPath). Otherwise, we might get into a
@@ -521,7 +521,7 @@ function resolveString(
   input: any,
   string: string,
   path: string,
-  opts: Opts,
+  resolvedOpts: Opts,
   incomingBreadCrumbPath: string[] = []
 ): string | false | undefined {
   DEV &&
@@ -631,13 +631,13 @@ function resolveString(
           input, // input
           varName.trim(), // varName
           path, // path
-          opts // opts
+          resolvedOpts // resolvedOpts
         );
         if (resolvedValue === undefined) {
-          if (opts.allowUnresolved === true) {
+          if (resolvedOpts.allowUnresolved === true) {
             resolvedValue = "";
-          } else if (typeof opts.allowUnresolved === "string") {
-            resolvedValue = opts.allowUnresolved;
+          } else if (typeof resolvedOpts.allowUnresolved === "string") {
+            resolvedValue = resolvedOpts.allowUnresolved;
           } else {
             throw new Error(
               `json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ${string.slice(
@@ -649,7 +649,7 @@ function resolveString(
         }
         if (
           !wholeValueIsVariable &&
-          opts.throwWhenNonStringInsertedInString &&
+          resolvedOpts.throwWhenNonStringInsertedInString &&
           !isStr(resolvedValue)
         ) {
           throw new Error(
@@ -665,9 +665,9 @@ function resolveString(
         }
 
         if (isBool(resolvedValue)) {
-          if (opts.resolveToBoolIfAnyValuesContainBool) {
+          if (resolvedOpts.resolveToBoolIfAnyValuesContainBool) {
             finalRangesArr.wipe();
-            if (!opts.resolveToFalseIfAnyValuesContainBool) {
+            if (!resolvedOpts.resolveToFalseIfAnyValuesContainBool) {
               return resolvedValue;
             }
             return false;
@@ -697,17 +697,17 @@ function resolveString(
           : varName;
         DEV &&
           console.log(`* 582 newPath = ${JSON.stringify(newPath, null, 4)}`);
-        if (containsHeadsOrTails(resolvedValue, opts)) {
+        if (containsHeadsOrTails(resolvedValue, resolvedOpts)) {
           let replacementVal = wrap(
             resolveString(
               // replacement value    <--------- R E C U R S I O N
               input,
               resolvedValue,
               newPath,
-              opts,
+              resolvedOpts,
               breadCrumbPath
             ) as string,
-            opts,
+            resolvedOpts,
             dontWrapTheseVars,
             breadCrumbPath,
             newPath,
@@ -725,7 +725,7 @@ function resolveString(
           secretResolvedVarsStash[varName] = resolvedValue;
           let replacementVal = wrap(
             resolvedValue,
-            opts,
+            resolvedOpts,
             dontWrapTheseVars,
             breadCrumbPath,
             newPath,
@@ -751,10 +751,15 @@ function resolveString(
   try {
     // strFindHeadsTails() can throw as well if there's mismatch in heads and tails,
     // for example, so it needs to be contained:
-    foundHeadsAndTails = strFindHeadsTails(string, opts.heads, opts.tails, {
-      source: "",
-      throwWhenSomethingWrongIsDetected: false,
-    });
+    foundHeadsAndTails = strFindHeadsTails(
+      string,
+      resolvedOpts.heads,
+      resolvedOpts.tails,
+      {
+        source: "",
+        throwWhenSomethingWrongIsDetected: false,
+      }
+    );
   } catch (error) {
     throw new Error(
       `json-variables/resolveString(): [THROW_ID_17] While trying to resolve string: "${string}" at path ${path}, something wrong with heads and tails was detected! Here's the internal error message:\n${error}`
@@ -803,14 +808,14 @@ function resolveString(
     return temp1;
   }
 
-  // 2. Process opts.headsNoWrap, opts.tailsNoWrap as well
+  // 2. Process resolvedOpts.headsNoWrap, resolvedOpts.tailsNoWrap as well
   try {
     // strFindHeadsTails() can throw as well if there's mismatch in heads and tails,
     // for example, so it needs to be contained:
     foundHeadsAndTails = strFindHeadsTails(
       string,
-      opts.headsNoWrap,
-      opts.tailsNoWrap,
+      resolvedOpts.headsNoWrap,
+      resolvedOpts.tailsNoWrap,
       {
         source: "",
         throwWhenSomethingWrongIsDetected: false,
@@ -843,7 +848,7 @@ function resolveString(
     return temp2;
   }
 
-  DEV && console.log(`846 temp2 = ${JSON.stringify(temp2, null, 4)}`);
+  DEV && console.log(`851 temp2 = ${JSON.stringify(temp2, null, 4)}`);
 
   // 3. Then, work the finalRangesArr list
   // ================================
@@ -877,7 +882,7 @@ function resolveString(
 /**
  * Resolves custom-marked, cross-referenced paths in parsed JSON
  */
-function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
+function jVar(input: Obj, opts?: Partial<Opts>): Obj {
   if (!arguments.length) {
     throw new Error(
       "json-variables/jVar(): [THROW_ID_01] Alas! Inputs are missing!"
@@ -890,26 +895,26 @@ function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
       }`
     );
   }
-  if (originalOpts && !isObj(originalOpts)) {
+  if (opts && !isObj(opts)) {
     throw new TypeError(
       `json-variables/jVar(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it's: ${
-        Array.isArray(originalOpts) ? "array" : typeof originalOpts
+        Array.isArray(opts) ? "array" : typeof opts
       }`
     );
   }
-  let opts: Opts = { ...defaults, ...originalOpts };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
-  if (!opts.dontWrapVars) {
-    opts.dontWrapVars = [];
-  } else if (!Array.isArray(opts.dontWrapVars)) {
-    opts.dontWrapVars = arrayiffy(opts.dontWrapVars);
+  if (!resolvedOpts.dontWrapVars) {
+    resolvedOpts.dontWrapVars = [];
+  } else if (!Array.isArray(resolvedOpts.dontWrapVars)) {
+    resolvedOpts.dontWrapVars = arrayiffy(resolvedOpts.dontWrapVars);
   }
 
   let culpritVal;
   let culpritIndex;
   if (
-    opts.dontWrapVars.length &&
-    !opts.dontWrapVars.every((el, idx) => {
+    resolvedOpts.dontWrapVars.length &&
+    !resolvedOpts.dontWrapVars.every((el, idx) => {
       if (!isStr(el)) {
         culpritVal = el;
         culpritIndex = idx;
@@ -919,55 +924,58 @@ function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
     })
   ) {
     throw new Error(
-      `json-variables/jVar(): [THROW_ID_05] Alas! All variable names set in opts.dontWrapVars should be of a string type. Computer detected a value "${culpritVal}" at index ${culpritIndex}, which is not string but ${
+      `json-variables/jVar(): [THROW_ID_05] Alas! All variable names set in resolvedOpts.dontWrapVars should be of a string type. Computer detected a value "${culpritVal}" at index ${culpritIndex}, which is not string but ${
         Array.isArray(culpritVal) ? "array" : typeof culpritVal
       }!`
     );
   }
 
-  if (opts.heads === "") {
+  if (resolvedOpts.heads === "") {
     throw new Error(
-      "json-variables/jVar(): [THROW_ID_06] Alas! opts.heads are empty!"
+      "json-variables/jVar(): [THROW_ID_06] Alas! resolvedOpts.heads are empty!"
     );
   }
-  if (opts.tails === "") {
+  if (resolvedOpts.tails === "") {
     throw new Error(
-      "json-variables/jVar(): [THROW_ID_07] Alas! opts.tails are empty!"
+      "json-variables/jVar(): [THROW_ID_07] Alas! resolvedOpts.tails are empty!"
     );
   }
-  if (opts.lookForDataContainers && opts.dataContainerIdentifierTails === "") {
+  if (
+    resolvedOpts.lookForDataContainers &&
+    resolvedOpts.dataContainerIdentifierTails === ""
+  ) {
     throw new Error(
-      "json-variables/jVar(): [THROW_ID_08] Alas! opts.dataContainerIdentifierTails is empty!"
+      "json-variables/jVar(): [THROW_ID_08] Alas! resolvedOpts.dataContainerIdentifierTails is empty!"
     );
   }
-  if (opts.heads === opts.tails) {
+  if (resolvedOpts.heads === resolvedOpts.tails) {
     throw new Error(
-      "json-variables/jVar(): [THROW_ID_09] Alas! opts.heads and opts.tails can't be equal!"
+      "json-variables/jVar(): [THROW_ID_09] Alas! resolvedOpts.heads and resolvedOpts.tails can't be equal!"
     );
   }
-  if (opts.heads === opts.headsNoWrap) {
+  if (resolvedOpts.heads === resolvedOpts.headsNoWrap) {
     throw new Error(
-      "json-variables/jVar(): [THROW_ID_10] Alas! opts.heads and opts.headsNoWrap can't be equal!"
+      "json-variables/jVar(): [THROW_ID_10] Alas! resolvedOpts.heads and resolvedOpts.headsNoWrap can't be equal!"
     );
   }
-  if (opts.tails === opts.tailsNoWrap) {
+  if (resolvedOpts.tails === resolvedOpts.tailsNoWrap) {
     throw new Error(
-      "json-variables/jVar(): [THROW_ID_11] Alas! opts.tails and opts.tailsNoWrap can't be equal!"
+      "json-variables/jVar(): [THROW_ID_11] Alas! resolvedOpts.tails and resolvedOpts.tailsNoWrap can't be equal!"
     );
   }
-  if (opts.headsNoWrap === "") {
+  if (resolvedOpts.headsNoWrap === "") {
     throw new Error(
-      "json-variables/jVar(): [THROW_ID_12] Alas! opts.headsNoWrap is an empty string!"
+      "json-variables/jVar(): [THROW_ID_12] Alas! resolvedOpts.headsNoWrap is an empty string!"
     );
   }
-  if (opts.tailsNoWrap === "") {
+  if (resolvedOpts.tailsNoWrap === "") {
     throw new Error(
-      "json-variables/jVar(): [THROW_ID_13] Alas! opts.tailsNoWrap is an empty string!"
+      "json-variables/jVar(): [THROW_ID_13] Alas! resolvedOpts.tailsNoWrap is an empty string!"
     );
   }
-  if (opts.headsNoWrap === opts.tailsNoWrap) {
+  if (resolvedOpts.headsNoWrap === resolvedOpts.tailsNoWrap) {
     throw new Error(
-      "json-variables/jVar(): [THROW_ID_14] Alas! opts.headsNoWrap and opts.tailsNoWrap can't be equal!"
+      "json-variables/jVar(): [THROW_ID_14] Alas! resolvedOpts.headsNoWrap and resolvedOpts.tailsNoWrap can't be equal!"
     );
   }
 
@@ -975,7 +983,7 @@ function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
 
   DEV && console.log("======== JSON VARIABLES START ========");
   DEV && console.log(`input = ${JSON.stringify(input, null, 4)}`);
-  DEV && console.log(`opts = ${JSON.stringify(opts, null, 4)}`);
+  DEV && console.log(`resolvedOpts = ${JSON.stringify(resolvedOpts, null, 4)}`);
   DEV && console.log("======== JSON VARIABLES END ========");
 
   //
@@ -988,7 +996,7 @@ function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
   // we return the result of the traversal:
   return traverse(input, (key, val, innerObj) => {
     DEV && console.log("\n========================================");
-    if (existy(val) && containsHeadsOrTails(key, opts)) {
+    if (existy(val) && containsHeadsOrTails(key, resolvedOpts)) {
       throw new Error(
         `json-variables/jVar(): [THROW_ID_15] Alas! Object keys can't contain variables!\nPlease check the following key: ${key}`
       );
@@ -1010,7 +1018,7 @@ function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
     // to mutate it, we return "current". If we want to mutate it, we return a new
     // value (which will get written onto that node, previously equal to "current").
 
-    DEV && console.log(`1013 current = ${JSON.stringify(current, null, 4)}`);
+    DEV && console.log(`1021 current = ${JSON.stringify(current, null, 4)}`);
 
     // *
     // Instantly skip empty strings:
@@ -1021,34 +1029,40 @@ function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
     // *
     // If the "current" that monkey brought us is equal to whole heads or tails:
     if (
-      (opts.heads.length !== 0 &&
-        trimIfString(current) === trimIfString(opts.heads)) ||
-      (opts.tails.length !== 0 &&
-        trimIfString(current) === trimIfString(opts.tails)) ||
-      (opts.headsNoWrap.length !== 0 &&
-        trimIfString(current) === trimIfString(opts.headsNoWrap)) ||
-      (opts.tailsNoWrap.length !== 0 &&
-        trimIfString(current) === trimIfString(opts.tailsNoWrap))
+      (resolvedOpts.heads.length &&
+        trimIfString(current) === trimIfString(resolvedOpts.heads)) ||
+      (resolvedOpts.tails.length &&
+        trimIfString(current) === trimIfString(resolvedOpts.tails)) ||
+      (resolvedOpts.headsNoWrap.length &&
+        trimIfString(current) === trimIfString(resolvedOpts.headsNoWrap)) ||
+      (resolvedOpts.tailsNoWrap.length &&
+        trimIfString(current) === trimIfString(resolvedOpts.tailsNoWrap))
     ) {
-      if (!opts.noSingleMarkers) {
+      if (!resolvedOpts.noSingleMarkers) {
         return current;
       }
       throw new Error(
         `json-variables/jVar(): [THROW_ID_16] Alas! While processing the input, we stumbled upon ${trimIfString(
           current
         )} which is equal to ${
-          trimIfString(current) === trimIfString(opts.heads) ? "heads" : ""
-        }${trimIfString(current) === trimIfString(opts.tails) ? "tails" : ""}${
-          isStr(opts.headsNoWrap) &&
-          trimIfString(current) === trimIfString(opts.headsNoWrap)
+          trimIfString(current) === trimIfString(resolvedOpts.heads)
+            ? "heads"
+            : ""
+        }${
+          trimIfString(current) === trimIfString(resolvedOpts.tails)
+            ? "tails"
+            : ""
+        }${
+          isStr(resolvedOpts.headsNoWrap) &&
+          trimIfString(current) === trimIfString(resolvedOpts.headsNoWrap)
             ? "headsNoWrap"
             : ""
         }${
-          isStr(opts.tailsNoWrap) &&
-          trimIfString(current) === trimIfString(opts.tailsNoWrap)
+          isStr(resolvedOpts.tailsNoWrap) &&
+          trimIfString(current) === trimIfString(resolvedOpts.tailsNoWrap)
             ? "tailsNoWrap"
             : ""
-        }. If you wouldn't have set opts.noSingleMarkers to "true" this error would not happen and computer would have left the current element (${trimIfString(
+        }. If you wouldn't have set resolvedOpts.noSingleMarkers to "true" this error would not happen and computer would have left the current element (${trimIfString(
           current
         )}) alone`
       );
@@ -1059,9 +1073,9 @@ function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
     // *
     // Process the current node if it's a string and it contains heads / tails /
     // headsNoWrap / tailsNoWrap:
-    if (isStr(current) && containsHeadsOrTails(current, opts)) {
+    if (isStr(current) && containsHeadsOrTails(current, resolvedOpts)) {
       // breadCrumbPath, the fifth argument is not passed as there're no previous paths
-      return resolveString(input, current, innerObj.path, opts);
+      return resolveString(input, current, innerObj.path, resolvedOpts);
     }
 
     // otherwise, just return as it is. We're not going to touch plain objects/arrays,numbers/bools etc.
