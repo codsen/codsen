@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.0.15 (2022-04-18)
+
+
+### Bug Fixes
+
+* tweak types ([3691de9](https://github.com/codsen/codsen/commit/3691de9821762dbcd8d012d7b0e959e13c5fda21))
+
+
+
+
+
 ## 7.0.0 (2021-09-09)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "5.0.15",
+  "version": "5.0.16",
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "keywords": [
     "breaks",
@@ -77,11 +77,11 @@
     }
   },
   "dependencies": {
-    "ranges-apply": "^6.1.1",
-    "ranges-push": "^6.1.1",
-    "string-left-right": "^5.0.12",
-    "string-match-left-right": "^8.1.1",
-    "string-range-expander": "^3.0.12",
-    "test-mixer": "^3.0.12"
+    "ranges-apply": "^6.1.2",
+    "ranges-push": "^6.1.2",
+    "string-left-right": "^5.0.13",
+    "string-match-left-right": "^8.1.2",
+    "string-range-expander": "^3.0.13",
+    "test-mixer": "^3.0.13"
   }
 }

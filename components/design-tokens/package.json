@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@codsen/design-tokens",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Codsen design tokens",
   "author": "Roy Revelt <roy@codsen.com>",
   "license": "UNLICENSED",

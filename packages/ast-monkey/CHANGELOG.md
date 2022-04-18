@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.0.16 (2022-04-18)
+
+
+### Bug Fixes
+
+* correct the types ([3ad3026](https://github.com/codsen/codsen/commit/3ad30268e4eca204d9b99edf14c20ac6cf34693e))
+* remove unused opts key and tweak regexes ([3cf7a4c](https://github.com/codsen/codsen/commit/3cf7a4c9619ce723a57abc81aa7d6daf22f42c12))
+* tweak types ([a890de1](https://github.com/codsen/codsen/commit/a890de158d734c7fe247cfcc5d96c555372fe9b7))
+
+
+
+
+
 ## 8.0.0 (2021-09-09)
 
 ### Features

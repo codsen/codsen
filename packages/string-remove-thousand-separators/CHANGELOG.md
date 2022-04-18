@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.1.3 (2022-04-18)
+
+
+### Bug Fixes
+
+* tweak types ([3a2f1a2](https://github.com/codsen/codsen/commit/3a2f1a2b5525c8067abcabd73735511e0ec31ce2))
+
+
+
+
+
 # [6.1.0](https://github.com/codsen/codsen/compare/string-remove-thousand-separators@6.0.13...string-remove-thousand-separators@6.1.0) (2022-04-10)
 
 ### Features
