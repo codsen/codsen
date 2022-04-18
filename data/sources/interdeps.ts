@@ -52,7 +52,7 @@ export const interdeps = [
     },
     {
         "name": "ast-delete-object",
-        "size": 1229,
+        "size": 1249,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse"
@@ -86,7 +86,7 @@ export const interdeps = [
     },
     {
         "name": "ast-monkey",
-        "size": 5089,
+        "size": 5209,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -120,7 +120,7 @@ export const interdeps = [
     },
     {
         "name": "check-types-mini",
-        "size": 5554,
+        "size": 5570,
         "imports": [
             "arrayiffy-if-string",
             "ast-monkey-traverse"
@@ -128,7 +128,7 @@ export const interdeps = [
     },
     {
         "name": "codsen-parser",
-        "size": 7105,
+        "size": 7138,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -180,7 +180,7 @@ export const interdeps = [
     },
     {
         "name": "detergent",
-        "size": 25153,
+        "size": 25161,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -208,7 +208,7 @@ export const interdeps = [
     },
     {
         "name": "email-all-chars-within-ascii",
-        "size": 1269,
+        "size": 1277,
         "imports": [
             "check-types-mini"
         ]
@@ -223,7 +223,7 @@ export const interdeps = [
     },
     {
         "name": "email-comb",
-        "size": 20411,
+        "size": 20475,
         "imports": [
             "array-pull-all-with-glob",
             "html-crush",
@@ -286,7 +286,7 @@ export const interdeps = [
     },
     {
         "name": "html-crush",
-        "size": 11028,
+        "size": 11036,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -351,14 +351,14 @@ export const interdeps = [
     },
     {
         "name": "is-media-descriptor",
-        "size": 6041,
+        "size": 6049,
         "imports": [
             "string-process-comma-separated"
         ]
     },
     {
         "name": "is-relative-uri",
-        "size": 5862,
+        "size": 5878,
         "imports": []
     },
     {
@@ -386,7 +386,7 @@ export const interdeps = [
     },
     {
         "name": "json-comb-core",
-        "size": 7281,
+        "size": 7297,
         "imports": [
             "object-fill-missing-keys",
             "object-flatten-all-arrays",
@@ -404,7 +404,7 @@ export const interdeps = [
     },
     {
         "name": "json-variables",
-        "size": 10044,
+        "size": 10148,
         "imports": [
             "arrayiffy-if-string",
             "ast-get-values-by-key",
@@ -445,7 +445,7 @@ export const interdeps = [
     },
     {
         "name": "object-delete-key",
-        "size": 1400,
+        "size": 1408,
         "imports": [
             "ast-is-empty",
             "ast-monkey",
@@ -454,7 +454,7 @@ export const interdeps = [
     },
     {
         "name": "object-fill-missing-keys",
-        "size": 2769,
+        "size": 2773,
         "imports": [
             "arrayiffy-if-string",
             "object-all-values-equal-to",
@@ -468,21 +468,21 @@ export const interdeps = [
     },
     {
         "name": "object-flatten-referencing",
-        "size": 4824,
+        "size": 4849,
         "imports": [
             "str-indexes-of-plus"
         ]
     },
     {
         "name": "object-merge-advanced",
-        "size": 7184,
+        "size": 7188,
         "imports": [
             "util-nonempty"
         ]
     },
     {
         "name": "object-no-new-keys",
-        "size": 1541,
+        "size": 1557,
         "imports": []
     },
     {
@@ -542,7 +542,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-push",
-        "size": 6912,
+        "size": 7040,
         "imports": [
             "string-collapse-leading-whitespace",
             "string-trim-spaces-only"
@@ -668,12 +668,12 @@ export const interdeps = [
     },
     {
         "name": "string-range-expander",
-        "size": 5164,
+        "size": 5211,
         "imports": []
     },
     {
         "name": "string-remove-duplicate-heads-tails",
-        "size": 3039,
+        "size": 3055,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",
@@ -702,7 +702,7 @@ export const interdeps = [
     },
     {
         "name": "string-split-by-whitespace",
-        "size": 1158,
+        "size": 1166,
         "imports": [
             "ranges-is-index-within"
         ]
