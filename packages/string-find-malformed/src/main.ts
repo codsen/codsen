@@ -35,7 +35,7 @@ function findMalformed(
   str: string,
   refStr: string,
   cb: (obj: DataObj) => void,
-  opts?: Partial<Opts> | undefined | null
+  opts?: Partial<Opts>
 ): void {
   DEV && console.log(`040 strFindMalformed() START:`);
   DEV &&
@@ -87,7 +87,7 @@ function findMalformed(
     );
   }
 
-  let resolvedOpts = { ...defaults, ...opts };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
   // we perform the validation upon Object-assigned "resolvedOpts" instead
   // of incoming "opts" because we don't want to mutate the
