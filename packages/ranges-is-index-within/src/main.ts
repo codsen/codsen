@@ -15,15 +15,15 @@ const defaults: Opts = {
 };
 
 function isIndexWithin(
-  originalIndex: number,
+  index: number,
   rangesArr: Ranges,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): boolean | Range {
-  let opts = { ...defaults, ...originalOpts };
+  let resolvedOpts = { ...defaults, ...opts };
   // insurance
-  if (!Number.isInteger(originalIndex)) {
+  if (!Number.isInteger(index)) {
     throw new Error(
-      `ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as ${originalIndex} (type ${typeof originalIndex})`
+      `ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as ${index} (type ${typeof index})`
     );
   }
 
@@ -31,19 +31,19 @@ function isIndexWithin(
     return false;
   }
 
-  if (opts.returnMatchedRangeInsteadOfTrue) {
+  if (resolvedOpts.returnMatchedRangeInsteadOfTrue) {
     return (
       rangesArr.find((arr) =>
-        opts.inclusiveRangeEnds
-          ? originalIndex >= arr[0] && originalIndex <= arr[1]
-          : originalIndex > arr[0] && originalIndex < arr[1]
+        resolvedOpts.inclusiveRangeEnds
+          ? index >= arr[0] && index <= arr[1]
+          : index > arr[0] && index < arr[1]
       ) || false
     );
   }
   return rangesArr.some((arr) =>
-    opts.inclusiveRangeEnds
-      ? originalIndex >= arr[0] && originalIndex <= arr[1]
-      : originalIndex > arr[0] && originalIndex < arr[1]
+    resolvedOpts.inclusiveRangeEnds
+      ? index >= arr[0] && index <= arr[1]
+      : index > arr[0] && index < arr[1]
   );
 }
 

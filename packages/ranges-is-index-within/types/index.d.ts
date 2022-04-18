@@ -10,9 +10,9 @@ interface Opts {
 }
 declare const defaults: Opts;
 declare function isIndexWithin(
-  originalIndex: number,
+  index: number,
   rangesArr: Ranges,
-  originalOpts?: Partial<Opts>
+  opts?: Partial<Opts>
 ): boolean | Range;
 
 export { defaults, isIndexWithin, version };
