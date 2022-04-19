@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [8.0.17](https://github.com/codsen/codsen/compare/ast-monkey@8.0.16...ast-monkey@8.0.17) (2022-04-19)
-
-**Note:** Version bump only for package ast-monkey
-
-
-
-
-
 ## 8.0.16 (2022-04-18)
 
 ### Bug Fixes
