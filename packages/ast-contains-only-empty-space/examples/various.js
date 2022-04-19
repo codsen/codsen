@@ -1,4 +1,4 @@
-// More Examples
+// Various
 
 import { strict as assert } from "assert";
 
