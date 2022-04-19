@@ -14,6 +14,9 @@
     "Libera",
     "rehype",
     "iife",
-    "sindresorhus"
+    "sindresorhus",
+    "nodenext",
+    "letspublish",
+    "jsdelivr"
   ]
 }

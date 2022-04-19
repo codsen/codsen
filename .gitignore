@@ -2,6 +2,7 @@
 
 # we use yarn
 package-lock.json
+data/yarn.lock
 
 # dependencies
 node_modules
