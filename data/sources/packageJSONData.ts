@@ -517,7 +517,7 @@ export const packageJSONData = {
     },
     "ast-compare": {
         "name": "ast-compare",
-        "version": "3.1.3",
+        "version": "3.1.4",
         "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
         "keywords": [
             "array",
@@ -591,7 +591,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-contains-only-empty-space": "^3.1.2",
+            "ast-contains-only-empty-space": "^3.1.3",
             "lodash.isplainobject": "^4.0.6",
             "matcher": "^5.0.0",
             "type-detect": "^4.0.8"
@@ -604,7 +604,7 @@ export const packageJSONData = {
     },
     "ast-contains-only-empty-space": {
         "name": "ast-contains-only-empty-space",
-        "version": "3.1.2",
+        "version": "3.1.3",
         "description": "Does AST contain only empty space?",
         "keywords": [
             "ast",
@@ -774,7 +774,7 @@ export const packageJSONData = {
     },
     "ast-delete-object": {
         "name": "ast-delete-object",
-        "version": "3.0.16",
+        "version": "3.0.17",
         "description": "Delete all plain objects in AST if they contain a certain key/value pair",
         "keywords": [
             "ast",
@@ -850,7 +850,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-compare": "^3.1.3",
+            "ast-compare": "^3.1.4",
             "ast-monkey-traverse": "^3.0.13",
             "lodash.clonedeep": "^4.5.0",
             "lodash.isplainobject": "^4.0.6"
@@ -862,7 +862,7 @@ export const packageJSONData = {
     },
     "ast-get-object": {
         "name": "ast-get-object",
-        "version": "3.0.16",
+        "version": "3.0.17",
         "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
         "keywords": [
             "ast",
@@ -939,7 +939,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "ast-compare": "^3.1.3",
+            "ast-compare": "^3.1.4",
             "lodash.clonedeep": "^4.5.0",
             "lodash.isplainobject": "^4.0.6"
         },
@@ -1123,7 +1123,7 @@ export const packageJSONData = {
     },
     "ast-loose-compare": {
         "name": "ast-loose-compare",
-        "version": "3.0.16",
+        "version": "3.0.17",
         "description": "Compare anything: AST, objects, arrays and strings",
         "keywords": [
             "array",
@@ -1199,7 +1199,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-contains-only-empty-space": "^3.1.2",
+            "ast-contains-only-empty-space": "^3.1.3",
             "lodash.isplainobject": "^4.0.6"
         },
         "devDependencies": {
@@ -1208,7 +1208,7 @@ export const packageJSONData = {
     },
     "ast-monkey": {
         "name": "ast-monkey",
-        "version": "8.0.16",
+        "version": "8.0.17",
         "description": "Traverse and edit AST",
         "keywords": [
             "ast",
@@ -1286,7 +1286,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-compare": "^3.1.3",
+            "ast-compare": "^3.1.4",
             "ast-monkey-traverse": "^3.0.13",
             "check-types-mini": "^7.1.3",
             "util-array-object-or-both": "^4.1.2"
@@ -1855,7 +1855,7 @@ export const packageJSONData = {
     },
     "codsen-parser": {
         "name": "codsen-parser",
-        "version": "0.12.17",
+        "version": "0.12.18",
         "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
         "keywords": [
             "ast",
@@ -1921,7 +1921,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-monkey-util": "^2.0.13",
-            "codsen-tokenizer": "^6.0.17",
+            "codsen-tokenizer": "^6.0.18",
             "object-path": "^0.11.8",
             "string-find-malformed": "^3.1.2",
             "string-left-right": "^5.0.13"
@@ -1929,7 +1929,7 @@ export const packageJSONData = {
     },
     "codsen-tokenizer": {
         "name": "codsen-tokenizer",
-        "version": "6.0.17",
+        "version": "6.0.18",
         "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
         "keywords": [
             "ast",
@@ -2010,7 +2010,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.6",
             "@types/lodash.isplainobject": "^4.0.6",
-            "ast-compare": "^3.1.3"
+            "ast-compare": "^3.1.4"
         }
     },
     "color-shorthand-hex-to-six-digit": {
@@ -3039,7 +3039,7 @@ export const packageJSONData = {
     },
     "emlint": {
         "name": "emlint",
-        "version": "5.0.17",
+        "version": "5.0.18",
         "description": "Pluggable email template code linter",
         "keywords": [
             "analysis",
@@ -3120,7 +3120,7 @@ export const packageJSONData = {
         "dependencies": {
             "ast-monkey-traverse": "^3.0.13",
             "ast-monkey-util": "^2.0.13",
-            "codsen-parser": "^0.12.17",
+            "codsen-parser": "^0.12.18",
             "define-lazy-prop": "^3.0.0",
             "globby": "^13.1.1",
             "he": "^1.2.0",
@@ -3753,7 +3753,7 @@ export const packageJSONData = {
     },
     "html-table-patcher": {
         "name": "html-table-patcher",
-        "version": "5.0.17",
+        "version": "5.0.18",
         "description": "Visual helper to place templating code around table tags into correct places",
         "keywords": [
             "add",
@@ -3825,7 +3825,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-monkey-traverse-with-lookahead": "^3.0.13",
-            "codsen-parser": "^0.12.17",
+            "codsen-parser": "^0.12.18",
             "ranges-apply": "^6.1.2",
             "ranges-push": "^6.1.2"
         }
@@ -5222,7 +5222,7 @@ export const packageJSONData = {
     },
     "object-delete-key": {
         "name": "object-delete-key",
-        "version": "3.1.3",
+        "version": "3.1.4",
         "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
         "keywords": [
             "ast",
@@ -5296,7 +5296,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-is-empty": "^3.0.13",
-            "ast-monkey": "^8.0.16",
+            "ast-monkey": "^8.0.17",
             "lodash.clonedeep": "^4.5.0",
             "util-array-object-or-both": "^4.1.2"
         },
@@ -8752,7 +8752,7 @@ export const packageJSONData = {
     },
     "stristri": {
         "name": "stristri",
-        "version": "4.0.17",
+        "version": "4.0.18",
         "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
         "keywords": [
             "code",
@@ -8823,7 +8823,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "codsen-tokenizer": "^6.0.17",
+            "codsen-tokenizer": "^6.0.18",
             "detect-templating-language": "^3.0.13",
             "ranges-apply": "^6.1.2",
             "ranges-merge": "^8.1.2",

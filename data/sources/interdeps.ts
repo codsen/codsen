@@ -542,7 +542,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-push",
-        "size": 6936,
+        "size": 7040,
         "imports": [
             "string-collapse-leading-whitespace",
             "string-trim-spaces-only"
@@ -709,7 +709,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 16709,
+        "size": 16707,
         "imports": [
             "ranges-apply",
             "ranges-push",
