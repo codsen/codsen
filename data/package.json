@@ -1,17 +1,38 @@
 {
   "name": "@codsen/data",
   "version": "0.1.4",
-  "private": true,
-  "main": "./dist/index.js",
-  "types": "./index.tsx",
+  "description": "extracted data from Codsen monorepo",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "https://codsen.com"
+  },
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "data"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "rimraf ./dist && tsc index.ts --module commonjs --outDir dist --declaration",
-    "postinstall": "yarn run build"
+    "build": "rimraf ./dist && tsc index.ts --module nodenext --outDir dist --declaration",
+    "test": "echo 'no tests'",
+    "postinstall": "npm run build",
+    "publ": "np patch --no-2fa --no-publish && yarn publish"
   },
   "devDependencies": {
     "@types/node": "^17.0.23",
+    "np": "^7.6.1",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
-    "typescript": "^4.5.4"
+    "typescript": "^4.7.0-beta"
   }
 }

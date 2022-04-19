@@ -1,0 +1,15 @@
+# folders:
+.turbo
+coverage
+perf
+src
+sources
+test
+
+# files:
+.all-contributorsrc
+.npmignore
+.prettierignore
+rollup.config.js
+tsconfig.json
+index.ts
