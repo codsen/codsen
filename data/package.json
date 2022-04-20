@@ -25,7 +25,6 @@
   "scripts": {
     "build": "rimraf ./dist && tsc index.ts --module nodenext --outDir dist --declaration",
     "test": "echo 'no tests'",
-    "postinstall": "npm run build",
     "publ": "yarn publish"
   },
   "devDependencies": {
