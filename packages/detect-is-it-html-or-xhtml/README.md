@@ -1,6 +1,6 @@
 # detect-is-it-html-or-xhtml
 
-> Answers, is the string input string more an HTML or XHTML (or neither)
+> Does the string resemble an HTML or XHTML (or neither)?
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/detect-is-it-html-or-xhtml" rel="nofollow noreferrer noopener">
