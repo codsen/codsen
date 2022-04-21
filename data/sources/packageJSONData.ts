@@ -2338,7 +2338,7 @@ export const packageJSONData = {
     "detect-is-it-html-or-xhtml": {
         "name": "detect-is-it-html-or-xhtml",
         "version": "5.0.13",
-        "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
+        "description": "Does the string resemble an HTML or XHTML (or neither)?",
         "keywords": [
             "check",
             "code",
