@@ -81,6 +81,18 @@ for (let packageName of packageNames) {
       } catch (e) {
         // nothing happens
       }
+      if (packageName === "detergent" && !exportedDefaults[packageName]) {
+        try {
+          let { opts } = await import(
+            `../../packages/${packageName}/dist/${packageName}.esm.js`
+          );
+          if (opts) {
+            exportedDefaults[packageName] = JSON.stringify(opts, null, 4);
+          }
+        } catch (e) {
+          // nothing happens
+        }
+      }
 
       // 4. compile all examples, including Quick Take
       examples[packageName] = readdirSync(
