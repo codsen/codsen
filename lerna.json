@@ -13,7 +13,8 @@
     "**/node_modules/**",
     "**/package.json",
     "**/.npmignore",
-    "**/perf/**"
+    "**/perf/**",
+    "./data"
   ],
   "lifecycle": {
     "version": "git add ."
