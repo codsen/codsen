@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [5.0.14](https://github.com/codsen/codsen/compare/detect-is-it-html-or-xhtml@5.0.13...detect-is-it-html-or-xhtml@5.0.14) (2022-04-21)
 
-
 ### Bug Fixes
 
-* improve the throw message ([9c69a06](https://github.com/codsen/codsen/commit/9c69a067dc96490d9ceea69b85399c7d28600bfc))
-
-
-
-
+- improve the throw message ([9c69a06](https://github.com/codsen/codsen/commit/9c69a067dc96490d9ceea69b85399c7d28600bfc))
 
 ## 5.0.0 (2021-09-09)
 
