@@ -81,13 +81,6 @@ blocks:
             - git push
             - git push origin --tags
             # build and publish @codsen/data
-            - yarn run ci:generate:info
-            - cd data
-            - npm run build
-            - npm version patch
-            - git add .
-            - cd ..
-            - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             - cd data
             - yarn run publ
             - cd ..
