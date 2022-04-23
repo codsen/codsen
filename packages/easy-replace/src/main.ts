@@ -232,7 +232,7 @@ function er(source: string, opts: Opts, replacement: string): string {
     let oneOfFoundIndexes = allResults[resIndex];
 
     // oneOfFoundIndexes is the index of starting index of found
-    // the principle of resolvedReplacement is after finding the searchFor string,
+    // the principle of replacement is after finding the searchFor string,
     // the boundaries optionally expand. That's left/right Maybe's from the
     // opts object. When done, the outsides are checked, first positive
     // (leftOutside, rightOutside), then negative (leftOutsideNot, rightOutsideNot).
