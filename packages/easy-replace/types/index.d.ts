@@ -17,10 +17,6 @@ interface Opts {
     rightOutsideNot: boolean;
   };
 }
-declare function er(
-  originalSource: string,
-  options: Opts,
-  originalReplacement: string
-): string;
+declare function er(source: string, opts: Opts, replacement: string): string;
 
 export { er, version };

@@ -25,7 +25,7 @@ interface Opts {
 function astralAwareSearch(
   whereToLook: string,
   whatToLookFor: string,
-  opts?: { i?: boolean }
+  resolvedOpts?: { i?: boolean }
 ): number[] {
   function existy(something: any): boolean {
     return something != null;
@@ -44,8 +44,8 @@ function astralAwareSearch(
   let found;
 
   for (let i = 0; i < arrWhereToLook.length; i++) {
-    // check if current source character matches the first char of what we're looking for
-    if (opts?.i) {
+    // check if current resolvedSource character matches the first char of what we're looking for
+    if (resolvedOpts?.i) {
       if (
         arrWhereToLook[i].toLowerCase() === arrWhatToLookFor[0].toLowerCase()
       ) {
@@ -181,11 +181,7 @@ function iterateRight(
 // M A I N   F U N C T I O N
 // =========================
 
-function er(
-  originalSource: string,
-  options: Opts,
-  originalReplacement: string
-): string {
+function er(source: string, opts: Opts, replacement: string): string {
   let defaults = {
     i: {
       leftOutsideNot: false,
@@ -197,20 +193,20 @@ function er(
       rightOutsideNot: false,
     },
   };
-  let opts = { ...defaults, ...options };
+  let resolvedOpts = { ...defaults, ...opts };
 
   // enforce the peace and order:
-  let source = stringise(originalSource);
-  opts.leftOutsideNot = stringise(opts.leftOutsideNot);
-  opts.leftOutside = stringise(opts.leftOutside);
-  opts.leftMaybe = stringise(opts.leftMaybe);
-  opts.searchFor = String(opts.searchFor);
-  opts.rightMaybe = stringise(opts.rightMaybe);
-  opts.rightOutside = stringise(opts.rightOutside);
-  opts.rightOutsideNot = stringise(opts.rightOutsideNot);
-  let replacement = stringise(originalReplacement);
+  let resolvedSource = stringise(source);
+  resolvedOpts.leftOutsideNot = stringise(resolvedOpts.leftOutsideNot);
+  resolvedOpts.leftOutside = stringise(resolvedOpts.leftOutside);
+  resolvedOpts.leftMaybe = stringise(resolvedOpts.leftMaybe);
+  resolvedOpts.searchFor = String(resolvedOpts.searchFor);
+  resolvedOpts.rightMaybe = stringise(resolvedOpts.rightMaybe);
+  resolvedOpts.rightOutside = stringise(resolvedOpts.rightOutside);
+  resolvedOpts.rightOutsideNot = stringise(resolvedOpts.rightOutsideNot);
+  let resolvedReplacement = stringise(replacement);
 
-  let arrSource = Array.from(source[0]);
+  let arrSource = Array.from(resolvedSource[0]);
   let foundBeginningIndex;
   let foundEndingIndex;
   let matched;
@@ -220,9 +216,13 @@ function er(
 
   //  T H E   L O O P
 
-  let allResults = astralAwareSearch(source[0], opts.searchFor, {
-    i: opts.i.searchFor,
-  });
+  let allResults = astralAwareSearch(
+    resolvedSource[0],
+    resolvedOpts.searchFor,
+    {
+      i: resolvedOpts.i.searchFor,
+    }
+  );
 
   for (
     let resIndex = 0, resLen = allResults.length;
@@ -232,28 +232,29 @@ function er(
     let oneOfFoundIndexes = allResults[resIndex];
 
     // oneOfFoundIndexes is the index of starting index of found
-    // the principle of replacement is after finding the searchFor string,
+    // the principle of resolvedReplacement is after finding the searchFor string,
     // the boundaries optionally expand. That's left/right Maybe's from the
-    // options object. When done, the outsides are checked, first positive
+    // opts object. When done, the outsides are checked, first positive
     // (leftOutside, rightOutside), then negative (leftOutsideNot, rightOutsideNot).
     // That's the plan.
 
     foundBeginningIndex = oneOfFoundIndexes;
-    foundEndingIndex = oneOfFoundIndexes + Array.from(opts.searchFor).length;
+    foundEndingIndex =
+      oneOfFoundIndexes + Array.from(resolvedOpts.searchFor).length;
     //
     // ===================== leftMaybe =====================
     // commence with maybe's
     // they're not hungry, i.e. the whole Maybe must be of the left of searchFor exactly
     //
     /* istanbul ignore else */
-    if (opts.leftMaybe.length) {
-      for (let i = 0, len = opts.leftMaybe.length; i < len; i++) {
+    if (resolvedOpts.leftMaybe.length) {
+      for (let i = 0, len = resolvedOpts.leftMaybe.length; i < len; i++) {
         // iterate each of the maybe's in the array:
         matched = true;
-        let splitLeftMaybe = Array.from(opts.leftMaybe[i]);
+        let splitLeftMaybe = Array.from(resolvedOpts.leftMaybe[i]);
         for (let i2 = 0, len2 = splitLeftMaybe.length; i2 < len2; i2++) {
           // iterate each character of particular Maybe:
-          if (opts.i.leftMaybe) {
+          if (resolvedOpts.i.leftMaybe) {
             if (
               splitLeftMaybe[i2].toLowerCase() !==
               arrSource[
@@ -281,18 +282,20 @@ function er(
     }
     // ===================== rightMaybe =====================
     /* istanbul ignore else */
-    if (opts.rightMaybe.length) {
-      for (let i = 0, len = opts.rightMaybe.length; i < len; i++) {
+    if (resolvedOpts.rightMaybe.length) {
+      for (let i = 0, len = resolvedOpts.rightMaybe.length; i < len; i++) {
         // iterate each of the Maybe's in the array:
         matched = true;
-        let splitRightMaybe = Array.from(opts.rightMaybe[i]);
+        let splitRightMaybe = Array.from(resolvedOpts.rightMaybe[i]);
         for (let i2 = 0, len2 = splitRightMaybe.length; i2 < len2; i2++) {
           // iterate each character of particular Maybe:
-          if (opts.i.rightMaybe) {
+          if (resolvedOpts.i.rightMaybe) {
             if (
               splitRightMaybe[i2].toLowerCase() !==
               arrSource[
-                oneOfFoundIndexes + Array.from(opts.searchFor).length + i2
+                oneOfFoundIndexes +
+                  Array.from(resolvedOpts.searchFor).length +
+                  i2
               ].toLowerCase()
             ) {
               matched = false;
@@ -301,7 +304,7 @@ function er(
           } else if (
             splitRightMaybe[i2] !==
             arrSource[
-              oneOfFoundIndexes + Array.from(opts.searchFor).length + i2
+              oneOfFoundIndexes + Array.from(resolvedOpts.searchFor).length + i2
             ]
           ) {
             matched = false;
@@ -312,26 +315,26 @@ function er(
           matched &&
           foundEndingIndex <
             oneOfFoundIndexes +
-              Array.from(opts.searchFor).length +
+              Array.from(resolvedOpts.searchFor).length +
               splitRightMaybe.length
         ) {
           foundEndingIndex =
             oneOfFoundIndexes +
-            Array.from(opts.searchFor).length +
+            Array.from(resolvedOpts.searchFor).length +
             splitRightMaybe.length;
         }
       }
     }
     // ===================== leftOutside =====================
-    if (opts.leftOutside[0] !== "") {
+    if (resolvedOpts.leftOutside[0] !== "") {
       found = false;
-      for (let i = 0, len = opts.leftOutside.length; i < len; i++) {
+      for (let i = 0, len = resolvedOpts.leftOutside.length; i < len; i++) {
         // iterate each of the outsides in the array:
         matched = iterateLeft(
-          opts.leftOutside[i],
+          resolvedOpts.leftOutside[i],
           arrSource,
           foundBeginningIndex,
-          opts.i.leftOutside
+          resolvedOpts.i.leftOutside
         );
         if (matched) {
           found = true;
@@ -342,15 +345,15 @@ function er(
       }
     }
     // ===================== rightOutside =====================
-    if (opts.rightOutside[0] !== "") {
+    if (resolvedOpts.rightOutside[0] !== "") {
       found = false;
-      for (let i = 0, len = opts.rightOutside.length; i < len; i++) {
+      for (let i = 0, len = resolvedOpts.rightOutside.length; i < len; i++) {
         // iterate each of the outsides in the array:
         matched = iterateRight(
-          opts.rightOutside[i],
+          resolvedOpts.rightOutside[i],
           arrSource,
           foundEndingIndex,
-          opts.i.rightOutside
+          resolvedOpts.i.rightOutside
         );
         if (matched) {
           found = true;
@@ -361,14 +364,14 @@ function er(
       }
     }
     // ===================== leftOutsideNot =====================
-    if (opts.leftOutsideNot[0] !== "") {
-      for (let i = 0, len = opts.leftOutsideNot.length; i < len; i++) {
+    if (resolvedOpts.leftOutsideNot[0] !== "") {
+      for (let i = 0, len = resolvedOpts.leftOutsideNot.length; i < len; i++) {
         // iterate each of the outsides in the array:
         matched = iterateLeft(
-          opts.leftOutsideNot[i],
+          resolvedOpts.leftOutsideNot[i],
           arrSource,
           foundBeginningIndex,
-          opts.i.leftOutsideNot
+          resolvedOpts.i.leftOutsideNot
         );
         if (matched) {
           foundBeginningIndex = -1;
@@ -381,14 +384,14 @@ function er(
       }
     }
     // ===================== rightOutsideNot =====================
-    if (opts.rightOutsideNot[0] !== "") {
-      for (let i = 0, len = opts.rightOutsideNot.length; i < len; i++) {
+    if (resolvedOpts.rightOutsideNot[0] !== "") {
+      for (let i = 0, len = resolvedOpts.rightOutsideNot.length; i < len; i++) {
         // iterate each of the outsides in the array:
         matched = iterateRight(
-          opts.rightOutsideNot[i],
+          resolvedOpts.rightOutsideNot[i],
           arrSource,
           foundEndingIndex,
-          opts.i.rightOutsideNot
+          resolvedOpts.i.rightOutsideNot
         );
         if (matched) {
           foundBeginningIndex = -1;
@@ -408,7 +411,7 @@ function er(
   // [ [0,10], [2,12] ] => [ [0,10], [10,12] ]
   if (replacementRecipe.length) {
     replacementRecipe.forEach((_elem, i) => {
-      // iterate through all replacement-recipe-array's elements:
+      // iterate through all resolvedReplacement-recipe-array's elements:
       if (
         replacementRecipe[i + 1] !== undefined &&
         replacementRecipe[i][1] > replacementRecipe[i + 1][0]
@@ -423,26 +426,26 @@ function er(
       }
     });
   } else {
-    // there were no findings, so return source
-    return source.join("");
+    // there were no findings, so return resolvedSource
+    return resolvedSource.join("");
   }
   //
-  // iterate the recipe array and perform the replacement:
+  // iterate the recipe array and perform the resolvedReplacement:
   // first, if replacements don't start with 0, attach this part onto result let:
   if (replacementRecipe.length && replacementRecipe[0][0] !== 0) {
     result += arrSource.slice(0, replacementRecipe[0][0]).join("");
   }
   replacementRecipe.forEach((_elem, i) => {
-    // first position is replacement string:
-    result += replacement.join("");
+    // first position is resolvedReplacement string:
+    result += resolvedReplacement.join("");
     if (replacementRecipe[i + 1] !== undefined) {
       // if next element exists, add content between current and next finding
       result += arrSource
         .slice(replacementRecipe[i][1], replacementRecipe[i + 1][0])
         .join("");
     } else {
-      // if this is the last element in the replacement recipe array, add
-      // remainder of the string after last replacement and the end:
+      // if this is the last element in the resolvedReplacement recipe array, add
+      // remainder of the string after last resolvedReplacement and the end:
       result += arrSource.slice(replacementRecipe[i][1]).join("");
     }
   });
