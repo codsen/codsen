@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.16](https://github.com/codsen/codsen/compare/easy-replace@5.0.15...easy-replace@5.0.16) (2022-04-23)
+
+
+### Bug Fixes
+
+* tweak types ([b854d68](https://github.com/codsen/codsen/commit/b854d68477f239bf15a85343aa769ff9a54e2183))
+
+
+
+
+
 ## 5.0.0 (2021-09-09)
 
 ### Features
