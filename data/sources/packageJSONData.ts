@@ -2586,7 +2586,7 @@ export const packageJSONData = {
     },
     "easy-replace": {
         "name": "easy-replace",
-        "version": "5.0.15",
+        "version": "5.0.16",
         "description": "Replace strings with optional lookarounds, but without regexes",
         "keywords": [
             "easy",
@@ -2656,7 +2656,7 @@ export const packageJSONData = {
     },
     "edit-package-json": {
         "name": "edit-package-json",
-        "version": "0.6.2",
+        "version": "0.6.3",
         "description": "Edit package.json without parsing, as string, to keep the formatting intact",
         "keywords": [
             "changes",
@@ -9077,7 +9077,7 @@ export const packageJSONData = {
     },
     "update-versions": {
         "name": "update-versions",
-        "version": "5.1.2",
+        "version": "5.1.3",
         "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
         "keywords": [
             "app",
@@ -9145,7 +9145,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ansi-diff-stream": "^1.2.1",
-            "edit-package-json": "^0.6.2",
+            "edit-package-json": "^0.6.3",
             "globby": "^13.1.1",
             "is-online": "^9.0.1",
             "lodash.isplainobject": "^4.0.6",
