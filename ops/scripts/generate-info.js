@@ -20,18 +20,28 @@ const isCI = process?.env?.CI || false;
 // READ ALL LIBS
 // =============
 
-const packagesOutsideMonorepo = [
-  "eslint-plugin-row-num",
-  "eslint-plugin-test-num",
-  "perf-ref",
-  "tsd-extract-noesm",
-];
+const packagesOutsideMonorepoObj = {
+  "eslint-plugin-row-num": {
+    description: "ESLint plugin to update row numbers on each console.log",
+  },
+  "eslint-plugin-test-num": {
+    description: "ESLint plugin to update unit test numbers automatically",
+  },
+  "perf-ref": {
+    description: "A dummy program to normalise perf scores against it",
+  },
+  "tsd-extract-noesm": {
+    description: "Extract any definition from TS definitions file",
+  },
+};
+
+const packagesOutsideMonorepo = Object.keys(packagesOutsideMonorepoObj);
 const allPackages = [...packagesOutsideMonorepo];
 const cliPackages = [];
 const programPackages = [];
 const specialPackages = [];
 const scriptAvailable = [];
-const packageJSONData = {};
+const packageJSONData = { ...packagesOutsideMonorepoObj };
 const examples = {};
 const allDTS = {};
 // if a package exports "defaults", that value will be

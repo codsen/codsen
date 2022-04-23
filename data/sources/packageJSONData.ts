@@ -1,4 +1,16 @@
 export const packageJSONData = {
+    "eslint-plugin-row-num": {
+        "description": "ESLint plugin to update row numbers on each console.log"
+    },
+    "eslint-plugin-test-num": {
+        "description": "ESLint plugin to update unit test numbers automatically"
+    },
+    "perf-ref": {
+        "description": "A dummy program to normalise perf scores against it"
+    },
+    "tsd-extract-noesm": {
+        "description": "Extract any definition from TS definitions file"
+    },
     "all-named-html-entities": {
         "name": "all-named-html-entities",
         "version": "2.0.13",
