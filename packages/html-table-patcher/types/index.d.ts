@@ -4,14 +4,12 @@ interface Opts {
   alwaysCenter: boolean;
 }
 declare const defaults: Opts;
+interface Res {
+  result: string;
+}
 /**
  * Visual helper to place templating code around table tags into correct places
  */
-declare function patcher(
-  str: string,
-  generalOpts?: Partial<Opts>
-): {
-  result: string;
-};
+declare function patcher(str: string, opts?: Partial<Opts>): Res;
 
 export { defaults, patcher, version };
