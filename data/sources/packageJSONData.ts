@@ -2808,7 +2808,7 @@ export const packageJSONData = {
     },
     "email-all-chars-within-ascii-cli": {
         "name": "email-all-chars-within-ascii-cli",
-        "version": "2.0.17",
+        "version": "2.0.18",
         "description": "Command line app to scan email templates, are all their characters within ASCII range",
         "keywords": [
             "7bit",
@@ -3052,7 +3052,7 @@ export const packageJSONData = {
     },
     "emlint": {
         "name": "emlint",
-        "version": "5.0.18",
+        "version": "5.0.19",
         "description": "Pluggable email template code linter",
         "keywords": [
             "analysis",
@@ -3142,7 +3142,7 @@ export const packageJSONData = {
             "is-d": "^1.0.0",
             "is-language-code": "^4.0.13",
             "is-media-descriptor": "^4.1.2",
-            "is-relative-uri": "^4.1.3",
+            "is-relative-uri": "^4.1.4",
             "is-url-superb": "^6.1.0",
             "leven": "^4.0.0",
             "line-column-mini": "^2.0.13",
@@ -4231,7 +4231,7 @@ export const packageJSONData = {
     },
     "is-relative-uri": {
         "name": "is-relative-uri",
-        "version": "4.1.3",
+        "version": "4.1.4",
         "description": "Is given string a relative URI?",
         "keywords": [
             "href",
