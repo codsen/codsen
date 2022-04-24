@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.17](https://github.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@2.0.16...email-all-chars-within-ascii-cli@2.0.17) (2022-04-24)
+
+
+### Bug Fixes
+
+* restore update-notifier ([873464c](https://github.com/codsen/codsen/commit/873464ccf4ccf6dd1630622d8ce3624a45ffa9eb))
+
+
+
+
+
 ## 2.0.3 (2021-11-02)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "5.0.18",
+  "version": "5.0.19",
   "description": "Visual helper to place templating code around table tags into correct places",
   "keywords": [
     "add",
