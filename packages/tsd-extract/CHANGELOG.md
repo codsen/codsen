@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.4.0](https://github.com/codsen/codsen/compare/tsd-extract@0.3.1...tsd-extract@0.4.0) (2022-04-24)
 
-
 ### Features
 
-* recognise generics ([09b2aea](https://github.com/codsen/codsen/commit/09b2aea975c1cc8ec63ff78af6bcd7b7ffc95c9d))
-
-
-
-
+- recognise generics ([09b2aea](https://github.com/codsen/codsen/commit/09b2aea975c1cc8ec63ff78af6bcd7b7ffc95c9d))
 
 # 0.3.0 (2022-04-17)
 
