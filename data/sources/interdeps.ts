@@ -215,7 +215,7 @@ export const interdeps = [
     },
     {
         "name": "email-all-chars-within-ascii-cli",
-        "size": 8571,
+        "size": 8570,
         "imports": [
             "email-all-chars-within-ascii",
             "string-left-right"
@@ -358,7 +358,7 @@ export const interdeps = [
     },
     {
         "name": "is-relative-uri",
-        "size": 5878,
+        "size": 5661,
         "imports": []
     },
     {

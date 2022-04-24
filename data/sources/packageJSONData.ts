@@ -2871,6 +2871,7 @@ export const packageJSONData = {
         "dependencies": {
             "chalk": "^5.0.1",
             "email-all-chars-within-ascii": "^4.0.16",
+            "fs-extra": "^10.1.0",
             "globby": "^13.1.1",
             "inquirer": "^8.2.2",
             "lodash.pullall": "^4.2.0",
@@ -4380,7 +4381,7 @@ export const packageJSONData = {
     "js-row-num-cli": {
         "name": "js-row-num-cli",
         "version": "2.1.2",
-        "description": "Update all row numbers in all console.logs in JS code",
+        "description": "Update all row numbers in all console.logs in given files",
         "keywords": [
             "automated",
             "automatically",
