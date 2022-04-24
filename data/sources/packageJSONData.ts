@@ -2586,7 +2586,7 @@ export const packageJSONData = {
     },
     "easy-replace": {
         "name": "easy-replace",
-        "version": "5.0.16",
+        "version": "5.0.17",
         "description": "Replace strings with optional lookarounds, but without regexes",
         "keywords": [
             "easy",
@@ -2808,7 +2808,7 @@ export const packageJSONData = {
     },
     "email-all-chars-within-ascii-cli": {
         "name": "email-all-chars-within-ascii-cli",
-        "version": "2.0.16",
+        "version": "2.0.17",
         "description": "Command line app to scan email templates, are all their characters within ASCII range",
         "keywords": [
             "7bit",
@@ -3174,7 +3174,7 @@ export const packageJSONData = {
     },
     "generate-atomic-css": {
         "name": "generate-atomic-css",
-        "version": "2.1.1",
+        "version": "2.1.2",
         "description": "Generate Atomic CSS",
         "keywords": [
             "api",
@@ -3246,7 +3246,7 @@ export const packageJSONData = {
     },
     "generate-atomic-css-cli": {
         "name": "generate-atomic-css-cli",
-        "version": "2.1.1",
+        "version": "2.1.2",
         "description": "Generates and updates all HTML templates' atomic CSS",
         "keywords": [
             "atomic",
@@ -3311,7 +3311,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "fs-extra": "^10.0.1",
-            "generate-atomic-css": "^2.1.1",
+            "generate-atomic-css": "^2.1.2",
             "globby": "^13.1.1",
             "is-d": "^1.0.0",
             "meow": "^10.1.2",
@@ -3765,7 +3765,7 @@ export const packageJSONData = {
     },
     "html-table-patcher": {
         "name": "html-table-patcher",
-        "version": "5.0.18",
+        "version": "5.0.19",
         "description": "Visual helper to place templating code around table tags into correct places",
         "keywords": [
             "add",

@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [5.0.19](https://github.com/codsen/codsen/compare/html-table-patcher@5.0.18...html-table-patcher@5.0.19) (2022-04-24)
 
-
 ### Bug Fixes
 
-* tweak types ([30225e9](https://github.com/codsen/codsen/commit/30225e95298aefa6ab941f668894d5f7465e406c))
-
-
-
-
+- tweak types ([30225e9](https://github.com/codsen/codsen/commit/30225e95298aefa6ab941f668894d5f7465e406c))
 
 ## 5.0.0 (2021-09-09)
 
