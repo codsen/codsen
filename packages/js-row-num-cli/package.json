@@ -1,7 +1,7 @@
 {
   "name": "js-row-num-cli",
   "version": "2.1.2",
-  "description": "Update all row numbers in all console.logs in JS code",
+  "description": "Update all row numbers in all console.logs in given files",
   "keywords": [
     "automated",
     "automatically",
