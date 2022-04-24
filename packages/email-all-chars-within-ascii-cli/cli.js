@@ -29,7 +29,7 @@ state.toDoList = []; // default
 const help = `
   Usage
     $ withinascii YOURFILE.html
-  or, just type "withinascii" and it will let you pick a file.
+  or, just type "withinascii" and it will let you pick a file
 
   Options
     -l, --len         Max allowed line length (default is 500)
