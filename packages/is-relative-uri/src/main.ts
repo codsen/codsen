@@ -323,11 +323,9 @@ const knownSchemes = [
 
 interface Opts {
   flagUpUrisWithSchemes: boolean;
-  offset: number;
 }
 const defaults: Opts = {
   flagUpUrisWithSchemes: true,
-  offset: 0,
 };
 
 interface Res {
@@ -349,20 +347,9 @@ function isRel(str: string, opts?: Partial<Opts>): Res {
     );
   }
   let resolvedOpts: Opts = { ...defaults, ...opts };
-  if (resolvedOpts.offset && !Number.isInteger(resolvedOpts.offset)) {
-    throw new Error(
-      `is-relative-uri: [THROW_ID_02] resolvedOpts.offset must be an integer, it was given as ${
-        resolvedOpts.offset
-      } (type ${typeof resolvedOpts.offset})`
-    );
-  }
-  if (!resolvedOpts.offset) {
-    // to cater false/null
-    resolvedOpts.offset = 0;
-  }
   DEV &&
     console.log(
-      `365 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} resolvedOpts = ${JSON.stringify(
+      `352 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} resolvedOpts = ${JSON.stringify(
         resolvedOpts,
         null,
         4
@@ -511,7 +498,7 @@ function isRel(str: string, opts?: Partial<Opts>): Res {
   }
 
   // ---------------------------------------------------------------------------
-  DEV && console.log(`514 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  DEV && console.log(`501 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   return {
     res: true,
     message: null,

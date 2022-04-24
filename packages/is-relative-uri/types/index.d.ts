@@ -1,7 +1,6 @@
 declare const version: string;
 interface Opts {
   flagUpUrisWithSchemes: boolean;
-  offset: number;
 }
 declare const defaults: Opts;
 interface Res {
