@@ -28,8 +28,8 @@
   "type": "module",
   "bin": {
     "ascii": "cli.js",
-    "tinaturner": "cli.js",
-    "withinascii": "cli.js"
+    "withinascii": "cli.js",
+    "tinaturner": "cli.js"
   },
   "scripts": {
     "build": "echo 'no build needed'",

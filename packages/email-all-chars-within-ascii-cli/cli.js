@@ -10,7 +10,7 @@ import fs from "fs-extra";
 import { globby } from "globby";
 import inquirer from "inquirer";
 import path from "path";
-// import updateNotifier from "update-notifier";
+import updateNotifier from "update-notifier";
 import pullAll from "lodash.pullall";
 import { createRequire } from "module";
 import argv from "minimist";
@@ -39,7 +39,7 @@ const help = `
   Instructions
     Just call it in the folder where your file is located or provide a path
 `;
-// updateNotifier({ pkg: package }).notify();
+updateNotifier({ pkg: package1 }).notify();
 
 function offerAListOfFilesToPickFrom() {
   let ui = new inquirer.ui.BottomBar();
