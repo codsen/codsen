@@ -61,6 +61,7 @@ const all = [
     "json-comb-core",
     "json-sort-cli",
     "json-variables",
+    "lect",
     "lerna-clean-changelogs",
     "lerna-clean-changelogs-cli",
     "lerna-link-dep",
@@ -362,6 +363,7 @@ const script = [
 const packagesOutsideMonorepo = [
     "eslint-plugin-row-num",
     "eslint-plugin-test-num",
+    "lect",
     "perf-ref",
     "tsd-extract-noesm"
 ] as const;
@@ -375,10 +377,10 @@ export const packages = {
     special,
     script,
     packagesOutsideMonorepo,
-    totalPackageCount: 124,
+    totalPackageCount: 125,
     cliCount: 12,
     programsCount: 108,
     specialCount: 1,
     scriptCount: 106,
-    packagesOutsideMonorepoCount: 4,
+    packagesOutsideMonorepoCount: 5,
 };

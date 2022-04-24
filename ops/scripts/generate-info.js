@@ -33,6 +33,9 @@ const packagesOutsideMonorepoObj = {
   "tsd-extract-noesm": {
     description: "Extract any definition from TS definitions file",
   },
+  lect: {
+    description: "Maintenance CLI for internal consumption",
+  },
 };
 
 const packagesOutsideMonorepo = Object.keys(packagesOutsideMonorepoObj);

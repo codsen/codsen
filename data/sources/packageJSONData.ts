@@ -11,6 +11,9 @@ export const packageJSONData = {
     "tsd-extract-noesm": {
         "description": "Extract any definition from TS definitions file"
     },
+    "lect": {
+        "description": "Maintenance CLI for internal consumption"
+    },
     "all-named-html-entities": {
         "name": "all-named-html-entities",
         "version": "2.0.13",
