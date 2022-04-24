@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.1.4 (2022-04-24)
+
+
+### Bug Fixes
+
+* remove unused opts.offset ([5254d4f](https://github.com/codsen/codsen/commit/5254d4fac499ff76a2a79411fa5e8a3faabf9ee0))
+
+
+
+
+
 ## 4.1.3 (2022-04-18)
 
 ### Bug Fixes
