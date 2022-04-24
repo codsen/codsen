@@ -215,7 +215,7 @@ export const interdeps = [
     },
     {
         "name": "email-all-chars-within-ascii-cli",
-        "size": 8576,
+        "size": 8571,
         "imports": [
             "email-all-chars-within-ascii",
             "string-left-right"
@@ -542,7 +542,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-push",
-        "size": 7040,
+        "size": 6936,
         "imports": [
             "string-collapse-leading-whitespace",
             "string-trim-spaces-only"
@@ -709,7 +709,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 16707,
+        "size": 16709,
         "imports": [
             "ranges-apply",
             "ranges-push",
