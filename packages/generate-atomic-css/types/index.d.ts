@@ -21,14 +21,12 @@ interface Opts {
   reportProgressFuncTo: number;
 }
 declare const defaults: Opts;
-declare function genAtomic(
-  str: string,
-  opts?: Partial<Opts>
-): {
+interface Res {
   log: {
     count: number;
   };
   result: string;
-};
+}
+declare function genAtomic(str: string, opts?: Partial<Opts>): Res;
 
 export { defaults, extractFromToSource, genAtomic, headsAndTails, version };
