@@ -101,7 +101,7 @@ function sortAllObjectsSync(input: any): any {
 
 function getKeyset<ValueType>(
   arrOfPromises: Iterable<PromiseLike<ValueType> | ValueType>,
-  opts?: { placeholder?: boolean }
+  opts?: Partial<GetKeysetOpts>
 ): Promise<Obj> {
   if (arguments.length === 0) {
     throw new Error(
@@ -117,10 +117,10 @@ function getKeyset<ValueType>(
       )}`
     );
   }
-  let defaults = {
+  let defaults: GetKeysetOpts = {
     placeholder: false,
   };
-  let resolvedOpts = { ...defaults, ...opts };
+  let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
       `126 CALLING check-types-mini:\nopts = ${JSON.stringify(
@@ -194,18 +194,21 @@ function getKeyset<ValueType>(
 
 // -----------------------------------------------------------------------------
 
-function getKeysetSync(arrOriginal: Obj[], opts?: { placeholder?: any }) {
+interface GetKeysetOpts {
+  placeholder: any;
+}
+function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!"
     );
   }
-  if (!Array.isArray(arrOriginal)) {
+  if (!Array.isArray(arr)) {
     throw new Error(
-      `json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ${typeof arrOriginal}`
+      `json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ${typeof arr}`
     );
   }
-  if (arrOriginal.length === 0) {
+  if (arr.length === 0) {
     throw new Error(
       "json-comb-core/getKeysetSync(): [THROW_ID_23] Input array is empty!"
     );
@@ -221,17 +224,17 @@ function getKeysetSync(arrOriginal: Obj[], opts?: { placeholder?: any }) {
   }
 
   let schemaObj = {};
-  let arr = clone(arrOriginal);
-  let defaults = {
+  let resolvedArr = clone(arr);
+  let defaults: GetKeysetOpts = {
     placeholder: false,
   };
-  let resolvedOpts = { ...defaults, ...opts };
+  let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
 
   let fOpts = {
     flattenArraysContainingStringsToBeEmpty: true,
   };
 
-  arr.forEach((obj, i) => {
+  resolvedArr.forEach((obj, i) => {
     if (!isObj(obj)) {
       throw new TypeError(
         `json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (${typeof obj}) detected within an array! It's the ${i}th element: ${JSON.stringify(
@@ -262,11 +265,10 @@ interface EnforceKeysetOpts {
   placeholder: boolean;
   useNullAsExplicitFalse: boolean;
 }
-
 function enforceKeyset(
   obj: Obj,
   schemaKeyset: Obj,
-  opts?: EnforceKeysetOpts
+  opts?: Partial<EnforceKeysetOpts>
 ): Promise<Obj> {
   if (arguments.length === 0) {
     throw new Error(
@@ -278,12 +280,12 @@ function enforceKeyset(
       "json-comb-core/enforceKeyset(): [THROW_ID_32] Second arg missing!"
     );
   }
-  let defaults = {
+  let defaults: EnforceKeysetOpts = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     placeholder: false,
     useNullAsExplicitFalse: true,
   };
-  let resolvedOpts = { ...defaults, ...opts };
+  let resolvedOpts: EnforceKeysetOpts = { ...defaults, ...opts };
   if (
     resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
     !resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
@@ -346,8 +348,8 @@ function enforceKeyset(
 function enforceKeysetSync(
   obj: Obj,
   schemaKeyset: Obj,
-  opts?: EnforceKeysetOpts
-) {
+  opts?: Partial<EnforceKeysetOpts>
+): Obj {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/enforceKeysetSync(): [THROW_ID_41] Inputs missing!"
@@ -376,12 +378,12 @@ function enforceKeysetSync(
       )}`
     );
   }
-  let defaults = {
+  let defaults: EnforceKeysetOpts = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     placeholder: false,
     useNullAsExplicitFalse: true,
   };
-  let resolvedOpts = { ...defaults, ...opts };
+  let resolvedOpts: EnforceKeysetOpts = { ...defaults, ...opts };
   if (
     resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
     !resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
@@ -405,7 +407,8 @@ function enforceKeysetSync(
 
 // no news is good news - when keyset is ok, empty array is returned
 // when there are rogue keys, array of paths is returned
-function noNewKeysSync(obj: Obj, schemaKeyset: Obj) {
+type NoNewKeysSyncRes = string[];
+function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/noNewKeysSync(): [THROW_ID_51] All inputs missing!"
@@ -439,21 +442,25 @@ function noNewKeysSync(obj: Obj, schemaKeyset: Obj) {
 
 // -----------------------------------------------------------------------------
 
+interface FindUnusedSyncOpts {
+  placeholder: boolean;
+  comments: string;
+}
 function findUnusedSync(
-  arrOriginal: any[],
-  opts?: { placeholder?: boolean; comments?: string }
-) {
+  arr: any[],
+  opts?: Partial<FindUnusedSyncOpts>
+): string[] {
   //
   // PREPARATIONS AND TYPE CHECKS
   // ============================
 
-  if (Array.isArray(arrOriginal)) {
-    if (arrOriginal.length === 0) {
+  if (Array.isArray(arr)) {
+    if (arr.length === 0) {
       return [];
     }
   } else {
     throw new TypeError(
-      `json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ${typeof arrOriginal}`
+      `json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ${typeof arr}`
     );
   }
   if (arguments.length > 1 && !isObj(opts)) {
@@ -469,7 +476,7 @@ function findUnusedSync(
   if (!resolvedOpts.comments) {
     resolvedOpts.comments = "";
   }
-  let arr = clone(arrOriginal);
+  let resolvedArr = clone(arr);
 
   // ---------------------------------------------------------------------------
 
@@ -481,7 +488,7 @@ function findUnusedSync(
 
   function findUnusedSyncInner(
     arr1: Obj[],
-    opts1?: { placeholder?: boolean; comments?: string },
+    opts1: FindUnusedSyncOpts,
     res: string[] = [],
     path = ""
   ) {
@@ -567,7 +574,7 @@ function findUnusedSync(
     return removeLeadingDot(res);
   }
 
-  return findUnusedSyncInner(arr, resolvedOpts);
+  return findUnusedSyncInner(resolvedArr, resolvedOpts);
 }
 
 // -----------------------------------------------------------------------------

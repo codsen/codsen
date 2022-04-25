@@ -5,16 +5,12 @@ interface Obj {
 declare function sortAllObjectsSync(input: any): any;
 declare function getKeyset<ValueType>(
   arrOfPromises: Iterable<PromiseLike<ValueType> | ValueType>,
-  opts?: {
-    placeholder?: boolean;
-  }
+  opts?: Partial<GetKeysetOpts>
 ): Promise<Obj>;
-declare function getKeysetSync(
-  arrOriginal: Obj[],
-  opts?: {
-    placeholder?: any;
-  }
-): {};
+interface GetKeysetOpts {
+  placeholder: any;
+}
+declare function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj;
 interface EnforceKeysetOpts {
   doNotFillThesePathsIfTheyContainPlaceholders: string[];
   placeholder: boolean;
@@ -23,20 +19,22 @@ interface EnforceKeysetOpts {
 declare function enforceKeyset(
   obj: Obj,
   schemaKeyset: Obj,
-  opts?: EnforceKeysetOpts
+  opts?: Partial<EnforceKeysetOpts>
 ): Promise<Obj>;
 declare function enforceKeysetSync(
   obj: Obj,
   schemaKeyset: Obj,
-  opts?: EnforceKeysetOpts
-): any;
-declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): any;
+  opts?: Partial<EnforceKeysetOpts>
+): Obj;
+declare type NoNewKeysSyncRes = string[];
+declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes;
+interface FindUnusedSyncOpts {
+  placeholder: boolean;
+  comments: string;
+}
 declare function findUnusedSync(
-  arrOriginal: any[],
-  opts?: {
-    placeholder?: boolean;
-    comments?: string;
-  }
+  arr: any[],
+  opts?: Partial<FindUnusedSyncOpts>
 ): string[];
 
 export {
