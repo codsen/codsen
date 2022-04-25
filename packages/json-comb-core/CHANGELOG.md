@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.0.16 (2022-04-25)
 
-
 ### Bug Fixes
 
-* improve types ([b40fdb0](https://github.com/codsen/codsen/commit/b40fdb0a8e94f910487dba2dcbe95ab374c1b34a))
-
-
-
-
+- improve types ([b40fdb0](https://github.com/codsen/codsen/commit/b40fdb0a8e94f910487dba2dcbe95ab374c1b34a))
 
 ## 7.0.15 (2022-04-18)
 

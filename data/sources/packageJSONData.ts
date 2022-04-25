@@ -4460,7 +4460,7 @@ export const packageJSONData = {
     },
     "json-comb": {
         "name": "json-comb",
-        "version": "0.6.15",
+        "version": "0.6.16",
         "description": "Command line app to manage sets of JSON files",
         "keywords": [
             "app",
@@ -4524,7 +4524,7 @@ export const packageJSONData = {
             "fs-extra": "^10.0.1",
             "globby": "^13.1.1",
             "is-d": "^1.0.0",
-            "json-comb-core": "^7.0.15",
+            "json-comb-core": "^7.0.16",
             "meow": "^10.1.2",
             "p-map": "^5.3.0",
             "p-reduce": "^3.0.0",
@@ -4533,7 +4533,7 @@ export const packageJSONData = {
     },
     "json-comb-core": {
         "name": "json-comb-core",
-        "version": "7.0.15",
+        "version": "7.0.16",
         "description": "The inner core of json-comb",
         "keywords": [
             "comb",
@@ -4606,7 +4606,7 @@ export const packageJSONData = {
             "object-fill-missing-keys": "^9.1.2",
             "object-flatten-all-arrays": "^6.1.1",
             "object-merge-advanced": "^13.1.1",
-            "object-no-new-keys": "^4.1.2",
+            "object-no-new-keys": "^4.1.3",
             "object-set-all-values-to": "^5.0.13",
             "p-map": "^5.3.0",
             "p-one": "^2.0.0",
@@ -5651,7 +5651,7 @@ export const packageJSONData = {
     },
     "object-no-new-keys": {
         "name": "object-no-new-keys",
-        "version": "4.1.2",
+        "version": "4.1.3",
         "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
         "keywords": [
             "compare",
