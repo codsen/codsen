@@ -18,6 +18,6 @@ declare function noNewKeys(
   input: JsonValue,
   reference: JsonValue,
   opts?: Partial<Opts>
-): any;
+): string[];
 
 export { defaults, noNewKeys, version };

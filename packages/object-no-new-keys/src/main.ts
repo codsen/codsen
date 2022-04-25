@@ -12,6 +12,11 @@ interface Obj {
   [key: string]: any;
 }
 
+interface InnerVar {
+  path: string;
+  res: string[];
+}
+
 function isObj(something: any): boolean {
   return (
     something && typeof something === "object" && !Array.isArray(something)
@@ -29,7 +34,7 @@ function noNewKeys(
   input: JsonValue,
   reference: JsonValue,
   opts?: Partial<Opts>
-): any {
+): string[] {
   if (opts && !isObj(opts)) {
     throw new TypeError(
       `object-no-new-keys/noNewKeys(): [THROW_ID_02] resolvedOpts should be a plain object. It was given as ${JSON.stringify(
@@ -55,7 +60,7 @@ function noNewKeys(
     resolvedInput: any,
     resolvedRef: any,
     resolvedOpts: Obj,
-    innerVar: any
+    innerVar: InnerVar
   ): any {
     let temp;
     if (isObj(resolvedInput)) {
