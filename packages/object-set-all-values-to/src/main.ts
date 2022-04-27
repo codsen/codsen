@@ -11,35 +11,35 @@ interface Obj {
   [key: string]: any;
 }
 
-function setAllValuesTo(inputOriginal: Obj, valueOriginal?: any): Obj {
-  let value: any;
-  let input = clone(inputOriginal);
+function setAllValuesTo(input: Obj, value?: any): Obj {
+  let val: any;
+  let inp = clone(input);
 
   if (arguments.length < 2) {
-    value = false;
-  } else if (isObj(valueOriginal) || Array.isArray(valueOriginal)) {
-    value = clone(valueOriginal);
+    val = false;
+  } else if (isObj(value) || Array.isArray(value)) {
+    val = clone(value);
   } else {
     // needed for functions as values - we can't clone them!
-    value = valueOriginal;
+    val = value;
   }
 
-  if (Array.isArray(input)) {
-    input.forEach((_el, i) => {
-      if (isObj(input[i]) || Array.isArray(input[i])) {
-        input[i] = setAllValuesTo(input[i], value);
+  if (Array.isArray(inp)) {
+    inp.forEach((_el, i) => {
+      if (isObj(inp[i]) || Array.isArray(inp[i])) {
+        inp[i] = setAllValuesTo(inp[i], val);
       }
     });
-  } else if (isObj(input)) {
-    Object.keys(input).forEach((key) => {
-      if (Array.isArray(input[key]) || isObj(input[key])) {
-        input[key] = setAllValuesTo(input[key], value);
+  } else if (isObj(inp)) {
+    Object.keys(inp).forEach((key) => {
+      if (Array.isArray(inp[key]) || isObj(inp[key])) {
+        inp[key] = setAllValuesTo(inp[key], val);
       } else {
-        input[key] = value;
+        inp[key] = val;
       }
     });
   }
-  return input;
+  return inp;
 }
 
 export { setAllValuesTo, version };
