@@ -16,10 +16,7 @@ const defaults: Opts = {
   flattenArraysContainingStringsToBeEmpty: false,
 };
 
-function flattenAllArrays(
-  originalIncommingObj: Obj,
-  originalOpts?: Partial<Opts>
-): Obj {
+function flattenAllArrays(input: Obj, opts?: Partial<Opts>): Obj {
   //
   // internal functions
   // ==================
@@ -31,9 +28,9 @@ function flattenAllArrays(
   // setup
   // =====
 
-  let opts: Opts = { ...defaults, ...originalOpts };
+  let resolvedOpts: Opts = { ...defaults, ...opts };
 
-  let incommingObj = clone(originalIncommingObj);
+  let incommingObj = clone(input);
   let isFirstObj;
   let combinedObj;
   let firstObjIndex;
@@ -44,7 +41,7 @@ function flattenAllArrays(
   // 1. check current
   if (Array.isArray(incommingObj)) {
     if (
-      opts.flattenArraysContainingStringsToBeEmpty &&
+      resolvedOpts.flattenArraysContainingStringsToBeEmpty &&
       arrayContainsStr(incommingObj)
     ) {
       return [];
@@ -72,13 +69,13 @@ function flattenAllArrays(
   if (isObj(incommingObj)) {
     Object.keys(incommingObj).forEach((key) => {
       if (isObj(incommingObj[key]) || Array.isArray(incommingObj[key])) {
-        incommingObj[key] = flattenAllArrays(incommingObj[key], opts);
+        incommingObj[key] = flattenAllArrays(incommingObj[key], resolvedOpts);
       }
     });
   } else if (Array.isArray(incommingObj)) {
     incommingObj.forEach((_el, i) => {
       if (isObj(incommingObj[i]) || Array.isArray(incommingObj[i])) {
-        incommingObj[i] = flattenAllArrays(incommingObj[i], opts);
+        incommingObj[i] = flattenAllArrays(incommingObj[i], resolvedOpts);
       }
     });
   }

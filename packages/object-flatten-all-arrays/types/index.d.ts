@@ -6,9 +6,6 @@ interface Opts {
   flattenArraysContainingStringsToBeEmpty: boolean;
 }
 declare const defaults: Opts;
-declare function flattenAllArrays(
-  originalIncommingObj: Obj,
-  originalOpts?: Partial<Opts>
-): Obj;
+declare function flattenAllArrays(input: Obj, opts?: Partial<Opts>): Obj;
 
 export { defaults, flattenAllArrays, version };
