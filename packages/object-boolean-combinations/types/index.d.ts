@@ -1,13 +1,13 @@
 declare const version: string;
-interface BoolValueObj {
+interface BoolObj {
   [key: string]: boolean;
 }
-interface UnknownValueObj {
+interface Obj {
   [key: string]: any;
 }
 declare function combinations(
-  originalIncomingObject: UnknownValueObj,
-  originalOverrideObject?: undefined | UnknownValueObj
-): BoolValueObj[];
+  input: Obj,
+  Override?: undefined | Obj
+): BoolObj[];
 
 export { combinations, version };

@@ -9,17 +9,14 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-interface BoolValueObj {
+interface BoolObj {
   [key: string]: boolean;
 }
-interface UnknownValueObj {
+interface Obj {
   [key: string]: any;
 }
 
-function combinations(
-  originalIncomingObject: UnknownValueObj,
-  originalOverrideObject: undefined | UnknownValueObj = {}
-): BoolValueObj[] {
+function combinations(input: Obj, Override: undefined | Obj = {}): BoolObj[] {
   //
   // FUNCTIONS
   // =========
@@ -42,28 +39,28 @@ function combinations(
   // CHECKS
   // ======
 
-  if (!originalIncomingObject) {
+  if (!input) {
     throw new Error("[THROW_ID_01] missing input object");
   }
-  if (!isObj(originalIncomingObject)) {
+  if (!isObj(input)) {
     throw new Error(
       "[THROW_ID_02] the first input object must be a true object"
     );
   }
-  if (originalOverrideObject && !isObj(originalOverrideObject)) {
+  if (Override && !isObj(Override)) {
     throw new Error(
       "[THROW_ID_03] the second override object must be a true object"
     );
   }
 
-  let incomingObject = clone(originalIncomingObject);
-  let overrideObject = clone(originalOverrideObject);
+  let incomingObject = clone(input);
+  let overrideObject = clone(Override);
 
   // START
   // =====
 
   let propertiesToMix = Object.keys(incomingObject);
-  let outcomingObjectsArray: BoolValueObj[] = [];
+  let outcomingObjectsArray: BoolObj[] = [];
   let propertiesToBeOverridden: string[] = [];
 
   // if there's override, prepare an alternative (a subset) array propertiesToMix
@@ -85,7 +82,7 @@ function combinations(
 
   let boolCombinations = combi(Object.keys(propertiesToMix).length);
 
-  let tempObject: BoolValueObj;
+  let tempObject: BoolObj;
   boolCombinations.forEach((_elem1, index1) => {
     tempObject = {};
     propertiesToMix.forEach((elem2, index2) => {
