@@ -11,7 +11,7 @@ interface Obj {
 declare type Callback = (obj: Obj) => void;
 declare function rIterate(
   str: string,
-  originalRanges: Ranges,
+  input: Ranges,
   cb: Callback,
   offset?: number
 ): void;

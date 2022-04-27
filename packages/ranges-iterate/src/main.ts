@@ -12,12 +12,7 @@ interface Obj {
 }
 type Callback = (obj: Obj) => void;
 
-function rIterate(
-  str: string,
-  originalRanges: Ranges,
-  cb: Callback,
-  offset = 0
-): void {
+function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
   if (typeof str !== "string") {
     throw new TypeError(
       `ranges-iterate: [THROW_ID_01] Input string must be a string! It was given as ${typeof str}, equal to: ${JSON.stringify(
@@ -31,10 +26,10 @@ function rIterate(
       `ranges-iterate: [THROW_ID_02] Input string must be non-empty!`
     );
   }
-  if (originalRanges && !Array.isArray(originalRanges)) {
+  if (input && !Array.isArray(input)) {
     throw new TypeError(
-      `ranges-iterate: [THROW_ID_03] Input ranges must be an array, consisting of zero or more arrays! Currently its type is: ${typeof originalRanges}, equal to: ${JSON.stringify(
-        originalRanges,
+      `ranges-iterate: [THROW_ID_03] Input ranges must be an array, consisting of zero or more arrays! Currently its type is: ${typeof input}, equal to: ${JSON.stringify(
+        input,
         null,
         0
       )}`
@@ -65,8 +60,7 @@ function rIterate(
   // to-be-inserted values too. That's where the complexity of this package
   // comes from.
 
-  if (originalRanges === null || !originalRanges.length) {
-    // TODO - implement ranges push
+  if (input === null || !input.length) {
     for (let i = 0; i < str.length; i++) {
       // push converter simply returns range that was given, no changes needed
       cb({
@@ -77,7 +71,7 @@ function rIterate(
     }
   } else {
     // clone the given ranges because they will be mutated:
-    let ranges = Array.from(originalRanges);
+    let resolvedRanges = Array.from(input);
 
     // currentIdx is index we use to traverse the string. It's like "i" above,
     // except it "pauses" and is fired many times when range has third argument,
@@ -91,25 +85,25 @@ function rIterate(
 
     DEV &&
       console.log(
-        `094 starting finalIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+        `088 starting finalIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
       );
 
     // cover the first characters up to starting range
-    if (finalIdx < ranges[0][0]) {
+    if (finalIdx < resolvedRanges[0][0]) {
       DEV &&
         console.log(
-          `101 finalIdx ${`\u001b[${34}m${finalIdx}\u001b[${39}m`} is before first range's starting index ${`\u001b[${34}m${
-            ranges[0][0]
+          `095 finalIdx ${`\u001b[${34}m${finalIdx}\u001b[${39}m`} is before first range's starting index ${`\u001b[${34}m${
+            resolvedRanges[0][0]
           }\u001b[${39}m`} so ping all characters up to it`
         );
       // eslint-disable-next-line
-      for (; finalIdx < ranges[0][0]; finalIdx++, currentIdx++) {
-        // insurange against gaps:
+      for (; finalIdx < resolvedRanges[0][0]; finalIdx++, currentIdx++) {
+        // insure against gaps:
         if (!str[finalIdx]) {
           break;
         }
         // ELSE
-        DEV && console.log(`112 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
+        DEV && console.log(`106 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
         // TODO - add push
         cb({
           i: finalIdx,
@@ -120,18 +114,18 @@ function rIterate(
 
     DEV &&
       console.log(
-        `123 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+        `117 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
       );
 
     // check, if the next range reaches before the end of the string
     // this is to prevent gaps.
     // For example, when string is 10 characters long, asking to insert something
     // from 20th to 30th character.
-    if (ranges[0][0] <= currentIdx) {
-      ranges.forEach((rangeArr, rangeArrIdx) => {
+    if (resolvedRanges[0][0] <= currentIdx) {
+      resolvedRanges.forEach((rangeArr, rangeArrIdx) => {
         DEV &&
           console.log(
-            `134 ${`\u001b[${36}m${`---------- rangeArr = ${JSON.stringify(
+            `128 ${`\u001b[${36}m${`---------- rangeArr = ${JSON.stringify(
               rangeArr,
               null,
               0
@@ -139,7 +133,7 @@ function rIterate(
           );
         DEV &&
           console.log(
-            `142 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+            `136 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
           );
 
         // 1. if "to insert" value, third range's argument is given, loop through it,
@@ -148,7 +142,7 @@ function rIterate(
         if (rangeArr[2]) {
           DEV &&
             console.log(
-              `151 loop "to insert value", ${`\u001b[${36}m${JSON.stringify(
+              `145 loop "to insert value", ${`\u001b[${36}m${JSON.stringify(
                 rangeArr[2],
                 null,
                 0
@@ -157,7 +151,7 @@ function rIterate(
           for (let y = 0, len = rangeArr[2].length; y < len; y++) {
             DEV &&
               console.log(
-                `160 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+                `154 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
               );
             cb({
               i: finalIdx,
@@ -171,7 +165,7 @@ function rIterate(
         while (currentIdx < rangeArr[1]) {
           DEV &&
             console.log(
-              `174 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`} -> ${`\u001b[${35}m${
+              `168 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`} -> ${`\u001b[${35}m${
                 currentIdx + 1
               }\u001b[${39}m`}`
             );
@@ -182,13 +176,13 @@ function rIterate(
         // 3. if next range is present, ping all characters up to its start OR
         // if it's not present, ping up to the end of the string
         let loopUntil = str.length;
-        if (ranges[rangeArrIdx + 1]) {
-          loopUntil = ranges[rangeArrIdx + 1][0];
+        if (resolvedRanges[rangeArrIdx + 1]) {
+          loopUntil = resolvedRanges[rangeArrIdx + 1][0];
         }
-        DEV && console.log(`188 loopUntil = ${loopUntil}`);
+        DEV && console.log(`182 loopUntil = ${loopUntil}`);
         // eslint-disable-next-line
         for (; currentIdx < loopUntil; finalIdx++, currentIdx++) {
-          DEV && console.log(`191 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
+          DEV && console.log(`185 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
           cb({
             i: finalIdx,
             val: str[currentIdx],
@@ -198,12 +192,12 @@ function rIterate(
         DEV && console.log("");
         DEV &&
           console.log(
-            `201 after while loop, finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+            `195 after while loop, finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
           );
       });
     }
     DEV &&
-      console.log(`206 ${`\u001b[${36}m${`---------- fin.`}\u001b[${39}m`}`);
+      console.log(`200 ${`\u001b[${36}m${`---------- fin.`}\u001b[${39}m`}`);
   }
 }
 
