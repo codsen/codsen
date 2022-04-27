@@ -33,9 +33,9 @@
   },
   "type": "module",
   "bin": {
+    "linkdep": "cli.js",
     "deplink": "cli.js",
-    "johnnydepp": "cli.js",
-    "linkdep": "cli.js"
+    "johnnydepp": "cli.js"
   },
   "scripts": {
     "build": "echo 'no build needed'",
