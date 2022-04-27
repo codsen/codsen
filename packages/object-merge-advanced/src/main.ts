@@ -875,13 +875,13 @@ function externalApi(input1: any, input2: any, opts?: Partial<Opts>): any {
   }
 
   // hardMergeKeys: '*' <===> hardMergeEverything === true
-  // also hardMergeKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
+  // also hardMergeKeys: ['whatnotKeyName', ... '*' ... ] - just one occurrence is enough
   if (resolvedOpts?.hardMergeKeys?.includes("*")) {
     resolvedOpts.hardMergeEverything = true;
   }
 
   // ignoreKeys: '*' <===> ignoreEverything === true
-  // also ignoreKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
+  // also ignoreKeys: ['whatnotKeyName', ... '*' ... ] - just one occurrence is enough
   if (resolvedOpts?.ignoreKeys?.includes("*")) {
     resolvedOpts.ignoreEverything = true;
   }
