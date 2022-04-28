@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.19 (2022-04-28)
+
+**Note:** Version bump only for package stristri
+
+
+
+
+
 ## 4.0.17 (2022-04-18)
 
 ### Bug Fixes

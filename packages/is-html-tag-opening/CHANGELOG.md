@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.16 (2022-04-28)
+
+**Note:** Version bump only for package is-html-tag-opening
+
+
+
+
+
 ## 3.0.15 (2022-04-18)
 
 ### Bug Fixes

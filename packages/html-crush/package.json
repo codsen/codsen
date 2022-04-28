@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "5.0.16",
+  "version": "5.0.17",
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "keywords": [
     "breaks",
@@ -82,6 +82,6 @@
     "string-left-right": "^5.0.13",
     "string-match-left-right": "^8.1.2",
     "string-range-expander": "^3.0.13",
-    "test-mixer": "^3.0.13"
+    "test-mixer": "^3.0.14"
   }
 }

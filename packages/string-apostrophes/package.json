@@ -1,6 +1,6 @@
 {
   "name": "string-apostrophes",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes",
   "keywords": [
     "apostrophe",

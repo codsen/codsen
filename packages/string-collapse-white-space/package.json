@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "10.1.2",
+  "version": "10.1.3",
   "description": "Replace chunks of whitespace with a single spaces",
   "keywords": [
     "chunk",
@@ -71,6 +71,6 @@
     "string-left-right": "^5.0.13"
   },
   "devDependencies": {
-    "test-mixer": "^3.0.13"
+    "test-mixer": "^3.0.14"
   }
 }

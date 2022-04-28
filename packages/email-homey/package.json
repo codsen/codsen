@@ -1,6 +1,6 @@
 {
   "name": "email-homey",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
   "keywords": [
     "browsersync",
