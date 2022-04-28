@@ -2,31 +2,100 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
-import {
-  convertOne as c11,
-  convertAll as c12,
-} from "../dist/string-apostrophes.esm.js";
+import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
 
-const leftSingleQuote = "\u2018";
-const rightSingleQuote = "\u2019";
-
-// 1. ESM
+// convertOne()
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`API`}\u001b[${39}m`} - ESM buid works for convertOne`, () => {
+test(`01 - 1st input arg is missing`, () => {
   throws(() => {
-    c11(`aa`, {});
-  }, "01");
+    convertOne();
+  }, /THROW_ID_01/);
 });
 
-test(`02 - ${`\u001b[${34}m${`API`}\u001b[${39}m`} - ESM build works for convertAll`, () => {
+test(`02 - 1st input arg wrong type`, () => {
+  throws(() => {
+    convertOne(true);
+  }, /THROW_ID_01/);
+});
+
+test(`03 - 2nd input arg wrong type`, () => {
+  throws(() => {
+    convertOne("abc", true);
+  }, /THROW_ID_02/);
+});
+
+test(`04 - 2nd input arg wrong type`, () => {
+  throws(() => {
+    convertOne("abc", []);
+  }, /THROW_ID_02/);
+});
+
+test(`05 - opts.to is wrong`, () => {
+  throws(() => {
+    convertOne("abc", {});
+  }, /THROW_ID_03/);
+});
+
+test(`06 - opts.from is wrong`, () => {
+  throws(() => {
+    convertOne("abc", { from: true });
+  }, /THROW_ID_03/);
+});
+
+test(`07 - opts.from is wrong`, () => {
+  throws(() => {
+    convertOne("a", { from: -1 });
+  }, /THROW_ID_03/);
+});
+
+test(`08 - opts.from is at or beyond str.length`, () => {
+  throws(() => {
+    convertOne("a", { from: 1 });
+  }, /THROW_ID_04/);
+});
+
+test(`09 - opts.from is at or beyond str.length`, () => {
+  throws(() => {
+    convertOne("abc", { from: 999 });
+  }, /THROW_ID_04/);
+});
+
+// convertAll()
+// -----------------------------------------------------------------------------
+
+test(`10 - 1st input arg is wrong`, () => {
+  throws(() => {
+    convertAll();
+  }, /THROW_ID_10/);
+});
+
+test(`11 - 1st input arg is wrong`, () => {
+  throws(() => {
+    convertAll(true);
+  }, /THROW_ID_10/);
+});
+
+test(`12 - 2nd input arg is wrong`, () => {
+  throws(() => {
+    convertAll("abc", true);
+  }, /THROW_ID_11/);
+});
+
+test(`13 - 2nd input arg is wrong`, () => {
+  throws(() => {
+    convertAll("abc", []);
+  }, /THROW_ID_11/);
+});
+
+test(`14 - early exit`, () => {
   equal(
-    c12(`'What!' he said`, {
-      convertApostrophes: 1,
-      convertEntities: 0,
-    }).result,
-    `${leftSingleQuote}What!${rightSingleQuote} he said`,
-    "02"
+    convertAll("", {}),
+    {
+      result: "",
+      ranges: null,
+    },
+    "14"
   );
 });
 

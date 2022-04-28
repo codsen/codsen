@@ -19,11 +19,13 @@ test(`01 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quo
   let gatheredRes = []
     .concat(
       convertOne(str, {
+        convertEntities: true,
         from: 8,
       })
     )
     .concat(
       convertOne(str, {
+        convertEntities: true,
         from: 17,
       })
     );
@@ -42,14 +44,14 @@ test(`02 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quo
   let gatheredRes = []
     .concat(
       convertOne(str, {
+        convertEntities: false,
         from: 8,
-        convertEntities: 0,
       })
     )
     .concat(
       convertOne(str, {
+        convertEntities: false,
         from: 17,
-        convertEntities: 0,
       })
     );
   equal(
@@ -68,13 +70,13 @@ test(`03 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quo
     .concat(
       convertOne(str, {
         from: 8,
-        convertApostrophes: 0,
+        convertApostrophes: false,
       })
     )
     .concat(
       convertOne(str, {
         from: 17,
-        convertApostrophes: 0,
+        convertApostrophes: false,
       })
     );
   equal(gatheredRes, [], "03");
@@ -206,7 +208,7 @@ test(`15 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - one, off`, (
   equal(
     convertOne(`${leftDoubleQuote}developers${rightDoubleQuote}`, {
       from: 0,
-      convertApostrophes: 0,
+      convertApostrophes: false,
       convertEntities: 1,
     }),
     [[0, 1, `"`]],
@@ -217,7 +219,7 @@ test(`15 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - one, off`, (
 test(`16 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - all, off`, () => {
   equal(
     convertAll(` ${leftDoubleQuote}developers${rightDoubleQuote} `, {
-      convertApostrophes: 0,
+      convertApostrophes: false,
       convertEntities: 1,
     }),
     {

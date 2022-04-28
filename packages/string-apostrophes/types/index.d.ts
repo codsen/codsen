@@ -1,7 +1,7 @@
 import { Ranges } from "ranges-apply";
 
 declare const version: string;
-interface Inputs {
+interface Opts {
   from: number;
   to?: number;
   value?: string;
@@ -9,19 +9,18 @@ interface Inputs {
   convertApostrophes?: boolean;
   offsetBy?: (amount: number) => void;
 }
-declare function convertOne(
-  str: string,
-  { from, to, value, convertEntities, convertApostrophes, offsetBy }: Inputs
-): Ranges;
+declare const defaults: {
+  convertEntities: boolean;
+  convertApostrophes: boolean;
+};
+declare function convertOne(str: string, opts: Opts): Ranges;
+interface convertAllRes {
+  result: string;
+  ranges: Ranges;
+}
 /**
  * Typographically-correct the apostrophes and single/double quotes
  */
-declare function convertAll(
-  str: string,
-  opts?: Inputs
-): {
-  result: string;
-  ranges: Ranges;
-};
+declare function convertAll(str: string, opts?: Partial<Opts>): convertAllRes;
 
-export { convertAll, convertOne, version };
+export { convertAll, convertOne, defaults, version };
