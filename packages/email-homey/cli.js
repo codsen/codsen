@@ -6,11 +6,15 @@ import fs from "fs";
 import meow from "meow";
 import path from "path";
 import chalk from "chalk";
-import { globby } from "globby";
 import uniq from "lodash.uniq";
+import { globby } from "globby";
 import splice from "string-splice";
 import logSymbols from "log-symbols";
-// import updateNotifier from "update-notifier";
+import { createRequire } from "module";
+import updateNotifier from "update-notifier";
+
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 
 const { log } = console;
 const state = {};
@@ -40,7 +44,7 @@ const cli = meow(
     },
   }
 );
-// updateNotifier({ pkg: cli.pkg }).notify();
+updateNotifier({ pkg }).notify();
 
 //                       +------------------------+
 //                       |                        |
@@ -157,7 +161,7 @@ function step4() {
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
-  log(cli.pkg.version);
+  log(pkg.version);
   process.exit(0);
 } else if (cli.flags.h) {
   log(cli.help);

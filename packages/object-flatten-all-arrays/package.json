@@ -73,8 +73,8 @@
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@types/lodash.clonedeep": "^4.5.6",
-    "@types/lodash.isplainobject": "^4.0.6",
-    "@types/lodash.merge": "^4.6.6"
+    "@types/lodash.clonedeep": "^4.5.7",
+    "@types/lodash.isplainobject": "^4.0.7",
+    "@types/lodash.merge": "^4.6.7"
   }
 }

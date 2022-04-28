@@ -4,15 +4,18 @@
 
 import meow from "meow";
 import fs from "fs-extra";
-import { globby } from "globby";
 import pReduce from "p-reduce";
 import isDirectory from "is-d";
-import writeFileAtomic from "write-file-atomic";
+import { globby } from "globby";
 import { promisify } from "util";
+import { createRequire } from "module";
+import updateNotifier from "update-notifier";
+import writeFileAtomic from "write-file-atomic";
 import { genAtomic, version } from "generate-atomic-css";
 
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 const write = promisify(writeFileAtomic);
-// import updateNotifier from "update-notifier";
 
 const { log } = console;
 const messagePrefix = `\u001b[${90}m${"✨ generate-atomic-css-cli: "}\u001b[${39}m`;
@@ -37,7 +40,7 @@ const cli = meow(
     importMeta: import.meta,
   }
 );
-// updateNotifier({ pkg: cli.pkg }).notify();
+updateNotifier({ pkg }).notify();
 
 function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs
@@ -146,7 +149,7 @@ function processPaths(incomingPaths) {
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
-  log(`cli: ${cli.pkg.version}; api: ${version}`);
+  log(`cli: ${pkg.version}; api: ${version}`);
   process.exit(0);
 } else if (cli.flags.h) {
   log(cli.help);

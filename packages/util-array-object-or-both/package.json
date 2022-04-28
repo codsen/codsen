@@ -70,6 +70,6 @@
     "lodash.includes": "^4.3.0"
   },
   "devDependencies": {
-    "@types/lodash.includes": "^4.3.6"
+    "@types/lodash.includes": "^4.3.7"
   }
 }

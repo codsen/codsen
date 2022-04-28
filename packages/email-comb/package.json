@@ -83,8 +83,8 @@
     "string-uglify": "^2.0.13"
   },
   "devDependencies": {
-    "@types/lodash.intersection": "^4.4.6",
-    "@types/lodash.pullall": "^4.2.6",
-    "@types/lodash.uniq": "^4.5.6"
+    "@types/lodash.intersection": "^4.4.7",
+    "@types/lodash.pullall": "^4.2.7",
+    "@types/lodash.uniq": "^4.5.7"
   }
 }

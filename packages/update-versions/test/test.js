@@ -6,7 +6,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 import pMap from "p-map";
 import clone from "lodash.clonedeep";
 import { createRequire } from "module";
@@ -119,7 +119,7 @@ const test2FileContents = [packTest12Lib3, rootPack];
 
 test("01 - monorepo", async () => {
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
 
   // 1. The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
@@ -200,7 +200,7 @@ test("01 - monorepo", async () => {
 });
 
 test("02 - normal repo", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
 
   // 1. create folders:
   ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
@@ -259,7 +259,7 @@ test("02 - normal repo", async () => {
 });
 
 test("03 - deletes deps from devdeps if they are among normal deps", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
 
   // 0. We need to add redundant deps onto normal deps key in package.json:
   let tweakedContents = clone(test2FileContents);
@@ -331,7 +331,7 @@ test("05 - help output mode", async () => {
 });
 
 test("06 - no files found in the given directory", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // create folder:
   ensureDirSync(path.resolve(tempFolder));
 

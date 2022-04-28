@@ -73,6 +73,6 @@
     "ranges-push": "^6.1.2"
   },
   "devDependencies": {
-    "@types/lodash.trim": "^4.5.6"
+    "@types/lodash.trim": "^4.5.7"
   }
 }

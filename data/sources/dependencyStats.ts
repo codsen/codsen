@@ -99,7 +99,6 @@ export const dependencyStats: DependencyStats = {
         "p-one": 1,
         "p-progress": 1,
         "p-reduce": 8,
-        "package-json-editor": 1,
         "pacote": 1,
         "plugin-error": 1,
         "ranges-apply": 16,

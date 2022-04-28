@@ -4,7 +4,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 // import pMap from "p-map";
 // import pack from "../package.json";
 // import {
@@ -19,7 +19,7 @@ import tempy from "tempy";
 // -----------------------------------------------------------------------------
 
 test("01 - when asked, sorts arrays which contain only strings", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
@@ -54,7 +54,7 @@ test("01 - when asked, sorts arrays which contain only strings", async () => {
 });
 
 test("02 - when not asked, does not sort arrays which contain only strings", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
@@ -79,7 +79,7 @@ test("02 - when not asked, does not sort arrays which contain only strings", asy
 });
 
 test("03 - array in deeper levels sorted (upon request)", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");

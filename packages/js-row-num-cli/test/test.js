@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
 import { fileURLToPath } from "url";
 import { execa } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,7 +29,7 @@ const letterC = "\x63";
 //                                  *
 
 test("01 - there are no usable files at all", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   let processedFileContents = fs
     .writeFile(path.join(tempFolder, "cli.js"), "zzz")
     .then(() =>
@@ -67,7 +67,7 @@ test("02 - cli.js in the root", async () => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write all test files
@@ -109,7 +109,7 @@ test("03/1 - pad override, -p", async () => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write all test files
@@ -140,7 +140,7 @@ test("04/2 - pad override, --pad", async () => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write all test files
@@ -185,7 +185,7 @@ test("05 - one file called with glob, another not processed", async () => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write all test files
@@ -241,7 +241,7 @@ test("06 - two files processed by calling glob with wildcard", async () => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write all test files
@@ -298,7 +298,7 @@ test('07/1 - "t" flag, -t', async () => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write all test files
@@ -330,7 +330,7 @@ test('08/2 - "t" flag, --trigger', async () => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write all test files

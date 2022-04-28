@@ -3,22 +3,21 @@
 // VARS
 // -----------------------------------------------------------------------------
 
+import path from "path";
 import chalk from "chalk";
-import { within } from "email-all-chars-within-ascii";
-import { right } from "string-left-right";
 import fs from "fs-extra";
+import argv from "minimist";
 import { globby } from "globby";
 import inquirer from "inquirer";
-import path from "path";
-import updateNotifier from "update-notifier";
 import pullAll from "lodash.pullall";
 import { createRequire } from "module";
-import argv from "minimist";
+import { right } from "string-left-right";
+import updateNotifier from "update-notifier";
+import { within } from "email-all-chars-within-ascii";
 
 const require1 = createRequire(import.meta.url);
-const package1 = require1("./package.json");
+const pkg = require1("./package.json");
 
-const { name, version } = package1;
 const argv1 = argv(process.argv.slice(2));
 
 const { log } = console;
@@ -34,12 +33,12 @@ const help = `
   Options
     -l, --len         Max allowed line length (default is 500)
     -h, --help        Shows this help
-    -v, --version     Shows the version of your ${name}
+    -v, --version     Shows the version of your ${pkg.name}
 
   Instructions
     Just call it in the folder where your file is located or provide a path
 `;
-updateNotifier({ pkg: package1 }).notify();
+updateNotifier({ pkg }).notify();
 
 function offerAListOfFilesToPickFrom() {
   let ui = new inquirer.ui.BottomBar();
@@ -70,7 +69,7 @@ function offerAListOfFilesToPickFrom() {
 // -----------------------------------------------------------------------------
 
 if (argv1.v || argv1.version) {
-  log(version);
+  log(pkg.version);
   process.exit(0);
 } else if (argv1.h || argv1.help) {
   log(help);

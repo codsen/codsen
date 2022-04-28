@@ -157,7 +157,7 @@ export const interdeps = [
     },
     {
         "name": "csv-sort-cli",
-        "size": 8955,
+        "size": 8937,
         "imports": [
             "csv-sort"
         ]
@@ -215,7 +215,7 @@ export const interdeps = [
     },
     {
         "name": "email-all-chars-within-ascii-cli",
-        "size": 8570,
+        "size": 8527,
         "imports": [
             "email-all-chars-within-ascii",
             "string-left-right"
@@ -267,7 +267,7 @@ export const interdeps = [
     },
     {
         "name": "generate-atomic-css-cli",
-        "size": 4594,
+        "size": 4704,
         "imports": [
             "generate-atomic-css"
         ]
@@ -371,7 +371,7 @@ export const interdeps = [
     },
     {
         "name": "js-row-num-cli",
-        "size": 5355,
+        "size": 5466,
         "imports": [
             "arrayiffy-if-string",
             "js-row-num"
@@ -379,7 +379,7 @@ export const interdeps = [
     },
     {
         "name": "json-comb",
-        "size": 6745,
+        "size": 6856,
         "imports": [
             "json-comb-core"
         ]
@@ -397,7 +397,7 @@ export const interdeps = [
     },
     {
         "name": "json-sort-cli",
-        "size": 13083,
+        "size": 13194,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -423,7 +423,7 @@ export const interdeps = [
     },
     {
         "name": "lerna-clean-changelogs-cli",
-        "size": 7333,
+        "size": 7496,
         "imports": [
             "lerna-clean-changelogs"
         ]
@@ -587,7 +587,7 @@ export const interdeps = [
     },
     {
         "name": "string-apostrophes",
-        "size": 6110,
+        "size": 7200,
         "imports": [
             "ranges-apply"
         ]
@@ -751,7 +751,7 @@ export const interdeps = [
     },
     {
         "name": "update-versions",
-        "size": 15114,
+        "size": 15230,
         "imports": [
             "edit-package-json"
         ]

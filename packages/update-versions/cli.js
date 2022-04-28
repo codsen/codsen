@@ -3,19 +3,23 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import { promises, readFileSync } from "fs";
-import write from "write-file-atomic";
-import { globby } from "globby";
-import pReduce from "p-reduce";
-import pProgress, { PProgress } from "p-progress";
 import meow from "meow";
-// import updateNotifier from "update-notifier";
-import isObj from "lodash.isplainobject";
 import pacote from "pacote";
-import objectPath from "object-path";
-import diff1 from "ansi-diff-stream";
-import { set, del } from "edit-package-json";
+import pReduce from "p-reduce";
+import { globby } from "globby";
 import isOnline from "is-online";
+import diff1 from "ansi-diff-stream";
+import objectPath from "object-path";
+import write from "write-file-atomic";
+import { createRequire } from "module";
+import isObj from "lodash.isplainobject";
+import { promises, readFileSync } from "fs";
+import { set, del } from "edit-package-json";
+import updateNotifier from "update-notifier";
+import pProgress, { PProgress } from "p-progress";
+
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 
 const { readFile } = promises;
 const diff = diff1();
@@ -40,13 +44,13 @@ const cli = meow(
     importMeta: import.meta,
   }
 );
-// updateNotifier({ pkg: cli.pkg }).notify();
+updateNotifier({ pkg }).notify();
 
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
-  log(cli.pkg.version);
+  log(pkg.version);
   process.exit(0);
 } else if (cli.flags.h) {
   log(cli.help);
@@ -205,19 +209,19 @@ if (cli.flags) {
                 .manifest(singleDepName, {
                   fullMetadata: true,
                 })
-                .then((pkg) => {
-                  if (pkg.version === null) {
+                .then((pkg1) => {
+                  if (pkg1.version === null) {
                     throw new Error(
                       `${messagePrefix}${singleDepName} version from npm came as null, CLI will exit now, nothing was written.`
                     );
                   } else {
-                    compiledDepNameVersionPairs[singleDepName] = pkg.version;
+                    compiledDepNameVersionPairs[singleDepName] = pkg1.version;
 
                     if (
                       (cli.flags.m || cli.flags.module) &&
-                      pkg.type === "module"
+                      pkg1.type === "module"
                     ) {
-                      newConfig.noMajorBumping.add(pkg.name);
+                      newConfig.noMajorBumping.add(pkg1.name);
                     }
                   }
                 });

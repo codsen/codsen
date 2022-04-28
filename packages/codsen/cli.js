@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
 import meow from "meow";
+import updateNotifier from "update-notifier";
 import { createRequire } from "module";
 
 const { log } = console;
 
-const require = createRequire(import.meta.url);
-const { name } = require("./package.json");
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 
 const cli = meow(
   `
@@ -22,12 +23,13 @@ const cli = meow(
     flags: {},
   }
 );
+updateNotifier({ pkg }).notify();
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
-  log(cli.pkg.version);
+  log(pkg.version);
   process.exit(0);
 } else if (cli.flags.h) {
   log(cli.help);

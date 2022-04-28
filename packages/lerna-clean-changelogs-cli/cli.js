@@ -3,17 +3,21 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import fs from "fs-extra";
-import chalk from "chalk";
-import { globby } from "globby";
 import meow from "meow";
 import path from "path";
-// import updateNotifier from "update-notifier";
+import fs from "fs-extra";
+import chalk from "chalk";
 import pReduce from "p-reduce";
 import pFilter from "p-filter";
-import { cleanChangelogs } from "lerna-clean-changelogs";
+import { globby } from "globby";
 import { promisify } from "util";
 import write from "write-file-atomic";
+import { createRequire } from "module";
+import updateNotifier from "update-notifier";
+import { cleanChangelogs } from "lerna-clean-changelogs";
+
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 
 const start = Date.now();
 const { log } = console;
@@ -22,7 +26,9 @@ function isStr(something) {
   return typeof something === "string";
 }
 function isObj(something) {
-  return typeof something === "object";
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 function formatTime(ms) {
   if (ms < 1000) {
@@ -49,14 +55,14 @@ const cli = meow(
     importMeta: import.meta,
   }
 );
-// updateNotifier({ pkg: cli.pkg }).notify();
+updateNotifier({ pkg }).notify();
 const signature = chalk.grey("✨ lerna-clean-changelogs-cli: ");
 
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
-  log(cli.pkg.version);
+  log(pkg.version);
   process.exit(0);
 } else if (cli.flags.h) {
   log(cli.help);

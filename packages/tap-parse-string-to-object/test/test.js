@@ -1,7 +1,7 @@
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 import fs from "fs-extra";
 import path from "path";
 
@@ -831,7 +831,7 @@ test("05 - object-set-all-values-to", () => {
 // -----------------------------------------------------------------------------
 
 test(`06 - ${`\u001b[${33}m${`streams`}\u001b[${39}m`} - stream is given`, async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
 

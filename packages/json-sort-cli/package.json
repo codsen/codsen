@@ -61,7 +61,7 @@
   "dependencies": {
     "ast-monkey-traverse": "^3.0.13",
     "chalk": "^5.0.1",
-    "fs-extra": "^10.0.1",
+    "fs-extra": "^10.1.0",
     "globby": "^13.1.1",
     "is-d": "^1.0.0",
     "lodash.isplainobject": "^4.0.6",
@@ -73,7 +73,7 @@
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "@types/lodash.isplainobject": "^4.0.6",
+    "@types/lodash.isplainobject": "^4.0.7",
     "p-map": "^5.3.0"
   }
 }

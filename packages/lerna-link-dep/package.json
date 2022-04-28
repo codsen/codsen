@@ -68,9 +68,8 @@
   },
   "dependencies": {
     "execa": "^6.1.0",
-    "fs-extra": "^10.0.1",
+    "fs-extra": "^10.1.0",
     "meow": "^10.1.2",
-    "package-json-editor": "^1.0.1",
     "update-notifier": "^5.1.0"
   }
 }

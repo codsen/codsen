@@ -4,7 +4,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 import pMap from "p-map";
 import { createRequire } from "module";
 
@@ -131,7 +131,7 @@ test("02 - help output mode", async () => {
 
 test("03 - no files found in the given directory [ID_1]", async () => {
   // fetch us a random temp folder
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // call execa on that empty folder
   let stdOutContents = await execa("./cli.js", [tempFolder]);
   // CLI will complain no files could be found
@@ -144,7 +144,7 @@ test("04 - normalisation, called on the directory with subdirectories", async ()
 
   // 1.1 For debug purposes, you can temporarily  re-route the test files into
   // `temp/` folder instead for easier access. Just comment either one of two lines:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // ---------------------------------------------------------------------------
@@ -194,7 +194,7 @@ test("05 - normalisation stops if one file is given [ID_2]", async () => {
   // fetch us a random temp folder
   // const tempFolder = "temp";
   // fs.ensureDirSync(path.join(tempFolder));
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
 
   let stdOutContents = await fs
     .writeJson(path.join(tempFolder, "data.json"), {

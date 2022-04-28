@@ -72,6 +72,6 @@
     "ranges-apply": "^6.1.2"
   },
   "devDependencies": {
-    "@types/lodash.uniq": "^4.5.6"
+    "@types/lodash.uniq": "^4.5.7"
   }
 }

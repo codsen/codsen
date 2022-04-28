@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
 import { fileURLToPath } from "url";
 import { execa } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,7 +25,7 @@ const __dirname = path.dirname(__filename);
 //                                  *
 
 test("01 - there are no usable files at all", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   let processedFileContents = fs
     .writeFile(path.join(tempFolder, "index.html"), "zzz")
     .then(() =>
@@ -94,7 +94,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   // console.log(`tempFolder = ${tempFolder}`);
 
@@ -162,7 +162,7 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write all test files

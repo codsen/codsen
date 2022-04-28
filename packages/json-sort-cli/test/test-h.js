@@ -4,7 +4,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 // import pMap from "p-map";
 // import pack from "../package.json";
 // import {
@@ -33,7 +33,7 @@ test("01 - help output mode", async () => {
 test("02 - help flag trumps silent flag", async () => {
   let unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
 
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.writeFileSync(path.join(tempFolder, "sortme.json"), unsortedFile);

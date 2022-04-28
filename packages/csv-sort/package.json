@@ -78,6 +78,6 @@
     "lodash.pull": "^4.1.0"
   },
   "devDependencies": {
-    "@types/lodash.pull": "^4.1.6"
+    "@types/lodash.pull": "^4.1.7"
   }
 }

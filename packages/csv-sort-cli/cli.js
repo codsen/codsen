@@ -5,22 +5,22 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import chalk from "chalk";
-import { sort } from "csv-sort";
 import fs from "fs";
-import { globby } from "globby";
-import inquirer from "inquirer";
 import meow from "meow";
 import path from "path";
-// import updateNotifier from "update-notifier";
-import pullAll from "lodash.pullall";
+import chalk from "chalk";
 import uniq from "lodash.uniq";
+import { sort } from "csv-sort";
+import inquirer from "inquirer";
+import { globby } from "globby";
+import pullAll from "lodash.pullall";
 import { createRequire } from "module";
+import updateNotifier from "update-notifier";
 
 const { log } = console;
 
-const require = createRequire(import.meta.url);
-const { name } = require("./package.json");
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 
 const state = {};
 state.toDoList = []; // default
@@ -35,7 +35,7 @@ const cli = meow(
   Options
     -o, --overwrite   Will overwrite the target file instead
     -h, --help        Shows this help
-    -v, --version     Shows the version of your ${name}
+    -v, --version     Shows the version of your ${pkg.name}
 
   Example
     Just call it in the root, where your csv file is located
@@ -51,7 +51,7 @@ const cli = meow(
     },
   }
 );
-// updateNotifier({ pkg: cli.pkg }).notify();
+updateNotifier({ pkg }).notify();
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
@@ -113,7 +113,7 @@ function offerAListOfCSVsToPickFrom(stateObj) {
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
-  log(cli.pkg.version);
+  log(pkg.version);
   process.exit(0);
 } else if (cli.flags.h) {
   log(cli.help);

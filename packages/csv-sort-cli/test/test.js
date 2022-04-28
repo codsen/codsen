@@ -3,7 +3,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 import { fileURLToPath } from "url";
 
 import { spawn } from "../../../ops/helpers/spawn.js";
@@ -26,7 +26,7 @@ const __dirname = path.dirname(__filename);
 //                                  *
 
 test("01 - there are no usable files at all", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   await fs.writeFile(path.join(tempFolder, "file.md"), "zzz");
@@ -72,7 +72,7 @@ test("02 - sorts a file", async () => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // let tempFolder = "temp";
   // fs.ensureDirSync(path.resolve(tempFolder));
 

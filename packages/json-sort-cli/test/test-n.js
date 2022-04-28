@@ -4,7 +4,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 // import pMap from "p-map";
 // import pack from "../package.json";
 // import {
@@ -19,7 +19,7 @@ import tempy from "tempy";
 // -----------------------------------------------------------------------------
 
 test("01 - only node_modules with one file, flag disabled", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
@@ -45,7 +45,7 @@ test("01 - only node_modules with one file, flag disabled", async () => {
 });
 
 test("02 - only node_modules with one file, flag enabled", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
@@ -73,7 +73,7 @@ test("03 - files inside and outside node_modules, flag enabled", async () => {
   let originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
   let sortedContents = `{\n  "a": 2,\n  "z": 1\n}\n`;
 
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
@@ -107,7 +107,7 @@ test("04 - files inside and outside node_modules, flag disabled", async () => {
   let originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
   let sortedContents = `{\n  "a": 2,\n  "z": 1\n}\n`;
 
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/dir1/")));

@@ -114,8 +114,8 @@
   },
   "devDependencies": {
     "@types/he": "^1.1.2",
-    "@types/lodash.clonedeep": "^4.5.6",
-    "@types/lodash.isregexp": "^4.0.6",
+    "@types/lodash.clonedeep": "^4.5.7",
+    "@types/lodash.isregexp": "^4.0.7",
     "@types/mime-db": "^1.43.1",
     "ast-deep-contains": "^4.1.1",
     "ranges-apply": "^6.1.2"

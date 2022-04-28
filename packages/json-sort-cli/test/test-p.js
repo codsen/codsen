@@ -4,7 +4,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 // import pMap from "p-map";
 // import pack from "../package.json";
 // import {
@@ -19,7 +19,7 @@ import tempy from "tempy";
 // -----------------------------------------------------------------------------
 
 test("01 - unsorted package.json, targetting two folders simultaneously", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "fol1")));
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "fol2")));
@@ -77,7 +77,7 @@ test("01 - unsorted package.json, targetting two folders simultaneously", async 
 });
 
 test("02 - already sorted package.json", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   let source = `{
   "dependencies": {
     "ast-monkey-traverse": "^1.11.31"
@@ -105,7 +105,7 @@ test("02 - already sorted package.json", async () => {
 });
 
 test("03 - empty array as package.json", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   let source = `[]\n`;
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));

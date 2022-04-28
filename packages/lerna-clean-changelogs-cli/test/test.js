@@ -4,7 +4,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 import pMap from "p-map";
 import { createRequire } from "module";
 
@@ -86,7 +86,7 @@ test(`02 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - help output mode`
 test(`03 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - no files found in the given directory`, async () => {
   // fetch us a random temp folder
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
 
   // call execa on that empty folder
@@ -106,7 +106,7 @@ test(`04 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed directly 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
 
   // write a changelog:
@@ -137,7 +137,7 @@ test(`04 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed directly 
 test(`05 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - globs, multiple written multiple skipped`, async () => {
   // 1. set up in which folder to write:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
 
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:

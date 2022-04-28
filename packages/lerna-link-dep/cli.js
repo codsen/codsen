@@ -5,11 +5,15 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import fs from "fs-extra";
 import meow from "meow";
 import path from "path";
-// import updateNotifier from "update-notifier";
+import fs from "fs-extra";
 import { execaSync } from "execa";
+import { createRequire } from "module";
+import updateNotifier from "update-notifier";
+
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 
 const { log } = console;
 
@@ -51,14 +55,13 @@ const cli = meow(
     },
   }
 );
-
-// updateNotifier({ pkg: cli.pkg }).notify();
+updateNotifier({ pkg }).notify();
 
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
 
 if (cli.flags.version) {
-  log(cli.pkg.version);
+  log(pkg.version);
   process.exit(0);
 } else if (cli.flags.help) {
   log(cli.help);

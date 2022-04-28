@@ -83,8 +83,8 @@
     "type-detect": "^4.0.8"
   },
   "devDependencies": {
-    "@types/lodash.clonedeep": "^4.5.6",
-    "@types/lodash.includes": "^4.3.6",
+    "@types/lodash.clonedeep": "^4.5.7",
+    "@types/lodash.includes": "^4.3.7",
     "@types/semver-compare": "^1.0.1"
   }
 }

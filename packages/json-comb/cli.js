@@ -1,15 +1,19 @@
 #!/usr/bin/env node
 /* eslint no-console:0 */
 
-import fs from "fs-extra";
-import { globby } from "globby";
 import meow from "meow";
 import path from "path";
-// import updateNotifier from "update-notifier";
+import pMap from "p-map";
+import fs from "fs-extra";
 import isDirectory from "is-d";
 import pReduce from "p-reduce";
-import pMap from "p-map";
+import { globby } from "globby";
+import { createRequire } from "module";
+import updateNotifier from "update-notifier";
 import { getKeyset, enforceKeyset } from "json-comb-core";
+
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 
 const messagePrefix = `\u001b[${90}m${"✨ JSON Comb: "}\u001b[${39}m`;
 const { log } = console;
@@ -62,7 +66,7 @@ const cli = meow(
     },
   }
 );
-// updateNotifier({ pkg: cli.pkg }).notify();
+updateNotifier({ pkg }).notify();
 
 // TODO:
 // -p, --placeholder   What value to set for newly added keys
@@ -76,7 +80,7 @@ const cli = meow(
 // -----------------------------------------------------------------------------
 
 if (cli.flags.version) {
-  log(cli.pkg.version);
+  log(pkg.version);
   process.exit(0);
 } else if (cli.flags.help) {
   log(cli.help);

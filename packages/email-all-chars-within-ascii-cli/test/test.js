@@ -5,7 +5,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,7 +15,7 @@ test("01 - called upon a single file which is healthy", async () => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write the test file
@@ -41,7 +41,7 @@ test("02 - called upon a single file which contains non-ASCII symbol", async () 
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
   // 2. asynchronously write the test file
@@ -80,7 +80,7 @@ test("04 - help output mode", async () => {
 
 test("05 - no files found in the given directory", async () => {
   // fetch us a random temp folder
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // call execa on that empty folder
 
   // CLI will complain no files could be found

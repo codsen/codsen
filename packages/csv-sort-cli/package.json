@@ -67,15 +67,15 @@
     "chalk": "^5.0.1",
     "csv-sort": "^6.0.17",
     "globby": "^13.1.1",
-    "inquirer": "^8.2.2",
+    "inquirer": "^8.2.4",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^10.1.2",
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "@types/lodash.pullall": "^4.2.6",
-    "@types/lodash.uniq": "^4.5.6",
-    "fs-extra": "^10.0.1"
+    "@types/lodash.pullall": "^4.2.7",
+    "@types/lodash.uniq": "^4.5.7",
+    "fs-extra": "^10.1.0"
   }
 }

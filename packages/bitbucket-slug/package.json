@@ -80,6 +80,6 @@
     "lodash.deburr": "^4.1.0"
   },
   "devDependencies": {
-    "@types/lodash.deburr": "^4.1.6"
+    "@types/lodash.deburr": "^4.1.7"
   }
 }

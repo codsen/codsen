@@ -4,7 +4,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 // import pMap from "p-map";
 // import pack from "../package.json";
 // import {
@@ -21,7 +21,7 @@ import tempy from "tempy";
 test("01 - one sorted file", async () => {
   let sortedFile = `{\n  "a": 1,\n  "z": 2\n}\n`;
 
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.writeFileSync(path.join(tempFolder, "sortme.json"), sortedFile);
@@ -41,7 +41,7 @@ test("01 - one sorted file", async () => {
 test("02 - one unsorted file", async () => {
   let unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
 
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.writeFileSync(path.join(tempFolder, "sortme.json"), unsortedFile);
@@ -63,7 +63,7 @@ test("02 - one unsorted file", async () => {
 test("03 - 'dry' flag trumps 'ci' flag", async () => {
   let unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
 
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.writeFileSync(path.join(tempFolder, "sortme.json"), unsortedFile);
@@ -86,7 +86,7 @@ test("03 - 'dry' flag trumps 'ci' flag", async () => {
 test("04 - 'dry', arg order is backwards", async () => {
   let unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
 
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.writeFileSync(path.join(tempFolder, "sortme.json"), unsortedFile);
@@ -105,7 +105,7 @@ test("04 - 'dry', arg order is backwards", async () => {
 });
 
 test("05 - errors out when unsorted array within json, --ci & --arrays flags", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
@@ -136,7 +136,7 @@ test("05 - errors out when unsorted array within json, --ci & --arrays flags", a
 });
 
 test("06 - unsorted array within json, --ci flag", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
@@ -164,7 +164,7 @@ test("06 - unsorted array within json, --ci flag", async () => {
 });
 
 test("07 - sorted nested plain object, --ci flag", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
@@ -191,7 +191,7 @@ test("07 - sorted nested plain object, --ci flag", async () => {
 });
 
 test("08 - unsorted nested plain object, --ci flag", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
@@ -220,7 +220,7 @@ test("08 - unsorted nested plain object, --ci flag", async () => {
 });
 
 test("09 - but requested copious tabs, --ci flag", async () => {
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");

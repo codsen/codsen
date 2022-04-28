@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
 import { fileURLToPath } from "url";
 import { execa, execaCommand } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -51,7 +51,7 @@ test(`01 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - requested package does n
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
   fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
@@ -106,7 +106,7 @@ test(`02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read a's packag
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
   fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
@@ -159,7 +159,7 @@ test(`03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's packag
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
   fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
@@ -212,7 +212,7 @@ test(`04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink alre
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
   fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
@@ -277,7 +277,7 @@ test(`05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to pa
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
   fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
@@ -337,7 +337,7 @@ test(`06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of sym
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules/.bin/"));
   fs.ensureDirSync(path.resolve(tempFolder, "c", "node_modules"));
@@ -408,7 +408,7 @@ test(`07 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no main
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules/.bin/"));
   fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
@@ -467,7 +467,7 @@ test(`08 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
   fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
@@ -513,7 +513,7 @@ test(`09 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI de
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules/.bin/"));
   fs.ensureDirSync(path.resolve(tempFolder, "c", "node_modules"));
@@ -563,7 +563,7 @@ test(`10 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
   fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
@@ -610,7 +610,7 @@ test(`11 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
   fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));

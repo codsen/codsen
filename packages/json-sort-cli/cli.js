@@ -3,19 +3,23 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import fs from "fs-extra";
-import chalk from "chalk";
-import { globby } from "globby";
 import meow from "meow";
 import path from "path";
-// import updateNotifier from "update-notifier";
+import fs from "fs-extra";
+import chalk from "chalk";
 import isDirectory from "is-d";
 import pReduce from "p-reduce";
 import pFilter from "p-filter";
+import { globby } from "globby";
+import { createRequire } from "module";
 import sortObject from "sorted-object";
-import { traverse } from "ast-monkey-traverse";
 import isObj from "lodash.isplainobject";
+import updateNotifier from "update-notifier";
+import { traverse } from "ast-monkey-traverse";
 import sortPackageJson from "sort-package-json";
+
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 
 function isStr(something) {
   return typeof something === "string";
@@ -125,7 +129,7 @@ const cli = meow(
     },
   }
 );
-// updateNotifier({ pkg: cli.pkg }).notify();
+updateNotifier({ pkg }).notify();
 
 const nonJsonFormats = ["yml", "toml", "yaml"]; // to save time
 const badFiles = [
@@ -274,7 +278,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
 // -----------------------------------------------------------------------------
 
 if (cli.flags.version) {
-  log(cli.pkg.version);
+  log(pkg.version);
   process.exit(0);
 } else if (cli.flags.help) {
   log(cli.help);

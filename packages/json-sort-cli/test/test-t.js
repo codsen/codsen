@@ -4,7 +4,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa } from "execa";
-import tempy from "tempy";
+import { temporaryDirectory } from "tempy";
 import pMap from "p-map";
 
 // import pack from "../package.json";
@@ -21,7 +21,7 @@ import {
 
 test("01 - sort, -t (tabs) mode", async () => {
   // 1. fetch us an empty, random, temporary folder:
-  let tempFolder = tempy.directory();
+  let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:

@@ -2,16 +2,20 @@
 
 import meow from "meow";
 import fs from "fs-extra";
-import { globby } from "globby";
 import pReduce from "p-reduce";
 import isDirectory from "is-d";
-import writeFileAtomic from "write-file-atomic";
+import { globby } from "globby";
 import { promisify } from "util";
-import { arrayiffy } from "arrayiffy-if-string";
+import { createRequire } from "module";
 import { fixRowNums } from "js-row-num";
+import updateNotifier from "update-notifier";
+import { arrayiffy } from "arrayiffy-if-string";
+import writeFileAtomic from "write-file-atomic";
+
+const require1 = createRequire(import.meta.url);
+const pkg = require1("./package.json");
 
 const write = promisify(writeFileAtomic);
-// import updateNotifier from "update-notifier";
 
 function existy(x) {
   return x != null;
@@ -63,7 +67,7 @@ const cli = meow(
     },
   }
 );
-// updateNotifier({ pkg: cli.pkg }).notify();
+updateNotifier({ pkg }).notify();
 
 function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs
@@ -179,7 +183,7 @@ function processPaths(paths) {
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
-  log(cli.pkg.version);
+  log(pkg.version);
   process.exit(0);
 } else if (cli.flags.h) {
   log(cli.help);
