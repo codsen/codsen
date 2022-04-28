@@ -5,20 +5,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2022-04-28)
 
-
 ### Bug Fixes
 
-* set correct defaults ([cfb61e2](https://github.com/codsen/codsen/commit/cfb61e2a3179dfe8b485ba0100efaebcfcde7f48))
-
+- set correct defaults ([cfb61e2](https://github.com/codsen/codsen/commit/cfb61e2a3179dfe8b485ba0100efaebcfcde7f48))
 
 ### BREAKING CHANGES
 
-* now convertOne() option opts.convertEntities default is false (it was wrongly true
+- now convertOne() option opts.convertEntities default is false (it was wrongly true
 before)
-
-
-
-
 
 # 2.1.0 (2022-04-11)
 
