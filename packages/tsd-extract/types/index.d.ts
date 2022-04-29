@@ -2,7 +2,7 @@ declare const version: string;
 interface Opts {
   extractAll: boolean;
   semi: boolean;
-  mustInclude: string | undefined;
+  mustInclude: string;
   stripAs: boolean;
 }
 interface Statement {
@@ -17,16 +17,16 @@ interface Statement {
   valueEndsAt: number | null;
 }
 declare const defaults: Opts;
+declare type ReturnType = Statement & {
+  all: string[];
+  error: string | null;
+};
 /**
  *
  * @param str type definitions file, as a string
  * @param def name of an interface, function or something else to extract
  * @param opts optional options object
  */
-declare type ReturnType = Statement & {
-  all: string[];
-  error: string | null;
-};
 declare function extract(
   str: string,
   def: string,

@@ -6,7 +6,7 @@ declare let DEV: boolean;
 interface Opts {
   extractAll: boolean;
   semi: boolean;
-  mustInclude: string | undefined;
+  mustInclude: string;
   stripAs: boolean;
 }
 
@@ -32,7 +32,7 @@ const IGNORE = new Set(["interface", "function", "declare", "type", "const"]);
 const defaults: Opts = {
   extractAll: false,
   semi: true,
-  mustInclude: undefined,
+  mustInclude: "",
   stripAs: false,
 };
 const NON_IDENTIFIER_CHARS = `{}()_;:,=<>'"`;
