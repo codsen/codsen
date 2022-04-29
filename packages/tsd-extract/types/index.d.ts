@@ -32,5 +32,6 @@ declare function extract(
   def: string,
   opts?: Partial<Opts>
 ): ReturnType;
+declare function join(...args: string[]): string;
 
-export { defaults, extract, version };
+export { defaults, extract, join, version };

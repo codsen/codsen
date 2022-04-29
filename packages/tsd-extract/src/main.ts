@@ -916,4 +916,62 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
   return { ...statementDefault, all: [...all], error: NOTFOUNDSTR };
 }
 
-export { extract, defaults, version };
+function extractStrChunksBetweenCurlies(str: string): string[] {
+  // early exit
+  if (typeof str !== "string") {
+    return [];
+  }
+
+  let openings: number[] = [];
+  let closings: number[] = [];
+
+  let opening: number = str.indexOf("{");
+  while (opening !== -1) {
+    if (opening !== -1) {
+      openings.push(opening);
+    }
+    opening = str.indexOf("{", opening + 1);
+  }
+
+  let closing: number = str.indexOf("}");
+  while (closing !== -1) {
+    if (closing !== -1) {
+      closings.push(closing);
+    }
+    closing = str.indexOf("}", closing + 1);
+  }
+
+  return openings.reduce((acc, curr, idx) => {
+    if (typeof closings[idx] === "number") {
+      return [...acc, str.slice(curr + 1, closings[idx])];
+    }
+    // else, bail
+    return acc;
+  }, <string[]>[]);
+}
+
+function join(...args: string[]): string {
+  // insurance
+  if (
+    !args.some(
+      (arg) => typeof arg === "string" && arg.includes("{") && arg.includes("}")
+    )
+  ) {
+    return "";
+  }
+  return (
+    "{\n" +
+    `${args
+      .reduce((acc, curr) => {
+        return acc.concat(extractStrChunksBetweenCurlies(curr));
+      }, <string[]>[])
+      .join("\n")}`
+      .split(/(\r?\n)/)
+      .filter((l) => l.trim().length)
+      .map((s) => `  ${s.trim()}`)
+      .join("\n") +
+    "\n}"
+  );
+}
+
+export { extract, join, defaults, version };
