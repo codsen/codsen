@@ -89,7 +89,7 @@ for (let packageName of packageNames) {
           `../../packages/${packageName}/dist/${packageName}.esm.js`
         );
         if (defaults) {
-          exportedDefaults[packageName] = JSON.stringify(defaults, null, 4);
+          exportedDefaults[packageName] = JSON.stringify(defaults, null, 2);
         }
       } catch (e) {
         // nothing happens
