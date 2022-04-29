@@ -3055,7 +3055,7 @@ export const packageJSONData = {
     },
     "emlint": {
         "name": "emlint",
-        "version": "5.0.20",
+        "version": "5.0.21",
         "description": "Pluggable email template code linter",
         "keywords": [
             "analysis",
@@ -3144,7 +3144,7 @@ export const packageJSONData = {
             "html-entities-not-email-friendly": "^0.6.13",
             "is-d": "^1.0.0",
             "is-language-code": "^4.0.13",
-            "is-media-descriptor": "^4.1.2",
+            "is-media-descriptor": "^4.1.3",
             "is-relative-uri": "^4.1.4",
             "is-url-superb": "^6.1.0",
             "leven": "^4.0.0",
@@ -4156,7 +4156,7 @@ export const packageJSONData = {
     },
     "is-media-descriptor": {
         "name": "is-media-descriptor",
-        "version": "4.1.2",
+        "version": "4.1.3",
         "description": "Is given string a valid media descriptor (including media query)?",
         "keywords": [
             "attribute",
@@ -9006,7 +9006,7 @@ export const packageJSONData = {
     },
     "tsd-extract": {
         "name": "tsd-extract",
-        "version": "0.4.0",
+        "version": "0.5.0",
         "description": "Extract any definition from TS definitions file",
         "keywords": [
             "ts",
