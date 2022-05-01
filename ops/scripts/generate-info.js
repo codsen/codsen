@@ -28,7 +28,7 @@ const packagesOutsideMonorepoObj = {
     description: "ESLint plugin to update unit test numbers automatically",
   },
   "perf-ref": {
-    description: "A dummy program to normalise perf scores against it",
+    description: "A mock program to normalise perf scores against it",
   },
   "tsd-extract-noesm": {
     description: "Extract any definition from TS definitions file",
