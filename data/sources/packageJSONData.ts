@@ -4691,7 +4691,7 @@ export const packageJSONData = {
             "meow": "^10.1.2",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
-            "sort-package-json": "^1.55.0",
+            "sort-package-json": "^1.56.1",
             "sorted-object": "^2.0.1",
             "update-notifier": "^5.1.0"
         },
