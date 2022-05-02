@@ -86,11 +86,11 @@ export const runPerf = async (cb, callerDir) => {
 
       if (
         historicalDataFileContents.trim() !==
-        JSON.stringify(sortAllObjectsSync(historicalData), null, 4).trim()
+        JSON.stringify(sortAllObjectsSync(historicalData), null, 2).trim()
       ) {
         fs.writeFile(
           path.resolve(callerDir, "./perf/historical.json"),
-          JSON.stringify(sortAllObjectsSync(historicalData), null, 4),
+          JSON.stringify(sortAllObjectsSync(historicalData), null, 2),
           (err) => {
             if (err) {
               throw err;
