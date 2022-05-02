@@ -38,8 +38,28 @@ const packagesOutsideMonorepoObj = {
   },
 };
 
+const deprecated = [
+  "bitsausage",
+  "chlu",
+  "chlu-cli",
+  "email-remove-unused-css",
+  "eslint-on-airbnb-base-badge",
+  "fol",
+  "posthtml-ast-compare",
+  "posthtml-ast-contains-only-empty-space",
+  "posthtml-ast-delete-key",
+  "posthtml-ast-delete-object",
+  "posthtml-ast-get-object",
+  "posthtml-ast-get-values-by-key",
+  "posthtml-ast-is-empty",
+  "posthtml-ast-loose-compare",
+  "posthtml-color-shorthand-hex-to-six-digit",
+  "posthtml-email-remove-unused-css",
+  "string-replace-slices-array",
+  "string-slices-array-push",
+];
 const packagesOutsideMonorepo = Object.keys(packagesOutsideMonorepoObj);
-const allPackages = [...packagesOutsideMonorepo];
+const allPackages = [...packagesOutsideMonorepo, ...deprecated];
 const cliPackages = [];
 const programPackages = [];
 const specialPackages = [];
@@ -171,7 +191,7 @@ const dependencyStats = { dependencies: {}, devDependencies: {} };
 
 for (let i = 0, len = allPackages.length; i < len; i++) {
   let name = allPackages[i];
-  if (packagesOutsideMonorepo.includes(name)) {
+  if (packagesOutsideMonorepo.includes(name) || deprecated.includes(name)) {
     continue;
   }
 
@@ -328,6 +348,7 @@ fs.writeFile(
   path.resolve("./data/sources/packages.ts"),
   `const all = ${JSON.stringify(allPackages.sort(), null, 4)} as const;
 const cli = ${JSON.stringify(cliPackages.sort(), null, 4)} as const;
+const deprecated = ${JSON.stringify(deprecated.sort(), null, 4)} as const;
 const programs = ${JSON.stringify(programPackages.sort(), null, 4)} as const;
 const special = ${JSON.stringify(specialPackages.sort(), null, 4)} as const;
 const script = ${JSON.stringify(scriptAvailable.sort(), null, 4)} as const;
@@ -342,6 +363,7 @@ export type Package = typeof all[number];
 export const packages = {
     all,
     cli,
+    deprecated,
     programs,
     special,
     script,
