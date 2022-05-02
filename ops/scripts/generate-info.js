@@ -60,6 +60,7 @@ const deprecated = [
 ];
 const packagesOutsideMonorepo = Object.keys(packagesOutsideMonorepoObj);
 const allPackages = [...packagesOutsideMonorepo, ...deprecated];
+const currentPackages = [...packagesOutsideMonorepo];
 const cliPackages = [];
 const programPackages = [];
 const specialPackages = [];
@@ -83,6 +84,7 @@ for (let packageName of packageNames) {
     packageJSONData[packageName] = packageJsonContents;
     if (!packageJsonContents.private) {
       allPackages.push(packageJsonContents.name);
+      currentPackages.push(packageJsonContents.name);
     }
     if (packageJsonContents.bin) {
       cliPackages.push(packageJsonContents.name);
@@ -347,6 +349,7 @@ fs.writeFile(
 fs.writeFile(
   path.resolve("./data/sources/packages.ts"),
   `const all = ${JSON.stringify(allPackages.sort(), null, 4)} as const;
+const current = ${JSON.stringify(currentPackages.sort(), null, 4)} as const;
 const cli = ${JSON.stringify(cliPackages.sort(), null, 4)} as const;
 const deprecated = ${JSON.stringify(deprecated.sort(), null, 4)} as const;
 const programs = ${JSON.stringify(programPackages.sort(), null, 4)} as const;
@@ -362,6 +365,7 @@ export type Package = typeof all[number];
 
 export const packages = {
     all,
+    current,
     cli,
     deprecated,
     programs,
@@ -369,6 +373,7 @@ export const packages = {
     script,
     packagesOutsideMonorepo,
     totalPackageCount: ${allPackages.length},
+    currentPackagesCount: ${currentPackages.length},
     cliCount: ${cliPackages.length},
     programsCount: ${programPackages.length},
     specialCount: ${specialPackages.length},
