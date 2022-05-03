@@ -36,9 +36,9 @@ npm i string-fix-broken-named-entities
 
 ```js
 import { strict as assert } from "assert";
+import { rApply } from "ranges-apply";
 
 import { fixEnt } from "string-fix-broken-named-entities";
-import { rApply } from "ranges-apply";
 
 const source = "&nsp;x&nsp;y&nsp;";
 

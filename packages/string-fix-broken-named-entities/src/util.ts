@@ -5,9 +5,9 @@ import { right } from "string-left-right";
 
 declare let DEV: boolean;
 
-function isObj(something: any): boolean {
+function isObj(something: unknown): boolean {
   return (
-    something && typeof something === "object" && !Array.isArray(something)
+    !!something && typeof something === "object" && !Array.isArray(something)
   );
 }
 
@@ -18,7 +18,7 @@ function isLatinLetterOrNumberOrHash(char: string): boolean {
   // - letters A-Z or
   // - #
   return (
-    isStr(char) &&
+    typeof char === "string" &&
     char.length === 1 &&
     ((char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123) ||
       (char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58) ||
@@ -26,18 +26,15 @@ function isLatinLetterOrNumberOrHash(char: string): boolean {
       char.charCodeAt(0) === 35)
   );
 }
-function isNumeric(something: any): boolean {
+function isNumeric(something: unknown): boolean {
   return (
-    isStr(something) &&
+    typeof something === "string" &&
     something.charCodeAt(0) > 47 &&
     something.charCodeAt(0) < 58
   );
 }
 
-function isStr(something: any): boolean {
-  return typeof something === "string";
-}
-function isLatinLetter(something: any): boolean {
+function isLatinLetter(something: unknown): boolean {
   return (
     typeof something === "string" &&
     ((something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123) ||
@@ -58,7 +55,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
   for (let i = from; i < to; i++) {
     DEV &&
       console.log(
-        `061 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str2[${i}] = "${str2[i]}"`}\u001b[${39}m`}`
+        `058 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str2[${i}] = "${str2[i]}"`}\u001b[${39}m`}`
       );
     if (str2[i].trim().length) {
       charTrimmed += str2[i];
@@ -82,7 +79,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
 
   DEV &&
     console.log(
-      `085 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
+      `082 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
         charTrimmed[0],
         null,
         4
@@ -223,7 +220,7 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
     copy = Array.from(temp1);
     // 1. if some matches have semicolon to the right of rightmostChar and
     // some matches don't, exclude those that don't.
-    // If at any moment we've left with one match, Bob's your uncle here's
+    // If at unknown moment we've left with one match, Bob's your uncle here's
     // the final result.
     // For example, we might be working on something like this:
     // [
@@ -269,7 +266,7 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
       );
       DEV &&
         console.log(
-          `272 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
+          `269 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
             copy,
             null,
             4
@@ -315,7 +312,6 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
 
 export {
   isObj,
-  isStr,
   isNumeric,
   resemblesNumericEntity,
   removeGappedFromMixedCases,
