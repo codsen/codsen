@@ -47,9 +47,9 @@ function compareIsEqual(a: any, b: any): boolean {
   }
   return !!compare(a, b, { matchStrictly: true, useWildcards: true });
 }
-function isObj(something: any): boolean {
+function isObj(something: unknown): boolean {
   return (
-    something && typeof something === "object" && !Array.isArray(something)
+    !!something && typeof something === "object" && !Array.isArray(something)
   );
 }
 
