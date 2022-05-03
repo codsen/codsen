@@ -43,11 +43,11 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
   // Functions
   // =========
 
-  function existy(something: any): boolean {
+  function existy(something: unknown): boolean {
     return something != null; // deliberate !=
   }
 
-  function isObj(something: any): boolean {
+  function isObj(something: unknown): boolean {
     return typ(something) === "Object";
   }
 
@@ -186,8 +186,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         resolvedOpts.schema[oneKey] = [resolvedOpts.schema[oneKey]];
       }
       // then turn all keys into strings and trim and lowercase them:
-      resolvedOpts.schema[oneKey] = resolvedOpts.schema[oneKey].map((el: any) =>
-        `${el}`.toLowerCase().trim()
+      resolvedOpts.schema[oneKey] = resolvedOpts.schema[oneKey].map(
+        (el: unknown) => `${el}`.toLowerCase().trim()
       );
     });
   } else if (resolvedOpts.schema != null) {
@@ -343,7 +343,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
       console.log(`\n${`${`\u001b[${32}m${`█`}\u001b[${39}m`} `.repeat(39)}\n`);
     // Here what we have been given:
     let current = val;
-    let objKey: any = key;
+    let objKey: string | undefined = key;
     if (innerObj.parentType === "array") {
       objKey = undefined;
       current = key;
@@ -397,8 +397,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
     // if this key is ignored, skip it:
     if (
       objKey &&
-      (resolvedOpts.ignoreKeys as string[]).some((oneOfKeysToIgnore) =>
-        isMatch(objKey, oneOfKeysToIgnore)
+      (resolvedOpts.ignoreKeys as string[]).some(
+        (oneOfKeysToIgnore) => objKey && isMatch(objKey, oneOfKeysToIgnore)
       )
     ) {
       DEV &&
@@ -598,7 +598,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
           )}`
         );
       let currentKeysSchema = arrayiffy(resolvedOpts.schema[innerObj.path]).map(
-        (el: any) => `${el}`.toLowerCase()
+        (el: unknown) => `${el}`.toLowerCase()
       );
       DEV &&
         console.log(
