@@ -52,21 +52,21 @@ function remDup(str: string, opts?: Partial<LenientOpts>): string {
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
     if (
-      !arrayiffy(clonedOriginalOpts.heads as any).every(
-        (val: any) => typeof val === "string" || Array.isArray(val)
+      !arrayiffy(clonedOriginalOpts.heads).every(
+        (val) => typeof val === "string" || Array.isArray(val)
       )
     ) {
       throw new Error(
         "string-remove-duplicate-heads-tails: [THROW_ID_04] The resolvedOpts.heads contains elements which are not string-type!"
       );
     } else if (typeof clonedOriginalOpts.heads === "string") {
-      clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads as string);
+      clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads);
     }
   }
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "tails")) {
     if (
-      !arrayiffy(clonedOriginalOpts.tails as any).every(
-        (val: any) => typeof val === "string" || Array.isArray(val)
+      !arrayiffy(clonedOriginalOpts.tails).every(
+        (val) => typeof val === "string" || Array.isArray(val)
       )
     ) {
       throw new Error(
@@ -373,7 +373,7 @@ function remDup(str: string, opts?: Partial<LenientOpts>): string {
             console.log(
               `\u001b[${33}m${"329 wiping conditional"}\u001b[${39}m`
             );
-          realRanges.push(conditionalRanges.current() as any);
+          realRanges.push(conditionalRanges.current());
         }
 
         // 2. let's evaluate the situation and possibly submit this range of indexes
@@ -389,7 +389,7 @@ function remDup(str: string, opts?: Partial<LenientOpts>): string {
               console.log(
                 `\u001b[${33}m${"343 pushing conditionals into real"}\u001b[${39}m`
               );
-            realRanges.push(conditionalRanges.current() as any);
+            realRanges.push(conditionalRanges.current());
             // then, wipe conditionals:
             DEV &&
               console.log(
@@ -736,7 +736,7 @@ function remDup(str: string, opts?: Partial<LenientOpts>): string {
     );
 
   if (conditionalRanges.current()) {
-    realRanges.push(conditionalRanges.current() as any);
+    realRanges.push(conditionalRanges.current());
   }
   if (realRanges.current()) {
     return rApply(str, realRanges.current()).trim();

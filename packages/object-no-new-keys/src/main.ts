@@ -17,9 +17,9 @@ interface InnerVar {
   res: string[];
 }
 
-function isObj(something: any): boolean {
+function isObj(something: unknown): boolean {
   return (
-    something && typeof something === "object" && !Array.isArray(something)
+    !!something && typeof something === "object" && !Array.isArray(something)
   );
 }
 
@@ -49,7 +49,7 @@ function noNewKeys(
     typeof optsOuter.mode === "string" &&
     ["1", "2"].includes(optsOuter.mode)
   ) {
-    (optsOuter as any).mode = +optsOuter.mode;
+    optsOuter.mode = +optsOuter.mode as 1 | 2;
   } else if (![1, 2].includes(optsOuter.mode)) {
     throw new TypeError(
       `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] resolvedOpts.mode should be "1" or "2" (string or number).`
@@ -61,7 +61,7 @@ function noNewKeys(
     resolvedRef: any,
     resolvedOpts: Obj,
     innerVar: InnerVar
-  ): any {
+  ) {
     let temp;
     if (isObj(resolvedInput)) {
       if (isObj(resolvedRef)) {

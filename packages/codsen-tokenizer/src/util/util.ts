@@ -317,9 +317,9 @@ function ensureXIsNotPresentBeforeOneOfY(
 }
 
 // deliberately a simpler check for perf reasons
-function isObj(something: any): boolean {
+function isObj(something: unknown): boolean {
   return (
-    something && typeof something === "object" && !Array.isArray(something)
+    !!something && typeof something === "object" && !Array.isArray(something)
   );
 }
 

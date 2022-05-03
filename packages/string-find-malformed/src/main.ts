@@ -6,9 +6,9 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-function isObj(something: any): boolean {
+function isObj(something: unknown): boolean {
   return (
-    something && typeof something === "object" && !Array.isArray(something)
+    !!something && typeof something === "object" && !Array.isArray(something)
   );
 }
 function isStr(something: any): boolean {

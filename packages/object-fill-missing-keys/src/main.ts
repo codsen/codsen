@@ -25,7 +25,7 @@ const defaults: Opts = {
 // ===================================
 // F ( )
 
-function typ(something: any): "plain object" | "array" | string {
+function typ(something: unknown): "plain object" | "array" | string {
   if (isObj(something)) {
     return "plain object";
   }
@@ -34,10 +34,10 @@ function typ(something: any): "plain object" | "array" | string {
   }
   return typeof something;
 }
-function isStr(something: any): boolean {
+function isStr(something: unknown): boolean {
   return typeof something === "string";
 }
-function existy(x: any): boolean {
+function existy(x: unknown): boolean {
   return x != null;
 }
 
@@ -166,7 +166,7 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
   let resolvedOpts: Opts = { ...defaults, ...opts };
 
   resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(
-    resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders as any
+    resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders
   );
 
   let culpritsVal = null;

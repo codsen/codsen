@@ -7,12 +7,12 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-function isObj(something: any): boolean {
+function isObj(something: unknown): boolean {
   return (
-    something && typeof something === "object" && !Array.isArray(something)
+    !!something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function isStr(something: any): boolean {
+function isStr(something: unknown): boolean {
   return typeof something === "string";
 }
 
@@ -173,7 +173,7 @@ function strFindHeadsTails(
   }
 
   // - for tails
-  if (!isStr(tails) && !Array.isArray(tails)) {
+  if (typeof tails !== "string" && !Array.isArray(tails)) {
     if (resolvedOpts.relaxedAPI) {
       return [];
     }
@@ -184,7 +184,7 @@ function strFindHeadsTails(
         4
       )}`
     );
-  } else if (isStr(tails)) {
+  } else if (typeof tails === "string") {
     if (tails.length === 0) {
       if (resolvedOpts.relaxedAPI) {
         return [];
@@ -194,7 +194,7 @@ function strFindHeadsTails(
       );
     } else {
       // eslint-disable-next-line no-param-reassign
-      tails = arrayiffy(tails as any);
+      tails = arrayiffy(tails);
     }
   } else if (Array.isArray(tails)) {
     if (tails.length === 0) {
@@ -257,7 +257,7 @@ function strFindHeadsTails(
     resolvedOpts.throwWhenSomethingWrongIsDetected &&
     !resolvedOpts.allowWholeValueToBeOnlyHeadsOrTails
   ) {
-    if (arrayiffy(heads as any).includes(str)) {
+    if (arrayiffy(heads).includes(str)) {
       throw new Error(
         `${resolvedOpts.source}${
           s ? ": [THROW_ID_16]" : ""
@@ -265,7 +265,7 @@ function strFindHeadsTails(
           isStr(heads) ? "" : "one of "
         }heads (${str})!`
       );
-    } else if (arrayiffy(tails as any).includes(str)) {
+    } else if (arrayiffy(tails).includes(str)) {
       throw new Error(
         `${resolvedOpts.source}${
           s ? ": [THROW_ID_17]" : ""

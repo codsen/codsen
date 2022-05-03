@@ -69,24 +69,24 @@ const defaults: Opts = {
 //                       H E L P E R   F U N C T I O N S
 // -----------------------------------------------------------------------------
 
-function isStr(something: any): boolean {
+function isStr(something: unknown): boolean {
   return typeof something === "string";
 }
-function isNum(something: any): boolean {
+function isNum(something: unknown): boolean {
   return typeof something === "number";
 }
-function isBool(something: any): boolean {
+function isBool(something: unknown): boolean {
   return typeof something === "boolean";
 }
-function isNull(something: any): boolean {
+function isNull(something: unknown): boolean {
   return something === null;
 }
-function isObj(something: any): boolean {
+function isObj(something: unknown): boolean {
   return (
-    something && typeof something === "object" && !Array.isArray(something)
+    !!something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function existy(x: any): boolean {
+function existy(x: unknown): boolean {
   return x != null;
 }
 
@@ -174,7 +174,7 @@ function removeWrappingHeadsAndTails(
     matchLeftIncl(str, str.length - 1, tails, {
       trimBeforeMatching: true,
       cb: (_c, _t, index) => {
-        tempTo = +(index as any) + 1;
+        tempTo = (index || 0) + 1;
         return true;
       },
     })
@@ -312,7 +312,7 @@ function wrap(
   return placementValue;
 }
 function findValues(
-  input: any,
+  input: Obj,
   varName: string,
   path: string,
   resolvedOpts: Opts
@@ -518,7 +518,7 @@ function findValues(
 // traversed already (present in breadCrumbPath). Otherwise, we might get into a
 // closed loop.
 function resolveString(
-  input: any,
+  input: Obj,
   string: string,
   path: string,
   resolvedOpts: Opts,

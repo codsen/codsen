@@ -12,9 +12,9 @@ const htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 
 const ranges = new Ranges();
 
-function isObj(something: any): boolean {
+function isObj(something: unknown): boolean {
   return (
-    something && typeof something === "object" && !Array.isArray(something)
+    !!something && typeof something === "object" && !Array.isArray(something)
   );
 }
 

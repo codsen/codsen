@@ -41,15 +41,15 @@ function fixRowNums(str: string, opts?: Partial<Opts>): string | Ranges {
   if (typeof str !== "string" || !str.length) {
     return str;
   }
-  function isDigit(something: any): boolean {
+  function isDigit(something: string): boolean {
     return /[0-9]/.test(something);
   }
-  function isAZ(something: any): boolean {
+  function isAZ(something: string): boolean {
     return /[A-Za-z]/.test(something);
   }
-  function isObj(something: any): boolean {
+  function isObj(something: unknown): boolean {
     return (
-      something && typeof something === "object" && !Array.isArray(something)
+      !!something && typeof something === "object" && !Array.isArray(something)
     );
   }
 

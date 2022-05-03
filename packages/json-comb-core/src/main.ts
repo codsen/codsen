@@ -26,18 +26,18 @@ interface Obj {
   [key: string]: any;
 }
 
-function existy(x: any): boolean {
+function existy(x: unknown): boolean {
   return x != null;
 }
-function isObj(something: any): boolean {
+function isObj(something: unknown): boolean {
   return typ(something) === "Object";
 }
-function isStr(something: any): boolean {
+function isStr(something: unknown): boolean {
   return typeof something === "string";
 }
 
 // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
-function toString(obj: any): string {
+function toString(obj: unknown): string {
   if (obj === null) {
     return "null";
   }
@@ -50,7 +50,7 @@ function toString(obj: any): string {
   if (typeof obj === "symbol") {
     throw new TypeError();
   }
-  return obj.toString();
+  return `${obj}`;
 }
 
 // -----------------------------------------------------------------------------

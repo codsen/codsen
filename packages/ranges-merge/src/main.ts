@@ -34,9 +34,9 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
   //
   // internal functions:
   // ---------------------------------------------------------------------------
-  function isObj(something: any): boolean {
+  function isObj(something: unknown): boolean {
     return (
-      something && typeof something === "object" && !Array.isArray(something)
+      !!something && typeof something === "object" && !Array.isArray(something)
     );
   }
 
