@@ -525,7 +525,8 @@ export const packageJSONData = {
         "lect": {
             "licence": {
                 "extras": [
-                    ""
+                    "",
+                    "Thanks to KRyan for types https://stackoverflow.com/a/71834598/3943954"
                 ]
             }
         }
