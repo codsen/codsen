@@ -33,7 +33,7 @@ export const esmBump = {
   "edit-package-json": "0.4.0",
   "email-all-chars-within-ascii-cli": "1.13.0",
   "email-all-chars-within-ascii": "3.1.0",
-  "email-comb": "5.1.0",
+  "email-comb": "5.2.1",
   "email-homey": "2.10.0",
   "emlint": "4.7.0",
   "eslint-plugin-row-num": "1.6.0",
