@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.15 (2022-05-04)
+
+
+### Bug Fixes
+
+* improve types ([ea1210f](https://github.com/codsen/codsen/commit/ea1210f44efdb0ab205ebe5be3f87d9f8d8562d9))
+
+
+
+
+
 ## 6.0.0 (2021-09-09)
 
 ### Features
