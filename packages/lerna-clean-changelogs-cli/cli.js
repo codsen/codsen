@@ -25,7 +25,7 @@ const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
-function isObj(something: unknown) {
+function isObj(something) {
   return (
     !!something && typeof something === "object" && !Array.isArray(something)
   );
