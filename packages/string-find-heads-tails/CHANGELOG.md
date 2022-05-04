@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 5.0.17 (2022-05-04)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-
-
-
-
 ## 5.0.0 (2021-09-09)
 
 ### Features

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 5.1.4 (2022-05-04)
-
-**Note:** Version bump only for package array-group-str-omit-num-char
-
-
-
-
-
 # 5.1.0 (2022-04-10)
 
 ### Features

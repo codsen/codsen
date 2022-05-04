@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 6.0.18 (2022-05-04)
-
-**Note:** Version bump only for package csv-split-easy
-
-
-
-
-
 ## 6.0.17 (2022-04-18)
 
 ### Bug Fixes

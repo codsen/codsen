@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 0.6.4 (2022-05-04)
-
-**Note:** Version bump only for package edit-package-json
-
-
-
-
-
 # 0.6.0 (2022-04-11)
 
 ### Features

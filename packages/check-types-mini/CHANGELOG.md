@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 7.1.4 (2022-05-04)
-
-**Note:** Version bump only for package check-types-mini
-
-
-
-
-
 ## 7.1.3 (2022-04-18)
 
 ### Bug Fixes
