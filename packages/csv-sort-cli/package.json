@@ -75,7 +75,6 @@
   },
   "devDependencies": {
     "@types/lodash.pullall": "^4.2.7",
-    "@types/lodash.uniq": "^4.5.7",
-    "fs-extra": "^10.1.0"
+    "@types/lodash.uniq": "^4.5.7"
   }
 }
