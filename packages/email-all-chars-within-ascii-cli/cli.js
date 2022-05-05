@@ -5,7 +5,7 @@
 
 import path from "path";
 import chalk from "chalk";
-import fs from "fs-extra";
+import fs from "fs";
 import argv from "minimist";
 import { globby } from "globby";
 import inquirer from "inquirer";
