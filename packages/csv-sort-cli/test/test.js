@@ -1,4 +1,4 @@
-import fs from "fs-extra";
+import fs from "fs";
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
@@ -29,7 +29,7 @@ test("01 - there are no usable files at all", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
 
-  await fs.writeFile(path.join(tempFolder, "file.md"), "zzz");
+  fs.writeFileSync(path.join(tempFolder, "file.md"), "zzz");
   try {
     spawn(tempFolder, __dirname);
     not.ok("01");

@@ -68,12 +68,10 @@ function offerAListOfCSVsToPickFrom(stateObj) {
   // this means, it was called without any arguments.
   // that's fine
   let allCSVsHere = globby.sync("./*.csv");
-  if (allCSVsHere.length === 0) {
-    // log(chalk.red(`\ncsv-sort-cli: Alas, computer couldn't find any CSV files
-    // in this folder and bailed on us!`))
+  if (!allCSVsHere.length) {
     return Promise.reject(
       new Error(
-        "\ncsv-sort-cli: Alas, computer couldn't find any CSV files in this folder and bailed on us!"
+        "\ncsv-sort-cli: Alas, program couldn't find any CSV files in this folder and bailed on us!"
       )
     );
   }
@@ -186,7 +184,7 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
   }
   log(
     chalk.yellow(
-      `\ncsv-sort-cli: Computer didn't recognise any CSV files in your input!\n${butStateWasRecognisedMsg}`
+      `\ncsv-sort-cli: Program didn't recognise any CSV files in your input!\n${butStateWasRecognisedMsg}`
     )
   );
 
@@ -258,16 +256,14 @@ thePromise
             }
           } catch (e) {
             return Promise.reject(
-              new Error(
-                `\ncsv-sort-cli: Alas, computer encountered an error:\n${e}`
-              )
+              new Error(`\ncsv-sort-cli: Alas, we encountered an error:\n${e}`)
             );
           }
         }
         if (csvError) {
           return Promise.reject(
             new Error(
-              `\ncsv-sort-cli: Alas, computer couldn't fetch the file "${path.basename(
+              `\ncsv-sort-cli: Alas, we couldn't fetch the file "${path.basename(
                 requestedCSVsPath
               )}" you requested and bailed on us!`
             )
