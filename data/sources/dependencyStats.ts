@@ -39,7 +39,7 @@ export const dependencyStats: DependencyStats = {
         "email-all-chars-within-ascii": 1,
         "email-comb": 1,
         "execa": 1,
-        "fs-extra": 7,
+        "fs-extra": 4,
         "generate-atomic-css": 1,
         "globby": 10,
         "grapheme-splitter": 1,
@@ -184,7 +184,7 @@ export const dependencyStats: DependencyStats = {
         "ast-monkey-traverse": 2,
         "color-shorthand-hex-to-six-digit": 1,
         "deep-equal": 1,
-        "fs-extra": 3,
+        "fs-extra": 2,
         "globby": 1,
         "lodash.clonedeep": 6,
         "lodash.isequal": 3,
@@ -223,13 +223,13 @@ export const dependencyStats: DependencyStats = {
             "p-reduce": 8
         },
         {
-            "fs-extra": 7
-        },
-        {
             "object-path": 6
         },
         {
             "lodash.uniq": 5
+        },
+        {
+            "chalk": 5
         }
     ],
     "top10OwnDeps": [

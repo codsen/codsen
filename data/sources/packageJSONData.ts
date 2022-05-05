@@ -2271,8 +2271,7 @@ export const packageJSONData = {
         },
         "devDependencies": {
             "@types/lodash.pullall": "^4.2.7",
-            "@types/lodash.uniq": "^4.5.7",
-            "fs-extra": "^10.1.0"
+            "@types/lodash.uniq": "^4.5.7"
         }
     },
     "csv-split-easy": {
@@ -2875,7 +2874,6 @@ export const packageJSONData = {
         "dependencies": {
             "chalk": "^5.0.1",
             "email-all-chars-within-ascii": "^4.0.17",
-            "fs-extra": "^10.1.0",
             "globby": "^13.1.1",
             "inquirer": "^8.2.4",
             "lodash.pullall": "^4.2.0",
@@ -3315,7 +3313,6 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "fs-extra": "^10.1.0",
             "generate-atomic-css": "^2.1.2",
             "globby": "^13.1.1",
             "is-d": "^1.0.0",
@@ -4449,7 +4446,6 @@ export const packageJSONData = {
         },
         "dependencies": {
             "arrayiffy-if-string": "^4.0.14",
-            "fs-extra": "^10.1.0",
             "globby": "^13.1.1",
             "is-d": "^1.0.0",
             "js-row-num": "^5.1.3",

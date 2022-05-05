@@ -157,7 +157,7 @@ export const interdeps = [
     },
     {
         "name": "csv-sort-cli",
-        "size": 8937,
+        "size": 8762,
         "imports": [
             "csv-sort"
         ]
@@ -215,7 +215,7 @@ export const interdeps = [
     },
     {
         "name": "email-all-chars-within-ascii-cli",
-        "size": 8527,
+        "size": 8521,
         "imports": [
             "email-all-chars-within-ascii",
             "string-left-right"
@@ -267,7 +267,7 @@ export const interdeps = [
     },
     {
         "name": "generate-atomic-css-cli",
-        "size": 4704,
+        "size": 4714,
         "imports": [
             "generate-atomic-css"
         ]
@@ -371,7 +371,7 @@ export const interdeps = [
     },
     {
         "name": "js-row-num-cli",
-        "size": 5466,
+        "size": 5476,
         "imports": [
             "arrayiffy-if-string",
             "js-row-num"
