@@ -2196,7 +2196,7 @@ export const packageJSONData = {
     },
     "csv-sort-cli": {
         "name": "csv-sort-cli",
-        "version": "2.0.19",
+        "version": "2.0.20",
         "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
         "keywords": [
             "accountancy",
@@ -2811,7 +2811,7 @@ export const packageJSONData = {
     },
     "email-all-chars-within-ascii-cli": {
         "name": "email-all-chars-within-ascii-cli",
-        "version": "2.0.20",
+        "version": "2.0.21",
         "description": "Command line app to scan email templates, are all their characters within ASCII range",
         "keywords": [
             "7bit",
@@ -3249,7 +3249,7 @@ export const packageJSONData = {
     },
     "generate-atomic-css-cli": {
         "name": "generate-atomic-css-cli",
-        "version": "2.1.3",
+        "version": "2.1.4",
         "description": "Generates and updates all HTML templates' atomic CSS",
         "keywords": [
             "atomic",
@@ -4381,7 +4381,7 @@ export const packageJSONData = {
     },
     "js-row-num-cli": {
         "name": "js-row-num-cli",
-        "version": "2.1.4",
+        "version": "2.1.5",
         "description": "Update all row numbers in all console.logs in given files",
         "keywords": [
             "automated",
