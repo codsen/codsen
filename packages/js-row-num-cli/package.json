@@ -65,7 +65,6 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^4.0.14",
-    "fs-extra": "^10.1.0",
     "globby": "^13.1.1",
     "is-d": "^1.0.0",
     "js-row-num": "^5.1.3",

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import meow from "meow";
-import fs from "fs-extra";
+import { promises as fs } from "fs";
 import pReduce from "p-reduce";
 import isDirectory from "is-d";
 import { globby } from "globby";
