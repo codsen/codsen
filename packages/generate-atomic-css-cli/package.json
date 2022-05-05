@@ -64,7 +64,6 @@
     "various": {}
   },
   "dependencies": {
-    "fs-extra": "^10.1.0",
     "generate-atomic-css": "^2.1.2",
     "globby": "^13.1.1",
     "is-d": "^1.0.0",
