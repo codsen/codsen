@@ -14,12 +14,14 @@ function spawn(tempFolder, dirname, ...args) {
       shell: true,
     }
   );
+
   if (result.status) {
     console.log(
       `child process exited with non-zero code: ${`\u001b[${31}m${
         result.status
       }\u001b[${39}m`}`
     );
+    console.log(String(result.stdout));
   }
 }
 
