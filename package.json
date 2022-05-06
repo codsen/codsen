@@ -88,11 +88,11 @@
     "perf-ref": "^1.0.3",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.71.1",
+    "rollup": "^2.72.0",
     "rollup-plugin-dts": "^4.2.1",
     "simple-git": "^3.7.1",
     "tempy": "^3.0.0",
-    "turbo": "^1.2.6",
+    "turbo": "^1.2.8",
     "typescript": "^4.6.3",
     "uvu": "^0.5.3"
   },
