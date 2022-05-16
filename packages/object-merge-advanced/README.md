@@ -1,6 +1,6 @@
 # object-merge-advanced
 
-> Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
+> Deeply merge JSON-like data structures
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/object-merge-advanced" rel="nofollow noreferrer noopener">
