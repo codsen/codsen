@@ -259,6 +259,14 @@ export const interdeps = [
         ]
     },
     {
+        "name": "extract-search-index",
+        "size": 1223,
+        "imports": [
+            "string-strip-html",
+            "string-unfancy"
+        ]
+    },
+    {
         "name": "generate-atomic-css",
         "size": 8118,
         "imports": [
@@ -475,7 +483,7 @@ export const interdeps = [
     },
     {
         "name": "object-merge-advanced",
-        "size": 7188,
+        "size": 7061,
         "imports": [
             "util-nonempty"
         ]

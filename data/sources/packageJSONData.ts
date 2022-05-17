@@ -3175,6 +3175,80 @@ export const packageJSONData = {
             "ranges-apply": "^6.1.3"
         }
     },
+    "extract-search-index": {
+        "name": "extract-search-index",
+        "version": "1.0.0",
+        "description": "Extract unique keyword input list string for search",
+        "keywords": [
+            "string",
+            "search",
+            "fuse",
+            "lunr",
+            "solr",
+            "fuse.js",
+            "index",
+            "list",
+            "generate",
+            "compile",
+            "extract"
+        ],
+        "homepage": "https://codsen.com/os/extract-search-index/",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/codsen/codsen.git",
+            "directory": "packages/extract-search-index"
+        },
+        "license": "MIT",
+        "author": {
+            "name": "Roy Revelt",
+            "email": "roy@codsen.com",
+            "url": "https://codsen.com"
+        },
+        "type": "module",
+        "exports": {
+            "script": "./dist/extract-search-index.umd.js",
+            "default": "./dist/extract-search-index.esm.js"
+        },
+        "types": "types/index.d.ts",
+        "scripts": {
+            "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
+            "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
+            "examples": "node '../../ops/scripts/run-examples.js'",
+            "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+            "letspublish": "yarn publish || :",
+            "lint": "eslint . --fix",
+            "perf": "node perf/check.js",
+            "prepare": "echo 'ready'",
+            "prettier": "prettier",
+            "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
+            "pretest": "yarn run lect && yarn run build",
+            "test": "yarn run devtest",
+            "unit": "uvu test"
+        },
+        "engines": {
+            "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+        },
+        "c8": {
+            "check-coverage": true,
+            "exclude": [
+                "**/test/**/*.*"
+            ],
+            "lines": 100
+        },
+        "lect": {
+            "licence": {
+                "extras": [
+                    ""
+                ]
+            }
+        },
+        "dependencies": {
+            "string-strip-html": "^9.1.12",
+            "string-unfancy": "^5.0.13"
+        }
+    },
     "generate-atomic-css": {
         "name": "generate-atomic-css",
         "version": "2.1.2",
@@ -5562,16 +5636,21 @@ export const packageJSONData = {
     "object-merge-advanced": {
         "name": "object-merge-advanced",
         "version": "13.1.2",
-        "description": "Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
+        "description": "Deeply merge JSON-like data structures",
         "keywords": [
             "advanced",
             "ast",
+            "deep",
+            "deeply",
+            "json",
+            "two",
             "merge",
-            "object",
-            "objects",
+            "data",
+            "structure",
+            "structures",
             "plain",
-            "posthtml-tree",
-            "posthtmltree"
+            "object",
+            "objects"
         ],
         "homepage": "https://codsen.com/os/object-merge-advanced/",
         "repository": {
