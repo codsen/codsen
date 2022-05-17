@@ -5,7 +5,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.0.1 (2022-05-17)
 
-
 ### Bug Fixes
 
-* initial release ([4c52037](https://github.com/codsen/codsen/commit/4c52037a0b862ce38a16b9612e73b6b7b64ecf34))
+- initial release ([4c52037](https://github.com/codsen/codsen/commit/4c52037a0b862ce38a16b9612e73b6b7b64ecf34))
