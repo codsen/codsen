@@ -7164,7 +7164,7 @@ export const packageJSONData = {
     },
     "string-bionic-split": {
         "name": "string-bionic-split",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "description": "Calculate a word string split position index for later highlighting",
         "keywords": [
             "string",
