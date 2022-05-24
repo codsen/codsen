@@ -11,7 +11,6 @@ interface DependencyStats {
 
 export const dependencyStats: DependencyStats = {
     "dependencies": {
-        "@babel/runtime": 1,
         "@sindresorhus/is": 1,
         "all-named-html-entities": 2,
         "ansi-diff-stream": 1,

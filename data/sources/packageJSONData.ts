@@ -2735,7 +2735,7 @@ export const packageJSONData = {
             "ast-monkey-traverse": "^3.0.13",
             "globby": "^13.1.1",
             "lodash.clonedeep": "^4.5.0",
-            "p-map": "^5.3.0"
+            "p-map": "^5.4.0"
         }
     },
     "email-all-chars-within-ascii": {
@@ -4597,7 +4597,7 @@ export const packageJSONData = {
             "is-d": "^1.0.0",
             "json-comb-core": "^7.0.18",
             "meow": "^10.1.2",
-            "p-map": "^5.3.0",
+            "p-map": "^5.4.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^5.1.0"
         }
@@ -4679,7 +4679,7 @@ export const packageJSONData = {
             "object-merge-advanced": "^13.1.2",
             "object-no-new-keys": "^4.1.4",
             "object-set-all-values-to": "^5.0.14",
-            "p-map": "^5.3.0",
+            "p-map": "^5.4.0",
             "p-one": "^2.0.0",
             "p-reduce": "^3.0.0",
             "semver-compare": "^1.0.0",
@@ -4762,13 +4762,13 @@ export const packageJSONData = {
             "meow": "^10.1.2",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
-            "sort-package-json": "^1.56.1",
+            "sort-package-json": "^1.57.0",
             "sorted-object": "^2.0.1",
             "update-notifier": "^5.1.0"
         },
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
-            "p-map": "^5.3.0"
+            "p-map": "^5.4.0"
         }
     },
     "json-variables": {
@@ -5007,7 +5007,7 @@ export const packageJSONData = {
             "write-file-atomic": "^4.0.1"
         },
         "devDependencies": {
-            "p-map": "^5.3.0"
+            "p-map": "^5.4.0"
         }
     },
     "lerna-link-dep": {
@@ -7162,6 +7162,78 @@ export const packageJSONData = {
             "ranges-apply": "^6.1.3"
         }
     },
+    "string-bionic-split": {
+        "name": "string-bionic-split",
+        "version": "1.0.0",
+        "description": "Calculate a word string split position index for later highlighting",
+        "keywords": [
+            "string",
+            "word",
+            "bionic",
+            "split",
+            "improved",
+            "read",
+            "reading",
+            "experience",
+            "readable",
+            "text",
+            "highlighted",
+            "fixation",
+            "point"
+        ],
+        "homepage": "https://codsen.com/os/string-bionic-split/",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/codsen/codsen.git",
+            "directory": "packages/string-bionic-split"
+        },
+        "license": "MIT",
+        "author": {
+            "name": "Roy Revelt",
+            "email": "roy@codsen.com",
+            "url": "https://codsen.com"
+        },
+        "type": "module",
+        "exports": {
+            "script": "./dist/string-bionic-split.umd.js",
+            "default": "./dist/string-bionic-split.esm.js"
+        },
+        "types": "types/index.d.ts",
+        "scripts": {
+            "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
+            "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
+            "examples": "node '../../ops/scripts/run-examples.js'",
+            "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+            "letspublish": "yarn publish || :",
+            "lint": "eslint . --fix",
+            "perf": "node perf/check.js",
+            "prepare": "echo 'ready'",
+            "prettier": "prettier",
+            "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
+            "pretest": "yarn run lect && yarn run build",
+            "test": "yarn run devtest",
+            "unit": "uvu test"
+        },
+        "engines": {
+            "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+        },
+        "c8": {
+            "check-coverage": true,
+            "exclude": [
+                "**/test/**/*.*"
+            ],
+            "lines": 100
+        },
+        "lect": {
+            "licence": {
+                "extras": [
+                    ""
+                ]
+            }
+        }
+    },
     "string-character-is-astral-surrogate": {
         "name": "string-character-is-astral-surrogate",
         "version": "2.0.13",
@@ -8757,9 +8829,6 @@ export const packageJSONData = {
                 ]
             },
             "various": {}
-        },
-        "dependencies": {
-            "@babel/runtime": "^7.17.9"
         }
     },
     "string-unfancy": {
@@ -9231,10 +9300,10 @@ export const packageJSONData = {
             "log-update": "^5.0.1",
             "meow": "^10.1.2",
             "object-path": "^0.11.8",
-            "p-map": "^5.3.0",
+            "p-map": "^5.4.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^13.1.1",
+            "pacote": "^13.4.1",
             "update-notifier": "^5.1.0",
             "write-file-atomic": "^4.0.1"
         },
