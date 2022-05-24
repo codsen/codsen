@@ -12,5 +12,12 @@
     ".git",
     "node_modules"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../string-strip-html"
+    },
+    {
+      "path": "../string-unfancy"
+    }
+  ]
 }

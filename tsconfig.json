@@ -107,6 +107,9 @@
       "path": "packages/emlint"
     },
     {
+      "path": "packages/extract-search-index"
+    },
+    {
       "path": "packages/generate-atomic-css"
     },
     {
@@ -240,6 +243,9 @@
     },
     {
       "path": "packages/string-apostrophes"
+    },
+    {
+      "path": "packages/string-bionic-split"
     },
     {
       "path": "packages/string-character-is-astral-surrogate"
