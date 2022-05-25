@@ -1,6 +1,6 @@
 {
   "name": "extract-search-index",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Extract unique keyword input list string for search",
   "keywords": [
     "string",
