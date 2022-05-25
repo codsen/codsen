@@ -3,6 +3,7 @@
 coverage
 perf
 src
+tap
 test
 
 # files:

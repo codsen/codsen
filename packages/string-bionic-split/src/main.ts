@@ -57,17 +57,19 @@ function split(str: string, opts?: Partial<Opts>): number {
     }
   }
 
-  let vowels = "aeiyou";
+  // ref https://en.wikipedia.org/wiki/Vowel#Written_vowels
+  // tested on French and Russian orthography, should work everywhere else
+  let vowels =
+    "aeiouyàáâãäåæèéêëìíîïòóôõöøùúûüýÿāăąēĕėęěĩīĭįĳōŏőœũūŭůűųŷǎǐǒǔǖǘǚǜǟǡǣǫǭǻǽǿȁȃȅȇȉȋȍȏȕȗȧȩȫȭȯȱȳ̇аеийоуыэюяѐёєіїѝў";
 
   if (str.length <= 3) {
-    DEV && console.log(`063 entering the "length <= 3" clauses`);
+    DEV && console.log(`066 entering the "length <= 3" clauses`);
     if (str.length === 1) {
-      DEV && console.log(`065 entering the "length === 1" clauses`);
-      if ("dghmts".includes(str.toLowerCase())) {
-        DEV &&
-          console.log(
-            `069 dgts - ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 0`
-          );
+      DEV && console.log(`068 entering the "length === 1" clauses`);
+      // probably it's an abbreviation for metres, hours, seconds and tonnes
+      // and splitting algorithm is primitive, not accounting numbers etc.
+      if ("dghmtsмчст".includes(str.toLowerCase())) {
+        DEV && console.log(`072 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 0`);
         return 0;
       }
     } else if (
@@ -89,25 +91,25 @@ function split(str: string, opts?: Partial<Opts>): number {
     ) {
       // units, like "km" or "mm"
       DEV &&
-        console.log(`092 units - ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 0`);
+        console.log(`094 units - ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 0`);
       return 0;
     }
 
     DEV &&
-      console.log(`097 default ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 1`);
+      console.log(`099 default ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 1`);
     return 1;
   } else if (str.length === 4) {
     DEV &&
       console.log(
-        `102 length 4 - ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 2`
+        `104 length 4 - ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 2`
       );
     return 2;
   } else if (str.length % 2 === 1) {
-    DEV && console.log(`106 odd number length clauses`);
+    DEV && console.log(`108 odd number length clauses`);
     let middle = Math.floor(str.length / 2);
     DEV &&
       console.log(
-        `110 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`middle`}\u001b[${39}m`} = ${middle} (${
+        `112 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`middle`}\u001b[${39}m`} = ${middle} (${
           str[middle]
         })`
       );
@@ -115,18 +117,18 @@ function split(str: string, opts?: Partial<Opts>): number {
     // vowel on the left, vowel on the right - go left
     DEV &&
       console.log(
-        `118 on the left: ${str[middle - 1]}; on the right: ${str[middle + 1]}`
+        `120 on the left: ${str[middle - 1]}; on the right: ${str[middle + 1]}`
       );
 
     if (vowels.includes(str[middle].toLowerCase())) {
       // middle letter is vowel
-      DEV && console.log(`123 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+      DEV && console.log(`125 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
       return middle + 1;
     }
     // ELSE - middle letter is consonant
     DEV &&
       console.log(
-        `129 ${`\u001b[${32}m${`RETURN ${str.slice(
+        `131 ${`\u001b[${32}m${`RETURN ${str.slice(
           0,
           middle + 1
         )} + ${str.slice(middle + 1)}`}\u001b[${39}m`}`
@@ -136,7 +138,7 @@ function split(str: string, opts?: Partial<Opts>): number {
 
   DEV &&
     console.log(
-      `139 final default ${`\u001b[${32}m${`RETURN ${str.slice(
+      `141 final default ${`\u001b[${32}m${`RETURN ${str.slice(
         0,
         Math.floor(str.length / 2)
       )} + ${str.slice(Math.floor(str.length / 2))}`}\u001b[${39}m`}`

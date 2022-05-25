@@ -52,4 +52,40 @@ test("12 - trichotillomania", () => {
   equal(split("trichotillomania"), 8, "12");
 });
 
+test("13 - dès", () => {
+  equal(split("dès"), 1, "13");
+});
+
+test("14 - impérieux", () => {
+  equal(split("impérieux"), 5, "14");
+});
+
+test("15 - pourquoi", () => {
+  equal(split("pourquoi"), 4, "15");
+});
+
+test("16 - théâtres", () => {
+  equal(split("théâtres"), 4, "16");
+});
+
+test("17 - речь", () => {
+  equal(split("речь"), 2, "17");
+});
+
+test("18 - и", () => {
+  equal(split("и"), 1, "18");
+});
+
+test("19 - время", () => {
+  equal(split("время"), 3, "19");
+});
+
+test("20 - был", () => {
+  equal(split("был"), 1, "20");
+});
+
+test("21 - зрения", () => {
+  equal(split("зрения"), 3, "21");
+});
+
 test.run();
