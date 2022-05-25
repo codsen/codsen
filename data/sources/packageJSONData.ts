@@ -3177,7 +3177,7 @@ export const packageJSONData = {
     },
     "extract-search-index": {
         "name": "extract-search-index",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "description": "Extract unique keyword input list string for search",
         "keywords": [
             "string",
@@ -7164,7 +7164,7 @@ export const packageJSONData = {
     },
     "string-bionic-split": {
         "name": "string-bionic-split",
-        "version": "1.0.1",
+        "version": "1.1.0",
         "description": "Calculate a word string split position index for later highlighting",
         "keywords": [
             "string",

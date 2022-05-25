@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.1.0](https://github.com/codsen/codsen/compare/string-bionic-split@1.0.1...string-bionic-split@1.1.0) (2022-05-25)
 
-
 ### Features
 
-* add a support for French and Russian orthography (and many of others) ([b22f23c](https://github.com/codsen/codsen/commit/b22f23ce7ee20afed84a400fc5f55a1250e3a5a4))
-
-
-
-
+- add a support for French and Russian orthography (and many of others) ([b22f23c](https://github.com/codsen/codsen/commit/b22f23ce7ee20afed84a400fc5f55a1250e3a5a4))
 
 ## 1.0.1 (2022-05-24)
 
