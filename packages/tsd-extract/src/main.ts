@@ -82,7 +82,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
     );
   }
 
-  let resolvedOpts: Opts = Object.assign(defaults, opts);
+  let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV && console.log(`resolvedOpts: ${JSON.stringify(resolvedOpts, null, 4)}`);
 
   // there's a challenge when content follows closing curly:
