@@ -1,0 +1,70 @@
+{
+  "name": "string-truncator",
+  "version": "1.0.0",
+  "description": "Over-engineered string truncation for web UI's",
+  "keywords": [
+    "string",
+    "limit",
+    "len",
+    "length",
+    "truncate",
+    "truncator"
+  ],
+  "homepage": "https://codsen.com/os/string-truncator/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/string-truncator"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "https://codsen.com"
+  },
+  "type": "module",
+  "exports": {
+    "script": "./dist/string-truncator.umd.js",
+    "default": "./dist/string-truncator.esm.js"
+  },
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+    "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
+    "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
+    "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
+    "examples": "node '../../ops/scripts/run-examples.js'",
+    "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+    "letspublish": "yarn publish || :",
+    "lint": "eslint . --fix",
+    "perf": "node perf/check.js",
+    "prepare": "echo 'ready'",
+    "prettier": "prettier",
+    "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
+    "pretest": "yarn run lect && yarn run build",
+    "test": "yarn run devtest",
+    "unit": "uvu test"
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
+  "c8": {
+    "branches": 100,
+    "check-coverage": true,
+    "lines": 100
+  },
+  "lect": {
+    "licence": {
+      "extras": [
+        ""
+      ]
+    }
+  },
+  "dependencies": {
+    "lodash.deburr": "^4.1.0",
+    "string-left-right": "^5.0.13"
+  },
+  "devDependencies": {
+    "@types/lodash.deburr": "^4.1.7"
+  }
+}
