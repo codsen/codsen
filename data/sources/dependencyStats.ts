@@ -65,7 +65,7 @@ export const dependencyStats: DependencyStats = {
         "leven": 3,
         "line-column-mini": 1,
         "lodash.clonedeep": 19,
-        "lodash.deburr": 1,
+        "lodash.deburr": 2,
         "lodash.includes": 3,
         "lodash.intersection": 3,
         "lodash.isdate": 1,
@@ -128,7 +128,7 @@ export const dependencyStats: DependencyStats = {
         "string-find-heads-tails": 1,
         "string-find-malformed": 2,
         "string-fix-broken-named-entities": 2,
-        "string-left-right": 17,
+        "string-left-right": 18,
         "string-match-left-right": 10,
         "string-process-comma-separated": 2,
         "string-range-expander": 3,
@@ -156,7 +156,7 @@ export const dependencyStats: DependencyStats = {
         "@types/hex-color-regex": 1,
         "@types/isstream": 1,
         "@types/lodash.clonedeep": 19,
-        "@types/lodash.deburr": 1,
+        "@types/lodash.deburr": 2,
         "@types/lodash.includes": 3,
         "@types/lodash.intersection": 3,
         "@types/lodash.isdate": 1,
@@ -233,7 +233,7 @@ export const dependencyStats: DependencyStats = {
     ],
     "top10OwnDeps": [
         {
-            "string-left-right": 17
+            "string-left-right": 18
         },
         {
             "ranges-apply": 16

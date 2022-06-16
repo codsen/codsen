@@ -83,7 +83,7 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "type-fest": "^2.13.0"
+            "type-fest": "^2.13.1"
         }
     },
     "array-group-str-omit-num-char": {
@@ -615,7 +615,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
-            "type-fest": "^2.13.0"
+            "type-fest": "^2.13.1"
         }
     },
     "ast-contains-only-empty-space": {
@@ -779,7 +779,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "@sindresorhus/is": "^4.6.0",
+            "@sindresorhus/is": "^5.1.0",
             "ast-monkey-traverse": "^3.0.13",
             "object-path": "^0.11.8"
         },
@@ -2262,7 +2262,7 @@ export const packageJSONData = {
         "dependencies": {
             "chalk": "^5.0.1",
             "csv-sort": "^6.0.18",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "inquirer": "^8.2.4",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
@@ -2733,9 +2733,9 @@ export const packageJSONData = {
         },
         "devDependencies": {
             "ast-monkey-traverse": "^3.0.13",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "lodash.clonedeep": "^4.5.0",
-            "p-map": "^5.4.0"
+            "p-map": "^5.5.0"
         }
     },
     "email-all-chars-within-ascii": {
@@ -2874,7 +2874,7 @@ export const packageJSONData = {
         "dependencies": {
             "chalk": "^5.0.1",
             "email-all-chars-within-ascii": "^4.0.17",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "inquirer": "^8.2.4",
             "lodash.pullall": "^4.2.0",
             "minimist": "^1.2.6",
@@ -3041,7 +3041,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "chalk": "^5.0.1",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "lodash.uniq": "^4.5.0",
             "log-symbols": "^5.1.0",
             "meow": "^10.1.2",
@@ -3137,7 +3137,7 @@ export const packageJSONData = {
             "ast-monkey-util": "^2.0.13",
             "codsen-parser": "^0.12.20",
             "define-lazy-prop": "^3.0.0",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "he": "^1.2.0",
             "html-all-known-attributes": "^5.0.13",
             "html-entities-not-email-friendly": "^0.6.13",
@@ -3388,7 +3388,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "generate-atomic-css": "^2.1.2",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "meow": "^10.1.2",
             "p-reduce": "^3.0.0",
@@ -4520,7 +4520,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "arrayiffy-if-string": "^4.0.14",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "js-row-num": "^5.1.3",
             "meow": "^10.1.2",
@@ -4593,11 +4593,11 @@ export const packageJSONData = {
         },
         "dependencies": {
             "fs-extra": "^10.1.0",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "json-comb-core": "^7.0.18",
             "meow": "^10.1.2",
-            "p-map": "^5.4.0",
+            "p-map": "^5.5.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^5.1.0"
         }
@@ -4679,7 +4679,7 @@ export const packageJSONData = {
             "object-merge-advanced": "^13.1.2",
             "object-no-new-keys": "^4.1.4",
             "object-set-all-values-to": "^5.0.14",
-            "p-map": "^5.4.0",
+            "p-map": "^5.5.0",
             "p-one": "^2.0.0",
             "p-reduce": "^3.0.0",
             "semver-compare": "^1.0.0",
@@ -4756,7 +4756,7 @@ export const packageJSONData = {
             "ast-monkey-traverse": "^3.0.13",
             "chalk": "^5.0.1",
             "fs-extra": "^10.1.0",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "lodash.isplainobject": "^4.0.6",
             "meow": "^10.1.2",
@@ -4768,7 +4768,7 @@ export const packageJSONData = {
         },
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
-            "p-map": "^5.4.0"
+            "p-map": "^5.5.0"
         }
     },
     "json-variables": {
@@ -4998,7 +4998,7 @@ export const packageJSONData = {
         "dependencies": {
             "chalk": "^5.0.1",
             "fs-extra": "^10.1.0",
-            "globby": "^13.1.1",
+            "globby": "^13.1.2",
             "lerna-clean-changelogs": "^4.1.1",
             "meow": "^10.1.2",
             "p-filter": "^3.0.0",
@@ -5007,7 +5007,7 @@ export const packageJSONData = {
             "write-file-atomic": "^4.0.1"
         },
         "devDependencies": {
-            "p-map": "^5.4.0"
+            "p-map": "^5.5.0"
         }
     },
     "lerna-link-dep": {
@@ -8755,6 +8755,76 @@ export const packageJSONData = {
             }
         }
     },
+    "string-truncator": {
+        "name": "string-truncator",
+        "version": "1.0.0",
+        "description": "Over-engineered string truncation for web UI's",
+        "keywords": [
+            "string",
+            "limit",
+            "len",
+            "length",
+            "truncate",
+            "truncator"
+        ],
+        "homepage": "https://codsen.com/os/string-truncator/",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/codsen/codsen.git",
+            "directory": "packages/string-truncator"
+        },
+        "license": "MIT",
+        "author": {
+            "name": "Roy Revelt",
+            "email": "roy@codsen.com",
+            "url": "https://codsen.com"
+        },
+        "type": "module",
+        "exports": {
+            "script": "./dist/string-truncator.umd.js",
+            "default": "./dist/string-truncator.esm.js"
+        },
+        "types": "types/index.d.ts",
+        "scripts": {
+            "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
+            "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
+            "examples": "node '../../ops/scripts/run-examples.js'",
+            "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+            "letspublish": "yarn publish || :",
+            "lint": "eslint . --fix",
+            "perf": "node perf/check.js",
+            "prepare": "echo 'ready'",
+            "prettier": "prettier",
+            "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
+            "pretest": "yarn run lect && yarn run build",
+            "test": "yarn run devtest",
+            "unit": "uvu test"
+        },
+        "engines": {
+            "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+        },
+        "c8": {
+            "branches": 100,
+            "check-coverage": true,
+            "lines": 100
+        },
+        "lect": {
+            "licence": {
+                "extras": [
+                    ""
+                ]
+            }
+        },
+        "dependencies": {
+            "lodash.deburr": "^4.1.0",
+            "string-left-right": "^5.0.13"
+        },
+        "devDependencies": {
+            "@types/lodash.deburr": "^4.1.7"
+        }
+    },
     "string-uglify": {
         "name": "string-uglify",
         "version": "2.0.13",
@@ -9294,16 +9364,16 @@ export const packageJSONData = {
         "dependencies": {
             "ansi-diff-stream": "^1.2.1",
             "edit-package-json": "^0.6.4",
-            "globby": "^13.1.1",
-            "is-online": "^9.0.1",
+            "globby": "^13.1.2",
+            "is-online": "^10.0.0",
             "lodash.isplainobject": "^4.0.6",
             "log-update": "^5.0.1",
             "meow": "^10.1.2",
             "object-path": "^0.11.8",
-            "p-map": "^5.4.0",
+            "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^13.5.0",
+            "pacote": "^13.6.0",
             "update-notifier": "^5.1.0",
             "write-file-atomic": "^4.0.1"
         },
