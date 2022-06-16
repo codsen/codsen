@@ -731,7 +731,7 @@ export const interdeps = [
     },
     {
         "name": "string-truncator",
-        "size": 4679,
+        "size": 4717,
         "imports": [
             "string-left-right"
         ]
