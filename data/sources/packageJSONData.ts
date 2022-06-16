@@ -3054,7 +3054,7 @@ export const packageJSONData = {
     },
     "emlint": {
         "name": "emlint",
-        "version": "5.0.23",
+        "version": "5.0.24",
         "description": "Pluggable email template code linter",
         "keywords": [
             "analysis",
@@ -3142,7 +3142,7 @@ export const packageJSONData = {
             "html-all-known-attributes": "^5.0.13",
             "html-entities-not-email-friendly": "^0.6.13",
             "is-d": "^1.0.0",
-            "is-language-code": "^4.0.13",
+            "is-language-code": "^4.0.14",
             "is-media-descriptor": "^4.1.5",
             "is-relative-uri": "^4.1.5",
             "is-url-superb": "^6.1.0",
@@ -4153,7 +4153,7 @@ export const packageJSONData = {
     },
     "is-language-code": {
         "name": "is-language-code",
-        "version": "4.0.13",
+        "version": "4.0.14",
         "description": "Is given string a language code (as per IANA)",
         "keywords": [
             "check",
@@ -8757,7 +8757,7 @@ export const packageJSONData = {
     },
     "string-truncator": {
         "name": "string-truncator",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "description": "Over-engineered string truncation for web UI's",
         "keywords": [
             "string",
@@ -9221,7 +9221,7 @@ export const packageJSONData = {
     },
     "tsd-extract": {
         "name": "tsd-extract",
-        "version": "0.5.0",
+        "version": "0.5.1",
         "description": "Extract any definition from TS definitions file",
         "keywords": [
             "ts",
