@@ -1,8 +1,13 @@
 declare const version: string;
-interface Res {
-  res: boolean;
-  message: string | null;
-}
+declare type Res =
+  | {
+      res: true;
+      message: null;
+    }
+  | {
+      res: false;
+      message: string;
+    };
 declare function isLangCode(str: string): Res;
 
 export { isLangCode, version };

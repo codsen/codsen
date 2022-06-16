@@ -6,7 +6,13 @@
   "include": [
     "src/**/*",
     "package.json",
-    "../../ops/typedefs/common.ts"
+    "../../ops/typedefs/common.ts",
+    "./src/tag_language.json",
+    "./src/tag_extlang.json",
+    "./src/tag_grandfathered.json",
+    "./src/tag_region.json",
+    "./src/tag_script.json",
+    "./src/tag_variant.json"
   ],
   "exclude": [
     ".git",

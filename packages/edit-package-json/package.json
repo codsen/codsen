@@ -74,8 +74,8 @@
   },
   "devDependencies": {
     "ast-monkey-traverse": "^3.0.13",
-    "globby": "^13.1.1",
+    "globby": "^13.1.2",
     "lodash.clonedeep": "^4.5.0",
-    "p-map": "^5.4.0"
+    "p-map": "^5.5.0"
   }
 }

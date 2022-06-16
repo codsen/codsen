@@ -83,7 +83,7 @@
     "ast-monkey-util": "^2.0.13",
     "codsen-parser": "^0.12.20",
     "define-lazy-prop": "^3.0.0",
-    "globby": "^13.1.1",
+    "globby": "^13.1.2",
     "he": "^1.2.0",
     "html-all-known-attributes": "^5.0.13",
     "html-entities-not-email-friendly": "^0.6.13",

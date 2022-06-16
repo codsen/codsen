@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "generate-atomic-css": "^2.1.2",
-    "globby": "^13.1.1",
+    "globby": "^13.1.2",
     "is-d": "^1.0.0",
     "meow": "^10.1.2",
     "p-reduce": "^3.0.0",
