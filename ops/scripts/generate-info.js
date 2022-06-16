@@ -14,6 +14,7 @@ import path from "path";
 import git from "simple-git";
 import { sortAllObjectsSync } from "json-comb-core";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
+import { programClassification } from "@codsen/data";
 
 const isCI = process?.env?.CI || false;
 
@@ -68,6 +69,29 @@ const scriptAvailable = [];
 const packageJSONData = { ...packagesOutsideMonorepoObj };
 const examples = {};
 const allDTS = {};
+
+// split-list is used on the website, to show lists the libs
+// split-list is different from above, one package can be in one category-only
+let splitListFlagshipLibs = [];
+let splitListRangeLibs = [];
+let splitListHtmlLibs = [];
+let splitListStringLibs = [];
+let splitListObjectOrArrLibs = [];
+let splitListLernaLibs = [];
+let splitListCliApps = [];
+let splitListASTApps = [];
+let splitListMiscLibs = [];
+// don't show these
+const splitListBlackList = [
+  "chlu",
+  "lect",
+  "codsen",
+  "helga",
+  "tsd-extract-noesm",
+];
+
+// -----------------------------------------------------------------------------
+
 // if a package exports "defaults", that value will be
 // extracted and written as a string, to this object:
 const exportedDefaults = {};
@@ -163,6 +187,89 @@ for (let packageName of packageNames) {
     console.log(`error! ${error}`);
   }
 }
+
+// splits follow
+// -----------------------------------------------------------------------------
+
+for (let p of packageNames) {
+  if (!splitListBlackList.includes(p)) {
+    if (programClassification.flagshipLibsList.includes(p)) {
+      splitListFlagshipLibs.push(p);
+    } else if (
+      programClassification.rangeLibsList.includes(p) ||
+      p.startsWith("ranges-")
+    ) {
+      splitListRangeLibs.push(p);
+    } else if (
+      programClassification.htmlLibsList.includes(p) ||
+      p.startsWith("html-") ||
+      p.endsWith("-css")
+    ) {
+      splitListHtmlLibs.push(p);
+    } else if (
+      programClassification.stringLibsList.includes(p) ||
+      p.startsWith("string-")
+    ) {
+      splitListStringLibs.push(p);
+    } else if (
+      programClassification.objectLibsList.includes(p) ||
+      p.startsWith("object-") ||
+      p.startsWith("array-")
+    ) {
+      splitListObjectOrArrLibs.push(p);
+    } else if (
+      programClassification.lernaLibsList.includes(p) ||
+      p.startsWith("lerna-")
+    ) {
+      splitListLernaLibs.push(p);
+    } else if (
+      programClassification.cliAppsList.includes(p) ||
+      p.endsWith("-cli")
+    ) {
+      splitListCliApps.push(p);
+    } else if (
+      programClassification.astLibsList.includes(p) ||
+      p.startsWith("ast-")
+    ) {
+      splitListASTApps.push(p);
+    } else {
+      splitListMiscLibs.push(p);
+    }
+  }
+}
+
+// At this point, we have divided the packages pool, but order is alphabetical.
+// We need to control the order, to set it as per of classification JSON (at least
+// the top part of it).
+
+function setTheOrder(libs, classification) {
+  return classification.concat(
+    libs.filter((p) => !classification.includes(p)).sort()
+  );
+}
+
+splitListStringLibs = setTheOrder(
+  splitListStringLibs,
+  programClassification.stringLibsList
+);
+splitListHtmlLibs = setTheOrder(
+  splitListHtmlLibs,
+  programClassification.htmlLibsList
+);
+splitListObjectOrArrLibs = setTheOrder(
+  splitListObjectOrArrLibs,
+  programClassification.objectLibsList
+);
+splitListASTApps = setTheOrder(
+  splitListASTApps,
+  programClassification.astLibsList
+);
+splitListFlagshipLibs = setTheOrder(
+  splitListFlagshipLibs,
+  programClassification.flagshipLibsList
+);
+
+// -----------------------------------------------------------------------------
 
 const interdep = [];
 
@@ -360,6 +467,43 @@ const packagesOutsideMonorepo = ${JSON.stringify(
     null,
     4
   )} as const;
+const splitListFlagshipLibs = ${JSON.stringify(
+    splitListFlagshipLibs,
+    null,
+    4
+  )} as const;
+const splitListRangeLibs = ${JSON.stringify(
+    splitListRangeLibs,
+    null,
+    4
+  )} as const;
+const splitListHtmlLibs = ${JSON.stringify(
+    splitListHtmlLibs,
+    null,
+    4
+  )} as const;
+const splitListStringLibs = ${JSON.stringify(
+    splitListStringLibs,
+    null,
+    4
+  )} as const;
+const splitListObjectOrArrLibs = ${JSON.stringify(
+    splitListObjectOrArrLibs,
+    null,
+    4
+  )} as const;
+const splitListLernaLibs = ${JSON.stringify(
+    splitListLernaLibs,
+    null,
+    4
+  )} as const;
+const splitListCliApps = ${JSON.stringify(splitListCliApps, null, 4)} as const;
+const splitListASTApps = ${JSON.stringify(splitListASTApps, null, 4)} as const;
+const splitListMiscLibs = ${JSON.stringify(
+    splitListMiscLibs,
+    null,
+    4
+  )} as const;
 
 export type Package = typeof all[number];
 
@@ -379,6 +523,15 @@ export const packages = {
     specialCount: ${specialPackages.length},
     scriptCount: ${scriptAvailable.length},
     packagesOutsideMonorepoCount: ${packagesOutsideMonorepo.length},
+    splitListFlagshipLibs,
+    splitListRangeLibs,
+    splitListHtmlLibs,
+    splitListStringLibs,
+    splitListObjectOrArrLibs,
+    splitListLernaLibs,
+    splitListCliApps,
+    splitListASTApps,
+    splitListMiscLibs,
 };\n`,
   (err) => {
     if (err) {

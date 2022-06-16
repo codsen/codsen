@@ -19,15 +19,33 @@ async function tsconfig({ state }) {
 
   // read the old config, get "references" contents
   let oldReferences;
+  let oldIncludes;
   try {
-    oldReferences = JSON.parse(
-      await fs.readFile("tsconfig.json", "utf8")
-    ).references;
+    let contents = JSON.parse(await fs.readFile("tsconfig.json", "utf8"));
+    oldReferences = contents.references;
+    oldIncludes = contents.include;
+    console.log(
+      `${`\u001b[${33}m${`oldReferences`}\u001b[${39}m`} = ${JSON.stringify(
+        oldReferences,
+        null,
+        4
+      )}`
+    );
+    console.log(
+      `${`\u001b[${33}m${`oldIncludes`}\u001b[${39}m`} = ${JSON.stringify(
+        oldIncludes,
+        null,
+        4
+      )}`
+    );
   } catch (error) {
     console.log(`lect: could not extract old TS config contents: ${error}`);
   }
   if (!Array.isArray(oldReferences)) {
     oldReferences = [];
+  }
+  if (!Array.isArray(oldIncludes)) {
+    oldIncludes = [];
   }
 
   let newTsConfig = {
@@ -35,7 +53,14 @@ async function tsconfig({ state }) {
     compilerOptions: {
       outDir: "dist",
     },
-    include: ["src/**/*", "package.json", "../../ops/typedefs/common.ts"],
+    include: [
+      ...new Set([
+        "src/**/*",
+        "package.json",
+        "../../ops/typedefs/common.ts",
+        ...oldIncludes,
+      ]),
+    ],
     exclude: [".git", "node_modules"],
     references: oldReferences,
   };
