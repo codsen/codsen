@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "email-comb": "^6.1.16",
-    "plugin-error": "^1.0.1"
+    "plugin-error": "^2.0.0"
   },
   "devDependencies": {
     "map-stream": "^0.0.7",

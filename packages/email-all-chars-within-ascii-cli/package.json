@@ -64,11 +64,11 @@
     "chalk": "^5.0.1",
     "email-all-chars-within-ascii": "^4.0.17",
     "globby": "^13.1.2",
-    "inquirer": "^8.2.4",
+    "inquirer": "^9.0.0",
     "lodash.pullall": "^4.2.0",
     "minimist": "^1.2.6",
     "string-left-right": "^5.0.13",
-    "update-notifier": "^5.1.0"
+    "update-notifier": "^6.0.2"
   },
   "devDependencies": {
     "@types/lodash.pullall": "^4.2.7",

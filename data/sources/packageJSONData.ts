@@ -44,6 +44,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/all-named-html-entities.umd.js",
             "default": "./dist/all-named-html-entities.esm.js"
         },
@@ -83,7 +84,7 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "type-fest": "^2.13.1"
+            "type-fest": "^2.16.0"
         }
     },
     "array-group-str-omit-num-char": {
@@ -117,6 +118,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/array-group-str-omit-num-char.umd.js",
             "default": "./dist/array-group-str-omit-num-char.esm.js"
         },
@@ -197,6 +199,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/array-includes-with-glob.umd.js",
             "default": "./dist/array-includes-with-glob.esm.js"
         },
@@ -266,6 +269,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/array-of-arrays-into-ast.umd.js",
             "default": "./dist/array-of-arrays-into-ast.esm.js"
         },
@@ -339,6 +343,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/array-of-arrays-sort-by-col.umd.js",
             "default": "./dist/array-of-arrays-sort-by-col.esm.js"
         },
@@ -416,6 +421,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/array-pull-all-with-glob.umd.js",
             "default": "./dist/array-pull-all-with-glob.esm.js"
         },
@@ -491,6 +497,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/arrayiffy-if-string.umd.js",
             "default": "./dist/arrayiffy-if-string.esm.js"
         },
@@ -568,6 +575,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-compare.umd.js",
             "default": "./dist/ast-compare.esm.js"
         },
@@ -615,7 +623,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
-            "type-fest": "^2.13.1"
+            "type-fest": "^2.16.0"
         }
     },
     "ast-contains-only-empty-space": {
@@ -652,6 +660,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-contains-only-empty-space.umd.js",
             "default": "./dist/ast-contains-only-empty-space.esm.js"
         },
@@ -739,6 +748,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-deep-contains.umd.js",
             "default": "./dist/ast-deep-contains.esm.js"
         },
@@ -779,7 +789,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "@sindresorhus/is": "^5.1.0",
+            "@sindresorhus/is": "^5.2.0",
             "ast-monkey-traverse": "^3.0.13",
             "object-path": "^0.11.8"
         },
@@ -827,6 +837,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-delete-object.umd.js",
             "default": "./dist/ast-delete-object.esm.js"
         },
@@ -915,6 +926,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-get-object.umd.js",
             "default": "./dist/ast-get-object.esm.js"
         },
@@ -1004,6 +1016,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-get-values-by-key.umd.js",
             "default": "./dist/ast-get-values-by-key.esm.js"
         },
@@ -1092,6 +1105,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-is-empty.umd.js",
             "default": "./dist/ast-is-empty.esm.js"
         },
@@ -1176,6 +1190,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-loose-compare.umd.js",
             "default": "./dist/ast-loose-compare.esm.js"
         },
@@ -1263,6 +1278,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-monkey.umd.js",
             "default": "./dist/ast-monkey.esm.js"
         },
@@ -1349,6 +1365,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-monkey-traverse.umd.js",
             "default": "./dist/ast-monkey-traverse.esm.js"
         },
@@ -1440,6 +1457,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-monkey-traverse-with-lookahead.umd.js",
             "default": "./dist/ast-monkey-traverse-with-lookahead.esm.js"
         },
@@ -1525,6 +1543,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ast-monkey-util.umd.js",
             "default": "./dist/ast-monkey-util.esm.js"
         },
@@ -1607,6 +1626,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/bitbucket-slug.umd.js",
             "default": "./dist/bitbucket-slug.esm.js"
         },
@@ -1687,6 +1707,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/charcode-is-valid-xml-name-character.umd.js",
             "default": "./dist/charcode-is-valid-xml-name-character.esm.js"
         },
@@ -1761,6 +1782,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/check-types-mini.umd.js",
             "default": "./dist/check-types-mini.esm.js"
         },
@@ -1865,8 +1887,8 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "meow": "^10.1.2",
-            "update-notifier": "^5.1.0"
+            "meow": "^10.1.3",
+            "update-notifier": "^6.0.2"
         }
     },
     "codsen-parser": {
@@ -1896,6 +1918,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/codsen-parser.umd.js",
             "default": "./dist/codsen-parser.esm.js"
         },
@@ -1975,6 +1998,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/codsen-tokenizer.umd.js",
             "default": "./dist/codsen-tokenizer.esm.js"
         },
@@ -2062,6 +2086,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/color-shorthand-hex-to-six-digit.umd.js",
             "default": "./dist/color-shorthand-hex-to-six-digit.esm.js"
         },
@@ -2146,6 +2171,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/csv-sort.umd.js",
             "default": "./dist/csv-sort.esm.js"
         },
@@ -2263,11 +2289,11 @@ export const packageJSONData = {
             "chalk": "^5.0.1",
             "csv-sort": "^6.0.18",
             "globby": "^13.1.2",
-            "inquirer": "^8.2.4",
+            "inquirer": "^9.0.0",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
-            "meow": "^10.1.2",
-            "update-notifier": "^5.1.0"
+            "meow": "^10.1.3",
+            "update-notifier": "^6.0.2"
         },
         "devDependencies": {
             "@types/lodash.pullall": "^4.2.7",
@@ -2308,6 +2334,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/csv-split-easy.umd.js",
             "default": "./dist/csv-split-easy.esm.js"
         },
@@ -2384,6 +2411,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/detect-is-it-html-or-xhtml.umd.js",
             "default": "./dist/detect-is-it-html-or-xhtml.esm.js"
         },
@@ -2449,6 +2477,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/detect-templating-language.umd.js",
             "default": "./dist/detect-templating-language.esm.js"
         },
@@ -2525,6 +2554,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/detergent.umd.js",
             "default": "./dist/detergent.esm.js"
         },
@@ -2618,6 +2648,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/easy-replace.umd.js",
             "default": "./dist/easy-replace.esm.js"
         },
@@ -2688,6 +2719,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/edit-package-json.umd.js",
             "default": "./dist/edit-package-json.esm.js"
         },
@@ -2767,6 +2799,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/email-all-chars-within-ascii.umd.js",
             "default": "./dist/email-all-chars-within-ascii.esm.js"
         },
@@ -2839,8 +2872,8 @@ export const packageJSONData = {
         "type": "module",
         "bin": {
             "ascii": "cli.js",
-            "withinascii": "cli.js",
-            "tinaturner": "cli.js"
+            "tinaturner": "cli.js",
+            "withinascii": "cli.js"
         },
         "scripts": {
             "build": "echo 'no build needed'",
@@ -2875,11 +2908,11 @@ export const packageJSONData = {
             "chalk": "^5.0.1",
             "email-all-chars-within-ascii": "^4.0.17",
             "globby": "^13.1.2",
-            "inquirer": "^8.2.4",
+            "inquirer": "^9.0.0",
             "lodash.pullall": "^4.2.0",
             "minimist": "^1.2.6",
             "string-left-right": "^5.0.13",
-            "update-notifier": "^5.1.0"
+            "update-notifier": "^6.0.2"
         },
         "devDependencies": {
             "@types/lodash.pullall": "^4.2.7",
@@ -2916,6 +2949,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/email-comb.umd.js",
             "default": "./dist/email-comb.esm.js"
         },
@@ -3044,9 +3078,9 @@ export const packageJSONData = {
             "globby": "^13.1.2",
             "lodash.uniq": "^4.5.0",
             "log-symbols": "^5.1.0",
-            "meow": "^10.1.2",
+            "meow": "^10.1.3",
             "string-splice": "^1.3.0",
-            "update-notifier": "^5.1.0"
+            "update-notifier": "^6.0.2"
         },
         "devDependencies": {
             "@types/lodash.uniq": "^4.5.7"
@@ -3092,6 +3126,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "default": "./dist/emlint.esm.js"
         },
         "types": "types/index.d.ts",
@@ -3151,7 +3186,7 @@ export const packageJSONData = {
             "lodash.clonedeep": "^4.5.0",
             "lodash.isregexp": "^4.0.1",
             "matcher": "^5.0.0",
-            "meow": "^10.1.2",
+            "meow": "^10.1.3",
             "mime-db": "^1.52.0",
             "object-path": "^0.11.8",
             "p-reduce": "^3.0.0",
@@ -3163,7 +3198,7 @@ export const packageJSONData = {
             "string-match-left-right": "^8.1.3",
             "string-process-comma-separated": "^3.0.13",
             "tiny-typed-emitter": "^2.1.0",
-            "update-notifier": "^5.1.0",
+            "update-notifier": "^6.0.2",
             "url-regex": "^5.0.0"
         },
         "devDependencies": {
@@ -3206,6 +3241,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/extract-search-index.umd.js",
             "default": "./dist/extract-search-index.esm.js"
         },
@@ -3279,6 +3315,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/generate-atomic-css.umd.js",
             "default": "./dist/generate-atomic-css.esm.js"
         },
@@ -3390,9 +3427,9 @@ export const packageJSONData = {
             "generate-atomic-css": "^2.1.2",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
-            "meow": "^10.1.2",
+            "meow": "^10.1.3",
             "p-reduce": "^3.0.0",
-            "update-notifier": "^5.1.0",
+            "update-notifier": "^6.0.2",
             "write-file-atomic": "^4.0.1"
         }
     },
@@ -3457,7 +3494,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "email-comb": "^6.1.16",
-            "plugin-error": "^1.0.1"
+            "plugin-error": "^2.0.0"
         },
         "devDependencies": {
             "map-stream": "^0.0.7",
@@ -3498,6 +3535,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/helga.umd.js",
             "default": "./dist/helga.esm.js"
         },
@@ -3565,6 +3603,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/html-all-known-attributes.umd.js",
             "default": "./dist/html-all-known-attributes.esm.js"
         },
@@ -3644,6 +3683,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/html-crush.umd.js",
             "default": "./dist/html-crush.esm.js"
         },
@@ -3719,6 +3759,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/html-entities-not-email-friendly.umd.js",
             "default": "./dist/html-entities-not-email-friendly.esm.js"
         },
@@ -3794,6 +3835,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/html-img-alt.umd.js",
             "default": "./dist/html-img-alt.esm.js"
         },
@@ -3873,6 +3915,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/html-table-patcher.umd.js",
             "default": "./dist/html-table-patcher.esm.js"
         },
@@ -3953,6 +3996,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/is-char-suitable-for-html-attr-name.umd.js",
             "default": "./dist/is-char-suitable-for-html-attr-name.esm.js"
         },
@@ -4026,6 +4070,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/is-html-attribute-closing.umd.js",
             "default": "./dist/is-html-attribute-closing.esm.js"
         },
@@ -4105,6 +4150,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/is-html-tag-opening.umd.js",
             "default": "./dist/is-html-tag-opening.esm.js"
         },
@@ -4187,6 +4233,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/is-language-code.umd.js",
             "default": "./dist/is-language-code.esm.js"
         },
@@ -4260,6 +4307,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/is-media-descriptor.umd.js",
             "default": "./dist/is-media-descriptor.esm.js"
         },
@@ -4334,6 +4382,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/is-relative-uri.umd.js",
             "default": "./dist/is-relative-uri.esm.js"
         },
@@ -4410,6 +4459,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/js-row-num.umd.js",
             "default": "./dist/js-row-num.esm.js"
         },
@@ -4523,9 +4573,9 @@ export const packageJSONData = {
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "js-row-num": "^5.1.3",
-            "meow": "^10.1.2",
+            "meow": "^10.1.3",
             "p-reduce": "^3.0.0",
-            "update-notifier": "^5.1.0",
+            "update-notifier": "^6.0.2",
             "write-file-atomic": "^4.0.1"
         }
     },
@@ -4596,10 +4646,10 @@ export const packageJSONData = {
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "json-comb-core": "^7.0.18",
-            "meow": "^10.1.2",
+            "meow": "^10.1.3",
             "p-map": "^5.5.0",
             "p-reduce": "^3.0.0",
-            "update-notifier": "^5.1.0"
+            "update-notifier": "^6.0.2"
         }
     },
     "json-comb-core": {
@@ -4632,6 +4682,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/json-comb-core.umd.js",
             "default": "./dist/json-comb-core.esm.js"
         },
@@ -4759,12 +4810,12 @@ export const packageJSONData = {
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "lodash.isplainobject": "^4.0.6",
-            "meow": "^10.1.2",
+            "meow": "^10.1.3",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
             "sort-package-json": "^1.57.0",
             "sorted-object": "^2.0.1",
-            "update-notifier": "^5.1.0"
+            "update-notifier": "^6.0.2"
         },
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
@@ -4808,6 +4859,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/json-variables.umd.js",
             "default": "./dist/json-variables.esm.js"
         },
@@ -4892,6 +4944,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/lerna-clean-changelogs.umd.js",
             "default": "./dist/lerna-clean-changelogs.esm.js"
         },
@@ -5000,10 +5053,10 @@ export const packageJSONData = {
             "fs-extra": "^10.1.0",
             "globby": "^13.1.2",
             "lerna-clean-changelogs": "^4.1.1",
-            "meow": "^10.1.2",
+            "meow": "^10.1.3",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
-            "update-notifier": "^5.1.0",
+            "update-notifier": "^6.0.2",
             "write-file-atomic": "^4.0.1"
         },
         "devDependencies": {
@@ -5045,9 +5098,9 @@ export const packageJSONData = {
         },
         "type": "module",
         "bin": {
-            "linkdep": "cli.js",
             "deplink": "cli.js",
-            "johnnydepp": "cli.js"
+            "johnnydepp": "cli.js",
+            "linkdep": "cli.js"
         },
         "scripts": {
             "build": "echo 'no build needed'",
@@ -5081,8 +5134,8 @@ export const packageJSONData = {
         "dependencies": {
             "execa": "^6.1.0",
             "fs-extra": "^10.1.0",
-            "meow": "^10.1.2",
-            "update-notifier": "^5.1.0"
+            "meow": "^10.1.3",
+            "update-notifier": "^6.0.2"
         }
     },
     "line-column-mini": {
@@ -5111,6 +5164,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/line-column-mini.umd.js",
             "default": "./dist/line-column-mini.esm.js"
         },
@@ -5181,6 +5235,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/object-all-values-equal-to.umd.js",
             "default": "./dist/object-all-values-equal-to.esm.js"
         },
@@ -5255,6 +5310,7 @@ export const packageJSONData = {
         "author": "Roy Revelt <roy@codsen.com> (http://codsen.com/)",
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/object-boolean-combinations.umd.js",
             "default": "./dist/object-boolean-combinations.esm.js"
         },
@@ -5342,6 +5398,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/object-delete-key.umd.js",
             "default": "./dist/object-delete-key.esm.js"
         },
@@ -5424,6 +5481,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/object-fill-missing-keys.umd.js",
             "default": "./dist/object-fill-missing-keys.esm.js"
         },
@@ -5505,6 +5563,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/object-flatten-all-arrays.umd.js",
             "default": "./dist/object-flatten-all-arrays.esm.js"
         },
@@ -5584,6 +5643,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/object-flatten-referencing.umd.js",
             "default": "./dist/object-flatten-referencing.esm.js"
         },
@@ -5666,6 +5726,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/object-merge-advanced.umd.js",
             "default": "./dist/object-merge-advanced.esm.js"
         },
@@ -5756,6 +5817,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/object-no-new-keys.umd.js",
             "default": "./dist/object-no-new-keys.esm.js"
         },
@@ -5826,6 +5888,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/object-set-all-values-to.umd.js",
             "default": "./dist/object-set-all-values-to.esm.js"
         },
@@ -5903,6 +5966,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-apply.umd.js",
             "default": "./dist/ranges-apply.esm.js"
         },
@@ -5975,6 +6039,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-crop.umd.js",
             "default": "./dist/ranges-crop.esm.js"
         },
@@ -6052,6 +6117,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-ent-decode.umd.js",
             "default": "./dist/ranges-ent-decode.esm.js"
         },
@@ -6126,6 +6192,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-invert.umd.js",
             "default": "./dist/ranges-invert.esm.js"
         },
@@ -6194,6 +6261,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-is-index-within.umd.js",
             "default": "./dist/ranges-is-index-within.esm.js"
         },
@@ -6263,6 +6331,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-iterate.umd.js",
             "default": "./dist/ranges-iterate.esm.js"
         },
@@ -6336,6 +6405,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-merge.umd.js",
             "default": "./dist/ranges-merge.esm.js"
         },
@@ -6408,6 +6478,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-offset.umd.js",
             "default": "./dist/ranges-offset.esm.js"
         },
@@ -6472,6 +6543,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-process-outside.umd.js",
             "default": "./dist/ranges-process-outside.esm.js"
         },
@@ -6549,6 +6621,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-push.umd.js",
             "default": "./dist/ranges-push.esm.js"
         },
@@ -6625,6 +6698,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-regex.umd.js",
             "default": "./dist/ranges-regex.esm.js"
         },
@@ -6697,6 +6771,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/ranges-sort.umd.js",
             "default": "./dist/ranges-sort.esm.js"
         },
@@ -6768,6 +6843,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/regex-empty-conditional-comments.umd.js",
             "default": "./dist/regex-empty-conditional-comments.esm.js"
         },
@@ -6839,6 +6915,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/regex-is-jinja-nunjucks.umd.js",
             "default": "./dist/regex-is-jinja-nunjucks.esm.js"
         },
@@ -6912,6 +6989,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/regex-is-jsp.umd.js",
             "default": "./dist/regex-is-jsp.esm.js"
         },
@@ -6983,6 +7061,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/regex-jinja-specific.umd.js",
             "default": "./dist/regex-jinja-specific.esm.js"
         },
@@ -7052,6 +7131,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/str-indexes-of-plus.umd.js",
             "default": "./dist/str-indexes-of-plus.esm.js"
         },
@@ -7120,6 +7200,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-apostrophes.umd.js",
             "default": "./dist/string-apostrophes.esm.js"
         },
@@ -7195,6 +7276,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-bionic-split.umd.js",
             "default": "./dist/string-bionic-split.esm.js"
         },
@@ -7268,6 +7350,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-character-is-astral-surrogate.umd.js",
             "default": "./dist/string-character-is-astral-surrogate.esm.js"
         },
@@ -7341,6 +7424,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-collapse-leading-whitespace.umd.js",
             "default": "./dist/string-collapse-leading-whitespace.esm.js"
         },
@@ -7409,6 +7493,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-collapse-white-space.umd.js",
             "default": "./dist/string-collapse-white-space.esm.js"
         },
@@ -7485,6 +7570,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-convert-indexes.umd.js",
             "default": "./dist/string-convert-indexes.esm.js"
         },
@@ -7555,6 +7641,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-extract-class-names.umd.js",
             "default": "./dist/string-extract-class-names.esm.js"
         },
@@ -7629,6 +7716,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-extract-sass-vars.umd.js",
             "default": "./dist/string-extract-sass-vars.esm.js"
         },
@@ -7703,6 +7791,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-find-heads-tails.umd.js",
             "default": "./dist/string-find-heads-tails.esm.js"
         },
@@ -7779,6 +7868,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-find-malformed.umd.js",
             "default": "./dist/string-find-malformed.esm.js"
         },
@@ -7855,6 +7945,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-fix-broken-named-entities.umd.js",
             "default": "./dist/string-fix-broken-named-entities.esm.js"
         },
@@ -7937,6 +8028,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-left-right.umd.js",
             "default": "./dist/string-left-right.esm.js"
         },
@@ -8012,6 +8104,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-match-left-right.umd.js",
             "default": "./dist/string-match-left-right.esm.js"
         },
@@ -8095,6 +8188,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-overlap-one-on-another.umd.js",
             "default": "./dist/string-overlap-one-on-another.esm.js"
         },
@@ -8164,6 +8258,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-process-comma-separated.umd.js",
             "default": "./dist/string-process-comma-separated.esm.js"
         },
@@ -8232,6 +8327,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-range-expander.umd.js",
             "default": "./dist/string-range-expander.esm.js"
         },
@@ -8305,6 +8401,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-remove-duplicate-heads-tails.umd.js",
             "default": "./dist/string-remove-duplicate-heads-tails.esm.js"
         },
@@ -8386,6 +8483,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-remove-thousand-separators.umd.js",
             "default": "./dist/string-remove-thousand-separators.esm.js"
         },
@@ -8468,6 +8566,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-remove-widows.umd.js",
             "default": "./dist/string-remove-widows.esm.js"
         },
@@ -8550,6 +8649,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-split-by-whitespace.umd.js",
             "default": "./dist/string-split-by-whitespace.esm.js"
         },
@@ -8630,6 +8730,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-strip-html.umd.js",
             "default": "./dist/string-strip-html.esm.js"
         },
@@ -8716,6 +8817,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-trim-spaces-only.umd.js",
             "default": "./dist/string-trim-spaces-only.esm.js"
         },
@@ -8781,6 +8883,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-truncator.umd.js",
             "default": "./dist/string-truncator.esm.js"
         },
@@ -8861,6 +8964,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-uglify.umd.js",
             "default": "./dist/string-uglify.esm.js"
         },
@@ -8935,6 +9039,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/string-unfancy.umd.js",
             "default": "./dist/string-unfancy.esm.js"
         },
@@ -9013,6 +9118,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/stristri.umd.js",
             "default": "./dist/stristri.esm.js"
         },
@@ -9096,7 +9202,10 @@ export const packageJSONData = {
             "url": "https://codsen.com"
         },
         "type": "module",
-        "exports": "./dist/tap-parse-string-to-object.esm.js",
+        "exports": {
+            "types": "./types/index.d.ts",
+            "default": "./dist/tap-parse-string-to-object.esm.js"
+        },
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
@@ -9173,6 +9282,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/test-mixer.umd.js",
             "default": "./dist/test-mixer.esm.js"
         },
@@ -9254,6 +9364,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/tsd-extract.umd.js",
             "default": "./dist/tsd-extract.esm.js"
         },
@@ -9368,13 +9479,13 @@ export const packageJSONData = {
             "is-online": "^10.0.0",
             "lodash.isplainobject": "^4.0.6",
             "log-update": "^5.0.1",
-            "meow": "^10.1.2",
+            "meow": "^10.1.3",
             "object-path": "^0.11.8",
             "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^13.6.0",
-            "update-notifier": "^5.1.0",
+            "pacote": "^13.6.1",
+            "update-notifier": "^6.0.2",
             "write-file-atomic": "^4.0.1"
         },
         "devDependencies": {
@@ -9412,6 +9523,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/util-array-object-or-both.umd.js",
             "default": "./dist/util-array-object-or-both.esm.js"
         },
@@ -9485,6 +9597,7 @@ export const packageJSONData = {
         },
         "type": "module",
         "exports": {
+            "types": "./types/index.d.ts",
             "script": "./dist/util-nonempty.umd.js",
             "default": "./dist/util-nonempty.esm.js"
         },
