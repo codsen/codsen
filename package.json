@@ -41,7 +41,7 @@
     "prettier": "turbo run prettier:format",
     "ci:generate:info": "node ./ops/scripts/generate-info.js",
     "ci:build:root-readme": "node ./ops/scripts/generate-readme.js",
-    "ci:lerna:version": "lerna version --no-push --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
+    "ci:lerna:version": "lerna version patch --no-push --no-commit-hooks --yes && lernacleanchangelog '**'",
     "ci:publish:all": "turbo run letspublish",
     "graph": "lerna-dependency-graph -f 'png' -o './deps-graph.png'",
     "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && yarn",
