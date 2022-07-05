@@ -1,6 +1,6 @@
 {
   "name": "object-set-all-values-to",
-  "version": "5.0.14",
+  "version": "5.0.15",
   "description": "Recursively walk the input and set all found values in plain objects to something",
   "keywords": [
     "all",

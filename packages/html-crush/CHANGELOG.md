@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.19](https://github.com/codsen/codsen/compare/html-crush@5.0.18...html-crush@5.0.19) (2022-07-05)
+
+**Note:** Version bump only for package html-crush
+
+
+
+
+
 ## 5.0.16 (2022-04-18)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "ast-delete-object",
-  "version": "3.0.17",
+  "version": "3.0.18",
   "description": "Delete all plain objects in AST if they contain a certain key/value pair",
   "keywords": [
     "ast",
@@ -77,8 +77,8 @@
     }
   },
   "dependencies": {
-    "ast-compare": "^3.1.4",
-    "ast-monkey-traverse": "^3.0.13",
+    "ast-compare": "^3.1.5",
+    "ast-monkey-traverse": "^3.0.14",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },

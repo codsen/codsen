@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.4](https://github.com/codsen/codsen/compare/ranges-apply@6.1.3...ranges-apply@6.1.4) (2022-07-05)
+
+**Note:** Version bump only for package ranges-apply
+
+
+
+
+
 # 6.1.0 (2022-04-11)
 
 ### Features

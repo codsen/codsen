@@ -1,6 +1,6 @@
 {
   "name": "regex-is-jinja-nunjucks",
-  "version": "3.0.13",
+  "version": "3.0.14",
   "description": "Regular expression for detecting Jinja or Nunjucks code",
   "keywords": [
     "code",

@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse-with-lookahead",
-  "version": "3.0.13",
+  "version": "3.0.14",
   "description": "Utility library to traverse AST, reports upcoming values",
   "keywords": [
     "ast",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.20](https://github.com/codsen/codsen/compare/detergent@8.0.19...detergent@8.0.20) (2022-07-05)
+
+**Note:** Version bump only for package detergent
+
+
+
+
+
 ## 8.0.17 (2022-04-18)
 
 ### Bug Fixes
