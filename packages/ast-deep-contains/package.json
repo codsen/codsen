@@ -43,6 +43,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-deep-contains.umd.js",
     "default": "./dist/ast-deep-contains.esm.js"
   },

@@ -39,6 +39,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-is-empty.umd.js",
     "default": "./dist/ast-is-empty.esm.js"
   },

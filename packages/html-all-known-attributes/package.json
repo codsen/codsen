@@ -26,6 +26,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/html-all-known-attributes.umd.js",
     "default": "./dist/html-all-known-attributes.esm.js"
   },

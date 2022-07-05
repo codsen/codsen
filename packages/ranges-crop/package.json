@@ -27,6 +27,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ranges-crop.umd.js",
     "default": "./dist/ranges-crop.esm.js"
   },

@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ranges-iterate.umd.js",
     "default": "./dist/ranges-iterate.esm.js"
   },

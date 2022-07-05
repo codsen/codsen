@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/detect-is-it-html-or-xhtml.umd.js",
     "default": "./dist/detect-is-it-html-or-xhtml.esm.js"
   },

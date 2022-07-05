@@ -33,6 +33,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/tsd-extract.umd.js",
     "default": "./dist/tsd-extract.esm.js"
   },

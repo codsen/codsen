@@ -38,6 +38,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-get-values-by-key.umd.js",
     "default": "./dist/ast-get-values-by-key.esm.js"
   },

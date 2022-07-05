@@ -29,6 +29,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/object-flatten-all-arrays.umd.js",
     "default": "./dist/object-flatten-all-arrays.esm.js"
   },

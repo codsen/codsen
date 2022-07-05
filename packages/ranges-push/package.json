@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ranges-push.umd.js",
     "default": "./dist/ranges-push.esm.js"
   },

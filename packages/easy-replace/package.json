@@ -29,6 +29,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/easy-replace.umd.js",
     "default": "./dist/easy-replace.esm.js"
   },

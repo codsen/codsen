@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-contains-only-empty-space.umd.js",
     "default": "./dist/ast-contains-only-empty-space.esm.js"
   },

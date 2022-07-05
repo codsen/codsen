@@ -100,6 +100,28 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     objectPath.del(content, "devDependencies");
   }
 
+  /* set the "types" also inside the exports to cater TS >=4.7
+  if (state.isRollup) {
+    // beware, the "exports" value might be string, in case the package
+    // has no UMD - see tap-parse-string-to-object:
+    // "exports": "./dist/tap-parse-string-to-object.esm.js",
+
+    if (typeof content.exports === "string") {
+      content.exports = {
+        types: "./types/index.d.ts",
+        default: content.exports,
+      };
+    } else {
+      // push types to be the first key
+      let newExports = { ...content.exports }; // clone it
+      delete newExports.types; // remove the "types"
+      content.exports = {
+        types: "./types/index.d.ts", // set it as the first key
+        ...newExports,
+      };
+    }
+  } */
+
   // 6. write
   try {
     await writeFileAtomic(

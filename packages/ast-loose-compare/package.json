@@ -37,6 +37,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-loose-compare.umd.js",
     "default": "./dist/ast-loose-compare.esm.js"
   },

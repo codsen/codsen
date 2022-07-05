@@ -33,6 +33,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-strip-html.umd.js",
     "default": "./dist/string-strip-html.esm.js"
   },

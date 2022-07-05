@@ -63,7 +63,7 @@ assert.equal(
 }`
 );
 
-// edit from JSON string
+// delete from JSON string
 assert.equal(
   del(
     `{

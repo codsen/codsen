@@ -37,6 +37,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-delete-object.umd.js",
     "default": "./dist/ast-delete-object.esm.js"
   },

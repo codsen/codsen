@@ -29,6 +29,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/array-group-str-omit-num-char.umd.js",
     "default": "./dist/array-group-str-omit-num-char.esm.js"
   },

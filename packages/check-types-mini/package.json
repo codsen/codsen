@@ -30,6 +30,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/check-types-mini.umd.js",
     "default": "./dist/check-types-mini.esm.js"
   },

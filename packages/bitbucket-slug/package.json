@@ -38,6 +38,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/bitbucket-slug.umd.js",
     "default": "./dist/bitbucket-slug.esm.js"
   },

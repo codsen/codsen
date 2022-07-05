@@ -30,6 +30,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ranges-regex.umd.js",
     "default": "./dist/ranges-regex.esm.js"
   },

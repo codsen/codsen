@@ -33,6 +33,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/csv-sort.umd.js",
     "default": "./dist/csv-sort.esm.js"
   },

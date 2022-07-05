@@ -27,6 +27,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-range-expander.umd.js",
     "default": "./dist/string-range-expander.esm.js"
   },

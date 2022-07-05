@@ -31,6 +31,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/object-merge-advanced.umd.js",
     "default": "./dist/object-merge-advanced.esm.js"
   },

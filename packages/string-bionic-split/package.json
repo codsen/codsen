@@ -31,6 +31,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-bionic-split.umd.js",
     "default": "./dist/string-bionic-split.esm.js"
   },

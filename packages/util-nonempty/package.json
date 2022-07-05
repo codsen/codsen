@@ -25,6 +25,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/util-nonempty.umd.js",
     "default": "./dist/util-nonempty.esm.js"
   },

@@ -26,6 +26,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/test-mixer.umd.js",
     "default": "./dist/test-mixer.esm.js"
   },

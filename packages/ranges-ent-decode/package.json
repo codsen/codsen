@@ -29,6 +29,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ranges-ent-decode.umd.js",
     "default": "./dist/ranges-ent-decode.esm.js"
   },

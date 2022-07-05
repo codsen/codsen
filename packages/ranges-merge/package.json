@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ranges-merge.umd.js",
     "default": "./dist/ranges-merge.esm.js"
   },

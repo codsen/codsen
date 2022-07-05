@@ -30,6 +30,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/regex-is-jinja-nunjucks.umd.js",
     "default": "./dist/regex-is-jinja-nunjucks.esm.js"
   },

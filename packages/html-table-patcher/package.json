@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/html-table-patcher.umd.js",
     "default": "./dist/html-table-patcher.esm.js"
   },

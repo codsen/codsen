@@ -33,6 +33,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-remove-widows.umd.js",
     "default": "./dist/string-remove-widows.esm.js"
   },

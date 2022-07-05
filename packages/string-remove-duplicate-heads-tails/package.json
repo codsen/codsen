@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-remove-duplicate-heads-tails.umd.js",
     "default": "./dist/string-remove-duplicate-heads-tails.esm.js"
   },

@@ -24,6 +24,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/detect-templating-language.umd.js",
     "default": "./dist/detect-templating-language.esm.js"
   },

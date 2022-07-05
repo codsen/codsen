@@ -35,6 +35,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-compare.umd.js",
     "default": "./dist/ast-compare.esm.js"
   },

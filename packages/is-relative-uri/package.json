@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/is-relative-uri.umd.js",
     "default": "./dist/is-relative-uri.esm.js"
   },

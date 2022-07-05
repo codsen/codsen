@@ -34,6 +34,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/html-img-alt.umd.js",
     "default": "./dist/html-img-alt.esm.js"
   },

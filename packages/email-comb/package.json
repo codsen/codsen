@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/email-comb.umd.js",
     "default": "./dist/email-comb.esm.js"
   },

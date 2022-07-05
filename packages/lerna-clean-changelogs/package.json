@@ -30,6 +30,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/lerna-clean-changelogs.umd.js",
     "default": "./dist/lerna-clean-changelogs.esm.js"
   },

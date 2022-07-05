@@ -34,6 +34,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/is-language-code.umd.js",
     "default": "./dist/is-language-code.esm.js"
   },

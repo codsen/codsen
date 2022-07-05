@@ -35,6 +35,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/json-variables.umd.js",
     "default": "./dist/json-variables.esm.js"
   },

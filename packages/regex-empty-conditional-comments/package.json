@@ -30,6 +30,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/regex-empty-conditional-comments.umd.js",
     "default": "./dist/regex-empty-conditional-comments.esm.js"
   },

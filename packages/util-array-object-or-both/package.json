@@ -27,6 +27,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/util-array-object-or-both.umd.js",
     "default": "./dist/util-array-object-or-both.esm.js"
   },

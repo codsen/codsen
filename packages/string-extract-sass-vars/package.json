@@ -30,6 +30,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-extract-sass-vars.umd.js",
     "default": "./dist/string-extract-sass-vars.esm.js"
   },

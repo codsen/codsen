@@ -33,6 +33,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/is-char-suitable-for-html-attr-name.umd.js",
     "default": "./dist/is-char-suitable-for-html-attr-name.esm.js"
   },

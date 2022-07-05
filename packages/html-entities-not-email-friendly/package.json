@@ -26,6 +26,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/html-entities-not-email-friendly.umd.js",
     "default": "./dist/html-entities-not-email-friendly.esm.js"
   },

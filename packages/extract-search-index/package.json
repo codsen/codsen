@@ -29,6 +29,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/extract-search-index.umd.js",
     "default": "./dist/extract-search-index.esm.js"
   },

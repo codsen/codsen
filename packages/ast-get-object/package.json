@@ -37,6 +37,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-get-object.umd.js",
     "default": "./dist/ast-get-object.esm.js"
   },

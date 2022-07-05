@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-fix-broken-named-entities.umd.js",
     "default": "./dist/string-fix-broken-named-entities.esm.js"
   },

@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-process-comma-separated.umd.js",
     "default": "./dist/string-process-comma-separated.esm.js"
   },

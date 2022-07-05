@@ -40,6 +40,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-monkey-traverse-with-lookahead.umd.js",
     "default": "./dist/ast-monkey-traverse-with-lookahead.esm.js"
   },

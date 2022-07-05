@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/str-indexes-of-plus.umd.js",
     "default": "./dist/str-indexes-of-plus.esm.js"
   },

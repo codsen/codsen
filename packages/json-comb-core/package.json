@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/json-comb-core.umd.js",
     "default": "./dist/json-comb-core.esm.js"
   },

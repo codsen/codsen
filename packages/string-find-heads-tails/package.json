@@ -29,6 +29,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-find-heads-tails.umd.js",
     "default": "./dist/string-find-heads-tails.esm.js"
   },

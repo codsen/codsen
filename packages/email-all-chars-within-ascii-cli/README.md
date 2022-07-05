@@ -34,8 +34,8 @@ Then, call it from the command line using one of the following keywords:
 
 ```bash
 ascii
-tinaturner
 withinascii
+tinaturner
 ```
 
 ## Documentation

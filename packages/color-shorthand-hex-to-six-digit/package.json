@@ -31,6 +31,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/color-shorthand-hex-to-six-digit.umd.js",
     "default": "./dist/color-shorthand-hex-to-six-digit.esm.js"
   },

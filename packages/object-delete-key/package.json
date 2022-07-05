@@ -34,6 +34,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/object-delete-key.umd.js",
     "default": "./dist/object-delete-key.esm.js"
   },

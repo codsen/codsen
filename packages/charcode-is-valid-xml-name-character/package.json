@@ -33,6 +33,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/charcode-is-valid-xml-name-character.umd.js",
     "default": "./dist/charcode-is-valid-xml-name-character.esm.js"
   },

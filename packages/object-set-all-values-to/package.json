@@ -29,6 +29,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/object-set-all-values-to.umd.js",
     "default": "./dist/object-set-all-values-to.esm.js"
   },

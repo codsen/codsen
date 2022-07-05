@@ -34,6 +34,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ast-monkey-util.umd.js",
     "default": "./dist/ast-monkey-util.esm.js"
   },

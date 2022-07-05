@@ -24,6 +24,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-extract-class-names.umd.js",
     "default": "./dist/string-extract-class-names.esm.js"
   },

@@ -38,6 +38,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/html-crush.umd.js",
     "default": "./dist/html-crush.esm.js"
   },

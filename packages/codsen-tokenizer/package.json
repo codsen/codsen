@@ -30,6 +30,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/codsen-tokenizer.umd.js",
     "default": "./dist/codsen-tokenizer.esm.js"
   },

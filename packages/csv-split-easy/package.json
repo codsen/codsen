@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/csv-split-easy.umd.js",
     "default": "./dist/csv-split-easy.esm.js"
   },

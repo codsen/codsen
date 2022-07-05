@@ -38,6 +38,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "default": "./dist/emlint.esm.js"
   },
   "types": "types/index.d.ts",

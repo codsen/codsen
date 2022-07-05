@@ -1,6 +1,6 @@
 # js-row-num-cli
 
-> Update all row numbers in all console.logs in JS code
+> Update all row numbers in all console.logs in given files
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/js-row-num-cli" rel="nofollow noreferrer noopener">

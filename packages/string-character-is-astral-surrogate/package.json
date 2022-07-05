@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-character-is-astral-surrogate.umd.js",
     "default": "./dist/string-character-is-astral-surrogate.esm.js"
   },

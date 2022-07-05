@@ -24,6 +24,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/line-column-mini.umd.js",
     "default": "./dist/line-column-mini.esm.js"
   },

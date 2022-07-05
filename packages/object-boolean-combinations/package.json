@@ -25,6 +25,7 @@
   "author": "Roy Revelt <roy@codsen.com> (http://codsen.com/)",
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/object-boolean-combinations.umd.js",
     "default": "./dist/object-boolean-combinations.esm.js"
   },

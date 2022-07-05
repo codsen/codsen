@@ -23,6 +23,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ranges-process-outside.umd.js",
     "default": "./dist/ranges-process-outside.esm.js"
   },

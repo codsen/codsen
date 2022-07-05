@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-trim-spaces-only.umd.js",
     "default": "./dist/string-trim-spaces-only.esm.js"
   },

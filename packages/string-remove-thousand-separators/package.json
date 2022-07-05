@@ -29,6 +29,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-remove-thousand-separators.umd.js",
     "default": "./dist/string-remove-thousand-separators.esm.js"
   },

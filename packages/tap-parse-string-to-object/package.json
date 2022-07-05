@@ -30,7 +30,10 @@
     "url": "https://codsen.com"
   },
   "type": "module",
-  "exports": "./dist/tap-parse-string-to-object.esm.js",
+  "exports": {
+    "types": "./types/index.d.ts",
+    "default": "./dist/tap-parse-string-to-object.esm.js"
+  },
   "types": "types/index.d.ts",
   "scripts": {
     "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",

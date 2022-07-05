@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/object-fill-missing-keys.umd.js",
     "default": "./dist/object-fill-missing-keys.esm.js"
   },

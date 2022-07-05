@@ -31,6 +31,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/is-html-tag-opening.umd.js",
     "default": "./dist/is-html-tag-opening.esm.js"
   },

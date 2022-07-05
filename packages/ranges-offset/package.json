@@ -24,6 +24,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/ranges-offset.umd.js",
     "default": "./dist/ranges-offset.esm.js"
   },

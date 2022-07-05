@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/array-of-arrays-sort-by-col.umd.js",
     "default": "./dist/array-of-arrays-sort-by-col.esm.js"
   },

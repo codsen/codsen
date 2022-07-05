@@ -26,6 +26,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-match-left-right.umd.js",
     "default": "./dist/string-match-left-right.esm.js"
   },

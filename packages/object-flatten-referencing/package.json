@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/object-flatten-referencing.umd.js",
     "default": "./dist/object-flatten-referencing.esm.js"
   },

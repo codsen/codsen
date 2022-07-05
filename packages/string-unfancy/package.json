@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-unfancy.umd.js",
     "default": "./dist/string-unfancy.esm.js"
   },

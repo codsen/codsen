@@ -27,6 +27,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/email-all-chars-within-ascii.umd.js",
     "default": "./dist/email-all-chars-within-ascii.esm.js"
   },

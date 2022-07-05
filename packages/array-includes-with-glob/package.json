@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/array-includes-with-glob.umd.js",
     "default": "./dist/array-includes-with-glob.esm.js"
   },

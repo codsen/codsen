@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/generate-atomic-css.umd.js",
     "default": "./dist/generate-atomic-css.esm.js"
   },

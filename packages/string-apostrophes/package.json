@@ -27,6 +27,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-apostrophes.umd.js",
     "default": "./dist/string-apostrophes.esm.js"
   },

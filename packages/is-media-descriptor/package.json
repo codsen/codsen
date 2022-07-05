@@ -32,6 +32,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/is-media-descriptor.umd.js",
     "default": "./dist/is-media-descriptor.esm.js"
   },

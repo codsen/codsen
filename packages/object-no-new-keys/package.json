@@ -30,6 +30,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/object-no-new-keys.umd.js",
     "default": "./dist/object-no-new-keys.esm.js"
   },

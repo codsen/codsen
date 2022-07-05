@@ -34,6 +34,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-overlap-one-on-another.umd.js",
     "default": "./dist/string-overlap-one-on-another.esm.js"
   },

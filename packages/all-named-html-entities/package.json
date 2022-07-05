@@ -28,6 +28,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/all-named-html-entities.umd.js",
     "default": "./dist/all-named-html-entities.esm.js"
   },

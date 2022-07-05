@@ -33,6 +33,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/array-pull-all-with-glob.umd.js",
     "default": "./dist/array-pull-all-with-glob.esm.js"
   },

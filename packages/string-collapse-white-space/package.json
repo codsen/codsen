@@ -27,6 +27,7 @@
   },
   "type": "module",
   "exports": {
+    "types": "./types/index.d.ts",
     "script": "./dist/string-collapse-white-space.umd.js",
     "default": "./dist/string-collapse-white-space.esm.js"
   },
