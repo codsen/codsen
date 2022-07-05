@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.1.2 (2022-07-05)
-
-**Note:** Version bump only for package string-overlap-one-on-another
-
-
-
-
-
 ## 3.1.1 (2022-04-18)
 
 ### Bug Fixes

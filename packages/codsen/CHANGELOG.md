@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 0.0.6 (2022-07-05)
-
-**Note:** Version bump only for package codsen
-
-
-
-
-
 ## 0.0.2 (2022-01-11)
 
 ### Bug Fixes

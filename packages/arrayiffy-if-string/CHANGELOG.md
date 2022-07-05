@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.0.15](https://github.com/codsen/codsen/compare/arrayiffy-if-string@4.0.14...arrayiffy-if-string@4.0.15) (2022-07-05)
-
-**Note:** Version bump only for package arrayiffy-if-string
-
-
-
-
-
 ## 4.0.14 (2022-05-04)
 
 ### Bug Fixes

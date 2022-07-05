@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.1.4](https://github.com/codsen/codsen/compare/ranges-ent-decode@5.1.3...ranges-ent-decode@5.1.4) (2022-07-05)
-
-**Note:** Version bump only for package ranges-ent-decode
-
-
-
-
-
 ## 5.1.2 (2022-04-18)
 
 ### Bug Fixes
