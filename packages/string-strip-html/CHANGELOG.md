@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping, `<script>a<style>b</script>c</style>`. That's a very weird broken code case, but still, warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there are no perf difference in the records ([a730596](https://github.com/codsen/codsen/commit/a730596ab08b1c16ff33a0363d2e08e0b1853f59)), closes [#48](https://github.com/codsen/codsen/issues/48)
+- Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping, `<script>a<style>b</script>c</style>`. That's a very weird broken code case, but still, warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there are no perf difference in the records.
 
 ### Bug Fixes
 
