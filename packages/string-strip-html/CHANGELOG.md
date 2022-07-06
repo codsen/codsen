@@ -5,25 +5,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [10.0.0](https://github.com/codsen/codsen/compare/string-strip-html@9.1.13...string-strip-html@10.0.0) (2022-07-06)
 
-### Features
-
-- algorithm improvements and bug fixes ([a730596](https://github.com/codsen/codsen/commit/a730596ab08b1c16ff33a0363d2e08e0b1853f59)), closes [#48](https://github.com/codsen/codsen/issues/48)
-
-### BREAKING CHANGES
-
-- now doctype tag attributes are pinged correctly, bumping major just in case
-somebody depends on it
-
 ## 10.0.0
 
 ### Features
 
-- Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping, `<script>a<style>b</script>c</style>`. That's a very weird broken code case, but still, warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there are no perf difference in the records.
+- Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping, `<script>a<style>b</script>c</style>`. That's a very weird broken code case, but still, warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there are no perf difference in the records ([a730596](https://github.com/codsen/codsen/commit/a730596ab08b1c16ff33a0363d2e08e0b1853f59)), closes [#48](https://github.com/codsen/codsen/issues/48)
 
 ### Bug Fixes
 
 - Correct `DOCTYPE` attribute values pinged to callback (all-`name`, no `value`)
 - Fixes a rare [case](https://github.com/codsen/codsen/issues/48) when the program could enter the infine tool condition when it encountered Nunjucks-Jinja-like (but different) templating literals. We added a hard check to prevent the backwards index offset.
+
+### BREAKING CHANGES
+
+- Bumping major just because formally, `DOCTYPE` tag attributes are now pinged to the callback differently than before (it's done correctly now, but differently nonetheless).
 
 ## [9.1.7](https://github.com/codsen/codsen/compare/string-strip-html@9.1.6...string-strip-html@9.1.7) (2022-03-21)
 
