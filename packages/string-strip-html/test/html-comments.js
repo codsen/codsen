@@ -174,10 +174,18 @@ test("15 - unclosed tag followed by another tag - bails because of spaces", () =
 });
 
 test("16 - range tags are overlapping - both default known range tags", () => {
+  let { result, allTagLocations } = stripHtml(
+    "<script>tra la <style>la</script>la la</style> rr"
+  );
+  equal(result, "la la rr", "16.01");
   equal(
-    stripHtml("<script>tra la <style>la</script>la la</style> rr").result,
-    "rr",
-    "16"
+    allTagLocations,
+    [
+      [0, 8],
+      [24, 33],
+      [38, 46],
+    ],
+    "16.02"
   );
 });
 

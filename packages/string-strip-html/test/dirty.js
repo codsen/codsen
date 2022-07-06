@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
@@ -1139,6 +1140,215 @@ test("121 - two equals", () => {
 
 test("122 - space + two equals", () => {
   equal(stripHtml('aaa <div class =="yo"> zzz').result, "aaa zzz", "122");
+});
+
+// harvested from sources mentioned in https://github.com/codsen/codsen/issues/48
+test("123 - Alvaro's #1 - DOCTYPE attr's", () => {
+  let gathered = [];
+  let cb = (o) => {
+    gathered.push(o.tag);
+    o.rangesArr.push(o.proposedReturn);
+  };
+  equal(
+    stripHtml(
+      `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">`,
+      {
+        cb,
+      }
+    ).result,
+    "",
+    "123.01"
+  );
+  equal(
+    gathered[0].attributes,
+    [
+      {
+        nameStarts: 10,
+        nameEnds: 14,
+        name: "html",
+      },
+      {
+        nameStarts: 15,
+        nameEnds: 21,
+        name: "PUBLIC",
+      },
+      {
+        nameStarts: 22,
+        nameEnds: 62,
+        name: '"-//W3C//DTD XHTML 1.0 Transitional//EN"',
+      },
+      {
+        nameStarts: 63,
+        nameEnds: 120,
+        name: '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"',
+      },
+    ],
+    "123.02"
+  );
+});
+
+test("124 - Alvaro's #2", () => {
+  let gathered = [];
+  let cb = (o) => {
+    gathered.push(o.tag);
+    o.rangesArr.push(o.proposedReturn);
+  };
+  let { result } = stripHtml(
+    `<script>a.a || a.a('<script a="/a/a"><\\/script>')</script>`,
+    { cb }
+  );
+  equal(result, "", "124.01");
+  equal(
+    gathered,
+    [
+      {
+        attributes: [],
+        lastOpeningBracketAt: 0,
+        slashPresent: false,
+        leftOuterWhitespace: 0,
+        onlyPlausible: false,
+        nameStarts: 1,
+        nameContainsLetters: true,
+        nameEnds: 7,
+        name: "script",
+        lastClosingBracketAt: 7,
+      },
+      {
+        lastOpeningBracketAt: 49,
+        slashPresent: 50,
+        attributes: [],
+        leftOuterWhitespace: 49,
+        onlyPlausible: false,
+        nameStarts: 51,
+        nameContainsLetters: true,
+        nameEnds: 57,
+        name: "script",
+        lastClosingBracketAt: 57,
+      },
+      {
+        lastOpeningBracketAt: 49,
+        slashPresent: 50,
+        attributes: [],
+        leftOuterWhitespace: 49,
+        onlyPlausible: false,
+        nameStarts: 51,
+        nameContainsLetters: true,
+        nameEnds: 57,
+        name: "script",
+        lastClosingBracketAt: 57,
+      },
+    ],
+    "124.02"
+  );
+});
+
+test("125 - Alvaro's #3", () => {
+  let gathered = [];
+  let cb = (o) => {
+    gathered.push(o.tag);
+    o.rangesArr.push(o.proposedReturn);
+  };
+  let { result } = stripHtml(`<script><div class="{%}f{%}%}"></script>`, {
+    cb,
+  });
+  equal(result, "", "125.01");
+  equal(
+    gathered,
+    [
+      {
+        attributes: [],
+        lastOpeningBracketAt: 0,
+        slashPresent: false,
+        leftOuterWhitespace: 0,
+        onlyPlausible: false,
+        nameStarts: 1,
+        nameContainsLetters: true,
+        nameEnds: 7,
+        name: "script",
+        lastClosingBracketAt: 7,
+      },
+      {
+        lastOpeningBracketAt: 31,
+        slashPresent: 32,
+        attributes: [],
+        leftOuterWhitespace: 31,
+        onlyPlausible: false,
+        nameStarts: 33,
+        nameContainsLetters: true,
+        nameEnds: 39,
+        name: "script",
+        lastClosingBracketAt: 39,
+      },
+      {
+        lastOpeningBracketAt: 31,
+        slashPresent: 32,
+        attributes: [],
+        leftOuterWhitespace: 31,
+        onlyPlausible: false,
+        nameStarts: 33,
+        nameContainsLetters: true,
+        nameEnds: 39,
+        name: "script",
+        lastClosingBracketAt: 39,
+      },
+    ],
+    "125.02"
+  );
+});
+
+test("126 - Alvaro's #4", () => {
+  let gathered = [];
+  let cb = (o) => {
+    gathered.push(o.tag);
+    o.rangesArr.push(o.proposedReturn);
+  };
+  let { result } = stripHtml(
+    `<script><div class="a {% if(b.c == 1 || (b.c >= 2 && d[1].e > 25)){%}f{%}%}"></script>`,
+    { cb }
+  );
+  equal(result, "", "126.01");
+  equal(
+    gathered,
+    [
+      {
+        attributes: [],
+        lastOpeningBracketAt: 0,
+        slashPresent: false,
+        leftOuterWhitespace: 0,
+        onlyPlausible: false,
+        nameStarts: 1,
+        nameContainsLetters: true,
+        nameEnds: 7,
+        name: "script",
+        lastClosingBracketAt: 7,
+      },
+      {
+        lastOpeningBracketAt: 77,
+        slashPresent: 78,
+        attributes: [],
+        leftOuterWhitespace: 77,
+        onlyPlausible: false,
+        nameStarts: 79,
+        nameContainsLetters: true,
+        nameEnds: 85,
+        name: "script",
+        lastClosingBracketAt: 85,
+      },
+      {
+        lastOpeningBracketAt: 77,
+        slashPresent: 78,
+        attributes: [],
+        leftOuterWhitespace: 77,
+        onlyPlausible: false,
+        nameStarts: 79,
+        nameContainsLetters: true,
+        nameEnds: 85,
+        name: "script",
+        lastClosingBracketAt: 85,
+      },
+    ],
+    "126.02"
+  );
 });
 
 test.run();

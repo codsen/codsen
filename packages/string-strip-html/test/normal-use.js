@@ -558,13 +558,6 @@ test("01 - dodgy attribute", () => {
   let input = `< abc |>`;
   let { result, ranges, allTagLocations } = stripHtml(input);
   equal(result, input);
-  console.log(
-    `███████████████████████████████████████ ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
-      ranges,
-      null,
-      4
-    )}`
-  );
   equal(ranges, null);
   equal(allTagLocations, [[0, 8]]);
   validateTagLocations(is, input, [[0, 8]]);
@@ -587,6 +580,14 @@ test("50 - dodgy attribute from astral range", () => {
   equal(ranges, [[0, 9]]);
   equal(allTagLocations, [[0, 9]]);
   validateTagLocations(is, input, [[0, 9]]);
+});
+
+test("51 - minimal, doctype", () => {
+  let { result, allTagLocations } = stripHtml("<!DOCTYPE html>z");
+  equal(
+    { result, allTagLocations },
+    { result: "z", allTagLocations: [[0, 15]] }
+  );
 });
 
 test.run();
