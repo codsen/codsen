@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3](https://github.com/codsen/codsen/compare/tsd-extract@0.5.2...tsd-extract@0.5.3) (2022-07-06)
+
+**Note:** Version bump only for package tsd-extract
+
+
+
+
+
 # [0.5.0](https://github.com/codsen/codsen/compare/tsd-extract@0.4.0...tsd-extract@0.5.0) (2022-04-29)
 
 ### Bug Fixes
