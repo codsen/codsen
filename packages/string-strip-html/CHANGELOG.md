@@ -5,20 +5,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [10.0.0](https://github.com/codsen/codsen/compare/string-strip-html@9.1.13...string-strip-html@10.0.0) (2022-07-06)
 
-
 ### Features
 
-* algorithm improvements and bug fixes ([a730596](https://github.com/codsen/codsen/commit/a730596ab08b1c16ff33a0363d2e08e0b1853f59)), closes [#48](https://github.com/codsen/codsen/issues/48)
-
+- algorithm improvements and bug fixes ([a730596](https://github.com/codsen/codsen/commit/a730596ab08b1c16ff33a0363d2e08e0b1853f59)), closes [#48](https://github.com/codsen/codsen/issues/48)
 
 ### BREAKING CHANGES
 
-* now doctype tag attributes are pinged correctly, bumping major just in case
+- now doctype tag attributes are pinged correctly, bumping major just in case
 somebody depends on it
-
-
-
-
 
 ## 10.0.0
 

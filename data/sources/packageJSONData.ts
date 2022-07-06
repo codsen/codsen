@@ -2524,7 +2524,7 @@ export const packageJSONData = {
     },
     "detergent": {
         "name": "detergent",
-        "version": "8.0.20",
+        "version": "8.0.21",
         "description": "Extracts, cleans and encodes text",
         "keywords": [
             "brief",
@@ -2608,8 +2608,8 @@ export const packageJSONData = {
             "string-fix-broken-named-entities": "^6.0.16",
             "string-left-right": "^5.0.14",
             "string-range-expander": "^3.0.14",
-            "string-remove-widows": "^3.0.19",
-            "string-strip-html": "^9.1.13",
+            "string-remove-widows": "^3.0.20",
+            "string-strip-html": "^10.0.0",
             "string-trim-spaces-only": "^4.0.14"
         },
         "devDependencies": {
@@ -3212,7 +3212,7 @@ export const packageJSONData = {
     },
     "extract-search-index": {
         "name": "extract-search-index",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "description": "Extract unique keyword input list string for search",
         "keywords": [
             "string",
@@ -3281,7 +3281,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-strip-html": "^9.1.13",
+            "string-strip-html": "^10.0.0",
             "string-unfancy": "^5.0.14"
         }
     },
@@ -8533,7 +8533,7 @@ export const packageJSONData = {
     },
     "string-remove-widows": {
         "name": "string-remove-widows",
-        "version": "3.0.19",
+        "version": "3.0.20",
         "description": "Helps to prevent widow words in a text",
         "keywords": [
             "against",
@@ -8612,7 +8612,7 @@ export const packageJSONData = {
             "string-match-left-right": "^8.1.4"
         },
         "devDependencies": {
-            "string-strip-html": "^9.1.13"
+            "string-strip-html": "^10.0.0"
         }
     },
     "string-split-by-whitespace": {
@@ -8697,7 +8697,7 @@ export const packageJSONData = {
     },
     "string-strip-html": {
         "name": "string-strip-html",
-        "version": "9.1.13",
+        "version": "10.0.0",
         "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
         "keywords": [
             "code",
@@ -9331,7 +9331,7 @@ export const packageJSONData = {
     },
     "tsd-extract": {
         "name": "tsd-extract",
-        "version": "0.5.2",
+        "version": "0.5.3",
         "description": "Extract any definition from TS definitions file",
         "keywords": [
             "ts",
