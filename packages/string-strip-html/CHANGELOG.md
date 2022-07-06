@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - Correct `DOCTYPE` attribute values pinged to callback (all-`name`, no `value`)
-- Fixes a rare [case](https://github.com/codsen/codsen/issues/48) when the program could enter the infine tool condition when it encountered Nunjucks-Jinja-like (but different) templating literals. We added a hard check to prevent the backwards index offset.
+- Fixes a rare [case](https://github.com/codsen/codsen/issues/48) when the program could enter the infine loop condition when it encounters Nunjucks-Jinja-like (but different) templating literals. We added a hard check to prevent the backwards index offset.
 
 ### BREAKING CHANGES
 
