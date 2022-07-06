@@ -7,12 +7,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping, `<script>a<style>b</script>c</style>`. That's a very weird broken code case, but still, warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there are no perf difference in the records.
+- Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping, `<script>a<style>b</script>c</style>`. That's a strange broken code case, but it still warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there is no perf difference in the records.
 
 ### Bug Fixes
 
-- Correct `DOCTYPE` attribute values pinged to callback (all-`name`, no `value`)
-- Fixes a rare [case](https://github.com/codsen/codsen/issues/48) when the program could enter the infine loop condition when it encounters Nunjucks-Jinja-like (but different) templating literals. We added a hard check to prevent the backwards index offset.
+- Correct `DOCTYPE` attribute values pinged to the callback (all-`name`, no `value`)
+- Fixes a rare [case](https://github.com/codsen/codsen/issues/48) when the program could enter the infinite loop condition when it encounters Nunjucks-Jinja-like (but different) templating literals. We added a hard check to prevent the backwards index offset.
 
 ### BREAKING CHANGES
 
