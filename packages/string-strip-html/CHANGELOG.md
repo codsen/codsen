@@ -3,9 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [10.0.0](https://github.com/codsen/codsen/compare/string-strip-html@9.1.13...string-strip-html@10.0.0) (2022-07-06)
-
-## 10.0.0
+## [10.0.0](https://github.com/codsen/codsen/compare/string-strip-html@9.1.13...string-strip-html@10.0.0) (2022-07-06)
 
 ### Features
 
