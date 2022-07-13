@@ -2524,7 +2524,7 @@ export const packageJSONData = {
     },
     "detergent": {
         "name": "detergent",
-        "version": "8.0.21",
+        "version": "8.0.22",
         "description": "Extracts, cleans and encodes text",
         "keywords": [
             "brief",
@@ -2608,8 +2608,8 @@ export const packageJSONData = {
             "string-fix-broken-named-entities": "^6.0.16",
             "string-left-right": "^5.0.14",
             "string-range-expander": "^3.0.14",
-            "string-remove-widows": "^3.0.20",
-            "string-strip-html": "^10.0.0",
+            "string-remove-widows": "^3.0.21",
+            "string-strip-html": "^10.1.0",
             "string-trim-spaces-only": "^4.0.14"
         },
         "devDependencies": {
@@ -2921,7 +2921,7 @@ export const packageJSONData = {
     },
     "email-comb": {
         "name": "email-comb",
-        "version": "6.1.17",
+        "version": "6.1.18",
         "description": "Remove unused CSS from email templates",
         "keywords": [
             "body",
@@ -3212,7 +3212,7 @@ export const packageJSONData = {
     },
     "extract-search-index": {
         "name": "extract-search-index",
-        "version": "1.0.4",
+        "version": "1.0.5",
         "description": "Extract unique keyword input list string for search",
         "keywords": [
             "string",
@@ -3281,7 +3281,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-strip-html": "^10.0.0",
+            "string-strip-html": "^10.1.0",
             "string-unfancy": "^5.0.14"
         }
     },
@@ -3435,7 +3435,7 @@ export const packageJSONData = {
     },
     "gulp-email-remove-unused-css": {
         "name": "gulp-email-remove-unused-css",
-        "version": "4.0.21",
+        "version": "4.0.22",
         "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
         "keywords": [
             "body",
@@ -3493,7 +3493,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "email-comb": "^6.1.17",
+            "email-comb": "^6.1.18",
             "plugin-error": "^2.0.0"
         },
         "devDependencies": {
@@ -8533,7 +8533,7 @@ export const packageJSONData = {
     },
     "string-remove-widows": {
         "name": "string-remove-widows",
-        "version": "3.0.20",
+        "version": "3.0.21",
         "description": "Helps to prevent widow words in a text",
         "keywords": [
             "against",
@@ -8612,7 +8612,7 @@ export const packageJSONData = {
             "string-match-left-right": "^8.1.4"
         },
         "devDependencies": {
-            "string-strip-html": "^10.0.0"
+            "string-strip-html": "^10.1.0"
         }
     },
     "string-split-by-whitespace": {
@@ -8697,7 +8697,7 @@ export const packageJSONData = {
     },
     "string-strip-html": {
         "name": "string-strip-html",
-        "version": "10.0.0",
+        "version": "10.1.0",
         "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
         "keywords": [
             "code",

@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [6.1.18](https://github.com/codsen/codsen/compare/email-comb@6.1.17...email-comb@6.1.18) (2022-07-13)
 
-
 ### Bug Fixes
 
-* fix a bug where selectors ending with colon were misinterpreted ([f279a19](https://github.com/codsen/codsen/commit/f279a197b4c314db57b59534ad8d0e356270da86))
-
-
-
-
+- fix a bug where selectors ending with colon were misinterpreted ([f279a19](https://github.com/codsen/codsen/commit/f279a197b4c314db57b59534ad8d0e356270da86))
 
 ## 6.1.14 (2022-04-18)
 
