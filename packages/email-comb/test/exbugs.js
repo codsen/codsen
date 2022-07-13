@@ -647,4 +647,143 @@ Yours sincerely,
   equal(comb(inp).result, inp, "19");
 });
 
+test("20 - DW reported - x-apple-data-detectors: - combo", () => {
+  let actual = comb(
+    `<head>
+<style>
+a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: inherit;}
+[class].HOV{transition: all .25s ease-in-out!important}
+[class].HOV:hover{transform:scale(1.07)!important}
+</style>
+</head>
+<body>
+<a class="HOV">some code</a>
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: inherit;}
+[class].HOV{transition: all .25s ease-in-out!important}
+[class].HOV:hover{transform:scale(1.07)!important}
+</style>
+</head>
+<body>
+<a class="HOV">some code</a>
+</body>
+`;
+
+  equal(actual.result, intended, "20");
+});
+
+test("21 - DW reported - x-apple-data-detectors: - only - detectors no colon", () => {
+  let actual = comb(
+    `<head>
+<style>
+a[href^="x-apple-data-detectors"] { color: inherit; text-decoration: inherit;}
+</style>
+</head>
+<body>
+<a class="x">some code</a>
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+a[href^="x-apple-data-detectors"] { color: inherit; text-decoration: inherit;}
+</style>
+</head>
+<body>
+<a>some code</a>
+</body>
+`;
+
+  equal(actual.result, intended, "21");
+});
+
+test("22 - DW reported - x-apple-data-detectors: - only - detectors + colon", () => {
+  let actual = comb(
+    `<head>
+<style>
+a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: inherit;}
+</style>
+</head>
+<body>
+<a class="x">some code</a>
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: inherit;}
+</style>
+</head>
+<body>
+<a>some code</a>
+</body>
+`;
+
+  equal(actual.result, intended, "22");
+});
+
+test("23 - DW reported - transition only - used", () => {
+  let actual = comb(
+    `<head>
+<style>
+[class].HOV{transition: all .25s ease-in-out!important}
+[class].HOV:hover{transform:scale(1.07)!important}
+.x{color: red !important}
+</style>
+</head>
+<body>
+<a class="HOV">some code</a>
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+[class].HOV{transition: all .25s ease-in-out!important}
+[class].HOV:hover{transform:scale(1.07)!important}
+</style>
+</head>
+<body>
+<a class="HOV">some code</a>
+</body>
+`;
+
+  equal(actual.result, intended, "23");
+});
+
+test("24 - DW reported - deletes 2 x [class]", () => {
+  let actual = comb(
+    `<head>
+<style>
+[class].HOV{transition: all .25s ease-in-out!important}
+[class].HOV:hover{transform:scale(1.07)!important}
+.x{color: red !important}
+</style>
+</head>
+<body>
+<a class="x">some code</a>
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+.x{color: red !important}
+</style>
+</head>
+<body>
+<a class="x">some code</a>
+</body>
+`;
+
+  equal(actual.result, intended, "24");
+});
+
 test.run();
