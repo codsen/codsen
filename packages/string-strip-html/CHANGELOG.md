@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.1.0](https://github.com/codsen/codsen/compare/string-strip-html@10.0.0...string-strip-html@10.1.0) (2022-07-13)
+
+
+### Features
+
+* improve whitespace control around punctuation ([d8318a7](https://github.com/codsen/codsen/commit/d8318a70d95425eddbea2976e3b26fd519068538)), closes [#49](https://github.com/codsen/codsen/issues/49)
+
+
+
+
+
 ## [10.0.0](https://github.com/codsen/codsen/compare/string-strip-html@9.1.13...string-strip-html@10.0.0) (2022-07-06)
 
 ### Features
