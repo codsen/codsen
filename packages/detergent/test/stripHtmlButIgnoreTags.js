@@ -43,7 +43,7 @@ test(`04 - single tag to ignore, given as string`, () => {
       stripHtmlButIgnoreTags: "div",
       removeWidows: false,
     }).res,
-    "a <div> z </div> c",
+    "a <div>z</div> c",
     "04"
   );
 });
@@ -54,7 +54,7 @@ test(`05 - single tag to ignore, given as string in an array`, () => {
       stripHtmlButIgnoreTags: ["div"],
       removeWidows: false,
     }).res,
-    "a <div> z </div> c",
+    "a <div>z</div> c",
     "05"
   );
 });
@@ -178,7 +178,7 @@ test(`16 - single tag to ignore, given as string`, () => {
       stripHtml: true,
       removeWidows: false,
     }).res,
-    "a <div> z </div> c",
+    "a <div>z</div> c",
     "16"
   );
 });
@@ -202,7 +202,7 @@ test(`18 - single tag to ignore, given as string in an array`, () => {
       stripHtml: true,
       removeWidows: false,
     }).res,
-    "a <div> z </div> c",
+    "a <div>z</div> c",
     "18"
   );
 });
@@ -315,7 +315,7 @@ test(`28 - ad hoc - four tags`, () => {
       stripHtmlButIgnoreTags: ["sup", "b", "c"],
       stripHtml: true,
     }).res,
-    "<sup> <b><c>",
+    "<sup><b><c>",
     "28"
   );
 });
@@ -326,7 +326,7 @@ test(`29 - ad hoc - four tags`, () => {
       stripHtmlButIgnoreTags: ["sup", "a", "c"],
       stripHtml: true,
     }).res,
-    "<sup><a> <c>",
+    "<sup><a><c>",
     "29"
   );
 });
