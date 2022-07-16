@@ -3,7 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [10.1.0](https://github.com/codsen/codsen/compare/string-strip-html@10.0.0...string-strip-html@10.1.0) (2022-07-13)
+## 11.0.0 (2022-07-16)
+
+### Features
+
+- add inline tag recognition - `x<b>y</b>z` strips to `xyz` because `b` is [inline](https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements) element — but — `x<div>y</div>z` strips to `x y z` because `div` is not inline element
+
+### BREAKING CHANGES
+
+- Bumping major just because formally, the inline tag improvements wield slightly different (correct) output.
+
+There are no API changes.
+
+## [10.1.0](https://github.com/codsen/codsen/compare/string-strip-html@10.0.0...string-strip-html@10.1.0) (2022-07-13)
 
 ### Features
 

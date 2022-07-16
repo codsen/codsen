@@ -99,7 +99,10 @@ c`).result,
 });
 
 test("12 - whitespace control - multiple tag combo case #1", () => {
-  equal(stripHtml("z<a><b>c</b></a>y").result, "z c y", "12");
+  equal(stripHtml("z<div><b>c</b></div>y").result, "z c y", "12.01");
+  equal(stripHtml("z<a><div>c</div></a>y").result, "z c y", "12.02");
+  equal(stripHtml("z<div><div>c</div></div>y").result, "z c y", "12.03");
+  equal(stripHtml("z<a><b>c</b></a>y").result, "zcy", "12.04");
 });
 
 test("13 - whitespace control - multiple tag combo case #2", () => {

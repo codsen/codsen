@@ -99,7 +99,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
         onlyStripTags: "b",
       }
     ).result,
-    `Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening`,
+    `Let's watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening`,
     "01.10 - only strip anchor tags"
   );
   equal(
@@ -109,7 +109,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
         onlyStripTags: ["b"],
       }
     ).result,
-    `Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening`,
+    `Let's watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening`,
     "01.11 - only strip anchor tags"
   );
 });
@@ -139,7 +139,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
         ignoreTags: "a",
       }
     ).result,
-    `Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening`,
+    `Let's watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening`,
     "02.03"
   );
   equal(
@@ -161,7 +161,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
         ignoreTags: "a",
       }
     ).result,
-    `<div>Let's watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening</div>`,
+    `<div>Let's watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening</div>`,
     "02.05 - both entries cancel each one out"
   );
   equal(

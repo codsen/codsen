@@ -189,20 +189,20 @@ test("18 - string is whole (opening) tag - but leading/trailing line breaks are 
 });
 
 test("19 - string is whole (opening) tag - HTML tag with attributes", () => {
-  let input = `z<a href="https://codsen.com" target="_blank">z<a href="zzz" target="_blank">z`;
+  let input = `z <a href="https://codsen.com" target="_blank"> z <a href="zzz" target="_blank"> z`;
   let { result, ranges, allTagLocations } = stripHtml(input);
   equal(result, "z z z");
   equal(ranges, [
-    [1, 46, " "],
-    [47, 77, " "],
+    [1, 48, " "],
+    [49, 81, " "],
   ]);
   equal(allTagLocations, [
-    [1, 46],
-    [47, 77],
+    [2, 47],
+    [50, 80],
   ]);
   validateTagLocations(is, input, [
-    [1, 46],
-    [47, 77],
+    [2, 47],
+    [50, 80],
   ]);
 });
 

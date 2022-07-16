@@ -658,11 +658,63 @@ test("48 - multiple equals after attribute's name", () => {
 });
 
 test("49 - multiple equals after attribute's name", () => {
+  // TIGHT
+
   // ranged tag:
   equal(
-    stripHtml('aaaaaaa<script class =="zzzz">x</script>bbbbbbbb').result,
-    "aaaaaaa bbbbbbbb",
-    "49"
+    stripHtml('abc<script class =="zzzz">x</script>def').result,
+    "abc def",
+    "49.01"
+  );
+  // block-level tag:
+  equal(
+    stripHtml('abc<div class =="zzzz">x</div>def').result,
+    "abc x def",
+    "49.02"
+  );
+  // inline tag
+  equal(stripHtml('abc<b class =="zzzz">x</b>def').result, "abcxdef", "49.03");
+
+  // ONE SPACE
+
+  // ranged tag:
+  equal(
+    stripHtml('abc <script class =="zzzz">x</script> def').result,
+    "abc def",
+    "49.04"
+  );
+  // block-level tag:
+  equal(
+    stripHtml('abc <div class =="zzzz">x</div> def').result,
+    "abc x def",
+    "49.05"
+  );
+  // inline tag
+  equal(
+    stripHtml('abc <b class =="zzzz">x</b> def').result,
+    "abc x def",
+    "49.06"
+  );
+
+  // TWO SPACES
+
+  // ranged tag:
+  equal(
+    stripHtml('abc  <script class =="zzzz">x</script>  def').result,
+    "abc def",
+    "49.07"
+  );
+  // block-level tag:
+  equal(
+    stripHtml('abc  <div class =="zzzz">x</div>  def').result,
+    "abc x def",
+    "49.08"
+  );
+  // inline tag
+  equal(
+    stripHtml('abc  <b class =="zzzz">x</b>  def').result,
+    "abc x def",
+    "49.09"
   );
 });
 

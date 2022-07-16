@@ -109,7 +109,8 @@ test("12 - punctuation after tag - simplified, exclamation mark", () => {
 });
 
 test("13 - punctuation after tag - simplified, exclamation mark", () => {
-  equal(stripHtml("a<b>!</b>c").result, "a! c", "13");
+  equal(stripHtml("a<div>!</div>c").result, "a! c", "13.01 - block");
+  equal(stripHtml("a<b>!</b>c").result, "a!c", "13.02 - inline");
 });
 
 test("14 - punctuation after tag - simplified, ellipsis", () => {

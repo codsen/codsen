@@ -11,10 +11,10 @@ test("01 - tag locations - anchor wrapping text", () => {
   equal(
     stripHtml("abc<a>click me</a>def"),
     {
-      result: "abc click me def",
+      result: "abcclick medef",
       ranges: [
-        [3, 6, " "],
-        [14, 18, " "],
+        [3, 6],
+        [14, 18],
       ],
       allTagLocations: [
         [3, 6],
@@ -25,7 +25,26 @@ test("01 - tag locations - anchor wrapping text", () => {
         [14, 18],
       ],
     },
-    "01"
+    "01.01 - inline"
+  );
+  equal(
+    stripHtml("abc<div>click me</div>def"),
+    {
+      result: "abc click me def",
+      ranges: [
+        [3, 8, " "],
+        [16, 22, " "],
+      ],
+      allTagLocations: [
+        [3, 8],
+        [16, 22],
+      ],
+      filteredTagLocations: [
+        [3, 8],
+        [16, 22],
+      ],
+    },
+    "01.02 - block"
   );
 });
 
@@ -48,10 +67,10 @@ test("03 - tag locations - opts.ignoreTags", () => {
       ignoreTags: ["a"],
     }),
     {
-      result: "<a> z </a>",
+      result: "<a>z</a>",
       ranges: [
-        [3, 9, " "],
-        [10, 17, " "],
+        [3, 9],
+        [10, 17],
       ],
       allTagLocations: [
         [0, 3],
@@ -64,7 +83,30 @@ test("03 - tag locations - opts.ignoreTags", () => {
         [10, 17],
       ],
     },
-    "03"
+    "03.01 - inline"
+  );
+  equal(
+    stripHtml("<div><span>z</span></div>", {
+      ignoreTags: ["div"],
+    }),
+    {
+      result: "<div>z</div>",
+      ranges: [
+        [5, 11],
+        [12, 19],
+      ],
+      allTagLocations: [
+        [0, 5],
+        [5, 11],
+        [12, 19],
+        [19, 25],
+      ],
+      filteredTagLocations: [
+        [5, 11],
+        [12, 19],
+      ],
+    },
+    "03.02 - block"
   );
 });
 
@@ -96,10 +138,10 @@ test("05 - tag locations - opts.onlyStripTags", () => {
       onlyStripTags: ["span"],
     }),
     {
-      result: "<a> z </a>",
+      result: "<a>z</a>",
       ranges: [
-        [3, 9, " "],
-        [10, 17, " "],
+        [3, 9],
+        [10, 17],
       ],
       allTagLocations: [
         [0, 3],

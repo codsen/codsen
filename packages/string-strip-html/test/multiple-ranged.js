@@ -30,20 +30,34 @@ test("02 - tags touching each other", () => {
 test("03 - lots of dodgy slashes around and within tags", () => {
   equal(
     stripHtml(
-      "///</a>///<a/>///</ a>///< /a></ a>///< /a>///</ a />///</a/>///< / a / >///"
+      "///</div>///<div/>///</ div>///< /div></ div>///< /div>///</ div />///</div/>///< / div / >///"
     ).result,
     "/// /// /// /// /// /// /// /// ///",
-    "03"
+    "03 - block"
+  );
+  equal(
+    stripHtml(
+      "///</a>///<a/>///</ a>///< /a></ a>///< /a>///</ a />///</a/>///< / a / >///"
+    ).result,
+    "///////////////////////////",
+    "03.02 - inline"
   );
 });
 
 test("04 - this time repeated slashes inside", () => {
   equal(
     stripHtml(
-      "///<///a>///<a/////>///<//// a>///< ///a><// a>///< ///a>///<// a //>///<///a///>///< //// a //// >///"
+      "///<///div>///<div/////>///<//// div>///< ///div><// div>///< ///div>///<// div //>///<///div///>///< //// div //// >///"
     ).result,
     "/// /// /// /// /// /// /// /// ///",
-    "04"
+    "04.01 - block"
+  );
+  equal(
+    stripHtml(
+      "///<///a>///<a/////>///<//// a>///< ///a><// a>///< ///a>///<// a //>///<///a///>///< //// a //// >///"
+    ).result,
+    "///////////////////////////",
+    "04.02 - inline"
   );
 });
 
@@ -51,40 +65,68 @@ test("05 - and the same but with bunch of line breaks and tabs", () => {
   // line breaks within tag doesn't count - the new line breaks should not be introduced!
   equal(
     stripHtml(
-      "///</\n/\n/\ta>///<a\n///\n//\t>///<\n////\t a>///< /\n//\na><// \ta>///<\n\n\n\n ///a>///<\t\t\t\t// \n\n\na //>///<\n\n\n///a\n///\n>///<\n //// \na\n //// \n>///"
+      "///</\n/\n/\tdiv>///<div\n///\n//\t>///<\n////\t div>///< /\n//\ndiv><// \tdiv>///<\n\n\n\n ///div>///<\t\t\t\t// \n\n\ndiv //>///<\n\n\n///div\n///\n>///<\n //// \ndiv\n //// \n>///"
     ).result,
     "/// /// /// /// /// /// /// /// ///",
-    "05"
+    "05.01 - block"
+  );
+  equal(
+    stripHtml(
+      "///</\n/\n/\ta>///<a\n///\n//\t>///<\n////\t a>///< /\n//\na><// \ta>///<\n\n\n\n ///a>///<\t\t\t\t// \n\n\na //>///<\n\n\n///a\n///\n>///<\n //// \na\n //// \n>///"
+    ).result,
+    "///////////////////////////",
+    "05.02 - inline"
   );
 });
 
 test("06 - lots of dodgy exclamation marks around and within tags", () => {
   equal(
     stripHtml(
-      "zzz<!a>zzz<a!>zzz<! a>zzz< !a><! a>zzz< !a>zzz<! a !>zzz<!a!>zzz< ! a ! >zzz"
+      "zzz<!div>zzz<div!>zzz<! div>zzz< !div><! div>zzz< !div>zzz<! div !>zzz<!div!>zzz< ! div ! >zzz"
     ).result,
     "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
-    "06"
+    "06.01 - block"
+  );
+  equal(
+    stripHtml(
+      "zzz<!a>zzz<a!>zzz<! a>zzz< !a><! a>zzz< !a>zzz<! a !>zzz<!a!>zzz< ! a ! >zzz"
+    ).result,
+    "zzzzzzzzzzzzzzzzzzzzzzzzzzz",
+    "06.02 - inline"
   );
 });
 
 test("07 - this time repeated exclamation marks inside", () => {
   equal(
     stripHtml(
-      "zzz<!!!a>zzz<a!!!!!>zzz<!!!! a>zzz< !!!a><!! a>zzz< !!!a>zzz<!! a !!>zzz<!!!a!!!>zzz< !!!! a !!!! >zzz"
+      "zzz<!!!div>zzz<div!!!!!>zzz<!!!! div>zzz< !!!div><!! div>zzz< !!!div>zzz<!! div !!>zzz<!!!div!!!>zzz< !!!! div !!!! >zzz"
     ).result,
     "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
-    "07"
+    "07.01 - block"
+  );
+  equal(
+    stripHtml(
+      "zzz<!!!a>zzz<a!!!!!>zzz<!!!! a>zzz< !!!a><!! a>zzz< !!!a>zzz<!! a !!>zzz<!!!a!!!>zzz< !!!! a !!!! >zzz"
+    ).result,
+    "zzzzzzzzzzzzzzzzzzzzzzzzzzz",
+    "07.02 - inline"
   );
 });
 
 test("08 - and the same but with bunch of line breaks and tabs", () => {
   equal(
     stripHtml(
-      "zzz<!\n!\n!\ta>zzz<a\n!!!\n!!\t>zzz<\n!!!!\t a>zzz< !\n!!\na><!! \ta>zzz<\n\n\n\n !!!a>zzz<\t\t\t\t!! \n\n\na !!>zzz<\n\n\n!!!a\n!!!\n>zzz<\n !!!! \na\n !!!! \n>zzz"
+      "zzz<!\n!\n!\tdiv>zzz<div\n!!!\n!!\t>zzz<\n!!!!\t div>zzz< !\n!!\ndiv><!! \tdiv>zzz<\n\n\n\n !!!div>zzz<\t\t\t\t!! \n\n\ndiv !!>zzz<\n\n\n!!!div\n!!!\n>zzz<\n !!!! \ndiv\n !!!! \n>zzz"
     ).result,
     "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
-    "08"
+    "08.01 - block"
+  );
+  equal(
+    stripHtml(
+      "zzz<!\n!\n!\ta>zzz<a\n!!!\n!!\t>zzz<\n!!!!\t a>zzz< !\n!!\na><!! \ta>zzz<\n\n\n\n !!!a>zzz<\t\t\t\t!! \n\n\na !!>zzz<\n\n\n!!!a\n!!!\n>zzz<\n !!!! \na\n !!!! \n>zzz"
+    ).result,
+    "zzzzzzzzzzzzzzzzzzzzzzzzzzz",
+    "08.02 - inline"
   );
 });
 

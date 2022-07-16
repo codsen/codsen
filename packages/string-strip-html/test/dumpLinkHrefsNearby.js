@@ -376,7 +376,7 @@ test("29 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + ignoreTags", () => {
         },
       }
     ).result,
-    "a <div>z</div> [https://codsen.com] b",
+    "a<div>z</div> [https://codsen.com] b",
     "29 - ignore on a div only"
   );
 });

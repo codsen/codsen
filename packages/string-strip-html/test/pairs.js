@@ -182,7 +182,16 @@ test("08 - multiple tag pairs - adds spaces - #1", () => {
 });
 
 test("09 - multiple tag pairs - adds spaces - #2", () => {
-  equal(stripHtml("aaaaaaa<a>bbbbbbbb").result, "aaaaaaa bbbbbbbb", "09");
+  equal(
+    stripHtml("aaaaaaa<div>bbbbbbbb").result,
+    "aaaaaaa bbbbbbbb",
+    "09.01 - block"
+  );
+  equal(
+    stripHtml("aaaaaaa<a>bbbbbbbb").result,
+    "aaaaaaabbbbbbbb",
+    "09.02 - inline"
+  );
 });
 
 test("10 - multiple tag pairs - adds spaces - #2", () => {
@@ -324,11 +333,18 @@ test("30 - multiple brackets repeated", () => {
 
 test("31 - checking can script slip through in any way", () => {
   equal(
+    stripHtml("x<div>y</div>z", {
+      stripTogetherWithTheirContents: ["div"],
+    }).result,
+    "x z",
+    "31.01 - block"
+  );
+  equal(
     stripHtml("x<b>y</b>z", {
       stripTogetherWithTheirContents: ["b"],
     }).result,
-    "x z",
-    "31"
+    "xz",
+    "31.02 - inline"
   );
 });
 
