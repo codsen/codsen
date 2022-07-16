@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0](https://github.com/codsen/codsen/compare/string-strip-html@10.1.0...string-strip-html@11.0.0) (2022-07-16)
+
+
+### Features
+
+* recognise inline tags and adjust whitespace accordingly ([cbac254](https://github.com/codsen/codsen/commit/cbac254860419488c2a5e72c9a4e7d4663d840a3)), closes [#49](https://github.com/codsen/codsen/issues/49)
+
+
+### BREAKING CHANGES
+
+* no API changes; bumping major because formally, input is slightly different (yet
+more correct)
+
+
+
+
+
 ## 11.0.0 (2022-07-16)
 
 ### Features
