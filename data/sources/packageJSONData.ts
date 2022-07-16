@@ -2222,7 +2222,7 @@ export const packageJSONData = {
     },
     "csv-sort-cli": {
         "name": "csv-sort-cli",
-        "version": "2.0.21",
+        "version": "2.0.22",
         "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
         "keywords": [
             "accountancy",
@@ -2524,7 +2524,7 @@ export const packageJSONData = {
     },
     "detergent": {
         "name": "detergent",
-        "version": "8.0.22",
+        "version": "8.0.23",
         "description": "Extracts, cleans and encodes text",
         "keywords": [
             "brief",
@@ -2608,8 +2608,8 @@ export const packageJSONData = {
             "string-fix-broken-named-entities": "^6.0.16",
             "string-left-right": "^5.0.14",
             "string-range-expander": "^3.0.14",
-            "string-remove-widows": "^3.0.21",
-            "string-strip-html": "^10.1.0",
+            "string-remove-widows": "^3.0.22",
+            "string-strip-html": "^11.0.0",
             "string-trim-spaces-only": "^4.0.14"
         },
         "devDependencies": {
@@ -2844,7 +2844,7 @@ export const packageJSONData = {
     },
     "email-all-chars-within-ascii-cli": {
         "name": "email-all-chars-within-ascii-cli",
-        "version": "2.0.22",
+        "version": "2.0.23",
         "description": "Command line app to scan email templates, are all their characters within ASCII range",
         "keywords": [
             "7bit",
@@ -3212,7 +3212,7 @@ export const packageJSONData = {
     },
     "extract-search-index": {
         "name": "extract-search-index",
-        "version": "1.0.5",
+        "version": "1.0.6",
         "description": "Extract unique keyword input list string for search",
         "keywords": [
             "string",
@@ -3281,7 +3281,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-strip-html": "^10.1.0",
+            "string-strip-html": "^11.0.0",
             "string-unfancy": "^5.0.14"
         }
     },
@@ -8533,7 +8533,7 @@ export const packageJSONData = {
     },
     "string-remove-widows": {
         "name": "string-remove-widows",
-        "version": "3.0.21",
+        "version": "3.0.22",
         "description": "Helps to prevent widow words in a text",
         "keywords": [
             "against",
@@ -8612,7 +8612,7 @@ export const packageJSONData = {
             "string-match-left-right": "^8.1.4"
         },
         "devDependencies": {
-            "string-strip-html": "^10.1.0"
+            "string-strip-html": "^11.0.0"
         }
     },
     "string-split-by-whitespace": {
@@ -8697,7 +8697,7 @@ export const packageJSONData = {
     },
     "string-strip-html": {
         "name": "string-strip-html",
-        "version": "10.1.0",
+        "version": "11.0.0",
         "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
         "keywords": [
             "code",
