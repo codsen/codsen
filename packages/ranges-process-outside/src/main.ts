@@ -91,7 +91,7 @@ function rProcessOutside(
         DEV && console.log(`091 charLength = ${charLength}`);
         // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         cb(i, i + charLength, (offsetValue) => {
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (offsetValue != null) {
             DEV && console.log(`096 offset i by "${offsetValue}" requested`);
             DEV && console.log(`097 old i = ${i}`);

@@ -4,12 +4,12 @@ interface Obj {
   [key: string]: any;
 }
 
-/* istanbul ignore next */
+/* c8 ignore next */
 function characterSuitableForNames(char: string): boolean {
   return /[-_A-Za-z0-9]/.test(char);
 }
 
-/* istanbul ignore next */
+/* c8 ignore next */
 function prepHopefullyAnArray(something: any, name: string): string[] {
   if (!something) {
     return [];
@@ -25,7 +25,7 @@ function prepHopefullyAnArray(something: any, name: string): string[] {
   );
 }
 
-/* istanbul ignore next */
+/* c8 ignore next */
 function xBeforeYOnTheRight(
   str: string,
   startingIdx: number,
@@ -51,7 +51,7 @@ function xBeforeYOnTheRight(
 //                                          ^
 //                                        we're here, it's false ending
 //
-/* istanbul ignore next */
+/* c8 ignore next */
 function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
   return (
     !tag ||

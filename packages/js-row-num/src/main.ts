@@ -345,7 +345,7 @@ function fixRowNums(str: string, opts?: Partial<Opts>): string | Ranges {
 
       /* istanbul ignore if */
       if (
-        /* istanbul ignore next */
+        /* c8 ignore next */
         str[i - 1] === BACKSLASH &&
         str[i] === "u" &&
         str[i + 1] === "0" &&
@@ -463,14 +463,14 @@ function fixRowNums(str: string, opts?: Partial<Opts>): string | Ranges {
             `463 ${`\u001b[${33}m${`ansiSequencesLetterMAt`}\u001b[${39}m`} = ${ansiSequencesLetterMAt};`
           );
 
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (!ansiSequencesLetterMAt) {
           // if ANSI closing "m" hasn't been detected yet, bail:
           wasLetterDetected = true;
           continue;
         }
 
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (
           str[ansiSequencesLetterMAt + 1] === "$" &&
           str[ansiSequencesLetterMAt + 2] === "{" &&
@@ -531,7 +531,7 @@ function fixRowNums(str: string, opts?: Partial<Opts>): string | Ranges {
         y < len2;
         y++
       ) {
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (str.startsWith(resolvedOpts.triggerKeywords[y], i)) {
           caughtKeyword = resolvedOpts.triggerKeywords[y];
           break;
@@ -539,7 +539,7 @@ function fixRowNums(str: string, opts?: Partial<Opts>): string | Ranges {
       }
 
       // if any of trigger keywords starts here
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (caughtKeyword) {
         consoleStartsAt = i + caughtKeyword.length;
         DEV &&

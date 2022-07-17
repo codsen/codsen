@@ -147,7 +147,7 @@ function findType(something: string): string {
   if (isNumeric(something)) {
     return "numeric";
   }
-  /* istanbul ignore next */
+  /* c8 ignore next */
   if (
     currencySigns.some((singleSign) =>
       // We remove all known currency symbols one by one from this input string.

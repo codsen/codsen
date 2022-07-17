@@ -77,7 +77,7 @@ function rApply(
     .forEach((el, i) => {
       if (progressFn) {
         percentageDone = Math.floor((counter / len) * 10);
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
           progressFn(percentageDone);
@@ -138,7 +138,7 @@ function rApply(
         // since "perc" is already from zero to hundred, we just divide by 10 and
         // get the range from zero to ten:
         percentageDone = 10 + Math.floor(perc / 10);
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
           progressFn(percentageDone);

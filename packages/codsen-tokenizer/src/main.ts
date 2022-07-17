@@ -236,7 +236,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
   function attribPush(tokenObj: TextToken | CommentToken | Property): void {
     DEV && console.log(`237`);
     // 1. clean up any existing tokens first
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (
       attrib.attribValue.length &&
       attrib.attribValue[~-attrib.attribValue.length].start &&
@@ -3482,7 +3482,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
 
     // catch the end of a css property (with or without !important)
     // -------------------------------------------------------------------------
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (
       !doNothing &&
       property &&
@@ -3514,7 +3514,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
           `3514 ${`\u001b[${32}m${`css property ends`}\u001b[${39}m`}`
         );
 
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (property.importantStarts && !property.importantEnds) {
         property.importantEnds = (left(str, i) as number) + 1;
         property.important = str.slice(
@@ -3535,7 +3535,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
           );
       }
 
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (property.valueStarts && !property.valueEnds) {
         property.valueEnds = (left(str, i) as number) + 1;
         if (!Array.isArray(property.value)) {
@@ -3555,7 +3555,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
         }
       }
 
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (str[i] === ";") {
         property.semi = i;
         DEV &&
@@ -3602,7 +3602,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
           );
       }
 
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (!property.end) {
         property.end = (left(str, i) as number) + 1;
         DEV &&
@@ -3615,7 +3615,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
           );
       }
 
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (token.type === "text" && token.start && !token.end) {
         token.end = i;
         token.value = str.slice(token.start, i);
@@ -3707,7 +3707,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
 
     // catch the end of a css property's value
     // -------------------------------------------------------------------------
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (
       !doNothing &&
       // token.type === "rule" &&
@@ -4035,13 +4035,13 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
         //                     ^
         //                we're here
 
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (property.valueStarts && !property.valueEnds) {
           property.valueEnds = i;
           property.value = str.slice(property.valueStarts, i);
         }
 
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (!property.end) {
           property.end = i;
         }
@@ -4142,7 +4142,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
 
     // catch the end of css property's !important
     // -------------------------------------------------------------------------
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (
       property?.importantStarts &&
       !property.importantEnds &&
@@ -4165,7 +4165,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
 
     // catch the start of css property's !important
     // -------------------------------------------------------------------------
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (
       !doNothing &&
       property &&
@@ -4231,7 +4231,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
 
     // catch the start of a css property's value
     // -------------------------------------------------------------------------
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (
       !doNothing &&
       property &&
@@ -4245,7 +4245,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
       str[i].trim()
     ) {
       DEV && console.log(`4247`);
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (
         // stopper character met:
         `;}'"`.includes(str[i]) &&
@@ -4254,7 +4254,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
       ) {
         DEV &&
           console.log(`4256 ${`\u001b[${31}m${`broken code!`}\u001b[${39}m`}`);
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (str[i] === ";") {
           property.semi = i;
           DEV &&
@@ -4270,7 +4270,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
         let temp;
 
         // patch missing .end
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (!property.end) {
           property.end = property.semi
             ? property.semi + 1
@@ -4304,7 +4304,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
           );
 
         // if there was a whitespace gap, submit it as text token
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (temp && temp < i) {
           pushProperty({
             type: "text",
@@ -6931,7 +6931,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
             // <table width="100">
             //                  ^
             //
-            /* istanbul ignore else */
+            /* c8 ignore next */
             if (isAttrClosing(str, attrib.attribOpeningQuoteAt, i)) {
               DEV && console.log(`6936`);
               attrib.attribClosingQuoteAt = i;
@@ -6945,7 +6945,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
                 );
             }
 
-            /* istanbul ignore else */
+            /* c8 ignore next */
             if (attrib.attribOpeningQuoteAt && attrib.attribClosingQuoteAt) {
               if (attrib.attribOpeningQuoteAt < ~-attrib.attribClosingQuoteAt) {
                 attrib.attribValueRaw = str.slice(

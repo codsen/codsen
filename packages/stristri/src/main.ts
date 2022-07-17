@@ -19,17 +19,17 @@ function returnHelper(
   templatingLang: { name: null | string },
   start: number
 ): Res {
-  /* istanbul ignore next */
+  /* c8 ignore next */
   if (arguments.length !== 4) {
     throw new Error(
       `stristri/returnHelper(): should be 3 input args but ${arguments.length} were given!`
     );
   }
-  /* istanbul ignore next */
+  /* c8 ignore next */
   if (typeof result !== "string") {
     throw new Error("stristri/returnHelper(): first arg missing!");
   }
-  /* istanbul ignore next */
+  /* c8 ignore next */
   if (typeof applicableOpts !== "object") {
     throw new Error("stristri/returnHelper(): second arg missing!");
   }
@@ -150,7 +150,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
             4
           )}`
         );
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (token.type === "comment") {
         DEV &&
           console.log(`156 ${`\u001b[${35}m${`COMMENT TOKEN`}\u001b[${39}m`}`);

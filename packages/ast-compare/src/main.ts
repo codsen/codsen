@@ -21,7 +21,7 @@ declare let DEV: boolean;
 
 // -----------------------------------------------------------------------------
 
-/* istanbul ignore next */
+/* c8 ignore next */
 function isBlank(something: any): boolean {
   if (isObj(something)) {
     return !Object.keys(something).length;

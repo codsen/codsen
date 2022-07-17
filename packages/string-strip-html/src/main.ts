@@ -312,7 +312,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               endingIdx,
             ]);
 
-            /* istanbul ignore else */
+            /* c8 ignore next */
             if (punctuation.has(str[i]) && resolvedOpts.cb) {
               resolvedOpts.cb({
                 tag: tag as Tag,
@@ -743,7 +743,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     Object.prototype.hasOwnProperty.call(opts, "dumpLinkHrefsNearby") &&
     existy(opts.dumpLinkHrefsNearby)
   ) {
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (isObj(opts.dumpLinkHrefsNearby)) {
       resolvedOpts.dumpLinkHrefsNearby = {
         ...defaults.dumpLinkHrefsNearby,
@@ -946,7 +946,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               ) &&
               stripHtml(`<${culprit.trim()}>`, resolvedOpts).result === ""
             ) {
-              /* istanbul ignore else */
+              /* c8 ignore next */
               if (
                 !allTagLocations.length ||
                 allTagLocations[allTagLocations.length - 1][0] !==
@@ -961,7 +961,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                   );
               }
 
-              /* istanbul ignore else */
+              /* c8 ignore next */
               if (
                 !filteredTagLocations.length ||
                 filteredTagLocations[filteredTagLocations.length - 1][0] !==
@@ -1141,11 +1141,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           }`
         );
       // 2. extract the full name string
-      /* istanbul ignore next */
+      /* c8 ignore next */
       tag.name = str.slice(
         tag.nameStarts,
         tag.nameEnds +
-          /* istanbul ignore next */
+          /* c8 ignore next */
           (!isClosingAt(i) && str[i] !== "/" && str[i + 1] === undefined
             ? 1
             : 0)
@@ -1246,7 +1246,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 4
               )}`
             );
-          /* istanbul ignore next */
+          /* c8 ignore next */
           filteredTagLocations = filteredTagLocations.filter(
             ([from, upto]) => !(from === tag.leftOuterWhitespace && upto === i)
           );
@@ -1385,7 +1385,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
       } else if (str[i] === "=") {
         DEV && console.log(`1387 equal char clauses`);
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (!attrObj.equalsAt) {
           DEV && console.log(`1390 equal hasn't been met`);
           attrObj.nameEnds = i;
@@ -1627,7 +1627,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             );
 
           // submit tag to allTagLocations
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (
             !allTagLocations.length ||
             allTagLocations[allTagLocations.length - 1][0] !==
@@ -1739,7 +1739,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           }
           DEV && console.log(`1740`);
 
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (
             !filteredTagLocations.length ||
             (filteredTagLocations[filteredTagLocations.length - 1][0] !==
@@ -1769,7 +1769,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               // ranged opening tag whose name is same like current, closing's
               let lastRangedOpeningTag: any;
               for (let z = rangedOpeningTagsForDeletion.length; z--; ) {
-                /* istanbul ignore else */
+                /* c8 ignore next */
                 if (rangedOpeningTagsForDeletion[z].name === tag.name) {
                   lastRangedOpeningTag = rangedOpeningTagsForDeletion[z];
                   DEV &&
@@ -1784,7 +1784,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 }
               }
 
-              /* istanbul ignore else */
+              /* c8 ignore next */
               if (lastRangedOpeningTag) {
                 DEV &&
                   console.log(
@@ -1817,7 +1817,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                     }, ${i + 1}] to filteredTagLocations`
                   );
               } else {
-                /* istanbul ignore next */
+                /* c8 ignore next */
                 filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
                 DEV &&
                   console.log(
@@ -1884,7 +1884,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           );
 
         // submit tag to allTagLocations
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (
           !allTagLocations.length ||
           allTagLocations[allTagLocations.length - 1][0] !==
@@ -2013,7 +2013,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           tag.attributes?.some((attrObj2: any) => attrObj2.equalsAt)
         ) {
           // submit tag to filteredTagLocations
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (
             !filteredTagLocations.length ||
             filteredTagLocations[filteredTagLocations.length - 1][0] !==
@@ -2381,7 +2381,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             // if whitespace extends to the beginning of a string, there's a risk it might include
             // not only spaces. To fix that, switch to space-only range marker:
 
-            /* istanbul ignore next */
+            /* c8 ignore next */
             tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
           } else {
             tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
@@ -2449,7 +2449,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 }
 
                 // submit the tag
-                /* istanbul ignore else */
+                /* c8 ignore next */
                 if (
                   !allTagLocations.length ||
                   allTagLocations[allTagLocations.length - 1][0] !==
@@ -2467,7 +2467,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                     );
                 }
 
-                /* istanbul ignore else */
+                /* c8 ignore next */
                 if (
                   !filteredTagLocations.length ||
                   filteredTagLocations[filteredTagLocations.length - 1][0] !==
@@ -2569,7 +2569,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         str[i] !== '"' &&
         str[i] !== "'"
       ) {
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (isObj(attrObj)) {
           DEV &&
             console.log(
@@ -2859,7 +2859,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
       // hard edit:
 
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (rangesToDelete.ranges) {
         let startingIdx2 =
           rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];

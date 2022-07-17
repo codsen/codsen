@@ -49,14 +49,14 @@ function internalApi(
   }
   let ast = clone(originalAst);
   // if object is passed, crawl it, checking for keyValPair:
-  /* istanbul ignore else */
+  /* c8 ignore next */
   if (isObj(ast)) {
     // DEV && console.log('\nwill compare:')
     // DEV && console.log('ast = ' + JSON.stringify(ast, null, 4))
     // DEV && console.log('keyValPair = ' + JSON.stringify(keyValPair, null, 4))
     if (compare(ast, keyValPair)) {
       if (set) {
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if ((replacementContentsArr as UnknownValueObj[]).length) {
           ast = (replacementContentsArr as UnknownValueObj[])[0];
           (replacementContentsArr as UnknownValueObj[]).shift();
@@ -85,7 +85,7 @@ function internalApi(
     // else, it's an array. Iterate each key, if it's an obj, call findTag()
     ast.forEach((_el, i) => {
       // DEV && console.log('array el[' + i + ']=' + JSON.stringify(el, null, 4))
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (isObj(ast[i]) || Array.isArray(ast[i])) {
         if (set) {
           ast[i] = internalApi(

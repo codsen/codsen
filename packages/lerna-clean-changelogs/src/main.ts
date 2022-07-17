@@ -46,7 +46,7 @@ function cleanChangelogs(
     changelog.length &&
     (!changelog.includes("\n") || !changelog.includes("\r"))
   ) {
-    /* istanbul ignore next */
+    /* c8 ignore next */
     let changelogEndedWithLinebreak =
       isStr(changelog) &&
       changelog.length &&
@@ -163,7 +163,7 @@ function cleanChangelogs(
       }
     }
 
-    /* istanbul ignore next */
+    /* c8 ignore next */
     final = `${newLinesArr.join("\n")}${
       changelogEndedWithLinebreak ? "\n" : ""
     }`;

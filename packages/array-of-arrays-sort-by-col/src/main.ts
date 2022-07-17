@@ -102,7 +102,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
           );
         return 1;
       }
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (
         (existy(arr1[+axis]) && !existy(arr2[+axis])) ||
         (existy(arr1[+axis]) &&
@@ -184,7 +184,7 @@ function sortByCol(arr: any[], axis: number | string = 0): any[] {
           return 1;
         }
       }
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (+axis + i < maxRangeToIterate) {
         // logging:
         DEV && console.log(logArray(arr1, +axis + i, 35));

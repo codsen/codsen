@@ -396,7 +396,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         // but here we stage because general whitespace clauses need to be
         // aware what was "booked" so far.
         staging.push([
-          /* istanbul ignore next */
+          /* c8 ignore next */
           whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx],
           {
             whiteSpaceStartsAt,
@@ -706,7 +706,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
               )}`
             );
 
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (str.endsWith(whatToAdd, linebreaksEndAt as number)) {
             DEV && console.log(`711 reuse the ending`);
             endIdx -= whatToAdd.length || 0;
@@ -725,7 +725,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
                 0
               )}]`}\u001b[${39}m`}`
             );
-          /* istanbul ignore next */
+          /* c8 ignore next */
           push(whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
             whiteSpaceStartsAt,
             whiteSpaceEndsAt: i,

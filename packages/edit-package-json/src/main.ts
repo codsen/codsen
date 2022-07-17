@@ -44,7 +44,7 @@ function stringifyAndEscapeValue(something: any): string {
   return JSON.stringify(something, null, 0);
 }
 
-/* istanbul ignore next */
+/* c8 ignore next */
 function isNotEscape(str: string, idx: number): boolean {
   if (str[idx] !== "\\") {
     // log(`045 yes, it's not excaped`);

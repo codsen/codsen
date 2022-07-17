@@ -58,7 +58,7 @@ function sort(input: string): Res {
     DEV && console.log(`058 content[${i}] = ${content[i]}`);
     if (!schema.length) {
       // prevention against last blank row:
-      /* istanbul ignore next */
+      /* c8 ignore next */
       if (content[i].length !== 1 || content[i][0] !== "") {
         for (let y = 0, len = content[i].length; y < len; y++) {
           schema.push(findType(content[i][y].trim()));
@@ -91,7 +91,7 @@ function sort(input: string): Res {
         // if (stateHeaderRowPresent && (schema.length !== content[i].length)) {
         // }
       }
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (!stateHeaderRowPresent && schema.length !== content[i].length) {
         stateDataColumnRowLengthIsConsistent = false;
       }
@@ -99,14 +99,14 @@ function sort(input: string): Res {
       let perRowIndexAtWhichEmptyCellsStart = null;
       for (let y = 0, len = content[i].length; y < len; y++) {
         // trim
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (
           perRowIndexAtWhichEmptyCellsStart === null &&
           findType(content[i][y].trim()) === "empty"
         ) {
           perRowIndexAtWhichEmptyCellsStart = y;
         }
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (
           perRowIndexAtWhichEmptyCellsStart !== null &&
           findType(content[i][y].trim()) !== "empty"
@@ -114,13 +114,13 @@ function sort(input: string): Res {
           perRowIndexAtWhichEmptyCellsStart = null;
         }
         // checking schema
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (
           findType(content[i][y].trim()) !== schema[y] &&
           !stateHeaderRowPresent
         ) {
           let toAdd = findType(content[i][y].trim());
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (Array.isArray(schema[y])) {
             if (!schema[y].includes(toAdd)) {
               (schema[y] as string[]).push(findType(content[i][y].trim()));
@@ -149,7 +149,7 @@ function sort(input: string): Res {
       // so algorithm skips those empty columns.
       //
 
-      /* istanbul ignore next */
+      /* c8 ignore next */
       if (
         indexAtWhichEmptyCellsStart !== null &&
         perRowIndexAtWhichEmptyCellsStart !== null &&
@@ -161,7 +161,7 @@ function sort(input: string): Res {
     }
   }
 
-  /* istanbul ignore else */
+  /* c8 ignore next */
   if (!indexAtWhichEmptyCellsStart) {
     indexAtWhichEmptyCellsStart = (schema as string[]).length;
   }
@@ -177,7 +177,7 @@ function sort(input: string): Res {
   }
 
   // if there are empty column in front, trim (via slice) both content and schema
-  /* istanbul ignore else */
+  /* c8 ignore next */
   if (nonEmptyColsStartAt !== 0) {
     content = content.map((arr) =>
       arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart as number)
@@ -259,7 +259,7 @@ function sort(input: string): Res {
         rowNum++
       ) {
         // 1. check for two consecutive equal values
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (lookForTwoEqualAndConsecutive) {
           // deliberate == to catch undefined and null
           if (previousValue == null) {
@@ -280,7 +280,7 @@ function sort(input: string): Res {
           }
         }
         // 2. also, tell if ALL values are the same:
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (lookForAllTheSame) {
           // deliberate == to catch undefined and null
           if (firstValue == null) {
@@ -296,7 +296,7 @@ function sort(input: string): Res {
         }
       }
 
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (lookForAllTheSame) {
         stateColumnsContainingSameValueEverywhere.push(
           suspectedBalanceColumnsIndexNumber
@@ -311,7 +311,7 @@ function sort(input: string): Res {
       ...deleteFromPotentialBalanceColumnIndexesList
     );
 
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (potentialBalanceColumnIndexesList.length === 1) {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0];
     } else if (potentialBalanceColumnIndexesList.length === 0) {
@@ -455,7 +455,7 @@ function sort(input: string): Res {
           }
 
           let totalVal = null;
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
             totalVal = currency(
               content[suspectedRowsIndex][balanceColumnIndex]
@@ -471,7 +471,7 @@ function sort(input: string): Res {
           }
 
           let topmostResContentBalance = null;
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (resContent[0][balanceColumnIndex] !== "") {
             topmostResContentBalance = currency(
               resContent[0][balanceColumnIndex]
@@ -487,7 +487,7 @@ function sort(input: string): Res {
           }
 
           let currentRowsDiffVal = null;
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (
             resContent[resContent.length - 1][
               potentialCreditDebitColumns[suspectedColIndex]
@@ -509,7 +509,7 @@ function sort(input: string): Res {
           }
 
           let lastResContentRowsBalance = null;
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
             lastResContentRowsBalance = currency(
               resContent[resContent.length - 1][balanceColumnIndex]
@@ -543,7 +543,7 @@ function sort(input: string): Res {
               `case 4 lastResContentRowsBalance=${lastResContentRowsBalance} - currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`
             );
 
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (
             diffVal &&
             (totalVal as currency).add(diffVal).format() ===
@@ -608,7 +608,7 @@ function sort(input: string): Res {
               )}`
             );
         }
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (thisRowIsDone) {
           thisRowIsDone = false;
           break;
@@ -627,7 +627,7 @@ function sort(input: string): Res {
   }
 
   // restore title row if present
-  /* istanbul ignore else */
+  /* c8 ignore next */
   if (stateHeaderRowPresent) {
     // trim header row of trailing empty columns if they protrude outside of the (consistent row length) schema
     if (
@@ -640,7 +640,7 @@ function sort(input: string): Res {
     resContent.unshift(content[0].slice(0, indexAtWhichEmptyCellsStart));
   }
 
-  /* istanbul ignore else */
+  /* c8 ignore next */
   if (content.length - (stateHeaderRowPresent ? 2 : 1) !== usedUpRows.length) {
     msgContent = "Not all rows were recognised!";
     msgType = "alert";

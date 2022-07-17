@@ -276,7 +276,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
   for (let i = 0; i <= len; i++) {
     if (resolvedOpts.progressFn) {
       percentageDone = Math.floor((counter / len) * 100);
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (percentageDone !== lastPercentageDone) {
         lastPercentageDone = percentageDone;
         resolvedOpts.progressFn(percentageDone);
@@ -390,7 +390,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
           // check, what's the index of the character to the right of
           // str[whatsOnTheLeft], is it any of the known named HTML entities.
           let firstChar: number | null = letterSeqStartAt;
-          /* istanbul ignore next */
+          /* c8 ignore next */
           let secondChar: number | null = letterSeqStartAt
             ? right(str, letterSeqStartAt)
             : null;
@@ -428,7 +428,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
           // TODO - set up the case-insensitive matching here:
 
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (
             Object.prototype.hasOwnProperty.call(
               entStartsWith,
@@ -479,7 +479,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 )}`}\u001b[${39}m`}`
               );
 
-            /* istanbul ignore else */
+            /* c8 ignore next */
             if (temp1) {
               ({ tempEnt, tempRes } = temp1);
             }
@@ -638,7 +638,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 )}`}\u001b[${39}m`}`
               );
 
-            /* istanbul ignore else */
+            /* c8 ignore next */
             if (temp1) {
               ({ tempEnt, tempRes } = temp1);
             }
@@ -769,7 +769,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
           // find out more: is it legit, unrecognised or numeric...
 
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (str.slice((whatsOnTheLeft as number) + 1, i).trim().length > 1) {
             DEV &&
               console.log(
@@ -820,7 +820,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
               // 1. TACKLE HEALTHY DECIMAL NUMERIC CHARACTER REFERENCE ENTITIES:
               if (
-                /* istanbul ignore next */
+                /* c8 ignore next */
                 situation.probablyNumeric &&
                 situation.charTrimmed[0] === "#" &&
                 !situation.whitespaceCount &&
@@ -1116,7 +1116,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
               // 1. check, maybe it's a known HTML entity
               let firstChar = letterSeqStartAt;
-              /* istanbul ignore next */
+              /* c8 ignore next */
               let secondChar = letterSeqStartAt
                 ? right(str, letterSeqStartAt)
                 : null;
@@ -1198,7 +1198,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   // b) two are different but entity is at least 4 chars long:
                   ((temp = [...allNamedEntitiesSetOnly].filter(
                     (curr) =>
-                      /* istanbul ignore next */
+                      /* c8 ignore next */
                       leven(curr, potentialEntity) === 2 &&
                       potentialEntity.length > 3
                   )) &&
@@ -1211,7 +1211,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
                 // now the problem: what if there were multiple entities matched?
 
-                /* istanbul ignore else */
+                /* c8 ignore next */
                 if (temp.length === 1) {
                   [tempEnt] = temp;
                   DEV &&
@@ -1390,7 +1390,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
           DEV && console.log(`1390 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
           rangesArr2.push({
             ruleName: `${
-              /* istanbul ignore next */
+              /* c8 ignore next */
               situation.probablyNumeric
                 ? "bad-html-entity-malformed-numeric"
                 : "bad-html-entity-unrecognised"
@@ -1582,10 +1582,10 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               `1582 ENTITY ${`\u001b[${32}m${matchedTemp}\u001b[${39}m`} FOLLOWS`
             );
           // is there ampersand on the left of "i", the first amp;?
-          /* istanbul ignore next */
+          /* c8 ignore next */
           let whatsOnTheLeft = left(str, i) || 0;
 
-          /* istanbul ignore else */
+          /* c8 ignore next */
           if (str[whatsOnTheLeft] === "&") {
             DEV && console.log(`1590 ampersand on the left`);
             DEV &&
@@ -1625,7 +1625,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             }
             DEV && console.log(`1626 final rangeFrom = ${rangeFrom}`);
 
-            /* istanbul ignore else */
+            /* c8 ignore next */
             if (typeof resolvedOpts.cb === "function") {
               DEV &&
                 console.log(`1631 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
@@ -1775,7 +1775,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
     )
   );
 
-  /* istanbul ignore else */
+  /* c8 ignore next */
   if (typeof resolvedOpts.cb === "function") {
     DEV &&
       console.log(`1781 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} mapped`);
@@ -1790,7 +1790,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
         4
       )}`
     );
-  /* istanbul ignore next */
+  /* c8 ignore next */
   return res;
 }
 

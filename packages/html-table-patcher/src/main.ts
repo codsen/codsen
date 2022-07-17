@@ -90,7 +90,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
       `090 ${`\u001b[${36}m${`COMMENCE THE TRAVERSE`}\u001b[${39}m`}`
     );
   traverse(cparser(str), (token, _val, innerObj) => {
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (
       isObj(token) &&
       (token as Obj).type === "comment" &&

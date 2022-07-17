@@ -130,7 +130,7 @@ function extract(str: string): Result {
     ) {
       DEV && console.log(`131 [class= caught`);
       // if it's zzz[class=something] (without quotes)
-      /* istanbul ignore else */
+      /* c8 ignore next */
       if (
         right(str, temp1) &&
         isLatinLetter(str[right(str, temp1) as number])

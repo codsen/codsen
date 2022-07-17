@@ -248,7 +248,7 @@ function convertOne(str: string, opts: Opts): Ranges {
                 : `${rightSingleQuote}n${rightSingleQuote}`
             }]`
           );
-        /* istanbul ignore next */
+        /* c8 ignore next */
         if (typeof offsetBy === "function") {
           offsetBy(2);
         }
@@ -264,7 +264,7 @@ function convertOne(str: string, opts: Opts): Ranges {
               (to as number) + 2
             }, "'n'"]`
           );
-        /* istanbul ignore next */
+        /* c8 ignore next */
         if (typeof offsetBy === "function") {
           offsetBy(2);
         }
@@ -402,7 +402,7 @@ function convertOne(str: string, opts: Opts): Ranges {
                   : `${rightSingleQuote}${rightDoubleQuote}`
               }}]`
             );
-          /* istanbul ignore next */
+          /* c8 ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
@@ -416,7 +416,7 @@ function convertOne(str: string, opts: Opts): Ranges {
             console.log(
               `417 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, '" ]`
             );
-          /* istanbul ignore next */
+          /* c8 ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
@@ -812,7 +812,7 @@ function convertOne(str: string, opts: Opts): Ranges {
               ? "&rdquo;&rsquo;"
               : `${rightDoubleQuote}${rightSingleQuote}`,
           ]);
-          /* istanbul ignore next */
+          /* c8 ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
@@ -828,7 +828,7 @@ function convertOne(str: string, opts: Opts): Ranges {
                 (to as number) + 1
               }, "']`
             );
-          /* istanbul ignore next */
+          /* c8 ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }

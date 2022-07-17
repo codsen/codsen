@@ -74,7 +74,7 @@ function internalCompare(
     if (Object.keys(smallObj as UnknownValueObj).length) {
       let keysArr = Object.keys(smallObj as UnknownValueObj);
       for (i = 0, len = keysArr.length; i < len; i++) {
-        /* istanbul ignore else */
+        /* c8 ignore next */
         if (
           Array.isArray((smallObj as UnknownValueObj)[keysArr[i]]) ||
           isObj((smallObj as UnknownValueObj)[keysArr[i]]) ||
@@ -112,7 +112,7 @@ function internalCompare(
     }
   } else if (typeof bigObj === "string" && typeof smallObj === "string") {
     // if both are strings
-    /* istanbul ignore else */
+    /* c8 ignore next */
     if (bigObj !== smallObj) {
       if (empty(smallObj) && empty(bigObj)) {
         return true;
