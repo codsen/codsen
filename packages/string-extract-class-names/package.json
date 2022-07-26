@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "7.0.14",
+  "version": "7.0.15",
   "description": "Extracts CSS class/id names from a string",
   "keywords": [
     "class",

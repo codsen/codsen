@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1](https://github.com/codsen/codsen/compare/string-strip-html@11.0.0...string-strip-html@11.0.1) (2022-07-26)
+
+
+### Bug Fixes
+
+* add more precautions when assuming string methods will exist ([00804b6](https://github.com/codsen/codsen/commit/00804b65a243f61fcf343fed6906e3b49646b156))
+* align edge whitespace processing on cb and not on cb ([43ee6d5](https://github.com/codsen/codsen/commit/43ee6d585b8c7ae68a896d4c23a1cbca104fc83a))
+* fix stripRecognisedHTMLOnly enabled to strip single letter tags ([1b7ff49](https://github.com/codsen/codsen/commit/1b7ff494290f019beb3dee191533d4dff2878606))
+
+
+
+
+
 ## [11.0.0](https://github.com/codsen/codsen/compare/string-strip-html@10.1.0...string-strip-html@11.0.0) (2022-07-16)
 
 ### Features

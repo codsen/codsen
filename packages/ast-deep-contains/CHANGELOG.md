@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.3](https://github.com/codsen/codsen/compare/ast-deep-contains@4.1.2...ast-deep-contains@4.1.3) (2022-07-26)
+
+**Note:** Version bump only for package ast-deep-contains
+
+
+
+
+
 ## 4.1.1 (2022-04-18)
 
 ### Bug Fixes
