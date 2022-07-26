@@ -28,7 +28,7 @@ assert.equal(
           }
         })
       ) {
-        rangesArr.push([deleteFrom, deleteTo, `${temp} ${insert}`]);
+        rangesArr.push([deleteFrom, deleteTo, `${temp} ${insert || ""}`]);
       } else {
         rangesArr.push(proposedReturn);
       }

@@ -190,7 +190,7 @@ test("15 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captu
 
 test("16 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured", () => {
   equal(
-    stripHtml('Let\'s watch <a href="https://www.rt.com/" targ', {
+    stripHtml(`Let's watch <a href="https://www.rt.com/" targ`, {
       dumpLinkHrefsNearby: { enabled: true },
     }).result,
     "Let's watch https://www.rt.com/",

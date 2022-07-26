@@ -136,4 +136,24 @@ test("15 - whitespace control - dirty html, few trailing spaces", () => {
   );
 });
 
+test("16 - tags on the edge of the string - normal", () => {
+  equal(stripHtml("<a>\n<b>\n<c>x</c>\n</b>\n</a>").result, "x", "16");
+});
+
+test("17 - tags on the edge of the string - cb", () => {
+  let gathered = [];
+  let cb = (o) => {
+    gathered.push(o);
+    o.rangesArr.push(o.proposedReturn);
+  };
+  // stripHtml("<a>\n<b>\n<c>x</c>\n</b>\n</a>", { cb });
+
+  equal(
+    stripHtml("<a>\n<b>\n<c>x</c>\n</b>\n</a>", { cb }).result,
+    "x",
+    "17.01"
+  );
+  // equal(gathered, [], "17.02");
+});
+
 test.run();

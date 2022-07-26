@@ -31,7 +31,7 @@ interface CbObj {
   tag: Tag;
   deleteFrom: null | number;
   deleteTo: null | number;
-  insert: null | string;
+  insert: null | undefined | string;
   rangesArr: Ranges$1;
   proposedReturn: Range | null;
 }
