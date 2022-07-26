@@ -84,7 +84,7 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "type-fest": "^2.16.0"
+            "type-fest": "^2.17.0"
         }
     },
     "array-group-str-omit-num-char": {
@@ -623,7 +623,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
-            "type-fest": "^2.16.0"
+            "type-fest": "^2.17.0"
         }
     },
     "ast-contains-only-empty-space": {
@@ -789,7 +789,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "@sindresorhus/is": "^5.2.0",
+            "@sindresorhus/is": "^5.3.0",
             "ast-monkey-traverse": "^3.0.14",
             "object-path": "^0.11.8"
         },
@@ -2289,7 +2289,7 @@ export const packageJSONData = {
             "chalk": "^5.0.1",
             "csv-sort": "^6.0.19",
             "globby": "^13.1.2",
-            "inquirer": "^9.0.1",
+            "inquirer": "^9.0.2",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
             "meow": "^10.1.3",
@@ -2908,7 +2908,7 @@ export const packageJSONData = {
             "chalk": "^5.0.1",
             "email-all-chars-within-ascii": "^4.0.18",
             "globby": "^13.1.2",
-            "inquirer": "^9.0.1",
+            "inquirer": "^9.0.2",
             "lodash.pullall": "^4.2.0",
             "minimist": "^1.2.6",
             "string-left-right": "^5.0.14",
