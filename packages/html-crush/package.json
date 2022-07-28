@@ -1,7 +1,7 @@
 {
   "name": "html-crush",
   "version": "5.0.20",
-  "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
+  "description": "A non-parsing, mixed-HTML email-template minifier",
   "keywords": [
     "breaks",
     "crush",

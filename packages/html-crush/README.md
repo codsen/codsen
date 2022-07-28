@@ -1,6 +1,6 @@
 # html-crush
 
-> Minifies HTML/CSS: valid or broken, pure or mixed with other languages
+> A non-parsing, mixed-HTML email-template minifier
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/html-crush" rel="nofollow noreferrer noopener">
