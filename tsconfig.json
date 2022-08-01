@@ -308,6 +308,9 @@
       "path": "packages/string-trim-spaces-only"
     },
     {
+      "path": "packages/string-truncator"
+    },
+    {
       "path": "packages/string-uglify"
     },
     {

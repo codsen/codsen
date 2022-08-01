@@ -84,7 +84,7 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "type-fest": "^2.17.0"
+            "type-fest": "^2.18.0"
         }
     },
     "array-group-str-omit-num-char": {
@@ -623,7 +623,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
-            "type-fest": "^2.17.0"
+            "type-fest": "^2.18.0"
         }
     },
     "ast-contains-only-empty-space": {
@@ -3646,7 +3646,7 @@ export const packageJSONData = {
     "html-crush": {
         "name": "html-crush",
         "version": "5.0.20",
-        "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
+        "description": "A non-parsing, mixed-HTML email-template minifier",
         "keywords": [
             "breaks",
             "crush",

@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - now convertOne() option opts.convertEntities default is false (it was wrongly true
-before)
+  before)
 
 # 2.1.0 (2022-04-11)
 

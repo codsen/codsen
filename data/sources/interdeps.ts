@@ -294,7 +294,7 @@ export const interdeps = [
     },
     {
         "name": "html-crush",
-        "size": 11036,
+        "size": 11015,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -717,7 +717,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 18182,
+        "size": 18342,
         "imports": [
             "ranges-apply",
             "ranges-push",
