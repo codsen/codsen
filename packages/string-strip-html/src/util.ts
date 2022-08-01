@@ -179,6 +179,15 @@ export const definitelyTagNames = new Set([
 
 export const singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
 
+// punctuation marks which we would delete if they were
+// trailing the URL's when opts.dumpLinkHrefsNearby is
+// enabled - for example:
+// Here's a <a href="https://codsen.com">link</a>.
+// turns into
+// Here's a link https://codsen.com
+// (no trailing full stop). We don't want to omit brackets though.
+export const punctuationTrailing = new Set([`.`, `,`, `;`, `!`, `?`]);
+
 export const punctuation = new Set([
   ".",
   ",",

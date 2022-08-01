@@ -417,4 +417,279 @@ test("31 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + stripTogetherWithThe
   );
 });
 
+test("32 - ends with URL - enabled=true, putOnNewLine=false", () => {
+  equal(
+    stripHtml(`<a href="https://example.com/">click me</a>`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "click me https://example.com/",
+    "32"
+  );
+});
+
+test("33 - ends with URL - enabled=true, putOnNewLine=true", () => {
+  equal(
+    stripHtml(`<a href="https://example.com/">click me</a>`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "click me\n\nhttps://example.com/",
+    "33"
+  );
+});
+
+test("34 - ends with URL - disabled", () => {
+  equal(
+    stripHtml(`<a href="https://example.com/">click me</a>`, {
+      dumpLinkHrefsNearby: { enabled: false },
+    }).result,
+    "click me",
+    "34"
+  );
+});
+
+test("35 - ends with URL - enabled=true, putOnNewLine=false", () => {
+  equal(
+    stripHtml(`<a href="https://example.com/">click me</a>\n\n\n\t`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "click me https://example.com/",
+    "35"
+  );
+});
+
+test("36 - ends with URL - enabled=true, putOnNewLine=true", () => {
+  equal(
+    stripHtml(`<a href="https://example.com/">click me</a>\n\n\n\t`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "click me\n\nhttps://example.com/",
+    "36"
+  );
+});
+
+test("37 - trailing dot + end", () => {
+  // putOnNewLine=false
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com",
+    "37.01"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>,`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com",
+    "37.02"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>;`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com",
+    "37.03"
+  );
+  equal(
+    stripHtml(`A <a href="https://codsen.com">link</a>!`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "A link https://codsen.com",
+    "37.04"
+  );
+  equal(
+    stripHtml(`Is this a <a href="https://codsen.com">link</a>?`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Is this a link https://codsen.com",
+    "37.05"
+  );
+  // putOnNewLine=true
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link.\n\nhttps://codsen.com",
+    "37.06"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>,`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link,\n\nhttps://codsen.com",
+    "37.07"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>;`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link;\n\nhttps://codsen.com",
+    "37.08"
+  );
+  equal(
+    stripHtml(`A <a href="https://codsen.com">link</a>!`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "A link!\n\nhttps://codsen.com",
+    "37.09"
+  );
+  equal(
+    stripHtml(`Is this a <a href="https://codsen.com">link</a>?`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Is this a link?\n\nhttps://codsen.com",
+    "37.10"
+  );
+});
+
+test("38 - trailing dot + new line", () => {
+  // putOnNewLine=false
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>.\nText.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com\nText.",
+    "38.01"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>,\ntext.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com\ntext.",
+    "38.02"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>;\ntext.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com\ntext.",
+    "38.03"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>!\ntext.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com\ntext.",
+    "38.04"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>?\ntext.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com\ntext.",
+    "38.05"
+  );
+  // putOnNewLine=true
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>.\nText.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link.\n\nhttps://codsen.com\n\nText.",
+    "38.06"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>,\ntext.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link,\n\nhttps://codsen.com\n\ntext.",
+    "38.07"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>;\ntext.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link;\n\nhttps://codsen.com\n\ntext.",
+    "38.08"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>!\ntext.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link!\n\nhttps://codsen.com\n\ntext.",
+    "38.09"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>?\ntext.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link?\n\nhttps://codsen.com\n\ntext.",
+    "38.10"
+  );
+});
+
+test("39 - trailing dot + space + text", () => {
+  // putOnNewLine=false
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>. Text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com Text.",
+    "39.01"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>, text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com text.",
+    "39.02"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>; text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com text.",
+    "39.03"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>! Text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com Text.",
+    "39.04"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>? Text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
+    }).result,
+    "Here's a link https://codsen.com Text.",
+    "39.05"
+  );
+  // putOnNewLine=true
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>. Text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link.\n\nhttps://codsen.com\n\nText.",
+    "39.06"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>, text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link,\n\nhttps://codsen.com\n\ntext.",
+    "39.07"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>; text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link;\n\nhttps://codsen.com\n\ntext.",
+    "39.08"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>! Text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link!\n\nhttps://codsen.com\n\nText.",
+    "39.09"
+  );
+  equal(
+    stripHtml(`Here's a <a href="https://codsen.com">link</a>? Text.`, {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "Here's a link?\n\nhttps://codsen.com\n\nText.",
+    "39.10"
+  );
+});
+
 test.run();
