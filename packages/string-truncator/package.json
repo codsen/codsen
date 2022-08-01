@@ -1,6 +1,6 @@
 {
   "name": "string-truncator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Over-engineered string truncation for web UI's",
   "keywords": [
     "string",

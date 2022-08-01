@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.1.0](https://github.com/codsen/codsen/compare/string-strip-html@11.0.1...string-strip-html@11.1.0) (2022-08-01)
+
+
+### Features
+
+* improvements to opts.dumpLinkHrefsNearby against punctuation ([daab255](https://github.com/codsen/codsen/commit/daab255c7b4736031ccead973e084c296e6ddba7))
+
+
+
+
+
 ## [11.0.1](https://github.com/codsen/codsen/compare/string-strip-html@11.0.0...string-strip-html@11.0.1) (2022-07-26)
 
 ### Bug Fixes
