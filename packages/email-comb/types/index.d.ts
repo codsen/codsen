@@ -1,3 +1,5 @@
+import { Opts as Opts$1 } from "html-crush";
+
 interface Obj {
   [key: string]: any;
 }
@@ -14,6 +16,7 @@ interface Opts {
   removeHTMLComments: boolean;
   removeCSSComments: boolean;
   doNotRemoveHTMLCommentsWhoseOpeningTagContains: string[];
+  htmlCrushOpts: Partial<Opts$1>;
   reportProgressFunc: null | ((percDone: number) => void);
   reportProgressFuncFrom: number;
   reportProgressFuncTo: number;

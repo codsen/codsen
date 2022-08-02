@@ -36,7 +36,6 @@ npm i email-comb
 
 ```js
 import { strict as assert } from "assert";
-
 import { comb, defaults, version } from "email-comb";
 
 const source = `<head>

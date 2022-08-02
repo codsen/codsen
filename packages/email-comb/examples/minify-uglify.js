@@ -1,10 +1,10 @@
-// Works even if `<style>` is within `<body>` and there's no `<head>`
+// Minifies and uglifies
 
 import { strict as assert } from "assert";
 import { comb } from "../dist/email-comb.esm.js";
 
 const someHtml = `<html>
-<body id="unused-1">
+<body id="used-1">
   <table class="unused-2 unused-3">
     <tr>
       <td class="unused-4 unused-5">text</td>
@@ -12,6 +12,9 @@ const someHtml = `<html>
   </table>
 
   <style>
+    #used-1 {
+      color: #ccc;
+    }
     .unused-6 {
       display: block;
     }
@@ -23,14 +26,18 @@ const someHtml = `<html>
 </html>`;
 
 assert.equal(
-  comb(someHtml).result,
+  comb(someHtml, {
+    uglify: true,
+    htmlCrushOpts: {
+      removeLineBreaks: true,
+    },
+  }).result,
   `<html>
-<body>
-  <table>
-    <tr>
-      <td>text</td>
-    </tr>
-  </table>
+<body id="q">
+<table><tr><td>text
+</td></tr></table>
+<style>#q{color:#ccc;}
+</style>
 </body>
 </html>`
 );

@@ -2,7 +2,6 @@
 // Quick Take
 
 import { strict as assert } from "assert";
-
 import { comb, defaults, version } from "../dist/email-comb.esm.js";
 
 const source = `<head>
