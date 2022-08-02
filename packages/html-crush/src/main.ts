@@ -13,7 +13,7 @@ declare let DEV: boolean;
 
 const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
 
-interface Opts {
+export interface Opts {
   lineLengthLimit: number;
   removeIndentations: boolean;
   removeLineBreaks: boolean;
@@ -126,7 +126,7 @@ function isLetter(something: any): boolean {
   );
 }
 
-interface Res {
+export interface Res {
   log: {
     timeTakenInMilliseconds: number;
     originalLength: number;

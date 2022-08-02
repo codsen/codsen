@@ -37,4 +37,4 @@ interface Res {
  */
 declare function crush(str: string, opts?: Partial<Opts>): Res;
 
-export { crush, defaults, version };
+export { Opts, Res, crush, defaults, version };
