@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "5.0.21",
+  "version": "5.0.22",
   "description": "A non-parsing, mixed-HTML email-template minifier",
   "keywords": [
     "breaks",

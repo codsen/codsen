@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.22](https://github.com/codsen/codsen/compare/html-crush@5.0.21...html-crush@5.0.22) (2022-08-02)
+
+
+### Bug Fixes
+
+* export Opts and Res types ([a91c313](https://github.com/codsen/codsen/commit/a91c31378be43a93a51893d3383a3b53cb2bc5f0))
+
+
+
+
+
 ## 5.0.16 (2022-04-18)
 
 ### Bug Fixes
