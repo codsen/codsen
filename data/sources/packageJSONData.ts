@@ -2921,7 +2921,7 @@ export const packageJSONData = {
     },
     "email-comb": {
         "name": "email-comb",
-        "version": "6.1.20",
+        "version": "6.1.21",
         "description": "Remove unused CSS from email templates",
         "keywords": [
             "body",
@@ -2990,7 +2990,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "array-pull-all-with-glob": "^6.1.3",
-            "html-crush": "^5.0.21",
+            "html-crush": "^5.0.22",
             "lodash.intersection": "^4.4.0",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
@@ -3435,7 +3435,7 @@ export const packageJSONData = {
     },
     "gulp-email-remove-unused-css": {
         "name": "gulp-email-remove-unused-css",
-        "version": "4.0.24",
+        "version": "4.0.25",
         "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
         "keywords": [
             "body",
@@ -3493,7 +3493,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "email-comb": "^6.1.20",
+            "email-comb": "^6.1.21",
             "plugin-error": "^2.0.0"
         },
         "devDependencies": {
@@ -3645,7 +3645,7 @@ export const packageJSONData = {
     },
     "html-crush": {
         "name": "html-crush",
-        "version": "5.0.21",
+        "version": "5.0.22",
         "description": "A non-parsing, mixed-HTML email-template minifier",
         "keywords": [
             "breaks",
