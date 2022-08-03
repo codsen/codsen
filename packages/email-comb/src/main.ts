@@ -35,12 +35,12 @@ interface NumValObj {
   [key: string]: number;
 }
 
-interface HeadsAndTailsObj {
+export interface HeadsAndTailsObj {
   heads: string;
   tails: string;
 }
 
-interface Opts {
+export interface Opts {
   whitelist: string[];
   backend: HeadsAndTailsObj[];
   uglify: boolean;
@@ -53,7 +53,7 @@ interface Opts {
   reportProgressFuncTo: number;
 }
 
-interface Res {
+export interface Res {
   log: {
     timeTakenInMilliseconds: number;
     traversedTotalCharacters: number;
