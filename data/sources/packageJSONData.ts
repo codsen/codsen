@@ -2921,7 +2921,7 @@ export const packageJSONData = {
     },
     "email-comb": {
         "name": "email-comb",
-        "version": "6.1.21",
+        "version": "6.1.22",
         "description": "Remove unused CSS from email templates",
         "keywords": [
             "body",
@@ -3435,7 +3435,7 @@ export const packageJSONData = {
     },
     "gulp-email-remove-unused-css": {
         "name": "gulp-email-remove-unused-css",
-        "version": "4.0.25",
+        "version": "4.0.26",
         "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
         "keywords": [
             "body",
@@ -3493,7 +3493,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "email-comb": "^6.1.21",
+            "email-comb": "^6.1.22",
             "plugin-error": "^2.0.0"
         },
         "devDependencies": {

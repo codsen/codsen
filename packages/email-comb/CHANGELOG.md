@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [6.1.22](https://github.com/codsen/codsen/compare/email-comb@6.1.21...email-comb@6.1.22) (2022-08-04)
 
-
 ### Bug Fixes
 
-* export Opts and Res types ([398a7d1](https://github.com/codsen/codsen/commit/398a7d19e70322c629bf5d7cf9fb107e64aefc15))
-
-
-
-
+- export Opts and Res types ([398a7d1](https://github.com/codsen/codsen/commit/398a7d19e70322c629bf5d7cf9fb107e64aefc15))
 
 ## [6.1.18](https://github.com/codsen/codsen/compare/email-comb@6.1.17...email-comb@6.1.18) (2022-07-13)
 
