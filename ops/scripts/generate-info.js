@@ -238,37 +238,6 @@ for (let p of packageNames) {
   }
 }
 
-// At this point, we have divided the packages pool, but order is alphabetical.
-// We need to control the order, to set it as per of classification JSON (at least
-// the top part of it).
-
-function setTheOrder(libs, classification) {
-  return classification.concat(
-    libs.filter((p) => !classification.includes(p)).sort()
-  );
-}
-
-splitListStringLibs = setTheOrder(
-  splitListStringLibs,
-  programClassification.stringLibsList
-);
-splitListHtmlLibs = setTheOrder(
-  splitListHtmlLibs,
-  programClassification.htmlLibsList
-);
-splitListObjectOrArrLibs = setTheOrder(
-  splitListObjectOrArrLibs,
-  programClassification.objectLibsList
-);
-splitListASTApps = setTheOrder(
-  splitListASTApps,
-  programClassification.astLibsList
-);
-splitListFlagshipLibs = setTheOrder(
-  splitListFlagshipLibs,
-  programClassification.flagshipLibsList
-);
-
 // -----------------------------------------------------------------------------
 
 const interdep = [];
@@ -451,6 +420,14 @@ fs.writeFile(
     }
     console.log(`\u001b[${32}m${`interdeps.ts written OK`}\u001b[${39}m`);
   }
+);
+
+console.log(
+  `426 ${`\u001b[${33}m${`splitListHtmlLibs`}\u001b[${39}m`} = ${JSON.stringify(
+    splitListHtmlLibs,
+    null,
+    4
+  )}`
 );
 
 fs.writeFile(

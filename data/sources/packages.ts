@@ -545,9 +545,10 @@ const packagesOutsideMonorepo = [
     "tsd-extract-noesm"
 ] as const;
 const splitListFlagshipLibs = [
+    "detergent",
     "email-comb",
     "html-crush",
-    "detergent"
+    "string-strip-html"
 ] as const;
 const splitListRangeLibs = [
     "ranges-apply",
@@ -565,37 +566,35 @@ const splitListRangeLibs = [
     "string-range-expander"
 ] as const;
 const splitListHtmlLibs = [
-    "emlint",
-    "html-crush",
-    "stristri",
-    "string-strip-html",
+    "all-named-html-entities",
+    "charcode-is-valid-xml-name-character",
     "color-shorthand-hex-to-six-digit",
     "detect-is-it-html-or-xhtml",
     "detect-templating-language",
-    "html-table-patcher",
-    "is-html-tag-opening",
-    "is-html-attribute-closing",
-    "is-language-code",
-    "html-img-alt",
-    "is-media-descriptor",
-    "is-relative-uri",
-    "is-char-suitable-for-html-attr-name",
-    "all-named-html-entities",
-    "charcode-is-valid-xml-name-character",
-    "html-entities-not-email-friendly",
+    "emlint",
     "generate-atomic-css",
     "gulp-email-remove-unused-css",
-    "html-all-known-attributes"
+    "html-all-known-attributes",
+    "html-entities-not-email-friendly",
+    "html-img-alt",
+    "html-table-patcher",
+    "is-char-suitable-for-html-attr-name",
+    "is-html-attribute-closing",
+    "is-html-tag-opening",
+    "is-language-code",
+    "is-media-descriptor",
+    "is-relative-uri",
+    "stristri"
 ] as const;
 const splitListStringLibs = [
-    "edit-package-json",
-    "easy-replace",
-    "str-indexes-of-plus",
+    "arrayiffy-if-string",
     "bitbucket-slug",
+    "easy-replace",
+    "edit-package-json",
     "email-all-chars-within-ascii",
     "js-row-num",
     "line-column-mini",
-    "arrayiffy-if-string",
+    "str-indexes-of-plus",
     "string-apostrophes",
     "string-bionic-split",
     "string-character-is-astral-surrogate",
@@ -621,23 +620,23 @@ const splitListStringLibs = [
     "string-unfancy"
 ] as const;
 const splitListObjectOrArrLibs = [
-    "json-comb-core",
-    "json-variables",
-    "object-merge-advanced",
-    "object-boolean-combinations",
-    "test-mixer",
     "array-group-str-omit-num-char",
     "array-includes-with-glob",
     "array-of-arrays-into-ast",
     "array-of-arrays-sort-by-col",
     "array-pull-all-with-glob",
+    "json-comb-core",
+    "json-variables",
     "object-all-values-equal-to",
+    "object-boolean-combinations",
     "object-delete-key",
     "object-fill-missing-keys",
     "object-flatten-all-arrays",
     "object-flatten-referencing",
+    "object-merge-advanced",
     "object-no-new-keys",
-    "object-set-all-values-to"
+    "object-set-all-values-to",
+    "test-mixer"
 ] as const;
 const splitListLernaLibs = [
     "lerna-clean-changelogs",
@@ -654,10 +653,6 @@ const splitListCliApps = [
     "json-sort-cli"
 ] as const;
 const splitListASTApps = [
-    "ast-monkey",
-    "ast-monkey-traverse",
-    "ast-monkey-util",
-    "ast-monkey-traverse-with-lookahead",
     "ast-compare",
     "ast-contains-only-empty-space",
     "ast-deep-contains",
@@ -665,7 +660,11 @@ const splitListASTApps = [
     "ast-get-object",
     "ast-get-values-by-key",
     "ast-is-empty",
-    "ast-loose-compare"
+    "ast-loose-compare",
+    "ast-monkey",
+    "ast-monkey-traverse",
+    "ast-monkey-traverse-with-lookahead",
+    "ast-monkey-util"
 ] as const;
 const splitListMiscLibs = [
     "check-types-mini",

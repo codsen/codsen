@@ -1,10 +1,5 @@
 export const programClassification = {
-  webApps: {
-    "email-comb": "emailcomb.com",
-    "html-crush": "htmlcrush.com",
-    detergent: "detergent.io",
-  },
-  flagshipLibsList: ["email-comb", "html-crush", "detergent"],
+  flagshipLibsList: ["string-strip-html", "email-comb", "html-crush", "detergent"],
   rangeLibsList: [
     "ranges-push",
     "ranges-apply",
