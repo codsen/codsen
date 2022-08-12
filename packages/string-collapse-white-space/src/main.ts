@@ -11,19 +11,19 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Extras {
+export interface Extras {
   whiteSpaceStartsAt: null | number;
   whiteSpaceEndsAt: null | number;
   str: string;
 }
 
-interface CbObj extends Extras {
+export interface CbObj extends Extras {
   suggested: Range;
 }
 
-type Callback = (cbObj: CbObj) => any;
+export type Callback = (cbObj: CbObj) => any;
 
-interface Opts {
+export interface Opts {
   trimStart: boolean;
   trimEnd: boolean;
   trimLines: boolean;
@@ -56,7 +56,7 @@ const defaults: Opts = {
   },
 };
 
-interface Res {
+export interface Res {
   result: string;
   ranges: RangesType;
 }
@@ -876,4 +876,4 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
   };
 }
 
-export { collapse, cbSchema, defaults, version };
+export { collapse, cbSchema, defaults, version, Range, RangesType };
