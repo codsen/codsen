@@ -8,11 +8,11 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface MappingObj {
+export interface MappingObj {
   [key: string]: any;
 }
 
-interface Opts {
+export interface Opts {
   wildcard: string;
   dedupePlease: boolean;
 }
