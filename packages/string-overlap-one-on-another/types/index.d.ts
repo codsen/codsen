@@ -10,4 +10,4 @@ declare function overlap(
   opts?: Partial<Opts>
 ): string;
 
-export { defaults, overlap, version };
+export { Opts, defaults, overlap, version };
