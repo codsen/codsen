@@ -5,7 +5,7 @@ const version: string = v;
 // ===================================
 // F U N C T I O N S
 
-type Output = "html" | "xhtml" | null;
+export type Output = "html" | "xhtml" | null;
 
 function detectIsItHTMLOrXhtml(input: string): Output {
   function existy(x: any): boolean {
