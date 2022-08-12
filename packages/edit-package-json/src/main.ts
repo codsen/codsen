@@ -68,7 +68,7 @@ function isNotEscape(str: string, idx: number): boolean {
   return false;
 }
 
-interface Inputs {
+export interface Inputs {
   str: string;
   path: string;
   valToInsert?: string | number;
