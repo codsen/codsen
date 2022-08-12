@@ -19,4 +19,4 @@ interface Opts {
 }
 declare function er(source: string, opts: Opts, replacement: string): string;
 
-export { er, version };
+export { Opts, er, version };
