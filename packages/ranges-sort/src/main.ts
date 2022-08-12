@@ -1,10 +1,10 @@
 import { version as v } from "../package.json";
 
-type Range =
+export type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
 
-type Ranges = Range[] | null;
+export type Ranges = Range[] | null;
 
 const version: string = v;
 
@@ -20,9 +20,9 @@ const version: string = v;
 // does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
 // sorts first by first element, then by second. Retains possible third element.
 
-type ProgressFn = (percentageDone: number) => void;
+export type ProgressFn = (percentageDone: number) => void;
 
-interface Opts {
+export interface Opts {
   strictlyTwoElementsInRangeArrays: boolean;
   progressFn: undefined | null | ProgressFn;
 }
@@ -117,4 +117,4 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   });
 }
 
-export { rSort, defaults, version, Range, Ranges };
+export { rSort, defaults, version };

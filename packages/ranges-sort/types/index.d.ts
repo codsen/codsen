@@ -14,4 +14,4 @@ declare function rSort(
   originalOptions?: Partial<Opts>
 ): Ranges;
 
-export { Range, Ranges, defaults, rSort, version };
+export { Opts, ProgressFn, Range, Ranges, defaults, rSort, version };
