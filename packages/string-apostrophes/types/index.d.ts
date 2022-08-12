@@ -1,4 +1,5 @@
 import { Ranges } from "ranges-apply";
+export { Range, Ranges } from "ranges-apply";
 
 declare const version: string;
 interface Opts {
@@ -23,4 +24,4 @@ interface convertAllRes {
  */
 declare function convertAll(str: string, opts?: Partial<Opts>): convertAllRes;
 
-export { convertAll, convertOne, defaults, version };
+export { Opts, convertAll, convertOne, defaults, version };

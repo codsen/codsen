@@ -7,7 +7,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Opts {
+export interface Opts {
   from: number;
   to?: number;
   value?: string;
@@ -1150,4 +1150,4 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
   };
 }
 
-export { convertOne, convertAll, defaults, version };
+export { convertOne, convertAll, defaults, version, Range, Ranges };
