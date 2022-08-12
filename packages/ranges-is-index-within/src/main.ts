@@ -4,7 +4,7 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-interface Opts {
+export interface Opts {
   inclusiveRangeEnds: boolean;
   returnMatchedRangeInsteadOfTrue: boolean;
 }
@@ -47,4 +47,4 @@ function isIndexWithin(
   );
 }
 
-export { isIndexWithin, defaults, version };
+export { isIndexWithin, defaults, version, Range, Ranges };
