@@ -23,7 +23,7 @@ function chomp(str: string): string {
   return str;
 }
 
-interface Opts {
+export interface Opts {
   isAttributeValue: boolean;
   strict: boolean;
 }
@@ -153,4 +153,4 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   return rMerge(rangesArr as Ranges);
 }
 
-export { rEntDecode, defaults, version };
+export { rEntDecode, defaults, Ranges, version };

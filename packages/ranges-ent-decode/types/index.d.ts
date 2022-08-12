@@ -1,4 +1,5 @@
 import { Ranges } from "ranges-merge";
+export { Ranges } from "ranges-merge";
 
 declare const version: string;
 interface Opts {
@@ -8,4 +9,4 @@ interface Opts {
 declare const defaults: Opts;
 declare function rEntDecode(str: string, opts?: Partial<Opts>): Ranges;
 
-export { defaults, rEntDecode, version };
+export { Opts, defaults, rEntDecode, version };
