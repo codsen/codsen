@@ -26,6 +26,10 @@ interface ErrorObj {
   severity?: Severity;
   keepSeparateWhenFixing?: boolean;
 }
+interface IdxRangeObj {
+  idxFrom: number;
+  idxTo: number;
+}
 interface TagTokenWithChildren extends TagToken {
   children: TokenWithChildren[];
 }
@@ -59,7 +63,12 @@ declare function cparser(str: string, opts?: Partial<Opts>): any[];
 
 export {
   CommentTokenWithChildren,
+  ErrCb,
   ErrorObj,
+  IdxRangeObj,
+  Opts,
+  Severity,
+  SupplementedErrorObj,
   TagTokenWithChildren,
   TokenWithChildren,
   cparser,

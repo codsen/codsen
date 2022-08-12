@@ -22,8 +22,8 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-type Severity = 0 | 1 | 2;
-interface ErrorObj {
+export type Severity = 0 | 1 | 2;
+export interface ErrorObj {
   ruleId?: string;
   message: string;
   idxFrom: number;
@@ -33,20 +33,20 @@ interface ErrorObj {
   keepSeparateWhenFixing?: boolean;
 }
 
-interface IdxRangeObj {
+export interface IdxRangeObj {
   idxFrom: number;
   idxTo: number;
 }
 
 // tokenizer doesn't have "children" property, parser, this program,
 // adds this extra data, so we need to extend the types accordingly:
-interface TagTokenWithChildren extends TagToken {
+export interface TagTokenWithChildren extends TagToken {
   children: TokenWithChildren[];
 }
-interface CommentTokenWithChildren extends CommentToken {
+export interface CommentTokenWithChildren extends CommentToken {
   children: TokenWithChildren[];
 }
-type TokenWithChildren =
+export type TokenWithChildren =
   | TextToken
   | TagTokenWithChildren
   | RuleToken
@@ -54,13 +54,13 @@ type TokenWithChildren =
   | CommentTokenWithChildren
   | EspToken;
 
-interface SupplementedErrorObj extends ErrorObj {
+export interface SupplementedErrorObj extends ErrorObj {
   tokenObj: TokenWithChildren;
 }
 
-type ErrCb = (obj: Partial<SupplementedErrorObj>) => void;
+export type ErrCb = (obj: Partial<SupplementedErrorObj>) => void;
 
-interface Opts {
+export interface Opts {
   reportProgressFunc: null | ((percDone: number) => void);
   reportProgressFuncFrom: number;
   reportProgressFuncTo: number;
@@ -1485,12 +1485,4 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
 
 // -----------------------------------------------------------------------------
 
-export {
-  cparser,
-  defaults,
-  version,
-  ErrorObj,
-  TokenWithChildren,
-  TagTokenWithChildren,
-  CommentTokenWithChildren,
-};
+export { cparser, defaults, version };
