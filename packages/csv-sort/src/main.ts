@@ -9,7 +9,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Res {
+export interface Res {
   res: string[][];
   msgContent: null | string;
   msgType: null | string;
