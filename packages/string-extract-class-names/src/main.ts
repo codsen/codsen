@@ -7,7 +7,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Result {
+export interface Result {
   res: string[];
   ranges: Ranges;
 }
