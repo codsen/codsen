@@ -12,13 +12,13 @@ declare let DEV: boolean;
 // ---------------------------------------------------------------------
 // MAIN:
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 
 type Only = "array" | "object" | "any";
 
-interface Opts {
+export interface Opts {
   key: null | string;
   val: any;
   cleanup: boolean;
