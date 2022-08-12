@@ -4,10 +4,10 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
-interface Opts {
+export interface Opts {
   targetJSON: boolean;
 }
 const defaults = {
