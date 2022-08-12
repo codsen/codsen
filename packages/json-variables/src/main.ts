@@ -19,11 +19,11 @@ declare let DEV: boolean;
 
 const has = Object.prototype.hasOwnProperty;
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 
-interface Opts {
+export interface Opts {
   heads: string;
   tails: string;
   headsNoWrap: string;

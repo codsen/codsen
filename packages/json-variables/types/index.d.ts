@@ -26,4 +26,4 @@ declare const defaults: Opts;
  */
 declare function jVar(input: Obj, opts?: Partial<Opts>): Obj;
 
-export { defaults, jVar, version };
+export { Obj, Opts, defaults, jVar, version };
