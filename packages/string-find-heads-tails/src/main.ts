@@ -16,7 +16,7 @@ function isStr(something: unknown): boolean {
   return typeof something === "string";
 }
 
-interface Opts {
+export interface Opts {
   fromIndex: number;
   throwWhenSomethingWrongIsDetected: boolean;
   allowWholeValueToBeOnlyHeadsOrTails: boolean;
@@ -34,7 +34,7 @@ const defaults = {
   relaxedAPI: false,
 };
 
-interface ResObj {
+export interface ResObj {
   headsStartAt: number;
   headsEndAt: number;
   tailsStartAt: number;
