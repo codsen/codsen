@@ -32,7 +32,7 @@ interface UnknownValueObj {
   [key: string]: any;
 }
 
-interface Opts {
+export interface Opts {
   skipContainers: boolean;
   arrayStrictComparison: boolean;
 }
@@ -42,11 +42,11 @@ const defaults: Opts = {
   arrayStrictComparison: false,
 };
 
-interface Callback {
+export interface Callback {
   (leftSideVal: any, rightSideVal: any, path: string): void;
 }
 
-interface ErrorCallback {
+export interface ErrorCallback {
   (errStr: string): void;
 }
 
