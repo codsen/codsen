@@ -15,7 +15,7 @@ function isStr(something: any): boolean {
   return typeof something === "string";
 }
 
-interface Opts {
+export interface Opts {
   stringOffset: number;
   maxDistance: number;
   ignoreWhitespace: boolean;
@@ -26,7 +26,7 @@ const defaults: Opts = {
   ignoreWhitespace: true,
 };
 
-interface DataObj {
+export interface DataObj {
   idxFrom: number;
   idxTo: number;
 }
