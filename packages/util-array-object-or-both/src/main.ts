@@ -3,7 +3,7 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-interface Opts {
+export interface Opts {
   msg: string;
   optsVarName: string;
 }
