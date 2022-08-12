@@ -11,7 +11,7 @@ const version: string = v;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare let DEV: boolean;
 
-interface UnknownValueObj {
+export interface UnknownValueObj {
   [key: string]: any;
 }
 
