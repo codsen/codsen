@@ -10,4 +10,4 @@ declare function combinations(
   Override?: undefined | Obj
 ): BoolObj[];
 
-export { combinations, version };
+export { BoolObj, Obj, combinations, version };
