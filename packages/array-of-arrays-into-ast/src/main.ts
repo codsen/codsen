@@ -6,11 +6,11 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface PlainObj {
+export interface PlainObj {
   [key: string]: any;
 }
 
-interface Opts {
+export interface Opts {
   dedupe: boolean;
 }
 
