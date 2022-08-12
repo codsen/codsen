@@ -2,6 +2,9 @@ import { Ranges } from "ranges-sort";
 export { Range, Ranges } from "ranges-sort";
 
 declare const version: string;
+interface UnknownValueObj {
+  [key: string]: any;
+}
 declare type ProgressFn = (percentageDone: number) => void;
 interface Opts {
   mergeType: 1 | 2 | "1" | "2";
@@ -14,4 +17,4 @@ declare function rMerge(
   originalOpts?: Partial<Opts>
 ): Ranges;
 
-export { defaults, rMerge, version };
+export { Opts, ProgressFn, UnknownValueObj, defaults, rMerge, version };

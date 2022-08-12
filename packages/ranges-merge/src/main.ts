@@ -7,13 +7,13 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface UnknownValueObj {
+export interface UnknownValueObj {
   [key: string]: any;
 }
 
-type ProgressFn = (percentageDone: number) => void;
+export type ProgressFn = (percentageDone: number) => void;
 
-interface Opts {
+export interface Opts {
   mergeType: 1 | 2 | "1" | "2";
   progressFn: null | undefined | ProgressFn;
   joinRangesThatTouchEdges: boolean;
