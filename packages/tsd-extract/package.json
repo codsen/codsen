@@ -71,5 +71,8 @@
         ""
       ]
     }
+  },
+  "dependencies": {
+    "string-left-right": "^5.0.14"
   }
 }

@@ -1,9 +1,17 @@
+declare const roysSort: (a: string, b: string) => number;
+
 declare const version: string;
 interface Opts {
   extractAll: boolean;
   semi: boolean;
   mustInclude: string;
   stripAs: boolean;
+  contentSort?: (el1: string, el2: string) => number;
+}
+interface Chunk {
+  startsAt: null | number;
+  endsAt: null | number;
+  identifiers: string[];
 }
 interface Statement {
   identifiers: string[];
@@ -34,4 +42,14 @@ declare function extract(
 ): ReturnType;
 declare function join(...args: string[]): string;
 
-export { defaults, extract, join, version };
+export {
+  Chunk,
+  Opts,
+  ReturnType,
+  Statement,
+  defaults,
+  extract,
+  join,
+  roysSort,
+  version,
+};
