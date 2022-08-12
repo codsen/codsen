@@ -11,13 +11,13 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Opts {
+export interface Opts {
   heads: string[];
   tails: string[];
 }
 
 // allows strings as well (which will end up arrayiffied)
-interface LenientOpts {
+export interface LenientOpts {
   heads: string | string[];
   tails: string | string[];
 }
