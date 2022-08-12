@@ -22,7 +22,7 @@ function isStr(something: any): boolean {
   return typeof something === "string";
 }
 
-interface Opts {
+export interface Opts {
   limitToBeAddedWhitespace: boolean;
   limitLinebreaksCount: number;
   mergeType: 1 | 2 | "1" | "2" | undefined;
