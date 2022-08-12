@@ -1,7 +1,7 @@
 {
   "name": "csv-sort",
   "version": "6.0.20",
-  "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
+  "description": "Sort double-entry bookkeeping CSV from internet banking",
   "keywords": [
     "accountancy",
     "accounting",
