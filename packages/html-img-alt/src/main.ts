@@ -9,7 +9,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Opts {
+export interface Opts {
   unfancyTheAltContents: boolean;
 }
 const defaults: Opts = {
