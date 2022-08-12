@@ -6,7 +6,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Opts {
+export interface Opts {
   classicTrim: boolean;
   cr: boolean;
   lf: boolean;
@@ -24,7 +24,7 @@ const defaults: Opts = {
   nbsp: false,
 };
 
-interface Res {
+export interface Res {
   res: string;
   ranges: Ranges;
 }

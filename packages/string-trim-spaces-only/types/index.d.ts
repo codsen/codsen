@@ -19,4 +19,4 @@ interface Res {
 }
 declare function trimSpaces(str: string, opts?: Partial<Opts>): Res;
 
-export { defaults, trimSpaces, version };
+export { Opts, Res, defaults, trimSpaces, version };
