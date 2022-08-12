@@ -9,10 +9,10 @@ declare let DEV: boolean;
 
 const BACKSLASH = "\u005C";
 
-interface UnknownValueObj {
+export interface UnknownValueObj {
   [key: string]: any;
 }
-interface Opts {
+export interface Opts {
   throwIfEmpty?: boolean;
   cb?: null | ((varValue: string) => any);
 }
