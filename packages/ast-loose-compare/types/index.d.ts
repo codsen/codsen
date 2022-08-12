@@ -10,6 +10,9 @@ declare type JsonObject = {
   [Key in string]?: JsonValue;
 };
 declare type JsonArray = JsonValue[];
+interface UnknownValueObj {
+  [key: string]: any;
+}
 /**
  * Compare anything: AST, objects, arrays and strings
  */
@@ -18,4 +21,11 @@ declare function looseCompare(
   smallObj: JsonValue
 ): boolean | undefined;
 
-export { looseCompare, version };
+export {
+  JsonArray,
+  JsonObject,
+  JsonValue,
+  UnknownValueObj,
+  looseCompare,
+  version,
+};
