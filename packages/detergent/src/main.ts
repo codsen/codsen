@@ -1333,6 +1333,6 @@ function det(str: string, opts?: Partial<Opts>): Res {
   };
 }
 
-export { det, defaultOpts as opts, version };
+export { det, defaultOpts as opts, version, Opts, Res };
 
 // -----------------------------------------------------------------------------

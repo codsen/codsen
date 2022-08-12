@@ -530,7 +530,7 @@ function isNumber(something: any): boolean {
   );
 }
 
-function isLetter(str: any): boolean {
+function isLetter(str: unknown): boolean {
   return (
     typeof str === "string" &&
     str.length === 1 &&
