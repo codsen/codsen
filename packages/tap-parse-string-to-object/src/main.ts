@@ -11,7 +11,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Res {
+export interface Res {
   ok: boolean;
   assertsTotal: number;
   assertsPassed: number;
@@ -21,7 +21,7 @@ interface Res {
   suitesFailed: number;
 }
 
-interface StreamInterface extends NodeJS.ReadWriteStream {
+export interface StreamInterface extends NodeJS.ReadWriteStream {
   read(size?: number): any;
 }
 

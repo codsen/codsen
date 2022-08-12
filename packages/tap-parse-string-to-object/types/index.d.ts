@@ -15,4 +15,4 @@ declare function parseTap(
   something: string | StreamInterface
 ): Res | Promise<Res>;
 
-export { parseTap, version };
+export { Res, StreamInterface, parseTap, version };
