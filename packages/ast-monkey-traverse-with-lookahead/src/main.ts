@@ -9,11 +9,11 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 
-type NextToken = [
+export type NextToken = [
   key: "string",
   value: any,
   innerObj: {
@@ -24,7 +24,7 @@ type NextToken = [
   }
 ];
 
-interface InnerObj {
+export interface InnerObj {
   depth: number;
   path: string;
   topmostKey?: string;
@@ -33,7 +33,7 @@ interface InnerObj {
   next?: NextToken[];
 }
 
-type Callback = (
+export type Callback = (
   key: string | Obj,
   val: any,
   innerObj: InnerObj,
