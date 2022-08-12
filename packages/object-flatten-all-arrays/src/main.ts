@@ -6,10 +6,10 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
-interface Opts {
+export interface Opts {
   flattenArraysContainingStringsToBeEmpty: boolean;
 }
 const defaults: Opts = {
