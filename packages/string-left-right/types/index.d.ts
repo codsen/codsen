@@ -1,4 +1,7 @@
 declare const version: string;
+interface Opts {
+  i?: boolean;
+}
 declare function right(str: string, idx?: number | null): number | null;
 declare function rightStopAtNewLines(str: string, idx: number): number | null;
 declare function rightStopAtRawNbsp(str: string, idx: number): number | null;
@@ -32,6 +35,7 @@ declare function chompRight(
 ): number | null;
 
 export {
+  Opts,
   chompLeft,
   chompRight,
   left,
