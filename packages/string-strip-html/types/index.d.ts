@@ -81,4 +81,4 @@ interface Res {
  */
 declare function stripHtml(str: string, opts?: Partial<Opts>): Res;
 
-export { CbObj, defaults, stripHtml, version };
+export { Attribute, CbObj, Opts, Res, Tag, defaults, stripHtml, version };

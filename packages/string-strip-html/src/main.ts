@@ -25,7 +25,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Attribute {
+export interface Attribute {
   nameStarts: number;
   nameEnds: number;
   equalsAt?: number;
@@ -34,7 +34,7 @@ interface Attribute {
   valueEnds?: number;
   value?: string;
 }
-interface Tag {
+export interface Tag {
   attributes: Attribute[];
   lastClosingBracketAt: number;
   lastOpeningBracketAt: number;
@@ -47,7 +47,7 @@ interface Tag {
   name: string;
 }
 
-interface CbObj {
+export interface CbObj {
   tag: Tag;
   deleteFrom: null | number;
   deleteTo: null | number;
@@ -56,7 +56,7 @@ interface CbObj {
   proposedReturn: Range | null;
 }
 
-interface Opts {
+export interface Opts {
   ignoreTags: string[];
   ignoreTagsWithTheirContents: string[];
   onlyStripTags: string[];
@@ -90,7 +90,7 @@ const defaults = {
   cb: null,
 };
 
-interface Res {
+export interface Res {
   log: {
     timeTakenInMilliseconds: number;
   };
@@ -3125,4 +3125,4 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   return res;
 }
 
-export { stripHtml, defaults, version, CbObj };
+export { stripHtml, defaults, version };
