@@ -5,7 +5,7 @@ import { Range } from "../../../ops/typedefs/common";
 
 const version: string = v;
 
-interface Opts {
+export interface Opts {
   ignoreRanges: Range[];
 }
 const defaults: Opts = {
@@ -76,4 +76,4 @@ function splitByW(str: string, opts?: Partial<Opts>): string[] {
   return res;
 }
 
-export { splitByW, defaults, version };
+export { splitByW, defaults, version, Range };
