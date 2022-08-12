@@ -4,7 +4,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Res {
+export interface Res {
   type: "character" | "line length";
   line: number;
   column: number;
@@ -14,7 +14,7 @@ interface Res {
   UTF32Hex?: undefined | string;
 }
 
-interface Opts {
+export interface Opts {
   lineLength: number;
 }
 
