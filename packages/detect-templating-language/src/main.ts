@@ -6,7 +6,7 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-type Output = "Nunjucks" | "Jinja" | "JSP" | null;
+export type Output = "Nunjucks" | "Jinja" | "JSP" | null;
 
 function detectLang(str: string): { name: Output } {
   let name: Output = null;
