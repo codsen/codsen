@@ -6,7 +6,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Opts {
+export interface Opts {
   str: string;
   from: number;
   to: number;
@@ -330,4 +330,4 @@ function expander(opts: Partial<Opts>): Range {
   return [from, to];
 }
 
-export { expander, defaults, version };
+export { expander, defaults, version, Range };
