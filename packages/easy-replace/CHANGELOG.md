@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 5.1.0 (2022-08-12)
 
-
 ### Features
 
-* export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
-
-
-
-
+- export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
 ## [5.0.16](https://github.com/codsen/codsen/compare/easy-replace@5.0.15...easy-replace@5.0.16) (2022-04-23)
 

@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.1.0 (2022-08-12)
 
-
 ### Features
 
-* export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
-
-
-
-
+- export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
 ## [2.0.18](https://github.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@2.0.17...email-all-chars-within-ascii-cli@2.0.18) (2022-04-24)
 

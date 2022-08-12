@@ -5,15 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 7.1.0 (2022-08-12)
 
-
 ### Features
 
-* export types ([87f1b65](https://github.com/codsen/codsen/commit/87f1b65d7d650fe137958a882c984303ff2f25af))
-* export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
-
-
-
-
+- export types ([87f1b65](https://github.com/codsen/codsen/commit/87f1b65d7d650fe137958a882c984303ff2f25af))
+- export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
 ## 7.0.0 (2021-09-09)
 
