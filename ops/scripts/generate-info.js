@@ -422,14 +422,6 @@ fs.writeFile(
   }
 );
 
-console.log(
-  `426 ${`\u001b[${33}m${`splitListHtmlLibs`}\u001b[${39}m`} = ${JSON.stringify(
-    splitListHtmlLibs,
-    null,
-    4
-  )}`
-);
-
 fs.writeFile(
   path.resolve("./data/sources/packages.ts"),
   `const all = ${JSON.stringify(allPackages.sort(), null, 4)} as const;

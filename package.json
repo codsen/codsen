@@ -9,8 +9,6 @@
     "url": "https://codsen.com"
   },
   "workspaces": [
-    "webapps/*",
-    "components/*",
     "packages/*",
     "data/"
   ],
