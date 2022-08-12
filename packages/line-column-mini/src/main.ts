@@ -34,6 +34,11 @@ function getLineStartIndexes(str: string): number[] {
   );
 }
 
+export interface Res {
+  line: number;
+  col: number;
+}
+
 /**
  * Convert string index to line-column position
  */
@@ -41,18 +46,15 @@ function lineCol(
   input: string | number[],
   idx: number,
   skipChecks = false
-): {
-  line: number;
-  col: number;
-} | null {
-  DEV && console.log(`048`);
+): Res | null {
+  DEV && console.log(`050`);
   if (
     !skipChecks &&
     ((!Array.isArray(input) && typeof input !== "string") ||
       ((typeof input === "string" || Array.isArray(input)) && !input.length))
   ) {
     DEV &&
-      console.log(`055 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
+      console.log(`057 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
     return null;
   }
   if (
@@ -62,7 +64,7 @@ function lineCol(
       (Array.isArray(input) && idx + 1 >= input[input.length - 1]))
   ) {
     DEV &&
-      console.log(`065 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
+      console.log(`067 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
     return null;
   }
 
@@ -72,7 +74,7 @@ function lineCol(
     let startIndexesOfEachLine = getLineStartIndexes(input);
     DEV &&
       console.log(
-        `075 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startIndexesOfEachLine`}\u001b[${39}m`} = ${JSON.stringify(
+        `077 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startIndexesOfEachLine`}\u001b[${39}m`} = ${JSON.stringify(
           startIndexesOfEachLine,
           null,
           4
@@ -81,7 +83,7 @@ function lineCol(
     let line = binarySearch(idx, startIndexesOfEachLine);
     DEV &&
       console.log(
-        `084 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+        `086 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
           line,
           null,
           4
@@ -97,7 +99,7 @@ function lineCol(
   let line = binarySearch(idx, input);
   DEV &&
     console.log(
-      `100 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+      `102 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
         line,
         null,
         4

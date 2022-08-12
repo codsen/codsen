@@ -1,5 +1,9 @@
 declare const version: string;
 declare function getLineStartIndexes(str: string): number[];
+interface Res {
+  line: number;
+  col: number;
+}
 /**
  * Convert string index to line-column position
  */
@@ -7,9 +11,6 @@ declare function lineCol(
   input: string | number[],
   idx: number,
   skipChecks?: boolean
-): {
-  line: number;
-  col: number;
-} | null;
+): Res | null;
 
-export { getLineStartIndexes, lineCol, version };
+export { Res, getLineStartIndexes, lineCol, version };
