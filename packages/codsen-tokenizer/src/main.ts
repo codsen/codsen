@@ -71,7 +71,7 @@ const defaults: Opts = {
   reportProgressFuncTo: 100,
 };
 
-interface Res {
+export interface Res {
   timeTakenInMilliseconds: number;
 }
 
@@ -7566,4 +7566,5 @@ export {
   AtToken,
   EspToken,
   CharCb,
+  Opts,
 };

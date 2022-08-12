@@ -186,6 +186,8 @@ export {
   CharCb,
   CommentToken,
   EspToken,
+  Opts,
+  Res,
   RuleToken,
   TagToken,
   TextToken,
