@@ -7,7 +7,7 @@ import { version as v } from "../package.json";
 declare let DEV: boolean;
 const version: string = v;
 
-interface Opts {
+export interface Opts {
   removeThousandSeparatorsFromNumbers: boolean;
   padSingleDecimalPlaceNumbers: boolean;
   forceUKStyle: boolean;
