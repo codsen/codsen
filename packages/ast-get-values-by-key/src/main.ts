@@ -8,7 +8,7 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-interface Findings {
+export interface Findings {
   val: any;
   path: string;
 }

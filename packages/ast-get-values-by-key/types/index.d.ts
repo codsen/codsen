@@ -1,4 +1,8 @@
 declare const version: string;
+interface Findings {
+  val: any;
+  path: string;
+}
 /**
  * Extract values and paths from AST by keys OR set them by keys
  */
@@ -8,4 +12,4 @@ declare function getByKey(
   originalReplacement?: any
 ): any;
 
-export { getByKey, version };
+export { Findings, getByKey, version };
