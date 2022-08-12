@@ -1,5 +1,5 @@
 declare let DEV: boolean;
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 
