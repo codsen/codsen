@@ -4,6 +4,9 @@ declare type ErrCb = (
   explanation: string,
   isFixable: boolean
 ) => void;
+interface Obj {
+  [key: string]: any;
+}
 interface Opts {
   from: number;
   to: number;
@@ -18,4 +21,4 @@ interface Opts {
 }
 declare function processCommaSep(str: string, opts?: Partial<Opts>): void;
 
-export { processCommaSep, version };
+export { ErrCb, Obj, Opts, processCommaSep, version };

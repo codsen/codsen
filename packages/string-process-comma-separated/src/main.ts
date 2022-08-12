@@ -4,17 +4,17 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-type ErrCb = (
+export type ErrCb = (
   indexes: [from: number, to: number][],
   explanation: string,
   isFixable: boolean
 ) => void;
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 
-interface Opts {
+export interface Opts {
   from: number;
   to: number;
   offset: number;
