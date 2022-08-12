@@ -1,6 +1,6 @@
 {
   "name": "ast-compare",
-  "version": "3.1.7",
+  "version": "3.2.0",
   "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
   "keywords": [
     "array",
@@ -75,7 +75,7 @@
     }
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^3.1.4",
+    "ast-contains-only-empty-space": "^3.2.0",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^5.0.0",
     "type-detect": "^4.0.8"

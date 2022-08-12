@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 6.2.0 (2022-08-12)
+
+
+### Features
+
+* export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+
+
+
+
 ## [6.1.22](https://github.com/codsen/codsen/compare/email-comb@6.1.21...email-comb@6.1.22) (2022-08-04)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "regex-empty-conditional-comments",
-  "version": "2.0.14",
+  "version": "2.1.0",
   "description": "Regular expression for matching HTML empty conditional comments",
   "keywords": [
     "code",

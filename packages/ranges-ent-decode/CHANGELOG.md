@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 5.2.0 (2022-08-12)
+
+
+### Features
+
+* export types ([2a85f0c](https://github.com/codsen/codsen/commit/2a85f0cf1310f6dee5b1b39595676e9ba72f7f58))
+* export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+
+
+
+
 ## 5.1.2 (2022-04-18)
 
 ### Bug Fixes

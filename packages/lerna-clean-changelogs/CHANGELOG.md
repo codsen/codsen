@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 4.2.0 (2022-08-12)
+
+
+### Features
+
+* export types ([c3e7f82](https://github.com/codsen/codsen/commit/c3e7f82300e53adef3fe2c8b3f79e74fb379d12b))
+* export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+
+
+
+
 ## 4.1.1 (2022-04-18)
 
 ### Bug Fixes

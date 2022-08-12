@@ -1,6 +1,6 @@
 {
   "name": "csv-sort",
-  "version": "6.0.20",
+  "version": "6.1.0",
   "description": "Sort double-entry bookkeeping CSV from internet banking",
   "keywords": [
     "accountancy",
@@ -74,7 +74,7 @@
     }
   },
   "dependencies": {
-    "csv-split-easy": "^6.0.20",
+    "csv-split-easy": "^6.1.0",
     "currency.js": "^2.0.4",
     "lodash.pull": "^4.1.0"
   },

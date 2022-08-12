@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-util",
-  "version": "2.0.14",
+  "version": "2.1.0",
   "description": "Utility library of AST helper functions",
   "keywords": [
     "ast",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.6.0 (2022-08-12)
+
+
+### Features
+
+* export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+
+
+
+
 # [0.5.0](https://github.com/codsen/codsen/compare/tsd-extract@0.4.0...tsd-extract@0.5.0) (2022-04-29)
 
 ### Bug Fixes
