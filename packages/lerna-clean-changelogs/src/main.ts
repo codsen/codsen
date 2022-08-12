@@ -8,7 +8,7 @@ function isStr(something: string): any {
   return typeof something === "string";
 }
 
-interface Opts {
+export interface Opts {
   extras: boolean;
 }
 
