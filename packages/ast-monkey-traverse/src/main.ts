@@ -10,11 +10,11 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Stop {
+export interface Stop {
   now: boolean;
 }
 
-interface InnerObj {
+export interface InnerObj {
   depth: number;
   path: string;
   topmostKey: string;
@@ -23,43 +23,48 @@ interface InnerObj {
   parentKey: string | null;
 }
 
-type Callback = (key: string, val: any, innerObj: InnerObj, stop: Stop) => any;
+export type Callback = (
+  key: string,
+  val: any,
+  innerObj: InnerObj,
+  stop: Stop
+) => any;
 
 /**
  * Utility library to traverse AST
  */
-function traverse(tree1: any, cb1: Callback): any {
+function traverse<T>(tree1: T, cb1: Callback): T {
   let stop2: Stop = { now: false };
   //
   // traverseInner() needs a wrapper to shield the last two input args from the outside
   //
-  function traverseInner(
-    treeOriginal: any,
+  function traverseInner<U>(
+    treeOriginal: U,
     callback: Callback,
     originalInnerObj: Partial<InnerObj>,
     stop: Stop
-  ): any {
-    DEV && console.log(`042 ======= traverseInner() =======`);
+  ): U {
+    DEV && console.log(`047 ======= traverseInner() =======`);
     let tree: any = clone(treeOriginal);
 
     let res;
     let innerObj = { depth: -1, path: "", ...originalInnerObj };
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
-      DEV && console.log(`049 tree is array!`);
+      DEV && console.log(`054 tree is array!`);
       for (let i = 0, len = tree.length; i < len; i++) {
         DEV &&
           console.log(
-            `053 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+            `058 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
           );
         if (stop.now) {
-          DEV && console.log(`056 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`061 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         let path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         DEV &&
           console.log(
-            `062 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+            `067 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
               4
@@ -71,7 +76,7 @@ function traverse(tree1: any, cb1: Callback): any {
           innerObj.parentKey = parent(path);
           DEV &&
             console.log(
-              `074 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+              `079 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
                 innerObj.parentKey,
                 null,
                 4
@@ -100,20 +105,20 @@ function traverse(tree1: any, cb1: Callback): any {
         }
       }
     } else if (isObj(tree)) {
-      DEV && console.log(`103 tree is object`);
+      DEV && console.log(`108 tree is object`);
       // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (let key in tree) {
         DEV &&
           console.log(
-            `108 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+            `113 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
           );
         if (stop.now && key != null) {
-          DEV && console.log(`111 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`116 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         DEV &&
           console.log(
-            `116 FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
+            `121 FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
               innerObj.path,
               null,
               4
@@ -122,7 +127,7 @@ function traverse(tree1: any, cb1: Callback): any {
         let path = innerObj.path ? `${innerObj.path}.${key}` : key;
         DEV &&
           console.log(
-            `125 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+            `130 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
               4
@@ -136,7 +141,7 @@ function traverse(tree1: any, cb1: Callback): any {
         innerObj.parentKey = parent(path);
         DEV &&
           console.log(
-            `139 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+            `144 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
               innerObj.parentKey,
               null,
               4
@@ -156,7 +161,7 @@ function traverse(tree1: any, cb1: Callback): any {
       }
     }
     DEV &&
-      console.log(`159 just returning tree, ${JSON.stringify(tree, null, 4)}`);
+      console.log(`164 just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
   return traverseInner(tree1, cb1, {}, stop2);

@@ -19,6 +19,6 @@ declare type Callback = (
 /**
  * Utility library to traverse AST
  */
-declare function traverse(tree1: any, cb1: Callback): any;
+declare function traverse<T>(tree1: T, cb1: Callback): T;
 
-export { traverse, version };
+export { Callback, InnerObj, Stop, traverse, version };
