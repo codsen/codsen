@@ -22,13 +22,7 @@ interface Res {
     timeTakenInMilliseconds: number;
   };
   result: string;
-  applicableOpts: {
-    html: boolean;
-    css: boolean;
-    text: boolean;
-    templatingTags: boolean;
-    js: boolean;
-  };
+  applicableOpts: ApplicableOpts;
   templatingLang: {
     name: null | string;
   };

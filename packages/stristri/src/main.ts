@@ -389,4 +389,4 @@ function stri(input: string, opts?: Partial<Opts>): Res {
   );
 }
 
-export { stri, defaultOpts as defaults, version };
+export { stri, defaultOpts as defaults, version, Opts, ApplicableOpts, Res };

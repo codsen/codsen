@@ -1,3 +1,10 @@
+interface ApplicableOpts {
+  html: boolean;
+  css: boolean;
+  text: boolean;
+  templatingTags: boolean;
+  js: boolean;
+}
 interface Opts {
   html: boolean;
   css: boolean;
@@ -13,13 +20,7 @@ interface Res {
     timeTakenInMilliseconds: number;
   };
   result: string;
-  applicableOpts: {
-    html: boolean;
-    css: boolean;
-    text: boolean;
-    templatingTags: boolean;
-    js: boolean;
-  };
+  applicableOpts: ApplicableOpts;
   templatingLang: {
     name: null | string;
   };
@@ -32,4 +33,4 @@ declare const version: string;
  */
 declare function stri(input: string, opts?: Partial<Opts>): Res;
 
-export { defaultOpts as defaults, stri, version };
+export { ApplicableOpts, Opts, Res, defaultOpts as defaults, stri, version };
