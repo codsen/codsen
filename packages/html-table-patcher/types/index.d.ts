@@ -1,4 +1,7 @@
 declare const version: string;
+interface Obj {
+  [key: string]: any;
+}
 interface Opts {
   cssStylesContent: string;
   alwaysCenter: boolean;
@@ -12,4 +15,4 @@ interface Res {
  */
 declare function patcher(str: string, opts?: Partial<Opts>): Res;
 
-export { defaults, patcher, version };
+export { Obj, Opts, Res, defaults, patcher, version };

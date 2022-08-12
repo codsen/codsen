@@ -18,12 +18,12 @@ function isObj(something: unknown): boolean {
   );
 }
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 
 // the plan is to use defaults on the UI, so export them as first-class citizen
-interface Opts {
+export interface Opts {
   cssStylesContent: string;
   alwaysCenter: boolean;
 }
@@ -32,7 +32,7 @@ const defaults: Opts = {
   alwaysCenter: false,
 };
 
-interface Res {
+export interface Res {
   result: string;
 }
 
