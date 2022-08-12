@@ -18,7 +18,7 @@ declare let DEV: boolean;
 // ===================================
 // T S
 
-type argType =
+export type argType =
   | "date"
   | "date"
   | "object"
@@ -32,13 +32,13 @@ type argType =
   | "null"
   | "undefined";
 
-interface InfoObj {
+export interface InfoObj {
   path: string | undefined;
   key: string | null;
   type: [argType, argType];
 }
 
-interface Opts {
+export interface Opts {
   cb:
     | null
     | ((input1: any, input2: any, result: any, infoObj?: InfoObj) => any); // cb(input1, input2, result)
@@ -840,7 +840,11 @@ function mergeAdvanced(
 /**
  * Recursively, deeply merge of anything
  */
-function externalApi(input1: any, input2: any, opts?: Partial<Opts>): any {
+function externalApi(
+  input1: unknown,
+  input2: unknown,
+  opts?: Partial<Opts>
+): any {
   if (!arguments.length) {
     throw new TypeError(
       "object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing"

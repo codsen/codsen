@@ -40,9 +40,16 @@ declare const defaults: Opts;
  * Recursively, deeply merge of anything
  */
 declare function externalApi(
-  input1: any,
-  input2: any,
+  input1: unknown,
+  input2: unknown,
   opts?: Partial<Opts>
 ): any;
 
-export { defaults, externalApi as mergeAdvanced, version };
+export {
+  InfoObj,
+  Opts,
+  argType,
+  defaults,
+  externalApi as mergeAdvanced,
+  version,
+};
