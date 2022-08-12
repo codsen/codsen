@@ -6,11 +6,11 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Obj {
+export interface Obj {
   i: number;
   val: any;
 }
-type Callback = (obj: Obj) => void;
+export type Callback = (obj: Obj) => void;
 
 function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
   if (typeof str !== "string") {
