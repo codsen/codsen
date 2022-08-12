@@ -8,10 +8,10 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
-interface Opts {
+export interface Opts {
   placeholder: boolean;
   doNotFillThesePathsIfTheyContainPlaceholders: string[];
   useNullAsExplicitFalse: boolean;
