@@ -10,6 +10,9 @@ declare type JsonObject = {
   [Key in string]?: JsonValue;
 };
 declare type JsonArray = JsonValue[];
+interface AnyObject {
+  [key: string]: any;
+}
 interface Opts {
   hungryForWhitespace: boolean;
   matchStrictly: boolean;
@@ -26,4 +29,13 @@ declare function compare(
   opts?: Partial<Opts>
 ): boolean | string;
 
-export { compare, defaults, version };
+export {
+  AnyObject,
+  JsonArray,
+  JsonObject,
+  JsonValue,
+  Opts,
+  compare,
+  defaults,
+  version,
+};
