@@ -17,6 +17,7 @@ interface Opts {
   hungry: boolean;
 }
 declare const defaults: Opts;
+declare const defaultGetNextIdx: (index: number) => number;
 declare function matchLeftIncl(
   str: string,
   position: number,
@@ -43,6 +44,8 @@ declare function matchRight(
 ): boolean | string;
 
 export {
+  Opts,
+  defaultGetNextIdx,
   defaults,
   matchLeft,
   matchLeftIncl,

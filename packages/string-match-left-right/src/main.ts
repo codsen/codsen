@@ -17,7 +17,7 @@ function isStr(something: unknown): boolean {
   return typeof something === "string";
 }
 
-interface Opts {
+export interface Opts {
   cb:
     | undefined
     | null
@@ -45,7 +45,7 @@ const defaults: Opts = {
   hungry: false,
 };
 
-const defaultGetNextIdx = (index: number): number => index + 1;
+export const defaultGetNextIdx = (index: number): number => index + 1;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function march(
