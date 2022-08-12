@@ -5,4 +5,4 @@ interface Opts {
 declare const defaults: Opts;
 declare function allEq(input: any, value: any, opts?: Partial<Opts>): boolean;
 
-export { allEq, defaults, version };
+export { Opts, allEq, defaults, version };
