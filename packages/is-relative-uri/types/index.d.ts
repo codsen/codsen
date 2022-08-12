@@ -9,4 +9,4 @@ interface Res {
 }
 declare function isRel(str: string, opts?: Partial<Opts>): Res;
 
-export { defaults, isRel, version };
+export { Opts, Res, defaults, isRel, version };

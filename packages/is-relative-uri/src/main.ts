@@ -321,14 +321,14 @@ const knownSchemes = [
   "z39.50s",
 ];
 
-interface Opts {
+export interface Opts {
   flagUpUrisWithSchemes: boolean;
 }
 const defaults: Opts = {
   flagUpUrisWithSchemes: true,
 };
 
-interface Res {
+export interface Res {
   res: boolean;
   message: string | null;
 }
