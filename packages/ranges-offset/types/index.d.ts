@@ -6,4 +6,4 @@ declare type Ranges = Range[] | null;
 declare const version: string;
 declare function rOffset(arrOfRanges: Ranges, offset?: number): Ranges;
 
-export { rOffset, version };
+export { Ranges, rOffset, version };

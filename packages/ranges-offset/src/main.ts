@@ -20,4 +20,4 @@ function rOffset(arrOfRanges: Ranges, offset = 0): Ranges {
   return arrOfRanges;
 }
 
-export { rOffset, version };
+export { rOffset, Ranges, version };
