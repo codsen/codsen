@@ -34,8 +34,8 @@ declare let DEV: boolean;
 // which be passed as reference - we have to break any references
 // to the original values in both "ref" and "opts".
 
-type PlainObject = { [name: string]: any };
-type PlainObjectOfBool = { [name: string]: boolean };
+export type PlainObject = { [name: string]: any };
+export type PlainObjectOfBool = { [name: string]: boolean };
 
 function mixer(
   ref: PlainObject = {},
