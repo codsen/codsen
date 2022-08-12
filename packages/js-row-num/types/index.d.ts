@@ -14,4 +14,4 @@ interface Opts {
 declare const defaults: Opts;
 declare function fixRowNums(str: string, opts?: Partial<Opts>): string | Ranges;
 
-export { defaults, fixRowNums, version };
+export { Opts, Ranges, defaults, fixRowNums, version };

@@ -13,7 +13,7 @@ const BACKSLASH = `\u005C`;
 // build scripts
 const letterC = "\x63";
 
-interface Opts {
+export interface Opts {
   padStart: number;
   overrideRowNum: null | number;
   returnRangesOnly: boolean;
@@ -610,4 +610,4 @@ function fixRowNums(str: string, opts?: Partial<Opts>): string | Ranges {
   return str;
 }
 
-export { fixRowNums, defaults, version };
+export { fixRowNums, defaults, version, Ranges };
