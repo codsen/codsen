@@ -128,7 +128,7 @@ export const dependencyStats: DependencyStats = {
         "string-find-heads-tails": 1,
         "string-find-malformed": 2,
         "string-fix-broken-named-entities": 2,
-        "string-left-right": 18,
+        "string-left-right": 19,
         "string-match-left-right": 10,
         "string-process-comma-separated": 2,
         "string-range-expander": 3,
@@ -233,7 +233,7 @@ export const dependencyStats: DependencyStats = {
     ],
     "top10OwnDeps": [
         {
-            "string-left-right": 18
+            "string-left-right": 19
         },
         {
             "ranges-apply": 16

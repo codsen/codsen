@@ -2289,7 +2289,7 @@ export const packageJSONData = {
             "chalk": "^5.0.1",
             "csv-sort": "^6.0.20",
             "globby": "^13.1.2",
-            "inquirer": "^9.0.2",
+            "inquirer": "^9.1.0",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
             "meow": "^10.1.3",
@@ -2908,7 +2908,7 @@ export const packageJSONData = {
             "chalk": "^5.0.1",
             "email-all-chars-within-ascii": "^4.0.18",
             "globby": "^13.1.2",
-            "inquirer": "^9.0.2",
+            "inquirer": "^9.1.0",
             "lodash.pullall": "^4.2.0",
             "minimist": "^1.2.6",
             "string-left-right": "^5.0.14",
@@ -8784,7 +8784,7 @@ export const packageJSONData = {
             "@types/lodash.without": "^4.4.7",
             "ast-monkey-traverse": "^3.0.14",
             "ranges-invert": "^5.1.6",
-            "title": "^3.4.4"
+            "title": "^3.5.2"
         }
     },
     "string-trim-spaces-only": {
@@ -9402,6 +9402,9 @@ export const packageJSONData = {
                     ""
                 ]
             }
+        },
+        "dependencies": {
+            "string-left-right": "^5.0.14"
         }
     },
     "update-versions": {

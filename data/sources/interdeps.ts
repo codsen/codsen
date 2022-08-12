@@ -663,7 +663,7 @@ export const interdeps = [
     },
     {
         "name": "string-match-left-right",
-        "size": 5812,
+        "size": 5835,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -762,6 +762,13 @@ export const interdeps = [
         "size": 1126,
         "imports": [
             "object-boolean-combinations"
+        ]
+    },
+    {
+        "name": "tsd-extract",
+        "size": 6524,
+        "imports": [
+            "string-left-right"
         ]
     },
     {
