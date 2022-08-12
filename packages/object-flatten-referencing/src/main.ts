@@ -299,4 +299,5 @@ export {
   arrayiffyString,
   defaults,
   version,
+  Opts,
 };

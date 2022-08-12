@@ -35,6 +35,7 @@ declare function flattenReferencing(
 ): any;
 
 export {
+  Opts,
   arrayiffyString,
   defaults,
   flattenArr,
