@@ -4,6 +4,9 @@ declare type Range =
 declare type Ranges = Range[] | null;
 
 declare const version: string;
+interface Obj {
+  [key: string]: any;
+}
 interface HeadsAndTailsObj {
   heads: string | string[];
   tails: string | string[];
@@ -36,4 +39,4 @@ interface Res {
 }
 declare function removeWidows(str: string, opts?: Partial<Opts>): Res;
 
-export { defaults, removeWidows, version };
+export { HeadsAndTailsObj, Obj, Opts, Res, defaults, removeWidows, version };

@@ -29,16 +29,16 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 
-interface HeadsAndTailsObj {
+export interface HeadsAndTailsObj {
   heads: string | string[];
   tails: string | string[];
 }
 
-interface Opts {
+export interface Opts {
   removeWidowPreventionMeasures: boolean;
   convertEntities: boolean;
   targetLanguage: "html" | "css" | "js";
@@ -68,7 +68,7 @@ const defaults: Opts = {
   tagRanges: [],
 };
 
-interface Res {
+export interface Res {
   res: string;
   ranges: RangesType;
   log: {
