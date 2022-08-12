@@ -24,4 +24,4 @@ declare function deleteObj<T extends JsonValue>(
   opts?: Partial<Opts>
 ): T;
 
-export { defaults, deleteObj, version };
+export { JsonArray, JsonObject, JsonValue, Opts, defaults, deleteObj, version };

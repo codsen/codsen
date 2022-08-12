@@ -8,11 +8,17 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 // From "type-fest" by Sindre Sorhus:
-type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
-type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = JsonValue[];
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JsonObject
+  | JsonArray;
+export type JsonObject = { [Key in string]?: JsonValue };
+export type JsonArray = JsonValue[];
 
-interface Opts {
+export interface Opts {
   matchKeysStrictly: boolean;
   hungryForWhitespace: boolean;
 }
