@@ -29,4 +29,12 @@ interface Res {
 }
 declare function genAtomic(str: string, opts?: Partial<Opts>): Res;
 
-export { defaults, extractFromToSource, genAtomic, headsAndTails, version };
+export {
+  Opts,
+  Res,
+  defaults,
+  extractFromToSource,
+  genAtomic,
+  headsAndTails,
+  version,
+};

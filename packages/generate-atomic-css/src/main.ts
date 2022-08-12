@@ -13,7 +13,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Opts {
+export interface Opts {
   includeConfig: boolean;
   includeHeadsAndTails: boolean;
   pad: boolean;
@@ -33,7 +33,7 @@ const defaults: Opts = {
   reportProgressFuncTo: 100,
 };
 
-interface Res {
+export interface Res {
   log: { count: number };
   result: string;
 }
