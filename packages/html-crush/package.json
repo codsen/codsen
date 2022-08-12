@@ -1,7 +1,7 @@
 {
   "name": "html-crush",
   "version": "5.0.22",
-  "description": "A non-parsing, mixed-HTML email-template minifier",
+  "description": "Minify email templates",
   "keywords": [
     "breaks",
     "crush",
