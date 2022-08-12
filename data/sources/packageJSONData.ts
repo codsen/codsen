@@ -2139,7 +2139,7 @@ export const packageJSONData = {
     "csv-sort": {
         "name": "csv-sort",
         "version": "6.0.20",
-        "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
+        "description": "Sort double-entry bookkeeping CSV from internet banking",
         "keywords": [
             "accountancy",
             "accounting",
@@ -2525,7 +2525,7 @@ export const packageJSONData = {
     "detergent": {
         "name": "detergent",
         "version": "8.0.25",
-        "description": "Extracts, cleans and encodes text",
+        "description": "Extract, clean, encode text and fix English style",
         "keywords": [
             "brief",
             "clean",
@@ -3646,7 +3646,7 @@ export const packageJSONData = {
     "html-crush": {
         "name": "html-crush",
         "version": "5.0.22",
-        "description": "A non-parsing, mixed-HTML email-template minifier",
+        "description": "Minify email templates",
         "keywords": [
             "breaks",
             "crush",
@@ -8698,7 +8698,7 @@ export const packageJSONData = {
     "string-strip-html": {
         "name": "string-strip-html",
         "version": "11.1.0",
-        "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
+        "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
         "keywords": [
             "code",
             "extract",

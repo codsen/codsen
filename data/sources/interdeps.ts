@@ -150,7 +150,7 @@ export const interdeps = [
     },
     {
         "name": "csv-sort",
-        "size": 4889,
+        "size": 4881,
         "imports": [
             "csv-split-easy"
         ]
@@ -180,7 +180,7 @@ export const interdeps = [
     },
     {
         "name": "detergent",
-        "size": 25161,
+        "size": 25177,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -294,7 +294,7 @@ export const interdeps = [
     },
     {
         "name": "html-crush",
-        "size": 11015,
+        "size": 10988,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -717,7 +717,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 18724,
+        "size": 18723,
         "imports": [
             "ranges-apply",
             "ranges-push",
