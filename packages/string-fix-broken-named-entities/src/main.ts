@@ -41,10 +41,10 @@ const allRules = [...allNamedEntitiesSetOnly]
     "bad-html-entity-other",
   ]);
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
-interface cbObj {
+export interface cbObj {
   rangeFrom: number;
   rangeTo: number;
   rangeValEncoded: string | null;
@@ -52,7 +52,7 @@ interface cbObj {
   ruleName: string;
   entityName: string | null;
 }
-interface Opts {
+export interface Opts {
   decode: boolean;
   cb: null | ((obj: cbObj) => void);
   entityCatcherCb: null | ((from: number, to: number) => void);
@@ -1794,4 +1794,4 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
   return res;
 }
 
-export { fixEnt, version, allRules };
+export { fixEnt, version, allRules, Ranges };
