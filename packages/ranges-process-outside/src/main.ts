@@ -9,8 +9,8 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-type OffsetValueCb = (amountToOffset: number) => void;
-type Callback = (
+export type OffsetValueCb = (amountToOffset: number) => void;
+export type Callback = (
   fromIdx: number,
   toIdx: number,
   offsetValueCb: OffsetValueCb
@@ -140,4 +140,4 @@ function rProcessOutside(
   }
 }
 
-export { rProcessOutside, version };
+export { rProcessOutside, Ranges, version };

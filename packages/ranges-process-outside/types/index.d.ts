@@ -1,4 +1,5 @@
 import { Ranges } from "ranges-crop";
+export { Ranges } from "ranges-crop";
 
 declare const version: string;
 declare type OffsetValueCb = (amountToOffset: number) => void;
@@ -14,4 +15,4 @@ declare function rProcessOutside(
   skipChecks?: boolean
 ): void;
 
-export { rProcessOutside, version };
+export { Callback, OffsetValueCb, rProcessOutside, version };
