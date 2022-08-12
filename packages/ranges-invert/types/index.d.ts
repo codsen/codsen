@@ -1,4 +1,5 @@
 import { Ranges } from "ranges-merge";
+export { Range, Ranges } from "ranges-merge";
 
 declare const version: string;
 interface Opts {
@@ -12,4 +13,4 @@ declare function rInvert(
   originalOptions?: Partial<Opts>
 ): Ranges;
 
-export { defaults, rInvert, version };
+export { Opts, defaults, rInvert, version };

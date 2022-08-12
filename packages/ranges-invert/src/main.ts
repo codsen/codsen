@@ -8,7 +8,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-interface Opts {
+export interface Opts {
   strictlyTwoElementsInRangeArrays: boolean;
   skipChecks: boolean;
 }
@@ -221,4 +221,4 @@ function rInvert(
   return rCrop(res as Ranges, strLen);
 }
 
-export { rInvert, defaults, version };
+export { rInvert, defaults, version, Range, Ranges };
