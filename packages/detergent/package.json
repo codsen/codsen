@@ -1,7 +1,7 @@
 {
   "name": "detergent",
   "version": "8.0.25",
-  "description": "Extracts, cleans and encodes text",
+  "description": "Extract, clean, encode text and fix English style",
   "keywords": [
     "brief",
     "clean",
