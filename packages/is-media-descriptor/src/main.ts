@@ -481,4 +481,4 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
   return res;
 }
 
-export { isMediaD, defaults, version };
+export { isMediaD, defaults, version, Opts, ResObj };
