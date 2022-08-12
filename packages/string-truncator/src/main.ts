@@ -222,7 +222,7 @@ const letterWidths: Record<string, number> = {
   " ": 79.2,
 };
 
-interface Opts {
+export interface Opts {
   maxLen: number;
   maxLines: number;
   ellipsisLen?: number;
@@ -240,7 +240,7 @@ const defaults: Opts = {
   letterWidths,
 };
 
-interface Res {
+export interface Res {
   result: string;
   addEllipsis: boolean;
 }

@@ -14,4 +14,4 @@ interface Res {
 }
 declare function truncate(str: string, opts?: Partial<Opts>): Res;
 
-export { defaults, truncate, version };
+export { Opts, Res, defaults, truncate, version };
