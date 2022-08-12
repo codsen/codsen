@@ -9,7 +9,7 @@ function tellcp(str: string, idNum = 0): number {
   return str.codePointAt(idNum) || 0;
 }
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 
