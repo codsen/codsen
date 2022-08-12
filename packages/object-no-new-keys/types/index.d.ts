@@ -20,4 +20,4 @@ declare function noNewKeys(
   opts?: Partial<Opts>
 ): string[];
 
-export { defaults, noNewKeys, version };
+export { JsonArray, JsonObject, JsonValue, Opts, defaults, noNewKeys, version };

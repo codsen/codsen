@@ -4,9 +4,15 @@ const version: string = v;
 
 /* eslint no-use-before-define: 0 */
 // From "type-fest" by Sindre Sorhus:
-type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
-type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = JsonValue[];
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JsonObject
+  | JsonArray;
+export type JsonObject = { [Key in string]?: JsonValue };
+export type JsonArray = JsonValue[];
 
 interface Obj {
   [key: string]: any;
@@ -23,7 +29,7 @@ function isObj(something: unknown): boolean {
   );
 }
 
-interface Opts {
+export interface Opts {
   mode: 1 | 2;
 }
 const defaults: Opts = {
