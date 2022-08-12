@@ -5,4 +5,4 @@ interface Opts {
 declare const defaults: Opts;
 declare function split(str: string, opts?: Partial<Opts>): number;
 
-export { defaults, split, version };
+export { Opts, defaults, split, version };

@@ -3,7 +3,7 @@ import { version as v } from "../package.json";
 const version: string = v;
 declare let DEV: boolean;
 
-interface Opts {
+export interface Opts {
   throwIfEdgeWhitespace: boolean;
 }
 const defaults: Opts = {
