@@ -48,4 +48,21 @@ interface DelOpts {
 declare function del(input: JsonValue, opts: DelOpts): JsonValue;
 declare function arrayFirstOnly(input: JsonValue): JsonValue;
 
-export { arrayFirstOnly, del, drop, find, get, set, version };
+export {
+  DelOpts,
+  DropOpts,
+  FindOpts,
+  Finding,
+  GetOpts,
+  JsonArray,
+  JsonObject,
+  JsonValue,
+  SetOpts,
+  arrayFirstOnly,
+  del,
+  drop,
+  find,
+  get,
+  set,
+  version,
+};

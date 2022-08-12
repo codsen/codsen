@@ -11,7 +11,7 @@ declare let DEV: boolean;
 
 /* eslint no-use-before-define: 0 */
 // From "type-fest" by Sindre Sorhus, with added undefined
-type JsonValue =
+export type JsonValue =
   | string
   | number
   | boolean
@@ -19,8 +19,8 @@ type JsonValue =
   | undefined // non-JSON but added too
   | JsonObject
   | JsonArray;
-type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = JsonValue[];
+export type JsonObject = { [Key in string]?: JsonValue };
+export type JsonArray = JsonValue[];
 
 // -----------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ interface InternalOpts {
   index?: number;
   mode: "find" | "get" | "set" | "drop" | "del" | "arrayFirstOnly";
 }
-interface Finding {
+export interface Finding {
   index: number;
   key: string;
   val: any;
@@ -213,7 +213,7 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
 // -----------------------------------------------------------------------------
 // Validate and prep all the options right here
 
-interface FindOpts {
+export interface FindOpts {
   key: null | string;
   val: any;
   only?: undefined | null | "any" | "array" | "object";
@@ -249,7 +249,7 @@ function find(input: JsonValue, opts: FindOpts): Finding[] {
   return monkey(input, { ...resolvedOpts, mode: "find" });
 }
 
-interface GetOpts {
+export interface GetOpts {
   index: number; // obligatory for get()
   only?: undefined | null | "any" | "array" | "object";
 }
@@ -285,7 +285,7 @@ function get(input: JsonValue, opts: GetOpts): JsonValue {
   return monkey(input, { ...resolvedOpts, mode: "get" });
 }
 
-interface SetOpts {
+export interface SetOpts {
   key: null | string;
   val: any;
   index: number;
@@ -336,7 +336,7 @@ function set(input: JsonValue, opts: SetOpts): JsonValue {
   return monkey(input, { ...resolvedOpts, mode: "set" });
 }
 
-interface DropOpts {
+export interface DropOpts {
   index: number;
 }
 function drop(input: JsonValue, opts: DropOpts): JsonValue {
@@ -369,7 +369,7 @@ function drop(input: JsonValue, opts: DropOpts): JsonValue {
   return monkey(input, { ...resolvedOpts, mode: "drop" });
 }
 
-interface DelOpts {
+export interface DelOpts {
   key: null | string;
   val: any;
   only?: undefined | null | "any" | "array" | "object";
