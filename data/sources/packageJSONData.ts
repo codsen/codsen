@@ -9331,7 +9331,7 @@ export const packageJSONData = {
     },
     "tsd-extract": {
         "name": "tsd-extract",
-        "version": "0.6.0",
+        "version": "0.6.1",
         "description": "Extract any definition from TS definitions file",
         "keywords": [
             "ts",

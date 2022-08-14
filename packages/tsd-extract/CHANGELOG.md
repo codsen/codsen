@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.6.1](https://github.com/codsen/codsen/compare/tsd-extract@0.6.0...tsd-extract@0.6.1) (2022-08-14)
 
-
 ### Bug Fixes
 
-* sort only export contents ([233abc5](https://github.com/codsen/codsen/commit/233abc557119b8d4d078b3befa5a51d0429f5bcd))
-
-
-
-
+- sort only export contents ([233abc5](https://github.com/codsen/codsen/commit/233abc557119b8d4d078b3befa5a51d0429f5bcd))
 
 # 0.6.0 (2022-08-12)
 
