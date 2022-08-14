@@ -766,7 +766,7 @@ export const interdeps = [
     },
     {
         "name": "tsd-extract",
-        "size": 6524,
+        "size": 6621,
         "imports": [
             "string-left-right"
         ]
