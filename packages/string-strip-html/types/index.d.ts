@@ -44,10 +44,10 @@ interface Opts {
   trimOnlySpaces: boolean;
   stripRecognisedHTMLOnly: boolean;
   dumpLinkHrefsNearby: {
-    enabled: boolean;
-    putOnNewLine: boolean;
-    wrapHeads: string;
-    wrapTails: string;
+    enabled?: boolean;
+    putOnNewLine?: boolean;
+    wrapHeads?: string;
+    wrapTails?: string;
   };
   cb: null | ((cbObj: CbObj) => void);
 }

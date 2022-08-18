@@ -65,10 +65,10 @@ export interface Opts {
   trimOnlySpaces: boolean;
   stripRecognisedHTMLOnly: boolean;
   dumpLinkHrefsNearby: {
-    enabled: boolean;
-    putOnNewLine: boolean;
-    wrapHeads: string;
-    wrapTails: string;
+    enabled?: boolean;
+    putOnNewLine?: boolean;
+    wrapHeads?: string;
+    wrapTails?: string;
   };
   cb: null | ((cbObj: CbObj) => void);
 }
@@ -139,7 +139,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   // temporary variable to assemble the attribute pieces:
   let attrObj: Obj = {};
 
-  // marker to store captured href, used in resolvedOpts.dumpLinkHrefsNearby.enabled
+  // marker to store captured href, used in resolvedOpts.dumpLinkHrefsNearby?.enabled
   let hrefDump: {
     tagName: string;
     hrefValue: string;
@@ -499,7 +499,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       str.length === toIdx &&
       lastClosingBracketAt &&
       (!resolvedOpts.dumpLinkHrefsNearby ||
-        !resolvedOpts.dumpLinkHrefsNearby.enabled)
+        !resolvedOpts.dumpLinkHrefsNearby?.enabled)
     ) {
       DEV &&
         console.log(
@@ -654,7 +654,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   function calculateHrefToBeInserted(resolvedOpts: Opts, toIdx?: number): void {
     DEV && console.log(`655 calculateHrefToBeInserted() called`);
     if (
-      resolvedOpts.dumpLinkHrefsNearby.enabled &&
+      resolvedOpts.dumpLinkHrefsNearby?.enabled &&
       hrefDump.tagName &&
       hrefDump.tagName === tag.name &&
       tag.lastOpeningBracketAt &&
@@ -670,7 +670,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     }
 
     if (hrefInsertionActive) {
-      let lineBreaks = resolvedOpts.dumpLinkHrefsNearby.putOnNewLine
+      let lineBreaks = resolvedOpts.dumpLinkHrefsNearby?.putOnNewLine
         ? "\n\n"
         : "";
       stringToInsertAfter = `${lineBreaks}${hrefDump.hrefValue}`;
@@ -1154,19 +1154,19 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         attrObj = {};
         // 2. finally, delete the quotes marker, we don't need it any more
         delete tag.quotes;
-        // 3. if resolvedOpts.dumpLinkHrefsNearby.enabled is on, catch href
+        // 3. if resolvedOpts.dumpLinkHrefsNearby?.enabled is on, catch href
         let hrefVal;
         if (
-          resolvedOpts.dumpLinkHrefsNearby.enabled &&
+          resolvedOpts.dumpLinkHrefsNearby?.enabled &&
           // eslint-disable-next-line
           tag.attributes.some((obj: Obj) => {
             if (
               typeof obj.name === "string" &&
               obj.name.toLowerCase() === "href"
             ) {
-              hrefVal = `${resolvedOpts.dumpLinkHrefsNearby.wrapHeads || ""}${
+              hrefVal = `${resolvedOpts.dumpLinkHrefsNearby?.wrapHeads || ""}${
                 obj.value
-              }${resolvedOpts.dumpLinkHrefsNearby.wrapTails || ""}`;
+              }${resolvedOpts.dumpLinkHrefsNearby?.wrapTails || ""}`;
               return true;
             }
           })
@@ -1664,9 +1664,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           tag.attributes.push(attrObj);
           attrObj = {};
         }
-        // 4. if resolvedOpts.dumpLinkHrefsNearby.enabled is on and we just recorded an href,
+        // 4. if resolvedOpts.dumpLinkHrefsNearby?.enabled is on and we just recorded an href,
         if (
-          resolvedOpts.dumpLinkHrefsNearby.enabled &&
+          resolvedOpts.dumpLinkHrefsNearby?.enabled &&
           hrefDump.tagName &&
           !hrefDump.openingTagEnds
         ) {
@@ -2172,7 +2172,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               )} (length: ${whiteSpaceCompensation?.length})`
             );
 
-          // calculate optional resolvedOpts.dumpLinkHrefsNearby.enabled HREF to insert
+          // calculate optional resolvedOpts.dumpLinkHrefsNearby?.enabled HREF to insert
           stringToInsertAfter = "";
           hrefInsertionActive = false;
 
@@ -2260,7 +2260,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               // a concatenation)
               (rangesToDelete.last() as Range)[1] < tag.lastOpeningBracketAt &&
               (!resolvedOpts.dumpLinkHrefsNearby ||
-                !resolvedOpts.dumpLinkHrefsNearby.putOnNewLine ||
+                !resolvedOpts.dumpLinkHrefsNearby?.putOnNewLine ||
                 !punctuationTrailing.has(str[endingRangeIndex]))
             ) {
               insert = " " + insert;
@@ -2343,7 +2343,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             punctuationTrailing.has(str[endingRangeIndex])
           ) {
             console.log(`2345`);
-            if (resolvedOpts.dumpLinkHrefsNearby.putOnNewLine) {
+            if (resolvedOpts.dumpLinkHrefsNearby?.putOnNewLine) {
               console.log(
                 `2348 bring ${str[endingRangeIndex]} forward from index ${endingRangeIndex} to ${tag.leftOuterWhitespace}`
               );

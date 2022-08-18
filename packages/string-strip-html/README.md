@@ -1,6 +1,6 @@
 # string-strip-html
 
-> Strips HTML tags from strings. No parser, accepts mixed sources.
+> Strip HTML tags from strings. No parser, accepts mixed sources.
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/string-strip-html" rel="nofollow noreferrer noopener">
@@ -66,7 +66,7 @@ assert.equal(stripHtml(`a < b and c > d`).result, `a < b and c > d`);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-strip-html/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/string-strip-html/) for a full description of the API. Also, try the [GUI playground](https://codsen.com/os/string-strip-html/play).
 
 ## Contributing
 
