@@ -53,6 +53,8 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     }
   }
 
+  content.homepage = `https://codsen.com/os/${content.name}`;
+
   // 3. write adhoc keys
   let lectKeysHardWrite = objectPath.get(lectrc, "package_keys.write") || {};
   Object.keys(lectKeysHardWrite).forEach((key) => {

@@ -3,6 +3,13 @@ import writeFileAtomic from "write-file-atomic";
 import arrayiffy from "../../helpers/arrayiffy.js";
 import { esmBump } from "@codsen/data";
 
+const hasPlayground = [
+  "string-strip-html",
+  "email-comb",
+  "html-crush",
+  "is-language-code",
+];
+
 const separateNonESMPackages = {
   "tsd-extract": "tsd-extract-noesm",
 };
@@ -97,7 +104,11 @@ ${quickTakeExample}
 
 Please [visit codsen.com](https://codsen.com/os/${
     state.pack.name
-  }/) for a full description of the API.
+  }/) for a full description of the API.${
+    hasPlayground.includes(state.pack.name)
+      ? ` Also, try the [GUI playground](https://codsen.com/os/${state.pack.name}/play).`
+      : ""
+  }
 
 ## Contributing
 
