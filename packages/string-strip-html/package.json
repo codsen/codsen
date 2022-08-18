@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "11.2.0",
+  "version": "11.3.0",
   "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
   "keywords": [
     "code",
@@ -77,16 +77,16 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1",
     "lodash.without": "^4.4.0",
-    "ranges-apply": "^6.2.0",
-    "ranges-push": "^6.2.0",
-    "string-left-right": "^5.1.0"
+    "ranges-apply": "^6.2.1",
+    "ranges-push": "^6.2.1",
+    "string-left-right": "^5.1.1"
   },
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.7",
     "@types/lodash.trim": "^4.5.7",
     "@types/lodash.without": "^4.4.7",
-    "ast-monkey-traverse": "^3.1.0",
-    "ranges-invert": "^5.2.0",
+    "ast-monkey-traverse": "^3.1.1",
+    "ranges-invert": "^5.2.1",
     "title": "^3.5.2"
   }
 }

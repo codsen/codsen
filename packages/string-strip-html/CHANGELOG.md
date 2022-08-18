@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.3.0](https://github.com/codsen/codsen/compare/string-strip-html@11.2.0...string-strip-html@11.3.0) (2022-08-18)
+
+
+### Features
+
+* make opts.dumpLinkHrefsNearby sub-keys all optional too ([90810d8](https://github.com/codsen/codsen/commit/90810d8a2474a230d5b3413bf14fbcfe4cf4c7f1))
+
+
+
+
+
 # 11.2.0 (2022-08-12)
 
 ### Features

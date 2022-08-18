@@ -1,6 +1,6 @@
 {
   "name": "string-fix-broken-named-entities",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes",
   "keywords": [
     "broken",
@@ -73,10 +73,10 @@
     "various": {}
   },
   "dependencies": {
-    "all-named-html-entities": "^2.1.0",
+    "all-named-html-entities": "^2.1.1",
     "leven": "^4.0.0",
     "lodash.clonedeep": "^4.5.0",
-    "string-left-right": "^5.1.0"
+    "string-left-right": "^5.1.1"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.7"

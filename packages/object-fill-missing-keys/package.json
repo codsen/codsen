@@ -1,6 +1,6 @@
 {
   "name": "object-fill-missing-keys",
-  "version": "9.2.0",
+  "version": "9.2.1",
   "description": "Add missing keys into plain objects, according to a reference object",
   "keywords": [
     "add",
@@ -72,11 +72,11 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^4.1.0",
+    "arrayiffy-if-string": "^4.1.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "object-all-values-equal-to": "^3.2.0",
-    "object-merge-advanced": "^13.2.0"
+    "object-all-values-equal-to": "^3.2.1",
+    "object-merge-advanced": "^13.2.1"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.7",
