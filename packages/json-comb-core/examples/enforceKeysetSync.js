@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-// Quick Take
+// Synchronous `enforceKeysetSync()`
 
 import { strict as assert } from "assert";
 
