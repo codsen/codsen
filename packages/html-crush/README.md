@@ -1,6 +1,6 @@
 # html-crush
 
-> A non-parsing, mixed-HTML email-template minifier
+> Minify email templates
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/html-crush" rel="nofollow noreferrer noopener">
@@ -55,10 +55,9 @@ assert.equal(
 );
 ```
 
-
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/html-crush/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/html-crush/) for a full description of the API. Also, try the [GUI playground](https://codsen.com/os/html-crush/play).
 
 ## Contributing
 

@@ -30,7 +30,7 @@ export const packageJSONData = {
             "named",
             "xhtml"
         ],
-        "homepage": "https://codsen.com/os/all-named-html-entities/",
+        "homepage": "https://codsen.com/os/all-named-html-entities",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -104,7 +104,7 @@ export const packageJSONData = {
             "same",
             "similar"
         ],
-        "homepage": "https://codsen.com/os/array-group-str-omit-num-char/",
+        "homepage": "https://codsen.com/os/array-group-str-omit-num-char",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -185,7 +185,7 @@ export const packageJSONData = {
             "string",
             "wildcard"
         ],
-        "homepage": "https://codsen.com/os/array-includes-with-glob/",
+        "homepage": "https://codsen.com/os/array-includes-with-glob",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -255,7 +255,7 @@ export const packageJSONData = {
             "put",
             "turn"
         ],
-        "homepage": "https://codsen.com/os/array-of-arrays-into-ast/",
+        "homepage": "https://codsen.com/os/array-of-arrays-into-ast",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -329,7 +329,7 @@ export const packageJSONData = {
             "sort",
             "sorting"
         ],
-        "homepage": "https://codsen.com/os/array-of-arrays-sort-by-col/",
+        "homepage": "https://codsen.com/os/array-of-arrays-sort-by-col",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -407,7 +407,7 @@ export const packageJSONData = {
             "whitelist",
             "matcher"
         ],
-        "homepage": "https://codsen.com/os/array-pull-all-with-glob/",
+        "homepage": "https://codsen.com/os/array-pull-all-with-glob",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -483,7 +483,7 @@ export const packageJSONData = {
             "validate",
             "validation"
         ],
-        "homepage": "https://codsen.com/os/arrayiffy-if-string/",
+        "homepage": "https://codsen.com/os/arrayiffy-if-string",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -561,7 +561,7 @@ export const packageJSONData = {
             "tree",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/ast-compare/",
+        "homepage": "https://codsen.com/os/ast-compare",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -646,7 +646,7 @@ export const packageJSONData = {
             "whitespace",
             "zero"
         ],
-        "homepage": "https://codsen.com/os/ast-contains-only-empty-space/",
+        "homepage": "https://codsen.com/os/ast-contains-only-empty-space",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -734,7 +734,7 @@ export const packageJSONData = {
             "tests",
             "unit"
         ],
-        "homepage": "https://codsen.com/os/ast-deep-contains/",
+        "homepage": "https://codsen.com/os/ast-deep-contains",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -823,7 +823,7 @@ export const packageJSONData = {
             "xhtml",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/ast-delete-object/",
+        "homepage": "https://codsen.com/os/ast-delete-object",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -912,7 +912,7 @@ export const packageJSONData = {
             "xhtml",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/ast-get-object/",
+        "homepage": "https://codsen.com/os/ast-get-object",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1002,7 +1002,7 @@ export const packageJSONData = {
             "xhtml",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/ast-get-values-by-key/",
+        "homepage": "https://codsen.com/os/ast-get-values-by-key",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1091,7 +1091,7 @@ export const packageJSONData = {
             "tree",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/ast-is-empty/",
+        "homepage": "https://codsen.com/os/ast-is-empty",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1176,7 +1176,7 @@ export const packageJSONData = {
             "xhtml",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/ast-loose-compare/",
+        "homepage": "https://codsen.com/os/ast-loose-compare",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1264,7 +1264,7 @@ export const packageJSONData = {
             "value",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/ast-monkey/",
+        "homepage": "https://codsen.com/os/ast-monkey",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1351,7 +1351,7 @@ export const packageJSONData = {
             "value",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/ast-monkey-traverse/",
+        "homepage": "https://codsen.com/os/ast-monkey-traverse",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1443,7 +1443,7 @@ export const packageJSONData = {
             "value",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/ast-monkey-traverse-with-lookahead/",
+        "homepage": "https://codsen.com/os/ast-monkey-traverse-with-lookahead",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1529,7 +1529,7 @@ export const packageJSONData = {
             "util",
             "utility"
         ],
-        "homepage": "https://codsen.com/os/ast-monkey-util/",
+        "homepage": "https://codsen.com/os/ast-monkey-util",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1612,7 +1612,7 @@ export const packageJSONData = {
             "title",
             "url"
         ],
-        "homepage": "https://codsen.com/os/bitbucket-slug/",
+        "homepage": "https://codsen.com/os/bitbucket-slug",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1693,7 +1693,7 @@ export const packageJSONData = {
             "valid",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/charcode-is-valid-xml-name-character/",
+        "homepage": "https://codsen.com/os/charcode-is-valid-xml-name-character",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1768,7 +1768,7 @@ export const packageJSONData = {
             "unique",
             "validate"
         ],
-        "homepage": "https://codsen.com/os/check-types-mini/",
+        "homepage": "https://codsen.com/os/check-types-mini",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1843,7 +1843,7 @@ export const packageJSONData = {
             "codsen",
             "cli"
         ],
-        "homepage": "https://codsen.com/os/codsen/",
+        "homepage": "https://codsen.com/os/codsen",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1904,7 +1904,7 @@ export const packageJSONData = {
             "processing",
             "tokenizer"
         ],
-        "homepage": "https://codsen.com/os/codsen-parser/",
+        "homepage": "https://codsen.com/os/codsen-parser",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -1984,7 +1984,7 @@ export const packageJSONData = {
             "tokeniser",
             "tokenizer"
         ],
-        "homepage": "https://codsen.com/os/codsen-tokenizer/",
+        "homepage": "https://codsen.com/os/codsen-tokenizer",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2072,7 +2072,7 @@ export const packageJSONData = {
             "shorthand",
             "six"
         ],
-        "homepage": "https://codsen.com/os/color-shorthand-hex-to-six-digit/",
+        "homepage": "https://codsen.com/os/color-shorthand-hex-to-six-digit",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2157,7 +2157,7 @@ export const packageJSONData = {
             "rows",
             "sort"
         ],
-        "homepage": "https://codsen.com/os/csv-sort/",
+        "homepage": "https://codsen.com/os/csv-sort",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2241,7 +2241,7 @@ export const packageJSONData = {
             "rows",
             "sort"
         ],
-        "homepage": "https://codsen.com/os/csv-sort-cli/",
+        "homepage": "https://codsen.com/os/csv-sort-cli",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2320,7 +2320,7 @@ export const packageJSONData = {
             "template",
             "templates"
         ],
-        "homepage": "https://codsen.com/os/csv-split-easy/",
+        "homepage": "https://codsen.com/os/csv-split-easy",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2397,7 +2397,7 @@ export const packageJSONData = {
             "tags",
             "xhtml"
         ],
-        "homepage": "https://codsen.com/os/detect-is-it-html-or-xhtml/",
+        "homepage": "https://codsen.com/os/detect-is-it-html-or-xhtml",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2463,7 +2463,7 @@ export const packageJSONData = {
             "template",
             "templating"
         ],
-        "homepage": "https://codsen.com/os/detect-templating-language/",
+        "homepage": "https://codsen.com/os/detect-templating-language",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2540,7 +2540,7 @@ export const packageJSONData = {
             "style",
             "text"
         ],
-        "homepage": "https://codsen.com/os/detergent/",
+        "homepage": "https://codsen.com/os/detergent",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2634,7 +2634,7 @@ export const packageJSONData = {
             "search",
             "string"
         ],
-        "homepage": "https://codsen.com/os/easy-replace/",
+        "homepage": "https://codsen.com/os/easy-replace",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2705,7 +2705,7 @@ export const packageJSONData = {
             "respect",
             "write"
         ],
-        "homepage": "https://codsen.com/os/edit-package-json/",
+        "homepage": "https://codsen.com/os/edit-package-json",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2785,7 +2785,7 @@ export const packageJSONData = {
             "templates",
             "validate"
         ],
-        "homepage": "https://codsen.com/os/email-all-chars-within-ascii/",
+        "homepage": "https://codsen.com/os/email-all-chars-within-ascii",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2857,7 +2857,7 @@ export const packageJSONData = {
             "templates",
             "validate"
         ],
-        "homepage": "https://codsen.com/os/email-all-chars-within-ascii-cli/",
+        "homepage": "https://codsen.com/os/email-all-chars-within-ascii-cli",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -2935,7 +2935,7 @@ export const packageJSONData = {
             "uncss",
             "unused"
         ],
-        "homepage": "https://codsen.com/os/email-comb/",
+        "homepage": "https://codsen.com/os/email-comb",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3029,7 +3029,7 @@ export const packageJSONData = {
             "system",
             "templates"
         ],
-        "homepage": "https://codsen.com/os/email-homey/",
+        "homepage": "https://codsen.com/os/email-homey",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3112,7 +3112,7 @@ export const packageJSONData = {
             "utility",
             "xhtml"
         ],
-        "homepage": "https://codsen.com/os/emlint/",
+        "homepage": "https://codsen.com/os/emlint",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3227,7 +3227,7 @@ export const packageJSONData = {
             "compile",
             "extract"
         ],
-        "homepage": "https://codsen.com/os/extract-search-index/",
+        "homepage": "https://codsen.com/os/extract-search-index",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3301,7 +3301,7 @@ export const packageJSONData = {
             "templates",
             "tool"
         ],
-        "homepage": "https://codsen.com/os/generate-atomic-css/",
+        "homepage": "https://codsen.com/os/generate-atomic-css",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3379,7 +3379,7 @@ export const packageJSONData = {
             "tool",
             "update"
         ],
-        "homepage": "https://codsen.com/os/generate-atomic-css-cli/",
+        "homepage": "https://codsen.com/os/generate-atomic-css-cli",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3430,7 +3430,7 @@ export const packageJSONData = {
             "meow": "^10.1.3",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
-            "write-file-atomic": "^4.0.1"
+            "write-file-atomic": "^4.0.2"
         }
     },
     "gulp-email-remove-unused-css": {
@@ -3451,7 +3451,7 @@ export const packageJSONData = {
             "uncss",
             "unused"
         ],
-        "homepage": "https://codsen.com/os/gulp-email-remove-unused-css/",
+        "homepage": "https://codsen.com/os/gulp-email-remove-unused-css",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3521,7 +3521,7 @@ export const packageJSONData = {
             "string",
             "templating"
         ],
-        "homepage": "https://codsen.com/os/helga/",
+        "homepage": "https://codsen.com/os/helga",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3589,7 +3589,7 @@ export const packageJSONData = {
             "not",
             "template"
         ],
-        "homepage": "https://codsen.com/os/html-all-known-attributes/",
+        "homepage": "https://codsen.com/os/html-all-known-attributes",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3669,7 +3669,7 @@ export const packageJSONData = {
             "tool",
             "utility"
         ],
-        "homepage": "https://codsen.com/os/html-crush/",
+        "homepage": "https://codsen.com/os/html-crush",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3745,7 +3745,7 @@ export const packageJSONData = {
             "not",
             "template"
         ],
-        "homepage": "https://codsen.com/os/html-entities-not-email-friendly/",
+        "homepage": "https://codsen.com/os/html-entities-not-email-friendly",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3821,7 +3821,7 @@ export const packageJSONData = {
             "template",
             "templates"
         ],
-        "homepage": "https://codsen.com/os/html-img-alt/",
+        "homepage": "https://codsen.com/os/html-img-alt",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3901,7 +3901,7 @@ export const packageJSONData = {
             "template",
             "templates"
         ],
-        "homepage": "https://codsen.com/os/html-table-patcher/",
+        "homepage": "https://codsen.com/os/html-table-patcher",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -3982,7 +3982,7 @@ export const packageJSONData = {
             "tokenizer",
             "value"
         ],
-        "homepage": "https://codsen.com/os/is-char-suitable-for-html-attr-name/",
+        "homepage": "https://codsen.com/os/is-char-suitable-for-html-attr-name",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4056,7 +4056,7 @@ export const packageJSONData = {
             "tokeniser",
             "tokenizer"
         ],
-        "homepage": "https://codsen.com/os/is-html-attribute-closing/",
+        "homepage": "https://codsen.com/os/is-html-attribute-closing",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4136,7 +4136,7 @@ export const packageJSONData = {
             "tokenizer",
             "utility"
         ],
-        "homepage": "https://codsen.com/os/is-html-tag-opening/",
+        "homepage": "https://codsen.com/os/is-html-tag-opening",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4219,7 +4219,7 @@ export const packageJSONData = {
             "valid",
             "validate"
         ],
-        "homepage": "https://codsen.com/os/is-language-code/",
+        "homepage": "https://codsen.com/os/is-language-code",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4293,7 +4293,7 @@ export const packageJSONData = {
             "tag",
             "validate"
         ],
-        "homepage": "https://codsen.com/os/is-media-descriptor/",
+        "homepage": "https://codsen.com/os/is-media-descriptor",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4368,7 +4368,7 @@ export const packageJSONData = {
             "url",
             "validate"
         ],
-        "homepage": "https://codsen.com/os/is-relative-uri/",
+        "homepage": "https://codsen.com/os/is-relative-uri",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4445,7 +4445,7 @@ export const packageJSONData = {
             "tags",
             "templates"
         ],
-        "homepage": "https://codsen.com/os/js-row-num/",
+        "homepage": "https://codsen.com/os/js-row-num",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4524,7 +4524,7 @@ export const packageJSONData = {
             "tool",
             "update"
         ],
-        "homepage": "https://codsen.com/os/js-row-num-cli/",
+        "homepage": "https://codsen.com/os/js-row-num-cli",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4576,7 +4576,7 @@ export const packageJSONData = {
             "meow": "^10.1.3",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
-            "write-file-atomic": "^4.0.1"
+            "write-file-atomic": "^4.0.2"
         }
     },
     "json-comb": {
@@ -4598,7 +4598,7 @@ export const packageJSONData = {
             "tool",
             "utility"
         ],
-        "homepage": "https://codsen.com/os/json-comb/",
+        "homepage": "https://codsen.com/os/json-comb",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4668,7 +4668,7 @@ export const packageJSONData = {
             "same",
             "schema"
         ],
-        "homepage": "https://codsen.com/os/json-comb-core/",
+        "homepage": "https://codsen.com/os/json-comb-core",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4759,7 +4759,7 @@ export const packageJSONData = {
             "tool",
             "utility"
         ],
-        "homepage": "https://codsen.com/os/json-sort-cli/",
+        "homepage": "https://codsen.com/os/json-sort-cli",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4845,7 +4845,7 @@ export const packageJSONData = {
             "variable",
             "variables"
         ],
-        "homepage": "https://codsen.com/os/json-variables/",
+        "homepage": "https://codsen.com/os/json-variables",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -4930,7 +4930,7 @@ export const packageJSONData = {
             "tool",
             "utility"
         ],
-        "homepage": "https://codsen.com/os/lerna-clean-changelogs/",
+        "homepage": "https://codsen.com/os/lerna-clean-changelogs",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5002,7 +5002,7 @@ export const packageJSONData = {
             "tool",
             "utility"
         ],
-        "homepage": "https://codsen.com/os/lerna-clean-changelogs-cli/",
+        "homepage": "https://codsen.com/os/lerna-clean-changelogs-cli",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5057,7 +5057,7 @@ export const packageJSONData = {
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
-            "write-file-atomic": "^4.0.1"
+            "write-file-atomic": "^4.0.2"
         },
         "devDependencies": {
             "p-map": "^5.5.0"
@@ -5084,7 +5084,7 @@ export const packageJSONData = {
             "tool",
             "utility"
         ],
-        "homepage": "https://codsen.com/os/lerna-link-dep/",
+        "homepage": "https://codsen.com/os/lerna-link-dep",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5150,7 +5150,7 @@ export const packageJSONData = {
             "linecol",
             "position"
         ],
-        "homepage": "https://codsen.com/os/line-column-mini/",
+        "homepage": "https://codsen.com/os/line-column-mini",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5221,7 +5221,7 @@ export const packageJSONData = {
             "values",
             "write"
         ],
-        "homepage": "https://codsen.com/os/object-all-values-equal-to/",
+        "homepage": "https://codsen.com/os/object-all-values-equal-to",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5300,7 +5300,7 @@ export const packageJSONData = {
             "unique",
             "variations"
         ],
-        "homepage": "https://codsen.com/os/object-boolean-combinations/",
+        "homepage": "https://codsen.com/os/object-boolean-combinations",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5384,7 +5384,7 @@ export const packageJSONData = {
             "value",
             "xml"
         ],
-        "homepage": "https://codsen.com/os/object-delete-key/",
+        "homepage": "https://codsen.com/os/object-delete-key",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5467,7 +5467,7 @@ export const packageJSONData = {
             "schema",
             "unify"
         ],
-        "homepage": "https://codsen.com/os/object-fill-missing-keys/",
+        "homepage": "https://codsen.com/os/object-fill-missing-keys",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5549,7 +5549,7 @@ export const packageJSONData = {
             "values",
             "write"
         ],
-        "homepage": "https://codsen.com/os/object-flatten-all-arrays/",
+        "homepage": "https://codsen.com/os/object-flatten-all-arrays",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5629,7 +5629,7 @@ export const packageJSONData = {
             "plain",
             "wrap"
         ],
-        "homepage": "https://codsen.com/os/object-flatten-referencing/",
+        "homepage": "https://codsen.com/os/object-flatten-referencing",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5712,7 +5712,7 @@ export const packageJSONData = {
             "object",
             "objects"
         ],
-        "homepage": "https://codsen.com/os/object-merge-advanced/",
+        "homepage": "https://codsen.com/os/object-merge-advanced",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5803,7 +5803,7 @@ export const packageJSONData = {
             "unique",
             "validate"
         ],
-        "homepage": "https://codsen.com/os/object-no-new-keys/",
+        "homepage": "https://codsen.com/os/object-no-new-keys",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5874,7 +5874,7 @@ export const packageJSONData = {
             "values",
             "write"
         ],
-        "homepage": "https://codsen.com/os/object-set-all-values-to/",
+        "homepage": "https://codsen.com/os/object-set-all-values-to",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -5952,7 +5952,7 @@ export const packageJSONData = {
             "splice",
             "string"
         ],
-        "homepage": "https://codsen.com/os/ranges-apply/",
+        "homepage": "https://codsen.com/os/ranges-apply",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6025,7 +6025,7 @@ export const packageJSONData = {
             "ranges",
             "string"
         ],
-        "homepage": "https://codsen.com/os/ranges-crop/",
+        "homepage": "https://codsen.com/os/ranges-crop",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6103,7 +6103,7 @@ export const packageJSONData = {
             "ranges",
             "string"
         ],
-        "homepage": "https://codsen.com/os/ranges-ent-decode/",
+        "homepage": "https://codsen.com/os/ranges-ent-decode",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6178,7 +6178,7 @@ export const packageJSONData = {
             "sort",
             "string"
         ],
-        "homepage": "https://codsen.com/os/ranges-invert/",
+        "homepage": "https://codsen.com/os/ranges-invert",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6247,7 +6247,7 @@ export const packageJSONData = {
             "string",
             "within"
         ],
-        "homepage": "https://codsen.com/os/ranges-is-index-within/",
+        "homepage": "https://codsen.com/os/ranges-is-index-within",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6317,7 +6317,7 @@ export const packageJSONData = {
             "string",
             "through"
         ],
-        "homepage": "https://codsen.com/os/ranges-iterate/",
+        "homepage": "https://codsen.com/os/ranges-iterate",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6391,7 +6391,7 @@ export const packageJSONData = {
             "substring",
             "two"
         ],
-        "homepage": "https://codsen.com/os/ranges-merge/",
+        "homepage": "https://codsen.com/os/ranges-merge",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6464,7 +6464,7 @@ export const packageJSONData = {
             "ranges",
             "string"
         ],
-        "homepage": "https://codsen.com/os/ranges-offset/",
+        "homepage": "https://codsen.com/os/ranges-offset",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6529,7 +6529,7 @@ export const packageJSONData = {
             "sort",
             "string"
         ],
-        "homepage": "https://codsen.com/os/ranges-process-outside/",
+        "homepage": "https://codsen.com/os/ranges-process-outside",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6607,7 +6607,7 @@ export const packageJSONData = {
             "splice",
             "string"
         ],
-        "homepage": "https://codsen.com/os/ranges-push/",
+        "homepage": "https://codsen.com/os/ranges-push",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6684,7 +6684,7 @@ export const packageJSONData = {
             "search",
             "string"
         ],
-        "homepage": "https://codsen.com/os/ranges-regex/",
+        "homepage": "https://codsen.com/os/ranges-regex",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6757,7 +6757,7 @@ export const packageJSONData = {
             "sort",
             "string"
         ],
-        "homepage": "https://codsen.com/os/ranges-sort/",
+        "homepage": "https://codsen.com/os/ranges-sort",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6829,7 +6829,7 @@ export const packageJSONData = {
             "remove",
             "strip"
         ],
-        "homepage": "https://codsen.com/os/regex-empty-conditional-comments/",
+        "homepage": "https://codsen.com/os/regex-empty-conditional-comments",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6901,7 +6901,7 @@ export const packageJSONData = {
             "source",
             "tell"
         ],
-        "homepage": "https://codsen.com/os/regex-is-jinja-nunjucks/",
+        "homepage": "https://codsen.com/os/regex-is-jinja-nunjucks",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -6975,7 +6975,7 @@ export const packageJSONData = {
             "source",
             "tell"
         ],
-        "homepage": "https://codsen.com/os/regex-is-jsp/",
+        "homepage": "https://codsen.com/os/regex-is-jsp",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7047,7 +7047,7 @@ export const packageJSONData = {
             "source",
             "tell"
         ],
-        "homepage": "https://codsen.com/os/regex-jinja-specific/",
+        "homepage": "https://codsen.com/os/regex-jinja-specific",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7117,7 +7117,7 @@ export const packageJSONData = {
             "string",
             "unicode"
         ],
-        "homepage": "https://codsen.com/os/str-indexes-of-plus/",
+        "homepage": "https://codsen.com/os/str-indexes-of-plus",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7186,7 +7186,7 @@ export const packageJSONData = {
             "typographically",
             "typography"
         ],
-        "homepage": "https://codsen.com/os/string-apostrophes/",
+        "homepage": "https://codsen.com/os/string-apostrophes",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7262,7 +7262,7 @@ export const packageJSONData = {
             "fixation",
             "point"
         ],
-        "homepage": "https://codsen.com/os/string-bionic-split/",
+        "homepage": "https://codsen.com/os/string-bionic-split",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7336,7 +7336,7 @@ export const packageJSONData = {
             "tell",
             "unicode"
         ],
-        "homepage": "https://codsen.com/os/string-character-is-astral-surrogate/",
+        "homepage": "https://codsen.com/os/string-character-is-astral-surrogate",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7410,7 +7410,7 @@ export const packageJSONData = {
             "tags",
             "templates"
         ],
-        "homepage": "https://codsen.com/os/string-collapse-leading-whitespace/",
+        "homepage": "https://codsen.com/os/string-collapse-leading-whitespace",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7479,7 +7479,7 @@ export const packageJSONData = {
             "white",
             "whitespace"
         ],
-        "homepage": "https://codsen.com/os/string-collapse-white-space/",
+        "homepage": "https://codsen.com/os/string-collapse-white-space",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7556,7 +7556,7 @@ export const packageJSONData = {
             "string",
             "unicode"
         ],
-        "homepage": "https://codsen.com/os/string-convert-indexes/",
+        "homepage": "https://codsen.com/os/string-convert-indexes",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7627,7 +7627,7 @@ export const packageJSONData = {
             "selector",
             "string"
         ],
-        "homepage": "https://codsen.com/os/string-extract-class-names/",
+        "homepage": "https://codsen.com/os/string-extract-class-names",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7702,7 +7702,7 @@ export const packageJSONData = {
             "variable",
             "variables"
         ],
-        "homepage": "https://codsen.com/os/string-extract-sass-vars/",
+        "homepage": "https://codsen.com/os/string-extract-sass-vars",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7777,7 +7777,7 @@ export const packageJSONData = {
             "templating",
             "unicode"
         ],
-        "homepage": "https://codsen.com/os/string-find-heads-tails/",
+        "homepage": "https://codsen.com/os/string-find-heads-tails",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7854,7 +7854,7 @@ export const packageJSONData = {
             "text",
             "validate"
         ],
-        "homepage": "https://codsen.com/os/string-find-malformed/",
+        "homepage": "https://codsen.com/os/string-find-malformed",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -7931,7 +7931,7 @@ export const packageJSONData = {
             "return",
             "string"
         ],
-        "homepage": "https://codsen.com/os/string-fix-broken-named-entities/",
+        "homepage": "https://codsen.com/os/string-fix-broken-named-entities",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8014,7 +8014,7 @@ export const packageJSONData = {
             "traversal",
             "traverse"
         ],
-        "homepage": "https://codsen.com/os/string-left-right/",
+        "homepage": "https://codsen.com/os/string-left-right",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8090,7 +8090,7 @@ export const packageJSONData = {
             "traverse",
             "utility"
         ],
-        "homepage": "https://codsen.com/os/string-match-left-right/",
+        "homepage": "https://codsen.com/os/string-match-left-right",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8174,7 +8174,7 @@ export const packageJSONData = {
             "word",
             "words"
         ],
-        "homepage": "https://codsen.com/os/string-overlap-one-on-another/",
+        "homepage": "https://codsen.com/os/string-overlap-one-on-another",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8244,7 +8244,7 @@ export const packageJSONData = {
             "text",
             "trim"
         ],
-        "homepage": "https://codsen.com/os/string-process-comma-separated/",
+        "homepage": "https://codsen.com/os/string-process-comma-separated",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8313,7 +8313,7 @@ export const packageJSONData = {
             "text",
             "within"
         ],
-        "homepage": "https://codsen.com/os/string-range-expander/",
+        "homepage": "https://codsen.com/os/string-range-expander",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8387,7 +8387,7 @@ export const packageJSONData = {
             "tags",
             "templates"
         ],
-        "homepage": "https://codsen.com/os/string-remove-duplicate-heads-tails/",
+        "homepage": "https://codsen.com/os/string-remove-duplicate-heads-tails",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8469,7 +8469,7 @@ export const packageJSONData = {
             "thousand",
             "thousands"
         ],
-        "homepage": "https://codsen.com/os/string-remove-thousand-separators/",
+        "homepage": "https://codsen.com/os/string-remove-thousand-separators",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8552,7 +8552,7 @@ export const packageJSONData = {
             "widow",
             "word"
         ],
-        "homepage": "https://codsen.com/os/string-remove-widows/",
+        "homepage": "https://codsen.com/os/string-remove-widows",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8635,7 +8635,7 @@ export const packageJSONData = {
             "tags",
             "templates"
         ],
-        "homepage": "https://codsen.com/os/string-split-by-whitespace/",
+        "homepage": "https://codsen.com/os/string-split-by-whitespace",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8716,7 +8716,7 @@ export const packageJSONData = {
             "text",
             "xhtml"
         ],
-        "homepage": "https://codsen.com/os/string-strip-html/",
+        "homepage": "https://codsen.com/os/string-strip-html",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8803,7 +8803,7 @@ export const packageJSONData = {
             "text",
             "trim"
         ],
-        "homepage": "https://codsen.com/os/string-trim-spaces-only/",
+        "homepage": "https://codsen.com/os/string-trim-spaces-only",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8869,7 +8869,7 @@ export const packageJSONData = {
             "truncate",
             "truncator"
         ],
-        "homepage": "https://codsen.com/os/string-truncator/",
+        "homepage": "https://codsen.com/os/string-truncator",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -8950,7 +8950,7 @@ export const packageJSONData = {
             "uglify",
             "values"
         ],
-        "homepage": "https://codsen.com/os/string-uglify/",
+        "homepage": "https://codsen.com/os/string-uglify",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -9025,7 +9025,7 @@ export const packageJSONData = {
             "tags",
             "templates"
         ],
-        "homepage": "https://codsen.com/os/string-unfancy/",
+        "homepage": "https://codsen.com/os/string-unfancy",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -9104,7 +9104,7 @@ export const packageJSONData = {
             "tags",
             "text"
         ],
-        "homepage": "https://codsen.com/os/stristri/",
+        "homepage": "https://codsen.com/os/stristri",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -9189,7 +9189,7 @@ export const packageJSONData = {
             "test",
             "unit"
         ],
-        "homepage": "https://codsen.com/os/tap-parse-string-to-object/",
+        "homepage": "https://codsen.com/os/tap-parse-string-to-object",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -9268,7 +9268,7 @@ export const packageJSONData = {
             "test",
             "variations"
         ],
-        "homepage": "https://codsen.com/os/test-mixer/",
+        "homepage": "https://codsen.com/os/test-mixer",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -9350,7 +9350,7 @@ export const packageJSONData = {
             "declare",
             "export"
         ],
-        "homepage": "https://codsen.com/os/tsd-extract/",
+        "homepage": "https://codsen.com/os/tsd-extract",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -9432,7 +9432,7 @@ export const packageJSONData = {
             "version",
             "versions"
         ],
-        "homepage": "https://codsen.com/os/update-versions/",
+        "homepage": "https://codsen.com/os/update-versions",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -9487,9 +9487,9 @@ export const packageJSONData = {
             "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^13.6.1",
+            "pacote": "^13.6.2",
             "update-notifier": "^6.0.2",
-            "write-file-atomic": "^4.0.1"
+            "write-file-atomic": "^4.0.2"
         },
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
@@ -9512,7 +9512,7 @@ export const packageJSONData = {
             "util",
             "validate"
         ],
-        "homepage": "https://codsen.com/os/util-array-object-or-both/",
+        "homepage": "https://codsen.com/os/util-array-object-or-both",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
@@ -9586,7 +9586,7 @@ export const packageJSONData = {
             "string",
             "util"
         ],
-        "homepage": "https://codsen.com/os/util-nonempty/",
+        "homepage": "https://codsen.com/os/util-nonempty",
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",

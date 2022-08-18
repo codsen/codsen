@@ -1,6 +1,6 @@
 # csv-sort
 
-> Sorts double-entry bookkeeping CSV coming from internet banking
+> Sort double-entry bookkeeping CSV from internet banking
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/csv-sort" rel="nofollow noreferrer noopener">

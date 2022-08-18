@@ -11,7 +11,7 @@
     "processing",
     "tokenizer"
   ],
-  "homepage": "https://codsen.com/os/codsen-parser/",
+  "homepage": "https://codsen.com/os/codsen-parser",
   "repository": {
     "type": "git",
     "url": "https://github.com/codsen/codsen.git",

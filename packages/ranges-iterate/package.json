@@ -14,7 +14,7 @@
     "string",
     "through"
   ],
-  "homepage": "https://codsen.com/os/ranges-iterate/",
+  "homepage": "https://codsen.com/os/ranges-iterate",
   "repository": {
     "type": "git",
     "url": "https://github.com/codsen/codsen.git",

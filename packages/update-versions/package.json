@@ -23,7 +23,7 @@
     "version",
     "versions"
   ],
-  "homepage": "https://codsen.com/os/update-versions/",
+  "homepage": "https://codsen.com/os/update-versions",
   "repository": {
     "type": "git",
     "url": "https://github.com/codsen/codsen.git",
@@ -78,9 +78,9 @@
     "p-map": "^5.5.0",
     "p-progress": "^0.6.0",
     "p-reduce": "^3.0.0",
-    "pacote": "^13.6.1",
+    "pacote": "^13.6.2",
     "update-notifier": "^6.0.2",
-    "write-file-atomic": "^4.0.1"
+    "write-file-atomic": "^4.0.2"
   },
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.7",

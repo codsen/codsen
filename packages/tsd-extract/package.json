@@ -19,7 +19,7 @@
     "declare",
     "export"
   ],
-  "homepage": "https://codsen.com/os/tsd-extract/",
+  "homepage": "https://codsen.com/os/tsd-extract",
   "repository": {
     "type": "git",
     "url": "https://github.com/codsen/codsen.git",

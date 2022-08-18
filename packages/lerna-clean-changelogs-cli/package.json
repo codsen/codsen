@@ -16,7 +16,7 @@
     "tool",
     "utility"
   ],
-  "homepage": "https://codsen.com/os/lerna-clean-changelogs-cli/",
+  "homepage": "https://codsen.com/os/lerna-clean-changelogs-cli",
   "repository": {
     "type": "git",
     "url": "https://github.com/codsen/codsen.git",
@@ -71,7 +71,7 @@
     "p-filter": "^3.0.0",
     "p-reduce": "^3.0.0",
     "update-notifier": "^6.0.2",
-    "write-file-atomic": "^4.0.1"
+    "write-file-atomic": "^4.0.2"
   },
   "devDependencies": {
     "p-map": "^5.5.0"

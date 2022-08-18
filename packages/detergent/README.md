@@ -1,6 +1,6 @@
 # detergent
 
-> Extracts, cleans and encodes text
+> Extract, clean, encode text and fix English style
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/detergent" rel="nofollow noreferrer noopener">

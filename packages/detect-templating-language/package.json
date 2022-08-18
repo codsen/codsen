@@ -10,7 +10,7 @@
     "template",
     "templating"
   ],
-  "homepage": "https://codsen.com/os/detect-templating-language/",
+  "homepage": "https://codsen.com/os/detect-templating-language",
   "repository": {
     "type": "git",
     "url": "https://github.com/codsen/codsen.git",

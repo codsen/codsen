@@ -57,7 +57,6 @@ assert.deepEqual(
 );
 ```
 
-
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-range-expander/) for a full description of the API.

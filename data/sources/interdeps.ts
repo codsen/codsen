@@ -223,7 +223,7 @@ export const interdeps = [
     },
     {
         "name": "email-comb",
-        "size": 20500,
+        "size": 20522,
         "imports": [
             "array-pull-all-with-glob",
             "html-crush",
@@ -717,7 +717,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 18723,
+        "size": 18732,
         "imports": [
             "ranges-apply",
             "ranges-push",

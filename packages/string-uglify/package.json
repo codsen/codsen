@@ -20,7 +20,7 @@
     "uglify",
     "values"
   ],
-  "homepage": "https://codsen.com/os/string-uglify/",
+  "homepage": "https://codsen.com/os/string-uglify",
   "repository": {
     "type": "git",
     "url": "https://github.com/codsen/codsen.git",
