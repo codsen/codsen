@@ -62,7 +62,7 @@ assert.equal(comb(source).result, intended);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/email-comb/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/email-comb/) for a full description of the API. Also, try the [GUI playground](https://codsen.com/os/email-comb/play).
 
 ## Contributing
 
