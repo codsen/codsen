@@ -4581,7 +4581,7 @@ export const packageJSONData = {
     },
     "json-comb": {
         "name": "json-comb",
-        "version": "0.7.1",
+        "version": "0.7.2",
         "description": "Command line app to manage sets of JSON files",
         "keywords": [
             "app",
@@ -4645,7 +4645,7 @@ export const packageJSONData = {
             "fs-extra": "^10.1.0",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
-            "json-comb-core": "^7.1.1",
+            "json-comb-core": "^7.1.2",
             "meow": "^10.1.3",
             "p-map": "^5.5.0",
             "p-reduce": "^3.0.0",
@@ -4654,7 +4654,7 @@ export const packageJSONData = {
     },
     "json-comb-core": {
         "name": "json-comb-core",
-        "version": "7.1.1",
+        "version": "7.1.2",
         "description": "The inner core of json-comb",
         "keywords": [
             "comb",
