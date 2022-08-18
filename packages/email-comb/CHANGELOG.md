@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [6.3.0](https://github.com/codsen/codsen/compare/email-comb@6.2.0...email-comb@6.3.0) (2022-08-18)
 
-
 ### Features
 
-* fix result log.originalLength ([994b27d](https://github.com/codsen/codsen/commit/994b27d3c8431f222e52512c5fe65db42011dab2))
-
-
-
-
+- fix result log.originalLength ([994b27d](https://github.com/codsen/codsen/commit/994b27d3c8431f222e52512c5fe65db42011dab2))
 
 # 6.2.0 (2022-08-12)
 
