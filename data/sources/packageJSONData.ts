@@ -84,7 +84,7 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "type-fest": "^2.18.0"
+            "type-fest": "^2.19.0"
         }
     },
     "array-group-str-omit-num-char": {
@@ -623,7 +623,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
-            "type-fest": "^2.18.0"
+            "type-fest": "^2.19.0"
         }
     },
     "ast-contains-only-empty-space": {
@@ -8784,7 +8784,7 @@ export const packageJSONData = {
             "@types/lodash.without": "^4.4.7",
             "ast-monkey-traverse": "^3.1.1",
             "ranges-invert": "^5.2.1",
-            "title": "^3.5.2"
+            "title": "^3.5.3"
         }
     },
     "string-trim-spaces-only": {
