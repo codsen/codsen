@@ -889,8 +889,7 @@ function main(
               (opts.trimBeforeMatching &&
                 currentChar !== undefined &&
                 currentChar.trim())) &&
-            (!opts.trimCharsBeforeMatching ||
-              !opts.trimCharsBeforeMatching.length ||
+            (!opts.trimCharsBeforeMatching?.length ||
               (currentChar !== undefined &&
                 !opts.trimCharsBeforeMatching.includes(currentChar)))
           ) {
@@ -904,7 +903,7 @@ function main(
           let currentChar = str[y];
           DEV &&
             console.log(
-              `907 ${`\u001b[${33}m${"currentChar"}\u001b[${39}m`} = ${JSON.stringify(
+              `906 ${`\u001b[${33}m${"currentChar"}\u001b[${39}m`} = ${JSON.stringify(
                 currentChar,
                 null,
                 4
@@ -914,18 +913,17 @@ function main(
           if (
             (!opts.trimBeforeMatching ||
               (opts.trimBeforeMatching && currentChar.trim())) &&
-            (!opts.trimCharsBeforeMatching ||
-              !opts.trimCharsBeforeMatching.length ||
+            (!opts.trimCharsBeforeMatching?.length ||
               !opts.trimCharsBeforeMatching.includes(currentChar))
           ) {
-            DEV && console.log("921 breaking!");
+            DEV && console.log("919 breaking!");
             firstCharOutsideIndex = y;
             break;
           }
         }
       }
       if (firstCharOutsideIndex === undefined) {
-        DEV && console.log("928 RETURN false");
+        DEV && console.log("926 RETURN false");
         return false;
       }
 
@@ -938,7 +936,7 @@ function main(
       }
       if (mode[5] === "L") {
         DEV &&
-          console.log(`941 ${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
+          console.log(`939 ${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
         return opts.cb(
           wholeCharacterOutside,
           theRemainderOfTheString,
@@ -951,7 +949,7 @@ function main(
         theRemainderOfTheString = str.slice(firstCharOutsideIndex);
       }
       DEV &&
-        console.log(`954 ${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
+        console.log(`952 ${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
       return opts.cb(
         wholeCharacterOutside,
         theRemainderOfTheString,
@@ -977,19 +975,19 @@ function main(
   for (let i = 0, len = whatToMatch.length; i < len; i++) {
     DEV &&
       console.log(
-        `980 matchLeft() LOOP ${i} ${`\u001b[${32}m${`=================================================================================`}\u001b[${39}m`} \n\n`
+        `978 matchLeft() LOOP ${i} ${`\u001b[${32}m${`=================================================================================`}\u001b[${39}m`} \n\n`
       );
 
     special = typeof whatToMatch[i] === "function";
-    DEV && console.log(`984 special = ${special}`);
+    DEV && console.log(`982 special = ${special}`);
 
     DEV &&
       console.log(
-        `988 🔥 whatToMatch no. ${i} = ${
+        `986 🔥 whatToMatch no. ${i} = ${
           whatToMatch[i]
         } (type ${typeof whatToMatch[i]})`
       );
-    DEV && console.log(`992 🔥 special = ${special}`);
+    DEV && console.log(`990 🔥 special = ${special}`);
 
     // since input can be function, we need to grab the value explicitly:
     let whatToMatchVal = whatToMatch[i];
@@ -1007,7 +1005,7 @@ function main(
 
     DEV &&
       console.log(
-        `1010 \u001b[${33}m${"march() called with:"}\u001b[${39}m\n* startingPosition = ${JSON.stringify(
+        `1008 \u001b[${33}m${"march() called with:"}\u001b[${39}m\n* startingPosition = ${JSON.stringify(
           startingPosition,
           null,
           4
@@ -1016,7 +1014,7 @@ function main(
     DEV && console.log("\n\n\n\n\n\n");
     DEV &&
       console.log(
-        `1019 ███████████████████████████████████████ march() STARTS BELOW ███████████████████████████████████████`
+        `1017 ███████████████████████████████████████ march() STARTS BELOW ███████████████████████████████████████`
       );
     let found = march(
       str,
@@ -1028,11 +1026,11 @@ function main(
     );
     DEV &&
       console.log(
-        `1031 ███████████████████████████████████████ march() ENDED ABOVE ███████████████████████████████████████\n\n\n\n\n\n`
+        `1029 ███████████████████████████████████████ march() ENDED ABOVE ███████████████████████████████████████\n\n\n\n\n\n`
       );
     DEV &&
       console.log(
-        `1035 \u001b[${33}m${"found"}\u001b[${39}m = ${JSON.stringify(
+        `1033 \u001b[${33}m${"found"}\u001b[${39}m = ${JSON.stringify(
           found,
           null,
           4
@@ -1048,7 +1046,7 @@ function main(
       whatToMatchVal() === "EOL"
     ) {
       DEV &&
-        console.log(`1051 returning whatToMatchVal() = ${whatToMatchVal()}`);
+        console.log(`1049 returning whatToMatchVal() = ${whatToMatchVal()}`);
       return whatToMatchVal() &&
         (opts.cb
           ? opts.cb(
@@ -1087,7 +1085,7 @@ function main(
 
     DEV &&
       console.log(
-        `1090 FINAL ${`\u001b[${33}m${`indexOfTheCharacterInFront`}\u001b[${39}m`} = ${JSON.stringify(
+        `1088 FINAL ${`\u001b[${33}m${`indexOfTheCharacterInFront`}\u001b[${39}m`} = ${JSON.stringify(
           indexOfTheCharacterInFront,
           null,
           4
@@ -1116,7 +1114,7 @@ function main(
     ) {
       DEV &&
         console.log(
-          `1119 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${JSON.stringify(
+          `1117 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${JSON.stringify(
             whatToMatchVal,
             null,
             4
@@ -1125,7 +1123,7 @@ function main(
       return whatToMatchVal as string;
     }
   }
-  DEV && console.log(`1128 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} false`);
+  DEV && console.log(`1126 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} false`);
   return false;
 }
 

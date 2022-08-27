@@ -87,6 +87,6 @@
     "@types/lodash.without": "^4.4.7",
     "ast-monkey-traverse": "^3.1.1",
     "ranges-invert": "^5.2.1",
-    "title": "^3.5.2"
+    "title": "^3.5.3"
   }
 }

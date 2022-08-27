@@ -97,7 +97,7 @@ module.exports = {
         "@typescript-eslint/prefer-namespace-keyword": "error",
         "@typescript-eslint/restrict-plus-operands": "error",
         "@typescript-eslint/no-useless-constructor": "error",
-        "@typescript-eslint/prefer-optional-chain": "error",
+        "@typescript-eslint/prefer-optional-chain": "warn",
         "@typescript-eslint/no-dupe-class-members": "error",
         "@typescript-eslint/no-use-before-define": [
           "error",

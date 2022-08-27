@@ -68,6 +68,6 @@
     }
   },
   "devDependencies": {
-    "type-fest": "^2.18.0"
+    "type-fest": "^2.19.0"
   }
 }

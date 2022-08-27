@@ -740,7 +740,6 @@ function prepLine(
 
           if (
             !source[y - 3].trim().length ||
-            // eslint-disable-next-line
             padLeftIfTheresOnTheLeft.some((val) =>
               source
                 .slice(startPoint, y - 2)
@@ -751,14 +750,14 @@ function prepLine(
             // if left-side padding can be possible:
             DEV &&
               console.log(
-                `754 source.slice(startPoint, y - 2) = "${source.slice(
+                `753 source.slice(startPoint, y - 2) = "${source.slice(
                   startPoint,
                   y - 2
                 )}"`
               );
             DEV &&
               console.log(
-                `761 push ${`${source.slice(startPoint, y - 2)}${
+                `760 push ${`${source.slice(startPoint, y - 2)}${
                   pad
                     ? String(i).padStart(
                         String(to).length +
@@ -792,7 +791,7 @@ function prepLine(
             }`;
             DEV &&
               console.log(
-                `795 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+                `794 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
               );
           } else if (
             !source[y + 1].trim().length ||
@@ -800,7 +799,7 @@ function prepLine(
           ) {
             DEV &&
               console.log(
-                `803 push ${`${source.slice(startPoint, y - 2)}${
+                `802 push ${`${source.slice(startPoint, y - 2)}${
                   pad
                     ? String(i).padEnd(
                         String(to).length +
@@ -824,17 +823,17 @@ function prepLine(
             }`;
             DEV &&
               console.log(
-                `827 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+                `826 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
               );
           } else {
             DEV &&
               console.log(
-                `832 push ${`${source.slice(startPoint, y - 2)}${i}`}`
+                `831 push ${`${source.slice(startPoint, y - 2)}${i}`}`
               );
             res += `${source.slice(startPoint, y - 2)}${i}`;
             DEV &&
               console.log(
-                `837 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+                `836 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
               );
 
             // also, make a note of padding which we'll need to do later,
@@ -849,7 +848,7 @@ function prepLine(
               debtPaddingLen = String(to).length - String(i).length;
               DEV &&
                 console.log(
-                  `852 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`debtPaddingLen`}\u001b[${39}m`} = ${JSON.stringify(
+                  `851 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`debtPaddingLen`}\u001b[${39}m`} = ${JSON.stringify(
                     debtPaddingLen,
                     null,
                     4
@@ -864,24 +863,24 @@ function prepLine(
       // catch opening curlie
       // -----------------------------------------------------------------------
       if (source[y] === "{" && pad) {
-        DEV && console.log(`867 opening curlie caught`);
+        DEV && console.log(`866 opening curlie caught`);
         if (debtPaddingLen) {
           res += `${source.slice(startPoint, y)}${` `.repeat(debtPaddingLen)}`;
           startPoint = y;
           debtPaddingLen = 0;
           DEV &&
             console.log(
-              `874 SET startPoint = ${startPoint}; debtPaddingLen = ${debtPaddingLen}`
+              `873 SET startPoint = ${startPoint}; debtPaddingLen = ${debtPaddingLen}`
             );
         }
       }
 
       // catch the last character of a line
       if (!source[y + 1]) {
-        DEV && console.log(`881 last character on a line!`);
+        DEV && console.log(`880 last character on a line!`);
         DEV &&
           console.log(
-            `884 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
+            `883 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
               startPoint,
               null,
               4
@@ -891,7 +890,7 @@ function prepLine(
         let restOfStr = source.slice(startPoint);
         DEV &&
           console.log(
-            `894 restOfStr = "${restOfStr}" --- we'll check, does it start with any elements from units`
+            `893 restOfStr = "${restOfStr}" --- we'll check, does it start with any elements from units`
           );
         if (
           i === 0 &&
@@ -905,27 +904,27 @@ function prepLine(
         ) {
           DEV &&
             console.log(
-              `908 push "${source.slice(startPoint + unitFound.length)}"`
+              `907 push "${source.slice(startPoint + unitFound.length)}"`
             );
           res += `${source.slice(startPoint + unitFound.length)}`;
           DEV &&
             console.log(
-              `913 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+              `912 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
             );
         } else {
           DEV &&
-            console.log(`917 last char - submit "${source.slice(startPoint)}"`);
+            console.log(`916 last char - submit "${source.slice(startPoint)}"`);
           res += `${source.slice(startPoint)}`;
           DEV &&
             console.log(
-              `921 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+              `920 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
             );
         }
         // add line break
         res += `${i !== to ? "\n" : ""}`;
         DEV &&
           console.log(
-            `928 add line break ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+            `927 add line break ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
           );
       }
     }

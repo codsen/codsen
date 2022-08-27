@@ -594,7 +594,7 @@ const seqDefaults: Opts = {
 
 function leftSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
   // if there are no arguments, it becomes left()
-  if (!args || !args.length) {
+  if (!args?.length) {
     // DEV && console.log(`493 leftSeq() calling left()`);
     // return left(str, idx);
     throw new Error(
@@ -622,7 +622,7 @@ function leftSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
 
 function rightSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
   // if there are no arguments, it becomes right()
-  if (!args || !args.length) {
+  if (!args?.length) {
     // DEV && console.log(`520 rightSeq() calling right()`);
     // return right(str, idx);
     throw new Error(

@@ -99,8 +99,8 @@ function sortAllObjectsSync(input: any): any {
 
 // -----------------------------------------------------------------------------
 
-function getKeyset<ValueType>(
-  arrOfPromises: Iterable<PromiseLike<ValueType> | ValueType>,
+function getKeyset(
+  arrOfPromises: Iterable<PromiseLike<Obj> | Obj>,
   opts?: Partial<GetKeysetOpts>
 ): Promise<Obj> {
   if (arguments.length === 0) {
@@ -508,7 +508,7 @@ function findUnusedSync(
             (obj) =>
               ((opts1 && obj[key] === opts1.placeholder) ||
                 obj[key] === undefined) &&
-              (!opts1 || !opts1.comments || !includes(key, opts1.comments))
+              (!opts1?.comments || !includes(key, opts1.comments))
           )
         );
         // DEV && console.log(`unusedKeys = ${JSON.stringify(unusedKeys, null, 4)}`)
@@ -536,11 +536,7 @@ function findUnusedSync(
               existy(obj[el]) &&
               (!opts1 || obj[el] !== opts1.placeholder)
             ) {
-              if (
-                !opts1 ||
-                !opts1.comments ||
-                !includes(obj[el], opts1.comments)
-              ) {
+              if (!opts1?.comments || !includes(obj[el], opts1.comments)) {
                 res1.push(obj[el]);
               }
             }

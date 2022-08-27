@@ -3,8 +3,8 @@ interface Obj {
   [key: string]: any;
 }
 declare function sortAllObjectsSync(input: any): any;
-declare function getKeyset<ValueType>(
-  arrOfPromises: Iterable<PromiseLike<ValueType> | ValueType>,
+declare function getKeyset(
+  arrOfPromises: Iterable<PromiseLike<Obj> | Obj>,
   opts?: Partial<GetKeysetOpts>
 ): Promise<Obj>;
 interface GetKeysetOpts {
