@@ -50,20 +50,37 @@ function compare(name) {
     hashes[noExtrasFileName] = sha256(noExtras);
     hashes[withExtrasFileName] = sha256(withExtras);
   }
+  // LF
   equal(
-    c(changelog).res,
-    noExtras,
-    `no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    c(changelog.replace(/\r?\n/g, "\n")).res,
+    noExtras.replace(/\r?\n/g, "\n"),
+    `01 LF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`
   );
   equal(
-    c(changelog, { extras: false }).res,
-    noExtras,
-    `hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    c(changelog.replace(/\r?\n/g, "\n"), { extras: false }).res,
+    noExtras.replace(/\r?\n/g, "\n"),
+    `02 LF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
   );
   equal(
-    c(changelog, { extras: true }).res,
-    withExtras,
-    `optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    c(changelog.replace(/\r?\n/g, "\n"), { extras: true }).res,
+    withExtras.replace(/\r?\n/g, "\n"),
+    `03 LF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+  );
+  // CRLF
+  equal(
+    c(changelog.replace(/\r?\n/g, "\r\n")).res,
+    noExtras.replace(/\r?\n/g, "\r\n"),
+    `04 CRLF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`
+  );
+  equal(
+    c(changelog.replace(/\r?\n/g, "\r\n"), { extras: false }).res,
+    noExtras.replace(/\r?\n/g, "\r\n"),
+    `05 CRLF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+  );
+  equal(
+    c(changelog.replace(/\r?\n/g, "\r\n"), { extras: true }).res,
+    withExtras.replace(/\r?\n/g, "\r\n"),
+    `06 CRLF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
   );
 }
 

@@ -37,37 +37,52 @@ function cleanChangelogs(
   }
 
   let resolvedOpts: Opts = { ...defaults, ...opts };
+  DEV && console.log(`040`);
+
+  let currentLineBreakStyle = "\n";
+  if (changelog.includes("\r\n")) {
+    currentLineBreakStyle = "\r\n";
+  } else if (changelog.includes("\r") && !changelog.includes("\n")) {
+    currentLineBreakStyle = "\r";
+  }
+
+  DEV &&
+    console.log(
+      `051 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentLineBreakStyle`}\u001b[${39}m`} = ${JSON.stringify(
+        currentLineBreakStyle,
+        null,
+        4
+      )}`
+    );
 
   let final;
   let lastLineWasEmpty = false;
 
-  if (
-    typeof changelog === "string" &&
-    changelog.length &&
-    (!changelog.includes("\n") || !changelog.includes("\r"))
-  ) {
+  if (typeof changelog === "string" && changelog?.trim()) {
+    DEV && console.log(`062`);
     /* c8 ignore next */
     let changelogEndedWithLinebreak =
       isStr(changelog) &&
       changelog.length &&
-      (changelog[changelog.length - 1] === "\n" ||
-        changelog[changelog.length - 1] === "\r");
+      (changelog[~-changelog.length] === "\n" ||
+        changelog[~-changelog.length] === "\r");
 
     // eslint-disable-next-line no-param-reassign
     changelog = changelog
-      .trim()
+      ?.trim()
       .replace(
         /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
         "$1commit/"
       );
     let linesArr = changelog.split(/\r?\n/);
-    // DEV && console.log(
-    //   `${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
-    //     linesArr,
-    //     null,
-    //     4
-    //   )}`
-    // );
+    DEV &&
+      console.log(
+        `080 ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
+          linesArr,
+          null,
+          4
+        )}`
+      );
 
     if (resolvedOpts.extras) {
       // ███
@@ -76,23 +91,24 @@ function cleanChangelogs(
       // into:
       // ## 2.9.1 (2018-12-27)
       linesArr.forEach((line, i) => {
-        if (line.startsWith("#")) {
+        if (line?.startsWith("#")) {
           linesArr[i] = line.replace(
             /(#+) \[?(\d+\.\d+\.\d+)\s?\]\([^)]*\)/g,
             "$1 $2"
           );
         }
-        if (i && linesArr[i].startsWith("# ")) {
+        if (i && linesArr[i]?.startsWith("# ")) {
           linesArr[i] = `#${linesArr[i]}`;
         }
       });
-      // DEV && console.log(
-      //   `062 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
-      //     linesArr,
-      //     null,
-      //     4
-      //   )}`
-      // );
+      DEV &&
+        console.log(
+          `106 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
+            linesArr,
+            null,
+            4
+          )}`
+        );
     }
 
     // ███
@@ -114,35 +130,35 @@ function cleanChangelogs(
           )}`
         );
       if (
-        linesArr[i].startsWith("**Note:** Version bump only") ||
+        linesArr[i]?.startsWith("**Note:** Version bump only") ||
         (resolvedOpts.extras && linesArr[i].toLowerCase().includes("wip"))
       ) {
         // delete all the blank lines above the culprit:
-        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
+        while (i && isStr(linesArr[~-i]) && !linesArr[~-i]?.trim()) {
           i -= 1;
         }
         // after that, delete the title, but only if there were no other entries:
         if (
           i &&
-          isStr(linesArr[i - 1]) &&
-          linesArr[i - 1].trim().startsWith("#")
+          isStr(linesArr[~-i]) &&
+          linesArr[~-i]?.trim()?.startsWith("#")
         ) {
           i -= 1;
         }
         // delete all the blank lines above the culprit:
-        while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim() && i) {
+        while (i && isStr(linesArr[~-i]) && !linesArr[~-i]?.trim()) {
           i -= 1;
         }
-      } else if (!linesArr[i].trim()) {
+      } else if (!linesArr[i]?.trim()) {
         // maybe this line is empty or contains only whitespace characters (spaces, tabs etc)?
         if (!lastLineWasEmpty) {
           // we push trimmed lines to prevent accidental whitespace characters
           // sitting on an empty line:
-          newLinesArr.unshift(linesArr[i].trim());
+          newLinesArr.unshift(linesArr[i]?.trim());
           lastLineWasEmpty = true;
           DEV &&
             console.log(
-              `145 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+              `161 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
             );
         }
       }
@@ -154,18 +170,18 @@ function cleanChangelogs(
       }
 
       // reset:
-      if (linesArr[i].trim()) {
+      if (linesArr[i]?.trim()) {
         lastLineWasEmpty = false;
         DEV &&
           console.log(
-            `161 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `177 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
       }
     }
 
     /* c8 ignore next */
-    final = `${newLinesArr.join("\n")}${
-      changelogEndedWithLinebreak ? "\n" : ""
+    final = `${newLinesArr.join(currentLineBreakStyle)}${
+      changelogEndedWithLinebreak ? currentLineBreakStyle : ""
     }`;
   }
 
