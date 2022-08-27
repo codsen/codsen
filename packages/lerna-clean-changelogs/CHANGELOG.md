@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.2](https://github.com/codsen/codsen/compare/lerna-clean-changelogs@4.2.1...lerna-clean-changelogs@4.2.2) (2022-08-27)
+
+
+### Bug Fixes
+
+* support windows CRLF line endings ([4f6195a](https://github.com/codsen/codsen/commit/4f6195a1bfa8f21f18540c90b4963f17c433980c))
+
+
+
+
+
 # 4.2.0 (2022-08-12)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "Integrate regex operations into Ranges workflow",
   "keywords": [
     "array",
@@ -71,10 +71,10 @@
   },
   "dependencies": {
     "lodash.isregexp": "^4.0.1",
-    "ranges-merge": "^8.2.1"
+    "ranges-merge": "^8.2.2"
   },
   "devDependencies": {
     "@types/lodash.isregexp": "^4.0.7",
-    "ranges-apply": "^6.2.1"
+    "ranges-apply": "^6.2.2"
   }
 }

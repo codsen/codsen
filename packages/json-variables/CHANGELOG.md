@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.1.2](https://github.com/codsen/codsen/compare/json-variables@11.1.1...json-variables@11.1.2) (2022-08-27)
+
+**Note:** Version bump only for package json-variables
+
+
+
+
+
 # 11.1.0 (2022-08-12)
 
 ### Features
