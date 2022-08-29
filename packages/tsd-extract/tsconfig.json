@@ -12,5 +12,9 @@
     ".git",
     "node_modules"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../string-left-right"
+    }
+  ]
 }

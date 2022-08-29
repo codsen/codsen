@@ -71,7 +71,8 @@
       "testStats.json",
       "testStats.md",
       "tsconfig.build.json",
-      "package.json.lerna_backup"
+      "package.json.lerna_backup",
+      "yarn-error.log"
     ],
     "write_hard": [
       {
@@ -134,7 +135,8 @@
       "testStats.md",
       "travis.js",
       "spack.config.js",
-      ".all-contributorsrc"
+      ".all-contributorsrc",
+      "yarn-error.log"
     ],
     "badFolders": [
       ".turbo",

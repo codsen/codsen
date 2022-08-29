@@ -239,6 +239,9 @@
       "path": "packages/regex-jinja-specific"
     },
     {
+      "path": "packages/seo-editor"
+    },
+    {
       "path": "packages/str-indexes-of-plus"
     },
     {
