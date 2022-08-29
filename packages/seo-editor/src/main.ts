@@ -8,7 +8,7 @@ export interface Opts {
   cb: () => string;
 }
 
-interface Res {
+export interface Res {
   result: {
     extracted: string;
     counts: number[];
@@ -23,7 +23,7 @@ interface Res {
   };
 }
 
-function isLetter(str: unknown): boolean {
+export function isLetter(str: unknown): boolean {
   return (
     typeof str === "string" &&
     str.length === 1 &&
@@ -31,7 +31,7 @@ function isLetter(str: unknown): boolean {
   );
 }
 
-function setLengthCompensation(
+export function setLengthCompensation(
   resultArr: Res["result"],
   receivedMaxLen: number
 ) {
