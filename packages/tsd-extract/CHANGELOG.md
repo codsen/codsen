@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.6.4](https://github.com/codsen/codsen/compare/tsd-extract@0.6.3...tsd-extract@0.6.4) (2022-08-29)
 
-
 ### Bug Fixes
 
-* setup refresh ([af648a3](https://github.com/codsen/codsen/commit/af648a30a205b6c93bbe7379c7530d2a4cd0e837))
-
-
-
-
+- setup refresh ([af648a3](https://github.com/codsen/codsen/commit/af648a30a205b6c93bbe7379c7530d2a4cd0e837))
 
 ## [0.6.1](https://github.com/codsen/codsen/compare/tsd-extract@0.6.0...tsd-extract@0.6.1) (2022-08-14)
 

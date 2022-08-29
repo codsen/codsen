@@ -7103,7 +7103,7 @@ export const packageJSONData = {
     },
     "seo-editor": {
         "name": "seo-editor",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "description": "Markdown editor which automates the keyword counting",
         "keywords": [
             "seo",
@@ -9403,7 +9403,7 @@ export const packageJSONData = {
     },
     "tsd-extract": {
         "name": "tsd-extract",
-        "version": "0.6.3",
+        "version": "0.6.4",
         "description": "Extract any definition from TS definitions file",
         "keywords": [
             "ts",
