@@ -1,6 +1,6 @@
 {
   "name": "tsd-extract",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Extract any definition from TS definitions file",
   "keywords": [
     "ts",
