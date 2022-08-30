@@ -41,7 +41,7 @@ I ate a banana and a cucumber.
       )
     ),
     {
-      result: [
+      todoLines: [
         { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
         { extracted: "apple", counts: [0], length: 5, lengthCompensation: 3 },
         { extracted: "banana", counts: [1], length: 6, lengthCompensation: 2 },
@@ -80,7 +80,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
       )
     ),
     {
-      result: [
+      todoLines: [
         { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
         {
           extracted: "apple",
@@ -123,7 +123,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
       )
     ),
     {
-      result: [
+      todoLines: [
         {
           extracted: "apple",
           counts: [0, 0],
@@ -155,7 +155,7 @@ test(`06 - both todo and copy are empty`, () => {
   equal(
     prep(editor("", "")),
     {
-      result: [],
+      todoLines: [],
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [],
@@ -165,7 +165,7 @@ test(`06 - both todo and copy are empty`, () => {
   equal(
     prep(editor("", ",")),
     {
-      result: [],
+      todoLines: [],
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [0],
@@ -178,7 +178,9 @@ test(`07 - nothing todo`, () => {
   equal(
     prep(editor("tralala", "")),
     {
-      result: [{ extracted: "", counts: [], length: 0, lengthCompensation: 0 }],
+      todoLines: [
+        { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
+      ],
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [],
@@ -188,7 +190,9 @@ test(`07 - nothing todo`, () => {
   equal(
     prep(editor("tralala", "\t\t\t\t\t\t")),
     {
-      result: [{ extracted: "", counts: [], length: 0, lengthCompensation: 0 }],
+      todoLines: [
+        { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
+      ],
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [],
@@ -198,7 +202,9 @@ test(`07 - nothing todo`, () => {
   equal(
     prep(editor("tralala", ",")),
     {
-      result: [{ extracted: "", counts: [], length: 0, lengthCompensation: 0 }],
+      todoLines: [
+        { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
+      ],
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [0],
@@ -208,7 +214,7 @@ test(`07 - nothing todo`, () => {
   equal(
     prep(editor("", "tralala")),
     {
-      result: [],
+      todoLines: [],
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [1],
@@ -218,7 +224,7 @@ test(`07 - nothing todo`, () => {
   equal(
     prep(editor("\t\t\t\t\t\t", "tralala")),
     {
-      result: [],
+      todoLines: [],
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [1],
@@ -228,7 +234,9 @@ test(`07 - nothing todo`, () => {
   equal(
     prep(editor("tralala", "tralala")),
     {
-      result: [{ extracted: "", counts: [], length: 0, lengthCompensation: 0 }],
+      todoLines: [
+        { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
+      ],
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [1],
@@ -238,7 +246,9 @@ test(`07 - nothing todo`, () => {
   equal(
     prep(editor("tralala", ",")),
     {
-      result: [{ extracted: "", counts: [], length: 0, lengthCompensation: 0 }],
+      todoLines: [
+        { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
+      ],
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [0],

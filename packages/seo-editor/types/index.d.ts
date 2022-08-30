@@ -1,9 +1,6 @@
 declare const version: string;
-interface Opts {
-  cb: () => string;
-}
 interface Res {
-  result: {
+  todoLines: {
     extracted: string;
     counts: number[];
     length: number;
@@ -18,7 +15,7 @@ interface Res {
 }
 declare function isLetter(str: unknown): boolean;
 declare function setLengthCompensation(
-  resultArr: Res["result"],
+  resultArr: Res["todoLines"],
   receivedMaxLen: number
 ): {
   extracted: string;
@@ -26,10 +23,6 @@ declare function setLengthCompensation(
   length: number;
   lengthCompensation: number;
 }[];
-declare function editor(
-  todo?: string,
-  copy?: string,
-  opts?: Partial<Opts>
-): Res;
+declare function editor(todo?: string, copy?: string): Res;
 
-export { Opts, Res, editor, isLetter, setLengthCompensation, version };
+export { Res, editor, isLetter, setLengthCompensation, version };

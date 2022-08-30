@@ -4,12 +4,8 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-export interface Opts {
-  cb: () => string;
-}
-
 export interface Res {
-  result: {
+  todoLines: {
     extracted: string;
     counts: number[];
     length: number;
@@ -20,6 +16,7 @@ export interface Res {
   completion: number[];
   log: {
     timeTakenInMilliseconds: number;
+    version: string;
   };
 }
 
@@ -32,13 +29,13 @@ export function isLetter(str: unknown): boolean {
 }
 
 export function setLengthCompensation(
-  resultArr: Res["result"],
+  resultArr: Res["todoLines"],
   receivedMaxLen: number
 ) {
   for (let i = resultArr.length; i--; ) {
     DEV &&
       console.log(
-        `041 ${`\u001b[${36}m${`----`}\u001b[${39}m`} ${`\u001b[${33}m${`resultArr[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
+        `038 ${`\u001b[${36}m${`----`}\u001b[${39}m`} ${`\u001b[${33}m${`resultArr[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
           resultArr[i],
           null,
           4
@@ -47,7 +44,7 @@ export function setLengthCompensation(
     if (!resultArr[i]?.counts?.length) {
       DEV &&
         console.log(
-          `050 ${`\u001b[${36}m${`----`}\u001b[${39}m`} ${`\u001b[${31}m${`break`}\u001b[${39}m`}`
+          `047 ${`\u001b[${36}m${`----`}\u001b[${39}m`} ${`\u001b[${31}m${`break`}\u001b[${39}m`}`
         );
       break;
     } else {
@@ -89,16 +86,8 @@ function isSuitable(lineStr: string): boolean {
   return typeof lineStr === "string" && lineStr.trim().startsWith("- ");
 }
 
-function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
+function editor(todo = "", copy = ""): Res {
   let start = Date.now();
-  DEV &&
-    console.log(
-      `096 received ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-        opts,
-        null,
-        4
-      )}`
-    );
 
   let chunksArr = copy
     .split(/---+/)
@@ -113,26 +102,26 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
       )}`
     );
 
-  let result: Res["result"] = [];
+  let todoLines: Res["todoLines"] = [];
   let maxLen = 0;
 
   let todoTotal = 0;
   let completion = chunksArr.length ? chunksArr.map(() => 0) : [0];
   DEV &&
     console.log(
-      `123 initial ${`\u001b[${33}m${`completion`}\u001b[${39}m`} = ${JSON.stringify(
+      `112 initial ${`\u001b[${33}m${`completion`}\u001b[${39}m`} = ${JSON.stringify(
         completion,
         null,
         4
       )}`
     );
 
-  let todoLines = todo.toLowerCase().split(/\r?\n/);
+  let todoLineArr = todo.toLowerCase().split(/\r?\n/);
 
   // early exit
   if (!todo.trim()) {
     return {
-      result: [],
+      todoLines: [],
       chunkWordCounts: chunksArr.map(
         (chunk) => chunk.match(wordRegex)?.length || 0
       ),
@@ -140,19 +129,20 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
       completion: chunksArr.length ? chunksArr.map(() => 0) : [0],
       log: {
         timeTakenInMilliseconds: Date.now() - start,
+        version,
       },
     };
   }
 
-  todoLines.forEach((lineStr, i) => {
+  todoLineArr.forEach((lineStr, i) => {
     DEV &&
       console.log(
-        `150 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`} ${`\u001b[${33}m${i}\u001b[${39}m`} ${lineStr}`
+        `140 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`} ${`\u001b[${33}m${i}\u001b[${39}m`} ${lineStr}`
       );
     if (isSuitable(lineStr)) {
       DEV &&
         console.log(
-          `155 ${`\u001b[${32}m${`suitable todo line`}\u001b[${39}m`}`
+          `145 ${`\u001b[${32}m${`suitable todo line`}\u001b[${39}m`}`
         );
       todoTotal++;
 
@@ -160,7 +150,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
       let { length } = extracted;
       DEV &&
         console.log(
-          `163 ${`\u001b[${33}m${`extracted`}\u001b[${39}m`} = ${JSON.stringify(
+          `153 ${`\u001b[${33}m${`extracted`}\u001b[${39}m`} = ${JSON.stringify(
             extracted,
             null,
             4
@@ -169,31 +159,31 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
       maxLen = Math.max(maxLen, extracted.length);
       DEV &&
         console.log(
-          `172 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lengthCompensation`}\u001b[${39}m`} = ${JSON.stringify(
+          `162 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lengthCompensation`}\u001b[${39}m`} = ${JSON.stringify(
             maxLen,
             null,
             4
           )}`
         );
-      result.push({
+      todoLines.push({
         extracted,
         length,
         counts: chunksArr.map((chunk, chunkIdx) => {
-          DEV && console.log(`182 ██`);
-          DEV && console.log(`183 chunk: ${JSON.stringify(chunk, null, 4)}`);
+          DEV && console.log(`172 ██`);
+          DEV && console.log(`173 chunk: ${JSON.stringify(chunk, null, 4)}`);
           // quick exit if string does not include our string
           if (!chunk.includes(extracted)) {
             DEV &&
               console.log(
-                `188 ${`\u001b[${31}m${`"${extracted}" not found`}\u001b[${39}m`}`
+                `178 ${`\u001b[${31}m${`"${extracted}" not found`}\u001b[${39}m`}`
               );
             DEV &&
-              console.log(`191 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 0`);
+              console.log(`181 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 0`);
             return 0;
           }
           DEV &&
             console.log(
-              `196 ${`\u001b[${32}m${`"${extracted}" found`}\u001b[${39}m`}`
+              `186 ${`\u001b[${32}m${`"${extracted}" found`}\u001b[${39}m`}`
             );
           // we need to count all instances
           let total = 0;
@@ -202,7 +192,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
             let findingStartsAt = chunk.indexOf(extracted, startIdx);
             DEV &&
               console.log(
-                `205 ${`\u001b[${33}m${`findingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+                `195 ${`\u001b[${33}m${`findingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
                   findingStartsAt,
                   null,
                   4
@@ -210,7 +200,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
               );
             DEV &&
               console.log(
-                `213 in front: idx ${findingStartsAt - 1}; follows: idx ${
+                `203 in front: idx ${findingStartsAt - 1}; follows: idx ${
                   findingStartsAt + extracted.length
                 }`
               );
@@ -223,7 +213,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
               total += 1;
               DEV &&
                 console.log(
-                  `226 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`total`}\u001b[${39}m`} = ${JSON.stringify(
+                  `216 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`total`}\u001b[${39}m`} = ${JSON.stringify(
                     total,
                     null,
                     4
@@ -233,7 +223,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
             // offset the search start, prepare for next finding
             DEV &&
               console.log(
-                `236 OLD ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+                `226 OLD ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                   startIdx,
                   null,
                   4
@@ -242,7 +232,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
             startIdx += findingStartsAt + extracted.length;
             DEV &&
               console.log(
-                `245 NEW ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+                `235 NEW ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                   startIdx,
                   null,
                   4
@@ -256,7 +246,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
 
           DEV &&
             console.log(
-              `259 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${total}`
+              `249 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${total}`
             );
           return total;
         }),
@@ -264,8 +254,8 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
       });
       DEV &&
         console.log(
-          `267 now ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${JSON.stringify(
-            result,
+          `257 now ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+            todoLines,
             null,
             4
           )}`
@@ -274,30 +264,30 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
       // traverse objects backwards and set their lengthCompensation
       DEV &&
         console.log(
-          `277 ██ ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${JSON.stringify(
-            result,
+          `267 ██ ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+            todoLines,
             null,
             4
           )}`
         );
-      if (result[~-result.length]?.counts.length) {
+      if (todoLines[~-todoLines.length]?.counts.length) {
         DEV &&
           console.log(
-            `286 ${`\u001b[${35}m${`traverse backwards`}\u001b[${39}m`}`
+            `276 ${`\u001b[${35}m${`traverse backwards`}\u001b[${39}m`}`
           );
         DEV &&
           console.log(
-            `290 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${JSON.stringify(
-              result,
+            `280 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+              todoLines,
               null,
               4
             )}; maxLen = ${maxLen}`
           );
-        result = setLengthCompensation(result, maxLen);
+        todoLines = setLengthCompensation(todoLines, maxLen);
         DEV &&
           console.log(
-            `299 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${JSON.stringify(
-              result,
+            `289 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+              todoLines,
               null,
               4
             )}`
@@ -306,9 +296,9 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
 
       DEV &&
         console.log(
-          `309 ${`\u001b[${31}m${`skip this todo line`}\u001b[${39}m`}`
+          `299 ${`\u001b[${31}m${`skip this todo line`}\u001b[${39}m`}`
         );
-      result.push({
+      todoLines.push({
         extracted: "",
         counts: [],
         length: 0,
@@ -319,7 +309,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
     }
     DEV &&
       console.log(
-        `322 ending ${`\u001b[${33}m${`lengthCompensation`}\u001b[${39}m`} = ${JSON.stringify(
+        `312 ending ${`\u001b[${33}m${`lengthCompensation`}\u001b[${39}m`} = ${JSON.stringify(
           maxLen,
           null,
           4
@@ -333,8 +323,8 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `336 FINAL ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${JSON.stringify(
-        result,
+      `326 FINAL ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+        todoLines,
         null,
         4
       )}`
@@ -342,8 +332,8 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `345 LAST TODO LINE ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
-        todoLines[~-todoLines.length],
+      `335 LAST TODO LINE ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+        todoLineArr[~-todoLineArr.length],
         null,
         4
       )}`
@@ -351,24 +341,24 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
 
   // if the last line in todo is suitable, this means the lengthCompensation
   // of its own and any surrounding entries above hasn't been set
-  if (isSuitable(todoLines[~-todoLines.length])) {
+  if (isSuitable(todoLineArr[~-todoLineArr.length])) {
     DEV &&
       console.log(
-        `357 todo's leading to EOL! ${`\u001b[${32}m${`traverse backwards`}\u001b[${39}m`}`
+        `347 todo's leading to EOL! ${`\u001b[${32}m${`traverse backwards`}\u001b[${39}m`}`
       );
     DEV &&
       console.log(
-        `361 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${JSON.stringify(
-          result,
+        `351 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+          todoLines,
           null,
           4
         )}; maxLen = ${maxLen}`
       );
-    result = setLengthCompensation(result, maxLen);
+    todoLines = setLengthCompensation(todoLines, maxLen);
     DEV &&
       console.log(
-        `370 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${JSON.stringify(
-          result,
+        `360 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+          todoLines,
           null,
           4
         )}`
@@ -376,7 +366,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
   }
 
   return {
-    result,
+    todoLines,
     chunkWordCounts: chunksArr.map(
       (chunk) => chunk.match(wordRegex)?.length || 0
     ),
@@ -384,6 +374,7 @@ function editor(todo = "", copy = "", opts?: Partial<Opts>): Res {
     completion,
     log: {
       timeTakenInMilliseconds: Date.now() - start,
+      version,
     },
   };
 }

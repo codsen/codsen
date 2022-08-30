@@ -1,6 +1,6 @@
 # seo-editor
 
-> Markdown editor which automates the keyword counting
+> Copywriting keyword to-do list automation
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/seo-editor" rel="nofollow noreferrer noopener">
@@ -41,8 +41,8 @@ import { editor, version } from "seo-editor";
 
 // Powers the UI of codsen.com/tools/seo-editor
 
-// there's also "log" which reports time spent which is not deterministic
-const { result, todoTotal, completion, chunkWordCounts } = editor(
+// there's also a non-deterministic "log" key containing calculation statistics
+const { todoLines, todoTotal, completion, chunkWordCounts } = editor(
   `
 - apple
 - banana
@@ -53,9 +53,9 @@ I ate a banana and a cucumber.
   `
 );
 assert.deepEqual(
-  { result, todoTotal, completion, chunkWordCounts },
+  { todoLines, todoTotal, completion, chunkWordCounts },
   {
-    result: [
+    todoLines: [
       { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
       { extracted: "apple", counts: [0], length: 5, lengthCompensation: 3 },
       { extracted: "banana", counts: [1], length: 6, lengthCompensation: 2 },
