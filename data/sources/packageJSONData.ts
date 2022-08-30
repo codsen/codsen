@@ -7104,7 +7104,7 @@ export const packageJSONData = {
     "seo-editor": {
         "name": "seo-editor",
         "version": "1.0.2",
-        "description": "Markdown editor which automates the keyword counting",
+        "description": "Copywriting keyword to-do list automation",
         "keywords": [
             "seo",
             "keyword",
