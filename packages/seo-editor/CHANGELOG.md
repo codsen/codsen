@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/codsen/codsen/compare/seo-editor@1.0.2...seo-editor@1.1.0) (2022-08-30)
+
+
+### Features
+
+* tweak the API, remove unused Opts for now ([cf5de18](https://github.com/codsen/codsen/commit/cf5de18982e09c98085cebc264567e6c7e06cbb9))
+
+
+
+
+
 ## [1.0.2](https://github.com/codsen/codsen/compare/seo-editor@1.0.1...seo-editor@1.0.2) (2022-08-29)
 
 ### Bug Fixes
