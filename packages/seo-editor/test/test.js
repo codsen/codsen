@@ -257,4 +257,20 @@ test(`07 - nothing todo`, () => {
   );
 });
 
+test(`08 - three dashes in the text`, () => {
+  equal(
+    prep(
+      editor(
+        `
+- a
+- b
+- c`,
+        "some text `---` like this"
+      )
+    ).chunkWordCounts.length,
+    1,
+    "08"
+  );
+});
+
 test.run();

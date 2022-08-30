@@ -90,7 +90,7 @@ function editor(todo = "", copy = ""): Res {
   let start = Date.now();
 
   let chunksArr = copy
-    .split(/---+/)
+    .split(/^[ \t]*---+/m)
     .map((ch) => prepChunk(ch).toLowerCase())
     .filter((ch) => ch.trim());
   DEV &&
