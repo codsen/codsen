@@ -7103,7 +7103,7 @@ export const packageJSONData = {
     },
     "seo-editor": {
         "name": "seo-editor",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "description": "Copywriting keyword to-do list automation",
         "keywords": [
             "seo",
