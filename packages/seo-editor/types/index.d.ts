@@ -11,6 +11,7 @@ interface Res {
   completion: number[];
   log: {
     timeTakenInMilliseconds: number;
+    version: string;
   };
 }
 declare function isLetter(str: unknown): boolean;
