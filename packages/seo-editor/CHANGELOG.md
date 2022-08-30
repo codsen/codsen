@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/codsen/codsen/compare/seo-editor@1.1.0...seo-editor@1.2.0) (2022-08-30)
+
+
+### Features
+
+* enforce --- to be at the front of the line, optionally preceded by spaces/tabs ([7d9696f](https://github.com/codsen/codsen/commit/7d9696f75880f217f0e9960f18509fb59412123c))
+
+
+
+
+
 # [1.1.0](https://github.com/codsen/codsen/compare/seo-editor@1.0.2...seo-editor@1.1.0) (2022-08-30)
 
 ### Features
