@@ -1893,7 +1893,7 @@ export const packageJSONData = {
     },
     "codsen-parser": {
         "name": "codsen-parser",
-        "version": "0.13.2",
+        "version": "0.13.3",
         "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
         "keywords": [
             "ast",
@@ -1960,7 +1960,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-monkey-util": "^2.1.1",
-            "codsen-tokenizer": "^6.1.2",
+            "codsen-tokenizer": "^6.1.3",
             "object-path": "^0.11.8",
             "string-find-malformed": "^3.2.2",
             "string-left-right": "^5.1.2"
@@ -1968,7 +1968,7 @@ export const packageJSONData = {
     },
     "codsen-tokenizer": {
         "name": "codsen-tokenizer",
-        "version": "6.1.2",
+        "version": "6.1.3",
         "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
         "keywords": [
             "ast",
@@ -2524,7 +2524,7 @@ export const packageJSONData = {
     },
     "detergent": {
         "name": "detergent",
-        "version": "8.1.3",
+        "version": "8.1.4",
         "description": "Extract, clean, encode text and fix English style",
         "keywords": [
             "brief",
@@ -2608,8 +2608,8 @@ export const packageJSONData = {
             "string-fix-broken-named-entities": "^6.1.2",
             "string-left-right": "^5.1.2",
             "string-range-expander": "^3.1.1",
-            "string-remove-widows": "^3.1.3",
-            "string-strip-html": "^11.4.0",
+            "string-remove-widows": "^3.1.4",
+            "string-strip-html": "^11.5.0",
             "string-trim-spaces-only": "^4.1.1"
         },
         "devDependencies": {
@@ -3088,7 +3088,7 @@ export const packageJSONData = {
     },
     "emlint": {
         "name": "emlint",
-        "version": "5.1.2",
+        "version": "5.1.3",
         "description": "Pluggable email template code linter",
         "keywords": [
             "analysis",
@@ -3170,7 +3170,7 @@ export const packageJSONData = {
         "dependencies": {
             "ast-monkey-traverse": "^3.1.1",
             "ast-monkey-util": "^2.1.1",
-            "codsen-parser": "^0.13.2",
+            "codsen-parser": "^0.13.3",
             "define-lazy-prop": "^3.0.0",
             "globby": "^13.1.2",
             "he": "^1.2.0",
@@ -3212,7 +3212,7 @@ export const packageJSONData = {
     },
     "extract-search-index": {
         "name": "extract-search-index",
-        "version": "1.1.3",
+        "version": "1.1.4",
         "description": "Extract unique keyword input list string for search",
         "keywords": [
             "string",
@@ -3281,7 +3281,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-strip-html": "^11.4.0",
+            "string-strip-html": "^11.5.0",
             "string-unfancy": "^5.1.1"
         }
     },
@@ -3883,7 +3883,7 @@ export const packageJSONData = {
     },
     "html-table-patcher": {
         "name": "html-table-patcher",
-        "version": "5.1.2",
+        "version": "5.1.3",
         "description": "Visual helper to place templating code around table tags into correct places",
         "keywords": [
             "add",
@@ -3956,7 +3956,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-monkey-traverse-with-lookahead": "^3.1.1",
-            "codsen-parser": "^0.13.2",
+            "codsen-parser": "^0.13.3",
             "ranges-apply": "^6.2.2",
             "ranges-push": "^6.2.2"
         }
@@ -7103,7 +7103,7 @@ export const packageJSONData = {
     },
     "seo-editor": {
         "name": "seo-editor",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "description": "Copywriting keyword to-do list automation",
         "keywords": [
             "seo",
@@ -8605,7 +8605,7 @@ export const packageJSONData = {
     },
     "string-remove-widows": {
         "name": "string-remove-widows",
-        "version": "3.1.3",
+        "version": "3.1.4",
         "description": "Helps to prevent widow words in a text",
         "keywords": [
             "against",
@@ -8684,7 +8684,7 @@ export const packageJSONData = {
             "string-match-left-right": "^8.2.2"
         },
         "devDependencies": {
-            "string-strip-html": "^11.4.0"
+            "string-strip-html": "^11.5.0"
         }
     },
     "string-split-by-whitespace": {
@@ -8769,7 +8769,7 @@ export const packageJSONData = {
     },
     "string-strip-html": {
         "name": "string-strip-html",
-        "version": "11.4.0",
+        "version": "11.5.0",
         "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
         "keywords": [
             "code",
@@ -9159,7 +9159,7 @@ export const packageJSONData = {
     },
     "stristri": {
         "name": "stristri",
-        "version": "4.1.2",
+        "version": "4.1.3",
         "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
         "keywords": [
             "code",
@@ -9231,7 +9231,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "codsen-tokenizer": "^6.1.2",
+            "codsen-tokenizer": "^6.1.3",
             "detect-templating-language": "^3.1.1",
             "ranges-apply": "^6.2.2",
             "ranges-merge": "^8.2.2",

@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.3.0](https://github.com/codsen/codsen/compare/seo-editor@1.2.0...seo-editor@1.3.0) (2022-08-31)
 
-
 ### Features
 
-* basic plural recognition ([a5604c9](https://github.com/codsen/codsen/commit/a5604c9956f022f98c64b12332c4a2f084223fa0))
-
-
-
-
+- basic plural recognition ([a5604c9](https://github.com/codsen/codsen/commit/a5604c9956f022f98c64b12332c4a2f084223fa0))
 
 # [1.2.0](https://github.com/codsen/codsen/compare/seo-editor@1.1.0...seo-editor@1.2.0) (2022-08-30)
 
