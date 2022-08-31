@@ -980,7 +980,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               : str[i] === "\t"
               ? "tab"
               : "space"
-            : str[i]
+            : `${str[i]} (${str[i].charCodeAt(0)})`
         }\u001b[${39}m`}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m`
       );
 
@@ -2831,7 +2831,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // catch whitespace
     // -------------------------------------------------------------------------
-    if (!str[i].trim()) {
+    if (!str[i].trim() || str[i].charCodeAt(0) === 847) {
       // 1. catch chunk boundaries:
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = i;
