@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.4.0](https://github.com/codsen/codsen/compare/string-strip-html@11.3.1...string-strip-html@11.4.0) (2022-08-31)
+
+
+### Features
+
+* remove indentations in front of text too ([6527eb8](https://github.com/codsen/codsen/commit/6527eb8d3995f39b8d8736194ac1d78cedaf4b6b))
+
+
+
+
+
 # [11.3.0](https://github.com/codsen/codsen/compare/string-strip-html@11.2.0...string-strip-html@11.3.0) (2022-08-18)
 
 ### Features
