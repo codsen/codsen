@@ -2524,7 +2524,7 @@ export const packageJSONData = {
     },
     "detergent": {
         "name": "detergent",
-        "version": "8.1.2",
+        "version": "8.1.3",
         "description": "Extract, clean, encode text and fix English style",
         "keywords": [
             "brief",
@@ -2608,8 +2608,8 @@ export const packageJSONData = {
             "string-fix-broken-named-entities": "^6.1.2",
             "string-left-right": "^5.1.2",
             "string-range-expander": "^3.1.1",
-            "string-remove-widows": "^3.1.2",
-            "string-strip-html": "^11.3.1",
+            "string-remove-widows": "^3.1.3",
+            "string-strip-html": "^11.4.0",
             "string-trim-spaces-only": "^4.1.1"
         },
         "devDependencies": {
@@ -3212,7 +3212,7 @@ export const packageJSONData = {
     },
     "extract-search-index": {
         "name": "extract-search-index",
-        "version": "1.1.2",
+        "version": "1.1.3",
         "description": "Extract unique keyword input list string for search",
         "keywords": [
             "string",
@@ -3281,7 +3281,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-strip-html": "^11.3.1",
+            "string-strip-html": "^11.4.0",
             "string-unfancy": "^5.1.1"
         }
     },
@@ -8605,7 +8605,7 @@ export const packageJSONData = {
     },
     "string-remove-widows": {
         "name": "string-remove-widows",
-        "version": "3.1.2",
+        "version": "3.1.3",
         "description": "Helps to prevent widow words in a text",
         "keywords": [
             "against",
@@ -8684,7 +8684,7 @@ export const packageJSONData = {
             "string-match-left-right": "^8.2.2"
         },
         "devDependencies": {
-            "string-strip-html": "^11.3.1"
+            "string-strip-html": "^11.4.0"
         }
     },
     "string-split-by-whitespace": {
@@ -8769,7 +8769,7 @@ export const packageJSONData = {
     },
     "string-strip-html": {
         "name": "string-strip-html",
-        "version": "11.3.1",
+        "version": "11.4.0",
         "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
         "keywords": [
             "code",
