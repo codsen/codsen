@@ -50,6 +50,9 @@ interface Opts {
     wrapTails?: string;
   };
   cb: null | ((cbObj: CbObj) => void);
+  reportProgressFunc: null | ((percDone: number) => void);
+  reportProgressFuncFrom: number;
+  reportProgressFuncTo: number;
 }
 declare const defaults: {
   ignoreTags: never[];
@@ -66,6 +69,9 @@ declare const defaults: {
     wrapTails: string;
   };
   cb: null;
+  reportProgressFunc: null;
+  reportProgressFuncFrom: number;
+  reportProgressFuncTo: number;
 };
 interface Res {
   log: {

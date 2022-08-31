@@ -81,6 +81,42 @@ test("09 - wrong opts.stripTogetherWithTheirContents", () => {
   }, /THROW_ID_05/);
 });
 
+test("10 - wrong opts.reportProgressFunc", () => {
+  throws(() => {
+    stripHtml("zzz", { reportProgressFunc: 1 });
+  }, /THROW_ID_06/);
+});
+
+test("10 - wrong opts.reportProgressFuncFrom", () => {
+  throws(() => {
+    stripHtml("zzz", {
+      reportProgressFunc: () => {},
+      reportProgressFuncFrom: true,
+    });
+  }, /THROW_ID_07/);
+  throws(() => {
+    stripHtml("zzz", { reportProgressFuncFrom: true });
+  }, /THROW_ID_07/);
+  throws(() => {
+    stripHtml("zzz", { reportProgressFuncFrom: "0" });
+  }, /THROW_ID_07/);
+});
+
+test("11 - wrong opts.reportProgressFuncTo", () => {
+  throws(() => {
+    stripHtml("zzz", {
+      reportProgressFunc: () => {},
+      reportProgressFuncTo: true,
+    });
+  }, /THROW_ID_08/);
+  throws(() => {
+    stripHtml("zzz", { reportProgressFuncTo: true });
+  }, /THROW_ID_08/);
+  throws(() => {
+    stripHtml("zzz", { reportProgressFuncTo: "100" });
+  }, /THROW_ID_08/);
+});
+
 // legit input
 // -----------------------------------------------------------------------------
 
