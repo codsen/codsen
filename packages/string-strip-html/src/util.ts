@@ -21,7 +21,7 @@ function prepHopefullyAnArray(something: any, name: string): string[] {
     return something.trim() ? [something] : [];
   }
   throw new TypeError(
-    `string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
+    `string-strip-html/stripHtml(): [THROW_ID_05] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
   );
 }
 

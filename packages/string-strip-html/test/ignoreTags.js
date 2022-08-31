@@ -326,7 +326,7 @@ test("26 - opts.ignoreTags - throws because of wrong type", () => {
         ignoreTags: 1,
       });
     },
-    /THROW_ID_03/,
+    /THROW_ID_05/,
     "26"
   );
 });

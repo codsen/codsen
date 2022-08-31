@@ -531,7 +531,7 @@ test("29 - tag pairs including content", () => {
         }
       );
     },
-    /THROW_ID_05/,
+    /THROW_ID_08/,
     "29"
   );
 });

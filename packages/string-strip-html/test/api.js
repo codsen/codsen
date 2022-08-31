@@ -31,9 +31,6 @@ test("04 - wrong input type", () => {
   }, /THROW_ID_01/);
 });
 
-// wrong opts
-// -----------------------------------------------------------------------------
-
 test("05 - wrong opts", () => {
   throws(() => {
     stripHtml("zzz", 1);
@@ -46,26 +43,9 @@ test("06 - wrong opts", () => {
   }, /THROW_ID_02/);
 });
 
-test("07 - wrong opts", () => {
+test("07 - wrong opts.reportProgressFunc", () => {
   throws(() => {
-    stripHtml("zzz", {
-      returnRangesOnly: true,
-    });
-  }, /THROW_ID_03/);
-  throws(() => {
-    stripHtml("zzz", {
-      returnRangesOnly: false,
-    });
-  }, /THROW_ID_03/);
-  throws(() => {
-    stripHtml("zzz", {
-      returnRangesOnly: null,
-    });
-  }, /THROW_ID_03/);
-  throws(() => {
-    stripHtml("zzz", {
-      returnRangesOnly: undefined,
-    });
+    stripHtml("zzz", { reportProgressFunc: 1 });
   }, /THROW_ID_03/);
 });
 
@@ -75,16 +55,27 @@ test("08 - wrong opts.dumpLinkHrefsNearby", () => {
   }, /THROW_ID_04/);
 });
 
-test("09 - wrong opts.stripTogetherWithTheirContents", () => {
+test("09 - wrong opts", () => {
   throws(() => {
-    stripHtml("zzz", { stripTogetherWithTheirContents: ["div", 1] });
+    stripHtml("zzz", {
+      returnRangesOnly: true,
+    });
   }, /THROW_ID_05/);
-});
-
-test("10 - wrong opts.reportProgressFunc", () => {
   throws(() => {
-    stripHtml("zzz", { reportProgressFunc: 1 });
-  }, /THROW_ID_06/);
+    stripHtml("zzz", {
+      returnRangesOnly: false,
+    });
+  }, /THROW_ID_05/);
+  throws(() => {
+    stripHtml("zzz", {
+      returnRangesOnly: null,
+    });
+  }, /THROW_ID_05/);
+  throws(() => {
+    stripHtml("zzz", {
+      returnRangesOnly: undefined,
+    });
+  }, /THROW_ID_05/);
 });
 
 test("10 - wrong opts.reportProgressFuncFrom", () => {
@@ -93,13 +84,13 @@ test("10 - wrong opts.reportProgressFuncFrom", () => {
       reportProgressFunc: () => {},
       reportProgressFuncFrom: true,
     });
-  }, /THROW_ID_07/);
+  }, /THROW_ID_06/);
   throws(() => {
     stripHtml("zzz", { reportProgressFuncFrom: true });
-  }, /THROW_ID_07/);
+  }, /THROW_ID_06/);
   throws(() => {
     stripHtml("zzz", { reportProgressFuncFrom: "0" });
-  }, /THROW_ID_07/);
+  }, /THROW_ID_06/);
 });
 
 test("11 - wrong opts.reportProgressFuncTo", () => {
@@ -108,19 +99,25 @@ test("11 - wrong opts.reportProgressFuncTo", () => {
       reportProgressFunc: () => {},
       reportProgressFuncTo: true,
     });
-  }, /THROW_ID_08/);
+  }, /THROW_ID_07/);
   throws(() => {
     stripHtml("zzz", { reportProgressFuncTo: true });
-  }, /THROW_ID_08/);
+  }, /THROW_ID_07/);
   throws(() => {
     stripHtml("zzz", { reportProgressFuncTo: "100" });
+  }, /THROW_ID_07/);
+});
+
+test("12 - wrong opts.stripTogetherWithTheirContents", () => {
+  throws(() => {
+    stripHtml("zzz", { stripTogetherWithTheirContents: ["div", 1] });
   }, /THROW_ID_08/);
 });
 
 // legit input
 // -----------------------------------------------------------------------------
 
-test("10 - empty input", () => {
+test("13 - empty input", () => {
   let { result, ranges, allTagLocations, filteredTagLocations } = stripHtml("");
   equal(
     { result, ranges, allTagLocations, filteredTagLocations },
@@ -130,11 +127,11 @@ test("10 - empty input", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "10"
+    "13"
   );
 });
 
-test("11 - tabs only", () => {
+test("14 - tabs only", () => {
   let input = "\t\t\t";
   equal(
     stripHtml(input, {
@@ -146,7 +143,7 @@ test("11 - tabs only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "11.01"
+    "14.01"
   );
   equal(
     stripHtml(input, {
@@ -158,11 +155,11 @@ test("11 - tabs only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "11.02"
+    "14.02"
   );
 });
 
-test("12 - spaces only", () => {
+test("15 - spaces only", () => {
   let input = "   ";
   equal(
     stripHtml(input, {
@@ -174,7 +171,7 @@ test("12 - spaces only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "12.01"
+    "15.01"
   );
   equal(
     stripHtml(input, {
@@ -186,7 +183,7 @@ test("12 - spaces only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "12.02"
+    "15.02"
   );
 });
 

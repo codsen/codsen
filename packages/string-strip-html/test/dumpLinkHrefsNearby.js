@@ -7,50 +7,50 @@ import { stripHtml } from "./util/noLog.js";
 // api peculiarities
 // -----------------------------------------------------------------------------
 
-test("01 - opts.dumpLinkHrefsNearby - null", () => {
+test("01 - null", () => {
   equal(
     stripHtml(
-      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: null,
       }
     ).result,
-    "Let's watch RT news this evening",
+    "Let's watch news this evening",
     "01 - control, default behaviour"
   );
 });
 
-test("02 - opts.dumpLinkHrefsNearby - undefined", () => {
+test("02 - undefined", () => {
   equal(
     stripHtml(
-      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: undefined,
       }
     ).result,
-    "Let's watch RT news this evening",
+    "Let's watch news this evening",
     "02 - control, default behaviour"
   );
 });
 
-test("03 - opts.dumpLinkHrefsNearby - {}", () => {
+test("03 - {}", () => {
   equal(
     stripHtml(
-      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: {},
       }
     ).result,
-    "Let's watch RT news this evening",
+    "Let's watch news this evening",
     "03 - control, default behaviour"
   );
 });
 
-test("04 - opts.dumpLinkHrefsNearby - {}", () => {
+test("04 - {}", () => {
   throws(
     () => {
       stripHtml(
-        'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+        'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
         {
           dumpLinkHrefsNearby: true,
         }
@@ -64,141 +64,203 @@ test("04 - opts.dumpLinkHrefsNearby - {}", () => {
 // opts.dumpLinkHrefsNearby
 // -----------------------------------------------------------------------------
 
-test("05 - opts.dumpLinkHrefsNearby - clean code, double quotes", () => {
+test("05 - clean code, double quotes", () => {
   equal(
     stripHtml(
-      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening'
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening'
     ).result,
-    "Let's watch RT news this evening",
-    "05 - control, default behaviour"
+    "Let's watch news this evening",
+    "05 - default behaviour"
   );
 });
 
-test("06 - opts.dumpLinkHrefsNearby - clean code, double quotes", () => {
+test("06 - clean code, double quotes", () => {
   equal(
     stripHtml(
-      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: { enabled: false },
       }
     ).result,
-    "Let's watch RT news this evening",
-    "06 - control, hardcoded default"
+    "Let's watch news this evening",
+    "06.01 - control, hardcoded default"
+  );
+  equal(
+    stripHtml(
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
+      {
+        dumpLinkHrefsNearby: { putOnNewLine: true },
+      }
+    ).result,
+    "Let's watch news this evening",
+    "06.02 - irrelevant sub-opts"
+  );
+  equal(
+    stripHtml(
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
+      {
+        dumpLinkHrefsNearby: { wrapHeads: "z" },
+      }
+    ).result,
+    "Let's watch news this evening",
+    "06.03 - irrelevant sub-opts"
+  );
+  equal(
+    stripHtml(
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
+      {
+        dumpLinkHrefsNearby: { wrapTails: "z" },
+      }
+    ).result,
+    "Let's watch news this evening",
+    "06.04 - irrelevant sub-opts"
+  );
+  equal(
+    stripHtml(
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
+      {
+        dumpLinkHrefsNearby: { wrapHeads: "|", wrapTails: "|" },
+      }
+    ).result,
+    "Let's watch news this evening",
+    "06.05 - irrelevant sub-opts"
+  );
+  equal(
+    stripHtml(
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
+      {
+        dumpLinkHrefsNearby: {
+          putOnNewLine: true,
+          wrapHeads: "|",
+          wrapTails: "|",
+        },
+      }
+    ).result,
+    "Let's watch news this evening",
+    "06.06 - irrelevant sub-opts"
   );
 });
 
-test("07 - opts.dumpLinkHrefsNearby - clean code, double quotes", () => {
+test("07 - clean code, double quotes", () => {
   equal(
     stripHtml(
-      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: { enabled: true },
       }
     ).result,
-    "Let's watch RT news https://www.rt.com/ this evening",
+    "Let's watch news https://www.news.com/ this evening",
     "07 - control, default behaviour"
   );
 });
 
-test("08 - opts.dumpLinkHrefsNearby - clean code, double quotes", () => {
+test("08 - clean code, double quotes", () => {
   equal(
     stripHtml(
-      'Let\'s sell some juicy gossip to the <a href="mailto:gossip@thesun.co.uk" target="_blank">The Sun</a> right now!',
+      'Let\'s sell some juicy gossip to the <a href="mailto:gossip@codsen.com" target="_blank">Roy</a> right now!',
       { dumpLinkHrefsNearby: { enabled: true } }
     ).result,
-    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
-    "08 - mailto links without customisation"
+    "Let's sell some juicy gossip to the Roy mailto:gossip@codsen.com right now!",
+    "08.01"
+  );
+  equal(
+    stripHtml(
+      'Let\'s sell some juicy gossip to the <a href="mailto:gossip@codsen.com" target="_blank">Roy</a> right now!',
+      { dumpLinkHrefsNearby: { enabled: true, wrapHeads: "|" } }
+    ).result,
+    "Let's sell some juicy gossip to the Roy |mailto:gossip@codsen.com right now!",
+    "08.02"
   );
 });
 
-test("09 - opts.dumpLinkHrefsNearby - clean code, double quotes", () => {
+test("09 - clean code, double quotes", () => {
   equal(
     stripHtml(
-      'Here\'s the <a href="mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night" target="_blank">chief editor\'s</a> email.',
+      'Here\'s the <a href="mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night" target="_blank">chief editor\'s</a> email.',
       { dumpLinkHrefsNearby: { enabled: true } }
     ).result,
-    "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
+    "Here's the chief editor's mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night email.",
     "09 - mailto links with customisation"
   );
 });
 
-test("10 - opts.dumpLinkHrefsNearby - clean code, single quotes", () => {
+test("10 - clean code, single quotes", () => {
   equal(
     stripHtml(
-      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening"
+      "Let's watch <a href='https://www.news.com/' target='_blank'>news</a> this evening"
     ).result,
-    "Let's watch RT news this evening",
+    "Let's watch news this evening",
     "10 - control, default behaviour"
   );
 });
 
-test("11 - opts.dumpLinkHrefsNearby - clean code, single quotes", () => {
+test("11 - clean code, single quotes", () => {
   equal(
     stripHtml(
-      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
+      "Let's watch <a href='https://www.news.com/' target='_blank'>news</a> this evening",
       {
         dumpLinkHrefsNearby: { enabled: false },
       }
     ).result,
-    "Let's watch RT news this evening",
+    "Let's watch news this evening",
     "11 - control, hardcoded default"
   );
 });
 
-test("12 - opts.dumpLinkHrefsNearby - clean code, single quotes", () => {
+test("12 - clean code, single quotes", () => {
   equal(
     stripHtml(
-      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
+      "Let's watch <a href='https://www.news.com/' target='_blank'>news</a> this evening",
       {
         dumpLinkHrefsNearby: { enabled: true },
       }
     ).result,
-    "Let's watch RT news https://www.rt.com/ this evening",
+    "Let's watch news https://www.news.com/ this evening",
     "12 - control, default behaviour"
   );
 });
 
-test("13 - opts.dumpLinkHrefsNearby - clean code, single quotes", () => {
+test("13 - clean code, single quotes", () => {
   equal(
     stripHtml(
-      "Let's sell some juicy gossip to the <a href='mailto:gossip@thesun.co.uk' target='_blank'>The Sun</a> right now!",
+      "Let's sell some juicy gossip to the <a href='mailto:gossip@codsen.com' target='_blank'>Roy</a> right now!",
       { dumpLinkHrefsNearby: { enabled: true } }
     ).result,
-    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
+    "Let's sell some juicy gossip to the Roy mailto:gossip@codsen.com right now!",
     "13 - mailto links without customisation"
   );
 });
 
-test("14 - opts.dumpLinkHrefsNearby - clean code, single quotes", () => {
+test("14 - clean code, single quotes", () => {
   equal(
     stripHtml(
-      "Here's the <a href='mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night' target='_blank'>chief editor's</a> email.",
+      "Here's the <a href='mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night' target='_blank'>chief editor's</a> email.",
       { dumpLinkHrefsNearby: { enabled: true } }
     ).result,
-    "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
+    "Here's the chief editor's mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night email.",
     "14 - mailto links with customisation"
   );
 });
 
-test("15 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured", () => {
+test("15 - dirty code, HTML is chopped but href captured", () => {
   equal(
-    stripHtml('Let\'s watch <a href="https://www.rt.com/" targ').result,
+    stripHtml('Let\'s watch <a href="https://www.news.com/" targ').result,
     "Let's watch",
     "15 - control, default behaviour"
   );
 });
 
-test("16 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured", () => {
+test("16 - dirty code, HTML is chopped but href captured", () => {
   equal(
-    stripHtml(`Let's watch <a href="https://www.rt.com/" targ`, {
+    stripHtml(`Let's watch <a href="https://www.news.com/" targ`, {
       dumpLinkHrefsNearby: { enabled: true },
     }).result,
-    "Let's watch https://www.rt.com/",
+    "Let's watch https://www.news.com/",
     "16 - only href contents are left after stripping"
   );
 });
 
-test("17 - opts.dumpLinkHrefsNearby - linked image", () => {
+test("17 - linked image", () => {
   equal(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
@@ -208,7 +270,7 @@ test("17 - opts.dumpLinkHrefsNearby - linked image", () => {
   );
 });
 
-test("18 - opts.dumpLinkHrefsNearby - linked image, dumpLinkHrefsNearby=off", () => {
+test("18 - linked image, dumpLinkHrefsNearby=off", () => {
   equal(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
@@ -219,7 +281,7 @@ test("18 - opts.dumpLinkHrefsNearby - linked image, dumpLinkHrefsNearby=off", ()
   );
 });
 
-test("19 - opts.dumpLinkHrefsNearby - linked image, dumpLinkHrefsNearby=on", () => {
+test("19 - linked image, dumpLinkHrefsNearby=on", () => {
   equal(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
@@ -230,7 +292,7 @@ test("19 - opts.dumpLinkHrefsNearby - linked image, dumpLinkHrefsNearby=on", () 
   );
 });
 
-test("20 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", () => {
+test("20 - .putOnNewLine, control", () => {
   equal(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
@@ -240,7 +302,7 @@ test("20 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", () => {
   );
 });
 
-test("21 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", () => {
+test("21 - .putOnNewLine, control", () => {
   equal(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
@@ -256,7 +318,7 @@ test("21 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", () => {
   );
 });
 
-test("22 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", () => {
+test("22 - .putOnNewLine, control", () => {
   equal(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
@@ -272,7 +334,7 @@ test("22 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", () => {
   );
 });
 
-test("23 - opts.dumpLinkHrefsNearby - .putOnNewLine", () => {
+test("23 - .putOnNewLine", () => {
   equal(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
@@ -290,7 +352,7 @@ test("23 - opts.dumpLinkHrefsNearby - .putOnNewLine", () => {
   );
 });
 
-test("24 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails - control", () => {
+test("24 - wrapHeads/wrapTails - control", () => {
   equal(
     stripHtml(`a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`)
       .result,
@@ -299,7 +361,7 @@ test("24 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails - control", () => {
   );
 });
 
-test("25 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails - default dump", () => {
+test("25 - wrapHeads/wrapTails - default dump", () => {
   equal(
     stripHtml(
       `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
@@ -314,7 +376,7 @@ test("25 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails - default dump", () =>
   );
 });
 
-test("26 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap heads only", () => {
+test("26 - wrapHeads/wrapTails wrap heads only", () => {
   equal(
     stripHtml(
       `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
@@ -330,7 +392,7 @@ test("26 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap heads only", () =
   );
 });
 
-test("27 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap teads only", () => {
+test("27 - wrapHeads/wrapTails wrap teads only", () => {
   equal(
     stripHtml(
       `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
@@ -346,7 +408,7 @@ test("27 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap teads only", () =
   );
 });
 
-test("28 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap both", () => {
+test("28 - wrapHeads/wrapTails wrap both", () => {
   equal(
     stripHtml(
       `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
@@ -363,7 +425,7 @@ test("28 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap both", () => {
   );
 });
 
-test("29 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + ignoreTags", () => {
+test("29 - wrapHeads/wrapTails + ignoreTags", () => {
   equal(
     stripHtml(
       `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
@@ -381,7 +443,7 @@ test("29 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + ignoreTags", () => {
   );
 });
 
-test("30 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + ignoreTags", () => {
+test("30 - wrapHeads/wrapTails + ignoreTags", () => {
   equal(
     stripHtml(
       `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
@@ -399,7 +461,7 @@ test("30 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + ignoreTags", () => {
   );
 });
 
-test("31 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + stripTogetherWithTheirContents", () => {
+test("31 - wrapHeads/wrapTails + stripTogetherWithTheirContents", () => {
   equal(
     stripHtml(
       `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
