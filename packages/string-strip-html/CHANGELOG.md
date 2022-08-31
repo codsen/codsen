@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.5.0](https://github.com/codsen/codsen/compare/string-strip-html@11.4.0...string-strip-html@11.5.0) (2022-08-31)
+
+
+### Features
+
+* add opts.reportProgressFunc ([4045496](https://github.com/codsen/codsen/commit/4045496da3624442a811522962d173c519a88164))
+
+
+
+
+
 # [11.4.0](https://github.com/codsen/codsen/compare/string-strip-html@11.3.1...string-strip-html@11.4.0) (2022-08-31)
 
 ### Features

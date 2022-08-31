@@ -1,6 +1,6 @@
 {
   "name": "extract-search-index",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Extract unique keyword input list string for search",
   "keywords": [
     "string",
@@ -69,7 +69,7 @@
     }
   },
   "dependencies": {
-    "string-strip-html": "^11.4.0",
+    "string-strip-html": "^11.5.0",
     "string-unfancy": "^5.1.1"
   }
 }
