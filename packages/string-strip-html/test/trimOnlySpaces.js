@@ -8,18 +8,37 @@ import { stripHtml } from "./util/noLog.js";
 // -----------------------------------------------------------------------------
 
 test("01 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all", () => {
-  equal(stripHtml("\xa0 a \xa0").result, "a", "01");
+  equal(
+    stripHtml("\xa0 a \xa0", { trimOnlySpaces: true }).result,
+    "\xa0 a \xa0",
+    "01.01"
+  );
+  equal(stripHtml("a", { trimOnlySpaces: false }).result, "a", "01.02");
 });
 
 test("02 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all, trailing whitespace", () => {
-  equal(stripHtml(" \xa0 a \xa0 ").result, "a", "02");
+  equal(
+    stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: true }).result,
+    "\xa0 a \xa0",
+    "02.01"
+  );
+  equal(
+    stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: false }).result,
+    "a",
+    "02.02"
+  );
 });
 
 test("03 - opts.trimOnlySpaces - opts.trimOnlySpaces = on", () => {
   equal(
     stripHtml("\xa0 a \xa0", { trimOnlySpaces: true }).result,
     "\xa0 a \xa0",
-    "03"
+    "03.01"
+  );
+  equal(
+    stripHtml("\xa0 a \xa0", { trimOnlySpaces: false }).result,
+    "a",
+    "03.02"
   );
 });
 
@@ -27,7 +46,12 @@ test("04 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, loose", () => {
   equal(
     stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: true }).result,
     "\xa0 a \xa0",
-    "04"
+    "04.01"
+  );
+  equal(
+    stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: false }).result,
+    "a",
+    "04.02"
   );
 });
 
@@ -39,7 +63,12 @@ test("06 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, tag", () => {
   equal(
     stripHtml("\xa0 <article> \xa0", { trimOnlySpaces: true }).result,
     "\xa0\xa0",
-    "06"
+    "06.01"
+  );
+  equal(
+    stripHtml("\xa0 <article> \xa0", { trimOnlySpaces: false }).result,
+    "",
+    "06.02"
   );
 });
 
@@ -48,7 +77,13 @@ test("07 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, two tags", () => {
     stripHtml(" \xa0 <article> \xa0 <div> \xa0 ", { trimOnlySpaces: true })
       .result,
     "\xa0 \xa0",
-    "07"
+    "07.01"
+  );
+  equal(
+    stripHtml(" \xa0 <article> \xa0 <div> \xa0 ", { trimOnlySpaces: false })
+      .result,
+    "",
+    "07.02"
   );
 });
 
@@ -79,7 +114,7 @@ test("11 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all 
 test("12 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - CRLF", () => {
   equal(
     stripHtml(" \t\n a \r\n ", { trimOnlySpaces: true }).result,
-    "\t\n a \r\n",
+    "\t\na \r\n",
     "12"
   );
 });
@@ -129,7 +164,7 @@ test("18 - opts.trimOnlySpaces - letters around are retained", () => {
     stripHtml(" \n a <article> \xa0 <div> \xa0 </article> b \t ", {
       trimOnlySpaces: true,
     }).result,
-    "\n a b \t",
+    "\na b \t",
     "18"
   );
 });
@@ -140,7 +175,7 @@ test("19 - opts.trimOnlySpaces - opts.ignoreTags combo", () => {
       trimOnlySpaces: true,
       ignoreTags: ["div"],
     }).result,
-    "\n a <div> b \t",
+    "\na <div> b \t",
     "19"
   );
 });
@@ -151,7 +186,7 @@ test("20 - opts.trimOnlySpaces - opts.ignoreTags combo - plausible but recognise
       trimOnlySpaces: true,
       ignoreTags: ["div"],
     }).result,
-    "\n a < div> b \t",
+    "\na < div> b \t",
     "20"
   );
 });

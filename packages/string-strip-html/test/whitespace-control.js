@@ -143,17 +143,78 @@ test("16 - tags on the edge of the string - normal", () => {
 test("17 - tags on the edge of the string - cb", () => {
   let gathered = [];
   let cb = (o) => {
-    gathered.push(o);
+    gathered.push(o.proposedReturn);
     o.rangesArr.push(o.proposedReturn);
   };
-  // stripHtml("<a>\n<b>\n<c>x</c>\n</b>\n</a>", { cb });
-
   equal(
-    stripHtml("<a>\n<b>\n<c>x</c>\n</b>\n</a>", { cb }).result,
+    stripHtml(
+      `<a>
+<b>
+<c>x</c>
+</b>
+</a>`,
+      { cb }
+    ).result,
     "x",
     "17.01"
   );
-  // equal(gathered, [], "17.02");
+  equal(
+    gathered,
+    [
+      [0, 4, undefined],
+      [3, 8, ""],
+      [7, 11, ""],
+      [12, 17, " "],
+      [16, 22, "\n"],
+      [21, 26, null],
+    ],
+    "17.02"
+  );
+});
+
+test("18 - indentations, mixed", () => {
+  equal(
+    stripHtml(`<a>
+    A.
+    B.</a>
+
+
+  `).result,
+    "A.\nB.",
+    "18"
+  );
+});
+
+test("19 - indentations, mixed", () => {
+  equal(
+    stripHtml(`<a>
+    A.
+    B.</a>
+
+
+  `).result,
+    "A.\nB.",
+    "19"
+  );
+});
+
+test("20 - indentations, tags in front", () => {
+  equal(
+    stripHtml(`  <a>x
+  <a>y
+  `).result,
+    "x\ny",
+    "20"
+  );
+});
+
+test("21 - indentations, sneaky pair tags", () => {
+  equal(
+    stripHtml(`a
+    <script>x    </script>  <script> y</script>  b`).result,
+    "a\nb",
+    "21"
+  );
 });
 
 test.run();
