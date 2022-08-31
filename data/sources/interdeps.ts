@@ -717,7 +717,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 18901,
+        "size": 19956,
         "imports": [
             "ranges-apply",
             "ranges-push",
