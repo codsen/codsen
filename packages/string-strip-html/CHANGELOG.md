@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [11.6.0](https://github.com/codsen/codsen/compare/string-strip-html@11.5.0...string-strip-html@11.6.0) (2022-08-31)
 
-
 ### Features
 
-* treat HTML-encoded Combining Grapheme Joiner (U+034F) character as whitespace ([5a0d7ec](https://github.com/codsen/codsen/commit/5a0d7ec6347459c67beae621902d6fee79d6db98))
-
-
-
-
+- treat HTML-encoded Combining Grapheme Joiner (U+034F) character as whitespace ([5a0d7ec](https://github.com/codsen/codsen/commit/5a0d7ec6347459c67beae621902d6fee79d6db98))
 
 # [11.5.0](https://github.com/codsen/codsen/compare/string-strip-html@11.4.0...string-strip-html@11.5.0) (2022-08-31)
 
