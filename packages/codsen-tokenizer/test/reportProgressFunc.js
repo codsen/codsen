@@ -57,7 +57,7 @@ test("03", () => {
       });
     },
     /50/,
-    `01.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`
+    `03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`
   );
 });
 
@@ -97,7 +97,7 @@ test("05", () => {
       });
     },
     /32/g,
-    `01.05 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, short input`
+    `05 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, short input`
   );
 });
 
@@ -110,7 +110,7 @@ test("06", () => {
   };
 
   // long input (>1000 chars long) should report at each natural number percentage passed:
-  // our function will mutate the counter variable:
+  // our function will mutate the "gather" variable:
   ct(
     `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(
       50
@@ -137,7 +137,7 @@ test("06", () => {
   equal(
     gather,
     compareTo,
-    `01.06 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, longer input`
+    `06 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, longer input`
   );
 });
 
