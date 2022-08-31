@@ -208,12 +208,17 @@ function editor(todo = "", copy = ""): Res {
               // ensure there's no letter in front, for example
               // we don't match "lake" in "Blake":
               !isLetter(chunk[findingStartsAt - 1]) &&
-              !isLetter(chunk[findingStartsAt + extracted.length])
+              // either not a letter follows
+              (!isLetter(chunk[findingStartsAt + extracted.length]) ||
+                // or it's "S" and not a letter follows
+                (chunk[findingStartsAt + extracted.length].toLowerCase() ===
+                  "s" &&
+                  !isLetter(chunk[findingStartsAt + extracted.length + 1])))
             ) {
               total += 1;
               DEV &&
                 console.log(
-                  `216 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`total`}\u001b[${39}m`} = ${JSON.stringify(
+                  `221 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`total`}\u001b[${39}m`} = ${JSON.stringify(
                     total,
                     null,
                     4
@@ -223,7 +228,7 @@ function editor(todo = "", copy = ""): Res {
             // offset the search start, prepare for next finding
             DEV &&
               console.log(
-                `226 OLD ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+                `231 OLD ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                   startIdx,
                   null,
                   4
@@ -232,7 +237,7 @@ function editor(todo = "", copy = ""): Res {
             startIdx += findingStartsAt + extracted.length;
             DEV &&
               console.log(
-                `235 NEW ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+                `240 NEW ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                   startIdx,
                   null,
                   4
@@ -246,7 +251,7 @@ function editor(todo = "", copy = ""): Res {
 
           DEV &&
             console.log(
-              `249 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${total}`
+              `254 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${total}`
             );
           return total;
         }),
@@ -254,7 +259,7 @@ function editor(todo = "", copy = ""): Res {
       });
       DEV &&
         console.log(
-          `257 now ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+          `262 now ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
             todoLines,
             null,
             4
@@ -264,7 +269,7 @@ function editor(todo = "", copy = ""): Res {
       // traverse objects backwards and set their lengthCompensation
       DEV &&
         console.log(
-          `267 ██ ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+          `272 ██ ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
             todoLines,
             null,
             4
@@ -273,11 +278,11 @@ function editor(todo = "", copy = ""): Res {
       if (todoLines[~-todoLines.length]?.counts.length) {
         DEV &&
           console.log(
-            `276 ${`\u001b[${35}m${`traverse backwards`}\u001b[${39}m`}`
+            `281 ${`\u001b[${35}m${`traverse backwards`}\u001b[${39}m`}`
           );
         DEV &&
           console.log(
-            `280 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+            `285 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
               todoLines,
               null,
               4
@@ -286,7 +291,7 @@ function editor(todo = "", copy = ""): Res {
         todoLines = setLengthCompensation(todoLines, maxLen);
         DEV &&
           console.log(
-            `289 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+            `294 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
               todoLines,
               null,
               4
@@ -296,7 +301,7 @@ function editor(todo = "", copy = ""): Res {
 
       DEV &&
         console.log(
-          `299 ${`\u001b[${31}m${`skip this todo line`}\u001b[${39}m`}`
+          `304 ${`\u001b[${31}m${`skip this todo line`}\u001b[${39}m`}`
         );
       todoLines.push({
         extracted: "",
@@ -309,7 +314,7 @@ function editor(todo = "", copy = ""): Res {
     }
     DEV &&
       console.log(
-        `312 ending ${`\u001b[${33}m${`lengthCompensation`}\u001b[${39}m`} = ${JSON.stringify(
+        `317 ending ${`\u001b[${33}m${`lengthCompensation`}\u001b[${39}m`} = ${JSON.stringify(
           maxLen,
           null,
           4
@@ -323,7 +328,7 @@ function editor(todo = "", copy = ""): Res {
 
   DEV &&
     console.log(
-      `326 FINAL ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+      `331 FINAL ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
         todoLines,
         null,
         4
@@ -332,7 +337,7 @@ function editor(todo = "", copy = ""): Res {
 
   DEV &&
     console.log(
-      `335 LAST TODO LINE ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+      `340 LAST TODO LINE ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
         todoLineArr[~-todoLineArr.length],
         null,
         4
@@ -344,11 +349,11 @@ function editor(todo = "", copy = ""): Res {
   if (isSuitable(todoLineArr[~-todoLineArr.length])) {
     DEV &&
       console.log(
-        `347 todo's leading to EOL! ${`\u001b[${32}m${`traverse backwards`}\u001b[${39}m`}`
+        `352 todo's leading to EOL! ${`\u001b[${32}m${`traverse backwards`}\u001b[${39}m`}`
       );
     DEV &&
       console.log(
-        `351 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+        `356 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
           todoLines,
           null,
           4
@@ -357,7 +362,7 @@ function editor(todo = "", copy = ""): Res {
     todoLines = setLengthCompensation(todoLines, maxLen);
     DEV &&
       console.log(
-        `360 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
+        `365 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
           todoLines,
           null,
           4

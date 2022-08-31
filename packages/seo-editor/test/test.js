@@ -273,4 +273,39 @@ test(`08 - three dashes in the text`, () => {
   );
 });
 
+test(`09 - todo singular, copy plural`, () => {
+  equal(
+    prep(
+      editor(
+        `
+- apple
+- banana
+- cucumber
+`,
+        `
+I ate bananas and cucumbers.
+    `
+      )
+    ),
+    {
+      todoLines: [
+        { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
+        { extracted: "apple", counts: [0], length: 5, lengthCompensation: 3 },
+        { extracted: "banana", counts: [1], length: 6, lengthCompensation: 2 },
+        {
+          extracted: "cucumber",
+          counts: [1],
+          length: 8,
+          lengthCompensation: 0,
+        },
+        { extracted: "", counts: [], length: 0, lengthCompensation: 0 },
+      ],
+      todoTotal: 3,
+      completion: [2],
+      chunkWordCounts: [5],
+    },
+    "09"
+  );
+});
+
 test.run();
