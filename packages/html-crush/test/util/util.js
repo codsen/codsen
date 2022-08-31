@@ -1,3 +1,5 @@
+// import fs from "fs";
+// import path from "path";
 import { mixer } from "test-mixer";
 import { rApply } from "ranges-apply";
 
@@ -9,6 +11,19 @@ function mixerToExport(ref) {
 }
 
 function m(equal, str, opts) {
+  // let extractedInputs = new Set(
+  //   JSON.parse(
+  //     fs.readFileSync(path.resolve("./test/util/extractedInputs.json"), "utf8")
+  //   )
+  // );
+  // if (str.trim().length > 3) {
+  //   extractedInputs.add(str);
+  //   fs.writeFileSync(
+  //     path.resolve("./test/util/extractedInputs.json"),
+  //     JSON.stringify([...extractedInputs], null, 0)
+  //   );
+  // }
+
   // check, do ranges really render into the result string
   let res = crushESM(str, opts);
   equal(
