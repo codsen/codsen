@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.1.2 (2022-09-05)
 
-
 ### Bug Fixes
 
-* address memory leaks related to arrays not being garbage-collected ([7001193](https://github.com/codsen/codsen/commit/7001193ba3f6eec5015b5f1199f6ae296ae31204))
-
-
-
-
+- address memory leaks related to arrays not being garbage-collected ([7001193](https://github.com/codsen/codsen/commit/7001193ba3f6eec5015b5f1199f6ae296ae31204))
 
 # 4.1.0 (2022-08-12)
 
