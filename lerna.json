@@ -9,7 +9,6 @@
     }
   },
   "ignoreChanges": [
-    "**/*.md",
     "**/node_modules/**",
     "**/.npmignore",
     "**/perf/**",
