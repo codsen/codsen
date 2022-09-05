@@ -354,7 +354,7 @@ export const interdeps = [
     },
     {
         "name": "is-language-code",
-        "size": 57137,
+        "size": 58524,
         "imports": []
     },
     {
