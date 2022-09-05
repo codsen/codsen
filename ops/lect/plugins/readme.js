@@ -7,6 +7,7 @@ const hasPlayground = [
   "string-strip-html",
   "email-comb",
   "html-crush",
+  "detergent",
   "is-language-code",
 ];
 
