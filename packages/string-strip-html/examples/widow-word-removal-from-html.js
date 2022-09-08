@@ -1,4 +1,4 @@
-// Widow word removal from text within HTML
+// Orphan removal from text within HTML
 
 import { strict as assert } from "assert";
 
