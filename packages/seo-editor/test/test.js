@@ -56,6 +56,7 @@ I ate a banana and a cucumber.
       todoTotal: 3,
       completion: [2],
       chunkWordCounts: [7],
+      chunkLengths: [30],
     },
     "03"
   );
@@ -105,6 +106,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
       todoTotal: 3,
       completion: [2, 1],
       chunkWordCounts: [7, 63],
+      chunkLengths: [30, 323],
     },
     "04"
   );
@@ -146,6 +148,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
       todoTotal: 3,
       completion: [2, 1],
       chunkWordCounts: [7, 63],
+      chunkLengths: [30, 323],
     },
     "05"
   );
@@ -159,6 +162,7 @@ test(`06 - both todo and copy are empty`, () => {
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [],
+      chunkLengths: [],
     },
     "06.01"
   );
@@ -169,6 +173,7 @@ test(`06 - both todo and copy are empty`, () => {
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [0],
+      chunkLengths: [1],
     },
     "06.02"
   );
@@ -184,6 +189,7 @@ test(`07 - nothing todo`, () => {
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [],
+      chunkLengths: [],
     },
     "07.01"
   );
@@ -196,6 +202,7 @@ test(`07 - nothing todo`, () => {
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [],
+      chunkLengths: [],
     },
     "07.02"
   );
@@ -208,6 +215,7 @@ test(`07 - nothing todo`, () => {
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [0],
+      chunkLengths: [1],
     },
     "07.03"
   );
@@ -218,6 +226,7 @@ test(`07 - nothing todo`, () => {
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [1],
+      chunkLengths: [7],
     },
     "07.04"
   );
@@ -228,6 +237,7 @@ test(`07 - nothing todo`, () => {
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [1],
+      chunkLengths: [7],
     },
     "07.05"
   );
@@ -240,6 +250,7 @@ test(`07 - nothing todo`, () => {
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [1],
+      chunkLengths: [7],
     },
     "07.06"
   );
@@ -252,6 +263,7 @@ test(`07 - nothing todo`, () => {
       todoTotal: 0,
       completion: [0],
       chunkWordCounts: [0],
+      chunkLengths: [1],
     },
     "07.07"
   );
@@ -303,6 +315,7 @@ I ate bananas and cucumbers.
       todoTotal: 3,
       completion: [2],
       chunkWordCounts: [5],
+      chunkLengths: [28],
     },
     "09"
   );

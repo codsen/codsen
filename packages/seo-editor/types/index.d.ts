@@ -7,6 +7,7 @@ interface Res {
     lengthCompensation: number;
   }[];
   chunkWordCounts: number[];
+  chunkLengths: number[];
   todoTotal: number;
   completion: number[];
   log: {
