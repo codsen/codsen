@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.4.0](https://github.com/codsen/codsen/compare/seo-editor@1.3.0...seo-editor@1.4.0) (2022-09-11)
 
-
 ### Features
 
-* report chunkLengths in result ([e53b2ca](https://github.com/codsen/codsen/commit/e53b2ca3180ffc9818fcdfe7bec4087573f3c381))
-
-
-
-
+- report chunkLengths in result ([e53b2ca](https://github.com/codsen/codsen/commit/e53b2ca3180ffc9818fcdfe7bec4087573f3c381))
 
 # [1.3.0](https://github.com/codsen/codsen/compare/seo-editor@1.2.0...seo-editor@1.3.0) (2022-08-31)
 

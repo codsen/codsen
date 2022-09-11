@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.3.5](https://github.com/codsen/codsen/compare/email-comb@6.3.4...email-comb@6.3.5) (2022-09-11)
-
-**Note:** Version bump only for package email-comb
-
-
-
-
-
 # [6.3.0](https://github.com/codsen/codsen/compare/email-comb@6.2.0...email-comb@6.3.0) (2022-08-18)
 
 ### Features
