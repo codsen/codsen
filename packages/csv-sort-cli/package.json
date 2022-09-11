@@ -1,6 +1,6 @@
 {
   "name": "csv-sort-cli",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
   "keywords": [
     "accountancy",
