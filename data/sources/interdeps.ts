@@ -589,6 +589,13 @@ export const interdeps = [
         "imports": []
     },
     {
+        "name": "remark-typography",
+        "size": 538,
+        "imports": [
+            "string-apostrophes"
+        ]
+    },
+    {
         "name": "str-indexes-of-plus",
         "size": 1084,
         "imports": []

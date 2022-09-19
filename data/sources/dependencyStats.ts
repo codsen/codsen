@@ -120,7 +120,7 @@ export const dependencyStats: DependencyStats = {
         "sorted-object": 1,
         "split2": 1,
         "str-indexes-of-plus": 1,
-        "string-apostrophes": 1,
+        "string-apostrophes": 2,
         "string-character-is-astral-surrogate": 1,
         "string-collapse-leading-whitespace": 1,
         "string-collapse-white-space": 2,
@@ -145,6 +145,7 @@ export const dependencyStats: DependencyStats = {
         "tiny-invariant": 1,
         "tiny-typed-emitter": 1,
         "type-detect": 3,
+        "unist-util-visit": 1,
         "update-notifier": 12,
         "url-regex": 1,
         "util-array-object-or-both": 2,
@@ -152,6 +153,7 @@ export const dependencyStats: DependencyStats = {
         "write-file-atomic": 4
     },
     "devDependencies": {
+        "@types/hast": 1,
         "@types/he": 3,
         "@types/hex-color-regex": 1,
         "@types/isstream": 1,
@@ -192,11 +194,13 @@ export const dependencyStats: DependencyStats = {
         "ranges-apply": 6,
         "ranges-invert": 1,
         "ranges-merge": 1,
+        "remark": 1,
         "string-find-heads-tails": 1,
         "string-strip-html": 1,
         "test-mixer": 4,
         "title": 1,
         "type-fest": 2,
+        "unified": 1,
         "vinyl-string": 1
     },
     "top10ExternalDeps": [

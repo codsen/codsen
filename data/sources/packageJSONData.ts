@@ -2289,7 +2289,7 @@ export const packageJSONData = {
             "chalk": "^5.0.1",
             "csv-sort": "^6.1.2",
             "globby": "^13.1.2",
-            "inquirer": "^9.1.1",
+            "inquirer": "^9.1.2",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
             "meow": "^10.1.3",
@@ -2908,7 +2908,7 @@ export const packageJSONData = {
             "chalk": "^5.0.1",
             "email-all-chars-within-ascii": "^4.1.1",
             "globby": "^13.1.2",
-            "inquirer": "^9.1.1",
+            "inquirer": "^9.1.2",
             "lodash.pullall": "^4.2.0",
             "minimist": "^1.2.6",
             "string-left-right": "^5.1.2",
@@ -7099,6 +7099,86 @@ export const packageJSONData = {
                     ""
                 ]
             }
+        }
+    },
+    "remark-typography": {
+        "name": "remark-typography",
+        "version": "0.0.1",
+        "description": "All-in-one English typography plugin for markdown",
+        "keywords": [
+            "unified",
+            "remark",
+            "remark-plugin",
+            "plugin",
+            "mdast",
+            "markdown",
+            "text",
+            "typography",
+            "typographic",
+            "typesetting",
+            "english"
+        ],
+        "homepage": "https://codsen.com/os/remark-typography",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/codsen/codsen.git",
+            "directory": "packages/remark-typography"
+        },
+        "license": "MIT",
+        "author": {
+            "name": "Roy Revelt",
+            "email": "roy@codsen.com",
+            "url": "https://codsen.com"
+        },
+        "type": "module",
+        "exports": {
+            "types": "./types/index.d.ts",
+            "default": "./dist/remark-typography.esm.js"
+        },
+        "types": "types/index.d.ts",
+        "scripts": {
+            "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
+            "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
+            "examples": "node '../../ops/scripts/run-examples.js'",
+            "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+            "letspublish": "yarn publish || :",
+            "lint": "eslint . --fix",
+            "perf": "echo 'skip perf'",
+            "prepare": "echo 'ready'",
+            "prettier": "prettier",
+            "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
+            "pretest": "yarn run lect && yarn run build",
+            "test": "yarn run devtest",
+            "unit": "uvu test"
+        },
+        "engines": {
+            "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+        },
+        "c8": {
+            "check-coverage": true,
+            "exclude": [
+                "**/test/**/*.*"
+            ],
+            "lines": 100
+        },
+        "lect": {
+            "licence": {
+                "extras": [
+                    ""
+                ]
+            },
+            "various": {}
+        },
+        "dependencies": {
+            "string-apostrophes": "^3.1.2",
+            "unist-util-visit": "^4.1.1"
+        },
+        "devDependencies": {
+            "@types/hast": "^2.3.4",
+            "remark": "^14.0.2",
+            "unified": "^10.1.2"
         }
     },
     "seo-editor": {
