@@ -180,7 +180,7 @@ export const interdeps = [
     },
     {
         "name": "detergent",
-        "size": 25175,
+        "size": 25177,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -260,7 +260,7 @@ export const interdeps = [
     },
     {
         "name": "extract-search-index",
-        "size": 1223,
+        "size": 1225,
         "imports": [
             "string-strip-html",
             "string-unfancy"
@@ -707,7 +707,7 @@ export const interdeps = [
     },
     {
         "name": "string-remove-widows",
-        "size": 7336,
+        "size": 7338,
         "imports": [
             "ranges-apply",
             "ranges-push",
