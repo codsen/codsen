@@ -1,6 +1,6 @@
 {
   "name": "remark-typography",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "All-in-one English typography plugin for markdown",
   "keywords": [
     "unified",
