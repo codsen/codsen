@@ -64,7 +64,7 @@
     "chalk": "^5.0.1",
     "email-all-chars-within-ascii": "^4.1.1",
     "globby": "^13.1.2",
-    "inquirer": "^9.1.1",
+    "inquirer": "^9.1.2",
     "lodash.pullall": "^4.2.0",
     "minimist": "^1.2.6",
     "string-left-right": "^5.1.2",
