@@ -40,6 +40,15 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     !state.isRollup ? "scripts.cli" : "scripts.rollup"
   );
 
+  // if perf script mentions "skip", don't change it
+  if (
+    objectPath.get(state.pack.scripts.perf) &&
+    typeof state.pack.scripts.perf === "string" &&
+    state.pack.scripts.perf.includes("skip")
+  ) {
+    content.scripts.perf = state.pack.scripts.perf;
+  }
+
   // 2. append any add-ons from .lectrc.json > "scripts_extras"
   if (objectPath.get(lectrc, `scripts_extras.${state.pack.name}`)) {
     let extras = objectPath.get(lectrc, `scripts_extras.${state.pack.name}`);
