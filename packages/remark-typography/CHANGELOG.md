@@ -8,7 +8,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - init ([b8dbd5f](https://github.com/codsen/codsen/commit/b8dbd5f74bd831da147f2d8a469996e6cbd14022))
-
-### BREAKING CHANGES
-
-- init
