@@ -24,20 +24,20 @@ async function tsconfig({ state }) {
     let contents = JSON.parse(await fs.readFile("tsconfig.json", "utf8"));
     oldReferences = contents.references;
     oldIncludes = contents.include;
-    console.log(
-      `${`\u001b[${33}m${`oldReferences`}\u001b[${39}m`} = ${JSON.stringify(
-        oldReferences,
-        null,
-        4
-      )}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`oldIncludes`}\u001b[${39}m`} = ${JSON.stringify(
-        oldIncludes,
-        null,
-        4
-      )}`
-    );
+    // console.log(
+    //   `${`\u001b[${33}m${`oldReferences`}\u001b[${39}m`} = ${JSON.stringify(
+    //     oldReferences,
+    //     null,
+    //     4
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`oldIncludes`}\u001b[${39}m`} = ${JSON.stringify(
+    //     oldIncludes,
+    //     null,
+    //     4
+    //   )}`
+    // );
   } catch (error) {
     console.log(`lect: could not extract old TS config contents: ${error}`);
   }
