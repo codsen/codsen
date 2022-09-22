@@ -134,7 +134,7 @@ export const dependencyStats: DependencyStats = {
         "string-range-expander": 3,
         "string-remove-duplicate-heads-tails": 1,
         "string-remove-thousand-separators": 1,
-        "string-remove-widows": 1,
+        "string-remove-widows": 2,
         "string-splice": 1,
         "string-strip-html": 2,
         "string-trim-spaces-only": 3,

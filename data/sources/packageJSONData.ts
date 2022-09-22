@@ -7104,7 +7104,7 @@ export const packageJSONData = {
     "remark-typography": {
         "name": "remark-typography",
         "version": "0.1.0",
-        "description": "All-in-one English typography plugin for markdown",
+        "description": "Remark plugin to fix typography: quotes, dashes and so on.",
         "keywords": [
             "unified",
             "remark",
@@ -7173,6 +7173,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "string-apostrophes": "^3.1.2",
+            "string-remove-widows": "^3.1.10",
             "unist-util-visit": "^4.1.1"
         },
         "devDependencies": {
