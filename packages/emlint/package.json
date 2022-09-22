@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "5.1.7",
+  "version": "5.1.8",
   "description": "Pluggable email template code linter",
   "keywords": [
     "analysis",
@@ -89,7 +89,7 @@
     "html-all-known-attributes": "^5.1.1",
     "html-entities-not-email-friendly": "^0.7.1",
     "is-d": "^1.0.0",
-    "is-language-code": "^4.1.5",
+    "is-language-code": "^4.1.6",
     "is-media-descriptor": "^4.2.2",
     "is-relative-uri": "^4.2.2",
     "is-url-superb": "^6.1.0",
