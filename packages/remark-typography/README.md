@@ -1,6 +1,6 @@
 # remark-typography
 
-> All-in-one English typography plugin for markdown
+> Remark plugin to fix typography: quotes, dashes and so on.
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/remark-typography" rel="nofollow noreferrer noopener">
@@ -45,7 +45,7 @@ import fixTypography from "remark-typography";
     (await remark().use(fixTypography, {}).process("Yes that's true but..."))
       .toString()
       .trim(),
-    `Yes that\u2019s true but\u2026`
+    `Yes that\u2019s true\u00A0but\u2026`
   );
 })();
 ```
