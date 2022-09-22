@@ -2222,7 +2222,7 @@ export const packageJSONData = {
     },
     "csv-sort-cli": {
         "name": "csv-sort-cli",
-        "version": "2.1.7",
+        "version": "2.1.8",
         "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
         "keywords": [
             "accountancy",
@@ -2524,7 +2524,7 @@ export const packageJSONData = {
     },
     "detergent": {
         "name": "detergent",
-        "version": "8.1.10",
+        "version": "8.1.11",
         "description": "Extract, clean, encode text and fix English style",
         "keywords": [
             "brief",
@@ -2608,8 +2608,8 @@ export const packageJSONData = {
             "string-fix-broken-named-entities": "^6.1.2",
             "string-left-right": "^5.1.2",
             "string-range-expander": "^3.1.1",
-            "string-remove-widows": "^3.1.10",
-            "string-strip-html": "^11.6.5",
+            "string-remove-widows": "^3.1.11",
+            "string-strip-html": "^11.6.6",
             "string-trim-spaces-only": "^4.1.1"
         },
         "devDependencies": {
@@ -2844,7 +2844,7 @@ export const packageJSONData = {
     },
     "email-all-chars-within-ascii-cli": {
         "name": "email-all-chars-within-ascii-cli",
-        "version": "2.1.7",
+        "version": "2.1.8",
         "description": "Command line app to scan email templates, are all their characters within ASCII range",
         "keywords": [
             "7bit",
@@ -2921,7 +2921,7 @@ export const packageJSONData = {
     },
     "email-comb": {
         "name": "email-comb",
-        "version": "6.3.6",
+        "version": "6.3.7",
         "description": "Remove unused CSS from email templates",
         "keywords": [
             "body",
@@ -2990,7 +2990,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "array-pull-all-with-glob": "^6.2.1",
-            "html-crush": "^5.1.7",
+            "html-crush": "^5.1.8",
             "lodash.intersection": "^4.4.0",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
@@ -3088,7 +3088,7 @@ export const packageJSONData = {
     },
     "emlint": {
         "name": "emlint",
-        "version": "5.1.7",
+        "version": "5.1.8",
         "description": "Pluggable email template code linter",
         "keywords": [
             "analysis",
@@ -3177,7 +3177,7 @@ export const packageJSONData = {
             "html-all-known-attributes": "^5.1.1",
             "html-entities-not-email-friendly": "^0.7.1",
             "is-d": "^1.0.0",
-            "is-language-code": "^4.1.5",
+            "is-language-code": "^4.1.6",
             "is-media-descriptor": "^4.2.2",
             "is-relative-uri": "^4.2.2",
             "is-url-superb": "^6.1.0",
@@ -3212,7 +3212,7 @@ export const packageJSONData = {
     },
     "extract-search-index": {
         "name": "extract-search-index",
-        "version": "1.1.10",
+        "version": "1.1.11",
         "description": "Extract unique keyword input list string for search",
         "keywords": [
             "string",
@@ -3281,7 +3281,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-strip-html": "^11.6.5",
+            "string-strip-html": "^11.6.6",
             "string-unfancy": "^5.1.1"
         }
     },
@@ -3435,7 +3435,7 @@ export const packageJSONData = {
     },
     "gulp-email-remove-unused-css": {
         "name": "gulp-email-remove-unused-css",
-        "version": "4.1.7",
+        "version": "4.1.8",
         "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
         "keywords": [
             "body",
@@ -3493,7 +3493,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "email-comb": "^6.3.6",
+            "email-comb": "^6.3.7",
             "plugin-error": "^2.0.0"
         },
         "devDependencies": {
@@ -3645,7 +3645,7 @@ export const packageJSONData = {
     },
     "html-crush": {
         "name": "html-crush",
-        "version": "5.1.7",
+        "version": "5.1.8",
         "description": "Minify email templates",
         "keywords": [
             "breaks",
@@ -4199,7 +4199,7 @@ export const packageJSONData = {
     },
     "is-language-code": {
         "name": "is-language-code",
-        "version": "4.1.5",
+        "version": "4.1.6",
         "description": "Is given string a language code (as per IANA)",
         "keywords": [
             "check",
@@ -7103,7 +7103,7 @@ export const packageJSONData = {
     },
     "remark-typography": {
         "name": "remark-typography",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "description": "Remark plugin to fix typography: quotes, dashes and so on.",
         "keywords": [
             "unified",
@@ -7173,7 +7173,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "string-apostrophes": "^3.1.2",
-            "string-remove-widows": "^3.1.10",
+            "string-remove-widows": "^3.1.11",
             "unist-util-visit": "^4.1.1"
         },
         "devDependencies": {
@@ -7184,7 +7184,7 @@ export const packageJSONData = {
     },
     "seo-editor": {
         "name": "seo-editor",
-        "version": "1.4.1",
+        "version": "1.4.2",
         "description": "Copywriting keyword to-do list automation",
         "keywords": [
             "seo",
@@ -8686,7 +8686,7 @@ export const packageJSONData = {
     },
     "string-remove-widows": {
         "name": "string-remove-widows",
-        "version": "3.1.10",
+        "version": "3.1.11",
         "description": "Helps to prevent widow words in a text",
         "keywords": [
             "against",
@@ -8765,7 +8765,7 @@ export const packageJSONData = {
             "string-match-left-right": "^8.2.2"
         },
         "devDependencies": {
-            "string-strip-html": "^11.6.5"
+            "string-strip-html": "^11.6.6"
         }
     },
     "string-split-by-whitespace": {
@@ -8850,7 +8850,7 @@ export const packageJSONData = {
     },
     "string-strip-html": {
         "name": "string-strip-html",
-        "version": "11.6.5",
+        "version": "11.6.6",
         "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
         "keywords": [
             "code",
@@ -9484,7 +9484,7 @@ export const packageJSONData = {
     },
     "tsd-extract": {
         "name": "tsd-extract",
-        "version": "0.6.7",
+        "version": "0.6.8",
         "description": "Extract any definition from TS definitions file string",
         "keywords": [
             "ts",

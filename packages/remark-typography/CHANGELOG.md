@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.2.0](https://github.com/codsen/codsen/compare/remark-typography@0.1.0...remark-typography@0.2.0) (2022-09-22)
 
-
 ### Features
 
-* widow word removal ([d4d68d8](https://github.com/codsen/codsen/commit/d4d68d8a1331cf32a41eb1d9ca3f49bb464c59ef))
-
-
-
-
+- widow word removal ([d4d68d8](https://github.com/codsen/codsen/commit/d4d68d8a1331cf32a41eb1d9ca3f49bb464c59ef))
 
 # 0.1.0 (2022-09-19)
 
