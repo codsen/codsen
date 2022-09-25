@@ -69,13 +69,13 @@
     "various": {}
   },
   "dependencies": {
+    "@types/hast": "^2.3.4",
     "string-apostrophes": "^3.1.2",
     "string-remove-widows": "^3.1.11",
+    "unified": "^10.1.2",
     "unist-util-visit": "^4.1.1"
   },
   "devDependencies": {
-    "@types/hast": "^2.3.4",
-    "remark": "^14.0.2",
-    "unified": "^10.1.2"
+    "remark": "^14.0.2"
   }
 }
