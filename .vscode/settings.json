@@ -18,6 +18,10 @@
     "nodenext",
     "letspublish",
     "jsdelivr",
-    "keyset"
+    "keyset",
+    "rehype",
+    "mdast",
+    "unist",
+    "colspan"
   ]
 }
