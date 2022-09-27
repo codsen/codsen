@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.1.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.0.2...rehype-responsive-tables@1.1.0) (2022-09-27)
 
-
 ### Features
 
-* support nested td contents not just text nodes ([e19613a](https://github.com/codsen/codsen/commit/e19613aeec9d1800daed8043b50591fe265050df))
-
-
-
-
+- support nested td contents not just text nodes ([e19613a](https://github.com/codsen/codsen/commit/e19613aeec9d1800daed8043b50591fe265050df))
 
 ## [1.0.2](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.0.1...rehype-responsive-tables@1.0.2) (2022-09-27)
 
