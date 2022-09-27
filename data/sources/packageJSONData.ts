@@ -84,7 +84,7 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "type-fest": "^2.19.0"
+            "type-fest": "^3.0.0"
         }
     },
     "array-group-str-omit-num-char": {
@@ -623,7 +623,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
-            "type-fest": "^2.19.0"
+            "type-fest": "^3.0.0"
         }
     },
     "ast-contains-only-empty-space": {
@@ -7101,6 +7101,82 @@ export const packageJSONData = {
             }
         }
     },
+    "rehype-responsive-tables": {
+        "name": "rehype-responsive-tables",
+        "version": "1.0.0",
+        "description": "Rehype plugin to stack the first column cells above their rows.",
+        "keywords": [
+            "unified",
+            "rehype",
+            "rehype-plugin",
+            "plugin",
+            "mdast",
+            "html",
+            "markdown"
+        ],
+        "homepage": "https://codsen.com/os/rehype-responsive-tables",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/codsen/codsen.git",
+            "directory": "packages/remark-typography"
+        },
+        "license": "MIT",
+        "author": {
+            "name": "Roy Revelt",
+            "email": "roy@codsen.com",
+            "url": "https://codsen.com"
+        },
+        "type": "module",
+        "exports": {
+            "types": "./types/index.d.ts",
+            "default": "./dist/remark-typography.esm.js"
+        },
+        "types": "types/index.d.ts",
+        "scripts": {
+            "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
+            "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
+            "examples": "node '../../ops/scripts/run-examples.js'",
+            "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+            "letspublish": "yarn publish || :",
+            "lint": "eslint . --fix",
+            "perf": "echo 'skip perf'",
+            "prepare": "echo 'ready'",
+            "prettier": "prettier",
+            "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
+            "pretest": "yarn run lect && yarn run build",
+            "test": "yarn run devtest",
+            "unit": "uvu test"
+        },
+        "engines": {
+            "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+        },
+        "c8": {
+            "check-coverage": true,
+            "exclude": [
+                "**/test/**/*.*"
+            ],
+            "lines": 100
+        },
+        "lect": {
+            "licence": {
+                "extras": [
+                    ""
+                ]
+            },
+            "various": {}
+        },
+        "dependencies": {
+            "@types/hast": "^2.3.4",
+            "unified": "^10.1.2",
+            "unist-util-visit": "^4.1.1"
+        },
+        "devDependencies": {
+            "rehype": "^12.0.1",
+            "rehype-format": "^4.0.1"
+        }
+    },
     "remark-typography": {
         "name": "remark-typography",
         "version": "0.2.0",
@@ -7172,14 +7248,14 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
+            "@types/hast": "^2.3.4",
             "string-apostrophes": "^3.1.2",
             "string-remove-widows": "^3.1.11",
+            "unified": "^10.1.2",
             "unist-util-visit": "^4.1.1"
         },
         "devDependencies": {
-            "@types/hast": "^2.3.4",
-            "remark": "^14.0.2",
-            "unified": "^10.1.2"
+            "remark": "^14.0.2"
         }
     },
     "seo-editor": {
