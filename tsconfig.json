@@ -239,6 +239,9 @@
       "path": "packages/regex-jinja-specific"
     },
     {
+      "path": "packages/rehype-responsive-tables"
+    },
+    {
       "path": "packages/remark-typography"
     },
     {
