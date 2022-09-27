@@ -7118,7 +7118,7 @@ export const packageJSONData = {
         "repository": {
             "type": "git",
             "url": "https://github.com/codsen/codsen.git",
-            "directory": "packages/remark-typography"
+            "directory": "packages/rehype-responsive-tables"
         },
         "license": "MIT",
         "author": {
@@ -7129,7 +7129,7 @@ export const packageJSONData = {
         "type": "module",
         "exports": {
             "types": "./types/index.d.ts",
-            "default": "./dist/remark-typography.esm.js"
+            "default": "./dist/rehype-responsive-tables.esm.js"
         },
         "types": "types/index.d.ts",
         "scripts": {
