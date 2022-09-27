@@ -65,7 +65,7 @@
     "various": {}
   },
   "dependencies": {
-    "hast": "^1.0.0",
+    "@types/hast": "^2.3.4",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.1"
   },
