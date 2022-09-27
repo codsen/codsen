@@ -5,8 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.0.1 (2022-09-27)
 
-
 ### Bug Fixes
 
-* init ([60ee595](https://github.com/codsen/codsen/commit/60ee5952914aaefdf2cd0bfcad4c27f32563a102))
-* replace hast types import with types/hast ([9e98816](https://github.com/codsen/codsen/commit/9e988168551e845fe454c22b9d2fd7b53ff679fc))
+- init ([60ee595](https://github.com/codsen/codsen/commit/60ee5952914aaefdf2cd0bfcad4c27f32563a102))
+- replace hast types import with types/hast ([9e98816](https://github.com/codsen/codsen/commit/9e988168551e845fe454c22b9d2fd7b53ff679fc))
