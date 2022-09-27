@@ -488,4 +488,89 @@ test(`10 - nested tags inside, colspan`, () => {
   equal(res, intended, "10");
 });
 
+test(`11 - thead, td with children`, () => {
+  let input = `
+<table>
+  <thead>
+    <tr>
+      <th>
+        Foo
+      </th>
+      <th>
+
+
+
+
+      Bar
+      </th>
+      <th>Baz           </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        a
+      </td>
+      <td>
+                  b
+      </td>
+      <td>   c   </td>
+    </tr>
+    <tr>
+      <td>
+        <code>x</code> y <code>z</code>
+      </td>
+      <td>
+        o
+      </td>
+      <td>
+        i
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+  let intended = `
+<table>
+  <thead>
+    <tr>
+      <th class="rrt-del-td">Foo</th>
+      <th>Bar</th>
+      <th>Baz</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="rrt-new-tr">
+      <td class="rrt-del-td"></td>
+      <td colspan="2">a</td>
+    </tr>
+    <tr>
+      <td class="rrt-del-td">a</td>
+      <td>b</td>
+      <td>c</td>
+    </tr>
+    <tr class="rrt-new-tr">
+      <td class="rrt-del-td"></td>
+      <td colspan="2"><code>x</code> y <code>z</code></td>
+    </tr>
+    <tr>
+      <td class="rrt-del-td"><code>x</code> y <code>z</code></td>
+      <td>o</td>
+      <td>i</td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+  let res = rehype()
+    .data("settings", { fragment: true })
+    .use(rehypeResponsiveTables)
+    .use(rehypeFormat)
+    .processSync(input)
+    .toString();
+
+  equal(res, intended, "11");
+});
+
 test.run();
