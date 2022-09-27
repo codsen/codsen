@@ -83,6 +83,6 @@
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.7",
     "@types/type-detect": "^4.0.1",
-    "type-fest": "^2.19.0"
+    "type-fest": "^3.0.0"
   }
 }
