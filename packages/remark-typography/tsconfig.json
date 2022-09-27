@@ -15,6 +15,9 @@
   "references": [
     {
       "path": "../string-apostrophes"
+    },
+    {
+      "path": "../string-remove-widows"
     }
   ]
 }
