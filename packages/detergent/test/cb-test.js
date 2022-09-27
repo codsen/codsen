@@ -50,7 +50,7 @@ test(`04 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip H
         })
       ).res,
       "<b>ABC</b>",
-      `01.04`
+      `04`
     );
   });
 });
@@ -63,7 +63,7 @@ test(`05 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip H
       cb: (str) => str.toUpperCase(),
     }).res,
     "ABC DEF",
-    "05"
+    "05.01"
   );
   // now mixer:
   mixer({
@@ -80,9 +80,37 @@ test(`05 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip H
         })
       ).res,
       "ABC DEF",
-      `01.04`
+      `05.02`
     );
   });
+});
+
+test(`06 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`, () => {
+  equal(
+    det1(
+      `
+<div>
+  abc
+</div>
+<div>
+  xyz
+</div>
+`.trim(),
+      {
+        replaceLineBreaks: false,
+        stripHtml: false,
+        // every substring between tags is fed to the callback,
+        // including that line break between div pairs, so
+        // we implement a check, is it non-whitespace,
+        // before wrapping it:
+        cb: (str) => (str && str.trim() ? `{${str.trim()}}` : str),
+      }
+    ).res,
+    `
+<div>{abc}</div>\n<div>{xyz}</div>
+`.trim(),
+    "06"
+  );
 });
 
 test.run();
