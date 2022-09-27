@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.14](https://github.com/codsen/codsen/compare/extract-search-index@1.1.13...extract-search-index@1.1.14) (2022-09-27)
+
+**Note:** Version bump only for package extract-search-index
+
+
+
+
+
 # 1.1.0 (2022-08-12)
 
 ### Features

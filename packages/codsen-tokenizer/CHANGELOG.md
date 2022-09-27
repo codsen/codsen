@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.6](https://github.com/codsen/codsen/compare/codsen-tokenizer@6.1.5...codsen-tokenizer@6.1.6) (2022-09-27)
+
+**Note:** Version bump only for package codsen-tokenizer
+
+
+
+
+
 # 6.1.0 (2022-08-12)
 
 ### Features
