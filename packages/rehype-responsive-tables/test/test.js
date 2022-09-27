@@ -374,4 +374,118 @@ test(`08 - empty thead tr, 2x2`, () => {
   equal(res, intended, "08");
 });
 
+test.skip(`09 - nested tags inside, no colspan`, () => {
+  let input = `
+<table>
+  <thead>
+    <tr></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>a</code></td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <td><code>x</code></td>
+      <td>y</td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+  let intended = `
+<table>
+  <thead>
+    <tr></tr>
+  </thead>
+  <tbody>
+    <tr class="rrt-new-tr">
+      <td class="rrt-del-td"></td>
+      <td><code>a</code></td>
+    </tr>
+    <tr>
+      <td class="rrt-del-td"><code>a</code></td>
+      <td>b</td>
+    </tr>
+    <tr class="rrt-new-tr">
+      <td class="rrt-del-td"></td>
+      <td><code>x</code></td>
+    </tr>
+    <tr>
+      <td class="rrt-del-td"><code>x</code></td>
+      <td>y</td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+  let res = rehype()
+    .data("settings", { fragment: true })
+    .use(rehypeResponsiveTables)
+    .use(rehypeFormat)
+    .processSync(input)
+    .toString();
+
+  equal(res, intended, "09");
+});
+
+test.skip(`10 - nested tags inside, colspan`, () => {
+  let input = `
+<table>
+  <thead>
+    <tr></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>a</code></td>
+      <td>b</td>
+      <td><code>c</code></td>
+    </tr>
+    <tr>
+      <td><code>x</code></td>
+      <td>y</td>
+      <td><code>z</code></td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+  let intended = `
+<table>
+  <thead>
+    <tr></tr>
+  </thead>
+  <tbody>
+    <tr class="rrt-new-tr">
+      <td class="rrt-del-td"></td>
+      <td colspan="2"><code>a</code></td>
+    </tr>
+    <tr>
+      <td class="rrt-del-td"><code>a</code></td>
+      <td>b</td>
+      <td><code>c</code></td>
+    </tr>
+    <tr class="rrt-new-tr">
+      <td class="rrt-del-td"></td>
+      <td colspan="2"><code>x</code></td>
+    </tr>
+    <tr>
+      <td class="rrt-del-td"><code>x</code></td>
+      <td>y</td>
+      <td><code>z</code></td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+  let res = rehype()
+    .data("settings", { fragment: true })
+    .use(rehypeResponsiveTables)
+    .use(rehypeFormat)
+    .processSync(input)
+    .toString();
+
+  equal(res, intended, "10");
+});
+
 test.run();
