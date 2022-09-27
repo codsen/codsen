@@ -33,7 +33,7 @@ function addClassToFirstTd(node: ElementContent, className: string) {
   let firstTdMet = false;
   return {
     ...node,
-    children: (node as any).children.map((c: any) => {
+    children: (node as Obj).children.map((c: Obj) => {
       if (!firstTdMet && c.tagName === "td") {
         firstTdMet = true;
         return {
@@ -68,9 +68,9 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
         Array.isArray(node.children) &&
         node.children.length &&
         node.children.some((childElem) => {
-          if ((childElem as any).tagName === "tr") {
-            tdCount = (childElem as any).children.filter(
-              (c: any) => c.tagName === "td"
+          if ((childElem as Obj).tagName === "tr") {
+            tdCount = (childElem as Obj).children.filter(
+              (c: Obj) => c.tagName === "td"
             ).length;
             return true;
           }
@@ -102,13 +102,37 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
         // 1. TACKLE TD'S
 
         node.children = node.children.reduce((acc, curr) => {
-          if ((curr as any).tagName !== "tr") {
+          if ((curr as Obj).tagName !== "tr") {
             return [...acc, curr];
           }
           let firstTdVal = "";
-          for (let i = 0, len = (curr as any)?.children?.length; i < len; i++) {
-            if (!firstTdVal && (curr as any)?.children[i]?.tagName === "td") {
-              firstTdVal = (curr as any)?.children[i]?.children[0]?.value;
+          let firstTdChildren: Obj[] = [];
+          for (let i = 0, len = (curr as Obj)?.children?.length; i < len; i++) {
+            // it depends, what's inside the td: string (will go to firstTdVal) or
+            // children array (will go to firstTdChildren)
+            if (!firstTdVal && (curr as Obj)?.children[i]?.tagName === "td") {
+              DEV && console.log(`114`);
+              if ((curr as Obj).children[i].value) {
+                firstTdVal = (curr as Obj)?.children[i]?.children[0]?.value;
+                DEV &&
+                  console.log(
+                    `119 SET ${`\u001b[${33}m${`firstTdVal`}\u001b[${39}m`} = ${JSON.stringify(
+                      firstTdVal,
+                      null,
+                      4
+                    )}`
+                  );
+              } else if ((curr as Obj).children[i].children) {
+                firstTdChildren = (curr as Obj).children[i].children;
+                DEV &&
+                  console.log(
+                    `129 SET ${`\u001b[${33}m${`firstTdChildren`}\u001b[${39}m`} = ${JSON.stringify(
+                      firstTdChildren,
+                      null,
+                      4
+                    )}`
+                  );
+              }
               break;
             }
           }
@@ -141,12 +165,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                           colSpan: `${tdCount - 1}`,
                         }
                       : {},
-                  children: [
-                    {
-                      type: "text",
-                      value: firstTdVal,
-                    },
-                  ],
+                  children: firstTdChildren ? Array.from(firstTdChildren) : [],
                 },
               ],
             },
@@ -156,17 +175,17 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
 
         // 2. TACKLE THEAD VIA PARENT
 
-        if (parent.children.some((c: any) => c.tagName === "thead")) {
-          DEV && console.log(`160 thead found`);
+        if (parent.children.some((c: Obj) => c.tagName === "thead")) {
+          DEV && console.log(`179 thead found`);
           parent.children = parent.children.map((ch) => {
             if (
-              (ch as any).tagName === "thead" &&
-              Array.isArray((ch as any).children) &&
-              (ch as any).children.length
+              (ch as Obj).tagName === "thead" &&
+              Array.isArray((ch as Obj).children) &&
+              (ch as Obj).children.length
             ) {
               return {
                 ...ch,
-                children: (ch as any).children.map((chl: any) => {
+                children: (ch as Obj).children.map((chl: Obj) => {
                   if (
                     chl.tagName === "tr" &&
                     Array.isArray(chl.children) &&

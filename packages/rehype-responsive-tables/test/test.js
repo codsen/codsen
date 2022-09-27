@@ -374,7 +374,7 @@ test(`08 - empty thead tr, 2x2`, () => {
   equal(res, intended, "08");
 });
 
-test.skip(`09 - nested tags inside, no colspan`, () => {
+test(`09 - nested tags inside, no colspan`, () => {
   let input = `
 <table>
   <thead>
@@ -429,7 +429,7 @@ test.skip(`09 - nested tags inside, no colspan`, () => {
   equal(res, intended, "09");
 });
 
-test.skip(`10 - nested tags inside, colspan`, () => {
+test(`10 - nested tags inside, colspan`, () => {
   let input = `
 <table>
   <thead>
