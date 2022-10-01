@@ -54,7 +54,7 @@ let input = `
 `;
 
 let intended = `
-<table>
+<table class="rrt-table">
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
