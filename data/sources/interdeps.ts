@@ -725,7 +725,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 19983,
+        "size": 19888,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -774,7 +774,7 @@ export const interdeps = [
     },
     {
         "name": "tsd-extract",
-        "size": 6624,
+        "size": 7585,
         "imports": [
             "string-left-right"
         ]
