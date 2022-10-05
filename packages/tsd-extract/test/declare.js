@@ -96,10 +96,10 @@ test("02 - declare const typeof", () => {
       identifiers: ["declare", "const", "util"],
       identifiersStartAt: 0,
       identifiersEndAt: 18,
-      content: `: {
+      content: `{
   matchLayerLast: typeof matchLayerLast;
 };`,
-      contentStartsAt: 18,
+      contentStartsAt: 20,
       contentEndsAt: 65,
       value: source,
       valueStartsAt: 0,
@@ -118,10 +118,10 @@ test("02 - declare const typeof", () => {
       identifiers: ["declare", "const", "util"],
       identifiersStartAt: 0,
       identifiersEndAt: 18,
-      content: `: {
+      content: `{
   matchLayerLast: typeof matchLayerLast;
 };`,
-      contentStartsAt: 18,
+      contentStartsAt: 20,
       contentEndsAt: 65,
       value: source,
       valueStartsAt: 0,
@@ -163,10 +163,10 @@ declare const xy: {
       identifiers: ["declare", "const", "xy"],
       identifiersStartAt: 40,
       identifiersEndAt: 56,
-      content: `: {
+      content: `{
   klm: typeof nop;
 };`,
-      contentStartsAt: 56,
+      contentStartsAt: 58,
       contentEndsAt: 81,
       value: `declare const xy: {
   klm: typeof nop;
@@ -203,10 +203,10 @@ declare const xy: {
       identifiers: ["declare", "const", "xy"],
       identifiersStartAt: 40,
       identifiersEndAt: 56,
-      content: `: {
+      content: `{
   klm: typeof nop;
 };`,
-      contentStartsAt: 56,
+      contentStartsAt: 58,
       contentEndsAt: 81,
       value: `declare const xy: {
   klm: typeof nop;

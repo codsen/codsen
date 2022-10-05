@@ -1,6 +1,6 @@
 # tsd-extract
 
-> Extract any definition from TS definitions file
+> Extract any definition from TS definitions file string
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/tsd-extract" rel="nofollow noreferrer noopener">

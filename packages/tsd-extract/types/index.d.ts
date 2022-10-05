@@ -29,6 +29,7 @@ declare type ReturnType = Statement & {
   all: string[];
   error: string | null;
 };
+declare function join(...args: string[]): string;
 /**
  *
  * @param str type definitions file, as a string
@@ -40,7 +41,6 @@ declare function extract(
   def: string,
   opts?: Partial<Opts>
 ): ReturnType;
-declare function join(...args: string[]): string;
 
 export {
   Chunk,

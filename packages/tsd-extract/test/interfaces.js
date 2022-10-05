@@ -154,7 +154,7 @@ interface Res {
   );
 });
 
-test.only("04 - the whole tsd-extract type definitions", () => {
+test("04 - the whole tsd-extract type definitions", () => {
   let source = `declare const roysSort: (a: string, b: string) => number;
 
 declare const version: string;
@@ -245,6 +245,34 @@ export {
       error: null,
     },
     "04"
+  );
+});
+
+test("05 - can't find an interface", () => {
+  let source = `interface abc {
+  xyz
+}
+interface def {
+  ghi
+}`;
+  equal(
+    extract(source, "tralala", {
+      extractAll: false,
+    }),
+    {
+      identifiers: [],
+      identifiersStartAt: null,
+      identifiersEndAt: null,
+      content: null,
+      contentStartsAt: null,
+      contentEndsAt: null,
+      value: null,
+      valueStartsAt: null,
+      valueEndsAt: null,
+      all: [],
+      error: "not found",
+    },
+    "05"
   );
 });
 
