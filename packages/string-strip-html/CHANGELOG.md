@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.6.10](https://github.com/codsen/codsen/compare/string-strip-html@11.6.9...string-strip-html@11.6.10) (2022-10-05)
+
+
+### Bug Fixes
+
+* respect stripTogetherWithTheirContents when dumpLinkHrefsNearby is on ([43209e7](https://github.com/codsen/codsen/commit/43209e7bc2a0d13ee5392171ea120b00c377b345)), closes [#54](https://github.com/codsen/codsen/issues/54)
+
+
+
+
+
 # [11.6.0](https://github.com/codsen/codsen/compare/string-strip-html@11.5.0...string-strip-html@11.6.0) (2022-08-31)
 
 ### Features
