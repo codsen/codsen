@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.2.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.1.0...rehype-responsive-tables@1.2.0) (2022-10-05)
 
-
 ### Features
 
-* add opts.tableClassName ([bab68f3](https://github.com/codsen/codsen/commit/bab68f370af5a7ca57d8e03102a80927831d27f9))
-
-
-
-
+- add opts.tableClassName ([bab68f3](https://github.com/codsen/codsen/commit/bab68f370af5a7ca57d8e03102a80927831d27f9))
 
 # [1.1.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.0.2...rehype-responsive-tables@1.1.0) (2022-09-27)
 

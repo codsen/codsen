@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.7.0](https://github.com/codsen/codsen/compare/tsd-extract@0.6.11...tsd-extract@0.7.0) (2022-10-05)
 
-
 ### Features
 
-* query sub keys from interfaces ([aa42b2d](https://github.com/codsen/codsen/commit/aa42b2dab86559346b241cba4845ffe96f1bda04))
-
-
-
-
+- query sub keys from interfaces ([aa42b2d](https://github.com/codsen/codsen/commit/aa42b2dab86559346b241cba4845ffe96f1bda04))
 
 ## [0.6.4](https://github.com/codsen/codsen/compare/tsd-extract@0.6.3...tsd-extract@0.6.4) (2022-08-29)
 

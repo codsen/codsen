@@ -354,7 +354,7 @@ export const interdeps = [
     },
     {
         "name": "is-language-code",
-        "size": 58524,
+        "size": 58526,
         "imports": []
     },
     {
@@ -725,7 +725,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 19888,
+        "size": 19890,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -774,7 +774,7 @@ export const interdeps = [
     },
     {
         "name": "tsd-extract",
-        "size": 7585,
+        "size": 7583,
         "imports": [
             "string-left-right"
         ]
