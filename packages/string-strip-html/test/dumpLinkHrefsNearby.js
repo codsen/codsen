@@ -754,4 +754,57 @@ test("39 - trailing dot + space + text", () => {
   );
 });
 
+test("40 - html tag - in tandem with stripTogetherWithTheirContents, bug #54", () => {
+  let source = `
+  Show in plaintext
+  <div>
+    <p>No images? <a href="url">Click here</a>.</p>
+  </div>
+  <p>Legit link? <a href="url">Click here</a>.</p>
+  <p>More text</p>
+`;
+
+  equal(
+    stripHtml(source, { stripTogetherWithTheirContents: ["div"] }).result,
+    "Show in plaintext\n\nLegit link? Click here.\nMore text",
+    "40.01 - control"
+  );
+  equal(
+    stripHtml(source, {
+      stripTogetherWithTheirContents: ["div"],
+      dumpLinkHrefsNearby: {
+        enabled: true,
+      },
+    }).result,
+    "Show in plaintext\n\nLegit link? Click here url\nMore text",
+    "40.02"
+  );
+});
+
+test("41 - custom tag - in tandem with stripTogetherWithTheirContents, bug #54", () => {
+  let source = `
+  Show in plaintext
+  <not-plaintext>
+    <p>No images? <a href="url">Click here</a>.</p>
+  </not-plaintext>
+`;
+
+  equal(
+    stripHtml(source, { stripTogetherWithTheirContents: ["not-plaintext"] })
+      .result,
+    "Show in plaintext",
+    "41.01 - control"
+  );
+  equal(
+    stripHtml(source, {
+      stripTogetherWithTheirContents: ["not-plaintext"],
+      dumpLinkHrefsNearby: {
+        enabled: true,
+      },
+    }).result,
+    "Show in plaintext",
+    "41.02"
+  );
+});
+
 test.run();
