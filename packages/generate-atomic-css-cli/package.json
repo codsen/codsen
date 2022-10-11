@@ -67,7 +67,7 @@
     "generate-atomic-css": "^2.2.2",
     "globby": "^13.1.2",
     "is-d": "^1.0.0",
-    "meow": "^10.1.3",
+    "meow": "^11.0.0",
     "p-reduce": "^3.0.0",
     "update-notifier": "^6.0.2",
     "write-file-atomic": "^4.0.2"

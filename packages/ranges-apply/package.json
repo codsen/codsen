@@ -69,6 +69,6 @@
   },
   "dependencies": {
     "ranges-merge": "^8.2.2",
-    "tiny-invariant": "^1.2.0"
+    "tiny-invariant": "^1.3.1"
   }
 }

@@ -84,7 +84,7 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "type-fest": "^3.0.0"
+            "type-fest": "^3.1.0"
         }
     },
     "array-group-str-omit-num-char": {
@@ -623,7 +623,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
-            "type-fest": "^3.0.0"
+            "type-fest": "^3.1.0"
         }
     },
     "ast-contains-only-empty-space": {
@@ -1887,7 +1887,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "update-notifier": "^6.0.2"
         }
     },
@@ -2286,13 +2286,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "chalk": "^5.0.1",
+            "chalk": "^5.1.0",
             "csv-sort": "^6.1.2",
             "globby": "^13.1.2",
-            "inquirer": "^9.1.2",
+            "inquirer": "^9.1.3",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "update-notifier": "^6.0.2"
         },
         "devDependencies": {
@@ -2905,12 +2905,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "chalk": "^5.0.1",
+            "chalk": "^5.1.0",
             "email-all-chars-within-ascii": "^4.1.1",
             "globby": "^13.1.2",
-            "inquirer": "^9.1.2",
+            "inquirer": "^9.1.3",
             "lodash.pullall": "^4.2.0",
-            "minimist": "^1.2.6",
+            "minimist": "^1.2.7",
             "string-left-right": "^5.1.2",
             "update-notifier": "^6.0.2"
         },
@@ -3074,11 +3074,11 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "chalk": "^5.0.1",
+            "chalk": "^5.1.0",
             "globby": "^13.1.2",
             "lodash.uniq": "^4.5.0",
             "log-symbols": "^5.1.0",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "string-splice": "^1.3.0",
             "update-notifier": "^6.0.2"
         },
@@ -3186,7 +3186,7 @@ export const packageJSONData = {
             "lodash.clonedeep": "^4.5.0",
             "lodash.isregexp": "^4.0.1",
             "matcher": "^5.0.0",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "mime-db": "^1.52.0",
             "object-path": "^0.11.8",
             "p-reduce": "^3.0.0",
@@ -3427,7 +3427,7 @@ export const packageJSONData = {
             "generate-atomic-css": "^2.2.2",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
             "write-file-atomic": "^4.0.2"
@@ -4573,7 +4573,7 @@ export const packageJSONData = {
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "js-row-num": "^5.2.2",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
             "write-file-atomic": "^4.0.2"
@@ -4646,7 +4646,7 @@ export const packageJSONData = {
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "json-comb-core": "^7.1.3",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "p-map": "^5.5.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2"
@@ -4805,12 +4805,12 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-monkey-traverse": "^3.1.1",
-            "chalk": "^5.0.1",
+            "chalk": "^5.1.0",
             "fs-extra": "^10.1.0",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "lodash.isplainobject": "^4.0.6",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
             "sort-package-json": "^1.57.0",
@@ -5049,11 +5049,11 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "chalk": "^5.0.1",
+            "chalk": "^5.1.0",
             "fs-extra": "^10.1.0",
             "globby": "^13.1.2",
             "lerna-clean-changelogs": "^4.2.2",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
@@ -5134,7 +5134,7 @@ export const packageJSONData = {
         "dependencies": {
             "execa": "^6.1.0",
             "fs-extra": "^10.1.0",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "update-notifier": "^6.0.2"
         }
     },
@@ -6007,7 +6007,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ranges-merge": "^8.2.2",
-            "tiny-invariant": "^1.2.0"
+            "tiny-invariant": "^1.3.1"
         }
     },
     "ranges-crop": {
@@ -7169,12 +7169,16 @@ export const packageJSONData = {
         },
         "dependencies": {
             "@types/hast": "^2.3.4",
+            "@types/lodash.iteratee": "^4.7.7",
+            "lodash.iteratee": "^4.7.0",
             "unified": "^10.1.2",
             "unist-util-visit": "^4.1.1"
         },
         "devDependencies": {
             "rehype": "^12.0.1",
-            "rehype-format": "^4.0.1"
+            "rehype-format": "^4.0.1",
+            "rehype-parse": "^8.0.4",
+            "rehype-stringify": "^9.0.3"
         }
     },
     "remark-typography": {
@@ -9711,12 +9715,12 @@ export const packageJSONData = {
             "is-online": "^10.0.0",
             "lodash.isplainobject": "^4.0.6",
             "log-update": "^5.0.1",
-            "meow": "^10.1.3",
+            "meow": "^11.0.0",
             "object-path": "^0.11.8",
             "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^13.6.2",
+            "pacote": "^14.0.0",
             "update-notifier": "^6.0.2",
             "write-file-atomic": "^4.0.2"
         },
