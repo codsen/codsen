@@ -1,6 +1,6 @@
 {
   "name": "codsen-tokenizer",
-  "version": "6.1.7",
+  "version": "6.1.8",
   "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
   "keywords": [
     "ast",
@@ -82,6 +82,6 @@
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/lodash.isplainobject": "^4.0.7",
-    "ast-compare": "^3.2.6"
+    "ast-compare": "^3.2.7"
   }
 }

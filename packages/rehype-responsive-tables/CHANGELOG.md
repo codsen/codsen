@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.2.0...rehype-responsive-tables@1.3.0) (2022-10-11)
+
+### Features
+
+- classes `rrt-new-tr-span`, `rrt-gap-tr` and setting `opts.up` ([0ebe772](https://github.com/codsen/codsen/commit/0ebe772d80a7e892ed77338c28e47440fb6e7f53))
+
 # [1.2.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.1.0...rehype-responsive-tables@1.2.0) (2022-10-05)
 
 ### Features

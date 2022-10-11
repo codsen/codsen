@@ -1,6 +1,6 @@
 {
   "name": "ranges-process-outside",
-  "version": "5.1.2",
+  "version": "5.1.3",
   "description": "Iterate string considering ranges, as if they were already applied",
   "keywords": [
     "array",
@@ -63,8 +63,8 @@
     }
   },
   "dependencies": {
-    "ranges-crop": "^5.2.2",
-    "ranges-invert": "^5.2.2",
+    "ranges-crop": "^5.2.3",
+    "ranges-invert": "^5.2.3",
     "runes": "^0.4.3"
   },
   "devDependencies": {

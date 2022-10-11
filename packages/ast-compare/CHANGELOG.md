@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.7](https://github.com/codsen/codsen/compare/ast-compare@3.2.6...ast-compare@3.2.7) (2022-10-11)
+
+**Note:** Version bump only for package ast-compare
+
 # 3.2.0 (2022-08-12)
 
 ### Features
