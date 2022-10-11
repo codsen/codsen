@@ -175,7 +175,7 @@ test(`06 - adds class to parent table, two classes exist already`, () => {
 `;
 
   let intended = `
-<table border="0" class="foo bar rrt-table">
+<table border="0" class="foo bar zzz">
   <tbody>
     <tr>
       <td>a</td>
@@ -186,7 +186,9 @@ test(`06 - adds class to parent table, two classes exist already`, () => {
 
   let res = rehype()
     .data("settings", { fragment: true })
-    .use(rehypeResponsiveTables)
+    .use(rehypeResponsiveTables, {
+      tableClassName: "zzz",
+    })
     .use(rehypeFormat)
     .processSync(input)
     .toString();

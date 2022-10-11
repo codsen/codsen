@@ -8,7 +8,7 @@ import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - one row, two cells`, () => {
+test(`01 - 1x2`, () => {
   let input = `
 <table>
   <tbody>
@@ -25,7 +25,7 @@ test(`01 - one row, two cells`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td>a</td>
+      <td><span class="rrt-new-tr-span">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -45,7 +45,7 @@ test(`01 - one row, two cells`, () => {
   equal(res, intended, "01");
 });
 
-test(`02 - one row, three cells`, () => {
+test(`02 - 1x3`, () => {
   let input = `
 <table class="n" border="0">
   <tbody>
@@ -63,7 +63,7 @@ test(`02 - one row, three cells`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2">a</td>
+      <td colspan="2"><span class="rrt-new-tr-span">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -84,7 +84,7 @@ test(`02 - one row, three cells`, () => {
   equal(res, intended, "02");
 });
 
-test(`03 - one row, five cells`, () => {
+test(`03 - 1x5`, () => {
   let input = `
 <table>
   <tbody>
@@ -104,7 +104,7 @@ test(`03 - one row, five cells`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="4">a</td>
+      <td colspan="4"><span class="rrt-new-tr-span">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -150,16 +150,20 @@ test(`04 - 2x3`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2">a</td>
+      <td colspan="2"><span class="rrt-new-tr-span">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
       <td>b</td>
       <td>c</td>
     </tr>
+    <tr class="rrt-gap-tr">
+      <td class="rrt-del-td"></td>
+      <td colspan="2"></td>
+    </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2">x</td>
+      <td colspan="2"><span class="rrt-new-tr-span">x</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">x</td>
@@ -207,15 +211,19 @@ test(`05 - nested tags inside, no colspan`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td><code>a</code></td>
+      <td><span class="rrt-new-tr-span"><code>a</code></span></td>
     </tr>
     <tr>
       <td class="rrt-del-td"><code>a</code></td>
       <td>b</td>
     </tr>
+    <tr class="rrt-gap-tr">
+      <td class="rrt-del-td"></td>
+      <td></td>
+    </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td><code>x</code></td>
+      <td><span class="rrt-new-tr-span"><code>x</code></span></td>
     </tr>
     <tr>
       <td class="rrt-del-td"><code>x</code></td>
@@ -264,16 +272,20 @@ test(`06 - nested tags inside, colspan`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><code>a</code></td>
+      <td colspan="2"><span class="rrt-new-tr-span"><code>a</code></span></td>
     </tr>
     <tr>
       <td class="rrt-del-td"><code>a</code></td>
       <td>b</td>
       <td><code>c</code></td>
     </tr>
+    <tr class="rrt-gap-tr">
+      <td class="rrt-del-td"></td>
+      <td colspan="2"></td>
+    </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><code>x</code></td>
+      <td colspan="2"><span class="rrt-new-tr-span"><code>x</code></span></td>
     </tr>
     <tr>
       <td class="rrt-del-td"><code>x</code></td>
