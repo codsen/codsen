@@ -1,6 +1,6 @@
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
-import sortPackageJson from "sort-package-json";
+import sortPackageJson, { sortOrder } from "sort-package-json";
 import { dequal } from "dequal";
 import omit from "lodash.omit";
 import intersection from "lodash.intersection";
@@ -9,22 +9,22 @@ function format(obj) {
   if (typeof obj !== "object") {
     return obj;
   }
-  let sortOrder = sortPackageJson.sortOrder
+  let newSortOrder = sortOrder
     // 1. delete tap and lect fields
     .filter((field) => !["lect", "tap", "c8", "engines"].includes(field));
 
   // 2. then, insert both after resolutions, first tap then lect
   // console.log(sortOrder);
 
-  let idxOfResolutions = sortOrder.indexOf("resolutions");
+  let idxOfResolutions = newSortOrder.indexOf("resolutions");
   // console.log(idxOfResolutions);
   // => 63
 
-  sortOrder.splice(idxOfResolutions, 0, "engines", "tap", "c8", "lect");
+  newSortOrder.splice(idxOfResolutions, 0, "engines", "tap", "c8", "lect");
 
   // use custom array for sorting order:
   return sortPackageJson(obj, {
-    sortOrder,
+    sortOrder: newSortOrder,
   });
 }
 
