@@ -2286,7 +2286,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "chalk": "^5.1.0",
+            "chalk": "^5.1.1",
             "csv-sort": "^6.1.3",
             "globby": "^13.1.2",
             "inquirer": "^9.1.3",
@@ -2905,7 +2905,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "chalk": "^5.1.0",
+            "chalk": "^5.1.1",
             "email-all-chars-within-ascii": "^4.1.1",
             "globby": "^13.1.2",
             "inquirer": "^9.1.3",
@@ -3074,7 +3074,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "chalk": "^5.1.0",
+            "chalk": "^5.1.1",
             "globby": "^13.1.2",
             "lodash.uniq": "^4.5.0",
             "log-symbols": "^5.1.0",
@@ -4805,7 +4805,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-monkey-traverse": "^3.1.1",
-            "chalk": "^5.1.0",
+            "chalk": "^5.1.1",
             "fs-extra": "^10.1.0",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
@@ -4813,8 +4813,7 @@ export const packageJSONData = {
             "meow": "^11.0.0",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
-            "sort-package-json": "^1.57.0",
-            "sorted-object": "^2.0.1",
+            "sort-package-json": "^2.0.0",
             "update-notifier": "^6.0.2"
         },
         "devDependencies": {
@@ -5049,7 +5048,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "chalk": "^5.1.0",
+            "chalk": "^5.1.1",
             "fs-extra": "^10.1.0",
             "globby": "^13.1.2",
             "lerna-clean-changelogs": "^4.2.2",

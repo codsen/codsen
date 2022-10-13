@@ -168,7 +168,6 @@ function findLongest(temp1: TempObj[]) {
 }
 
 function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
-  /* istanbul ignore if */
   if (arguments.length !== 2) {
     throw new Error("removeGappedFromMixedCases(): wrong amount of inputs!");
   }
@@ -247,7 +246,6 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
     //     }
     // ]
 
-    /* istanbul ignore if */
     if (
       copy.length > 1 &&
       copy.some(
@@ -266,7 +264,7 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
       );
       DEV &&
         console.log(
-          `269 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
+          `267 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
             copy,
             null,
             4

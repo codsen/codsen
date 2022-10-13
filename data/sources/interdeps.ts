@@ -405,7 +405,7 @@ export const interdeps = [
     },
     {
         "name": "json-sort-cli",
-        "size": 13194,
+        "size": 14369,
         "imports": [
             "ast-monkey-traverse"
         ]

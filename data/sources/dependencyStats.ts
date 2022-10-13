@@ -120,7 +120,6 @@ export const dependencyStats: DependencyStats = {
         "semver-compare": 1,
         "sort-keys": 1,
         "sort-package-json": 1,
-        "sorted-object": 1,
         "split2": 1,
         "str-indexes-of-plus": 1,
         "string-apostrophes": 2,
