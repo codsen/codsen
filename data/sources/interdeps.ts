@@ -405,7 +405,7 @@ export const interdeps = [
     },
     {
         "name": "json-sort-cli",
-        "size": 14369,
+        "size": 13148,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -590,7 +590,7 @@ export const interdeps = [
     },
     {
         "name": "remark-typography",
-        "size": 627,
+        "size": 756,
         "imports": [
             "string-apostrophes",
             "string-remove-widows"
