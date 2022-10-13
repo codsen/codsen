@@ -1,3 +1,5 @@
 {
-  "noMajorBumping": []
+  "noMajorBumping": [
+    "rollup"
+  ]
 }
