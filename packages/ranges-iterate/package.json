@@ -1,6 +1,6 @@
 {
   "name": "ranges-iterate",
-  "version": "3.2.4",
+  "version": "3.2.5",
   "description": "Iterate a string and any changes within given string index ranges",
   "keywords": [
     "array",
@@ -68,7 +68,7 @@
     }
   },
   "devDependencies": {
-    "ranges-apply": "^6.2.4",
+    "ranges-apply": "^6.2.5",
     "ranges-merge": "^8.2.2"
   }
 }

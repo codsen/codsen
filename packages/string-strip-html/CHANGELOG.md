@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.6.13](https://github.com/codsen/codsen/compare/string-strip-html@11.6.12...string-strip-html@11.6.13) (2022-10-13)
+
+### Bug Fixes
+
+- tweaks to broken code algorithm to align dumpLinkHrefsNearby enabled and disabled ([234faa1](https://github.com/codsen/codsen/commit/234faa1094f0dbc0c2cc8ba4345a5b91aa7cc94d))
+
 ## [11.6.10](https://github.com/codsen/codsen/compare/string-strip-html@11.6.9...string-strip-html@11.6.10) (2022-10-05)
 
 ### Bug Fixes
