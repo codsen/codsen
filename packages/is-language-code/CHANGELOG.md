@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.1.12](https://github.com/codsen/codsen/compare/is-language-code@4.1.11...is-language-code@4.1.12) (2022-10-13)
-
-**Note:** Version bump only for package is-language-code
-
 ## 4.1.2 (2022-09-05)
 
 ### Bug Fixes
