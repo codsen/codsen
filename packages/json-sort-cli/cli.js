@@ -12,11 +12,10 @@ import pReduce from "p-reduce";
 import pFilter from "p-filter";
 import { globby } from "globby";
 import { createRequire } from "module";
-import sortObject from "sorted-object";
 import isObj from "lodash.isplainobject";
 import updateNotifier from "update-notifier";
 import { traverse } from "ast-monkey-traverse";
-import sortPackageJson from "sort-package-json";
+import sortPackageJson, { sortOrder } from "sort-package-json";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -25,27 +24,33 @@ function isStr(something) {
   return typeof something === "string";
 }
 function format(obj) {
-  /* istanbul ignore next */
   if (typeof obj !== "object") {
     return obj;
   }
-  let sortOrder = sortPackageJson.sortOrder
+  let newSortOrder = sortOrder
     // 1. delete tap and lect fields
     .filter((field) => !["lect", "tap"].includes(field));
 
   // 2. then, insert both after resolutions, first tap then lect
-  // console.log(sortOrder);
-
-  let idxOfResolutions = sortOrder.indexOf("resolutions");
+  let idxOfResolutions = newSortOrder.indexOf("resolutions");
   // console.log(idxOfResolutions);
   // => 63
 
-  sortOrder.splice(idxOfResolutions, 0, "tap", "lect");
+  newSortOrder.splice(idxOfResolutions, 0, "tap", "lect");
 
   // use custom array for sorting order:
   return sortPackageJson(obj, {
-    sortOrder,
+    sortOrder: newSortOrder,
   });
+}
+function sortObj(obj) {
+  let res = {};
+  Object.keys(obj)
+    .sort()
+    .forEach((key) => {
+      res[key] = obj[key];
+    });
+  return res;
 }
 
 const prefix = "✨ json-sort-cli: ";
@@ -174,7 +179,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
       let result;
 
       if (isObj(parsedJson)) {
-        result = sortObject(parsedJson);
+        result = sortObj(parsedJson);
       } else if (
         cli.flags.arrays &&
         Array.isArray(parsedJson) &&
@@ -210,7 +215,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
             traverse(obj, (key, val) => {
               let current = val !== undefined ? val : key;
               if (isObj(current)) {
-                return sortObject(current);
+                return sortObj(current);
               }
               if (
                 cli.flags.arrays &&
@@ -228,6 +233,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
           );
           return stringified.trimEnd() !== filesContent.trimEnd();
         }
+
         // ELSE,
         return fs
           .writeJson(
@@ -235,7 +241,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
             traverse(obj, (key, val) => {
               let current = val !== undefined ? val : key;
               if (isObj(current)) {
-                return sortObject(current);
+                return sortObj(current);
               }
               if (
                 cli.flags.arrays &&
@@ -267,7 +273,6 @@ function readSortAndWriteOverFile(oneOfPaths) {
       });
     })
     .catch((err) => {
-      /* istanbul ignore next */
       console.log(
         `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`
       );
@@ -289,6 +294,9 @@ if (cli.flags.version) {
 // -----------------------------------------------------------------------------
 
 const { input } = cli;
+if (Array.isArray(input) && !input.length) {
+  input.push("**/*.json");
+}
 
 // Step #2. query the glob and follow the pipeline
 // -----------------------------------------------------------------------------
@@ -313,7 +321,6 @@ globby(input, { dot: true })
       (concattedTotal, singleDirOrFilePath) =>
         concattedTotal.concat(
           isDirectory(singleDirOrFilePath).then((bool) =>
-            /* istanbul ignore next */
             bool
               ? globby(
                   cli.flags.nodemodules
@@ -380,7 +387,6 @@ globby(input, { dot: true })
         return pFilter(paths, (currentPath) =>
           readSortAndWriteOverFile(currentPath)
         ).then((received2) => {
-          /* istanbul ignore else */
           if (received2.length && !cli.flags.silent) {
             log(
               `${chalk.grey(prefix)}${chalk.red(
@@ -415,7 +421,6 @@ globby(input, { dot: true })
                   }
             )
             .catch((err) => {
-              /* istanbul ignore next */
               if (!cli.flags.silent) {
                 log(
                   `${chalk.grey(prefix)}${chalk.red(
@@ -449,7 +454,6 @@ globby(input, { dot: true })
     }
   })
   .catch((err) => {
-    /* istanbul ignore next */
     if (!cli.flags.silent) {
       log(`${chalk.grey(prefix)}${chalk.red("Oops!")} ${err}`);
     }
