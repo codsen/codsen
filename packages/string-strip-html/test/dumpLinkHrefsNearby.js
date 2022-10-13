@@ -807,4 +807,54 @@ test("41 - custom tag - in tandem with stripTogetherWithTheirContents, bug #54",
   );
 });
 
+test("42 - in combo with broken case, missing opening bracket + double quote attribute", () => {
+  let source = `<!DOCTYPE html>
+  html lang="en">
+<head>`;
+
+  equal(
+    stripHtml(source, {
+      dumpLinkHrefsNearby: {
+        enabled: false,
+      },
+    }).result,
+    "",
+    "42.01"
+  );
+  equal(
+    stripHtml(source, {
+      dumpLinkHrefsNearby: {
+        enabled: true,
+      },
+    }).result,
+    "",
+    "42.02"
+  );
+});
+
+test("43", () => {
+  let source = `<a>
+  html lang="en">
+<head>`;
+
+  equal(
+    stripHtml(source, {
+      dumpLinkHrefsNearby: {
+        enabled: false,
+      },
+    }).result,
+    "",
+    "42.01"
+  );
+  equal(
+    stripHtml(source, {
+      dumpLinkHrefsNearby: {
+        enabled: true,
+      },
+    }).result,
+    "",
+    "42.02"
+  );
+});
+
 test.run();
