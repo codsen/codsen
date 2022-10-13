@@ -844,7 +844,7 @@ test("43", () => {
       },
     }).result,
     "",
-    "42.01"
+    "43.01"
   );
   equal(
     stripHtml(source, {
@@ -853,7 +853,30 @@ test("43", () => {
       },
     }).result,
     "",
-    "42.02"
+    "43.02"
+  );
+});
+
+test("44", () => {
+  let source = `<title>z</title>`;
+
+  equal(
+    stripHtml(source, {
+      dumpLinkHrefsNearby: {
+        enabled: false,
+      },
+    }).result,
+    "z",
+    "44.01"
+  );
+  equal(
+    stripHtml(source, {
+      dumpLinkHrefsNearby: {
+        enabled: true,
+      },
+    }).result,
+    "z",
+    "44.02"
   );
 });
 
