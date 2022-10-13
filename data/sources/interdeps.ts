@@ -128,7 +128,7 @@ export const interdeps = [
     },
     {
         "name": "codsen-parser",
-        "size": 7136,
+        "size": 7138,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -138,7 +138,7 @@ export const interdeps = [
     },
     {
         "name": "codsen-tokenizer",
-        "size": 40201,
+        "size": 40203,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -239,7 +239,7 @@ export const interdeps = [
     },
     {
         "name": "emlint",
-        "size": 175322,
+        "size": 175323,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -321,7 +321,7 @@ export const interdeps = [
     },
     {
         "name": "html-table-patcher",
-        "size": 2840,
+        "size": 2842,
         "imports": [
             "ast-monkey-traverse-with-lookahead",
             "codsen-parser",
@@ -756,7 +756,7 @@ export const interdeps = [
     },
     {
         "name": "stristri",
-        "size": 2671,
+        "size": 2673,
         "imports": [
             "codsen-tokenizer",
             "detect-templating-language",
