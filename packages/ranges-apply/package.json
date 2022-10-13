@@ -1,6 +1,6 @@
 {
   "name": "ranges-apply",
-  "version": "6.2.3",
+  "version": "6.2.4",
   "description": "Take an array of string index ranges, delete/replace the string according to them",
   "keywords": [
     "delete",
