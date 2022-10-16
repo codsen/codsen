@@ -1179,4 +1179,68 @@ test("30 - opts.useNullAsExplicitFalse - case #3", () => {
   );
 });
 
+// https://github.com/codsen/codsen/issues/51
+test("31 - case #51", () => {
+  equal(
+    fillMissing(
+      {
+        a: false,
+      },
+      {
+        a: true,
+      },
+      {}
+    ),
+    {
+      a: false,
+    },
+    "30.01"
+  );
+  equal(
+    fillMissing(
+      {
+        a: false,
+      },
+      {
+        a: false,
+      },
+      {}
+    ),
+    {
+      a: false,
+    },
+    "30.02"
+  );
+  equal(
+    fillMissing(
+      {
+        a: true,
+      },
+      {
+        a: false,
+      },
+      {}
+    ),
+    {
+      a: true,
+    },
+    "30.03"
+  );
+  equal(
+    fillMissing(
+      {
+        a: true,
+      },
+      {
+        a: true,
+      },
+      {}
+    ),
+    {
+      a: true,
+    },
+    "30.04"
+  );
+});
+
 test.run();

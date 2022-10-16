@@ -8,6 +8,8 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+declare let DEV: boolean;
+
 export interface Obj {
   [key: string]: any;
 }
@@ -50,6 +52,7 @@ function fillMissingKeys(
   resolvedOpts: Opts,
   path = ""
 ): Obj {
+  DEV && console.log(`055 fillMissingKeys() starts`);
   let incomplete = clone(incompleteOriginal);
   if (
     existy(incomplete) ||
@@ -61,7 +64,9 @@ function fillMissingKeys(
       allEq(incomplete, resolvedOpts.placeholder)
     )
   ) {
+    DEV && console.log(`067`);
     if (isObj(schema) && isObj(incomplete)) {
+      DEV && console.log(`069 - it's a plain object`);
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach((key) => {
         // calculate the path for current key
@@ -99,6 +104,7 @@ function fillMissingKeys(
         }
       });
     } else if (Array.isArray(schema) && Array.isArray(incomplete)) {
+      DEV && console.log(`107 - it's an array`);
       if (incomplete.length === 0) {
         return schema;
       }
@@ -116,8 +122,17 @@ function fillMissingKeys(
         }
       }
     } else {
+      DEV && console.log(`125 - mergeAdvanced()`);
       return mergeAdvanced(schema, incomplete, {
         useNullAsExplicitFalse: resolvedOpts.useNullAsExplicitFalse,
+        cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+          // if two primitive values are being merged, don't write
+          // the schema value onto the original
+          if (typ(inputArg1) === typ(inputArg2)) {
+            return inputArg2;
+          }
+          return resultAboutToBeReturned;
+        },
       });
     }
   }
@@ -164,6 +179,14 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
 
   // fill any settings with defaults if missing:
   let resolvedOpts: Opts = { ...defaults, ...opts };
+  DEV &&
+    console.log(
+      `184 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+        resolvedOpts,
+        null,
+        4
+      )}`
+    );
 
   resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(
     resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders
