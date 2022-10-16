@@ -548,4 +548,101 @@ test(`17 - nbsp only, nothing else`, () => {
   );
 });
 
+test(`18 - multiparagraph combo with jinja`, () => {
+  let source = `<!--[if mso]>
+  <p>A paragraph inside an Outlook MSO&nbsp;comment</p>
+  <p>unescaped {{ foo }}</p>
+<![endif]-->`;
+  let res = removeWidows(source, {
+    minWordCount: 2,
+    ignore: [
+      {
+        heads: "{#",
+        tails: "#}",
+      },
+      {
+        heads: "{%",
+        tails: "%}",
+      },
+      {
+        heads: "{{",
+        tails: "}}",
+      },
+      {
+        heads: "<!--[",
+        tails: "]>",
+      },
+      {
+        heads: "<![",
+        tails: "]--><",
+      },
+    ],
+  });
+  equal(
+    res.res,
+    `<!--[if mso]>
+  <p>A paragraph inside an Outlook MSO&nbsp;comment</p>&nbsp;<p>unescaped {{ foo }}</p>
+<![endif]-->`,
+    "18"
+  );
+});
+
+test(`19 - multiparagraph combo with jinja`, () => {
+  let source = `<!--[if mso]>
+  <p>A paragraph inside an Outlook MSO&nbsp;comment</p>
+  <p>unescaped {{ foo }}</p>
+<![endif]-->`;
+  let res = removeWidows(source, {
+    minWordCount: 2,
+    ignore: [
+      {
+        heads: "<!--[",
+        tails: "]-->",
+      },
+      {
+        heads: "{#",
+        tails: "#}",
+      },
+      {
+        heads: "{%",
+        tails: "%}",
+      },
+      {
+        heads: "{{",
+        tails: "}}",
+      },
+    ],
+  });
+  equal(res.res, source, "19");
+});
+
+test(`20 - multiparagraph combo with jinja`, () => {
+  let source = `<!--[if !mso]><!-->
+  <p>A paragraph inside an Outlook MSO&nbsp;comment</p>
+  <p>unescaped {{ foo }}</p>
+<!--<![endif]-->`;
+  let res = removeWidows(source, {
+    minWordCount: 2,
+    ignore: [
+      {
+        heads: "<!--[",
+        tails: "]-->",
+      },
+      {
+        heads: "{#",
+        tails: "#}",
+      },
+      {
+        heads: "{%",
+        tails: "%}",
+      },
+      {
+        heads: "{{",
+        tails: "}}",
+      },
+    ],
+  });
+  equal(res.res, source, "20");
+});
+
 test.run();
