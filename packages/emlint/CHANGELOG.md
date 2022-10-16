@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.16](https://github.com/codsen/codsen/compare/emlint@5.1.15...emlint@5.1.16) (2022-10-16)
+
+**Note:** Version bump only for package emlint
+
 # 5.1.0 (2022-08-12)
 
 ### Features

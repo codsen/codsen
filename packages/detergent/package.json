@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "8.1.18",
+  "version": "8.1.19",
   "description": "Extract, clean, encode text and fix English style",
   "keywords": [
     "brief",
@@ -71,21 +71,21 @@
     }
   },
   "dependencies": {
-    "all-named-html-entities": "^2.1.9",
+    "all-named-html-entities": "^2.1.10",
     "ansi-regex": "^6.0.1",
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.7.1",
-    "ranges-apply": "^6.2.5",
-    "ranges-invert": "^5.2.5",
-    "ranges-process-outside": "^5.1.5",
+    "ranges-apply": "^6.2.6",
+    "ranges-invert": "^5.2.6",
+    "ranges-process-outside": "^5.1.6",
     "ranges-push": "^6.2.2",
-    "string-apostrophes": "^3.1.5",
-    "string-collapse-white-space": "^10.2.5",
-    "string-fix-broken-named-entities": "^6.1.9",
+    "string-apostrophes": "^3.1.6",
+    "string-collapse-white-space": "^10.2.6",
+    "string-fix-broken-named-entities": "^6.1.10",
     "string-left-right": "^5.1.2",
     "string-range-expander": "^3.1.1",
-    "string-remove-widows": "^3.1.18",
-    "string-strip-html": "^11.6.13",
+    "string-remove-widows": "^3.1.19",
+    "string-strip-html": "^11.6.14",
     "string-trim-spaces-only": "^4.1.1"
   },
   "devDependencies": {

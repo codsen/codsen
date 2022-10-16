@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 10.0.0 (2022-10-16)
+
+### Bug Fixes
+
+- set the merging to be correct as per what is promised ([1830aff](https://github.com/codsen/codsen/commit/1830aff6ed92b5431e4bf754d530c2790031b5dd)), closes [#51](https://github.com/codsen/codsen/issues/51)
+
+### BREAKING CHANGES
+
+- during deep merging, if value of the incoming schema is matching what's already
+  there, now already there prevails; previously, the schema would prevail
+
 # 9.2.0 (2022-08-12)
 
 ### Features
