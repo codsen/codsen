@@ -1,7 +1,7 @@
 export const interdeps = [
     {
         "name": "all-named-html-entities",
-        "size": 176730,
+        "size": 176732,
         "imports": []
     },
     {
@@ -31,7 +31,7 @@ export const interdeps = [
     },
     {
         "name": "ast-compare",
-        "size": 3437,
+        "size": 3439,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -52,7 +52,7 @@ export const interdeps = [
     },
     {
         "name": "ast-delete-object",
-        "size": 1247,
+        "size": 1249,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse"
@@ -60,7 +60,7 @@ export const interdeps = [
     },
     {
         "name": "ast-get-object",
-        "size": 1025,
+        "size": 1027,
         "imports": [
             "ast-compare"
         ]
@@ -86,7 +86,7 @@ export const interdeps = [
     },
     {
         "name": "ast-monkey",
-        "size": 5208,
+        "size": 5210,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -453,7 +453,7 @@ export const interdeps = [
     },
     {
         "name": "object-delete-key",
-        "size": 1408,
+        "size": 1410,
         "imports": [
             "ast-is-empty",
             "ast-monkey",
@@ -462,7 +462,7 @@ export const interdeps = [
     },
     {
         "name": "object-fill-missing-keys",
-        "size": 2801,
+        "size": 2803,
         "imports": [
             "arrayiffy-if-string",
             "object-all-values-equal-to",
@@ -658,7 +658,7 @@ export const interdeps = [
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 11362,
+        "size": 11364,
         "imports": [
             "all-named-html-entities",
             "string-left-right"

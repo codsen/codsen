@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.2.6](https://github.com/codsen/codsen/compare/html-img-alt@3.2.5...html-img-alt@3.2.6) (2022-10-16)
-
-**Note:** Version bump only for package html-img-alt
-
 # 3.2.0 (2022-08-12)
 
 ### Features
