@@ -2286,7 +2286,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "chalk": "^5.1.1",
+            "chalk": "^5.1.2",
             "csv-sort": "^6.1.5",
             "globby": "^13.1.2",
             "inquirer": "^9.1.3",
@@ -2905,7 +2905,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "chalk": "^5.1.1",
+            "chalk": "^5.1.2",
             "email-all-chars-within-ascii": "^4.1.1",
             "globby": "^13.1.2",
             "inquirer": "^9.1.3",
@@ -3074,7 +3074,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "chalk": "^5.1.1",
+            "chalk": "^5.1.2",
             "globby": "^13.1.2",
             "lodash.uniq": "^4.5.0",
             "log-symbols": "^5.1.0",
@@ -3430,7 +3430,7 @@ export const packageJSONData = {
             "meow": "^11.0.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
-            "write-file-atomic": "^4.0.2"
+            "write-file-atomic": "^5.0.0"
         }
     },
     "gulp-email-remove-unused-css": {
@@ -4576,7 +4576,7 @@ export const packageJSONData = {
             "meow": "^11.0.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
-            "write-file-atomic": "^4.0.2"
+            "write-file-atomic": "^5.0.0"
         }
     },
     "json-comb": {
@@ -4805,7 +4805,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-monkey-traverse": "^3.1.1",
-            "chalk": "^5.1.1",
+            "chalk": "^5.1.2",
             "fs-extra": "^10.1.0",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
@@ -5048,7 +5048,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "chalk": "^5.1.1",
+            "chalk": "^5.1.2",
             "fs-extra": "^10.1.0",
             "globby": "^13.1.2",
             "lerna-clean-changelogs": "^4.2.2",
@@ -5056,7 +5056,7 @@ export const packageJSONData = {
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
-            "write-file-atomic": "^4.0.2"
+            "write-file-atomic": "^5.0.0"
         },
         "devDependencies": {
             "p-map": "^5.5.0"
@@ -9719,9 +9719,9 @@ export const packageJSONData = {
             "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^14.0.0",
+            "pacote": "^15.0.0",
             "update-notifier": "^6.0.2",
-            "write-file-atomic": "^4.0.2"
+            "write-file-atomic": "^5.0.0"
         },
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",

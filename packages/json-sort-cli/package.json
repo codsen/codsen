@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "ast-monkey-traverse": "^3.1.1",
-    "chalk": "^5.1.1",
+    "chalk": "^5.1.2",
     "fs-extra": "^10.1.0",
     "globby": "^13.1.2",
     "is-d": "^1.0.0",

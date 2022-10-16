@@ -64,7 +64,7 @@
     }
   },
   "dependencies": {
-    "chalk": "^5.1.1",
+    "chalk": "^5.1.2",
     "csv-sort": "^6.1.5",
     "globby": "^13.1.2",
     "inquirer": "^9.1.3",

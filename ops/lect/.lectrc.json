@@ -144,6 +144,7 @@
       ".nyc_output",
       "coverage",
       "docs",
+      "examples",
       "fixtures",
       "media",
       "perf",
@@ -170,7 +171,7 @@
       "perf-ref.umd.js",
       "perf-ref.esm.js"
     ],
-    "goodFolders": ["bin", "dist", "examples", "lib", "rules", "types"]
+    "goodFolders": ["bin", "dist", "lib", "rules", "types"]
   },
   "package": {
     "devDependencies": {},

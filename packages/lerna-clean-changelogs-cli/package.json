@@ -63,7 +63,7 @@
     }
   },
   "dependencies": {
-    "chalk": "^5.1.1",
+    "chalk": "^5.1.2",
     "fs-extra": "^10.1.0",
     "globby": "^13.1.2",
     "lerna-clean-changelogs": "^4.2.2",
@@ -71,7 +71,7 @@
     "p-filter": "^3.0.0",
     "p-reduce": "^3.0.0",
     "update-notifier": "^6.0.2",
-    "write-file-atomic": "^4.0.2"
+    "write-file-atomic": "^5.0.0"
   },
   "devDependencies": {
     "p-map": "^5.5.0"
