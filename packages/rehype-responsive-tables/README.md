@@ -38,7 +38,6 @@ npm i rehype-responsive-tables
 import { strict as assert } from "assert";
 import { rehype } from "rehype";
 import rehypeFormat from "rehype-format";
-
 import rehypeResponsiveTables from "rehype-responsive-tables";
 
 let input = `

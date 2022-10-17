@@ -3,7 +3,6 @@
 import { strict as assert } from "assert";
 import { rehype } from "rehype";
 import rehypeFormat from "rehype-format";
-
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 let input = `

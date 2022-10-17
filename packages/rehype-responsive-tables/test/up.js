@@ -5,7 +5,6 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { rehype } from "rehype";
 import rehypeFormat from "rehype-format";
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
-import rehypeStringify from "rehype-stringify";
 
 // target cells by their thead column's contents
 // -----------------------------------------------------------------------------
@@ -174,10 +173,10 @@ test(`02 - lifts Bar, code`, () => {
       up: ["Bar"],
     })
     .use(rehypeFormat)
-    .use(rehypeStringify)
-    .processSync(input);
+    .processSync(input)
+    .toString();
 
-  equal(res.value, intended, "02");
+  equal(res, intended, "02");
 });
 
 test(`03 - wildcard`, () => {
