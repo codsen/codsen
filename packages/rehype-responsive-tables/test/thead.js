@@ -45,7 +45,7 @@ test(`06 - thead, 2x3`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">a</span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -58,7 +58,7 @@ test(`06 - thead, 2x3`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">x</span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">x</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">x</td>
@@ -102,7 +102,7 @@ test(`07 - empty thead, 2x2`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td><span class="rrt-new-tr-span">a</span></td>
+      <td><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -114,7 +114,7 @@ test(`07 - empty thead, 2x2`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td><span class="rrt-new-tr-span">x</span></td>
+      <td><span class="rrt-new-tr__span-top">x</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">x</td>
@@ -161,7 +161,7 @@ test(`08 - empty thead tr, 2x2`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td><span class="rrt-new-tr-span">a</span></td>
+      <td><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -173,7 +173,7 @@ test(`08 - empty thead tr, 2x2`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td><span class="rrt-new-tr-span">x</span></td>
+      <td><span class="rrt-new-tr__span-top">x</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">x</td>
@@ -248,7 +248,7 @@ test(`11 - thead, td with children`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">a</span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -261,7 +261,7 @@ test(`11 - thead, td with children`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span"><code>x</code> y <code>z</code></span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top"><code>x</code> y <code>z</code></span></td>
     </tr>
     <tr>
       <td class="rrt-del-td"><code>x</code> y <code>z</code></td>

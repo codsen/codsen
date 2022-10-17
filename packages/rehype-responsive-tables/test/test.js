@@ -25,7 +25,7 @@ test(`01 - 1x2`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td><span class="rrt-new-tr-span">a</span></td>
+      <td><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -63,7 +63,7 @@ test(`02 - 1x3`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">a</span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -104,7 +104,7 @@ test(`03 - 1x5`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="4"><span class="rrt-new-tr-span">a</span></td>
+      <td colspan="4"><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -150,7 +150,7 @@ test(`04 - 2x3`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">a</span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -163,7 +163,7 @@ test(`04 - 2x3`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">x</span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">x</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">x</td>
@@ -211,7 +211,7 @@ test(`05 - nested tags inside, no colspan`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td><span class="rrt-new-tr-span"><code>a</code></span></td>
+      <td><span class="rrt-new-tr__span-top"><code>a</code></span></td>
     </tr>
     <tr>
       <td class="rrt-del-td"><code>a</code></td>
@@ -223,7 +223,7 @@ test(`05 - nested tags inside, no colspan`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td><span class="rrt-new-tr-span"><code>x</code></span></td>
+      <td><span class="rrt-new-tr__span-top"><code>x</code></span></td>
     </tr>
     <tr>
       <td class="rrt-del-td"><code>x</code></td>
@@ -272,7 +272,7 @@ test(`06 - nested tags inside, colspan`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span"><code>a</code></span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top"><code>a</code></span></td>
     </tr>
     <tr>
       <td class="rrt-del-td"><code>a</code></td>
@@ -285,7 +285,7 @@ test(`06 - nested tags inside, colspan`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span"><code>x</code></span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top"><code>x</code></span></td>
     </tr>
     <tr>
       <td class="rrt-del-td"><code>x</code></td>

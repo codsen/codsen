@@ -25,7 +25,7 @@ test(`01 - 1x2`, () => {
   <tbody>
     <tr class="foo-new-tr">
       <td class="foo-del-td"></td>
-      <td><span class="rrt-new-tr-span">a</span></td>
+      <td><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="foo-del-td">a</td>

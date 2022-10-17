@@ -38,21 +38,16 @@ interface Opts {
    * When the first column is "lifted" up, its contents are wrapped
    * with a span which will contain this CSS class
    */
-  newTrSpanClassName: string;
+  newTrSpanTopClassName: string;
+  /**
+   * All labels "lifted" with opts.up will be wrapped by a span
+   * with this class
+   */
+  newTrSpanOtherClassName: string;
   /**
    * Lift the following cells' contents up, under the first column
    */
   up: string[];
-  /**
-   * Move the following cells' contents under the table, full-width cell
-   */
-  /**
-   * On narrow viewports sticky thead does not make sense any more, so
-   * each <tr> group gets it own, equivalent of <thead>. Now, if
-   * all heading cell values are covered by this blacklist, this
-   * <thead> equivalent row won't be displayed.
-   */
-  newTheadBlacklist: string[];
 }
 declare const defaults: Opts;
 declare const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root>;

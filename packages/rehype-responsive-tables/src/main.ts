@@ -35,7 +35,12 @@ export interface Opts {
    * When the first column is "lifted" up, its contents are wrapped
    * with a span which will contain this CSS class
    */
-  newTrSpanClassName: string;
+  newTrSpanTopClassName: string;
+  /**
+   * All labels "lifted" with opts.up will be wrapped by a span
+   * with this class
+   */
+  newTrSpanOtherClassName: string;
   /**
    * Lift the following cells' contents up, under the first column
    */
@@ -47,7 +52,8 @@ export const defaults: Opts = {
   newTrClassName: "rrt-new-tr",
   hideTdClassName: "rrt-del-td",
   gapTrClassName: "rrt-gap-tr",
-  newTrSpanClassName: "rrt-new-tr-span",
+  newTrSpanTopClassName: "rrt-new-tr__span-top",
+  newTrSpanOtherClassName: "rrt-new-tr__span-other",
   up: [],
 };
 
@@ -72,7 +78,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `075 final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `081 final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4
@@ -100,7 +106,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
       ) {
         DEV &&
           console.log(
-            `103 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `109 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4
@@ -108,7 +114,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
           );
         DEV &&
           console.log(
-            `111 ${`\u001b[${33}m${`tdCount`}\u001b[${39}m`} = ${JSON.stringify(
+            `117 ${`\u001b[${33}m${`tdCount`}\u001b[${39}m`} = ${JSON.stringify(
               tdCount,
               null,
               4
@@ -120,7 +126,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
 
           // 1. TACKLE THEAD VIA PARENT
           if (parent.children.some((c: Obj) => c.tagName === "thead")) {
-            DEV && console.log(`123 thead found`);
+            DEV && console.log(`129 thead found`);
             parent.children = parent.children.map((ch) => {
               if (
                 (ch as Obj).tagName === "thead" &&
@@ -148,7 +154,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                           (acc: Obj[], curr2: Obj) => {
                             DEV &&
                               console.log(
-                                `151 ${`\u001b[${33}m${`curr2`}\u001b[${39}m`} = ${JSON.stringify(
+                                `157 ${`\u001b[${33}m${`curr2`}\u001b[${39}m`} = ${JSON.stringify(
                                   curr2,
                                   null,
                                   4
@@ -172,7 +178,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                               ) {
                                 DEV &&
                                   console.log(
-                                    `175 ${`\u001b[${32}m${`CONTAINS ${matchedUpVal}`}\u001b[${39}m`}`
+                                    `181 ${`\u001b[${32}m${`CONTAINS ${matchedUpVal}`}\u001b[${39}m`}`
                                   );
                                 // make a note of this
                                 theadChildrenToSet.push({
@@ -227,7 +233,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
 
           DEV &&
             console.log(
-              `230 final gathered ${`\u001b[${33}m${`theadChildrenToSet`}\u001b[${39}m`} = ${JSON.stringify(
+              `236 final gathered ${`\u001b[${33}m${`theadChildrenToSet`}\u001b[${39}m`} = ${JSON.stringify(
                 theadChildrenToSet,
                 null,
                 4
@@ -241,7 +247,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
               trCounter++;
               DEV &&
                 console.log(
-                  `244 ${`\u001b[${33}m${`trCounter`}\u001b[${39}m`} = ${JSON.stringify(
+                  `250 ${`\u001b[${33}m${`trCounter`}\u001b[${39}m`} = ${JSON.stringify(
                     trCounter,
                     null,
                     4
@@ -271,7 +277,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                 tdCounter++;
                 DEV &&
                   console.log(
-                    `274 - inside td ${(curr as Obj)?.children[
+                    `280 - inside td ${(curr as Obj)?.children[
                       i
                     ]?.children[0].value.trim()} #${tdCounter}`
                   );
@@ -282,7 +288,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                     firstTdVal = (curr as Obj)?.children[i]?.children[0]?.value;
                     DEV &&
                       console.log(
-                        `285 SET ${`\u001b[${33}m${`firstTdVal`}\u001b[${39}m`} = ${JSON.stringify(
+                        `291 SET ${`\u001b[${33}m${`firstTdVal`}\u001b[${39}m`} = ${JSON.stringify(
                           firstTdVal,
                           null,
                           4
@@ -292,7 +298,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                     firstTdChild = (curr as Obj).children[i].children;
                     DEV &&
                       console.log(
-                        `295 SET ${`\u001b[${33}m${`firstTdChild`}\u001b[${39}m`} = ${JSON.stringify(
+                        `301 SET ${`\u001b[${33}m${`firstTdChild`}\u001b[${39}m`} = ${JSON.stringify(
                           firstTdChild,
                           null,
                           4
@@ -307,7 +313,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                     return c.thIdx === tdCounter - 1;
                   })
                 ) {
-                  DEV && console.log(`310 this td was moved up`);
+                  DEV && console.log(`316 this td was moved up`);
                   if (
                     !Array.isArray(
                       (curr as Obj).children[i].properties.className
@@ -320,7 +326,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                   );
                   DEV &&
                     console.log(
-                      `323 final ${`\u001b[${33}m${`(curr as Obj).children[i]`}\u001b[${39}m`} = ${JSON.stringify(
+                      `329 final ${`\u001b[${33}m${`(curr as Obj).children[i]`}\u001b[${39}m`} = ${JSON.stringify(
                         (curr as Obj).children[i],
                         null,
                         4
@@ -390,7 +396,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                         type: "element",
                         tagName: "span",
                         properties: {
-                          className: [resolvedOpts.newTrSpanClassName],
+                          className: [resolvedOpts.newTrSpanTopClassName],
                         },
                         children: [...firstTdChild],
                       },
@@ -398,7 +404,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                       (theadChildrenToSet as any[]).reduce((acc2, curr2) => {
                         DEV &&
                           console.log(
-                            `401 ███████████████████████████████████████ ${`\u001b[${33}m${`curr`}\u001b[${39}m`} = ${JSON.stringify(
+                            `407 ███████████████████████████████████████ ${`\u001b[${33}m${`curr`}\u001b[${39}m`} = ${JSON.stringify(
                               curr,
                               null,
                               4
@@ -408,7 +414,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                         let tdValue = getNthChildTag(curr, "td", curr2.thIdx);
                         DEV &&
                           console.log(
-                            `411 retrieved ${`\u001b[${33}m${`tdValue`}\u001b[${39}m`} = ${JSON.stringify(
+                            `417 retrieved ${`\u001b[${33}m${`tdValue`}\u001b[${39}m`} = ${JSON.stringify(
                               tdValue,
                               null,
                               4
@@ -424,11 +430,24 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
                               children: [],
                             },
                           ])
-                          .concat(curr2.children)
+                          .concat({
+                            type: "element",
+                            tagName: "span",
+                            properties: {
+                              className: [resolvedOpts.newTrSpanOtherClassName],
+                            },
+                            children: [
+                              ...curr2.children,
+                              {
+                                type: "text",
+                                value: ":",
+                              },
+                            ],
+                          })
                           .concat([
                             {
                               type: "text",
-                              value: ": ",
+                              value: " ",
                             },
                           ])
                           .concat(tdValue ? tdValue.children : []);

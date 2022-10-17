@@ -47,7 +47,7 @@ test(`01 - lifts Bar, text`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">a</span><br>Bar: b</td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">a</span><br><span class="rrt-new-tr__span-other">Bar:</span> b</td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -60,7 +60,7 @@ test(`01 - lifts Bar, text`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">x</span><br>Bar: y</td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">x</span><br><span class="rrt-new-tr__span-other">Bar:</span> y</td>
     </tr>
     <tr>
       <td class="rrt-del-td">x</td>
@@ -144,7 +144,7 @@ test(`02 - lifts Bar, code`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">a</span><br><code>Bar</code>: b</td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">a</span><br><span class="rrt-new-tr__span-other"><code>Bar</code>:</span> b</td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -157,7 +157,7 @@ test(`02 - lifts Bar, code`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">x</span><br><code>Bar</code>: y</td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">x</span><br><span class="rrt-new-tr__span-other"><code>Bar</code>:</span> y</td>
     </tr>
     <tr>
       <td class="rrt-del-td">x</td>
@@ -217,7 +217,7 @@ test(`03 - wildcard`, () => {
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">a</span><br>Foo: a<br>Bar: b<br>Baz: c</td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">a</span><br><span class="rrt-new-tr__span-other">Foo:</span> a<br><span class="rrt-new-tr__span-other">Bar:</span> b<br><span class="rrt-new-tr__span-other">Baz:</span> c</td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
@@ -230,7 +230,7 @@ test(`03 - wildcard`, () => {
     </tr>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">x</span><br>Foo: x<br>Bar: y<br>Baz: z</td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">x</span><br><span class="rrt-new-tr__span-other">Foo:</span> x<br><span class="rrt-new-tr__span-other">Bar:</span> y<br><span class="rrt-new-tr__span-other">Baz:</span> z</td>
     </tr>
     <tr>
       <td class="rrt-del-td">x</td>

@@ -23,7 +23,7 @@ let intended = `
   <tbody>
     <tr class="rrt-new-tr">
       <td class="rrt-del-td"></td>
-      <td colspan="2"><span class="rrt-new-tr-span">a</span></td>
+      <td colspan="2"><span class="rrt-new-tr__span-top">a</span></td>
     </tr>
     <tr>
       <td class="rrt-del-td">a</td>
