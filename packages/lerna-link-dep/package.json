@@ -1,6 +1,6 @@
 {
   "name": "lerna-link-dep",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "Like lerna add but does just the symlinking, works on CLI bins too",
   "keywords": [
     "add",

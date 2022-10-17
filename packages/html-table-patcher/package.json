@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "5.1.11",
+  "version": "5.1.12",
   "description": "Visual helper to place templating code around table tags into correct places",
   "keywords": [
     "add",
@@ -73,8 +73,8 @@
   },
   "dependencies": {
     "ast-monkey-traverse-with-lookahead": "^3.1.1",
-    "codsen-parser": "^0.13.11",
-    "ranges-apply": "^6.2.6",
+    "codsen-parser": "^0.13.12",
+    "ranges-apply": "^6.2.7",
     "ranges-push": "^6.2.2"
   }
 }

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.3.0...rehype-responsive-tables@1.4.0) (2022-10-17)
+
+### Bug Fixes
+
+- remove unreleased options for now ([ef17b9a](https://github.com/codsen/codsen/commit/ef17b9a3993d796ccfe52f930459f4360906474c))
+
+### Features
+
+- wrap each lifted label with a span too ([34832ca](https://github.com/codsen/codsen/commit/34832cac9c2c21bc0ff405ff136754e1592e8a57))
+
 # [1.3.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.2.0...rehype-responsive-tables@1.3.0) (2022-10-11)
 
 ### Features
