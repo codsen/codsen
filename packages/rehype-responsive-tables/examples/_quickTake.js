@@ -37,7 +37,9 @@ let intended = `
 assert.equal(
   rehype()
     .data("settings", { fragment: true })
-    .use(rehypeResponsiveTables)
+    .use(rehypeResponsiveTables, {
+      tableClassName: "rrt-table",
+    })
     .use(rehypeFormat)
     .processSync(input)
     .toString(),
