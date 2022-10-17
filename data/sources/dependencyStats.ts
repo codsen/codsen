@@ -201,6 +201,8 @@ export const dependencyStats: DependencyStats = {
         "rehype-parse": 1,
         "rehype-stringify": 1,
         "remark": 1,
+        "remark-gfm": 1,
+        "remark-rehype": 1,
         "string-find-heads-tails": 1,
         "string-strip-html": 1,
         "test-mixer": 4,

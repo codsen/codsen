@@ -2289,7 +2289,7 @@ export const packageJSONData = {
             "chalk": "^5.1.2",
             "csv-sort": "^6.1.6",
             "globby": "^13.1.2",
-            "inquirer": "^9.1.3",
+            "inquirer": "^9.1.4",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
             "meow": "^11.0.0",
@@ -2908,7 +2908,7 @@ export const packageJSONData = {
             "chalk": "^5.1.2",
             "email-all-chars-within-ascii": "^4.1.1",
             "globby": "^13.1.2",
-            "inquirer": "^9.1.3",
+            "inquirer": "^9.1.4",
             "lodash.pullall": "^4.2.0",
             "minimist": "^1.2.7",
             "string-left-right": "^5.1.2",
@@ -7177,7 +7177,9 @@ export const packageJSONData = {
             "rehype": "^12.0.1",
             "rehype-format": "^4.0.1",
             "rehype-parse": "^8.0.4",
-            "rehype-stringify": "^9.0.3"
+            "rehype-stringify": "^9.0.3",
+            "remark-gfm": "^3.0.1",
+            "remark-rehype": "^10.1.0"
         }
     },
     "remark-typography": {
@@ -9719,7 +9721,7 @@ export const packageJSONData = {
             "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^15.0.0",
+            "pacote": "^15.0.1",
             "update-notifier": "^6.0.2",
             "write-file-atomic": "^5.0.0"
         },
