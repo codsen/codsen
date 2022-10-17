@@ -645,4 +645,32 @@ test(`20 - multiparagraph combo with jinja`, () => {
   equal(res.res, source, "20");
 });
 
+test(`21 - multiparagraph combo with jinja`, () => {
+  let source = `<!--[if mso]>
+  <div>Show this in all Outlook versions</div>
+<![endif]-->`;
+  let res = removeWidows(source, {
+    minWordCount: 2,
+    ignore: [
+      {
+        heads: "<!--[",
+        tails: "]-->",
+      },
+      {
+        heads: "{#",
+        tails: "#}",
+      },
+      {
+        heads: "{%",
+        tails: "%}",
+      },
+      {
+        heads: "{{",
+        tails: "}}",
+      },
+    ],
+  });
+  equal(res.res, source, "21");
+});
+
 test.run();
