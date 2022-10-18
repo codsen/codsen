@@ -71,4 +71,4 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.4.0 (2019-04-14)
 
-- ✨ Migrating this package to our main monorepo on GitLab
+- Migrating this package to our main monorepo on GitLab

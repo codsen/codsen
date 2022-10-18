@@ -69,52 +69,52 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 7.10.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+- Various documentation and setup tweaks after we migrated to monorepo
+- Setup refresh: updated dependencies and all config files using automated tools
 
 ## 7.6.0 (2018-10-14)
 
-- ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
+- Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
 
 ## 7.5.0 (2018-06-10)
 
-- ✨ Moved to BitBucket. GitHub sold us out.
-- ✨ Removed Travis and BitHound (RIP), enabled Codacy (for code quality audit)
-- ✨ Removed `package-lock`
+- Moved to BitBucket. GitHub sold us out.
+- Removed Travis and BitHound (RIP), enabled Codacy (for code quality audit)
+- Removed `package-lock`
 
 ## 7.4.0 (2018-05-02)
 
 ### Added
 
-- ✨ Set up [Prettier](https://prettier.io)
-- ✨ Removed `package.lock` and `.editorconfig`
-- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+- Set up [Prettier](https://prettier.io)
+- Removed `package.lock` and `.editorconfig`
+- Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 
 ## 7.3.0 (2018-01-03)
 
 ### Added
 
-- ✨ Updated to the latest release of `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse)) which gives the `innerObj.path` in the callback object. The path is exactly the same notation as per popular [object-path](https://www.npmjs.com/package/object-path) and you can feed `innerObj.path` to `object-path`, you'd get `current`. However, this enables us to traverse up the tree, following the path. That's the reason why I added this feature - to traverse the AST up to root when resolving variables in [json-variables](https://www.npmjs.com/package/json-variables).
+- Updated to the latest release of `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse)) which gives the `innerObj.path` in the callback object. The path is exactly the same notation as per popular [object-path](https://www.npmjs.com/package/object-path) and you can feed `innerObj.path` to `object-path`, you'd get `current`. However, this enables us to traverse up the tree, following the path. That's the reason why I added this feature - to traverse the AST up to root when resolving variables in [json-variables](https://www.npmjs.com/package/json-variables).
 
 ## 7.2.0 (2017-12-23)
 
 ### Changed
 
-- ✨ Separated `traverse()` into a standalone library, `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse)) and then tapped it
+- Separated `traverse()` into a standalone library, `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse)) and then tapped it
 
 ## 7.1.0 (2017-10-29)
 
 ### Added
 
-- ✨ `find()` and `del()` methods previously were using string-to-string comparisons. I replaced `lodash.isequal` with `ast-compare` ([npm](https://www.npmjs.com/package/ast-compare), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare)) running in strict mode with wildcards enabled. Now you can use [matcher](https://github.com/sindresorhus/matcher/) API when querying the keys or values.
-- ✨ Some rebasing done to improve the algorithm's performance. For example, `find()` and `del()` previously matched the actual content first, then checked `opts.only` conditions. It was not effective because why perform a check if `opts.only` is not satisfied anyway? Now, `opts.only` checks, is it of a desired type, and if so, continues to compare the values.
+- `find()` and `del()` methods previously were using string-to-string comparisons. I replaced `lodash.isequal` with `ast-compare` ([npm](https://www.npmjs.com/package/ast-compare), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare)) running in strict mode with wildcards enabled. Now you can use [matcher](https://github.com/sindresorhus/matcher/) API when querying the keys or values.
+- Some rebasing done to improve the algorithm's performance. For example, `find()` and `del()` previously matched the actual content first, then checked `opts.only` conditions. It was not effective because why perform a check if `opts.only` is not satisfied anyway? Now, `opts.only` checks, is it of a desired type, and if so, continues to compare the values.
 
 ## 7.0.0 (2017-10-23)
 
 ### Changed
 
-- ✨ The main source now is in ES2015 modules with `import`/`export`.
-- ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
+- The main source now is in ES2015 modules with `import`/`export`.
+- Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
 
 ## 6.4.0 (2017-09-19)
 
@@ -138,7 +138,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Added
 
-- ✨ Added checkTypes() onto drop(). Missed it this morning. Now all sorted.
+- Added checkTypes() onto drop(). Missed it this morning. Now all sorted.
 
 ## 6.0.0 (2017-06-18)
 
@@ -158,7 +158,7 @@ This changes how you interact with `traversal()` function. Sorry about this brea
 
 ### Added
 
-- ✨ `opts.only` is now present on all relevant `ast-monkey`'s methods and allows you to describe in natural language do you want to query only objects, or arrays or both. Previously it was only both. Supported values for `opts.only` are quite wide:
+- `opts.only` is now present on all relevant `ast-monkey`'s methods and allows you to describe in natural language do you want to query only objects, or arrays or both. Previously it was only both. Supported values for `opts.only` are quite wide:
 
 ```js
 // keywords for `opts.only` to query only objects:
@@ -185,31 +185,31 @@ Hardened the API, namely, all added more validations to options object key value
 
 ### Added
 
-- ✨ Recoded all options objects' validations, on each method. Preparing for next big secret feature. We'll need this.
+- Recoded all options objects' validations, on each method. Preparing for next big secret feature. We'll need this.
 
 ## 5.4.0 (2017-06-10)
 
 ### Added
 
-- ✨ [Holes in arrays](http://speakingjs.com/es5/ch18.html#array_holes) were skipped in `traverse()` as if they didn't exist. Now I push it further, `traverse()` will silently delete any holes in arrays it encounters. I think this feature a no-brainer since array holes have no use in JS.
+- [Holes in arrays](http://speakingjs.com/es5/ch18.html#array_holes) were skipped in `traverse()` as if they didn't exist. Now I push it further, `traverse()` will silently delete any holes in arrays it encounters. I think this feature a no-brainer since array holes have no use in JS.
 
 ## 5.3.0 (2017-05-15)
 
 ### Added
 
-- ✨ Set `standard` to be consumer under normal semver range, not _the latest_ in order to prevent surprises in the future. Which happened as late as v10.
+- Set `standard` to be consumer under normal semver range, not _the latest_ in order to prevent surprises in the future. Which happened as late as v10.
 
 ## 5.2.0 (2017-05-15)
 
 ### Added
 
-- ✨ Tighetened the API in cases when `monkey()` inputs are missing or falsey.
+- Tighetened the API in cases when `monkey()` inputs are missing or falsey.
 
 ## 5.1.0 (2017-05-02)
 
 ### Added
 
-- ✨ `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for `json-variables` ([npm](https://www.npmjs.com/package/json-variables), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/json-variables)) to allow variables lookup at deeper levels, not only at the root. 🦄
+- `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for `json-variables` ([npm](https://www.npmjs.com/package/json-variables), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/json-variables)) to allow variables lookup at deeper levels, not only at the root. 🦄
 
 ## 5.0.0 (2017-04-30)
 
@@ -246,7 +246,7 @@ The good thing about being not popular is you can make breaking changes and very
 
 ### Added
 
-- ✨ Imagine, you're using `🐒.traverse()` ([ast-monkey on npm](https://www.npmjs.com/package/ast-monkey#traverse)/[ast-monkey on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey#traverse)) on the following piece of AST:
+- Imagine, you're using `🐒.traverse()` ([ast-monkey on npm](https://www.npmjs.com/package/ast-monkey#traverse)/[ast-monkey on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey#traverse)) on the following piece of AST:
 
 ```js
 {
@@ -270,7 +270,7 @@ I needed this feature for `json-variables` ([npm](https://www.npmjs.com/package/
 
 ### Added
 
-- ✨ Added `traverse()` unit tests, namely, `09.x` group.
+- Added `traverse()` unit tests, namely, `09.x` group.
 
 ### Unchanged
 
@@ -286,14 +286,14 @@ BREAKING API CHANGES.
 
 ### Added
 
-- ✨ Exposed `.traverse()` too; shielded its inner API with another function (one input arguement-less now)
+- Exposed `.traverse()` too; shielded its inner API with another function (one input arguement-less now)
 
 ## 2.9.0 (2017-03-09) International recursive alrorithms day
 
 ### Added
 
-- ✨ `.flatten()`
-- ✨ related unit tests.
+- `.flatten()`
+- related unit tests.
 
 ### Changed
 
@@ -303,7 +303,7 @@ BREAKING API CHANGES.
 
 ### Added
 
-- ✨ Now cloning all arguments in main `🐒()` and auxiliary `traverse()` functions' input object args to prevent any accidental mutation. **This is big and very important.**
+- Now cloning all arguments in main `🐒()` and auxiliary `traverse()` functions' input object args to prevent any accidental mutation. **This is big and very important.**
 
 ## 2.7.0 (2017-02-20)
 
@@ -315,31 +315,31 @@ BREAKING API CHANGES.
 
 ### Added
 
-- ✨ Incoming input is cloned upon receiving and clone is used instead, so that original input is not mutated. This is very important. ✨
+- Incoming input is cloned upon receiving and clone is used instead, so that original input is not mutated. This is very important. ✨
 
 ## 2.5.0 (2017-02-18)
 
 ### Added
 
-- ✨ Rebased the requirements for `opts.key` or `opts.val` to exist, now `find()` and `del()` are combined.
+- Rebased the requirements for `opts.key` or `opts.val` to exist, now `find()` and `del()` are combined.
 
 ## 2.4.0 (2017-02-18)
 
 ### Added
 
-- ✨ Enforcing the {index: ?} to be provided for `drop()`. ✨
+- Enforcing the {index: ?} to be provided for `drop()`. ✨
 
 ## 2.3.0 (2017-02-18)
 
 ### Added
 
-- ✨ Added `index` key to each of `find()` result object. 👌
+- Added `index` key to each of `find()` result object. 👌
 
 ## 2.2.0 (2017-02-16) International software testers commemoration day
 
 ### Added
 
-- ✨ Added `del()` method which deletes pieces from AST's by key or by value or by both. It leaves empty stumps and does not clean after deletion.
+- Added `del()` method which deletes pieces from AST's by key or by value or by both. It leaves empty stumps and does not clean after deletion.
 
 ## 2.0.0 (2017-02-16)
 

@@ -100,4 +100,4 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.0.0 (2018-06-28)
 
-- ✨ First public release
+- First public release

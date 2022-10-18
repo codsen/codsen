@@ -65,36 +65,36 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.9.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+- Various documentation and setup tweaks after we migrated to monorepo
+- Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.3.0 (2018-10-17)
 
-- ✨ Updated all dependencies
-- ✨ Restored unit test coverage tracking: reporting in terminal and coveralls.io
-- ✨ Restored unit test linting
+- Updated all dependencies
+- Restored unit test coverage tracking: reporting in terminal and coveralls.io
+- Restored unit test linting
 
 ## 3.2.0 (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
-- ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
-- ✨ Dropped BitHound (RIP) and Travis
-- ✨ Removed `package-lock`
+- Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
+- Dropped BitHound (RIP) and Travis
+- Removed `package-lock`
 
 ## 3.1.0 (2018-05-17)
 
-- ✨ Set up [Prettier](https://prettier.io) on custom ESLint rules
-- ✨ Removed `package.lock` and `.editorconfig`
-- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
-- ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
+- Set up [Prettier](https://prettier.io) on custom ESLint rules
+- Removed `package.lock` and `.editorconfig`
+- Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+- Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
 ## 3.0.0 (2017-12-09)
 
 ### Added
 
-- ✨ Rebased in ES Modules
-- ✨ Set up the Rollup (nice rhyme). Now serving three builds: CommonJS, UMD and ES Module. all wired-up to separate package.json keys. This way, Rollup and WebPack can tap ES Modules instead of CommonJS. This also solves problems with transpiling. CommonJS is transpiled, ES Modules are not. No more problems with `create-react-app` not being able to uglify the source in ES6.
+- Rebased in ES Modules
+- Set up the Rollup (nice rhyme). Now serving three builds: CommonJS, UMD and ES Module. all wired-up to separate package.json keys. This way, Rollup and WebPack can tap ES Modules instead of CommonJS. This also solves problems with transpiling. CommonJS is transpiled, ES Modules are not. No more problems with `create-react-app` not being able to uglify the source in ES6.
 
 API didn't change, it actually became even more flexible. `main`, `module` and `browser` keys in `package.json` lead to different build flavours.
 
@@ -131,7 +131,7 @@ Fresh morning and fresh head yields new improvements.
 
 ### Added
 
-- ✨ Changelog. Ha!
+- Changelog. Ha!
 - Tapped `check-types-mini` to enforce the input types better.
 
 ## 2.7.0 (2017-02-17)

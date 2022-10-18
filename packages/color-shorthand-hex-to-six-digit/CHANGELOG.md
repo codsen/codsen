@@ -53,42 +53,42 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.10.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+- Various documentation and setup tweaks after we migrated to monorepo
+- Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.4.0 (2018-10-15)
 
-- ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
+- Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
 
 ## 2.3.0 (2018-06-27)
 
-- ✨ Set up Rollup to remove any comments from build files
-- ✨ Attempt to fix reported issues with UMD builds `undefined$3` variable not found
+- Set up Rollup to remove any comments from build files
+- Attempt to fix reported issues with UMD builds `undefined$3` variable not found
 
 ## 2.2.0 (2018-06-08)
 
 ### Added
 
-- ✨ Fixed false positive cases of HTML entities, for example `&#124;`. Thanks James Kupczak!
-- ✨ Rebased a little
-- ✨ Migrated to BitBucket...
-- ✨ ...which means we dropped Travis. But we kept Coveralls.
-- ✨ RIP BitHound
+- Fixed false positive cases of HTML entities, for example `&#124;`. Thanks James Kupczak!
+- Rebased a little
+- Migrated to BitBucket...
+- ...which means we dropped Travis. But we kept Coveralls.
+- RIP BitHound
 
 ## 2.1.0 (2018-05-03)
 
 ### Added
 
-- ✨ Set up [Prettier](https://prettier.io)
-- ✨ Removed `package.lock` and `.editorconfig`
-- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+- Set up [Prettier](https://prettier.io)
+- Removed `package.lock` and `.editorconfig`
+- Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 
 ## 2.0.0 (2017-12-06)
 
 ### Changed
 
-- ✨ Rebased in ES Modules
-- ✨ Set up Rollup (nice rhyming), now generating transpiled CommonJS, UMD and native ES Module builds.
+- Rebased in ES Modules
+- Set up Rollup (nice rhyming), now generating transpiled CommonJS, UMD and native ES Module builds.
 
 Bumping major just in case it breaks somebody's API. It shouldn't though.
 

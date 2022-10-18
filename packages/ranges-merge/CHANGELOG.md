@@ -101,56 +101,56 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.12.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+- Various documentation and setup tweaks after we migrated to monorepo
+- Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.8.0 (2018-12-26)
 
-- ✨ Improvements against input argument mutation ([924c7ae](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/commits/924c7ae))
-- ✨ Removes ranges with no third arg with identical start and end points ([707553b](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/commits/707553b))
+- Improvements against input argument mutation ([924c7ae](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/commits/924c7ae))
+- Removes ranges with no third arg with identical start and end points ([707553b](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/commits/707553b))
 
 ## 3.7.0 (2018-11-29)
 
-- ✨ Second input argument - `progressFn` is added, it will report percentage done so far. It's used in worker setups.
+- Second input argument - `progressFn` is added, it will report percentage done so far. It's used in worker setups.
 
 ## 3.6.0 (2018-10-25)
 
-- ✨ Updated all dependencies
-- ✨ Restored coveralls.io reporting
-- ✨ Restored unit test linting
+- Updated all dependencies
+- Restored coveralls.io reporting
+- Restored unit test linting
 
 ## 3.5.0 (2018-08-17)
 
-- ✨ Apparently the input arguments were mutated on some cases. That's fixed now.
+- Apparently the input arguments were mutated on some cases. That's fixed now.
 
 ## 3.4.0 (2018-08-16)
 
-- ✨ Now, ranges with identical starting and ending points with no third argument (nothing to add) will be removed. They're futile anyway. It's like saying at this index... and saying nothing else.
+- Now, ranges with identical starting and ending points with no third argument (nothing to add) will be removed. They're futile anyway. It's like saying at this index... and saying nothing else.
 
 ## 3.3.0 (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
-- ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
-- ✨ Dropped BitHound (RIP) and Travis
-- ✨ Removed `package-lock`
+- Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
+- Dropped BitHound (RIP) and Travis
+- Removed `package-lock`
 
 ## 3.2.0 (2018-05-26)
 
-- ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
-- ✨ Removed `package.lock` and `.editorconfig`
-- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
-- ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
+- Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
+- Removed `package.lock` and `.editorconfig`
+- Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
+- Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
 ## 3.1.0 (2017-12-29)
 
-- ✨ If third argument is `null` on any side being merged, output is always `null`. This will stand for explicit "no" to remove any content to be added. Sibling [libraries](https://github.com/codsen/string-slices-array-push) will tap this feature.
+- If third argument is `null` on any side being merged, output is always `null`. This will stand for explicit "no" to remove any content to be added. Sibling [libraries](https://github.com/codsen/string-slices-array-push) will tap this feature.
 
 Previously `null` would have been turned into a string and shown/concatenated like that which was meaningless and kindof erroneous. We never used `null` anyway. That's why this is not a major semver bump but minor - it's only a feature, an extension of the API.
 
 ## 3.0.0 (2017-12-05)
 
-- ✨ If you have two ranges where second-one completely overlaps the first-one and the first has third argument, something to insert in its place, that third argument will be discarded upon merge.
+- If you have two ranges where second-one completely overlaps the first-one and the first has third argument, something to insert in its place, that third argument will be discarded upon merge.
 
 Let's say you got these two ranges:
 
@@ -167,8 +167,8 @@ This change is logical and natural but I'm bumping major version just in case it
 
 ## 2.0.0 (2017-12-04)
 
-- ✨ Rebased the source in ES Modules
-- ✨ Set up Rollup and now we are generating three builds: CommonJS, UMD and ES Modules (native code).
+- Rebased the source in ES Modules
+- Set up Rollup and now we are generating three builds: CommonJS, UMD and ES Modules (native code).
 
 ## 1.0.0 (2017-09-18)
 

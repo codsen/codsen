@@ -591,4 +591,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.1.0 (2018-08-27)
 
-- ✨ First public release
+- First public release

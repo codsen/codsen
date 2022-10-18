@@ -59,25 +59,25 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.8.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+- Various documentation and setup tweaks after we migrated to monorepo
+- Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.4.0 (2018-12-14)
 
-- ✨ Updated all dependencies and restored AVA linting, added licence to the top of each built file
+- Updated all dependencies and restored AVA linting, added licence to the top of each built file
 
 ## 1.3.0 (2018-10-12)
 
-- ✨ Updated all dependencies and restored coverage reporting both in terminal and sending to coveralls
+- Updated all dependencies and restored coverage reporting both in terminal and sending to coveralls
 
 ## 1.2.0 (2018-05-11)
 
-- ✨ Pointed AVA unit tests to ES Modules build, as opposed to previously transpiled CommonJS-one. This means, now unit test code coverage is correct.
+- Pointed AVA unit tests to ES Modules build, as opposed to previously transpiled CommonJS-one. This means, now unit test code coverage is correct.
 
 ## 1.1.0 (2018-04-29)
 
-- ✨ Setup refresh and dependency updates: deleted `package-lock.json` and `.editorconfig`
+- Setup refresh and dependency updates: deleted `package-lock.json` and `.editorconfig`
 
 ## 1.0.0 (2018-03-31)
 
-- ✨ Public release
+- Public release

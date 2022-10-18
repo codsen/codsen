@@ -84,8 +84,8 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 5.6.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+- Various documentation and setup tweaks after we migrated to monorepo
+- Setup refresh: updated dependencies and all config files using automated tools
 
 ## 5.2.0 (2018-12-26)
 
@@ -95,14 +95,14 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Features
 
-- ✨ Matcher under opts.ignorePaths and opts.ignoreKeys ([4648ad5](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/4648ad5))
-- ✨ `opts.ignorePaths` and nested opts support ([c1128d6](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/c1128d6))
-- ✨ `opts.schema` can now be given in nested formatting too ([d102784](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/d102784))
-- ✨ schema ignores with types 'any' and 'whatever' now apply to all children nodes of that path ([568eb33](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/568eb33))
+- Matcher under opts.ignorePaths and opts.ignoreKeys ([4648ad5](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/4648ad5))
+- `opts.ignorePaths` and nested opts support ([c1128d6](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/c1128d6))
+- `opts.schema` can now be given in nested formatting too ([d102784](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/d102784))
+- schema ignores with types 'any' and 'whatever' now apply to all children nodes of that path ([568eb33](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/568eb33))
 
 ## 5.1.0 (2018-10-15)
 
-- ✨ `opts.schema` now can be given in nested order as well, for example, given as:
+- `opts.schema` now can be given in nested order as well, for example, given as:
 
 ```js
 {
@@ -154,14 +154,14 @@ Technically, this is a breaking change, warranting **a major semver release**.
 
 ## 4.1.0 (2018-08-23)
 
-- ✨ Implemented [matcher](https://www.npmjs.com/package/matcher) on `opts.ignorePaths` and `opts.ignoreKeys`. Now we can use wildcards in both.
+- Implemented [matcher](https://www.npmjs.com/package/matcher) on `opts.ignorePaths` and `opts.ignoreKeys`. Now we can use wildcards in both.
 - 🔧 Now keys that are covered by `opts.ignoreKeys` won't be flagged up as not covered by schema or a reference object. Previously, every key had to be covered, `opts.ignoreKeys` was only regarding the type comparison which was skipped. I know, that's illogical, it was a bug and it's now fixed. Sorry about that.
 
 ## 4.0.0 (2018-07-03)
 
 I felt a need for this feature since the very beginning but only now the API's of my librarires started to become complex-enough to warrant nested options' objects.
 
-- ✨ Now, we accept and enforce _nested options objects_. For example, you can have defaults as:
+- Now, we accept and enforce _nested options objects_. For example, you can have defaults as:
 
   ```js
   {
@@ -182,36 +182,36 @@ I felt a need for this feature since the very beginning but only now the API's o
   // => oodles.noodles is a string, not Boolean
   ```
 
-- ✨ Also, rebased the code quite substantially, with some new deps and some old deps removed.
-- ✨ `opts.ignorePaths` because now `opts.ignoreKeys` is not enough - what if key names are called the same in different nested opts object key's value child object key's values?
-- ✨ Implemented _throw pinning_. It's fancy term meaning all internal errors are named with an ID and all unit tests are not just checking, _does it throw_ but _does it throw the particular error_, because it can _throw_ but _throw at wrong place_ that would be a defect, yet unit test would pass. As a side effect, this doesn't lock the throw error messages in the unit tests. Since we pin against the ID, we can tweak the error messages' text as much as we want as long as ID is kept the same.
+- Also, rebased the code quite substantially, with some new deps and some old deps removed.
+- `opts.ignorePaths` because now `opts.ignoreKeys` is not enough - what if key names are called the same in different nested opts object key's value child object key's values?
+- Implemented _throw pinning_. It's fancy term meaning all internal errors are named with an ID and all unit tests are not just checking, _does it throw_ but _does it throw the particular error_, because it can _throw_ but _throw at wrong place_ that would be a defect, yet unit test would pass. As a side effect, this doesn't lock the throw error messages in the unit tests. Since we pin against the ID, we can tweak the error messages' text as much as we want as long as ID is kept the same.
 
 ## 3.4.0 (2018-06-10)
 
 GitHub sold us out. God bless their souls and the new billionaire. In the meantime, we:
 
-- ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
-- ✨ Dropped BitHound (RIP) and Travis
+- Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
+- Dropped BitHound (RIP) and Travis
 
 ## 3.3.0 (2018-05-11)
 
-- ✨ Now unit tests point to ES Modules build. This means, code coverage will be correct from now on... No more missed Babel functions...
+- Now unit tests point to ES Modules build. This means, code coverage will be correct from now on... No more missed Babel functions...
 
 ## 3.2.0 (2018-05-02)
 
-- ✨ Set up [Prettier](https://prettier.io)
-- ✨ Removed `package.lock` and `.editorconfig`
-- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+- Set up [Prettier](https://prettier.io)
+- Removed `package.lock` and `.editorconfig`
+- Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 
 ## 3.1.0 (2018-01-29)
 
-- ✨ `true` and `false` as precise types in `opts.schema`
+- `true` and `false` as precise types in `opts.schema`
 - 💥 Removed `lodash.includes` (replaced with `Array.includes`)
 
 ## 3.0.0 (2017-12-08)
 
 - 🔧 Rebased all the source to be in ES Modules.
-- ✨ Set up Rollup and generate three flavours of the distribution: CommonJS, UMD and ES Modules (native source)
+- Set up Rollup and generate three flavours of the distribution: CommonJS, UMD and ES Modules (native source)
 
 Bumping major just in case. API is the same, just when you consume from Rollup setups, `package.json` key entry `module` will be recognised and ES Modules build will be used natively. You'll get all the benefits of ES Modules, like tree-shaking.
 
@@ -253,7 +253,7 @@ checkTypes(opts, defaults <...>)
 
 ### Added
 
-- ✨ Now `opts.schema` understands `opts.acceptArrays` setting: if the latter is `true`, that array will be traversed and each key will be matched against the types supplied in `opts.schema`. No more errors telling that array does not match the required type when `opts.acceptArrays` is on and all types inside that array match the types required by `opts.schema`.
+- Now `opts.schema` understands `opts.acceptArrays` setting: if the latter is `true`, that array will be traversed and each key will be matched against the types supplied in `opts.schema`. No more errors telling that array does not match the required type when `opts.acceptArrays` is on and all types inside that array match the types required by `opts.schema`.
 - More unit tests. Coverage is still solid 100%.
 
 Funny, I discovered this issue when I tried to set up `check-types-mini` on `easy-replace` ([npm](https://www.npmjs.com/package/easy-replace), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace)). Like they say, eat what you cook - the easiest way to discover issues is to use your own software. Especially, in production.
@@ -262,19 +262,19 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on `eas
 
 ### Added
 
-- ✨ Now, the errors which are caused by misconfiguration of the `check-types-mini` itself will reference it as a source of an error. Once this library is configured correctly, then the errors can be personalised as per `opts.msg`.
+- Now, the errors which are caused by misconfiguration of the `check-types-mini` itself will reference it as a source of an error. Once this library is configured correctly, then the errors can be personalised as per `opts.msg`.
 
 ## 2.0.0 (2017-06-12)
 
 ### Changed
 
-- ✨ BREAKING API CHANGES. Third argument `msg` moved to `opts.msg`. Fourth argument `optsVarName` moved to `opts.optsVarName`. That was the right thing to do. Sorry for any hassle updating.
+- BREAKING API CHANGES. Third argument `msg` moved to `opts.msg`. Fourth argument `optsVarName` moved to `opts.optsVarName`. That was the right thing to do. Sorry for any hassle updating.
 
 ## 1.6.0 (2017-06-11)
 
 ### Added
 
-- ✨ `opts.schema` - let's you enforce any schema you want for any key. Case-insensitive, just put types. `object` means plain object, not `array`. `whatever`, and `any` are also valid values. Algorithm will check the `opts.schema` first, then if the keys does not exist there, will check its type in `defaults`.
+- `opts.schema` - let's you enforce any schema you want for any key. Case-insensitive, just put types. `object` means plain object, not `array`. `whatever`, and `any` are also valid values. Algorithm will check the `opts.schema` first, then if the keys does not exist there, will check its type in `defaults`.
 
 ## 1.5.0 (2017-06-11)
 
@@ -287,14 +287,14 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on `eas
 
 ### Added
 
-- ✨ `opts.enforceStrictKeyset` will now by default `throw` if there are any keys in the options object, that don't exist in the reference object.
+- `opts.enforceStrictKeyset` will now by default `throw` if there are any keys in the options object, that don't exist in the reference object.
 
 ## 1.3.0 (2017-05-22)
 
 ### Added
 
-- ✨ `opts.acceptArrays` will accept arrays too, if they contain only the same type elements as the one that's being checked.
-- ✨ `opts.acceptArraysIgnore` - lets you ignore per-key level when `opts.acceptArrays` is on. 👍
+- `opts.acceptArrays` will accept arrays too, if they contain only the same type elements as the one that's being checked.
+- `opts.acceptArraysIgnore` - lets you ignore per-key level when `opts.acceptArrays` is on. 👍
 
 ## 1.2.0 (2017-05-15)
 
@@ -306,7 +306,7 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on `eas
 
 ### Added
 
-- ✨ `opts.ignoreKeys`
+- `opts.ignoreKeys`
 
 ## 1.0.0 (2017-05-15)
 

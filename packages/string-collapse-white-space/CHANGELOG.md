@@ -143,24 +143,24 @@ Also, properly tested and fixed `opts.enforceSpacesOnly`. It now works as intend
 
 ## 4.5.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+- Various documentation and setup tweaks after we migrated to monorepo
+- Setup refresh: updated dependencies and all config files using automated tools
 
 ## 4.3.0 (2018-12-26)
 
-- ✨ Add dynamically generated tests - 10000 random strings are checked to catch any false-positives ([43d7dc4](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space/commits/43d7dc4))
-- ✨ Add `opts.removeEmptyLines` ([75e0671](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space/commits/75e0671))
+- Add dynamically generated tests - 10000 random strings are checked to catch any false-positives ([43d7dc4](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space/commits/43d7dc4))
+- Add `opts.removeEmptyLines` ([75e0671](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space/commits/75e0671))
 
 ## 4.2.0 (2018-10-25)
 
-- ✨ Updated all dependencies
-- ✨ Restored coveralls.io reporting
-- ✨ Restored unit test linting
+- Updated all dependencies
+- Restored coveralls.io reporting
+- Restored unit test linting
 
 ## 4.1.0 (2018-07-24)
 
-- ✨ Fixed a strange false-positive bug which was happening around the encountered first bracket when there was no whitespace to remove, but with only a single line break. Sorry about that.
-- ✨ To iron-out all false-positive cases, I created an 8th group unit test where `10,000` randomly generated strings that don't contain anything to collapse are checked. Various pieces are assembled in random order and length: `<br>`, `<br/>`, `<zzz class="yyy">`, `zzz`, `1`, `_`, `a`, `&`, `#`, `.`. Plus, there are single spaces in-between, added with 25% probability.
+- Fixed a strange false-positive bug which was happening around the encountered first bracket when there was no whitespace to remove, but with only a single line break. Sorry about that.
+- To iron-out all false-positive cases, I created an 8th group unit test where `10,000` randomly generated strings that don't contain anything to collapse are checked. Various pieces are assembled in random order and length: `<br>`, `<br/>`, `<zzz class="yyy">`, `zzz`, `1`, `_`, `a`, `&`, `#`, `.`. Plus, there are single spaces in-between, added with 25% probability.
 
 Here are ten examples of randomly-generated text which should not be changed by string-collapse function (notice there are maximum one space everywhere):
 
@@ -190,81 +190,81 @@ Hopefully bugs like the one we just fixed should not happen any more 🤞
 
 ## 4.0.0 (2018-07-23)
 
-- ✨ When `opts.returnRangesOnly` is on and there are no results, instead of `null` (_a falsey thing_) now we return empty array (_a truthy thing_). It's better now because while you can't easily check for its existence (a la `if result`), actually you don't have to any more. Just map over its result. It will always be array, albeit sometimes empty.
+- When `opts.returnRangesOnly` is on and there are no results, instead of `null` (_a falsey thing_) now we return empty array (_a truthy thing_). It's better now because while you can't easily check for its existence (a la `if result`), actually you don't have to any more. Just map over its result. It will always be array, albeit sometimes empty.
 
 ## 3.7.0 (2018-06-20)
 
-- ✨ Set up Rollup to remove comments from the code
+- Set up Rollup to remove comments from the code
 
 ## 3.6.0 (2018-06-20)
 
-- ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
+- Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
 
 ## 3.5.0 (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
-- ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
-- ✨ Dropped BitHound (RIP) and Travis
-- ✨ Removed `package-lock`
-- ✨ Added new feature — `opts.returnRangesOnly`
+- Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
+- Dropped BitHound (RIP) and Travis
+- Removed `package-lock`
+- Added new feature — `opts.returnRangesOnly`
 
 ## 3.4.0 (2018-05-26)
 
-- ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
-- ✨ Removed `package.lock` and `.editorconfig`
-- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
-- ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
+- Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
+- Removed `package.lock` and `.editorconfig`
+- Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
+- Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
 ## 3.3.0 (2018-04-30)
 
 ### Added
 
-- ✨ `opts.removeEmptyLines`
-- ✨ Set up Prettier to run automatically on all relevant files. Dropping `airbnb-base` ESLint preset.
-- ✨ Stopping to commit (and generate at all) `package-lock` files
-- ✨ Beefed up unit tests, filled all missing rows. Obviously, unit tests will be ran against the transpiled code (as well as nyc/coveralls reporting) and I can't unit-test some of the functions that Babel adds. Hence not perfect coverage score.
+- `opts.removeEmptyLines`
+- Set up Prettier to run automatically on all relevant files. Dropping `airbnb-base` ESLint preset.
+- Stopping to commit (and generate at all) `package-lock` files
+- Beefed up unit tests, filled all missing rows. Obviously, unit tests will be ran against the transpiled code (as well as nyc/coveralls reporting) and I can't unit-test some of the functions that Babel adds. Hence not perfect coverage score.
 
 ## 3.2.0 (2017-10-29)
 
 ### Added
 
-- ✨ Removed the look left-right matching function into a separate library, [string-match-left-right](https://github.com/codsen/string-match-left-right) and tapped it. Also did some tiny code rebasing.
+- Removed the look left-right matching function into a separate library, [string-match-left-right](https://github.com/codsen/string-match-left-right) and tapped it. Also did some tiny code rebasing.
 
 ## 3.1.0 (2017-10-27)
 
 ### Added
 
-- ✨ AVA unit test linting via ESLint plugin
+- AVA unit test linting via ESLint plugin
 
 ## 3.0.0 (2017-09-30)
 
 ### Added
 
-- ✨ The main source now is in ES2015 modules with `import`/`export`.
-- ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
-- ✨ `opts.recogniseHTML` (default true) - if string contains HTML, whitespace around brackets will be collapsed completely, for example: `< img` => `<img`, not `< img` => `< img` as before. The "before" result _now_ would yield only with this new setting turned off. Total 118 opening HTML tags are recognised (with or without attributes).
+- The main source now is in ES2015 modules with `import`/`export`.
+- Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
+- `opts.recogniseHTML` (default true) - if string contains HTML, whitespace around brackets will be collapsed completely, for example: `< img` => `<img`, not `< img` => `< img` as before. The "before" result _now_ would yield only with this new setting turned off. Total 118 opening HTML tags are recognised (with or without attributes).
 
 ## 2.2.0 (2017-09-16)
 
 ### Added
 
-- ✨ `opts.trimLines` - activates trim per-line basis
-- ✨ `opts.trimnbsp` - non-breaking spaces are trimmed too
-- ✨ switched to ESLint on `airbnb-base` config, with 3 exceptions: 1. no semicolons; 2. plus-plus allowed in loops;
+- `opts.trimLines` - activates trim per-line basis
+- `opts.trimnbsp` - non-breaking spaces are trimmed too
+- switched to ESLint on `airbnb-base` config, with 3 exceptions: 1. no semicolons; 2. plus-plus allowed in loops;
 
 ## 2.1.0 (2017-09-03)
 
 ### Added
 
-- ✨ Correctly treats non-breaking spaces - they are not considered _collapsable_ or _trimmable_ now.
+- Correctly treats non-breaking spaces - they are not considered _collapsable_ or _trimmable_ now.
 
 ## 2.0.0 (2017-09-03)
 
 ### Changed
 
-- ✨ This morning I didn't like yesterday's v.1 API at all, personally I think it was stupid. So, I simplified it and basically, recoded the whole thing.
+- This morning I didn't like yesterday's v.1 API at all, personally I think it was stupid. So, I simplified it and basically, recoded the whole thing.
 
 ## 1.0.0 (2017-09-02)
 
-- ✨ First public release
+- First public release

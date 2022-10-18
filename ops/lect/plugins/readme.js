@@ -9,6 +9,7 @@ const hasPlayground = [
   "html-crush",
   "detergent",
   "is-language-code",
+  "rehype-responsive-tables",
 ];
 
 const separateNonESMPackages = {

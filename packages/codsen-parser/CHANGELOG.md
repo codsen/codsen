@@ -166,4 +166,4 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 0.0.1 (2020-02-02)
 
-- ✨ First public release.
+- First public release.

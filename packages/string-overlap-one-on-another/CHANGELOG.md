@@ -71,15 +71,15 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.5.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+- Various documentation and setup tweaks after we migrated to monorepo
+- Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.1.0 (2018-10-26)
 
-- ✨ Updated all dependencies
-- ✨ Restored coveralls.io reporting
-- ✨ Restored unit test linting
+- Updated all dependencies
+- Restored coveralls.io reporting
+- Restored unit test linting
 
 ## 1.0.0 (2018-08-15)
 
-- ✨ First public release
+- First public release

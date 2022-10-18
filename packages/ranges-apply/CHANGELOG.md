@@ -87,19 +87,19 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.12.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+- Various documentation and setup tweaks after we migrated to monorepo
+- Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.9.0 (2018-12-26)
 
-- ✨ Add 3rd input arg - progressFn ([f6735e2](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/commits/f6735e2))
-- ✨ Accept `null` as second input argument, instead of ranges ([0c59484](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/commits/0c59484))
-- ✨ [`ranges-merge`](https://www.npmjs.com/package/ranges-merge) (sort + merge) is applied by default now to prevent errors on unsorted ranges ([35e3c4b](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/commits/35e3c4b))
+- Add 3rd input arg - progressFn ([f6735e2](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/commits/f6735e2))
+- Accept `null` as second input argument, instead of ranges ([0c59484](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/commits/0c59484))
+- [`ranges-merge`](https://www.npmjs.com/package/ranges-merge) (sort + merge) is applied by default now to prevent errors on unsorted ranges ([35e3c4b](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/commits/35e3c4b))
 
 ## 2.8.0 (2018-11-29)
 
-- ✨ Added third argument, `progressFn` — it reports progress, feeding natural numbers meaning percentage done to any function that is in the third input argument.
-- ✨ Pinned all the throws on all unit tests. "Pinning unit test throws" means we not just assert the fact that function threw, but match the throw's error message too. This gives more assurance:
+- Added third argument, `progressFn` — it reports progress, feeding natural numbers meaning percentage done to any function that is in the third input argument.
+- Pinned all the throws on all unit tests. "Pinning unit test throws" means we not just assert the fact that function threw, but match the throw's error message too. This gives more assurance:
 
   1. When there are many cases when an algorithm can throw and generic "function threw" assertion is used, a unit test can anticipate one throw to be thrown but another was thrown. Generic "function threw" assertions would still pass, throw is throw after all. But not pinned throws:
   2. It's easier to sort unit tests this way (order by throw ID) in a test file
@@ -115,43 +115,43 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.7.0 (2018-10-25)
 
-- ✨ Updated all dependencies
-- ✨ Restored coveralls.io reporting
-- ✨ Restored unit test linting
+- Updated all dependencies
+- Restored coveralls.io reporting
+- Restored unit test linting
 
 ## 2.6.0 (2018-08-29)
 
-- ✨ Now second argument, ranges array, can be `null`. This means, output of [ranges-push](https://www.npmjs.com/package/ranges-push) classes method`.current()` can be fed directly into this library without even checking. If it's null, original string will be returned.
+- Now second argument, ranges array, can be `null`. This means, output of [ranges-push](https://www.npmjs.com/package/ranges-push) classes method`.current()` can be fed directly into this library without even checking. If it's null, original string will be returned.
 
 ## 2.5.0 (2018-08-16)
 
-- ✨ Now we merge all input ranges using [ranges-merge](https://www.npmjs.com/package/ranges-merge) because it's necessary for algorithm and we can't rely on user to always provide merged ranges only.
+- Now we merge all input ranges using [ranges-merge](https://www.npmjs.com/package/ranges-merge) because it's necessary for algorithm and we can't rely on user to always provide merged ranges only.
 
 ## 2.4.0 (2018-08-11)
 
-- ✨ Updated error labels
-- ✨ Updated all dependencies
-- ✨ Removed AVA ES linting rules and `nyc` code coverage build steps because we migrated to Babel v.7 and `nyc` breaks
+- Updated error labels
+- Updated all dependencies
+- Removed AVA ES linting rules and `nyc` code coverage build steps because we migrated to Babel v.7 and `nyc` breaks
 
 ## 2.3.0 (2018-06-18)
 
-- ✨ Renamed to `ranges-apply` and migrated to Bitbucket.
+- Renamed to `ranges-apply` and migrated to Bitbucket.
 
 ## 2.2.0 (2018-05-11)
 
-- ✨ Set up [Prettier](https://prettier.io)
-- ✨ Removed `package.lock` and `.editorconfig`
-- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
-- ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
+- Set up [Prettier](https://prettier.io)
+- Removed `package.lock` and `.editorconfig`
+- Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+- Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
 ## 2.1.0 (2018-02-13)
 
-- ✨ Now accepts a single range as well, not only array of ranges.
+- Now accepts a single range as well, not only array of ranges.
 
 ## 2.0.0 (2017-11-02)
 
-- ✨ The main source now is in ES2015 modules with `import`/`export`.
-- ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
+- The main source now is in ES2015 modules with `import`/`export`.
+- Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
 
 ## 1.4.0 (2017-09-19)
 
@@ -174,4 +174,4 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.0.0 (2017-07-25)
 
-- ✨ First public release
+- First public release
