@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.1.2 (2022-10-22)
+
+**Note:** Version bump only for package color-shorthand-hex-to-six-digit
+
 # 4.1.0 (2022-08-12)
 
 ### Features

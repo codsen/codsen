@@ -1,6 +1,6 @@
 {
   "name": "ast-contains-only-empty-space",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Does AST contain only empty space?",
   "keywords": [
     "ast",
@@ -72,6 +72,6 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^3.1.1"
+    "ast-monkey-traverse": "^3.1.2"
   }
 }

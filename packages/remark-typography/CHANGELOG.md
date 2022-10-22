@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4](https://github.com/codsen/codsen/compare/remark-typography@0.4.3...remark-typography@0.4.4) (2022-10-22)
+
+### Bug Fixes
+
+- set the tree walker to be a synchronous function ([8cf34ec](https://github.com/codsen/codsen/commit/8cf34ec02437e5b2d646508beea8ebad97f5197e))
+
 # [0.4.0](https://github.com/codsen/codsen/compare/remark-typography@0.3.4...remark-typography@0.4.0) (2022-10-13)
 
 ### Features
