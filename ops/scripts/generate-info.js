@@ -3,10 +3,10 @@
 /* eslint operator-assignment:0 */
 
 import {
-  promises as fs,
   F_OK,
   accessSync,
   readdirSync,
+  writeFile,
   statSync,
   readFileSync,
 } from "fs";
@@ -401,7 +401,7 @@ dependencyStats.top10ExternalDeps = top10ExternalDeps;
 // 4. write files
 // -----------------------------------------------------------------------------
 
-fs.writeFile(
+writeFile(
   path.resolve("./data/sources/interdeps.ts"),
   // JSON.stringify(interdep, null, 4),
   `export const interdeps = ${JSON.stringify(
@@ -422,7 +422,7 @@ fs.writeFile(
   }
 );
 
-fs.writeFile(
+writeFile(
   path.resolve("./data/sources/packages.ts"),
   `const all = ${JSON.stringify(allPackages.sort(), null, 4)} as const;
 const current = ${JSON.stringify(currentPackages.sort(), null, 4)} as const;
@@ -510,7 +510,7 @@ export const packages = {
   }
 );
 
-fs.writeFile(
+writeFile(
   path.resolve("./data/sources/dependencyStats.ts"),
   `${dependencyStatsTypings}\nexport const dependencyStats: DependencyStats = ${JSON.stringify(
     sortAllObjectsSync(dependencyStats),
@@ -525,7 +525,7 @@ fs.writeFile(
   }
 );
 
-fs.writeFile(
+writeFile(
   path.resolve("./data/sources/packageJSONData.ts"),
   `export const packageJSONData = ${JSON.stringify(
     packageJSONData,
@@ -540,7 +540,7 @@ fs.writeFile(
   }
 );
 
-fs.writeFile(
+writeFile(
   path.resolve("./data/sources/allDTS.ts"),
   `export const allDTS = ${JSON.stringify(allDTS, null, 0)};\n`,
   (err) => {
@@ -551,7 +551,7 @@ fs.writeFile(
   }
 );
 
-fs.writeFile(
+writeFile(
   path.resolve("./data/sources/exportedDefaults.ts"),
   `export const exportedDefaults = ${JSON.stringify(
     exportedDefaults,
@@ -568,7 +568,7 @@ fs.writeFile(
   }
 );
 
-fs.writeFile(
+writeFile(
   path.resolve("./data/sources/examples.ts"),
   `export const examples = ${JSON.stringify(examples, null, 0)};\n`,
   (err) => {
@@ -588,7 +588,7 @@ if (!isCI) {
   try {
     // git rev-list --count HEAD
     commitTotal = await git(".git").raw(["rev-list", "--count", "HEAD"]);
-    fs.writeFile(
+    writeFile(
       path.join("./data/sources/gitStats.ts"),
       `export const gitStats = ${JSON.stringify(
         { commitTotal: commitTotal.trim() },

@@ -7182,6 +7182,90 @@ export const packageJSONData = {
             "remark-rehype": "^10.1.0"
         }
     },
+    "remark-conventional-commit-changelog-timeline": {
+        "name": "remark-conventional-commit-changelog-timeline",
+        "version": "1.0.0",
+        "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
+        "keywords": [
+            "unified",
+            "remark",
+            "remark-plugin",
+            "plugin",
+            "mdast",
+            "markdown",
+            "changelog",
+            "conventional",
+            "commits"
+        ],
+        "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/codsen/codsen.git",
+            "directory": "packages/remark-conventional-commit-changelog-timeline"
+        },
+        "license": "MIT",
+        "author": {
+            "name": "Roy Revelt",
+            "email": "roy@codsen.com",
+            "url": "https://codsen.com"
+        },
+        "type": "module",
+        "exports": {
+            "types": "./types/index.d.ts",
+            "default": "./dist/remark-conventional-commit-changelog-timeline.esm.js"
+        },
+        "types": "types/index.d.ts",
+        "scripts": {
+            "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
+            "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
+            "examples": "node '../../ops/scripts/run-examples.js'",
+            "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+            "letspublish": "yarn publish || :",
+            "lint": "eslint . --fix",
+            "perf": "echo 'skip perf'",
+            "prepare": "echo 'ready'",
+            "prettier": "prettier",
+            "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
+            "pretest": "yarn run lect && yarn run build",
+            "test": "yarn run devtest",
+            "unit": "uvu test"
+        },
+        "engines": {
+            "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+        },
+        "c8": {
+            "check-coverage": true,
+            "exclude": [
+                "**/test/**/*.*"
+            ],
+            "lines": 100
+        },
+        "lect": {
+            "licence": {
+                "extras": [
+                    ""
+                ]
+            },
+            "various": {}
+        },
+        "dependencies": {
+            "@types/hast": "^2.3.4",
+            "semver-regex": "^4.0.5",
+            "unified": "^10.1.2",
+            "unist-util-visit": "^4.1.1"
+        },
+        "devDependencies": {
+            "object-delete-key": "^3.2.11",
+            "rehype-format": "^4.0.1",
+            "rehype-stringify": "^9.0.3",
+            "remark": "^14.0.2",
+            "remark-gfm": "^3.0.1",
+            "remark-parse": "^10.0.1",
+            "remark-rehype": "^10.1.0"
+        }
+    },
     "remark-typography": {
         "name": "remark-typography",
         "version": "0.4.3",
@@ -9721,7 +9805,7 @@ export const packageJSONData = {
             "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^15.0.1",
+            "pacote": "^15.0.3",
             "update-notifier": "^6.0.2",
             "write-file-atomic": "^5.0.0"
         },

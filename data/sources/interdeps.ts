@@ -590,7 +590,7 @@ export const interdeps = [
     },
     {
         "name": "remark-typography",
-        "size": 756,
+        "size": 750,
         "imports": [
             "string-apostrophes",
             "string-remove-widows"
