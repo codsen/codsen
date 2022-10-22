@@ -15,24 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - tweak types ([104a64a](https://github.com/codsen/codsen/commit/104a64ab783c05af4ae8bd3eb653742eb95d0cd2))
 
-## 5.0.10 (2021-12-24)
-
-### Bug Fixes
-
-- add missing extension ([147bd6e](https://github.com/codsen/codsen/commit/147bd6ec2a2d44c09749f0fba0ca3e3d9c52da94))
-
-## 5.0.9 (2021-12-24)
-
-### Bug Fixes
-
-- add missing extension ([147bd6e](https://github.com/codsen/codsen/commit/147bd6ec2a2d44c09749f0fba0ca3e3d9c52da94))
-
-## 5.0.8 (2021-12-24)
-
-### Bug Fixes
-
-- add missing extension ([147bd6e](https://github.com/codsen/codsen/commit/147bd6ec2a2d44c09749f0fba0ca3e3d9c52da94))
-
 ## 5.0.0 (2021-09-09)
 
 ### Bug Fixes
