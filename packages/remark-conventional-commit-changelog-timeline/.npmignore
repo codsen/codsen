@@ -1,0 +1,13 @@
+# folders:
+.turbo
+coverage
+examples
+src
+test
+
+# files:
+.all-contributorsrc
+.npmignore
+.prettierignore
+rollup.config.js
+tsconfig.json
