@@ -12,7 +12,7 @@ const fixTypography: UnifiedPlugin<any[]> = () => {
   let mDash = "\u2014";
   let rightSingleQuote = "\u2019";
   //
-  return async (tree) => {
+  return (tree) => {
     visit(tree, "text", (node, index, parent) => {
       let originalNodeValue = node.value;
 
