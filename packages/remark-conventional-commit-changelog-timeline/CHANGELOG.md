@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@1.1.0...remark-conventional-commit-changelog-timeline@1.2.0) (2022-10-23)
+
+### Features
+
+- wrap emoji with a span ([9d9e25f](https://github.com/codsen/codsen/commit/9d9e25f86fb333a60d5f2fff7f0f293bb5620c63))
+
 # [1.1.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@1.0.1...remark-conventional-commit-changelog-timeline@1.1.0) (2022-10-23)
 
 ### Features
