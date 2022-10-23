@@ -92,7 +92,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 </ul>
 <h2>0.3.0</h2>
 <div class="release-date">27 Sept<br>2022</div>
-<h3>🔧 Bug Fixes</h3>
+<h3>🔧 Fixed</h3>
 <ul>
   <li>fix dependencies (<a href="https://github.com/codsen/codsen/commit/c945828389167e9e304b29dd6b3a5ad4e5551f9e">c945828</a>)</li>
 </ul>

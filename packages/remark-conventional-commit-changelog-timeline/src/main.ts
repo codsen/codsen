@@ -247,12 +247,30 @@ const changelogTimeline: UnifiedPlugin<any[]> = () => {
 
         let emoji = "";
 
-        if ((node as any)?.children[0].value === "Features") {
-          emoji = "✨";
-        } else if ((node as any)?.children[0].value === "Bug Fixes") {
-          emoji = "🔧";
-        } else if ((node as any)?.children[0].value === "BREAKING CHANGES") {
-          emoji = "💥";
+        switch ((node as any)?.children[0].value) {
+          case "Features":
+            emoji = "✨";
+            break;
+          case "BREAKING CHANGES":
+            emoji = "💥";
+            break;
+          case "Reverts":
+            emoji = "⏪";
+            break;
+          case "Changes":
+            emoji = "✈️";
+            break;
+          case "Improvements":
+            emoji = "🏗️";
+            break;
+          case "Bug Fixes":
+          case "Fixed":
+            // don't mention "bugs"
+            (node as any).children[0].value = "Fixed";
+            emoji = "🔧";
+            break;
+          default:
+            break;
         }
 
         if (emoji) {
@@ -265,7 +283,7 @@ const changelogTimeline: UnifiedPlugin<any[]> = () => {
 
     DEV &&
       console.log(
-        `268 ███████████████████████████████████████ NEW  ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(
+        `286 ███████████████████████████████████████ NEW  ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(
           tree
         )}`
       );
