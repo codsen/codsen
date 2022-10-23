@@ -115,21 +115,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add few previously missing invisible space-like characters ([33ee0ed](https://gitlab.com/codsen/codsen/commit/33ee0ed1dc151cd03e4d52ff1f99037eed3ad82b))
 
-Besides U+200A HAIR SPACE, now we detect and turn into normal space all other fancy space characters:
-U+1680 OGHAM SPACE MARK
-U+2000 EN QUAD
-U+2001 EM QUAD
-U+2002 EN SPACE
-U+2003 EM SPACE
-U+2004 THREE-PER-EM SPACE
-U+2005 FOUR-PER-EM SPACE
-U+2006 SIX-PER-EM SPACE
-U+2007 FIGURE SPACE
-U+2008 PUNCTUATION SPACE
-U+2009 THIN SPACE
-U+202F NARROW NO-BREAK SPACE
-U+205F MEDIUM MATHEMATICAL SPACE
-U+3000 IDEOGRAPHIC SPACE
+- Besides U+200A HAIR SPACE, now we detect and turn into normal space all other fancy space characters:
+
+  - U+1680 OGHAM SPACE MARK
+  - U+2000 EN QUAD
+  - U+2001 EM QUAD
+  - U+2002 EN SPACE
+  - U+2003 EM SPACE
+  - U+2004 THREE-PER-EM SPACE
+  - U+2005 FOUR-PER-EM SPACE
+  - U+2006 SIX-PER-EM SPACE
+  - U+2007 FIGURE SPACE
+  - U+2008 PUNCTUATION SPACE
+  - U+2009 THIN SPACE
+  - U+202F NARROW NO-BREAK SPACE
+  - U+205F MEDIUM MATHEMATICAL SPACE
+  - U+3000 IDEOGRAPHIC SPACE
 
 Reference: <https://www.fileformat.info/info/unicode/category/Zs/list.htm>
 
@@ -429,9 +430,9 @@ This second stage relieved us from roughly half of the blanked functions that pr
 
 - Swooping in on full stop + letter fixes. I found the file names where extension is mentioned get separated into two parts. I came up with the idea: two errors rarely happen at one place. "string1.string2" is a double error because space after full stop is missing and letter that follows is in capital. This leads to the algorithm:
 
-If there is no space after full stop, and letter that follows is uppercase, add a full stop. If lowecase letter follows full stop, leave it as it is.
+  If there is no space after full stop, and letter that follows is uppercase, add a full stop. If lowecase letter follows full stop, leave it as it is.
 
-Additionally, the algorithm is now checking, does any of the known extensions follow the full stop (in any case). If so, space between the full stop and extension is not added. This should cover all false positives where file names are involved.
+  Additionally, the algorithm is now checking, does any of the known extensions follow the full stop (in any case). If so, space between the full stop and extension is not added. This should cover all false positives where file names are involved.
 
 ## 2.22.0 (2017-03-22)
 
