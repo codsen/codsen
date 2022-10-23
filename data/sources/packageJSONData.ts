@@ -7258,12 +7258,7 @@ export const packageJSONData = {
         },
         "devDependencies": {
             "object-delete-key": "^3.2.12",
-            "rehype-format": "^4.0.1",
-            "rehype-stringify": "^9.0.3",
-            "remark": "^14.0.2",
-            "remark-gfm": "^3.0.1",
-            "remark-parse": "^10.0.1",
-            "remark-rehype": "^10.1.0"
+            "remark": "^14.0.2"
         }
     },
     "remark-typography": {
