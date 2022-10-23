@@ -41,7 +41,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 let expected = `
 <h2>3.1.0</h2>
 <div class="release-date">12 Aug<br>2022</div>
-<h3>✨ Features</h3>
+<h3><span class="emoji">✨</span> Features</h3>
 <ul>
   <li>abc</li>
   <li>xyz</li>

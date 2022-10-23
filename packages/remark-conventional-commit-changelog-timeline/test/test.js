@@ -45,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   let expected = `
 <h2>3.1.0</h2>
 <div class="release-date">12 Aug<br>2022</div>
-<h3>✨ Features</h3>
+<h3><span class="emoji">✨</span> Features</h3>
 <ul>
   <li>abc</li>
   <li>xyz</li>
@@ -86,17 +86,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   let expected = `
 <h2>0.4.0</h2>
 <div class="release-date">13 Oct<br>2022</div>
-<h3>✨ Features</h3>
+<h3><span class="emoji">✨</span> Features</h3>
 <ul>
   <li>correct apostrophes after code tag pairs (<a href="https://github.com/codsen/codsen/commit/6495fe370022eca5ad984b689294cdee33db1a63">6495fe3</a>)</li>
 </ul>
 <h2>0.3.0</h2>
 <div class="release-date">27 Sept<br>2022</div>
-<h3>🔧 Fixed</h3>
+<h3><span class="emoji">🔧</span> Fixed</h3>
 <ul>
   <li>fix dependencies (<a href="https://github.com/codsen/codsen/commit/c945828389167e9e304b29dd6b3a5ad4e5551f9e">c945828</a>)</li>
 </ul>
-<h3>💥 BREAKING CHANGES</h3>
+<h3><span class="emoji">💥</span> BREAKING CHANGES</h3>
 <ul>
   <li>fix dependencies</li>
 </ul>
@@ -128,7 +128,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
   let expected = `
 <h2>Whatever</h2>
-<h3>✨ Features</h3>
+<h3><span class="emoji">✨</span> Features</h3>
 <ul>
   <li>abc</li>
   <li>xyz</li>

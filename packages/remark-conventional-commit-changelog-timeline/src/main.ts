@@ -274,16 +274,31 @@ const changelogTimeline: UnifiedPlugin<any[]> = () => {
         }
 
         if (emoji) {
-          (node as any).children[0].value = `${emoji} ${
+          // 1. add a space in between emoji and existing label
+          (node as any).children[0].value = ` ${
             (node as any)?.children[0].value
           }`;
+          // 2. insert span with emoji in front:
+          (node as any).children.unshift({
+            type: "element",
+            tagName: "span",
+            properties: {
+              className: "emoji",
+            },
+            children: [
+              {
+                type: "text",
+                value: `${emoji}`,
+              },
+            ],
+          });
         }
       }
     });
 
     DEV &&
       console.log(
-        `286 ███████████████████████████████████████ NEW  ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(
+        `301 ███████████████████████████████████████ NEW  ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(
           tree
         )}`
       );
