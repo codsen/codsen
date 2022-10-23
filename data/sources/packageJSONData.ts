@@ -7184,7 +7184,7 @@ export const packageJSONData = {
     },
     "remark-conventional-commit-changelog-timeline": {
         "name": "remark-conventional-commit-changelog-timeline",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
         "keywords": [
             "unified",
