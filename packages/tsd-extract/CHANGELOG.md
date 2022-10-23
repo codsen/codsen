@@ -11,13 +11,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.6.4](https://github.com/codsen/codsen/compare/tsd-extract@0.6.3...tsd-extract@0.6.4) (2022-08-29)
 
-### Bug Fixes
+### Fixed
 
 - setup refresh ([af648a3](https://github.com/codsen/codsen/commit/af648a30a205b6c93bbe7379c7530d2a4cd0e837))
 
 ## [0.6.1](https://github.com/codsen/codsen/compare/tsd-extract@0.6.0...tsd-extract@0.6.1) (2022-08-14)
 
-### Bug Fixes
+### Fixed
 
 - sort only export contents ([233abc5](https://github.com/codsen/codsen/commit/233abc557119b8d4d078b3befa5a51d0429f5bcd))
 
@@ -29,7 +29,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.5.0](https://github.com/codsen/codsen/compare/tsd-extract@0.4.0...tsd-extract@0.5.0) (2022-04-29)
 
-### Bug Fixes
+### Fixed
 
 - instead of using undefined for opts.mustInclude, use empty string - simplifies types ([aba9f94](https://github.com/codsen/codsen/commit/aba9f949b95577d96a9efb2263139ab4bb621a3a))
 
@@ -51,7 +51,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.2.0](https://github.com/codsen/codsen/compare/tsd-extract@0.1.0...tsd-extract@0.2.0) (2022-04-10)
 
-### Bug Fixes
+### Fixed
 
 - tweak the algorithm ([e62c8b7](https://github.com/codsen/codsen/commit/e62c8b7bf8c6f4e412a96360d7e86506368d10cc))
 

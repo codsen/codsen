@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 8.0.17 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([444d3fe](https://github.com/codsen/codsen/commit/444d3feff61a2d5b5b84e362748fadc96785ba5e))
 
@@ -39,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -49,7 +49,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - rewrite in TypeScript ([4a4e304](https://github.com/codsen/codsen/commit/4a4e30437a95480cb9a1d5ec2334f042803f66e7))
 
-### Breaking Changes
+### BREAKING CHANGES
 
 - there should not be any, but bumping anyway as the source was rewritten in TypeScript
 
@@ -61,7 +61,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.0.0 (2020-11-28)
 
-### Breaking Changes
+### BREAKING CHANGES
 
 - when `opts.removeWidows` is off, it's interpreted as explicit request to turn `&nbsp;` and raw non-breaking space characters into normal spaces
 
@@ -85,7 +85,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.8.1 (2019-11-27)
 
-### Bug Fixes
+### Fixed
 
 - apostrophes algorithm improvements ([3415b17](https://gitlab.com/codsen/codsen/commit/3415b1704b9b9e1b33d8ec234ba6ea20cd57d1ba))
 - characters are index zero were not included in the clause ([6ad8f5f](https://gitlab.com/codsen/codsen/commit/6ad8f5f7e4d84dd8205392c1882e9b007501d81f))
@@ -99,7 +99,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.7.1 (2019-11-11)
 
-### Bug Fixes
+### Fixed
 
 - fix the html tag skipping during widow removal ([2fd262b](https://gitlab.com/codsen/codsen/commit/2fd262bc8fecdaa376406f42fc750571af8379c8))
 
@@ -141,7 +141,7 @@ Reference: <https://www.fileformat.info/info/unicode/category/Zs/list.htm>
 
 ## 5.4.0 (2019-10-26)
 
-### Bug Fixes
+### Fixed
 
 - making all tests pass ([e1f332b](https://gitlab.com/codsen/codsen/commit/e1f332bd61714cac672f1ec3cadb32fbadde06bd))
 
@@ -271,7 +271,7 @@ This is a huge boost for my productivity.
 
 ## 3.5.0 (2018-01-01)
 
-### Added
+### Features
 
 - Strips [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code) from the input, thanks to [strip-ansi](https://github.com/chalk/strip-ansi)
 
@@ -285,33 +285,33 @@ This is a huge boost for my productivity.
 
 ## 3.3.0 (2017-11-27)
 
-### Added
+### Features
 
 - Switched to custom HTML stripping [library](https://github.com/codsen/string-strip-html) tailored specificly for Detergent. Now legit brackets are recognised and not removed, for example: `Equations: a < b and c > d are important` would not treat `< b and c >` as a tag any more.
 - Recognises improvised arrows comprising of 4 and more dashes, like `->`, `-->`, `--->` and so on.
 - Contributors list to readme.
 - Closes [#19](https://github.com/codsen/detergent/issues/19) - now recognises left-to-right and right-to-left marks.
 
-### Removed
+### Fixed
 
 - Removed dependency `string.js`, it was causing security [alerts](https://snyk.io/test/npm/string/3.3.3).
 
 ## 3.2.0 (2017-09-25)
 
-### Added
+### Features
 
 - The main source now is in ES2015 modules with `import`/`export`.
 - Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
 
 ## 3.1.6 (2017-09-19)
 
-### Changed
+### Changes
 
 - Small rebase - tapped the line trimming function in `string-collapse-white-space` what rendered the current `string.js`-based function redundant. All functionality stays the same, it's a rebase.
 
 ## 3.1.0 (2017-09-13)
 
-### Added
+### Features
 
 - Widow removal now detects Jinja/Nunjucks code. For example, if the input string starts with `{` and ends with `}`, it will automatically deactivate.
 
@@ -349,83 +349,83 @@ I separated all the operations performed on input into three stages: **the first
 
 This second stage relieved us from roughly half of the blanked functions that previously mutated the string again and again. Now, all deletion/insertion procedures are recorded during (a single) traversal in Step 2; then a string is crunched in one go. It's done using combo of [string-slices-array-push](https://github.com/codsen/string-slices-array-push) and [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array).
 
-### Added
+### Features
 
 - Horizontal ellipsis is converted only when there are three dots in one lump, not more and setting is on. Gung-ho regex replacements would not do this correctly by the way.
 - Horizontal ellipsis switch makes the journey strictly either way: either all kinds of what could be interpreted as ellipsis are converted to fancy &hellip; (or unencoded character if the encoding is turned off) OR those above are converted to dot dot dot. There are no gray cases. Unlike before.
 - Script tags are now stripped together with their contents. Solves #15, thanks @nacimgoura
 - More tests to thoroughly prove that single quotes in any format (`'`) are not encoded. Ever. They can be converted to fancy single quote, but in a single straight shape, they should always stay the same.
 
-### Removed
+### Fixed
 
 - 💥 `upper-case` dependency. It was buggy, by the way, reporting '1' as uppercase. For those concerned that didn't affect Detergent's correctness.
 - 💥 `lower-case` dependency. It was buggy as well. Same thing.
 
 ## 2.31.0 (2017-08-28)
 
-### Added
+### Features
 
 - `opts.convertDotsToEllipsis` - now you can customise, do you want three dots converted to horizontal ellipsis, `&hellip;`, or not.
 - Tapped [check-types-mini](https://github.com/codsen/check-types-mini) to enforce peace and order within an options object. Now unrecognised options object's keys will `throw` as well.
 
-### Removed
+### Fixed
 
 - 💥 Dependency `lodash.clonedeep` - the `Object.assign` against an empty object does the same job - it does not mutate the input arguments.
 
 ## 2.30.0 (2017-07-20)
 
-### Added
+### Features
 
 - Bunch of new badges to readme.
 - `.npmignore` and added `/media/` to it, along all dotfiles. This will reduce your npm installation footprint.
 
 ## 2.29.0 (2017-07-20)
 
-### Added
+### Features
 
 - Feature for issue [#14](https://github.com/codsen/detergent/issues/14) - Detergent strips all HTML (except bolt/italic/strong/em) code, but in the process, some content might be misformatted. For example, the content in unordered lists would get bunged up together without spaces. Now that's fixed. By default, every `<li>` will be put onto a new line, as well as closing `</ul>`. If you want everything on one line, set `opts.removeLineBreaks` to `true`.
 
-### Removed
+### Fixed
 
 - 💥 Some Lodash dependencies, replacing them with native ES6-ones.
 
 ## 2.28.0 (2017-07-08)
 
-### Removed
+### Fixed
 
 - 💥 As the features grew, the "Builds" time on Travis grew too. Currently Travis fails around 50% of the cases because it hits 50 minutes mark while running the end-to-end unit tests. Therefore, I'm removing Travis for good. It makes no sense anyway, as there are no "Builds" for this library, only unit tests, which can be ran locally.
 
 ## 2.27.0 (2017-07-08)
 
-### Updated
+### Fixed
 
 - Code refresh: updated all deps, generated up-to-date `package-lock` and did some small code rebasing related to all this.
 
 ## 2.26.0 (2017-04-12)
 
-### Added
+### Features
 
 - Options key `o.addMissingSpaces` now allows you to control, do you want to add missing spaces after full stops/colons/semicolons, or not. This does not break the API as the new default setting matches previously non-customiseable setting.
 
 ## 2.25.0 (2017-04-07)
 
-### Improved
+### Improvements
 
 - Tiny rebasing: separated all functions into util.js, added some measures to protect against options object settings in wrong type (values other type than Boolean).
 
 ## 2.24.0 (2017-04-05)
 
-### Improved
+### Improvements
 
 - Widows won't be added if there's right closing slash following the space. Also, they won't be added if there's `hr` or `br` preceding the space. This is necessary to cater the cases when Detergent is being ran on a code which has concealed HTML tags where brackets are swapped with custom strings. For example, cases like `aaaaaaaaaaa%%%1br /%%%2aaaaaaaaaaa` should get identified as concealed HTML and widow removal should not be triggered.
 
-### Removed
+### Fixed
 
 - 💥 `strip-bom` library dependency was redundant; '\uFEFF' was already in the invisible character list and removed along all other invisibles.
 
 ## 2.23.0 (2017-03-24)
 
-### Improved
+### Improvements
 
 - Swooping in on full stop + letter fixes. I found the file names where extension is mentioned get separated into two parts. I came up with the idea: two errors rarely happen at one place. "string1.string2" is a double error because space after full stop is missing and letter that follows is in capital. This leads to the algorithm:
 
@@ -435,41 +435,41 @@ Additionally, the algorithm is now checking, does any of the known extensions fo
 
 ## 2.22.0 (2017-03-22)
 
-### Improved
+### Improvements
 
 - Now correctly recognises and ignores legitimate minus signs, such as `-20°C` when it comes after a space. If algorithm will detect a number of curency symbol after a dash, it will not add a space after it or turn it into an m-dash. It does not matter now, a space character precedes all that or not.
 - Updated Husky to latest.
 
-### Added
+### Features
 
 - More tests.
 
-### Changed
+### Changes
 
 - 🔧 Now consuming JS Standard linter in normal fashion, not "any latest", but within the current _major_ range.
 
 ## 2.21.0 (2017-03-09)
 
-### Added
+### Features
 
 - Removes [byte order mark](https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8) (BOM).
 
 ## 2.20.0 (2017-02-22)
 
-### Added
+### Features
 
 - Widow removal now identifies UK postcodes and replaces the space with non-breaking space.
 
 ## 2.19.0 (2017-01-04)
 
-### Added
+### Features
 
 - URL recognition — now Detergent won't add spaces within an URL.
 - New tests — to maintain the coverage and prove the surrounded text is cleaned correctly as before.
 
 ## 2.18.0 (2016-12-23)
 
-### Added
+### Features
 
 - JS Standard on a precommit hook to enforce an order everywhere
 - Tweaks for BitHound to ignore the fact that we are going to use the _latest version_ `AVA`, `Coveralls` and `Standard` no matter what, to reduce maintenance time spent on all my libraries.
@@ -477,7 +477,7 @@ Additionally, the algorithm is now checking, does any of the known extensions fo
 
 ## 2.17.0 (2016-12-21)
 
-### Added
+### Features
 
 - Test coverage and a badge
 - Changelog

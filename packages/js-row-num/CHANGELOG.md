@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.1.2 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([e215772](https://github.com/codsen/codsen/commit/e215772dc1c9f9efcbdc92f26c3370f5dd0e027e))
 
@@ -46,7 +46,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -62,7 +62,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.7.0 (2019-12-14)
 
-### Bug Fixes
+### Fixed
 
 - fix the regression of letters in front of digits not causing a bailout ([d141967](https://gitlab.com/codsen/codsen/commit/d14196750fa3b83d049bbd573fe0851ef150120f))
 - set up Tap as a test runner, write many more unit tests and fix all remaining issues ([58e1471](https://gitlab.com/codsen/codsen/commit/58e147195282077df7ad20efb00dac95976ac24d))

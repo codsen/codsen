@@ -33,7 +33,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.3.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -49,7 +49,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.1.2 (2020-04-04)
 
-### Bug Fixes
+### Fixed
 
 - don't return null when going up from root, return `"0"` ([7743d87](https://gitlab.com/codsen/codsen/commit/7743d877a357afa1ec0452e83b2c507cd927fcfe))
 

@@ -39,13 +39,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.3 (2021-02-07)
 
-### Bug Fixes
+### Fixed
 
 - passed ranges can be null ([ed082b8](https://github.com/codsen/codsen/commit/ed082b8b87aec7e909e1b523ab70e9debeabb00b))
 
 ## 5.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -65,7 +65,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.2.0 (2020-09-07)
 
-### Bug Fixes
+### Fixed
 
 - make all tests pass ([d86cf1b](https://gitlab.com/codsen/codsen/commit/d86cf1bca9b0ac38e5bf141ed4ffd44c935ef51c))
 
@@ -75,7 +75,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.1.5 (2020-04-26)
 
-### Bug Fixes
+### Fixed
 
 - harden the eslint rules set and make all tests pass ([3b593b4](https://gitlab.com/codsen/codsen/commit/3b593b495f645005780a26ab8d719aa7d1846dd0))
 

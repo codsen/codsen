@@ -11,13 +11,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.1.1 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([abf7641](https://github.com/codsen/codsen/commit/abf76412cc8669f04481bdc17c26350b030a8389))
 
 # 2.1.0 (2022-04-11)
 
-### Bug Fixes
+### Fixed
 
 - use Partial, every opts key is optional ([844685c](https://github.com/codsen/codsen/commit/844685ca133e107bb10c46c75c6cba70a7a5a8f3))
 
@@ -49,7 +49,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.4.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -65,7 +65,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.2.3 (2019-07-24)
 
-### Bug Fixes
+### Fixed
 
 - closing curlies were not recognised if they were placed on a new line - fixed now ([c81eb14](https://gitlab.com/codsen/codsen/commit/c81eb14))
 
@@ -80,7 +80,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.1.0 (2019-07-06)
 
-### Bug Fixes
+### Fixed
 
 - Don't close the comment blocks above, it's not fully safe ([5ce6230](https://gitlab.com/codsen/codsen/commit/5ce6230))
 - Fix cases when there is no \$\$\$ in the input and there are heads/tails ([09ceccd](https://gitlab.com/codsen/codsen/commit/09ceccd))

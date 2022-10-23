@@ -11,13 +11,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [2.0.18](https://github.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@2.0.17...email-all-chars-within-ascii-cli@2.0.18) (2022-04-24)
 
-### Bug Fixes
+### Fixed
 
 - add the missing dependency ([7d56225](https://github.com/codsen/codsen/commit/7d56225e329f6cd9d37c375e3540ae5c16ab99eb))
 
 ## [2.0.17](https://github.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@2.0.16...email-all-chars-within-ascii-cli@2.0.17) (2022-04-24)
 
-### Bug Fixes
+### Fixed
 
 - restore update-notifier ([873464c](https://github.com/codsen/codsen/commit/873464ccf4ccf6dd1630622d8ce3624a45ffa9eb))
 
@@ -55,7 +55,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.12.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 

@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2022-04-28)
 
-### Bug Fixes
+### Fixed
 
 - set correct defaults ([cfb61e2](https://github.com/codsen/codsen/commit/cfb61e2a3179dfe8b485ba0100efaebcfcde7f48))
 
@@ -51,7 +51,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.4.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 

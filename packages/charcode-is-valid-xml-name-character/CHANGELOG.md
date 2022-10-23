@@ -39,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.12.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -86,7 +86,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 1.2.0 (2018-02-16)
 
-### Added
+### Features
 
 - First checking lowercase letters, then the rest.
 

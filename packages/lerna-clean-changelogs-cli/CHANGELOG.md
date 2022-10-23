@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [2.0.16](https://github.com/codsen/codsen/compare/lerna-clean-changelogs-cli@2.0.15...lerna-clean-changelogs-cli@2.0.16) (2022-05-04)
 
-### Bug Fixes
+### Fixed
 
 - remove a stray TS bit ([ea63aaf](https://github.com/codsen/codsen/commit/ea63aafb82cfa3971e13d6f50da583a8a985f496))
 
@@ -50,7 +50,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.4.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 

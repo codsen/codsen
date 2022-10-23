@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.1.2 (2022-09-05)
 
-### Bug Fixes
+### Fixed
 
 - address memory leaks related to arrays not being garbage-collected ([7001193](https://github.com/codsen/codsen/commit/7001193ba3f6eec5015b5f1199f6ae296ae31204))
 
@@ -39,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 

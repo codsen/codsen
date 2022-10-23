@@ -85,6 +85,13 @@
     "object-path": "^0.11.8",
     "perf-ref": "^1.0.5",
     "prettier": "^2.7.1",
+    "rehype-format": "^4.0.1",
+    "rehype-stringify": "^9.0.3",
+    "remark-conventional-commit-changelog-timeline": "^1.0.1",
+    "remark-parse": "^10.0.1",
+    "remark-rehype": "^10.1.0",
+    "remark-gfm": "^3.0.1",
+    "remark-typography": "^0.4.4",
     "rimraf": "^3.0.2",
     "rollup": "^3.2.3",
     "rollup-plugin-dts": "^5.0.0",
@@ -93,6 +100,7 @@
     "tempy": "^3.0.0",
     "turbo": "^1.6.1",
     "typescript": "^4.8.4",
+    "unified": "^10.1.2",
     "uvu": "^0.5.6"
   },
   "packageManager": "yarn@1.22.17"

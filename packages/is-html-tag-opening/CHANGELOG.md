@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.15 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([6e721d2](https://github.com/codsen/codsen/commit/6e721d2872d07182718d0ab4e54e213e62a88b17))
 
@@ -40,14 +40,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.9 (2021-03-23)
 
-### Bug Fixes
+### Fixed
 
 - address the `opts.allowCustomTagNames` in context of malformed closing tags ([0a785fa](https://github.com/codsen/codsen/commit/0a785faa2a0e7821007fa9c9665bc247ac4cc6b2))
 - better detection of missing opening bracket when slash + known tag name follows ([b569953](https://github.com/codsen/codsen/commit/b56995356d6b449851ba1fc4a9e4e1b7bc220770))
 
 ## 2.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -85,7 +85,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.7.0 (2020-03-16)
 
-### Bug Fixes
+### Fixed
 
 - require that tag name would not be followed by equal sign ([9081082](https://gitlab.com/codsen/codsen/commit/9081082c8f0a4142c6c4941405b4b1b400d1e390))
 

@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.1.2 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak the types ([dd6a429](https://github.com/codsen/codsen/commit/dd6a429e54dac5d58c2be72261f59e556e605f86))
 
@@ -46,7 +46,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -66,13 +66,13 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.1.5 (2020-04-26)
 
-### Bug Fixes
+### Fixed
 
 - harden the eslint rules set and make all unit tests pass again and rebase a little ([52328ea](https://gitlab.com/codsen/codsen/commit/52328ea1f1a691513676d5bac259705ed61444d4))
 
 ## 1.1.0 (2020-03-16)
 
-### Bug Fixes
+### Fixed
 
 - correction to the algorithm ([f1f4a00](https://gitlab.com/codsen/codsen/commit/f1f4a00c2a7dc43fbb13c1eff209beb12dfb0bd9))
 

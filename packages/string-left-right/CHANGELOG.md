@@ -34,7 +34,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -63,7 +63,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.1.5 (2019-03-22)
 
-### Bug Fixes
+### Fixed
 
 - Tweak the algorithm and add more unit tests ([1008482](https://gitlab.com/codsen/codsen/commit/1008482))
 - Tweak the chompRight algorithm to match two characters repeated vs more ([8403566](https://gitlab.com/codsen/codsen/commit/8403566))

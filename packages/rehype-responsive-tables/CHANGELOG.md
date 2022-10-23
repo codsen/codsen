@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.4.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.3.0...rehype-responsive-tables@1.4.0) (2022-10-17)
 
-### Bug Fixes
+### Fixed
 
 - remove unreleased options for now ([ef17b9a](https://github.com/codsen/codsen/commit/ef17b9a3993d796ccfe52f930459f4360906474c))
 
@@ -33,13 +33,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.0.2](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.0.1...rehype-responsive-tables@1.0.2) (2022-09-27)
 
-### Bug Fixes
+### Fixed
 
 - fix exports ([326479b](https://github.com/codsen/codsen/commit/326479bd4b61bac1940944298c71c04340c6d6ff))
 
 ## 1.0.1 (2022-09-27)
 
-### Bug Fixes
+### Fixed
 
 - init ([60ee595](https://github.com/codsen/codsen/commit/60ee5952914aaefdf2cd0bfcad4c27f32563a102))
 - replace hast types import with types/hast ([9e98816](https://github.com/codsen/codsen/commit/9e988168551e845fe454c22b9d2fd7b53ff679fc))

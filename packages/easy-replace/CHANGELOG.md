@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [5.0.16](https://github.com/codsen/codsen/compare/easy-replace@5.0.15...easy-replace@5.0.16) (2022-04-23)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([b854d68](https://github.com/codsen/codsen/commit/b854d68477f239bf15a85343aa769ff9a54e2183))
 
@@ -39,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -91,7 +91,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 3.0.0 (2017-12-09)
 
-### Added
+### Features
 
 - Rebased in ES Modules
 - Set up the Rollup (nice rhyme). Now serving three builds: CommonJS, UMD and ES Module. all wired-up to separate package.json keys. This way, Rollup and WebPack can tap ES Modules instead of CommonJS. This also solves problems with transpiling. CommonJS is transpiled, ES Modules are not. No more problems with `create-react-app` not being able to uglify the source in ES6.
@@ -100,13 +100,13 @@ API didn't change, it actually became even more flexible. `main`, `module` and `
 
 ## 2.12.0 (2017-09-15)
 
-### Removed
+### Fixed
 
 - Removed JS Standard and moved onto ESLint with tweaked AirBnB preset with semicolons off. Blimey, so many issues were reported by ESLint that JS Standard missed!
 
 ## 2.11.0 (2017-09-09)
 
-### Added
+### Features
 
 - Prevented defaults object's mutation. Don't know if it affects the final result anyhow, (looking from unit tests, it does not).
 
@@ -114,13 +114,13 @@ API didn't change, it actually became even more flexible. `main`, `module` and `
 
 Fresh morning and fresh head yields new improvements.
 
-### Added
+### Features
 
 - Improved the main search algorithm to better account for edge cases where there are missing inputs.
 
 ## 2.9.0 (2017-07-07)
 
-### Added
+### Features
 
 - Case insensitive searches/replacement/deletion. Set `opts.i` plain object's keys to `true`.
 - Swapped all `foreach` loops with old `for`'s, that should make this library tiny bit faster.
@@ -129,38 +129,38 @@ Fresh morning and fresh head yields new improvements.
 
 ## 2.8.0 (2017-07-05)
 
-### Added
+### Features
 
 - Changelog. Ha!
 - Tapped `check-types-mini` to enforce the input types better.
 
 ## 2.7.0 (2017-02-17)
 
-### Changed
+### Changes
 
 - Various minor updates including BitHound config.
 
 ## 2.6.0 (2017-02-17)
 
-### Changed
+### Changes
 
 - Code refresh: updated some info and all deps.
 
 ## 2.5.0 (2016-12-23)
 
-### Added
+### Features
 
 - JS Standard precommit hook and unit test coverage.
 
 ## 2.4.0 (2016-11-16)
 
-### Changed
+### Changes
 
 - Now tapping Lodash functions one-by-one.
 
 ## 2.0.0 (2016-09-20)
 
-### Changed
+### Changes
 
 - Complete rewrite.
 

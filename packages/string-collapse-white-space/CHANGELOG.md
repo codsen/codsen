@@ -40,7 +40,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 9.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -131,7 +131,7 @@ Also, properly tested and fixed `opts.enforceSpacesOnly`. It now works as intend
 
 ## 5.1.2 (2019-10-02)
 
-### Bug Fixes
+### Fixed
 
 - string boundary won't throw now, sorry about that ([94639dd](https://gitlab.com/codsen/codsen/commit/94639dd))
 
@@ -218,7 +218,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 3.3.0 (2018-04-30)
 
-### Added
+### Features
 
 - `opts.removeEmptyLines`
 - Set up Prettier to run automatically on all relevant files. Dropping `airbnb-base` ESLint preset.
@@ -227,19 +227,19 @@ GitHub sold us out. In the meantime, we:
 
 ## 3.2.0 (2017-10-29)
 
-### Added
+### Features
 
 - Removed the look left-right matching function into a separate library, [string-match-left-right](https://github.com/codsen/string-match-left-right) and tapped it. Also did some tiny code rebasing.
 
 ## 3.1.0 (2017-10-27)
 
-### Added
+### Features
 
 - AVA unit test linting via ESLint plugin
 
 ## 3.0.0 (2017-09-30)
 
-### Added
+### Features
 
 - The main source now is in ES2015 modules with `import`/`export`.
 - Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
@@ -247,7 +247,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.2.0 (2017-09-16)
 
-### Added
+### Features
 
 - `opts.trimLines` - activates trim per-line basis
 - `opts.trimnbsp` - non-breaking spaces are trimmed too
@@ -255,13 +255,13 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.1.0 (2017-09-03)
 
-### Added
+### Features
 
 - Correctly treats non-breaking spaces - they are not considered _collapsable_ or _trimmable_ now.
 
 ## 2.0.0 (2017-09-03)
 
-### Changed
+### Changes
 
 - This morning I didn't like yesterday's v.1 API at all, personally I think it was stupid. So, I simplified it and basically, recoded the whole thing.
 

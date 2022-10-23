@@ -16,7 +16,9 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkGfm from "remark-gfm";
-// import rehypeFormat from "rehype-format";
+import changelogTimeline from "remark-conventional-commit-changelog-timeline";
+import remarkTypography from "remark-typography";
+import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 
 // ------------------------------------------------------------------------------
@@ -28,6 +30,8 @@ const packageNames = readdirSync(path.resolve("packages")).filter((d) =>
 const gatheredChangelogs = {};
 let changelogContents;
 
+let uniqueH3 = new Set();
+
 for (let packageName of packageNames) {
   try {
     // read
@@ -36,12 +40,23 @@ for (let packageName of packageNames) {
       "utf8"
     );
 
+    // EXTRAS:
+    changelogContents
+      .split(/(\r?\n)/)
+      .filter((l) => l.startsWith("### "))
+      .map((l) => l.slice(4))
+      .forEach((l) => {
+        uniqueH3.add(l);
+      });
+
     // render markdown
     let { value } = unified()
       .data("settings", { fragment: true })
       .use(remarkParse)
       .use(remarkGfm)
       .use(remarkRehype)
+      .use(changelogTimeline)
+      .use(remarkTypography)
       // .use(rehypeFormat)
       .use(rehypeStringify)
       .processSync(changelogContents);
@@ -62,7 +77,10 @@ for (let packageName of packageNames) {
 
 writeFile(
   path.resolve("./data/sources/changelogs.ts"),
-  `export const changelogs = ${JSON.stringify(gatheredChangelogs, null, 4)};\n`,
+  // path.resolve("./data/sources/changelogs.html"),
+  `export const changelogs = ${JSON.stringify(gatheredChangelogs, null, 0)};\n`,
+  // gatheredChangelogs["email-comb"],
+  // [...uniqueH3].join("\n").trim(),
   (err) => {
     if (err) {
       throw err;

@@ -17,25 +17,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [6.1.22](https://github.com/codsen/codsen/compare/email-comb@6.1.21...email-comb@6.1.22) (2022-08-04)
 
-### Bug Fixes
+### Fixed
 
 - export `Opts` and `Res` types ([398a7d1](https://github.com/codsen/codsen/commit/398a7d19e70322c629bf5d7cf9fb107e64aefc15))
 
 ## [6.1.18](https://github.com/codsen/codsen/compare/email-comb@6.1.17...email-comb@6.1.18) (2022-07-13)
 
-### Bug Fixes
+### Fixed
 
 - fix a bug where selectors ending with colon were misinterpreted ([f279a19](https://github.com/codsen/codsen/commit/f279a197b4c314db57b59534ad8d0e356270da86))
 
 ## 6.1.14 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([a6acd6a](https://github.com/codsen/codsen/commit/a6acd6a49e3b7cef93c3a250493ca3064d86d61d))
 
 ## 6.1.8 (2022-01-11)
 
-### Bug Fixes
+### Fixed
 
 - add safeguards against inputs with excessive whitespace ([4694257](https://github.com/codsen/codsen/commit/4694257a4d75825470a0f4da9603e52620aaf3a3)), closes [#35](https://github.com/codsen/codsen/issues/35)
 
@@ -69,19 +69,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.14 (2021-04-04)
 
-### Bug Fixes
+### Fixed
 
 - recognise Nunjucks/Jinja within head CSS [@font-face](https://github.com/font-face) ([4fd803b](https://github.com/codsen/codsen/commit/4fd803bbb0734c192309e95bbafbd1d029e07571))
 
 ## 5.0.7 (2021-03-07)
 
-### Bug Fixes
+### Fixed
 
 - correct the name of the package in the throw messages ([2d1ad58](https://github.com/codsen/codsen/commit/2d1ad58a8d48c98d56abf88e351bae39fe8d9e42))
 
 ## 5.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -103,7 +103,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.5 (2020-12-09)
 
-### Bug Fixes
+### Fixed
 
 - correct the typo in the log.timeTakenInMilliseconds ([ddc2dec](https://git.sr.ht/~royston/codsen/commit/ddc2decbe0997e0704db781e5bdc97f0b53d5054))
 
@@ -113,7 +113,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.10.6 (2020-11-02)
 
-### Bug Fixes
+### Fixed
 
 - recognise id= or class= in URLs as text ([547cf93](https://gitlab.com/codsen/codsen/commit/547cf9345b7c9406f778d9988e0e3384aabb5d8b)), closes [#45](https://gitlab.com/codsen/codsen/issues/45)
 
@@ -125,13 +125,13 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.9.20 (2020-08-08)
 
-### Bug Fixes
+### Fixed
 
 - fix a bug with consecutive style tags ignored first class' first char ([758ea97](https://gitlab.com/codsen/codsen/commit/758ea970cd0911f7c04f6c209a515ee680b75c60)), closes [#36](https://gitlab.com/codsen/codsen/issues/36)
 
 ## 3.9.17 (2020-05-24)
 
-### Bug Fixes
+### Fixed
 
 - stop removing "class" or "id" without following equals, completely (for now) ([c07cce5](https://gitlab.com/codsen/codsen/commit/c07cce56d8633ef72ea9451617d8b06d96efc5db)), closes [#27](https://gitlab.com/codsen/codsen/issues/27)
 
@@ -143,7 +143,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.8.0 (2019-09-17)
 
-### Bug Fixes
+### Fixed
 
 - correctly recognise single and double apostrophes within the text, outside tags ([5f7f428](https://gitlab.com/codsen/codsen/commit/5f7f428))
 
@@ -153,7 +153,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.7.1 (2019-09-11)
 
-### Bug Fixes
+### Fixed
 
 - remove leading spaces in cleaned like class=" zz" and tighten up class/id recognition ([a900e4e](https://gitlab.com/codsen/codsen/commit/a900e4e))
 
@@ -216,19 +216,19 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.0.10 (2019-03-22)
 
-### Bug Fixes
+### Fixed
 
 - The comma bug where unused chunk was sandwiched by used chunks ([cb6fa4c](https://gitlab.com/codsen/codsen/commit/cb6fa4c))
 
 ## 1.2.8 (2019-02-26)
 
-### Bug Fixes
+### Fixed
 
 - Empty media queries in tight scenarios not being removed completely ([d4f1d8e](https://gitlab.com/codsen/codsen/commit/d4f1d8e))
 
 ## 1.2.7 (2019-02-10)
 
-### Bug Fixes
+### Fixed
 
 - Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
 

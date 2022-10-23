@@ -39,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.3.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -55,31 +55,31 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 0.1.24 (2020-04-26)
 
-### Bug Fixes
+### Fixed
 
 - harden the eslint rules set, make all tests pass and rebase a tad ([e3bee37](https://gitlab.com/codsen/codsen/commit/e3bee37319d31f480a7d25e74c0168dacb64addd))
 
 ## 0.1.5 (2019-10-23)
 
-### Bug Fixes
+### Fixed
 
 - fix the missing tests and enable all synthetic tests on all package.json's in monorepo ([b08c76a](https://gitlab.com/codsen/codsen/commit/b08c76a51546f9e02450e9bbd8eb3e52be1ecfe4))
 
 ## 0.1.4 (2019-10-21)
 
-### Bug Fixes
+### Fixed
 
 - algorithm improvements, many cases fixed ([30a6cf8](https://gitlab.com/codsen/codsen/commit/30a6cf8ff639059507935ff348d4d9700ca8fec7))
 
 ## 0.1.3 (2019-10-09)
 
-### Bug Fixes
+### Fixed
 
 - few bug fixes involving arrays, comments and quoted chunks ([337c7ca](https://gitlab.com/codsen/codsen/commit/337c7cad0935d7b1b2449d6b69175f5a3c02b8c4))
 
 ## 0.1.2 (2019-10-05)
 
-### Bug Fixes
+### Fixed
 
 - fix array element deletion ([49e2124](https://gitlab.com/codsen/codsen/commit/49e2124))
 - fix certain nested combinations + set up real-file based fixtures on a separate test file ([456a7f6](https://gitlab.com/codsen/codsen/commit/456a7f6))

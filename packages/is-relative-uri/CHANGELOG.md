@@ -12,13 +12,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.1.4 (2022-04-24)
 
-### Bug Fixes
+### Fixed
 
 - remove unused opts.offset ([5254d4f](https://github.com/codsen/codsen/commit/5254d4fac499ff76a2a79411fa5e8a3faabf9ee0))
 
 ## 4.1.3 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([31171bd](https://github.com/codsen/codsen/commit/31171bdefeb649413b2dd3700490b6d293a16c25))
 
@@ -52,7 +52,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 

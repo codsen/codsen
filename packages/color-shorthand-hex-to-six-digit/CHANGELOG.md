@@ -33,7 +33,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -67,7 +67,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.2.0 (2018-06-08)
 
-### Added
+### Features
 
 - Fixed false positive cases of HTML entities, for example `&#124;`. Thanks James Kupczak!
 - Rebased a little
@@ -77,7 +77,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.1.0 (2018-05-03)
 
-### Added
+### Features
 
 - Set up [Prettier](https://prettier.io)
 - Removed `package.lock` and `.editorconfig`
@@ -85,7 +85,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.0.0 (2017-12-06)
 
-### Changed
+### Changes
 
 - Rebased in ES Modules
 - Set up Rollup (nice rhyming), now generating transpiled CommonJS, UMD and native ES Module builds.
@@ -94,37 +94,37 @@ Bumping major just in case it breaks somebody's API. It shouldn't though.
 
 ## 1.5.0 (2017-05-25)
 
-### Updated
+### Fixed
 
 - Dependencies to request the latest `_.clonedeep`
 - Readme, added more examples
 
 ## 1.4.0 (2017-03-06)
 
-### Added
+### Features
 
 - More unit tests to cover XHTML code.
 
 ## 1.3.0 (2017-03-02)
 
-### Tweaked
+### Fixed
 
 - Now any input args are not mutated. Ever.
 
 ## 1.2.0 (2017-02-17)
 
-### Added
+### Features
 
 - Table of Contents in README
 
-### Tweaked
+### Fixed
 
 - Set up blanket deps ranges because it's tedious to update them and these deps never breaking-change
 - Updated company name in README and LICENSE
 
 ## 1.1.0 (2017-01-09)
 
-### Added
+### Features
 
 - All hex codes, three and six digits long, are converted to lowercase. This is to prevent case mismatches.
 - Test 05.01 to prove this works as intended.

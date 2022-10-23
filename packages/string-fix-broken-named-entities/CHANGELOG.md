@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.0.15 (2022-05-04)
 
-### Bug Fixes
+### Fixed
 
 - improve types ([ea1210f](https://github.com/codsen/codsen/commit/ea1210f44efdb0ab205ebe5be3f87d9f8d8562d9))
 
@@ -50,7 +50,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.1.0 (2021-03-23)
 
-### Bug Fixes
+### Fixed
 
 - fix a case with entity without semi, reporting of raw amps in front ([8e25561](https://github.com/codsen/codsen/commit/8e25561295ecf944880a2a205eef58313b6a9e68))
 - more fixes for `opts.textAmpersandCatcherCb` ([1bbdf3a](https://github.com/codsen/codsen/commit/1bbdf3ab2d338458147c6e442d52a848cf0952b0))
@@ -63,7 +63,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -83,7 +83,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.0.0 (2020-05-06)
 
-### Bug Fixes
+### Fixed
 
 - measure distance on more lenient Levenshtein l=2 by source entity which is present ([afb99d6](https://gitlab.com/codsen/codsen/commit/afb99d681813bd9c13d53b7ab3b6d3bb1ac5539f))
 
@@ -124,14 +124,14 @@ But all existing unit tests pass and more have been added.
 
 ## 2.4.3 (2019-09-11)
 
-### Bug Fixes
+### Fixed
 
 - algorithm tweaks ([fe71a2a](https://gitlab.com/codsen/codsen/commit/fe71a2a))
 - treat clean nbsp sequences correctly ([061de0d](https://gitlab.com/codsen/codsen/commit/061de0d))
 
 ## 2.4.0 (2019-08-24)
 
-### Bug Fixes
+### Fixed
 
 - fix &prnsim to be recognised correctly ([fd4df75](https://gitlab.com/codsen/codsen/commit/fd4df75))
 - further named entity recognition fixes ([feef62b](https://gitlab.com/codsen/codsen/commit/feef62b))
@@ -157,7 +157,7 @@ But all existing unit tests pass and more have been added.
 
 ## 2.2.0 (2019-04-06)
 
-### Bug Fixes
+### Fixed
 
 - Align nbsp missing semicol error with other entities, use -malformed-nbsp ([12420e5](https://gitlab.com/codsen/codsen/commit/12420e5))
 - Before recoding missing semicolon check part ([ad3394f](https://gitlab.com/codsen/codsen/commit/ad3394f))
@@ -169,7 +169,7 @@ But all existing unit tests pass and more have been added.
 
 ## 2.1.0 (2019-03-17)
 
-### Bug Fixes
+### Fixed
 
 - Properly recognise false cases for double-encoded entity scenarios ([0b3eed2](https://gitlab.com/codsen/codsen/commit/0b3eed2))
 

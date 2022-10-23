@@ -12,6 +12,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.0.1 (2022-06-16)
 
-### Bug Fixes
+### Fixed
 
 - init ([db2cc82](https://github.com/codsen/codsen/commit/db2cc82df92a4700e48dc95dd025393acb0ab673))

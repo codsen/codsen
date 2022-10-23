@@ -45,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -61,7 +61,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.5.0 (2020-12-11)
 
-### Bug Fixes
+### Fixed
 
 - correctly interpret equal chars inside urls ([71f8dcf](https://git.sr.ht/~royston/codsen/commit/71f8dcf33eb1df1e6781979720ae5e0420a062f8))
 

@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 11.0.16 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([5da8102](https://github.com/codsen/codsen/commit/5da8102fa04b52c63b5a7a32733aaf8eace13569))
 
@@ -40,7 +40,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 10.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -124,13 +124,13 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 **Small but nonetheless breaking changes.**
 
-### Changed
+### Changes
 
 - 💥 Mismatching wrapping/nonwrapping heads and tails are not permitted any more. Either both are wrapping or both are non-wrapping. If you used this library in normal ways you should not see the difference. The benefits of this changes are huge - 💥 We have completely rehauled _head_ and _tail_ detection (see below) and accepting only matching pairs allows us to identify more false-positives.
 
 **PS. Bumping _semver major_ just in case (could have bumped minor) but let's better be safe than sorry** 😉
 
-### Improved
+### Improvements
 
 - Improved _head_ and _tail_ detection algorithm. Previously we used simple string search, without considering the order of the findings. Wrong order now will help to rule-out more false positives.
 - Tapped [ast-monkey-traverse](https://www.npmjs.com/package/ast-monkey-traverse) directly, without the need for the whole [ast-monkey](https://www.npmjs.com/package/ast-monkey).

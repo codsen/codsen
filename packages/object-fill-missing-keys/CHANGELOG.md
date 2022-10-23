@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 10.0.0 (2022-10-16)
 
-### Bug Fixes
+### Fixed
 
 - set the merging to be correct as per what is promised ([1830aff](https://github.com/codsen/codsen/commit/1830aff6ed92b5431e4bf754d530c2790031b5dd)), closes [#51](https://github.com/codsen/codsen/issues/51)
 
@@ -23,7 +23,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 9.1.2 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([050580c](https://github.com/codsen/codsen/commit/050580c1c7935383d499a7f46acb1e6cb44a0ae4))
 
@@ -57,7 +57,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 8.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -121,7 +121,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 7.0.0 (2018-03-13)
 
-### Added
+### Features
 
 - `opts.useNullAsExplicitFalse`
 
@@ -129,7 +129,7 @@ Since it's on by default, and it behaves differently to if it were off, it's a b
 
 ## 6.0.0 (2018-01-27)
 
-### Changed
+### Changes
 
 - Complete recode from scratch in order to control key creation more precisely (necessary for new features). Previously `object-merge-advanced` did all the job.
 - `opts.doNotFillThesePathsIfTheyContainPlaceholders`
@@ -137,7 +137,7 @@ Since it's on by default, and it behaves differently to if it were off, it's a b
 
 ## 4.0.0 (2017-12-11)
 
-### Changed
+### Changes
 
 - Rebased in ES Modules
 - Set up Rollup. Now serving 3 flavours: CommonJS, UMD and ES Module. When this library is used as a dependency, WebPack and Rollup should recognise ES Module wiring via `module` key in package.json and should switch to ES Modules version automatically.
@@ -147,27 +147,27 @@ Since it's on by default, and it behaves differently to if it were off, it's a b
 
 ## 3.1.0 (2017-10-14)
 
-### Added
+### Features
 
 - `opts.placeholder`
 - `opts.doNotFillThesePathsIfTheyContainPlaceholders`
 
 ## 3.0.0 (2017-10-13)
 
-### Changed
+### Changes
 
 - 🔧 Hardened the API - strange cases with no arguments or wrong-ones will `throw` an error. Hence bumping the major semver release.
 
 ## 2.3.0 (2017-10-13)
 
-### Added
+### Features
 
 - Dropped JS Standard and moved to raw ESLint on `airbnb-base` preset with semicolons off. JS Standard does not have many important rules on, beware.
 - Options - third input argument, with all validation (driven by `check-types-mini` [on npm](https://www.npmjs.com/package/check-types-mini), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini))
 
 ## 2.2.0 (2017-05-20)
 
-### Added
+### Features
 
 - cli `clear` when running unit tests (not that relevant for end-user, but totally relevant when maintaining all this)
 - now consuming `standard` as a normal semver range, not _the latest greatest_ which is a liability remembering what happened on v10 release
@@ -175,20 +175,20 @@ Since it's on by default, and it behaves differently to if it were off, it's a b
 
 ## 2.1.0 (2017-03-16)
 
-### Changed
+### Changes
 
 - 🔧 Improvements to the merging algorithm
 
 ## 2.0.0 (2017-03-16)
 
-### Changed
+### Changes
 
 - 🔧 Rewrote pretty much the whole core of this. Previously, the algorithm did not take into the account the placeholder values and also didn't use an `object-merge-advanced`-class merging, only filled the missing keys. It's fixed now. From practical standpoint, the main difference is when merging two plain objects, if two have the same key but one's value is a string, another's value is array, array will overwrite string. Previously, not so. Basically, now the full hierarchy of `object-merge-advanced` is retained. This might have consequences to any template code that relied on previous algorithm, but it's a bad practice to mix different data types in the template logic anyway, so hey.
 
-### Added
+### Features
 
 - Even more more unit tests
 
-### Improved
+### Improvements
 
 - Put some test variables into correct scope. It does not change anything, but still.

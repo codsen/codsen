@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.12.17 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([0742fd6](https://github.com/codsen/codsen/commit/0742fd6959f9bcabfc47f54186fbd4ffdc2b08c1))
 
@@ -39,19 +39,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.10.3 (2021-02-27)
 
-### Bug Fixes
+### Fixed
 
 - build against the latest tokenizer, with `!important` support ([66d2b2c](https://github.com/codsen/codsen/commit/66d2b2c60cdf88ce734443b9742d774401c0d914))
 
 ## 0.10.1 (2021-02-09)
 
-### Bug Fixes
+### Fixed
 
 - correctly nest the broken tag layers ([4ad69f6](https://github.com/codsen/codsen/commit/4ad69f605f7164245d53bc2ec5b24bf0426ec3c7))
 
 ## 0.10.0 (2021-02-07)
 
-### Bug Fixes
+### Fixed
 
 - tweak the type definitions, DRY up moving ErrorObj definitions from emlint here ([0b07c0a](https://github.com/codsen/codsen/commit/0b07c0acc8b93c6b92779b10846e545492c0babc))
 
@@ -61,7 +61,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.9.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -77,7 +77,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 0.7.9 (2020-10-19)
 
-### Bug Fixes
+### Fixed
 
 - update tests to the latest tokenizer api ([5b46ff0](https://gitlab.com/codsen/codsen/commit/5b46ff094d714bf25ceaf1808fa201a7dd9334b8))
 
@@ -89,13 +89,13 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 0.6.5 (2020-05-11)
 
-### Bug Fixes
+### Fixed
 
 - nesting fix - closing tags don't next text tokens that follow ([de384b5](https://gitlab.com/codsen/codsen/commit/de384b5a3e89f6521cc4c080da1f9de3ebe96f4f))
 
 ## 0.6.2 (2020-04-26)
 
-### Bug Fixes
+### Fixed
 
 - harden the eslint rules set, make all tests pass and rebase a little ([40cf4b9](https://gitlab.com/codsen/codsen/commit/40cf4b9dcb2dd1beca40d4ad4f72a9c9b07c5ad4))
 
@@ -107,7 +107,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 0.5.0 (2020-04-04)
 
-### Bug Fixes
+### Fixed
 
 - tend the layer endings properly ([c563d2a](https://gitlab.com/codsen/codsen/commit/c563d2a73955a5d45ec4af54b34a2de36ae72ce5))
 
@@ -121,7 +121,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 0.4.0 (2020-03-24)
 
-### Bug Fixes
+### Fixed
 
 - correctly nest empty tags ([380c268](https://gitlab.com/codsen/codsen/commit/380c26893d8cd05e2d07c7d6110167183cf8cce0))
 
@@ -140,7 +140,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 0.2.0 (2020-02-24)
 
-### Bug Fixes
+### Fixed
 
 - missing tag opening rule - demand that closing tag's previous tag would be not closing ([ceff20b](https://gitlab.com/codsen/codsen/commit/ceff20b01d27debd4e789150504e7488c9fdbc12))
 - nested tags ([5846347](https://gitlab.com/codsen/codsen/commit/584634757cf5514f3db9c3b20c211f7f855aa7e8))

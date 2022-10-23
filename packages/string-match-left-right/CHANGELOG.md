@@ -39,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.0.0 (2021-02-27)
 
-### Bug Fixes
+### Fixed
 
 - if the first char was matched, don't tolerate any mismatches leading up to it ([c482851](https://github.com/codsen/codsen/commit/c4828514dfcca6470d895f0b35801eac1faf2f7a))
 
@@ -55,7 +55,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -75,13 +75,13 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 4.0.1 (2020-03-24)
 
-### Bug Fixes
+### Fixed
 
 - fix `opts.firstMustMatch` ([195350b](https://gitlab.com/codsen/codsen/commit/195350b56c26d3e856b5cd3d1a2abb947c9ada3d))
 
 ## 4.0.0 (2020-03-16)
 
-### Bug Fixes
+### Fixed
 
 - `opts.maxMismatches` higher than one ([c0a416a](https://gitlab.com/codsen/codsen/commit/c0a416afd32aa39698703437aed36b81cb04abd6))
 - add insurance against the variable being not string ([e53f435](https://gitlab.com/codsen/codsen/commit/e53f435206b1b2daf1e7d9c45c8373933d09eca9))
@@ -180,7 +180,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.0.0 (2017-12-21)
 
-### Changed
+### Changes
 
 - Let's say you want to check, does a string contain "something" to the right or to the left of somewhere in it (a given index). We allow "something" to be an **array** of strings. If those strings are of a varying length, how do you find out, what exactly did match from the "something" array and especially, how long it is? As a solution for that, I'm going to return a positive result not Boolean `true` which is meaningless, but actually the value of a matched string from "something". It is equally `truthy` but you can now query it further, like find its `length`.
 
@@ -192,7 +192,7 @@ If you relied on the result being explicitly Boolean, `true` or `false`, prepare
 
 ## 1.4.0 (2017-12-10)
 
-### Added
+### Features
 
 - Stringifying of `opts.trimCharsBeforeMatching` now occurs only if element is not string.
 - Callbacks, [opts.cbLeft and opts.cbRight](https://www.npmjs.com/package/string-match-left-right#optscbleft-and-optscbright), get second argument - whole substring of what's on that side. First argument it received is first character, second is whole substring (including first character).

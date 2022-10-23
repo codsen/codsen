@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [5.0.19](https://github.com/codsen/codsen/compare/html-table-patcher@5.0.18...html-table-patcher@5.0.19) (2022-04-24)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([30225e9](https://github.com/codsen/codsen/commit/30225e95298aefa6ab941f668894d5f7465e406c))
 
@@ -39,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -78,13 +78,13 @@ As a result, UMD bundle is half-the size (was 191KB minified, now 87KB)!
 
 ## 1.1.13 (2019-08-08)
 
-### Bug Fixes
+### Fixed
 
 - fix breaking unit test, colspan number should be string not number ([ee381ee](https://gitlab.com/codsen/codsen/commit/ee381ee))
 
 ## 1.1.9 (2019-07-24)
 
-### Bug Fixes
+### Fixed
 
 - Add missing node globals, necessary for UMD build ([b917068](https://gitlab.com/codsen/codsen/commit/b917068))
 - Rollup globals plugin was missing in builds which errorred out the UMD builds ([2f8ee25](https://gitlab.com/codsen/codsen/commit/2f8ee25))

@@ -21,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.7.0 (2021-05-24)
 
-### Bug Fixes
+### Fixed
 
 - tweak issue labels ([8d65ea3](https://github.com/codsen/codsen/commit/8d65ea3d5e0e1b234f7578a8c989137b7141e3c5))
 
@@ -32,7 +32,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.6.0 (2021-04-11)
 
-### Bug Fixes
+### Fixed
 
 - decommission `attribute-enforce-img-alt` in favor of more generic `attribute-required` ([197a4f6](https://github.com/codsen/codsen/commit/197a4f67cf57dadbea111fb4c21551bfc51482dc))
 - export the JSON of every single rule possibly reported by emlint ([e048195](https://github.com/codsen/codsen/commit/e04819552be0c560a9d250225e1e97b590cb362a))
@@ -51,7 +51,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.5.0 (2021-03-23)
 
-### Bug Fixes
+### Fixed
 
 - `attribute-validate-style` the case of a missing value ([efcefa7](https://github.com/codsen/codsen/commit/efcefa767684dd37758573adeeee927dca43b037))
 - improve `tag-malformed`, detect missing opening brackets too ([d71f957](https://github.com/codsen/codsen/commit/d71f9575250a590d2966168ad48b0befdbb7167f))
@@ -68,7 +68,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.4.0 (2021-03-14)
 
-### Bug Fixes
+### Fixed
 
 - apply attr equal character checks on empty value too ([0f2732a](https://github.com/codsen/codsen/commit/0f2732aaa1d509ded8103fc3b6654c99097f2f1b))
 - improvements to `tag-table` ([1510cdf](https://github.com/codsen/codsen/commit/1510cdfef7d86f01001cdcc23b51c3efc6deb52e))
@@ -87,7 +87,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.3.0 (2021-03-07)
 
-### Bug Fixes
+### Fixed
 
 - extend the reporting range in `tag-void-slash` ([b8fae83](https://github.com/codsen/codsen/commit/b8fae83230d0419a18e9d3a7d1ea1dba8afea1cc))
 - prevent `attribute-duplicate` reporting non-attributes: ESP tokens, comments etc ([110d1f4](https://github.com/codsen/codsen/commit/110d1f4ddf45ba9119d2ef79e19bbafd63896bb0))
@@ -102,7 +102,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.2.0 (2021-02-27)
 
-### Bug Fixes
+### Fixed
 
 - improvements to `css-rule-malformed` ([cf34cf4](https://github.com/codsen/codsen/commit/cf34cf4e3bd76373432903bdd40908728fa5ef8c))
 - rename `trailing-semi` to `css-trailing-semi` ([ed848a7](https://github.com/codsen/codsen/commit/ed848a7a23b1f916e75758962d1eadf298aeab5a))
@@ -121,7 +121,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.1.0 (2021-02-07)
 
-### Bug Fixes
+### Fixed
 
 - stop `attribute-validate-alt` flagging up empty alt attribute values ([14b0160](https://github.com/codsen/codsen/commit/14b0160e5366209425b84f67c1c26960c34b0341))
 
@@ -133,7 +133,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -163,7 +163,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.16.0 (2020-04-04)
 
-### Bug Fixes
+### Fixed
 
 - don't raise alerts on doctype case in rule `tag-name-case` ([4d5c2a7](https://gitlab.com/codsen/codsen/commit/4d5c2a7fb7e31245e178352bccf83168404a7719))
 - fix a few premature exiting functions ([f8ad307](https://gitlab.com/codsen/codsen/commit/f8ad3075e850e8622bd831d3f33c511ac9985f78))
@@ -193,7 +193,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.14.0 (2020-03-16)
 
-### Bug Fixes
+### Fixed
 
 - fix the severity reporting for `character-unspaced-punctuation` rule ([dce4064](https://gitlab.com/codsen/codsen/commit/dce406414ba5ba53f0417add197a7edee151a5b6))
 
@@ -408,7 +408,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.3.0 (2019-11-21)
 
-### Bug Fixes
+### Fixed
 
 - when bad entity rules are disabled, they do not raise any issues ([6f06ce2](https://gitlab.com/codsen/codsen/commit/6f06ce2429d7cea4c49bd6523e2b2c9fbd6588a8))
 
@@ -459,7 +459,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.8.0 (2019-10-09)
 
-### Bug Fixes
+### Fixed
 
 - make rule tag-space-after-opening-bracket not applicable for HTML comments ([3fac2f6](https://gitlab.com/codsen/codsen/commit/3fac2f61934979655fca35b03401c98facd224bb))
 
@@ -529,7 +529,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.8.0 (2019-02-26)
 
-### Bug Fixes
+### Fixed
 
 - Algorithm tweaks ([b5875ff](https://gitlab.com/codsen/codsen/commit/b5875ff))
 - Algorithm tweaks ([2c4e4c5](https://gitlab.com/codsen/codsen/commit/2c4e4c5))
@@ -553,7 +553,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Rule `tag-attribute-missing-equal` tweaks ([06c5992](https://gitlab.com/codsen/codsen/commit/06c5992))
 - Rules `tag-attribute-missing-equal` and `tag-attribute-opening-quotation-mark-missing` ([5f2f0d4](https://gitlab.com/codsen/codsen/commit/5f2f0d4))
 
-### Bug Fixes
+### Fixed
 
 - Add more false-outcome unit tests and tweak the algorithm edge cases to pass all tests ([3563c3e](https://gitlab.com/codsen/codsen/commit/3563c3e))
 - Algorithm tweaks to pass all unit tests ([d576d39](https://gitlab.com/codsen/codsen/commit/d576d39))

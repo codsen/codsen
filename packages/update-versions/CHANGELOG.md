@@ -17,7 +17,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.4 (2021-11-04)
 
-### Bug Fixes
+### Fixed
 
 - update the API to match the updated p-progress ([8aa235c](https://github.com/codsen/codsen/commit/8aa235c8ced8daefcfdab14e380d9765f980ef8d))
 
@@ -46,7 +46,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 

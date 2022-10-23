@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.17 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([0aee2bd](https://github.com/codsen/codsen/commit/0aee2bdf4ce7fc7357c56b8a281630c4542c9791))
 
@@ -40,7 +40,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -66,13 +66,13 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.5.2 (2019-10-21)
 
-### Bug Fixes
+### Fixed
 
 - remove rogue require() which was present instead of import ([233a8d1](https://gitlab.com/codsen/codsen/commit/233a8d11d70f62c7a521e97207acfdb3b64d5f63))
 
 ## 1.5.0 (2019-10-02)
 
-### Bug Fixes
+### Fixed
 
 - fix a case where nbsp could be replaced with itself ([7ca664a](https://gitlab.com/codsen/codsen/commit/7ca664a))
 
@@ -82,7 +82,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.4.0 (2019-09-11)
 
-### Bug Fixes
+### Fixed
 
 - properly recognise single line breaks, not counts are reset correctly ([ec5578b](https://gitlab.com/codsen/codsen/commit/ec5578b))
 
@@ -99,7 +99,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.2.0 (2019-08-18)
 
-### Bug Fixes
+### Fixed
 
 - disable min char count setting so it's off by default ([60aa23c](https://gitlab.com/codsen/codsen/commit/60aa23c))
 - further twaks to m-dash rules ([bec2683](https://gitlab.com/codsen/codsen/commit/bec2683))

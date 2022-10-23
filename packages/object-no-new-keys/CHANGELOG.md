@@ -12,13 +12,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.1.3 (2022-04-25)
 
-### Bug Fixes
+### Fixed
 
 - improve types ([f2b1ea1](https://github.com/codsen/codsen/commit/f2b1ea1dee7b912cf1e9d5f30e7483f49b3f8d07))
 
 ## 4.1.2 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([fe67aa5](https://github.com/codsen/codsen/commit/fe67aa510c5523969e83d905c7420106081d4a8b))
 
@@ -52,7 +52,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 

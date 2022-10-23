@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.13 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak the types ([9f5bddb](https://github.com/codsen/codsen/commit/9f5bddbf84173e51214a4c4ea75c527df0297a70))
 
@@ -40,7 +40,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -60,13 +60,13 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.2.6 (2020-04-26)
 
-### Bug Fixes
+### Fixed
 
 - harden the eslint rules set, make all tests pass again and rebase a little ([8c2c0a8](https://gitlab.com/codsen/codsen/commit/8c2c0a8d1b0a0c195c853460ac4de117cee15033))
 
 ## 1.2.0 (2020-01-01)
 
-### Bug Fixes
+### Fixed
 
 - errCb argument fixable tests and functionality ([f89ebc0](https://gitlab.com/codsen/codsen/commit/f89ebc03858734e67e4ffd4db9a89b4116fa07ea))
 - trailing whitespace clause fix ([9ef1181](https://gitlab.com/codsen/codsen/commit/9ef1181c20e15b135b791ccc53343d135241cf22))
@@ -77,7 +77,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.1.0 (2019-12-27)
 
-### Bug Fixes
+### Fixed
 
 - add more tests and cover opts.trailingWhitespaceOK ([335c6d6](https://gitlab.com/codsen/codsen/commit/335c6d63fa3ff0b324f5d191350fc0e593e88430))
 - returned ranges is always array of arrays, not just a single range/array ([f9469a1](https://gitlab.com/codsen/codsen/commit/f9469a1f53aa13c7f85eb953e35428a735232cd1))

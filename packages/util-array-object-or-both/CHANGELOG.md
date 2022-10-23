@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.1.2 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([fa71185](https://github.com/codsen/codsen/commit/fa71185b561d052379bbbed0a20ee025f8c929be))
 
@@ -45,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -61,7 +61,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.7.58 (2020-04-26)
 
-### Bug Fixes
+### Fixed
 
 - harden the eslint rules set and make all unit tests pass ([8821ee5](https://gitlab.com/codsen/codsen/commit/8821ee5ecbe697217133c7dce03f5dc119770591))
 

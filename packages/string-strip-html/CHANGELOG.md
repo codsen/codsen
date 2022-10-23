@@ -5,13 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [11.6.13](https://github.com/codsen/codsen/compare/string-strip-html@11.6.12...string-strip-html@11.6.13) (2022-10-13)
 
-### Bug Fixes
+### Fixed
 
 - tweaks to broken code algorithm to align dumpLinkHrefsNearby enabled and disabled ([234faa1](https://github.com/codsen/codsen/commit/234faa1094f0dbc0c2cc8ba4345a5b91aa7cc94d))
 
 ## [11.6.10](https://github.com/codsen/codsen/compare/string-strip-html@11.6.9...string-strip-html@11.6.10) (2022-10-05)
 
-### Bug Fixes
+### Fixed
 
 - respect stripTogetherWithTheirContents when dumpLinkHrefsNearby is on ([43209e7](https://github.com/codsen/codsen/commit/43209e7bc2a0d13ee5392171ea120b00c377b345)), closes [#54](https://github.com/codsen/codsen/issues/54)
 
@@ -53,7 +53,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [11.0.1](https://github.com/codsen/codsen/compare/string-strip-html@11.0.0...string-strip-html@11.0.1) (2022-07-26)
 
-### Bug Fixes
+### Fixed
 
 - add more precautions when assuming string methods will exist ([00804b6](https://github.com/codsen/codsen/commit/00804b65a243f61fcf343fed6906e3b49646b156))
 - align edge whitespace processing on cb and not on cb ([43ee6d5](https://github.com/codsen/codsen/commit/43ee6d585b8c7ae68a896d4c23a1cbca104fc83a))
@@ -81,7 +81,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping, `<script>a<style>b</script>c</style>`. That's a strange broken code case, but it still warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there is no perf difference in the records.
 
-### Bug Fixes
+### Fixed
 
 - Correct `DOCTYPE` attribute values pinged to the callback (all-`name`, no `value`)
 - Fixes a rare [case](https://github.com/codsen/codsen/issues/48) when the program could enter the infinite loop condition when it encounters Nunjucks-Jinja-like (but different) templating literals. We added a hard check to prevent the backwards index offset.
@@ -92,7 +92,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [9.1.7](https://github.com/codsen/codsen/compare/string-strip-html@9.1.6...string-strip-html@9.1.7) (2022-03-21)
 
-### Bug Fixes
+### Fixed
 
 - correct the types ([7ec82ab](https://github.com/codsen/codsen/commit/7ec82aba4f80e90ef6564dcff60f8e4fe5e19fc8))
 
@@ -115,7 +115,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 8.3.0 (2021-05-24)
 
-### Bug Fixes
+### Fixed
 
 - skip jinja-nunjucks tags to run faster ([307a578](https://github.com/codsen/codsen/commit/307a5784278b94f4287cf8306f7c19f40e68ca43))
 
@@ -143,7 +143,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 8.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -175,7 +175,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 6.1.0 (2020-10-13)
 
-### Bug Fixes
+### Fixed
 
 - fix filteredTagLocations closing location on paired tags ([43ce393](https://gitlab.com/codsen/codsen/commit/43ce393391f81dcc8de4e3de70e463356f4d0af5))
 
@@ -185,7 +185,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 6.0.0 (2020-09-15)
 
-### Bug Fixes
+### Fixed
 
 - correct `filteredTagLocations` for pair tags which are stripped with content ([6bd6f4c](https://gitlab.com/codsen/codsen/commit/6bd6f4c8639571089bb3baa3b8146045ca891375))
 
@@ -278,7 +278,7 @@ That's different from _ranges_ output, because _ranges_ are instructions: what t
 
 ## 3.3.0 (2018-12-26)
 
-### Bug Fixes
+### Fixed
 
 - 🐛 Throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/commits/ef44f63))
 
@@ -354,7 +354,7 @@ This makes it easier for us to contain all new `opts.dumpLinkHrefsNearby` settin
 
 One day I noticed that my [Nunjucks](https://mozilla.github.io/nunjucks/) code (just a greater-than comparison against a number) gets falsely interpreted as HTML by this library and went on to rewrite the whole thing from scratch. Now it's leaner, cleaner and with the same and double extra more unit tests.
 
-### Added
+### Features
 
 - An even smarter algorithm, now being able to detect missing opening bracket on a tag, for example. Even latest Chrome `v.66` can't do that.
 - Increased unit test assertion count from 148 to 370. Covering even more legit and stinky code cases.

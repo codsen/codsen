@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 13.1.1 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([4791f68](https://github.com/codsen/codsen/commit/4791f688bf47dd2d11b4f12db4e9d8c3dbd88158))
 
@@ -66,7 +66,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 11.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -142,7 +142,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 9.1.0 (2018-02-15)
 
-### Added
+### Features
 
 - `opts.cb`
 - Rebased a lot of code, merged `util.js` into the main file
@@ -150,7 +150,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 9.0.0 (2018-02-08)
 
-### Changed
+### Changes
 
 Previously, `opts.hardMergeKeys`, `opts.ignoreKeys` as well as `opts.hardMergeEverything` and `opts.ignoreEverything` were not 100% unidirectional. In some cases, for example, when object key's value was an array and it clashed with another array from same-named key, the merging was performed instead of hard write. It was done with intention to retain as much data as possible after merging. However, it was not what was promised in documentation. Now this is sorted.
 
@@ -194,7 +194,7 @@ Thanks to [@jabiinfante](https://github.com/jabiinfante) PR:
 
 Bumping the _major_ just in case because strictly speaking, while things behave more _correct_ now, they behave slightly different. This involves more precise hard merging and ignoring keys, when values are container-like (arrays or plain objects). For the rest, the merging algorithm's behaviour is the same. Read below.
 
-### Added
+### Features
 
 - Improvements to the algorithm, related to hard merges and ignores. Quick refresher: **a hard merge** is when second item overwrites first no matter what. **An ignore** is the opposite - first value is left as it is, no matter what it is merged against. Up until now, the hard merging was done via simple overwriting. On some edge cases I found out that container-like values (arrays or objects) should not be simply overwritten, but **their contents** should be hard-merged instead. Again, this concerns only narrow cases where types of both _merger_ and _mergee_ match and are equal to arrays or plain objects.
 
@@ -216,7 +216,7 @@ Bumping the _major_ just in case because strictly speaking, while things behave 
 
 ## 6.1.0 (2017-04-23) weekend
 
-### Added
+### Features
 
 - When the options object values are set to be of a wrong type, this library will throw an error. At the same time, we're trying to be as flexible as possible - for example, accepting single string value instead of array.
 - new options setting, `opts.ignoreKeys` - this is one direction merge. Key names accept wildcards.
@@ -232,13 +232,13 @@ Like changing a broken carburettor with another, working-one. 🎉
 
 ## 6.0.0 (2017-03-14)
 
-### Changed
+### Changes
 
 - 🔧 Recoded everything, adding Number type. This means, now there are 100 possibilities of the merge. Looks even more clean and optimal now, but that's a subjective thing.
 
 ## 5.0.0 (2017-03-13)
 
-### API addition
+### Features
 
 - Added an optional options object, the third argument. Now `opts.mergeObjectsOnlyWhenKeysetMatches` allow more granular control over how objects within arrays are merged. The default setting is balanced option, `opts.mergeObjectsOnlyWhenKeysetMatches = false` is more _gung-ho_ merging approach (behaviour like v4, previous version).
 

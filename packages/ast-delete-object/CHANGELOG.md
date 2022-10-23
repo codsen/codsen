@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.16 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([826cdf4](https://github.com/codsen/codsen/commit/826cdf4e4a59dd6245bcf31129f7e9e999851776))
 
@@ -39,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -65,7 +65,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.8.63 (2020-04-26)
 
-### Bug Fixes
+### Fixed
 
 - harden the eslint rules set, make all tests pass and rebase a little ([c84365e](https://gitlab.com/codsen/codsen/commit/c84365e8aa37ce253d5b6a0a700128db6ee2a3fb))
 
@@ -88,14 +88,14 @@ GitHub sold us out. In the meantime, we:
 
 ## 1.2.0 (2018-05-14)
 
-### Improved
+### Improvements
 
 - Now pointing unit tests at ES Modules build, not CommonJS-one. This means, unit test coverage will be correct (higher) because there won't be any missing rows that Babel added which are impossible to cover.
 - Tweaks to ava [config](https://github.com/avajs/ava/blob/master/docs/recipes/es-modules.md) in `package.json`, properly enabling the `dev` Rollup builds.
 
 ## 1.1.0 (2018-05-01)
 
-### Added
+### Features
 
 - Set up [Prettier](https://prettier.io)
 - Removed `package.lock` and `.editorconfig`

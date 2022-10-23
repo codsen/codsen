@@ -21,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.6.0 (2021-09-09)
 
-### Bug Fixes
+### Fixed
 
 - set meow to allow multiple "ignore" path args ([162c082](https://github.com/codsen/codsen/commit/162c0821d496ed4b7b0980beef3fc0a9981f6f1f))
 
@@ -47,7 +47,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.4.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -57,7 +57,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 0.2.31 (2019-11-20)
 
-### Bug Fixes
+### Fixed
 
 - update to the latest meow v4 API ([ca7c1f9](https://gitlab.com/codsen/codsen/commit/ca7c1f9b1e28dd7540442fa19f9ca4b7855b9e34))
 

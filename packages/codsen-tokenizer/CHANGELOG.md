@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.0.17 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([5ef2fbf](https://github.com/codsen/codsen/commit/5ef2fbff647e07b8b96133b01d81b7f9e7d412ad))
 
@@ -27,7 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.6.0 (2021-05-24)
 
-### Bug Fixes
+### Fixed
 
 - algorithm fixes ([b20147c](https://github.com/codsen/codsen/commit/b20147c8d86c905ce595920f7fffb00ab02c8557))
 - algorithm improvements ([f313aed](https://github.com/codsen/codsen/commit/f313aed2e19cdcdfe4ee7652cea64d156e21d1cf))
@@ -50,7 +50,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.5.6 (2021-04-11)
 
-### Bug Fixes
+### Fixed
 
 - correctly end the inline CSS style property without a value ([59b699d](https://github.com/codsen/codsen/commit/59b699dccd2466de8e9698f6f2564fcb3f1c9150))
 
@@ -60,7 +60,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.5.0 (2021-03-23)
 
-### Bug Fixes
+### Fixed
 
 - recognise Nunjucks double curly variables within CSS rules ([5963e7b](https://github.com/codsen/codsen/commit/5963e7b43dc89cf7849d8ce88d942daa55157ab0))
 - recognise quote groups within HTML inline style attributes ([1a79454](https://github.com/codsen/codsen/commit/1a79454cf4149f6bba0a22bf5906d5b57055cb93))
@@ -71,7 +71,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.4.0 (2021-03-14)
 
-### Bug Fixes
+### Fixed
 
 - further improvements to JS code recognition ([77273f0](https://github.com/codsen/codsen/commit/77273f004437b1568e1fe7708794ec320c1d6d79))
 - tackle a case where attribute's opening quotes are followed by slash + bracket ([876812e](https://github.com/codsen/codsen/commit/876812e5dfe0cc6b57cfe6be5a8cbef7127a1ebd))
@@ -82,7 +82,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.3.0 (2021-03-07)
 
-### Bug Fixes
+### Fixed
 
 - detect mis-typed !important better ([a2a2631](https://github.com/codsen/codsen/commit/a2a2631746457b9469e2b1daf34410b3c5687ce0))
 - improve the tag end patching up when it abruptly ends ([ff571fc](https://github.com/codsen/codsen/commit/ff571fc7bc0a7dbed9b6354c83249f8c345194ba))
@@ -98,7 +98,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.2.0 (2021-02-27)
 
-### Bug Fixes
+### Fixed
 
 - algorithm improvements in broken `!important` recognition ([dcfd755](https://github.com/codsen/codsen/commit/dcfd755e0561fc00212b83606a86b3d94e095e2e))
 - algorithm improvements in broken `!important` recognition ([0254ca8](https://github.com/codsen/codsen/commit/0254ca8e1973b3b747589b3c8e585d0bda2f8252))
@@ -124,7 +124,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -140,7 +140,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.5.0 (2020-12-13)
 
-### Bug Fixes
+### Fixed
 
 - add checks and prevent throwing in certain unfinished code cases ([aa63861](https://git.sr.ht/~royston/codsen/commit/aa6386199014d507725dfc64320ee09ddd708a1e))
 - fix a case of unfinished css style blocks ([755ce98](https://git.sr.ht/~royston/codsen/commit/755ce982f0beee5602809840a9a07d093f74c0e3)), closes [#2](https://git.sr.ht/~royston/codsen/issues/2)
@@ -216,7 +216,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.17.0 (2020-05-24)
 
-### Bug Fixes
+### Fixed
 
 - fix "rule" type node "left" key when it is preceded by at-rule ([96e3a65](https://gitlab.com/codsen/codsen/commit/96e3a650f9e4da6caa6f9ee5c3a15bcc88370aef))
 
@@ -250,7 +250,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.13.0 (2020-04-19)
 
-### Bug Fixes
+### Fixed
 
 - more fixes for `attribs[].attribValue[]` ([51f842b](https://gitlab.com/codsen/codsen/commit/51f842b1e78eb6751a3609d924b634ae41ea5dee))
 - set tag key `pureHTML` correctly ([90cbb4b](https://gitlab.com/codsen/codsen/commit/90cbb4b694a106445e9632ac4396dc0f8f67b3c6))
@@ -283,7 +283,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.10.0 (2020-03-24)
 
-### Bug Fixes
+### Fixed
 
 - recognise "only"-kind closing tails with simple comment tails preceding ([f0d3624](https://gitlab.com/codsen/codsen/commit/f0d3624ca9f441cb6c741bd7da223562f0064517))
 - second part of newly-added layer quotes - removing them ([9378cb9](https://gitlab.com/codsen/codsen/commit/9378cb9c76aa38a1ff8c683e1e020e3ef83cbac4))
@@ -298,7 +298,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.9.0 (2020-03-16)
 
-### Bug Fixes
+### Fixed
 
 - add missing value, token.recognised on the broken tags ([95fd011](https://gitlab.com/codsen/codsen/commit/95fd011fa0e9d9a17ce6fb9806a152670880e0db))
 - correct the incomplete simple opening HTML tag token ([08620a6](https://gitlab.com/codsen/codsen/commit/08620a6bd11309e623d0ecd8bad6f8a3d870310e))
@@ -315,7 +315,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.8.0 (2020-02-24)
 
-### Bug Fixes
+### Fixed
 
 - a donothing skip was missing ([b79dafc](https://gitlab.com/codsen/codsen/commit/b79dafce493277df6f68fa9bd9e067e25468fa9e))
 - make all tests pass ([2c48aa1](https://gitlab.com/codsen/codsen/commit/2c48aa10247aa81e3defc750853ee7ba52b247c4))
@@ -337,7 +337,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.7.0 (2020-02-09)
 
-### Bug Fixes
+### Fixed
 
 - don't ping last undefined character to charCb ([284b50c](https://gitlab.com/codsen/codsen/commit/284b50cdfd968c26b2858a0efd2697a7a7d67d90))
 - turn off styleStarts ([def78e0](https://gitlab.com/codsen/codsen/commit/def78e04f960261381c16408bcd19bfe73d77c4c))
@@ -359,7 +359,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.5.0 (2020-01-01)
 
-### Bug Fixes
+### Fixed
 
 - whole attribute's value can't be an opening or closing ESP lump ([051f2b6](https://gitlab.com/codsen/codsen/commit/051f2b609ea83daab5ba97d3821aac5625b9b9b0))
 
@@ -379,7 +379,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.3.1 (2019-12-21)
 
-### Bug Fixes
+### Fixed
 
 - false positive - repeated percentage within attribute's value pretending to be an ESP tag ([ec36476](https://gitlab.com/codsen/codsen/commit/ec3647690728b99109b2c9ff44407229a283f336))
 - html empty attributes logic fix ([a3e507d](https://gitlab.com/codsen/codsen/commit/a3e507d0b29baa3d6d7f92996d97b0c3af076db8))
@@ -393,7 +393,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.2.0 (2019-12-09)
 
-### Bug Fixes
+### Fixed
 
 - add all h\* tags to recognised list, fix the digit from being skipped ([43cae4f](https://gitlab.com/codsen/codsen/commit/43cae4f95b34f675768b2b2d8b256928a69e8ddc))
 
@@ -404,7 +404,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.1.0 (2019-11-27)
 
-### Bug Fixes
+### Fixed
 
 - fix score calculation ([3601ce2](https://gitlab.com/codsen/codsen/commit/3601ce282fb3f186531198ffb61ad41c1bb3e31b))
 - report doctype as recognised ([6967044](https://gitlab.com/codsen/codsen/commit/6967044c5f4649feb6c1194ceb4d8ce4ac4a7741))
@@ -429,7 +429,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.3.0 (2019-11-18)
 
-### Bug Fixes
+### Fixed
 
 - improve void tag detection by moving calculation to where tag name is calculated ([5ea548f](https://gitlab.com/codsen/codsen/commit/5ea548f580f6ea6df3e8b72d036781b3bff09d8b))
 

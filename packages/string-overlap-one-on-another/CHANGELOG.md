@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.1.1 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([6e47b9e](https://github.com/codsen/codsen/commit/6e47b9eb3cd6592c87658e50206241400fca9bcc))
 
@@ -45,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 

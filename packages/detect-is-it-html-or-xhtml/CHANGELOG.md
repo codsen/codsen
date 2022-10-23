@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [5.0.14](https://github.com/codsen/codsen/compare/detect-is-it-html-or-xhtml@5.0.13...detect-is-it-html-or-xhtml@5.0.14) (2022-04-21)
 
-### Bug Fixes
+### Fixed
 
 - improve the throw message ([9c69a06](https://github.com/codsen/codsen/commit/9c69a067dc96490d9ceea69b85399c7d28600bfc))
 
@@ -39,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 

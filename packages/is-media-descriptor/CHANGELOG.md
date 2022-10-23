@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.1.2 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([7f2a0f5](https://github.com/codsen/codsen/commit/7f2a0f579d251d7472f6dfc279478deac80bfb3a))
 
@@ -50,7 +50,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -70,7 +70,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.2.2 (2020-02-24)
 
-### Bug Fixes
+### Fixed
 
 - loop through the correct parts ([2d4c3f7](https://gitlab.com/codsen/codsen/commit/2d4c3f750032e694b7cff56839eab522989023d5))
 

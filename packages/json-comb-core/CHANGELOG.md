@@ -11,13 +11,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.0.16 (2022-04-25)
 
-### Bug Fixes
+### Fixed
 
 - improve types ([b40fdb0](https://github.com/codsen/codsen/commit/b40fdb0a8e94f910487dba2dcbe95ab374c1b34a))
 
 ## 7.0.15 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([3691de9](https://github.com/codsen/codsen/commit/3691de9821762dbcd8d012d7b0e959e13c5fda21))
 
@@ -45,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.8.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -61,7 +61,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 6.6.1 (2019-10-02)
 
-### Bug Fixes
+### Fixed
 
 - fix the semver key comparison, regex was off ([6335dc9](https://gitlab.com/codsen/codsen/commit/6335dc9))
 

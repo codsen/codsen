@@ -34,7 +34,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -87,7 +87,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.1.0 (2018-05-17)
 
-### Changed
+### Changes
 
 - Set up [Prettier](https://prettier.io) on a custom ESLint rules, dropped `airbnb-base`
 - Removed `package.lock` and `.editorconfig`
@@ -96,7 +96,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.0.0 (2017-12-12)
 
-### Changed
+### Changes
 
 - Rebased the source in ES Modules
 - Set up Rollup and now we are generating three builds: CommonJS, UMD and ES Modules (native code).

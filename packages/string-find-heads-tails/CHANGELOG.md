@@ -34,7 +34,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -133,7 +133,7 @@ No new features, only under-bonnet improvements.
 
 ## 3.0.0 (2017-12-28)
 
-### Breaking API changes
+### BREAKING CHANGES
 
 - Moved fourth argument, `fromIndex`, into `opts` because it stood in the way.
 - `opts.throwWhenSomethingWrongIsDetected` – When I tapped this API myself for the first time, I noticed errors with heads and tails should be `throw`n here, at this package, not at its consumers. For example, both heads and tails are found but they're in the opposite order. Now, the default settings will leads to `throw`n error. You can turn it off and make it behave like previous version by setting `opts.throwWhenSomethingWrongIsDetected` to `false`

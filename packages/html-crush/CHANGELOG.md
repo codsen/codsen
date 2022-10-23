@@ -5,19 +5,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [5.0.22](https://github.com/codsen/codsen/compare/html-crush@5.0.21...html-crush@5.0.22) (2022-08-02)
 
-### Bug Fixes
+### Fixed
 
 - export Opts and Res types ([a91c313](https://github.com/codsen/codsen/commit/a91c31378be43a93a51893d3383a3b53cb2bc5f0))
 
 ## 5.0.16 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([104a64a](https://github.com/codsen/codsen/commit/104a64ab783c05af4ae8bd3eb653742eb95d0cd2))
 
 ## 5.0.0 (2021-09-09)
 
-### Bug Fixes
+### Fixed
 
 - tweaks to the line length calculation ([4ec1fe2](https://github.com/codsen/codsen/commit/4ec1fe224f8e2c32e94c085afb8cf517cc806a8c))
 
@@ -44,7 +44,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.1.5 (2021-03-28)
 
-### Bug Fixes
+### Fixed
 
 - retain the same type of line endings as the input ([b171628](https://github.com/codsen/codsen/commit/b171628d3fc1c0909af61530c1bcaf970c310159))
 
@@ -56,7 +56,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 - correct the line length calculation around inline tags ([073f7a5](https://github.com/codsen/codsen/commit/073f7a5a2bb3f8ce0460e674deed9cf1eff63409))
@@ -73,13 +73,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.5 (2020-09-15)
 
-### Bug Fixes
+### Fixed
 
 - improve CRLF line ending recognition ([ff3e3e7](https://gitlab.com/codsen/codsen/commit/ff3e3e7d7943a52e2339fb78e0cbd4677b72a11a))
 
 ## 2.0.0 (2020-07-04)
 
-### Bug Fixes
+### Fixed
 
 - fix typo in the output, in log.timeTakenInMilliseconds ([48debda](https://gitlab.com/codsen/codsen/commit/48debda98858aa83d6f7df4a3b7f85895756d67e))
 
@@ -102,7 +102,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.9.35 (2020-05-24)
 
-### Bug Fixes
+### Fixed
 
 - fixes the pre, code, CDATA and other code chunk skipping ([ec0408a](https://gitlab.com/codsen/codsen/commit/ec0408afee0b1a09cd711549cab6fefdc55efde8)), closes [#29](https://gitlab.com/codsen/codsen/issues/29)
 
@@ -128,19 +128,19 @@ That's now implemented.
 
 ## 1.8.5 (2019-09-04)
 
-### Bug Fixes
+### Fixed
 
 - stop breaking `<!--<![endif]-->` into two parts, in front of `<![endif]` ([af421c7](https://gitlab.com/codsen/codsen/commit/af421c7))
 
 ## 1.8.3 (2019-08-24)
 
-### Bug Fixes
+### Fixed
 
 - adding one more breaking point for insurance, thanks Mark Robbins ([b21651b](https://gitlab.com/codsen/codsen/commit/b21651b))
 
 ## 1.8.0 (2019-08-08)
 
-### Bug Fixes
+### Fixed
 
 - previously inner tag whitespace removal was too lax, risking false positives ([ab59492](https://gitlab.com/codsen/codsen/commit/ab59492))
 - update the program's name on throw error reports ([abd093a](https://gitlab.com/codsen/codsen/commit/abd093a))
@@ -157,7 +157,7 @@ That's now implemented.
 
 ## 1.6.0 (2019-07-15)
 
-### Bug Fixes
+### Fixed
 
 - Fix the rare cases where state of being within style tag was not terminated properly ([fefc206](https://gitlab.com/codsen/codsen/commit/fefc206)), closes [#11](https://gitlab.com/codsen/codsen/issues/11)
 
@@ -199,7 +199,7 @@ That's now implemented.
 
 ## 1.0.11 (2019-04-06)
 
-### Bug Fixes
+### Fixed
 
 - Algorithm improvement not to break in front of `</a>` to prevent accidentally adding new spaces ([8939654](https://gitlab.com/codsen/codsen/commit/8939654))
 

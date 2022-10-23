@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [2.1.3](https://github.com/codsen/codsen/compare/json-sort-cli@2.1.2...json-sort-cli@2.1.3) (2022-10-13)
 
-### Bug Fixes
+### Fixed
 
 - update dependencies ([a3834e7](https://github.com/codsen/codsen/commit/a3834e75d77cbdb238cfa8ec392829dfa95cb962))
 
@@ -45,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.18.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -62,13 +62,13 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.15.3 (2019-12-09)
 
-### Bug Fixes
+### Fixed
 
 - update to the latest meow api, no more short aliases ([412bdd4](https://gitlab.com/codsen/codsen/commit/412bdd432dbcc9e23a585132f8d24d2e95efa08e))
 
 ## 1.15.1 (2019-11-20)
 
-### Bug Fixes
+### Fixed
 
 - update to the v4 meow api, aliases were broken until now ([5c80a05](https://gitlab.com/codsen/codsen/commit/5c80a05ad29bd0a3d489ecaaee5c9ab39db1eaaa))
 

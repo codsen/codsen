@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.1.3 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - correct the Quick Take example ([86566b9](https://github.com/codsen/codsen/commit/86566b9ba8a3ad2371b4de48b3a6a474a5e71cfc))
 - tweak types ([8105826](https://github.com/codsen/codsen/commit/8105826931820464072a9320a8bfbc0e10022955))
@@ -46,7 +46,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -89,7 +89,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 5.2.0 (2018-12-26)
 
-### Bug Fixes
+### Fixed
 
 - 🐛 Pull pullAllWithGlob inline because it was causing circular dependency clashes ([2948a28](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/2948a28))
 
@@ -230,7 +230,7 @@ Bumping major just in case. API is the same, just when you consume from Rollup s
 
 ## 2.4.0 (2017-08-07)
 
-### Updated
+### Fixed
 
 - 📖 **Readme**. I was thinking, we don't even need to use `lodash.clonedeep`, because the defaults are always flat, plain objects. Since `Object.assign` takes many sources, it makes our life simpler:
 
@@ -251,7 +251,7 @@ checkTypes(opts, defaults <...>)
 
 ## 2.2.0 (2017-07-04)
 
-### Added
+### Features
 
 - Now `opts.schema` understands `opts.acceptArrays` setting: if the latter is `true`, that array will be traversed and each key will be matched against the types supplied in `opts.schema`. No more errors telling that array does not match the required type when `opts.acceptArrays` is on and all types inside that array match the types required by `opts.schema`.
 - More unit tests. Coverage is still solid 100%.
@@ -260,51 +260,51 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on `eas
 
 ## 2.1.0 (2017-06-18)
 
-### Added
+### Features
 
 - Now, the errors which are caused by misconfiguration of the `check-types-mini` itself will reference it as a source of an error. Once this library is configured correctly, then the errors can be personalised as per `opts.msg`.
 
 ## 2.0.0 (2017-06-12)
 
-### Changed
+### Changes
 
 - BREAKING API CHANGES. Third argument `msg` moved to `opts.msg`. Fourth argument `optsVarName` moved to `opts.optsVarName`. That was the right thing to do. Sorry for any hassle updating.
 
 ## 1.6.0 (2017-06-11)
 
-### Added
+### Features
 
 - `opts.schema` - let's you enforce any schema you want for any key. Case-insensitive, just put types. `object` means plain object, not `array`. `whatever`, and `any` are also valid values. Algorithm will check the `opts.schema` first, then if the keys does not exist there, will check its type in `defaults`.
 
 ## 1.5.0 (2017-06-11)
 
-### Changed
+### Changes
 
 - 🔧 Fixed a bug involving `null` values. I overused `existy()`, in this case, using it to check existence of a key in an Object. The right way is to use `.hasOwnProperty`. Silly me. {facepalm}
 - 🔧 Now `opts.enforceStrictKeyset` checks both ways, the keysets of both object and reference object have to match _strictly_. Previously I tried to cheat and check only one direction, assuming the object will be `object-assign`'ed from the reference. But this morning I was thinking, what it isn't? For me it's easy to close this error rabbit-hole, so let's do it.
 
 ## 1.4.0 (2017-06-10)
 
-### Added
+### Features
 
 - `opts.enforceStrictKeyset` will now by default `throw` if there are any keys in the options object, that don't exist in the reference object.
 
 ## 1.3.0 (2017-05-22)
 
-### Added
+### Features
 
 - `opts.acceptArrays` will accept arrays too, if they contain only the same type elements as the one that's being checked.
 - `opts.acceptArraysIgnore` - lets you ignore per-key level when `opts.acceptArrays` is on. 👍
 
 ## 1.2.0 (2017-05-15)
 
-### Added
+### Features
 
 - `opts.ignoreKeys` won't throw now if input is a single string.
 
 ## 1.1.0 (2017-05-15)
 
-### Added
+### Features
 
 - `opts.ignoreKeys`
 

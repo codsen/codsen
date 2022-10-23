@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [4.2.2](https://github.com/codsen/codsen/compare/lerna-clean-changelogs@4.2.1...lerna-clean-changelogs@4.2.2) (2022-08-27)
 
-### Bug Fixes
+### Fixed
 
 - support windows CRLF line endings ([4f6195a](https://github.com/codsen/codsen/commit/4f6195a1bfa8f21f18540c90b4963f17c433980c))
 
@@ -18,7 +18,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.1.1 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([97ea400](https://github.com/codsen/codsen/commit/97ea4001c1bb6bf1a9a09d36fa2d1694f2c4d974))
 
@@ -30,7 +30,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [4.0.0](https://github.com/codsen/codsen/compare/lerna-clean-changelogs@3.0.11...lerna-clean-changelogs@4.0.0) (2022-01-22)
 
-### Bug Fixes
+### Fixed
 
 - set options as a plain object ([814cf09](https://github.com/codsen/codsen/commit/814cf090d14c9810b2cf6074fad316fa43d125c8)), closes [#36](https://github.com/codsen/codsen/issues/36)
 
@@ -62,7 +62,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
@@ -88,7 +88,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 1.3.53 (2020-04-26)
 
-### Bug Fixes
+### Fixed
 
 - harden the eslint rules set and make all tests pass again ([29df39e](https://gitlab.com/codsen/codsen/commit/29df39eb787ff5b3a0636ed4ea7df6056f5a0451))
 

@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.1.3 (2022-04-18)
 
-### Bug Fixes
+### Fixed
 
 - tweak types ([f01fc91](https://github.com/codsen/codsen/commit/f01fc91f31bf9a7c62325f5ea0ce705896cefb05))
 
@@ -40,7 +40,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.16 (2021-04-14)
 
-### Bug Fixes
+### Fixed
 
 - correctly treat non-JSON data structures with undefined as a value ([bf1454a](https://github.com/codsen/codsen/commit/bf1454a5cdb1b8be72b2ad78005183fed1842f5e)), closes [#8](https://github.com/codsen/codsen/issues/8)
 
@@ -52,7 +52,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.1 (2021-01-28)
 
-### Bug Fixes
+### Fixed
 
 - add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
