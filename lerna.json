@@ -12,7 +12,8 @@
     "**/node_modules/**",
     "**/.npmignore",
     "**/perf/**",
-    "./data"
+    "./data",
+    "*.md"
   ],
   "lifecycle": {
     "version": "git add ."
