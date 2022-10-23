@@ -79,7 +79,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping, `<script>a<style>b</script>c</style>`. That's a strange broken code case, but it still warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there is no perf difference in the records.
+- Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping,
+
+  ```html
+  <script>
+    a
+    <style>
+      b
+    </script>
+    c
+  </style>
+  ```
+
+  That's a strange broken code case, but it still warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there is no perf difference in the records.
 
 ### Fixed
 
