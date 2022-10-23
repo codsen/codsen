@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.3](https://github.com/codsen/codsen/compare/ranges-is-index-within@3.2.2...ranges-is-index-within@3.2.3) (2022-10-23)
+
+**Note:** Version bump only for package ranges-is-index-within
+
 # 3.2.0 (2022-08-12)
 
 ### Features

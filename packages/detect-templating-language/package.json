@@ -1,6 +1,6 @@
 {
   "name": "detect-templating-language",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Detects various templating languages present in string",
   "keywords": [
     "check",
@@ -64,8 +64,8 @@
     }
   },
   "dependencies": {
-    "regex-is-jinja-nunjucks": "^3.1.1",
-    "regex-is-jsp": "^3.1.1",
-    "regex-jinja-specific": "^3.1.1"
+    "regex-is-jinja-nunjucks": "^3.1.2",
+    "regex-is-jsp": "^3.1.2",
+    "regex-jinja-specific": "^3.1.2"
   }
 }

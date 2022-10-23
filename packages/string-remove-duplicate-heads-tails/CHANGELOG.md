@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.9](https://github.com/codsen/codsen/compare/string-remove-duplicate-heads-tails@6.1.8...string-remove-duplicate-heads-tails@6.1.9) (2022-10-23)
+
+**Note:** Version bump only for package string-remove-duplicate-heads-tails
+
 # 6.1.0 (2022-08-12)
 
 ### Features
