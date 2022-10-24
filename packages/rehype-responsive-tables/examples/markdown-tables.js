@@ -1,4 +1,4 @@
-// rehype-responsive-tables renders markdown tables
+// Renders markdown tables
 
 import { strict as assert } from "assert";
 import { unified } from "unified";
