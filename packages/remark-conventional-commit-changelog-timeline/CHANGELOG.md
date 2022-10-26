@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@1.2.0...remark-conventional-commit-changelog-timeline@2.0.0) (2022-10-26)
+
+### Features
+
+- allow date customisation ([4d90331](https://github.com/codsen/codsen/commit/4d903316809d6632753a8a33f7d9a007a94b89e4))
+
+### BREAKING CHANGES
+
+- implements the callback interface to fully customise the date div contents
+
 # [1.2.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@1.1.0...remark-conventional-commit-changelog-timeline@1.2.0) (2022-10-23)
 
 ### Features
