@@ -10,13 +10,13 @@ import rehypeStringify from "rehype-stringify";
 
 import c from "../dist/remark-conventional-commit-changelog-timeline.esm.js";
 
-function render(str) {
+function render(str, opts) {
   let res = unified()
     .data("settings", { fragment: true })
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
-    .use(c)
+    .use(c, opts)
     .use(rehypeFormat)
     .use(rehypeStringify)
     .processSync(str);
@@ -40,7 +40,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 let expected = `
 <h2>3.1.0</h2>
-<div class="release-date">12 Aug<br>2022</div>
+<div class="release-date">Aug 12, <span>2022</span></div>
 <h3><span class="emoji">✨</span> Features</h3>
 <ul>
   <li>abc</li>
@@ -48,4 +48,13 @@ let expected = `
 </ul>
 `;
 
-assert.equal(render(input), expected);
+assert.equal(
+  render(input, {
+    // defaults:
+    dateDivLocale: "en-US",
+    // eslint-disable-next-line no-unused-vars
+    dateDivMarkup: ({ date, year, month, day }) =>
+      `${month} ${day}, <span>${year}</span>`,
+  }),
+  expected
+);

@@ -8,21 +8,49 @@ import {
   extractDateString,
 } from "./util";
 import type { Plugin } from "unified";
+
+// Note for self: don't add "hast" itself as a dependency
+// This type comes from "@types/hast"
 import type { Root } from "hast";
+
+import { raw } from "hast-util-raw";
+import { u } from "unist-builder";
 import semverRegex from "semver-regex";
 
 declare let DEV: boolean;
 
+export interface DateParamsObj {
+  date: Date;
+  year: string;
+  month: string;
+  day: string;
+}
+export interface Opts {
+  dateDivLocale: string;
+  dateDivMarkup: (dateParamsObj: DateParamsObj) => string;
+}
+
+export const defaults: Opts = {
+  dateDivLocale: "en-US",
+  dateDivMarkup: ({ year, month, day }) =>
+    `${month} ${day}, <span>${year}</span>`,
+};
+
 type UnifiedPlugin<T> = Plugin<[T], Root>;
 // declare let DEV: boolean;
 
-const changelogTimeline: UnifiedPlugin<any[]> = () => {
-  return (tree) => {
-    // DEV &&
-    //   console.log(
-    //     `018 ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`
-    //   );
+const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
+  let resolvedOpts: Opts = { ...defaults, ...opts };
+  DEV &&
+    console.log(
+      `046 final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+        resolvedOpts,
+        null,
+        4
+      )}`
+    );
 
+  return (tree) => {
     // ██████████████████ 1. █████████████████████
 
     // delete the h1, "# Change Log"
@@ -107,7 +135,7 @@ const changelogTimeline: UnifiedPlugin<any[]> = () => {
 
     DEV &&
       console.log(
-        `110 ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`
+        `138 ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`
       );
 
     visit(tree, "element", (node, index, parent) => {
@@ -127,7 +155,7 @@ const changelogTimeline: UnifiedPlugin<any[]> = () => {
       ) {
         DEV &&
           console.log(
-            `130 processing: ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
+            `158 processing: ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
               node
             )}`
           );
@@ -163,11 +191,11 @@ const changelogTimeline: UnifiedPlugin<any[]> = () => {
 
       if (versionStr && dateStr) {
         DEV &&
-          console.log(`166 versionStr: ${versionStr}; dateStr: ${dateStr}`);
+          console.log(`194 versionStr: ${versionStr}; dateStr: ${dateStr}`);
 
         DEV &&
           console.log(
-            `170  ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `198  ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4
@@ -181,47 +209,103 @@ const changelogTimeline: UnifiedPlugin<any[]> = () => {
           },
         ];
 
-        DEV && console.log(`184 set the h2 to ${versionStr}`);
+        DEV && console.log(`212 set the h2 to ${versionStr}`);
 
         if (dateStr && typeof index === "number") {
-          DEV && console.log(`187 add the .release-date div`);
+          DEV && console.log(`215 add the .release-date div`);
           let date = new Date(dateStr);
-          let formatDay = new Intl.DateTimeFormat("en-UK", {
+          let formatDay = new Intl.DateTimeFormat(resolvedOpts.dateDivLocale, {
             day: "numeric",
           }).format;
-          let formatMonth = new Intl.DateTimeFormat("en-UK", {
-            month: "short",
-          }).format;
-          let formatYear = new Intl.DateTimeFormat("en-UK", {
+          let formatMonth = new Intl.DateTimeFormat(
+            resolvedOpts.dateDivLocale,
+            {
+              month: "short",
+            }
+          ).format;
+          let formatYear = new Intl.DateTimeFormat(resolvedOpts.dateDivLocale, {
             year: "numeric",
           }).format;
 
-          let shortMonth = formatMonth(date); // "Aug"
-          let day = formatDay(date); // "Aug"
-          let year = formatYear(date); // "Aug"
+          let month = formatMonth(date); // "Jan"
+          let day = formatDay(date); // "1"
+          let year = formatYear(date); // "2020"
 
-          parent?.children.splice(index + 1, 0, {
-            type: "element",
-            tagName: "div",
-            properties: {
-              className: "release-date",
-            },
-            children: [
-              {
-                type: "text",
-                value: `${day} ${shortMonth}`,
+          let dateParamsObj: DateParamsObj = {
+            date,
+            year,
+            month,
+            day,
+          };
+          DEV &&
+            console.log(
+              `242 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
+                dateParamsObj,
+                null,
+                4
+              )}`
+            );
+
+          let newMarkup = raw(
+            u("raw", resolvedOpts.dateDivMarkup(dateParamsObj))
+          );
+
+          DEV &&
+            console.log(
+              `255 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
+                newMarkup,
+                null,
+                4
+              )}`
+            );
+
+          // it depends, on what newMarkup, the generated AST ended up -
+          // - if it was a static string, it ended up as:
+          //
+          // {
+          //     "type": "text",
+          //     "value": "foo"
+          // }
+          //
+          // - if user actually used those date strings and nested
+          // some tags, it will be like:
+          //   {
+          //     "type": "root",
+          //     "children": [
+          //         {
+          //             "type": "text",
+          //             "value": "2 Sept"
+          //         },
+          //         {
+          //             "type": "element",
+          //             "tagName": "br",
+          //             ...
+          //         },
+          //     ],
+          //     "data": {
+          //         "quirksMode": false
+          //     }
+          // }
+
+          if (newMarkup.type === "root") {
+            parent?.children.splice(index + 1, 0, {
+              type: "element",
+              tagName: "div",
+              properties: {
+                className: "release-date",
               },
-              {
-                type: "element",
-                tagName: "br",
-                children: [],
+              children: Array.from((newMarkup as any)?.children || []),
+            });
+          } else if (newMarkup.type === "text") {
+            parent?.children.splice(index + 1, 0, {
+              type: "element",
+              tagName: "div",
+              properties: {
+                className: "release-date",
               },
-              {
-                type: "text",
-                value: year,
-              },
-            ],
-          });
+              children: Array.from([newMarkup]),
+            });
+          }
         }
       }
 
@@ -238,7 +322,7 @@ const changelogTimeline: UnifiedPlugin<any[]> = () => {
       ) {
         DEV &&
           console.log(
-            `241 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `325 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4
@@ -295,13 +379,6 @@ const changelogTimeline: UnifiedPlugin<any[]> = () => {
         }
       }
     });
-
-    DEV &&
-      console.log(
-        `301 ███████████████████████████████████████ NEW  ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(
-          tree
-        )}`
-      );
 
     // ███████████████████ fin. ████████████████████
   };

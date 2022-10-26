@@ -68,8 +68,10 @@
   },
   "dependencies": {
     "@types/hast": "^2.3.4",
+    "hast-util-raw": "^7.2.2",
     "semver-regex": "^4.0.5",
     "unified": "^10.1.2",
+    "unist-builder": "^3.0.0",
     "unist-util-visit": "^4.1.1"
   },
   "devDependencies": {
