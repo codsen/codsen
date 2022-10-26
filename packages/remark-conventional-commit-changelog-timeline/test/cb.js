@@ -120,10 +120,7 @@ test(`03 - arabic dates`, () => {
     render(input, {
       dateDivLocale: "ar-EG",
       dateDivMarkup: ({ date, year, month, day }) => {
-        equal(
-          String(date),
-          "Sat Jan 01 2022 00:00:00 GMT+0000 (Greenwich Mean Time)"
-        );
+        equal(date instanceof Date, true);
         equal(year, "٢٠٢٢");
         equal(month, "يناير");
         equal(day, "١");
