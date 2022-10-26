@@ -7102,7 +7102,7 @@ export const packageJSONData = {
     },
     "rehype-responsive-tables": {
         "name": "rehype-responsive-tables",
-        "version": "1.4.1",
+        "version": "1.4.2",
         "description": "Rehype plugin to stack the first column cells above their rows.",
         "keywords": [
             "unified",
@@ -7184,7 +7184,7 @@ export const packageJSONData = {
     },
     "remark-conventional-commit-changelog-timeline": {
         "name": "remark-conventional-commit-changelog-timeline",
-        "version": "1.2.0",
+        "version": "2.0.0",
         "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
         "keywords": [
             "unified",
