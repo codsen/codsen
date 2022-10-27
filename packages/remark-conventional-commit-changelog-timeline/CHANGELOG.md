@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- implements the callback interface to fully customise the date div contents
+- implement a callback interface to fully customise the date `div` contents
 
 # [1.2.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@1.1.0...remark-conventional-commit-changelog-timeline@1.2.0) (2022-10-23)
 
