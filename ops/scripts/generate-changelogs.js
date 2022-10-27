@@ -55,7 +55,11 @@ for (let packageName of packageNames) {
       .use(remarkParse)
       .use(remarkGfm)
       .use(remarkRehype)
-      .use(changelogTimeline)
+      .use(changelogTimeline, {
+        dateDivLocale: "en-UK",
+        dateDivMarkup: ({ year, month, day }) =>
+          `${day} ${month} <span>${year}</span>`,
+      })
       .use(remarkTypography)
       // .use(rehypeFormat)
       .use(rehypeStringify)
